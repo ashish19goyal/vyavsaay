@@ -157,10 +157,13 @@ function sync_server_to_local(func)
 		
 		var max_localdb_open_requests=0;
 		var progress_dummy=progress_value+5;
-		var online_counter=1;
+		var online_counter=50;
 		var sync_download_complete=setInterval(function()
 		{
-			online_counter+=1;
+			if(online_counter>0)
+			{
+				online_counter-=1;
+			}
 	  	   if(number_active_ajax===0)
 	  	   {
 	  	   		var progress_dummy1=progress_dummy+20;
@@ -210,8 +213,8 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
 		}
 		else
 		{
-			var end_table=response.childNodes[0].childNodes[1].childNodes[0].innerHTML;
-			var end_offset=response.childNodes[0].childNodes[1].childNodes[1].innerHTML;
+			var end_table=response.childNodes[0].childNodes[1].childNodes[0].textContent;
+			var end_offset=response.childNodes[0].childNodes[1].childNodes[1].textContent;
 			//console.log(end_table);
 			if(end_table!="end_syncing")
 			{
@@ -253,7 +256,7 @@ function local_put_record(this_table,objectStore,num_rows,row_index)
 		for(var j=0;j<el;j++)
 		{
 			var nname=this_table.childNodes[row_index].childNodes[j].nodeName;
-			row[nname]=this_table.childNodes[row_index].childNodes[j].innerHTML;
+			row[nname]=this_table.childNodes[row_index].childNodes[j].textContent;
 		}
 		
 		row_index+=1;
@@ -283,7 +286,7 @@ function local_delete_record(this_table,num_rows,row_index)
 		for(var j=0;j<el;j++)
 		{
 			var nname=this_table.childNodes[row_index].childNodes[j].nodeName;
-			row[nname]=this_table.childNodes[row_index].childNodes[j].innerHTML;
+			row[nname]=this_table.childNodes[row_index].childNodes[j].textContent;
 		}
 		
 		row_index+=1;
@@ -477,7 +480,7 @@ function set_activities_to_synced(response)
 				if(delete_index<delete_ids.length)
 				{
 					/////remove parseint from here
-					var record_id=delete_ids[delete_index].innerHTML;
+					var record_id=delete_ids[delete_index].textContent;
 					delete_index+=1;
 					var delete_request=objectStore.delete(record_id);
 					delete_request.onsuccess=function(e)
@@ -502,7 +505,7 @@ function set_activities_to_synced(response)
 			{
 				if(row_index<update_ids.length)
 				{
-					var record_id=update_ids[row_index].innerHTML;
+					var record_id=update_ids[row_index].textContent;
 					var req=objectStore.get(record_id);
 					req.onsuccess=function(e)
 					{

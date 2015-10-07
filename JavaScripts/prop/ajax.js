@@ -65,7 +65,7 @@ function ajax_with_custom_func(url,kvp,func)
 
 								for(var z=0;z<num_svar;z++)
 								{
-									session_vars[session_var[0].childNodes[z].nodeName]=session_var[0].childNodes[z].innerHTML;
+									session_vars[session_var[0].childNodes[z].nodeName]=session_var[0].childNodes[z].textContent;
 								}
 								var offline=get_session_var('offline');
 								for(var field in session_vars)
@@ -126,7 +126,7 @@ function server_read_single_column(column,callback,results)
 			{
 				if(row[i].nodeName!="" && row[i].nodeName!="#text")
 				{
-					results.push(row[i].innerHTML);
+					results.push(row[i].textContent);
 				}
 			}
 		}
@@ -158,7 +158,7 @@ function server_read_multiple_column(columns,callback,results)
 					var row_data={};
 					for(var j=0;j<data.length;j++)
 					{
-						row_data[data[j].nodeName]=data[j].innerHTML;
+						row_data[data[j].nodeName]=data[j].textContent;
 					}
 					results.push(row_data);
 				}
@@ -501,7 +501,7 @@ function server_generate_report(report_id,results,callback)
 				var row_data=[];
 				for(var j=0;j<data.length;j++)
 				{
-					row_data[data[j].nodeName]=data[j].innerHTML;
+					row_data[data[j].nodeName]=data[j].textContent;
 				}
 				results.push(row_data);
 			}

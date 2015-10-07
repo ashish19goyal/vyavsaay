@@ -272,7 +272,7 @@ function backup_server_db()
 			var link=document.createElement('a');
 			link.setAttribute('href',downloadUrl);
 			link.setAttribute('download',domain+".sql");
-			link.innerHTML="Click to download the file.";			
+			link.textContent="Click to download the file.";			
 			modal_element.appendChild(link);
 			$("#modal55").dialog("open");
 			hide_loader();
@@ -331,14 +331,14 @@ function local_read_single_column(columns,callback,results)
 			
 			for(var j=0; j<tcols.length;j++)
 			{
-				if(tcols[j].innerHTML!=null && tcols[j].innerHTML!="")
+				if(tcols[j].textContent!=null && tcols[j].textContent!="")
 				{
 					var fil=new Object();
 					fil.name=tcols[j].nodeName;
 					
 					if(tcols[j].hasAttribute('lowerbound'))
 					{
-						fil.value=tcols[j].innerHTML;
+						fil.value=tcols[j].textContent;
 						fil.type='lowerbound';
 						filter.push(fil);
 						lowerbound=[fil.value,'0'];
@@ -352,7 +352,7 @@ function local_read_single_column(columns,callback,results)
 					}
 					if(tcols[j].hasAttribute('upperbound'))
 					{
-						fil.value=tcols[j].innerHTML;
+						fil.value=tcols[j].textContent;
 						fil.type='upperbound';
 						filter.push(fil);
 						upperbound=[fil.value,'999999999999'];
@@ -367,13 +367,13 @@ function local_read_single_column(columns,callback,results)
 					
 					if(tcols[j].hasAttribute('array'))
 					{
-						fil.value=tcols[j].innerHTML;
+						fil.value=tcols[j].textContent;
 						fil.type='array';
 						filter.push(fil);
 					}
 					else if(!(tcols[j].hasAttributes()))
 					{
-						fil.value=tcols[j].innerHTML;
+						fil.value=tcols[j].textContent;
 						fil.type='';
 						filter.push(fil);
 					}
@@ -382,7 +382,7 @@ function local_read_single_column(columns,callback,results)
 				{
 					var fil=new Object();
 					fil.name=tcols[j].nodeName;
-					fil.value=tcols[j].innerHTML;
+					fil.value=tcols[j].textContent;
 					fil.type='exact';
 					filter.push(fil);
 					sort_index=tcols[j].nodeName;
@@ -542,14 +542,14 @@ function local_read_multi_column(columns,callback,results)
 		
 		for(var j=0;j<cols.length;j++)
 		{
-			if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
+			if(cols[j].textContent!=null && cols[j].textContent!="")
 			{
 				var fil=new Object();
 				fil.name=cols[j].nodeName;
 				
 				if(cols[j].hasAttribute('lowerbound'))
 				{
-					fil.value=cols[j].innerHTML;
+					fil.value=cols[j].textContent;
 					fil.type='lowerbound';
 					filter.push(fil);
 					lowerbound=[fil.value,'0'];
@@ -563,7 +563,7 @@ function local_read_multi_column(columns,callback,results)
 				}
 				if(cols[j].hasAttribute('upperbound'))
 				{
-					fil.value=cols[j].innerHTML;
+					fil.value=cols[j].textContent;
 					fil.type='upperbound';
 					filter.push(fil);
 					upperbound=[fil.value,'999999999999'];
@@ -578,13 +578,13 @@ function local_read_multi_column(columns,callback,results)
 				
 				if(cols[j].hasAttribute('array'))
 				{
-					fil.value=cols[j].innerHTML;
+					fil.value=cols[j].textContent;
 					fil.type='array';
 					filter.push(fil);
 				}
 				else if(!(cols[j].hasAttributes()))
 				{
-					fil.value=cols[j].innerHTML;
+					fil.value=cols[j].textContent;
 					fil.type='';
 					filter.push(fil);
 				}
@@ -593,7 +593,7 @@ function local_read_multi_column(columns,callback,results)
 			{
 				var fil=new Object();
 				fil.name=cols[j].nodeName;
-				fil.value=cols[j].innerHTML;
+				fil.value=cols[j].textContent;
 				fil.type='exact';
 				filter.push(fil);
 				sort_index=cols[j].nodeName;
@@ -733,7 +733,7 @@ function local_update_row(data_xml,activity_xml)
 		var parser=new DOMParser();
 		var data=parser.parseFromString(data_xml,"text/xml");
 		var table=data.childNodes[0].nodeName;
-		var data_id=data.childNodes[0].getElementsByTagName('id')[0].innerHTML;
+		var data_id=data.childNodes[0].getElementsByTagName('id')[0].textContent;
 		var cols=data.childNodes[0].childNodes;
 	
 		var activity=parser.parseFromString(activity_xml,"text/xml");
@@ -748,7 +748,7 @@ function local_update_row(data_xml,activity_xml)
 			{
 				for(var j=0;j<cols.length;j++)
 				{
-					data_record[cols[j].nodeName]=cols[j].innerHTML;
+					data_record[cols[j].nodeName]=cols[j].textContent;
 				}
 				var put_req=objectStore.put(data_record);
 				put_req.onsuccess=function(e)
@@ -763,7 +763,7 @@ function local_update_row(data_xml,activity_xml)
 
 					for(var k=0;k<activity_data.length;k++)
 					{
-						act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
+						act_row[activity_data[k].nodeName]=activity_data[k].textContent;
 					}
 
 					static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
@@ -799,7 +799,7 @@ function local_update_simple(data_xml)
 		//data_xml=data_xml.replace(/[\x{0009}\x{000a}\x{000d}\x{0020}\x{D7FF}\x{E000}\x{FFFD}]/g," ");
 		var data=parser.parseFromString(data_xml,"text/xml");
 		var table=data.childNodes[0].nodeName;
-		var data_id=data.childNodes[0].getElementsByTagName('id')[0].innerHTML;
+		var data_id=data.childNodes[0].getElementsByTagName('id')[0].textContent;
 		var cols=data.childNodes[0].childNodes;
 		
 		var objectStore=static_local_db.transaction([table],"readwrite").objectStore(table);
@@ -811,7 +811,7 @@ function local_update_simple(data_xml)
 			{
 				for(var j=0;j<cols.length;j++)
 				{
-					data_record[cols[j].nodeName]=cols[j].innerHTML;
+					data_record[cols[j].nodeName]=cols[j].textContent;
 				}
 				
 				var put_req=objectStore.put(data_record);
@@ -888,7 +888,7 @@ function local_update_batch(data_xml)
 			if(i<rows.length)
 			{
 				//console.log("I"+i);
-				var data_id=rows[i].getElementsByTagName('id')[0].innerHTML;
+				var data_id=rows[i].getElementsByTagName('id')[0].textContent;
 				var cols=rows[i].childNodes;
 				localdb_open_requests+=1;
 								
@@ -903,7 +903,7 @@ function local_update_batch(data_xml)
 					{
 						for(var j=0;j<cols.length;j++)
 						{
-							data_record[cols[j].nodeName]=cols[j].innerHTML;
+							data_record[cols[j].nodeName]=cols[j].textContent;
 						}
 						
 						var put_req=os1.put(data_record);
@@ -929,10 +929,10 @@ function local_update_batch(data_xml)
 			if(j<rows.length)
 			{
 				//console.log("J"+j);
-				var data_id=rows[j].getElementsByTagName('id')[0].innerHTML;
+				var data_id=rows[j].getElementsByTagName('id')[0].textContent;
 				localdb_open_requests+=1;
 				
-				var row_data_xml="<"+table+">"+rows[j].innerHTML+"</"+table+">";
+				var row_data_xml="<"+table+">"+rows[j].textContent+"</"+table+">";
 				var act_row={id:""+(activity_id+j),
 						type:'update',
 						status:'unsynced',
@@ -1002,7 +1002,7 @@ function local_update_simple_func(data_xml,func)
 		var parser=new DOMParser();
 		var data=parser.parseFromString(data_xml,"text/xml");
 		var table=data.childNodes[0].nodeName;
-		var data_id=data.childNodes[0].getElementsByTagName('id')[0].innerHTML;
+		var data_id=data.childNodes[0].getElementsByTagName('id')[0].textContent;
 		var cols=data.childNodes[0].childNodes;
 		
 		var os1=static_local_db.transaction([table],"readwrite").objectStore(table);
@@ -1014,7 +1014,7 @@ function local_update_simple_func(data_xml,func)
 			{
 				for(var j=0;j<cols.length;j++)
 				{
-					data_record[cols[j].nodeName]=cols[j].innerHTML;
+					data_record[cols[j].nodeName]=cols[j].textContent;
 				}
 				
 				var put_req=os1.put(data_record);
@@ -1068,19 +1068,19 @@ function local_create_row(data_xml,activity_xml)
 		var parser=new DOMParser();
 		var data=parser.parseFromString(data_xml,"text/xml");
 		var table=data.childNodes[0].nodeName;
-		var data_id=data.childNodes[0].getElementsByTagName('id')[0].innerHTML;
+		var data_id=data.childNodes[0].getElementsByTagName('id')[0].textContent;
 		var cols=data.childNodes[0].childNodes;
 		
 		var unique=new Array();
 		for(var j=0;j<cols.length;j++)
 		{
-			if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
+			if(cols[j].textContent!=null && cols[j].textContent!="")
 			{
 				if(cols[j].hasAttribute('unique'))
 				{
 					var fil=new Object();
 					fil.name=cols[j].nodeName;
-					fil.value=cols[j].innerHTML;
+					fil.value=cols[j].textContent;
 					unique.push(fil);
 				}
 			}
@@ -1098,7 +1098,7 @@ function local_create_row(data_xml,activity_xml)
 				
 			for(var j=0;j<cols.length;j++)
 			{
-				data_row[cols[j].nodeName]=cols[j].innerHTML;
+				data_row[cols[j].nodeName]=cols[j].textContent;
 			}
 			
 			var put_req=objectStore.put(data_row);
@@ -1113,7 +1113,7 @@ function local_create_row(data_xml,activity_xml)
 						last_updated:""+get_my_time()};
 				for(var k=0;k<activity_data.length;k++)
 				{
-					act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
+					act_row[activity_data[k].nodeName]=activity_data[k].textContent;
 				}
 				static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 				{
@@ -1138,7 +1138,7 @@ function local_create_row(data_xml,activity_xml)
 				{
 					for(var j=0;j<cols.length;j++)
 					{
-						data_row[cols[j].nodeName]=cols[j].innerHTML;
+						data_row[cols[j].nodeName]=cols[j].textContent;
 					}
 					objectStore.put(data_row).onsuccess=function(e)
 					{
@@ -1152,7 +1152,7 @@ function local_create_row(data_xml,activity_xml)
 						
 						for(var k=0;k<activity_data.length;k++)
 						{
-							act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
+							act_row[activity_data[k].nodeName]=activity_data[k].textContent;
 						}
 						static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 						{
@@ -1188,19 +1188,19 @@ function local_create_row_func(data_xml,activity_xml,func)
 		var parser=new DOMParser();
 		var data=parser.parseFromString(data_xml,"text/xml");
 		var table=data.childNodes[0].nodeName;
-		var data_id=data.childNodes[0].getElementsByTagName('id')[0].innerHTML;
+		var data_id=data.childNodes[0].getElementsByTagName('id')[0].textContent;
 		var cols=data.childNodes[0].childNodes;
 		
 		var unique=new Array();
 		for(var j=0;j<cols.length;j++)
 		{
-			if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
+			if(cols[j].textContent!=null && cols[j].textContent!="")
 			{
 				if(cols[j].hasAttribute('unique'))
 				{
 					var fil=new Object();
 					fil.name=cols[j].nodeName;
-					fil.value=cols[j].innerHTML;
+					fil.value=cols[j].textContent;
 					unique.push(fil);
 				}
 			}
@@ -1218,7 +1218,7 @@ function local_create_row_func(data_xml,activity_xml,func)
 				
 			for(var j=0;j<cols.length;j++)
 			{
-				data_row[cols[j].nodeName]=cols[j].innerHTML;
+				data_row[cols[j].nodeName]=cols[j].textContent;
 			}
 			
 			var put_req=objectStore.put(data_row);
@@ -1233,7 +1233,7 @@ function local_create_row_func(data_xml,activity_xml,func)
 						last_updated:""+get_my_time()};
 				for(var k=0;k<activity_data.length;k++)
 				{
-					act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
+					act_row[activity_data[k].nodeName]=activity_data[k].textContent;
 				}
 				static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 				{
@@ -1262,7 +1262,7 @@ function local_create_row_func(data_xml,activity_xml,func)
 				{
 					for(var j=0;j<cols.length;j++)
 					{
-						data_row[cols[j].nodeName]=cols[j].innerHTML;
+						data_row[cols[j].nodeName]=cols[j].textContent;
 					}
 					objectStore.put(data_row).onsuccess=function(e)
 					{
@@ -1276,7 +1276,7 @@ function local_create_row_func(data_xml,activity_xml,func)
 						
 						for(var k=0;k<activity_data.length;k++)
 						{
-							act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
+							act_row[activity_data[k].nodeName]=activity_data[k].textContent;
 						}
 						static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 						{
@@ -1317,19 +1317,19 @@ function local_create_simple(data_xml)
 		var parser=new DOMParser();
 		var data=parser.parseFromString(data_xml,"text/xml");
 		var table=data.childNodes[0].nodeName;
-		var data_id=data.childNodes[0].getElementsByTagName('id')[0].innerHTML;
+		var data_id=data.childNodes[0].getElementsByTagName('id')[0].textContent;
 		var cols=data.childNodes[0].childNodes;
 
 		var unique=new Array();
 		for(var j=0;j<cols.length;j++)
 		{
-			if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
+			if(cols[j].textContent!=null && cols[j].textContent!="")
 			{
 				if(cols[j].hasAttribute('unique'))
 				{
 					var fil=new Object();
 					fil.name=cols[j].nodeName;
-					fil.value=cols[j].innerHTML;
+					fil.value=cols[j].textContent;
 					unique.push(fil);
 				}
 			}
@@ -1343,7 +1343,7 @@ function local_create_simple(data_xml)
 				
 			for(var j=0;j<cols.length;j++)
 			{
-				data_row[cols[j].nodeName]=cols[j].innerHTML;
+				data_row[cols[j].nodeName]=cols[j].textContent;
 			}
 			
 			var put_req=objectStore.put(data_row);
@@ -1382,7 +1382,7 @@ function local_create_simple(data_xml)
 				{
 					for(var j=0;j<cols.length;j++)
 					{
-						data_row[cols[j].nodeName]=cols[j].innerHTML;
+						data_row[cols[j].nodeName]=cols[j].textContent;
 					}
 					objectStore.put(data_row).onsuccess=function(e)
 					{
@@ -1449,13 +1449,13 @@ function local_create_batch(data_xml)
 			var first_col=rows[0].childNodes;
 			for(var j=0;j<first_col.length;j++)
 			{
-				if(first_col[j].innerHTML!=null && first_col[j].innerHTML!="")
+				if(first_col[j].textContent!=null && first_col[j].textContent!="")
 				{
 					if(first_col[j].hasAttribute('unique'))
 					{
 						var fil=new Object();
 						fil.name=first_col[j].nodeName;
-						fil.value=first_col[j].innerHTML;
+						fil.value=first_col[j].textContent;
 						unique.push(fil);
 					}
 				}
@@ -1475,14 +1475,14 @@ function local_create_batch(data_xml)
 		{
 			if(i<rows.length)
 			{
-				var data_id=rows[i].getElementsByTagName('id')[0].innerHTML;
+				var data_id=rows[i].getElementsByTagName('id')[0].textContent;
 				var cols=rows[i].childNodes;
 				
 				var data_row=new Object();
 				
 				for(var j=0;j<cols.length;j++)
 				{
-					data_row[cols[j].nodeName]=cols[j].innerHTML;
+					data_row[cols[j].nodeName]=cols[j].textContent;
 				}
 				
 				localdb_open_requests+=1;
@@ -1504,8 +1504,8 @@ function local_create_batch(data_xml)
 							os1.put(data_row).onsuccess=function(e)
 							{
 								success_count+=1;
-								var data_id=rows[i].getElementsByTagName('id')[0].innerHTML;
-								var row_data_xml="<"+table+">"+rows[i].innerHTML+"</"+table+">";
+								var data_id=rows[i].getElementsByTagName('id')[0].textContent;
+								var row_data_xml="<"+table+">"+rows[i].textContent+"</"+table+">";
 								var act_row={id:""+(activity_id+i),
 										type:'create',
 										status:'unsynced',
@@ -1530,8 +1530,8 @@ function local_create_batch(data_xml)
 				{
 					os1.put(data_row).onsuccess=function(e)
 					{
-						var data_id=rows[i].getElementsByTagName('id')[0].innerHTML;
-						var row_data_xml="<"+table+">"+rows[i].innerHTML+"</"+table+">";
+						var data_id=rows[i].getElementsByTagName('id')[0].textContent;
+						var row_data_xml="<"+table+">"+rows[i].textContent+"</"+table+">";
 						var act_row={id:""+(activity_id+i),
 								type:'create',
 								status:'unsynced',
@@ -1624,13 +1624,13 @@ function local_create_batch_noloader(data_xml)
 			var first_col=rows[0].childNodes;
 			for(var j=0;j<first_col.length;j++)
 			{
-				if(first_col[j].innerHTML!=null && first_col[j].innerHTML!="")
+				if(first_col[j].textContent!=null && first_col[j].textContent!="")
 				{
 					if(first_col[j].hasAttribute('unique'))
 					{
 						var fil=new Object();
 						fil.name=first_col[j].nodeName;
-						fil.value=first_col[j].innerHTML;
+						fil.value=first_col[j].textContent;
 						unique.push(fil);
 					}
 				}
@@ -1650,14 +1650,14 @@ function local_create_batch_noloader(data_xml)
 		{
 			if(i<rows.length)
 			{
-				var data_id=rows[i].getElementsByTagName('id')[0].innerHTML;
+				var data_id=rows[i].getElementsByTagName('id')[0].textContent;
 				var cols=rows[i].childNodes;
 				
 				var data_row=new Object();
 				
 				for(var j=0;j<cols.length;j++)
 				{
-					data_row[cols[j].nodeName]=cols[j].innerHTML;
+					data_row[cols[j].nodeName]=cols[j].textContent;
 				}
 				
 				localdb_open_requests+=1;
@@ -1679,8 +1679,8 @@ function local_create_batch_noloader(data_xml)
 							os1.put(data_row).onsuccess=function(e)
 							{
 								success_count+=1;
-								var data_id=rows[i].getElementsByTagName('id')[0].innerHTML;
-								var row_data_xml="<"+table+">"+rows[i].innerHTML+"</"+table+">";
+								var data_id=rows[i].getElementsByTagName('id')[0].textContent;
+								var row_data_xml="<"+table+">"+rows[i].textContent+"</"+table+">";
 								var act_row={id:""+(activity_id+i),
 										type:'create',
 										status:'unsynced',
@@ -1705,8 +1705,8 @@ function local_create_batch_noloader(data_xml)
 				{
 					os1.put(data_row).onsuccess=function(e)
 					{
-						var data_id=rows[i].getElementsByTagName('id')[0].innerHTML;
-						var row_data_xml="<"+table+">"+rows[i].innerHTML+"</"+table+">";
+						var data_id=rows[i].getElementsByTagName('id')[0].textContent;
+						var row_data_xml="<"+table+">"+rows[i].textContent+"</"+table+">";
 						var act_row={id:""+(activity_id+i),
 								type:'create',
 								status:'unsynced',
@@ -1748,19 +1748,19 @@ function local_create_simple_func(data_xml,func)
 		var parser=new DOMParser();
 		var data=parser.parseFromString(data_xml,"text/xml");
 		var table=data.childNodes[0].nodeName;
-		var data_id=data.childNodes[0].getElementsByTagName('id')[0].innerHTML;
+		var data_id=data.childNodes[0].getElementsByTagName('id')[0].textContent;
 		var cols=data.childNodes[0].childNodes;
 
 		var unique=new Array();
 		for(var j=0;j<cols.length;j++)
 		{
-			if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
+			if(cols[j].textContent!=null && cols[j].textContent!="")
 			{
 				if(cols[j].hasAttribute('unique'))
 				{
 					var fil=new Object();
 					fil.name=cols[j].nodeName;
-					fil.value=cols[j].innerHTML;
+					fil.value=cols[j].textContent;
 					unique.push(fil);
 				}
 			}
@@ -1774,7 +1774,7 @@ function local_create_simple_func(data_xml,func)
 				
 			for(var j=0;j<cols.length;j++)
 			{
-				data_row[cols[j].nodeName]=cols[j].innerHTML;
+				data_row[cols[j].nodeName]=cols[j].textContent;
 			}
 			
 			var put_req=objectStore.put(data_row);
@@ -1817,7 +1817,7 @@ function local_create_simple_func(data_xml,func)
 				{
 					for(var j=0;j<cols.length;j++)
 					{
-						data_row[cols[j].nodeName]=cols[j].innerHTML;
+						data_row[cols[j].nodeName]=cols[j].textContent;
 					}
 					objectStore.put(data_row).onsuccess=function(e)
 					{
@@ -1869,19 +1869,19 @@ function local_create_simple_no_warning(data_xml)
 		var parser=new DOMParser();
 		var data=parser.parseFromString(data_xml,"text/xml");
 		var table=data.childNodes[0].nodeName;
-		var data_id=data.childNodes[0].getElementsByTagName('id')[0].innerHTML;
+		var data_id=data.childNodes[0].getElementsByTagName('id')[0].textContent;
 		var cols=data.childNodes[0].childNodes;
 
 		var unique=new Array();
 		for(var j=0;j<cols.length;j++)
 		{
-			if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
+			if(cols[j].textContent!=null && cols[j].textContent!="")
 			{
 				if(cols[j].hasAttribute('unique'))
 				{
 					var fil=new Object();
 					fil.name=cols[j].nodeName;
-					fil.value=cols[j].innerHTML;
+					fil.value=cols[j].textContent;
 					unique.push(fil);
 				}
 			}
@@ -1895,7 +1895,7 @@ function local_create_simple_no_warning(data_xml)
 				
 			for(var j=0;j<cols.length;j++)
 			{
-				data_row[cols[j].nodeName]=cols[j].innerHTML;
+				data_row[cols[j].nodeName]=cols[j].textContent;
 			}
 			
 			var put_req=objectStore.put(data_row);
@@ -1934,7 +1934,7 @@ function local_create_simple_no_warning(data_xml)
 				{
 					for(var j=0;j<cols.length;j++)
 					{
-						data_row[cols[j].nodeName]=cols[j].innerHTML;
+						data_row[cols[j].nodeName]=cols[j].textContent;
 					}
 					objectStore.put(data_row).onsuccess=function(e)
 					{
@@ -1991,11 +1991,11 @@ function local_delete_row(data_xml,activity_xml)
 		var filter=new Array();
 		for(var j=0;j<cols.length;j++)
 		{
-			if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
+			if(cols[j].textContent!=null && cols[j].textContent!="")
 			{
 				fil=new Object();
 				fil.name=cols[j].nodeName;
-				fil.value=cols[j].innerHTML;
+				fil.value=cols[j].textContent;
 				filter.push(fil);
 			}
 		}
@@ -2037,7 +2037,7 @@ function local_delete_row(data_xml,activity_xml)
 							
 							for(var k=0;k<activity_data.length;k++)
 							{
-								act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
+								act_row[activity_data[k].nodeName]=activity_data[k].textContent;
 							}
 							
 							static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
@@ -2116,7 +2116,7 @@ function local_delete_row(data_xml,activity_xml)
 							
 							for(var k=0;k<activity_data.length;k++)
 							{
-								act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
+								act_row[activity_data[k].nodeName]=activity_data[k].textContent;
 							}
 							act_row['data_id']=delete_ids_array[j];
 
@@ -2173,11 +2173,11 @@ function local_delete_simple(data_xml)
 		var filter=new Array();
 		for(var j=0;j<cols.length;j++)
 		{
-			if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
+			if(cols[j].textContent!=null && cols[j].textContent!="")
 			{
 				fil=new Object();
 				fil.name=cols[j].nodeName;
-				fil.value=cols[j].innerHTML;
+				fil.value=cols[j].textContent;
 				filter.push(fil);
 			}
 		}
@@ -2351,11 +2351,11 @@ function local_delete_simple_func(data_xml,func)
 		var filter=new Array();
 		for(var j=0;j<cols.length;j++)
 		{
-			if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
+			if(cols[j].textContent!=null && cols[j].textContent!="")
 			{
 				fil=new Object();
 				fil.name=cols[j].nodeName;
-				fil.value=cols[j].innerHTML;
+				fil.value=cols[j].textContent;
 				filter.push(fil);
 			}
 		}
@@ -3028,14 +3028,14 @@ function local_get_available_inventory(product,batch,data_array,callback)
 																			
 																			for(var j=0; j<tcols.length;j++)
 																			{
-																				if(tcols[j].innerHTML!=null && tcols[j].innerHTML!="")
+																				if(tcols[j].textContent!=null && tcols[j].textContent!="")
 																				{
 																					var fil=new Object();
 																					fil.name=tcols[j].nodeName;
 																					
 																					if(tcols[j].hasAttribute('lowerbound'))
 																					{
-																						fil.value=tcols[j].innerHTML;
+																						fil.value=tcols[j].textContent;
 																						fil.type='lowerbound';
 																						filter.push(fil);
 																						lowerbound=[fil.value,'0'];
@@ -3049,7 +3049,7 @@ function local_get_available_inventory(product,batch,data_array,callback)
 																					}
 																					if(tcols[j].hasAttribute('upperbound'))
 																					{
-																						fil.value=tcols[j].innerHTML;
+																						fil.value=tcols[j].textContent;
 																						fil.type='upperbound';
 																						filter.push(fil);
 																						upperbound=[fil.value,'999999999999'];
@@ -3064,13 +3064,13 @@ function local_get_available_inventory(product,batch,data_array,callback)
 																					
 																					if(tcols[j].hasAttribute('array'))
 																					{
-																						fil.value=tcols[j].innerHTML;
+																						fil.value=tcols[j].textContent;
 																						fil.type='array';
 																						filter.push(fil);
 																					}
 																					else if(!(tcols[j].hasAttributes()))
 																					{
-																						fil.value=tcols[j].innerHTML;
+																						fil.value=tcols[j].textContent;
 																						fil.type='';
 																						filter.push(fil);
 																					}
@@ -3079,7 +3079,7 @@ function local_get_available_inventory(product,batch,data_array,callback)
 																				{
 																					var fil=new Object();
 																					fil.name=tcols[j].nodeName;
-																					fil.value=tcols[j].innerHTML;
+																					fil.value=tcols[j].textContent;
 																					fil.type='exact';
 																					filter.push(fil);
 																					sort_index=tcols[j].nodeName;
