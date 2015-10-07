@@ -1,15 +1,5 @@
 c2e.convert_special: 0
 e2c.convert_num: 0
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js:868287:867355:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js:77655:76595:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/get_totals.js:1118:1104:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form250.php:223:0:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form251.php:1351:0:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_header_ini.js:76502:76080:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/add_items.js:428812:419782:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js:279433:278631:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/update.js:290455:290067:1:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/delete.js:130568:130388:0:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -21,10 +11,10 @@ view_left_panel: 1
 default_mime_type: text/plain
 e2c.convert_xml: 1
 c2e.convert_iso: 0
-opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
+opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/Classes
 wrap_text_default: 0
 bookmarks_filename_mode: 0
-ssearch_text: 77_
+ssearch_text: inventory
 snr_casesens: 0
 view_blocks: 1
 name: vyavsaay
@@ -57,8 +47,6 @@ ssearch_regex: 0
 e2c.convert_iso: 0
 ssearch_casesens: 0
 charmap_block: 1
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/responsive_menu.js
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/sitemap.xml
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form165.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form80.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/db/user_demo_data.xml
@@ -87,6 +75,8 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/pr
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/api/get_data.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/test_scripts/bcrypt.html
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/reports_ini.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/db/demo_user_db_data.xml
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/Classes/mailer.php
 snr_replacetype: 0
 savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
 spell_check_default: 1
@@ -98,8 +88,6 @@ snr_escape_chars: 0
 htmlbar_view: 0
 spell_lang: en
 ssearch_dotmatchall: 0
-searchlist: 248
-searchlist: 219_
 searchlist: cod_filter
 searchlist: collectable_value
 searchlist: 201_
@@ -113,6 +101,8 @@ searchlist: 91_
 searchlist: 193_
 searchlist: item
 searchlist: 77_
+searchlist: area_utili
+searchlist: inventory
 autocomplete: 1
 outputb_show_all_output: 0
 bookmarks_show_mode: 0

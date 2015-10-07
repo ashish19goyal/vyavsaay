@@ -10691,7 +10691,7 @@ function form193_update_form()
 									"<updated_by>"+get_name()+"</updated_by>" +
 									"</activity>";
 						create_row(data_xml,activity_xml);
-						console.log(data_xml);
+						//console.log(data_xml);
 						///////////adding store placement////////
 						var storage_data="<area_utilization>" +
 								"<id></id>" +
@@ -10702,7 +10702,7 @@ function form193_update_form()
 						fetch_requested_data('',storage_data,function(placements)
 						{
 							counter+=1;
-							if(placements.length===0 && item.quantity>0)
+							if(placements.length===0 && parseFloat(item.quantity)>0)
 							{
 								var storage_xml="<area_utilization>" +
 										"<id>"+(id+counter)+"</id>" +
@@ -10713,7 +10713,7 @@ function form193_update_form()
 										"</area_utilization>";
 								create_simple(storage_xml);
 							}
-							else if(placements.length>0 && item.quantity==0)
+							else if(placements.length>0 && parseFloat(item.quantity)==0)
 							{
 								var storage_xml="<area_utilization>" +
 										"<id>"+placements[0].id+"</id>" +
@@ -13015,7 +13015,7 @@ function form244_update_form()
 				fetch_requested_data('',storage_data,function(placements)
 				{
 					counter+=1;
-					if(placements.length===0 && item.quantity>0)
+					if(placements.length===0 && parseFloat(item.quantity)>0)
 					{
 						var storage_xml="<area_utilization>" +
 								"<id>"+(id+counter)+"</id>" +

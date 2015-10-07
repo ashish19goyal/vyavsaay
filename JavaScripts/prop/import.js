@@ -1189,25 +1189,11 @@ function form38_import(data_array,import_type)
 	data_xml+="</area_utilization>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -1248,25 +1234,11 @@ function form39_import(data_array,import_type)
 	data_xml+="</product_master>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
