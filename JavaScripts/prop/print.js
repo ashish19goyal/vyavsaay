@@ -985,6 +985,11 @@ function print_form72(func)
 		}
 	});
 	
+	total_amount=my_round(total_amount,2);
+	total_vat=my_round(total_vat,2);
+	total_st=my_round(total_st,2);
+	master_total=my_round(master_total,0);
+	
 	var row_count=$(table_element).find('tbody>tr').length;
 	var rows_to_add=5-row_count;
 	for(var i=0;i<3;i++)
