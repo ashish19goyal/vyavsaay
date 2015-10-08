@@ -305,7 +305,7 @@ function show_notif()
 					var notification=new Notification('Vyavsaay',
 					{
 						body: "You have "+num_res+" unseen notifications",
-						icon: "./images/favicon.png"
+						icon: "./images/icon.jpeg"
 					});
 				}
 				else
@@ -318,7 +318,7 @@ function show_notif()
 							var notification=new Notification('Vyavsaay',
 							{
 								body: "You have "+num_res+" unseen notifications",
-								icon: "./images/favicon.png"
+								icon: "./images/icon.jpeg"
 							});							 
 						}
 			        });

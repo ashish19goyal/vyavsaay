@@ -5735,10 +5735,13 @@ function report79_ini()
 		var po_id_string='--';
 		for(var i in pos)
 		{
-			var bill_id_array=JSON.parse(pos[i].bill_id);
-			for(var x in bill_id_array)
+			if(pos[i].bill_id!="" && pos[i].bill_id!=null)
 			{
-				bill_id_string+=bill_id_array[x].bill_id+"--";
+				var bill_id_array=JSON.parse(pos[i].bill_id);
+				for(var x in bill_id_array)
+				{
+					bill_id_string+=bill_id_array[x].bill_id+"--";
+				}
 			}
 			po_id_string+=pos[i].id+"--";
 		}		

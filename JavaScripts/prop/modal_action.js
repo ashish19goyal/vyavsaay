@@ -11449,35 +11449,6 @@ function modal151_action(bill_id,order_num)
 	var bag_num=bill_id_string.slice(-3);
 
 	bag_filter.value=bag_num;
-/*	
-	if('Notification' in window)
-	{		
-		if(Notification.permission==='granted')
-		{
-			//console.log('permission is granted by default');
-			var notification=new Notification('Vyavsaay',
-			{
-				body: "Place this item in bag # "+bag_num,
-				icon: "./images/favicon.png"
-			});
-		}
-		else
-		{
-			Notification.requestPermission(function(permission)
-			{
-				if(permission==='granted')
-				{
-					console.log('permission granted');
-					var notification=new Notification('Vyavsaay',
-					{
-						body: "Place this item in bag # "+bag_num,
-						icon: "./images/favicon.png"
-					});							 
-				}
-	        });
-		}
-	}
-*/
 	$(form).off('submit');
 	$(form).on('submit',function(event) 
 	{

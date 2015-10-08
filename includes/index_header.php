@@ -11,7 +11,7 @@
 			include "js_includes_index.php";
 			include "css_includes_index.php";
 		?>
-		<link rel="icon" href="./images/favicon.png">
+		<link rel="icon" href="./images/icon.jpeg">
 	</head>
 	<body onload="default_load();" style='background-color: #fff;'>
 		<div id="loading_icon"><img src="./images/loader.gif"></div>
