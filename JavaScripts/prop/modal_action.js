@@ -9167,6 +9167,8 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 							}				
 			  			   
 			  			   	var order_item_string=JSON.stringify(order_item);
+							order_item_string=order_item_string.replace(/'/g, "");			  			   	
+			  			   	//console.log(order_item_string);
 							var rowsHTML="<tr title='"+item_title+"' data-object='"+order_item_string+"' id='modal133_item_row_"+order_item.id+"'>"+
 								"<td>"+order_item.item_name+"</td>"+
 								"<td>"+order_item.quantity+"</td>";

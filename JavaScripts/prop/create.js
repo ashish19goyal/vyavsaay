@@ -5939,6 +5939,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 			var order_item=new Object();			
 			if(checked)
 			{
+				//console.log($(this).attr('data-object'));
 				order_item=JSON.parse($(this).attr('data-object'));
 				order_items.push(order_item);
 			}
