@@ -5804,9 +5804,17 @@ function report79_ini()
 				var rowsHTML="";
 				po_items.forEach(function(item)
 				{
+					for(var l in pos)
+					{
+						if(item.order_id==pos[l].id)
+						{
+							item.order_num=pos[l].order_num;
+							break;
+						}
+					}
 					rowsHTML+="<tr>";
 					rowsHTML+="<td data-th='PO #'>";
-						rowsHTML+="<a onclick=\"element_display('"+item.order_id+"','form24');\">"+item.order_id+"<\a>";
+						rowsHTML+="<a onclick=\"element_display('"+item.order_id+"','form24');\">"+item.order_num+"<\a>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='SKU'>";
 						rowsHTML+=item.item_name;
@@ -5823,6 +5831,24 @@ function report79_ini()
 					rowsHTML+="</tr>";
 				});
 				$('#report79_body').html(rowsHTML);
+				
+				var csv_button=form.elements['csv'];
+				$(csv_button).off("click");
+				$(csv_button).on("click", function(event)
+				{
+					var new_items=[];
+					po_items.forEach(function(item)
+					{
+						var new_item=new Object();
+						new_item['PO #']=item.order_num;
+						new_item['SKU']=item.item_name;
+						new_item['Item Name']=item.item_desc;
+						new_item['Order Qty']=item.order_quantity;
+						new_item['Pending Qty']=item.quantity;
+						new_items.push(new_item);
+					});
+					csv_download_report(new_items,'Pending purchase order items');
+				});
 				
 				hide_loader();
 			});
@@ -7261,6 +7287,24 @@ function report92_ini()
 					rowsHTML+="</tr>";
 				});
 				$('#report92_body').html(rowsHTML);
+				
+				var csv_button=form.elements['csv'];
+				$(csv_button).off("click");
+				$(csv_button).on("click", function(event)
+				{
+					var new_items=[];
+					po_items.forEach(function(item)
+					{
+						var new_item=new Object();
+						new_item['Order #']=item.order_num;
+						new_item['SKU']=item.item_name;
+						new_item['Item Name']=item.item_desc;
+						new_item['Order Qty']=item.order_quantity;
+						new_item['Pending Qty']=item.quantity;
+						new_items.push(new_item);
+					});
+					csv_download_report(new_items,'Pending sale order items');
+				});
 				
 				hide_loader();
 			});
