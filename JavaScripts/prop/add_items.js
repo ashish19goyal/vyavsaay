@@ -2358,9 +2358,10 @@ function form72_add_product()
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form72_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='button' class='submit_hidden' form='form72_"+id+"' id='save_form72_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form72_"+id+"' id='delete_form72_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form72_"+id+"' id='delete_form72_"+id+"' onclick='$(this).parent().parent().remove(); form72_get_totals();'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form72_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form72_"+id+"' name='tax_rate'>";
+				rowsHTML+="<input type='hidden' form='form72_"+id+"' name='type' value='product'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	
@@ -2482,6 +2483,8 @@ function form72_add_product()
 			tax_filter.value=parseFloat((parseFloat(tax_rate_filter.value)*(parseFloat(amount_filter.value)-parseFloat(discount_filter.value)))/100);
 			total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);
 		});
+		
+		form72_get_totals();
 	}
 	else
 	{
@@ -2524,7 +2527,7 @@ function form72_add_service()
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form72_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='button' class='submit_hidden' form='form72_"+id+"' id='save_form72_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form72_"+id+"' id='delete_form72_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form72_"+id+"' id='delete_form72_"+id+"' onclick='$(this).parent().parent().remove(); form72_get_totals();'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form72_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form72_"+id+"' name='tax_rate'>";
 			rowsHTML+="</td>";			
@@ -2596,6 +2599,8 @@ function form72_add_service()
 			tax_filter.value=parseFloat((parseFloat(tax_rate_filter.value)*(parseFloat(amount_filter.value)-parseFloat(discount_filter.value)))/100);
 			total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);
 		});
+		
+		form72_get_totals();
 	}
 	else
 	{
@@ -11500,6 +11505,14 @@ function form200_add_item()
 		var save_button=item_form.elements[10];
 		var ship_to=item_form.elements[12];
 		var order_history=item_form.elements[14];
+		
+		var new_drs=true;
+		var saved=document.getElementById('form200_master').elements['saved'].value;
+		if(saved=='yes')
+		{
+			new_drs=false;
+		}
+		
 		/*
 		$(save_button).on('click',function (e) 
 		{
@@ -11521,7 +11534,7 @@ function form200_add_item()
 					double_entry+=1;
 			});
 
-			if(total_entries==1)
+			if(total_entries==1 && new_drs)
 			{
 				form200_create_form(function()
 				{
@@ -11573,7 +11586,7 @@ function form200_add_item()
 						double_entry+=1;
 				});
 				
-				if(total_entries==1)
+				if(total_entries==1 && new_drs)
 				{
 					form200_create_form(function () 
 					{
@@ -12923,6 +12936,13 @@ function form219_add_item()
 		var ship_to=item_form.elements[13];
 		var order_history=item_form.elements[15];
 		
+		var new_drs=true;
+		var saved=document.getElementById('form219_master').elements['saved'].value;
+		if(saved=='yes')
+		{
+			new_drs=false;
+		}
+
 		$(item_form).on("submit", function(event)
 		{
 			event.preventDefault();
@@ -12938,7 +12958,7 @@ function form219_add_item()
 					double_entry+=1;
 			});
 
-			if(total_entries==1)
+			if(total_entries==1 && new_drs)
 			{
 				form219_create_form(function () 
 				{
@@ -12989,7 +13009,7 @@ function form219_add_item()
 						double_entry+=1;
 				});
 	
-				if(total_entries==1)
+				if(total_entries==1 && new_drs)
 				{
 					form219_create_form(function () 
 					{
@@ -14599,7 +14619,11 @@ function form248_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Address'>";
 				rowsHTML+="<textarea readonly='readonly' form='form248_"+id+"'></textarea>";
-				rowsHTML+="<br>Phone: <input type='text' readonly='readonly' form='form248_"+id+"'>";
+				rowsHTML+="<br><b>Phone</b>: <input type='text' readonly='readonly' form='form248_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Details'>";
+				rowsHTML+="<b>Weight</b>: <input type='number' step='any' readonly='readonly' form='form248_"+id+"'>";
+				rowsHTML+="<br><b>LBH</b>: <input type='text' readonly='readonly' form='form248_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Status'>";
 				rowsHTML+="<input type='text' readonly='readonly' form='form248_"+id+"'>";
@@ -14618,10 +14642,19 @@ function form248_add_item()
 		var awb_filter=item_form.elements[0];
 		var address_filter=item_form.elements[1];
 		var phone_filter=item_form.elements[2];
-		var status_filter=item_form.elements[3];
-		var id_filter=item_form.elements[4];
-		var save_button=item_form.elements[5];
-		var history_filter=item_form.elements[7];
+		var weight_filter=item_form.elements[3];
+		var lbh_filter=item_form.elements[4];
+		var status_filter=item_form.elements[5];
+		var id_filter=item_form.elements[6];
+		var save_button=item_form.elements[7];
+		var history_filter=item_form.elements[9];
+		
+		var new_bag=true;
+		var saved=document.getElementById('form248_master').elements['saved'].value;
+		if(saved=='yes')
+		{
+			new_bag=false;
+		}
 		
 		$(item_form).on("submit", function(event)
 		{
@@ -14637,7 +14670,7 @@ function form248_add_item()
 					double_entry+=1;
 			});
 
-			if(total_entries==1)
+			if(total_entries==1 && new_bag)
 			{
 				form248_create_form(function()
 				{
@@ -14689,7 +14722,7 @@ function form248_add_item()
 						double_entry+=1;
 				});
 				
-				if(total_entries==1)
+				if(total_entries==1 && new_bag)
 				{
 					form248_create_form(function () 
 					{
@@ -14708,6 +14741,7 @@ function form248_add_item()
 											"<ship_to></ship_to>" +
 											"<phone></phone>" +
 											"<weight></weight>" +
+											"<lbh></lbh>" +
 											"<pieces></pieces>" +
 											"<drs_num></drs_num>" +
 											"<status array='yes'>--received--undelivered--pending--</status>"+
@@ -14721,6 +14755,8 @@ function form248_add_item()
 								{
 									address_filter.value=orders[0].ship_to+"\n"+orders[0].address1+", "+orders[0].address2+", "+orders[0].city+"-"+orders[0].pincode;
 									phone_filter.value=orders[0].phone;
+									weight_filter.value=orders[0].weight;
+									lbh_filter.value=orders[0].lbh;
 									status_filter.value=orders[0].status;
 									id_filter.value=orders[0].id;
 									history_filter.value=orders[0].order_history;
@@ -14731,6 +14767,8 @@ function form248_add_item()
 								{
 									address_filter.value="";
 									phone_filter.value="";
+									weight_filter.value="";
+									lbh_filter.value="";
 									status_filter.value="";
 									id_filter.value="";
 									history_filter.value="";
@@ -14763,6 +14801,7 @@ function form248_add_item()
 										"<ship_to></ship_to>" +
 										"<phone></phone>" +
 										"<weight></weight>" +
+										"<lbh></lbh>" +
 										"<pieces></pieces>" +
 										"<drs_num></drs_num>" +
 										"<status array='yes'>--received--undelivered--pending--</status>"+
@@ -14776,6 +14815,8 @@ function form248_add_item()
 							{
 								address_filter.value=orders[0].ship_to+"\n"+orders[0].address1+", "+orders[0].address2+", "+orders[0].city+"-"+orders[0].pincode;
 								phone_filter.value=orders[0].phone;
+								weight_filter.value=orders[0].weight;
+								lbh_filter.value=orders[0].lbh;
 								status_filter.value=orders[0].status;
 								id_filter.value=orders[0].id;
 								history_filter.value=orders[0].order_history;	
@@ -14786,6 +14827,8 @@ function form248_add_item()
 							{
 								address_filter.value="";
 								phone_filter.value="";
+								weight_filter.value="";
+								lbh_filter.value="";
 								status_filter.value="";
 								id_filter.value="";
 								awb_filter.value="";
@@ -14802,7 +14845,6 @@ function form248_add_item()
 				}
 			}
 		});
-
 		$('textarea').autosize();
 		form248_update_serial_numbers();
 	}
@@ -14811,3 +14853,222 @@ function form248_add_item()
 		$("#modal2").dialog("open");
 	}
 }
+
+
+/**
+ * @form Create MTS
+ * @formNo 250
+ */
+function form250_add_item()
+{
+	if(is_create_access('form250'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form250_"+id+"'></form>";
+			rowsHTML+="<td data-th='S.No.'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Bag #'>";
+				rowsHTML+="<input type='text' required form='form250_"+id+"' oninvalid=\"setCustomValidity('This Bag # is invalid')\">";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='LBH'>";
+				rowsHTML+="<input type='text' readonly='readonly' form='form250_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Weight'>";
+				rowsHTML+="<input type='number' step='any' readonly='readonly' form='form250_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='# orders'>";
+				rowsHTML+="<input type='number' step='any' readonly='readonly' form='form250_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form250_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='submit_hidden' form='form250_"+id+"' id='save_form250_"+id+"'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form250_"+id+"' id='delete_form250_"+id+"' onclick='$(this).parent().parent().remove(); form250_update_serial_numbers();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+
+		$('#form250_body').prepend(rowsHTML);
+
+		var item_form=document.getElementById('form250_'+id);
+		var bag_filter=item_form.elements[0];
+		var lbh_filter=item_form.elements[1];
+		var weight_filter=item_form.elements[2];
+		var num_filter=item_form.elements[3];
+		var id_filter=item_form.elements[4];
+		var save_button=item_form.elements[5];
+		
+		var new_mts=true;
+		var saved=document.getElementById('form250_master').elements['saved'].value;
+		if(saved=='yes')
+		{
+			new_mts=false;
+		}
+		
+		$(item_form).on("submit", function(event)
+		{
+			event.preventDefault();
+			var total_entries=0;
+			var double_entry=0;
+			$("[id^='save_form250']").each(function(index)
+			{
+				var subform_id=$(this).attr('form');
+				var subform=document.getElementById(subform_id);
+				total_entries+=1;
+				if(subform.elements[0].value==bag_filter.value)	
+					double_entry+=1;
+			});
+
+			if(total_entries==1 && new_mts)
+			{
+				//console.log(new_mts+" --");
+				form250_create_form(function()
+				{
+					if(double_entry<2)
+					{
+						form250_create_item(item_form);
+						form250_add_item();
+					}
+					else 
+					{
+						bag_filter.value="";
+						$("#modal65").dialog("open");
+					}
+				});
+			}
+			else 
+			{
+				if(double_entry<2)
+				{
+					form250_create_item(item_form);
+					form250_add_item();
+				}
+				else 
+				{
+					bag_filter.value="";
+					$("#modal65").dialog("open");
+				}
+			}
+		});
+
+		$(bag_filter).focus();
+				
+		$(bag_filter).on('keydown',function (event) 
+		{
+			if(event.keyCode == 13 ) 
+			{
+				event.preventDefault();
+				
+				var total_entries=0;
+				var double_entry=0;
+				$("[id^='save_form250']").each(function(index)
+				{
+					var subform_id=$(this).attr('form');
+					var subform=document.getElementById(subform_id);
+					
+					total_entries+=1;
+				
+					if(subform.elements[0].value==bag_filter.value)	
+						double_entry+=1;
+				});
+				
+				if(total_entries==1 && new_mts)
+				{
+					form250_create_form(function () 
+					{
+						if(double_entry<2)
+						{
+							var orders_data="<transit_bags count='1'>"+
+											"<id></id>"+
+											"<bag_num exact='yes'>"+bag_filter.value+"</bag_num>" +
+											"<lbh></lbh>" +
+											"<weight></weight>" +
+											"<status></status>" +
+											"<num_orders></num_orders>" +
+											"<mts></mts>" +
+											"</transit_bags>";
+							//console.log(orders_data);				
+							fetch_requested_data('',orders_data,function (orders) 
+							{
+								//console.log(orders);
+								if(orders.length>0 && (orders[0].mts=="" || orders[0].mts=="null" || orders[0].mts==null))
+								{
+									lbh_filter.value=orders[0].lbh;
+									weight_filter.value=orders[0].weight;
+									id_filter.value=orders[0].id;
+									num_filter.value=orders[0].num_orders;
+									form250_create_item(item_form);
+									form250_add_item();
+								}
+								else 
+								{
+									bag_filter.value="";
+									lbh_filter.value="";
+									weight_filter.value="";
+									id_filter.value="";
+									num_filter.value="";
+									$("#modal65").dialog("open");
+								}
+							});
+						}
+						else 
+						{
+							bag_filter.value="";
+							$("#modal65").dialog("open");
+						}
+					});
+				}
+				else 
+				{
+					if(double_entry<2)
+					{
+						var orders_data="<transit_bags count='1'>"+
+										"<id></id>"+
+										"<bag_num exact='yes'>"+bag_filter.value+"</bag_num>" +
+										"<lbh></lbh>" +
+										"<weight></weight>" +
+										"<status></status>" +
+										"<num_orders></num_orders>" +
+										"<mts></mts>" +
+										"</transit_bags>";
+						//console.log(orders_data);				
+						fetch_requested_data('',orders_data,function (orders) 
+						{
+							//console.log(orders);
+							if(orders.length>0 && (orders[0].mts=="" || orders[0].mts=="null" || orders[0].mts==null))
+							{
+								lbh_filter.value=orders[0].lbh;
+								weight_filter.value=orders[0].weight;
+								id_filter.value=orders[0].id;
+								num_filter.value=orders[0].num_orders;
+								form250_create_item(item_form);
+								form250_add_item();
+							}
+							else 
+							{
+								bag_filter.value="";
+								lbh_filter.value="";
+								weight_filter.value="";
+								id_filter.value="";
+								num_filter.value="";
+								$("#modal65").dialog("open");
+							}
+						});
+					}
+					else 
+					{
+						bag_filter.value="";
+						$("#modal65").dialog("open");
+					}
+				}
+			}
+		});
+
+		$('textarea').autosize();
+		form250_update_serial_numbers();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+

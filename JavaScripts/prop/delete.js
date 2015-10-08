@@ -2290,6 +2290,7 @@ function form72_delete_item(button)
 					"</bill_items>";	
 			delete_simple(data_xml);
 			$(button).parent().parent().remove();
+			form72_get_totals();
 		});
 	}
 	else
@@ -8211,6 +8212,113 @@ function form249_delete_item(button)
 							"</row>";
 				});
 				data_xml+="</logistics_orders>";
+				//console.log(data_xml);
+				update_batch(data_xml);
+				
+			},bag_items_xml);
+			
+			delete_row(data_xml,activity_xml);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * formNo 250
+ * form Create MTS
+ * @param button
+ */
+function form250_delete_item(button)
+{
+	if(is_delete_access('form250'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var data_id=form.elements[4].value;
+			var last_updated=get_my_time();
+			var data_xml="<transit_bags>" +
+						"<id>"+data_id+"</id>" +
+						"<status>pending</status>" +
+						"<mts></mts>"+
+						"<mts_id></mts_id>"+
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</transit_bags>";
+			update_simple(data_xml);
+			$(button).parent().parent().remove();
+			form250_update_serial_numbers();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage MTS
+ * @param button
+ */
+function form251_delete_item(button)
+{
+	if(is_delete_access('form251'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var mts=form.elements[0].value;
+			var data_id=form.elements[4].value;
+			var data_xml="<mts>" +
+						"<id>"+data_id+"</id>" +
+						"</mts>";	
+			var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>mts</tablename>" +
+					"<link_to>form251</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>MTS # "+mts+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+			
+			var bag_items_xml="<transit_bags>"+
+							"<id></id>"+
+							"<status exact='yes'>in-transit</status>"+
+							"<mts exact='yes'>"+mts+"</mts>"+
+							"</transit_bags>";
+										
+			get_single_column_data(function(bag_items)
+			{
+				var data_xml="<transit_bags>";
+				var counter=1;
+				var last_updated=get_my_time();
+				
+				bag_items.forEach(function(bag_item)
+				{
+					if((counter%500)===0)
+					{
+						data_xml+="</transit_bags><separator></separator><transit_bags>";
+					}
+						
+					counter+=1;
+				
+					data_xml+="<row>" +
+							"<id>"+bag_item+"</id>" +
+							"<mts></mts>" +
+							"<mts_id></mts_id>" +
+							"<status>pending</status>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</row>";
+				});
+				data_xml+="</transit_bags>";
 				//console.log(data_xml);
 				update_batch(data_xml);
 				

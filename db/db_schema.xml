@@ -1564,6 +1564,7 @@
 			<len index='no' type="DECIMAL(12,2)"></len>
 			<breadth index='no' type="DECIMAL(12,2)"></breadth>
 			<height index='no' type="DECIMAL(12,2)"></height>
+			<lbh index='yes' type="TEXT"></lbh>
 			<pieces index='no' type="DECIMAL(12,0)"></pieces>
 			<carrier_account index='no' type="TEXT"></carrier_account>
 			<carrier_name index='no' type="TEXT"></carrier_name>
@@ -1606,6 +1607,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<bag_num index='yes' type="VARCHAR(20)"></bag_num>
 			<mts index='yes' type="VARCHAR(20)"></mts>
+			<mts_id index='yes' type="VARCHAR(20)"></mts_id>
 			<lbh index='yes' type="TEXT"></lbh>
 			<date index='yes' type="BIGINT"></date>
 			<status index='yes' type="VARCHAR(20)"></status><!--in-transit/pending/received-->

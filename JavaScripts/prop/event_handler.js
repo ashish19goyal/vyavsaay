@@ -291,7 +291,7 @@ function modal_forms_ini()
 	   		}
 		});
 	}
-	for(var i=50;i<=77;i++)
+	for(var i=50;i<=78;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,

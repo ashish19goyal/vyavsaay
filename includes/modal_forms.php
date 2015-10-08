@@ -730,6 +730,10 @@
 		This bag number is already taken. Please use another number.
 	</div>
 
+	<div id="modal78" title="Change MTS Number">
+		This MTS number is already taken. Please use another number.
+	</div>
+
 	<div id="modal101" title="Email Document">
 		<form id='modal101_form' autocomplete="off">
 			<fieldset>

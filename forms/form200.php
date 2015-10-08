@@ -9,7 +9,8 @@
 			<label>	<input type='button' title='Print DRS' name='print' class='print_icon' onclick='form200_print_form();'></label>
 			<label>	<input type='button' title='Email DRS' name='share' class='share_icon' id='form200_share'></label>
 			<label>	<input type='hidden' name='id'>
-					<input type='submit' class='submit_hidden'>
+					<input type='hidden' name='saved'>
+				<input type='submit' class='submit_hidden'>
 			</label>
 		</fieldset>
 	</form>

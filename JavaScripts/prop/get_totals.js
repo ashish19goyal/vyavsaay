@@ -83,6 +83,84 @@ function form69_get_totals()
 	$('#form69_foot').html(total_row);
 }
 
+function form72_get_totals()
+{
+	var amount=0;
+	var discount=0;
+	var service_tax=0;
+	var vat=0;
+	var total=0;
+	
+	$("[id^='save_form72']").each(function(index)
+	{
+		var subform_id=$(this).attr('form');
+		var subform=document.getElementById(subform_id);
+		
+		if(!isNaN(parseFloat(subform.elements[5].value)))
+		{
+			amount+=parseFloat(subform.elements[5].value);
+		}
+		if(!isNaN(parseFloat(subform.elements[6].value)))
+		{
+			discount+=parseFloat(subform.elements[6].value);
+		}
+		if(!isNaN(parseFloat(subform.elements[8].value)))
+		{
+			total+=parseFloat(subform.elements[8].value);
+		}					
+		if(!isNaN(parseFloat(subform.elements[7].value)))
+		{
+			if(subform.elements[2].value=="NA")
+			{
+				service_tax+=parseFloat(subform.elements[7].value);
+			}
+			else 
+			{
+				vat+=parseFloat(subform.elements[7].value);
+			}
+		}					
+
+	});
+	
+	service_tax=my_round(service_tax,2);
+	vat=my_round(vat,2);
+	amount=my_round(amount,2);
+	discount=my_round(discount,2);
+	total=my_round(total,0);
+	
+	var tax_string="VAT: <br>S.Tax:";
+	var tax_amount_string="Rs. "+vat+"<br>Rs. "+service_tax+"<br>";
+
+	if(vat==0)
+	{
+		tax_string="S.Tax:";
+		tax_amount_string="Rs. "+service_tax+"<br>";
+	}
+	
+	if(service_tax==0)
+	{
+		tax_string="VAT:";
+		tax_amount_string="Rs. "+vat+"<br>";
+	}
+	
+	if(service_tax==0 && vat==0)
+	{
+		tax_string="Tax:";
+		tax_amount_string="Rs. 0<br>";
+	}
+	
+	var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+				"<td>Amount:<br>Discount: <br>"+tax_string+"<br>Total: </td>" +
+				"<td>Rs. "+amount+"</br>" +
+				"Rs. "+discount+"</br>" +
+				tax_amount_string +
+				"Rs. "+total+"</td>" +
+				"<td></td>" +
+				"</tr>";
+	$('#form72_foot').html(total_row);
+}
+
+
 function form91_get_totals()
 {
 	var amount=0;
@@ -673,6 +751,7 @@ function form248_update_serial_numbers()
 	});
 	
 	var num_orders=0;
+	var weight=0;
 	$("[id^='save_form248']").each(function(index)
 	{
 		var subform_id=$(this).attr('form');
@@ -682,8 +761,48 @@ function form248_update_serial_numbers()
 		{
 			num_orders+=1;			
 		}
+		if(!isNaN(parseFloat(subform.elements[3].value)))
+		{
+			weight+=parseFloat(subform.elements[3].value);			
+		}
 	});
 	
 	var form=document.getElementById("form248_master");
 	form.elements['num_orders'].value=num_orders;
+	form.elements['weight'].value=weight;
+}
+
+function form250_update_serial_numbers()
+{
+	$('#form250_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)').html(index+1);
+	});
+	
+	var num_bags=0;
+	var num_orders=0;
+	var weight=0;
+	$("[id^='save_form250']").each(function(index)
+	{
+		var subform_id=$(this).attr('form');
+		var subform=document.getElementById(subform_id);
+
+		if(subform.elements[0].value!="")
+		{
+			num_bags+=1;			
+		}
+		if(!isNaN(parseFloat(subform.elements[3].value)))
+		{
+			num_orders+=parseFloat(subform.elements[3].value);			
+		}
+		if(!isNaN(parseFloat(subform.elements[2].value)))
+		{
+			weight+=parseFloat(subform.elements[2].value);			
+		}
+	});
+	
+	var form=document.getElementById("form250_master");
+	form.elements['num_orders'].value=num_orders;
+	form.elements['num_bags'].value=num_bags;
+	form.elements['weight'].value=weight;
 }

@@ -7396,6 +7396,7 @@ function form200_header_ini()
 	var employee=fields.elements['employee'];
 	var drs_date=fields.elements['date'];
 
+	fields.elements['saved'].value='no';
 	fields.elements['id'].value=get_new_key();
 
 	var save_button=fields.elements['save'];
@@ -8175,6 +8176,7 @@ function form219_header_ini()
 	var total_cod=fields.elements['total'];
 	var collected_cod=fields.elements['collected'];
 	
+	fields.elements['saved'].value='no';
 	fields.elements['id'].value=get_new_key();
 	
 	var save_button=fields.elements['save'];
@@ -9466,12 +9468,15 @@ function form248_header_ini()
 	var date=fields.elements['date'];
 	var weight=fields.elements['weight'];
 
+	fields.elements['saved'].value='no';
 	fields.elements['id'].value=get_new_key();
 
 	var save_button=fields.elements['save'];
 	bag_filter.value="";
 	lbh.value="";
 	weight.value="";
+	$(date).datepicker();
+	date.value=get_my_date();
 
 	var bag_id=$("#form248_link").attr('data_id');
 	if(bag_id==null)
@@ -9511,9 +9516,6 @@ function form248_header_ini()
 		form248_add_item();
 	});
 
-	$(date).datepicker();
-	date.value=get_my_date();
-	$('#form248_share').hide();
 }
 
 /**
@@ -9553,31 +9555,42 @@ function form250_header_ini()
 	var fields=document.getElementById('form250_master');
 
 	var mts_filter=fields.elements['mts_num'];
-	var lbh=fields.elements['lbh'];
+	var num_orders=fields.elements['num_orders'];
+	var num_bags=fields.elements['num_bags'];
 	var date=fields.elements['date'];
 	var weight=fields.elements['weight'];
 	var branch=fields.elements['branch'];
-
+	
+	fields.elements['saved'].value='no';
 	fields.elements['id'].value=get_new_key();
 
 	var save_button=fields.elements['save'];
-	bag_filter.value="";
-	lbh.value="";
+	mts_filter.value="";
+	num_orders.value="";
+	num_bags.value="";
+	branch.value="";
 	weight.value="";
+	$(date).datepicker();
+	date.value=get_my_date();
 
-	var bag_id=$("#form250_link").attr('data_id');
-	if(bag_id==null)
-		bag_id="";	
+	var mts_id=$("#form250_link").attr('data_id');
+	if(mts_id==null)
+		mts_id="";	
 
-	if(bag_id=="")
+	if(mts_id=="")
 	{
-		var bag_num_data="<user_preferences count='1'>"+
+		var mts_num_data="<user_preferences count='1'>"+
 						"<value></value>"+
-						"<name exact='yes'>bag_num</name>"+
+						"<name exact='yes'>mts_num</name>"+
 						"</user_preferences>";
-		set_my_value(bag_num_data,bag_filter);	
+		set_my_value(mts_num_data,mts_filter);	
 	}
-	
+
+	var branch_data="<store_areas>"+
+					"<name></name>"+
+					"</store_areas>";
+	set_my_value_list(branch_data,branch);
+						
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
 	{
@@ -9599,12 +9612,9 @@ function form250_header_ini()
 	$(fields).on("submit", function(event)
 	{
 		event.preventDefault();
-		//modal129_action();
 		form250_add_item();
 	});
 
-	$(date).datepicker();
-	date.value=get_my_date();
 	$('#form250_share').hide();
 }
 
@@ -9615,13 +9625,13 @@ function form250_header_ini()
 function form251_header_ini()
 {
 	var filter_fields=document.getElementById('form251_header');
-	var bag_filter=filter_fields.elements[0];
+	var mts_filter=filter_fields.elements[0];
 	var date_filter=filter_fields.elements[1];
-	var status_filter=filter_fields.elements[2];
+	var branch_filter=filter_fields.elements[2];
 		
-	var bag_data="<transit_bags>" +
-			"<bag_num></bag_num>" +
-			"</transit_bags>";
+	var mts_data="<mts>" +
+			"<mts_num></mts_num>" +
+			"</mts>";
 			
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
@@ -9630,8 +9640,11 @@ function form251_header_ini()
 		form251_ini();
 	});
 
-	set_my_filter(bag_data,bag_filter);
+	set_my_filter(mts_data,mts_filter);
 	$(date_filter).datepicker();
-		
-	set_static_filter('transit_bags','status',status_filter);
+
+	var branch_data="<store_areas>"+
+					"<name></name>"+
+					"</store_areas>";
+	set_my_filter(branch_data,branch_filter);
 };

@@ -893,6 +893,7 @@ function print_form72(func)
 	var date=master_form.elements['date'].value;	
 	var bill_num=master_form.elements['bill_num'].value;
 	var vat_no=get_session_var('vat');
+	var st_no=get_session_var('service_tax_no');
 	
 	var show_sub_totals=master_form.elements['sub_totals'];
 		
@@ -902,16 +903,17 @@ function print_form72(func)
 
 	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	//business_intro.innerHTML=get_session_var('business_intro');
-	business_contact.innerHTML="<hr style='border: 1px solid #00f;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email;
+	business_contact.innerHTML="<hr style='border: 1px solid #00f;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+"<br>VAT #: "+vat_no+"S.Tax #: "+st_no;
 	
 	var info_section_text="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Invoice No: "+bill_num+"</b></div><hr style='border: 1px solid #00f;'>"+
 							"<b>For: </b>"+customer_name+
 							"<br>Date: "+date;
+/*	
 	if(show_sub_totals.checked)	
 	{
 		info_section_text+="<br>VAT #: "+vat_no;
 	}
-	
+*/	
 	info_section.innerHTML=info_section_text;
 	footer.innerHTML=bill_message;
 	
@@ -919,46 +921,79 @@ function print_form72(func)
 	
 	/////////////adding new table //////////////////////////////////////////////////////	
 	var new_table=document.createElement('table');
-	new_table.setAttribute('style','border:none;width:100%;font-size:11px;text-align:left;');
-	var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
+	new_table.setAttribute('style','border:none;width:100%;font-size:14px;text-align:left;');
+	
+	var table_header_service="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
+				"<td style='text-align:left;width:130px;wrap:break-word'>Service</td>"+
+				"<td style='text-align:left;width:45px'>Qty</td>"+
+				"<td style='text-align:left;width:80px'>Total</td></tr>";
+
+	var table_header_product="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
 				"<td style='text-align:left;width:130px;wrap:break-word'>Item</td>"+
 				"<td style='text-align:left;width:45px'>Qty</td>"+
 				"<td style='text-align:left;width:80px'>Total</td></tr>";
 
-	var table_rows=table_header;
-	var counter=0;
+	var table_rows_service=table_header_service;
+	var table_rows_product=table_header_product;
+	var counter_service=0;
+	var counter_product=0;
 	var total_items=0;
 	var total_amount=0;
-	var total_tax=0;
+	var total_vat=0;
+	var total_st=0;
 	var master_total=0;
 	
 	$(table_element).find('form').each(function(index)
 	{
-		counter+=1;
 		var form=$(this)[0];
 		var item_name=form.elements[1].value;
+		var batch=form.elements[2].value;
 		var quantity=""+form.elements[3].value;
 		var price=form.elements[4].value;
 		var amount=form.elements[5].value;
 		var tax=form.elements[7].value;
 		var total=form.elements[8].value;
-
-		total_items+=parseFloat(form.elements[3].value);
-		total_amount+=parseFloat(form.elements[5].value);
-		total_tax+=parseFloat(form.elements[7].value);
-		master_total+=parseFloat(form.elements[8].value);
 		
-		table_rows+="<tr>"+
-				"<td style='text-align:left;'>"+item_name+"</td>"+
-				"<td style='text-align:left;'>"+quantity+"</td>"+
-				"<td style='text-align:left;'>"+total+"</td></tr>";
+		if(batch=='NA')
+		{
+			counter_service+=1;
+			
+			total_items+=parseFloat(form.elements[3].value);			
+			total_amount+=parseFloat(form.elements[5].value);
+			total_st+=parseFloat(form.elements[7].value);
+			master_total+=parseFloat(form.elements[8].value);
+			
+			table_rows_service+="<tr>"+
+					"<td style='text-align:left;'>"+item_name+"</td>"+
+					"<td style='text-align:left;'>"+quantity+"</td>"+
+					"<td style='text-align:left;'>"+total+"</td></tr>";
+		}
+		else 
+		{
+			counter_product+=1;
+			
+			total_items+=parseFloat(form.elements[3].value);
+			total_amount+=parseFloat(form.elements[5].value);
+			total_vat+=parseFloat(form.elements[7].value);
+			master_total+=parseFloat(form.elements[8].value);
+			
+			table_rows_product+="<tr>"+
+					"<td style='text-align:left;'>"+item_name+"</td>"+
+					"<td style='text-align:left;'>"+quantity+"</td>"+
+					"<td style='text-align:left;'>"+total+"</td></tr>";
+
+		}
 	});
 	
 	var row_count=$(table_element).find('tbody>tr').length;
-	var rows_to_add=10-row_count;
+	var rows_to_add=5-row_count;
+	for(var i=0;i<3;i++)
+	{
+		table_rows_service+="<tr style='flex:2;height:20px;'><td></td><td></td><td></td></tr>";
+	}
 	for(var i=0;i<rows_to_add;i++)
 	{
-		table_rows+="<tr style='flex:2;height:20px;'><td></td><td></td><td></td></tr>";
+		table_rows_product+="<tr style='flex:2;height:20px;'><td></td><td></td><td></td></tr>";
 	}
 
 	var table_foot=document.getElementById(form_id+'_foot');
@@ -968,16 +1003,45 @@ function print_form72(func)
 	
 	if(show_sub_totals.checked)
 	{
-		display_total="Amount:<br>Tax:<br>Total:";
-		display_total_amount="Rs. "+total_amount+"<br>Rs. "+total_tax+"<br>Rs. "+master_total;
+		display_total="Amount:<br>VAT: <br>S. Tax:<br>Total:";
+		display_total_amount="Rs. "+total_amount+"<br>Rs. "+total_vat+"<br>Rs. "+total_st+"<br>Rs. "+master_total;
+
+		if(counter_service==0)
+		{
+			display_total="Amount:<br>VAT: <br>Total:";
+			display_total_amount="Rs. "+total_amount+"<br>Rs. "+total_vat+"<br>Rs. "+master_total;
+		}
+
+		if(counter_product==0)
+		{
+			display_total="Amount:<br>S. Tax:<br>Total:";
+			display_total_amount="Rs. "+total_amount+"<br>Rs. "+total_st+"<br>Rs. "+master_total;
+		}
+		
+		if(counter_service==0 && counter_product==0)
+		{
+			display_total="Amount:<br>Tax:<br>Total:";
+			display_total_amount="Rs. "+total_amount+"<br>Rs. 0<br>Rs. "+master_total;
+		}
 	}
 	
 	//console.log(total_amount);
 	var table_foot_row="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
-				"<td style='text-align:left;'>Total # of Items:"+total_items+"</td>"+
+				"<td style='text-align:left;'>Total bill Items:"+total_items+"</td>"+
 				"<td style='text-align:left;'>"+display_total+"</td>"+
 				"<td style='text-align:left;'>"+display_total_amount+"</td></tr>";
 	//console.log(table_foot_row);
+	var table_rows="";
+	if(counter_service>0)
+	{
+		table_rows+=table_rows_service;
+	}
+
+	if(counter_product>0)
+	{
+		table_rows+=table_rows_product;
+	}
+		
 	table_rows+=table_foot_row;
 	new_table.innerHTML=table_rows;
 	
@@ -987,6 +1051,7 @@ function print_form72(func)
 	container.appendChild(info_section);
 	
 	container.appendChild(new_table);
+	
 	container.appendChild(footer);
 	
 	header.appendChild(logo);
@@ -4332,6 +4397,143 @@ function print_form243(func,receipt_id,acc_name,amount,date)
 
 	footer.appendChild(tandc);
 	footer.appendChild(signature);
+
+	func(container);
+}
+
+/**
+ * @form Create MTS
+ * @formNo 250
+ */
+function form250_print_form()
+{
+	print_form250(function(container)
+	{
+		$.print(container);
+		container.innerHTML="";	
+	});	
+}
+
+/**
+ * @form Create MTS
+ * @formNo 250
+ */
+function print_form250(func)
+{
+	var form_id='form250';
+	
+	////////////setting up containers///////////////////////	
+	var container=document.createElement('div');
+	
+	var header=document.createElement('div');
+		var logo=document.createElement('div');
+		var business_title=document.createElement('div');
+		var mts_barcode=document.createElement('img');
+	
+	var mts_title=document.createElement('div');
+	
+	var detail_section=document.createElement('div');
+	
+	var table_container=document.createElement('div');
+
+	////////////setting styles for containers/////////////////////////
+
+	container.setAttribute('style','width:98%;height:90%;margin:0px;padding:0px;');
+	header.setAttribute('style','display:block;width:98%;height:70px;margin-top:10px;');
+		logo.setAttribute('style','float:left;width:35%;height:60px;');
+		business_title.setAttribute('style','float:left;width:40%;height:60px;text-align:center;font-weight:bold;');
+		mts_barcode.setAttribute('style','float:right;width:23%;height:60px;padding:left:5px;padding-right:5px;');
+	mts_title.setAttribute('style','display:block;width:98%;height:20px;text-align:center');	
+	detail_section.setAttribute('style','display:block;width:98%;height:30px;text-align:center;');
+	
+	///////////////getting the content////////////////////////////////////////
+
+	var bt=get_session_var('title');
+	var font_size=get_session_var('print_size');
+	var logo_image=get_session_var('logo');
+
+	var master_form=document.getElementById(form_id+'_master');
+	var branch_name=master_form.elements['branch'].value;
+	var mts_date=master_form.elements['date'].value;
+	var mts_num=master_form.elements['mts_num'].value;
+	var mts_weight=master_form.elements['weight'].value;
+	var num_orders=master_form.elements['num_orders'].value;
+	var num_bags=master_form.elements['num_bags'].value;
+
+	////////////////filling in the content into the containers//////////////////////////
+	
+	var table_element=document.getElementById(form_id+'_body');
+	var total_items=$(table_element).find('tr').length;
+
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"' style='height:98%;margin-left:10%'>";
+	business_title.innerHTML=bt;
+
+	$(mts_barcode).JsBarcode(mts_num,{displayValue:false});
+		
+	mts_title.innerHTML="Material Transfer Sheet";
+
+	employee_text="<td>Branch: "+branch_name+"</td><td>Total Bags: "+num_bags+"</td><td>Total Orders: "+num_orders+"</td>";
+	mts_text="<td>MTS #: "+mts_num+"</td><td>MTS Date: "+mts_date+"</td>";
+	detail_text="<table style='border:none;width:98%;font-size:11px;'><tr>"+employee_text+"</tr><tr>"+mts_text+"</tr></table>";
+	
+	detail_section.innerHTML=detail_text;
+
+	var new_table=document.createElement('table');
+	new_table.setAttribute('style','font-size:10px;border:none;text-align:left;');
+	new_table.setAttribute('class','printing_tables');
+
+	var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:6%'>S.No.</td>"+
+				"<td style='text-align:left;width:30%'>Bag No.</td>"+
+				"<td style='text-align:left;width:20%'>LBH</td>"+
+				"<td style='text-align:left;width:20%'>Wt.</td>"+
+				"<td style='text-align:left;width:20%'>Orders</td></tr>";
+
+	var table_rows=table_header;
+	var counter=0;
+
+//	var td_text="<td style='border:solid 1px #000000'></td>";
+//	var tr_text="<tr>"+td_text+td_text+td_text+td_text+td_text+td_text+td_text+td_text+td_text+td_text+"</tr>";
+//	var rc="<table style='width:15px;height:15px;'><tr>"+td_text+"</tr></table>";
+
+	$(table_element).find('form').each(function(index)
+	{
+		counter+=1;
+		var form=$(this)[0];
+		//var mob_seal="<table style='width:95%;height:40px;'>"+tr_text+tr_text+"</table><br><div style='font-size:14px;'>"+form.elements[2].value+"</div>";
+		
+		var bag_num=""+form.elements[0].value;
+		
+		var cnote_no=document.createElement('div');
+		var barcode_image=document.createElement('img');
+		var barcode_value=document.createElement('div');
+		
+		barcode_image.setAttribute('style','width:130px;height:30px;');
+		barcode_value.setAttribute('style','width:130px;font-size:14px;margin:1px;text-align:center;');
+		
+		barcode_value.innerHTML=bag_num;
+		$(barcode_image).JsBarcode(bag_num,{displayValue:false});
+
+		cnote_no.appendChild(barcode_image);
+		cnote_no.appendChild(barcode_value);
+		
+		table_rows+="<tr style='border-top: 1px solid #000000;height:60px;'><td><div>"+counter+"</div></td>"+
+				"<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
+				"<td><div>"+form.elements[1].value+"</div></td>"+
+				"<td><div>"+form.elements[2].value+"</div></td>"+
+				"<td><div>"+form.elements[3].value+"</div></td></tr>";				
+	});
+	new_table.innerHTML=table_rows;
+	/////////////placing the containers //////////////////////////////////////////////////////	
+
+	container.appendChild(header);
+	container.appendChild(mts_title);
+	container.appendChild(detail_section);
+
+	container.appendChild(new_table);
+	
+	header.appendChild(logo);
+	header.appendChild(business_title);
+	header.appendChild(mts_barcode);
 
 	func(container);
 }

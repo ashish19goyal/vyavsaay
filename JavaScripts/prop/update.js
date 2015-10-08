@@ -3528,19 +3528,81 @@ function form72_update_form()
 
 		var amount=0;
 		var discount=0;
-		var tax=0;
+		var service_tax=0;
+		var vat=0;
 		var total=0;
 		
 		$("[id^='save_form72']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			amount+=parseFloat(subform.elements[5].value);
-			discount+=parseFloat(subform.elements[6].value);
-			tax+=parseFloat(subform.elements[7].value);
-			total+=parseFloat(subform.elements[8].value);			
+			
+			if(!isNaN(parseFloat(subform.elements[5].value)))
+			{
+				amount+=parseFloat(subform.elements[5].value);
+			}
+			if(!isNaN(parseFloat(subform.elements[6].value)))
+			{
+				discount+=parseFloat(subform.elements[6].value);
+			}
+			if(!isNaN(parseFloat(subform.elements[8].value)))
+			{
+				total+=parseFloat(subform.elements[8].value);
+			}					
+			if(!isNaN(parseFloat(subform.elements[7].value)))
+			{
+				if(subform.elements[2].value=="NA")
+				{
+					service_tax+=parseFloat(subform.elements[7].value);
+				}
+				else 
+				{
+					vat+=parseFloat(subform.elements[7].value);
+				}
+			}					
+	
 		});
-
+		
+		service_tax=my_round(service_tax,2);
+		vat=my_round(vat,2);
+		amount=my_round(amount,2);
+		discount=my_round(discount,2);
+		total=my_round(total,0);
+		
+		var tax=service_tax+vat;
+		
+		var tax_string="VAT: <br>S.Tax:";
+		var tax_amount_string="Rs. "+vat+"<br>Rs. "+service_tax+"<br>";
+	
+		if(vat==0)
+		{
+			tax_string="S.Tax:";
+			tax_amount_string="Rs. "+service_tax+"<br>";
+		}
+		
+		if(service_tax==0)
+		{
+			tax_string="VAT:";
+			tax_amount_string="Rs. "+vat+"<br>";
+		}
+		
+		if(service_tax==0 && vat==0)
+		{
+			tax_string="Tax:";
+			tax_amount_string="Rs. 0<br>";
+		}
+		
+		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+					"<td>Amount:<br>Discount: <br>"+tax_string+"<br>Total: </td>" +
+					"<td>Rs. "+amount+"</br>" +
+					"Rs. "+discount+"</br>" +
+					tax_amount_string +
+					"Rs. "+total+"</td>" +
+					"<td></td>" +
+					"</tr>";
+		$('#form72_foot').html(total_row);
+			
+					
 		var last_updated=get_my_time();
 		
 		var data_xml="<bills>" +
@@ -3574,16 +3636,6 @@ function form72_update_form()
 		update_row(data_xml,activity_xml);
 		update_simple(transaction_xml);
 		
-		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
-				"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
-				"<td>Rs. "+amount+"</br>" +
-				"Rs. "+discount+"</br>" +
-				"Rs. "+tax+"</br>" +
-				"Rs. "+total+"</td>" +
-				"<td></td>" +
-				"</tr>";
-		$('#form72_foot').html(total_row);
-
 		var payment_data="<payments>" +
 				"<id></id>" +
 				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
@@ -13182,6 +13234,106 @@ function form248_update_form()
 				
 		
 				$("[id^='save_form248_']").click();
+			}
+			else 
+			{
+				$("#modal77").dialog("open");
+			}
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 250
+ * form Create MTS
+ * @param button
+ */
+function form250_update_item(form)
+{
+	if(is_update_access('form250'))
+	{
+		var mts_num=document.getElementById('form250_master').elements['mts_num'].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<transit_bags>" +
+					"<id>"+data_id+"</id>" +
+					"<mts>"+mts_num+"</mts>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</transit_bags>";
+		update_simple(data_xml);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Manage MTS
+ * @param button
+ */
+function form250_update_form()
+{
+	if(is_create_access('form250'))
+	{
+		var form=document.getElementById("form250_master");
+		
+		var mts_num=form.elements['mts_num'].value;
+		var branch=form.elements['branch'].value;
+		var weight=form.elements['weight'].value;
+		var num_orders=form.elements['num_orders'].value;
+		var num_bags=form.elements['num_bags'].value;
+		var date=get_raw_time(form.elements['date'].value);
+		var data_id=form.elements['id'].value;
+		
+		var save_button=form.elements['save'];
+		var last_updated=get_my_time();
+		
+		$('#form250_share').show();
+		$('#form250_share').click(function()
+		{
+			modal101_action('Material Transfer Sheet','','staff',function (func) 
+			{
+				print_form250(func);
+			});
+		});
+
+		var mts_columns="<mts count='2'>" +
+					"<id></id>"+
+					"<mts_num exact='yes'>"+mts_num+"</mts_num>"+
+					"</mts>";		
+		fetch_requested_data('',mts_columns,function(mtss)
+		{
+			if(mtss.length==0 || (mtss.length==1 && mtss[0].id==data_id))
+			{
+				var data_xml="<mts>" +
+							"<id>"+data_id+"</id>" +
+							"<mts_num>"+mts_num+"</mts_num>"+
+							"<branch>"+branch+"</branch>"+
+							"<weight>"+weight+"</weight>"+
+							"<num_orders>"+num_orders+"</num_orders>"+
+							"<num_bags>"+num_bags+"</num_bags>"+
+							"<date>"+date+"</date>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</mts>";
+				var activity_xml="<activity>" +
+							"<data_id>"+data_id+"</data_id>" +
+							"<tablename>mts</tablename>" +
+							"<link_to>form251</link_to>" +
+							"<title>Updated</title>" +
+							"<notes>MTS # "+mts_num+"</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+				update_row(data_xml,activity_xml);
+				
+		
+				$("[id^='save_form250_']").click();
 			}
 			else 
 			{

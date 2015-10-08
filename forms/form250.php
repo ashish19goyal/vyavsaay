@@ -8,7 +8,10 @@
 			<label># of Orders<br><input type='number' readonly='readonly' name='num_orders'></label>
 			<label># of bags<br><input type='text' readonly='readonly' name='num_bags'></label>
 			<label>	<input type='button' title='Save MTS' name='save' class='save_icon'></label>
+			<label>	<input type='button' title='Print MTS' name='print' class='print_icon' onclick='form250_print_form();'></label>
+			<label>	<input type='button' title='Email MTS' name='share' class='share_icon' id='form250_share'></label>
 			<label>	<input type='hidden' name='id'>
+					<input type='hidden' name='saved'>
 					<input type='submit' class='submit_hidden'>
 			</label>
 		</fieldset>

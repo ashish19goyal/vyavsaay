@@ -4426,10 +4426,10 @@ function form57_ini()
 						rowsHTML+="<textarea readonly='readonly' form='form57_"+result.id+"' class='dblclick_editable'>"+result.description+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Price'>";
-						rowsHTML+="<input type='number' readonly='readonly' form='form57_"+result.id+"' class='dblclick_editable' value='"+result.price+"'>";
+						rowsHTML+="<input type='number' readonly='readonly' step='any' form='form57_"+result.id+"' class='dblclick_editable' value='"+result.price+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Tax(in %)'>";
-						rowsHTML+="<input type='number' readonly='readonly' form='form57_"+result.id+"' class='dblclick_editable' value='"+result.tax+"'>";
+						rowsHTML+="<input type='number' readonly='readonly' form='form57_"+result.id+"' step='any' class='dblclick_editable' value='"+result.tax+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form57_"+result.id+"' value='"+result.id+"'>";
@@ -5822,7 +5822,7 @@ function form72_ini()
 		{
 			var filter_fields=document.getElementById('form72_master');
 			
-			if (bill_results.length>0)
+			if(bill_results.length>0)
 			{
 				filter_fields.elements['customer'].value=bill_results[0].customer_name;
 				filter_fields.elements['date'].value=get_my_past_date(bill_results[0].bill_date);
@@ -5837,16 +5837,6 @@ function form72_ini()
 					event.preventDefault();
 					form72_update_form();
 				});
-
-				var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
-							"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
-							"<td>Rs. "+bill_results[0].amount+"</br>" +
-							"Rs. "+bill_results[0].discount+"</br>" +
-							"Rs. "+bill_results[0].tax+"</br>" +
-							"Rs. "+bill_results[0].total+"</td>" +
-							"<td></td>" +
-							"</tr>";
-				$('#form72_foot').html(total_row);
 			}
 			
 			fetch_requested_data('',bill_items_column,function(results)
@@ -5894,7 +5884,7 @@ function form72_ini()
 						print_form72(func);
 					});
 				});
-
+				form72_get_totals();
 				hide_loader();
 			});
 		});
@@ -21159,16 +21149,10 @@ function form200_ini()
 				filter_fields.elements['employee'].value=drs_results[0].employee;
 				filter_fields.elements['date'].value=get_my_past_date(drs_results[0].drs_time);
 				filter_fields.elements['id'].value=drs_results[0].id;
-				
+				filter_fields.elements['saved'].value='yes';
+
 				var save_button=filter_fields.elements['save'];
-				/*
-				$(save_button).off('click');
-				$(save_button).on("click", function(event)
-				{
-					event.preventDefault();
-					form200_update_form();
-				});
-*/
+				
 				$(save_button).show();
 				
 				var drs_items_column="<logistics_orders>" +
@@ -22709,16 +22693,9 @@ function form219_ini()
 				filter_fields.elements['id'].value=drs_results[0].id;
 				filter_fields.elements['total'].value=drs_results[0].collectable_amount;
 				filter_fields.elements['collected'].value=drs_results[0].collected_amount;
-				
+				filter_fields.elements['saved'].value='yes';
+
 				var save_button=filter_fields.elements['save'];
-				/*
-				$(save_button).off('click');
-				$(save_button).on("click", function(event)
-				{
-					event.preventDefault();
-					form219_update_form();
-				});
-*/
 				$(save_button).show();
 				
 				var drs_items_column="<logistics_orders>" +
@@ -26067,7 +26044,7 @@ function form248_ini()
 	{
 		show_loader();
 		var bag_columns="<transit_bags>" +
-				"<id>"+drs_id+"</id>" +
+				"<id>"+bag_id+"</id>" +
 				"<bag_num></bag_num>"+
 				"<lbh></lbh>"+
 				"<weight></weight>"+
@@ -26084,10 +26061,11 @@ function form248_ini()
 				filter_fields.elements['bag_num'].value=bag_results[0].bag_num;
 				filter_fields.elements['lbh'].value=bag_results[0].lbh;
 				filter_fields.elements['weight'].value=bag_results[0].weight;
-				filter_fields.elements['date'].value=get_my_past_date(bag_results[0].bag_time);
+				filter_fields.elements['date'].value=get_my_past_date(bag_results[0].date);
 				filter_fields.elements['id'].value=bag_results[0].id;
 				filter_fields.elements['num_orders'].value=bag_results[0].num_orders;
-				
+				filter_fields.elements['saved'].value='yes';
+
 				var save_button=filter_fields.elements['save'];
 				$(save_button).show();
 				
@@ -26096,7 +26074,6 @@ function form248_ini()
 									"<awb_num></awb_num>" +
 									"<manifest_type></manifest_type>" +
 									"<order_num></order_num>" +
-									"<merchant_name></merchant_name>" +
 									"<ship_to></ship_to>" +
 									"<address1></address1>" +
 									"<address2></address2>" +
@@ -26104,8 +26081,8 @@ function form248_ini()
 									"<pincode></pincode>" +
 									"<phone></phone>" +
 									"<weight></weight>" +
-									"<pieces></pieces>" +
 									"<status></status>" +
+									"<lbh></lbh>"+
 									"<bag_num exact='yes'>"+bag_results[0].bag_num+"</bag_num>" +
 									"<bag_id exact='yes'>"+bag_id+"</bag_id>" +
 									"</logistics_orders>";
@@ -26132,7 +26109,11 @@ function form248_ini()
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Address'>";
 								rowsHTML+="<textarea readonly='readonly' form='form248_"+id+"'>"+address+"</textarea>";
-								rowsHTML+="<br>Phone: <input type='text' readonly='readonly' value='"+result.phone+"' form='form248_"+id+"'>";
+								rowsHTML+="<br><b>Phone</b>: <input type='text' readonly='readonly' value='"+result.phone+"' form='form248_"+id+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Details'>";
+								rowsHTML+="<b>Weight</b>: <input type='number' step='any' readonly='readonly' form='form248_"+id+"' value='"+result.weight+"'>";
+								rowsHTML+="<br><b>LBH</b>: <input type='text' readonly='readonly' value='"+result.lbh+"' form='form248_"+id+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Status'>";
 								rowsHTML+="<input type='text' readonly='readonly' form='form248_"+id+"' value='"+result.status+"'>";
@@ -26147,7 +26128,7 @@ function form248_ini()
 						$('#form248_body').append(rowsHTML);
 						
 						var item_form=document.getElementById('form248_'+id);
-						var save_button=item_form.elements[5];
+						var save_button=item_form.elements[7];
 						
 						$(save_button).on('click',function (e) 
 						{
@@ -26212,7 +26193,7 @@ function form249_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form249_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Bag #'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form249_"+result.id+"' value='"+result.bag_num+"'>";
+						rowsHTML+="<input type='text' class='input_link' readonly='readonly' form='form249_"+result.id+"' value='"+result.bag_num+"' onclick=\"element_display('"+result.id+"','form248');\">";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Date'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form249_"+result.id+"' value='"+get_my_past_date(result.date)+"'>";
@@ -26221,11 +26202,10 @@ function form249_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form249_"+result.id+"' value='"+result.status+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='MTS'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form249_"+result.id+"' title='Non-COD' value='"+result.mts+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form249_"+result.id+"' value='"+result.mts+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form249_"+result.id+"' value='"+result.id+"' name='id'>";
-						rowsHTML+="<input type='button' form='form249_"+result.id+"' class='edit_icon' title='View bag' name='edit' onclick=\"element_display('"+result.id+"','form248');\">";
 						rowsHTML+="<input type='button' class='delete_icon' form='form249_"+result.id+"' title='Delete' onclick='form249_delete_item($(this));'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
@@ -26266,6 +26246,227 @@ function form249_ini()
 		$(export_button).on("click", function(event)
 		{
 			get_export_data(columns,'Transit bags');
+		});
+		hide_loader();
+	});
+};
+
+/**
+ * @form Create MTS
+ * @formNo 250
+ * @Loading light
+ */
+function form250_ini()
+{
+	var mts_id=$("#form250_link").attr('data_id');
+	if(mts_id==null)
+		mts_id="";	
+	$('#form250_body').html("");
+	$('#form250_foot').html("");
+	
+	if(mts_id!="")
+	{
+		show_loader();
+		var mts_columns="<mts>" +
+				"<id>"+mts_id+"</id>" +
+				"<mts_num></mts_num>"+
+				"<weight></weight>"+
+				"<branch></branch>"+
+				"<date></date>"+
+				"<num_orders></num_orders>"+
+				"<num_bags></num_bags>"+
+				"</mts>";
+	
+		////separate fetch function to get bill details like customer name, total etc.
+		fetch_requested_data('',mts_columns,function(mts_results)
+		{
+			var filter_fields=document.getElementById('form250_master');
+			if(mts_results.length>0)
+			{
+				filter_fields.elements['mts_num'].value=mts_results[0].mts_num;
+				filter_fields.elements['branch'].value=mts_results[0].branch;
+				filter_fields.elements['weight'].value=mts_results[0].weight;
+				filter_fields.elements['date'].value=get_my_past_date(mts_results[0].date);
+				filter_fields.elements['id'].value=mts_results[0].id;
+				filter_fields.elements['num_orders'].value=mts_results[0].num_orders;
+				filter_fields.elements['num_bags'].value=mts_results[0].num_bags;
+				filter_fields.elements['saved'].value='yes';
+
+				var save_button=filter_fields.elements['save'];
+				$(save_button).show();
+				
+				var bag_columns="<transit_bags>" +
+						"<id></id>" +
+						"<bag_num></bag_num>"+
+						"<weight></weight>"+
+						"<lbh></lbh>"+
+						"<date></date>"+
+						"<num_orders></num_orders>"+
+						"<mts_id exact='yes'>"+mts_id+"</mts_id>"+
+						"</transit_bags>";
+			
+				/////////////////////////////////////////////////////////////////////////
+	
+				fetch_requested_data('',bag_columns,function(results)
+				{
+					results.forEach(function(result)
+					{
+						var id=result.id;
+						var rowsHTML="<tr>";
+						rowsHTML+="<form id='form250_"+id+"'></form>";
+							rowsHTML+="<td data-th='S.No.'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Bag #'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form250_"+id+"' value='"+result.bag_num+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='LBH'>";
+								rowsHTML+="<textarea readonly='readonly' form='form250_"+id+"'>"+result.lbh+"</textarea>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Weight'>";
+								rowsHTML+="<input type='number' step='any' readonly='readonly' form='form250_"+id+"' value='"+result.weight+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='# orders'>";
+								rowsHTML+="<input type='number' step='any' readonly='readonly' form='form250_"+id+"' value='"+result.num_orders+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Action'>";
+								rowsHTML+="<input type='hidden' form='form250_"+id+"' value='"+id+"'>";
+								rowsHTML+="<input type='button' class='submit_hidden' form='form250_"+id+"' id='save_form250_"+id+"'>";
+								rowsHTML+="<input type='button' class='delete_icon' form='form250_"+id+"' id='delete_form250_"+id+"' onclick='form250_delete_item($(this));'>";
+							rowsHTML+="</td>";			
+						rowsHTML+="</tr>";
+	
+						$('#form250_body').append(rowsHTML);
+						
+						var item_form=document.getElementById('form250_'+id);
+						var save_button=item_form.elements[5];
+						
+						$(save_button).on('click',function (e) 
+						{
+							e.preventDefault();
+							form250_update_item(item_form);
+						});
+					});
+					
+					form250_update_serial_numbers();
+					
+					$('#form250_share').show();
+					$('#form250_share').click(function()
+					{
+						modal101_action('Material Transfer Sheet','','staff',function (func) 
+						{
+							print_form250(func);
+						});
+					});
+					
+					$('textarea').autosize();
+					hide_loader();
+				});
+			}
+		});
+	}
+}
+
+/**
+ * @form Manage MTS
+ * @formNo 251
+ * @Loading light
+ */
+function form251_ini()
+{
+	show_loader();
+	var fid=$("#form251_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form251_header');
+
+	//populating form 
+	var fmts=filter_fields.elements[0].value;
+	var fdate=get_raw_time(filter_fields.elements[1].value);
+	var fbranch=filter_fields.elements[2].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form251_index');
+	var prev_element=document.getElementById('form251_prev');
+	var next_element=document.getElementById('form251_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<mts count='25' start_index='"+start_index+"'>" +
+				"<id>"+fid+"</id>" +
+				"<mts_num>"+fmts+"</mts_num>"+
+				"<weight></weight>"+
+				"<date>"+fdate+"</date>"+
+				"<num_orders></num_orders>"+
+				"<num_bags></num_bags>"+
+				"<branch>"+fbranch+"</branch>"+
+				"</mts>";
+	
+	$('#form251_body').html("");
+
+	fetch_requested_data('form251',columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form251_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='MTS #'>";
+						rowsHTML+="<input type='text' class='input_link' readonly='readonly' form='form251_"+result.id+"' value='"+result.mts_num+"' onclick=\"element_display('"+result.id+"','form250');\">";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form251_"+result.id+"' value='"+get_my_past_date(result.date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Branch'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form251_"+result.id+"' value='"+result.branch+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Details'>";
+						rowsHTML+="<b>Bags</b>: <input type='number' readonly='readonly' form='form251_"+result.id+"' value='"+result.num_bags+"'>";
+						rowsHTML+="<br><b>Orders</b>: <input type='number' readonly='readonly' form='form251_"+result.id+"' value='"+result.num_orders+"'>";
+						rowsHTML+="<br><b>Weight</b>: <input type='number' readonly='readonly' form='form251_"+result.id+"' value='"+result.weight+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form251_"+result.id+"' value='"+result.id+"' name='id'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form251_"+result.id+"' title='Delete' onclick='form251_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form251_body').append(rowsHTML);
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[3];
+		
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'MTS');
 		});
 		hide_loader();
 	});
