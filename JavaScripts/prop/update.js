@@ -10958,11 +10958,12 @@ function form199_update_item(form)
 		var comments=master_form.elements['comments'].value;
 		
 		var awb_num=form.elements[0].value;
+		var lbh=form.elements[1].value;
 		var status='received';
-		var id=form.elements[2].value;
+		var id=form.elements[3].value;
 		var last_updated=get_my_time();
 		
-		var old_order_history=form.elements[5].value;
+		var old_order_history=form.elements[6].value;
 
 		var order_history=JSON.parse(old_order_history);
 		var history_object=new Object();
@@ -10977,6 +10978,7 @@ function form199_update_item(form)
 					"<id>"+id+"</id>" +
 					//"<awb_num>"+awb_num+"</awb_num>" +
 					"<status>"+status+"</status>" +
+					"<lbh>"+lbh+"</lbh>" +
 					"<comments>"+comments+"</comments>" +
 					"<order_history>"+order_history_string+"</order_history>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
@@ -10991,7 +10993,41 @@ function form199_update_item(form)
 					"</activity>";
 		update_row(data_xml,activity_xml);
 		
-		for(var i=0;i<2;i++)
+		for(var i=0;i<1;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Logistics Incoming Items
+ * @param button
+ */
+function form199_update_lbh(form)
+{
+	if(is_update_access('form199'))
+	{
+		//console.log('199 update');
+		var master_form=document.getElementById("form199_master");		
+		
+		var awb_num=form.elements[0].value;
+		var lbh=form.elements[1].value;
+		var id=form.elements[3].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<logistics_orders>" +
+					"<id>"+id+"</id>" +
+					"<lbh>"+lbh+"</lbh>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</logistics_orders>";
+		update_simple(data_xml);
+		
+		for(var i=0;i<3;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}

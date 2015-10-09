@@ -11342,8 +11342,11 @@ function form199_add_item()
 			rowsHTML+="<td data-th='AWB #'>";
 				rowsHTML+="<input type='text' required form='form199_"+id+"' oninvalid=\"setCustomValidity('This AWB # is invalid')\">";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Order #'>";
+			rowsHTML+="<td data-th='LBH'>";
 				rowsHTML+="<input type='text' form='form199_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Tansfer Zone'>";
+				rowsHTML+="<input type='text' readonly='readonly' form='form199_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form199_"+id+"'>";
@@ -11357,9 +11360,19 @@ function form199_add_item()
 		
 		var fields=document.getElementById("form199_"+id);
 		var awb_filter=fields.elements[0];
-		var order_filter=fields.elements[1];
-		var id_filter=fields.elements[2];
-		var order_history=fields.elements[5];
+		var lbh_filter=fields.elements[1];
+		var tz_filter=fields.elements[2];
+		var id_filter=fields.elements[3];
+		var order_history=fields.elements[6];
+
+		$(lbh_filter).on('keydown',function (e) 
+		{
+			if(e.keyCode==13)
+			{
+				e.preventDefault();			
+				form199_update_lbh(fields);
+			}
+		});
 
 		$(fields).on("submit", function(event)
 		{
@@ -11408,9 +11421,13 @@ function form199_add_item()
 				{
 					var order_data="<logistics_orders count='1'>"+
 							"<id></id>"+
-							"<order_num></order_num>"+
+							"<pincode></pincode>"+
 							"<order_history></order_history>"+
-							"<status exact='yes'>picked</status>"+
+							"<len></len>"+
+							"<breadth></breadth>"+
+							"<height></height>"+
+							"<lbh></lbh>"+
+							"<status array='yes'>--picked--in-transit--</status>"+
 							"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>"+
 							"</logistics_orders>";
 					fetch_requested_data('',order_data,function(orders)
@@ -11418,7 +11435,16 @@ function form199_add_item()
 						//console.log('form199 double entry checked');
 						if(orders.length>0)
 						{
-							order_filter.value=orders[0].order_num;
+							var transfer_zone_data="<pincodes>"+
+												"<zone></zone>"+
+												"<status exact='yes'>active</status>"+
+												"<pincode exact='yes'>"+orders[0].pincode+"</pincode>"+
+												"</pincodes>";
+							set_my_value(transfer_zone_data,tz_filter);					
+							if(orders[0].lbh=="" || orders[0].lbh=="null" || orders[0].lbh==null)							
+								lbh_filter.value=orders[0].len+"*"+orders[0].breadth+"*"+orders[0].height;
+							else 
+								lbh_filter.value=orders[0].lbh;	
 							id_filter.value=orders[0].id;
 							order_history.value=orders[0].order_history;
 							form199_update_item(fields);
@@ -11426,7 +11452,8 @@ function form199_add_item()
 						}
 						else 
 						{
-							order_filter.value="";
+							tz_filter.value="";
+							lbh_filter.value="";
 							id_filter.value="";
 							order_history.value="";
 							awb_filter.value="";

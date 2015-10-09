@@ -10,7 +10,8 @@
 			<tr>
 				<form id='form199_header'></form>
 					<th>AWB #</th>
-					<th>Order #</th>
+					<th>LBH</th>
+					<th>Transfer Zone</th>
 					<th><input type='button' form='form199_header' title='Add item' class='add_icon' onclick='form199_add_item();'></th>
 			</tr>
 		</thead>

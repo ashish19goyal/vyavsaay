@@ -6574,7 +6574,7 @@ function form199_delete_item(button)
 		
 		var awb_num=form.elements[0].value;
 		var status='picked';
-		var id=form.elements[2].value;
+		var id=form.elements[3].value;
 		var last_updated=get_my_time();
 		if(id!="")
 		{		
