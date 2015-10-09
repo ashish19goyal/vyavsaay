@@ -5481,7 +5481,7 @@ function report76_ini()
 	var delivery_filter=form.elements[2].value;
 	var status_filter=form.elements[3].value;
 	var start_filter=get_raw_time(form.elements[4].value);
-	var end_filter=get_raw_time(form.elements[5].value);
+	var end_filter=get_raw_time(form.elements[5].value)+86399999;
 	
 	show_loader();
 	$('#report76_body').html('');	
@@ -5493,17 +5493,30 @@ function report76_ini()
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
 
-	var orders_data="<logistics_orders count='25' start_index='"+start_index+"'>" +
-		"<id></id>"+
-		"<awb_num>"+awb_filter+"</awb_num>" +
-		"<import_date lowerbound='yes'>"+start_filter+"</import_date>"+
-		"<import_date upperbound='yes'>"+end_filter+"</import_date>"+
-		"<delivery_person>"+delivery_filter+"</delivery_person>"+
-		"<status>"+status_filter+"</status>"+
-		"</logistics_orders>";
-	//console.log(orders_data);
+	var columns=new Object();
+	columns.count=25;
+	columns.start_index=start_index;
+	columns.data_store='logistics_orders';		
 	
-	fetch_requested_data('report76',orders_data,function(items)
+	columns.indexes=[{index:'id'},
+					{index:'awb_num',value:awb_filter},
+					{index:'import_date',lowerbound:start_filter,upperbound:end_filter},
+					{index:'drs_time'},
+					{index:'order_num'},
+					{index:'weight'},
+					{index:'pieces'},
+					{index:'status',value:status_filter},
+					{index:'delivery_person',value:delivery_filter},
+					{index:'manifest_type'},
+					{index:'merchant_name'},
+					{index:'phone'},
+					{index:'sku'},
+					{index:'return_address1'},
+					{index:'return_address2'},
+					{index:'return_address3'},
+					{index:'drs_num'}];		
+
+	read_json_rows('report76',columns,function(items)
 	{
 		var rowsHTML="";
 		items.forEach(function(item)
@@ -5549,8 +5562,39 @@ function report76_ini()
 		{
 			$(prev_element).show();
 		}
-		/////////////
 
+		/////////////
+		var csv_button=form.elements['csv'];
+		$(csv_button).off("click");
+		$(csv_button).on("click", function(event)
+		{
+			columns.count=0;
+			columns.start_index=0;
+			
+			get_export_data_restructured(columns,'Order Detail Report',function(new_results)
+			{
+				var sorted_array=[];
+				new_results.forEach(function(new_result)
+				{
+					var sorted_element=new Object();
+					sorted_element['AWB No']=new_result.awb_num;
+					sorted_element['Order Id']=new_result.order_num;
+					sorted_element['status']=new_result.status;
+					sorted_element['Manifest Import Date']=get_my_past_date(new_result.import_date);
+					sorted_element['Delivery Boy']=new_result.delivery_person;
+					sorted_element['Wt']=new_result.weight;
+					sorted_element['Pcs']=new_result.pieces;
+					sorted_element['AWB Type']=new_result.manifest_type;
+					sorted_element['Merchant']=new_result.merchant_name;
+					sorted_element['Merchant Address']=new_result.return_address1+", "+new_result.return_address2+", "+new_result.return_address3;
+					sorted_element['Mobile No']=new_result.phone;
+					sorted_element['Product Name']=new_result.sku;
+					
+					sorted_array.push(sorted_element);
+				});
+				return sorted_array;
+			});
+		});
 		hide_loader();
 	});
 	
@@ -5629,7 +5673,7 @@ function report77_ini()
 					rowsHTML+="</tr>";					
 				});
 				$('#report77_body').html(rowsHTML);
-				
+
 				var csv_button=form.elements['csv'];
 				$(csv_button).off("click");
 				$(csv_button).on("click", function(event)
@@ -6236,8 +6280,8 @@ function report84_ini()
 {
 	show_loader();
 	var form=document.getElementById('report84_header');
-	var start_date=form.elements[1].value;
-	var end_date=form.elements[2].value;
+	var start_date=get_raw_time(form.elements[1].value);
+	var end_date=get_raw_time(form.elements[2].value)+86399999;
 	
 	var canvas_parent=$("#report84_canvas").parent();
 	$("#report84_canvas").remove();
@@ -6245,13 +6289,30 @@ function report84_ini()
 	
 	var ctx = document.getElementById("report84_canvas").getContext("2d");
 	
-	var orders_data="<logistics_orders>" +
-			"<id></id>" +
-			"<delivery_person></delivery_person>" +
-			"<import_date lowerbound='yes'>"+get_raw_time(start_date)+"</import_date>" +
-			"<import_date upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</import_date>" +
-			"</logistics_orders>";
-	fetch_requested_data('report84',orders_data,function(orders)
+	var columns=new Object();
+	columns.count=0;
+	columns.start_index=0;
+	columns.data_store='logistics_orders';		
+	
+	columns.indexes=[{index:'id'},
+					{index:'awb_num'},
+					{index:'import_date',lowerbound:start_date,upperbound:end_date},
+					{index:'drs_time'},
+					{index:'order_num'},
+					{index:'weight'},
+					{index:'pieces'},
+					{index:'status',exact:'delivered'},
+					{index:'delivery_person'},
+					{index:'manifest_type'},
+					{index:'merchant_name'},
+					{index:'phone'},
+					{index:'sku'},
+					{index:'return_address1'},
+					{index:'return_address2'},
+					{index:'return_address3'},
+					{index:'drs_num'}];		
+
+	read_json_rows('report84',columns,function(orders)
 	{
 		for(var i=0;i<orders.length;i++)
 		{
@@ -6282,164 +6343,37 @@ function report84_ini()
 
 		var print_button=form.elements[4];
 		print_graphical_report('report84','# Deliveries',print_button,mybarchart);
+		
+		var csv_button=form.elements['csv'];
+		$(csv_button).off("click");
+		$(csv_button).on("click", function(event)
+		{
+			var sorted_array=[];
+			orders.forEach(function(new_result)
+			{
+				var sorted_element=new Object();
+				sorted_element['AWB No']=new_result.awb_num;
+				sorted_element['Order Id']=new_result.order_num;
+				sorted_element['status']=new_result.status;
+				sorted_element['Manifest Import Date']=get_my_past_date(new_result.import_date);
+				sorted_element['Delivery Boy']=new_result.delivery_person;
+				sorted_element['Wt']=new_result.weight;
+				sorted_element['Pcs']=new_result.pieces;
+				sorted_element['AWB Type']=new_result.manifest_type;
+				sorted_element['Merchant']=new_result.merchant_name;
+				sorted_element['Merchant Address']=new_result.return_address1+", "+new_result.return_address2+", "+new_result.return_address3;
+				sorted_element['Mobile No']=new_result.phone;
+				sorted_element['Product Name']=new_result.sku;
+				
+				sorted_array.push(sorted_element);
+			});
+			csv_download_report(sorted_array,'Delivery Report');
+		});
+		
 		hide_loader();
 	});
 };
 
-/**
- * @reportNo 85
- * @report # DRS
- */
-/*function report85_ini()
-{
-	show_loader();
-	var form=document.getElementById('report85_header');
-	var start_date=form.elements[1].value;
-	var end_date=form.elements[2].value;
-	
-	var canvas_parent=$("#report85_canvas").parent();
-	$("#report85_canvas").remove();
-	$(canvas_parent).append("<canvas id='report85_canvas' class='report_sizing'></canvas>");
-	
-	var ctx = document.getElementById("report85_canvas").getContext("2d");
-	
-	var drs_data="<drs>" +
-			"<id></id>" +
-			"<drs_num></drs_num>" +
-			"<drs_time lowerbound='yes'>"+(get_raw_time(start_date)-1)+"</drs_time>" +
-			"<drs_time upperbound='yes'>"+(get_raw_time(end_date)+86399999)+"</drs_time>" +
-			"</drs>";
-	fetch_requested_data('report85',drs_data,function(orders)
-	{
-		var drs_num_array="--";
-		for(var i=0;i<orders.length;i++)
-		{
-			drs_num_array+=orders[i].drs_num+"--";
-		}
-
-		for(var i=0;i<orders.length;i++)
-		{
-			orders[i].drs_count=1;
-			for(var j=i+1;j<orders.length;j++)
-			{
-				if(orders[i].drs_time==orders[j].drs_time)
-				{
-					orders[i].drs_count+=1;
-					orders.splice(j,1);
-					j-=1;
-				}
-			}
-		}
-
-		orders.sort(function(a,b)
-		{
-			if(parseFloat(a.drs_time)<parseFloat(b.drs_time))
-				return -1;
-			else
-				return 1;
-		});
-
-		for(var i=0;i<orders.length;i++)
-		{
-			orders[i].drs_time=get_my_past_date(orders[i].drs_time);
-		}
-
-		var result=transform_to_bar_sum(orders,'# DRS','drs_count','drs_time');
-		var mybarchart = new Chart(ctx).Bar(result,{});
-		document.getElementById("report85_legend").innerHTML=mybarchart.generateLegend();
-
-		var print_button=form.elements[4];
-		print_graphical_report('report85','# DRS',print_button,mybarchart);
-		
-		var csv_button=form.elements[5];
-		$(csv_button).off("click");
-		$(csv_button).on("click", function(event)
-		{
-			var columns="<logistics_orders>"+
-						"<id></id>"+
-						"<awb_num></awb_num>"+
-                        "<type></type>"+
-                        "<order_num></order_num>"+
-                        "<manifest_id></manifest_id>"+
-                        "<merchant_name></merchant_name>"+
-                        "<ship_to></ship_to>"+
-                        "<address1></address1>"+
-                        "<address2></address2>"+
-                        "<city></city>"+
-                        "<state></state>"+
-                        "<pincode></pincode>"+
-                        "<phone></phone>"+
-                        "<telephone></telephone>"+
-                        "<weight></weight>"+
-                        "<declared_value></declared_value>"+
-                        "<collectable_value></collectable_value>"+
-                        "<vendor_code></vendor_code>"+
-                        "<shipper_name></shipper_name>"+
-                        "<return_address1></return_address1>"+
-                        "<return_address2></return_address2>"+
-                        "<return_address3></return_address3>"+
-                        "<return_pincode></return_pincode>"+
-                        "<len></len>"+
-                        "<breadth></breadth>"+
-                        "<height></height>"+
-                        "<pieces></pieces>"+
-                        "<carrier_account></carrier_account>"+
-                        "<carrier_name></carrier_name>"+
-                        "<manifest_type></manifest_type>"+
-                        "<dispatch_date></dispatch_date>"+
-                        "<import_date></import_date>"+
-                        "<notes></notes>"+
-                        "<pickup_location></pickup_location>"+
-                        "<pickup_by></pickup_by>"+
-                        "<sku></sku>"+
-                        "<product_name></product_name>"+
-                        "<status></status>"+
-                        "<current_location></current_location>"+
-                        "<delivery_person></delivery_person>"+
-                        "<order_history></order_history>"+
-                        "<comments></comments>"+
-                        "<drs_time></drs_time>" +
-                        "<drs_num array='yes'>"+drs_num_array+"</drs_num>"+
-						"</logistics_orders>";
-			get_export_data_restructured(columns,'drs_details',function(new_results)
-			{
-				var sorted_array=[];
-				new_results.forEach(function(new_result)
-				{
-					var sorted_element=new Object();
-					sorted_element['DRS No']=new_result.drs_num;
-					if(new_result.drs_time!="" && new_result.drs_time!="NULL")
-					{	
-						sorted_element['DRS Date']=get_my_datetime(new_result.drs_time);
-					}
-					else 
-					{
-						sorted_element['DRS Date']="";
-					}					
-					sorted_element['Order Id']=new_result.order_num;
-					sorted_element['AWB No']=new_result.awb_num;
-					sorted_element['Wt']=new_result.weight;
-					sorted_element['Pcs']=new_result.pieces;
-					sorted_element['status']=new_result.status;
-					sorted_element['Delivery Boy']=new_result.delivery_person;
-					sorted_element['AWB Type']=new_result.manifest_type;
-					sorted_element['Merchant']=new_result.merchant_name;
-					sorted_element['Merchant Address']=new_result.return_address1+", "+new_result.return_address2+", "+new_result.return_address3;
-					sorted_element['Mobile No']=new_result.phone;
-					sorted_element['Product Name']=new_result.sku;
-					
-					if(new_result.drs_num!="")
-					{
-						sorted_array.push(sorted_element);
-					}
-				});
-				return sorted_array;
-			});
-		});
-		hide_loader();		
-	});
-};
-*/
 
 /**
  * @reportNo 85
@@ -6801,19 +6735,32 @@ function report89_ini()
 	var form=document.getElementById('report89_header');
 	var person=form.elements['person'].value;
 	var start_date=get_raw_time(form.elements['start'].value);
-	var end_date=get_raw_time(form.elements['end'].value);
+	var end_date=get_raw_time(form.elements['end'].value)+86399999;
 	
 	$('#report89_body').html('');
 
-	var deliveries_data="<logistics_orders>" +
-			"<awb_num></awb_num>" +
-			"<delivery_person></delivery_person>" +
-			"<import_date lowerbound='yes'>"+start_date+"</import_date>"+
-			"<import_date upperbound='yes'>"+end_date+"</import_date>"+
-			"<order_history></order_history>"+
-			"</logistics_orders>";
+	var columns=new Object();
+	columns.count=0;
+	columns.start_index=0;
+	columns.data_store='logistics_orders';		
 	
-	fetch_requested_data('report89',deliveries_data,function(deliveries)
+	columns.indexes=[{index:'id'},
+					{index:'awb_num'},
+					{index:'import_date',lowerbound:start_date,upperbound:end_date},
+					{index:'order_num'},
+					{index:'status',exact:'delivered'},
+					{index:'delivery_person'},
+					{index:'manifest_type'},
+					{index:'merchant_name'},
+					{index:'phone'},
+					{index:'sku'},
+					{index:'return_address1'},
+					{index:'return_address2'},
+					{index:'return_address3'},
+					{index:'order_history'},
+					{index:'drs_num'}];		
+
+	read_json_rows('report89',columns,function(deliveries)
 	{
 		deliveries.forEach(function(result)
 		{

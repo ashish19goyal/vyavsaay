@@ -1621,7 +1621,7 @@ function report77_header_ini()
 		event.preventDefault();
 		report77_ini();
 	});
-			
+
 	var item_data="<product_master>"+
 				"<name></name>"+
 				"</product_master>";
