@@ -13154,13 +13154,6 @@ function form219_add_item()
 				}
 			}
 		});
-		/*
-		$(save_button).on('click',function (e) 
-		{
-			e.preventDefault();
-			form219_create_item(item_form);
-		});
-		*/	
 		$('textarea').autosize();
 		form219_update_serial_numbers();
 	}

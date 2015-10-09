@@ -1575,7 +1575,7 @@ function report76_header_ini()
 {	
 	var form=document.getElementById('report76_header');
 	var awb_filter=form.elements[1];
-	var delivery_filter=form.elements[2];
+	var manifest_filter=form.elements[2];
 	var status_filter=form.elements[3];
 	var start_filter=form.elements[4];
 	var end_filter=form.elements[5];
@@ -1592,10 +1592,11 @@ function report76_header_ini()
 				"</logistics_orders>";
 	set_my_filter(awb_data,awb_filter);
 
-	var delivery_data="<logistics_orders>"+
-				"<delivery_person></delivery_person>"+
+
+	var manifest_data="<logistics_orders>"+
+				"<manifest_id></manifest_id>"+
 				"</logistics_orders>";
-	set_my_filter(delivery_data,delivery_filter);
+	set_my_filter(manifest_data,manifest_filter);
 	
 	set_static_filter('logistics_orders','status',status_filter);	
 	
