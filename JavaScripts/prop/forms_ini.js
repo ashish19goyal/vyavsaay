@@ -116,7 +116,7 @@ function form1_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data_extended(columns,'inventory',function(new_result)
+			get_export_data_extended(columns,'Inventory',function(new_result)
 			{
 				total_export_requests+=1;
 
@@ -343,7 +343,7 @@ function form5_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'assets');
+			get_export_data(columns,'Assets');
 		});
 		hide_loader();
 	});
@@ -621,7 +621,7 @@ function form8_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'staff');
+			get_export_data(columns,'Staff');
 		});
 		hide_loader();
 	});
@@ -943,7 +943,7 @@ function form11_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'payments');
+			get_export_data(columns,'Payments');
 		});
 		hide_loader();
 	});
@@ -1225,7 +1225,7 @@ function form14_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'tasks');
+			get_export_data(columns,'Tasks');
 		});
 		hide_loader();
 	});
@@ -1478,7 +1478,7 @@ function form16_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'customer_returns');
+			get_export_data(columns,'Customer Returns');
 		});
 		hide_loader();
 	});
@@ -1588,7 +1588,7 @@ function form17_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'supplier_returns');
+			get_export_data(columns,'Supplier Returns');
 		});
 		hide_loader();
 	});
@@ -2047,8 +2047,8 @@ function form30_ini()
 						rowsHTML+="<textarea readonly='readonly' required form='form30_"+result.id+"'>"+result.name+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Contact'>";
-						rowsHTML+="Phone: <input type='text' readonly='readonly' form='form30_"+result.id+"' class='dblclick_editable' value='"+result.phone+"'>";
-						rowsHTML+="<br>Email: <textarea readonly='readonly' form='form30_"+result.id+"' class='dblclick_editable'>"+result.email+"</textarea>";
+						rowsHTML+="<b>Phone</b>: <input type='text' readonly='readonly' form='form30_"+result.id+"' class='dblclick_editable' value='"+result.phone+"'>";
+						rowsHTML+="<br><b>Email</b>: <textarea readonly='readonly' form='form30_"+result.id+"' class='dblclick_editable'>"+result.email+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Address'>";
 						rowsHTML+="<textarea readonly='readonly' form='form30_"+result.id+"'>"+result.address+", "+result.pincode+", "+result.city+", "+result.state+", "+result.country+"</textarea>";
@@ -2089,7 +2089,7 @@ function form30_ini()
 				var attribute_content="";
 				attributes.forEach(function(attribute)
 				{
-					attribute_content+=attribute.attribute+": "+attribute.value+"<br>";
+					attribute_content+="<b>"+attribute.attribute+"</b>: "+attribute.value+"<br>";
 				});
 				var td_elem=document.getElementById('form30_'+result.id+'_details');
 				td_elem.innerHTML=attribute_content;
@@ -2127,7 +2127,7 @@ function form30_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'customers');
+			get_export_data(columns,'Customers');
 		});
 		hide_loader();
 	});
@@ -2262,7 +2262,7 @@ function form35_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'offers');
+			get_export_data(columns,'Offers');
 		});
 		hide_loader();
 	});
@@ -2378,7 +2378,7 @@ function form38_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'store_placement');
+			get_export_data(columns,'Store Placement');
 		});
 		hide_loader();
 	});
@@ -2529,7 +2529,7 @@ function form39_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'products');
+			get_export_data(columns,'Products');
 		});
 		hide_loader();
 	});	
@@ -2686,7 +2686,7 @@ function form40_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'suppliers');
+			get_export_data(columns,'Suppliers');
 		});
 		hide_loader();
 	});
@@ -2973,7 +2973,7 @@ function form42_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'bills');
+			get_export_data(columns,'Bills');
 		});
 		hide_loader();
 	});
@@ -3382,7 +3382,7 @@ function form43_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'purchase_orders');
+			get_export_data(columns,'Purchase Orders');
 		});
 		hide_loader();
 	});
@@ -3580,7 +3580,7 @@ function form46_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'system_defaults');
+			get_export_data(columns,'System Default Settings');
 		});
 		hide_loader();
 	});
@@ -3688,7 +3688,7 @@ function form48_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'reports');
+			get_export_data(columns,'Reports');
 		});
 		hide_loader();
 	});
@@ -3794,7 +3794,7 @@ function form49_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'forms');
+			get_export_data(columns,'Forms');
 		});
 		hide_loader();
 	});
@@ -3896,7 +3896,7 @@ function form50_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'accounting');
+			get_export_data(columns,'Accounting');
 		});
 		hide_loader();
 	});
@@ -4164,7 +4164,7 @@ function form53_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'supplier_bills');
+			get_export_data(columns,'Supplier Bills');
 		});
 		hide_loader();
 	});
@@ -4265,7 +4265,7 @@ function form54_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'printing_templates');
+			get_export_data(columns,'Printing Templates');
 		});
 		hide_loader();
 	});
@@ -4373,7 +4373,7 @@ function form56_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'expenses');
+			get_export_data(columns,'Expenses');
 		});
 		hide_loader();
 	});
@@ -4480,7 +4480,7 @@ function form57_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'services');
+			get_export_data(columns,'Services');
 		});
 		hide_loader();
 	});
@@ -4588,7 +4588,7 @@ function form58_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'service_pre_requisites');
+			get_export_data(columns,'Service Pre requisites');
 		});
 		hide_loader();
 	});
@@ -4697,7 +4697,7 @@ function form59_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'product_pre_requisites');
+			get_export_data(columns,'Product Pre requisites');
 		});
 		hide_loader();
 	});
@@ -4803,7 +4803,7 @@ function form60_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'item_attributes');
+			get_export_data(columns,'Item Attributes');
 		});
 		hide_loader();
 	});
@@ -4907,7 +4907,7 @@ function form61_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'service_attributes');
+			get_export_data(columns,'Service Attributes');
 		});
 		hide_loader();
 	});
@@ -5016,7 +5016,7 @@ function form62_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'product_reviews');
+			get_export_data(columns,'Product Reviews');
 		});
 		hide_loader();
 	});
@@ -5125,7 +5125,7 @@ function form63_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'service_reviews');
+			get_export_data(columns,'Service Reviews');
 		});
 		hide_loader();
 	});
@@ -5230,7 +5230,7 @@ function form64_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'service_cross_sells');
+			get_export_data(columns,'Service Cross Sells');
 		});
 		hide_loader();
 	});
@@ -5336,7 +5336,7 @@ function form66_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'product_cross_sells');
+			get_export_data(columns,'Product Cross Sells');
 		});
 		hide_loader();
 	});
@@ -5610,7 +5610,7 @@ function form70_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'sale_orders');
+			get_export_data(columns,'Sale Orders');
 		});
 		hide_loader();
 	});
@@ -5768,7 +5768,7 @@ function form71_ini()
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
-				get_export_data(columns,'accounts');
+				get_export_data(columns,'Accounts');
 			});
 			hide_loader();
 		});
@@ -6090,7 +6090,7 @@ function activities_ini()
 			"<last_updated></last_updated>" +
 			"</activities>";
 		
-			get_export_data(new_columns,'activities');
+			get_export_data(new_columns,'Activities');
 		});
 
 		var unsynced_export_button=activities_form.elements['export_unsynced'];
@@ -6112,7 +6112,7 @@ function activities_ini()
 				"<status exact='yes'>unsynced</status>" +
 				"<last_updated></last_updated>" +
 				"</activities>";
-			get_export_data(new_columns,'unsynced_data');
+			get_export_data(new_columns,'Unsynced Data');
 		});
 
 		var import_button=activities_form.elements['import_unsynced'];
@@ -6546,7 +6546,7 @@ function form77_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'shortcuts');
+			get_export_data(columns,'Shortcuts');
 		});
 		hide_loader();
 	});
@@ -6725,7 +6725,7 @@ function form79_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'task_types');
+			get_export_data(columns,'Task Types');
 		});
 		hide_loader();
 	});
@@ -6891,7 +6891,7 @@ function form81_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'sale_leads');
+			get_export_data(columns,'Sale Leads');
 		});
 		hide_loader();
 	});
@@ -7000,7 +7000,7 @@ function form83_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'store_areas');
+			get_export_data(columns,'Store Areas');
 		});
 		hide_loader();
 	});
@@ -7119,7 +7119,7 @@ function form84_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'subscriptions');
+			get_export_data(columns,'Subscriptions');
 		});
 		hide_loader();
 	});
@@ -7517,7 +7517,7 @@ function form87_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'products');
+			get_export_data(columns,'Products');
 		});
 		hide_loader();
 	});	
@@ -7636,7 +7636,7 @@ function form88_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'manufacturing_schedule');
+			get_export_data(columns,'Manufacturing Schedule');
 		});
 		hide_loader();
 	});	
@@ -7846,7 +7846,7 @@ function form89_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'appointments');
+			get_export_data(columns,'Appointments');
 		});
 		hide_loader();
 	});
@@ -7946,7 +7946,7 @@ function form90_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'billing_types');
+			get_export_data(columns,'Billing Types');
 		});
 		hide_loader();
 	});	
@@ -8245,7 +8245,7 @@ function form92_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'bills');
+			get_export_data(columns,'Bills');
 		});
 		hide_loader();
 	});
@@ -8391,7 +8391,7 @@ function form93_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'loans');
+			get_export_data(columns,'Loans');
 		});
 		hide_loader();
 	});	
@@ -8529,7 +8529,7 @@ function form94_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'discarded_items');
+			get_export_data(columns,'Discarded Items');
 		});
 		hide_loader();
 	});
@@ -8728,7 +8728,7 @@ function form96_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'customer_attributes');
+			get_export_data(columns,'Customer Attributes');
 		});
 		hide_loader();
 	});
@@ -8832,7 +8832,7 @@ function form97_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'supplier_attributes');
+			get_export_data(columns,'Supplier Attributes');
 		});
 		hide_loader();
 	});
@@ -8936,7 +8936,7 @@ function form98_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'staff_attributes');
+			get_export_data(columns,'Staff Attributes');
 		});
 		hide_loader();
 	});
@@ -9199,7 +9199,7 @@ function form101_ini()
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
-				get_export_data(columns,'projects');
+				get_export_data(columns,'Projects');
 			});
 			hide_loader();
 		});
@@ -10072,7 +10072,7 @@ function form108_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'sale_orders');
+			get_export_data(columns,'Sale Orders');
 		});
 		hide_loader();
 	});
@@ -10175,7 +10175,7 @@ function form109_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'product_attributes');
+			get_export_data(columns,'Product Attributes');
 		});
 		hide_loader();
 	});
@@ -10465,7 +10465,7 @@ function form113_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'sale_challans');
+			get_export_data(columns,'Sale Challans');
 		});
 		hide_loader();
 	});
@@ -10575,7 +10575,7 @@ function form115_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'purchase_challans');
+			get_export_data(columns,'Purchase Challans');
 		});
 		hide_loader();
 	});
@@ -10708,7 +10708,7 @@ function form116_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'loyalty_programs');
+			get_export_data(columns,'Loyalty Programs');
 		});
 		hide_loader();
 	});
@@ -26467,6 +26467,519 @@ function form251_ini()
 		$(export_button).on("click", function(event)
 		{
 			get_export_data(columns,'MTS');
+		});
+		hide_loader();
+	});
+};
+
+
+/**
+ * @form Vendor Leads
+ * @formNo 252
+ * @Loading light
+ */
+function form252_ini()
+{
+	show_loader();
+	var fid=$("#form252_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form252_header');
+	var fname=filter_fields.elements[0].value;
+	var fidentify=filter_fields.elements[1].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form252_index');
+	var prev_element=document.getElementById('form252_prev');
+	var next_element=document.getElementById('form252_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<sale_leads count='25' start_index='"+start_index+"'>" +
+		"<id>"+fid+"</id>" +
+		"<customer>"+fname+"</customer>" +
+		"<detail></detail>" +
+		"<status></status>" +
+		"<due_date></due_date>" +
+		"<identified_by>"+fidentify+"</identified_by>" +
+		"<type exact='yes'>vendor</type>" +
+		"</sale_leads>";
+	
+	$('#form252_body').html("");
+	
+	fetch_requested_data('form252',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var row_class="";
+			if(result.status=='closed')
+			{
+				row_class="class='cancelled_row'";
+			}
+			var rowsHTML="";
+			rowsHTML+="<tr "+row_class+">";
+				rowsHTML+="<form id='form252_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Customer'>";
+						rowsHTML+="<textarea readonly='readonly' form='form252_"+result.id+"'>"+result.customer+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Details'>";
+						rowsHTML+="<textarea readonly='readonly' form='form252_"+result.id+"' class='dblclick_editable'>"+result.detail+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Due Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form252_"+result.id+"' class='dblclick_editable' value='"+get_my_past_date(result.due_date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Identified By'>";
+					if(result.identified_by=="")
+						rowsHTML+="<input type='text' readonly='readonly' form='form252_"+result.id+"' class='dblclick_editable' value='"+result.identified_by+"'>";
+					else
+						rowsHTML+="<input type='text' readonly='readonly' form='form252_"+result.id+"' value='"+result.identified_by+"'>";	
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form252_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form252_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form252_"+result.id+"' onclick='form252_delete_item($(this));'>";
+					if(result.status!='closed')					
+					{					
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form252_"+result.id+"' value='Follow-up' onclick=\"modal134_action('"+result.id+"','"+result.customer+"','"+result.detail+"');\">";
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form252_"+result.id+"' value='Update Contact' onclick=\"modal145_action('"+result.customer+"');\">";
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form252_"+result.id+"' value='Close Lead' onclick=\"modal153_action(this,'"+result.id+"');\">";
+					}					
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form252_body').append(rowsHTML);
+			var fields=document.getElementById("form252_"+result.id);
+			var identified_filter=fields.elements[3];
+			
+			var identified_data="<staff>"+
+								"<acc_name></acc_name>"+
+								"</staff>";
+			set_my_value_list(identified_data,identified_filter);
+					
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form252_update_item(fields);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'Vendor Support');
+		});
+		hide_loader();
+	});
+};
+
+/**
+ * @form Customer Leads
+ * @formNo 253
+ * @Loading light
+ */
+function form253_ini()
+{
+	show_loader();
+	var fid=$("#form253_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form253_header');
+	var fname=filter_fields.elements[0].value;
+	var fidentify=filter_fields.elements[1].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form253_index');
+	var prev_element=document.getElementById('form253_prev');
+	var next_element=document.getElementById('form253_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<sale_leads count='25' start_index='"+start_index+"'>" +
+		"<id>"+fid+"</id>" +
+		"<customer>"+fname+"</customer>" +
+		"<detail></detail>" +
+		"<status></status>" +
+		"<due_date></due_date>" +
+		"<identified_by>"+fidentify+"</identified_by>" +
+		"<type exact='yes'>customer</type>" +
+		"</sale_leads>";
+	
+	$('#form253_body').html("");
+	
+	fetch_requested_data('form253',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var row_class="";
+			if(result.status=='closed')
+			{
+				row_class="class='cancelled_row'";
+			}
+			var rowsHTML="";
+			rowsHTML+="<tr "+row_class+">";
+				rowsHTML+="<form id='form253_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Customer'>";
+						rowsHTML+="<textarea readonly='readonly' form='form253_"+result.id+"'>"+result.customer+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Details'>";
+						rowsHTML+="<textarea readonly='readonly' form='form253_"+result.id+"' class='dblclick_editable'>"+result.detail+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Due Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form253_"+result.id+"' class='dblclick_editable' value='"+get_my_past_date(result.due_date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Identified By'>";
+					if(result.identified_by=="")
+						rowsHTML+="<input type='text' readonly='readonly' form='form253_"+result.id+"' class='dblclick_editable' value='"+result.identified_by+"'>";
+					else
+						rowsHTML+="<input type='text' readonly='readonly' form='form253_"+result.id+"' value='"+result.identified_by+"'>";	
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form253_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form253_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form253_"+result.id+"' onclick='form253_delete_item($(this));'>";
+					if(result.status!='closed')					
+					{					
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form253_"+result.id+"' value='Follow-up' onclick=\"modal134_action('"+result.id+"','"+result.customer+"','"+result.detail+"');\">";
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form253_"+result.id+"' value='Update Contact' onclick=\"modal145_action('"+result.customer+"');\">";
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form253_"+result.id+"' value='Close Lead' onclick=\"modal153_action(this,'"+result.id+"');\">";
+					}					
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form253_body').append(rowsHTML);
+			var fields=document.getElementById("form253_"+result.id);
+			var identified_filter=fields.elements[3];
+			
+			var identified_data="<staff>"+
+								"<acc_name></acc_name>"+
+								"</staff>";
+			set_my_value_list(identified_data,identified_filter);
+					
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form253_update_item(fields);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'Customer Support');
+		});
+		hide_loader();
+	});
+};
+
+/**
+ * @form Telecalling Leads
+ * @formNo 254
+ * @Loading light
+ */
+function form254_ini()
+{
+	show_loader();
+	var fid=$("#form254_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form254_header');
+	var fname=filter_fields.elements[0].value;
+	var fidentify=filter_fields.elements[1].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form254_index');
+	var prev_element=document.getElementById('form254_prev');
+	var next_element=document.getElementById('form254_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<sale_leads count='25' start_index='"+start_index+"'>" +
+		"<id>"+fid+"</id>" +
+		"<customer>"+fname+"</customer>" +
+		"<detail></detail>" +
+		"<status></status>" +
+		"<due_date></due_date>" +
+		"<identified_by>"+fidentify+"</identified_by>" +
+		"<type exact='yes'>telecalling</type>" +
+		"</sale_leads>";
+	
+	$('#form254_body').html("");
+	
+	fetch_requested_data('form254',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var row_class="";
+			if(result.status=='closed')
+			{
+				row_class="class='cancelled_row'";
+			}
+			var rowsHTML="";
+			rowsHTML+="<tr "+row_class+">";
+				rowsHTML+="<form id='form254_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Customer'>";
+						rowsHTML+="<textarea readonly='readonly' form='form254_"+result.id+"'>"+result.customer+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Details'>";
+						rowsHTML+="<textarea readonly='readonly' form='form254_"+result.id+"' class='dblclick_editable'>"+result.detail+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Due Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form254_"+result.id+"' class='dblclick_editable' value='"+get_my_past_date(result.due_date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Identified By'>";
+					if(result.identified_by=="")
+						rowsHTML+="<input type='text' readonly='readonly' form='form254_"+result.id+"' class='dblclick_editable' value='"+result.identified_by+"'>";
+					else
+						rowsHTML+="<input type='text' readonly='readonly' form='form254_"+result.id+"' value='"+result.identified_by+"'>";	
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form254_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form254_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form254_"+result.id+"' onclick='form254_delete_item($(this));'>";
+					if(result.status!='closed')					
+					{					
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form254_"+result.id+"' value='Follow-up' onclick=\"modal134_action('"+result.id+"','"+result.customer+"','"+result.detail+"');\">";
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form254_"+result.id+"' value='Update Contact' onclick=\"modal145_action('"+result.customer+"');\">";
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form254_"+result.id+"' value='Close Lead' onclick=\"modal153_action(this,'"+result.id+"');\">";
+					}					
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form254_body').append(rowsHTML);
+			var fields=document.getElementById("form254_"+result.id);
+			var identified_filter=fields.elements[3];
+			
+			var identified_data="<staff>"+
+								"<acc_name></acc_name>"+
+								"</staff>";
+			set_my_value_list(identified_data,identified_filter);
+					
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form254_update_item(fields);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'Telecalling Support');
+		});
+		hide_loader();
+	});
+};
+
+/**
+ * @form Marketing Leads
+ * @formNo 255
+ * @Loading light
+ */
+function form255_ini()
+{
+	show_loader();
+	var fid=$("#form255_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form255_header');
+	var fname=filter_fields.elements[0].value;
+	var fidentify=filter_fields.elements[1].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form255_index');
+	var prev_element=document.getElementById('form255_prev');
+	var next_element=document.getElementById('form255_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<sale_leads count='25' start_index='"+start_index+"'>" +
+		"<id>"+fid+"</id>" +
+		"<customer>"+fname+"</customer>" +
+		"<detail></detail>" +
+		"<status></status>" +
+		"<due_date></due_date>" +
+		"<identified_by>"+fidentify+"</identified_by>" +
+		"<type exact='yes'>marketing</type>" +
+		"</sale_leads>";
+	
+	$('#form255_body').html("");
+	
+	fetch_requested_data('form255',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var row_class="";
+			if(result.status=='closed')
+			{
+				row_class="class='cancelled_row'";
+			}
+			var rowsHTML="";
+			rowsHTML+="<tr "+row_class+">";
+				rowsHTML+="<form id='form255_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Customer'>";
+						rowsHTML+="<textarea readonly='readonly' form='form255_"+result.id+"'>"+result.customer+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Details'>";
+						rowsHTML+="<textarea readonly='readonly' form='form255_"+result.id+"' class='dblclick_editable'>"+result.detail+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Due Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form255_"+result.id+"' class='dblclick_editable' value='"+get_my_past_date(result.due_date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Identified By'>";
+					if(result.identified_by=="")
+						rowsHTML+="<input type='text' readonly='readonly' form='form255_"+result.id+"' class='dblclick_editable' value='"+result.identified_by+"'>";
+					else
+						rowsHTML+="<input type='text' readonly='readonly' form='form255_"+result.id+"' value='"+result.identified_by+"'>";	
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form255_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form255_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form255_"+result.id+"' onclick='form255_delete_item($(this));'>";
+					if(result.status!='closed')					
+					{					
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form255_"+result.id+"' value='Follow-up' onclick=\"modal134_action('"+result.id+"','"+result.customer+"','"+result.detail+"');\">";
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form255_"+result.id+"' value='Update Contact' onclick=\"modal145_action('"+result.customer+"');\">";
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form255_"+result.id+"' value='Close Lead' onclick=\"modal153_action(this,'"+result.id+"');\">";
+					}					
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form255_body').append(rowsHTML);
+			var fields=document.getElementById("form255_"+result.id);
+			var identified_filter=fields.elements[3];
+			
+			var identified_data="<staff>"+
+								"<acc_name></acc_name>"+
+								"</staff>";
+			set_my_value_list(identified_data,identified_filter);
+					
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form255_update_item(fields);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'Marketing Support');
 		});
 		hide_loader();
 	});

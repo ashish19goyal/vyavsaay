@@ -9648,3 +9648,139 @@ function form251_header_ini()
 					"</store_areas>";
 	set_my_filter(branch_data,branch_filter);
 };
+
+/**
+ * @form Vendor leads
+ * @formNo 252
+ */
+function form252_header_ini()
+{
+	var filter_fields=document.getElementById('form252_header');	
+	var names_filter=filter_fields.elements[0];
+	var identified_filter=filter_fields.elements[1];
+
+	//setting autocompletes 
+	var names_data="<attributes>" +
+			"<name></name>" +
+			"<type exact='yes'>customer</type>"+
+			"<attribute exact='yes'>Support Type</attribute>"+
+			"<value exact='yes'>Vendor</value>"+
+			"</attributes>";
+
+	set_my_filter(names_data,names_filter);
+
+	//setting autocompletes 
+	var identified_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+	set_my_filter(names_data,names_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form252_ini();
+	});	
+}
+
+/**
+ * @form Customer leads
+ * @formNo 253
+ */
+function form253_header_ini()
+{
+	var filter_fields=document.getElementById('form253_header');	
+	var names_filter=filter_fields.elements[0];
+	var identified_filter=filter_fields.elements[1];
+
+	//setting autocompletes 
+	var names_data="<attributes>" +
+			"<name></name>" +
+			"<type exact='yes'>customer</type>"+
+			"<attribute exact='yes'>Support Type</attribute>"+
+			"<value exact='yes'>Customer</value>"+
+			"</attributes>";
+
+	set_my_filter(names_data,names_filter);
+
+	//setting autocompletes 
+	var identified_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+	set_my_filter(names_data,names_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form253_ini();
+	});	
+}
+
+/**
+ * @form Telecalling leads
+ * @formNo 254
+ */
+function form254_header_ini()
+{
+	var filter_fields=document.getElementById('form254_header');	
+	var names_filter=filter_fields.elements[0];
+	var identified_filter=filter_fields.elements[1];
+
+	//setting autocompletes 
+	var names_data="<attributes>" +
+			"<name></name>" +
+			"<type exact='yes'>customer</type>"+
+			"<attribute exact='yes'>Support Type</attribute>"+
+			"<value exact='yes'>Telecalling</value>"+
+			"</attributes>";
+
+	set_my_filter(names_data,names_filter);
+
+	//setting autocompletes 
+	var identified_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+	set_my_filter(names_data,names_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form254_ini();
+	});	
+}
+
+/**
+ * @form Marketing leads
+ * @formNo 255
+ */
+function form255_header_ini()
+{
+	var filter_fields=document.getElementById('form255_header');	
+	var names_filter=filter_fields.elements[0];
+	var identified_filter=filter_fields.elements[1];
+
+	//setting autocompletes 
+	var names_data="<attributes>" +
+			"<name></name>" +
+			"<type exact='yes'>customer</type>"+
+			"<attribute exact='yes'>Support Type</attribute>"+
+			"<value exact='yes'>Marketing</value>"+
+			"</attributes>";
+
+	set_my_filter(names_data,names_filter);
+
+	//setting autocompletes 
+	var identified_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+	set_my_filter(names_data,names_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form255_ini();
+	});	
+}

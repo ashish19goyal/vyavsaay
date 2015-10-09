@@ -432,6 +432,10 @@
 	"create_mts":"Create MTS",
 	"manage_mts":"Manage MTS",
 	"combo_inventory":"Combo Inventory",
-	"order_sorting":"Order Sorting"
+	"order_sorting":"Order Sorting",
+	"vendor_leads":"Vendor Support",
+	"customer_leads":"Customer Support",
+	"telecalling_leads":"Telecalling Support",
+	"marketing_leads":"Marketing Support"
 	}
 }

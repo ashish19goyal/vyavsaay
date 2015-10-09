@@ -7076,14 +7076,7 @@ function form213_delete_item(button)
 						"<notes>Sale lead for customer "+customer+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-			}	
+			delete_row(data_xml,activity_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -8324,6 +8317,150 @@ function form251_delete_item(button)
 				
 			},bag_items_xml);
 			
+			delete_row(data_xml,activity_xml);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Vendor Leads
+ * @param button
+ */
+function form252_delete_item(button)
+{
+	if(is_delete_access('form252'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var customer=form.elements[0].value;
+			var data_id=form.elements[4].value;
+			var data_xml="<sale_leads>" +
+						"<id>"+data_id+"</id>" +
+						"<customer>"+customer+"</customer>" +
+						"</sale_leads>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>sale_leads</tablename>" +
+						"<link_to>form252</link_to>" +
+						"<title>Delete</title>" +
+						"<notes>Lead for customer "+customer+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			delete_row(data_xml,activity_xml);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Customer Leads
+ * @param button
+ */
+function form253_delete_item(button)
+{
+	if(is_delete_access('form253'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var customer=form.elements[0].value;
+			var data_id=form.elements[4].value;
+			var data_xml="<sale_leads>" +
+						"<id>"+data_id+"</id>" +
+						"<customer>"+customer+"</customer>" +
+						"</sale_leads>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>sale_leads</tablename>" +
+						"<link_to>form253</link_to>" +
+						"<title>Delete</title>" +
+						"<notes>Lead for customer "+customer+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			delete_row(data_xml,activity_xml);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Telecalling Leads
+ * @param button
+ */
+function form254_delete_item(button)
+{
+	if(is_delete_access('form254'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var customer=form.elements[0].value;
+			var data_id=form.elements[4].value;
+			var data_xml="<sale_leads>" +
+						"<id>"+data_id+"</id>" +
+						"<customer>"+customer+"</customer>" +
+						"</sale_leads>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>sale_leads</tablename>" +
+						"<link_to>form254</link_to>" +
+						"<title>Delete</title>" +
+						"<notes>Lead for customer "+customer+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			delete_row(data_xml,activity_xml);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Marketing Leads
+ * @param button
+ */
+function form255_delete_item(button)
+{
+	if(is_delete_access('form255'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var customer=form.elements[0].value;
+			var data_id=form.elements[4].value;
+			var data_xml="<sale_leads>" +
+						"<id>"+data_id+"</id>" +
+						"<customer>"+customer+"</customer>" +
+						"</sale_leads>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>sale_leads</tablename>" +
+						"<link_to>form255</link_to>" +
+						"<title>Delete</title>" +
+						"<notes>Lead for customer "+customer+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
 			delete_row(data_xml,activity_xml);
 			$(button).parent().parent().remove();
 		});

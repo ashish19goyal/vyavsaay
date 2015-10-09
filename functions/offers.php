@@ -4,6 +4,10 @@
 			<li><a id='form81_link' href='#form81' onclick='form81_header_ini(); form81_ini();' data-i18n='form.sale_leads'></a></li>
 			<li><a id='form182_link' href='#form182' onclick='form182_header_ini(); form182_ini();' data-i18n='form.sale_leads'></a></li>
 			<li><a id='form213_link' href='#form213' onclick='form213_header_ini(); form213_ini();' data-i18n='form.sale_leads'></a></li>
+			<li><a id='form252_link' href='#form252' onclick='form252_header_ini(); form252_ini();' data-i18n='form.vendor_leads'></a></li>
+			<li><a id='form253_link' href='#form253' onclick='form253_header_ini(); form253_ini();' data-i18n='form.customer_leads'></a></li>
+			<li><a id='form254_link' href='#form254' onclick='form254_header_ini(); form254_ini();' data-i18n='form.telecalling_leads'></a></li>
+			<li><a id='form255_link' href='#form255' onclick='form255_header_ini(); form255_ini();' data-i18n='form.marketing_leads'></a></li>
 			<li><a id='form35_link' href='#form35' onclick='form35_header_ini(); form35_ini();' data-i18n='form.manage_offers'></a></li>
 			<li><a id='form233_link' href='#form233' onclick='form233_header_ini(); form233_ini();' data-i18n='form.newsletter_creator'></a></li>
 			<li><a id='form2_link' href='#form2' onclick='form2_header_ini(); form2_ini();' data-i18n='form.create_pamphlet'></a></li>
@@ -24,6 +28,10 @@
 			include "forms/form81.php";
 			include "forms/form182.php";
 			include "forms/form213.php";
+			include "forms/form252.php";
+			include "forms/form253.php";
+			include "forms/form254.php";
+			include "forms/form255.php";
 			include "forms/form35.php";
 			include "forms/form233.php";
 			include "forms/form2.php";

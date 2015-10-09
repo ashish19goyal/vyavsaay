@@ -11900,14 +11900,7 @@ function form213_update_item(form)
 					"<notes>Sale lead for customer "+customer+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
+		update_row(data_xml,activity_xml);
 		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -13376,6 +13369,170 @@ function form250_update_form()
 				$("#modal77").dialog("open");
 			}
 		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Vendor leads
+ * @param button
+ */
+function form252_update_item(form)
+{
+	if(is_update_access('form252'))
+	{
+		var customer=form.elements[0].value;
+		var detail=form.elements[1].value;
+		var due_date=get_raw_time(form.elements[2].value);
+		var identified_by=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<sale_leads>" +
+					"<id>"+data_id+"</id>" +
+					"<detail>"+detail+"</detail>" +
+					"<due_date>"+due_date+"</due_date>" +
+					"<identified_by>"+identified_by+"</identified_by>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_leads>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>sale_leads</tablename>" +
+					"<link_to>form252</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Lead for customer "+customer+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		update_row(data_xml,activity_xml);
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Customer leads
+ * @param button
+ */
+function form253_update_item(form)
+{
+	if(is_update_access('form253'))
+	{
+		var customer=form.elements[0].value;
+		var detail=form.elements[1].value;
+		var due_date=get_raw_time(form.elements[2].value);
+		var identified_by=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<sale_leads>" +
+					"<id>"+data_id+"</id>" +
+					"<detail>"+detail+"</detail>" +
+					"<due_date>"+due_date+"</due_date>" +
+					"<identified_by>"+identified_by+"</identified_by>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_leads>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>sale_leads</tablename>" +
+					"<link_to>form253</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Lead for customer "+customer+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		update_row(data_xml,activity_xml);
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Telecalling leads
+ * @param button
+ */
+function form254_update_item(form)
+{
+	if(is_update_access('form254'))
+	{
+		var customer=form.elements[0].value;
+		var detail=form.elements[1].value;
+		var due_date=get_raw_time(form.elements[2].value);
+		var identified_by=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<sale_leads>" +
+					"<id>"+data_id+"</id>" +
+					"<detail>"+detail+"</detail>" +
+					"<due_date>"+due_date+"</due_date>" +
+					"<identified_by>"+identified_by+"</identified_by>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_leads>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>sale_leads</tablename>" +
+					"<link_to>form254</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Lead for customer "+customer+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		update_row(data_xml,activity_xml);
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Marketing leads
+ * @param button
+ */
+function form255_update_item(form)
+{
+	if(is_update_access('form255'))
+	{
+		var customer=form.elements[0].value;
+		var detail=form.elements[1].value;
+		var due_date=get_raw_time(form.elements[2].value);
+		var identified_by=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<sale_leads>" +
+					"<id>"+data_id+"</id>" +
+					"<detail>"+detail+"</detail>" +
+					"<due_date>"+due_date+"</due_date>" +
+					"<identified_by>"+identified_by+"</identified_by>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_leads>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>sale_leads</tablename>" +
+					"<link_to>form255</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Lead for customer "+customer+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		update_row(data_xml,activity_xml);
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
 	}
 	else
 	{

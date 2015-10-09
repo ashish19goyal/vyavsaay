@@ -15092,3 +15092,350 @@ function form250_add_item()
 	}
 }
 
+/**
+ * @form Vendor Leads
+ * @formNo 252
+ */
+function form252_add_item()
+{
+	if(is_create_access('form252'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form252_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Customer'>";
+				rowsHTML+="<input type='text' form='form252_"+id+"' required value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' id='form252_add_customer_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Details'>";
+				rowsHTML+="<textarea form='form252_"+id+"' class='dblclick_editable'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Due Date'>";
+				rowsHTML+="<input type='text' class='dblclick_editable' form='form252_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Identified By'>";
+				rowsHTML+="<input type='text' form='form252_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form252_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form252_"+id+"'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form252_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+				rowsHTML+="<input type='button' class='generic_icon' form='form252_"+id+"' value='Follow-up' onclick='modal134_action();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form252_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form252_"+id);
+		var customer_filter=fields.elements[0];
+		var detail_filter=fields.elements[1];
+		var due_filter=fields.elements[2];
+		var by_filter=fields.elements[3];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form252_create_item(fields);
+		});
+					
+		var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";	
+		set_my_value_list_func(customer_data,customer_filter,function () 
+		{
+			$(customer_filter).focus();
+		});
+		
+		$(due_filter).datepicker();
+		due_filter.value=get_my_past_date(parseFloat(get_my_time())+86400000);
+		
+		var staff_data="<staff>" +
+				"<acc_name></acc_name>" +
+				"</staff>";
+		set_my_value_list(staff_data,by_filter);
+
+		var add_customer=document.getElementById('form252_add_customer_'+id);
+		$(add_customer).on('click',function()
+		{
+			modal161_action('Vendor',function()
+			{	
+				var customer_data="<customers>" +
+					"<acc_name></acc_name>" +
+					"</customers>";	
+				set_my_value_list_func(customer_data,customer_filter,function () 
+				{
+					$(customer_filter).focus();
+				});
+			});
+		});
+		
+		$('textarea').autosize();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
+ * @form Customer Leads
+ * @formNo 253
+ */
+function form253_add_item()
+{
+	if(is_create_access('form253'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form253_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Customer'>";
+				rowsHTML+="<input type='text' form='form253_"+id+"' required value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' id='form253_add_customer_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Details'>";
+				rowsHTML+="<textarea form='form253_"+id+"' class='dblclick_editable'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Due Date'>";
+				rowsHTML+="<input type='text' class='dblclick_editable' form='form253_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Identified By'>";
+				rowsHTML+="<input type='text' form='form253_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form253_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form253_"+id+"'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form253_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+				rowsHTML+="<input type='button' class='generic_icon' form='form253_"+id+"' value='Follow-up' onclick='modal134_action();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form253_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form253_"+id);
+		var customer_filter=fields.elements[0];
+		var detail_filter=fields.elements[1];
+		var due_filter=fields.elements[2];
+		var by_filter=fields.elements[3];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form253_create_item(fields);
+		});
+					
+		var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";	
+		set_my_value_list_func(customer_data,customer_filter,function () 
+		{
+			$(customer_filter).focus();
+		});
+		
+		$(due_filter).datepicker();
+		due_filter.value=get_my_past_date(parseFloat(get_my_time())+86400000);
+		
+		var staff_data="<staff>" +
+				"<acc_name></acc_name>" +
+				"</staff>";
+		set_my_value_list(staff_data,by_filter);
+
+		var add_customer=document.getElementById('form253_add_customer_'+id);
+		$(add_customer).on('click',function()
+		{
+			modal161_action('Customer',function()
+			{	
+				var customer_data="<customers>" +
+					"<acc_name></acc_name>" +
+					"</customers>";	
+				set_my_value_list_func(customer_data,customer_filter,function () 
+				{
+					$(customer_filter).focus();
+				});
+			});
+		});
+
+		$('textarea').autosize();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
+ * @form Telecalling Leads
+ * @formNo 254
+ */
+function form254_add_item()
+{
+	if(is_create_access('form254'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form254_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Customer'>";
+				rowsHTML+="<input type='text' form='form254_"+id+"' required value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' id='form254_add_customer_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Details'>";
+				rowsHTML+="<textarea form='form254_"+id+"' class='dblclick_editable'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Due Date'>";
+				rowsHTML+="<input type='text' class='dblclick_editable' form='form254_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Identified By'>";
+				rowsHTML+="<input type='text' form='form254_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form254_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form254_"+id+"'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form254_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+				rowsHTML+="<input type='button' class='generic_icon' form='form254_"+id+"' value='Follow-up' onclick='modal134_action();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form254_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form254_"+id);
+		var customer_filter=fields.elements[0];
+		var detail_filter=fields.elements[1];
+		var due_filter=fields.elements[2];
+		var by_filter=fields.elements[3];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form254_create_item(fields);
+		});
+					
+		var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";	
+		set_my_value_list_func(customer_data,customer_filter,function () 
+		{
+			$(customer_filter).focus();
+		});
+		
+		$(due_filter).datepicker();
+		due_filter.value=get_my_past_date(parseFloat(get_my_time())+86400000);
+		
+		var staff_data="<staff>" +
+				"<acc_name></acc_name>" +
+				"</staff>";
+		set_my_value_list(staff_data,by_filter);
+
+		var add_customer=document.getElementById('form254_add_customer_'+id);
+		$(add_customer).on('click',function()
+		{
+			modal161_action('Telecalling',function()
+			{	
+				var customer_data="<customers>" +
+					"<acc_name></acc_name>" +
+					"</customers>";	
+				set_my_value_list_func(customer_data,customer_filter,function () 
+				{
+					$(customer_filter).focus();
+				});
+			});
+		});
+	
+		$('textarea').autosize();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
+ * @form Marketing Leads
+ * @formNo 255
+ */
+function form255_add_item()
+{
+	if(is_create_access('form255'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form255_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Customer'>";
+				rowsHTML+="<input type='text' form='form255_"+id+"' required value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' id='form255_add_customer_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Details'>";
+				rowsHTML+="<textarea form='form255_"+id+"' class='dblclick_editable'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Due Date'>";
+				rowsHTML+="<input type='text' class='dblclick_editable' form='form255_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Identified By'>";
+				rowsHTML+="<input type='text' form='form255_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form255_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form255_"+id+"'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form255_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+				rowsHTML+="<input type='button' class='generic_icon' form='form255_"+id+"' value='Follow-up' onclick='modal134_action();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form255_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form255_"+id);
+		var customer_filter=fields.elements[0];
+		var detail_filter=fields.elements[1];
+		var due_filter=fields.elements[2];
+		var by_filter=fields.elements[3];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form255_create_item(fields);
+		});
+					
+		var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";	
+		set_my_value_list_func(customer_data,customer_filter,function () 
+		{
+			$(customer_filter).focus();
+		});
+		
+		$(due_filter).datepicker();
+		due_filter.value=get_my_past_date(parseFloat(get_my_time())+86400000);
+		
+		var staff_data="<staff>" +
+				"<acc_name></acc_name>" +
+				"</staff>";
+		set_my_value_list(staff_data,by_filter);
+
+		var add_customer=document.getElementById('form255_add_customer_'+id);
+		$(add_customer).on('click',function()
+		{
+			modal161_action('Marketing',function()
+			{	
+				var customer_data="<customers>" +
+					"<acc_name></acc_name>" +
+					"</customers>";	
+				set_my_value_list_func(customer_data,customer_filter,function () 
+				{
+					$(customer_filter).focus();
+				});
+			});
+		});
+
+		$('textarea').autosize();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}

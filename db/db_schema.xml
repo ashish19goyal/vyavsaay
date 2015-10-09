@@ -847,6 +847,7 @@
 			<identified_by index='yes' type="TEXT"></identified_by>
 			<source_id index='yes' type="BIGINT"></source_id>
 			<status index='yes' type="VARCHAR(20)"></status><!--open/closed-->
+			<type index='yes' type="VARCHAR(20)"></type><!--vendor/customer/telecalling/marketing-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</sale_leads>

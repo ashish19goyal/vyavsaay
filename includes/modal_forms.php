@@ -1536,4 +1536,22 @@
 		</form>
 	</div>
 
+	<div id="modal161" title="Add new customer">
+		<form id='modal161_form' autocomplete="off">
+			<fieldset>
+				<label>Category: <input type='text' class='modal161_attributes' name='Category'></label><br>
+				<label>Sub-Category: <input type='text' class='modal161_attributes' name='Sub-Category'></label><br>
+				<label>Name: <input type='text' required></label><br>
+				<label>Phone: <input type="tel"></label><br>
+				<label>Email: <input type="text"></label><br>
+				<label>Address: <textarea></textarea></label><br>
+				<label>Pincode: <input type="number"></label><br>
+				<label>City: <input type="text"></label><br>
+				<label>Website: <input type="text" class='modal161_attributes' name='Website'></label><br>
+				<label>Contact Person: <input type="text" class='modal161_attributes' name='Contact'></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+	
 </div>

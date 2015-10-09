@@ -12553,3 +12553,131 @@ function modal160_action()
 	
 	$("#modal160").dialog("open");
 }
+
+/**
+ * @modalNo 161
+ * @modal Add new customer (CRM)
+ * @param button
+ */
+function modal161_action(support_type,func)
+{
+	var form=document.getElementById('modal161_form');
+	
+	var fcat=form.elements[1];
+	var fsubcat=form.elements[2];
+	var fname=form.elements[3];
+	var fphone=form.elements[4];
+	var femail=form.elements[5];
+	var faddress=form.elements[6];
+	var fpincode=form.elements[7];
+	var fcity=form.elements[8];
+	var fweb=form.elements[9];
+	var fperson=form.elements[10];
+	
+	///////////////////////////
+	fcat.value="";
+	fsubcat.value="";
+	fname.value="";
+	fphone.value="";
+	femail.value="";
+	faddress.value="";
+	fpincode.value="";
+	fcity.value="";
+	fweb.value="";
+	fperson.value="";
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form30'))
+		{
+			var name=fname.value;
+			var phone=fphone.value;
+			var acc_name=name+" ("+phone+")";
+			var email=femail.value;
+			var address=faddress.value;
+			
+			name = name.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			name = name.replace(/â/g,'');
+			name = name.replace(/&/g, "and");
+			
+			address = address.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			address = address.replace(/â/g,'');
+			address = address.replace(/&/g, "and");
+			
+			var pincode=fpincode.value;
+			var city=fcity.value;
+			var data_id=get_new_key();
+			var last_updated=get_my_time();
+			var data_xml="<customers>" +
+						"<id>"+data_id+"</id>" +
+						"<name>"+name+"</name>" +
+						"<phone>"+phone+"</phone>" +
+						"<email>"+email+"</email>" +
+						"<acc_name unique='yes'>"+acc_name+"</acc_name>" +
+						"<status>active</status>" +
+						"<address>"+address+"</address>" +
+						"<pincode>"+pincode+"</pincode>" +
+						"<city>"+city+"</city>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</customers>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>customers</tablename>" +
+						"<link_to>form30</link_to>" +
+						"<title>Added</title>" +
+						"<notes>New customer "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			var account_xml="<accounts>" +
+						"<id>"+data_id+"</id>" +
+						"<description></description>" +
+						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
+						"<type>customer</type>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</accounts>";
+			var attribute_xml="<attributes>" +
+							"<id>"+data_id+"</id>" +
+							"<name>"+acc_name+"</name>" +
+							"<type>customer</type>" +
+							"<attribute>Support Type</attribute>" +
+							"<value>"+support_type+"</value>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</attributes>";
+								
+			create_row_func(data_xml,activity_xml,func);
+			create_simple(account_xml);
+			create_simple(attribute_xml);
+			
+			var business_title=get_session_var('title');
+			
+			var id=get_new_key();
+			$(".modal161_attributes").each(function()
+			{
+				id++;
+				var value=$(this).val();
+				var attribute=$(this).attr('name');
+				if(value!="")
+				{
+					var attribute_xml="<attributes>" +
+							"<id>"+id+"</id>" +
+							"<name>"+acc_name+"</name>" +
+							"<type>customer</type>" +
+							"<attribute>"+attribute+"</attribute>" +
+							"<value>"+value+"</value>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</attributes>";
+					create_simple(attribute_xml);
+				}
+			});
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal161").dialog("close");
+	});
+	
+	$("#modal161").dialog("open");
+}

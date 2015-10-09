@@ -3583,6 +3583,50 @@
 			<tables>--mts--transit_bags--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form252</name>
+			<display_name>vendor_leads</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--sale_leads--followups--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form253</name>
+			<display_name>customer_leads</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--sale_leads--followups--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form254</name>
+			<display_name>telecalling_leads</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--sale_leads--followups--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form255</name>
+			<display_name>marketing_leads</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--sale_leads--followups--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -6801,6 +6845,50 @@
 			<username>master</username>
 			<element_id>form251</element_id>
 			<element_name>manage_mts</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form252</element_id>
+			<element_name>vendor_leads</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form253</element_id>
+			<element_name>customer_leads</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form254</element_id>
+			<element_name>telecalling_leads</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form255</element_id>
+			<element_name>marketing_leads</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

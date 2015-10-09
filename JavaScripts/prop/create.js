@@ -15077,7 +15077,6 @@ function form209_create_form()
 }
 
 
-
 /**
  * @form Sale leads
  * @param button
@@ -17264,6 +17263,386 @@ function form250_create_form(func)
 				$("#modal78").dialog("open");
 			}
 		},mts_columns);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Vendor leads
+ * @param button
+ */
+function form252_create_item(form)
+{
+	if(is_create_access('form252'))
+	{
+		var customer=form.elements[0].value;
+		var detail=form.elements[1].value;
+		var due_date=get_raw_time(form.elements[2].value);
+		var identified_by=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<sale_leads>" +
+					"<id>"+data_id+"</id>" +
+					"<customer>"+customer+"</customer>" +
+					"<detail>"+detail+"</detail>" +
+					"<due_date>"+due_date+"</due_date>" +
+					"<identified_by>"+identified_by+"</identified_by>" +
+					"<type>vendor</type>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_leads>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>sale_leads</tablename>" +
+					"<link_to>form252</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Lead for customer "+customer+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		create_row(data_xml,activity_xml);
+		
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+		var customer_data="<customers>"+
+						"<name></name>"+
+						"<phone></phone>"+
+						"<email></email>"+
+						"<acc_name exact='yes'>"+customer+"</acc_name>"+
+						"</customers>";
+		fetch_requested_data('',customer_data,function(customers)
+		{
+			var customer_name=customers[0].name;
+			var customer_phone=customers[0].phone;
+			var business_title=get_session_var('title');
+			var sms_content=get_session_var('sms_content');			
+			var message=sms_content.replace(/customer_name/g,customer_name);
+			message=message.replace(/business_title/g,business_title);
+			
+			send_sms(customer_phone,message,'transaction');
+			///////////////////////////////////////////////////////////////////////////////
+
+			var nl_name=get_session_var('default_newsletter');
+			var nl_id_xml="<newsletter>"+
+						"<id></id>"+
+						"<name exact='yes'>"+nl_name+"</name>"+
+						"</newsletter>";
+			get_single_column_data(function(nls)
+			{
+				var subject=nl_name;
+				var nl_id=nls[0];	
+				print_newsletter(nl_name,nl_id,'mail',function(container)
+				{
+					var message=container.innerHTML;
+					var to=customer_name+":"+customers[0].email;
+					var from=get_session_var('email');
+					send_email(to,from,business_title,subject,message,function(){});
+				});
+			},nl_id_xml);
+		});
+
+		var del_button=form.elements[6];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form252_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form252_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Customer leads
+ * @param button
+ */
+function form253_create_item(form)
+{
+	if(is_create_access('form253'))
+	{
+		var customer=form.elements[0].value;
+		var detail=form.elements[1].value;
+		var due_date=get_raw_time(form.elements[2].value);
+		var identified_by=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<sale_leads>" +
+					"<id>"+data_id+"</id>" +
+					"<customer>"+customer+"</customer>" +
+					"<detail>"+detail+"</detail>" +
+					"<due_date>"+due_date+"</due_date>" +
+					"<identified_by>"+identified_by+"</identified_by>" +
+					"<type>customer</type>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_leads>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>sale_leads</tablename>" +
+					"<link_to>form253</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Lead for customer "+customer+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		create_row(data_xml,activity_xml);
+		
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+		var customer_data="<customers>"+
+						"<name></name>"+
+						"<phone></phone>"+
+						"<email></email>"+
+						"<acc_name exact='yes'>"+customer+"</acc_name>"+
+						"</customers>";
+		fetch_requested_data('',customer_data,function(customers)
+		{
+			var customer_name=customers[0].name;
+			var customer_phone=customers[0].phone;
+			var business_title=get_session_var('title');
+			var sms_content=get_session_var('sms_content');			
+			var message=sms_content.replace(/customer_name/g,customer_name);
+			message=message.replace(/business_title/g,business_title);
+			
+			send_sms(customer_phone,message,'transaction');
+			///////////////////////////////////////////////////////////////////////////////
+
+			var nl_name=get_session_var('default_newsletter');
+			var nl_id_xml="<newsletter>"+
+						"<id></id>"+
+						"<name exact='yes'>"+nl_name+"</name>"+
+						"</newsletter>";
+			get_single_column_data(function(nls)
+			{
+				var subject=nl_name;
+				var nl_id=nls[0];	
+				print_newsletter(nl_name,nl_id,'mail',function(container)
+				{
+					var message=container.innerHTML;
+					var to=customer_name+":"+customers[0].email;
+					var from=get_session_var('email');
+					send_email(to,from,business_title,subject,message,function(){});
+				});
+			},nl_id_xml);
+		});
+
+		var del_button=form.elements[6];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form253_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form253_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Telecalling leads
+ * @param button
+ */
+function form254_create_item(form)
+{
+	if(is_create_access('form254'))
+	{
+		var customer=form.elements[0].value;
+		var detail=form.elements[1].value;
+		var due_date=get_raw_time(form.elements[2].value);
+		var identified_by=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<sale_leads>" +
+					"<id>"+data_id+"</id>" +
+					"<customer>"+customer+"</customer>" +
+					"<detail>"+detail+"</detail>" +
+					"<due_date>"+due_date+"</due_date>" +
+					"<identified_by>"+identified_by+"</identified_by>" +
+					"<type>telecalling</type>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_leads>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>sale_leads</tablename>" +
+					"<link_to>form254</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Lead for customer "+customer+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		create_row(data_xml,activity_xml);
+		
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+		var customer_data="<customers>"+
+						"<name></name>"+
+						"<phone></phone>"+
+						"<email></email>"+
+						"<acc_name exact='yes'>"+customer+"</acc_name>"+
+						"</customers>";
+		fetch_requested_data('',customer_data,function(customers)
+		{
+			var customer_name=customers[0].name;
+			var customer_phone=customers[0].phone;
+			var business_title=get_session_var('title');
+			var sms_content=get_session_var('sms_content');			
+			var message=sms_content.replace(/customer_name/g,customer_name);
+			message=message.replace(/business_title/g,business_title);
+			
+			send_sms(customer_phone,message,'transaction');
+			///////////////////////////////////////////////////////////////////////////////
+
+			var nl_name=get_session_var('default_newsletter');
+			var nl_id_xml="<newsletter>"+
+						"<id></id>"+
+						"<name exact='yes'>"+nl_name+"</name>"+
+						"</newsletter>";
+			get_single_column_data(function(nls)
+			{
+				var subject=nl_name;
+				var nl_id=nls[0];	
+				print_newsletter(nl_name,nl_id,'mail',function(container)
+				{
+					var message=container.innerHTML;
+					var to=customer_name+":"+customers[0].email;
+					var from=get_session_var('email');
+					send_email(to,from,business_title,subject,message,function(){});
+				});
+			},nl_id_xml);
+		});
+
+		var del_button=form.elements[6];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form254_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form254_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Marketing leads
+ * @param button
+ */
+function form255_create_item(form)
+{
+	if(is_create_access('form255'))
+	{
+		var customer=form.elements[0].value;
+		var detail=form.elements[1].value;
+		var due_date=get_raw_time(form.elements[2].value);
+		var identified_by=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<sale_leads>" +
+					"<id>"+data_id+"</id>" +
+					"<customer>"+customer+"</customer>" +
+					"<detail>"+detail+"</detail>" +
+					"<due_date>"+due_date+"</due_date>" +
+					"<identified_by>"+identified_by+"</identified_by>" +
+					"<type>marketing</type>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_leads>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>sale_leads</tablename>" +
+					"<link_to>form255</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Lead for customer "+customer+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		create_row(data_xml,activity_xml);
+		
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+		var customer_data="<customers>"+
+						"<name></name>"+
+						"<phone></phone>"+
+						"<email></email>"+
+						"<acc_name exact='yes'>"+customer+"</acc_name>"+
+						"</customers>";
+		fetch_requested_data('',customer_data,function(customers)
+		{
+			var customer_name=customers[0].name;
+			var customer_phone=customers[0].phone;
+			var business_title=get_session_var('title');
+			var sms_content=get_session_var('sms_content');			
+			var message=sms_content.replace(/customer_name/g,customer_name);
+			message=message.replace(/business_title/g,business_title);
+			
+			send_sms(customer_phone,message,'transaction');
+			///////////////////////////////////////////////////////////////////////////////
+
+			var nl_name=get_session_var('default_newsletter');
+			var nl_id_xml="<newsletter>"+
+						"<id></id>"+
+						"<name exact='yes'>"+nl_name+"</name>"+
+						"</newsletter>";
+			get_single_column_data(function(nls)
+			{
+				var subject=nl_name;
+				var nl_id=nls[0];	
+				print_newsletter(nl_name,nl_id,'mail',function(container)
+				{
+					var message=container.innerHTML;
+					var to=customer_name+":"+customers[0].email;
+					var from=get_session_var('email');
+					send_email(to,from,business_title,subject,message,function(){});
+				});
+			},nl_id_xml);
+		});
+
+		var del_button=form.elements[6];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form255_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form255_update_item(form);
+		});
 	}
 	else
 	{
