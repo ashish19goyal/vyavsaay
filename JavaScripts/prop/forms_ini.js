@@ -1988,6 +1988,7 @@ function form24_ini()
 					});
 				});
 				form24_get_totals();
+				$('textarea').autosize();
 				hide_loader();
 			});
 		});
@@ -11447,7 +11448,7 @@ function form122_ini()
 					rowsHTML+="<td data-th='Item'>";
 						rowsHTML+="<input type='hidden' form='form122_"+id+"'>";
 						rowsHTML+="<b>SKU</b>: <input type='text' form='form122_"+id+"' value='"+result.product_name+"' required readonly='readonly'>";
-						rowsHTML+="<br><b>Name</b>: <input type='text' readonly='readonly' form='form122_"+id+"' value='"+result.item_desc+"' readonly='readonly'>";
+						rowsHTML+="<br><b>Name</b>: <textarea readonly='readonly' form='form122_"+id+"' readonly='readonly'>"+result.item_desc+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Batch'>";
 						rowsHTML+="<input type='text' form='form122_"+id+"' value='"+result.batch+"' required readonly='readonly'>";
@@ -11485,6 +11486,7 @@ function form122_ini()
 				
 			});
 			form122_get_totals();
+			$('textarea').autosize();
 			hide_loader();
 		});
 	}
@@ -17103,7 +17105,7 @@ function form165_ini()
 						});
 					}
 				});
-		
+				form165_get_totals();
 				longPressEditable($('.dblclick_editable'));
 				
 				hide_loader();

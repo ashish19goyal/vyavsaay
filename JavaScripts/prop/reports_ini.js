@@ -7072,6 +7072,7 @@ function report90_ini()
 		  	   {
 					clearInterval(report90_complete);
 					$('textarea').autosize();
+					report90_get_totals();
 					hide_loader();   
 		  	   }
 			},500);

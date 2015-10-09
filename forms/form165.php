@@ -1,6 +1,7 @@
 <div id='form165' class='function_detail'>
 	<form id='form165_master' autocomplete="off">
 		<fieldset>
+			<label style='background-color:#555;color:#fff;padding:5px;'>Pending Quantity<br><input type='number' step='any' style='font-weight:bold;' readonly='readonly' name='pending_count'></label>
 			<label>SKU<br><input type='text' name='sku'></label>
 			<label>Batch<br><input type='text' name='batch'></label>
 			<label>	

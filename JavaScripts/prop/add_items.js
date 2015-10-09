@@ -1254,7 +1254,8 @@ function form24_add_item()
 		});
 
 		form24_get_totals();
-		longPressEditable($('.dblclick_editable'));		
+		longPressEditable($('.dblclick_editable'));	
+		$('textarea').autosize();	
 	}
 	else
 	{
@@ -5473,7 +5474,7 @@ function form122_add_item()
 			rowsHTML+="<td data-th='Item'>";
 				rowsHTML+="<input type='text' required form='form122_"+id+"'>";
 				rowsHTML+="<br><b>SKU</b>: <input type='text' form='form122_"+id+"' required>";
-				rowsHTML+="<br><b>Name</b>: <input type='text' readonly='readonly' form='form122_"+id+"'>";
+				rowsHTML+="<br><b>Name</b>: <textarea readonly='readonly' form='form122_"+id+"'></textarea>";
 				rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Barcode' id='form122_bracode_image_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
@@ -5906,6 +5907,9 @@ function form122_add_item()
 				qc_image.setAttribute('class','red_circle');
 			}
 		});
+
+		$('textarea').autosize();
+			
 	}
 	else
 	{

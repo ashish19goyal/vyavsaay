@@ -489,6 +489,61 @@ function form158_get_totals()
 	longPressEditable($('.dblclick_editable'));
 }
 
+
+/**
+ * @form Put Away
+ * @formNo 165
+ * @param button
+ */
+function form165_get_totals()
+{
+	var master_form=document.getElementById('form165_master');
+
+	var total_tbp=0;
+	var total_placed=0;
+	
+	$("[id^='row_form165_']").each(function(index)
+	{
+		if(!isNaN(parseFloat(this.elements[2].value)))
+		{
+			total_tbp+=parseFloat(this.elements[2].value);
+		}		
+		if(!isNaN(parseFloat(this.elements[3].value)))
+		{
+			total_placed+=parseFloat(this.elements[3].value);
+		}		
+
+	});
+	
+	master_form.elements['pending_count'].value=total_tbp-total_placed;
+}
+
+/**
+ * @form Order picklist
+ * @formNo 90
+ * @param button
+ */
+function report90_get_totals()
+{
+	var master_form=document.getElementById('report90_header');
+
+	var total_tbp=0;
+	var total_picked=0;
+	
+	$("[id^='row_report90_']").each(function(index)
+	{
+		if(!isNaN(parseFloat(this.elements[3].value)))
+		{
+			total_tbp+=parseFloat(this.elements[3].value);
+		}		
+		if(!isNaN(parseFloat(this.elements[4].value)))
+		{
+			total_picked+=parseFloat(this.elements[4].value);
+		}
+	});	
+	master_form.elements['pending_count'].value=total_tbp-total_picked;
+}
+
 function form178_get_totals()
 {
 	var amount=0;

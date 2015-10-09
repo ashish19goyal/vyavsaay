@@ -11354,7 +11354,7 @@ function modal150_action(rack,report_id)
 	$(save_button).on('click',function (event) 
 	{
 		event.preventDefault();
-				
+		var master_form_array=[];		
 		$("[id^='modal150_row_']").each(function(index)
 		{
 			//console.log('modal_row_parsed');
@@ -11362,16 +11362,30 @@ function modal150_action(rack,report_id)
 			
 			var unpicked_quantity=parseFloat($(this).find('td:nth-child(3)').html());
 			
+			master_form_array.push("row_"+report_id+"_"+record_id);
 			var master_form=document.getElementById("row_"+report_id+"_"+record_id);
 			var to_pick_quantity=parseFloat(master_form.elements[3].value);
 			var old_pick_quantity=parseFloat(master_form.elements[4].value);
 			var new_pick_quantity=to_pick_quantity-unpicked_quantity;
 			master_form.elements[4].value=new_pick_quantity;
 
+			//$(master_form).trigger('submit');
+		});
+		
+		master_form_array=array_unique(master_form_array);
+		//console.log(master_form_array);		
+		
+		master_form_array.forEach(function(master_form_id)
+		{
+			var master_form=document.getElementById(master_form_id);
 			$(master_form).trigger('submit');
 		});
 		
 		$("#modal150").dialog("close");	
+		if(report_id=='report90')
+		{		
+			report90_get_totals();
+		}
 		var report_form=document.getElementById(report_id+'_header');
 		var rack_filter=report_form.elements['rack'];
 		rack_filter.value="";
@@ -11518,13 +11532,16 @@ function modal152_action(rack)
 	$(save_button).on('click',function (event) 
 	{
 		event.preventDefault();
-				
+		
+		var master_form_array=[];		
 		$("[id^='modal152_row_']").each(function(index)
 		{
 			//console.log('modal_row_parsed');
 			var record_id=$(this).attr('data-id');
 			var unplaced_quantity=parseFloat($(this).find('td:nth-child(3)').html());
 			
+			master_form_array.push("row_form165_"+record_id);
+			//console.log(record_id);			
 			var master_form=document.getElementById("row_form165_"+record_id);
 			var to_place_quantity=parseFloat(master_form.elements[2].value);
 			var old_placed_quantity=parseFloat(master_form.elements[3].value);
@@ -11539,9 +11556,20 @@ function modal152_action(rack)
 
 			master_form.elements[3].value=new_placed_quantity;
 
-			$(master_form).trigger('submit');
+			//$(master_form).trigger('submit');
 		});
+		
+		master_form_array=array_unique(master_form_array);
+		//console.log(master_form_array);		
+		
+		master_form_array.forEach(function(master_form_id)
+		{
+			var master_form=document.getElementById(master_form_id);
+			$(master_form).trigger('submit');
+		});		
+
 		$("#modal152").dialog("close");
+		form165_get_totals();
 		var report_form=document.getElementById('form165_master');
 		var rack_filter=report_form.elements['rack'];
 		rack_filter.value="";
