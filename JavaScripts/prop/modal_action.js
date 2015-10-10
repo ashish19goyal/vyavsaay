@@ -11208,7 +11208,7 @@ function modal149_action()
 				var order_history=[];
 				var history_object=new Object();
 				history_object.timeStamp=get_my_time();
-				history_object.details="Order dispatched from Shopclues";				
+				history_object.details="Order dispatched";				
 				history_object.location=row['Return Address2'];
 				if(type_filter.value=='PREPAID')
 				{
