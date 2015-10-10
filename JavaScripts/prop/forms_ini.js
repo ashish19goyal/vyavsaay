@@ -1943,8 +1943,22 @@ function form24_ini()
 		
 			fetch_requested_data('',order_items_column,function(results)
 			{
+				var data_array=[];
+				var counter=0;
 				results.forEach(function(result)
 				{
+					counter+=1;
+					var new_object=new Object();
+					new_object['S.No.']=counter;					
+					new_object['Item Name']=result.item_desc;
+					new_object['SKU']=result.item_name;
+					new_object['Supplier SKU']=result.supplier_sku;
+					new_object['Qty']=result.quantity;
+					new_object['MRP']=result.mrp;
+					new_object['Price']=result.price;
+					new_object['Tax']=result.tax_rate;
+					new_object['Total']=result.total;
+					data_array.push(new_object);
 					var rowsHTML="";
 					var id=result.id;
 					rowsHTML+="<tr>";
@@ -1978,6 +1992,7 @@ function form24_ini()
 					$('#form24_body').append(rowsHTML);
 				});
 
+				var message_attachment=my_obj_array_to_csv_string(data_array);
 				var bt=get_session_var('title');
 				$('#form24_share').show();
 				$('#form24_share').click(function()
@@ -1985,7 +2000,7 @@ function form24_ini()
 					modal101_action(bt+' - PO# '+filter_fields.elements['order_num'].value+' - '+filter_fields.elements['supplier'].value,filter_fields.elements['supplier'].value,'supplier',function (func) 
 					{
 						print_form24(func);
-					});
+					},'csv',message_attachment);
 				});
 				form24_get_totals();
 				$('textarea').autosize();

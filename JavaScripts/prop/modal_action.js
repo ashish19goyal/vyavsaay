@@ -5674,7 +5674,7 @@ function modal57_action(item_name,customer)
  * @modal Email documents
  * @modalNo 101
  */
-function modal101_action(doc_type,person,person_type,func)
+function modal101_action(doc_type,person,person_type,func,attachment_type,message_attachment)
 {
 	show_loader();
 	var form=document.getElementById('modal101_form');
@@ -5795,11 +5795,21 @@ function modal101_action(doc_type,person,person_type,func)
 			var receiver=form.elements[4].value+":"+form.elements[2].value;
 			var sub=form.elements[3].value;
 			
-			send_email(receiver,from,business_title,sub,email_message,function()
+			if(typeof attachment_type!='undefined')
 			{
-				hide_loader();
-			});
-
+				console.log(message_attachment);
+				send_email_attachment(receiver,from,business_title,sub,email_message,message_attachment,'csv',function()
+				{
+					hide_loader();
+				});
+			}
+			else 
+			{				
+				send_email(receiver,from,business_title,sub,email_message,function()
+				{
+					hide_loader();
+				});
+			}
 			$("#modal101").dialog("close");
 		});
 	});

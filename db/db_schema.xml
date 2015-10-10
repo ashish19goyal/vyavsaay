@@ -1383,6 +1383,7 @@
 			<sender_name index='yes' type="TEXT"></sender_name>
 			<status index='yes' type="VARCHAR(25)"></status><!--pending/sent/cancelled-->
 			<type index='yes' type='VARCHAR(25)'></type><!--transaction/promotion-->
+			<attachment_type index='yes' type='VARCHAR(25)'></attachment_type><!--jpeg/csv-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</emails>

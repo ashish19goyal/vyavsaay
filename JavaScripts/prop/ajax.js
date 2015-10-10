@@ -535,6 +535,19 @@ function server_send_email(to,from,from_name,subject,message,message_attachment,
 	});
 }
 
+function server_send_email_attachment(to,from,from_name,subject,message,message_attachment,func,attachment_type)
+{
+	var domain=get_domain();
+	var username=get_username();
+	var read_access=get_session_var('re');
+	//console.log(message_attachment);
+	ajax_with_custom_func("./ajax/email.php",{domain:domain,atype:attachment_type,username:username,re:read_access,to:to,from:from,message:message,message_attachment:message_attachment,subject:subject,from_name:from_name},function(e)
+	{
+		console.log(e.responseText);
+		func();
+	});
+}
+
 function ajax_for_app(url,kvp,func)
 {
 	var xmlhttp;

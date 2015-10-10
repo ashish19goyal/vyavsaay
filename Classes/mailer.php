@@ -116,6 +116,104 @@ class send_mailer
 	    //print_r($result);
 	}
 
+
+	//send mailer
+	public function direct_send_csv($subject,$message,$message_attachment,$receivers,$from,$from_name)
+	{
+		$merge_vars=array();
+	    $to=array();    
+		$receivers_array=explode(';',$receivers);		
+
+		foreach($receivers_array as $r_item)
+		{
+			$receiver_var=explode(':',$r_item);
+			
+			if($r_item!=';' && count($receiver_var)>1)
+			{
+				$merge_var=array(
+		       		'rcpt' => $receiver_var[1],
+		            'vars' => array(
+		            	array(
+		                	'customer_name' => $receiver_var[0],
+		                	'business_title'=> $from_name
+		            	)
+		        	)
+		        );
+		    	$to_var=array(
+		        	'email' => $receiver_var[1],
+		            'name' => $receiver_var[0],
+		            'type' => 'to'
+		        );
+	
+				array_push($merge_vars, $merge_var);
+				array_push($to, $to_var);
+			}
+			else if($r_item!=';' && count($receiver_var)==1)
+			{
+				$merge_var=array(
+		       		'rcpt' => $receiver_var[0],
+		            'vars' => array(
+		            	array(
+		                	'customer_name' => 'Sir',
+		                	'business_title'=> $from_name
+		            	)
+		        	)
+		        );
+		    	$to_var=array(
+		        	'email' => $receiver_var[0],
+		            'name' => $receiver_var[0],
+		            'type' => 'to'
+		        );
+	
+				array_push($merge_vars, $merge_var);
+				array_push($to, $to_var);
+			}
+		}		
+		
+		$final_message = array(
+	        'html' => $message,
+	        'subject' => $subject,
+	        'from_email' => $from,
+	        'from_name' => $from_name,
+	        'to' => $to,
+	        'headers' => array('Reply-To' => $from),
+	        'preserve_recipients' => false,
+	        'merge' => true,
+	        'merge_language' => 'mailchimp',
+	        'merge_vars' => $merge_vars
+	    );
+	    
+	    if($message_attachment!="")
+	    {
+	    	$new_attachment=base64_encode($message_attachment);
+	    	$attachment=array(
+	            array(
+	                'type' => 'text/csv',
+	                'name' => 'file.csv',
+	                'content' => $new_attachment
+	            )
+	        );
+	        
+       		$final_message = array(
+		        'html' => $message,
+		        'subject' => $subject,
+		        'from_email' => $from,
+		        'from_name' => $from_name,
+		        'to' => $to,
+		        'headers' => array('Reply-To' => $from),
+		        'preserve_recipients' => false,
+		        'merge' => true,
+		        'merge_language' => 'mailchimp',
+		        'merge_vars' => $merge_vars,
+		        'images' => $attachment
+		    );
+	    }
+	    
+	    $result = $this->mandrill->messages->send($final_message);
+	    //print_r($result);
+	}
+
+
 	///send all pending mailer stored in the db
 	public function send_stored_mailer($domain)
 	{
@@ -131,7 +229,14 @@ class send_mailer
 		
 		for($i=0;$i<count($result);$i++)
 		{
-			$this->direct_send($result[$i]['subject'],$result[$i]['message'],$result[$i]['message_attachment'],$result[$i]['receivers'],$result[$i]['sender'],$result[$i]['sender_name']);			
+			if($result[$i]['attachment_type']=='csv')
+			{
+				$this->direct_send_csv($result[$i]['subject'],$result[$i]['message'],$result[$i]['message_attachment'],$result[$i]['receivers'],$result[$i]['sender'],$result[$i]['sender_name']);
+			}
+			else 
+			{
+				$this->direct_send($result[$i]['subject'],$result[$i]['message'],$result[$i]['message_attachment'],$result[$i]['receivers'],$result[$i]['sender'],$result[$i]['sender_name']);
+			}			
 			$update_stmt->execute(array('sent',$result[$i]['id']));
 		}
 	}

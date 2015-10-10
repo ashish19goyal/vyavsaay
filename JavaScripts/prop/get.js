@@ -404,6 +404,53 @@ function my_obj_array_to_csv(data_array,file_name)
 	document.body.removeChild(a);
 }
 
+
+/**
+ * Converts an array of objects into a csv file
+ */
+function my_obj_array_to_csv_string(data_array)
+{
+	var csvRows = [];
+
+	///for header row
+	var header_string="";
+	var header_array=[];
+	for(var p in data_array[0])
+	{
+		header_array.push(p);	
+		header_string+=p+",";
+	}
+	
+    csvRows.push(header_string);
+	
+	/////for data rows
+	data_array.forEach(function(data_row)
+	{
+		//console.log(data_row);
+		var data_string="";
+		for(var i=0;i<header_array.length;i++)
+		{
+			if(typeof data_row[header_array[i]]!= 'undefined')
+			{
+				if(String(data_row[header_array[i]]).search(","))
+				{
+					data_row[header_array[i]]="\""+data_row[header_array[i]]+"\"";
+				}
+				data_string+=data_row[header_array[i]]+",";
+			}
+			else 
+			{
+				data_string+=",";
+			}
+		}
+		csvRows.push(data_string);
+	});
+
+	var csvString = csvRows.join("\n");
+	return csvString;
+}
+
+
 /**
  * This function converts a csv string into array of named objects
  * @param csvString CSV String to be converted 
@@ -611,84 +658,6 @@ function delete_feed(feed_id,element)
 	delete_simple(like_xml);
 	delete_simple(comment_xml);
 	$(element).parent().parent().remove();
-}
-
-function send_sms(to,message,type)
-{
-	var sms_enabled=get_session_var('sms_enabled');
-	if(sms_enabled=='yes')
-	{
-		if(is_online())
-		{
-			server_send_sms(to,message,type);
-		}
-		else
-		{
-			var sms_data="<sms>"+
-						"<id>"+get_new_key()+"</id>"+
-						"<receiver>"+to+"</receiver>"+
-						"<message>"+htmlentities(message)+"</message>"+
-						"<status>pending</status>"+
-						"<billing_status>pending</billing_status>"+
-						"<type>"+type+"</type>"+
-						"<last_updated>"+get_my_time()+"</last_updated>"+
-						"</sms>";
-			local_create_simple(sms_data);	
-			hide_loader();		
-		}
-	}
-	else 
-	{
-		hide_loader();
-		//$("#modal60").dialog("open");
-	}
-}
-
-function send_email(to,from,from_name,subject,message,func)
-{
-	var email_enabled=get_session_var('email_enabled');
-	var message_attachment="";
-	var pdf_elem=document.getElementById('pdf_print_div');
-	
-	if(email_enabled=='yes')
-	{
-		pdf_elem.innerHTML=message;
-	
-		html2canvas(pdf_elem, 
-		{
-	        onrendered: function(canvas) 
-	        {   
-	        	message_attachment=canvas.toDataURL("image/jpeg");
-				pdf_elem.innerHTML="";
-	
-				if(is_online())
-				{
-					server_send_email(to,from,from_name,subject,message,message_attachment,func);
-				}
-				else
-				{
-					var email_data="<emails>"+
-								"<id>"+get_new_key()+"</id>"+
-								"<subject>"+subject+"</subject>"+
-								"<message>"+htmlentities(message)+"</message>"+
-								"<message_attachment>"+message_attachment+"</message_attachment>"+
-								"<receivers>"+to+"</receivers>"+
-								"<sender>"+from+"</sender>"+
-								"<sender_name>"+from_name+"</sender_name>"+
-								"<status>pending</status>"+
-								"<last_updated>"+get_my_time()+"</last_updated>"+
-								"</emails>";
-					local_create_simple(email_data);			
-					func();
-				}	    
-	        }
-	    });		
-	}
-	else
-	{
-		hide_loader();
-		//$("#modal59").dialog("open");
-	}
 }
 
 function htmlentities(str)

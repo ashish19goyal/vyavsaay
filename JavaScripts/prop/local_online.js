@@ -329,3 +329,118 @@ function read_json_rows(element_id,columns,callback)
 		$("#modal2").dialog("open");
 	}
 }
+
+function send_email(to,from,from_name,subject,message,func)
+{
+	var email_enabled=get_session_var('email_enabled');
+	var message_attachment="";
+	var pdf_elem=document.getElementById('pdf_print_div');
+	
+	if(email_enabled=='yes')
+	{
+		pdf_elem.innerHTML=message;
+	
+		html2canvas(pdf_elem, 
+		{
+	        onrendered: function(canvas) 
+	        {   
+	        	message_attachment=canvas.toDataURL("image/jpeg");
+				pdf_elem.innerHTML="";
+	
+				if(is_online())
+				{
+					server_send_email(to,from,from_name,subject,message,message_attachment,func);
+				}
+				else
+				{
+					var email_data="<emails>"+
+								"<id>"+get_new_key()+"</id>"+
+								"<subject>"+subject+"</subject>"+
+								"<message>"+htmlentities(message)+"</message>"+
+								"<message_attachment>"+message_attachment+"</message_attachment>"+
+								"<receivers>"+to+"</receivers>"+
+								"<sender>"+from+"</sender>"+
+								"<sender_name>"+from_name+"</sender_name>"+
+								"<status>pending</status>"+
+								"<last_updated>"+get_my_time()+"</last_updated>"+
+								"</emails>";
+					local_create_simple(email_data);			
+					func();
+				}	    
+	        }
+	    });		
+	}
+	else
+	{
+		hide_loader();
+		//$("#modal59").dialog("open");
+	}
+}
+
+function send_email_attachment(to,from,from_name,subject,message,message_attachment,attachment_type,func)
+{
+	var email_enabled=get_session_var('email_enabled');
+	var pdf_elem=document.getElementById('pdf_print_div');
+	
+	if(email_enabled=='yes')
+	{	    	
+		if(is_online())
+		{
+			server_send_email_attachment(to,from,from_name,subject,message,message_attachment,func,attachment_type);
+		}
+		else
+		{
+			var email_data="<emails>"+
+						"<id>"+get_new_key()+"</id>"+
+						"<subject>"+subject+"</subject>"+
+						"<message>"+htmlentities(message)+"</message>"+
+						"<message_attachment>"+message_attachment+"</message_attachment>"+
+						"<receivers>"+to+"</receivers>"+
+						"<sender>"+from+"</sender>"+
+						"<sender_name>"+from_name+"</sender_name>"+
+						"<attachment_type>"+attachment_type+"</attachment_type>"+
+						"<status>pending</status>"+
+						"<last_updated>"+get_my_time()+"</last_updated>"+
+						"</emails>";
+			local_create_simple(email_data);			
+			func();
+		}	        		
+	}
+	else
+	{
+		hide_loader();
+		//$("#modal59").dialog("open");
+	}
+}
+
+
+function send_sms(to,message,type)
+{
+	var sms_enabled=get_session_var('sms_enabled');
+	if(sms_enabled=='yes')
+	{
+		if(is_online())
+		{
+			server_send_sms(to,message,type);
+		}
+		else
+		{
+			var sms_data="<sms>"+
+						"<id>"+get_new_key()+"</id>"+
+						"<receiver>"+to+"</receiver>"+
+						"<message>"+htmlentities(message)+"</message>"+
+						"<status>pending</status>"+
+						"<billing_status>pending</billing_status>"+
+						"<type>"+type+"</type>"+
+						"<last_updated>"+get_my_time()+"</last_updated>"+
+						"</sms>";
+			local_create_simple(sms_data);	
+			hide_loader();		
+		}
+	}
+	else 
+	{
+		hide_loader();
+		//$("#modal60").dialog("open");
+	}
+}

@@ -1764,7 +1764,7 @@ function form24_create_form()
 			modal101_action(bt+' - PO# '+order_num+' - '+supplier,supplier,'supplier',function (func) 
 			{
 				print_form24(func);
-			});
+			},'csv','Test,text,here');
 		});
 		
 		var amount=0;
