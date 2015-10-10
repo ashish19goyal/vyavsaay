@@ -962,6 +962,8 @@ function import_data(form_name)
 		break;
 		case 'form191':modal23_action(form191_import_template,form191_import);
 		break;
+		case 'form193':modal23_action(form193_import_template,form193_import);
+		break;
 		case 'form195':modal23_action(form195_import_template,form195_import);
 		break;
 		case 'form197':modal23_action(form197_import_template,form197_import);

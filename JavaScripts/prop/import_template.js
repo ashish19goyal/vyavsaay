@@ -1171,6 +1171,16 @@ function form191_import_template()
 };
 
 /**
+* @form Update Stock
+* @formNo 193
+*/
+function form193_import_template()
+{
+	var data_array=['id','product_name','batch','quantity','source','storage'];
+	my_array_to_csv(data_array);
+};
+
+/**
 * @form Letterhead
 * @formNo 195
 */

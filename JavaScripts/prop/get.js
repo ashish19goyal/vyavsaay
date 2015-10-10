@@ -657,16 +657,8 @@ function send_email(to,from,from_name,subject,message,func)
 		html2canvas(pdf_elem, 
 		{
 	        onrendered: function(canvas) 
-	        {         
-	        	var imgData = canvas.toDataURL(
-	                'image/png');              
-	            //var doc = new jsPDF('p', 'mm');
-	            //doc.addImage(imgData, 'PNG', 10, 10);
-	            //doc.save('sample-file.pdf');
-	           	//message_attachment=doc.output('datauristring');
-				message_attachment=canvas.toDataURL("image/png");
-				//window.location=message_attachment;
-	            //console.log(message_attachment);
+	        {   
+	        	message_attachment=canvas.toDataURL("image/jpeg");
 				pdf_elem.innerHTML="";
 	
 				if(is_online())

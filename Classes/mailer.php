@@ -88,11 +88,11 @@ class send_mailer
 	    
 	    if($message_attachment!="")
 	    {
-	    	$new_attachment=preg_replace('/data:image\/png;base64,/',"",$message_attachment,1);
+	    	$new_attachment=preg_replace('/data:image\/jpeg;base64,/',"",$message_attachment,1);
 	    	$attachment=array(
 	            array(
-	                'type' => 'image/png',
-	                'name' => "$subject".".png",
+	                'type' => 'image/jpeg',
+	                'name' => "$subject".".jpeg",
 	                'content' => $new_attachment
 	            )
 	        );

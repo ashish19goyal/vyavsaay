@@ -1761,7 +1761,7 @@ function form24_create_form()
 		$('#form24_share').show();
 		$('#form24_share').click(function()
 		{
-			modal101_action(bt+' - PO# '+order_num,supplier,'supplier',function (func) 
+			modal101_action(bt+' - PO# '+order_num+' - '+supplier,supplier,'supplier',function (func) 
 			{
 				print_form24(func);
 			});

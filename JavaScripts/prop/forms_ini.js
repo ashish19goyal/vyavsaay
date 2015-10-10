@@ -1982,7 +1982,7 @@ function form24_ini()
 				$('#form24_share').show();
 				$('#form24_share').click(function()
 				{
-					modal101_action(bt+' - PO# '+filter_fields.elements['order_num'].value,filter_fields.elements['supplier'].value,'supplier',function (func) 
+					modal101_action(bt+' - PO# '+filter_fields.elements['order_num'].value+' - '+filter_fields.elements['supplier'].value,filter_fields.elements['supplier'].value,'supplier',function (func) 
 					{
 						print_form24(func);
 					});
