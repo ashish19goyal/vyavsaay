@@ -9568,6 +9568,10 @@ function modal138_action()
 						"</sku_mapping>";
 			fetch_requested_data('',sku_data,function (skus) 
 			{
+				for(var i in skus)
+				{
+					import_items_string+=skus[i].system_sku+"--";
+				}
 				var products_xml="<product_master>"+
 								"<tax></tax>"+
 								"<name array='yes'>"+import_items_string+"</name>"+
@@ -9575,9 +9579,7 @@ function modal138_action()
 	
 				fetch_requested_data('',products_xml,function (products) 
 				{
-					console.log(products);
-					console.log(skus);
-					if((products.length+sku.length)==(unique_sku_in_import.length+unique_channel_sku_in_import.length))
+					if((products.length)==(unique_sku_in_import.length+unique_channel_sku_in_import.length))
 					{
 				    	var data_xml="<sale_orders>";
 			       		var data2_xml="<sale_order_items>";
