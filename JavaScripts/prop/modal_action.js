@@ -9537,260 +9537,293 @@ function modal138_action()
 	
 	       	progress_value=10;
 	    
-	    	var unique_items_in_import=[];
+	    	var unique_sku_in_import=[];
+			var unique_channel_sku_in_import=[];
 			
 			var import_items_string="--";
+			var channel_sku_string="--";
 			data_array.forEach(function (data_row) 
 			{
 				console.log(data_row);
-				import_items_string+=data_row.system_sku+"--";
-				unique_items_in_import.push(data_row.system_sku);
+				if(data_row.system_sku!="")
+				{
+					import_items_string+=data_row.system_sku+"--";
+					unique_sku_in_import.push(data_row.system_sku);
+				}
+				else 
+				{
+					channel_sku_string+=data_row.channel_sku+"--";
+					unique_channel_sku_in_import.push(data_row.channel_sku);
+				}
 			});
 			
-			unique_items_in_import=array_unique(unique_items_in_import);
+			unique_sku_in_import=array_unique(unique_sku_in_import);
+			unique_channel_sku_in_import=array_unique(unique_channel_sku_in_import);
 			
-			var products_xml="<product_master>"+
-							"<tax></tax>"+
-							"<name array='yes'>"+import_items_string+"</name>"+
-							"</product_master>";
-
-			fetch_requested_data('',products_xml,function (products) 
+			var sku_data="<sku_mapping>"+
+						"<item_desc></item_desc>"+
+						"<system_sku></system_sku>"+
+						"<channel_sku array='yes'>"+channel_sku_string+"</channel_sku>"+
+						"<channel exact='yes'>"+channel+"</channel>"+
+						"</sku_mapping>";
+			fetch_requested_data('',sku_data,function (skus) 
 			{
-				//console.log(products);
-				//console.log(unique_items_in_import);
-				if(products.length==unique_items_in_import.length)
+				var products_xml="<product_master>"+
+								"<tax></tax>"+
+								"<name array='yes'>"+import_items_string+"</name>"+
+								"</product_master>";
+	
+				fetch_requested_data('',products_xml,function (products) 
 				{
-			    	var data_xml="<sale_orders>";
-		       		var data2_xml="<sale_order_items>";
-					var data3_xml="<customers>";
-					var counter=1;
-					var last_updated=get_my_time();
-					var order_array=[];
-					var order_item_array=[];
-					var customer_array=[];
+					console.log(products);
+					console.log(skus);
+					if((products.length+sku.length)==(unique_sku_in_import.length+unique_channel_sku_in_import.length))
+					{
+				    	var data_xml="<sale_orders>";
+			       		var data2_xml="<sale_order_items>";
+						var data3_xml="<customers>";
+						var counter=1;
+						var last_updated=get_my_time();
+						var order_array=[];
+						var order_item_array=[];
+						var customer_array=[];
+						
+						data_array.forEach(function (data_row) 
+						{
+							if(data_row.system_sku=="")
+							{
+								for(var i in skus)
+								{
+									if(data_row.channel_sku==skus[i].channel_sku)
+									{
+										data_row.system_sku=skus[i].system_sku;
+										data_row.item_name=skus[i].item_desc;
+										break;
+									}
+								}
+							}
+							
+							counter+=1;
+							var customer=data_row.customer_name+" ("+data_row.phone+")";
+							var customer_object=new Object();
+							customer_object.id=last_updated+counter;
+							customer_object.name=data_row.customer_name;
+							customer_object.acc_name=customer;
+			                customer_object.email=data_row.customer_email;
+			                customer_object.phone=data_row.phone;
+			                customer_object.address=data_row.address;
+			                customer_object.city="";
+			                customer_object.pincode=data_row.pincode;
+			                customer_object.state="";
+			                customer_object.country="India";
+			
+			                var add_customer=true;
+			                
+			                for(var i=0;i<customer_array.length;i++)
+			                {
+			                	if(customer_array[i].acc_name==customer_object.acc_name)
+			                	{
+			                		add_customer=false;
+			                		break;
+			                	}
+			                }
+			
+			            	if(add_customer)
+			            	{
+			            		customer_array.push(customer_object);
+			            	}
+							
+			                var order_item_object=new Object();
+							order_item_object.id=last_updated+counter;
+			                order_item_object.item_name=data_row.system_sku;
+			                order_item_object.item_desc=data_row.item_name;
+			                order_item_object.channel_sku=data_row.channel_sku;
+			                order_item_object.vendor_sku="";
+							order_item_object.quantity=data_row.quantity;
+			                order_item_object.mrp=data_row.item_mrp;
+			                
+			                order_item_object.tax_rate=0;
+			                for(var i in products)
+			                {
+			                	if(products[i].name==order_item_object.item_name)
+			                	{
+	  				                order_item_object.tax_rate=products[i].tax;
+			                		break;
+			                	}
+			                }
+			                order_item_object.selling_price=data_row.item_price;
+			                order_item_object.unit_price=parseFloat(data_row.item_price)/(1+parseFloat(order_item_object.tax_rate)/100);
+			                order_item_object.amount=(parseFloat(order_item_object.unit_price)*parseFloat(data_row.quantity));
+			                order_item_object.tax=parseFloat(order_item_object.amount)*parseFloat(order_item_object.tax_rate)/100;
+			                order_item_object.freight=data_row.shipping_amount;
+			                order_item_object.total=parseFloat(order_item_object.amount)+parseFloat(data_row.shipping_amount)+parseFloat(order_item_object.tax);
+			                
+			                var add_order=true;
+							
+							var order_object=new Object();
+							order_object.id=last_updated+counter;
+							order_object.order_num=data_row.order_id;
+			                order_object.customer=customer;
+			                order_object.pincode=data_row.pincode;
+			                order_object.order_date=data_row.order_date;
+			                order_object.tax_type=data_row.tax_type;
+			                order_object.freight=data_row.shipping_amount;
+			                order_object.item_price=data_row.item_price;
+			                order_object.amount=order_item_object.amount;
+			                order_object.tax=order_item_object.tax;
+			                order_object.total=parseFloat(order_object.freight)+parseFloat(order_object.amount)+parseFloat(order_object.tax);
+							order_object.total_quantity=parseFloat(data_row.quantity);
+			
+							data_row.order_system_id=order_object.id;
+							for(var j=0;j<order_array.length;j++)
+			                {
+			                	if(order_array[j].order_num==order_object.order_num)
+			                	{
+			                		add_order=false;
+			                		order_array[j].freight=parseFloat(order_array[j].freight)+parseFloat(order_object.freight);
+									order_array[j].amount=parseFloat(order_array[j].amount)+parseFloat(order_object.amount);
+									order_array[j].tax=parseFloat(order_array[j].tax)+parseFloat(order_object.tax);
+									order_array[j].total=parseFloat(order_array[j].total)+parseFloat(order_object.total);
+									order_array[j].total_quantity=parseFloat(order_array[j].total_quantity)+parseFloat(order_object.total_quantity);
+									data_row.order_system_id=order_array[j].id;
+			                		break;
+			                	}
+			                }
+			                
+	   						order_item_object.order_id=data_row.order_system_id;
+							order_item_array.push(order_item_object);
+			                
+			                if(add_order)
+			                {
+			                	order_array.push(order_object);
+			                }
+	
+						});
+			
+						order_array.forEach(function(row)
+						{
+							if((counter%500)===0)
+							{
+								data_xml+="</sale_orders><separator></separator><sale_orders>";
+							}
+							counter+=1;
+							data_xml+="<row>" +
+									"<id>"+row.id+"</id>" +
+									"<order_num>"+row.order_num+"</order_num>" +
+									"<channel>"+channel+"</channel>" +
+									"<customer_name>"+row.customer+"</customer_name>"+
+									"<pincode>"+row.pincode+"</pincode>"+
+									"<order_date>"+get_raw_time(row.order_date)+"</order_date>"+
+									"<freight>"+row.freight+"</freight>"+
+									"<amount>"+row.amount+"</amount>"+
+									"<tax>"+row.tax+"</tax>"+
+									"<total>"+row.total+"</total>"+
+									"<total_quantity>"+row.total_quantity+"</total_quantity>"+
+									"<status>pending</status>"+
+									"<billing_type>"+row.tax_type+"</billing_type>"+
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</row>";
+						});
+			
+						//console.log(order_item_array);
+						order_item_array.forEach(function(row)
+						{
+							if((counter%500)===0)
+							{
+								data2_xml+="</sale_order_items><separator></separator><sale_order_items>";
+							}
+							counter+=1;
+							
+							data2_xml+="<row>" +
+									"<id>"+row.id+"</id>" +
+									"<order_id>"+row.order_id+"</order_id>"+
+			                        "<item_name>"+row.item_name+"</item_name>"+
+			                        "<item_desc>"+row.item_desc+"</item_desc>"+
+			                        "<channel_sku>"+row.channel_sku+"</channel_sku>"+
+			                        "<vendor_sku>"+row.vendor_sku+"</vendor_sku>"+
+			                        "<quantity>"+row.quantity+"</quantity>"+
+			                        "<notes></notes>"+
+			                        "<mrp>"+row.mrp+"</mrp>"+
+			                        "<unit_price>"+row.unit_price+"</unit_price>"+
+			                        "<selling_price>"+row.selling_price+"</selling_price>"+
+			                        "<amount>"+row.amount+"</amount>"+
+			                       	"<tax>"+row.tax+"</tax>"+
+			                       	"<tax_rate>"+row.tax_rate+"</tax_rate>"+
+			                        "<freight>"+row.freight+"</freight>"+
+			                        "<total>"+row.total+"</total>"+
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</row>";		
+						});
 					
-					data_array.forEach(function (data_row) 
-					{
-						counter+=1;
-						var customer=data_row.customer_name+" ("+data_row.phone+")";
-						var customer_object=new Object();
-						customer_object.id=last_updated+counter;
-						customer_object.name=data_row.customer_name;
-						customer_object.acc_name=customer;
-		                customer_object.email=data_row.customer_email;
-		                customer_object.phone=data_row.phone;
-		                customer_object.address=data_row.address;
-		                customer_object.city="";
-		                customer_object.pincode=data_row.pincode;
-		                customer_object.state="";
-		                customer_object.country="India";
-		
-		                var add_customer=true;
-		                
-		                for(var i=0;i<customer_array.length;i++)
-		                {
-		                	if(customer_array[i].acc_name==customer_object.acc_name)
-		                	{
-		                		add_customer=false;
-		                		break;
-		                	}
-		                }
-		
-		            	if(add_customer)
-		            	{
-		            		customer_array.push(customer_object);
-		            	}
-						
-		                var order_item_object=new Object();
-						order_item_object.id=last_updated+counter;
-		                order_item_object.item_name=data_row.system_sku;
-		                order_item_object.item_desc=data_row.item_name;
-		                order_item_object.channel_sku=data_row.channel_sku;
-		                order_item_object.vendor_sku="";
-						order_item_object.quantity=data_row.quantity;
-		                order_item_object.mrp=data_row.item_mrp;
-		                
-		                order_item_object.tax_rate=0;
-		                for(var i in products)
-		                {
-		                	if(products[i].name==order_item_object.item_name)
-		                	{
-  				                order_item_object.tax_rate=products[i].tax;
-		                		break;
-		                	}
-		                }
-		                order_item_object.selling_price=data_row.item_price;
-		                order_item_object.unit_price=parseFloat(data_row.item_price)/(1+parseFloat(order_item_object.tax_rate)/100);
-		                order_item_object.amount=(parseFloat(order_item_object.unit_price)*parseFloat(data_row.quantity));
-		                order_item_object.tax=parseFloat(order_item_object.amount)*parseFloat(order_item_object.tax_rate)/100;
-		                order_item_object.freight=data_row.shipping_amount;
-		                order_item_object.total=parseFloat(order_item_object.amount)+parseFloat(data_row.shipping_amount)+parseFloat(order_item_object.tax);
-		                
-		                var add_order=true;
-						
-						var order_object=new Object();
-						order_object.id=last_updated+counter;
-						order_object.order_num=data_row.order_id;
-		                order_object.customer=customer;
-		                order_object.pincode=data_row.pincode;
-		                order_object.order_date=data_row.order_date;
-		                order_object.tax_type=data_row.tax_type;
-		                order_object.freight=data_row.shipping_amount;
-		                order_object.item_price=data_row.item_price;
-		                order_object.amount=order_item_object.amount;
-		                order_object.tax=order_item_object.tax;
-		                order_object.total=parseFloat(order_object.freight)+parseFloat(order_object.amount)+parseFloat(order_object.tax);
-						order_object.total_quantity=parseFloat(data_row.quantity);
-		
-						data_row.order_system_id=order_object.id;
-						for(var j=0;j<order_array.length;j++)
-		                {
-		                	if(order_array[j].order_num==order_object.order_num)
-		                	{
-		                		add_order=false;
-		                		order_array[j].freight=parseFloat(order_array[j].freight)+parseFloat(order_object.freight);
-								order_array[j].amount=parseFloat(order_array[j].amount)+parseFloat(order_object.amount);
-								order_array[j].tax=parseFloat(order_array[j].tax)+parseFloat(order_object.tax);
-								order_array[j].total=parseFloat(order_array[j].total)+parseFloat(order_object.total);
-								order_array[j].total_quantity=parseFloat(order_array[j].total_quantity)+parseFloat(order_object.total_quantity);
-								data_row.order_system_id=order_array[j].id;
-		                		break;
-		                	}
-		                }
-		                
-   						order_item_object.order_id=data_row.order_system_id;
-						order_item_array.push(order_item_object);
-		                
-		                if(add_order)
-		                {
-		                	order_array.push(order_object);
-		                }
-
-					});
-		
-					order_array.forEach(function(row)
-					{
-						if((counter%500)===0)
+						customer_array.forEach(function(row)
 						{
-							data_xml+="</sale_orders><separator></separator><sale_orders>";
-						}
-						counter+=1;
-						data_xml+="<row>" +
-								"<id>"+row.id+"</id>" +
-								"<order_num>"+row.order_num+"</order_num>" +
-								"<channel>"+channel+"</channel>" +
-								"<customer_name>"+row.customer+"</customer_name>"+
-								"<pincode>"+row.pincode+"</pincode>"+
-								"<order_date>"+get_raw_time(row.order_date)+"</order_date>"+
-								"<freight>"+row.freight+"</freight>"+
-								"<amount>"+row.amount+"</amount>"+
-								"<tax>"+row.tax+"</tax>"+
-								"<total>"+row.total+"</total>"+
-								"<total_quantity>"+row.total_quantity+"</total_quantity>"+
-								"<status>pending</status>"+
-								"<billing_type>"+row.tax_type+"</billing_type>"+
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</row>";
-					});
-		
-					//console.log(order_item_array);
-					order_item_array.forEach(function(row)
-					{
-						if((counter%500)===0)
-						{
-							data2_xml+="</sale_order_items><separator></separator><sale_order_items>";
-						}
-						counter+=1;
-						
-						data2_xml+="<row>" +
-								"<id>"+row.id+"</id>" +
-								"<order_id>"+row.order_id+"</order_id>"+
-		                        "<item_name>"+row.item_name+"</item_name>"+
-		                        "<item_desc>"+row.item_desc+"</item_desc>"+
-		                        "<channel_sku>"+row.channel_sku+"</channel_sku>"+
-		                        "<vendor_sku>"+row.vendor_sku+"</vendor_sku>"+
-		                        "<quantity>"+row.quantity+"</quantity>"+
-		                        "<notes></notes>"+
-		                        "<mrp>"+row.mrp+"</mrp>"+
-		                        "<unit_price>"+row.unit_price+"</unit_price>"+
-		                        "<selling_price>"+row.selling_price+"</selling_price>"+
-		                        "<amount>"+row.amount+"</amount>"+
-		                       	"<tax>"+row.tax+"</tax>"+
-		                       	"<tax_rate>"+row.tax_rate+"</tax_rate>"+
-		                        "<freight>"+row.freight+"</freight>"+
-		                        "<total>"+row.total+"</total>"+
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</row>";		
-					});
-				
-					customer_array.forEach(function(row)
-					{
-						if((counter%500)===0)
-						{
-							data3_xml+="</customers><separator></separator><customers>";
-						}
-						counter+=1;
-						
-						data3_xml+="<row>" +
-								"<id>"+row.id+"</id>" +
-								"<name>"+row.name+"</name>"+
-		                        "<acc_name unique='yes'>"+row.acc_name+"</acc_name>"+
-		                        "<email>"+row.email+"</email>"+
-		                        "<phone>"+row.phone+"</phone>"+
-		                        "<status>active</status>"+
-		                        "<address>"+row.address+"</address>"+
-		                        "<city>"+row.city+"</city>"+
-		                        "<pincode>"+row.pincode+"</pincode>"+
-		                        "<state>"+row.state+"</state>"+
-		                        "<country>"+row.country+"</country>"+
-		                        "<last_updated>"+last_updated+"</last_updated>" +
-								"</row>";		
-					});
-				
-					data_xml+="</sale_orders>";
-					data2_xml+="</sale_order_items>";
-					data3_xml+="</customers>";
+							if((counter%500)===0)
+							{
+								data3_xml+="</customers><separator></separator><customers>";
+							}
+							counter+=1;
+							
+							data3_xml+="<row>" +
+									"<id>"+row.id+"</id>" +
+									"<name>"+row.name+"</name>"+
+			                        "<acc_name unique='yes'>"+row.acc_name+"</acc_name>"+
+			                        "<email>"+row.email+"</email>"+
+			                        "<phone>"+row.phone+"</phone>"+
+			                        "<status>active</status>"+
+			                        "<address>"+row.address+"</address>"+
+			                        "<city>"+row.city+"</city>"+
+			                        "<pincode>"+row.pincode+"</pincode>"+
+			                        "<state>"+row.state+"</state>"+
+			                        "<country>"+row.country+"</country>"+
+			                        "<last_updated>"+last_updated+"</last_updated>" +
+									"</row>";		
+						});
 					
-					console.log(data2_xml);
-					create_batch(data_xml);
-					create_batch(data2_xml);
-					create_batch(data3_xml);
-		
-		           	////////////////////
-		        	progress_value=15;
-		        	
-		        	//console.log(data_array.length);
-		        	
-		        	var ajax_complete=setInterval(function()
-		        	{
-		        		//console.log(number_active_ajax);
-		        		if(number_active_ajax===0)
-		        		{
-		        			progress_value=15+(1-(localdb_open_requests/(2*data_array.length)))*85;
-		        		}
-		        		else if(localdb_open_requests===0)
-		        		{
-		        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
-		        		}
-		        		
-		        		if(number_active_ajax===0 && localdb_open_requests===0)
-		        		{
-		        			hide_progress();
-		        			selected_file.value="Upload complete";
-		        			$(select_file).val('');
-		        			$("#modal138").dialog("close");
-		        			clearInterval(ajax_complete);
-		        		}
-		        	},1000);
-		        }
-		        else 
-		        {
-		        	hide_progress();
-        			$(select_file).val('');
-        			$("#modal138").dialog("close");
-        			$("#modal73").dialog("open");
-		        }
-	        });
+						data_xml+="</sale_orders>";
+						data2_xml+="</sale_order_items>";
+						data3_xml+="</customers>";
+						
+						console.log(data2_xml);
+						create_batch(data_xml);
+						create_batch(data2_xml);
+						create_batch(data3_xml);
+			
+			           	////////////////////
+			        	progress_value=15;
+			        	
+			        	//console.log(data_array.length);
+			        	
+			        	var ajax_complete=setInterval(function()
+			        	{
+			        		//console.log(number_active_ajax);
+			        		if(number_active_ajax===0)
+			        		{
+			        			progress_value=15+(1-(localdb_open_requests/(2*data_array.length)))*85;
+			        		}
+			        		else if(localdb_open_requests===0)
+			        		{
+			        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
+			        		}
+			        		
+			        		if(number_active_ajax===0 && localdb_open_requests===0)
+			        		{
+			        			hide_progress();
+			        			selected_file.value="Upload complete";
+			        			$(select_file).val('');
+			        			$("#modal138").dialog("close");
+			        			clearInterval(ajax_complete);
+			        		}
+			        	},1000);
+			        }
+			        else 
+			        {
+			        	hide_progress();
+	        			$(select_file).val('');
+	        			$("#modal138").dialog("close");
+	        			$("#modal73").dialog("open");
+			        }
+		        });
+		    });
 	     };
 	     reader.readAsText(file);    
     });
