@@ -4544,3 +4544,63 @@ function print_form250(func)
 
 	func(container);
 }
+
+ /**
+ * @param report_name
+ * @param report_title
+ * @param print_button
+ */
+function print_report90(report_title,print_button)
+{
+	$(print_button).off('click');
+	$(print_button).on('click',function(event)
+	{
+	   var container=document.createElement('div');
+	   var business_title=document.createElement('div');
+	   var title=document.createElement('div');
+	   var bt=get_session_var('title');
+	   business_title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.5em'><b>"+bt+"</b></div>";
+	   title.innerHTML="<div style='display: block;width:100%;font-size:1.2em'><b>"+report_title+"</b></div>";
+	   var table_element=document.getElementById("report90_body");
+	   
+	   
+	   var font_size=get_session_var('print_size');
+
+		var new_table=document.createElement('table');
+		new_table.setAttribute('style','font-size:11px;border:1px solid #000;text-align:left;');
+		new_table.setAttribute('class','printing_tables');
+
+		var table_header="<tr>"+
+				"<td style='border: 1px solid #000;text-align:left;width:16%'>SKU</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:30%'>Item Name</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:16%'>Batch</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:16%'>Storage</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:10%'>To Pick</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:10%'>Picked</td></tr>";
+
+		var table_rows=table_header;
+		var counter=0;
+
+		$(table_element).find('form').each(function(index)
+		{
+			counter+=1;
+			var form=$(this)[0];	
+			table_rows+="<tr>"+
+				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[0].value+"</div></td>"+
+				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[1].value+"</div></td>"+
+				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[2].value+"</div></td>"+
+				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[5].value+"</div></td>"+
+				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[3].value+"</div></td>"+
+				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[4].value+"</div></td></tr>";		
+		});
+		new_table.innerHTML=table_rows;
+		/////////////placing the containers //////////////////////////////////////////////////////	
+
+
+	   //$(table_copy).find('td,th').attr('style',"word-wrap: break-word;border:1px solid black;text-align:left;font-size:"+font_size+"em");
+	   container.appendChild(business_title);
+	   container.appendChild(title);
+	   container.appendChild(new_table);
+	   $.print(container);
+	});
+}

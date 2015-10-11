@@ -8,6 +8,7 @@
 			<label>
 				<input type='submit' name='refresh' value='Refresh' class='generic_icon'>
 				<input type='button' name='print' title='Print' class='print_icon'>
+				<input type='button' title='Download CSV' class='csv_icon' name='csv'>			
 			</label>	
 			<br>
 			<label style='background-color:#B93C42;color:#fff;padding:3px;'>Scan Rack<br><input type='text' style='color:#000;' name='rack'></label>
