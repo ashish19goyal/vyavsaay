@@ -11360,12 +11360,12 @@ function modal150_action(rack,report_id)
 		var storage=subform.elements[5].value;
 		if(storage==rack)
 		{
-			var item_name=subform.elements[0].value;
-			var item_desc=subform.elements[1].value;
-			var batch=subform.elements[2].value;
-			var quantity=parseFloat(subform.elements[3].value);
-			var picked_quantity=parseFloat(subform.elements[4].value);
-			var row_id=subform.elements[13].value;
+			var item_name=subform.elements[1].value;
+			var item_desc=subform.elements[2].value;
+			var batch=subform.elements[3].value;
+			var quantity=parseFloat(subform.elements[4].value);
+			var picked_quantity=parseFloat(subform.elements[5].value);
+			var row_id=subform.elements[15].value;
 			var item_row=document.createElement('tr');
 			
 			item_row.setAttribute('id','modal150_row_'+row_id);
@@ -11379,8 +11379,8 @@ function modal150_action(rack,report_id)
 			
 			if(report_id=='report90')
 			{			
-				var order_num=subform.elements[9].value;
-				var bill_id=subform.elements[10].value;
+				var order_num=subform.elements[11].value;
+				var bill_id=subform.elements[12].value;
 				item_row.setAttribute('data-order-num',order_num);
 				item_row.setAttribute('data-bill-id',bill_id);
 			}
@@ -11409,10 +11409,10 @@ function modal150_action(rack,report_id)
 			
 			master_form_array.push("row_"+report_id+"_"+record_id);
 			var master_form=document.getElementById("row_"+report_id+"_"+record_id);
-			var to_pick_quantity=parseFloat(master_form.elements[3].value);
-			var old_pick_quantity=parseFloat(master_form.elements[4].value);
+			var to_pick_quantity=parseFloat(master_form.elements[4].value);
+			var old_pick_quantity=parseFloat(master_form.elements[5].value);
 			var new_pick_quantity=to_pick_quantity-unpicked_quantity;
-			master_form.elements[4].value=new_pick_quantity;
+			master_form.elements[5].value=new_pick_quantity;
 
 			//$(master_form).trigger('submit');
 		});
@@ -11427,11 +11427,12 @@ function modal150_action(rack,report_id)
 		});
 		
 		$("#modal150").dialog("close");	
+/*		
 		if(report_id=='report90')
 		{		
 			report90_get_totals();
 		}
-		var report_form=document.getElementById(report_id+'_header');
+*/		var report_form=document.getElementById(report_id+'_header');
 		var rack_filter=report_form.elements['rack'];
 		rack_filter.value="";
 		$(rack_filter).focus();
@@ -12753,4 +12754,62 @@ function modal161_action(support_type,func)
 	});
 	
 	$("#modal161").dialog("open");
+}
+
+
+/**
+ * @modalNo 162
+ * @modal Close pickings
+ */
+function modal162_action(button)
+{
+	var form=document.getElementById('modal162_form');
+	
+	var sku_filter=form.elements['sku'];
+	var item_filter=form.elements['item'];
+	var batch_filter=form.elements['batch'];
+	var storage_filter=form.elements['storage'];
+	var topick_filter=form.elements['topick'];
+	var picked_filter=form.elements['picked'];
+
+	var form_id=$(button).attr('form');
+	var master_form=document.getElementById(form_id);
+	sku_filter.value=master_form.elements[1].value;
+	item_filter.value=master_form.elements[2].value;
+	batch_filter.value=master_form.elements[3].value;
+	storage_filter.value=master_form.elements[6].value;
+	topick_filter.value=master_form.elements[4].value;
+	picked_filter.value=master_form.elements[5].value;		
+	
+	var data_id=master_form.elements[8].value;
+	var table_type=master_form.elements[9].value;
+		
+	$(form).off('submit');
+	$(form).on('submit',function(event) 
+	{
+		event.preventDefault();
+		
+		var plus_minus="";		
+		if(table_type=='inventory_adjust')
+		{
+			plus_minus="-";
+		}
+
+		var status="picked";
+		if(parseFloat(picked_filter.value)!=parseFloat(topick_filter.value))
+			status='pending';		
+		var data_xml="<"+table_type+">";
+			data_xml+="<id>"+data_id+"</id>" +
+				"<picked_status>"+status+"</picked_status>" +
+				"<picked_quantity>"+plus_minus+picked_filter.value+"</picked_quantity>" +
+				"<last_updated>"+get_my_time()+"</last_updated>";
+			data_xml+="</"+table_type+">";
+		
+		master_form.elements[5].value=picked_filter.value;
+		update_simple(data_xml);
+		$("#modal162").dialog("close");
+	});
+	
+	///////////////////////////
+	$("#modal162").dialog("open");	
 }

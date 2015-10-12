@@ -1958,6 +1958,51 @@ function report90_header_ini()
 	
 	var rack_filter=form.elements['rack'];
 
+	$('.report_result_count_selected').off('click');
+	$('.report_result_count').off('click');
+	$('.report_result_count').add('.report_result_count_selected').on('click',function () 
+	{
+		console.log('something');
+		$('.report_result_count_selected').attr('class','report_result_count');
+		$(this).attr('class','report_result_count_selected');
+	});
+
+	var close_all_picks=document.getElementById('report90_close_all_picks');	
+	$(close_all_picks).off('click');
+	$(close_all_picks).on('click',function () 
+	{
+		$("[id^='row_report90_']").each(function(index)
+		{
+			var subform=$(this)[0];
+			if(subform.elements[0].checked)
+			{
+				report90_close_item(subform);
+				//$(subform.elements[7]).trigger('click');
+			}
+		});
+	});	
+
+	var select_all_check=document.getElementById('report90_select_all');
+	$(select_all_check).off('change');
+	$(select_all_check).on('change',function () 
+	{
+		//console.log('changed');
+		if(select_all_check.checked)
+		{
+			$('.report90_select_box').each(function()
+			{
+				$(this)[0].checked=true;
+			});
+		}
+		else 
+		{
+			$('.report90_select_box').each(function()
+			{
+				$(this)[0].checked=false;
+			});
+		}
+	});	
+	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{

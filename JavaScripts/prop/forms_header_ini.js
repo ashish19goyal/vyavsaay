@@ -9841,7 +9841,7 @@ function form256_header_ini()
 	var batch_data="<product_instances>" +
 		"<batch></batch>" +
 		"</product_instances>";
-	set_my_value_list(batch_data,batch_filter,function () 
+	set_my_filter(batch_data,batch_filter,function () 
 	{
 		$(batch_filter).focus();
 	});
@@ -9852,7 +9852,7 @@ function form256_header_ini()
 		var batch_data="<product_instances>" +
 			"<batch></batch>" +
 			"</product_instances>";
-		set_my_value_list(batch_data,batch_filter,function () 
+		set_my_filter(batch_data,batch_filter,function () 
 		{
 			$(batch_filter).focus();
 		});

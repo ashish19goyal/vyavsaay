@@ -19688,7 +19688,7 @@ function form186_ini()
 						console.log('button');
 						element_display('','form256');
 						var form256=document.getElementById('form256_master');
-						form256.elements['item'].value=result.item;
+						form256.elements['item_name'].value=result.item;
 						form256.elements['batch'].value=result.batch;
 						form256.elements['brand'].value=result.brand;
 						form256.elements['quantity'].value=result.quantity;
@@ -27035,7 +27035,9 @@ function form256_ini()
 	var fid=$("#form256_link").attr('data_id');
 	if(fid==null)
 		fid="";	
-	
+
+	$('#form256_body').html('');
+		
 	var master_fields=document.getElementById('form256_master');
 	var master_name=master_fields.elements['item_name'].value;
 	var batch=master_fields.elements['batch'].value;

@@ -8488,7 +8488,7 @@ function form256_delete_item(button)
 			var data_xml="<batch_raw_material>" +
 						"<id>"+data_id+"</id>" +
 						"</batch_raw_material>";
-			delete_row(data_xml,activity_xml);
+			delete_simple(data_xml);
 			$(button).parent().parent().remove();
 		});
 	}

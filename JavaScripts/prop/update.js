@@ -238,19 +238,67 @@ function report72_update(form)
  * @report Order Picklist
  * @param form
  */
+function report90_close_item(form)
+{
+	if(is_update_access('report90'))
+	{
+		console.log('picked');				
+		var item=form.elements[1].value;
+		var item_desc=form.elements[2].value;
+		var batch=form.elements[3].value;
+		var to_pick=form.elements[4].value;
+		var picked=form.elements[5].value;
+		var storage=form.elements[6].value;
+		var data_id=form.elements[8].value;
+		var bill_id=form.elements['bill_id'].value;
+		var table_type=form.elements[9].value;
+		var last_updated=get_my_time();
+		
+		form.elements[5].value=to_pick;		
+		var close_button=form.elements[7];		
+		var edit_button=document.getElementById('report90_edit_location_'+data_id);
+		var refresh_button=document.getElementById('report90_refresh_location_'+data_id);				
+		
+		$(close_button).hide();		
+		$(edit_button).hide();		
+		$(refresh_button).hide();		
+		
+		var plus_minus="";		
+		if(table_type=='inventory_adjust')
+		{
+			plus_minus="-";
+		}
+
+		var data_xml="<"+table_type+">";
+			data_xml+="<id>"+data_id+"</id>" +
+				"<picked_status>picked</picked_status>" +
+				"<picked_quantity>"+plus_minus+to_pick+"</picked_quantity>" +
+				"<storage>"+storage+"</storage>"+
+				"<last_updated>"+last_updated+"</last_updated>";
+			data_xml+="</"+table_type+">";
+		
+		console.log(data_xml);
+		update_simple(data_xml);
+	}
+}
+
+/**
+ * @report Order Picklist
+ * @param form
+ */
 function report90_update(form)
 {
 	if(is_update_access('report90'))
 	{
-		var item=form.elements[0].value;
-		var item_desc=form.elements[1].value;
-		var batch=form.elements[2].value;
-		var to_pick=form.elements[3].value;
-		var picked=form.elements[4].value;
-		var storage=form.elements[5].value;
-		var data_id=form.elements[6].value;
+		var item=form.elements[1].value;
+		var item_desc=form.elements[2].value;
+		var batch=form.elements[3].value;
+		var to_pick=form.elements[4].value;
+		var picked=form.elements[5].value;
+		var storage=form.elements[6].value;
+		var data_id=form.elements[8].value;
 		var bill_id=form.elements['bill_id'].value;
-		var table_type=form.elements[7].value;
+		var table_type=form.elements[9].value;
 		var last_updated=get_my_time();
 		
 		var plus_minus="";		
@@ -272,14 +320,9 @@ function report90_update(form)
 		
 		update_simple(data_xml);
 		
-		for(var i=0;i<6;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-		
 		//////////////////////////////
-		var old_storage=form.elements[11].value;
-		var old_picked=form.elements[12].value;
+		var old_storage=form.elements[13].value;
+		var old_picked=form.elements[14].value;
 		
 		if(storage==old_storage)
 		{
@@ -295,8 +338,8 @@ function report90_update(form)
 				data_xml+="</"+table_type+">";
 			
 			update_simple(data_xml);
-			form.elements[11].value=storage;
-			form.elements[12].value=picked;					
+			form.elements[13].value=storage;
+			form.elements[14].value=picked;					
 		}
 		else
 		{
@@ -315,8 +358,8 @@ function report90_update(form)
 						"</"+table_type+">";
 				
 				update_simple(data_xml);
-				form.elements[11].value=storage;
-				form.elements[12].value=picked;
+				form.elements[13].value=storage;
+				form.elements[14].value=picked;
 			}
 			else
 			{
@@ -339,12 +382,12 @@ function report90_update(form)
 				var old_pending_quantity=parseFloat(to_pick)-parseFloat(old_picked);
 				var new_picked_quantity=parseFloat(picked)-parseFloat(old_picked);
 				var new_key=get_new_key();
-				form.elements[7].value='inventory_adjust';
-				form.elements[6].value=new_key;
-				form.elements[11].value=storage;
-				form.elements[12].value=new_picked_quantity;
-				form.elements[3].value=old_pending_quantity;
-				form.elements[4].value=new_picked_quantity;
+				form.elements[9].value='inventory_adjust';
+				form.elements[8].value=new_key;
+				form.elements[13].value=storage;
+				form.elements[14].value=new_picked_quantity;
+				form.elements[4].value=old_pending_quantity;
+				form.elements[5].value=new_picked_quantity;
 		
 				var adjust1_xml="<inventory_adjust>"+
 					"<id>"+(new_key-1)+"</id>" +
@@ -379,7 +422,7 @@ function report90_update(form)
 			}
 		}
 		
-		for(var i=0;i<6;i++)
+		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -558,15 +601,8 @@ function form2_update_form()
 					"<notes>NewsLetter "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
-	
+		update_row(data_xml,activity_xml);
+		
 		$("[id^='save_form2_']").click();
 	}
 	else
@@ -603,14 +639,8 @@ function form5_update_item(form)
 					"<notes>Asset "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
+		update_row(data_xml,activity_xml);
+			
 		for(var i=0;i<3;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -716,14 +746,8 @@ function form8_update_item(form)
 					"<notes>Staff profile of "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
+		update_row(data_xml,activity_xml);
+			
 		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');

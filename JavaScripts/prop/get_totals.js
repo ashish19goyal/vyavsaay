@@ -523,7 +523,7 @@ function form165_get_totals()
  * @formNo 90
  * @param button
  */
-function report90_get_totals()
+/*function report90_get_totals()
 {
 	var master_form=document.getElementById('report90_header');
 
@@ -543,6 +543,7 @@ function report90_get_totals()
 	});	
 	master_form.elements['pending_count'].value=total_tbp-total_picked;
 }
+*/
 
 function form178_get_totals()
 {

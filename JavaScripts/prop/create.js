@@ -14305,6 +14305,43 @@ function form186_create_item(form)
 	
 		create_simple(data_xml);
 		
+		var raw_data="<pre_requisites>" +
+				"<type exact='yes'>product</type>" +
+				"<requisite_type exact='yes'>product</requisite_type>"+
+				"<name exact='yes'>"+item+"</name>" +
+				"<requisite_name></requisite_name>"+
+				"<quantity></quantity>"+
+				"</pre_requisites>";
+		fetch_requested_data('',raw_data,function(raws)
+		{
+			raws.forEach(function(raw)
+			{
+				raw.quantity=parseFloat(raw.quantity)*parseFloat(quantity);			
+				var batch_data="<product_instances>"+
+								"<batch></batch>"+
+								"<product_name exact='yes'>"+raw.requisite_name+"</product_name>"+
+								"</product_instances>";
+				get_single_column_data(function (batches) 
+				{
+					var batches_result_array=[];
+					get_available_batch(raw.requisite_name,batches,raw.quantity,batches_result_array,function()
+					{
+						batches_result_array.forEach(function (batch_result) 
+						{
+							var batch_raw_xml="<batch_raw_material>"+
+								"<item>"+raw.requisite_name+"</item>"+
+								"<batch>"+batch_result.batch+"</batch>"+
+								"<quantity>"+batch_result.quantity+"</quantity>"+
+								"<production_id>"+data_id+"</production_id>"+
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</batch_raw_material>";
+							create_simple(batch_raw_xml);
+						});
+					});
+				},batch_data);	
+			});
+		});
+		
 		var steps_xml="<business_processes>"+
 					"<name></name>"+
 					"<details></details>"+

@@ -15489,18 +15489,22 @@ function form256_add_item()
 			"<name></name>" +
 			"<type exact='yes'>product</type>"+
 			"<value exact='yes'>yes</value>"+
-			"<attribute exact='yes'>manufactured</attribute>"+
+			"<attribute exact='yes'>raw material</attribute>"+
 			"</attributes>";
 		set_my_value_list_func(item_data,item_filter,function () 
 		{
 			$(item_filter).focus();
 		});
-		
-		var batch_data="<product_instances>" +
+
+		$(item_filter).on('blur',function () 
+		{		
+			var batch_data="<product_instances>" +
 				"<batch></batch>" +
+				"<product_name exact='yes'>"+item_filter.value+"</product_name>"+
 				"</product_instances>";
 							
-		set_my_value_list(batch_data,batch_filter);	
+			set_my_value_list(batch_data,batch_filter);
+		});		
 		longPressEditable($('.dblclick_editable'));
 			
 	}

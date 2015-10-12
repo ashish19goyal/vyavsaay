@@ -1554,4 +1554,18 @@
 		</form>
 	</div>
 	
+	<div id="modal162" title="Close Picking">
+		<form id='modal162_form' autocomplete="off">
+			<fieldset>
+				<label>SKU: <input type='text' readonly='readonly' name='sku'></label><br>
+				<label>Item Name: <input type='text' readonly='readonly' name='item'></label><br>
+				<label>Batch: <input type='text' readonly='readonly' name='batch'></label><br>
+				<label>Storage: <input type="text" readonly='readonly' name='storage'></label><br>
+				<label>To Pick: <input type="text" readonly='readonly' name='topick'></label><br>
+				<label>Picked: <input type="text" name='picked'></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+	
 </div>

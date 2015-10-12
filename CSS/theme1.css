@@ -1197,6 +1197,26 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 	border: 2px solid #ffffff;
 }
 
+.report_result_count{
+	cursor: pointer;
+	width:21px;
+	background-color: #EDFDD0;
+	margin:1px;
+	float:left;
+	border: 1px solid #C2EE62;
+	color: #006000;
+}
+
+.report_result_count_selected{
+	cursor: pointer;
+	width:21px;
+	background-color: #234F32;
+	margin:1px;
+	float:left;
+	border: 1px solid #234f32;
+	color: #fff;
+}
+
 @media screen and (min-width: 550px) {
 	#side_menu{
 		background-color: #A2A2A2;	
