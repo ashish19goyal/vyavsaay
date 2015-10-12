@@ -9,6 +9,7 @@
 		<li><a id='form187_link' href='#form187' onclick='form187_header_ini(); form187_ini();' data-i18n='form.testing_processes'></a></li>
 		<li><a id='form224_link' href='#form224' onclick='form224_header_ini(); form224_ini();' data-i18n='form.testing'></a></li>
 		<li><a id='report83_link' href='#report83' onclick='report83_header_ini();' data-i18n='form.testing_results'></a></li>
+		<li><a id='form256_link' href='#form256' onclick='form256_header_ini(); form256_ini();' data-i18n='form.batch_info'></a></li>
 	</ul>
 	<?php 
 		include "forms/form88.php";
@@ -20,5 +21,7 @@
 		include "forms/form187.php";
 		include "forms/form224.php";
 		include "reports/report83.php";
+		include "forms/form256.php";
+		
 	?>
 </div>

@@ -6787,7 +6787,7 @@ function form183_header_ini()
 		"<name></name>" +
 		"<type exact='yes'>product</type>"+
 		"<value exact='yes'>yes</value>"+
-		"<attribute exact='yes'>raw material</attribute>"+
+		"<attribute exact='yes'>manufactured</attribute>"+
 		"</attributes>";
 
 	var batch_data="<product_instances>" +
@@ -9783,4 +9783,87 @@ function form255_header_ini()
 		event.preventDefault();
 		form255_ini();
 	});	
+}
+
+
+/**
+ * @form Batch Info
+ * @formNo 256
+ */
+function form256_header_ini()
+{
+	var fields=document.getElementById('form256_master');
+	
+	var item_filter=fields.elements['item_name'];
+	var batch_filter=fields.elements['batch'];
+	var quantity_filter=fields.elements['quantity'];
+	var brand_filter=fields.elements['brand'];
+	var plan_filter=fields.elements['pplan'];
+	var id_filter=fields.elements['id'];
+	var save_button=fields.elements['save'];
+
+	$(plan_filter).off('click');
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form256_create_form();
+	});
+
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form256_ini();
+	});
+
+	var item_data="<attributes>" +
+			"<name></name>" +
+			"<type exact='yes'>product</type>"+
+			"<value exact='yes'>yes</value>"+
+			"<attribute exact='yes'>manufactured</attribute>"+
+			"</attributes>";
+		
+	set_my_value_list(item_data,item_filter,function () 
+	{
+		$(item_filter).focus();
+	});
+	
+	var batch_data="<product_instances>" +
+		"<batch></batch>" +
+		"</product_instances>";
+	set_my_value_list(batch_data,batch_filter,function () 
+	{
+		$(batch_filter).focus();
+	});
+	
+	$(item_filter).off('blur');
+	$(item_filter).on('blur',function()
+	{
+		var batch_data="<product_instances>" +
+			"<batch></batch>" +
+			"</product_instances>";
+		set_my_value_list(batch_data,batch_filter,function () 
+		{
+			$(batch_filter).focus();
+		});
+	});
+
+	item_filter.value='';
+	batch_filter.value="";
+	quantity_filter.value="";
+	brand_filter.value="";
+	plan_filter.value="";
+	id_filter.value="";
+	
+	$('#form256_body').html("");
 }

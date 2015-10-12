@@ -4002,7 +4002,7 @@ function print_form225(func)
 	var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
 				"<td style='text-align:left;width:13%;'>Item</td>"+
 				"<td style='text-align:left;width:20%;'>Description</td>"+
-				"<td style='text-align:left;width:13%;'>Batch</td>"+
+				//"<td style='text-align:left;width:13%;'>Batch</td>"+
 				"<td style='text-align:left;width:10%'>Qty</td>"+
 				"<td style='text-align:left;width:10%'>Rate</td>"+
 				"<td style='text-align:left;width:10%'>Amount</td>"+
@@ -4028,7 +4028,7 @@ function print_form225(func)
 		table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
 				"<td style='text-align:left;word-wrap: break-word'>"+item_name+"</td>"+
 				"<td style='text-align:left;word-wrap: break-word'>"+item_desc+"</td>"+
-				"<td style='text-align:left;word-wrap: break-word'>"+batch+"</td>"+
+				//"<td style='text-align:left;word-wrap: break-word'>"+batch+"</td>"+
 				"<td style='text-align:left;word-wrap: break-word'>"+quantity+"</td>"+
 				"<td style='text-align:left;word-wrap: break-word'>"+price+"</td>"+
 				"<td style='text-align:left;word-wrap: break-word'>"+amount+"</td>"+

@@ -13539,3 +13539,50 @@ function form255_update_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Batch Info
+ * @param button
+ */
+function form256_update_item(form)
+{
+	if(is_update_access('form256'))
+	{
+		var item=form.elements[0].value;
+		var batch=form.elements[1].value;
+		var quantity=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<batch_raw_material>" +
+					"<id>"+data_id+"</id>" +
+					"<quantity>"+quantity+"</quantity>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</batch_raw_material>";
+		update_simple(data_xml);
+		
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Batch Info
+ * @param button
+ */
+function form256_update_form()
+{
+	if(is_create_access('form256'))
+	{	
+		$("[id^='save_form256_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}	
+}

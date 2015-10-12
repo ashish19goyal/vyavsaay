@@ -1515,6 +1515,15 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</production_plan_items>
+	<batch_raw_material>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<production_id index='yes' type="BIGINT"></production_id>
+			<item index='yes' type="TEXT"></item>
+			<batch index='yes' type="TEXT"></batch>
+			<quantity index='no' type="DECIMAL(12,2)"></quantity>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</batch_raw_material>
 	<system_grid_metrics>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<metric_id index='yes' type="VARCHAR(30)"></metric_id>

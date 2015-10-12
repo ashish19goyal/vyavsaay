@@ -8470,3 +8470,30 @@ function form255_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Marketing Leads
+ * @param button
+ */
+function form256_delete_item(button)
+{
+	if(is_delete_access('form256'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var item=form.elements[0].value;
+			var data_id=form.elements[3].value;
+			var data_xml="<batch_raw_material>" +
+						"<id>"+data_id+"</id>" +
+						"</batch_raw_material>";
+			delete_row(data_xml,activity_xml);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

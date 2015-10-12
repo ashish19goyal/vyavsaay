@@ -17649,3 +17649,69 @@ function form255_create_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+
+/**
+ * @form Batch Info
+ * @param button
+ */
+function form256_create_item(form)
+{
+	if(is_create_access('form256'))
+	{
+		var production_id=document.getElementById('form256_master').elements['id'].value;
+		var item=form.elements[0].value;
+		var batch=form.elements[1].value;
+		var quantity=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<batch_raw_material>" +
+					"<id>"+data_id+"</id>" +
+					"<production_id>"+production_id+"</production_id>" +
+					"<item>"+item+"</item>" +
+					"<batch>"+batch+"</batch>" +
+					"<quantity>"+quantity+"</quantity>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</batch_raw_material>";
+		create_simple(data_xml);
+		
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+		var del_button=form.elements[5];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form256_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form256_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Batch Info
+ * @param button
+ */
+function form256_create_form()
+{
+	if(is_create_access('form256'))
+	{	
+		$("[id^='save_form256_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}	
+}

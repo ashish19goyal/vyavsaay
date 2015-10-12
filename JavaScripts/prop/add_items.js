@@ -15443,3 +15443,69 @@ function form255_add_item()
 		$("#modal2").dialog("open");
 	}		
 }
+
+
+/**
+ * @form Batch Info
+ * @formNo 256
+ */
+function form256_add_item()
+{
+	if(is_create_access('form256'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form256_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='text' form='form256_"+id+"' required value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Batch'>";
+				rowsHTML+="<input type='text' required form='form256_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' class='dblclick_editable' required step='any' form='form256_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form256_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form256_"+id+"'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form256_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form256_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form256_"+id);
+		var item_filter=fields.elements[0];
+		var batch_filter=fields.elements[1];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form256_create_item(fields);
+		});
+
+		var item_data="<attributes>" +
+			"<name></name>" +
+			"<type exact='yes'>product</type>"+
+			"<value exact='yes'>yes</value>"+
+			"<attribute exact='yes'>manufactured</attribute>"+
+			"</attributes>";
+		set_my_value_list_func(item_data,item_filter,function () 
+		{
+			$(item_filter).focus();
+		});
+		
+		var batch_data="<product_instances>" +
+				"<batch></batch>" +
+				"</product_instances>";
+							
+		set_my_value_list(batch_data,batch_filter);	
+		longPressEditable($('.dblclick_editable'));
+			
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}

@@ -3627,6 +3627,17 @@
 			<tables>--sale_leads--followups--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form256</name>
+			<display_name>batch_info</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--production_plan_items--batch_raw_material--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -6889,6 +6900,17 @@
 			<username>master</username>
 			<element_id>form255</element_id>
 			<element_name>marketing_leads</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form256</element_id>
+			<element_name>batch_info</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

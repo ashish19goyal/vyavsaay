@@ -19625,6 +19625,7 @@ function form186_ini()
 			var plan_items_column="<production_plan_items>" +
 					"<id></id>" +
 					"<item></item>" +
+					"<batch></batch>"+
 					"<order_no></order_no>" +
 					"<quantity></quantity>" +
 					"<brand></brand>" +
@@ -19669,7 +19670,7 @@ function form186_ini()
 							rowsHTML+="<input type='button' class='delete_icon' form='form186_"+id+"' id='delete_form186_"+id+"' onclick='form186_delete_item($(this));'>";
 						if(plan_status=='approved' && result.status=='pending')
 						{
-							rowsHTML+="<input type='button' class='generic_icon' value='Ready' form='form186_"+id+"' onclick='modal141_action($(this));'>";							
+							rowsHTML+="<input type='button' class='generic_icon' value='Ready' name='ready' form='form186_"+id+"'>";							
 						}						
 						rowsHTML+="</td>";			
 					rowsHTML+="</tr>";
@@ -19680,6 +19681,26 @@ function form186_ini()
 					var to_filter=fields.elements[5];
 					var status_filter=fields.elements[6];
 					var save_button=fields.elements[8];
+					var ready_button=fields.elements['ready'];
+					
+					$(ready_button).on('click',function()
+					{
+						console.log('button');
+						element_display('','form256');
+						var form256=document.getElementById('form256_master');
+						form256.elements['item'].value=result.item;
+						form256.elements['batch'].value=result.batch;
+						form256.elements['brand'].value=result.brand;
+						form256.elements['quantity'].value=result.quantity;
+						var plan_elem=form256.elements['pplan'];
+						plan_elem.value=result.plan_id;
+						$(plan_elem).on('click',function () 
+						{
+							element_display(result.plan_id,'form186');
+						});
+						form256.elements['id'].value=get_new_key();
+						form256_ini();
+					});
 					
 					$(from_filter).datepicker();
 					$(to_filter).datepicker();
@@ -27001,3 +27022,100 @@ function form255_ini()
 		hide_loader();
 	});
 };
+
+/**
+ * @form Batch info
+ * @formNo 256
+ * @Loading light
+ */
+function form256_ini()
+{
+	show_loader();
+
+	var fid=$("#form256_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var master_fields=document.getElementById('form256_master');
+	var master_name=master_fields.elements['item_name'].value;
+	var batch=master_fields.elements['batch'].value;
+	
+	var items_column="<production_plan_items>" +
+					"<id>"+fid+"</id>" +
+					"<plan_id></plan_id>"+
+					"<status></status>" +
+					"<brand></brand>" +
+					"<quantity></quantity>" +
+					"<item exact='yes'>"+master_name+"</item>" +
+					"<batch exact='yes'>"+batch+"</batch>" +
+					"</production_plan_items>";
+	fetch_requested_data('',items_column,function(bag_results)
+	{
+		var filter_fields=document.getElementById('form256_master');
+		if(bag_results.length>0)
+		{
+			filter_fields.elements['id'].value=bag_results[0].id;
+			filter_fields.elements['brand'].value=bag_results[0].brand;
+			filter_fields.elements['quantity'].value=bag_results[0].quantity;
+			filter_fields.elements['pplan'].value=bag_results[0].plan_id;
+
+			var plan_elem=filter_fields.elements['pplan'];			
+			$(plan_elem).on('click',function()
+			{
+				element_display(bag_results[0].plan_id,'form186');
+			});
+						
+			var save_button=filter_fields.elements['save'];
+			
+			$(save_button).off('click');
+			$(save_button).on("click", function(event)
+			{
+				event.preventDefault();
+				form256_update_form();
+			});
+
+			var raw_column="<batch_raw_material>" +
+							"<id></id>" +
+							"<item></item>" +
+							"<batch></batch>" +
+							"<quantity></quantity>" +
+							"<production_id exact='yes'>"+bag_results[0].id+"</production_id>" +
+							"</batch_raw_material>";
+
+			fetch_requested_data('form256',raw_column,function(results)
+			{
+				//console.log(results);
+				results.forEach(function(result)
+				{
+					var id=result.id;
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form256_"+id+"'></form>";
+						rowsHTML+="<td data-th='Item'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form256_"+id+"' value='"+result.item+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Batch'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form256_"+id+"' value='"+result.batch+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Quantity'>";
+							rowsHTML+="<input type='number' step='any' readonly='readonly' form='form256_"+id+"' value='"+result.quantity+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form256_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='button' class='submit_hidden' form='form256_"+id+"' id='save_form256_"+id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form256_"+id+"' id='delete_form256_"+id+"' onclick='form256_delete_item($(this));'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";
+		
+					$('#form256_body').append(rowsHTML);
+				});
+				
+				$('textarea').autosize();
+				hide_loader();
+			});
+		}
+		else
+		{
+			hide_loader();
+		}
+	});
+}
