@@ -4586,12 +4586,12 @@ function print_report90(report_title,print_button)
 			counter+=1;
 			var form=$(this)[0];	
 			table_rows+="<tr>"+
-				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[0].value+"</div></td>"+
 				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[1].value+"</div></td>"+
 				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[2].value+"</div></td>"+
-				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[5].value+"</div></td>"+
 				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[3].value+"</div></td>"+
-				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[4].value+"</div></td></tr>";		
+				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[6].value+"</div></td>"+
+				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[4].value+"</div></td>"+
+				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[5].value+"</div></td></tr>";		
 		});
 		new_table.innerHTML=table_rows;
 		/////////////placing the containers //////////////////////////////////////////////////////	
