@@ -312,13 +312,18 @@ function set_session_offline()
 		var req=objectStore.index('name').get(kv);
 		req.onsuccess=function(e)
 		{
+			//console.log('got offline record');
 			var data=req.result;
+			//console.log(req);
 			if(data)
 			{
+				//console.log(data);
 				data.value='offline';
 				var put_req=objectStore.put(data);
 				put_req.onsuccess=function(e)
 				{
+					//console.log('put offline record');
+
 					set_session_var('offline','offline');
 					hide_menu_items();
 					hide_loader();

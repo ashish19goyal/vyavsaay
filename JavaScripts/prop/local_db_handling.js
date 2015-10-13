@@ -228,10 +228,12 @@ function update_local_db(domain,func,new_version)
 						}
 					}
 				}
+				/*
 				if(typeof func!="undefined")
 				{					
 					func();
 				}
+				*/
 			};
 
 			request.onerror=function(ev)

@@ -17377,21 +17377,22 @@ function form169_ini()
 	var next_element=document.getElementById('form169_next');
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
-
-	var columns="<product_master count='25' start_index='"+start_index+"'>" +
-			"<id>"+fid+"</id>" +
-			"<name>"+fsku+"</name>" +
-			"<make>"+fbrand+"</make>" +
-			"<description>"+fname+"</description>" +
-			"<bar_code></bar_code>" +
-			"<tax></tax>" +
-			"<last_updated></last_updated>" +
-			"</product_master>";
-
 	$('#form169_body').html("");
 
-	fetch_requested_data('form169',columns,function(results)
-	{
+	var new_columns=new Object();
+		new_columns.count=25;
+		new_columns.start_index=start_index;
+		new_columns.data_store='product_master';		
+		
+		new_columns.indexes=[{index:'id',value:fid},
+							{index:'name',value:fsku},
+							{index:'make',value:fbrand},
+							{index:'description',value:fname},
+							{index:'bar_code'},
+							{index:'tax'}];		
+
+	read_json_rows('form169',new_columns,function(results)
+	{	
 		var smaller_barcodes=get_session_var('brands_small_barcode');
 		results.forEach(function(result)
 		{
@@ -17512,7 +17513,9 @@ function form169_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'products');
+			get_limited_export_data(new_columns,'Products',function(new_result)
+			{
+			});
 		});
 		hide_loader();
 	});	
@@ -19686,7 +19689,8 @@ function form186_ini()
 					$(ready_button).on('click',function()
 					{
 						console.log('button');
-						element_display('','form256');
+						element_display(result.id,'form256');
+						/*						
 						var form256=document.getElementById('form256_master');
 						form256.elements['item_name'].value=result.item;
 						form256.elements['batch'].value=result.batch;
@@ -19700,6 +19704,7 @@ function form186_ini()
 						});
 						form256.elements['id'].value=get_new_key();
 						form256_ini();
+						*/
 					});
 					
 					$(from_filter).datepicker();
@@ -27038,6 +27043,7 @@ function form256_ini()
 
 	$('#form256_body').html('');
 		
+	console.log(fid);
 	var master_fields=document.getElementById('form256_master');
 	var master_name=master_fields.elements['item_name'].value;
 	var batch=master_fields.elements['batch'].value;
@@ -27048,8 +27054,8 @@ function form256_ini()
 					"<status></status>" +
 					"<brand></brand>" +
 					"<quantity></quantity>" +
-					"<item exact='yes'>"+master_name+"</item>" +
-					"<batch exact='yes'>"+batch+"</batch>" +
+					"<item>"+master_name+"</item>" +
+					"<batch>"+batch+"</batch>" +
 					"</production_plan_items>";
 	fetch_requested_data('',items_column,function(bag_results)
 	{
@@ -27057,6 +27063,8 @@ function form256_ini()
 		if(bag_results.length>0)
 		{
 			filter_fields.elements['id'].value=bag_results[0].id;
+			filter_fields.elements['item_name'].value=bag_results[0].item;
+			filter_fields.elements['batch'].value=bag_results[0].batch;
 			filter_fields.elements['brand'].value=bag_results[0].brand;
 			filter_fields.elements['quantity'].value=bag_results[0].quantity;
 			filter_fields.elements['pplan'].value=bag_results[0].plan_id;

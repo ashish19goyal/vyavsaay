@@ -1541,7 +1541,7 @@
 			<fieldset>
 				<label>Category: <input type='text' class='modal161_attributes' name='Category'></label><br>
 				<label>Sub-Category: <input type='text' class='modal161_attributes' name='Sub-Category'></label><br>
-				<label>Name: <input type='text' required></label><br>
+				<label>Organization Name: <input type='text' required></label><br>
 				<label>Phone: <input type="tel"></label><br>
 				<label>Email: <input type="text"></label><br>
 				<label>Address: <textarea></textarea></label><br>

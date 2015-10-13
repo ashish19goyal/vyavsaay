@@ -7104,13 +7104,13 @@ function modal114_action(func)
 			var description=form.elements[2].value;
 			var make=form.elements[3].value;
 			
-			name = name.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			name = name.replace(/[^a-z0-9A-Z<>\s\(\)\+\-\;\.\<\,]/g,'');
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
-			make = make.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			make = make.replace(/[^a-z0-9A-Z<>\s\(\)\+\-\;\.\<\,]/g,'');
 			make = make.replace(/â/g,'');
 			make = make.replace(/&/g, "and");
-			description = description.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			description = description.replace(/[^a-z0-9A-Z<>\s\(\)\+\-\;\.\<\,]/g,'');
 			description = description.replace(/â/g,'');
 			description = description.replace(/&/g, "and");
 
@@ -7178,30 +7178,6 @@ function modal114_action(func)
 				}
 			});
 
-			///ADDING ACTIVE AND REQUIRED CHECKLIST ITEMS
-			var cid=get_new_key();
-			var checklist_items_xml="<checklist_items>"+
-									"<checkpoint></checkpoint>"+
-									"<desired_result></desired_result>"+
-									"<status array='yes'>--active--required--</status>"+
-									"</checklist_items>";
-			fetch_requested_data('',checklist_items_xml,function(checklists)
-			{
-				cid++;
-				checklists.forEach(function(checklist)
-				{
-					var checklist_xml="<checklist_mapping>" +
-							"<id>"+cid+"</id>" +
-							"<item>"+name+"</item>" +
-							"<checkpoint>"+checklist.checkpoint+"</checkpoint>" +
-							"<desired_result>"+checklist.desired_result+"</desired_result>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</checklist_mapping>";
-					create_simple(checklist_xml);
-					
-				});
-			});
-
 			if(url!="")
 			{
 				var pic_xml="<documents>" +
@@ -7264,7 +7240,7 @@ function modal114_action(func)
 				cat_sku_mapping_xml+="</category_sku_mapping>";
 				channel_price_xml+="</channel_prices>";
 				
-				create_batch(sku_mapping_xml);
+				//create_batch(sku_mapping_xml);
 				create_batch(cat_sku_mapping_xml);
 				//create_batch(channel_price_xml);
 				

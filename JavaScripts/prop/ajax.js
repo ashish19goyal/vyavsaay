@@ -28,7 +28,8 @@ function ajax_with_custom_func(url,kvp,func)
 			number_active_ajax-=1;
 			hide_loader();
 			$("#modal74").dialog("open");
-	        console.log(xhr.status);
+	        //console.log(xhr.status);
+		    console.log(xhr.responseText);    	    
     	    console.log(thrownError);
 		},
 		success: function(return_data,return_status,e)

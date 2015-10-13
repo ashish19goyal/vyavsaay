@@ -400,8 +400,11 @@ function hide_menu_items()
 {
 	//console.log("hiding menu items");
 	var loc=get_session_var('capture_location');
-	if(loc=='no')
-		$('#location_icon').hide();
+	$('#location_icon').hide();
+	//console.log(loc);
+	if(loc=='yes')
+		$('#location_icon').show();
+		
 	var offline=get_session_var('offline');
 	if(offline=="online")
 	{

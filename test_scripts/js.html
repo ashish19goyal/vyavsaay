@@ -2,22 +2,14 @@
 
 <script>
 
-var batches=['','',3,0,8,'',4,1,2,'',0];
+var o={json:'js'};
+var batches=["json","<d><a>a</a><b>b</b></d>"];
 
-						batches.sort(function(a,b)
-						{
-							if(parseFloat(a)>parseFloat(b) || isNaN(a) || a=="" || a==0)
-							{	console.log(a+"-"+b);
-							
-								return 1;}
-							else 
-							{	
-								console.log(b+"-"+a);
-									
-								return -1;}
-						});
-
-console.log(batches);
+batches.forEach(function(batch)
+{
+	var a=JSON.stringify(batch);
+	console.log(a);
+});						
 
 </script>
 <body></body>

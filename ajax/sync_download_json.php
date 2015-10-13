@@ -1,28 +1,24 @@
 <?php
 /*
  * output data format: 
- *	<re_xml>	
- *		<data>
- *			<tablename>
- *				<row>
- *					<column1>value1</column1>
- *					<column2>value2</column2>
- *					<column3></column3>
- *					<column(n)>value(n)</column(n)>
- *				</row>
- *				<row>
- *					<column1>value1</column1>
- *					<column2>value2</column2>
- *					<column3></column3>
- *					<column(n)>value(n)</column(n)>
- *				</row>
- *			</tablename>
- *		</data>
- *		<data>	
- *			<end_table>tablename</end_table>
- *			<end_offset>integrer value</end_offset>
- *		</data>
- *	</re_xml>	
+ *	{
+ 		end_table:"",
+ 		end_offset:"",
+ 		data:
+ 		{
+ 			tablename:
+ 			[
+ 				{
+ 					column1:value,
+ 					column2:value
+ 				},
+ 				{
+ 					column1:value,
+ 					column2:value
+ 				}
+ 			]
+ 		}
+ 	}
 */
 	session_start();
 	
@@ -46,8 +42,9 @@
 			$db_schema_xml->load("../db/db_schema.xml");
 			$db_schema=$db_schema_xml->documentElement;
 			
-			$xmlresponse="<re_xml><data>";
-
+			$jsonresponse=[];			
+			$jsoneresponse['data']=[];
+			
 			$first_iteration=true;
 			$num_records=500;
 			$end_table='end_syncing';
@@ -80,8 +77,8 @@
 				
 				if($table_name!="#text" && ($found!==false))
 				{
-					$xmlresponse.="<$table_name>";
-					//echo $table_name;
+					$jsonresponse['data'][$table_name]=[];
+					
 					$stmt[$table_name]=$conn->conn->prepare("select * from $table_name where last_updated>? or last_sync_time>? limit ?,?;");
 					$stmt[$table_name]->execute(array($last_sync_time,$last_sync_time,$start_offset,$num_records));
 					$stmt_res=$stmt[$table_name]->fetchAll(PDO::FETCH_ASSOC);
@@ -97,18 +94,21 @@
 							}
 						}
 
-						$xmlresponse.="<row>";
-						
-						foreach ($stmt_res[$i] as $key => $value)
+						$response_row=[];
+						foreach($stmt_res[$i] as $key => $value)
 						{
-							$xmlresponse.="<".$key.">";
-							$xmlresponse.=htmlentities($value);
-							$xmlresponse.="</".$key.">";
+							/*if(json_decode($value,true))
+							{
+								$response_row[$key]=json_decode($value,true);
+							}
+							else {
+							*/	$response_row[$key]=$value;
+							//}
 						}
-						$xmlresponse.="</row>";
+						$response_row['id']="".$response_row['id'];
+						$response_row['last_updated']="".$response_row['last_updated'];
+						$jsonresponse['data'][$table_name][]=$response_row;						
 					}
-					
-					$xmlresponse.="</$table_name>";
 					
 					if(count($stmt_res)<$num_records)
 					{
@@ -126,16 +126,12 @@
 					}
 				}
 			}
-				
-			$xmlresponse.="</data>";
-			$xmlresponse.="<data>";
-			$xmlresponse.="<end_table>$end_table</end_table>";
-			$xmlresponse.="<end_offset>$start_offset</end_offset>";
-			$xmlresponse.="</data></re_xml>";
-			$xmlresponse=preg_replace('/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u',' ',$xmlresponse);
-	
-			header("Content-Type:text/xml");
-			echo $xmlresponse;
+			
+			$jsonresponse['end_table']=$end_table;			
+			$jsonresponse['end_offset']=$start_offset;
+			$jsonresponse_string=json_encode($jsonresponse);			
+			header("Content-Type:application/json");
+			echo $jsonresponse_string;
 		}
 		else
 		{

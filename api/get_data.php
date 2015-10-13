@@ -69,7 +69,7 @@
 	$api_struct_res=$api_stmt->fetchAll(PDO::FETCH_ASSOC);
 	
 	//echo $api_struct_res[0]['dbname'];
-	$xmlresponse="";
+	$jsonresponse="";
 	if(count($api_struct_res)>0)
 	{
 		$db_name=$api_struct_res[0]['dbname'];
@@ -193,20 +193,20 @@
 			}
 
 			$response_object['rows']=$response_rows;
-			$xmlresponse=json_encode($response_object);
+			$jsonresponse=json_encode($response_object);
 		}
 		else 
 		{
-			$xmlresponse="{'status':'error'}";
+			$jsonresponse="{'status':'error'}";
 		}
 	}
 	else 
 	{
-		$xmlresponse="{'status':'error'}";
+		$jsonresponse="{'status':'error'}";
 	}	
 
 	//header ("Content-Type:text/plain");
 	header ("Content-Type:application/json");
-	echo $xmlresponse;
+	echo $jsonresponse;
 
 ?>
