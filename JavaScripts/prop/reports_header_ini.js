@@ -1952,7 +1952,7 @@ function report89_header_ini()
 function report90_header_ini()
 {	
 	var form=document.getElementById('report90_header');
-	var channel_filter=form.elements['channel'];
+	//var channel_filter=form.elements['channel'];
 	var order_filter=form.elements['order'];
 	var bill_filter=form.elements['bill'];
 	
@@ -1974,7 +1974,7 @@ function report90_header_ini()
 		$("[id^='row_report90_']").each(function(index)
 		{
 			var subform=$(this)[0];
-			if(subform.elements[0].checked)
+			if(subform.elements[0].checked && subform.elements[6].value!="")
 			{
 				report90_close_item(subform);
 				//$(subform.elements[7]).trigger('click');
@@ -2019,7 +2019,7 @@ function report90_header_ini()
 	var channel_data="<sale_channels>"+
 		"<name></name>"+
 		"</sale_channels>";
-	set_my_filter(channel_data,channel_filter);					
+	//set_my_filter(channel_data,channel_filter);					
 	
 	var order_data="<sale_orders>"+
 		"<order_num></order_num>"+

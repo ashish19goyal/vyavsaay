@@ -9520,7 +9520,7 @@ function modal138_action()
 			var channel_sku_string="--";
 			data_array.forEach(function (data_row) 
 			{
-				console.log(data_row);
+				//console.log(data_row);
 				if(data_row.system_sku!="")
 				{
 					import_items_string+=data_row.system_sku+"--";
@@ -9536,6 +9536,7 @@ function modal138_action()
 			unique_sku_in_import=array_unique(unique_sku_in_import);
 			unique_channel_sku_in_import=array_unique(unique_channel_sku_in_import);
 			
+			//console.log(unique_sku_in_import);
 			var sku_data="<sku_mapping>"+
 						"<item_desc></item_desc>"+
 						"<system_sku></system_sku>"+
@@ -9555,6 +9556,7 @@ function modal138_action()
 	
 				fetch_requested_data('',products_xml,function (products) 
 				{
+					console.log(products);
 					if((products.length)==(unique_sku_in_import.length+unique_channel_sku_in_import.length))
 					{
 				    	var data_xml="<sale_orders>";
@@ -12742,7 +12744,7 @@ function modal162_action(button)
 	var form=document.getElementById('modal162_form');
 	
 	var sku_filter=form.elements['sku'];
-	var item_filter=form.elements['item'];
+	var item_filter=form.elements['item_name'];
 	var batch_filter=form.elements['batch'];
 	var storage_filter=form.elements['storage'];
 	var topick_filter=form.elements['topick'];
@@ -12756,6 +12758,11 @@ function modal162_action(button)
 	storage_filter.value=master_form.elements[6].value;
 	topick_filter.value=master_form.elements[4].value;
 	picked_filter.value=master_form.elements[5].value;		
+	
+	if(storage_filter.value=="")
+	{
+		storage_filter.removeAttribute('readonly');
+	}
 	
 	var data_id=master_form.elements[8].value;
 	var table_type=master_form.elements[9].value;

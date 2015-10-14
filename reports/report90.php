@@ -2,7 +2,7 @@
 	<form id='report90_header' autocomplete="off">
 		<fieldset>
 			<!--<label style='background-color:#555;color:#fff;padding:5px;'>Pending Quantity<br><input type='number' step='any' style='font-weight:bold;' readonly='readonly' name='pending_count'></label>-->
-			<label>Channel<br><input type='text' name='channel'></label>
+			<!--<label>Channel<br><input type='text' name='channel'></label>-->
 			<label>Order #<br><input type='text' name='order'></label>
 			<label>Invoice #<br><input type='text' name='bill'></label>
 			<label>
