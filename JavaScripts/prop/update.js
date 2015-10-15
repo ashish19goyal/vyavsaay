@@ -10661,6 +10661,15 @@ function form193_update_form()
 		var storage=form.elements['storage'].value;
 		var items=[];
 
+		var save_button=form.elements['save'];
+	
+		$(save_button).off('click');
+		$(save_button).on("click", function(event)
+		{
+			event.preventDefault();
+			//form193_update_form();
+		});
+
 		form193_get_totals();
 		
 		$("[id^='193form193_']").each(function () 
@@ -13051,6 +13060,15 @@ function form244_update_form()
 		var form=document.getElementById("form244_master");		
 		var storage=form.elements['storage'].value;
 		var items=[];
+
+		var save_button=form.elements['save'];
+	
+		$(save_button).off('click');
+		$(save_button).on("click", function(event)
+		{
+			event.preventDefault();
+			//form193_update_form();
+		});
 
 		form244_get_totals();
 		

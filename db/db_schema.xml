@@ -1551,6 +1551,7 @@
 	<logistics_orders>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<awb_num index='yes' type="VARCHAR(20)"></awb_num>
+			<channel_name index='yes' type="TEXT"></channel_name>
 			<type index='yes' type="VARCHAR(10)"></type><!--COD/RTM/PREPAID-->
 			<order_num index='no' type="VARCHAR(20)"></order_num>
 			<manifest_id index='no' type="VARCHAR(20)"></manifest_id>
@@ -1558,12 +1559,14 @@
 			<ship_to index='no' type="TEXT"></ship_to>
 			<address1 index='no' type="TEXT"></address1>
 			<address2 index='no' type="TEXT"></address2>
+			<address3 index='no' type="TEXT"></address3>
 			<city index='no' type="TEXT"></city>
 			<state index='no' type="TEXT"></state>
 			<pincode index='no' type="TEXT"></pincode>
 			<phone index='no' type="TEXT"></phone>
 			<telephone index='no' type="TEXT"></telephone>
 			<weight index='no' type="DECIMAL(12,2)"></weight>
+			<volumetric_weight index='no' type="DECIMAL(12,2)"></volumetric_weight>
 			<declared_value index='no' type="DECIMAL(12,2)"></declared_value>
 			<collectable_value index='no' type="DECIMAL(12,2)"></collectable_value>
 			<vendor_code index='no' type="TEXT"></vendor_code>
@@ -1572,6 +1575,7 @@
 			<return_address2 index='no' type="TEXT"></return_address2>
 			<return_address3 index='no' type="TEXT"></return_address3>
 			<return_pincode index='no' type="TEXT"></return_pincode>
+			<vendor_phone index='no' type="TEXT"></vendor_phone>
 			<len index='no' type="DECIMAL(12,2)"></len>
 			<breadth index='no' type="DECIMAL(12,2)"></breadth>
 			<height index='no' type="DECIMAL(12,2)"></height>
@@ -1588,6 +1592,7 @@
 			<sku index='no' type="TEXT"></sku>
 			<product_name index='no' type="TEXT"></product_name>
 			<status index='yes' type="VARCHAR(20)"></status><!--picked/out for delivery/received/delivered/pending/undelivered-->
+			<branch index='yes' type="TEXT"></branch>
 			<current_location index='no' type="TEXT"></current_location>
 			<delivery_person index='yes' type="TEXT"></delivery_person>
 			<order_history index='no' type="TEXT"></order_history>
@@ -1611,6 +1616,7 @@
 			<num_orders index='no' type="INT"></num_orders>
 			<collectable_amount index='yes' type="DECIMAL(12,2)"></collectable_amount>
 			<collected_amount index='yes' type="DECIMAL(12,2)"></collected_amount>
+			<branch index='yes' type="TEXT"></branch>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</drs>
@@ -1624,6 +1630,7 @@
 			<status index='yes' type="VARCHAR(20)"></status><!--in-transit/pending/received-->
 			<weight index='no' type="DECIMAL(12,2)"></weight>
 			<num_orders index='no' type="INT"></num_orders>
+			<branch index='yes' type="TEXT"></branch>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</transit_bags>

@@ -180,7 +180,7 @@ function sync_server_to_local(func)
 	  		   }
 	  		   else
 	  		   {
-	  			   progress_value=progress_dummy1+(1-(localdb_open_requests/max_localdb_open_requests))*25;
+	  			   progress_value=progress_dummy1+(1-(localdb_open_requests/max_localdb_open_requests))*20;
 	  		   }
 	  		   if(localdb_open_requests===0)
 	  		   {
@@ -194,7 +194,7 @@ function sync_server_to_local(func)
 	  	   }
 	  	   else
 	  	   {
-	  	   		progress_value=progress_dummy+(1-(online_counter/50))*24;
+	  	   		progress_value=progress_dummy+(1-(online_counter/50))*20;
 	  	   }
 	     },1000);	
 	 }
@@ -221,6 +221,7 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
 		else
 		{
 			var response_object=JSON.parse(response);
+						
 			var end_table=response_object.end_table;
 			var end_offset=response_object.end_offset;
 			//console.log(end_table);

@@ -9068,19 +9068,35 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 					fetch_requested_data('',sku_components_xml,function(components)
 					{
 						order_item_timer+=components.length;
-						components.forEach(function(component)
+						if(components.length==0)
 						{
-							component.quantity=parseFloat(component.quantity)*parseFloat(order_item.quantity);
-							get_inventory(component.requisite_name,'',function(quantity)
+							order_item_timer+=1;
+							get_inventory(order_item.item_name,'',function(quantity)
 							{
-								if(parseFloat(quantity)<parseFloat(component.quantity))
+								if(parseFloat(quantity)<parseFloat(order_item.quantity))
 								{
-									tr_elem_title.push('Insufficient Inventory for '+component.requisite_name);
+									tr_elem_title.push('Insufficient Inventory ');
 									tr_elem_selection.push(get_session_var('billing_on_inventory'));
 								}
 								order_item_timer-=1;
 							});
-						});
+						}
+						else
+						{
+							components.forEach(function(component)
+							{
+								component.quantity=parseFloat(component.quantity)*parseFloat(order_item.quantity);
+								get_inventory(component.requisite_name,'',function(quantity)
+								{
+									if(parseFloat(quantity)<parseFloat(component.quantity))
+									{
+										tr_elem_title.push('Insufficient Inventory for '+component.requisite_name);
+										tr_elem_selection.push(get_session_var('billing_on_inventory'));
+									}
+									order_item_timer-=1;
+								});
+							});
+						}
 						order_item_timer-=1;
 					});
 

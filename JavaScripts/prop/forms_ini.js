@@ -21041,55 +21041,48 @@ function form198_ini()
 	var master_form=document.getElementById('form198_master');
 	var awb_num=master_form.elements['awb_num'];
 
-	var columns="<logistics_orders count='1'>" +
-			"<id>"+fid+"</id>" +
-			"<order_num></order_num>"+
-			"<awb_num>"+awb_num.value+"</awb_num>"+
-			    "<type></type>"+
-                "<manifest_id></manifest_id>"+
-                "<merchant_name></merchant_name>"+
-                "<ship_to></ship_to>"+
-                "<address1></address1>"+
-                "<address2></address2>"+
-                "<city></city>"+
-                "<state></state>"+
-                "<pincode></pincode>"+
-                "<phone></phone>"+
-                "<telephone></telephone>"+
-                "<weight></weight>"+
-                "<declared_value></declared_value>"+
-                "<collectable_value></collectable_value>"+
-                "<vendor_code></vendor_code>"+
-                "<shipper_name></shipper_name>"+
-                "<return_address1></return_address1>"+
-                "<return_address2></return_address2>"+
-                "<return_address3></return_address3>"+
-                "<return_pincode></return_pincode>"+
-                "<len></len>"+
-                "<breadth></breadth>"+
-                "<height></height>"+
-                "<pieces></pieces>"+
-                "<carrier_account></carrier_account>"+
-                "<carrier_name></carrier_name>"+
-                "<manifest_type></manifest_type>"+
-                "<dispatch_date></dispatch_date>"+
-                "<import_date></import_date>"+
-                "<notes></notes>"+
-                "<pickup_location></pickup_location>"+
-                "<pickup_by></pickup_by>"+
-                "<sku></sku>"+
-                "<product_name></product_name>"+
-                "<status></status>"+
-                "<current_location></current_location>"+
-                "<delivery_person></delivery_person>"+
-                "<order_history></order_history>"+
-                "<comments></comments>"+
-                "<drs_num></drs_num>"+
-                "</logistics_orders>";
-
 	$('#form198_body').html("");
 
-	fetch_requested_data('form198',columns,function(results)
+	var new_columns=new Object();
+		new_columns.count=1;
+		new_columns.start_index=0;
+		new_columns.data_store='logistics_orders';		
+		
+		new_columns.indexes=[{index:'id',value:fid},
+							{index:'order_num'},
+							{index:'awb_num',value:awb_num.value},
+							{index:'type'},
+							{index:'channel_name'},
+							{index:'merchant_name'},
+							{index:'ship_to'},
+							{index:'import_date'},
+							{index:'address1'},
+							{index:'address2'},
+							{index:'address3'},
+							{index:'city'},
+							{index:'pincode'},
+							{index:'state'},
+							{index:'phone'},
+							{index:'telephone'},
+							{index:'product_name'},
+							{index:'pieces'},
+							{index:'collectable_value'},
+							{index:'declared_value'},
+							{index:'weight'},
+							{index:'volumetric_weight'},
+							{index:'LBH'},
+							{index:'shipper_name'},
+							{index:'return_address1'},
+							{index:'vendor_phone'},
+							{index:'return_pincode'},
+							{index:'manifest_id'},
+							{index:'delivery_person'},
+							{index:'order_history'},
+							{index:'drs_num'},
+							{index:'branch'},
+							{index:'status'}];		
+
+	read_json_rows('form198',new_columns,function(results)
 	{	
 		results.forEach(function(result)
 		{
@@ -21098,9 +21091,9 @@ function form198_ini()
 				awb_num.value=result.awb_num;
 			}
 			
-			var order_history=JSON.parse(result.order_history);
+			var order_history=result.order_history;
 		
-			var rowsHTML="<b>Order History</b><br><table><tr style='background-color:#4eac72'><td>Time</td><td>Details</td><td>Location</td><td>Status</td></tr>";
+			var rowsHTML="<b>Order History</b><br><table class='plain_table'><tr style='background-color:#4eac72'><td>Time</td><td>Details</td><td>Location</td><td>Status</td></tr>";
 			
 			for(var k in order_history)
 			{
@@ -21111,12 +21104,13 @@ function form198_ini()
 				rowsHTML+="<input type='hidden' name='id'  value='"+result.id+"'>";
 				rowsHTML+="<label>Order #: <input type='text' name='order_num'  value='"+result.order_num+"'></label>";
 				rowsHTML+="<label>Type: <input type='text' name='type'  value='"+result.type+"' required></label>";
+				rowsHTML+="<label>Channel: <input type='text' name='type'  value='"+result.channel_name+"' required></label>";
 				rowsHTML+="<label>Manifest ID: <input type='text' name='manifest_id'  value='"+result.manifest_id+"' required></label>";
-				rowsHTML+="<label>Merchant Name: <textarea name='merchant_name'  required>"+result.merchant_name+"</textarea></label>";
-				rowsHTML+="<label>Ship To: <textarea name='ship_to'  required>"+result.ship_to+"</textarea></label>";
+				rowsHTML+="<label>Customer Name: <textarea name='merchant_name'  required>"+result.merchant_name+"</textarea></label>";
+				rowsHTML+="<label>Consignee: <textarea name='ship_to'  required>"+result.ship_to+"</textarea></label>";
 				rowsHTML+="<label>Address 1: <textarea name='address1' >"+result.address1+"</textarea></label>";
 				rowsHTML+="<label>Address 2: <textarea name='address2' >"+result.address2+"</textarea></label>";
-				rowsHTML+="<label>City: <input type='text' name='city'  value='"+result.city+"'></label>";
+				rowsHTML+="<label>Destination City: <input type='text' name='city'  value='"+result.city+"'></label>";
 				rowsHTML+="<label>State: <input type='text' name='state'  value='"+result.state+"'></label>";
 				rowsHTML+="<label>Pincode: <input type='text' name='pincode'  value='"+result.pincode+"'></label>";
 				rowsHTML+="<label>Phone: <input type='text' name='phone'  required value='"+result.phone+"'></label>";
@@ -21124,30 +21118,18 @@ function form198_ini()
 				rowsHTML+="<label>Weight: <input type='number' step='any' name='weight'  value='"+result.weight+"'></label>";
 				rowsHTML+="<label>Declared Value: <input type='number' step='any' name='d_value'  value='"+result.declared_value+"'></label>";
 				rowsHTML+="<label>Collectable Value: <input type='number' step='any' name='c_value'  value='"+result.collectable_value+"'></label>";
-				rowsHTML+="<label>Vendor Code: <input type='text' name='vendor_code'  required value='"+result.vendor_code+"'></label>";
-				rowsHTML+="<label>Shipper Name: <textarea name='shipper_name' >"+result.shipper_name+"</textarea></label>";
-				rowsHTML+="<label>Return Address 1: <textarea name='r_address1' >"+result.return_address1+"</textarea></label>";
-				rowsHTML+="<label>Return Address 2: <textarea name='r_address2' >"+result.return_address2+"</textarea></label>";
-				rowsHTML+="<label>Return Address 3: <textarea name='r_address3' >"+result.return_address3+"</textarea></label>";
+				rowsHTML+="<label>Vendor Name: <textarea name='shipper_name' >"+result.shipper_name+"</textarea></label>";
+				rowsHTML+="<label>Return Address: <textarea name='r_address1' >"+result.return_address1+"</textarea></label>";
 				rowsHTML+="<label>Return Pincode: <input type='text' name='rpincode' value='"+result.return_pincode+"'></label>";
 				rowsHTML+="<label>Length: <input type='number' step='any' name='len'  value='"+result.len+"'></label>";
 				rowsHTML+="<label>Breadth: <input type='number' step='any' name='breadth'  value='"+result.breadth+"'></label>";
 				rowsHTML+="<label>Height: <input type='number' step='any' name='height'  value='"+result.height+"'></label>";
 				rowsHTML+="<label>Pieces: <input type='number' step='any' name='pieces'  value='"+result.pieces+"'></label>";
-				rowsHTML+="<label>Carrier Account: <input type='text' name='c_account'  value='"+result.carrier_account+"'></label>";
-				rowsHTML+="<label>Carrier Name: <input type='text' name='c_name'  value='"+result.carrier_name+"'></label>";
-				rowsHTML+="<label>Manifest Type: <input type='text' name='manifest_type'  value='"+result.manifest_type+"'></label>";
 				rowsHTML+="<label>Import Date: <input type='text' name='ddate'  value='"+get_my_past_date(result.import_date)+"'></label>";
-				rowsHTML+="<label>Notes: <textarea name='notes' >"+result.notes+"</textarea></label>";
-				rowsHTML+="<label>Pickup Location: <input type='text' name='pickup_location'  value='"+result.pickup_location+"'></label>";
-				rowsHTML+="<label>Pickup By: <input type='text' name='pickup_by'  value='"+result.pickup_by+"'></label>";
-				rowsHTML+="<label>SKU: <textarea name='sku' >"+result.sku+"</textarea></label>";
 				rowsHTML+="<label>Product Name: <textarea name='product_name' >"+result.product_name+"</textarea></label>";
 				rowsHTML+="<label>Status: <input type='text' name='status'  required value='"+result.status+"'></label>";
-				rowsHTML+="<label>Current Location: <input type='text' name='current_location'  value='"+result.current_location+"'></label>";
 				rowsHTML+="<label>Delivery Person: <input type='text' name='delivery_person'  value='"+result.delivery_person+"'></label>";
 				rowsHTML+="<label>DRS #: <input type='text' name='drs_num'  value='"+result.drs_num+"'></label>";
-				//rowsHTML+="<label>Comments: <textarea name='comments' >"+result.comments+"</textarea></label>";
 				rowsHTML+="<label><input type='button' value='Update' class='generic_icon' name='update' onclick='form198_update_item();'></label>";
 
 			$('#form198_fieldset').html(rowsHTML);
@@ -21486,9 +21468,14 @@ function form203_ini()
 	//////////////
 	
 	var awb_object={index:'awb_num'};
+	var status_object={index:'status'};
 	if(fawb!="")
 	{
 		awb_object={index:'awb_num',exact:fawb};
+	}
+	if(fstatus!="")
+	{
+		status_object={index:'status',exact:fstatus};
 	}
 
 	var new_columns=new Object();
@@ -21498,13 +21485,14 @@ function form203_ini()
 		
 		new_columns.indexes=[{index:'id',value:fid},
 							{index:'order_num',value:forder},
-							awb_object,
 							{index:'merchant_name'},
 							{index:'ship_to'},
 							{index:'import_date',value:fdate},
 							{index:'type'},
 							{index:'manifest_type'},
-							{index:'status',value:fstatus}];		
+							{index:'branch'},
+							status_object,
+							awb_object];		
 
 	
 	$('#form203_body').html("");
