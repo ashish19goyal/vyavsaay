@@ -98,7 +98,7 @@ function if_data_read_access(tablename,func)
 		var count=user_fields_array.length;
 		user_fields_array.forEach(function (obj)
 		{
-			var access2_data="<"+tablename+">"+
+			var access2_data="<"+tablename+" fields='all'>"+
 				"<id></id>"+
 				"<"+obj.user_field+">"+acc_name+"</"+obj.user_field+">"+
 				"</"+tablename+">";

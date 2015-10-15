@@ -1,6 +1,6 @@
 <?php
 /*	input data format: 
- * 			<table_name count='' start_index=''>
+ * 			<table_name count='' start_index='' fields='all'>
  *				<column1>value1</column1>
  *				<column2>value2</column2>
  *				<column3></column3>
@@ -51,6 +51,11 @@
 				$columns_to_display=rtrim($columns_to_display,",");
 							
 				$query="select ".$columns_to_display." from $table where ";
+				
+				if($input->hasAttribute('fields'))
+				{
+					$query="select * from $table where ";					
+				}				
 				
 				$order_by=" ORDER BY last_updated DESC, ";
 				
@@ -120,6 +125,10 @@
 				if(count($values_array)===0)
 				{
 					$query="select ".$columns_to_display." from $table";
+					if($input->hasAttribute('fields'))
+					{
+						$query="select * from $table";					
+					}
 				}
 				$query.=$order_by."id DESC";
 

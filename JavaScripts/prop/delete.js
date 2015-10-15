@@ -8136,6 +8136,7 @@ function form248_delete_item(button)
 						"<status>received</status>" +
 						"<bag_num></bag_num>"+
 						"<bag_id></bag_id>"+
+						"<branch></branch>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</logistics_orders>";
 			update_simple(data_xml);

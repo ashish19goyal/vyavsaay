@@ -1587,11 +1587,12 @@ function report76_header_ini()
 		report76_ini();
 	});
 	
+	/*
 	var awb_data="<logistics_orders>"+
 				"<awb_num></awb_num>"+
 				"</logistics_orders>";
 	set_my_filter(awb_data,awb_filter);
-
+*/
 
 	var manifest_data="<logistics_orders>"+
 				"<manifest_id></manifest_id>"+

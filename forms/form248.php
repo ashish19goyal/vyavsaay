@@ -2,8 +2,9 @@
 	<form id='form248_master' autocomplete="off">
 		<fieldset>
 			<label>Bag # <br><input type='text' name='bag_num' required></label>
+			<label>Branch<br><input type='text' name='branch' required></label>
 			<label>LBH<br><input type='text' name='lbh' required></label>
-			<label>Date<br><input type='text' name='date'></label>
+			<br><label>Date<br><input type='text' name='date'></label>
 			<label>Weight<br><input type='text' name='weight' readonly='readonly'></label>
 			<label># of Orders<br><input type='number' readonly='readonly' name='num_orders'></label>
 			<label>	<input type='button' title='Save Bag' name='save' class='save_icon'></label>

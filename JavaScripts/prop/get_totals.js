@@ -825,7 +825,7 @@ function form248_update_serial_numbers()
 	
 	var form=document.getElementById("form248_master");
 	form.elements['num_orders'].value=num_orders;
-	form.elements['weight'].value=weight;
+	form.elements['weight'].value=my_round(weight,4);
 }
 
 function form250_update_serial_numbers()

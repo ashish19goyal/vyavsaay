@@ -8635,8 +8635,11 @@ function modal128_action()
 {
 	var form=document.getElementById('modal128_form');
 	
-	var date_filter=form.elements['date'];	
-	$(date_filter).datepicker();	
+	var channel_filter=form.elements['channel'];	
+	var type_filter=form.elements['type'];	
+	
+	set_static_value_list('logistics_orders','type',type_filter);
+	set_static_value_list('logistics_orders','channel',channel_filter);
 		
 	$(form).off("submit");
 	$(form).on("submit",function(event)
@@ -8647,6 +8650,7 @@ function modal128_action()
 			var awb=form.elements['awb'].value;
 			var type=form.elements['type'].value;
 			var order=form.elements['order'].value;
+			var channel=form.elements['channel'].value;
 			var merchant=form.elements['merchant'].value;
 			var shipto=form.elements['shipto'].value;
 			var address=form.elements['address'].value;
@@ -8657,15 +8661,16 @@ function modal128_action()
 			var d_value=form.elements['d_value'].value;
 			var c_value=form.elements['c_value'].value;
 			var raddress=form.elements['raddress'].value;
-			var date=get_raw_time(form.elements['date'].value);
+			var date=get_my_time();
 			var last_updated=get_my_time();
 
 			var orders_xml="<logistics_orders>"+
-						"<id>"+get_new_key()+"</id>"+
+						"<id>"+last_updated+"</id>"+
 						"<awb_num unique='yes'>"+awb+"</awb_num>"+
 		                "<type>"+type+"</type>"+
 		                "<order_num>"+order+"</order_num>"+
 		                "<merchant_name>"+merchant+"</merchant_name>"+
+		                "<channel_name>"+channel+"</channel_name>"+
 		                "<ship_to>"+shipto+"</ship_to>"+
 		                "<address1>"+address+"</address1>"+
 		                "<city>"+city+"</city>"+

@@ -7395,6 +7395,7 @@ function form200_header_ini()
 	var drs_filter=fields.elements['drs_num'];
 	var employee=fields.elements['employee'];
 	var drs_date=fields.elements['date'];
+	var branch=fields.elements['branch'];
 
 	fields.elements['saved'].value='no';
 	fields.elements['id'].value=get_new_key();
@@ -7433,6 +7434,14 @@ function form200_header_ini()
 	    }
 	});
 
+	var acc_name=get_account_name();
+	var branch_data="<store_areas count='1'>"+
+					"<name></name>"+
+					"<owner>"+acc_name+"</owner>"+
+					"</store_areas>";
+	
+	set_my_value(branch_data,branch);
+	
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
 	{
@@ -8175,6 +8184,7 @@ function form219_header_ini()
 	var drs_date=fields.elements['date'];
 	var total_cod=fields.elements['total'];
 	var collected_cod=fields.elements['collected'];
+	var branch=fields.elements['branch'];
 	
 	fields.elements['saved'].value='no';
 	fields.elements['id'].value=get_new_key();
@@ -8196,6 +8206,14 @@ function form219_header_ini()
 		set_my_value(drs_num_data,drs_filter);	
 	}
 		
+	var acc_name=get_account_name();
+	var branch_data="<store_areas count='1'>"+
+					"<name></name>"+
+					"<owner>"+acc_name+"</owner>"+
+					"</store_areas>";
+	
+	set_my_value(branch_data,branch);
+	
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
 	{
@@ -9467,10 +9485,16 @@ function form248_header_ini()
 	var lbh=fields.elements['lbh'];
 	var date=fields.elements['date'];
 	var weight=fields.elements['weight'];
-
+	var branch=fields.elements['branch'];
+	
+	branch.removeAttribute('readonly');	
+	
 	fields.elements['saved'].value='no';
 	fields.elements['id'].value=get_new_key();
 
+	var branch_data="<store_areas><name></name></store_areas>";
+	set_my_value_list(branch_data,branch);	
+	
 	var save_button=fields.elements['save'];
 	bag_filter.value="";
 	lbh.value="";

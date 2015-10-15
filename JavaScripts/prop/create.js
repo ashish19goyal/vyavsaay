@@ -14903,6 +14903,7 @@ function form200_create_form(func)
 		var employee=form.elements['employee'].value;
 		var ddate=get_raw_time(form.elements['date'].value);
 		var data_id=form.elements['id'].value;
+		var branch=form.elements['branch'].value;
 		
 		$('#form200_share').show();
 		$('#form200_share').click(function()
@@ -14931,6 +14932,7 @@ function form200_create_form(func)
 							"<employee>"+employee+"</employee>"+
 							"<drs_time>"+ddate+"</drs_time>"+
 							"<type>NONCOD</type>"+
+							"<branch>"+branch+"</branch>"+
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</drs>";
 				var activity_xml="<activity>" +
@@ -15609,6 +15611,7 @@ function form219_create_form(func)
 		var collectable_amount=form.elements['total'].value;
 		var collected_amount=form.elements['collected'].value;
 		var data_id=form.elements['id'].value;
+		var branch=form.elements['branch'].value;
 		
 		$('#form219_share').show();
 		$('#form219_share').click(function()
@@ -15640,6 +15643,7 @@ function form219_create_form(func)
 							"<type>COD</type>"+
 							"<collectable_amount>"+collectable_amount+"</collectable_amount>"+
 							"<collected_amount>"+collected_amount+"</collected_amount>"+
+							"<branch>"+branch+"</branch>"+
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</drs>";
 				var activity_xml="<activity>" +
@@ -17024,17 +17028,20 @@ function form248_create_item(form)
 	//console.log('form248_create_form');
 	if(is_create_access('form248'))
 	{
-		var bag_num=document.getElementById('form248_master').elements['bag_num'].value;
-		var bag_id=document.getElementById('form248_master').elements['id'].value;
-		var bag_date=document.getElementById('form248_master').elements['date'].value;
-		var lbh=document.getElementById('form248_master').elements['lbh'].value;
-		var weight=document.getElementById('form248_master').elements['weight'].value;
-		var num_orders=document.getElementById('form248_master').elements['num_orders'].value;
-		var data_id=form.elements[4].value;
-		var save_button=form.elements[5];
-		var del_button=form.elements[6];
+		var master_form=document.getElementById('form248_master');
+		var bag_num=master_form.elements['bag_num'].value;
+		var bag_id=master_form.elements['id'].value;
+		var bag_date=master_form.elements['date'].value;
+		var lbh=master_form.elements['lbh'].value;
+		var weight=master_form.elements['weight'].value;
+		var num_orders=master_form.elements['num_orders'].value;
+		var branch=master_form.elements['branch'].value;
+				
+		var data_id=form.elements[6].value;
+		var save_button=form.elements[7];
+		var del_button=form.elements[8];
 		
-		var old_order_history=form.elements[7].value;
+		var old_order_history=form.elements[9].value;
 
 		var order_history=[];
 		if(old_order_history!="")
@@ -17042,7 +17049,7 @@ function form248_create_item(form)
 		var history_object=new Object();
 		history_object.timeStamp=get_my_time();
 		history_object.details="Order in-transit";
-		history_object.location=get_session_var('address');
+		history_object.location=branch;
 		history_object.status="in-transit";
 		order_history.push(history_object);
 		var order_history_string=JSON.stringify(order_history);		
@@ -17054,11 +17061,12 @@ function form248_create_item(form)
 					"<bag_num>"+bag_num+"</bag_num>"+
 					"<bag_id>"+bag_id+"</bag_id>"+
 					"<order_history>"+order_history_string+"</order_history>"+
+					"<branch>"+branch+"</branch>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</logistics_orders>";
 		update_simple(data_xml);
 		
-		for(var i=0;i<4;i++)
+		for(var i=0;i<6;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -17097,6 +17105,10 @@ function form248_create_form(func)
 		var date=get_raw_time(form.elements['date'].value);
 		var data_id=form.elements['id'].value;
 		var num_orders=form.elements['num_orders'].value;
+		var branch_filter=form.elements['branch'];
+		var branch=branch_filter.value;
+		
+		branch_filter.setAttribute('readonly','readonly');
 		
 		var save_button=form.elements['save'];
 		var last_updated=get_my_time();
@@ -17116,6 +17128,7 @@ function form248_create_form(func)
 							"<weight>"+weight+"</weight>"+
 							"<num_orders>"+num_orders+"</num_orders>"+
 							"<status>pending</status>"+
+							"<branch>"+branch+"</branch>"+
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</transit_bags>";
 				var activity_xml="<activity>" +
@@ -17226,7 +17239,7 @@ function form250_create_form(func)
 		var master_form=document.getElementById('form250_master');
 		var mts_num=master_form.elements['mts_num'].value;
 		var data_id=master_form.elements['id'].value;
-		var date=master_form.elements['date'].value;
+		var date=get_raw_time(master_form.elements['date'].value);
 		var weight=master_form.elements['weight'].value;
 		var num_orders=master_form.elements['num_orders'].value;
 		var num_bags=master_form.elements['num_bags'].value;

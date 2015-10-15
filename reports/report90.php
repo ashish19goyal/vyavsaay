@@ -33,4 +33,11 @@
 		<tbody id='report90_body'>
 		</tbody>
 	</table>
+
+	<div class='form_nav'>
+		<img src='./images/previous.png' id='report90_prev' class='prev_icon' data-index='-25' onclick="$('#report90_index').attr('data-index',$(this).attr('data-index')); report90_ini();">
+		<div style='display:hidden;' id='report90_index' data-index='0'></div>
+		<img src='./images/next.png' id='report90_next' class='next_icon' data-index='25' onclick="$('#report90_index').attr('data-index',$(this).attr('data-index')); report90_ini();">
+	</div>
+
 </div>

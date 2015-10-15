@@ -4,6 +4,8 @@
  				data_store:'',
  				count:'',
  				start_index:'',
+ 				return_column:'',
+ 				sum:'yes/no',
  				indexes:
  				[
  					{
@@ -35,16 +37,9 @@
  				status:'',
  				rows:
  				[
- 					{
- 						column1:'value1',
- 						column2:'value2',
- 						column3:'value3'
- 					},
- 					{
- 						column1:'valuex',
- 						column2:'valuey',
- 						column3:'valuez'
- 					}
+ 					0:'value1',
+ 					1:'value2',
+ 					2:'value3'
  				]
  			}
 */
@@ -62,6 +57,8 @@
 
 	$table=$input_object['data_store'];
 	$start_index=$input_object['start_index'];
+	$return_column=$input_object['return_column'];
+	
 	$columns_array=(array)$input_object['indexes'];
 
 	$response_object=[];
@@ -85,21 +82,18 @@
 			}
 
 			///seting the indexes to be returned
-			$columns_to_display="";
 			$values_array=array();
 			
-			foreach($columns_array as $col)
-			{
-				$columns_to_display.=$col['index'].",";			
-			}
-			
-			$columns_to_display=rtrim($columns_to_display,",");
 			
 			///formulating the query
-			$query="select ".$columns_to_display." from $table where ";
+			$query="select ".$return_column." from $table where ";
 			$order_by=" ORDER BY last_updated DESC, ";
 			$limit=" limit ?,?";
 			
+			if(isset($input_object['sum']))
+			{
+				$query="select sum(".$result_column.") from $table where ";
+			}
 			//parsing the indexes for filtering of results
 			foreach($columns_array as $col)
 			{
@@ -168,7 +162,11 @@
 			
 			if(count($values_array)===0)
 			{
-				$query="select ".$columns_to_display." from $table";
+				$query="select ".$return_column." from $table";
+				if(isset($input_object['sum']))
+				{
+					$query="select sum(".$result_column.") from $table";
+				}
 			}
 			$query.=$order_by."id DESC";
 
@@ -184,7 +182,7 @@
 			$conn=new db_connect($db_name);
 			$stmt=$conn->conn->prepare($query);
 			$stmt->execute($values_array);
-			$struct_res=$stmt->fetchAll(PDO::FETCH_ASSOC);
+			$struct_res=$stmt->fetchAll(PDO::FETCH_NUM);
 			
 			$response_object['status']='success';
 			$response_object['data_store']=$table;
@@ -195,19 +193,16 @@
 	
 			for($i=0;$i<count($struct_res);$i++)
 			{
-				$response_rows[$i]=[];
-				foreach($struct_res[$i] as $key => $value)
+				if($struct_res[$i][0]==null || $struct_res[$i][0]=="null")
 				{
-					/*if(json_decode($value,true))
-					{
-						$response_rows[$i][$key]=json_decode($value,true);
-					}
-					else {
-					*/	$response_rows[$i][$key]=$value;
-					//}
+					$response_rows[]="0";
 				}
-				$response_rows[$i]['id']="".$response_rows[$i]['id'];
+				else 
+				{
+					$response_rows[]=$struct_res[$i][0];
+				}
 			}
+			
 			$response_object['rows']=$response_rows;
 		}
 		else
@@ -222,8 +217,6 @@
 	
 	$jsonresponse=json_encode($response_object);		
 	header ("Content-Type:application/json");
-	//header ("Content-Type:text/xml");
-	//echo $query;			
 	echo $jsonresponse;
 
 ?>

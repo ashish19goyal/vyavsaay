@@ -55,6 +55,7 @@
 <script src='./JavaScripts/prop/responsive_menu.js'></script>
 <script src='./JavaScripts/prop/sessions.js'></script>
 <script src='./JavaScripts/prop/set.js'></script>
+<script src='./JavaScripts/prop/set_json.js'></script>
 <script src='./JavaScripts/prop/access.js'></script>
 <script src='./JavaScripts/prop/sync.js'></script>
 <script src='./JavaScripts/prop/update.js'></script>

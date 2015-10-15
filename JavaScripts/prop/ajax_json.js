@@ -29,7 +29,7 @@ function ajax_json(url,kvp,func)
 			hide_loader();
 			$("#modal74").dialog("open");
 	        console.log(xhr.status);
-    	    console.log(thrownError);
+    	    console.log(xhr.responseText);
 		},
 		success: function(return_data,return_status,e)
 		{
@@ -128,5 +128,19 @@ function server_read_json_rows(columns,callback,results)
 			columns.start_index=columns.start_index+columns.count;
 			server_read_json_rows(columns,callback,results);
 		}
+	});
+}
+
+function server_read_json_column(columns,callback,results)
+{
+	var domain=get_domain();
+	var username=get_username();
+	var re_access=get_session_var('re');
+	var string_columns=JSON.stringify(columns);
+	
+	ajax_json("./ajax_json/get_single_column.php",{domain:domain,username:username,re:re_access,data:string_columns},function(response_object)
+	{
+		results=response_object.rows;
+		callback(results);
 	});
 }

@@ -11623,6 +11623,11 @@ function form200_add_item()
 					{
 						if(double_entry<2)
 						{
+							var status_string="<status array='yes'>--received--undelivered--pending--</status>";
+							if(get_session_var('drs_restriction')=='no')
+							{
+								status_string="<status></status>";
+							}				
 							var orders_data="<logistics_orders count='1'>"+
 											"<id></id>"+
 											"<address1></address1>"+
@@ -11639,7 +11644,7 @@ function form200_add_item()
 											"<weight></weight>" +
 											"<pieces></pieces>" +
 											"<drs_num></drs_num>" +
-											"<status array='yes'>--received--undelivered--pending--</status>"+
+											status_string+
 											"<order_history></order_history>"+
 											"</logistics_orders>";
 							//console.log(orders_data);				
@@ -11691,6 +11696,11 @@ function form200_add_item()
 				{
 					if(double_entry<2)
 					{
+						var status_string="<status array='yes'>--received--undelivered--pending--</status>";
+						if(get_session_var('drs_restriction')=='no')
+						{
+							status_string="<status></status>";
+						}
 						var orders_data="<logistics_orders count='1'>"+
 										"<id></id>"+
 										"<address1></address1>"+
@@ -11707,7 +11717,7 @@ function form200_add_item()
 										"<weight></weight>" +
 										"<pieces></pieces>" +
 										"<drs_num></drs_num>" +
-										"<status array='yes'>--received--undelivered--pending--</status>"+
+										status_string+
 										"<order_history></order_history>"+
 										"</logistics_orders>";
 						//console.log(orders_data);				
@@ -13046,6 +13056,11 @@ function form219_add_item()
 					{
 						if(double_entry<2)
 						{
+							var status_string="<status array='yes'>--received--undelivered--pending--</status>";
+							if(get_session_var('drs_restriction')=='no')
+							{
+								status_string="<status></status>";
+							}
 							var orders_data="<logistics_orders count='1'>"+
 											"<id></id>"+
 											"<address1></address1>"+
@@ -13063,7 +13078,7 @@ function form219_add_item()
 											"<weight></weight>" +
 											"<pieces></pieces>" +
 											"<drs_num></drs_num>" +
-											"<status array='yes'>--received--undelivered--pending--</status>"+
+											status_string+
 											"<order_history></order_history>"+
 											"</logistics_orders>";
 							//console.log(orders_data);				
@@ -13117,6 +13132,11 @@ function form219_add_item()
 				{
 					if(double_entry<2)
 					{
+						var status_string="<status array='yes'>--received--undelivered--pending--</status>";
+						if(get_session_var('drs_restriction')=='no')
+						{
+							status_string="<status></status>";
+						}
 						var orders_data="<logistics_orders count='1'>"+
 										"<id></id>"+
 										"<address1></address1>"+
@@ -13134,7 +13154,7 @@ function form219_add_item()
 										"<weight></weight>" +
 										"<pieces></pieces>" +
 										"<drs_num></drs_num>" +
-										"<status array='yes'>--received--undelivered--pending--</status>"+
+										status_string+
 										"<order_history></order_history>"+
 										"</logistics_orders>";
 						//console.log(orders_data);				
@@ -14923,6 +14943,7 @@ function form250_add_item()
 		
 		var new_mts=true;
 		var saved=document.getElementById('form250_master').elements['saved'].value;
+		var branch=document.getElementById('form250_master').elements['branch'].value;
 		if(saved=='yes')
 		{
 			new_mts=false;
@@ -15009,6 +15030,7 @@ function form250_add_item()
 											"<status></status>" +
 											"<num_orders></num_orders>" +
 											"<mts></mts>" +
+											"<branch>"+branch+"</branch>"+
 											"</transit_bags>";
 							//console.log(orders_data);				
 							fetch_requested_data('',orders_data,function (orders) 
@@ -15053,6 +15075,7 @@ function form250_add_item()
 										"<status></status>" +
 										"<num_orders></num_orders>" +
 										"<mts></mts>" +
+										"<branch>"+branch+"</branch>"+
 										"</transit_bags>";
 						//console.log(orders_data);				
 						fetch_requested_data('',orders_data,function (orders) 

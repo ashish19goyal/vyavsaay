@@ -206,6 +206,7 @@ JavaScripts/prop/reports_header_ini.js
 JavaScripts/prop/reports_ini.js
 JavaScripts/prop/responsive_menu.js
 JavaScripts/prop/set.js
+JavaScripts/prop/set_json.js
 JavaScripts/prop/sessions.js
 JavaScripts/prop/sync.js
 JavaScripts/prop/time.js

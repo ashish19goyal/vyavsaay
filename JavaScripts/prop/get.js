@@ -90,7 +90,7 @@ function get_new_key()
 {
 	var d=new Date();
 	var seconds=d.getTime();
-	seconds=(seconds*1000)+Math.floor(Math.random()*1000);
+	//seconds=(seconds*1000)+Math.floor(Math.random()*1000);
 	return seconds;
 }
 

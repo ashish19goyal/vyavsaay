@@ -3857,7 +3857,7 @@ function form50_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form50_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Name'>";
-						rowsHTML+="<textarea readonly='readonly' form='form50_"+result.id+"'>"+result.display_name+"</textarea>";
+						rowsHTML+="<textarea readonly='readonly' title='"+result.name+"' form='form50_"+result.id+"'>"+result.display_name+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Value'>";
 						rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form50_"+result.id+"'>"+result.value+"</textarea>";
@@ -3980,7 +3980,7 @@ function form51_ini()
 						rowsHTML+="<tr>";
 							rowsHTML+="<form id='form51_"+data_id+"'></form>";
 								rowsHTML+="<td data-th='Name'>";
-									rowsHTML+="<textarea readonly='readonly' form='form51_"+data_id+"' data-i18n='form."+element.element_name+"'></textarea>";
+									rowsHTML+="<textarea readonly='readonly' title='"+element.element_id+"' form='form51_"+data_id+"' data-i18n='form."+element.element_name+"'></textarea>";
 								rowsHTML+="</td>";
 								rowsHTML+="<td data-th='Read'>";
 									rowsHTML+="<input type='checkbox' form='form51_"+data_id+"'>";
@@ -6958,7 +6958,7 @@ function form83_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form83_"+result.id+"' value='"+result.name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Owner'>";
-						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form83_"+result.id+"' value='"+result.owner+"'>";
+						rowsHTML+="<input type='text' style='width:auto;' readonly='readonly' class='dblclick_editable' form='form83_"+result.id+"' value='"+result.owner+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Type'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form83_"+result.id+"' value='"+result.area_type+"'>";
@@ -14858,7 +14858,7 @@ function form148_ini()
 						rowsHTML+="<tr>";
 							rowsHTML+="<form id='form148_"+data_id+"'></form>";
 								rowsHTML+="<td data-th='Name'>";
-									rowsHTML+="<textarea readonly='readonly' form='form148_"+data_id+"' data-i18n='form."+element.element_name+"'></textarea>";
+									rowsHTML+="<textarea readonly='readonly' title='"+element.element_id+"' form='form148_"+data_id+"' data-i18n='form."+element.element_name+"'></textarea>";
 								rowsHTML+="</td>";
 								rowsHTML+="<td data-th='Read'>";
 									rowsHTML+="<input type='checkbox' form='form148_"+data_id+"'>";
@@ -21038,6 +21038,7 @@ function form198_ini()
 	if(fid==null)
 		fid="";	
 	
+	console.log(fid);
 	var master_form=document.getElementById('form198_master');
 	var awb_num=master_form.elements['awb_num'];
 
@@ -21083,7 +21084,8 @@ function form198_ini()
 							{index:'status'}];		
 
 	read_json_rows('form198',new_columns,function(results)
-	{	
+	{
+		console.log(results);	
 		results.forEach(function(result)
 		{
 			if(awb_num.value=="")
@@ -21091,7 +21093,7 @@ function form198_ini()
 				awb_num.value=result.awb_num;
 			}
 			
-			var order_history=result.order_history;
+			var order_history=JSON.parse(result.order_history);
 		
 			var rowsHTML="<b>Order History</b><br><table class='plain_table'><tr style='background-color:#4eac72'><td>Time</td><td>Details</td><td>Location</td><td>Status</td></tr>";
 			
@@ -21104,7 +21106,7 @@ function form198_ini()
 				rowsHTML+="<input type='hidden' name='id'  value='"+result.id+"'>";
 				rowsHTML+="<label>Order #: <input type='text' name='order_num'  value='"+result.order_num+"'></label>";
 				rowsHTML+="<label>Type: <input type='text' name='type'  value='"+result.type+"' required></label>";
-				rowsHTML+="<label>Channel: <input type='text' name='type'  value='"+result.channel_name+"' required></label>";
+				rowsHTML+="<label>Channel: <input type='text' name='channel_name'  value='"+result.channel_name+"' required></label>";
 				rowsHTML+="<label>Manifest ID: <input type='text' name='manifest_id'  value='"+result.manifest_id+"' required></label>";
 				rowsHTML+="<label>Customer Name: <textarea name='merchant_name'  required>"+result.merchant_name+"</textarea></label>";
 				rowsHTML+="<label>Consignee: <textarea name='ship_to'  required>"+result.ship_to+"</textarea></label>";
@@ -21130,6 +21132,7 @@ function form198_ini()
 				rowsHTML+="<label>Status: <input type='text' name='status'  required value='"+result.status+"'></label>";
 				rowsHTML+="<label>Delivery Person: <input type='text' name='delivery_person'  value='"+result.delivery_person+"'></label>";
 				rowsHTML+="<label>DRS #: <input type='text' name='drs_num'  value='"+result.drs_num+"'></label>";
+				rowsHTML+="<label>Branch: <input type='text' name='branch'  value='"+result.branch+"'></label>";
 				rowsHTML+="<label><input type='button' value='Update' class='generic_icon' name='update' onclick='form198_update_item();'></label>";
 
 			$('#form198_fieldset').html(rowsHTML);
@@ -21162,6 +21165,7 @@ function form200_ini()
 				"<drs_num></drs_num>"+
 				"<employee></employee>"+
 				"<drs_time></drs_time>"+
+				"<branch></branch>"+
 				"</drs>";
 	
 		////separate fetch function to get bill details like customer name, total etc.
@@ -21174,6 +21178,7 @@ function form200_ini()
 				filter_fields.elements['employee'].value=drs_results[0].employee;
 				filter_fields.elements['date'].value=get_my_past_date(drs_results[0].drs_time);
 				filter_fields.elements['id'].value=drs_results[0].id;
+				filter_fields.elements['branch'].value=drs_results[0].branch;
 				filter_fields.elements['saved'].value='yes';
 
 				var save_button=filter_fields.elements['save'];
@@ -21298,144 +21303,172 @@ function form201_ini()
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
 
-	var columns="<drs count='25' start_index='"+start_index+"'>" +
-			"<id>"+fid+"</id>" +
-			"<drs_num>"+fdrs+"</drs_num>"+
-			"<employee>"+femployee+"</employee>"+
-			"<drs_time>"+fdate+"</drs_time>" +
-			"<type>"+ftype+"</type>" +
-			"<collectable_amount></collectable_amount>" +
-			"<collected_amount></collected_amount>" +
-			"</drs>";
-
 	$('#form201_body').html("");
-
-	fetch_requested_data('form201',columns,function(results)
-	{	
-		var drs_num_array=[];
-		results.forEach(function(result)
-		{
-			drs_num_array.push(result.drs_num);
-			var rowsHTML="";
-			rowsHTML+="<tr>";
-				rowsHTML+="<form id='form201_"+result.id+"'></form>";
-					rowsHTML+="<td data-th='DRS #'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form201_"+result.id+"' value='"+result.drs_num+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Employee'>";
-						rowsHTML+="<textarea readonly='readonly' form='form201_"+result.id+"'>"+result.employee+"</textarea>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='DRS Time'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form201_"+result.id+"' value='"+get_my_past_date(result.drs_time)+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Type'>";
-						if(result.type=='COD')
-							rowsHTML+="<input type='text' readonly='readonly' form='form201_"+result.id+"' title='Collectable Amount: Rs. "+result.collectable_amount+"\nCollected Amount: Rs. "+result.collected_amount+"' value='"+result.type+"'>";
-						else
-							rowsHTML+="<input type='text' readonly='readonly' form='form201_"+result.id+"' title='Non-COD' value='"+result.type+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='form201_"+result.id+"' value='"+result.id+"' name='id'>";
-						if(result.type=='COD')
-							rowsHTML+="<input type='button' form='form201_"+result.id+"' class='edit_icon' title='View DRS' name='edit' onclick=\"element_display('"+result.id+"','form219');\">";
-						else
-							rowsHTML+="<input type='button' form='form201_"+result.id+"' class='edit_icon' title='View DRS' name='edit' onclick=\"element_display('"+result.id+"','form200');\">";
-						rowsHTML+="<input type='button' class='delete_icon' form='form201_"+result.id+"' title='Delete order' onclick='form201_delete_item($(this));'>";
-					rowsHTML+="</td>";			
-			rowsHTML+="</tr>";
-			
-			$('#form201_body').append(rowsHTML);
-		});
-
-		////indexing///
-		var next_index=parseInt(start_index)+25;
-		var prev_index=parseInt(start_index)-25;
-		next_element.setAttribute('data-index',next_index);
-		prev_element.setAttribute('data-index',prev_index);
-		index_element.setAttribute('data-index','0');
-		if(results.length<25)
-		{
-			$(next_element).hide();
-		}
-		else
-		{
-			$(next_element).show();
-		}
-		if(prev_index<0)
-		{
-			$(prev_element).hide();
-		}
-		else
-		{
-			$(prev_element).show();
-		}
-		/////////////
-
-		longPressEditable($('.dblclick_editable'));
-		$('textarea').autosize();
+	
+	if_data_read_access('store_areas',function(accessible_data)
+	{
+		console.log(accessible_data);
+		var branches_array=[];
+		var branch_object={index:'branch',array:branches_array};
 		
-		var export_button=filter_fields.elements[4];
-		$(export_button).off("click");
-		$(export_button).on("click", function(event)
+		for(var x in accessible_data)
 		{
-			var columns=new Object();
-			columns.count=0;
-			columns.start_index=0;
-			columns.data_store='logistics_orders';		
-			
-			columns.indexes=[{index:'id'},
-							{index:'awb_num'},
-							{index:'drs_time'},
-							{index:'order_num'},
-							{index:'weight'},
-							{index:'pieces'},
-							{index:'status'},
-							{index:'delivery_person'},
-							{index:'manifest_type'},
-							{index:'merchant_name'},
-							{index:'phone'},
-							{index:'sku'},
-							{index:'return_address1'},
-							{index:'return_address2'},
-							{index:'return_address3'},
-							{index:'drs_num',array:drs_num_array}];		
-
-			get_export_data_restructured(columns,'drs_details',function(new_results)
+			branches_array.push(accessible_data[x].name);
+			if(accessible_data[x].record_id=='all')
 			{
-				var sorted_array=[];
-				new_results.forEach(function(new_result)
-				{
-					var sorted_element=new Object();
-					sorted_element['DRS No']=new_result.drs_num;
-					if(new_result.drs_time!="" && new_result.drs_time!="NULL")
-					{	
-						sorted_element['DRS Date']=get_my_datetime(new_result.drs_time);
-					}
-					else 
-					{
-						sorted_element['DRS Date']="";
-					}	
-					sorted_element['Order Id']=new_result.order_num;
-					sorted_element['AWB No']=new_result.awb_num;
-					sorted_element['Wt']=new_result.weight;
-					sorted_element['Pcs']=new_result.pieces;
-					sorted_element['status']=new_result.status;
-					sorted_element['Delivery Boy']=new_result.delivery_person;
-					sorted_element['AWB Type']=new_result.manifest_type;
-					sorted_element['Merchant']=new_result.merchant_name;
-					sorted_element['Merchant Address']=new_result.return_address1+", "+new_result.return_address2+", "+new_result.return_address3;
-					sorted_element['Mobile No']=new_result.phone;
-					sorted_element['Product Name']=new_result.sku;
-					
-					if(new_result.drs_num!="")
-					{
-						sorted_array.push(sorted_element);
-					}
-				});
-				return sorted_array;
+				branch_object={index:'branch'};
+				break;
+			}
+		}
+
+		console.log(branch_object);
+		
+		var type_object={index:'type'};
+		if(ftype!="")
+		{
+			type_object={index:'type',exact:ftype};
+		}
+		var new_columns=new Object();
+			new_columns.count=25;
+			new_columns.start_index=start_index;
+			new_columns.data_store='drs';		
+			
+			new_columns.indexes=[{index:'id',value:fid},
+								{index:'drs_num',value:fdrs},
+								{index:'employee',value:femployee},
+								{index:'drs_time',value:fdate},
+								type_object,
+								{index:'collectable_amount'},
+								{index:'collected_amount'},
+								branch_object];
+		
+		read_json_rows('form201',new_columns,function(results)
+		{
+			var drs_num_array=[];
+			results.forEach(function(result)
+			{
+				drs_num_array.push(result.drs_num);
+				var rowsHTML="";
+				rowsHTML+="<tr>";
+					rowsHTML+="<form id='form201_"+result.id+"'></form>";
+						rowsHTML+="<td data-th='DRS #'>";
+						if(result.type=='COD')
+							rowsHTML+="<input type='text' class='input_link' readonly='readonly' form='form201_"+result.id+"' value='"+result.drs_num+"' onclick=\"element_display('"+result.id+"','form219');\">";
+						else {
+							rowsHTML+="<input type='text' class='input_link' readonly='readonly' form='form201_"+result.id+"' value='"+result.drs_num+"' onclick=\"element_display('"+result.id+"','form200');\">";
+						}	
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Employee'>";
+							rowsHTML+="<textarea readonly='readonly' form='form201_"+result.id+"'>"+result.employee+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='DRS Time'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form201_"+result.id+"' value='"+get_my_past_date(result.drs_time)+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Type'>";
+							if(result.type=='COD')
+								rowsHTML+="<input type='text' readonly='readonly' form='form201_"+result.id+"' title='Collectable Amount: Rs. "+result.collectable_amount+"\nCollected Amount: Rs. "+result.collected_amount+"' value='"+result.type+"'>";
+							else
+								rowsHTML+="<input type='text' readonly='readonly' form='form201_"+result.id+"' title='Non-COD' value='"+result.type+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form201_"+result.id+"' value='"+result.id+"' name='id'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form201_"+result.id+"' title='Delete order' onclick='form201_delete_item($(this));'>";
+						rowsHTML+="</td>";			
+				rowsHTML+="</tr>";
+				
+				$('#form201_body').append(rowsHTML);
 			});
+	
+			////indexing///
+			var next_index=parseInt(start_index)+25;
+			var prev_index=parseInt(start_index)-25;
+			next_element.setAttribute('data-index',next_index);
+			prev_element.setAttribute('data-index',prev_index);
+			index_element.setAttribute('data-index','0');
+			if(results.length<25)
+			{
+				$(next_element).hide();
+			}
+			else
+			{
+				$(next_element).show();
+			}
+			if(prev_index<0)
+			{
+				$(prev_element).hide();
+			}
+			else
+			{
+				$(prev_element).show();
+			}
+			/////////////
+	
+			longPressEditable($('.dblclick_editable'));
+			$('textarea').autosize();
+			
+			var export_button=filter_fields.elements[4];
+			$(export_button).off("click");
+			$(export_button).on("click", function(event)
+			{
+				var columns=new Object();
+				columns.count=0;
+				columns.start_index=0;
+				columns.data_store='logistics_orders';		
+				
+				columns.indexes=[{index:'id'},
+								{index:'awb_num'},
+								{index:'drs_time'},
+								{index:'order_num'},
+								{index:'weight'},
+								{index:'pieces'},
+								{index:'status'},
+								{index:'delivery_person'},
+								{index:'manifest_type'},
+								{index:'merchant_name'},
+								{index:'phone'},
+								{index:'sku'},
+								{index:'return_address1'},
+								{index:'return_address2'},
+								{index:'return_address3'},
+								{index:'drs_num',array:drs_num_array}];		
+	
+				get_export_data_restructured(columns,'drs_details',function(new_results)
+				{
+					var sorted_array=[];
+					new_results.forEach(function(new_result)
+					{
+						var sorted_element=new Object();
+						sorted_element['DRS No']=new_result.drs_num;
+						if(new_result.drs_time!="" && new_result.drs_time!="NULL")
+						{	
+							sorted_element['DRS Date']=get_my_datetime(new_result.drs_time);
+						}
+						else 
+						{
+							sorted_element['DRS Date']="";
+						}	
+						sorted_element['Order Id']=new_result.order_num;
+						sorted_element['AWB No']=new_result.awb_num;
+						sorted_element['Wt']=new_result.weight;
+						sorted_element['Pcs']=new_result.pieces;
+						sorted_element['status']=new_result.status;
+						sorted_element['Delivery Boy']=new_result.delivery_person;
+						sorted_element['AWB Type']=new_result.manifest_type;
+						sorted_element['Merchant']=new_result.merchant_name;
+						sorted_element['Merchant Address']=new_result.return_address1+", "+new_result.return_address2+", "+new_result.return_address3;
+						sorted_element['Mobile No']=new_result.phone;
+						sorted_element['Product Name']=new_result.sku;
+						
+						if(new_result.drs_num!="")
+						{
+							sorted_array.push(sorted_element);
+						}
+					});
+					return sorted_array;
+				});
+			});
+			hide_loader();
 		});
-		hide_loader();
 	});
 };
 
@@ -21467,6 +21500,8 @@ function form203_ini()
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
 	
+	$('#form203_body').html("");
+	
 	var awb_object={index:'awb_num'};
 	var status_object={index:'status'};
 	if(fawb!="")
@@ -21478,98 +21513,115 @@ function form203_ini()
 		status_object={index:'status',exact:fstatus};
 	}
 
-	var new_columns=new Object();
-		new_columns.count=25;
-		new_columns.start_index=start_index;
-		new_columns.data_store='logistics_orders';		
+	if_data_read_access('store_areas',function(accessible_data)
+	{
+		console.log(accessible_data);
+		var branches_array=[];
+		var branch_object={index:'branch',array:branches_array};
 		
-		new_columns.indexes=[{index:'id',value:fid},
-							{index:'order_num',value:forder},
-							{index:'merchant_name'},
-							{index:'ship_to'},
-							{index:'import_date',value:fdate},
-							{index:'type'},
-							{index:'manifest_type'},
-							{index:'branch'},
-							status_object,
-							awb_object];		
-
-	
-	$('#form203_body').html("");
-
-	read_json_rows('form203',new_columns,function(results)
-	{	
-		results.forEach(function(result)
+		for(var x in accessible_data)
 		{
-			var rowsHTML="";
-			rowsHTML+="<tr>";
-				rowsHTML+="<form id='form203_"+result.id+"'></form>";
-					rowsHTML+="<td data-th='AWB #'>";
-						rowsHTML+="<input type='text' readonly='readonly' class='input_link' form='form203_"+result.id+"' onclick=\"element_display('"+result.id+"','form198');\" value='"+result.awb_num+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Order #'>";
-						rowsHTML+=result.order_num;
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Customer'>";
-						rowsHTML+="<b>Merchant: </b>"+ result.merchant_name;
-						rowsHTML+="<br><b>Ship to: </b>"+ result.ship_to;
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Date'>";
-						rowsHTML+=get_my_past_date(result.import_date);
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Type'>";
-						rowsHTML+="<b>Type: </b>"+ result.type;
-						rowsHTML+="<br><b>Manifest Type: </b>"+ result.manifest_type;
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Status'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form203_"+result.id+"' value='"+result.status+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='form203_"+result.id+"' value='"+result.id+"' name='id'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form203_"+result.id+"' title='Delete order' onclick='form203_delete_item($(this));'>";
-					rowsHTML+="</td>";			
-			rowsHTML+="</tr>";
-
-			$('#form203_body').append(rowsHTML);
-		});
-
-		////indexing///
-		var next_index=parseInt(start_index)+25;
-		var prev_index=parseInt(start_index)-25;
-		next_element.setAttribute('data-index',next_index);
-		prev_element.setAttribute('data-index',prev_index);
-		index_element.setAttribute('data-index','0');
-		if(results.length<25)
-		{
-			$(next_element).hide();
-		}
-		else
-		{
-			$(next_element).show();
-		}
-		if(prev_index<0)
-		{
-			$(prev_element).hide();
-		}
-		else
-		{
-			$(prev_element).show();
-		}
-		/////////////
-
-		longPressEditable($('.dblclick_editable'));
-		$('textarea').autosize();
-		
-		var export_button=filter_fields.elements['export'];
-		$(export_button).off("click");
-		$(export_button).on("click", function(event)
-		{
-			get_limited_export_data(new_columns,'logistics_orders',function(new_result)
+			branches_array.push(accessible_data[x].name);
+			if(accessible_data[x].record_id=='all')
 			{
-				new_result.import_date=get_my_datetime(new_result.import_date);
+				branch_object={index:'branch'};
+				break;
+			}
+		}
+
+		console.log(branch_object);
+		
+		var new_columns=new Object();
+			new_columns.count=25;
+			new_columns.start_index=start_index;
+			new_columns.data_store='logistics_orders';		
+			
+			new_columns.indexes=[{index:'id',value:fid},
+								{index:'order_num',value:forder},
+								{index:'merchant_name'},
+								{index:'ship_to'},
+								{index:'import_date',value:fdate},
+								{index:'type'},
+								{index:'manifest_type'},
+								{index:'branch'},
+								branch_object,
+								status_object,
+								awb_object];
+		
+		read_json_rows('form203',new_columns,function(results)
+		{	
+			results.forEach(function(result)
+			{
+				var rowsHTML="";
+				rowsHTML+="<tr>";
+					rowsHTML+="<form id='form203_"+result.id+"'></form>";
+						rowsHTML+="<td data-th='AWB #'>";
+							rowsHTML+="<input type='text' readonly='readonly' class='input_link' form='form203_"+result.id+"' onclick=\"element_display('"+result.id+"','form198');\" value='"+result.awb_num+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Order #'>";
+							rowsHTML+=result.order_num;
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Customer'>";
+							rowsHTML+="<b>Merchant: </b>"+ result.merchant_name;
+							rowsHTML+="<br><b>Ship to: </b>"+ result.ship_to;
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Date'>";
+							rowsHTML+=get_my_past_date(result.import_date);
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Type'>";
+							rowsHTML+="<b>Type: </b>"+ result.type;
+							rowsHTML+="<br><b>Manifest Type: </b>"+ result.manifest_type;
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Status'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form203_"+result.id+"' value='"+result.status+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form203_"+result.id+"' value='"+result.id+"' name='id'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form203_"+result.id+"' title='Delete order' onclick='form203_delete_item($(this));'>";
+						rowsHTML+="</td>";			
+				rowsHTML+="</tr>";
+	
+				$('#form203_body').append(rowsHTML);
 			});
+	
+			////indexing///
+			var next_index=parseInt(start_index)+25;
+			var prev_index=parseInt(start_index)-25;
+			next_element.setAttribute('data-index',next_index);
+			prev_element.setAttribute('data-index',prev_index);
+			index_element.setAttribute('data-index','0');
+			if(results.length<25)
+			{
+				$(next_element).hide();
+			}
+			else
+			{
+				$(next_element).show();
+			}
+			if(prev_index<0)
+			{
+				$(prev_element).hide();
+			}
+			else
+			{
+				$(prev_element).show();
+			}
+			/////////////
+	
+			longPressEditable($('.dblclick_editable'));
+			$('textarea').autosize();
+			
+			var export_button=filter_fields.elements['export'];
+			$(export_button).off("click");
+			$(export_button).on("click", function(event)
+			{
+				get_limited_export_data(new_columns,'logistics_orders',function(new_result)
+				{
+					new_result.import_date=get_my_datetime(new_result.import_date);
+				});
+			});
+			hide_loader();
 		});
-		hide_loader();
 	});
 };
 
@@ -22231,55 +22283,80 @@ function form211_ini()
 	{
 		show_loader();
 		
-		var logistics_column="<logistics_orders>" +
-				"<awb_num></awb_num>" +
-				"<id></id>" +
-				"<status></status>" +
-				"<order_history></order_history>"+
-				"<drs_num exact='yes'>"+drs_num+"</drs_num>"+
-				"</logistics_orders>";
-		set_my_value_list(logistics_column,awb_filter);
-		
-		fetch_requested_data('',logistics_column,function(results)
+		if_data_read_access('store_areas',function(accessible_data)
 		{
-			results.forEach(function(result)
-			{
-				var id=result.id;
-				var rowsHTML="<tr>";
-				rowsHTML+="<form id='form211_"+result.awb_num+"'></form>";
-					rowsHTML+="<td data-th='AWB #'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form211_"+result.awb_num+"' value='"+result.awb_num+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Current Status'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form211_"+result.awb_num+"' value='"+result.status+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Updated Status'>";
-						rowsHTML+="<input type='text' form='form211_"+result.awb_num+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Remark'>";
-						rowsHTML+="<textarea form='form211_"+result.awb_num+"'></textarea>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='form211_"+result.awb_num+"' value='"+id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form211_"+result.awb_num+"' id='save_form211_"+id+"'>";
-						rowsHTML+="<input type='hidden' form='form211_"+result.awb_num+"' value='"+result.order_history+"'>";
-					rowsHTML+="</td>";			
-				rowsHTML+="</tr>";
+			console.log(accessible_data);
+			var branches_array=[];
+			var branch_object={index:'branch',array:branches_array};
 			
-				$('#form211_body').prepend(rowsHTML);
-				var fields=document.getElementById("form211_"+result.awb_num);
-				var status_filter=fields.elements[2];
-				
-				set_static_value_list('logistics_orders','status',status_filter);
-						
-				$(fields).on("submit", function(event)
+			for(var x in accessible_data)
+			{
+				branches_array.push(accessible_data[x].name);
+				if(accessible_data[x].record_id=='all')
 				{
-					event.preventDefault();
-					form211_update_item(fields);
+					branch_object={index:'branch'};
+					break;
+				}
+			}
+	
+			console.log(branch_object);
+			
+			var new_columns=new Object();
+				new_columns.count=0;
+				new_columns.start_index=0;
+				new_columns.data_store='logistics_orders';
+				new_columns.return_column='awb_num';		
+				
+				new_columns.indexes=[{index:'awb_num'},
+									{index:'id'},
+									{index:'drs_num',exact:drs_num},
+									{index:'status'},
+									{index:'order_history'},
+									branch_object];
+
+			set_my_value_list_json(new_columns,awb_filter);
+			
+			read_json_rows('',new_columns,function(results)
+			{	
+				results.forEach(function(result)
+				{
+					var id=result.id;
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form211_"+result.awb_num+"'></form>";
+						rowsHTML+="<td data-th='AWB #'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form211_"+result.awb_num+"' value='"+result.awb_num+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Current Status'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form211_"+result.awb_num+"' value='"+result.status+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Updated Status'>";
+							rowsHTML+="<input type='text' form='form211_"+result.awb_num+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Remark'>";
+							rowsHTML+="<textarea form='form211_"+result.awb_num+"'></textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form211_"+result.awb_num+"' value='"+id+"'>";
+							rowsHTML+="<input type='submit' class='save_icon' form='form211_"+result.awb_num+"' id='save_form211_"+id+"'>";
+							rowsHTML+="<input type='hidden' form='form211_"+result.awb_num+"' value='"+result.order_history+"'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";
+				
+					$('#form211_body').prepend(rowsHTML);
+					var fields=document.getElementById("form211_"+result.awb_num);
+					var status_filter=fields.elements[2];
+					
+					set_static_value_list('logistics_orders','status',status_filter);
+							
+					$(fields).on("submit", function(event)
+					{
+						event.preventDefault();
+						form211_update_item(fields);
+					});
 				});
+				form211_get_totals();
+				hide_loader();
 			});
-			form211_get_totals();
-			hide_loader();
 		});
 	}
 }
@@ -22710,6 +22787,7 @@ function form219_ini()
 				"<collectable_amount></collectable_amount>"+
 				"<collected_amount></collected_amount>"+
 				"<drs_time></drs_time>"+
+				"<branch></branch>"+
 				"</drs>";
 	
 		////separate fetch function to get bill details like customer name, total etc.
@@ -22724,6 +22802,7 @@ function form219_ini()
 				filter_fields.elements['id'].value=drs_results[0].id;
 				filter_fields.elements['total'].value=drs_results[0].collectable_amount;
 				filter_fields.elements['collected'].value=drs_results[0].collected_amount;
+				filter_fields.elements['branch'].value=drs_results[0].branch;
 				filter_fields.elements['saved'].value='yes';
 
 				var save_button=filter_fields.elements['save'];
@@ -26081,6 +26160,7 @@ function form248_ini()
 				"<weight></weight>"+
 				"<date></date>"+
 				"<num_orders></num_orders>"+
+				"<branch></branch>"+
 				"</transit_bags>";
 	
 		////separate fetch function to get bill details like customer name, total etc.
@@ -26095,8 +26175,11 @@ function form248_ini()
 				filter_fields.elements['date'].value=get_my_past_date(bag_results[0].date);
 				filter_fields.elements['id'].value=bag_results[0].id;
 				filter_fields.elements['num_orders'].value=bag_results[0].num_orders;
+				filter_fields.elements['branch'].value=bag_results[0].branch;
 				filter_fields.elements['saved'].value='yes';
 
+				filter_fields.elements['branch'].setAttribute('readonly','readonly');
+				
 				var save_button=filter_fields.elements['save'];
 				$(save_button).show();
 				
@@ -26203,82 +26286,105 @@ function form249_ini()
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
 
-	var columns="<transit_bags count='25' start_index='"+start_index+"'>" +
-				"<id>"+fid+"</id>" +
-				"<bag_num>"+fbag+"</bag_num>"+
-				"<lbh></lbh>"+
-				"<weight></weight>"+
-				"<date>"+fdate+"</date>"+
-				"<num_orders></num_orders>"+
-				"<status>"+fstatus+"</status>"+
-				"<mts></mts>"+
-				"</transit_bags>";
-	
 	$('#form249_body').html("");
-
-	fetch_requested_data('form249',columns,function(results)
-	{	
-		results.forEach(function(result)
+	
+	if_data_read_access('store_areas',function(accessible_data)
+	{
+		console.log(accessible_data);
+		var branches_array=[];
+		var branch_object={index:'branch',array:branches_array};
+		
+		for(var x in accessible_data)
 		{
-			var rowsHTML="";
-			rowsHTML+="<tr>";
-				rowsHTML+="<form id='form249_"+result.id+"'></form>";
-					rowsHTML+="<td data-th='Bag #'>";
-						rowsHTML+="<input type='text' class='input_link' readonly='readonly' form='form249_"+result.id+"' value='"+result.bag_num+"' onclick=\"element_display('"+result.id+"','form248');\">";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Date'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form249_"+result.id+"' value='"+get_my_past_date(result.date)+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Status'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form249_"+result.id+"' value='"+result.status+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='MTS'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form249_"+result.id+"' value='"+result.mts+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='form249_"+result.id+"' value='"+result.id+"' name='id'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form249_"+result.id+"' title='Delete' onclick='form249_delete_item($(this));'>";
-					rowsHTML+="</td>";			
-			rowsHTML+="</tr>";
+			branches_array.push(accessible_data[x].name);
+			if(accessible_data[x].record_id=='all')
+			{
+				branch_object={index:'branch'};
+				break;
+			}
+		}
+
+		console.log(branch_object);
+		
+		var new_columns=new Object();
+			new_columns.count=25;
+			new_columns.start_index=start_index;
+			new_columns.data_store='transit_bags';		
 			
-			$('#form249_body').append(rowsHTML);
-		});
-
-		////indexing///
-		var next_index=parseInt(start_index)+25;
-		var prev_index=parseInt(start_index)-25;
-		next_element.setAttribute('data-index',next_index);
-		prev_element.setAttribute('data-index',prev_index);
-		index_element.setAttribute('data-index','0');
-		if(results.length<25)
-		{
-			$(next_element).hide();
-		}
-		else
-		{
-			$(next_element).show();
-		}
-		if(prev_index<0)
-		{
-			$(prev_element).hide();
-		}
-		else
-		{
-			$(prev_element).show();
-		}
-		/////////////
-
-		longPressEditable($('.dblclick_editable'));
-		$('textarea').autosize();
+			new_columns.indexes=[{index:'id',value:fid},
+								{index:'bag_num',value:fbag},
+								{index:'lbh'},
+								{index:'weight'},
+								{index:'date',value:fdate},
+								{index:'num_orders'},
+								{index:'status',value:fstatus},
+								{index:'mts'},
+								branch_object];
 		
-		var export_button=filter_fields.elements[3];
-		
-		$(export_button).off("click");
-		$(export_button).on("click", function(event)
-		{
-			get_export_data(columns,'Transit bags');
+		read_json_rows('form249',new_columns,function(results)
+		{			
+			results.forEach(function(result)
+			{
+				var rowsHTML="";
+				rowsHTML+="<tr>";
+					rowsHTML+="<form id='form249_"+result.id+"'></form>";
+						rowsHTML+="<td data-th='Bag #'>";
+							rowsHTML+="<input type='text' class='input_link' readonly='readonly' form='form249_"+result.id+"' value='"+result.bag_num+"' onclick=\"element_display('"+result.id+"','form248');\">";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Date'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form249_"+result.id+"' value='"+get_my_past_date(result.date)+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Status'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form249_"+result.id+"' value='"+result.status+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='MTS'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form249_"+result.id+"' value='"+result.mts+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form249_"+result.id+"' value='"+result.id+"' name='id'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form249_"+result.id+"' title='Delete' onclick='form249_delete_item($(this));'>";
+						rowsHTML+="</td>";			
+				rowsHTML+="</tr>";
+				
+				$('#form249_body').append(rowsHTML);
+			});
+	
+			////indexing///
+			var next_index=parseInt(start_index)+25;
+			var prev_index=parseInt(start_index)-25;
+			next_element.setAttribute('data-index',next_index);
+			prev_element.setAttribute('data-index',prev_index);
+			index_element.setAttribute('data-index','0');
+			if(results.length<25)
+			{
+				$(next_element).hide();
+			}
+			else
+			{
+				$(next_element).show();
+			}
+			if(prev_index<0)
+			{
+				$(prev_element).hide();
+			}
+			else
+			{
+				$(prev_element).show();
+			}
+			/////////////
+	
+			longPressEditable($('.dblclick_editable'));
+			$('textarea').autosize();
+			
+			var export_button=filter_fields.elements[3];
+			
+			$(export_button).off("click");
+			$(export_button).on("click", function(event)
+			{
+				get_export_data(columns,'Transit bags');
+			});
+			hide_loader();
 		});
-		hide_loader();
 	});
 };
 
@@ -26422,84 +26528,106 @@ function form251_ini()
 	var next_element=document.getElementById('form251_next');
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
-
-	var columns="<mts count='25' start_index='"+start_index+"'>" +
-				"<id>"+fid+"</id>" +
-				"<mts_num>"+fmts+"</mts_num>"+
-				"<weight></weight>"+
-				"<date>"+fdate+"</date>"+
-				"<num_orders></num_orders>"+
-				"<num_bags></num_bags>"+
-				"<branch>"+fbranch+"</branch>"+
-				"</mts>";
-	
 	$('#form251_body').html("");
-
-	fetch_requested_data('form251',columns,function(results)
-	{	
-		results.forEach(function(result)
+	
+	if_data_read_access('store_areas',function(accessible_data)
+	{
+		console.log(accessible_data);
+		var branches_array=[];
+		var branch_object={index:'branch',array:branches_array};
+		
+		for(var x in accessible_data)
 		{
-			var rowsHTML="";
-			rowsHTML+="<tr>";
-				rowsHTML+="<form id='form251_"+result.id+"'></form>";
-					rowsHTML+="<td data-th='MTS #'>";
-						rowsHTML+="<input type='text' class='input_link' readonly='readonly' form='form251_"+result.id+"' value='"+result.mts_num+"' onclick=\"element_display('"+result.id+"','form250');\">";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Date'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form251_"+result.id+"' value='"+get_my_past_date(result.date)+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Branch'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form251_"+result.id+"' value='"+result.branch+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Details'>";
-						rowsHTML+="<b>Bags</b>: <input type='number' readonly='readonly' form='form251_"+result.id+"' value='"+result.num_bags+"'>";
-						rowsHTML+="<br><b>Orders</b>: <input type='number' readonly='readonly' form='form251_"+result.id+"' value='"+result.num_orders+"'>";
-						rowsHTML+="<br><b>Weight</b>: <input type='number' readonly='readonly' form='form251_"+result.id+"' value='"+result.weight+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='form251_"+result.id+"' value='"+result.id+"' name='id'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form251_"+result.id+"' title='Delete' onclick='form251_delete_item($(this));'>";
-					rowsHTML+="</td>";			
-			rowsHTML+="</tr>";
+			branches_array.push(accessible_data[x].name);
+			if(accessible_data[x].record_id=='all')
+			{
+				branch_object={index:'branch'};
+				break;
+			}
+		}
+		
+		branch_object.value=fbranch;
+		console.log(branch_object);
+		
+		var new_columns=new Object();
+			new_columns.count=25;
+			new_columns.start_index=start_index;
+			new_columns.data_store='mts';		
 			
-			$('#form251_body').append(rowsHTML);
-		});
-
-		////indexing///
-		var next_index=parseInt(start_index)+25;
-		var prev_index=parseInt(start_index)-25;
-		next_element.setAttribute('data-index',next_index);
-		prev_element.setAttribute('data-index',prev_index);
-		index_element.setAttribute('data-index','0');
-		if(results.length<25)
-		{
-			$(next_element).hide();
-		}
-		else
-		{
-			$(next_element).show();
-		}
-		if(prev_index<0)
-		{
-			$(prev_element).hide();
-		}
-		else
-		{
-			$(prev_element).show();
-		}
-		/////////////
-
-		longPressEditable($('.dblclick_editable'));
-		$('textarea').autosize();
+			new_columns.indexes=[{index:'id',value:fid},
+								{index:'mts_num',value:fmts},
+								{index:'weight'},
+								{index:'date',value:fdate},
+								{index:'num_orders'},
+								{index:'num_bags'},
+								branch_object];
 		
-		var export_button=filter_fields.elements[3];
-		
-		$(export_button).off("click");
-		$(export_button).on("click", function(event)
+		read_json_rows('form251',new_columns,function(results)
 		{
-			get_export_data(columns,'MTS');
+			results.forEach(function(result)
+			{
+				var rowsHTML="";
+				rowsHTML+="<tr>";
+					rowsHTML+="<form id='form251_"+result.id+"'></form>";
+						rowsHTML+="<td data-th='MTS #'>";
+							rowsHTML+="<input type='text' class='input_link' readonly='readonly' form='form251_"+result.id+"' value='"+result.mts_num+"' onclick=\"element_display('"+result.id+"','form250');\">";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Date'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form251_"+result.id+"' value='"+get_my_past_date(result.date)+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Branch'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form251_"+result.id+"' value='"+result.branch+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Details'>";
+							rowsHTML+="<b>Bags</b>: <input type='number' readonly='readonly' form='form251_"+result.id+"' value='"+result.num_bags+"'>";
+							rowsHTML+="<br><b>Orders</b>: <input type='number' readonly='readonly' form='form251_"+result.id+"' value='"+result.num_orders+"'>";
+							rowsHTML+="<br><b>Weight</b>: <input type='number' readonly='readonly' form='form251_"+result.id+"' value='"+result.weight+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form251_"+result.id+"' value='"+result.id+"' name='id'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form251_"+result.id+"' title='Delete' onclick='form251_delete_item($(this));'>";
+						rowsHTML+="</td>";			
+				rowsHTML+="</tr>";
+				
+				$('#form251_body').append(rowsHTML);
+			});
+	
+			////indexing///
+			var next_index=parseInt(start_index)+25;
+			var prev_index=parseInt(start_index)-25;
+			next_element.setAttribute('data-index',next_index);
+			prev_element.setAttribute('data-index',prev_index);
+			index_element.setAttribute('data-index','0');
+			if(results.length<25)
+			{
+				$(next_element).hide();
+			}
+			else
+			{
+				$(next_element).show();
+			}
+			if(prev_index<0)
+			{
+				$(prev_element).hide();
+			}
+			else
+			{
+				$(prev_element).show();
+			}
+			/////////////
+	
+			longPressEditable($('.dblclick_editable'));
+			$('textarea').autosize();
+			
+			var export_button=filter_fields.elements[3];
+			
+			$(export_button).off("click");
+			$(export_button).on("click", function(event)
+			{
+				get_export_data(columns,'MTS');
+			});
+			hide_loader();
 		});
-		hide_loader();
 	});
 };
 

@@ -10880,6 +10880,7 @@ function form198_update_item()
 		var type=form.elements['type'].value;
 		var manifest_id=form.elements['manifest_id'].value;
 		var merchant_name=form.elements['merchant_name'].value;
+		var channel_name=form.elements['channel_name'].value;
 		var ship_to=form.elements['ship_to'].value;
 		var address1=form.elements['address1'].value;
 		var address2=form.elements['address2'].value;
@@ -10891,29 +10892,19 @@ function form198_update_item()
 		var weight=form.elements['weight'].value;
 		var d_value=form.elements['d_value'].value;
 		var c_value=form.elements['c_value'].value;
-		var vendor_code=form.elements['vendor_code'].value;
 		var shipper_name=form.elements['shipper_name'].value;
 		var r_address1=form.elements['r_address1'].value;
-		var r_address2=form.elements['r_address2'].value;
-		var r_address3=form.elements['r_address3'].value;
 		var rpincode=form.elements['rpincode'].value;
 		var len=form.elements['len'].value;
 		var breadth=form.elements['breadth'].value;
 		var height=form.elements['height'].value;
 		var pieces=form.elements['pieces'].value;
-		var c_account=form.elements['c_account'].value;
-		var c_name=form.elements['c_name'].value;
-		var manifest_type=form.elements['manifest_type'].value;
-		var ddate=form.elements['ddate'].value;
-		var notes=form.elements['notes'].value;
-		var pickup_location=form.elements['pickup_location'].value;
-		var pickup_by=form.elements['pickup_by'].value;
-		var sku=form.elements['sku'].value;
 		var product_name=form.elements['product_name'].value;
 		var status=form.elements['status'].value;
-		var current_location=form.elements['current_location'].value;
 		var delivery_person=form.elements['delivery_person'].value;
 		var drs_num=form.elements['drs_num'].value;
+		var branch=form.elements['branch'].value;
+		var import_date=get_raw_time(form.elements['ddate'].value);
 
 		var id=form.elements['id'].value;
 		var last_updated=get_my_time();
@@ -10924,6 +10915,7 @@ function form198_update_item()
                 "<order_num>"+order_num+"</order_num>"+
                 "<manifest_id>"+manifest_id+"</manifest_id>"+
                 "<merchant_name>"+merchant_name+"</merchant_name>"+
+                "<channel_name>"+channel_name+"</channel_name>"+
                 "<ship_to>"+ship_to+"</ship_to>"+
                 "<address1>"+address1+"</address1>"+
                 "<address2>"+address2+"</address2>"+
@@ -10935,29 +10927,19 @@ function form198_update_item()
                 "<weight>"+weight+"</weight>"+
                 "<declared_value>"+d_value+"</declared_value>"+
                 "<collectable_value>"+c_value+"</collectable_value>"+
-                "<vendor_code>"+vendor_code+"</vendor_code>"+
                 "<shipper_name>"+shipper_name+"</shipper_name>"+
                 "<return_address1>"+r_address1+"</return_address1>"+
-                "<return_address2>"+r_address2+"</return_address2>"+
-                "<return_address3>"+r_address3+"</return_address3>"+
                 "<return_pincode>"+rpincode+"</return_pincode>"+
                 "<len>"+len+"</len>"+
                 "<breadth>"+breadth+"</breadth>"+
                 "<height>"+height+"</height>"+
                 "<pieces>"+pieces+"</pieces>"+
-                "<carrier_account>"+c_account+"</carrier_account>"+
-                "<carrier_name>"+c_name+"</carrier_name>"+
-                "<manifest_type>"+manifest_type+"</manifest_type>"+
-                "<import_date>"+get_raw_time(ddate)+"</import_date>"+
-                "<notes>"+notes+"</notes>"+
-                "<pickup_location>"+pickup_location+"</pickup_location>"+
-                "<pickup_by>"+pickup_by+"</pickup_by>"+
-                "<sku>"+sku+"</sku>"+
+                "<import_date>"+import_date+"</import_date>"+
                 "<product_name>"+product_name+"</product_name>"+
                 "<status>"+status+"</status>"+
-                "<current_location>"+current_location+"</current_location>"+
                 "<delivery_person>"+delivery_person+"</delivery_person>"+
                 "<drs_num>"+drs_num+"</drs_num>"+
+                "<branch>"+branch+"</branch>"+
                 "<last_updated>"+last_updated+"</last_updated>" +
 				"</logistics_orders>";
 		var activity_xml="<activity>" +

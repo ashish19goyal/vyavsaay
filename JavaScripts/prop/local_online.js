@@ -330,6 +330,23 @@ function read_json_rows(element_id,columns,callback)
 	}
 }
 
+/**
+ * @param columns
+ * @param callback
+ */
+function read_json_single_column(columns,callback)
+{
+	var results=new Array();
+	if(is_online())
+	{
+		server_read_json_column(columns,callback,results)
+	}
+	else
+	{
+		local_read_json_column(columns,callback,results);
+	}
+}
+
 function send_email(to,from,from_name,subject,message,func)
 {
 	var email_enabled=get_session_var('email_enabled');
