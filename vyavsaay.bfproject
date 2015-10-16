@@ -2,10 +2,11 @@ c2e.convert_special: 0
 e2c.convert_num: 0
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_header_ini.js:233714:233157:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/includes/modal_forms.php:53420:52806:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/update.js:251833:251540:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js:713096:714817:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js:320623:319382:1:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/add_items.js:379824:386501:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/update.js:300917:300939:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js:700337:696968:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js:319233:318471:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/add_items.js:377245:377232:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/import.js:23578:22739:0:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -20,7 +21,7 @@ c2e.convert_iso: 0
 opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
 wrap_text_default: 0
 bookmarks_filename_mode: 0
-ssearch_text: 203_
+ssearch_text: 198_
 snr_casesens: 0
 view_blocks: 1
 name: vyavsaay
@@ -53,7 +54,6 @@ ssearch_regex: 0
 e2c.convert_iso: 0
 ssearch_casesens: 0
 charmap_block: 1
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax_json/get_single_column.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax_json/get_limited_rows.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/get_rows.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/get_single_column.php
@@ -83,6 +83,7 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/scripts/d
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/event_handler.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/add_items.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/import.js
 snr_replacetype: 0
 savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
 spell_check_default: 1
@@ -94,11 +95,6 @@ snr_escape_chars: 0
 htmlbar_view: 0
 spell_lang: en
 ssearch_dotmatchall: 0
-searchlist: 90_
-searchlist: start_index
-searchlist: 165_
-searchlist: 163
-searchlist: 165_
 searchlist: 152_
 searchlist: 162
 searchlist: fitler
@@ -107,8 +103,13 @@ searchlist: import logistics
 searchlist: 149
 searchlist: type_filter
 searchlist: 200_
-searchlist: 198
 searchlist: 203_
+searchlist: channel
+searchlist: 198_
+searchlist: manage customers
+searchlist: 122
+searchlist: 199_
+searchlist: 198_
 autocomplete: 1
 outputb_show_all_output: 0
 bookmarks_show_mode: 0

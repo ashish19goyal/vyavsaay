@@ -10895,9 +10895,7 @@ function form198_update_item()
 		var shipper_name=form.elements['shipper_name'].value;
 		var r_address1=form.elements['r_address1'].value;
 		var rpincode=form.elements['rpincode'].value;
-		var len=form.elements['len'].value;
-		var breadth=form.elements['breadth'].value;
-		var height=form.elements['height'].value;
+		var lbh=form.elements['lbh'].value;
 		var pieces=form.elements['pieces'].value;
 		var product_name=form.elements['product_name'].value;
 		var status=form.elements['status'].value;
@@ -10930,9 +10928,7 @@ function form198_update_item()
                 "<shipper_name>"+shipper_name+"</shipper_name>"+
                 "<return_address1>"+r_address1+"</return_address1>"+
                 "<return_pincode>"+rpincode+"</return_pincode>"+
-                "<len>"+len+"</len>"+
-                "<breadth>"+breadth+"</breadth>"+
-                "<height>"+height+"</height>"+
+                "<lbh>"+lbh+"</lbh>"+
                 "<pieces>"+pieces+"</pieces>"+
                 "<import_date>"+import_date+"</import_date>"+
                 "<product_name>"+product_name+"</product_name>"+
@@ -11008,7 +11004,7 @@ function form199_update_item(form)
 					"</activity>";
 		update_row(data_xml,activity_xml);
 		
-		for(var i=0;i<1;i++)
+		for(var i=0;i<2;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}

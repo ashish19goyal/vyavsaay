@@ -21075,7 +21075,7 @@ function form198_ini()
 							{index:'declared_value'},
 							{index:'weight'},
 							{index:'volumetric_weight'},
-							{index:'LBH'},
+							{index:'lbh'},
 							{index:'shipper_name'},
 							{index:'return_address1'},
 							{index:'vendor_phone'},
@@ -21127,9 +21127,7 @@ function form198_ini()
 				rowsHTML+="<label>Vendor Name: <textarea name='shipper_name' >"+result.shipper_name+"</textarea></label>";
 				rowsHTML+="<label>Return Address: <textarea name='r_address1' >"+result.return_address1+"</textarea></label>";
 				rowsHTML+="<label>Return Pincode: <input type='text' name='rpincode' value='"+result.return_pincode+"'></label>";
-				rowsHTML+="<label>Length: <input type='number' step='any' name='len'  value='"+result.len+"'></label>";
-				rowsHTML+="<label>Breadth: <input type='number' step='any' name='breadth'  value='"+result.breadth+"'></label>";
-				rowsHTML+="<label>Height: <input type='number' step='any' name='height'  value='"+result.height+"'></label>";
+				rowsHTML+="<label>LBH: <input type='text' name='lbh'  value='"+result.lbh+"'></label>";
 				rowsHTML+="<label>Pieces: <input type='number' step='any' name='pieces'  value='"+result.pieces+"'></label>";
 				rowsHTML+="<label>Import Date: <input type='text' name='ddate'  value='"+get_my_past_date(result.import_date)+"'></label>";
 				rowsHTML+="<label>Product Name: <textarea name='product_name' >"+result.sku+"</textarea></label>";

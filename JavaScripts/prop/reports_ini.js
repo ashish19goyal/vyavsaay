@@ -5527,6 +5527,13 @@ function report76_ini()
 						{index:'merchant_name'},
 						{index:'phone'},
 						{index:'sku'},
+						{index:'delivery_person'},
+						{index:'collectable_value'},
+						{index:'ship_to'},
+						{index:'address1'},
+						{index:'address2'},
+						{index:'address3'},
+						{index:'city'},
 						{index:'return_address1'},
 						{index:'return_address2'},
 						{index:'return_address3'},
@@ -5596,17 +5603,21 @@ function report76_ini()
 						var sorted_element=new Object();
 						sorted_element['AWB No']=new_result.awb_num;
 						sorted_element['Order Id']=new_result.order_num;
-						sorted_element['status']=new_result.status;
 						sorted_element['Manifest Import Date']=get_my_past_date(new_result.import_date);
 						sorted_element['Manifest Id']=new_result.manifest_id;
+						sorted_element['Status']=new_result.status;
 						sorted_element['Wt']=new_result.weight;
 						sorted_element['Pcs']=new_result.pieces;
+						sorted_element['COD Amount']=new_result.collectable_value;
+						sorted_element['Delivery Boy']=new_result.delivery_person;
 						sorted_element['AWB Type']=new_result.manifest_type;
-						sorted_element['Merchant']=new_result.merchant_name;
-						sorted_element['Merchant Address']=new_result.return_address1+", "+new_result.return_address2+", "+new_result.return_address3;
+						sorted_element['Customer Name']=new_result.merchant_name;
+						sorted_element['Customer Address']=new_result.return_address1+", "+new_result.return_address2+", "+new_result.return_address3;
+						sorted_element['Consignee Name']=new_result.ship_to;
+						sorted_element['Consignee Address']=new_result.address1+", "+new_result.address2+", "+new_result.address3+", "+new_result.city;
 						sorted_element['Mobile No']=new_result.phone;
 						sorted_element['Product Name']=new_result.sku;
-						
+												
 						sorted_array.push(sorted_element);
 					});
 					return sorted_array;
@@ -6512,8 +6523,14 @@ function report85_ini()
 								{index:'pieces'},
 								{index:'status'},
 								{index:'delivery_person'},
+								{index:'collectable_value'},
 								{index:'manifest_type'},
 								{index:'merchant_name'},
+								{index:'ship_to'},
+								{index:'address1'},
+								{index:'address2'},
+								{index:'address3'},
+								{index:'city'},
 								{index:'phone'},
 								{index:'sku'},
 								{index:'return_address1'},
@@ -6540,11 +6557,14 @@ function report85_ini()
 						sorted_element['AWB No']=new_result.awb_num;
 						sorted_element['Wt']=new_result.weight;
 						sorted_element['Pcs']=new_result.pieces;
-						sorted_element['status']=new_result.status;
+						sorted_element['COD Amount']=new_result.collectable_value;
+						sorted_element['Status']=new_result.status;
 						sorted_element['Delivery Boy']=new_result.delivery_person;
 						sorted_element['AWB Type']=new_result.manifest_type;
-						sorted_element['Merchant']=new_result.merchant_name;
-						sorted_element['Merchant Address']=new_result.return_address1+", "+new_result.return_address2+", "+new_result.return_address3;
+						sorted_element['Customer Name']=new_result.merchant_name;
+						sorted_element['Customer Address']=new_result.return_address1+", "+new_result.return_address2+", "+new_result.return_address3;
+						sorted_element['Consignee Name']=new_result.ship_to;
+						sorted_element['Consignee Address']=new_result.address1+", "+new_result.address2+", "+new_result.address3+", "+new_result.city;
 						sorted_element['Mobile No']=new_result.phone;
 						sorted_element['Product Name']=new_result.sku;
 						

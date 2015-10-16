@@ -11369,48 +11369,23 @@ function form199_add_item()
 		var id_filter=fields.elements[3];
 		var order_history=fields.elements[6];
 
-		$(lbh_filter).on('keydown',function (e) 
+		$(lbh_filter).on('keydown',function (event) 
 		{
-			if(e.keyCode==13)
+			if(event.keyCode==13)
 			{
-				e.preventDefault();			
-				form199_update_lbh(fields);
-			}
-		});
-
-		$(fields).on("submit", function(event)
-		{
-			event.preventDefault();
+				event.preventDefault();
 			
-			var double_entry=0;
-			$("[id^='save_form199']").each(function(index)
-			{
-				var subform_id=$(this).attr('form');
-				var subform=document.getElementById(subform_id);
-				
-				if(subform.elements[0].value==awb_filter.value)	
-					double_entry+=1;
-			});
-
-			if(double_entry<2)
-			{
+				form199_update_item(fields);
 				form199_add_item();
 			}
-			else 
-			{
-				awb_filter.value="";
-				$("#modal65").dialog("open");
-			}
 		});
-
-		$(awb_filter).focus();
 		
 		$(awb_filter).on('keydown',function (event) 
 		{
 			if(event.keyCode == 13 ) 
 			{
 				event.preventDefault();
-			
+				
 				var double_entry=0;
 				$("[id^='save_form199']").each(function(index)
 				{
@@ -11451,8 +11426,7 @@ function form199_add_item()
 								lbh_filter.value=orders[0].lbh;	
 							id_filter.value=orders[0].id;
 							order_history.value=orders[0].order_history;
-							form199_update_item(fields);
-							form199_add_item();
+							$(lbh_filter).focus();
 						}
 						else 
 						{
@@ -11469,10 +11443,37 @@ function form199_add_item()
 				{
 					awb_filter.value="";
 					$("#modal65").dialog("open");
-				}
-								
+				}		
 			}
 		});
+
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			
+			var double_entry=0;
+			$("[id^='save_form199']").each(function(index)
+			{
+				var subform_id=$(this).attr('form');
+				var subform=document.getElementById(subform_id);
+				
+				if(subform.elements[0].value==awb_filter.value)	
+					double_entry+=1;
+			});
+
+			if(double_entry<2)
+			{
+				form199_add_item();
+			}
+			else 
+			{
+				awb_filter.value="";
+				$("#modal65").dialog("open");
+			}
+		});
+
+		$(awb_filter).focus();
+		
 	}
 	else
 	{
