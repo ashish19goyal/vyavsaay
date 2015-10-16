@@ -1017,6 +1017,7 @@ function form30_import(data_array,import_type)
 	
 	data_array.forEach(function(row)
 	{
+		//console.log(row);
 		if((counter%500)===0)
 		{
 			data_xml+="</customers><separator></separator><customers>";
@@ -1055,6 +1056,7 @@ function form30_import(data_array,import_type)
 	
 	data_xml+="</customers>";
 	account_xml+="</accounts>";
+	console.log(data_xml);
 	
 	if(import_type=='create_new')
 	{

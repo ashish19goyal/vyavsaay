@@ -1392,6 +1392,7 @@
 				<br>
 				<br>
 				<b>Import pre-filled template</b><br>
+				Channel: <input type="text" required><br>
 				Type: <input type="text" required><br>
 				<input type="file" value='Select file' accept=".csv" style='display:none'>
 				<input type='button' class='generic_red_icon' value='Select File'>
@@ -1563,6 +1564,19 @@
 				<label>Storage: <input type="text" readonly='readonly' required name='storage'></label><br>
 				<label>To Pick: <input type="text" readonly='readonly' name='topick'></label><br>
 				<label>Picked: <input type="text" name='picked'></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+	
+	<div id="modal163" title="Mass Put-away">
+		<form id='modal163_form' autocomplete="off">
+			<fieldset>
+				<label>SKU: <input type='text' readonly='readonly' name='sku'></label><br>
+				<label>Batch: <input type='text' readonly='readonly' required name='batch'></label><br>
+				<label>Storage: <input type="text" required name='storage'></label><br>
+				<label>To Place: <input type="text" readonly='readonly' name='toplace'></label><br>
+				<label>Placed: <input type="text" name='placed'></label><br>
 				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>
 		</form>

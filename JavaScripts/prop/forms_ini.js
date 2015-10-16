@@ -17082,6 +17082,7 @@ function form165_ini()
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Action'>";
 										rowsHTML+="<img src='./images/edit.png' class='edit_icon' title='Edit Location' id='form165_edit_location_"+result.id+"'>";
+										rowsHTML+="<input type='hidden' form='row_form165_"+result.id+"' value='Put-away' onclick='modal163_action($(this));'>";
 										rowsHTML+="<input type='hidden' form='row_form165_"+result.id+"' value='"+result.id+"'>";
 										rowsHTML+="<input type='hidden' form='row_form165_"+result.id+"' value='"+result.table_type+"'>";
 										rowsHTML+="<input type='submit' class='submit_hidden' form='row_form165_"+result.id+"' value='Place'>";
@@ -17106,13 +17107,16 @@ function form165_ini()
 							///write code to select all text in the field
 							this.select();
 						});
-	
+						
+						
 						var edit_button=document.getElementById("form165_edit_location_"+result.id);
 						$(edit_button).on('click',function ()
 						{
 							storage_filter.removeAttribute('readonly');
 						});
-
+						
+						
+						
 						$(fields).on('submit',function(event)
 						{
 							event.preventDefault();
@@ -21065,7 +21069,7 @@ function form198_ini()
 							{index:'state'},
 							{index:'phone'},
 							{index:'telephone'},
-							{index:'product_name'},
+							{index:'sku'},
 							{index:'pieces'},
 							{index:'collectable_value'},
 							{index:'declared_value'},
@@ -21128,7 +21132,7 @@ function form198_ini()
 				rowsHTML+="<label>Height: <input type='number' step='any' name='height'  value='"+result.height+"'></label>";
 				rowsHTML+="<label>Pieces: <input type='number' step='any' name='pieces'  value='"+result.pieces+"'></label>";
 				rowsHTML+="<label>Import Date: <input type='text' name='ddate'  value='"+get_my_past_date(result.import_date)+"'></label>";
-				rowsHTML+="<label>Product Name: <textarea name='product_name' >"+result.product_name+"</textarea></label>";
+				rowsHTML+="<label>Product Name: <textarea name='product_name' >"+result.sku+"</textarea></label>";
 				rowsHTML+="<label>Status: <input type='text' name='status'  required value='"+result.status+"'></label>";
 				rowsHTML+="<label>Delivery Person: <input type='text' name='delivery_person'  value='"+result.delivery_person+"'></label>";
 				rowsHTML+="<label>DRS #: <input type='text' name='drs_num'  value='"+result.drs_num+"'></label>";

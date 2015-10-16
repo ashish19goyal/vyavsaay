@@ -9159,11 +9159,11 @@ function form165_update_item(form)
 		var to_place=form.elements[2].value;
 		var placed=form.elements[3].value;
 		var storage=form.elements[4].value;
-		var data_id=form.elements[5].value;
-		var table_type=form.elements[6].value;
+		var data_id=form.elements[6].value;
+		var table_type=form.elements[7].value;
 		var last_updated=get_my_time();
-		var old_storage=form.elements[8].value;
-		var old_placed=form.elements[9].value;
+		var old_storage=form.elements[9].value;
+		var old_placed=form.elements[10].value;
 		
 		if(storage==old_storage)
 		{
@@ -9179,8 +9179,8 @@ function form165_update_item(form)
 				data_xml+="</"+table_type+">";
 			
 			update_simple(data_xml);
-			form.elements[8].value=storage;
-			form.elements[9].value=placed;					
+			form.elements[9].value=storage;
+			form.elements[10].value=placed;					
 		}
 		else
 		{
@@ -9199,8 +9199,8 @@ function form165_update_item(form)
 						"</"+table_type+">";
 				
 				update_simple(data_xml);
-				form.elements[8].value=storage;
-				form.elements[9].value=placed;
+				form.elements[9].value=storage;
+				form.elements[10].value=placed;
 			}
 			else
 			{
@@ -9223,10 +9223,10 @@ function form165_update_item(form)
 				var old_pending_quantity=parseFloat(to_place)-parseFloat(old_placed);
 				var new_placed_quantity=parseFloat(placed)-parseFloat(old_placed);
 				var new_key=get_new_key();
-				form.elements[6].value='inventory_adjust';
-				form.elements[5].value=new_key;
-				form.elements[8].value=storage;
-				form.elements[9].value=new_placed_quantity;
+				form.elements[7].value='inventory_adjust';
+				form.elements[6].value=new_key;
+				form.elements[9].value=storage;
+				form.elements[10].value=new_placed_quantity;
 				form.elements[2].value=old_pending_quantity;
 				form.elements[3].value=new_placed_quantity;
 		
