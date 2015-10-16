@@ -3972,10 +3972,13 @@ function form51_ini()
 				
 				fetch_requested_data('form51',elements_name,function(elements)
 				{
+					var counter=0;
+					var new_key=get_new_key();
 					//console.log('elements found for new user');
 					elements.forEach(function(element)
 					{
-						var data_id=get_new_key();
+						counter+=1;
+						var data_id=new_key+counter;
 						var rowsHTML="";
 						rowsHTML+="<tr>";
 							rowsHTML+="<form id='form51_"+data_id+"'></form>";
@@ -21057,13 +21060,13 @@ function form198_ini()
 							{index:'order_num'},
 							{index:'awb_num',value:awb_num.value},
 							{index:'type'},
+							{index:'manifest_type'},							
 							{index:'channel_name'},
 							{index:'merchant_name'},
 							{index:'ship_to'},
 							{index:'import_date'},
 							{index:'address1'},
 							{index:'address2'},
-							{index:'address3'},
 							{index:'city'},
 							{index:'pincode'},
 							{index:'state'},
@@ -21076,8 +21079,13 @@ function form198_ini()
 							{index:'weight'},
 							{index:'volumetric_weight'},
 							{index:'lbh'},
+							{index:'len'},
+							{index:'breadth'},
+							{index:'height'},
 							{index:'shipper_name'},
 							{index:'return_address1'},
+							{index:'return_address2'},
+							{index:'return_address3'},
 							{index:'vendor_phone'},
 							{index:'return_pincode'},
 							{index:'manifest_id'},
@@ -21109,8 +21117,9 @@ function form198_ini()
 
 				rowsHTML+="<input type='hidden' name='id'  value='"+result.id+"'>";
 				rowsHTML+="<label>Order #: <input type='text' name='order_num'  value='"+result.order_num+"'></label>";
-				rowsHTML+="<label>Type: <input type='text' name='type'  value='"+result.type+"' required></label>";
 				rowsHTML+="<label>Channel: <input type='text' name='channel_name'  value='"+result.channel_name+"' required></label>";
+				rowsHTML+="<label>Type: <input type='text' name='type'  value='"+result.type+"' required></label>";
+				rowsHTML+="<label>Manifest Type: <input type='text' name='manifest_type'  value='"+result.manifest_type+"' required></label>";
 				rowsHTML+="<label>Manifest ID: <input type='text' name='manifest_id'  value='"+result.manifest_id+"' required></label>";
 				rowsHTML+="<label>Customer Name: <textarea name='merchant_name'  required>"+result.merchant_name+"</textarea></label>";
 				rowsHTML+="<label>Consignee: <textarea name='ship_to'  required>"+result.ship_to+"</textarea></label>";
@@ -21122,13 +21131,21 @@ function form198_ini()
 				rowsHTML+="<label>Phone: <input type='text' name='phone'  required value='"+result.phone+"'></label>";
 				rowsHTML+="<label>Telephone: <input type='text' name='telephone'  value='"+result.telephone+"'></label>";
 				rowsHTML+="<label>Weight: <input type='number' step='any' name='weight'  value='"+result.weight+"'></label>";
+				rowsHTML+="<label>Volumetric Weight: <input type='number' step='any' name='vol_weight'  value='"+result.volumetric_weight+"'></label>";
 				rowsHTML+="<label>Declared Value: <input type='number' step='any' name='d_value'  value='"+result.declared_value+"'></label>";
 				rowsHTML+="<label>Collectable Value: <input type='number' step='any' name='c_value'  value='"+result.collectable_value+"'></label>";
 				rowsHTML+="<label>Vendor Name: <textarea name='shipper_name' >"+result.shipper_name+"</textarea></label>";
-				rowsHTML+="<label>Return Address: <textarea name='r_address1' >"+result.return_address1+"</textarea></label>";
+				rowsHTML+="<label>Return Address1: <textarea name='r_address1' >"+result.return_address1+"</textarea></label>";
+				rowsHTML+="<label>Return Address2: <textarea name='r_address2' >"+result.return_address2+"</textarea></label>";
+				rowsHTML+="<label>Return Address3: <textarea name='r_address3' >"+result.return_address3+"</textarea></label>";
 				rowsHTML+="<label>Return Pincode: <input type='text' name='rpincode' value='"+result.return_pincode+"'></label>";
-				rowsHTML+="<label>LBH: <input type='text' name='lbh'  value='"+result.lbh+"'></label>";
-				rowsHTML+="<label>Pieces: <input type='number' step='any' name='pieces'  value='"+result.pieces+"'></label>";
+				if(result.lbh=="")
+				{
+					rowsHTML+="<label>LBH: <input type='text' name='lbh'  value='"+result.len+"*"+result.breadth+"*"+result.height+"'></label>";			
+				}				
+				else {				
+					rowsHTML+="<label>LBH: <input type='text' name='lbh'  value='"+result.lbh+"'></label>";
+				}				
 				rowsHTML+="<label>Import Date: <input type='text' name='ddate'  value='"+get_my_past_date(result.import_date)+"'></label>";
 				rowsHTML+="<label>Product Name: <textarea name='product_name' >"+result.sku+"</textarea></label>";
 				rowsHTML+="<label>Status: <input type='text' name='status'  required value='"+result.status+"'></label>";

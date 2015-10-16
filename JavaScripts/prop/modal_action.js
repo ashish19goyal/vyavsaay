@@ -11212,12 +11212,12 @@ function modal149_action()
 						'Carrier Account','Carrier Name','Manifest Type','Dispatch Date','Notes',
 						'Pickup Location','Pickup By'];
 		*/
-		var data_array=['Manifest ID','Date','Waybill','Order Number','Customer Name','Type','Consignee',
-						'Consignee Address1','Consignee Address2','Consignee Address3','Destination City',
-						'Pincode','State','Mobile','Telephone','Item Description','Pieces',
-						'Collectable Value','Declared value','Actual Weight(g)','Volumetric Weight(g)','Length(cms)',
-						'Breadth(cms)','Height(cms)','vendor name','vendor return address','vendor mobile no',
-						'vendor pin code'];
+		var data_array=['Date','AWB No.','Type','Order No.','Manifest ID','Customer Name','Consignee',
+						'Consignee Address1','Consignee Address2','Destination City',
+						'Pincode','State','Tel. Number','Mobile number','Product name','Weight(K.G.)',
+						'Declared Value','Collectable Value','Volumetric Weight(g)','Length(cms)',
+						'Breadth(cms)','Height(cms)','vendor name','Return Address1','Return Address2','Return Address3',
+						'Return Pin'];
 		my_array_to_csv(data_array);
 	});
 	
@@ -11275,35 +11275,34 @@ function modal149_action()
 				data_xml+="<row>" +
 						"<id>"+row.id+"</id>" +
 						"<import_date>"+get_raw_time(row['Date'])+"</import_date>"+
-						"<awb_num unique='yes'>"+row['Waybill']+"</awb_num>"+
+						"<awb_num unique='yes'>"+row['AWB No.']+"</awb_num>"+
 						"<channel_name>"+channel+"</channel_name>"+
 		                "<manifest_type>"+row['Type']+"</manifest_type>"+
 		                "<type>"+type_filter.value+"</type>"+
-		                "<order_num>"+row['Order Number']+"</order_num>"+
+		                "<order_num>"+row['Order No.']+"</order_num>"+
 		                "<manifest_id>"+row['Manifest ID']+"</manifest_id>"+
 		                "<merchant_name>"+row['Customer Name']+"</merchant_name>"+
 		                "<ship_to>"+row['Consignee']+"</ship_to>"+
 		                "<address1>"+row['Consignee Address1']+"</address1>"+
 		                "<address2>"+row['Consignee Address2']+"</address2>"+
-		                "<address3>"+row['Consignee Address3']+"</address3>"+
 		                "<city>"+row['Destination City']+"</city>"+
 		                "<state>"+row['State']+"</state>"+
 		                "<pincode>"+row['Pincode']+"</pincode>"+
-		                "<phone>"+row['Mobile']+"</phone>"+
-		                "<telephone>"+row['Telephone']+"</telephone>"+
-		                "<weight>"+row['Actual Weight(g)']+"</weight>"+
+		                "<phone>"+row['Mobile number']+"</phone>"+
+		                "<telephone>"+row['Tel. Number']+"</telephone>"+
+		                "<weight>"+row['Weight(K.G.)']+"</weight>"+
 		                "<volumetric_weight>"+row['Volumetric Weight(g)']+"</volumetric_weight>"+
 		                "<declared_value>"+row['Declared Value']+"</declared_value>"+
 		                "<collectable_value>"+row['Collectable Value']+"</collectable_value>"+
 		                "<shipper_name>"+row['vendor name']+"</shipper_name>"+
-		                "<return_address1>"+row['vendor return address']+"</return_address1>"+
-		                "<return_pincode>"+row['vendor pin code']+"</return_pincode>"+
-		                "<vendor_phone>"+row['vendor mobile no']+"</vendor_phone>"+
+		                "<return_address1>"+row['Return Address1']+"</return_address1>"+
+		                "<return_address2>"+row['Return Address2']+"</return_address2>"+
+		                "<return_address3>"+row['Return Address3']+"</return_address3>"+
+		                "<return_pincode>"+row['Return Address1']+"</return_pincode>"+
 		                "<len>"+row['Length(cms)']+"</len>"+
 		                "<breadth>"+row['Breadth(cms)']+"</breadth>"+
 		                "<height>"+row['Height(cms)']+"</height>"+
-		                "<pieces>"+row['Pieces']+"</pieces>"+
-		                "<sku>"+row['Item Description']+"</sku>"+
+		                "<sku>"+row['Product name']+"</sku>"+
 		                "<order_history>"+order_history_string+"</order_history>"+
 		                "<status>picked</status>"+
 		                "<last_updated>"+last_updated+"</last_updated>" +

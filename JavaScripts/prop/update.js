@@ -10878,6 +10878,7 @@ function form198_update_item()
 		var awb_num=form.elements['awb_num'].value;
 		var order_num=form.elements['order_num'].value;
 		var type=form.elements['type'].value;
+		var manifest_type=form.elements['manifest_type'].value;
 		var manifest_id=form.elements['manifest_id'].value;
 		var merchant_name=form.elements['merchant_name'].value;
 		var channel_name=form.elements['channel_name'].value;
@@ -10890,13 +10891,15 @@ function form198_update_item()
 		var phone=form.elements['phone'].value;
 		var telephone=form.elements['telephone'].value;
 		var weight=form.elements['weight'].value;
+		var volumetric_weight=form.elements['vol_weight'].value;
 		var d_value=form.elements['d_value'].value;
 		var c_value=form.elements['c_value'].value;
 		var shipper_name=form.elements['shipper_name'].value;
 		var r_address1=form.elements['r_address1'].value;
+		var r_address2=form.elements['r_address2'].value;
+		var r_address3=form.elements['r_address3'].value;
 		var rpincode=form.elements['rpincode'].value;
 		var lbh=form.elements['lbh'].value;
-		var pieces=form.elements['pieces'].value;
 		var product_name=form.elements['product_name'].value;
 		var status=form.elements['status'].value;
 		var delivery_person=form.elements['delivery_person'].value;
@@ -10912,6 +10915,7 @@ function form198_update_item()
 				"<type>"+type+"</type>"+
                 "<order_num>"+order_num+"</order_num>"+
                 "<manifest_id>"+manifest_id+"</manifest_id>"+
+                "<manifest_type>"+manifest_type+"</manifest_type>"+
                 "<merchant_name>"+merchant_name+"</merchant_name>"+
                 "<channel_name>"+channel_name+"</channel_name>"+
                 "<ship_to>"+ship_to+"</ship_to>"+
@@ -10923,13 +10927,15 @@ function form198_update_item()
                 "<phone>"+phone+"</phone>"+
                 "<telephone>"+telephone+"</telephone>"+
                 "<weight>"+weight+"</weight>"+
+                "<volumetric_weight>"+volumetric_weight+"</volumetric_weight>"+
                 "<declared_value>"+d_value+"</declared_value>"+
                 "<collectable_value>"+c_value+"</collectable_value>"+
                 "<shipper_name>"+shipper_name+"</shipper_name>"+
                 "<return_address1>"+r_address1+"</return_address1>"+
+                "<return_address2>"+r_address2+"</return_address2>"+
+                "<return_address3>"+r_address3+"</return_address3>"+
                 "<return_pincode>"+rpincode+"</return_pincode>"+
                 "<lbh>"+lbh+"</lbh>"+
-                "<pieces>"+pieces+"</pieces>"+
                 "<import_date>"+import_date+"</import_date>"+
                 "<product_name>"+product_name+"</product_name>"+
                 "<status>"+status+"</status>"+
