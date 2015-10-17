@@ -10587,16 +10587,8 @@ function form192_update_form()
 					"<tax>"+(-tax)+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-			server_update_simple(transaction_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-			local_update_simple(transaction_xml);
-		}
+		update_row(data_xml,activity_xml);
+		update_simple(transaction_xml);
 		
 		var payment_data="<payments>" +
 				"<id></id>" +
@@ -10623,20 +10615,10 @@ function form192_update_form()
 							"<tax>0</tax>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</transactions>";
-				if(is_online())
+				update_simple_func(payment_xml,function()
 				{
-					server_update_simple_func(payment_xml,function()
-					{
-						modal28_action(payments[y]);
-					});
-				}
-				else
-				{
-					local_update_simple_func(payment_xml,function()
-					{
-						modal28_action(payments[y]);
-					});
-				}
+					modal28_action(payments[y]);
+				});
 				break;
 			}
 		},payment_data);
@@ -10845,14 +10827,7 @@ function form195_update_item(form)
 					"<receiver>"+to+"</receiver>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</letterheads>";
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}	
+		update_simple(data_xml);
 		
 		for(var i=0;i<4;i++)
 		{

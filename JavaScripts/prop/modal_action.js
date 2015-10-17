@@ -11212,7 +11212,7 @@ function modal149_action()
 						'Carrier Account','Carrier Name','Manifest Type','Dispatch Date','Notes',
 						'Pickup Location','Pickup By'];
 		*/
-		var data_array=['Date','AWB No.','Type','Order No.','Manifest ID','Customer Name','Consignee',
+		var data_array=['SR no','Date','AWB No.','Type','Order No.','Manifest ID','Customer Name','Consignee',
 						'Consignee Address1','Consignee Address2','Destination City',
 						'Pincode','State','Tel. Number','Mobile number','Product name','Weight(K.G.)',
 						'Declared Value','Collectable Value','Volumetric Weight(g)','Length(cms)',
