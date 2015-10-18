@@ -1060,29 +1060,13 @@ function form30_import(data_array,import_type)
 	
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-			server_create_batch(account_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-			local_create_batch(account_xml);
-		}
+		create_batch(data_xml);
+		create_batch(account_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-			server_update_batch(account_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-			local_update_batch(account_xml);
-		}
+		update_batch(data_xml);
+		update_batch(account_xml);
 	}
 }
 
@@ -1134,25 +1118,11 @@ function form35_import(data_array,import_type)
 	data_xml+="</offers>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -1440,25 +1410,11 @@ function form43_import(data_array,import_type)
 	data_xml+="</purchase_orders>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -1515,29 +1471,13 @@ function form53_import(data_array,import_type)
 	transaction_xml+="</transactions>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-			server_create_batch(transaction_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-			local_create_batch(transaction_xml);
-		}
+		create_batch(data_xml);
+		create_batch(transaction_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-			server_update_batch(transaction_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-			local_update_batch(transaction_xml);
-		}
+		update_batch(data_xml);
+		update_batch(transaction_xml);
 	}
 };
 
@@ -1627,37 +1567,18 @@ function form56_import(data_array,import_type)
 	
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-			server_create_batch(transaction_xml);
-			server_create_batch(transaction2_xml);
-			server_create_batch(payment_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-			local_create_batch(transaction_xml);
-			local_create_batch(transaction2_xml);
-			local_create_batch(payment_xml);
-		}
+		create_batch(data_xml);
+		create_batch(transaction_xml);
+		create_batch(transaction2_xml);
+		create_batch(payment_xml);
+		
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-			server_update_batch(transaction_xml);
-			server_update_batch(transaction2_xml);
-			server_update_batch(payment_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-			local_update_batch(transaction_xml);
-			local_update_batch(transaction2_xml);
-			local_update_batch(payment_xml);
-		}
+		update_batch(data_xml);
+		update_batch(transaction_xml);
+		update_batch(transaction2_xml);
+		update_batch(payment_xml);
 	}
 };
 
@@ -1696,25 +1617,11 @@ function form57_import(data_array,import_type)
 	data_xml+="</services>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -1753,25 +1660,11 @@ function form58_import(data_array,import_type)
 	data_xml+="</pre_requisites>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -1811,25 +1704,11 @@ function form59_import(data_array,import_type)
 	data_xml+="</pre_requisites>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -1868,25 +1747,11 @@ function form60_import(data_array,import_type)
 	data_xml+="</attributes>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -1924,25 +1789,11 @@ function form61_import(data_array,import_type)
 	data_xml+="</attributes>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -1981,25 +1832,11 @@ function form62_import(data_array,import_type)
 	data_xml+="</reviews>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -2038,25 +1875,11 @@ function form63_import(data_array,import_type)
 	data_xml+="</reviews>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -2094,27 +1917,12 @@ function form64_import(data_array,import_type)
 	data_xml+="</cross_sells>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
-
 };
 
 
@@ -2152,25 +1960,11 @@ function form66_import(data_array,import_type)
 	data_xml+="</cross_sells>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -2216,25 +2010,11 @@ function form69_import(data_array,import_type)
 	data_xml+="</sale_order_items>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -2272,25 +2052,11 @@ function form70_import(data_array,import_type)
 	data_xml+="</sale_orders>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -2328,25 +2094,11 @@ function form71_import(data_array,import_type)
 	data_xml+="</accounts>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -2390,25 +2142,11 @@ function form72_import(data_array,import_type)
 	data_xml+="</bill_items>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -2446,25 +2184,11 @@ function form79_import(data_array,import_type)
 	data_xml+="</task_type>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -2502,25 +2226,11 @@ function form81_import(data_array,import_type)
 	data_xml+="</sale_leads>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 }
 
@@ -2570,25 +2280,11 @@ function form82_import(data_array,import_type)
 	data_xml+="</bill_items>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -2638,25 +2334,11 @@ function form83_import(data_array,import_type)
 	data_xml+="</store_areas>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 				
 };
@@ -2698,25 +2380,11 @@ function form84_import(data_array,import_type)
 	data_xml+="</service_subscriptions>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -2756,25 +2424,11 @@ function form87_import(data_array,import_type)
 	data_xml+="</product_master>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -2814,25 +2468,11 @@ function form88_import(data_array,import_type)
 	data_xml+="</manufacturing_schedule>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -2872,25 +2512,11 @@ function form89_import(data_array,import_type)
 	data_xml+="</appointments>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}		
 };
 
@@ -2927,25 +2553,11 @@ function form90_import(data_array,import_type)
 	data_xml+="</bill_types>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -3058,29 +2670,13 @@ function form92_import(data_array,import_type)
 	transaction_xml+="</transactions>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-			server_create_batch(transaction_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-			local_create_batch(transaction_xml);
-		}
+		create_batch(data_xml);
+		create_batch(transaction_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-			server_update_batch(transaction_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-			local_update_batch(transaction_xml);
-		}
+		update_batch(data_xml);
+		update_batch(transaction_xml);
 	}
 };
 
@@ -3130,25 +2726,11 @@ function form93_import(data_array,import_type)
 	data_xml+="</loans>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -3187,25 +2769,11 @@ function form94_import(data_array,import_type)
 	data_xml+="</discarded>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 }
 
@@ -3244,25 +2812,11 @@ function form96_import(data_array,import_type)
 	data_xml+="</attributes>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -3300,25 +2854,11 @@ function form97_import(data_array,import_type)
 	data_xml+="</attributes>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -3356,25 +2896,11 @@ function form98_import(data_array,import_type)
 	data_xml+="</attributes>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -3413,25 +2939,11 @@ function form101_import(data_array,import_type)
 	data_xml+="</projects>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 
@@ -3471,25 +2983,11 @@ function form102_import(data_array,import_type)
 	data_xml+="</project_team>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 

@@ -7264,25 +7264,32 @@ function form136_add_item()
 {
 	if(is_create_access('form136'))
 	{
+		var master_form=document.getElementById('form136_master');
+		var supplier_name=master_form.elements['supplier'].value;
+		var order_id=master_form.elements['order_id'].value;
+		var bill_id=master_form.elements['id'].value;
+		
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form136_"+id+"' autocomplete='off'></form>";
-			rowsHTML+="<td data-th='Product Name'>";
+			rowsHTML+="<td data-th='Item'>";
 				rowsHTML+="<input type='text' required form='form136_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' readonly='readonly' required form='form136_"+id+"'></br>";
 				rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+id+"' id='form136_barcode_"+id+"'>";
+				rowsHTML+="<br><b>Quantity</b>: <input type='number' step='any' required form='form136_"+id+"'>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Quantity'>";
-				rowsHTML+="Bought: <input type='number' step='any' required form='form136_"+id+"'>";
-				rowsHTML+="<br>Free: <input type='number' step='any' required form='form136_"+id+"' value='0'>";
+			rowsHTML+="<td data-th='Bill Price'>";
+				rowsHTML+="<b>Unit Price</b>: <input type='number' form='form136_"+id+"' step='any'>";
+				rowsHTML+="<br><b>Amount</b>: <input type='number' readonly='readonly' form='form136_"+id+"' value='' step='any'>";
+				rowsHTML+="<br><b>Tax</b>: <input type='number' required form='form136_"+id+"' step='any'>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+="Unit Price: <input type='number' form='form136_"+id+"' step='any'>";
-				rowsHTML+="<br>Tax: <input type='number' readonly='readonly' form='form136_"+id+"' value='' step='any'>";
-				rowsHTML+="<br>Total: <input type='number' readonly='readonly' required form='form136_"+id+"' step='any'>";
+			rowsHTML+="<td data-th='PO Price'>";
+				rowsHTML+="<b>Unit Price</b>: <input type='number' readonly='readonly' form='form136_"+id+"' step='any'>";
+				rowsHTML+="<br><b>Amount</b>: <input type='number' readonly='readonly' form='form136_"+id+"' value='' step='any'>";
+				rowsHTML+="<br><b>Tax</b>: <input type='number' readonly='readonly' required form='form136_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Storage Area'>";
 				rowsHTML+="<input type='text' form='form136_"+id+"'>";
@@ -7291,28 +7298,32 @@ function form136_add_item()
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form136_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='button' class='submit_hidden' form='form136_"+id+"' id='save_form136_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form136_"+id+"' id='delete_form136_"+id+"' onclick='$(this).parent().parent().remove();'>";
-				rowsHTML+="<input type='hidden' form='form136_"+id+"' step='any'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form136_"+id+"' id='delete_form136_"+id+"' onclick='$(this).parent().parent().remove(); form136_get_totals();'>";
+				rowsHTML+="<input type='hidden' form='form136_"+id+"' step='any' name='tax_unit'>";
+				rowsHTML+="<input type='hidden' form='form136_"+id+"' step='any' name='po_tax_unit'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form136_"+id+"'>";
 			rowsHTML+="</td>";
 		rowsHTML+="</tr>";
 	
 		$('#form136_body').prepend(rowsHTML);
-		var master_fields=document.getElementById('form136_master');
-		var bill_id=master_fields.elements['id'].value;
-
+		
 		var fields=document.getElementById("form136_"+id);
 		var name_filter=fields.elements[0];
 		var batch_filter=fields.elements[1];
-		var pquantity_filter=fields.elements[2];
-		var fquantity_filter=fields.elements[3];
-		var price_filter=fields.elements[4];
+		var quantity_filter=fields.elements[2];
+		var unit_filter=fields.elements[3];
+		var amount_filter=fields.elements[4];
 		var tax_filter=fields.elements[5];
-		var total_filter=fields.elements[6];
-		var storage_filter=fields.elements[7];
-		var id_filter=fields.elements[8];
-		var save_button=fields.elements[9];
-		var tax_unit_filter=fields.elements[11];
+		
+		var po_unit_filter=fields.elements[6];
+		var po_amount_filter=fields.elements[7];
+		var po_tax_filter=fields.elements[8];
+		
+		var storage_filter=fields.elements[9];
+		var id_filter=fields.elements[10];
+		var save_button=fields.elements[11];
+		var tax_unit_filter=fields.elements[13];
+		var po_tax_rate_filter=fields.elements[14];
 
 		batch_filter.value=String(bill_id).substr(1,8);
 			
@@ -7405,40 +7416,62 @@ function form136_add_item()
 
 		$(name_filter).on('blur',function(event)
 		{
-			/*
-			var batch_data="<product_instances>" +
-					"<batch></batch>" +
-					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
-					"</product_instances>";
-			set_my_value_list(batch_data,batch_filter);
-			*/
-			var price_data="<supplier_bill_items count='1'>" +
-					"<unit_price></unit_price>" +
-					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
-					"</supplier_bill_items>";
-			set_my_value(price_data,price_filter);
+			var po_item_data="<purchase_order_items>"+
+							"<item_name exact='yes'>"+name_filter.value+"</item_name>"+
+							"<quantity></quantity>"+
+							"<price></price>"+
+							"<amount></amount>"+
+							"<tax></tax>"+
+							"<tax_rate></tax_rate>"+
+							"<order_id exact='yes'>"+order_id+"</order_id>"+
+							"</purchase_order_items>";
+			fetch_requested_data('',po_item_data,function(po_items)
+			{
+				if(po_items.length>0)
+				{
+					po_unit_filter.value=po_items[0].price;
+					po_amount_filter.value=po_items[0].price;
+					po_tax_rate_filter.value=po_items[0].tax_rate;
+					po_tax_filter.value=parseFloat(po_items[0].tax_rate)*parseFloat(po_items[0].price)/100;					
+				}
+				else 
+				{
+					po_unit_filter.value="";
+					po_amount_filter.value="";
+					po_tax_rate_filter.value="";
+					po_tax_filter.value="";					
+				}
+			});		
 			
-			var tax_data="<product_master>"+
-						"<tax></tax>"+
-						"<name exact='yes'>"+name_filter.value+"</name>"+						
-						"</product_master>";			
-			set_my_value(tax_data,tax_unit_filter);
-			
-			//batch_filter.value="";
+			var tax_unit_data="<product_master>"+
+							"<tax></tax>"+
+							"<name exact='yes'>"+name_filter.value+"</name>"+
+							"</product_master>";
+			set_my_value(tax_unit_data,tax_unit_filter);
+							
 		});
 		
-		$(pquantity_filter).on('blur',function(event)
+		$(quantity_filter).on('blur',function(event)
 		{
-			tax_filter.value=my_round((parseFloat(tax_unit_filter.value)*parseFloat(pquantity_filter.value)*parseFloat(price_filter.value)/100),2);
-			var total=(parseFloat(price_filter.value)*parseFloat(pquantity_filter.value))+parseFloat(tax_filter.value);
-			total_filter.value=my_round(total,2);
+			amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
+			tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
+
+			po_amount_filter.value=parseFloat(po_unit_filter.value)*parseFloat(quantity_filter.value);
+			po_tax_filter.value=parseFloat(po_tax_rate_filter.value)*parseFloat(po_amount_filter.value)/100;				
 		});
-		$(price_filter).on('blur',function(event)
+		
+		////////////////////////////////////
+			
+		$(unit_filter).on('blur',function () 
 		{
-			tax_filter.value=my_round((parseFloat(tax_unit_filter.value)*parseFloat(pquantity_filter.value)*parseFloat(price_filter.value)/100),2);
-			var total=(parseFloat(price_filter.value)*parseFloat(pquantity_filter.value))+parseFloat(tax_filter.value);
-			total_filter.value=my_round(total,2);
+			amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
+			tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
+			
 		});
+
+		form136_get_totals();
+		$('textarea').autosize();
+		
 	}
 	else
 	{

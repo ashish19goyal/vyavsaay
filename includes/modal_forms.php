@@ -734,6 +734,10 @@
 		This MTS number is already taken. Please use another number.
 	</div>
 
+	<div id="modal79" title="Questionnaire Submitted">
+		Your responses have been captured. Thanks!
+	</div>
+
 	<div id="modal101" title="Email Document">
 		<form id='modal101_form' autocomplete="off">
 			<fieldset>

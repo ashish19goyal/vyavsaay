@@ -9557,7 +9557,7 @@ function modal138_action()
 			unique_sku_in_import=array_unique(unique_sku_in_import);
 			unique_channel_sku_in_import=array_unique(unique_channel_sku_in_import);
 			
-			//console.log(unique_sku_in_import);
+			console.log(unique_sku_in_import);
 			var sku_data="<sku_mapping>"+
 						"<item_desc></item_desc>"+
 						"<system_sku></system_sku>"+

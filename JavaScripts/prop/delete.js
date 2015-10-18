@@ -1424,7 +1424,6 @@ function form53_delete_item(button)
 			var last_updated=get_my_time();
 			var bill_xml="<supplier_bills>" +
 						"<id>"+data_id+"</id>" +
-						"<supplier>"+supplier+"</supplier>" +
 						"</supplier_bills>";	
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
@@ -1477,7 +1476,7 @@ function form53_delete_item(button)
 			delete_simple(items_data);
 	
 			var return_items_data="<supplier_return_items>" +
-					"<bill_id>"+data_id+"</bill_id>" +
+					"<return_id>"+data_id+"</return_id>" +
 					"</supplier_return_items>";
 			delete_simple(return_items_data);
 	
@@ -4542,16 +4541,13 @@ function form136_delete_item(button)
 	{
 		modal115_action(function()
 		{
-			var bill_id=document.getElementById("form136_master").elements[6].value;
-			
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var data_id=form.elements[8].value;
+			var data_id=form.elements[10].value;
 			
 			var data_xml="<supplier_bill_items>" +
 						"<id>"+data_id+"</id>" +
-						"<bill_id>"+bill_id+"</bill_id>" +
 						"</supplier_bill_items>";	
 			var batch_xml="<product_instances>" +
 						"<id>"+data_id+"</id>" +
@@ -4560,6 +4556,7 @@ function form136_delete_item(button)
 			delete_simple(batch_xml);
 					
 			$(button).parent().parent().remove();
+			form136_get_totals();
 		});
 	}
 	else

@@ -173,14 +173,7 @@ function initialize_questionnaires(id,ques_name)
 						"<field_value>"+field_value+"</field_value>"+
 						"<last_updated>"+last_updated+"</last_updated>"+
 						"</ques_fields_data>";
-				if(is_online())
-				{
-					server_create_simple(field_data);
-				}
-				else
-				{
-					local_create_simple(field_data);
-				}				
+				create_simple(field_data);				
 			});
 
 			var total_weighted_score=total_score/total_weight;
@@ -196,10 +189,8 @@ function initialize_questionnaires(id,ques_name)
 						"<total_score>"+total_weighted_score+"</total_score>"+
 						"<last_updated>"+last_updated+"</last_updated>"+
 						"</ques_data>";
-			if(is_online())
+			create_simple_func(ques_data,function () 
 			{
-				server_create_simple_func(ques_data,function () 
-				{
 					if(ques_name=='ques1')
 					{
 						ques1_submit_action(ques_form);
@@ -212,32 +203,10 @@ function initialize_questionnaires(id,ques_name)
 					{
 						ques3_submit_action(ques_form);
 					}
-				});
-			}
-			else
-			{
-				local_create_simple_func(ques_data,function () 
-				{
-					if(ques_name=='ques1')
-					{
-						ques1_submit_action(ques_form);
-					}
-					else if(ques_name=='ques2')
-					{
-						ques2_submit_action(ques_form);
-					}
-					else if(ques_name=='ques3')
-					{
-						ques3_submit_action(ques_form);
-					}
-				});
-			}
-
-			$(ques_form).off('submit');
-			$(ques_form).on('submit',function(event)
-			{
-				event.preventDefault();
-			});			
+			});
+			$("#modal79").dialog("open");	
+			
+			initialize_questionnaires(id,ques_name);
 		});		
 	});
 }
@@ -335,7 +304,7 @@ function previous_questionnaires(id,ques_name,start_index)
 					var rowsHTML="<tr>";
 						rowsHTML+="<form id='ques_"+result.id+"'></form>";
 							rowsHTML+="<td data-th='Id'>";
-								rowsHTML+="<a onclick=\"filled_questionnaires('"+id+"','"+ques_name+"','"+result.id+"','"+result.submitter+"','"+result.sub_date+"')\">"+result.id+"</a>";
+								rowsHTML+="<a style='cursor: pointer;text-decoration: underline;' onclick=\"filled_questionnaires('"+id+"','"+ques_name+"','"+result.id+"','"+result.submitter+"','"+result.sub_date+"')\">"+result.id+"</a>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Submitter'>";
 								rowsHTML+=result.submitter;
@@ -354,6 +323,9 @@ function previous_questionnaires(id,ques_name,start_index)
 								else if(result.status=='reviewed')								
 									rowsHTML+="<input type='button' class='generic_icon' value='Approve' onclick='questionnaire_approved("+result.id+");'>";
 								rowsHTML+="</td>";						
+							}
+							else{
+								rowsHTML+="<td></td>";						
 							}
 					rowsHTML+="</tr>";
 					
@@ -377,14 +349,7 @@ function questionnaire_reviewed(id)
 					"<rev_date>"+last_updated+"</rev_date>"+
 					"<last_updated>"+last_updated+"</last_updated>"+
 					"</ques_data>";
-	if(is_online())
-	{
-		server_update_simple(ques_xml);
-	}
-	else
-	{
-		local_update_simple(ques_xml);
-	}		
+	update_simple(ques_xml);	
 }
 
 function questionnaire_approved(id)
@@ -398,14 +363,8 @@ function questionnaire_approved(id)
 					"<rev_date>"+last_updated+"</rev_date>"+
 					"<last_updated>"+last_updated+"</last_updated>"+
 					"</ques_data>";
-	if(is_online())
-	{
-		server_update_simple(ques_xml);
-	}
-	else
-	{
-		local_update_simple(ques_xml);
-	}		
+	update_simple(ques_xml);
+			
 }
 
 
@@ -419,6 +378,9 @@ function filled_questionnaires(struct_id,ques_name,ques_id,submitter,sub_date)
 					"<description></description>"+					
 					"<type></type>"+
 					"<fvalues></fvalues>"+
+					"<weight></weight>"+
+					"<dynamic_values></dynamic_values>"+
+					"<fcol></fcol>"+
 					"<forder></forder>"+
 					"<freq></freq>"+
 					"</ques_fields>";
@@ -477,6 +439,8 @@ function filled_questionnaires(struct_id,ques_name,ques_id,submitter,sub_date)
 								break;
 					case 'textarea':content+="<label>"+field.display_name+field_desc+fcol+" <textarea readonly='readonly'>"+field_value+"</textarea></label>";
 								break;
+					case 'dynamic value list':content+="<label>"+field.display_name+field_desc+fcol+" <input type='text' value='"+field_value+"'></label>";
+								break;			
 				}
 			});
 			content+="</fieldset></form>";

@@ -13280,43 +13280,31 @@ function form136_ini()
 				"<tax></tax>" +
 				"<bill_date></bill_date>" +
 				"<entry_date></entry_date>" +
-				"<notes></notes>" +
-				"<transaction_id></transaction_id>" +
+				"<order_id></order_id>" +
+				"<order_num></order_num>" +
 				"</supplier_bills>";
 		
 		////separate fetch function to get bill details like customer name, total etc.
 		fetch_requested_data('',bill_columns,function(bill_results)
 		{
-			for (var i in bill_results)
+			if (bill_results.length>0)
 			{
 				var filter_fields=document.getElementById('form136_master');
-				filter_fields.elements[1].value=bill_results[i].supplier;
-				filter_fields.elements[2].value=bill_results[i].bill_id;
-				filter_fields.elements[3].value=get_my_past_date(bill_results[i].bill_date);
-				filter_fields.elements[4].value=get_my_past_date(bill_results[i].entry_date);
-				filter_fields.elements[5].value=bill_results[i].notes;
-				filter_fields.elements[6].value=bill_id;
-				filter_fields.elements[7].value=bill_results[i].transaction_id;
-				var save_button=filter_fields.elements[8];
-				
+				filter_fields.elements['supplier'].value=bill_results[0].supplier;
+				filter_fields.elements['bill_num'].value=bill_results[0].bill_id;
+				filter_fields.elements['bill_date'].value=get_my_past_date(bill_results[0].bill_date);
+				filter_fields.elements['entry_date'].value=get_my_past_date(bill_results[0].entry_date);
+				filter_fields.elements['id'].value=bill_id;
+				filter_fields.elements['order_id'].value=bill_results[0].order_id;
+				filter_fields.elements['order_num'].value=bill_results[0].order_num;
+				var save_button=filter_fields.elements['save'];
+
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
 					event.preventDefault();
 					form136_update_form();
 				});
-				
-				var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
-							"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
-							"<td>Rs. "+bill_results[i].amount+"</br>" +
-							"Rs. "+bill_results[i].discount+"</br>" +
-							"Rs. "+bill_results[i].tax+"</br>" +
-							"Rs. "+bill_results[i].total+"</td>" +
-							"<td></td>" +
-							"</tr>";
-				$('#form136_foot').html(total_row);
-				
-				break;
 			}
 		});
 		
@@ -13328,8 +13316,9 @@ function form136_ini()
 				"<tax></tax>" +
 				"<total></total>" +
 				"<unit_price></unit_price>" +
-				"<p_quantity></p_quantity>" +
-				"<f_quantity></f_quantity>" +
+				"<po_price></po_price>"+
+				"<po_amount></po_amount>"+
+				"<po_tax></po_tax>"+				
 				"<quantity></quantity>" +
 				"<storage></storage>" +
 				"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
@@ -13343,21 +13332,23 @@ function form136_ini()
 				var id=result.id;
 				rowsHTML+="<tr>";
 				rowsHTML+="<form id='form136_"+id+"'></form>";
-					rowsHTML+="<td data-th='Product Name'>";
+					rowsHTML+="<td data-th='Item'>";
 						rowsHTML+="<textarea readonly='readonly' form='form136_"+id+"'>"+result.product_name+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Batch'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form136_"+id+"' value='"+result.batch+"'>";
 						rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+id+"' onclick=\"print_product_barcode('"+id+"','"+result.product_name+"','"+result.batch+"');\">";
+						rowsHTML+="<br><b>Quantity</b>: <input type='number' readonly='readonly' form='form136_"+id+"' value='"+result.quantity+"' step='any'>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Quantity'>";
-						rowsHTML+="Bought: <input type='number' readonly='readonly' form='form136_"+id+"' value='"+result.p_quantity+"' step='any'>";
-						rowsHTML+="<br>Free: <input type='number' readonly='readonly' form='form136_"+id+"' value='"+result.f_quantity+"' step='any'>";
+					rowsHTML+="<td data-th='Bill Price'>";
+						rowsHTML+="<b>Unit Price</b>: <input type='number' readonly='readonly' form='form136_"+id+"' value='"+result.unit_price+"' step='any'>";
+						rowsHTML+="<br><b>Amount</b>: <input type='number' readonly='readonly' form='form136_"+id+"' value='"+result.amount+"' step='any'>";
+						rowsHTML+="<br><b>Tax</b>: <input type='number' readonly='readonly' form='form136_"+id+"' value='"+result.tax+"' step='any'>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Amount'>";
-						rowsHTML+="Unit Price: <input type='number' readonly='readonly' form='form136_"+id+"' value='"+result.unit_price+"' step='any'>";
-						rowsHTML+="<br>Tax: <input type='number' readonly='readonly' form='form136_"+id+"' value='"+result.tax+"' step='any'>";
-						rowsHTML+="<br>Total: <input type='number' readonly='readonly' form='form136_"+id+"' value='"+result.total+"' step='any'>";
+					rowsHTML+="<td data-th='PO Price'>";
+						rowsHTML+="<b>Unit Price</b>: <input type='number' readonly='readonly' form='form136_"+id+"' value='"+result.po_price+"' step='any'>";
+						rowsHTML+="<br><b>Total</b>: <input type='number' readonly='readonly' form='form136_"+id+"' value='"+result.po_amount+"' step='any'>";
+						rowsHTML+="<br><b>Tax</b>: <input type='number' readonly='readonly' form='form136_"+id+"' value='"+result.po_tax+"' step='any'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Storage Area'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form136_"+id+"' value='"+result.storage+"'>";
@@ -13377,6 +13368,7 @@ function form136_ini()
 					event.preventDefault();
 				});
 			});
+			form136_get_totals();
 			hide_loader();
 		});
 	}
@@ -18680,19 +18672,18 @@ function form179_ini()
 						rowsHTML+="<input type='button' class='edit_icon' form='form179_"+result.id+"' title='Edit order' onclick=\"element_display('"+result.id+"','form178');\">";
 						rowsHTML+="<input type='submit' class='save_icon' form='form179_"+result.id+"' title='Save order'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form179_"+result.id+"' title='Delete order' onclick='form179_delete_item($(this));'>";
-					if(result.status=='order placed')
+					if(result.status=='order placed' || result.status=='partially received')
 					{
 						rowsHTML+="<br><input type='button' name='issue_grn' class='generic_icon' form='form179_"+result.id+"' value='Issue GRN'>";
-					}
-					else if(result.status=='closed')
-					{
-						rowsHTML+="<br><input type='button' name='view_bill' class='generic_icon' form='form179_"+result.id+"' value='View Bill'>";
 					}
 					if(result.status=='draft')
 					{
 						rowsHTML+="<br><input type='button' name='assign_supplier' class='generic_icon' form='form179_"+result.id+"' onclick=\"modal126_action('"+result.id+"','"+result.order_num+"');\" value='Assign'>";
 					}
-					
+					if(result.bill_id!='' && result.bill_id!='null')
+					{
+						rowsHTML+="<br><input type='button' name='view_bill' class='generic_icon' form='form179_"+result.id+"' value='View Bill'>";
+					}
 					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 
@@ -18714,27 +18705,26 @@ function form179_ini()
 				form179_update_item(fields);
 			});
 			
-			if(result.status=='order placed')
+			var issue_button=fields.elements['issue_grn'];
+			$(issue_button).on('click',function()
 			{
-				var issue_button=fields.elements['issue_grn'];
-				$(issue_button).on('click',function()
-				{
-					element_display('','form136');
-					var master_form=document.getElementById('form136_master');
-					master_form.elements['supplier'].value=result.supplier;
-					master_form.elements['po_num'].value=result.order_num;
-					master_form.elements['order_id'].value=result.id;
-					$(master_form.elements['bill_num']).focus();
-				});
-			}
-			else if(result.status=='closed')
+				element_display('','form136');
+				var master_form=document.getElementById('form136_master');
+				master_form.elements['supplier'].value=result.supplier;
+				master_form.elements['po_num'].value=result.order_num;
+				master_form.elements['order_id'].value=result.id;
+				$(master_form.elements['bill_num']).focus();
+			});
+			
+			
+			var view_button=fields.elements['view_bill'];
+			$(view_button).on('click',function()
 			{
-				var view_button=fields.elements['view_bill'];
-				$(view_button).on('click',function()
-				{
-					element_display(result.bill_id,'form136');
-				});
-			}			
+				modal137_action(result.bill_id);
+				//element_display(result.bill_id,'form122');
+			});
+		
+	
 		});
 
 		////indexing///

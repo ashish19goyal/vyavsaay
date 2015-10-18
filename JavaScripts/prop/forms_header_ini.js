@@ -4960,14 +4960,15 @@ function form136_header_ini()
 {
 	var fields=document.getElementById('form136_master');
 	
-	var supplier_filter=fields.elements[1];
-	fields.elements[2].value="";
-	var bill_date=fields.elements[3];
-	var entry_date=fields.elements[4];
-	fields.elements[5].value="";
+	var supplier_filter=fields.elements['supplier'];
+	fields.elements['bill_num'].value="";
+	var bill_date=fields.elements['bill_date'];
+	var entry_date=fields.elements['entry_date'];
+	fields.elements['po_num'].value="";
+	
 	fields.elements['id'].value=get_my_time();
-	fields.elements[7].value=fields.elements[6].value;
-	var save_button=fields.elements[8];
+	fields.elements['order_id'].value="";
+	var save_button=fields.elements['save'];
 	
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
@@ -4995,7 +4996,10 @@ function form136_header_ini()
 		"<acc_name></acc_name>" +
 		"</suppliers>";
 	
-	set_my_value_list(suppliers_data,supplier_filter);
+	set_my_value_list(suppliers_data,supplier_filter,function () 
+	{
+		$(supplier_filter).focus();
+	});
 	
 	var add_supplier=document.getElementById('form136_add_supplier');
 	$(add_supplier).off('click');
@@ -5006,7 +5010,10 @@ function form136_header_ini()
 			var suppliers_data="<suppliers>" +
 				"<acc_name></acc_name>" +
 				"</suppliers>";			
-			set_my_value_list(suppliers_data,supplier_filter);
+			set_my_value_list(suppliers_data,supplier_filter,function () 
+			{
+				$(supplier_filter).focus();
+			});
 		});
 	});
 
@@ -5017,7 +5024,6 @@ function form136_header_ini()
 	$(entry_date).val(get_my_date());
 
 	supplier_filter.value='';
-	$(supplier_filter).focus();
 }
 
 /**
