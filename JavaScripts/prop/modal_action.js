@@ -11267,7 +11267,9 @@ function modal149_action()
 										{column:'Return Address3'},
 										{column:'Return Pin',required:'yes',regex:new RegExp('[0-9]+','g')}];
 			
-			var error_array=validate_import_array(data_array,validate_template_array);
+			//var error_array=validate_import_array(data_array,validate_template_array);
+			var error_array=new Object();
+			error_array.status='success';			
 			if(error_array.status=='success')
 			{
 	        	progress_value=10;
