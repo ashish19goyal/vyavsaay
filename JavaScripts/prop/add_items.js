@@ -10802,8 +10802,8 @@ function form186_add_item()
 				rowsHTML+="<input type='number' required form='form186_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Schedule'>";
-				rowsHTML+="From: <input type='text' form='form186_"+id+"'>";
-				rowsHTML+="<br>To: <input type='text' form='form186_"+id+"'>";
+				rowsHTML+="<b>From</b>: <input type='text' form='form186_"+id+"'>";
+				rowsHTML+="<br><b>To</b>: <input type='text' form='form186_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Status'>";
 				rowsHTML+="<input type='text' form='form186_"+id+"' required value='pending'>";

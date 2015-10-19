@@ -566,11 +566,11 @@ function modal11_action(func)
 			var email=femail.value;
 			var address=faddress.value;
 			
-			name = name.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			name = name.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
 			
-			address = address.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			address = address.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			address = address.replace(/â/g,'');
 			address = address.replace(/&/g, "and");
 			
@@ -863,15 +863,15 @@ function modal13_action(func)
 			var country=fcountry.value;
 			var notes=fnotes.value;
 			
-			name = name.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			name = name.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
 			
-			address = address.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			address = address.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			address = address.replace(/â/g,'');
 			address = address.replace(/&/g, "and");
 			
-			notes = notes.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			notes = notes.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			notes = notes.replace(/â/g,'');
 			notes = notes.replace(/&/g, "and");
 
@@ -1055,13 +1055,13 @@ function modal14_action(func)
 			var make=form.elements[2].value;
 			var description=form.elements[3].value;
 
-			name = name.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			name = name.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
-			make = make.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			make = make.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			make = make.replace(/â/g,'');
 			make = make.replace(/&/g, "and");
-			description = description.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			description = description.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			description = description.replace(/â/g,'');
 			description = description.replace(/&/g, "and");
 
@@ -1268,11 +1268,11 @@ function modal16_action(func)
 			var username=form.elements[2].value;
 			var address=form.elements[5].value;
 			
-			name = name.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			name = name.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
 			
-			address = address.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			address = address.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			address = address.replace(/â/g,'');
 			address = address.replace(/&/g, "and");
 			
@@ -2214,7 +2214,7 @@ function modal22_action(func)
 			var name=fname.value;
 			var batch=fbatch.value;
 			
-			batch = batch.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			batch = batch.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			batch = batch.replace(/â/g,'');
 			batch = batch.replace(/&/g, "and");
 						
@@ -6676,13 +6676,13 @@ function modal112_action(func)
 			var make=form.elements[2].value;
 			var description=form.elements[3].value;
 			
-			name = name.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			name = name.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
-			make = make.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			make = make.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			make = make.replace(/â/g,'');
 			make = make.replace(/&/g, "and");
-			description = description.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			description = description.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			description = description.replace(/â/g,'');
 			description = description.replace(/&/g, "and");
 			
@@ -7104,13 +7104,13 @@ function modal114_action(func)
 			var description=form.elements[2].value;
 			var make=form.elements[3].value;
 			
-			name = name.replace(/[^a-z0-9A-Z<>\s\(\)\+\-\;\.\<\,]/g,'');
+			name = name.replace(/[^a-z0-9A-Z<>\t\n \(\)\+\-\;\.\<\,]/g,'');
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
-			make = make.replace(/[^a-z0-9A-Z<>\s\(\)\+\-\;\.\<\,]/g,'');
+			make = make.replace(/[^a-z0-9A-Z<>\t\n \(\)\+\-\;\.\<\,]/g,'');
 			make = make.replace(/â/g,'');
 			make = make.replace(/&/g, "and");
-			description = description.replace(/[^a-z0-9A-Z<>\s\(\)\+\-\;\.\<\,]/g,'');
+			description = description.replace(/[^a-z0-9A-Z<>\t\n \(\)\+\-\;\.\<\,]/g,'');
 			description = description.replace(/â/g,'');
 			description = description.replace(/&/g, "and");
 
@@ -7126,7 +7126,7 @@ function modal114_action(func)
 			var weight=form.elements[12].value;
 			var packing=form.elements[13].value;
 
-			packing = packing.replace(/[^a-z0-9A-Z<>\s\!\@\$\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			packing = packing.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			packing = packing.replace(/â/g,'');
 
 			var barcode=form.elements[14].value;
@@ -7952,7 +7952,7 @@ function modal120_action(func,product_name,required)
 			var name=fname.value;
 			var batch=fbatch.value;
 			
-			batch = batch.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			batch = batch.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			batch = batch.replace(/â/g,'');
 			batch = batch.replace(/&/g, "and");
 			
@@ -10482,7 +10482,7 @@ function modal142_action(func)
 			var name=fname.value;
 			var batch=fbatch.value;
 			
-			batch = batch.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			batch = batch.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			batch = batch.replace(/â/g,'');
 			batch = batch.replace(/&/g, "and");
 						
@@ -10740,7 +10740,7 @@ function modal145_action(customer_acc_name)
 		{
 			var name=fname.value;
 			
-			name = name.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			name = name.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
 			
@@ -10748,7 +10748,7 @@ function modal145_action(customer_acc_name)
 			var email=femail.value;
 			var address=faddress.value;
 			
-			address = address.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			address = address.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			address = address.replace(/â/g,'');
 			address = address.replace(/&/g, "and");
 			
@@ -11239,37 +11239,37 @@ function modal149_action()
 			
 			progress_value=5;
 			
-			var validate_template_array=[{column:'Date',required:'yes',regex:new RegExp('[0-9].\/[0-9].\/[0-9]...','g')},
-										{column:'AWB No.',required:'yes',regex:new RegExp('[0-9 ]+','g')},
+			var validate_template_array=[{column:'Date',required:'yes',regex:new RegExp('^[0-9].\/[0-9].\/[0-9]...$')},
+										{column:'AWB No.',required:'yes',regex:new RegExp('^[0-9a-zA-Z]+$')},
 										{column:'Type',required:'yes',list:['RTM','PP','COD']},
-										{column:'Order No.',required:'yes',regex:new RegExp('[a-zA-Z0-9 ]+','g')},
-										{column:'Manifest ID',required:'yes',regex:new RegExp('[a-zA-Z0-9 ]+','g')},
-										{column:'Customer Name',required:'yes',regex:new RegExp('[a-z\.A-Z0-9 ]+','g')},
-										{column:'Consignee',required:'yes',regex:new RegExp('[a-z\.A-Z0-9 ]+','g')},
+										{column:'Order No.',required:'yes',regex:new RegExp('^[0-9a-zA-Z]+$')},
+										{column:'Manifest ID',required:'yes',regex:new RegExp('^[0-9a-zA-Z]+$')},
+										{column:'Customer Name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,-]+$')},
+										{column:'Consignee',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,/@$!()-]+$')},
 										{column:'Consignee Address1',required:'yes'},
 										{column:'Consignee Address2'},
-										{column:'Destination City',required:'yes',regex:new RegExp('[a-z.A-Z0-9 ]+','g')},
-										{column:'Pincode',required:'yes',regex:new RegExp('[0-9]+','g')},
-										{column:'State',regex:new RegExp('[a-zA-Z ]+','g')},
-										{column:'Tel. Number',regex:new RegExp('[0-9\+\(\)\. -]+','g')},
-										{column:'Mobile number',regex:new RegExp('[0-9\+\(\)\. -]+','g')},
+										{column:'Destination City',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,-]+$')},
+										{column:'Pincode',required:'yes',regex:new RegExp('^[0-9]+$')},
+										{column:'State',regex:new RegExp('^[0-9a-zA-Z ,]+$')},
+										{column:'Tel. Number',regex:new RegExp('^[0-9\+\(\)\./ -]+$')},
+										{column:'Mobile number',regex:new RegExp('^[0-9\+\(\)\./ -]+$')},
 										{column:'Product name'},
-										{column:'Weight(K.G.)',regex:new RegExp('[0-9\.]+','g')},
-										{column:'Declared Value',regex:new RegExp('[0-9\.]+','g')},
-										{column:'Collectable Value',regex:new RegExp('[0-9\.]+','g')},
-										{column:'Volumetric Weight(g)',regex:new RegExp('[0-9\.]+','g')},
-										{column:'Length(cms)',regex:new RegExp('[0-9\. ]+','g')},
-										{column:'Breadth(cms)',regex:new RegExp('[0-9\. ]+','g')},
-										{column:'Height(cms)',regex:new RegExp('[0-9\. ]+','g')},
+										{column:'Weight(K.G.)',regex:new RegExp('^[0-9\.]+$')},
+										{column:'Declared Value',regex:new RegExp('^[0-9\.]+$')},
+										{column:'Collectable Value',regex:new RegExp('^[0-9\.]+$')},
+										{column:'Volumetric Weight(g)',regex:new RegExp('^[0-9\.]+$')},
+										{column:'Length(cms)',regex:new RegExp('^[0-9\.]+$')},
+										{column:'Breadth(cms)',regex:new RegExp('^[0-9\.]+$')},
+										{column:'Height(cms)',regex:new RegExp('^[0-9\.]+$')},
 										{column:'vendor name',required:'yes'},
 										{column:'Return Address1',required:'yes'},
 										{column:'Return Address2'},
 										{column:'Return Address3'},
-										{column:'Return Pin',required:'yes',regex:new RegExp('[0-9]+','g')}];
+										{column:'Return Pin',required:'yes',regex:new RegExp('^[0-9]+$')}];
 			
-			//var error_array=validate_import_array(data_array,validate_template_array);
-			var error_array=new Object();
-			error_array.status='success';			
+			var error_array=validate_import_array(data_array,validate_template_array);
+			//var error_array=new Object();
+			//error_array.status='success';			
 			if(error_array.status=='success')
 			{
 	        	progress_value=10;
@@ -11337,7 +11337,7 @@ function modal149_action()
 			                "<len>"+row['Length(cms)']+"</len>"+
 			                "<breadth>"+row['Breadth(cms)']+"</breadth>"+
 			                "<height>"+row['Height(cms)']+"</height>"+
-			                //"<sku>"+row['Product name']+"</sku>"+
+			                "<sku>"+row['Product name']+"</sku>"+
 			                "<order_history>"+order_history_string+"</order_history>"+
 			                "<status>picked</status>"+
 			                "<last_updated>"+last_updated+"</last_updated>" +
@@ -12212,7 +12212,7 @@ function modal156_action(product_type,product_name)
 			var name=fname.value;
 			var batch=fbatch.value;
 
-			batch = batch.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			batch = batch.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			batch = batch.replace(/â/g,'');
 			batch = batch.replace(/&/g, "and");
 						
@@ -12761,11 +12761,11 @@ function modal161_action(support_type,func)
 			var email=femail.value;
 			var address=faddress.value;
 			
-			name = name.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			name = name.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
 			
-			address = address.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			address = address.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			address = address.replace(/â/g,'');
 			address = address.replace(/&/g, "and");
 			
@@ -13013,8 +13013,8 @@ function modal164_action(error_array)
 	var link=document.createElement('a');
 	link.setAttribute('href',downloadUrl);
 	link.setAttribute('download',"error.csv");
-	link.setAttribute('style',"color:#ff0000");
-	link.textContent="The import was aborted due to file errors. Please click here to download the error report.";			
+//	link.setAttribute('style',"color:#ff0000");
+	$(link).html("The import was aborted due to file errors. Please <u style='color:#f00'>click here</u> to download the error report.");			
 	$(modal_element).html(link);
 	$("#modal164").dialog("open");
 	hide_loader();	

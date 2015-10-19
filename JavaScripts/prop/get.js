@@ -458,8 +458,10 @@ function my_obj_array_to_csv_string(data_array)
  */
 function csv_string_to_obj_array(csvString)
 {
-	csvString = csvString.replace(/[^a-z0-9A-Z<>\s\!\@\$\%\^\&\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+	csvString = csvString.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\%\^\&\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+	//csvString = csvString.replace(/[a-zA-Z0-9<>|\n\t. _+&()-]/g,'');	
 	csvString = csvString.replace(/â/g,'');
+	
 	
 	var rows=csvString.split("\n");	
 	var results=[];
@@ -523,41 +525,47 @@ function csv_string_to_obj_array(csvString)
 	return results;
 }
 
-function validate_import_array(data_array,validate_template_array)
+function validate_import_array(data_array,vt)
 {
 	var error_array=new Object();
 	error_array.status='success';
 	error_array.logs=[];
-	
+	//console.log(vt);
 	var row_count=1;
 	data_array.forEach(function(data_row)
 	{
+		//console.log(data_row);
 		row_count+=1;
-		validate_template_array.forEach(function(validate_row)
+		for (var a=0;a<vt.length;a++)
 		{
-			//console.log(validate_row);
-			if(data_row[validate_row.column]=='undefined')
+			//console.log(vt[a]);
+			if(data_row[vt[a].column]=='undefined')
 			{
-				error_array.logs.push({row:row_count,column:validate_row.column,error:"Undefined",data:''});
+				error_array.logs.push({row:row_count,column:vt[a].column,error:"Undefined",data:''});
 				error_array.status='error';
 			}
-			else if((typeof validate_row.required!='undefined') && validate_row.required=='yes' && data_row[validate_row.column]=="" || data_row[validate_row.column]=='null')
+			else if((typeof vt[a].required!='undefined') && vt[a].required=='yes' && (data_row[vt[a].column]=="" || data_row[vt[a].column]=='null'))
 			{
-				error_array.logs.push({row:row_count,column:validate_row.column,error:"Blank",data:''});
+				error_array.logs.push({row:row_count,column:vt[a].column,error:"Blank",data:''});
 				error_array.status='error';				
 			}
-			else if((typeof validate_row.regex!='undefined') && data_row[validate_row.column]!="" && !validate_row.regex.test(data_row[validate_row.column]))
+			else if((typeof vt[a].regex!='undefined') && data_row[vt[a].column]!="")
 			{
-				error_array.logs.push({row:row_count,column:validate_row.column,error:"Format Mismatch",data:data_row[validate_row.column],regex:validate_row.regex});
-				error_array.status='error';
+				var test_result=vt[a].regex.test(data_row[vt[a].column]);
+				//console.log(test_result);
+				if(!test_result)
+				{
+					//console.log('e3');
+					error_array.logs.push({row:row_count,column:vt[a].column,error:"Format Mismatch",data:data_row[vt[a].column]});
+					error_array.status='error';
+				}
 			}
-			else if((typeof validate_row.list!='undefined') && $.inArray(data_row[validate_row.column],validate_row.list)==-1)
+			else if((typeof vt[a].list!='undefined') && $.inArray(data_row[vt[a].column],vt[a].list)==-1)
 			{
-				error_array.logs.push({row:row_count,column:validate_row.column,error:"Data doesn't match system list",data:data_row[validate_row.column]});
+				error_array.logs.push({row:row_count,column:vt[a].column,error:"Data doesn't match system list",data:data_row[vt[a].column]});
 				error_array.status='error';
-			}
-			
-		});
+			}			
+		}
 	});
 	return error_array;
 }

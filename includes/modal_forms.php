@@ -1396,8 +1396,8 @@
 				<br>
 				<br>
 				<b>Import pre-filled template</b><br>
-				Channel: <input type="text" required><br>
-				Type: <input type="text" required><br>
+				<label>Channel: <input type="text" required></label><br>
+				<label>Type: <input type="text" required></label><br>
 				<input type="file" required value='Select file' accept=".csv" style='display:none'>
 				<input type='button' class='generic_red_icon' value='Select File'>
 				<br>
