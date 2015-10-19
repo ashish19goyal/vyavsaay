@@ -14846,9 +14846,12 @@ function form148_ini()
 				fetch_requested_data('form148',elements_name,function(elements)
 				{
 					//console.log('elements found for new user');
+					var master_id=get_new_key();
+					var id_counter=0;						
 					elements.forEach(function(element)
 					{
-						var data_id=get_new_key();
+						id_counter+=1;
+						var data_id=master_id+id_counter;
 						var rowsHTML="";
 						rowsHTML+="<tr>";
 							rowsHTML+="<form id='form148_"+data_id+"'></form>";

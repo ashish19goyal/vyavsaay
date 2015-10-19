@@ -4,10 +4,11 @@ openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_h
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/update.js:281268:280849:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js:442502:441300:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/delete.js:150299:150727:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js:714971:714276:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js:487173:486532:1:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/get.js:11572:11203:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js:364670:364067:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js:315497:322104:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/includes/modal_forms.php:53623:52707:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/add_items.js:358607:357698:0:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -19,10 +20,10 @@ view_left_panel: 1
 default_mime_type: text/plain
 e2c.convert_xml: 1
 c2e.convert_iso: 0
-opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/includes
+opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
 wrap_text_default: 0
 bookmarks_filename_mode: 0
-ssearch_text: replace
+ssearch_text: 148_
 snr_casesens: 0
 view_blocks: 1
 name: vyavsaay
@@ -82,9 +83,9 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/insert_gr
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/master_db_creation.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/get_inventory.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/get_store_inventory.php
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/add_items.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/includes/modal_forms.php
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/add_items.js
 snr_replacetype: 0
 savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
 spell_check_default: 1
@@ -96,13 +97,6 @@ snr_escape_chars: 0
 htmlbar_view: 0
 spell_lang: en
 ssearch_dotmatchall: 0
-searchlist: modal33_
-searchlist: 186_
-searchlist: 183_
-searchlist: 186_
-searchlist: import logistics
-searchlist: 199_
-searchlist: 164
 searchlist: import manife
 searchlist: import logistics
 searchlist: validate_template_array
@@ -111,6 +105,13 @@ searchlist: typeof
 searchlist: 164
 searchlist: import log
 searchlist: replace
+searchlist: \\s
+searchlist: 164
+searchlist: import logisti
+searchlist: 186_
+searchlist: 189_
+searchlist: 256_
+searchlist: 148_
 autocomplete: 1
 outputb_show_all_output: 0
 bookmarks_show_mode: 0
