@@ -538,22 +538,22 @@ function validate_import_array(data_array,validate_template_array)
 			//console.log(validate_row);
 			if(data_row[validate_row.column]=='undefined')
 			{
-				error_array.logs.push({row:row_count,column:validate_row.column,error:"Undefined"});
+				error_array.logs.push({row:row_count,column:validate_row.column,error:"Undefined",data:''});
 				error_array.status='error';
 			}
 			else if((typeof validate_row.required!='undefined') && validate_row.required=='yes' && data_row[validate_row.column]=="" || data_row[validate_row.column]=='null')
 			{
-				error_array.logs.push({row:row_count,column:validate_row.column,error:"Blank"});
+				error_array.logs.push({row:row_count,column:validate_row.column,error:"Blank",data:''});
 				error_array.status='error';				
 			}
 			else if((typeof validate_row.regex!='undefined') && data_row[validate_row.column]!="" && !validate_row.regex.test(data_row[validate_row.column]))
 			{
-				error_array.logs.push({row:row_count,column:validate_row.column,error:"Format Mismatch"});
+				error_array.logs.push({row:row_count,column:validate_row.column,error:"Format Mismatch",data:data_row[validate_row.column],regex:validate_row.regex});
 				error_array.status='error';
 			}
 			else if((typeof validate_row.list!='undefined') && $.inArray(data_row[validate_row.column],validate_row.list)==-1)
 			{
-				error_array.logs.push({row:row_count,column:validate_row.column,error:"Data doesn't match system list"});
+				error_array.logs.push({row:row_count,column:validate_row.column,error:"Data doesn't match system list",data:data_row[validate_row.column]});
 				error_array.status='error';
 			}
 			

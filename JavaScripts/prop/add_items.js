@@ -11456,10 +11456,12 @@ function form199_add_item()
 												"<pincode exact='yes'>"+orders[0].pincode+"</pincode>"+
 												"</pincodes>";
 							set_my_value(transfer_zone_data,tz_filter);					
+							/*
 							if(orders[0].lbh=="" || orders[0].lbh=="null" || orders[0].lbh==null)							
 								lbh_filter.value=orders[0].len+"*"+orders[0].breadth+"*"+orders[0].height;
 							else 
 								lbh_filter.value=orders[0].lbh;	
+							*/
 							id_filter.value=orders[0].id;
 							order_history.value=orders[0].order_history;
 							$(lbh_filter).focus();

@@ -1,12 +1,13 @@
 c2e.convert_special: 0
 e2c.convert_num: 0
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_header_ini.js:183355:183070:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/update.js:281272:280693:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js:444917:444212:1:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/delete.js:151595:150651:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js:643890:643393:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js:100107:100114:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/get.js:13910:13086:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/update.js:281268:280849:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js:442502:441300:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/delete.js:150299:150727:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js:650206:651502:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/get.js:13918:13037:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/add_items.js:360170:358107:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js:320072:318000:0:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -18,10 +19,10 @@ view_left_panel: 1
 default_mime_type: text/plain
 e2c.convert_xml: 1
 c2e.convert_iso: 0
-opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax
+opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
 wrap_text_default: 0
 bookmarks_filename_mode: 0
-ssearch_text: 186_
+ssearch_text: import logistics
 snr_casesens: 0
 view_blocks: 1
 name: vyavsaay
@@ -54,7 +55,6 @@ ssearch_regex: 0
 e2c.convert_iso: 0
 ssearch_casesens: 0
 charmap_block: 1
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/ajax.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/quickstart.html
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/functions/purchase.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/delete.js
@@ -63,7 +63,6 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/pr
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/questionnaire.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/CSS/theme1.css
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/create_batch.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/db/demo_user_db_data.xml
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/locales/translation-en.json
@@ -84,6 +83,8 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/insert_gr
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/master_db_creation.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/get_inventory.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/get_store_inventory.php
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/add_items.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js
 snr_replacetype: 0
 savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
 spell_check_default: 1
@@ -95,21 +96,21 @@ snr_escape_chars: 0
 htmlbar_view: 0
 spell_lang: en
 ssearch_dotmatchall: 0
-searchlist: 164
-searchlist: 164
-searchlist: import mani
-searchlist: import logi
-searchlist: 15
-searchlist: 164
-searchlist: 149
-searchlist: 186_
-searchlist: 185_
-searchlist: modal33_
 searchlist: 108_
 searchlist: 186_
 searchlist: 145
+searchlist: 186_
+searchlist: 108_
+searchlist: storages
+searchlist: 186_
 searchlist: 189
 searchlist: 186_
+searchlist: 185_
+searchlist: modal33_
+searchlist: 186_
+searchlist: 183_
+searchlist: 186_
+searchlist: import logistics
 autocomplete: 1
 outputb_show_all_output: 0
 bookmarks_show_mode: 0

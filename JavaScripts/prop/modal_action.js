@@ -11239,8 +11239,8 @@ function modal149_action()
 			
 			progress_value=5;
 			
-			var validate_template_array=[{column:'Date',required:'yes',regex:new RegExp('[0-9]./[0-9]./[0-9]...','g')},
-										{column:'AWB No.',required:'yes',regex:new RegExp('[0-9]+','g')},
+			var validate_template_array=[{column:'Date',required:'yes',regex:new RegExp('[0-9].\/[0-9].\/[0-9]...','g')},
+										{column:'AWB No.',required:'yes',regex:new RegExp('[0-9 ]+','g')},
 										{column:'Type',required:'yes',list:['RTM','PP','COD']},
 										{column:'Order No.',required:'yes',regex:new RegExp('[a-zA-Z0-9 ]+','g')},
 										{column:'Manifest ID',required:'yes',regex:new RegExp('[a-zA-Z0-9 ]+','g')},
@@ -11337,7 +11337,7 @@ function modal149_action()
 			                "<len>"+row['Length(cms)']+"</len>"+
 			                "<breadth>"+row['Breadth(cms)']+"</breadth>"+
 			                "<height>"+row['Height(cms)']+"</height>"+
-			                "<sku>"+row['Product name']+"</sku>"+
+			                //"<sku>"+row['Product name']+"</sku>"+
 			                "<order_history>"+order_history_string+"</order_history>"+
 			                "<status>picked</status>"+
 			                "<last_updated>"+last_updated+"</last_updated>" +
