@@ -3588,14 +3588,14 @@ function modal33_action(id)
 						"<notes>Task "+name+" assigned to "+assignee+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_update_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_update_row(data_xml,activity_xml);
-			}	
+			var prod_xml="<production_plan_items>" +
+						"<id>"+data_id+"</id>" +
+						"<status>"+status+"</status>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</production_plan_items>";
+					
+			update_row(data_xml,activity_xml);	
+			update_simple(prod_xml);	
 		}
 		else
 		{
@@ -11214,7 +11214,7 @@ function modal149_action()
 		*/
 		var data_array=['SR no','Date','AWB No.','Type','Order No.','Manifest ID','Customer Name','Consignee',
 						'Consignee Address1','Consignee Address2','Destination City',
-						'Pincode','State','Tel. Number','Mobile number','Product name','Weight(K.G.)',
+						'State','Pincode','Tel. Number','Mobile number','Product name','Weight(K.G.)',
 						'Declared Value','Collectable Value','Volumetric Weight(g)','Length(cms)',
 						'Breadth(cms)','Height(cms)','vendor name','Return Address1','Return Address2','Return Address3',
 						'Return Pin'];
@@ -11233,153 +11233,194 @@ function modal149_action()
     	var reader = new FileReader();
         reader.onload = function(e)
         {
-        	progress_value=5;
+        	progress_value=2;
         	var content=reader.result;
         	var data_array=csv_string_to_obj_array(content);
-
-        	progress_value=10;
-           
-           	//////////////////
-           	
-       		var data_xml="<logistics_orders>";
-			var counter=1;
-			var last_updated=get_my_time();
-			var order_array=[];
 			
-			//console.log(data_array);					
+			progress_value=5;
 			
-			data_array.forEach(function(row)
+			var validate_template_array=[{column:'Date',required:'yes',regex:new RegExp('[0-9]./[0-9]./[0-9]...','g')},
+										{column:'AWB No.',required:'yes',regex:new RegExp('[0-9]+','g')},
+										{column:'Type',required:'yes',list:['RTM','PP','COD']},
+										{column:'Order No.',required:'yes',regex:new RegExp('[a-zA-Z0-9 ]+','g')},
+										{column:'Manifest ID',required:'yes',regex:new RegExp('[a-zA-Z0-9 ]+','g')},
+										{column:'Customer Name',required:'yes',regex:new RegExp('[a-z\.A-Z0-9 ]+','g')},
+										{column:'Consignee',required:'yes',regex:new RegExp('[a-z\.A-Z0-9 ]+','g')},
+										{column:'Consignee Address1',required:'yes'},
+										{column:'Consignee Address2'},
+										{column:'Destination City',required:'yes',regex:new RegExp('[a-z.A-Z0-9 ]+','g')},
+										{column:'Pincode',required:'yes',regex:new RegExp('[0-9]+','g')},
+										{column:'State',regex:new RegExp('[a-zA-Z ]+','g')},
+										{column:'Tel. Number',regex:new RegExp('[0-9\+\(\)\. -]+','g')},
+										{column:'Mobile number',regex:new RegExp('[0-9\+\(\)\. -]+','g')},
+										{column:'Product name'},
+										{column:'Weight(K.G.)',regex:new RegExp('[0-9\.]+','g')},
+										{column:'Declared Value',regex:new RegExp('[0-9\.]+','g')},
+										{column:'Collectable Value',regex:new RegExp('[0-9\.]+','g')},
+										{column:'Volumetric Weight(g)',regex:new RegExp('[0-9\.]+','g')},
+										{column:'Length(cms)',regex:new RegExp('[0-9\. ]+','g')},
+										{column:'Breadth(cms)',regex:new RegExp('[0-9\. ]+','g')},
+										{column:'Height(cms)',regex:new RegExp('[0-9\. ]+','g')},
+										{column:'vendor name',required:'yes'},
+										{column:'Return Address1',required:'yes'},
+										{column:'Return Address2'},
+										{column:'Return Address3'},
+										{column:'Return Pin',required:'yes',regex:new RegExp('[0-9]+','g')}];
+			
+			var error_array=validate_import_array(data_array,validate_template_array);
+			if(error_array.status=='success')
 			{
-				if((counter%500)===0)
+	        	progress_value=10;
+	           
+	           	//////////////////
+	           	
+	       		var data_xml="<logistics_orders>";
+				var counter=1;
+				var last_updated=get_my_time();
+				var order_array=[];
+				
+				//console.log(data_array);					
+				
+				data_array.forEach(function(row)
 				{
-					data_xml+="</logistics_orders><separator></separator><logistics_orders>";
-				}
-				counter+=1;
+					if((counter%500)===0)
+					{
+						data_xml+="</logistics_orders><separator></separator><logistics_orders>";
+					}
+					counter+=1;
+					
+					var channel=channel_filter.value;
+					
+					row.id=last_updated+counter;
+					var order_history=[];
+					var history_object=new Object();
+					history_object.timeStamp=get_my_time();
+					history_object.details="Order dispatched from "+channel;				
+					//history_object.location=row['vendor return address'];
+					//if(type_filter.value=='PREPAID')
+					//{
+						history_object.location=channel;
+					//}
+					history_object.status="dispatched";
+					order_history.push(history_object);
+					var order_history_string=JSON.stringify(order_history);
+					
+					data_xml+="<row>" +
+							"<id>"+row.id+"</id>" +
+							"<import_date>"+get_raw_time(row['Date'])+"</import_date>"+
+							"<awb_num unique='yes'>"+row['AWB No.']+"</awb_num>"+
+							"<channel_name>"+channel+"</channel_name>"+
+			                "<manifest_type>"+row['Type']+"</manifest_type>"+
+			                "<type>"+type_filter.value+"</type>"+
+			                "<order_num>"+row['Order No.']+"</order_num>"+
+			                "<manifest_id>"+row['Manifest ID']+"</manifest_id>"+
+			                "<merchant_name>"+row['Customer Name']+"</merchant_name>"+
+			                "<ship_to>"+row['Consignee']+"</ship_to>"+
+			                "<address1>"+row['Consignee Address1']+"</address1>"+
+			                "<address2>"+row['Consignee Address2']+"</address2>"+
+			                "<city>"+row['Destination City']+"</city>"+
+			                "<state>"+row['State']+"</state>"+
+			                "<pincode>"+row['Pincode']+"</pincode>"+
+			                "<phone>"+row['Mobile number']+"</phone>"+
+			                "<telephone>"+row['Tel. Number']+"</telephone>"+
+			                "<weight>"+row['Weight(K.G.)']+"</weight>"+
+			                "<volumetric_weight>"+row['Volumetric Weight(g)']+"</volumetric_weight>"+
+			                "<declared_value>"+row['Declared Value']+"</declared_value>"+
+			                "<collectable_value>"+row['Collectable Value']+"</collectable_value>"+
+			                "<shipper_name>"+row['vendor name']+"</shipper_name>"+
+			                "<return_address1>"+row['Return Address1']+"</return_address1>"+
+			                "<return_address2>"+row['Return Address2']+"</return_address2>"+
+			                "<return_address3>"+row['Return Address3']+"</return_address3>"+
+			                "<return_pincode>"+row['Return Address1']+"</return_pincode>"+
+			                "<len>"+row['Length(cms)']+"</len>"+
+			                "<breadth>"+row['Breadth(cms)']+"</breadth>"+
+			                "<height>"+row['Height(cms)']+"</height>"+
+			                "<sku>"+row['Product name']+"</sku>"+
+			                "<order_history>"+order_history_string+"</order_history>"+
+			                "<status>picked</status>"+
+			                "<last_updated>"+last_updated+"</last_updated>" +
+							"</row>";							
+	
+	/*				data_xml+="<row>" +
+							"<id>"+row.id+"</id>" +
+							"<awb_num unique='yes'>"+row['AWB No.']+"</awb_num>"+
+			                "<type>"+row['Type']+"</type>"+
+			                "<order_num>"+row['Order No.']+"</order_num>"+
+			                "<manifest_id>"+row['Manifest ID']+"</manifest_id>"+
+			                "<merchant_name>"+row['Merchant Name']+"</merchant_name>"+
+			                "<ship_to>"+row['Ship To']+"</ship_to>"+
+			                "<address1>"+row['Address1']+"</address1>"+
+			                "<address2>"+row['Address2']+"</address2>"+
+			                "<city>"+row['City']+"</city>"+
+			                "<state>"+row['State']+"</state>"+
+			                "<pincode>"+row['Pincode']+"</pincode>"+
+			                "<phone>"+row['Mobile number']+"</phone>"+
+			                "<telephone>"+row['Tel. Number']+"</telephone>"+
+			                "<weight>"+row['Weight']+"</weight>"+
+			                "<declared_value>"+row['Declared Value']+"</declared_value>"+
+			                "<collectable_value>"+row['Collectable Value']+"</collectable_value>"+
+			                "<vendor_code>"+row['Vendor Code']+"</vendor_code>"+
+			                "<shipper_name>"+row['Shipper Name']+"</shipper_name>"+
+			                "<return_address1>"+row['Return Address1']+"</return_address1>"+
+			                "<return_address2>"+row['Return Address2']+"</return_address2>"+
+			                "<return_address3>"+row['Return Address3']+"</return_address3>"+
+			                "<return_pincode>"+row['Return Pin']+"</return_pincode>"+
+			                "<len>"+row['Length ( Cms )']+"</len>"+
+			                "<breadth>"+row['Breadth ( Cms )']+"</breadth>"+
+			                "<height>"+row['Height ( Cms )']+"</height>"+
+			                "<pieces>"+row['Pieces']+"</pieces>"+
+			                "<carrier_account>"+row['Carrier Account']+"</carrier_account>"+
+			                "<carrier_name>"+row['Carrier Name']+"</carrier_name>"+
+			                "<manifest_type>"+type_filter.value+"</manifest_type>"+
+			                "<dispatch_date>"+get_raw_time(row['Dispatch Date'])+"</dispatch_date>"+
+			                "<import_date>"+get_my_time()+"</import_date>"+
+			                "<notes>"+row['Notes']+"</notes>"+
+			                "<pickup_location>"+row['Pickup Location']+"</pickup_location>"+
+			                "<pickup_by>"+row['Pickup By']+"</pickup_by>"+
+			                "<sku>"+row['Prod/SKU code']+"</sku>"+
+			                "<product_name></product_name>"+
+			                "<order_history>"+order_history_string+"</order_history>"+
+			                "<status>picked</status>"+
+			                "<last_updated>"+last_updated+"</last_updated>" +
+							"</row>";							
+	*/
+				});
 				
-				var channel=channel_filter.value;
-				
-				row.id=last_updated+counter;
-				var order_history=[];
-				var history_object=new Object();
-				history_object.timeStamp=get_my_time();
-				history_object.details="Order dispatched from "+channel;				
-				//history_object.location=row['vendor return address'];
-				//if(type_filter.value=='PREPAID')
-				//{
-					history_object.location=channel;
-				//}
-				history_object.status="dispatched";
-				order_history.push(history_object);
-				var order_history_string=JSON.stringify(order_history);
-				
-				data_xml+="<row>" +
-						"<id>"+row.id+"</id>" +
-						"<import_date>"+get_raw_time(row['Date'])+"</import_date>"+
-						"<awb_num unique='yes'>"+row['AWB No.']+"</awb_num>"+
-						"<channel_name>"+channel+"</channel_name>"+
-		                "<manifest_type>"+row['Type']+"</manifest_type>"+
-		                "<type>"+type_filter.value+"</type>"+
-		                "<order_num>"+row['Order No.']+"</order_num>"+
-		                "<manifest_id>"+row['Manifest ID']+"</manifest_id>"+
-		                "<merchant_name>"+row['Customer Name']+"</merchant_name>"+
-		                "<ship_to>"+row['Consignee']+"</ship_to>"+
-		                "<address1>"+row['Consignee Address1']+"</address1>"+
-		                "<address2>"+row['Consignee Address2']+"</address2>"+
-		                "<city>"+row['Destination City']+"</city>"+
-		                "<state>"+row['State']+"</state>"+
-		                "<pincode>"+row['Pincode']+"</pincode>"+
-		                "<phone>"+row['Mobile number']+"</phone>"+
-		                "<telephone>"+row['Tel. Number']+"</telephone>"+
-		                "<weight>"+row['Weight(K.G.)']+"</weight>"+
-		                "<volumetric_weight>"+row['Volumetric Weight(g)']+"</volumetric_weight>"+
-		                "<declared_value>"+row['Declared Value']+"</declared_value>"+
-		                "<collectable_value>"+row['Collectable Value']+"</collectable_value>"+
-		                "<shipper_name>"+row['vendor name']+"</shipper_name>"+
-		                "<return_address1>"+row['Return Address1']+"</return_address1>"+
-		                "<return_address2>"+row['Return Address2']+"</return_address2>"+
-		                "<return_address3>"+row['Return Address3']+"</return_address3>"+
-		                "<return_pincode>"+row['Return Address1']+"</return_pincode>"+
-		                "<len>"+row['Length(cms)']+"</len>"+
-		                "<breadth>"+row['Breadth(cms)']+"</breadth>"+
-		                "<height>"+row['Height(cms)']+"</height>"+
-		                "<sku>"+row['Product name']+"</sku>"+
-		                "<order_history>"+order_history_string+"</order_history>"+
-		                "<status>picked</status>"+
-		                "<last_updated>"+last_updated+"</last_updated>" +
-						"</row>";							
-
-/*				data_xml+="<row>" +
-						"<id>"+row.id+"</id>" +
-						"<awb_num unique='yes'>"+row['AWB No.']+"</awb_num>"+
-		                "<type>"+row['Type']+"</type>"+
-		                "<order_num>"+row['Order No.']+"</order_num>"+
-		                "<manifest_id>"+row['Manifest ID']+"</manifest_id>"+
-		                "<merchant_name>"+row['Merchant Name']+"</merchant_name>"+
-		                "<ship_to>"+row['Ship To']+"</ship_to>"+
-		                "<address1>"+row['Address1']+"</address1>"+
-		                "<address2>"+row['Address2']+"</address2>"+
-		                "<city>"+row['City']+"</city>"+
-		                "<state>"+row['State']+"</state>"+
-		                "<pincode>"+row['Pincode']+"</pincode>"+
-		                "<phone>"+row['Mobile number']+"</phone>"+
-		                "<telephone>"+row['Tel. Number']+"</telephone>"+
-		                "<weight>"+row['Weight']+"</weight>"+
-		                "<declared_value>"+row['Declared Value']+"</declared_value>"+
-		                "<collectable_value>"+row['Collectable Value']+"</collectable_value>"+
-		                "<vendor_code>"+row['Vendor Code']+"</vendor_code>"+
-		                "<shipper_name>"+row['Shipper Name']+"</shipper_name>"+
-		                "<return_address1>"+row['Return Address1']+"</return_address1>"+
-		                "<return_address2>"+row['Return Address2']+"</return_address2>"+
-		                "<return_address3>"+row['Return Address3']+"</return_address3>"+
-		                "<return_pincode>"+row['Return Pin']+"</return_pincode>"+
-		                "<len>"+row['Length ( Cms )']+"</len>"+
-		                "<breadth>"+row['Breadth ( Cms )']+"</breadth>"+
-		                "<height>"+row['Height ( Cms )']+"</height>"+
-		                "<pieces>"+row['Pieces']+"</pieces>"+
-		                "<carrier_account>"+row['Carrier Account']+"</carrier_account>"+
-		                "<carrier_name>"+row['Carrier Name']+"</carrier_name>"+
-		                "<manifest_type>"+type_filter.value+"</manifest_type>"+
-		                "<dispatch_date>"+get_raw_time(row['Dispatch Date'])+"</dispatch_date>"+
-		                "<import_date>"+get_my_time()+"</import_date>"+
-		                "<notes>"+row['Notes']+"</notes>"+
-		                "<pickup_location>"+row['Pickup Location']+"</pickup_location>"+
-		                "<pickup_by>"+row['Pickup By']+"</pickup_by>"+
-		                "<sku>"+row['Prod/SKU code']+"</sku>"+
-		                "<product_name></product_name>"+
-		                "<order_history>"+order_history_string+"</order_history>"+
-		                "<status>picked</status>"+
-		                "<last_updated>"+last_updated+"</last_updated>" +
-						"</row>";							
-*/
-			});
-			
-			data_xml+="</logistics_orders>";
-			create_batch(data_xml);
-
-           	////////////////////
-        	progress_value=15;
-        	        	
-        	var ajax_complete=setInterval(function()
-        	{
-        		//console.log(number_active_ajax);
-        		if(number_active_ajax===0)
-        		{
-        			progress_value=15+(1-(localdb_open_requests/(2*data_array.length)))*85;
-        		}
-        		else if(localdb_open_requests===0)
-        		{
-        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
-        		}
-        		
-        		if(number_active_ajax===0 && localdb_open_requests===0)
-        		{
-        			hide_progress();
-        			selected_file.value="Upload complete";
-        			$(select_file).val('');
-        			$("#modal149").dialog("close");
-        			clearInterval(ajax_complete);
-        		}
-        	},1000); 
+				data_xml+="</logistics_orders>";
+				create_batch(data_xml);
+	
+	           	////////////////////
+	        	progress_value=15;
+	        	        	
+	        	var ajax_complete=setInterval(function()
+	        	{
+	        		//console.log(number_active_ajax);
+	        		if(number_active_ajax===0)
+	        		{
+	        			progress_value=15+(1-(localdb_open_requests/(2*data_array.length)))*85;
+	        		}
+	        		else if(localdb_open_requests===0)
+	        		{
+	        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
+	        		}
+	        		
+	        		if(number_active_ajax===0 && localdb_open_requests===0)
+	        		{
+	        			hide_progress();
+	        			selected_file.value="Upload complete";
+	        			$(select_file).val('');
+	        			$("#modal149").dialog("close");
+	        			clearInterval(ajax_complete);
+	        		}
+	        	},1000); 
+	        }
+	        else
+	        {
+	        	hide_progress();
+       			$(select_file).val('');
+       			$("#modal149").dialog("close");
+				modal164_action(error_array);       			
+	        }
         }
         reader.readAsText(file);    
     });
@@ -12951,4 +12992,28 @@ function modal163_action(button)
 	
 	///////////////////////////
 	$("#modal163").dialog("open");	
+}
+
+
+/**
+ * @modalNo 164
+ * @modal Import Validation
+ */
+function modal164_action(error_array)
+{
+	var response=my_obj_array_to_csv_string(error_array.logs);
+	var type="text/csv";
+	var blob = new Blob([response], { type: type });			
+	var URL = window.URL || window.webkitURL;
+    var downloadUrl = URL.createObjectURL(blob);	
+			
+	var modal_element=document.getElementById('modal164_div');
+	var link=document.createElement('a');
+	link.setAttribute('href',downloadUrl);
+	link.setAttribute('download',"error.csv");
+	link.setAttribute('style',"color:#ff0000");
+	link.textContent="The import was aborted due to file errors. Please click here to download the error report.";			
+	$(modal_element).html(link);
+	$("#modal164").dialog("open");
+	hide_loader();	
 }

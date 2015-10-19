@@ -1,7 +1,7 @@
 <?php
 
 namespace RetailingEssentials;
-include_once "../../Classes/db.php";
+include_once "../Classes/db.php";
 use RetailingEssentials\db_connect;
 use \DOMDocument;
 
@@ -13,7 +13,7 @@ use \DOMDocument;
 
 		$db_schema_xml=new \DOMDocument();
 		
-		$db_schema_xml->load("../../db/grid_metrics.xml");
+		$db_schema_xml->load("../db/grid_metrics.xml");
 		$db_schema=$db_schema_xml->documentElement;
 		
 		foreach($db_schema->childNodes as $table)
@@ -67,7 +67,7 @@ use \DOMDocument;
 	{
 		$conn=new db_connect($dbname);
 		
-		$json_file=file_get_contents("../../db/grid_metrics.json");
+		$json_file=file_get_contents("../db/grid_metrics.json");
 		$file = json_decode($json_file,true);
 		$parent_json=$file['re_xml'];
 		

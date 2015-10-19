@@ -273,7 +273,7 @@
 				<b>Import pre-filled template</b><br>
 				<label><input type="radio" name='upload_option' value='new'>Create New Records</label><br>
 				<label><input type="radio" name='upload_option' value='existing' checked>Update existing Records</label><br>
-				<input type="file" value='Select file' accept=".csv" style='display:none'>
+				<input type="file" required value='Select file' accept=".csv" style='display:none'>
 				<input type='button' class='generic_red_icon' value='Select File'>
 				<br>
 				<output name='selected_file'></output><br>
@@ -1236,7 +1236,7 @@
 				<br>
 				<b>Import pre-filled template</b><br>
 				Channel: <input type="text" required><br>
-				<input type="file" value='Select file' accept=".csv" style='display:none'>
+				<input type="file" required value='Select file' accept=".csv" style='display:none'>
 				<input type='button' class='generic_red_icon' value='Select File'>
 				<br>
 				<output name='selected_file'></output><br>
@@ -1268,7 +1268,7 @@
 				<br>
 				<br>
 				<b>Import pre-filled template</b><br>
-				<input type="file" value='Select file' accept=".csv" style='display:none'>
+				<input type="file" required value='Select file' accept=".csv" style='display:none'>
 				<input type='button' class='generic_red_icon' value='Select File'>
 				<br>				
 				<output name='selected_file'></output><br>
@@ -1379,7 +1379,7 @@
 				<br>
 				<br>
 				<b>Import pre-filled template</b><br>
-				<input type="file" value='Select file' accept=".csv" style='display:none'>
+				<input type="file" required value='Select file' accept=".csv" style='display:none'>
 				<input type='button' class='generic_red_icon' value='Select File'>
 				<br>				
 				<output name='selected_file'></output><br>
@@ -1398,7 +1398,7 @@
 				<b>Import pre-filled template</b><br>
 				Channel: <input type="text" required><br>
 				Type: <input type="text" required><br>
-				<input type="file" value='Select file' accept=".csv" style='display:none'>
+				<input type="file" required value='Select file' accept=".csv" style='display:none'>
 				<input type='button' class='generic_red_icon' value='Select File'>
 				<br>
 				<output name='selected_file'></output><br>
@@ -1532,7 +1532,7 @@
 			<fieldset>
 				<br>
 				<br>				
-				<input type="file" value='Select file' accept=".csv" style='display:none'>
+				<input type="file" required value='Select file' accept=".csv" style='display:none'>
 				<input type='button' class='generic_red_icon' value='Select File'>
 				<br>
 				<output name='selected_file'></output><br>
@@ -1586,4 +1586,9 @@
 		</form>
 	</div>
 	
+	<div id="modal164" title="Import Aborted">
+		<form id='modal164_form' autocomplete="off"></form>
+		<div id='modal164_div'></div>
+	</div>
+
 </div>

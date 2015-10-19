@@ -10841,9 +10841,12 @@ function form186_add_item()
 			form186_add_item();
 		});
 		
-		var product_data="<product_master>" +
-				"<name></name>" +
-				"</product_master>";
+		var product_data="<attributes>" +
+		"<name></name>" +
+		"<type exact='yes'>product</type>"+
+		"<value exact='yes'>yes</value>"+
+		"<attribute exact='yes'>manufactured</attribute>"+
+		"</attributes>";
 		set_my_value_list_func(product_data,item_filter,function () 
 		{
 			$(item_filter).focus();

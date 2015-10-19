@@ -6204,9 +6204,14 @@ function form186_delete_item(button)
 						"</production_plan_items>";	
 			var task_xml="<task_instances>" +
 						"<source_id exact='yes'>"+data_id+"</source_id>" +
-						"</task_instances>";	
+						"</task_instances>";
+			var batch_raw_xml="<batch_raw_material>"+
+						"<production_id>"+data_id+"</production_id>"+
+						"</batch_raw_material>";
+										
 			delete_simple(data_xml);
 			delete_simple(task_xml);
+			delete_simple(batch_raw_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -6329,14 +6334,7 @@ function form189_delete_item(button)
 						"<notes>"+name+" production plan</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-			}	
+			delete_row(data_xml,activity_xml);
 			
 			var items_xml="<production_plan_items>" +
 						"<id></id>"+						
@@ -6352,17 +6350,11 @@ function form189_delete_item(button)
 					var task_xml="<task_instances>" +
 						"<source_id exact='yes'>"+item.id+"</source_id>" +
 						"</task_instances>";
-					if(is_online())
-					{
-						server_delete_simple(item_xml);
-						server_delete_simple(task_xml);
-					}
-					else
-					{
-						local_delete_simple(item_xml);
-						local_delete_simple(task_xml);
-					}	
-				});				
+					delete_simple(item_xml);
+					delete_simple(task_xml);
+						
+				});	
+				delete_simple(items_xml);			
 			},items_xml);
 
 			$(button).parent().parent().remove();

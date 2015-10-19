@@ -11327,14 +11327,7 @@ function form145_create_item(form)
 					"<notes>Store movement initiated for item "+product_name+" from storage area "+source+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_create_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-		}	
+		create_row(data_xml,activity_xml);
 		for(var i=0;i<6;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -11369,14 +11362,7 @@ function form145_create_item(form)
 						"<batch>"+batch+"</batch>" +
 						"<last_updated>"+get_my_time()+"</last_updated>" +
 						"</area_utilization>";
-				if(is_online())
-				{
-					server_create_simple(storage_xml);
-				}
-				else
-				{
-					local_create_simple(storage_xml);
-				}
+				create_simple(storage_xml);
 			}
 		});
 	}
@@ -14358,6 +14344,7 @@ function form186_create_item(form)
 				"</production_plan_items>";
 	
 		create_simple(data_xml);
+		console.log(data_xml);
 		
 		var raw_data="<pre_requisites>" +
 				"<type exact='yes'>product</type>" +
@@ -14382,6 +14369,7 @@ function form186_create_item(form)
 					{
 						batches_result_array.forEach(function (batch_result) 
 						{
+							console.log(batch_result);
 							var batch_raw_xml="<batch_raw_material>"+
 								"<item>"+raw.requisite_name+"</item>"+
 								"<batch>"+batch_result.batch+"</batch>"+
@@ -14390,6 +14378,64 @@ function form186_create_item(form)
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</batch_raw_material>";
 							create_simple(batch_raw_xml);
+							///////////////////////////////////////////////////////
+							var storage_xml="<area_utilization>"+
+											"<name></name>"+
+											"<item_name exact='yes'>"+raw.requisite_name+"</item_name>"+
+											"<batch exact='yes'>"+batch_result.batch+"</batch>"+
+											"</area_utilization>";
+							console.log(storage);																	
+							get_single_column_data(function (storages) 
+							{
+								get_available_storage(raw.requisite_name,batch_result.batch,storages,batch_result.quantity,storage_result_array,function () 
+								{
+									console.log(storage_result_array);
+	
+									var item_storage="";
+									var store_item_id=get_new_key();
+									var adjust_count=1;	
+									var target=get_session_var('production_floor_store');
+									if(storage_result_array.length>0)
+									{
+										item_storage=storage_result_array[0].storage;
+									
+										adjust_count+=1;
+										var data_xml="<store_movement>" +
+											"<id>"+store_item_id+"</id>" +
+											"<item_name>"+raw.requisite_name+"</item_name>" +
+											"<batch>"+batch_result.batch+"</batch>" +
+											"<quantity>"+batch_result.quantity+"</quantity>" +
+											"<source>"+item_storage+"</source>"+
+											"<target>"+target+"</target>"+
+											"<status>pending</status>"+
+											"<dispatcher>"+get_account_name()+"</dispatcher>"+
+											"<receiver></receiver>"+
+											"<last_updated>"+last_updated+"</last_updated>" +
+											"</store_movement>";	
+										create_simple(data_xml);	
+										console.log(data_xml);
+									}
+									storage_result_array.forEach(function(storage_result)
+									{
+										adjust_count+=1;
+										var data_xml="<store_movement>" +
+											"<id>"+(store_item_id+adjust_count)+"</id>" +
+											"<item_name>"+raw.requisite_name+"</item_name>" +
+											"<batch>"+batch_result.batch+"</batch>" +
+											"<quantity>"+storage_result.quantity+"</quantity>" +
+											"<source>"+storage_result.storage+"</source>"+
+											"<target>"+target+"</target>"+
+											"<status>pending</status>"+
+											"<dispatcher>"+get_account_name()+"</dispatcher>"+
+											"<receiver></receiver>"+
+											"<last_updated>"+last_updated+"</last_updated>" +
+											"</store_movement>";
+										create_simple(data_xml);
+										console.log(data_xml);																			
+									});				
+								});
+							},storage_xml);	
+								////////////////////////////////////////////////////////
 						});
 					});
 				},batch_data);	
@@ -14416,35 +14462,29 @@ function form186_create_item(form)
 			});
 			
 			var t_initiated=parseFloat(from);
-			var data_xml="<task_instances>";
-			var counter=1;
+			var steps_string="";
+			var task_hours=0;
 			steps.forEach(function(step)
 			{
-				if((counter%500)===0)
-				{
-					data_xml+="</task_instances><separator></separator><task_instances>";
-				}
-				counter+=1;
-				
-				var task_hours=parseFloat(step.time_estimate)*parseFloat(quantity);
-				var t_due=t_initiated+(task_hours*3600000);
+				steps_string+=step.name+"\n";
+				task_hours=parseFloat(step.time_estimate)*parseFloat(quantity);
+			});	
+			var t_due=t_initiated+(task_hours*3600000);
 								
-				data_xml+="<row>"+
-							"<name>"+step.name+"</name>" +
-							"<description>For "+step.type+" of "+quantity+" pieces of "+item+"</description>" +
-							"<assignee>"+step.default_assignee+"</assignee>" +
-							"<t_due>"+t_due+"</t_due>" +
-							"<t_initiated>"+t_initiated+"</t_initiated>" +
-							"<task_hours>"+task_hours+"</task_hours>" +
-							"<status>pending</status>" +
-							"<source>business process</source>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</row>";
-				t_initiated=t_due;
-			});
-			data_xml+="</task_instances>";
-			
-			create_batch(data_xml);
+			var data_xml="<task_instances>"+
+					"<id>"+data_id+"</id>"+
+					"<name>"+item+"("+quantity+" pieces)"+"</name>" +
+					"<description>Perform following steps for production of "+quantity+" pieces of "+item+"\n"+steps_string+"</description>" +
+					"<assignee></assignee>" +
+					"<t_due>"+t_due+"</t_due>" +
+					"<t_initiated>"+t_initiated+"</t_initiated>" +
+					"<task_hours>"+task_hours+"</task_hours>" +
+					"<status>pending</status>" +
+					"<source>business process</source>" +
+					"<source_id>"+data_id+"</source_id>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</task_instances>";
+			create_simple(data_xml);
 			
 		});
 		
@@ -14460,8 +14500,9 @@ function form186_create_item(form)
 		});
 
 		$(save_button).off('click');
-		$(save_button).on('click',function () 
+		$(save_button).on('click',function (e) 
 		{
+			e.preventDefault();
 			form186_update_item(form);
 		});
 
@@ -14509,7 +14550,6 @@ function form186_create_form()
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		create_row(data_xml,activity_xml);
-		
 		
 		$(save_button).off('click');
 		$(save_button).on('click',function(event)

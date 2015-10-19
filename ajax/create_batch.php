@@ -122,7 +122,7 @@
 				if($user_display=='yes')
 				{
 					$notes="Added ".$success_count." records to table ".$table;
-					$act_data=array('Data import',$user_display,$notes,'','','online',1000*time(),'create',$_SESSION['name']);
+					$act_data=array('Data import',$user_display,$notes,'',$data_xml,'online',1000*time(),'create',$_SESSION['name']);
 					$query3="insert into activities (title,user_display,notes,tablename,data_xml,status,last_updated,type,updated_by) values(?,?,?,?,?,?,?,?,?)";
 					$stmt3=$conn->conn->prepare($query3);
 					$stmt3->execute($act_data);

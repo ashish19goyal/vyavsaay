@@ -19387,14 +19387,15 @@ function form185_ini()
 						"<t_initiated>"+t_initiated+"</t_initiated>" +
 						"<last_updated>"+get_my_time()+"</last_updated>" +
 						"</task_instances>";
-			if(is_online())
-			{
-				server_update_simple(data_xml);
-			}
-			else
-			{
-				local_update_simple(data_xml);
-			}
+			var prod_xml="<production_plan_items>" +
+						"<id>"+event.id+"</id>" +
+						"<from_time>"+t_initiated+"</from_time>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</production_plan_items>";
+						
+			update_simple(data_xml);
+			update_simple(prod_xml);
+			
 	    },
 	    eventResize: function(event, delta, revertFunc){
 	    	var task_hours=parseFloat((parseFloat(event.end.unix())-parseFloat(event.start.unix()))/3600);
@@ -19403,14 +19404,7 @@ function form185_ini()
 						"<task_hours>"+task_hours+"</task_hours>" +
 						"<last_updated>"+get_my_time()+"</last_updated>" +
 						"</task_instances>";
-			if(is_online())
-			{
-				server_update_simple(data_xml);
-			}
-			else
-			{
-				local_update_simple(data_xml);
-			}
+			update_simple(data_xml);
 		}
 	});
 

@@ -1,8 +1,8 @@
 <?php
 
-	include_once "../../Classes/S3.php";
-	include_once '../../Classes/file_reader.php';
-	include_once "../../Classes/db.php";
+	include_once "../Classes/S3.php";
+	include_once '../Classes/file_reader.php';
+	include_once "../Classes/db.php";
 	use RetailingEssentials\db_connect;
 	use RetailingEssentials\file_reader;
 
@@ -10,7 +10,7 @@
 	
 	if($pass=='vya')
 	{		
-		$fr=new file_reader("../../../Config/config.prop");
+		$fr=new file_reader("../../Config/config.prop");
 		$dbhost=$fr->attributes["host"];
 		$dbuser = $fr->attributes["user"];
 		$dbpass = $fr->attributes["password"];

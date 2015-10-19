@@ -10226,8 +10226,16 @@ function form186_update_item(form)
 				"<plan_id>"+plan_id+"</plan_id>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</production_plan_items>";
-	
+		var task_xml="<task_instances>"+
+				"<id>"+data_id+"</id>"+
+				"<name>"+item+"("+quantity+" pieces)"+"</name>" +
+				"<t_due>"+to+"</t_due>" +
+				"<t_initiated>"+from+"</t_initiated>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</task_instances>";
+			
 		update_simple(data_xml);
+		update_simple(task_xml);
 				
 		for(var i=0;i<7;i++)
 		{

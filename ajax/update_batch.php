@@ -72,7 +72,7 @@
 					}
 				}
 				$notes="Updated ".$success_count." records from table ".$table;
-				$act_data=array('Data import','yes',$notes,'','','online',1000*time(),'update',$_SESSION['name']);
+				$act_data=array('Data import','yes',$notes,'',$data_xml,'online',1000*time(),'update',$_SESSION['name']);
 				$query3="insert into activities (user_display,notes,tablename,data_xml,status,last_updated,type,updated_by) values(?,?,?,?,?,?,?,?)";
 				$stmt3=$conn->conn->prepare($query3);
 				$stmt3->execute($act_data);
