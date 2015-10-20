@@ -1,6 +1,6 @@
 <?php
 
-	require_once '../ajax/mandrill/src/Mandrill.php';
+	require_once '../Classes/mandrill/src/Mandrill.php';
 	$api_key='Ub0h4w5NVLE6GdyXrYFlZw';
 
 	try
