@@ -429,6 +429,7 @@
 			<address index='yes' type="TEXT"></address>
 			<notes index='no' type="TEXT"></notes>
 			<order_date index='yes' type="BIGINT"></order_date>
+			<import_date index='yes' type="BIGINT"></import_date>
 			<type index="yes" type="VARCHAR(10)"></type><!-- service/product -->
 			<freight index='no' type="DECIMAL(12,2)"></freight>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
@@ -1591,7 +1592,7 @@
 			<pickup_by index='no' type="TEXT"></pickup_by>
 			<sku index='no' type="TEXT"></sku>
 			<product_name index='no' type="TEXT"></product_name>
-			<status index='yes' type="VARCHAR(20)"></status><!--picked/out for delivery/received/delivered/pending/undelivered-->
+			<status index='yes' type="VARCHAR(20)"></status><!--picked/out for delivery/received/delivered/pending/undelivered/in-transit-->
 			<branch index='yes' type="TEXT"></branch>
 			<current_location index='no' type="TEXT"></current_location>
 			<delivery_person index='yes' type="TEXT"></delivery_person>

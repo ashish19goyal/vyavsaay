@@ -3200,7 +3200,8 @@ function form108_header_ini()
 	var channel_filter=filter_fields.elements[0];
 	var order_filter=filter_fields.elements[1];
 	var name_filter=filter_fields.elements[2];
-	var status_filter=filter_fields.elements[3];
+	var date_filter=filter_fields.elements[3];
+	var status_filter=filter_fields.elements[4];
 	
 	var update_order_button=filter_fields.elements['update_orders'];
 	$(update_order_button).off('click');	
@@ -3239,6 +3240,7 @@ function form108_header_ini()
 		form108_ini();
 	});
 
+	$(date_filter).datepicker();
 	set_static_filter('sale_orders','status',status_filter);
 };
 

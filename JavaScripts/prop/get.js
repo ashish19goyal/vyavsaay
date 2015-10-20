@@ -549,21 +549,31 @@ function validate_import_array(data_array,vt)
 				error_array.logs.push({row:row_count,column:vt[a].column,error:"Blank",data:''});
 				error_array.status='error';				
 			}
-			else if((typeof vt[a].regex!='undefined') && data_row[vt[a].column]!="")
+			else if(data_row[vt[a].column]!="")			
 			{
-				var test_result=vt[a].regex.test(data_row[vt[a].column]);
-				//console.log(test_result);
-				if(!test_result)
+				if(typeof vt[a].regex!='undefined')
 				{
-					//console.log('e3');
-					error_array.logs.push({row:row_count,column:vt[a].column,error:"Format Mismatch",data:data_row[vt[a].column]});
+					var test_result=vt[a].regex.test(data_row[vt[a].column]);
+					//console.log(test_result);
+					if(!test_result)
+					{
+						//console.log('e3');
+						error_array.logs.push({row:row_count,column:vt[a].column,error:"Format Mismatch",data:data_row[vt[a].column]});
+						error_array.status='error';
+					}
+				}
+				
+				if((typeof vt[a].list!='undefined') && $.inArray(data_row[vt[a].column],vt[a].list)==-1)
+				{
+					error_array.logs.push({row:row_count,column:vt[a].column,error:"Data doesn't match system list",data:data_row[vt[a].column]});
 					error_array.status='error';
 				}
-			}
-			else if((typeof vt[a].list!='undefined') && $.inArray(data_row[vt[a].column],vt[a].list)==-1)
-			{
-				error_array.logs.push({row:row_count,column:vt[a].column,error:"Data doesn't match system list",data:data_row[vt[a].column]});
-				error_array.status='error';
+
+				if((typeof vt[a].anti_list!='undefined') && $.inArray(data_row[vt[a].column],vt[a].anti_list)!=-1)
+				{
+					error_array.logs.push({row:row_count,column:vt[a].column,error:"Duplicate Data",data:data_row[vt[a].column]});
+					error_array.status='error';
+				}
 			}			
 		}
 	});
@@ -819,4 +829,14 @@ function get_available_storage(item_name,batch,storage_array,min_quantity,result
 	{
 		success_func();
 	}
+}
+
+function array_2d_1d(array, col_name)
+{
+	var column = [];
+	for(var i=0; i<array.length; i++)
+	{
+		column.push(array[i][col_name]);
+	}
+	return column;
 }

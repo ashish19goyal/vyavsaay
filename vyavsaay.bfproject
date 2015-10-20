@@ -4,11 +4,9 @@ openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_h
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/update.js:281268:280849:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js:442502:441300:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/delete.js:150299:150727:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js:487173:486532:1:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/get.js:11572:11203:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js:315497:322104:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/includes/modal_forms.php:53623:52707:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/add_items.js:358607:357698:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js:709029:708532:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js:281826:281461:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/get.js:14583:13848:0:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -23,7 +21,7 @@ c2e.convert_iso: 0
 opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
 wrap_text_default: 0
 bookmarks_filename_mode: 0
-ssearch_text: 148_
+ssearch_text: show_loader
 snr_casesens: 0
 view_blocks: 1
 name: vyavsaay
@@ -56,10 +54,6 @@ ssearch_regex: 0
 e2c.convert_iso: 0
 ssearch_casesens: 0
 charmap_block: 1
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/quickstart.html
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/functions/purchase.php
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/delete.js
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form136.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/get_totals.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/questionnaire.js
@@ -67,12 +61,10 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/CSS/theme1.css
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/create_batch.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/db/demo_user_db_data.xml
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/locales/translation-en.json
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/get.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/update_batch.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/local_db_handling_json.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form99.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/local_db_handling.js
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/set.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/event_handler.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/scripts/all_db_backup.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/scripts/insert_grid_records.php
@@ -86,6 +78,12 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/get_store
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/includes/modal_forms.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/add_items.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/test_scripts/api_testing.html
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/test_scripts/mandrill.php
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/Classes/mailer.php
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/set.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/set_json.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/get.js
 snr_replacetype: 0
 savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
 spell_check_default: 1
@@ -97,21 +95,21 @@ snr_escape_chars: 0
 htmlbar_view: 0
 spell_lang: en
 ssearch_dotmatchall: 0
-searchlist: import manife
-searchlist: import logistics
-searchlist: validate_template_array
-searchlist: validate_row
-searchlist: typeof
-searchlist: 164
-searchlist: import log
-searchlist: replace
-searchlist: \\s
-searchlist: 164
-searchlist: import logisti
-searchlist: 186_
 searchlist: 189_
 searchlist: 256_
 searchlist: 148_
+searchlist: import 
+searchlist: ('^[0-9].\\/[0-9].\\/[0-9]...$')
+searchlist: import logi
+searchlist: 148
+searchlist: 140_
+searchlist: import 
+searchlist: read_json
+searchlist: payment mode
+searchlist: validat
+searchlist: shiow
+searchlist: 138
+searchlist: show_loader
 autocomplete: 1
 outputb_show_all_output: 0
 bookmarks_show_mode: 0

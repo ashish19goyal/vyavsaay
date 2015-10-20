@@ -9925,7 +9925,8 @@ function form108_ini()
 	var fchannel=filter_fields.elements[0].value;
 	var fnum=filter_fields.elements[1].value;
 	var fname=filter_fields.elements[2].value;
-	var fstatus=filter_fields.elements[3].value;
+	var fdate=get_raw_time(filter_fields.elements[3].value);
+	var fstatus=filter_fields.elements[4].value;
 	
 	////indexing///
 	var index_element=document.getElementById('form108_index');
@@ -9934,6 +9935,14 @@ function form108_ini()
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
 
+	var order_date_string="<order_date></order_date>";
+	if(fdate!="")
+	{
+		order_date_string="<order_date lowerbound='yes'>"+(fdate-1000)+"</order_date>"+
+						"<order_date upperbound='yes'>"+(fdate+86390000)+"</order_date>";
+			
+	}
+	
 	var columns="<sale_orders count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<order_num>"+fnum+"</order_num>"+
@@ -9943,7 +9952,7 @@ function form108_ini()
 			"<status>"+fstatus+"</status>" +
 			"<bill_id></bill_id>"+
 			"<return_id></return_id>"+
-			"<order_date></order_date>"+
+			order_date_string+
 			"<billing_type></billing_type>"+
 			"</sale_orders>";
 
@@ -10087,7 +10096,7 @@ function form108_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[4];
+		var export_button=filter_fields.elements[5];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
