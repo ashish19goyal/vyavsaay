@@ -40,6 +40,7 @@
 <script src='./JavaScripts/prop/get.js'></script>
 <script src='./JavaScripts/prop/import_template.js'></script>
 <script src='./JavaScripts/prop/import.js'></script>
+<script src='./JavaScripts/prop/import_validation.js'></script>
 <script src='./JavaScripts/prop/local_online.js'></script>
 <script src='./JavaScripts/prop/local_db_handling.js'></script>
 <script src='./JavaScripts/prop/local_db_handling_json.js'></script>

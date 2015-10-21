@@ -12,7 +12,12 @@
 	$subject=$_POST['subject'];
 	$message=$_POST['message'];
 	$message_attachment=$_POST['message_attachment'];
-	$attachment_type=$_POST['atype'];
+	$attachment_type="";
+	if(isset($_POST['atype']))
+	{
+		$attachment_type=$_POST['atype'];
+	}
+		
 	$to=$_POST['to'];
 	$from=$_POST['from'];
 	$from_name=$_POST['from_name'];

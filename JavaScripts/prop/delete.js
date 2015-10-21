@@ -3302,7 +3302,7 @@ function form105_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var data_id=form.elements[6].value;
+			var data_id=form.elements[7].value;
 			var data_xml="<data_access>" +
 						"<id>"+data_id+"</id>" +
 						"</data_access>";	

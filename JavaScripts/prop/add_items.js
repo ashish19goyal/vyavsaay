@@ -3928,6 +3928,7 @@ function form105_add_item()
 			rowsHTML+="<td data-th='User'>";
 				rowsHTML+="<input type='text' form='form105_"+id+"'>";
 				rowsHTML+="<input type='text' form='form105_"+id+"'>";
+				rowsHTML+="<input type='text' form='form105_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Criteria Field'>";
 				rowsHTML+="<input type='text' form='form105_"+id+"' title='Leave this blank for unconditional access'>";
@@ -3949,7 +3950,8 @@ function form105_add_item()
 		var user_type_filter=fields.elements[1];
 		var user_filter=fields.elements[2];
 		var user_field_filter=fields.elements[3];
-		var field_filter=fields.elements[4];
+		var role_filter=fields.elements[4];
+		var field_filter=fields.elements[5];
 		
 		var master_fields=document.getElementById('form105_master');
 		var tablename=master_fields.elements[1].value;
@@ -3961,12 +3963,14 @@ function form105_add_item()
 		});
 		set_static_value_list('data_access','user_type',user_type_filter);
 		$(user_field_filter).hide();
+		$(role_filter).hide();
 		
 		$(user_type_filter).off('blur');
 		$(user_type_filter).on('blur',function()
 		{
 			$(user_filter).hide();
 			$(user_field_filter).hide();
+			$(role_filter).hide();
 	
 			if(user_type_filter.value=='user')
 			{
@@ -3975,6 +3979,10 @@ function form105_add_item()
 			else if(user_type_filter.value=='field')
 			{
 				$(user_field_filter).show();
+			}
+			else if(user_type_filter.value=='role')
+			{
+				$(role_filter).show();
 			}
 		});
 
@@ -3995,6 +4003,12 @@ function form105_add_item()
 					"</user_fields_list>";		
 		set_my_value_list(field_data,user_field_filter);
 		
+		var role_data="<roles>"+
+					"<role_name></role_name>"+
+					"<status exact='yes'>active</status>"+
+					"</roles>";		
+		set_my_value_list(role_data,role_filter);
+
 		var field_data="<data_access>" +
 				"<criteria_field></criteria_field>" +
 				"<tablename exact='yes'>"+tablename+"</tablename>" +

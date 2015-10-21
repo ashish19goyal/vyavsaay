@@ -12706,11 +12706,109 @@ function form231_update_form()
 	}
 }
 
+
 /**
  * @form Newsletter Creator
  * @param button
  */
 function form233_update_item()
+{
+	if(is_update_access('form233'))
+	{
+		show_loader();
+		var form=document.getElementById("form233_form");
+
+		var new_key=get_new_key();
+		var counter=0;
+				
+		$("[id^='vyavsaay_image_box_']").each(function(index)
+		{
+			counter+=1;
+			var image_elem=$(this)[0];
+			resize_picture(image_elem,image_elem.width);
+			
+			var data_src=image_elem.getAttribute('data-src');
+			console.log(data_src);
+			var blob=image_elem.src;
+			var blob_name=data_src;
+				
+			if(data_src=="" || data_src=='undefined' || data_src=='null' || data_src==null)
+			{
+				blob_name=get_new_key()+".jpeg";
+				image_elem.setAttribute('data-src',blob_name);			
+			}
+
+			if(is_online())
+			{
+				$.ajax(
+				{
+					type: "POST",
+					url: "./ajax/s3_doc.php",
+					data: 
+					{
+						blob: blob,
+						name:blob_name,
+						content_type:'image/jpeg'
+					},
+					success: function(return_data,return_status,e)
+					{
+						console.log(e.responseText);
+					}
+				});
+			}
+			else
+			{
+				var s3_xml="<s3_object>"+
+							"<id>"+(new_key+counter)+"</id>"+
+							"<data_blob>"+blob+"</data_blob>"+
+							"<name>"+blob_name+"</name>"+
+							"<type>image/jpeg</type>"+
+							"<last_updated>"+get_my_time()+"</last_updated>"+
+							"</s3_object>";
+				create_simple(s3_xml);			
+			}
+			console.log('image saved');
+		});
+
+
+		var data_id=form.elements['id'].value;
+		var name=form.elements['name'].value;
+		var description=form.elements['description'].value;
+		var pic_url=form.elements['pic_url'].value;
+		var form233_section=document.getElementById('form233_section');
+		var html_content=form233_section.innerHTML;
+		var save_button=form.elements['save'];
+		var last_updated=get_my_time();
+		
+		var data_xml="<newsletter>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+name+"</name>" +
+					"<description>"+description+"</description>" +
+					"<html_content>"+htmlentities(html_content)+"</html_content>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</newsletter>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>newsletter</tablename>" +
+					"<link_to>form2</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Newsletter "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		update_row(data_xml,activity_xml);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Newsletter Creator
+ * @param button
+ */
+/*function form233_update_item()
 {
 	if(is_update_access('form233'))
 	{
@@ -12728,15 +12826,15 @@ function form233_update_item()
 		var description=form.elements['description'].value;
 		var pic_url=form.elements['pic_url'].value;
 		var form233_section=document.getElementById('form233_section');
-		var html_content=htmlentities(form233_section.innerHTML);
+		var html_content=form233_section.innerHTML;
 		var save_button=form.elements['save'];
 		var last_updated=get_my_time();
 		
 		
-		var new_div_container=document.createElement('div');
-		new_div_container.innerHTML=html_content;
-		$(new_div_container).width($(form233_section).width());
-		$(new_div_container).height($(form233_section).height());
+		var new_div_container=document.getElementById('newsletter_print_div');
+		$(new_div_container).html(html_content);
+		//$(new_div_container).width($(form233_section).width());
+		//$(new_div_container).height($(form233_section).height());
 		
 		//console.log(form233_section.style('width'));
 		
@@ -12796,6 +12894,7 @@ function form233_update_item()
 					success: function(return_data,return_status,e)
 					{
 						console.log(e.responseText);
+						$(new_div_container).html('xyz');
 					}
 				});
 				
@@ -12803,7 +12902,7 @@ function form233_update_item()
 							"<id>"+data_id+"</id>" +
 							"<name>"+name+"</name>" +
 							"<description>"+description+"</description>" +
-							"<html_content>"+html_content+"</html_content>" +
+							"<html_content>"+htmlentities(html_content)+"</html_content>" +
 							"<pic_url>"+blob_name+"</pic_url>"+
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</newsletter>";
@@ -12824,6 +12923,8 @@ function form233_update_item()
 		$("#modal2").dialog("open");
 	}
 }
+*/
+
 
 /**
  * formNo 230

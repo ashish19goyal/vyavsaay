@@ -30,16 +30,16 @@ function text_button_handler(section_elem)
     var unique_id="vyavsaay_text_box"+Math.round(Math.random()*10000);
     
     /* Adding draggable and resizable div elements */
-    var new_parent = document.createElement("div");
-    new_parent.setAttribute("id", "parent_" + unique_id);
-    new_parent.setAttribute("class", "draggable");
-    new_parent.setAttribute("style", "padding: 10px; width:200px; border:1px solid #000000; white-space: pre-wrap; word-wrap:break-word");
+    //var new_parent = document.createElement("div");
+    //new_parent.setAttribute("id", "parent_" + unique_id);
+    //new_parent.setAttribute("class", "draggable");
+    //new_parent.setAttribute("style", "float:left;padding: 10px; width:200px; border:1px solid #000000; white-space: pre-wrap; word-wrap:break-word");
 
     var new_child = document.createElement("div");
     new_child.setAttribute("id", unique_id);
     new_child.setAttribute("class", "resizable");
     //new_child.setAttribute("contenteditable", "true");
-    new_child.setAttribute("style", "width:200px; height:100px;");
+    new_child.setAttribute("style", "float:left;width:200px; height:100px;border:1px solid #000000;margin:5px;");
 
 	var new_grand_child = document.createElement("div");
     new_grand_child.setAttribute("id", "child_"+unique_id);
@@ -48,19 +48,20 @@ function text_button_handler(section_elem)
     new_grand_child.setAttribute("style", "width:200px; height:100px;");
 
     //Append these elemnts id DOM hierarchy under section area
-    section_elem.appendChild(new_parent);
-    new_parent.appendChild(new_child);
+    //section_elem.appendChild(new_parent);
+    //new_parent.appendChild(new_child);
+    section_elem.appendChild(new_child);
     new_child.appendChild(new_grand_child);
     	
     /* Fuction to store element value for deletion */
-	document.getElementById('parent_'+unique_id).setAttribute('onclick',"set_html_elem_4_del(this);");	
+	document.getElementById(unique_id).setAttribute('onclick',"set_html_elem_4_del(this);");	
 
-    $(".draggable").draggable();
+    //$(".draggable").draggable();
 
     /* Code so that the text in editable area can be 
      selected without dragging the divs. The common area which
      is both editable and draggable has been disabled for dragging*/
-
+/*
 	var onmousedown_func="var draggableDiv = $('#parent_"+unique_id+"').draggable();"+
 		"draggableDiv.draggable('disable');";
 
@@ -70,7 +71,7 @@ function text_button_handler(section_elem)
 
 	document.getElementById(unique_id).setAttribute('onmousedown',onmousedown_func);
 	document.getElementById(unique_id).setAttribute("onmouseup",onmouseup_func);
-
+*/
 	$(".resizable").resizable(
 	{
 		stop:function(event,ui)
@@ -79,11 +80,13 @@ function text_button_handler(section_elem)
 			var object_id=this_element.id;
 			console.log(object_id);
 			var editable_element=document.getElementById('child_'+object_id);
-			editable_element.setAttribute('style',this_element.getAttribute('style'));
+			//editable_element.setAttribute('style',this_element.getAttribute('style'));
+			editable_element.style.width=this_element.style.width;
+			editable_element.style.height=this_element.style.height;
 			//editable_element.setAttribute('height',this_element.getAttribute('height'));
 			
-			console.log(this_element);
-			console.log(editable_element);
+			//console.log(this_element);
+			//console.log(editable_element);
 		}
 	});
 };
@@ -380,13 +383,15 @@ function border_formatting_cbk (elem, format_type) {
 *********************************************************************/
 function delete_sel_elem_4m_canvas() 
 { 
-    if (newsletter_element_4_deletion.length != 0) {	
-
-        for (var i = 0; i < newsletter_element_4_deletion.length; i++) {
-            newsletter_element_4_deletion[i].parentNode.removeChild(newsletter_element_4_deletion[i]);
+    if (newsletter_element_4_deletion.length != 0) 
+    {	
+        for (var i = 0; i < newsletter_element_4_deletion.length; i++) 
+        {
+            //newsletter_element_4_deletion[i].parentNode.removeChild(newsletter_element_4_deletion[i]);
+            $(newsletter_element_4_deletion[i]).remove();
 		}
 
-	newsletter_element_4_deletion = [];
+		newsletter_element_4_deletion = [];
     }
 }	
 
@@ -397,11 +402,9 @@ function delete_sel_elem_4m_canvas()
 *********************************************************************/
 function set_html_elem_4_del()
 { 
-	//console.log('element selected for delete');
-     newsletter_element_4_deletion = [];
-
-     for (var i = 0; i < arguments.length; i++) {
-         /* Without 'var' keyword it will become global */	
-	 newsletter_element_4_deletion[i] = arguments[i];
-     }	 
+	newsletter_element_4_deletion = [];
+	for (var i = 0; i < arguments.length; i++) 
+	{
+		newsletter_element_4_deletion[i] = arguments[i];
+	}	 
 }

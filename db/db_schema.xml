@@ -176,6 +176,15 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</documents>
+	<s3_objects>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="TEXT"></name>
+			<data_blob index='no' type="MEDIUMBLOB"></data_blob>
+			<type index='yes' type="TEXT"></type>
+			<status index='yes' type="VARCHAR(20)"></status><!-- pending/synced -->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</s3_objects>
 	<expenses>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<status index='yes' type="VARCHAR(45)"></status><!-- submitted/approved/rejected-->
@@ -1148,6 +1157,7 @@
 			<user_type index='yes' type="VARCHAR(25)"></user_type><!--user/field/role-->
 			<user index='yes' type="TEXT"></user>
 			<user_field index='yes' type="TEXT"></user_field>
+			<role index='yes' type="TEXT"></role>
 			<criteria_field index='yes' type="TEXT"></criteria_field>
 			<criteria_value index='yes' type="TEXT"></criteria_value>
 			<last_updated index='yes' type="BIGINT"></last_updated>

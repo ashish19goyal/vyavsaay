@@ -51,13 +51,9 @@ function login_action()
 
 function login_online(username,domain,pass)
 {
-	//console.log('logging online');
-	ajax_with_custom_func("./ajax/login.php",{domain:domain,user:username,pass:pass},function(e)
+	ajax_json("./ajax_json/login.php",{domain:domain,user:username,pass:pass},function(response_object)
 	{
-		login_status=e.responseText;
-		//console.log(login_status);
-		var session_xml=e.responseXML;
-		if(login_status=="failed_auth")
+		if(response_object.status=="Invalid session")
 		{
 			//console.log('failed because of db problem');					
 			document.getElementById("failed_auth").innerHTML="Login failed, try again!";
@@ -65,20 +61,7 @@ function login_online(username,domain,pass)
 		}
 		else
 		{
-			//console.log(e.responseText);
-			//console.log(session_xml);
-			
-			var session_var=session_xml.getElementsByTagName('session');
-			//console.log(session_var);			
-			var session_vars=new Object();
-			var num_svar=session_var[0].childElementCount;
-
-			for(var z=0;z<num_svar;z++)
-			{
-				//console.log(session_var[0].childNodes[z].nodeName);
-				//console.log(session_var[0].childNodes[z].textContent);
-				session_vars[session_var[0].childNodes[z].nodeName]=session_var[0].childNodes[z].textContent;
-			}
+			var session_vars=response_object.data;
 			ini_session(domain,username);
 			
 			//console.log(session_vars);
@@ -177,6 +160,7 @@ function set_session_variables(domain,username,pass)
 							var cr='';
 							var up='';
 							var del='';
+							var user_roles="";
 							var access_control_count=1;
 							
 							static_local_db.transaction(['user_role_mapping'],"readonly").objectStore('user_role_mapping').index('username').openCursor(keyValue).onsuccess=function(e)
@@ -186,6 +170,9 @@ function set_session_variables(domain,username,pass)
 								{
 									var record5=result5.value;
 									access_control_count+=1;
+									
+									user_roles+=record5.role_name+"--";
+
 									keyValue=IDBKeyRange.bound([record5.role_name,'0'],[record5.role_name,'99999999']);
 									static_local_db.transaction(['access_control'],"readonly").objectStore('access_control').index('username').openCursor(keyValue).onsuccess=function(e)
 									{
@@ -270,6 +257,7 @@ function set_session_variables(domain,username,pass)
 									data.cr=cr;
 									data.up=up;
 									data.del=del;
+									data.user_roles=user_roles;
 									set_session(data);			  		
 							 	} 	
 							 },100);																					

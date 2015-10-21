@@ -2282,7 +2282,7 @@ function modal22_action(func)
  * @param t_func function to generate import template
  * @param i_func function to import the generated data_array
  */
-function modal23_action(t_func,i_func)
+function modal23_action(t_func,i_func,v_func)
 {
 	var form=document.getElementById('modal23_form');
 	
@@ -2304,7 +2304,6 @@ function modal23_action(t_func,i_func)
 	dummy_button.setAttribute('class','generic_red_icon');
 	select_file.value="";
 	selected_file.value="";
-	
 	
 	$(select_file).off('change');
 	$(select_file).on('change',function () 
@@ -2346,42 +2345,94 @@ function modal23_action(t_func,i_func)
         	var data_array=csv_string_to_obj_array(content);
 
         	progress_value=10;
-           
-           //console.log(data_array);
-        	if(new_records.checked)
-        	{
-        		i_func(data_array,'create_new');
-        	}
-        	else if(update_records.checked)
-        	{
-        		i_func(data_array,'update_records');
-        	}
-           
-        	progress_value=15;
+           	//console.log(data_array);
         	
-        	//console.log(data_array.length);
-        	
-        	var ajax_complete=setInterval(function()
-        	{
-        		//console.log(number_active_ajax);
-        		if(number_active_ajax===0)
-        		{
-        			progress_value=15+(1-(localdb_open_requests/(2*data_array.length)))*85;
-        		}
-        		else if(localdb_open_requests===0)
-        		{
-        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
-        		}
-        		
-        		if(number_active_ajax===0 && localdb_open_requests===0)
-        		{
-        			hide_progress();
-        			selected_file.value="Upload complete";
-        			$(select_file).val('');
-        			$("#modal23").dialog("close");
-        			clearInterval(ajax_complete);
-        		}
-        	},1000);
+           	if(typeof v_func!='undefined')
+           	{
+           		var error_array=v_func(data_array);
+           		if(error_array.status=='success')
+           		{
+           			if(new_records.checked)
+		        	{
+		        		i_func(data_array,'create_new');
+		        	}
+		        	else if(update_records.checked)
+		        	{
+		        		i_func(data_array,'update_records');
+		        	}
+		           
+		        	progress_value=15;
+		        	
+		        	//console.log(data_array.length);
+		        	
+		        	var ajax_complete=setInterval(function()
+		        	{
+		        		//console.log(number_active_ajax);
+		        		if(number_active_ajax===0)
+		        		{
+		        			progress_value=15+(1-(localdb_open_requests/(2*data_array.length)))*85;
+		        		}
+		        		else if(localdb_open_requests===0)
+		        		{
+		        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
+		        		}
+		        		
+		        		if(number_active_ajax===0 && localdb_open_requests===0)
+		        		{
+		        			hide_progress();
+		        			selected_file.value="Upload complete";
+		        			$(select_file).val('');
+		        			$("#modal23").dialog("close");
+		        			clearInterval(ajax_complete);
+		        		}
+		        	},1000);
+           		}
+           		else 
+           		{
+           			hide_progress();
+	       			selected_file.value="";
+	        		$(select_file).val('');
+	        		$("#modal23").dialog("close");
+	        		modal164_action(error_array);
+           		}
+           	}
+           	else 
+           	{
+	           	if(new_records.checked)
+	        	{
+	        		i_func(data_array,'create_new');
+	        	}
+	        	else if(update_records.checked)
+	        	{
+	        		i_func(data_array,'update_records');
+	        	}
+	           
+	        	progress_value=15;
+	        	
+	        	//console.log(data_array.length);
+	        	
+	        	var ajax_complete=setInterval(function()
+	        	{
+	        		//console.log(number_active_ajax);
+	        		if(number_active_ajax===0)
+	        		{
+	        			progress_value=15+(1-(localdb_open_requests/(2*data_array.length)))*85;
+	        		}
+	        		else if(localdb_open_requests===0)
+	        		{
+	        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
+	        		}
+	        		
+	        		if(number_active_ajax===0 && localdb_open_requests===0)
+	        		{
+	        			hide_progress();
+	        			selected_file.value="Upload complete";
+	        			$(select_file).val('');
+	        			$("#modal23").dialog("close");
+	        			clearInterval(ajax_complete);
+	        		}
+	        	},1000);
+	        }
         }
         reader.readAsText(file);    
     });
@@ -9571,13 +9622,13 @@ function modal138_action()
 						
 						var validate_template_array=[{column:'order_date',required:'yes',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
 												{column:'order_id',required:'yes',regex:new RegExp('^[0-9a-zA-Z-]+$'),anti_list:orders_list},
-												{column:'customer_name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,/@$!()-]+$')},
+												{column:'customer_name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 												{column:'customer_email',regex:new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z_.-]+$')},
-												{column:'phone',regex:new RegExp('^[0-9 ./+-]+$')},
+												{column:'phone',regex:new RegExp('^[0-9 ./,+-]+$')},
 												{column:'address'},
 												{column:'pincode',regex:new RegExp('^[0-9]+$')},
 												{column:'tin',regex:new RegExp('^[a-zA-Z0-9./-]+$')},
-												{column:'item_name',regex:new RegExp('^[0-9a-zA-Z _.,/@$!()+-]+$')},
+												{column:'item_name',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()+-]+$')},
 												{column:'channel_sku',list:skus_list},
 												{column:'system_sku',list:products_list},
 												{column:'sku',required:'yes'},
@@ -10005,11 +10056,11 @@ function modal140_action(i_func)
 				{	
 					var validate_template_array=[{column:'order_date',required:'yes',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
 												{column:'order_num',required:'yes',regex:new RegExp('^[0-9a-zA-Z-]+$'),anti_list:orders},
-												{column:'supplier_name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,/@$!()-]+$')},
+												{column:'supplier_name',required:'yes',regex:new RegExp('^[0-9a-zA-Z\' _.,/@$!()-]+$')},
 												{column:'supplier_email',regex:new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z_.-]+$')},
-												{column:'phone',regex:new RegExp('^[0-9 ./+-]+$')},
+												{column:'phone',regex:new RegExp('^[0-9 ./+,-]+$')},
 												{column:'address'},
-												{column:'item_name',regex:new RegExp('^[0-9a-zA-Z _.,/@$!()-]+$')},
+												{column:'item_name',regex:new RegExp('^[0-9a-zA-Z\' _.,/@$!()-]+$')},
 												{column:'supplier_sku',regex:new RegExp('^[0-9a-zA-Z_ -]+$')},
 												{column:'system_sku',required:'yes',list:products},
 												{column:'item_mrp',required:'yes',regex:new RegExp('^[0-9.]+$')},
@@ -11102,8 +11153,8 @@ function modal148_action()
 			var validate_template_array=[{column:'date',required:'yes',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
 										{column:'awb',required:'yes',regex:new RegExp('^[0-9a-zA-Z]+$')},
 										{column:'order_status',required:'yes',list:['delivered','undelivered','pending','in-transit']},
-										{column:'received by',regex:new RegExp('^[0-9a-zA-Z _.,/@$!()-]+$')},
-										{column:'remark',regex:new RegExp('^[0-9a-zA-Z _.,/@$!()-]+$')}];
+										{column:'received by',regex:new RegExp('^[0-9a-zA-Z\' _.,/@$!()-]+$')},
+										{column:'remark',regex:new RegExp('^[0-9a-zA-Z\' _.,/@$!()-]+$')}];
 			
 			var error_array=validate_import_array(data_array,validate_template_array);
 			//var error_array=new Object();
@@ -11334,8 +11385,8 @@ function modal149_action()
 										{column:'Consignee Address2'},
 										{column:'Destination City',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'()_.,-]+$')},
 										{column:'Pincode',required:'yes',regex:new RegExp('^[0-9]+$')},
-										{column:'State',regex:new RegExp('^[0-9a-zA-Z ,-]+$')},
-										{column:'Tel. Number',regex:new RegExp('^[0-9\+\(\)\./ -]+$')},
+										{column:'State',regex:new RegExp('^[0-9a-zA-Z\' ,-]+$')},
+										{column:'Tel. Number',regex:new RegExp('^[0-9\+\(\)\./, -]+$')},
 										{column:'Mobile number',regex:new RegExp('^[0-9\+\(\)\./, -]+$')},
 										{column:'Product name'},
 										{column:'Weight(K.G.)',regex:new RegExp('^[0-9\.]+$')},
@@ -11427,49 +11478,6 @@ function modal149_action()
 			                "<last_updated>"+last_updated+"</last_updated>" +
 							"</row>";							
 	
-	/*				data_xml+="<row>" +
-							"<id>"+row.id+"</id>" +
-							"<awb_num unique='yes'>"+row['AWB No.']+"</awb_num>"+
-			                "<type>"+row['Type']+"</type>"+
-			                "<order_num>"+row['Order No.']+"</order_num>"+
-			                "<manifest_id>"+row['Manifest ID']+"</manifest_id>"+
-			                "<merchant_name>"+row['Merchant Name']+"</merchant_name>"+
-			                "<ship_to>"+row['Ship To']+"</ship_to>"+
-			                "<address1>"+row['Address1']+"</address1>"+
-			                "<address2>"+row['Address2']+"</address2>"+
-			                "<city>"+row['City']+"</city>"+
-			                "<state>"+row['State']+"</state>"+
-			                "<pincode>"+row['Pincode']+"</pincode>"+
-			                "<phone>"+row['Mobile number']+"</phone>"+
-			                "<telephone>"+row['Tel. Number']+"</telephone>"+
-			                "<weight>"+row['Weight']+"</weight>"+
-			                "<declared_value>"+row['Declared Value']+"</declared_value>"+
-			                "<collectable_value>"+row['Collectable Value']+"</collectable_value>"+
-			                "<vendor_code>"+row['Vendor Code']+"</vendor_code>"+
-			                "<shipper_name>"+row['Shipper Name']+"</shipper_name>"+
-			                "<return_address1>"+row['Return Address1']+"</return_address1>"+
-			                "<return_address2>"+row['Return Address2']+"</return_address2>"+
-			                "<return_address3>"+row['Return Address3']+"</return_address3>"+
-			                "<return_pincode>"+row['Return Pin']+"</return_pincode>"+
-			                "<len>"+row['Length ( Cms )']+"</len>"+
-			                "<breadth>"+row['Breadth ( Cms )']+"</breadth>"+
-			                "<height>"+row['Height ( Cms )']+"</height>"+
-			                "<pieces>"+row['Pieces']+"</pieces>"+
-			                "<carrier_account>"+row['Carrier Account']+"</carrier_account>"+
-			                "<carrier_name>"+row['Carrier Name']+"</carrier_name>"+
-			                "<manifest_type>"+type_filter.value+"</manifest_type>"+
-			                "<dispatch_date>"+get_raw_time(row['Dispatch Date'])+"</dispatch_date>"+
-			                "<import_date>"+get_my_time()+"</import_date>"+
-			                "<notes>"+row['Notes']+"</notes>"+
-			                "<pickup_location>"+row['Pickup Location']+"</pickup_location>"+
-			                "<pickup_by>"+row['Pickup By']+"</pickup_by>"+
-			                "<sku>"+row['Prod/SKU code']+"</sku>"+
-			                "<product_name></product_name>"+
-			                "<order_history>"+order_history_string+"</order_history>"+
-			                "<status>picked</status>"+
-			                "<last_updated>"+last_updated+"</last_updated>" +
-							"</row>";							
-	*/
 				});
 				
 				data_xml+="</logistics_orders>";

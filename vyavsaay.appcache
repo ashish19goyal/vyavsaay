@@ -192,6 +192,7 @@ JavaScripts/prop/forms_ini.js
 JavaScripts/prop/get.js
 JavaScripts/prop/import_template.js
 JavaScripts/prop/import.js
+JavaScripts/prop/import_validation.js
 JavaScripts/prop/local_online.js
 JavaScripts/prop/local_db_handling.js
 JavaScripts/prop/local_db_handling_json.js

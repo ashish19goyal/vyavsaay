@@ -35,9 +35,8 @@ function form5_import_template()
 */
 function form8_import_template()
 {
-	var data_array=['id','name','phone','email','status','joining_date','qualification',
-	                'skills','fixed_comp','variable_comp_rate','monthly_hours','allowed_pto','acc_name',
-	                'address','pincode','city','state','country','address_status','username'];
+	var data_array=['id','name','phone','email','status','acc_name','username',
+	                'address','pincode','city','state','country'];
 	my_array_to_csv(data_array);
 };
 
@@ -165,8 +164,7 @@ function form24_import_template()
 */
 function form30_import_template()
 {
-	var data_array=['id','name','phone','email','status','acc_name','notes',
-	                'address','pincode','city','state','country','address_status'];
+	var data_array=['id','name','phone','email','acc_name','address','city','pincode','state'];
 	my_array_to_csv(data_array);
 };
 
@@ -214,7 +212,7 @@ function form39_import_template()
 function form40_import_template()
 {
 	var data_array=['id','name','phone','email','notes','acc_name',
-	                'address','pincode','city','state','country','address_status'];
+	                'address','pincode','city','state','country'];
 	my_array_to_csv(data_array);
 };
 
@@ -439,7 +437,7 @@ function form82_import_template()
 */
 function form83_import_template()
 {
-	var data_array=['id','name','area_type','height','width','length','locx','locy','locz','storey','color','loc_type','faceEast','faceWest','faceNorth','faceSouth'];
+	var data_array=['id','name','parent','owner','area_type','height','breadth','length','unit'];
 	my_array_to_csv(data_array);
 };
 
@@ -1031,7 +1029,7 @@ function form172_import_template()
 */
 function form173_import_template()
 {
-	var data_array=['id','channel','channel_sku','vendor_sku','system_sku','item_desc'];
+	var data_array=['id','channel','channel_sku','system_sku','item_desc'];
 	my_array_to_csv(data_array);
 };
 

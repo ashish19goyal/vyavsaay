@@ -222,8 +222,6 @@
 	
 	$jsonresponse=json_encode($response_object);		
 	header ("Content-Type:application/json");
-	//header ("Content-Type:text/xml");
-	//echo $query;			
 	echo $jsonresponse;
 
 ?>

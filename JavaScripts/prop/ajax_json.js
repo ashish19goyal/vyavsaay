@@ -50,11 +50,9 @@ function ajax_json(url,kvp,func)
 						show_loader();
 						var pass=document.getElementById("modal1_pass").value;
 						var user_kvp={domain:domain,user:user,pass:pass};
-						ajax_with_custom_func("./ajax/login.php",user_kvp,function(e)
+						ajax_json("./ajax_json/login.php",user_kvp,function(response_object)
 						{
-							login_status=e.responseText;
-							var session_xml=e.responseXML;
-							if(login_status=="failed_auth")
+							if(response_object.status=="Invalid session")
 							{
 								alert("Password is incorrect. Aborting operation.");
 								delete_session();
@@ -62,14 +60,8 @@ function ajax_json(url,kvp,func)
 							}
 							else
 							{
-								var session_var=session_xml.getElementsByTagName('session');
-								var session_vars=new Object();
-								var num_svar=session_var[0].childElementCount;
-
-								for(var z=0;z<num_svar;z++)
-								{
-									session_vars[session_var[0].childNodes[z].nodeName]=session_var[0].childNodes[z].innerHTML;
-								}
+								var	session_vars=response_object.data;
+								
 								var offline=get_session_var('offline');
 								for(var field in session_vars)
 								{

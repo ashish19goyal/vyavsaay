@@ -9844,6 +9844,7 @@ function form105_ini()
 			"<user_type></user_type>" +
 			"<user></user>" +
 			"<user_field></user_field>" +
+			"<role></role>" +
 			"<criteria_field></criteria_field>" +
 			"<criteria_value></criteria_value>" +
 			"<last_updated></last_updated>" +
@@ -9872,8 +9873,13 @@ function form105_ini()
 					{
 						rowsHTML+="<td data-th='User Field'>";
 					}
+					else if(result.user_type=='role')
+					{
+						rowsHTML+="<td data-th='Role'>";
+					}
 							rowsHTML+="<textarea readonly='readonly' form='form105_"+result.id+"'>"+result.user+"</textarea>";
 							rowsHTML+="<input readonly='readonly' type='text' form='form105_"+result.id+"' value='"+result.user_field+"'>";
+							rowsHTML+="<input readonly='readonly' type='text' form='form105_"+result.id+"' value='"+result.role+"'>";
 						rowsHTML+="</td>";										
 					rowsHTML+="<td data-th='Criteria Field'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form105_"+result.id+"' value='"+result.criteria_field+"'>";
@@ -9891,15 +9897,23 @@ function form105_ini()
 			var fields=document.getElementById("form105_"+result.id);
 			var user_filter=fields.elements[2];
 			var user_field_filter=fields.elements[3];
+			var role_filter=fields.elements[4];
+			$(user_filter).hide();
+			$(user_field_filter).hide();
+			$(role_filter).hide();
+						
 			if(result.user_type=='user')
 			{
-				$(user_field_filter).hide();
+				$(user_filter).show();
+			}
+			else if(result.user_type=='field') 
+			{
+				$(user_field_filter).show();				
 			}
 			else 
 			{
-				$(user_filter).hide();				
+				$(role_filter).show();
 			}
-
 		});
 
 		$('textarea').autosize();
@@ -21529,7 +21543,7 @@ function form203_ini()
 
 	if_data_read_access('store_areas',function(accessible_data)
 	{
-		//console.log(accessible_data);
+		console.log(accessible_data);
 		var branches_array=[];
 		var branch_object={index:'branch',array:branches_array};
 		
@@ -24675,10 +24689,10 @@ function form233_ini()
 				$('#form233_section').html(updated_content);
 				
 				//$(".resizable").resizable();
-			    $(".draggable").draggable();
+			    //$(".draggable").draggable();
 
 			    $('.resizable-aspect-ratio').resizable({aspectRatio: true});
-    	        $('.draggable-containment').draggable({ containment: "window" });
+    	        //$('.draggable-containment').draggable({ containment: "window" });
 			}
 			hide_loader();
 		});	

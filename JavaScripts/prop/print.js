@@ -377,8 +377,7 @@ function print_newsletter(nl_name,nl_id,print_type,func)
 */
 function print_flex_newsletter(nl_name,nl_id,print_type,func)
 {
-	var master_container=document.createElement('div');
-	var container=document.createElement('iframe');
+	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
 		var business_intro=document.createElement('div');
@@ -396,9 +395,9 @@ function print_flex_newsletter(nl_name,nl_id,print_type,func)
 	
 	nl_content.setAttribute('style','display:block;width:98%;height:auto;');
 
-	footer.setAttribute('style','display:block;width:98%;');
-		business_contact.setAttribute('style','display:block;width:98%;text-align:center');
-		powered_by.setAttribute('style','display:block;width:98%;text-align:center');
+	footer.setAttribute('style','width:98%;min-height:100px;text-align:center;margin:5px;');
+		business_contact.setAttribute('style','width:98%;text-align:center');
+		powered_by.setAttribute('style','width:98%;text-align:center');
 	
 ///////////////getting the content////////////////////////////////////////
 
@@ -424,7 +423,6 @@ function print_flex_newsletter(nl_name,nl_id,print_type,func)
 		powered_by.innerHTML="<hr style='border: 1px solid #000;'><a href='"+powered_by_link+"'>Powered By: "+powered_by_text+"</a>";	
 	
 /////////////placing the containers //////////////////////////////////////////////////////	
-	master_container.appendChild(container);
 	container.appendChild(header);
 	container.appendChild(nl_content);
 	container.appendChild(footer);
@@ -446,17 +444,40 @@ function print_flex_newsletter(nl_name,nl_id,print_type,func)
 	{
 		if(results.length>0)
 		{
-			//var updated_content=revert_htmlentities(results[0].html_content);
-			//nl_content.innerHTML=updated_content;
+			var updated_content=revert_htmlentities(results[0].html_content);
+			$(nl_content).html(updated_content);
 			
+			$(nl_content).find('img').each(function(index)
+			{
+				var image_elem=$(this)[0];
+				var data_src=image_elem.getAttribute('data-src');
+
+				image_elem.src="https://s3-ap-southeast-1.amazonaws.com/vyavsaay-newsletter/"+data_src;	
+				image_elem.removeAttribute('onclick');
+				image_elem.removeAttribute('onmouseup');
+				image_elem.removeAttribute('onmousedown');
+				image_elem.removeAttribute('onchange');
+				image_elem.removeAttribute('contenteditable');			
+			});
+	
+			$(nl_content).find('div').each(function () 
+			{
+				var div_element=$(this)[0];
+				div_element.removeAttribute('onclick');
+				div_element.removeAttribute('onmouseup');
+				div_element.removeAttribute('onmousedown');
+				div_element.removeAttribute('onchange');
+				div_element.removeAttribute('contenteditable');
+			});
+
 			//var image_src="https://s3-ap-southeast-1.amazonaws.com/vyavsaay-newsletter/Firefox_wallpaper.png";
-			var image_src="https://s3-ap-southeast-1.amazonaws.com/vyavsaay-newsletter/"+results[0].pic_url;
-			var image_elem=document.createElement('img');
-			image_elem.setAttribute('src',image_src);
-			nl_content.appendChild(image_elem);
+			//var image_src="https://s3-ap-southeast-1.amazonaws.com/vyavsaay-newsletter/"+results[0].pic_url;
+			//var image_elem=document.createElement('img');
+			//image_elem.setAttribute('src',image_src);
+			//nl_content.appendChild(image_elem);
 		}
-		console.log(master_container.innerHTML);
-		func(master_container);
+		console.log(container.innerHTML);
+		func(container);
 	});
 }
 

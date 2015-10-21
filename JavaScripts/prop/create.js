@@ -5896,9 +5896,12 @@ function form105_create_item(form)
 		var user_type=form.elements[1].value;
 		var user=form.elements[2].value;
 		var user_field=form.elements[3].value;
-		var criteria_field=form.elements[4].value;
-		var criteria_value=form.elements[5].value;
-		var data_id=form.elements[6].value;
+		var role=form.elements[4].value;
+		var criteria_field=form.elements[5].value;
+		var criteria_value=form.elements[6].value;
+		var data_id=form.elements[7].value;
+		var del_button=form.elements[9];
+		
 		var last_updated=get_my_time();
 		var data_xml="<data_access>" +
 					"<id>"+data_id+"</id>" +
@@ -5908,17 +5911,17 @@ function form105_create_item(form)
 					"<user_type>"+user_type+"</user_type>" +
 					"<user>"+user+"</user>" +
 					"<user_field>"+user_field+"</user_field>" +
+					"<role>"+role+"</role>" +
 					"<criteria_field>"+criteria_field+"</criteria_field>" +
 					"<criteria_value>"+criteria_value+"</criteria_value>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</data_access>";
 		create_simple(data_xml);
 		
-		for(var i=0;i<6;i++)
+		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[8];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
@@ -16741,8 +16744,12 @@ function form233_create_item()
 		var name=form.elements['name'].value;
 		var description=form.elements['description'].value;
 		
+		var new_key=get_new_key();
+		var counter=0;
+		
 		$("[id^='vyavsaay_image_box_']").each(function(index)
 		{
+			counter+=1;
 			var image_elem=$(this)[0];
 			resize_picture(image_elem,image_elem.width);
 			
@@ -16754,21 +16761,35 @@ function form233_create_item()
 				var blob_name=get_new_key()+".jpeg";
 
 				image_elem.setAttribute('data-src',blob_name);			
-				$.ajax(
+				if(is_online())
+				{				
+					$.ajax(
+					{
+						type: "POST",
+						url: "./ajax/s3_doc.php",
+						data: 
+						{
+							blob: blob,
+							name:blob_name,
+							content_type:'image/jpeg'
+						},
+						success: function(return_data,return_status,e)
+						{
+							console.log(e.responseText);
+						}
+					});
+				}
+				else
 				{
-					type: "POST",
-					url: "./ajax/s3_doc.php",
-					data: 
-					{
-						blob: blob,
-						name:blob_name,
-						content_type:'image/jpeg'
-					},
-					success: function(return_data,return_status,e)
-					{
-						console.log(e.responseText);
-					}
-				});
+					var s3_xml="<s3_object>"+
+								"<id>"+(new_key+counter)+"</id>"+
+								"<data_blob>"+blob+"</data_blob>"+
+								"<name>"+blob_name+"</name>"+
+								"<type>image/jpeg</type>"+
+								"<last_updated>"+get_my_time()+"</last_updated>"+
+								"</s3_object>";
+					create_simple(s3_xml);			
+				}
 				console.log('image saved');
 			}			
 		});

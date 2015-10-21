@@ -8905,24 +8905,26 @@ function form233_header_ini()
         {
 			//var unique_id="vyavsaay_picture_box"+Math.round(Math.random()*100);
    
-            var new_div_elem = document.createElement("div");
-            new_div_elem.setAttribute("style", "width:100px; height:100px;");
-	    	new_div_elem.setAttribute("onclick", "set_html_elem_4_del(this)")
-			new_div_elem.setAttribute("class", "draggable-containment");
+            //var new_div_elem = document.createElement("div");
+            //new_div_elem.setAttribute("style", "margin:5px;float:left;width:100px; height:100px;");
+	    	//new_div_elem.setAttribute("onclick", "set_html_elem_4_del(this)")
+			//new_div_elem.setAttribute("class", "draggable-containment");
 
             var new_elem = document.createElement("img");
-            new_elem.setAttribute("id","vyavsaay_image_box_"+Math.round(Math.random()*10000));
+            new_elem.setAttribute("onclick", "set_html_elem_4_del(this);");
+			new_elem.setAttribute("id","vyavsaay_image_box_"+Math.round(Math.random()*10000));
             new_elem.setAttribute("src", dataURL);
             new_elem.setAttribute("class", "ui-widget-content");
             new_elem.setAttribute("alt", "Image Not Found");
-            new_elem.setAttribute("style", "width:100px; height:100px;");
+            new_elem.setAttribute("style", "float:left;margin:5px;width:100px; height:100px;");
 			new_elem.setAttribute("class", "resizable-aspect-ratio");
 
-            $('#form233_section').append(new_div_elem);
-	    	$(new_div_elem).append(new_elem);
+            //$('#form233_section').append(new_div_elem);
+	    	//$(new_div_elem).append(new_elem);
 
+			$('#form233_section').append(new_elem);
 		    $(new_elem).resizable({aspectRatio:true});
-            $(new_div_elem).draggable({ containment: "window" });
+            //$(new_div_elem).draggable({ containment: "window" });
         });
     });
 };

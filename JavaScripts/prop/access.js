@@ -67,6 +67,7 @@ function is_delete_access(form_id)
 function if_data_read_access(tablename,func)
 {
 	var acc_name=get_account_name();
+	var user_roles=get_session_var('user_roles');
 	
 	var access_data="<data_access>" +
 			"<record_id></record_id>" +
@@ -76,6 +77,7 @@ function if_data_read_access(tablename,func)
 			"<user_type></user_type>"+
 			"<user></user>" +
 			"<user_field></user_field>"+
+			"<role></role>" +
 			"<tablename exact='yes'>"+tablename+"</tablename>" +
 			"</data_access>";
 	fetch_requested_data('',access_data,function(datas)
@@ -93,15 +95,24 @@ function if_data_read_access(tablename,func)
 			{
 				final_array.push(data);
 			}
+			
+			if(data.user_type=='role')
+			{
+				var found=user_roles.indexOf(data.role);
+				if(found!=-1)
+				{
+					final_array.push(data);
+				}
+			}
 		});
 
 		var count=user_fields_array.length;
 		user_fields_array.forEach(function (obj)
 		{
 			var access2_data="<"+tablename+" fields='all'>"+
-				"<id></id>"+
-				"<"+obj.user_field+">"+acc_name+"</"+obj.user_field+">"+
-				"</"+tablename+">";
+						"<id></id>"+
+						"<"+obj.user_field+">"+acc_name+"</"+obj.user_field+">"+
+						"</"+tablename+">";
 			fetch_requested_data('',access2_data,function (datas2) 
 			{
 				//console.log(datas2);
@@ -139,205 +150,6 @@ function if_data_read_access(tablename,func)
   		   		clearInterval(final_array_timer);
 				func(final_array);
 			}
-    	},100);				
-	});
-}
-
-function if_data_update_access(tablename,func)
-{		
-	var access_data="<data_access>" +
-			"<record_id></record_id>" +
-			"<criteria_field></criteria_field>" +
-			"<criteria_value></criteria_value>" +
-			"<access_type array='yes'>--all--update--</access_type>" +
-			"<user_type></user_type>"+
-			"<user></user>" +
-			"<user_field></user_field>"+
-			"<tablename exact='yes'>"+tablename+"</tablename>" +
-			"</data_access>";
-	fetch_requested_data('',access_data,function(datas)
-	{
-		var user_fields_array=[];
-		var final_array=[];
-		datas.forEach(function(data)
-		{
-			if(data.user_type=='field')
-			{
-				user_fields_array.push(data);
-			}
-			else if(data.user_type=='user' && data.user==acc_name)
-			{
-				final_array.push(data);
-			}
-		});
-
-		var count=user_fields_array.length;
-		user_fields_array.forEach(function (obj)
-		{
-			var access2_data="<"+tablename+">"+
-				"<id></id>"+
-				"<"+obj.user_field+">"+acc_name+"</"+obj.user_field+">"+
-				"</"+tablename+">";
-			fetch_requested_data('',access2_data,function (datas2) 
-			{
-				datas2.forEach(function(data2)
-				{
-					if(obj.record_id=='all')
-					{
-						var newObject = jQuery.extend({}, obj);
-						newObject.record_id=data2.id;
-						final_array.push(newObject);
-					}
-					else if(obj.record_id==data2.id)
-					{
-						final_array.push(obj);
-					}					
-				});
-				count-=1;
-			});			
-		});
-		
-		var final_array_timer=setInterval(function()
-		{
-			if(count==0)
-			{
-  		   		clearInterval(final_array_timer);
-				func(final_array);
-  	   		}
-    	},100);				
-	});
-}
-
-function if_data_delete_access(tablename,func)
-{
-	var acc_name=get_account_name();
-	
-	var access_data="<data_access>" +
-			"<record_id></record_id>" +
-			"<criteria_field></criteria_field>" +
-			"<criteria_value></criteria_value>" +
-			"<access_type array='yes'>--all--delete--</access_type>" +
-			"<user_type></user_type>"+
-			"<user></user>" +
-			"<user_field></user_field>"+
-			"<tablename exact='yes'>"+tablename+"</tablename>" +
-			"</data_access>";
-	fetch_requested_data('',access_data,function(datas)
-	{
-		var user_fields_array=[];
-		var final_array=[];
-		datas.forEach(function(data)
-		{
-			if(data.user_type=='field')
-			{
-				user_fields_array.push(data);
-			}
-			else if(data.user_type=='user' && data.user==acc_name)
-			{
-				final_array.push(data);
-			}
-		});
-
-		var count=user_fields_array.length;
-		user_fields_array.forEach(function (obj)
-		{
-			var access2_data="<"+tablename+">"+
-				"<id></id>"+
-				"<"+obj.user_field+">"+acc_name+"</"+obj.user_field+">"+
-				"</"+tablename+">";
-			fetch_requested_data('',access2_data,function (datas2) 
-			{
-				datas2.forEach(function(data2)
-				{
-					if(obj.record_id=='all')
-					{
-						var newObject = jQuery.extend({}, obj);
-						newObject.record_id=data2.id;
-						final_array.push(newObject);
-					}
-					else if(obj.record_id==data2.id)
-					{
-						final_array.push(obj);
-					}					
-				});
-				count-=1;
-			});			
-		});
-		
-		var final_array_timer=setInterval(function()
-		{
-			if(count==0)
-			{
-  		   		clearInterval(final_array_timer);
-				func(final_array);
-  	   		}
-    	},100);				
-	});
-}
-
-function if_data_all_access(tablename,record_id,func)
-{
-	var acc_name=get_account_name();
-		
-	var access_data="<data_access>" +
-			"<record_id array='yes'>--"+record_id+"--all--</record_id>" +
-			"<criteria_field></criteria_field>" +
-			"<criteria_value></criteria_value>" +
-			"<access_type array='yes'>--all--delete--</access_type>" +
-			"<user_type></user_type>"+
-			"<user></user>" +
-			"<user_field></user_field>"+
-			"<tablename exact='yes'>"+tablename+"</tablename>" +
-			"</data_access>";
-	fetch_requested_data('',access_data,function(datas)
-	{
-		var user_fields_array=[];
-		var final_array=[];
-		datas.forEach(function(data)
-		{
-			if(data.user_type=='field')
-			{
-				user_fields_array.push(data);
-			}
-			else if(data.user_type=='user' && data.user==acc_name)
-			{
-				final_array.push(data);
-			}
-		});
-
-		var count=user_fields_array.length;
-		user_fields_array.forEach(function (obj)
-		{
-			var access2_data="<"+tablename+">"+
-				"<id></id>"+
-				"<"+obj.user_field+">"+acc_name+"</"+obj.user_field+">"+
-				"</"+tablename+">";
-			fetch_requested_data('',access2_data,function (datas2) 
-			{
-				datas2.forEach(function(data2)
-				{
-					if(obj.record_id=='all')
-					{
-						var newObject = jQuery.extend({}, obj);
-						newObject.record_id=data2.id;
-						final_array.push(newObject);
-					}
-					else if(obj.record_id==data2.id)
-					{
-						final_array.push(obj);
-					}					
-				});
-				count-=1;
-			});			
-		});
-		
-		var final_array_timer=setInterval(function()
-		{
-			if(count==0)
-			{
-  		   		clearInterval(final_array_timer);
-				func(final_array);
-  	   		}
     	},100);				
 	});
 }

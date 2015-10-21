@@ -5539,9 +5539,10 @@ function report76_ini()
 						{index:'return_address3'},
 						{index:'drs_num'},
 						branch_object];		
-	
+		//console.log(columns);
 		read_json_rows('report76',columns,function(items)
 		{
+			//console.log(items);
 			var rowsHTML="";
 			items.forEach(function(item)
 			{

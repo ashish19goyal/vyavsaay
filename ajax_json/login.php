@@ -10,6 +10,8 @@ use RetailingEssentials\db_connect;
 	$pass=$_POST['pass'];
 	$user=$_POST['user'];
 	
+	$response_object=[];
+	
 	try 
 	{
 		$conn=new db_connect("re_user_".$domain);
@@ -18,7 +20,7 @@ use RetailingEssentials\db_connect;
 		
 		if(!$stmt || $stmt->rowCount()!=1)
 		{
-			$status="failed_auth";
+			$response_object="{'status':'Invalid session'}";
 		}
 		else
 		{
@@ -26,25 +28,18 @@ use RetailingEssentials\db_connect;
 			$pass_hash=$row['password'];
 			if(!password_verify($pass,$pass_hash))
 			{
-				$status="failed_auth";
+				$response_object="{'status':'Invalid session'}";
 			}
 			else	
 			{
-				$status="successful";
-			
-				$_SESSION['session']='yes';
-				$_SESSION['domain']=$domain;
-				$_SESSION['username']=$user;
-				
-				$session_var="<session>";
+				$response_object['status']='success';
+				$response_object['data']=[];
 				
 				$stmt=$conn->conn->prepare("select name,value from user_preferences where type in (?,?,?,?) and status=?");
 				$stmt->execute(array('template','other','accounting','hidden','active'));
 				while ($row=$stmt->fetch(PDO::FETCH_ASSOC))
 				{
-					$session_var.="<".$row['name'].">";
-					$session_var.=$row['value'];
-					$session_var.="</".$row['name'].">";
+					$response_object['data'][$row['name']]=$row['value'];
 				}
 				
 				/////setting forms and reports session variables for selective display
@@ -55,10 +50,9 @@ use RetailingEssentials\db_connect;
 				{
 					$forms.=$row['name']."-";
 				}
-				$session_var.="<forms>";
-				$session_var.=$forms;
-				$session_var.="</forms>";
 				
+				$response_object['data']['forms']=$forms;
+								
 				$reports="";
 				$stmt1=$conn->conn->prepare("select name from user_preferences where type=? and value=? and status=?");
 				$stmt1->execute(array('report','checked','active'));
@@ -66,12 +60,8 @@ use RetailingEssentials\db_connect;
 				{
 					$reports.=$row['name']."-";
 				}
-				$session_var.="<reports>";
-				$session_var.=$reports;
-				$session_var.="</reports>";
 				
-				$_SESSION['forms']=$forms;
-				$_SESSION['reports']=$reports;
+				$response_object['data']['reports']=$reports;				
 				
 				//////////////////////////////////////////////////////
 				
@@ -83,10 +73,9 @@ use RetailingEssentials\db_connect;
 				{
 					$read_access.=$row['element_id']."-";
 				}
-				$session_var.="<re>";
-				$session_var.=$read_access;
-				$session_var.="</re>";
 				
+				$response_object['data']['re']=$read_access;				
+								
 				$create_access="";
 				$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.cr=? and c.status=? union select b.element_id from user_role_mapping a, access_control b where b.username=a.role_name and a.username=? and b.cr=? and b.status=?");
 				$stmt1->execute(array($user,'checked','active',$user,'checked','active'));
@@ -94,9 +83,8 @@ use RetailingEssentials\db_connect;
 				{
 					$create_access.=$row['element_id']."-";
 				}
-				$session_var.="<cr>";
-				$session_var.=$create_access;
-				$session_var.="</cr>";
+				
+				$response_object['data']['cr']=$create_access;				
 				
 				$update_access="";
 				$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.up=? and c.status=? union select b.element_id from user_role_mapping a, access_control b where b.username=a.role_name and a.username=? and b.up=? and b.status=?");
@@ -105,9 +93,8 @@ use RetailingEssentials\db_connect;
 				{
 					$update_access.=$row['element_id']."-";
 				}
-				$session_var.="<up>";
-				$session_var.=$update_access;
-				$session_var.="</up>";
+				
+				$response_object['data']['up']=$update_access;				
 				
 				$del_access="";
 				$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.del=? and c.status=? union select b.element_id from user_role_mapping a,access_control b where b.username=a.role_name and a.username=? and b.del=? and b.status=?");
@@ -116,42 +103,40 @@ use RetailingEssentials\db_connect;
 				{
 					$del_access.=$row['element_id']."-";
 				}
-				$session_var.="<del>";
-				$session_var.=$del_access;
-				$session_var.="</del>";
 				
-				$_SESSION['re']=$read_access;
-				$_SESSION['cr']=$create_access;
-				$_SESSION['up']=$update_access;
-				$_SESSION['del']=$del_access;
+				$response_object['data']['del']=$del_access;								
 				
 				$user_roles="";
 				$stmt1=$conn->conn->prepare("select role_name from user_role_mapping where username=? and status=?");
 				$stmt1->execute(array($user,'active'));
 				while ($row=$stmt1->fetch(PDO::FETCH_ASSOC))
 				{
-					$user_roles.=$row['role_name']."-";
+					$user_roles.=$row['role_name']."--";
 				}
-				$session_var.="<user_roles>";
-				$session_var.=$user_roles;
-				$session_var.="</user_roles>";
+				
+				$response_object['data']['user_roles']=$user_roles;				
 				
 				//////setting username and name
 				$stmt2=$conn->conn->prepare("select staff.name,staff.acc_name from staff,accounts where accounts.username=? and staff.acc_name=accounts.acc_name union select customers.name,customers.acc_name from customers,accounts where accounts.username=? and customers.acc_name=accounts.acc_name union select suppliers.name,suppliers.acc_name from suppliers,accounts where accounts.username=? and suppliers.acc_name=accounts.acc_name");
 				$stmt2->execute(array($user,$user,$user));
 				$row2=$stmt2->fetch(PDO::FETCH_ASSOC);
-				$session_var.="<username>";
-				$session_var.=$user;
-				$session_var.="</username>";
-				$session_var.="<name>";
-				$session_var.=$row2['name'];
-				$session_var.="</name>";
-				$session_var.="<acc_name>";
-				$session_var.=$row2['acc_name'];
-				$session_var.="</acc_name>";
 
-				$session_var.="</session>";
-				$status=$session_var;
+				$response_object['data']['username']=$user;							
+				$response_object['data']['name']=$row2['name'];				
+				$response_object['data']['acc_name']=$row2['acc_name'];				
+
+				//setting up php session variables
+				$_SESSION['session']='yes';
+				$_SESSION['domain']=$domain;
+				$_SESSION['username']=$user;
+				
+				$_SESSION['forms']=$forms;
+				$_SESSION['reports']=$reports;
+
+				$_SESSION['re']=$read_access;
+				$_SESSION['cr']=$create_access;
+				$_SESSION['up']=$update_access;
+				$_SESSION['del']=$del_access;
 				$_SESSION['name']=$row2['name'];
 			}
 		}
@@ -159,11 +144,11 @@ use RetailingEssentials\db_connect;
 	catch(PDOException $ex)
 	{
 		$status="failed_auth";
+		$response_object="{'status':'Invalid session'}";
 	}
-	if($status!="failed_auth")
-	{
-		header ("Content-Type:text/xml");
-	}
-	echo $status;
+	
+	$jsonresponse=json_encode($response_object);		
+	header ("Content-Type:application/json");
+	echo $jsonresponse;
 
 ?>
