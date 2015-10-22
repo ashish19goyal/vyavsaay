@@ -22429,6 +22429,7 @@ function form213_ini()
 	{
 		results.forEach(function(result)
 		{
+			//console.log(result.detail);
 			var row_class="";
 			if(result.status=='closed')
 			{
@@ -22458,7 +22459,7 @@ function form213_ini()
 						rowsHTML+="<input type='button' class='delete_icon' form='form213_"+result.id+"' onclick='form213_delete_item($(this));'>";
 					if(result.status!='closed')					
 					{					
-						rowsHTML+="<br><input type='button' class='generic_icon' form='form213_"+result.id+"' value='Follow-up' onclick=\"modal134_action('"+result.id+"','"+result.customer+"','"+result.detail+"');\">";
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form213_"+result.id+"' value='Follow-up' name='followup'>";
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form213_"+result.id+"' value='Update Contact' onclick=\"modal145_action('"+result.customer+"');\">";
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form213_"+result.id+"' value='Close Lead' onclick=\"modal153_action(this,'"+result.id+"');\">";
 					}					
@@ -22468,7 +22469,13 @@ function form213_ini()
 			$('#form213_body').append(rowsHTML);
 			var fields=document.getElementById("form213_"+result.id);
 			var identified_filter=fields.elements[3];
+			var followup_button=fields.elements['followup'];
 			
+			$(followup_button).on('click',function () 
+			{
+				modal134_action(result.id,result.customer,result.detail);
+			});
+
 			var identified_data="<staff>"+
 								"<acc_name></acc_name>"+
 								"</staff>";

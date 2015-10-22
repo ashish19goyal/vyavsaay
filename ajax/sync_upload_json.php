@@ -45,10 +45,12 @@
 	include_once "../Classes/sms.php";
 	include_once "../Classes/mailer.php";	
 	include_once "../Classes/db.php";
+	include_once "../Classes/s3_objects.php";
 
 	use RetailingEssentials\send_mailer;
 	use RetailingEssentials\db_connect;
 	use RetailingEssentials\send_sms;
+	use RetailingEssentials\s3_object;
 	
 	//username required to identify the database
 	$domain=$_POST['domain'];
@@ -257,6 +259,9 @@
 				
 				$email_instance=new send_mailer();
 				$email_instance->send_stored_mailer($domain);
+
+				$s3_instance=new s3_object();
+				$s3_instance->transfer_stored_objects($domain);
 			}
 			
 			$return_data=json_encode($ids_for_update);

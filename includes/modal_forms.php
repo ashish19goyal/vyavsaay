@@ -1,4 +1,4 @@
-<div id='newsletter_print_div' style='width:8in;background-color:#fff;padding:2px;'>xyz</div>
+<!--<div id='newsletter_print_div' style='width:8in;background-color:#fff;padding:2px;'>xyz</div>-->
 <div id='pdf_print_div' style='width:8in;background-color:#fff;padding:2px;'>xyz</div>
 
 <div class='modal_forms'>

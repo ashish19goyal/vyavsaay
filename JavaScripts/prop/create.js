@@ -16781,13 +16781,14 @@ function form233_create_item()
 				}
 				else
 				{
-					var s3_xml="<s3_object>"+
+					var s3_xml="<s3_objects>"+
 								"<id>"+(new_key+counter)+"</id>"+
 								"<data_blob>"+blob+"</data_blob>"+
 								"<name>"+blob_name+"</name>"+
 								"<type>image/jpeg</type>"+
+								"<status>pending</status>"+
 								"<last_updated>"+get_my_time()+"</last_updated>"+
-								"</s3_object>";
+								"</s3_objects>";
 					create_simple(s3_xml);			
 				}
 				console.log('image saved');
