@@ -3638,6 +3638,61 @@
 			<tables>--production_plan_items--batch_raw_material--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form257</name>
+			<display_name>user_accounts</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--accounts--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form258</name>
+			<display_name>create_quotation_nvs</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--quotation--quotation_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form259</name>
+			<display_name>manage_quotations_nvs</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--quotation--quotation_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form260</name>
+			<display_name>inventory_spares</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--product_master--product_instances--inventory_adjust--bill_items--supplier_bill_items--customer_return_items--supplier_return_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form261</name>
+			<display_name>bank_accounts</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--bank_accounts--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -6911,6 +6966,61 @@
 			<username>master</username>
 			<element_id>form256</element_id>
 			<element_name>batch_info</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form257</element_id>
+			<element_name>user_accounts</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form258</element_id>
+			<element_name>create_quotation_nvs</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form259</element_id>
+			<element_name>manage_quotations_nvs</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form260</element_id>
+			<element_name>inventory_spares</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form261</element_id>
+			<element_name>bank_accounts</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

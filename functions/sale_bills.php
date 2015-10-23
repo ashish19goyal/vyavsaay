@@ -18,6 +18,8 @@
 			<li><a id='form108_link' href='#form108' onclick='form108_header_ini(); form108_ini();' data-i18n='form.manage_order'></a></li>
 			<li><a id='form152_link' href='#form152' onclick='form152_header_ini(); form152_ini();' data-i18n='form.manage_quotations'></a></li>
 			<li><a id='form153_link' href='#form153' onclick='form153_header_ini(); form153_ini();' data-i18n='form.prepare_quotation'></a></li>
+			<li><a id='form259_link' href='#form259' onclick='form259_header_ini(); form259_ini();' data-i18n='form.manage_quotations'></a></li>
+			<li><a id='form258_link' href='#form258' onclick='form258_header_ini(); form258_ini();' data-i18n='form.prepare_quotation'></a></li>
 			<li><a id='form15_link' href='#form15' onclick="form15_header_ini(); form15_ini();" data-i18n='form.enter_returns'></a></li>
 			<li><a id='form16_link' href='#form16' onclick='form16_header_ini(); form16_ini();' data-i18n='form.manage_returns'></a></li>
 			<li><a id='form82_link' href='#form82' onclick='form82_header_ini();' data-i18n='form.scan_items'></a></li>
@@ -49,6 +51,8 @@
 			include "forms/form108.php";
 			include "forms/form152.php";
 			include "forms/form153.php";
+			include "forms/form259.php";
+			include "forms/form258.php";
 			include "forms/form15.php";		
 			include "forms/form16.php";
 			include "forms/form82.php";		

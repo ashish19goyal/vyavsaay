@@ -375,6 +375,18 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</receipts>
+	<bank_accounts>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="TEXT"></name>
+			<bank index='yes' type="TEXT"></bank>
+			<branch index='yes' type="TEXT"></branch>
+			<account_name index='yes' type="TEXT"></account_name>
+			<account_num index='yes' type="TEXT"></account_num>
+			<ifsc index='no' type="TEXT"></ifsc>
+			<status index='yes' type="VARCHAR(20)"></status><!--active/inactive-->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</bank_accounts>
 	<payments>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<acc_name index='yes' type="TEXT"></acc_name>
@@ -1475,7 +1487,7 @@
 			<total index='no' type="DECIMAL(12,2)"></total>
 			<discount index='no' type="DECIMAL(12,2)"></discount>
 			<offer index='no' type="TEXT"></offer>
-			<type index='yes' type="VARCHAR(10)"></type><!-- service/product -->	
+			<type index='yes' type="VARCHAR(10)"></type><!-- service/product/spare -->	
 			<notes index='no' type="TEXT"></notes>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<last_updated index='yes' type="BIGINT"></last_updated>

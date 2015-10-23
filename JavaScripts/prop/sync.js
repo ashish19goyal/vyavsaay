@@ -167,6 +167,9 @@ function sync_server_to_local(func)
 		var online_counter=50;
 		var sync_download_complete=setInterval(function()
 		{
+			console.log("aj"+number_active_ajax);
+			console.log("l"+localdb_open_requests);
+			
 			if(online_counter>0)
 			{
 				online_counter-=1;

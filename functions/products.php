@@ -10,6 +10,7 @@
 			<li><a id='form207_link' href='#form207' onclick='form207_header_ini(); form207_ini();' data-i18n='form.update_inventory'></a></li>
 			<li><a id='form183_link' href='#form183' onclick='form183_header_ini(); form183_ini();' data-i18n='form.inventory_finished'></a></li>
 			<li><a id='form238_link' href='#form238' onclick='form238_header_ini(); form238_ini();' data-i18n='form.inventory_raw_cps'></a></li>
+			<li><a id='form260_link' href='#form260' onclick='form260_header_ini(); form260_ini();' data-i18n='form.inventory_spares'></a></li>
 			<li><a id='form227_link' href='#form227' onclick='form227_header_ini(); form227_ini();' data-i18n='form.update_inventory'></a></li>
 			<li><a id='form234_link' href='#form234' onclick='form234_header_ini(); form234_ini();' data-i18n='form.manage_products'></a></li>
 			<li><a id='form228_link' href='#form228' onclick='form228_header_ini(); form228_ini();' data-i18n='form.demo'></a></li>
@@ -52,6 +53,7 @@
 			include "forms/form207.php";
 			include "forms/form183.php";
 			include "forms/form238.php";
+			include "forms/form260.php";
 			include "forms/form227.php";
 			include "forms/form234.php";
 			include "forms/form228.php";

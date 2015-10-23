@@ -441,6 +441,11 @@
 	"customer_leads":"Customer Support",
 	"telecalling_leads":"Telecalling Support",
 	"marketing_leads":"Marketing Support",
-	"batch_info":"Batch Information"
+	"batch_info":"Batch Information",
+	"user_accounts":"User Accounts",
+	"create_quotation_nvs":"Create Quotation (NVS)",
+	"manage_quotations_nvs":"Manage Quotations (NVS)",
+	"inventory_spares":"Inventory (Spares)",
+	"bank_accounts":"Bank Accounts"
 	}
 }
