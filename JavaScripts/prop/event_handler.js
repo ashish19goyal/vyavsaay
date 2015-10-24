@@ -431,7 +431,9 @@ function hide_all()
 	$("#all_activities_box").hide();
 	$("#notifications_box").hide();
 	
-	//hide all functions
+//	hide_all_grids();
+
+	
 	$("#sale_bills_main").hide();
 	$("#logistics_main").hide();
 	$("#orders_main").hide();
@@ -440,22 +442,19 @@ function hide_all()
 	$("#products_main").hide();
 	$("#purchase_main").hide();
 	$("#services_main").hide();
-	//$("#inventory_main").hide();
 	$("#finances_main").hide();
 	$("#ecommerce_main").hide();
 	$("#people_main").hide();
-	//$("#customers_main").hide();
 	$("#customer_service_main").hide();
 	$("#treatment_main").hide();
 	$("#projects_main").hide();
-	//$("#suppliers_main").hide();
-	//$("#staff_main").hide();
 	$("#store_main").hide();
 	$("#offers_main").hide();
 	$("#maps_main").hide();
 	$("#manufacturing_main").hide();
 	$("#sale_reports_main").hide();
 	$("#admin_main").hide();
+
 	hide_menu_items();
 	
 	$("#home_grid").hide();

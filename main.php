@@ -1,6 +1,5 @@
 <?php 
-	include "includes/header.php";
-	
+	include "includes/header.php";	
 ?>	
 	<script type='text/javascript'>
 			history.pushState(null, null, 'main.php');
@@ -17,7 +16,10 @@
 	
 	echo "<div id='content_box'>";
 		//central grid display for reports
+		
 		include "includes/grids.php";	
+		//include "includes/grids_dynamic.php";
+		
 		//display for search results, notifications and opportunities
 		include "functions/search.php";
 		include "functions/notifications.php";

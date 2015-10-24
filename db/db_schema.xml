@@ -1560,6 +1560,17 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</system_grid_metrics>
+	<system_grids>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="TEXT"></name>
+			<display_name index='no' type="TEXT"></display_name>
+			<head_color index='no' type="VARCHAR(10)"></head_color>
+			<back_color index='no' type="VARCHAR(10)"></back_color>
+			<status index='yes' type="VARCHAR(30)"></status><!--active/inactive-->
+			<elements index='no' type="TEXT"></elements>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</system_grids>
 	<letterheads>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="TEXT"></name>

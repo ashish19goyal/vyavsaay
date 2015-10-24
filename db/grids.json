@@ -1,0 +1,168 @@
+{
+	"re_xml":
+	{
+		"system_grids":
+		[
+			{
+				"name":"sales",
+				"display_name":"Sales",
+				"head_color":"#c44030",
+				"back_color":"#E66051",
+				"status": "active",
+				"elements": "[]"
+			},
+			{
+				"name":"purchase",
+				"display_name":"Purchase",
+				"head_color":"#52bda3",
+				"back_color":"#74dfc5",
+				"status": "active",
+				"elements": "[]"
+			},
+			{
+				"name":"finances",
+				"display_name":"Finances",
+				"head_color":"#946bba",
+				"back_color":"#b2a0cf",
+				"status": "active",
+				"elements": "[]"
+			},
+			{
+				"name":"products",
+				"display_name":"Products",
+				"head_color":"#008279",
+				"back_color":"#22a49b",
+				"status": "active",
+				"elements": "[]"
+			},
+			{
+				"name":"services",
+				"display_name":"Services",
+				"head_color":"#69a4ab",
+				"back_color":"#8bc6cd",
+				"status": "active",
+				"elements": "[]"
+			},
+			{
+				"name":"customer_service",
+				"display_name":"Customer Service",
+				"head_color":"#0f2042",
+				"back_color":"#314264",
+				"status": "active",
+				"elements": "[]"
+			},
+			{
+				"name":"treatment",
+				"display_name":"Treatment",
+				"head_color":"#0f2042",
+				"back_color":"#314264",
+				"status": "active",
+				"elements": "[]"
+			},
+			{
+				"name":"logistics",
+				"display_name":"Logistics",
+				"head_color":"#DA9110",
+				"back_color":"#FCA33B",
+				"status": "active",
+				"elements": "[]"
+			},
+			{
+				"name":"orders",
+				"display_name":"Orders",
+				"head_color":"#1D676A",
+				"back_color":"#3F898C",
+				"status": "active",
+				"elements": "[]"
+			},
+			{
+				"name":"drs",
+				"display_name":"DRS",
+				"head_color":"#F1433F",
+				"back_color":"#F3655F",
+				"status": "active",
+				"elements": "[]"
+			},
+			{
+				"name":"transit",
+				"display_name":"Transit",
+				"head_color":"#4BA69D",
+				"back_color":"#6DC8BF",
+				"status": "active",
+				"elements": "[]"
+			},
+			{
+				"name":"people",
+				"display_name":"People",
+				"head_color":"#BD8D29",
+				"back_color":"#DFAF4B",
+				"status": "active",
+				"elements": "[]"
+			},
+			{
+				"name":"projects",
+				"display_name":"Projects",
+				"head_color":"#4B3C39",
+				"back_color":"#7E6F6C",
+				"status": "active",
+				"elements": "[]"
+			},
+			{
+				"name":"store",
+				"display_name":"Store",
+				"head_color":"#a1b228",
+				"back_color":"#c3e44a",
+				"status": "active",
+				"elements": "[]"
+			},
+			{
+				"name":"ecommerce",
+				"display_name":"Ecommerce",
+				"head_color":"#f14112",
+				"back_color":"#ff6334",
+				"status": "active",
+				"elements": "[]"
+			},
+			{
+				"name":"offers",
+				"display_name":"offers",
+				"head_color":"#085698",
+				"back_color":"#2a78ba",
+				"status": "active",
+				"elements": "[]"
+			},
+			{
+				"name":"manufacturing",
+				"display_name":"Manufacturing",
+				"head_color":"#807377",
+				"back_color":"#B39699",
+				"status": "active",
+				"elements": "[]"
+			},
+			{
+				"name":"maps",
+				"display_name":"maps",
+				"head_color":"#946bba",
+				"back_color":"#b2a0cf",
+				"status": "active",
+				"elements": "[]"
+			},
+			{
+				"name":"reports",
+				"display_name":"Reports",
+				"head_color":"#ce1b6d",
+				"back_color":"#ef3d8f",
+				"status": "active",
+				"elements": "[]"
+			},
+			{
+				"name":"admin",
+				"display_name":"Admin",
+				"head_color":"#43196b",
+				"back_color":"#652b8d",
+				"status": "active",
+				"elements": "[]"
+			}
+		]
+	}
+}

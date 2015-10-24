@@ -22,6 +22,7 @@ class user_setup
 		$this->get_data_from_xml('demo_user_db_data.xml');
 		$this->get_data_from_xml('user_demo_data.xml');
 		$this->get_data_from_json('grid_metrics.json');
+		$this->get_data_from_json('grids.json');
 	}
 
 	public function __destruct()
