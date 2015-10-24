@@ -53,7 +53,10 @@ function login_online(username,domain,pass)
 {
 	ajax_json("./ajax_json/login.php",{domain:domain,user:username,pass:pass},function(response_object)
 	{
-		if(response_object.status=="Invalid session")
+		//console.log(response_object);
+		//console.log(response_object.status);
+		
+		if(response_object.status=="Failed Authentication")
 		{
 			//console.log('failed because of db problem');					
 			document.getElementById("failed_auth").innerHTML="Login failed, try again!";

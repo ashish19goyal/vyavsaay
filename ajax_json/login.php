@@ -20,7 +20,7 @@ use RetailingEssentials\db_connect;
 		
 		if(!$stmt || $stmt->rowCount()!=1)
 		{
-			$response_object="{'status':'Invalid session'}";
+			$response_object['status']='Failed Authentication';
 		}
 		else
 		{
@@ -28,7 +28,7 @@ use RetailingEssentials\db_connect;
 			$pass_hash=$row['password'];
 			if(!password_verify($pass,$pass_hash))
 			{
-				$response_object="{'status':'Invalid session'}";
+				$response_object['status']='Failed Authentication';			
 			}
 			else	
 			{
@@ -143,8 +143,7 @@ use RetailingEssentials\db_connect;
 	}
 	catch(PDOException $ex)
 	{
-		$status="failed_auth";
-		$response_object="{'status':'Invalid session'}";
+		$response_object['status']='Failed Authentication';
 	}
 	
 	$jsonresponse=json_encode($response_object);		

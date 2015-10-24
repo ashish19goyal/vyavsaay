@@ -33,7 +33,7 @@ function ajax_json(url,kvp,func)
 		},
 		success: function(return_data,return_status,e)
 		{
-			console.log(e.responseText);
+			//console.log(e.responseText);
 			var response_object=JSON.parse(e.responseText);
 				
 			if(response_object.status=="Invalid session")
@@ -52,7 +52,7 @@ function ajax_json(url,kvp,func)
 						var user_kvp={domain:domain,user:user,pass:pass};
 						ajax_json("./ajax_json/login.php",user_kvp,function(response_object)
 						{
-							if(response_object.status=="Invalid session")
+							if(response_object.status=="Failed Authentication")
 							{
 								alert("Password is incorrect. Aborting operation.");
 								delete_session();
@@ -88,6 +88,7 @@ function ajax_json(url,kvp,func)
 			}
 			else
 			{
+				//console.log('here');
 				number_active_ajax-=1;
 				func(response_object);
 			}
