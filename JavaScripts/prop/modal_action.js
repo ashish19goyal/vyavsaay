@@ -611,18 +611,11 @@ function modal11_action(func)
 						"<description>"+notes+"</description>" +
 						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
 						"<type>customer</type>" +
+						"<username></username>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</accounts>";
-			if(is_online())
-			{
-				server_create_row_func(data_xml,activity_xml,func);
-				server_create_simple(account_xml);
-			}
-			else
-			{
-				local_create_row_func(data_xml,activity_xml,func);
-				local_create_simple(account_xml);
-			}	
+			create_row_func(data_xml,activity_xml,func);
+			create_simple(account_xml);
 			
 			var business_title=get_session_var('title');
 			var sms_message="Hi "+name+", thanks for being a valuable customer of "+business_title+". Please visit again.";
@@ -733,6 +726,7 @@ function modal12_action(func)
 					"<id>"+data_id+"</id>" +
 					"<acc_name unique='yes'>"+name+"</acc_name>" +
 					"<type>"+type+"</type>" +
+					"<username></username>"+
 					"<description>"+description+"</description>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</accounts>";
@@ -744,14 +738,7 @@ function modal12_action(func)
 					"<notes>New account "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_create_row_func(data_xml,activity_xml,func);
-		}
-		else
-		{
-			local_create_row_func(data_xml,activity_xml,func);
-		}	
+		create_row_func(data_xml,activity_xml,func);
 		
 		var id=get_new_key();
 		$("#modal12_attributes").find('input, select').each(function()
@@ -907,18 +894,11 @@ function modal13_action(func)
 						"<description>"+notes+"</description>" +
 						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
 						"<type>supplier</type>" +
+						"<username></username>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</accounts>";
-			if(is_online())
-			{
-				server_create_row_func(data_xml,activity_xml,func);
-				server_create_simple(account_xml);
-			}
-			else
-			{
-				local_create_row_func(data_xml,activity_xml,func);
-				local_create_simple(account_xml);
-			}	
+			create_row_func(data_xml,activity_xml,func);
+			create_simple(account_xml);
 			
 			var id=get_new_key();
 			$("#modal13_attributes").find('input, select').each(function()
@@ -1309,10 +1289,13 @@ function modal16_action(func)
 						"<notes>Staff "+name+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
+			var username_string="<username unique='yes'>"+username+"</username>";			
+			if(username=="")
+				username_string="<username></username>";			
 			var account_xml="<accounts>" +
 						"<id>"+data_id+"</id>" +
 						"<description>account for staff "+name+"</description>" +
-						"<username unique='yes'>"+username+"</username>" +
+						username_string+
 						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
 						"<type>staff</type>" +
 						"<status>active</status>"+						
@@ -7787,6 +7770,7 @@ function modal118_action()
 								"<id>"+data_id+"</id>" +
 								"<acc_name unique='yes'>"+acc_name+"</acc_name>" +
 								"<type>customer</type>" +
+								"<username></username>"+
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</accounts>";
 			        		
@@ -11473,7 +11457,7 @@ function modal149_action()
 			                "<len>"+row['Length(cms)']+"</len>"+
 			                "<breadth>"+row['Breadth(cms)']+"</breadth>"+
 			                "<height>"+row['Height(cms)']+"</height>"+
-			                "<sku>"+row['Product name']+"</sku>"+
+			                //"<sku>"+row['Product name']+"</sku>"+
 			                "<order_history>"+order_history_string+"</order_history>"+
 			                "<status>picked</status>"+
 			                "<last_updated>"+last_updated+"</last_updated>" +
@@ -12913,6 +12897,7 @@ function modal161_action(support_type,func)
 						"<description></description>" +
 						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
 						"<type>customer</type>" +
+						"<username></username>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</accounts>";
 			var attribute_xml="<attributes>" +

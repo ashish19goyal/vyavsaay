@@ -27,7 +27,6 @@ function form1_header_ini()
 	set_my_filter(batch_data,batches_filter);
 };
 
-
 /**
  * @form Create Newsletter
  * @formNo 2
@@ -9900,4 +9899,96 @@ function form256_header_ini()
 	id_filter.value="";
 	
 	$('#form256_body').html("");
+}
+
+/**
+ * @form User Accounts
+ * @formNo 257
+ */
+function form257_header_ini()
+{
+	var filter_fields=document.getElementById('form257_header');	
+	var names_filter=filter_fields.elements[0];
+	var username_filter=filter_fields.elements[1];
+	var type_filter=filter_fields.elements[2];
+	var status_filter=filter_fields.elements[3];
+	
+	//setting autocompletes 
+	var names_data="<accounts>" +
+			"<acc_name></acc_name>" +
+			"</accounts>";
+	set_my_filter(names_data,names_filter);
+
+
+	var username_data="<accounts>" +
+			"<username></username>" +
+			"</accounts>";
+	set_my_filter(username_data,username_filter);
+	
+	set_static_filter('accounts','status',status_filter);
+	set_static_filter('accounts','type',type_filter);	
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form257_ini();
+	});	
+}
+
+/**
+ * @form Inventory (Spares)
+ * @formNo 260
+ */
+function form260_header_ini()
+{
+	var filter_fields=document.getElementById('form260_header');	
+	var name_filter=filter_fields.elements[0];
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form260_ini();
+	});
+
+	var item_data="<attributes>" +
+		"<name></name>" +
+		"<type exact='yes'>product</type>"+
+		"<value exact='yes'>yes</value>"+
+		"<attribute exact='yes'>Spare Part</attribute>"+
+		"</attributes>";	
+	set_my_filter(item_data,name_filter);
+};
+
+/**
+ * @form Bank Accounts
+ * @formNo 261
+ */
+function form261_header_ini()
+{
+	var filter_fields=document.getElementById('form261_header');	
+	var name_filter=filter_fields.elements[0];
+	var bank_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+	
+	//setting autocompletes 
+	var name_data="<bank_accounts>" +
+			"<name></name>" +
+			"</bank_accounts>";
+	set_my_filter(name_data,name_filter);
+
+	var bank_data="<bank_accounts>" +
+			"<bank></bank>" +
+			"</bank_accounts>";
+	set_my_filter(bank_data,bank_filter);
+	
+	set_static_filter('bank_accounts','status',status_filter);	
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form261_ini();
+	});	
 }

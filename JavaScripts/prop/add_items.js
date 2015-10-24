@@ -15520,7 +15520,6 @@ function form255_add_item()
 	}		
 }
 
-
 /**
  * @form Batch Info
  * @formNo 256
@@ -15583,6 +15582,148 @@ function form256_add_item()
 		});		
 		longPressEditable($('.dblclick_editable'));
 			
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
+ * @form User Accounts
+ * @formNo 257
+ */
+function form257_add_item()
+{
+	if(is_create_access('form257'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form257_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Name'>";
+				rowsHTML+="<input type='text' form='form257_"+id+"' required value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Username'>";
+				rowsHTML+="<input type='text' form='form257_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Password'>";
+				rowsHTML+="<input type='password' class='dblclick_editable' required form='form257_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Type'>";
+				rowsHTML+="<input type='text' readonly='readonly' form='form257_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' required form='form257_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form257_"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form257_"+id+"'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form257_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form257_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form257_"+id);
+		var name_filter=fields.elements[0];
+		var type_filter=fields.elements[3];
+		var status_filter=fields.elements[4];
+		var id_filter=fields.elements[5];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form257_update_item(fields);
+		});
+			
+		$(name_filter).on('blur',function ()
+		{
+			var type_data="<accounts>"+
+						"<id></id>"+
+						"<type></type>"+
+						"<status></status>"+
+						"<acc_name exact='yes'>"+name_filter.value+"</acc_name>"+						
+						"</accounts>";
+			fetch_requested_data('',type_data,function (accounts) 
+			{
+				if(accounts.length>0)
+				{
+					type_filter.value=accounts[0].type;
+					status_filter.value=accounts[0].status;
+					id_filter.value=accounts[0].id;					
+				}
+			});
+		});				
+
+		var list_data=new Object();
+				list_data.count=0;
+				list_data.start_index=0;
+				list_data.data_store='accounts';		
+				list_data.return_column='acc_name';				
+				list_data.indexes=[{index:'username',array:['',null,'null']}];
+	
+		set_my_value_list_json(list_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		});
+		
+		set_static_value_list('accounts','status',status_filter);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
+ * @form User Accounts
+ * @formNo 261
+ */
+function form261_add_item()
+{
+	if(is_create_access('form261'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form261_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Name'>";
+				rowsHTML+="<input type='text' form='form261_"+id+"' required value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Bank'>";
+				rowsHTML+="<b>Bank</b>:<input type='text' class='dblclick_editable' form='form261_"+id+"' required>";
+				rowsHTML+="<br><b>Branch</b>:<textarea class='dblclick_editable' form='form261_"+id+"'></textarea>";
+				rowsHTML+="<br><b>IFSC</b>:<input type='text' class='dblclick_editable' form='form261_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Account'>";
+				rowsHTML+="<b>Name</b>: <input type='text' form='form261_"+id+"' required class='dblclick_editable'>";
+				rowsHTML+="<br><b>Account #</b>: <input type='text' form='form261_"+id+"' required class='dblclick_editable'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' required form='form261_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form261_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form261_"+id+"'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form261_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form261_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form261_"+id);
+		var status_filter=fields.elements[6];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form261_create_item(fields);
+		});
+					
+		set_static_value_list('bank_accounts','status',status_filter);
 	}
 	else
 	{

@@ -2637,14 +2637,7 @@ function form51_update_item(form)
 					"<status>active</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</access_control>";	
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}	
+		update_simple(data_xml);
 		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -2687,14 +2680,8 @@ function form51_update_form()
 						"<notes>Access for "+username+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_update_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_update_row(data_xml,activity_xml);
-			}
+			update_row(data_xml,activity_xml);
+			
 			
 			$("[id^='save_form51_']").click();
 		}
@@ -2721,14 +2708,8 @@ function form51_update_form()
 							"<notes>Access for "+username+"</notes>" +
 							"<updated_by>"+get_name()+"</updated_by>" +
 							"</activity>";
-				if(is_online())
-				{
-					server_update_row(data_xml,activity_xml);
-				}
-				else
-				{
-					local_update_row(data_xml,activity_xml);
-				}
+				update_row(data_xml,activity_xml);
+				
 				
 				$("[id^='save_form51_']").click();
 			}, function() {});
@@ -13745,4 +13726,104 @@ function form256_update_form()
 	{
 		$("#modal2").dialog("open");
 	}	
+}
+
+/**
+ * @form User accounts
+ * @param button
+ */
+function form257_update_item(form)
+{
+	if(is_update_access('form257'))
+	{
+		var name=form.elements[0].value;
+		var username=form.elements[1].value;
+		var password=form.elements[2].value;
+		var type=form.elements[3].value;
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var data_xml="<accounts>" +
+					"<id>"+data_id+"</id>" +
+					"<username unique='yes'>"+username+"</username>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</accounts>";
+		update_simple(data_xml);
+		
+		if(password!="" && password!="********")
+		{
+			var salt='$2a$10$'+get_domain()+'1234567891234567891234';
+			var salt_22=salt.substring(0, 29);
+			
+			var bcrypt = new bCrypt();
+			bcrypt.hashpw(password, salt_22, function(newhash)
+			{
+				var data_xml="<accounts>" +
+							"<id>"+data_id+"</id>" +
+							"<password>"+newhash+"</password>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</accounts>";
+				var activity_xml="<activity>" +
+							"<data_id>"+data_id+"</data_id>" +
+							"<tablename>accounts</tablename>" +
+							"<link_to>form257</link_to>" +
+							"<title>Updated</title>" +
+							"<notes>Password for "+username+"</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+				update_row(data_xml,activity_xml);				
+			}, function() {});
+		}
+		
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form User accounts
+ * @param button
+ */
+function form261_update_item(form)
+{
+	if(is_update_access('form261'))
+	{
+		var name=form.elements[0].value;
+		var bank=form.elements[1].value;
+		var branch=form.elements[2].value;
+		var ifsc=form.elements[3].value;
+		var acc_name=form.elements[4].value;
+		var acc_num=form.elements[5].value;
+		var status=form.elements[6].value;
+		var data_id=form.elements[7].value;
+		var last_updated=get_my_time();
+		var data_xml="<bank_accounts>" +
+					"<id>"+data_id+"</id>" +
+					"<name unique='yes'>"+name+"</name>" +
+					"<bank>"+bank+"</bank>" +
+					"<branch>"+branch+"</branch>" +
+					"<ifsc>"+ifsc+"</ifsc>" +
+					"<account_name>"+acc_name+"</account_name>" +
+					"<account_num>"+acc_num+"</account_num>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</bank_accounts>";
+		update_simple(data_xml);
+		
+		for(var i=0;i<7;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
 }

@@ -268,11 +268,14 @@ function get_limited_export_data(columns,filename,func)
 					"</activity>";
 		create_row(export_xml,activity_xml);
 		
-		results.forEach(function(result)
+		if(typeof func!='undefined')
 		{
-			func(result);
-		});
-
+			results.forEach(function(result)
+			{
+				func(result);
+			});
+		}
+		
 		var export_complete=setInterval(function()
 		{
 			//console.log(total_export_requests);

@@ -226,14 +226,8 @@ function form10_delete_item(button)
 						"<id>"+data_id+"</id>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
 						"</bill_items>";	
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-			}			
+			delete_simple(data_xml);
+						
 			$(button).parent().parent().remove();
 		});
 	}
@@ -264,14 +258,7 @@ function form12_delete_item(button)
 						"<id>"+data_id+"</id>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
 						"</bill_items>";	
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-			}
+			delete_simple(data_xml);
 					
 			$(button).parent().parent().remove();
 		});
@@ -313,14 +300,8 @@ function form14_delete_item(button)
 						"<notes>Task "+name+" assigned to "+assignee+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-			}	
+			delete_row(data_xml,activity_xml);
+				
 			$(button).parent().parent().remove();
 		});
 	}
@@ -360,17 +341,8 @@ function form15_delete_item(button)
 					"<batch>"+batch+"</batch>" +
 					"<source>sale return</source>" +
 					"</discarded>";
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-				server_delete_simple(discard_xml);
-				
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-				local_delete_simple(discard_xml);
-			}
+			delete_simple(data_xml);
+			delete_simple(discard_xml);
 					
 			$(button).parent().parent().remove();
 		});
@@ -418,16 +390,9 @@ function form16_delete_item(button)
 					"<id>"+transaction_id+"</id>" +
 					"</transactions>";
 	
-			if(is_online())
-			{
-				server_update_row(return_xml,activity_xml);
-				server_delete_simple(transaction_xml);
-			}
-			else
-			{
-				local_update_row(return_xml,activity_xml);
-				local_delete_simple(transaction_xml);
-			}	
+			update_row(return_xml,activity_xml);
+			delete_simple(transaction_xml);
+			
 			$(button).parent().parent().attr('style','opacity:0.5');
 			$(button).parent().parent().attr('title','This bill was cancelled');
 			$(button).hide();
@@ -452,16 +417,8 @@ function form16_delete_item(button)
 							"<transaction_id></transaction_id>" +
 							"</payments>";
 	
-					if(is_online())
-					{
-						server_delete_simple(pay_xml);
-						server_delete_simple(pt_xml);
-					}
-					else
-					{
-						local_delete_simple(pay_xml);
-						local_delete_simple(pt_xml);
-					}
+					delete_simple(pay_xml);
+					delete_simple(pt_xml);
 					break;
 				}
 			});
@@ -474,16 +431,9 @@ function form16_delete_item(button)
 					"<source>sale return</source>" +
 					"</discarded>";
 	
-			if(is_online())
-			{
-				server_delete_simple(items_data);
-				server_delete_simple(discard_xml);
-			}
-			else
-			{
-				local_delete_simple(items_data);
-				local_delete_simple(discard_xml);
-			}
+			delete_simple(items_data);
+			delete_simple(discard_xml);
+			
 		});
 	}
 	else
@@ -528,16 +478,8 @@ function form17_delete_item(button)
 					"<id>"+transaction_id+"</id>" +
 					"</transactions>";
 	
-			if(is_online())
-			{
-				server_delete_row(return_xml,activity_xml);
-				server_delete_simple(transaction_xml);
-			}
-			else
-			{
-				local_delete_row(return_xml,activity_xml);
-				local_delete_simple(transaction_xml);
-			}	
+			delete_row(return_xml,activity_xml);
+			delete_simple(transaction_xml);
 			$(button).parent().parent().remove();
 	
 			var payment_xml="<payments>" +
@@ -559,16 +501,8 @@ function form17_delete_item(button)
 							"<transaction_id></transaction_id>" +
 							"</payments>";
 	
-					if(is_online())
-					{
-						server_delete_simple(pay_xml);
-						server_delete_simple(pt_xml);
-					}
-					else
-					{
-						local_delete_simple(pay_xml);
-						local_delete_simple(pt_xml);
-					}
+					delete_simple(pay_xml);
+					delete_simple(pt_xml);
 					break;
 				}
 			});
@@ -581,16 +515,8 @@ function form17_delete_item(button)
 					"<source_id>"+data_id+"</source_id>" +
 					"<source>purchase return</source>" +
 					"</discarded>";
-			if(is_online())
-			{
-				server_delete_simple(items_data);
-				server_delete_simple(discard_xml);
-			}
-			else
-			{
-				local_delete_simple(items_data);
-				local_delete_simple(discard_xml);
-			}
+			delete_simple(items_data);
+			delete_simple(discard_xml);
 		});
 	}
 	else
@@ -631,17 +557,8 @@ function form19_delete_item(button)
 					"<batch>"+batch+"</batch>" +
 					"<source>purchase return</source>" +
 					"</discarded>";
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-				server_delete_simple(discard_xml);
-				
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-				local_delete_simple(discard_xml);
-			}
+			delete_simple(data_xml);
+			delete_simple(discard_xml);
 					
 			$(button).parent().parent().remove();
 		});
@@ -675,14 +592,7 @@ function form21_delete_item(button)
 						"<id>"+data_id+"</id>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
 						"</supplier_bill_items>";	
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-			}
+			delete_simple(data_xml);
 					
 			$(button).parent().parent().remove();
 		});
@@ -711,14 +621,8 @@ function form24_delete_item(button)
 			var data_xml="<purchase_order_items>" +
 						"<id>"+data_id+"</id>" +
 						"</purchase_order_items>";	
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-			}	
+			delete_simple(data_xml);
+				
 			$(button).parent().parent().remove();
 		});
 	}
@@ -764,18 +668,9 @@ function form30_delete_item(button)
 						"<name>"+acc_name+"</name>" +
 						"<type>customer</type>" +
 						"</attributes>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-				server_delete_simple(account_xml);
-				server_delete_simple(attribute_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-				local_delete_simple(account_xml);
-				local_delete_simple(attribute_xml);
-			}	
+			delete_row(data_xml,activity_xml);
+			delete_simple(account_xml);
+			delete_simple(attribute_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -821,14 +716,7 @@ function form35_delete_item(button)
 						"<notes>Offer "+offer_name+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-			}	
+			delete_row(data_xml,activity_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -870,14 +758,7 @@ function form38_delete_item(button)
 						"<notes>Item "+product_name+" from storage area "+name+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-			}	
+			delete_row(data_xml,activity_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -945,27 +826,13 @@ function form39_delete_item(button)
 					"<type>product</type>" +
 					"</reviews>";
 	
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-				server_delete_simple(other_delete);
-				server_delete_simple(other_delete2);
-				server_delete_simple(other_delete3);
-				server_delete_simple(other_delete4);
-				server_delete_simple(other_delete5);
-				server_delete_simple(other_delete6);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-				local_delete_simple(other_delete);
-				local_delete_simple(other_delete2);
-				local_delete_simple(other_delete3);
-				local_delete_simple(other_delete4);
-				local_delete_simple(other_delete5);
-				local_delete_simple(other_delete6);
-	
-			}	
+			delete_row(data_xml,activity_xml);
+			delete_simple(other_delete);
+			delete_simple(other_delete2);
+			delete_simple(other_delete3);
+			delete_simple(other_delete4);
+			delete_simple(other_delete5);
+			delete_simple(other_delete6);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -1011,18 +878,9 @@ function form40_delete_item(button)
 						"<type>supplier</type>" +
 						"</attributes>";
 						
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-				server_delete_simple(account_xml);
-				server_delete_simple(attribute_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-				local_delete_simple(account_xml);
-				local_delete_simple(attribute_xml);
-			}	
+			delete_row(data_xml,activity_xml);
+			delete_simple(account_xml);
+			delete_simple(attribute_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -1077,19 +935,10 @@ function form42_delete_item(button)
 			$(button).hide();
 			$(edit_button).hide();
 
-			if(is_online())
-			{
-				server_update_row(bill_xml,activity_xml);
-				server_delete_simple(transaction_xml);
-				server_delete_simple(points_xml);
-			}
-			else
-			{
-				local_update_row(bill_xml,activity_xml);
-				local_delete_simple(transaction_xml);
-				local_delete_simple(points_xml);
-			}	
-	
+			update_row(bill_xml,activity_xml);
+			delete_simple(transaction_xml);
+			delete_simple(points_xml);
+			
 			var payment_xml="<payments>" +
 					"<id></id>" +
 					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
@@ -1109,16 +958,8 @@ function form42_delete_item(button)
 							"<transaction_id></transaction_id>" +
 							"</payments>";
 	
-					if(is_online())
-					{
-						server_delete_simple(pay_xml);
-						server_delete_simple(pt_xml);
-					}
-					else
-					{
-						local_delete_simple(pay_xml);
-						local_delete_simple(pt_xml);
-					}
+					delete_simple(pay_xml);
+					delete_simple(pt_xml);
 					break;
 				}
 			});
@@ -1128,14 +969,7 @@ function form42_delete_item(button)
 					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
 					"</bill_items>";
 			
-			if(is_online())
-			{
-				server_delete_simple(items_data);
-			}
-			else
-			{
-				local_delete_simple(items_data);
-			}
+			delete_simple(items_data);
 				
 		});
 	}
@@ -1176,16 +1010,8 @@ function form43_delete_item(button)
 			var other_delete="<purchase_order_items>" +
 					"<order_id>"+data_id+"</order_id>" +
 					"</purchase_order_items>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-				server_delete_simple(other_delete);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-				local_delete_simple(other_delete);
-			}	
+			delete_row(data_xml,activity_xml);
+			delete_simple(other_delete);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -1228,16 +1054,8 @@ function form44_delete_item(button)
 			var other_delete="<newsletter_items>" +
 					"<nl_id>"+data_id+"</nl_id>" +
 					"</newsletter_items>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-				server_delete_simple(other_delete);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-				local_delete_simple(other_delete);
-			}	
+			delete_row(data_xml,activity_xml);
+			delete_simple(other_delete);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -1274,14 +1092,7 @@ function form46_delete_item(button)
 						"<notes>Setting "+name+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-			}	
+			delete_row(data_xml,activity_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -1386,14 +1197,7 @@ function form50_delete_item(button)
 						"<notes>Setting "+name+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-			}	
+			delete_row(data_xml,activity_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -8479,6 +8283,88 @@ function form256_delete_item(button)
 						"<id>"+data_id+"</id>" +
 						"</batch_raw_material>";
 			delete_simple(data_xml);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form User Accounts
+ * @param button
+ */
+function form257_delete_item(button)
+{
+	if(is_delete_access('form257'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var name=form.elements[0].value;
+			var username=form.elements[1].value;
+			var data_id=form.elements[5].value;
+			var data_xml="<accounts>" +
+						"<id>"+data_id+"</id>" +
+						"<username></username>" +
+						"<password></password>"+
+						"</accounts>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>accounts</tablename>" +
+						"<link_to>form257</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>User account for "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			var access_xml="<access_control>"+
+							"<username>"+username+"</username>"+
+							"</access_control>";
+							
+			delete_simple(access_xml);			
+			update_row(data_xml,activity_xml);
+			
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Bank Accounts
+ * @param button
+ */
+function form261_delete_item(button)
+{
+	if(is_delete_access('form261'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var name=form.elements[0].value;
+			var data_id=form.elements[7].value;
+			var data_xml="<bank_accounts>" +
+						"<id>"+data_id+"</id>" +
+						"</bank_accounts>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>bank_accounts</tablename>" +
+						"<link_to>form261</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Bank account "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+							
+			delete_row(data_xml,activity_xml);			
+			
 			$(button).parent().parent().remove();
 		});
 	}

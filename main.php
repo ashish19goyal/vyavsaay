@@ -1,5 +1,6 @@
 <?php 
 	include "includes/header.php";
+	
 ?>	
 	<script type='text/javascript'>
 			history.pushState(null, null, 'main.php');
@@ -22,6 +23,7 @@
 		include "functions/notifications.php";
 		include "functions/all_activities.php";
 		
+	
 		//display for each of the grids
 		include "functions/sale_bills.php";
 		include "functions/logistics.php";
@@ -32,12 +34,8 @@
 		include "functions/services.php";
 		include "functions/purchase.php";
 		include "functions/store.php";
-		//include "functions/inventory.php";
-		//include "functions/customers.php";
 		include "functions/customer_service.php";
 		include "functions/treatment.php";
-		//include "functions/staff.php";
-		//include "functions/suppliers.php";
 		include "functions/people.php";
 		include "functions/projects.php";
 		include "functions/offers.php";
@@ -47,6 +45,9 @@
 		include "functions/sale_reports.php";
 		include "functions/maps.php";
 		include "functions/admin.php";
+
+		//include "functions/dynamic.php";
+		
 		//display for settings
 		include "functions/settings.php";
  	echo "</div>";

@@ -174,7 +174,7 @@ class master_setup
 	public function __construct()
 	{
 		$this->conn=new db_connect(0);
-		$this->setup();
+		$this->setup_json();
 	}
 
 	public function __destruct()
@@ -182,7 +182,7 @@ class master_setup
 		unset($this->conn);
 	}
 
-	private function setup()
+	private function setup_xml()
 	{
 		//////////reading xml schema of the database
 		$db_schema_xml=new \DOMDocument();
@@ -211,6 +211,32 @@ class master_setup
 				}
 				echo "Table $table_name created successfully</br>";
 			}
+		}
+	}
+	
+	private function setup_json()
+	{
+		$file_json=file_get_contents("../db/master_db_schema.json");
+		$file = json_decode($file_json, true);
+		$parent_json=$file['re_xml'];
+		
+		foreach ($parent_json as $table_name => $table)
+	    {
+			$q_string="create table $table_name (";
+				
+			foreach ($table as $column_name => $column)
+			{
+				$q_string.=$column_name." ".$column['type']." ,";
+			}
+			$q_string.="PRIMARY KEY (id));";
+				
+			try{
+				$this->conn->conn->exec($q_string);
+			}catch(PDOException $ex)
+			{
+				echo "Could not create table $table_name: " .$ex->getMessage() ."</br>";
+			}
+			echo "Table $table_name created successfully</br>";			
 		}
 	}
 }

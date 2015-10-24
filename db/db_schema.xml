@@ -888,6 +888,8 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(30)" unique='yes'></name>
 			<display_name index="no" type="TEXT"></display_name>
+			<onclick index="no" type="TEXT"></onclick>
+			<func index="yes" type="TEXT"></func>
 			<value index='yes' type="TEXT"></value>
 			<type index='yes' type="VARCHAR(20)"></type><!-- function/report/form/accounting/other/template -->
 			<shortcut index='no' type="VARCHAR(40)"></shortcut>

@@ -118,7 +118,7 @@
 				if(isset($col['unequal']))
 				{
 					$query.=$col['index']." <> ? and ";
-					$values_array[]=$col['not'];
+					$values_array[]=$col['unequal'];
 				}
 				
 				if(isset($col['array']))

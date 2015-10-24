@@ -3,297 +3,34 @@
 	{
 		"user_profile":
 		{
-			"id":
-			{
-				"index": "no",
-				"type": "BIGINT NOT NULL AUTO_INCREMENT"
-			},
-			"username":
-			{
-				"index": "no",
-				"type": "VARCHAR(100) NOT NULL"
-			},
-			"phone":
-			{
-				"index": "no",
-				"type": "VARCHAR(15) NOT NULL"
-			},
-			"name":
-			{
-				"index": "no",
-				"type": "VARCHAR(90)"
-			},
-			"industry":
-			{
-				"index": "no",
-				"type": "VARCHAR(50)"
-			},
-			"status":
-			{
-				"index": "no",
-				"type": "VARCHAR(45)"
-			},
-			"dbname":
-			{
-				"index": "no",
-				"type": "VARCHAR(100)"
-			},
-			"email":
-			{
-				"index": "no",
-				"type": "VARCHAR(100)"
-			}
-		},		
-		"reseller profile":
-		{    
-            "id":
-			{
-				"index": "no",
-				"type": "BIGINT NOT NULL AUTO_INCREMENT"
-			},
-			"username":
-			{
-				"index": "no",
-				"type": "VARCHAR(100) NOT NULL"
-			},
-			"phone":
-			{
-				"index": "no",
-				"type": "VARCHAR(15) NOT NULL"
-			},
-			"name":
-			{
-				"index": "no",
-				"type": "VARCHAR(90)"
-			},
-			"status":
-			{
-				"index": "no",
-				"type": "VARCHAR(45)"
-			},
-			"email":
-			{
-				"index": "no",
-				"type": "VARCHAR(100)"
-			}			
+			"id":{"index": "no","type": "BIGINT NOT NULL AUTO_INCREMENT"},
+			"username":{"index": "no","type": "VARCHAR(100) NOT NULL"},
+			"phone":{"index": "no","type": "VARCHAR(15) NOT NULL"},
+			"name":{"index": "no","type": "VARCHAR(90)"},
+			"industry":{"index": "no","type": "VARCHAR(50)"},
+			"status":{"index": "no","type": "VARCHAR(45)"},
+			"dbname":{"index": "no","type": "VARCHAR(100)"},
+			"email":{"index": "no","type": "VARCHAR(100)"}
 		},
-        "feed item":
+		"api_key_mapping":
 		{
-            "id":
-			{
-			    "index":"no",
-				"type":"BIGINT NOT NULL AUTO_INCREMENT"
-			},
-            "t_generated":
-            { 
-           	    "index":"no",
-                "type":"BIGINT"
-            },
-         	"heading":
-            {			
-		        "index":"no",
-                "type":"TEXT"
-			},
-            "detail":
-            {
-                "index":"no",
-                "type":"TEXT"
-            },
-            "industry":
-            {
-                "index":"no",
-                "type":"VARCHAR(45)"
-            },
-            "status":
-            {
-                "index":"no",
-                "type":"VARCHAR(10)"
-            }
-        },
-        "templates":
-        {
-            "id":
-            {
-                "index":"no",
-                "type":"INT NOT NULL AUTO_INCREMENT"
-            },
-            "name":
-            {
-                "index":"no",
-                "type":"VARCHAR(100)"
-            },
-            "header":
-            {
-                "index":"no",
-                "type":"TEXT"
-            },
-            "footer":
-            {
-			  	"index":"no",
-                "type":"TEXT"
-            },
-            "row":
-            {
-                "index":"no",
-                "type":"TEXT"
-            },
-            "header_fields":
-            {
-			    "index":"no",
-                "type":"INT"
-			},
-            "footer_fields":
-            {
-			    "index":"no",
-                "type":"INT"
-            },
-            "row_fields":
-            {
-			    "index":"no",
-                "type":"INT"
-            },
-            "type":
-            {
-			    "index":"no",
-                "type":"VARCHAR(20)"
-            },
-            "status":
-            {
-                "index":"no",
-                "type":"VARCHAR(10)"
-            },
-            "last_updated":
-            {
-			    "index":"no",
-                "type":"BIGINT"
-            }
-        },
-        "values_list":
-        {
-            "id":
-            {
-                "index":"no",
-                "type":"INT NOT NULL AUTO_INCREMENT"
-            },
-            "name":
-            {
-                "index":"no",
-                "type":"VARCHAR(30)"
-            },	
-            "status":
-            {
-                "index":"no",
-                "type":"VARCHAR(10)"
-            },
-            "last_updated":
-            {
-			    "index":"no",
-                "type":"BIGINT"
-            },
-            "listname":
-            {
-                "index":"no",
-                "type":"VARCHAR(30)"
-            },
-            "value":
-            {
-                "index":"no",
-                "type":"VARCHAR(30)"
-            }
-        },
-        "de_duplication_ref":
-        {
-            "id":
-            {
-                "index":"no",
-                "type":"BIGINT NOT NULL AUTO_INCREMENT"
-            },
-            "object":
-            {
-                "index":"yes",
-                "type":"VARCHAR(50)"
-            },
-            "tablename":
-            {
-			    "index":"yes",
-                "type":"VARCHAR(50)"
-            },
-            "keycolumn":
-            {
-			    "index":"yes",
-                "type":"VARCHAR(50)"
-            },
-            "references_value":
-			{
-			    "index":"no",
-                "type":"TEXT"
-			},
-            "references_id":
-            {
-			    "index":"no",
-                "type":"TEXT"
-            },
-            "last_updated":
-            {
-			    "index":"no",
-                "type":"BIGINT"
-            }
-        },	
-		"whatsapp":
-        {
-		    "id":
-            {
-			    "index":"no",
-                "type":"BIGINT NOT NULL AUTO_INCREMENT"
-            },
-            "name":
-            {
-			    "index":"yes",
-                "type":"VARCHAR(90)"
-            },
-            "contact":
-            {
-			    "index":"yes",
-                "type":"VARCHAR(20)"
-            }
-        },
-        "api_key_mapping":
+			"id":{"index": "no","type": "BIGINT NOT NULL AUTO_INCREMENT"},
+			"username":{"index": "no","type": "VARCHAR(100) NOT NULL"},
+			"api_key":{"index": "no","type": "VARCHAR(100) NOT NULL"},
+			"status":{"index": "no","type": "VARCHAR(45)"},
+			"dbname":{"index": "no","type": "VARCHAR(100)"},
+			"call_limit":{"index": "no","type": "DECIMAL(12,2)"},
+			"data_stores":{"index": "no","type": "TEXT"}
+		},
+		"grids":
 		{
-			"id":
-			{
-				"index": "no",
-				"type": "BIGINT NOT NULL AUTO_INCREMENT"
-			},
-			"username":
-			{
-				"index": "no",
-				"type": "VARCHAR(100) NOT NULL"
-			},
-			"api_key":
-			{
-				"index": "no",
-				"type": "VARCHAR(100) NOT NULL"
-			},
-			"status":
-			{
-				"index": "no",
-				"type": "VARCHAR(45)"
-			},
-			"dbname":
-			{
-				"index": "no",
-				"type": "VARCHAR(100)"
-			},
-			"call_limit":
-			{
-				"index": "no",
-				"type": "DECIMAL(12,2)"
-			},
-			"data_stores":
-			{
-				"index": "no",
-				"type": "TEXT"
-			}
+			"id":{"index": "no","type": "BIGINT NOT NULL AUTO_INCREMENT"},
+			"name":{"index": "yes","type": "TEXT NOT NULL"},
+			"display_name":{"index": "yes","type": "TEXT"},
+			"status":{"index": "yes","type": "VARCHAR(45)"},
+			"head_color":{"index": "no","type": "VARCHAR(10)"},
+			"back_color":{"index": "no","type": "VARCHAR(10)"},
+			"elements":{"index": "no","type": "TEXT"}
 		}	
 	}
 }

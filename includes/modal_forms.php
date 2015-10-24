@@ -169,7 +169,7 @@
 		<form id='modal16_form' autocomplete="off">
 			<fieldset>
 				<label>Name: <input type='text' required></label><br>
-				<label>UserName: <input type='text' required title='only alphanumeric characters'></label><br>
+				<label>UserName: <input type='text' title='only alphanumeric characters'></label><br>
 				<label>Phone: <input type="text"></label><br>
 				<label>Email: <input type="text"></label><br>
 				<label>Address: <textarea></textarea></label><br>

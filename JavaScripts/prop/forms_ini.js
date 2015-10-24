@@ -27282,3 +27282,339 @@ function form256_ini()
 		});
 	}
 }
+
+/**
+ * @form User Accounts
+ * @formNo 257
+ * @Loading light
+ */
+function form257_ini()
+{
+	show_loader();
+	var fid=$("#form257_link").attr('data_id');
+	if(fid==null)
+		fid="";
+	
+	var filter_fields=document.getElementById('form257_header');
+	var fname=filter_fields.elements[0].value;
+	var fusername=filter_fields.elements[1].value;
+	var ftype=filter_fields.elements[2].value;
+	var fstatus=filter_fields.elements[3].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form257_index');
+	var prev_element=document.getElementById('form257_prev');
+	var next_element=document.getElementById('form257_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+	$('#form257_body').html("");
+	
+	var new_columns=new Object();
+			new_columns.count=25;
+			new_columns.start_index=start_index;
+			new_columns.data_store='accounts';		
+			
+			new_columns.indexes=[{index:'id',value:fid},
+								{index:'acc_name',value:fname},
+								{index:'username',value:fusername,unequal:""},
+								{index:'type',value:ftype},
+								{index:'status',value:fstatus}];
+		
+	read_json_rows('form257',new_columns,function(results)
+	{			
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form257_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Name'>";
+						rowsHTML+="<textarea readonly='readonly' form='form257_"+result.id+"'>"+result.acc_name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Username'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form257_"+result.id+"' required value='"+result.username+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Password'>";
+						rowsHTML+="<input type='password' readonly='readonly' form='form257_"+result.id+"' required class='dblclick_editable' value='********'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Type'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form257_"+result.id+"' value='"+result.type+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form257_"+result.id+"' required class='dblclick_editable' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form257_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form257_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form257_"+result.id+"' onclick='form257_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form257_body').append(rowsHTML);
+			var fields=document.getElementById("form257_"+result.id);
+			var status_filter=fields.elements[4];
+			
+			set_static_value_list('accounts','status',status_filter);
+					
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form257_update_item(fields);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[5];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_limited_export_data(new_columns,'User Accounts');
+		});
+		hide_loader();
+	});
+};
+
+/**
+ * @form Inventory (Spares)
+ * @formNo 260
+ * @Loading heavy
+ */
+function form260_ini()
+{
+	show_loader();
+	var fid=$("#form260_link").attr('data_id');
+	if(fid==null)
+		fid="";
+	
+	var filter_fields=document.getElementById('form260_header');
+	
+	var fname=filter_fields.elements[0].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form260_index');
+	var prev_element=document.getElementById('form260_prev');
+	var next_element=document.getElementById('form260_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+	
+	$('#form260_body').html("");
+
+	var new_columns=new Object();
+			new_columns.count=25;
+			new_columns.start_index=start_index;
+			new_columns.data_store='attributes';		
+			
+			new_columns.indexes=[{index:'id',value:fid},
+								{index:'name',value:fname},
+								{index:'type',exact:'product'},
+								{index:'value',exact:'yes'},
+								{index:'attribute',exact:'Spare Part'}];
+		
+	read_json_rows('form260',new_columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form260_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Item'>";
+						rowsHTML+="<textarea readonly='readonly' form='form260_"+result.id+"'>"+result.name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Quantity'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form260_"+result.id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form260_"+result.id+"' value='"+result.id+"'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form260_body').append(rowsHTML);
+			var fields=document.getElementById("form260_"+result.id);
+			var sys_inventory=fields.elements[1];
+			
+			get_inventory(result.product_name,'',function(inventory)
+			{
+				sys_inventory.value=inventory;
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+		
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+
+		var export_button=filter_fields.elements[2];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'Inventory - Spares');
+		});
+		hide_loader();	
+	});
+};
+
+
+/**
+ * @form Bank Accounts
+ * @formNo 261
+ * @Loading light
+ */
+function form261_ini()
+{
+	show_loader();
+	var fid=$("#form261_link").attr('data_id');
+	if(fid==null)
+		fid="";
+	
+	var filter_fields=document.getElementById('form261_header');
+	var fname=filter_fields.elements[0].value;
+	var fbank=filter_fields.elements[1].value;
+	var fstatus=filter_fields.elements[2].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form261_index');
+	var prev_element=document.getElementById('form261_prev');
+	var next_element=document.getElementById('form261_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+	$('#form261_body').html("");
+	
+	var new_columns=new Object();
+			new_columns.count=25;
+			new_columns.start_index=start_index;
+			new_columns.data_store='bank_accounts';		
+			
+			new_columns.indexes=[{index:'id',value:fid},
+								{index:'name',value:fname},
+								{index:'bank',value:fbank},
+								{index:'branch'},
+								{index:'account_name'},
+								{index:'account_num'},
+								{index:'ifsc'},
+								{index:'status',value:fstatus}];
+		
+	read_json_rows('form261',new_columns,function(results)
+	{			
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form261_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Name'>";
+						rowsHTML+="<textarea readonly='readonly' form='form261_"+result.id+"'>"+result.name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Bank'>";
+						rowsHTML+="<b>Bank</b>:<input type='text' class='dblclick_editable' readonly='readonly' form='form261_"+result.id+"' required value='"+result.bank+"'>";
+						rowsHTML+="<br><b>Branch</b>:<textarea class='dblclick_editable' readonly='readonly' form='form261_"+result.id+"'>"+result.branch+"</textarea>";
+						rowsHTML+="<br><b>IFSC</b>:<input type='text' class='dblclick_editable' readonly='readonly' form='form261_"+result.id+"' value='"+result.ifsc+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Account'>";
+						rowsHTML+="<b>Name</b>: <input type='text' readonly='readonly' form='form261_"+result.id+"' required class='dblclick_editable' value='"+result.account_name+"'>";
+						rowsHTML+="<br><b>Account #</b>: <input type='text' readonly='readonly' form='form261_"+result.id+"' required class='dblclick_editable' value='"+result.account_num+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form261_"+result.id+"' required class='dblclick_editable' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form261_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form261_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form261_"+result.id+"' onclick='form261_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form261_body').append(rowsHTML);
+			var fields=document.getElementById("form261_"+result.id);
+			var status_filter=fields.elements[6];
+			
+			set_static_value_list('bank_accounts','status',status_filter);
+					
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form261_update_item(fields);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_limited_export_data(new_columns,'Bank Accounts');
+		});
+		hide_loader();
+	});
+};

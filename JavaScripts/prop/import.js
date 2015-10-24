@@ -6682,3 +6682,49 @@ function form247_import(data_array,import_type)
 		update_batch(data_xml);
 	}
 };
+
+/**
+* @form Bank Accounts
+* @formNo 261
+*/
+function form261_import(data_array,import_type)
+{
+	var data_xml="<bank_accounts>";
+	var counter=1;
+	var last_updated=get_my_time();
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</bank_accounts><separator></separator><bank_accounts>";
+		}
+
+		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+					"<name unique='yes'>"+row.name+"</name>" +
+					"<bank>"+row.bank+"</bank>" +
+					"<branch>"+row.branch+"</branch>" +
+					"<ifsc>"+row.ifsc+"</ifsc>" +
+					"<account_name>"+row.account_name+"</account_name>" +
+					"<account_num>"+row.account_num+"</account_num>" +
+					"<status>"+row.status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</row>";
+	});
+	
+	data_xml+="</bank_accounts>";
+	if(import_type=='create_new')
+	{
+		create_batch(data_xml);
+	}
+	else
+	{
+		update_batch(data_xml);
+	}
+};

@@ -1353,3 +1353,13 @@ function form247_import_template()
 	var data_array=['id','pincode','zone','status'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Bank Accounts
+* @formNo 261
+*/
+function form261_import_template()
+{
+	var data_array=['id','name','bank','branch','ifsc','account_name','account_num','status'];
+	my_array_to_csv(data_array);
+};

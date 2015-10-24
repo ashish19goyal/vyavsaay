@@ -5,6 +5,7 @@
 			<li><a id='form39_link' href='#form39' onclick='form39_header_ini(); form39_ini();' data-i18n='form.manage_products'></a></li>
 			<li><a id='form169_link' href='#form169' onclick='form169_header_ini(); form169_ini();' data-i18n='form.manage_products'></a></li>
 			<li><a id='form235_link' href='#form235' onclick='form235_header_ini(); form235_ini();' data-i18n='form.manage_products'></a></li>
+			<li><a id='form234_link' href='#form234' onclick='form234_header_ini(); form234_ini();' data-i18n='form.manage_products'></a></li>
 			<li><a id='form1_link' href='#form1' onclick='form1_header_ini(); form1_ini();' data-i18n='form.update_inventory'></a></li>
 			<li><a id='form155_link' href='#form155' onclick='form155_header_ini(); form155_ini();' data-i18n='form.update_inventory'></a></li>
 			<li><a id='form207_link' href='#form207' onclick='form207_header_ini(); form207_ini();' data-i18n='form.update_inventory'></a></li>
@@ -12,7 +13,6 @@
 			<li><a id='form238_link' href='#form238' onclick='form238_header_ini(); form238_ini();' data-i18n='form.inventory_raw_cps'></a></li>
 			<li><a id='form260_link' href='#form260' onclick='form260_header_ini(); form260_ini();' data-i18n='form.inventory_spares'></a></li>
 			<li><a id='form227_link' href='#form227' onclick='form227_header_ini(); form227_ini();' data-i18n='form.update_inventory'></a></li>
-			<li><a id='form234_link' href='#form234' onclick='form234_header_ini(); form234_ini();' data-i18n='form.manage_products'></a></li>
 			<li><a id='form228_link' href='#form228' onclick='form228_header_ini(); form228_ini();' data-i18n='form.demo'></a></li>
 			<li><a id='form229_link' href='#form229' onclick='form229_header_ini(); form229_ini();' data-i18n='form.hiring'></a></li>
 			<li><a id='form230_link' href='#form230' onclick='form230_header_ini(); form230_ini();' data-i18n='form.in_out'></a></li>
@@ -48,6 +48,7 @@
 			include "forms/form39.php";
 			include "forms/form169.php";
 			include "forms/form235.php";
+			include "forms/form234.php";
 			include "forms/form1.php";
 			include "forms/form155.php";
 			include "forms/form207.php";
@@ -55,7 +56,6 @@
 			include "forms/form238.php";
 			include "forms/form260.php";
 			include "forms/form227.php";
-			include "forms/form234.php";
 			include "forms/form228.php";
 			include "forms/form229.php";
 			include "forms/form230.php";
