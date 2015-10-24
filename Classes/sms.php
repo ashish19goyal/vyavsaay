@@ -21,12 +21,12 @@ class send_sms
 		$this->sender_id=urlencode('VYAVSY');
 		$this->url='http://sms99.co.in/pushsms.php';
 	}
-	
+
 	public function sender_id($sender_id)
 	{
 		$this->sender_id=urlencode($sender_id);
 	}
-	
+
 	//send sms
 	public function direct_send($message,$to,$type)
 	{
@@ -65,7 +65,7 @@ class send_sms
 			$update_stmt->execute(array('sent',$result[$i]['id']));
 		}
 	}
-	
+
 	public function store_pending_sms($domain,$message,$to,$type)
 	{
 		$conn=new db_connect('re_user_'.$domain);
@@ -83,7 +83,7 @@ class send_sms
 		$create_stmt=$conn->conn->prepare($create_query);
 		$create_stmt->execute(array($to,$message,'sent','pending',$type,1000*time()));		
 	}
-	
+
 	public function send_all_stored_sms()
 	{
 		$conn=new db_connect(0);

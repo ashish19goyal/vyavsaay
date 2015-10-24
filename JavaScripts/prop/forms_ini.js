@@ -20736,7 +20736,6 @@ function form196_ini()
 					{
 						sms_type='transaction';
 					}
-					console.log(sms_type);					
 					results.forEach(function (result) 
 					{
 						var to=result.email;
@@ -20744,8 +20743,7 @@ function form196_ini()
 						var customer_name=result.name;
 						var message=sms_content.replace(/customer_name/g,customer_name);
 						message=message.replace(/business_title/g,business_title);
-						
-						
+
 						send_sms(customer_phone,message,sms_type);
 						if(to!="")
 						{
@@ -20804,6 +20802,12 @@ function form196_ini_all()
 				var email_message=container.innerHTML;
 				var from=get_session_var('email');
 				
+				var sms_type=get_session_var('sms_type');
+				if(sms_type=='undefined')
+				{
+					sms_type='transaction';
+				}
+					
 				results.forEach(function (result) 
 				{
 					var to=result.email;
@@ -20812,7 +20816,7 @@ function form196_ini_all()
 					var message=sms_content.replace(/customer_name/g,customer_name);
 					message=message.replace(/business_title/g,business_title);
 						
-					send_sms(customer_phone,message,'transaction');
+					send_sms(customer_phone,message,sms_type);
 				
 					if(to!="")
 					{
@@ -25147,6 +25151,11 @@ function form237_ini()
 					var email_message=container.innerHTML;
 					var from=get_session_var('email');
 					
+					var sms_type=get_session_var('sms_type');
+					if(sms_type=='undefined')
+					{
+						sms_type='transaction';
+					}
 					results.forEach(function (result) 
 					{
 						var to=result.email;
@@ -25155,7 +25164,7 @@ function form237_ini()
 						var message=sms_content.replace(/customer_name/g,customer_name);
 						message=message.replace(/business_title/g,business_title);
 							
-						send_sms(customer_phone,message,'transaction');
+						send_sms(customer_phone,message,sms_type);
 						if(to!="")
 						{
 							email_id_string+=customer_name+":"+to+";";
@@ -25213,6 +25222,11 @@ function form237_ini_all()
 				var email_message=container.innerHTML;
 				var from=get_session_var('email');
 				
+				var sms_type=get_session_var('sms_type');
+				if(sms_type=='undefined')
+				{
+					sms_type='transaction';
+				}					
 				results.forEach(function (result) 
 				{
 					var to=result.email;
@@ -25221,7 +25235,7 @@ function form237_ini_all()
 					var message=sms_content.replace(/customer_name/g,customer_name);
 					message=message.replace(/business_title/g,business_title);
 						
-					send_sms(customer_phone,message,'transaction');
+					send_sms(customer_phone,message,sms_type);
 				
 					if(to!="")
 					{
