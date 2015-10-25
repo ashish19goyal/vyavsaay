@@ -1,9 +1,9 @@
 <div id='form47' class='function_detail'>
 	<form id='form47_master' autocomplete="off">
 		<fieldset>
-				Current Password: <input type="password" form='form47_master'/><br>
-				New Password: <input type="password" form='form47_master'><br>
-				Retype Password: <input type="password" form='form47_master' onkeyup="form47_verify_password($(this))">
+				<label>Current Password: <input type="password" form='form47_master'></label><br>
+				<label>New Password: <input type="password" form='form47_master'></label><br>
+				<label>Retype Password: <input type="password" form='form47_master' onkeyup="form47_verify_password($(this))"></label>
 				<br><label class="form47_verify"></label><br>
 				<label><input type="button" title="Save" class='save_icon' onclick="form47_update_form()" form='form47_master' disabled='true'></label>
 		</fieldset>

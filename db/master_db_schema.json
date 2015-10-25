@@ -21,16 +21,6 @@
 			"dbname":{"index": "no","type": "VARCHAR(100)"},
 			"call_limit":{"index": "no","type": "DECIMAL(12,2)"},
 			"data_stores":{"index": "no","type": "TEXT"}
-		},
-		"grids":
-		{
-			"id":{"index": "no","type": "BIGINT NOT NULL AUTO_INCREMENT"},
-			"name":{"index": "yes","type": "TEXT NOT NULL"},
-			"display_name":{"index": "yes","type": "TEXT"},
-			"status":{"index": "yes","type": "VARCHAR(45)"},
-			"head_color":{"index": "no","type": "VARCHAR(10)"},
-			"back_color":{"index": "no","type": "VARCHAR(10)"},
-			"elements":{"index": "no","type": "TEXT"}
-		}	
+		}
 	}
 }

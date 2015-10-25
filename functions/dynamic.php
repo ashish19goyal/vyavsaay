@@ -15,10 +15,19 @@
 		{
 			echo "<div id='".$struct_res[$i]['name']."_main' class='vy_tabs function_main'>";
 			echo "<ul>";
-				echo "<li><a id='form171_link' href='#form171' onclick='form171_header_ini(); form171_ini();' data-i18n='form.manage_channels'></a></li>";
+			//echo $struct_res[$i]['elements'];			
+			$elements_array=json_decode($struct_res[$i]['elements'],true);
+			//echo count($elements_array);
+				for($x=0;$x<count($elements_array);$x++)
+				{
+					echo "<li><a id='".$elements_array[$x]['name']."_link' href='#".$elements_array[$x]['name']."' onclick='".$elements_array[$x]['onclick']."'>".$elements_array[$x]['display_name']."</a></li>";
+				}
 			echo "</ul>";
 			
-				include "forms/form171.php";		
+				for($x=0;$x<count($elements_array);$x++)
+				{
+					include $elements_array[$x]['type']."/".$elements_array[$x]['name'].".php";
+				}
 			echo "</div>";	
 		}		
 

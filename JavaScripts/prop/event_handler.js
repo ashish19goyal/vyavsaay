@@ -431,9 +431,9 @@ function hide_all()
 	$("#all_activities_box").hide();
 	$("#notifications_box").hide();
 	
-//	hide_all_grids();
+	//hide_all_grids();
 
-	
+
 	$("#sale_bills_main").hide();
 	$("#logistics_main").hide();
 	$("#orders_main").hide();
@@ -454,6 +454,7 @@ function hide_all()
 	$("#manufacturing_main").hide();
 	$("#sale_reports_main").hide();
 	$("#admin_main").hide();
+
 
 	hide_menu_items();
 	

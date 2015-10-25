@@ -19,13 +19,4 @@
 			<call_limit index='no' type="DECIMAL(12,2)"></call_limit>
 			<data_stores index='no' type="TEXT"></data_stores>
 	</api_key_mapping>
-	<grids>
-			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<name index='yes' type="TEXT NOT NULL"></name>
-			<display_name index='yes' type="TEXT"></display_name>
-			<status index='yes' type="VARCHAR(45)"></status><!-- active/inactive -->
-			<head_color index='no' type="VARCHAR(10)"></head_color>
-			<back_color index='no' type="VARCHAR(10)"></back_color>
-			<elements index='no' type="TEXT"></elements>
-	</grids>
 </re_xml>

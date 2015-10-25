@@ -322,6 +322,54 @@
 	</user_fields_list>
 	<values_list>
 		<row>
+			<tablename>system_grid_metrics</tablename>
+			<listname>status</listname>
+			<name>active</name>
+			<value>Active</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>system_grid_metrics</tablename>
+			<listname>status</listname>
+			<name>inactive</name>
+			<value>Inactive</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>system_grid_elements</tablename>
+			<listname>type</listname>
+			<name>report</name>
+			<value>Report</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>system_grid_elements</tablename>
+			<listname>type</listname>
+			<name>form</name>
+			<value>Form</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>system_grids</tablename>
+			<listname>status</listname>
+			<name>active</name>
+			<value>Active</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>system_grids</tablename>
+			<listname>status</listname>
+			<name>inactive</name>
+			<value>Inactive</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>bank_accounts</tablename>
 			<listname>status</listname>
 			<name>active</name>

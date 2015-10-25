@@ -10,7 +10,6 @@ function is_form_access(form_id)
 		return true;
 }
 
-
 function is_read_access(form_id)
 {
 	var re=get_session_var('re');

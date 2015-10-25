@@ -212,12 +212,12 @@
 		}
 		else
 		{
-			$response_object="{'status':'Invalid session'}";
+			$response_object['status']='Invalid session';
 		}
 	}
 	else
 	{
-		$response_object="{'status':'Invalid session'}";
+		$response_object['status']='Invalid session';
 	}
 	
 	$jsonresponse=json_encode($response_object);		

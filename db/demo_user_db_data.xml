@@ -3693,6 +3693,39 @@
 			<tables>--bank_accounts--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form262</name>
+			<display_name>manage_grids</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--system_grids--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form263</name>
+			<display_name>arrange_grid_tabs</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--system_grids--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form264</name>
+			<display_name>grid_metrics</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--system_grid_metrics--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -7021,6 +7054,39 @@
 			<username>master</username>
 			<element_id>form261</element_id>
 			<element_name>bank_accounts</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form262</element_id>
+			<element_name>manage_grids</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form263</element_id>
+			<element_name>arrange_grid_tabs</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form264</element_id>
+			<element_name>grid_metrics</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

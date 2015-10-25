@@ -20743,7 +20743,7 @@ function form196_ini()
 						var customer_name=result.name;
 						var message=sms_content.replace(/customer_name/g,customer_name);
 						message=message.replace(/business_title/g,business_title);
-
+						
 						send_sms(customer_phone,message,sms_type);
 						if(to!="")
 						{

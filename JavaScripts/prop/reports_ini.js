@@ -7175,42 +7175,43 @@ function report90_ini()
 							});
 							
 						});
-					});
-				});
-	
-				var report90_complete=setInterval(function()
-				{
-			  	   if(report90_count===0)
-			  	   {
-						clearInterval(report90_complete);
-						$('textarea').autosize();
-						//report90_get_totals();
-	
-						var csv_button=form.elements['csv'];
-						$(csv_button).off("click");
-						$(csv_button).on("click", function(event)
+						
+						var report90_complete=setInterval(function()
 						{
-							var sorted_array=[];
-							items.forEach(function(new_result)
-							{
-								var sorted_element=new Object();
-								sorted_element['Order #']=new_result.order_num;
-								sorted_element['Bill #']=new_result.bill_num;
-								sorted_element['SKU']=new_result.item_name;
-								sorted_element['Item Name']=new_result.item_desc;
-								sorted_element['Batch']=new_result.batch;
-								sorted_element['Storage']=new_result.storage;
-								sorted_element['To Pick']=new_result.quantity;
-								sorted_element['Picked']=new_result.picked_quantity;
-								
-								sorted_array.push(sorted_element);
-							});
-							csv_download_report(sorted_array,'Order Picklist');
-						});
+					  	   if(report90_count===0)
+					  	   {
+								clearInterval(report90_complete);
+								$('textarea').autosize();
+								//report90_get_totals();
+			
+								var csv_button=form.elements['csv'];
+								$(csv_button).off("click");
+								$(csv_button).on("click", function(event)
+								{
+									var sorted_array=[];
+									items.forEach(function(new_result)
+									{
+										var sorted_element=new Object();
+										sorted_element['Order #']=new_result.order_num;
+										sorted_element['Bill #']=new_result.bill_num;
+										sorted_element['SKU']=new_result.item_name;
+										sorted_element['Item Name']=new_result.item_desc;
+										sorted_element['Batch']=new_result.batch;
+										sorted_element['Storage']=new_result.storage;
+										sorted_element['To Pick']=new_result.quantity;
+										sorted_element['Picked']=new_result.picked_quantity;
 										
-						hide_loader();   
-			  	   }
-				},500);
+										sorted_array.push(sorted_element);
+									});
+									csv_download_report(sorted_array,'Order Picklist');
+								});
+												
+								hide_loader();   
+					  	   }
+						},500);
+						
+					});
+				});	
 			}		    
 		});
 	}

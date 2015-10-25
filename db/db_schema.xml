@@ -888,8 +888,6 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(30)" unique='yes'></name>
 			<display_name index="no" type="TEXT"></display_name>
-			<onclick index="no" type="TEXT"></onclick>
-			<func index="yes" type="TEXT"></func>
 			<value index='yes' type="TEXT"></value>
 			<type index='yes' type="VARCHAR(20)"></type><!-- function/report/form/accounting/other/template -->
 			<shortcut index='no' type="VARCHAR(40)"></shortcut>
@@ -1568,6 +1566,7 @@
 			<back_color index='no' type="VARCHAR(10)"></back_color>
 			<status index='yes' type="VARCHAR(30)"></status><!--active/inactive-->
 			<elements index='no' type="TEXT"></elements>
+			<grid_order index='yes' type="INT"></grid_order>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</system_grids>

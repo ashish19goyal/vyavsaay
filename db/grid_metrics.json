@@ -6,7 +6,7 @@
 			{
 				"metric_id":"grid_item_1",
 				"display_name":"Last sale bill Id",
-				"grid":"sale_bills",
+				"grid":"sales",
 				"function_name":"set_grid_item_1();",
 				"function_def": "function set_grid_item_1(){var columns=\"<bills count='1'><bill_num></bill_num></bills>\";get_single_column_data(function(results){if(results.length>0){var grid_item=document.getElementById('grid_item_1');grid_item.innerHTML=results[0];}},columns);setTimeout(set_grid_item_1,600000);};",
 				"status": "active",
@@ -15,7 +15,7 @@
 			{
 				"metric_id":"grid_item_2",
 				"display_name":"# Sale bills today",
-				"grid":"sale_bills",
+				"grid":"sales",
 				"function_name":"set_grid_item_2();",
 				"function_def": "function set_grid_item_2(){var columns=\"<bills><id></id><bill_date lowerbound='yes'>\"+(get_raw_time(get_my_date())-1000)+\"</bill_date><bill_date upperbound='yes'>\"+(get_raw_time(get_my_date())+86400000)+\"</bill_date></bills>\";get_single_column_data(function(results){document.getElementById('grid_item_2').innerHTML=results.length;},columns);setTimeout(set_grid_item_2,600000);};",
 				"status": "active",
@@ -177,7 +177,7 @@
 			{
 				"metric_id":"grid_item_22",
 				"display_name":"Latest offer",
-				"grid":"offers",
+				"grid":"promotion",
 				"function_name":"set_grid_item_22();",
 				"function_def": "function set_grid_item_22(){var columns=\"<offers count='1'><offer_name></offer_name><status array='yes'>--active--extended--</status></offers>\";get_single_column_data(function(results){if(results.length>0){document.getElementById('grid_item_22').innerHTML=results[0];}},columns);};",
 				"status": "active",
@@ -186,7 +186,7 @@
 			{
 				"metric_id":"grid_item_23",
 				"display_name":"# Sales leads",
-				"grid":"offers",
+				"grid":"promotion",
 				"function_name":"set_grid_item_23();",
 				"function_def": "function set_grid_item_23(){var columns=\"<sale_leads><id></id></sale_leads>\";get_single_column_data(function(results){document.getElementById('grid_item_23').innerHTML=results.length;},columns);};",
 				"status": "active",
@@ -213,7 +213,7 @@
 			{
 				"metric_id":"grid_item_26",
 				"display_name":"Today's total sale",
-				"grid":"sale_reports",
+				"grid":"reports",
 				"function_name":"set_grid_item_26();",
 				"function_def": "function set_grid_item_26(){var columns=\"<bills><total></total><bill_date lowerbound='yes'>\"+(get_raw_time(get_my_date())-1000)+\"</bill_date><bill_date upperbound='yes'>\"+(get_raw_time(get_my_date())+86400000)+\"</bill_date></bills>\";get_single_column_data(function(results){var sale=0;for (var i in results){sale+=parseFloat(results[i]);}document.getElementById('grid_item_26').innerHTML=\"Rs. \"+sale;},columns);setTimeout(set_grid_item_26,600000);};",
 				"status": "active",
@@ -348,7 +348,7 @@
 			{
 				"metric_id":"grid_item_41",
 				"display_name":"Unbilled sms credits",
-				"grid":"offers",
+				"grid":"promotion",
 				"function_name":"set_grid_item_41();",
 				"function_def":"function set_grid_item_41(){var columns=\"<sms><id></id><message></message><receiver></receiver><status exact='yes'>sent</status><billing_status exact='yes'>pending</billing_status></sms>\";fetch_requested_data('',columns,function(results){var sms_char_length=160;var total_credits=0;results.forEach(function(result){result.num_sms=Math.floor(result.message.length/sms_char_length)+1;result.num_phone=Math.floor(result.receiver.length/13)+1;result.sms_credit=result.num_sms*result.num_phone;total_credits+=result.sms_credit;});document.getElementById('grid_item_41').innerHTML=total_credits;},columns);}",
 				"status": "active",

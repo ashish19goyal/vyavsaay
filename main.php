@@ -48,7 +48,7 @@
 		include "functions/maps.php";
 		include "functions/admin.php";
 
-		//include "functions/dynamic.php";
+//		include "functions/dynamic.php";
 		
 		//display for settings
 		include "functions/settings.php";

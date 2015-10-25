@@ -29,8 +29,8 @@ function responsive_tabs()
 
 function setup_grid_display_tabs()
 {
-	var functions_array=['sale_bills','logistics','orders','drs','transit','purchase','finances','products','services','customer_service','treatment','projects','people','store','ecommerce','offers','manufacturing','maps','sale_reports','admin'];
-	functions_array.forEach(function(func)
+	var system_grids_array=['sale_bills','logistics','orders','drs','transit','purchase','finances','products','services','customer_service','treatment','projects','people','store','ecommerce','offers','manufacturing','maps','sale_reports','admin'];
+	system_grids_array.forEach(function(func)
 	{
 		var function_main=$("#"+func+"_main").find('ul').find('li').length;
 		var hidden_function_main=$("#"+func+"_main").find('ul').find('li:hidden').length;
@@ -43,8 +43,8 @@ function setup_grid_display_tabs()
 
 function setup_grid_display_accordion()
 {
-	var functions_array=['sale_bills','logistics','orders','drs','transit','purchase','finances','products','services','customer_service','treatment','projects','people','store','ecommerce','offers','manufacturing','maps','sale_reports','admin'];
-	functions_array.forEach(function(func)
+	var system_grids_array=['sale_bills','logistics','orders','drs','transit','purchase','finances','products','services','customer_service','treatment','projects','people','store','ecommerce','offers','manufacturing','maps','sale_reports','admin'];
+	system_grids_array.forEach(function(func)
 	{
 		var function_main=$("#"+func+"_main").find('h3').length;
 		var hidden_function_main=$("#"+func+"_main").find('h3:hidden').length;
@@ -111,8 +111,8 @@ function accordionsToTabs()
 
 function init_functions_tabs()
 {
-	var functions_array=['sale_bills','logistics','orders','drs','transit','purchase','finances','products','services','customer_service','treatment','projects','people','store','ecommerce','offers','manufacturing','maps','sale_reports','admin','settings'];
-	functions_array.forEach(function(func)
+	var system_grids_array=['sale_bills','logistics','orders','drs','transit','purchase','finances','products','services','customer_service','treatment','projects','people','store','ecommerce','offers','manufacturing','maps','sale_reports','admin','settings'];
+	system_grids_array.forEach(function(func)
 	{
 		var function_main=$("#"+func+"_main");
 		$(function_main).tabs(
@@ -173,8 +173,8 @@ function init_functions_tabs()
 
 function init_functions_accordion()
 {
-	var functions_array=['sale_bills','logistics','orders','drs','transit','purchase','finances','products','services','customer_service','treatment','projects','people','store','ecommerce','offers','manufacturing','maps','sale_reports','admin','settings'];
-	functions_array.forEach(function(func)
+	var system_grids_array=['sale_bills','logistics','orders','drs','transit','purchase','finances','products','services','customer_service','treatment','projects','people','store','ecommerce','offers','manufacturing','maps','sale_reports','admin','settings'];
+	system_grids_array.forEach(function(func)
 	{
 		var function_main=$("#"+func+"_main");
 		$(function_main).accordion(

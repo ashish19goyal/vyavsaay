@@ -81,19 +81,34 @@ function fetch_requested_data(element_id,columns,callback)
  */
 function generate_report(report_id)
 {	
-	var results=new Array();
-
 	if(is_online())
 	{
-		server_generate_report(report_id,results,function()
+		server_generate_report_json(report_id,function(results)
 		{
+			//console.log(results);
+			results.forEach(function(result)
+			{
+				//console.log(result);
+				if(typeof result.last_updated!='undefined')
+				{
+					result.last_updated=get_my_datetime(result.last_updated);
+				}
+			});
 			my_obj_array_to_csv(results,'report');
 		});
 	}
 	else
 	{
-		local_generate_report(report_id,results,function()
+		local_generate_report_json(report_id,function(results)
 		{
+			results.forEach(function(result)
+			{
+				if(typeof result.last_updated!='undefined')
+				{
+					result.last_updated=get_my_datetime(result.last_updated);
+				}
+			});
+
 			my_obj_array_to_csv(results,'report');
 		});
 	}
@@ -434,7 +449,7 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
 function send_sms(to,message,type)
 {
 	var sms_enabled=get_session_var('sms_enabled');
-	if(sms_enabled=='yes')
+	if(sms_enabled=='yes' && to!="" && to!=0 && to!="0")
 	{
 		if(is_online())
 		{

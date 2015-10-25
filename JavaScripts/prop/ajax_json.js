@@ -137,3 +137,18 @@ function server_read_json_column(columns,callback,results)
 		callback(results);
 	});
 }
+
+
+function server_generate_report_json(report_id,callback)
+{
+	var domain=get_domain();
+	var username=get_username();
+	var re_access=get_session_var('re');
+	ajax_json("./ajax_json/generate_report.php",{domain:domain,username:username,re:re_access,report_id:report_id},function(response_object)
+	{
+		//console.log(response_object);
+		//console.log(response_object.rows);
+		var results=response_object.rows;		
+		callback(results);
+	});
+}
