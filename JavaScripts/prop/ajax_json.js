@@ -141,6 +141,7 @@ function server_read_json_column(columns,callback,results)
 
 function server_generate_report_json(report_id,callback)
 {
+	show_loader();
 	var domain=get_domain();
 	var username=get_username();
 	var re_access=get_session_var('re');
@@ -150,5 +151,6 @@ function server_generate_report_json(report_id,callback)
 		//console.log(response_object.rows);
 		var results=response_object.rows;		
 		callback(results);
+		hide_loader();
 	});
 }

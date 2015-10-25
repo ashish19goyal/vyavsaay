@@ -1550,7 +1550,7 @@
 	<system_grid_metrics>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<metric_id index='yes' type="VARCHAR(30)"></metric_id>
-			<display_name index='no' type="TEXT"></display_name>
+			<display_name index='yes' type="TEXT"></display_name>
 			<grid index='yes' type="VARCHAR(100)"></grid>
 			<function_name index='no' type="TEXT"></function_name>
 			<function_def index='no' type="TEXT"></function_def>
@@ -1561,7 +1561,7 @@
 	<system_grids>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="TEXT"></name>
-			<display_name index='no' type="TEXT"></display_name>
+			<display_name index='yes' type="TEXT"></display_name>
 			<head_color index='no' type="VARCHAR(10)"></head_color>
 			<back_color index='no' type="VARCHAR(10)"></back_color>
 			<status index='yes' type="VARCHAR(30)"></status><!--active/inactive-->
@@ -1630,11 +1630,15 @@
 			<branch index='yes' type="TEXT"></branch>
 			<current_location index='no' type="TEXT"></current_location>
 			<delivery_person index='yes' type="TEXT"></delivery_person>
+			<return_person index='yes' type="TEXT"></return_person>
 			<order_history index='no' type="TEXT"></order_history>
 			<comments index='no' type="TEXT"></comments>
 			<drs_num index='yes' type="VARCHAR(20)"></drs_num>
 			<drs_id index='yes' type="BIGINT"></drs_id>
 			<drs_time index='no' type="BIGINT"></drs_time>
+			<rto_num index='yes' type="VARCHAR(20)"></rto_num>
+			<rto_id index='yes' type="BIGINT"></rto_id>
+			<rto_time index='no' type="BIGINT"></rto_time>
 			<received_by index='no' type="TEXT"></received_by>
 			<bag_num index='yes' type="VARCHAR(20)"></bag_num>
 			<bag_id index='yes' type="BIGINT"></bag_id>
@@ -1655,6 +1659,16 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</drs>
+	<rto>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<rto_num index='yes' type="VARCHAR(20)"></rto_num>
+			<employee index='yes' type="TEXT"></employee>
+			<rto_time index='yes' type="BIGINT"></rto_time>
+			<num_orders index='no' type="INT"></num_orders>
+			<branch index='yes' type="TEXT"></branch>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</rto>
 	<transit_bags>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<bag_num index='yes' type="VARCHAR(20)"></bag_num>

@@ -15730,3 +15730,459 @@ function form261_add_item()
 		$("#modal2").dialog("open");
 	}		
 }
+
+/**
+ * @form Manage Grids
+ * @formNo 262
+ */
+function form262_add_item()
+{
+	if(is_create_access('form262'))
+	{
+		var id=get_new_key();
+
+		var rowsHTML="<tr>";
+			rowsHTML+="<form id='form262_"+id+"'></form>";
+				rowsHTML+="<td data-th='Order'>";
+					rowsHTML+="<input type='text' readonly='readonly' form='form262_"+id+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Grid'>";
+					rowsHTML+="<input type='text' form='form262_"+id+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Name'>";
+					rowsHTML+="<input type='text' class='dblclick_editable' form='form262_"+id+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Color'>";
+					rowsHTML+="<b>Head</b>:<input type='text' class='dblclick_editable' form='form262_"+id+"'>";
+					rowsHTML+="<br><b>Back</b>:<input type='text' class='dblclick_editable' form='form262_"+id+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Status'>";
+					rowsHTML+="<input type='text' class='dblclick_editable' form='form262_"+id+"' value='active'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Action'>";
+					rowsHTML+="<input type='hidden' form='form262_"+id+"' value='"+id+"'>";
+					rowsHTML+="<input type='submit' class='save_icon' form='form262_"+id+"'>";	
+					rowsHTML+="<input type='button' class='delete_icon' form='form262_"+id+"' onclick='$(this).parent().parent().remove(); form262_update_serial_numbers();'>";	
+				rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+	
+		$('#form262_body').append(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form262_"+id);
+		var status_filter=fields.elements[5];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form262_create_item(fields);
+		});
+					
+		set_static_value_list('system_grids','status',status_filter);
+		form262_update_serial_numbers();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
+ * @form Arrange Grid tabs
+ * @formNo 263
+ */
+function form263_add_item()
+{
+	if(is_create_access('form263'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form263_"+id+"'></form>";
+			rowsHTML+="<td data-th='S.No.'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Type'>";
+				rowsHTML+="<input type='text' required form='form263_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Name'>";
+				rowsHTML+="<input type='text' required form='form263_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Display Name'>";
+				rowsHTML+="<input type='text' required form='form263_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Onclick'>";
+				rowsHTML+="<textarea required form='form263_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form263_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='submit_hidden' form='form263_"+id+"' id='save_form263_"+id+"'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form263_"+id+"' id='delete_form263_"+id+"' onclick='$(this).parent().parent().remove(); form263_update_serial_numbers();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+
+		$('#form263_body').append(rowsHTML);
+
+		var item_form=document.getElementById('form263_'+id);
+		var type_filter=item_form.elements[0];
+		var name_filter=item_form.elements[1];
+		var save_button=item_form.elements[5];
+		
+		set_static_value_list('system_grid_elements','type',type_filter);
+		
+		var name_data="<user_preferences>" +
+				"<name></name>" +
+				"<value exact='yes'>checked</value>"+
+				"<type array='yes'>--report--form--</value>"+
+				"</user_preferences>";
+		set_my_value_list(name_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		});
+
+		$('textarea').autosize();
+		form263_update_serial_numbers();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form System Grid Metrics
+ * @formNo 264
+ */
+function form264_add_item()
+{
+	if(is_create_access('form264'))
+	{
+		var id=get_new_key();
+
+		var rowsHTML="<tr>";
+			rowsHTML+="<form id='form264_"+id+"'></form>";
+				rowsHTML+="<td data-th='Id'>";
+					rowsHTML+="<input type='text' readonly='readonly' form='form264_"+id+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Name'>";
+					rowsHTML+="<input type='text' form='form264_"+id+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Grid'>";
+					rowsHTML+="<input type='text' class='dblclick_editable' form='form264_"+id+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Function'>";
+					rowsHTML+="<input type='text' readonly='readonly' class='input_link dblclick_editable' form='form264_"+id+"' onclick=\"modal165_action('"+id+"',$(this))\">";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Status'>";
+					rowsHTML+="<input type='text' class='dblclick_editable' form='form264_"+id+"' value='active'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Action'>";
+					rowsHTML+="<input type='hidden' form='form264_"+id+"' value='"+id+"'>";
+					rowsHTML+="<input type='submit' class='save_icon' form='form264_"+id+"'>";	
+					rowsHTML+="<input type='button' class='delete_icon' form='form264_"+id+"' onclick='$(this).parent().parent().remove(); form264_update_serial_numbers();'>";	
+				rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+	
+		$('#form264_body').append(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form264_"+id);
+		var grid_filter=fields.elements[2];
+		var status_filter=fields.elements[4];
+					
+		var grid_data="<system_grids>"+
+						"<name></name>"+
+						"<status exact='yes'>active</status>"+
+						"</system_grids>";
+		set_my_value_list(grid_data,grid_filter);
+						
+		set_static_value_list('system_grid_metrics','status',status_filter);
+			
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form264_create_item(fields);
+		});					
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
+ * @form Create RTO
+ * @formNo 265
+ */
+function form265_add_item()
+{
+	if(is_create_access('form265'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form265_"+id+"'></form>";
+			rowsHTML+="<td data-th='S.No.'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='AWB #'>";
+				rowsHTML+="<input type='text' required form='form265_"+id+"' oninvalid=\"setCustomValidity('This AWB # is invalid')\">";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Address'>";
+				rowsHTML+="<textarea readonly='readonly' form='form265_"+id+"'></textarea>";
+				rowsHTML+="<br>Phone: <input type='text' readonly='readonly' form='form265_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Details'>";
+				rowsHTML+="Weight: <input type='number' readonly='readonly' form='form265_"+id+"' step='any'>";
+				rowsHTML+="<br>Pieces: <input type='number' readonly='readonly' form='form265_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' readonly='readonly' form='form265_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form265_"+id+"' name='manifest_type'>";
+				rowsHTML+="<input type='hidden' form='form265_"+id+"' name='order_num'>";
+				rowsHTML+="<input type='hidden' form='form265_"+id+"' name='ship_to'>";
+				rowsHTML+="<input type='hidden' form='form265_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='submit_hidden' form='form265_"+id+"' id='save_form265_"+id+"'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form265_"+id+"' id='delete_form265_"+id+"' onclick='$(this).parent().parent().remove(); form265_update_serial_numbers();'>";
+				rowsHTML+="<input type='hidden' form='form265_"+id+"' name='merchant_name'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form265_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form265_"+id+"' name='order_history'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+
+		$('#form265_body').prepend(rowsHTML);
+
+		var item_form=document.getElementById('form265_'+id);
+		var awb_filter=item_form.elements[0];
+		var address_filter=item_form.elements[1];
+		var phone_filter=item_form.elements[2];
+		var weight_filter=item_form.elements[3];
+		var pieces_filter=item_form.elements[4];
+		var status_filter=item_form.elements[5];
+		var manifest_type_filter=item_form.elements[6];
+		var order_num_filter=item_form.elements[7];
+		var ship_to=item_form.elements[8];
+		var id_filter=item_form.elements[9];
+		var save_button=item_form.elements[10];
+		var merchant_filter=item_form.elements[12];
+		var order_history=item_form.elements[14];
+		
+		var new_rto=true;
+		var saved=document.getElementById('form265_master').elements['saved'].value;
+		if(saved=='yes')
+		{
+			new_rto=false;
+		}
+		
+		$(item_form).on("submit", function(event)
+		{
+			event.preventDefault();
+			var total_entries=0;
+			var double_entry=0;
+			$("[id^='save_form265']").each(function(index)
+			{
+				var subform_id=$(this).attr('form');
+				var subform=document.getElementById(subform_id);
+				total_entries+=1;
+				if(subform.elements[0].value==awb_filter.value)	
+					double_entry+=1;
+			});
+
+			if(total_entries==1 && new_rto)
+			{
+				form265_create_form(function()
+				{
+					if(double_entry<2)
+					{
+						form265_create_item(item_form);
+						form265_add_item();
+					}
+					else 
+					{
+						awb_filter.value="";
+						$("#modal65").dialog("open");
+					}
+				});
+			}
+			else 
+			{
+				if(double_entry<2)
+				{
+					form265_create_item(item_form);
+					form265_add_item();
+				}
+				else 
+				{
+					awb_filter.value="";
+					$("#modal65").dialog("open");
+				}
+			}
+		});
+
+		$(awb_filter).focus();
+				
+		$(awb_filter).on('keydown',function (event) 
+		{
+			if(event.keyCode == 13 ) 
+			{
+				event.preventDefault();
+				
+				var total_entries=0;
+				var double_entry=0;
+				$("[id^='save_form265']").each(function(index)
+				{
+					var subform_id=$(this).attr('form');
+					var subform=document.getElementById(subform_id);
+					
+					total_entries+=1;
+				
+					if(subform.elements[0].value==awb_filter.value)	
+						double_entry+=1;
+				});
+				
+				if(total_entries==1 && new_rto)
+				{
+					form265_create_form(function () 
+					{
+						if(double_entry<2)
+						{
+							var orders_data="<logistics_orders count='1'>"+
+											"<id></id>"+
+											"<return_address1></return_address1>"+
+											"<return_address2></return_address2>"+
+											"<return_address3></return_address3>"+
+											"<return_pincode></return_pincode>"+
+											"<type></type>"+
+											"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>" +
+											"<manifest_type></manifest_type>" +
+											"<order_num></order_num>" +
+											"<merchant_name></merchant_name>" +
+											"<ship_to></ship_to>" +
+											"<vendor_phone></vendor_phone>" +
+											"<weight></weight>" +
+											"<pieces></pieces>" +
+											"<rto_num></rto_num>" +
+											"<status></status>"+
+											"<order_history></order_history>"+
+											"</logistics_orders>";
+							//console.log(orders_data);				
+							fetch_requested_data('',orders_data,function (orders) 
+							{
+								//console.log(orders);
+								if(orders.length>0)
+								{
+									address_filter.value=orders[0].merchant_name+"\n"+orders[0].return_address1+", "+orders[0].return_address2+", "+orders[0].return_address3+"-"+orders[0].return_pincode;
+									phone_filter.value=orders[0].vendor_phone;
+									weight_filter.value=orders[0].weight;
+									pieces_filter.value=orders[0].pieces;
+									status_filter.value=orders[0].status;
+									manifest_type_filter.value=orders[0].manifest_type;
+									order_num_filter.value=orders[0].order_num;
+									id_filter.value=orders[0].id;
+									merchant_filter.value=orders[0].merchant_name;
+									order_history.value=orders[0].order_history;
+									ship_to.value=orders[0].ship_to;
+									form265_create_item(item_form);
+									form265_add_item();
+								}
+								else 
+								{
+									address_filter.value="";
+									phone_filter.value="";
+									weight_filter.value="";
+									pieces_filter.value="";
+									status_filter.value="";
+									manifest_type_filter.value="";
+									order_num_filter.value="";
+									id_filter.value="";
+									merchant_filter.value="";
+									order_history.value="";
+									ship_to.value="";
+									awb_filter.value="";
+									$("#modal65").dialog("open");
+								}
+							});
+						}
+						else 
+						{
+							awb_filter.value="";
+							$("#modal65").dialog("open");
+						}
+					});
+				}
+				else 
+				{
+					if(double_entry<2)
+					{
+						var orders_data="<logistics_orders count='1'>"+
+											"<id></id>"+
+											"<return_address1></return_address1>"+
+											"<return_address2></return_address2>"+
+											"<return_address3></return_address3>"+
+											"<return_pincode></return_pincode>"+
+											"<type></type>"+
+											"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>" +
+											"<manifest_type></manifest_type>" +
+											"<order_num></order_num>" +
+											"<merchant_name></merchant_name>" +
+											"<ship_to></ship_to>" +
+											"<vendor_phone></vendor_phone>" +
+											"<weight></weight>" +
+											"<pieces></pieces>" +
+											"<rto_num></rto_num>" +
+											"<status></status>"+
+											"<order_history></order_history>"+
+											"</logistics_orders>";
+						//console.log(orders_data);				
+						fetch_requested_data('',orders_data,function (orders) 
+						{
+							//console.log(orders);
+							if(orders.length>0)
+							{
+								address_filter.value=orders[0].merchant_name+"\n"+orders[0].return_address1+", "+orders[0].return_address2+", "+orders[0].return_address3+"-"+orders[0].return_pincode;
+								phone_filter.value=orders[0].vendor_phone;
+								weight_filter.value=orders[0].weight;
+								pieces_filter.value=orders[0].pieces;
+								status_filter.value=orders[0].status;
+								manifest_type_filter.value=orders[0].manifest_type;
+								order_num_filter.value=orders[0].order_num;
+								id_filter.value=orders[0].id;
+								merchant_filter.value=orders[0].merchant_name;
+								order_history.value=orders[0].order_history;
+								ship_to.value=orders[0].ship_to;
+								form265_create_item(item_form);
+								form265_add_item();
+							}
+							else 
+							{
+								address_filter.value="";
+								phone_filter.value="";
+								weight_filter.value="";
+								pieces_filter.value="";
+								status_filter.value="";
+								manifest_type_filter.value="";
+								order_num_filter.value="";
+								id_filter.value="";
+								merchant_filter.value="";
+								order_history.value="";
+								ship_to.value="";
+								awb_filter.value="";
+								$("#modal65").dialog("open");
+							}
+						});
+					}
+					else 
+					{
+						awb_filter.value="";
+						$("#modal65").dialog("open");
+					}
+				}
+			}
+		});
+
+		$('textarea').autosize();
+		form265_update_serial_numbers();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

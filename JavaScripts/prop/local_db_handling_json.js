@@ -475,6 +475,7 @@ function local_generate_report_json(report_id,callback)
 	}
 	else
 	{
+		show_loader();
 		var report_tables=[];
 		var report_fields=[];
 		var field_conditions=[];
@@ -603,6 +604,7 @@ function local_generate_report_json(report_id,callback)
 						    else
 						    {
 						    	callback(results);
+						    	hide_loader();
 						    }
 						}
 					}

@@ -10165,13 +10165,6 @@ function form184_update_item(form)
 	}
 }
 
-function form184_update_serial_numbers()
-{
-	$('#form184_body').find('tr').each(function(index)
-	{
-		$(this).find('td:nth-child(2)>input').attr('value',index+1);
-	});
-}
 
 /**
  * @form Create production plan
@@ -10818,6 +10811,7 @@ function form193_update_form()
 										"</area_utilization>";
 								create_simple(storage_xml);
 							}
+							/*
 							else if(placements.length>0 && parseFloat(item.quantity)==0)
 							{
 								var storage_xml="<area_utilization>" +
@@ -10825,6 +10819,7 @@ function form193_update_form()
 										"</area_utilization>";
 								delete_simple(storage_xml);
 							}
+							*/
 						});
 						///////////////////////////////////	
 					}
@@ -11802,15 +11797,7 @@ function form211_update_item(form)
 						"<order_history>"+order_history_string+"</order_history>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</logistics_orders>";
-			var activity_xml="<activity>" +
-						"<data_id>"+id+"</data_id>" +
-						"<tablename>logistics_orders</tablename>" +
-						"<link_to>form198</link_to>" +
-						"<title>Updated</title>" +
-						"<notes>AWB # "+awb_num+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			update_row(data_xml,activity_xml);
+			update_simple(data_xml);
 			for(var i=0;i<4;i++)
 			{
 				$(form.elements[i]).attr('readonly','readonly');
@@ -11821,7 +11808,6 @@ function form211_update_item(form)
 			{
 				e.preventDefault();
 			});
-			
 		}
 	}
 	else
@@ -13820,6 +13806,285 @@ function form261_update_item(form)
 		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage Grids
+ * @param button
+ */
+function form262_update_item(form)
+{
+	if(is_update_access('form262'))
+	{
+		var order=form.elements[0].value;
+		var name=form.elements[1].value;
+		var display_name=form.elements[2].value;
+		var head_color=form.elements[3].value;
+		var back_color=form.elements[4].value;
+		var status=form.elements[5].value;
+		var data_id=form.elements[6].value;
+		var del_button=form.elements[8];
+		
+		var last_updated=get_my_time();
+		var data_xml="<system_grids>" +
+					"<id>"+data_id+"</id>" +
+					"<name unique='yes'>"+name+"</name>" +
+					"<display_name>"+display_name+"</display_name>" +
+					"<head_color>"+head_color+"</head_color>" +
+					"<back_color>"+back_color+"</back_color>" +
+					"<grid_order>"+order+"</grid_order>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</system_grids>";
+		update_simple(data_xml);
+		
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Arrange Grid Tabs
+ * @param button
+ */
+function form263_update_form()
+{
+	if(is_update_access('form263'))
+	{
+		var elements_array=[];
+		$("[id^='save_form263']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+			
+			var elem_obj=new Object();
+			elem_obj.type=subform.elements[0].value;
+			elem_obj.name=subform.elements[1].value;
+			elem_obj.display_name=subform.elements[2].value;
+			elem_obj.onclick=subform.elements[3].value;
+			elements_array.push(elem_obj);
+			
+			for(var i=0;i<4;i++)
+			{
+				$(subform.elements[i]).attr('readonly','readonly');
+			}
+			
+		});
+		
+		var elements_string=JSON.stringify(elements_array);
+		var last_updated=get_my_time();
+		var data_xml="<system_grids>" +
+					"<id>"+data_id+"</id>" +
+					"<elements>"+elements_string+"</elements>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</system_grids>";
+		update_simple(data_xml);		
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Grid Metrics
+ * @param button
+ */
+function form264_update_item(form)
+{
+	if(is_update_access('form264'))
+	{
+		var metric_id=form.elements[0].value;
+		var name=form.elements[1].value;
+		var grid=form.elements[2].value;
+		var function_name=form.elements[3].value;
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var del_button=form.elements[7];
+		
+		var last_updated=get_my_time();
+		var data_xml="<system_grid_metrics>" +
+					"<id>"+data_id+"</id>" +
+					"<metric_id unique='yes'>"+metric_id+"</metric_id>" +
+					"<display_name>"+name+"</display_name>" +
+					"<grid>"+grid+"</grid>" +
+					"<function_name>"+function_name+"</function_name>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</system_grid_metrics>";
+		update_simple(data_xml);
+		
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 265
+ * form Create RTO
+ * @param button
+ */
+function form265_update_item(form)
+{
+	if(is_update_access('form265'))
+	{
+		var rto_num=document.getElementById('form265_master').elements['rto_num'].value;
+		var delivery_person=document.getElementById('form265_master').elements['employee'].value;
+		var data_id=form.elements[9].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<logistics_orders>" +
+					"<id>"+data_id+"</id>" +
+					"<rto_num>"+rto_num+"</rto_num>"+
+					"<return_person>"+delivery_person+"</return_person>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</logistics_orders>";
+		update_simple(data_xml);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Create RTO
+ * @param button
+ */
+function form265_update_form()
+{
+	if(is_create_access('form265'))
+	{
+		var form=document.getElementById("form265_master");
+		
+		var rto_num=form.elements['rto_num'].value;
+		var employee=form.elements['employee'].value;
+		var ddate=get_raw_time(form.elements['date'].value);
+		var data_id=form.elements['id'].value;
+		
+		$('#form265_share').show();
+		$('#form265_share').click(function()
+		{
+			modal101_action('RTO Sheet',employee,'staff',function (func) 
+			{
+				print_form265(func);
+			});
+		});
+
+		var save_button=form.elements['save'];
+		var last_updated=get_my_time();
+		
+		var rto_columns="<rto count='2'>" +
+					"<id></id>"+
+					"<rto_num exact='yes'>"+rto_num+"</rto_num>"+
+					"</rto>";		
+		fetch_requested_data('',rto_columns,function(rtoes)
+		{
+			if(rtoes.length==0 || (rtoes.length==1 && rtoes[0].id==data_id))
+			{
+				var data_xml="<rto>" +
+							"<id>"+data_id+"</id>" +
+							"<rto_num>"+rto_num+"</rto_num>"+
+							"<employee>"+employee+"</employee>"+
+							"<rto_time>"+ddate+"</rto_time>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</rto>";
+				var activity_xml="<activity>" +
+							"<data_id>"+data_id+"</data_id>" +
+							"<tablename>rto</tablename>" +
+							"<link_to>form266</link_to>" +
+							"<title>Updated</title>" +
+							"<notes>RTO # "+rto_num+"</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+				update_row(data_xml,activity_xml);
+				
+				$("[id^='save_form265_']").click();
+			}
+			else 
+			{
+				$("#modal68").dialog("open");
+			}
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form RTO orders
+ * @param button
+ */
+function form267_update_item(form)
+{
+	if(is_update_access('form267'))
+	{
+		var awb_num=form.elements[0].value;
+		var status=form.elements[2].value;
+		var remarks=form.elements[3].value;
+		var id=form.elements[4].value;
+		var last_updated=get_my_time();
+		
+		if(status!="")
+		{
+			var old_order_history=form.elements[6].value;
+			var order_history=JSON.parse(old_order_history);
+			var history_object=new Object();
+			history_object.timeStamp=get_my_time();
+			history_object.details=remarks;
+			history_object.status=status;
+			
+			if(status=='RTO pending')
+			{
+				history_object.location=get_session_var('address');
+			}
+			else if(status=='RTO delivered')
+			{
+				history_object.location="";
+			}
+			
+			order_history.push(history_object);
+			var order_history_string=JSON.stringify(order_history);		
+			
+			var data_xml="<logistics_orders>" +
+						"<id>"+id+"</id>" +
+						"<status>"+status+"</status>" +
+						"<comments>"+remarks+"</comments>" +
+						"<order_history>"+order_history_string+"</order_history>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</logistics_orders>";
+			update_simple(data_xml);
+			for(var i=0;i<4;i++)
+			{
+				$(form.elements[i]).attr('readonly','readonly');
+			}
+			
+			$(form).off('submit');
+			$(form).on('submit',function (e) 
+			{
+				e.preventDefault();
+			});	
 		}
 	}
 	else

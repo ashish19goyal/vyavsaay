@@ -8373,3 +8373,186 @@ function form261_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form System Grids
+ * @param button
+ */
+function form262_delete_item(button)
+{
+	if(is_delete_access('form262'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var name=form.elements[1].value;
+			var data_id=form.elements[6].value;
+			var data_xml="<system_grids>" +
+						"<id>"+data_id+"</id>" +
+						"</system_grids>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>system_grids</tablename>" +
+						"<link_to>form262</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Grid "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+							
+			delete_row(data_xml,activity_xml);			
+			
+			$(button).parent().parent().remove();
+			form262_update_serial_numbers();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form System Grid Metrics
+ * @param button
+ */
+function form264_delete_item(button)
+{
+	if(is_delete_access('form264'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var name=form.elements[1].value;
+			var data_id=form.elements[5].value;
+			var data_xml="<system_grid_metrics>" +
+						"<id>"+data_id+"</id>" +
+						"</system_grid_metrics>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>system_grid_metrics</tablename>" +
+						"<link_to>form264</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Grid metrics "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+							
+			delete_row(data_xml,activity_xml);			
+			
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 265
+ * form Create RTO
+ * @param button
+ */
+function form265_delete_item(button)
+{
+	if(is_delete_access('form265'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var data_id=form.elements[9].value;
+			var last_updated=get_my_time();
+			var data_xml="<logistics_orders>" +
+						"<id>"+data_id+"</id>" +
+						"<status>received</status>" +
+						"<rto_num></rto_num>"+
+						"<rto_time></rto_time>"+
+						"<rto_id></rto_id>"+
+						"<return_person></return_person>"+
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</logistics_orders>";
+			update_simple(data_xml);
+			$(button).parent().parent().remove();
+			form265_update_serial_numbers();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage RTO
+ * @param button
+ */
+function form266_delete_item(button)
+{
+	if(is_delete_access('form266'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var rto_num=form.elements[0].value;
+			var data_id=form.elements[3].value;
+			var data_xml="<rto>" +
+						"<id>"+data_id+"</id>" +
+						"</rto>";	
+			var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>rto</tablename>" +
+					"<link_to>form266</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>RTO # "+rto_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+			
+			var rto_items_xml="<logistics_orders>"+
+							"<id></id>"+
+							"<status exact='yes'>RTO out for delivery</status>"+
+							"<rto_num exact='yes'>"+rto_num+"</rto_num>"+
+							"</logistics_orders>";			
+			get_single_column_data(function(rto_items)
+			{
+				var data_xml="<logistics_orders>";
+				var counter=1;
+				var last_updated=get_my_time();
+				
+				rto_items.forEach(function(rto_item)
+				{
+					if((counter%500)===0)
+					{
+						data_xml+="</logistics_orders><separator></separator><logistics_orders>";
+					}
+						
+					counter+=1;
+				
+					data_xml+="<row>" +
+							"<id>"+rto_item+"</id>" +
+							"<rto_num></rto_num>" +
+							"<rto_id></rto_id>"+
+							"<return_person></return_person>" +
+							"<status>received</status>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</row>";
+				});
+				data_xml+="</logistics_orders>";
+				//console.log(data_xml);
+				update_batch(data_xml);
+				
+			},rto_items_xml);
+			
+			delete_row(data_xml,activity_xml);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

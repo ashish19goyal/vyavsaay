@@ -22,6 +22,9 @@
 			<li><a id='form177_link' href='#form177' onclick='form177_header_ini(); form177_ini();' data-i18n='form.prioritization_parameters'></a></li>
 			<li><a id='form191_link' href='#form191' onclick='form191_header_ini(); form191_ini();' data-i18n='form.manage_values_lists'></a></li>
 			<li><a id='form195_link' href='#form195' onclick='form195_header_ini(); form195_ini();' data-i18n='form.letterhead'></a></li>
+			<li><a id='form262_link' href='#form262' onclick='form262_header_ini(); form262_ini();' data-i18n='form.manage_grids'></a></li>
+			<li><a id='form263_link' href='#form263' onclick='form263_header_ini(); form263_ini();' data-i18n='form.arrange_grid_tabs'></a></li>
+			<li><a id='form264_link' href='#form264' onclick='form264_header_ini(); form264_ini();' data-i18n='form.grid_metrics'></a></li>
 		</ul>
 
 	<?php 
@@ -46,5 +49,8 @@
 			include "forms/form177.php";		
 			include "forms/form191.php";		
 			include "forms/form195.php";		
+			include "forms/form262.php";		
+			include "forms/form263.php";		
+			include "forms/form264.php";		
 	?>
 </div>

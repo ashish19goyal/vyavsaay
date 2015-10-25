@@ -9992,3 +9992,304 @@ function form261_header_ini()
 		form261_ini();
 	});	
 }
+
+/**
+ * @form Manage Grids
+ * @formNo 262
+ */
+function form262_header_ini()
+{
+	var filter_fields=document.getElementById('form262_header');
+	var grid_filter=filter_fields.elements[0];
+	var name_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+		
+	var grid_data="<system_grids>" +
+		"<name></name>" +
+		"</system_grids>";
+
+	var name_data="<system_grids>" +
+		"<display_name></display_name>" +
+		"</system_grids>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form262_ini();
+	});
+
+	set_my_filter(grid_data,grid_filter);
+	set_my_filter(name_data,name_filter);
+	set_static_filter('system_grids','status',status_filter);
+	
+	var body_elem=document.getElementById('form262_body');
+	body_elem.addEventListener('table_sort',function(e)
+	{
+		form262_update_serial_numbers();
+		$("[id^='save_form262_']").click();
+	},false);
+
+};
+
+/**
+ * @form Arrange Grid Tabs
+ * @formNo 263
+ */
+function form263_header_ini()
+{
+	var fields=document.getElementById('form263_master');
+	
+	var grid_filter=fields.elements['grid'];
+	var id_filter=fields.elements['id'];
+	var save_button=fields.elements['save'];
+	
+	id_filter.value="";
+	grid_filter.value='';
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form263_update_form();
+	});
+
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form263_ini();
+	});
+
+	var grid_data="<system_grids>" +
+		"<name></name>" +
+		"<status exact='yes'>active</status>" +
+		"</system_grids>";
+	set_my_value_list(grid_data,grid_filter,function () 
+	{
+		$(grid_filter).focus();
+	});
+	
+	$(grid_filter).off('blur');
+	$(grid_filter).off('change');
+	$(grid_filter).off('select');
+
+	$(grid_filter).on('blur change select',function()
+	{
+		var grid_data="<system_grids>" +
+			"<id></id>"+
+			"<name exact='yes'>"+grid_filter.value+"</name>" +
+			"</system_grids>";
+		set_my_value(grid_data,id_filter);
+	});
+	
+	$('#form263_body').html("");
+	
+	var body_elem=document.getElementById('form263_body');
+	body_elem.addEventListener('table_sort',function(e)
+	{
+		form263_update_serial_numbers();
+	},false);
+
+}
+
+/**
+ * @form Grids Metrics
+ * @formNo 264
+ */
+function form264_header_ini()
+{
+	var filter_fields=document.getElementById('form264_header');
+	var name_filter=filter_fields.elements[0];
+	var grid_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+		
+	var name_data="<system_grid_metrics>" +
+		"<display_name></display_name>" +
+		"</system_grid_metrics>";
+
+	var grid_data="<system_grids>" +
+		"<name></name>" +
+		"</system_grids>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form264_ini();
+	});
+
+	set_my_filter(grid_data,grid_filter);
+	set_my_filter(name_data,name_filter);
+	set_static_filter('system_grid_metrics','status',status_filter);
+};
+
+/**
+ * @form Create RTO
+ * @formNo 265
+ */
+function form265_header_ini()
+{
+	var fields=document.getElementById('form265_master');
+
+	var rto_filter=fields.elements['rto_num'];
+	var employee=fields.elements['employee'];
+	var rto_date=fields.elements['date'];
+	var branch=fields.elements['branch'];
+
+	fields.elements['saved'].value='no';
+	fields.elements['id'].value=get_new_key();
+
+	var save_button=fields.elements['save'];
+	rto_filter.value="";
+	employee.value="";
+
+	var rto_id=$("#form265_link").attr('data_id');
+	if(rto_id==null)
+		rto_id="";	
+
+	if(rto_id=="")
+	{
+		var rto_num_data="<user_preferences count='1'>"+
+						"<value></value>"+
+						"<name exact='yes'>rto_num</name>"+
+						"</user_preferences>";
+		set_my_value(rto_num_data,rto_filter);	
+	}
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form265_update_form();
+	});
+
+	$(save_button).hide();
+	
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	var acc_name=get_account_name();
+	var branch_data="<store_areas count='1'>"+
+					"<name></name>"+
+					"<owner>"+acc_name+"</owner>"+
+					"</store_areas>";
+	
+	set_my_value(branch_data,branch);
+	
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		//modal129_action();
+		form265_add_item();
+	});
+
+	var employee_data="<staff>" +
+		"<acc_name></acc_name>" +
+		"</staff>";
+	set_my_value_list(employee_data,employee,function () 
+	{
+		$(employee).focus();
+	});
+	
+	$(rto_date).datepicker();
+	rto_date.value=get_my_date();
+	$('#form265_share').hide();
+}
+
+/**
+ * @form Manage RTO
+ * @formNo 266
+ */
+function form266_header_ini()
+{
+	var filter_fields=document.getElementById('form266_header');
+	var rto_filter=filter_fields.elements[0];
+	var employee_filter=filter_fields.elements[1];
+	var date_filter=filter_fields.elements[2];
+		
+	var rto_data="<rto>" +
+			"<rto_num></rto_num>" +
+			"</rto>";
+	var employee_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form266_ini();
+	});
+
+	set_my_filter(rto_data,rto_filter);
+	set_my_filter(employee_data,employee_filter);
+	$(date_filter).datepicker();
+};
+
+/**
+ * @form RTO Status
+ * @formNo 267
+ */
+function form267_header_ini()
+{
+	$('#form267_body').html("");
+	
+	var fields=document.getElementById('form267_master');
+	
+	var rto_filter=fields.elements['rto'];
+	var status_filter=fields.elements['status'];
+	var remark_filter=fields.elements['remark'];
+	var awb_filter=fields.elements['awb_num'];
+	var save_button=fields.elements['save'];
+
+	rto_filter.value="";
+	$(rto_filter).focus();
+
+	set_static_value_list('logistics_orders','status',status_filter);
+
+	$(awb_filter).off('keydown');
+	$(awb_filter).on('keydown',function (event) 
+	{
+		if(event.keyCode == 13) 
+		{
+	    	event.preventDefault();
+	    	var subform=document.getElementById('form267_'+awb_filter.value);
+	    	subform.elements[2].value=status_filter.value;
+	    	subform.elements[3].value=remark_filter.value;
+	    	form267_get_totals();
+	    	awb_filter.value="";
+	    }
+	});
+	
+	$(rto_filter).off('keydown');
+	$(rto_filter).on('keydown',function (event) 
+	{
+		if(event.keyCode == 13) 
+		{
+	    	event.preventDefault();
+	    	form267_ini();
+	    }
+	});
+
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		$("[id^='save_form267_']").click();
+	});
+}

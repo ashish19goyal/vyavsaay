@@ -3726,6 +3726,39 @@
 			<tables>--system_grid_metrics--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form265</name>
+			<display_name>create_rto</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--rto--logistics_orders--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form266</name>
+			<display_name>manage_rto</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--rto--logistics_orders--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form267</name>
+			<display_name>rto_status</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--rto--logistics_orders--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -7087,6 +7120,39 @@
 			<username>master</username>
 			<element_id>form264</element_id>
 			<element_name>grid_metrics</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form265</element_id>
+			<element_name>create_rto</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form266</element_id>
+			<element_name>manage_rto</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form267</element_id>
+			<element_name>rto_status</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

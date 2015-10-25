@@ -104,6 +104,16 @@
 				"elements": "[{\"name\":\"form200\",\"onclick\":\"form200_header_ini(); form200_ini();\",\"display_name\":\"Create Non-COD DRS\",\"type\":\"forms\"},{\"name\":\"form219\",\"onclick\":\"form219_header_ini(); form219_ini();\",\"display_name\":\"Create COD DRS\",\"type\":\"forms\"},{\"name\":\"form201\",\"onclick\":\"form201_header_ini(); form201_ini();\",\"display_name\":\"Manage DRS\",\"type\":\"forms\"},{\"name\":\"form211\",\"onclick\":\"form211_header_ini();\",\"display_name\":\"Update Orders\",\"type\":\"forms\"},{\"name\":\"form199\",\"onclick\":\"form199_header_ini();\",\"display_name\":\"Incoming Items\",\"type\":\"forms\"},{\"name\":\"form204\",\"onclick\":\"form204_header_ini();\",\"display_name\":\"Pending Orders\",\"type\":\"forms\"},{\"name\":\"form205\",\"onclick\":\"form205_header_ini();\",\"display_name\":\"Undelivered Orders\",\"type\":\"forms\"},{\"name\":\"form206\",\"onclick\":\"form206_header_ini();\",\"display_name\":\"Delivered Orders\",\"type\":\"forms\"}]"
 			},
 			{
+				"name":"rto",
+				"display_name":"RTO",
+				"head_color":"#4B3C39",
+				"back_color":"#7E6F6C",
+				"status": "active",
+				"last_updated":1,
+				"grid_order":10,
+				"elements": "[{\"name\":\"form265\",\"onclick\":\"form265_header_ini(); form265_ini();\",\"display_name\":\"Create RTO Sheet\",\"type\":\"forms\"},{\"name\":\"form266\",\"onclick\":\"form266_header_ini(); form266_ini();\",\"display_name\":\"Manage RTO Sheets\",\"type\":\"forms\"},{\"name\":\"form267\",\"onclick\":\"form267_header_ini();\",\"display_name\":\"Update RTO Status\",\"type\":\"forms\"}]"
+			},
+			{
 				"name":"transit",
 				"display_name":"Transit",
 				"head_color":"#4BA69D",

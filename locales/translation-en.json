@@ -446,6 +446,12 @@
 	"create_quotation_nvs":"Create Quotation (NVS)",
 	"manage_quotations_nvs":"Manage Quotations (NVS)",
 	"inventory_spares":"Inventory (Spares)",
-	"bank_accounts":"Bank Accounts"
+	"bank_accounts":"Bank Accounts",
+	"grid_metrics":"Grid Metrics",
+	"arrange_grid_tabs":"Arrange Grid Tabs",
+	"manage_grids":"Manage Grids",
+	"create_rto":"Create RTO",
+	"manage_rto":"Manage RTO",
+	"rto_status":"Update RTO Status"
 	}
 }

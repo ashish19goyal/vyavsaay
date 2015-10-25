@@ -27639,3 +27639,685 @@ function form261_ini()
 		hide_loader();
 	});
 };
+
+/**
+ * @form Manage Grids
+ * @formNo 262
+ * @Loading light
+ */
+function form262_ini()
+{
+	show_loader();
+	var fid=$("#form262_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form262_header');
+	
+	var	fgrid=filter_fields.elements[0].value;
+	var	fname=filter_fields.elements[1].value;
+	var	fstatus=filter_fields.elements[2].value;
+
+	$('#form262_body').html("");
+
+	var new_columns=new Object();
+			new_columns.count=0;
+			new_columns.start_index=0;
+			new_columns.data_store='system_grids';		
+			
+			new_columns.indexes=[{index:'id',value:fid},
+								{index:'name',value:fgrid},
+								{index:'display_name',value:fname},
+								{index:'head_color'},
+								{index:'back_color'},
+								{index:'elements'},
+								{index:'grid_order'},
+								{index:'status',value:fstatus}];
+		
+	read_json_rows('form262',new_columns,function(results)
+	{	
+		results.sort(function(a,b)
+		{
+			if(parseInt(a.grid_order)>parseInt(b.grid_order))
+			{	return 1;}
+			else 
+			{	return -1;}
+		});
+			
+		results.forEach(function(result)
+		{
+			var rowsHTML="<tr>";
+				rowsHTML+="<form id='form262_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Order'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form262_"+result.id+"' value='"+result.grid_order+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Grid'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form262_"+result.id+"' value='"+result.name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Name'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form262_"+result.id+"' value='"+result.display_name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Color'>";
+						rowsHTML+="<b>Head</b>:<input type='text' readonly='readonly' class='dblclick_editable' form='form262_"+result.id+"' value='"+result.head_color+"'>";
+						rowsHTML+="<br><b>Back</b>:<input type='text' readonly='readonly' class='dblclick_editable' form='form262_"+result.id+"' value='"+result.back_color+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form262_"+result.id+"' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form262_"+result.id+"' value='"+result.id+"'>";	
+						rowsHTML+="<input type='submit' class='save_icon' form='form262_"+result.id+"' title='Save' id='save_form262_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form262_"+result.id+"' title='Delete' onclick='form262_delete_item($(this));'>";
+						rowsHTML+="<input type='button' form='form262_"+result.id+"' class='generic_icon' value='Arrange Tabs' name='arrange'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form262_body').append(rowsHTML);
+			var fields=document.getElementById("form262_"+result.id);
+			var status_filter=fields.elements[5];
+			var arrange_button=fields.elements['arrange'];
+						
+			set_static_value_list('system_grids','status',status_filter);
+			
+			$(arrange_button).on('click',function () 
+			{
+				element_display(result.id,'form263');
+			});
+					
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form262_update_item(fields);
+			});
+		});
+
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements['export'];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_limited_export_data(new_columns,'Grids');
+		});
+		hide_loader();
+	});
+}
+
+/**
+ * @form Arrange Grid Tabs
+ * @formNo 263
+ * @Loading light
+ */
+function form263_ini()
+{
+	var data_id=$("#form263_link").attr('data_id');
+	if(data_id==null)
+		data_id="";	
+	$('#form263_body').html("");
+	
+	var master_form=document.getElementById('form263_master');	
+	var id_filter=master_form.elements['id'];
+	
+	if(data_id=="")
+	{
+		data_id=id_filter.value;
+	}
+	
+	if(data_id!="")
+	{
+		show_loader();
+		var new_columns=new Object();
+			new_columns.count=1;
+			new_columns.start_index=0;
+			new_columns.data_store='system_grids';		
+			
+			new_columns.indexes=[{index:'id',value:data_id},
+								{index:'name'},
+								{index:'display_name'},
+								{index:'elements'},
+								{index:'status'}];
+		
+		read_json_rows('form263',new_columns,function(results)
+		{					
+			var filter_fields=document.getElementById('form263_master');
+			if(results.length>0)
+			{
+				filter_fields.elements['grid'].value=results[0].name;
+
+				var elements_array=JSON.parse(results[0].elements);
+
+				var new_id=get_new_key();
+				var counter=0;
+				elements_array.forEach(function(result)
+				{
+					counter+=1;
+					var id=new_id+counter;
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form263_"+id+"'></form>";
+						rowsHTML+="<td data-th='S.No.'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Type'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form263_"+id+"' value='"+result.type+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Name'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form263_"+id+"' value='"+result.name+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Display Name'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form263_"+id+"' value='"+result.display_name+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Onclick'>";
+							rowsHTML+="<textarea readonly='readonly' form='form263_"+id+"'>"+result.onclick+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form263_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='button' class='submit_hidden' form='form263_"+id+"' id='save_form263_"+id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form263_"+id+"' id='delete_form263_"+id+"' onclick='$(this).parent().parent().remove(); form263_update_serial_numbers();'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";
+
+					$('#form263_body').append(rowsHTML);
+				});
+				
+				form263_update_serial_numbers();
+				$('textarea').autosize();
+				hide_loader();
+			}
+		});
+	}
+}
+
+/**
+ * @form Manage Grids
+ * @formNo 264
+ * @Loading light
+ */
+function form264_ini()
+{
+	show_loader();
+	var fid=$("#form264_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form264_header');
+	
+	var	fname=filter_fields.elements[0].value;
+	var	fgrid=filter_fields.elements[1].value;
+	var	fstatus=filter_fields.elements[2].value;
+
+	$('#form264_body').html("");
+
+	var new_columns=new Object();
+			new_columns.count=0;
+			new_columns.start_index=0;
+			new_columns.data_store='system_grid_metrics';		
+			
+			new_columns.indexes=[{index:'id',value:fid},
+								{index:'metric_id'},
+								{index:'display_name',value:fname},
+								{index:'grid',value:fgrid},
+								{index:'function_name'},
+								{index:'function_def'},
+								{index:'status',value:fstatus}];
+		
+	read_json_rows('form264',new_columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var rowsHTML="<tr>";
+				rowsHTML+="<form id='form264_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Id'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form264_"+result.id+"' value='"+result.metric_id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Name'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form264_"+result.id+"' class='dblclick_editable' value='"+result.display_name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Grid'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form264_"+result.id+"' value='"+result.grid+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Function'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='input_link dblclick_editable' form='form264_"+result.id+"' value='"+result.function_name+"' onclick=\"modal165_action('"+result.id+"',$(this))\">";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form264_"+result.id+"' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form264_"+result.id+"' value='"+result.id+"'>";	
+						rowsHTML+="<input type='submit' class='save_icon' form='form264_"+result.id+"' title='Save'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form264_"+result.id+"' title='Delete' onclick='form264_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form264_body').append(rowsHTML);
+			var fields=document.getElementById("form264_"+result.id);
+			var grid_filter=fields.elements[2];
+			var status_filter=fields.elements[4];
+						
+			var grid_data="<system_grids>"+
+						"<name></name>"+
+						"<status exact='yes'>active</status>"+
+						"</system_grids>";
+			set_my_value_list(grid_data,grid_filter);
+						
+			set_static_value_list('system_grid_metrics','status',status_filter);
+			
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form264_update_item(fields);
+			});
+		});
+
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements['export'];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_limited_export_data(new_columns,'Grid Metrics');
+		});
+		hide_loader();
+	});
+}
+
+/**
+ * @form Create RTO
+ * @formNo 265
+ * @Loading light
+ */
+function form265_ini()
+{
+	var rto_id=$("#form265_link").attr('data_id');
+	if(rto_id==null)
+		rto_id="";	
+	$('#form265_body').html("");
+	$('#form265_foot').html("");
+	
+	if(rto_id!="")
+	{
+		show_loader();
+		var rto_columns="<rto>" +
+				"<id>"+rto_id+"</id>" +
+				"<rto_num></rto_num>"+
+				"<employee></employee>"+
+				"<rto_time></rto_time>"+
+				"<branch></branch>"+
+				"</rto>";
+	
+		////separate fetch function to get bill details like customer name, total etc.
+		fetch_requested_data('',rto_columns,function(rto_results)
+		{
+			var filter_fields=document.getElementById('form265_master');
+			if(rto_results.length>0)
+			{
+				filter_fields.elements['rto_num'].value=rto_results[0].rto_num;
+				filter_fields.elements['employee'].value=rto_results[0].employee;
+				filter_fields.elements['date'].value=get_my_past_date(rto_results[0].rto_time);
+				filter_fields.elements['id'].value=rto_results[0].id;
+				filter_fields.elements['branch'].value=rto_results[0].branch;
+				filter_fields.elements['saved'].value='yes';
+
+				var save_button=filter_fields.elements['save'];
+				
+				$(save_button).show();
+				
+				var rto_items_column="<logistics_orders>" +
+									"<id></id>" +
+									"<awb_num></awb_num>" +
+									"<manifest_type></manifest_type>" +
+									"<order_num></order_num>" +
+									"<merchant_name></merchant_name>" +
+									"<ship_to></ship_to>" +
+									"<return_address1></return_address1>" +
+									"<return_address2></return_address2>" +
+									"<return_address3></return_address3>" +
+									"<return_pincode></return_pincode>" +
+									"<vendor_phone></vendor_phone>" +
+									"<weight></weight>" +
+									"<pieces></pieces>" +
+									"<status></status>" +
+									"<rto_num exact='yes'>"+rto_results[0].rto_num+"</rto_num>" +
+									"<rto_id exact='yes'>"+rto_id+"</rto_id>" +
+									"</logistics_orders>";
+
+				/////////////////////////////////////////////////////////////////////////
+	
+				fetch_requested_data('',rto_items_column,function(results)
+				{
+					results.forEach(function(result)
+					{
+						var id=result.id;
+						var rowsHTML="<tr>";
+
+						var address=result.merchant_name+"\n"+result.return_address1+", "+result.return_address2+", "+result.return_address3+"-"+result.return_pincode;
+						rowsHTML+="<form id='form265_"+id+"'></form>";
+							rowsHTML+="<td data-th='S.No.'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='AWB #'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form265_"+id+"' value='"+result.awb_num+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Address'>";
+								rowsHTML+="<textarea readonly='readonly' form='form265_"+id+"'>"+address+"</textarea>";
+								rowsHTML+="<br>Phone: <input type='text' readonly='readonly' value='"+result.vendor_phone+"' form='form265_"+id+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Details'>";
+								rowsHTML+="Weight: <input type='number' readonly='readonly' form='form265_"+id+"' value='"+result.weight+"' step='any'>";
+								rowsHTML+="<br>Pieces: <input type='number' readonly='readonly' form='form265_"+id+"' value='"+result.pieces+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Status'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form265_"+id+"' value='"+result.status+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Action'>";
+								rowsHTML+="<input type='hidden' form='form265_"+id+"' value='"+result.manifest_type+"'>";
+								rowsHTML+="<input type='hidden' form='form265_"+id+"' value='"+result.order_num+"'>";
+								rowsHTML+="<input type='hidden' form='form265_"+id+"' value='"+result.ship_to+"'>";
+								rowsHTML+="<input type='hidden' form='form265_"+id+"' value='"+id+"'>";
+								rowsHTML+="<input type='button' class='submit_hidden' form='form265_"+id+"' id='save_form265_"+id+"'>";
+								rowsHTML+="<input type='button' class='delete_icon' form='form265_"+id+"' id='delete_form265_"+id+"' onclick='form265_delete_item($(this));'>";
+								rowsHTML+="<input type='hidden' form='form265_"+id+"' value='"+result.merchant_name+"'>";
+							rowsHTML+="</td>";			
+						rowsHTML+="</tr>";
+	
+						$('#form265_body').append(rowsHTML);
+						
+						var item_form=document.getElementById('form265_'+id);
+						var save_button=item_form.elements[10];
+						
+						$(save_button).on('click',function (e) 
+						{
+							e.preventDefault();
+							form265_update_item(item_form);
+						});
+					});
+					
+					$('#form265_share').show();
+					$('#form265_share').click(function()
+					{
+						modal101_action('RTO Sheet',filter_fields.elements['employee'].value,'staff',function (func) 
+						{
+							print_form265(func);
+						});
+					});
+					
+					form265_update_serial_numbers();
+					$('textarea').autosize();
+					hide_loader();
+				});
+			}
+		});
+	}
+}
+
+/**
+ * @form Manage RTO
+ * @formNo 266
+ * @Loading light
+ */
+function form266_ini()
+{
+	show_loader();
+	var fid=$("#form266_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form266_header');
+
+	//populating form 
+	var frto=filter_fields.elements[0].value;
+	var femployee=filter_fields.elements[1].value;
+	var fdate=get_raw_time(filter_fields.elements[2].value);
+	
+	////indexing///
+	var index_element=document.getElementById('form266_index');
+	var prev_element=document.getElementById('form266_prev');
+	var next_element=document.getElementById('form266_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	$('#form266_body').html("");
+	
+	if_data_read_access('store_areas',function(accessible_data)
+	{
+		//console.log(accessible_data);
+		var branches_array=[];
+		var branch_object={index:'branch',array:branches_array};
+		
+		for(var x in accessible_data)
+		{
+			branches_array.push(accessible_data[x].name);
+			if(accessible_data[x].record_id=='all')
+			{
+				branch_object={index:'branch'};
+				break;
+			}
+		}
+
+		//console.log(branch_object);
+		
+		var new_columns=new Object();
+			new_columns.count=25;
+			new_columns.start_index=start_index;
+			new_columns.data_store='rto';		
+			
+			new_columns.indexes=[{index:'id',value:fid},
+								{index:'rto_num',value:frto},
+								{index:'employee',value:femployee},
+								{index:'rto_time',value:fdate},
+								branch_object];
+		
+		read_json_rows('form266',new_columns,function(results)
+		{
+			var rto_num_array=[];
+			results.forEach(function(result)
+			{
+				rto_num_array.push(result.rto_num);
+				var rowsHTML="";
+				rowsHTML+="<tr>";
+					rowsHTML+="<form id='form266_"+result.id+"'></form>";
+						rowsHTML+="<td data-th='RTO #'>";
+							rowsHTML+="<input type='text' class='input_link' readonly='readonly' form='form266_"+result.id+"' value='"+result.rto_num+"' onclick=\"element_display('"+result.id+"','form265');\">";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Employee'>";
+							rowsHTML+="<textarea readonly='readonly' form='form266_"+result.id+"'>"+result.employee+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='RTO Time'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form266_"+result.id+"' value='"+get_my_past_date(result.rto_time)+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form266_"+result.id+"' value='"+result.id+"' name='id'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form266_"+result.id+"' title='Delete RTO' onclick='form266_delete_item($(this));'>";
+						rowsHTML+="</td>";			
+				rowsHTML+="</tr>";
+				
+				$('#form266_body').append(rowsHTML);
+			});
+	
+			////indexing///
+			var next_index=parseInt(start_index)+25;
+			var prev_index=parseInt(start_index)-25;
+			next_element.setAttribute('data-index',next_index);
+			prev_element.setAttribute('data-index',prev_index);
+			index_element.setAttribute('data-index','0');
+			if(results.length<25)
+			{
+				$(next_element).hide();
+			}
+			else
+			{
+				$(next_element).show();
+			}
+			if(prev_index<0)
+			{
+				$(prev_element).hide();
+			}
+			else
+			{
+				$(prev_element).show();
+			}
+			/////////////
+	
+			longPressEditable($('.dblclick_editable'));
+			$('textarea').autosize();
+			
+			var export_button=filter_fields.elements['export'];
+			$(export_button).off("click");
+			$(export_button).on("click", function(event)
+			{
+				var columns=new Object();
+				columns.count=0;
+				columns.start_index=0;
+				columns.data_store='logistics_orders';		
+				
+				columns.indexes=[{index:'id'},
+								{index:'awb_num'},
+								{index:'rto_time'},
+								{index:'order_num'},
+								{index:'weight'},
+								{index:'pieces'},
+								{index:'status'},
+								{index:'return_person'},
+								{index:'manifest_type'},
+								{index:'merchant_name'},
+								{index:'vendor_phone'},
+								{index:'sku'},
+								{index:'return_address1'},
+								{index:'return_address2'},
+								{index:'return_address3'},
+								{index:'rto_num',array:rto_num_array}];		
+	
+				get_export_data_restructured(columns,'RTO Details',function(new_results)
+				{
+					var sorted_array=[];
+					new_results.forEach(function(new_result)
+					{
+						var sorted_element=new Object();
+						sorted_element['RTO No']=new_result.rto_num;
+						if(new_result.rto_time!="" && new_result.rto_time!="NULL")
+						{	
+							sorted_element['RTO Date']=get_my_datetime(new_result.rto_time);
+						}
+						else 
+						{
+							sorted_element['RTO Date']="";
+						}	
+						sorted_element['Order Id']=new_result.order_num;
+						sorted_element['AWB No']=new_result.awb_num;
+						sorted_element['Wt']=new_result.weight;
+						sorted_element['Pcs']=new_result.pieces;
+						sorted_element['status']=new_result.status;
+						sorted_element['Delivery Boy']=new_result.return_person;
+						sorted_element['AWB Type']=new_result.manifest_type;
+						sorted_element['Merchant']=new_result.merchant_name;
+						sorted_element['Merchant Address']=new_result.return_address1+", "+new_result.return_address2+", "+new_result.return_address3;
+						sorted_element['Mobile No']=new_result.vendor_phone;
+						sorted_element['Product Name']=new_result.sku;
+						
+						if(new_result.rto_num!="")
+						{
+							sorted_array.push(sorted_element);
+						}
+					});
+					return sorted_array;
+				});
+			});
+			hide_loader();
+		});
+	});
+};
+
+/**
+ * @form RTO Status
+ * @formNo 267
+ * @Loading light
+ */
+function form267_ini()
+{
+	$('#form267_body').html("");
+	$('#form267_foot').html("");
+
+	var filter_fields=document.getElementById('form267_master');
+	var rto_num=filter_fields['rto'].value;
+	var all_status=filter_fields['status'].value;
+	var all_remark=filter_fields['remark'].value;
+	var awb_filter=filter_fields['awb_num'];
+		
+	if(rto_num!="")
+	{
+		show_loader();
+		
+		if_data_read_access('store_areas',function(accessible_data)
+		{
+			//console.log(accessible_data);
+			var branches_array=[];
+			var branch_object={index:'branch',array:branches_array};
+			
+			for(var x in accessible_data)
+			{
+				branches_array.push(accessible_data[x].name);
+				if(accessible_data[x].record_id=='all')
+				{
+					branch_object={index:'branch'};
+					break;
+				}
+			}
+	
+			//console.log(branch_object);
+			
+			var new_columns=new Object();
+				new_columns.count=0;
+				new_columns.start_index=0;
+				new_columns.data_store='logistics_orders';
+				new_columns.return_column='awb_num';		
+				
+				new_columns.indexes=[{index:'awb_num'},
+									{index:'id'},
+									{index:'rto_num',exact:rto_num},
+									{index:'status'},
+									{index:'order_history'},
+									branch_object];
+
+			set_my_value_list_json(new_columns,awb_filter);
+			
+			read_json_rows('',new_columns,function(results)
+			{	
+				results.forEach(function(result)
+				{
+					var id=result.id;
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form267_"+result.awb_num+"'></form>";
+						rowsHTML+="<td data-th='AWB #'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form267_"+result.awb_num+"' value='"+result.awb_num+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Current Status'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form267_"+result.awb_num+"' value='"+result.status+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Updated Status'>";
+							rowsHTML+="<input type='text' form='form267_"+result.awb_num+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Remark'>";
+							rowsHTML+="<textarea form='form267_"+result.awb_num+"'></textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form267_"+result.awb_num+"' value='"+id+"'>";
+							rowsHTML+="<input type='submit' class='save_icon' form='form267_"+result.awb_num+"' id='save_form267_"+id+"'>";
+							rowsHTML+="<input type='hidden' form='form267_"+result.awb_num+"' value='"+result.order_history+"'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";
+				
+					$('#form267_body').prepend(rowsHTML);
+					var fields=document.getElementById("form267_"+result.awb_num);
+					var status_filter=fields.elements[2];
+					
+					set_static_value_list('logistics_orders','status',status_filter);
+							
+					$(fields).on("submit", function(event)
+					{
+						event.preventDefault();
+						form267_update_item(fields);
+					});
+				});
+				form267_get_totals();
+				hide_loader();
+			});
+		});
+	}
+}

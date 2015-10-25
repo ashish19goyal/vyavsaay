@@ -206,7 +206,10 @@
 					*/	$response_rows[$i][$key]=$value;
 					//}
 				}
-				$response_rows[$i]['id']="".$response_rows[$i]['id'];
+				if(isset($response_rows[$i]['id']))
+				{			
+					$response_rows[$i]['id']="".$response_rows[$i]['id'];
+				}
 			}
 			$response_object['rows']=$response_rows;
 		}

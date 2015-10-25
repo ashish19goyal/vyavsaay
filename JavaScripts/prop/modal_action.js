@@ -9113,6 +9113,8 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 							order_item_timer+=1;
 							get_inventory(order_item.item_name,'',function(quantity)
 							{
+								console.log(order_item.item_name+"-"+quantity);
+
 								if(parseFloat(quantity)<parseFloat(order_item.quantity))
 								{
 									tr_elem_title.push('Insufficient Inventory ');
@@ -13118,4 +13120,50 @@ function modal164_action(error_array)
 	$(modal_element).html(link);
 	$("#modal164").dialog("open");
 	hide_loader();	
+}
+
+/**
+ * @modalNo 165
+ * @modal Function Definition
+ */
+function modal165_action(id,elem)
+{
+	var form=document.getElementById('modal165_form');
+	
+	var name_filter=form.elements['name'];
+	var def_filter=form.elements['def'];
+	
+	name_filter.value=$(elem).val();
+	def_filter.value="";
+	
+	var def_columns=new Object();
+			def_columns.count=1;
+			def_columns.start_index=0;
+			def_columns.data_store='system_grid_metrics';		
+			def_columns.return_column='function_def';
+			def_columns.indexes=[{index:'id',value:id}];
+	set_my_value_json(def_columns,def_filter);
+				
+	$(form).off('submit');
+	$(form).on('submit',function(event) 
+	{
+		event.preventDefault();
+		
+		var name=name_filter.value;
+		var def=def_filter.value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<system_grid_metrics>"+
+				"<id>"+id+"</id>" +
+				"<function_name>"+name+"</function_name>" +
+				"<function_def>"+htmlentities(def)+"</function_def>" +
+				"<last_updated>"+last_updated+"</last_updated>"+
+				"</system_grid_metrics>";
+		
+		update_simple(data_xml);
+		$("#modal165").dialog("close");
+	});
+	
+	///////////////////////////
+	$("#modal165").dialog("open");	
 }

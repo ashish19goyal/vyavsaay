@@ -649,6 +649,14 @@ function form180_get_totals()
 	$('#form180_foot').html(total_row);
 }
 
+function form184_update_serial_numbers()
+{
+	$('#form184_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)>input').attr('value',index+1);
+	});
+}
+
 
 function form193_get_totals()
 {
@@ -895,4 +903,84 @@ function form250_update_serial_numbers()
 	form.elements['num_orders'].value=num_orders;
 	form.elements['num_bags'].value=num_bags;
 	form.elements['weight'].value=weight;
+}
+
+function form262_update_serial_numbers()
+{
+	$('#form262_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)>input').attr('value',index+1);
+	});
+}
+
+function form263_update_serial_numbers()
+{
+	$('#form263_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)').html(index+1);
+	});
+}
+
+function form265_update_serial_numbers()
+{
+	$('#form265_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)').html(index+1);
+	});
+	
+	var num_orders=0;
+	$("[id^='save_form265']").each(function(index)
+	{
+		var subform_id=$(this).attr('form');
+		var subform=document.getElementById(subform_id);
+
+		if(subform.elements[0].value!="")
+		{
+			num_orders+=1;			
+		}
+	});
+	
+	var form=document.getElementById("form265_master");
+	form.elements['num_orders'].value=num_orders;
+}
+
+function form267_get_totals()
+{
+	var out_for_delivery=0;
+	var delivered=0;
+	var pending=0;
+	
+	$("[id^='save_form267']").each(function(index)
+	{
+		var subform_id=$(this).attr('form');
+		var subform=document.getElementById(subform_id);
+		var updated_status=subform.elements[2].value;
+		var current_status=subform.elements[1].value;
+		
+		if(updated_status!="")
+		{
+			if(updated_status=='RTO delivered')
+				delivered+=1;
+			else if(updated_status=='RTO out for delivery')	
+				out_for_delivery+=1;
+			else if(updated_status=='RTO pending')	
+				pending+=1;	
+		}
+		else 
+		{
+			if(current_status=='RTO delivered')
+				delivered+=1;
+			else if(current_status=='RTO out for delivery')	
+				out_for_delivery+=1;
+			else if(current_status=='RTO pending')	
+				pending+=1;	
+		}
+	});
+	
+	var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+							"<td>Out for Delivery:<br>Delivered:<br>Pending:</td>" +
+							"<td>"+out_for_delivery+"<br>"+delivered+"<br>" +pending+"</td>" +
+							"<td></td>" +
+							"</tr>";
+	$('#form267_foot').html(total_row);
 }
