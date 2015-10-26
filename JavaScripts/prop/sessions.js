@@ -239,54 +239,63 @@ function get_pamphlet_template()
  */
 function set_session_online(func)
 {
-	var db_name="re_local_"+get_domain();
-	var request = indexedDB.open(db_name);
-	request.onsuccess=function(e)
+	if("indexedDB" in window && indexedDB!=null)
 	{
-		static_local_db=e.target.result;
-		if(static_local_db.objectStoreNames.contains("user_preferences"))
+		var db_name="re_local_"+get_domain();
+		var request = indexedDB.open(db_name);
+		request.onsuccess=function(e)
 		{
-			var transaction=static_local_db.transaction(['user_preferences'],"readwrite");
-			var objectStore=transaction.objectStore('user_preferences');
-			var kv=IDBKeyRange.bound(['offline','0'],['offline','99999999']);
-			var req=objectStore.index('name').get(kv);
-			req.onsuccess=function(e)
+			static_local_db=e.target.result;
+			if(static_local_db.objectStoreNames.contains("user_preferences"))
 			{
-				var data=req.result;
-				if(data)
+				var transaction=static_local_db.transaction(['user_preferences'],"readwrite");
+				var objectStore=transaction.objectStore('user_preferences');
+				var kv=IDBKeyRange.bound(['offline','0'],['offline','99999999']);
+				var req=objectStore.index('name').get(kv);
+				req.onsuccess=function(e)
 				{
-					data.value='online';
-					var put_req=objectStore.put(data);
-					put_req.onsuccess=function(e)
+					var data=req.result;
+					if(data)
 					{
-						set_session_var('offline','online');
-						hide_menu_items();
-						func();
-					};
-				}
-			};
-		}
-		else
+						data.value='online';
+						var put_req=objectStore.put(data);
+						put_req.onsuccess=function(e)
+						{
+							set_session_var('offline','online');
+							hide_menu_items();
+							func();
+						};
+					}
+				};
+			}
+			else
+			{
+				set_session_var('offline','online');
+				func();
+			}
+		};
+		request.onerror=function(e)
 		{
-			set_session_var('offline','online');
+		    var db=e.target.result;
+		    if(db)
+		    	db.close();
+			console.log(this.error);
 			func();
-		}
-	};
-	request.onerror=function(e)
+		};
+		request.onabort=function(e)
+		{
+		    var db=e.target.result;
+		    db.close();
+		    console.log(this.error);
+		    func();
+		};
+	}
+	else 
 	{
-	    var db=e.target.result;
-	    if(db)
-	    	db.close();
-		console.log(this.error);
+		set_session_var('offline','online');
+		hide_menu_items();
 		func();
-	};
-	request.onabort=function(e)
-	{
-	    var db=e.target.result;
-	    db.close();
-	    console.log(this.error);
-	    func();
-	};
+	}
 };
 
 /**
