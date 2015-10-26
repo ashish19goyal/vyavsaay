@@ -281,7 +281,7 @@ function set_session_variables(domain,username,pass)
 function try_local_db_login(username,domain,func_success,func_failure)
 {
 	////////////checking if indexed db is supported/////////////////
-	if("indexedDB" in window)
+	if("indexedDB" in window && indexedDB!=null)
 	{
 		//console.log("3.1");
 		var db_name="re_local_" + domain;
