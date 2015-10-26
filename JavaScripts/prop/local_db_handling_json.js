@@ -124,56 +124,67 @@ function local_read_json_rows(columns,callback,results)
 				var match_word=true;
 				for(var i=0;i<filter.length;i++)
 				{
-					var string=record[filter[i].name].toString().toLowerCase();
-					if(filter[i].type!='array')
-					{					
-						var search_word=filter[i].value.toString().toLowerCase();
-						var found=0;
-						
-						if(filter[i].type=='')
-						{
-							if(string.indexOf(search_word)===-1)
+					if(typeof record[filter[i].name]!="undefined")
+					{
+						var string=record[filter[i].name].toString().toLowerCase();
+						if(filter[i].type!='array')
+						{					
+							var search_word=filter[i].value.toString().toLowerCase();
+							var found=0;
+							
+							if(filter[i].type=='')
 							{
-								match_word=false;
-								break;
+								if(string.indexOf(search_word)===-1)
+								{
+									match_word=false;
+									break;
+								}
+							}
+							if(filter[i].type=='exact')
+							{
+								if(search_word!==string)
+								{
+									match_word=false;
+									break;
+								}
+							}
+							if(filter[i].type=='unequal')
+							{
+								if(search_word==string)
+								{
+									match_word=false;
+									break;
+								}
+							}
+							if(filter[i].type=='upperbound') 
+							{
+								if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
+								{
+									match_word=false;
+									break;
+								}
+							}
+							else if(filter[i].type=='lowerbound') 
+							{
+								if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
+								{
+									match_word=false;
+									break;
+								}
 							}
 						}
-						if(filter[i].type=='exact')
+						else if(filter[i].type=='array')
 						{
-							if(search_word!==string)
-							{
-								match_word=false;
-								break;
-							}
-						}
-						if(filter[i].type=='unequal')
-						{
-							if(search_word==string)
-							{
-								match_word=false;
-								break;
-							}
-						}
-						if(filter[i].type=='upperbound') 
-						{
-							if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
-							{
-								match_word=false;
-								break;
-							}
-						}
-						else if(filter[i].type=='lowerbound') 
-						{
-							if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
+							if(filter[i].value.indexOf(string)==-1)
 							{
 								match_word=false;
 								break;
 							}
 						}
 					}
-					else if(filter[i].type=='array')
+					else
 					{
-						if(filter[i].value.indexOf(string)==-1)
+						if(filter[i].type!='unequal')
 						{
 							match_word=false;
 							break;
@@ -353,56 +364,68 @@ function local_read_json_column(columns,callback,results)
 				var match_word=true;
 				for(var i=0;i<filter.length;i++)
 				{
-					var string=record[filter[i].name].toString().toLowerCase();
-					if(filter[i].type!='array')
-					{					
-						var search_word=filter[i].value.toString().toLowerCase();
-						var found=0;
-						
-						if(filter[i].type=='')
+					if(typeof record[filter[i].name]!="undefined")
+					{
+						var string=record[filter[i].name].toString().toLowerCase();
+						if(filter[i].type!='array')
 						{
-							if(string.indexOf(search_word)===-1)
+												
+							var search_word=filter[i].value.toString().toLowerCase();
+							var found=0;
+							
+							if(filter[i].type=='')
 							{
-								match_word=false;
-								break;
+								if(string.indexOf(search_word)===-1)
+								{
+									match_word=false;
+									break;
+								}
+							}
+							if(filter[i].type=='exact')
+							{
+								if(search_word!==string)
+								{
+									match_word=false;
+									break;
+								}
+							}
+							if(filter[i].type=='unequal')
+							{
+								if(search_word==string)
+								{
+									match_word=false;
+									break;
+								}
+							}
+							if(filter[i].type=='upperbound') 
+							{
+								if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
+								{
+									match_word=false;
+									break;
+								}
+							}
+							else if(filter[i].type=='lowerbound') 
+							{
+								if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
+								{
+									match_word=false;
+									break;
+								}
 							}
 						}
-						if(filter[i].type=='exact')
+						else if(filter[i].type=='array')
 						{
-							if(search_word!==string)
-							{
-								match_word=false;
-								break;
-							}
-						}
-						if(filter[i].type=='unequal')
-						{
-							if(search_word==string)
-							{
-								match_word=false;
-								break;
-							}
-						}
-						if(filter[i].type=='upperbound') 
-						{
-							if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
-							{
-								match_word=false;
-								break;
-							}
-						}
-						else if(filter[i].type=='lowerbound') 
-						{
-							if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
+							if(filter[i].value.indexOf(string)==-1)
 							{
 								match_word=false;
 								break;
 							}
 						}
 					}
-					else if(filter[i].type=='array')
+					else
 					{
-						if(filter[i].value.indexOf(string)==-1)
+						if(filter[i].type!='unequal')
 						{
 							match_word=false;
 							break;

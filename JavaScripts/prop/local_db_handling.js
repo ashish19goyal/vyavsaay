@@ -412,47 +412,55 @@ function local_read_single_column(columns,callback,results)
 					var match_word=true;
 					for(var i=0;i<filter.length;i++)
 					{
-						var string=record[filter[i].name].toString().toLowerCase();
-						var search_word=filter[i].value.toString().toLowerCase();
-						var found=0;
-						
-						if(filter[i].type=='')
+						if(typeof record[filter[i].name]!='undefined')
 						{
-							found=string.indexOf(search_word);
-						}
-						else if(filter[i].type=='exact')
-						{
-							if(search_word!==string)
+							var string=record[filter[i].name].toString().toLowerCase();
+							var search_word=filter[i].value.toString().toLowerCase();
+							var found=0;
+							
+							if(filter[i].type=='')
+							{
+								found=string.indexOf(search_word);
+							}
+							else if(filter[i].type=='exact')
+							{
+								if(search_word!==string)
+								{
+									match_word=false;
+									break;
+								}
+							}
+							else if(filter[i].type=='array')
+							{
+								found=search_word.indexOf("-"+string+"-");
+							}
+							else if(filter[i].type=='upperbound') 
+							{
+								if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
+								{
+									match_word=false;
+									break;
+								}
+							}
+							else if(filter[i].type=='lowerbound') 
+							{
+								if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
+								{
+									match_word=false;
+									break;
+								}
+							}
+							
+							if(found==-1)
 							{
 								match_word=false;
 								break;
 							}
 						}
-						else if(filter[i].type=='array')
-						{
-							found=search_word.indexOf("-"+string+"-");
-						}
-						else if(filter[i].type=='upperbound') 
-						{
-							if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
-							{
-								match_word=false;
-								break;
-							}
-						}
-						else if(filter[i].type=='lowerbound') 
-						{
-							if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
-							{
-								match_word=false;
-								break;
-							}
-						}
-						
-						if(found==-1)
+						else 
 						{
 							match_word=false;
-							break;
+							break;						
 						}
 					}
 					
@@ -631,49 +639,57 @@ function local_read_multi_column(columns,callback,results)
 				var match_word=true;
 				for(var i=0;i<filter.length;i++)
 				{
-					var string=record[filter[i].name].toString().toLowerCase();
-					var search_word=filter[i].value.toString().toLowerCase();
-					var found=0;
-					
-					if(filter[i].type=='')
+					if(typeof record[filter[i].name]!='undefined')
 					{
-						found=string.indexOf(search_word);
-					}
-					else if(filter[i].type=='exact')
-					{
-						if(search_word!==string)
+						var string=record[filter[i].name].toString().toLowerCase();
+						var search_word=filter[i].value.toString().toLowerCase();
+						var found=0;
+						
+						if(filter[i].type=='')
+						{
+							found=string.indexOf(search_word);
+						}
+						else if(filter[i].type=='exact')
+						{
+							if(search_word!==string)
+							{
+								match_word=false;
+								break;
+							}
+						}
+						else if(filter[i].type=='array')
+						{
+							found=search_word.indexOf("-"+string+"-");
+						}
+						
+						if(found===-1)
 						{
 							match_word=false;
 							break;
 						}
+						
+						if(filter[i].type=='upperbound') 
+						{
+							if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
+							{
+								match_word=false;
+								break;
+							}
+						}
+						else if(filter[i].type=='lowerbound') 
+						{
+							if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
+							{
+								match_word=false;
+								break;
+							}
+						}
 					}
-					else if(filter[i].type=='array')
-					{
-						found=search_word.indexOf("-"+string+"-");
-					}
-					
-					if(found===-1)
+					else 
 					{
 						match_word=false;
-						break;
-					}
-					
-					if(filter[i].type=='upperbound') 
-					{
-						if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
-						{
-							match_word=false;
-							break;
-						}
-					}
-					else if(filter[i].type=='lowerbound') 
-					{
-						if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
-						{
-							match_word=false;
-							break;
-						}
-					}
+						break;						
+					}	
 				}
 				
 				if(match_word===true)

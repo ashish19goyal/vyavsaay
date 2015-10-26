@@ -12048,15 +12048,8 @@ function form154_create_product(form)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</bill_items>";	
 	
-		if(is_online())
-		{
-			server_create_simple(data_xml);
-		}
-		else
-		{
-			local_create_simple(data_xml);
-		}
-
+		create_simple(data_xml);
+		
 		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
