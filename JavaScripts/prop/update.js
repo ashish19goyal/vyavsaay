@@ -10711,8 +10711,7 @@ function form193_update_form()
 
 		var body_html="";
 		var head_html="<tr><th>SKU</th><th>Item Name</th><th>Batch</th><th>Quantity</th></tr>";
-		
-		
+
 		var area_util_xml="<area_utilization>"+
 						"<item_name></item_name>"+
 						"<batch></batch>"+
@@ -10720,7 +10719,6 @@ function form193_update_form()
 						"</area_utilization>";
 		fetch_requested_data('',area_util_xml,function (more_items) 
 		{
-			
 			for(var i=0;i<more_items.length;i++)
 			{
 				for(var l=i+1;l<more_items.length;l++)
@@ -10731,8 +10729,8 @@ function form193_update_form()
 						l-=1;
 					}
 				}
-			}	
-			
+			}
+			//console.log(more_items);
 			
 			for(var i=0;i<items.length;i++)
 			{
@@ -10745,6 +10743,7 @@ function form193_update_form()
 					}
 				}
 			}	
+			//console.log(more_items);
 			
 			more_items.forEach(function (more_item) 
 			{
@@ -10756,7 +10755,9 @@ function form193_update_form()
 				if(item.name!="")			
 				items.push(item);
 			});
+			
 			//console.log(items);	
+
 			var id=get_new_key();
 			var counter=1;
 			items.forEach(function(item)

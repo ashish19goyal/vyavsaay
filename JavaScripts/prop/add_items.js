@@ -11201,8 +11201,7 @@ function form193_add_item()
 						else 
 						{
 							$(barcode_td).append("<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+descs[0].bar_code+"' onclick=\"print_product_barcode('"+descs[0].bar_code+"','"+name_filter.value+"','"+descs[0].description+"');\">");
-						}						
-						
+						}
 					}
 					else 
 					{
@@ -11215,8 +11214,7 @@ function form193_add_item()
 						else 
 						{
 							$(barcode_td).append("<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+string+"' onclick=\"print_product_barcode('"+string+"','"+name_filter.value+"','"+descs[0].description+"');\">");
-						}						
-						
+						}
 					}
 				}
 			});
@@ -11240,9 +11238,11 @@ function form193_add_item()
 					{
 						batch_filter.value=name_filter.value;						
 						$(batch_filter).focus();
-						$('#form193_body>tr:first').remove();						
+						if(rows_length!=1)
+						{
+							$('#form193_body>tr:first').remove();
+						}						
 					}
-					//	return false;
 				}
 			});
 		});
@@ -14435,7 +14435,10 @@ function form244_add_item()
 					{
 						batch_filter.value=name_filter.value;						
 						$(batch_filter).focus();
-						$('#form244_body>tr:first').remove();						
+						if(rows.length!=1)
+						{						
+							$('#form244_body>tr:first').remove();
+						}						
 					}
 					//	return false;
 				}
