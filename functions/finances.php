@@ -1,8 +1,8 @@
 <div id='finances_main' class='vy_tabs function_main'>
 
 		<ul>
-			<li><a id='form124_link' href='#form124' onclick='form124_header_ini(); form124_ini();' data-i18n='form.receipts'></a></li>
-			<li><a id='form243_link' href='#form243' onclick='form243_header_ini(); form243_ini();' data-i18n='form.receipts'></a></li>
+			<li><a id='form124_link' href='#form124' onclick='form124_header_ini(); form124_ini();' data-i18n='form.receipts_receivable'></a></li>
+			<li><a id='form243_link' href='#form243' onclick='form243_header_ini(); form243_ini();' data-i18n='form.receipts_receivable'></a></li>
 			<li><a id='form11_link' href='#form11' onclick='form11_header_ini(); form11_ini();' data-i18n='form.manage_payments'></a></li>
 			<li><a id='form241_link' href='#form241' onclick='form241_header_ini(); form241_ini();' data-i18n='form.manage_receivables'></a></li>
 			<li><a id='form242_link' href='#form242' onclick='form242_header_ini(); form242_ini();' data-i18n='form.manage_payables'></a></li>

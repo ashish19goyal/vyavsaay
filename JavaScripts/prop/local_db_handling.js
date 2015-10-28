@@ -2780,11 +2780,11 @@ function local_get_store_inventory(store,product,batch,callback)
 											if(sm_result)
 											{
 												var sm_record=sm_result.value;
-												if(sm_record['source']==store && (sm_record['batch']==batch || batch=='' || batch===null))
+												if(sm_record['source']==store && (sm_record['status']=='received' || sm_record['status']=='dispatched') && (sm_record['batch']==batch || batch=='' || batch===null))
 												{
 													result-=parseFloat(sm_record['quantity']);
 												}
-												if(sm_record['target']==store && (sm_record['batch']==batch || batch=='' || batch===null))
+												if(sm_record['target']==store && (sm_record['status']=='received') && (sm_record['batch']==batch || batch=='' || batch===null))
 												{
 													result+=parseFloat(sm_record['quantity']);
 												}

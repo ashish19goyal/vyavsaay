@@ -851,11 +851,7 @@ function form11_ini()
 			}
 			var subject="Payment Receipt from "+get_session_var('title');
 			
-			var detail_string="Bill Id: " +result.bill_id+
-					"\nMode of payment: " +result.mode+
-					"\nDue Date: "+get_my_past_date(result.due_date)+
-					"\nDate: "+get_my_past_date(result.date)+
-					"\nClosing Notes: "+result.notes;
+			var detail_string="Due Date: "+get_my_past_date(result.due_date);
 			var rowsHTML="";
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form11_"+result.id+"'></form>";
@@ -869,10 +865,10 @@ function form11_ini()
 						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form11_"+result.id+"' value='"+result.total_amount+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Paid Amount'>";
-						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form11_"+result.id+"' class='dblclick_editable' value='"+result.paid_amount+"'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' required form='form11_"+result.id+"' class='dblclick_editable' value='"+result.paid_amount+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' required class='dblclick_editable' value='"+result.status+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Details'>";
 						rowsHTML+="<textarea readonly='readonly' form='form11_"+result.id+"'>"+detail_string+"</textarea>";
@@ -2477,7 +2473,8 @@ function form39_ini()
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Picture'>";
 							rowsHTML+="<output form='form39_"+result.id+"'><div class='figure' name='"+pic_results_id+"'><img id='img_form39_"+result.id+"' src='"+updated_url+"'></div></output>";
-							rowsHTML+="<input type='file' form='form39_"+result.id+"'>";
+							rowsHTML+="<input type='file' style='display:none' form='form39_"+result.id+"'>";
+							rowsHTML+="<input type='button' class='generic_red_icon' form='form39_"+result.id+"' value='Change Picture'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Tax'>";
 							rowsHTML+="<input type='text' readonly='readonly' form='form39_"+result.id+"' class='dblclick_editable' value='"+result.tax+"'>";
@@ -2485,7 +2482,6 @@ function form39_ini()
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form39_"+result.id+"' value='"+result.id+"'>";
 							rowsHTML+="<input type='submit' class='save_icon' form='form39_"+result.id+"' value='saved'>";
-							rowsHTML+="<input type='button' class='copy_icon' form='form39_"+result.id+"' value='saved' onclick='modal19_action($(this));'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form39_"+result.id+"' value='saved' onclick='form39_delete_item($(this));'>";	
 						rowsHTML+="</td>";			
 				rowsHTML+="</tr>";
@@ -2495,6 +2491,13 @@ function form39_ini()
 				var fields=document.getElementById("form39_"+result.id);
 				var pictureinfo=fields.elements[3];
 				var picture=fields.elements[4];
+				var dummy_button=fields.elements[5];
+	
+				$(dummy_button).on('click',function (e) 
+				{
+					e.preventDefault();
+					$(picture).trigger('click');
+				});
 
 				$(fields).on("submit",function(event)
 				{
@@ -13319,7 +13322,7 @@ function form136_ini()
 				filter_fields.elements['entry_date'].value=get_my_past_date(bill_results[0].entry_date);
 				filter_fields.elements['id'].value=bill_id;
 				filter_fields.elements['order_id'].value=bill_results[0].order_id;
-				filter_fields.elements['order_num'].value=bill_results[0].order_num;
+				filter_fields.elements['po_num'].value=bill_results[0].order_num;
 				var save_button=filter_fields.elements['save'];
 
 				$(save_button).off('click');
@@ -14461,6 +14464,7 @@ function form145_ini()
 			"<dispatcher></dispatcher>"+
 			"<receiver></receiver>"+
 			"<status>"+fstatus+"</status>"+
+			"<applicable_from></applicable_from>"+
 			"<last_updated></last_updated>" +
 			"</store_movement>";
 
@@ -14522,11 +14526,12 @@ function form145_ini()
 									rowsHTML+="<input type='number' readonly='readonly' form='form145_"+result.id+"' value='"+result.quantity+"'>";
 								rowsHTML+="</td>";
 								rowsHTML+="<td data-th='Store'>";
-									rowsHTML+="Source: <input type='text' readonly='readonly' form='form145_"+result.id+"' value='"+result.source+"'>";
-									rowsHTML+="<br>Target: <input type='text' readonly='readonly' form='form145_"+result.id+"' value='"+result.target+"'>";
+									rowsHTML+="<b>Source</b>: <input type='text' readonly='readonly' form='form145_"+result.id+"' value='"+result.source+"'>";
+									rowsHTML+="<br><b>Target</b>: <input type='text' readonly='readonly' form='form145_"+result.id+"' value='"+result.target+"'>";
 								rowsHTML+="</td>";
 								rowsHTML+="<td data-th='Status'>";
 									rowsHTML+="<input type='text' readonly='readonly' form='form145_"+result.id+"' value='"+result.status+"'>";
+									rowsHTML+="<br><b>Scheduled for</b>: <input type='text' readonly='readonly' form='form145_"+result.id+"' value='"+get_my_datetime(result.applicable_from)+"'>";
 								rowsHTML+="</td>";
 								rowsHTML+="<td data-th='Action'>";
 									rowsHTML+="<input type='hidden' form='form145_"+result.id+"' value='"+result.id+"'>";
@@ -15111,7 +15116,7 @@ function form150_ini()
 				var feed_content="<div class='feed_item'>"+
 								"<br><div class='feed_title'>"+feed_result.content_title+
 								" <a class='small_cross_icon' onclick=\"delete_feed('"+feed_result.id+"',$(this));\" title='Delete post'>&#10006;</a></div>"+
-								"<br><div class='feed_detail'>"+feed_result.content_detail+"</div>"+
+								"<br><u>"+feed_result.owner+"</u>: <div class='feed_detail'>"+feed_result.content_detail+"</div>"+
 								"<br><div id='form150_likes_"+feed_result.id+"' class='feed_likes'></div>"+								
 								"<br><div id='form150_comments_"+feed_result.id+"' class='feed_comments'></div>"+
 								"</div>";
@@ -15157,7 +15162,7 @@ function form150_ini()
 					for(var i in comment_results)
 					{
 						var delete_right=get_account_name();
-						var comments_content_item="<label>"+comment_results[i].person+": "+comment_results[i].comment_text;
+						var comments_content_item="<label><u>"+comment_results[i].person+"</u>: "+comment_results[i].comment_text;
 						if(feed_result.owner==delete_right || comment_results[i].person==delete_right)
 						{
 							comments_content_item+=" <a class='small_cross_icon' onclick=\"delete_feed_comment('"+comment_results[i].id+"',$(this));\" title='Delete comment'>&#10006;</a>";
@@ -15165,7 +15170,7 @@ function form150_ini()
 						comments_content_item+="</label><br>";
 						comments_content=comments_content_item+comments_content;
 					}
-					comments_content+="<label>"+account_name+": <textarea class='feed_comments' placeholder='comment..'></textarea></label>";
+					comments_content+="<label><u>"+account_name+"</u>: <textarea class='feed_comments' placeholder='comment..'></textarea></label>";
 					$('#form150_comments_'+feed_result.id).html(comments_content);
 					$('#form150_comments_'+feed_result.id).find('label').find('textarea').on('keyup',function(e)
 					{
@@ -17472,7 +17477,8 @@ function form169_ini()
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Picture'>";
 							rowsHTML+="<output form='form169_"+result.id+"'><div class='figure' name='"+pic_results_id+"'><img id='img_form169_"+result.id+"' src='"+updated_url+"'></div></output>";
-							rowsHTML+="<input type='file' form='form169_"+result.id+"'>";
+							rowsHTML+="<input type='file' style='display:none' form='form169_"+result.id+"'>";
+							rowsHTML+="<input type='button' class='generic_red_icon' form='form169_"+result.id+"' value='Change Picture'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Tax'>";
 							rowsHTML+="<input type='text' readonly='readonly' form='form169_"+result.id+"' class='dblclick_editable' value='"+result.tax+"'>";
@@ -17489,6 +17495,13 @@ function form169_ini()
 				var fields=document.getElementById("form169_"+result.id);
 				var pictureinfo=fields.elements[3];
 				var picture=fields.elements[4];
+				var dummy_button=fields.elements[5];
+	
+				$(dummy_button).on('click',function (e) 
+				{
+					e.preventDefault();
+					$(picture).trigger('click');
+				});
 
 				$(fields).on("submit",function(event)
 				{
@@ -19406,7 +19419,8 @@ function form185_ini()
 	    eventClick: function(calEvent,jsEvent,view){
 	    	modal33_action(calEvent.id);
 	    },
-	    eventDrop: function(event,delta,revertFunc){
+	    eventDrop: function(event,delta,revertFunc)
+	    {
 	    	var t_initiated=(parseFloat(event.start.unix())*1000);
 	    	var data_xml="<task_instances>" +
 						"<id>"+event.id+"</id>" +
@@ -19422,6 +19436,23 @@ function form185_ini()
 			update_simple(data_xml);
 			update_simple(prod_xml);
 			
+			var store_movement_xml="<store_movement>"+
+							"<id></id>"+
+							"<record_source exact='yes'>production_plan_item</record_source>"+
+							"<source_id exact='yes'>"+event.id+"</source_id>"+
+							"</store_movement>";
+			fetch_requested_data('',store_movement_xml,function (movs) 
+			{
+				movs.forEach(function (mov) 
+				{
+					var mov_xml="<store_movement>"+
+						"<id>"+mov.id+"</id>"+
+						"<applicable_from>"+t_initiated+"</applicable_from>"+
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</store_movement>";
+					update_simple(mov_xml);	
+				});
+			});		
 	    },
 	    eventResize: function(event, delta, revertFunc){
 	    	var task_hours=parseFloat((parseFloat(event.end.unix())-parseFloat(event.start.unix()))/3600);
@@ -19512,7 +19543,7 @@ function form185_ini()
 								rowsHTML+="<textarea readonly='readonly' form='form185_"+result.id+"'>"+result.name+"</textarea>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Details'>";
-								rowsHTML+="<textarea readonly='readonly' form='form185_"+result.id+"'>"+result.description+"</textarea>";
+								rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form185_"+result.id+"'>"+result.description+"</textarea>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Assignee'>";
 								rowsHTML+="<input type='text' readonly='readonly' form='form185_"+result.id+"' class='dblclick_editable' value='"+result.assignee+"'>";
@@ -19553,8 +19584,8 @@ function form185_ini()
 					set_my_value_list(staff_data,assignee_filter);
 					
 					set_static_value_list('task_instances','status',status_filter);
-					$(due_filter).datepicker();
-					$(from_filter).datepicker();
+					$(due_filter).datetimepicker();
+					$(from_filter).datetimepicker();
 				}
 			});
 			
@@ -19686,11 +19717,11 @@ function form186_ini()
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form186_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='save_icon' form='form186_"+id+"' id='save_form186_"+id+"'>";
-						if(result.status!='completed')
+						if(result.status!='inventoried')
 							rowsHTML+="<input type='button' class='delete_icon' form='form186_"+id+"' id='delete_form186_"+id+"' onclick='form186_delete_item($(this));'>";
-						if(plan_status=='approved' && result.status=='pending')
+						if(plan_status=='approved' && result.status!='inventoried')
 						{
-							rowsHTML+="<input type='button' class='generic_icon' value='Ready' name='ready' form='form186_"+id+"'>";							
+							rowsHTML+="<input type='button' class='generic_icon' value='Inventory' name='ready' form='form186_"+id+"'>";							
 						}						
 						rowsHTML+="</td>";			
 					rowsHTML+="</tr>";
@@ -19705,23 +19736,16 @@ function form186_ini()
 					
 					$(ready_button).on('click',function()
 					{
-						console.log('button');
+						//console.log('button');
 						element_display(result.id,'form256');
-						/*						
-						var form256=document.getElementById('form256_master');
-						form256.elements['item_name'].value=result.item;
-						form256.elements['batch'].value=result.batch;
-						form256.elements['brand'].value=result.brand;
-						form256.elements['quantity'].value=result.quantity;
-						var plan_elem=form256.elements['pplan'];
-						plan_elem.value=result.plan_id;
-						$(plan_elem).on('click',function () 
+						
+						var save_button=document.getElementById('form256_master').elements['save'];						
+						$(save_button).off('click');
+						$(save_button).on("click", function(event)
 						{
-							element_display(result.plan_id,'form186');
-						});
-						form256.elements['id'].value=get_new_key();
-						form256_ini();
-						*/
+							event.preventDefault();
+							form256_create_form();
+						});						
 					});
 					
 					$(from_filter).datepicker();
@@ -25608,13 +25632,13 @@ function form241_ini()
 						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form241_"+result.id+"' value='"+result.total_amount+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Paid Amount'>";
-						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form241_"+result.id+"' class='dblclick_editable' value='"+result.paid_amount+"'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' required form='form241_"+result.id+"' class='dblclick_editable' value='"+result.paid_amount+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Due Date'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form241_"+result.id+"' value='"+get_my_past_date(result.due_date)+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form241_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form241_"+result.id+"' required class='dblclick_editable' value='"+result.status+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form241_"+result.id+"' value='"+result.id+"'>";
@@ -25727,13 +25751,13 @@ function form242_ini()
 						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form242_"+result.id+"' value='"+result.total_amount+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Paid Amount'>";
-						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form242_"+result.id+"' class='dblclick_editable' value='"+result.paid_amount+"'>";
+						rowsHTML+="<input type='number' step='any' required readonly='readonly' form='form242_"+result.id+"' class='dblclick_editable' value='"+result.paid_amount+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Due Date'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form242_"+result.id+"' value='"+get_my_past_date(result.due_date)+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form242_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' required form='form242_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form242_"+result.id+"' value='"+result.id+"'>";
@@ -27250,13 +27274,6 @@ function form256_ini()
 							
 				var save_button=filter_fields.elements['save'];
 				
-				$(save_button).off('click');
-				$(save_button).on("click", function(event)
-				{
-					event.preventDefault();
-					form256_update_form();
-				});
-	
 				var raw_column="<batch_raw_material>" +
 								"<id></id>" +
 								"<item></item>" +

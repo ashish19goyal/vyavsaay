@@ -9841,7 +9841,7 @@ function form256_header_ini()
 	$(save_button).on("click", function(event)
 	{
 		event.preventDefault();
-		form256_create_form();
+		form256_update_form();
 	});
 
 	$(document).off('keydown');

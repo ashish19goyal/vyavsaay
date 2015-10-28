@@ -7344,7 +7344,7 @@ function form136_add_item()
 		var barcode_filter=document.getElementById("form136_barcode_"+id);
 		$(barcode_filter).on('click',function () 
 		{
-			print_product_barcode(id,name_filter.value,batch_filter.value);
+			print_product_barcode(String(id),name_fitler.value,batch_filter.value);
 		});
 				
 		$(save_button).on("click", function(event)
@@ -7845,11 +7845,12 @@ function form145_add_item()
 				rowsHTML+="<input type='number' required form='form145_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Store'>";
-				rowsHTML+="Source: <input type='text' required form='form145_"+id+"'>";
-				rowsHTML+="<br>Target: <input type='text' required form='form145_"+id+"'>";				
+				rowsHTML+="<b>Source</b>: <input type='text' required form='form145_"+id+"'>";
+				rowsHTML+="<br><b>Target</b>: <input type='text' required form='form145_"+id+"'>";				
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Status'>";
 				rowsHTML+="<input type='text' readonly='readonly' required form='form145_"+id+"' value='pending'>";
+				rowsHTML+="<br><b>Scheduled @</b>: <input type='text' form='form145_"+id+"'>";				
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form145_"+id+"' value='"+id+"'>";
@@ -7868,11 +7869,13 @@ function form145_add_item()
 		var source_filter=fields.elements[3];
 		var target_filter=fields.elements[4];
 		var status_filter=fields.elements[5];
-		var receiver_filter=fields.elements[7];
-		var save_button=fields.elements[8];
-		var dispatch_button=fields.elements[10];
+		var schedule_filter=fields.elements[6];
+		var receiver_filter=fields.elements[8];
+		var save_button=fields.elements[9];
+		var dispatch_button=fields.elements[11];
 		
 		$(dispatch_button).hide();
+		$(schedule_filter).datetimepicker();
 		
 		$(fields).on("submit", function(event)
 		{
@@ -10649,9 +10652,12 @@ function form180_add_item()
 			form180_add_item();
 		});
 				
-		var product_data="<product_master>" +
+		var product_data="<attributes>" +
 				"<name></name>" +
-				"</product_master>";		
+				"<type exact='yes'>product</type>"+
+				"<value exact='yes'>yes</value>"+
+				"<attribute exact='yes'>manufactured</attribute>"+
+				"</attributes>";			
 		set_my_value_list_func(product_data,name_filter,function () 
 		{
 			$(name_filter).focus();
@@ -13679,9 +13685,12 @@ function form225_add_item()
 			form225_add_product();
 		});
 		
-		var product_data="<product_master>" +
+		var product_data="<attributes>" +
 				"<name></name>" +
-				"</product_master>";
+				"<type exact='yes'>product</type>"+
+				"<value exact='yes'>yes</value>"+
+				"<attribute exact='yes'>manufactured</attribute>"+
+				"</attributes>";			
 		set_my_value_list(product_data,name_filter,function () 
 		{
 			$(name_filter).focus();

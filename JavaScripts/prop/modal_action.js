@@ -952,12 +952,19 @@ function modal14_action(func)
 	var fdescription=form.elements[3];
 	var fpictureinfo=form.elements[4];
 	var fpicture=form.elements[5];
-	var fbarcode=form.elements[7];
-	var auto_generate=form.elements[8];
+	var dummy_button=fields.elements[6];
+	var fbarcode=form.elements[8];
+	var auto_generate=form.elements[9];
 	
 	fbarcode.value=get_my_time();
 	auto_generate.checked=true;
 	
+	$(dummy_button).on('click',function (e) 
+	{
+		e.preventDefault();
+		$(fpicture).trigger('click');
+	});
+
 	$(auto_generate).off('click');
 	$(auto_generate).on('click',function(event)
 	{
@@ -1045,11 +1052,11 @@ function modal14_action(func)
 			description = description.replace(/â/g,'');
 			description = description.replace(/&/g, "and");
 
-			var tax=form.elements[6].value;
+			var tax=form.elements[7].value;
 			var data_id=get_new_key();
 			var pic_id=get_new_key();
 			var url=$(fpictureinfo).find('div').find('img').attr('src');
-			var barcode=form.elements[7].value;
+			var barcode=form.elements[8].value;
 			var last_updated=get_my_time();
 			var data_xml="<product_master>" +
 						"<id>"+data_id+"</id>" +
@@ -3044,13 +3051,6 @@ function modal30_action()
 			if(balance_amount==0)
 			{
 				balance_filter.value="Rs. 0";
-				/*$(form).off('submit');
-				$(form).on('submit',function(event)
-				{
-					event.preventDefault();
-					$("#modal30").dialog("close");
-				});
-				*/
 			}
 			else if(balance_amount>0)
 			{
@@ -3083,12 +3083,12 @@ function modal30_action()
 					"<id></id>" +
 					//"<type exact='yes'>"+receipt_type+"</type>" +
 					"<type></type>"+					
+					"<status exact='yes'>pending</status>" +
 					"<acc_name exact='yes'>"+account_name+"</acc_name>" +
 					"<date></date>" +
 					"<total_amount></total_amount>" +
 					"<paid_amount></paid_amount>" +
 					"<notes></notes>" +
-					"<status>pending</status>" +
 					"</payments>";
 			
 			fetch_requested_data('',accounts_data,function(accounts)
@@ -3117,12 +3117,39 @@ function modal30_action()
 					}
 				}
 				
+				total_amount=total_amount-counter_payment;
+				
+				if(total_amount>0)
+				{
+					accounts.sort(function(a,b)
+					{
+						if(a.type>b.type)
+						{	return 1;}
+						else 
+						{	return -1;}
+					});
+					console.log(accounts);					
+				}
+				else
+				{
+					accounts.sort(function(a,b)
+					{
+						if(a.type<b.type)
+						{	return 1;}
+						else 
+						{	return -1;}
+					});
+					console.log(accounts);					
+				}
+
+				console.log(total_amount);
+				
 				var new_id=get_new_key();
 				var last_updated=get_my_time();
 				accounts.forEach(function(account)
 				{
 					new_id++;
-					if(total_amount==counter_payment)
+					if(total_amount==0)
 					{
 						var notes=account.notes+"\nClosed by receipt # "+receipt_id;
 						var payment_xml="<payments>" +
@@ -3137,20 +3164,12 @@ function modal30_action()
 								"<receipt_id>"+receipt_id+"</receipt_id>" +
 								"<payment_id>"+account.id+"</payment_id>" +
 								"<type>"+account.type+"</type>" +
-								"<amount>"+counter_payment+"</amount>" +
+								"<amount>"+(parseFloat(account.total_amount)-parseFloat(account.paid_amount))+"</amount>" +
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</receipts_payment_mapping>";
 						
-						if(is_online())
-						{
-							server_update_simple(payment_xml);
-							server_create_simple(receipts_xml);
-						}
-						else
-						{
-							local_update_simple(payment_xml);
-							local_create_simple(receipts_xml);
-						}
+						update_simple(payment_xml);
+						create_simple(receipts_xml);	
 					}
 					else
 					{
@@ -3158,6 +3177,7 @@ function modal30_action()
 						{
 							if(total_amount>0)
 							{
+								var notes=account.notes+"\nClosed by receipt # "+receipt_id;
 								var payment_xml="<payments>" +
 									"<id>"+account.id+"</id>" +
 									"<paid_amount>"+account.total_amount+"</paid_amount>" +
@@ -3176,102 +3196,157 @@ function modal30_action()
 									"<last_updated>"+last_updated+"</last_updated>" +
 									"</receipts_payment_mapping>";
 							
-								if(is_online())
-								{
-									server_update_simple(payment_xml);
-									server_create_simple(receipts_xml);
-								}
-								else
-								{
-									local_update_simple(payment_xml);
-									local_create_simple(receipts_xml);
-								}
-							}
-						}
-						else 
-						{
-							var pending_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount);
-							if(pending_amount<=counter_payment)
-							{
-								var notes=account.notes+"\nClosed by receipt # "+receipt_id;
-								var payment_xml="<payments>" +
-										"<id>"+account.id+"</id>" +
-										"<paid_amount>"+account.total_amount+"</paid_amount>" +
-										"<status>closed</status>" +
-										"<notes>"+notes+"</notes>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</payments>";
-								var receipts_xml="<receipts_payment_mapping>" +
-										"<id>"+new_id+"</id>" +
-										"<receipt_id>"+receipt_id+"</receipt_id>" +
-										"<payment_id>"+account.id+"</payment_id>" +
-										"<type>"+receipt_type+"</type>" +
-										"<amount>"+pending_amount+"</amount>" +
-										"<acc_name>"+account_name+"</acc_name>" +
-										"<date>"+last_updated+"</date>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</receipts_payment_mapping>";
-				
-								if(is_online())
-								{
-									server_update_simple(payment_xml);
-									server_create_simple(receipts_xml);
-								}
-								else
-								{
-									local_update_simple(payment_xml);
-									local_create_simple(receipts_xml);
-								}
-								
-								counter_payment-=pending_amount;
+								update_simple(payment_xml);
+								create_simple(receipts_xml);
 							}
 							else
 							{
-								var paid_amount=parseFloat(account.paid_amount)+counter_payment;
-								var notes=account.notes+"\n Rs."+counter_payment+" balanced against receipt # "+receipt_id;
-								var payment_xml="<payments>" +
+								if(parseFloat(account.total_amount)>-(total_amount))
+								{
+									var balanced_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount)+total_amount;
+									var notes=account.notes+"\n Rs."+balanced_amount+" balanced against receipt # "+receipt_id;
+									var payment_xml="<payments>" +
 										"<id>"+account.id+"</id>" +
-										"<paid_amount>"+paid_amount+"</paid_amount>" +
+										"<paid_amount>"+(parseFloat(account.total_amount)+total_amount)+"</paid_amount>" +
 										"<status>pending</status>" +
 										"<notes>"+notes+"</notes>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</payments>";
-								var receipts_xml="<receipts_payment_mapping>" +
+									var receipts_xml="<receipts_payment_mapping>" +
 										"<id>"+new_id+"</id>" +
 										"<receipt_id>"+receipt_id+"</receipt_id>" +
 										"<payment_id>"+account.id+"</payment_id>" +
-										"<type>"+receipt_type+"</type>" +
-										"<amount>"+counter_payment+"</amount>" +
+										"<type>"+account.type+"</type>" +
+										"<amount>"+balanced_amount+"</amount>" +
 										"<acc_name>"+account_name+"</acc_name>" +
 										"<date>"+last_updated+"</date>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</receipts_payment_mapping>";
-					
-								if(is_online())
-								{
-									server_update_simple(payment_xml);
-									server_create_simple(receipts_xml);
+								
+									update_simple(payment_xml);
+									create_simple(receipts_xml);
+									total_amount=0;
 								}
 								else
 								{
-									local_update_simple(payment_xml);
-									local_create_simple(receipts_xml);
+									var notes=account.notes+"\n Rs."+account.paid_amount+" balanced against receipt # "+receipt_id;
+									var payment_xml="<payments>" +
+										"<id>"+account.id+"</id>" +
+										"<paid_amount>0</paid_amount>" +
+										"<status>pending</status>" +
+										"<notes>"+notes+"</notes>" +
+										"<last_updated>"+last_updated+"</last_updated>" +
+										"</payments>";
+									var receipts_xml="<receipts_payment_mapping>" +
+										"<id>"+new_id+"</id>" +
+										"<receipt_id>"+receipt_id+"</receipt_id>" +
+										"<payment_id>"+account.id+"</payment_id>" +
+										"<type>"+account.type+"</type>" +
+										"<amount>"+account.paid_amount+"</amount>" +
+										"<acc_name>"+account_name+"</acc_name>" +
+										"<date>"+last_updated+"</date>" +
+										"<last_updated>"+last_updated+"</last_updated>" +
+										"</receipts_payment_mapping>";
+								
+									update_simple(payment_xml);
+									create_simple(receipts_xml);
+									total_amount=total_amount+parseFloat(account.total_amount);
+								}								
+							}
+						}
+						else 
+						{
+							if(total_amount<0)
+							{
+								var notes=account.notes+"\nClosed by receipt # "+receipt_id;
+								var payment_xml="<payments>" +
+									"<id>"+account.id+"</id>" +
+									"<paid_amount>"+account.total_amount+"</paid_amount>" +
+									"<status>closed</status>" +
+									"<notes>"+notes+"</notes>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</payments>";
+								var receipts_xml="<receipts_payment_mapping>" +
+									"<id>"+new_id+"</id>" +
+									"<receipt_id>"+receipt_id+"</receipt_id>" +
+									"<payment_id>"+account.id+"</payment_id>" +
+									"<type>"+account.type+"</type>" +
+									"<amount>"+(parseFloat(account.total_amount)-parseFloat(account.paid_amount))+"</amount>" +
+									"<acc_name>"+account_name+"</acc_name>" +
+									"<date>"+last_updated+"</date>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</receipts_payment_mapping>";
+							
+								update_simple(payment_xml);
+								create_simple(receipts_xml);
+							}
+							else
+							{
+								if(parseFloat(account.total_amount)>total_amount)
+								{
+									var balanced_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount)-total_amount;
+									var notes=account.notes+"\n Rs."+balanced_amount+" balanced against receipt # "+receipt_id;
+									var payment_xml="<payments>" +
+										"<id>"+account.id+"</id>" +
+										"<paid_amount>"+(parseFloat(account.total_amount)-total_amount)+"</paid_amount>" +
+										"<status>pending</status>" +
+										"<notes>"+notes+"</notes>" +
+										"<last_updated>"+last_updated+"</last_updated>" +
+										"</payments>";
+									var receipts_xml="<receipts_payment_mapping>" +
+										"<id>"+new_id+"</id>" +
+										"<receipt_id>"+receipt_id+"</receipt_id>" +
+										"<payment_id>"+account.id+"</payment_id>" +
+										"<type>"+account.type+"</type>" +
+										"<amount>"+balanced_amount+"</amount>" +
+										"<acc_name>"+account_name+"</acc_name>" +
+										"<date>"+last_updated+"</date>" +
+										"<last_updated>"+last_updated+"</last_updated>" +
+										"</receipts_payment_mapping>";
+								
+									update_simple(payment_xml);
+									create_simple(receipts_xml);
+									total_amount=0;
 								}
-								counter_payment=0;
+								else
+								{
+									var notes=account.notes+"\n Rs."+account.paid_amount+" balanced against receipt # "+receipt_id;
+									var payment_xml="<payments>" +
+										"<id>"+account.id+"</id>" +
+										"<paid_amount>0</paid_amount>" +
+										"<status>pending</status>" +
+										"<notes>"+notes+"</notes>" +
+										"<last_updated>"+last_updated+"</last_updated>" +
+										"</payments>";
+									var receipts_xml="<receipts_payment_mapping>" +
+										"<id>"+new_id+"</id>" +
+										"<receipt_id>"+receipt_id+"</receipt_id>" +
+										"<payment_id>"+account.id+"</payment_id>" +
+										"<type>"+account.type+"</type>" +
+										"<amount>"+account.paid_amount+"</amount>" +
+										"<acc_name>"+account_name+"</acc_name>" +
+										"<date>"+last_updated+"</date>" +
+										"<last_updated>"+last_updated+"</last_updated>" +
+										"</receipts_payment_mapping>";
+								
+									update_simple(payment_xml);
+									create_simple(receipts_xml);
+									total_amount=total_amount-parseFloat(account.total_amount);
+								}								
 							}
 						}
 					}
 				});
 					
 				var p_id=get_new_key();				
-				if(counter_payment>0)
+				if(total_amount<0)
 				{
 					var payment_xml="<payments>" +
 								"<id>"+p_id+"</id>" +
 								"<status>pending</status>" +
 								"<type>paid</type>" +
 								"<date>"+get_my_time()+"</date>" +
-								"<total_amount>"+counter_payment+"</total_amount>" +
+								"<total_amount>"+(-total_amount)+"</total_amount>" +
 								"<paid_amount>0</paid_amount>" +
 								"<acc_name>"+account_name+"</acc_name>" +
 								"<due_date>"+get_credit_period()+"</due_date>" +
@@ -3282,14 +3357,7 @@ function modal30_action()
 								"<notes>Generated for receipt # "+receipt_id+"</notes>" +	
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</payments>";
-					if(is_online())
-					{
-						server_create_simple(payment_xml);
-					}
-					else
-					{
-						local_create_simple(payment_xml);
-					}
+					create_simple(payment_xml);		
 				}
 				
 				var receipt_xml="<receipts>" +
@@ -3301,14 +3369,8 @@ function modal30_action()
 								"<date>"+last_updated+"</date>" +
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</receipts>";
-				if(is_online())
-				{
-					server_create_simple(receipt_xml);
-				}
-				else
-				{
-					local_create_simple(receipt_xml);
-				}
+				create_simple(receipt_xml);
+				
 			});
 		}
 		else
@@ -3438,14 +3500,9 @@ function modal31_action()
 									"<status>pending</status>" +
 									"<last_updated>"+last_updated+"</last_updated>" +
 									"</payments>";
-							if(is_online())
-							{
-								server_update_simple(payment_xml);
-							}
-							else
-							{
-								local_update_simple(payment_xml);
-							}
+							
+							update_simple(payment_xml);
+							
 						});
 						
 						var receipt_xml="<receipts>" +
@@ -3459,18 +3516,10 @@ function modal31_action()
 							"<source_info>receipts</source_info>" +
 							"</payments>";
 												
-						if(is_online())
-						{
-							server_delete_simple(receipt_xml);
-							server_delete_simple(receipt_payment_xml);
-							server_delete_simple(payment_xml);
-						}
-						else
-						{
-							local_delete_simple(receipt_xml);
-							local_delete_simple(receipt_payment_xml);
-							local_delete_simple(payment_xml);
-						}
+						delete_simple(receipt_xml);
+						delete_simple(receipt_payment_xml);
+						delete_simple(payment_xml);
+						
 					});
 				});
 			});
@@ -6645,7 +6694,14 @@ function modal112_action(func)
 	var fdescription=form.elements[3];
 	var fpictureinfo=form.elements[4];
 	var fpicture=form.elements[5];
-		
+	var dummy_button=form.elements[6];
+	
+	$(dummy_button).on('click',function (e) 
+	{
+		e.preventDefault();
+		$(fpicture).trigger('click');
+	});
+	
 	var make_data="<product_master>" +
 		"<make></make>" +
 		"</product_master>";
@@ -6720,11 +6776,11 @@ function modal112_action(func)
 			description = description.replace(/â/g,'');
 			description = description.replace(/&/g, "and");
 			
-			var tax=form.elements[6].value;
+			var tax=form.elements[7].value;
 			var data_id=get_new_key();
 			var pic_id=get_new_key();
-			var cost_price=form.elements[7].value;
-			var sale_price=form.elements[8].value;
+			var cost_price=form.elements[8].value;
+			var sale_price=form.elements[9].value;
 			var url=$(fpictureinfo).find('div').find('img').attr('src');
 			var last_updated=get_my_time();
 			var data_xml="<product_master>" +
@@ -6751,17 +6807,9 @@ function modal112_action(func)
 							"<notes>Product "+name+" to inventory</notes>" +
 							"<updated_by>"+get_name()+"</updated_by>" +
 							"</activity>";
-			if(is_online())
-			{
-				server_create_row_func(data_xml,activity_xml,func);
-				server_create_simple(instance_xml);
-			}
-			else
-			{
-				local_create_row_func(data_xml,activity_xml,func);
-				local_create_simple(instance_xml);
-			}	
-
+			create_row_func(data_xml,activity_xml,func);
+			create_simple(instance_xml);
+			
 			////adding sale price fields for all billing types///////
 			var billing_type_data="<bill_types>" +
 					"<name></name>" +
@@ -6781,14 +6829,8 @@ function modal112_action(func)
 							"<billing_type>"+bill_type+"</billing_type>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</sale_prices>";
-					if(is_online())
-					{
-						server_create_simple(sale_price_xml);
-					}
-					else
-					{
-						local_create_simple(sale_price_xml);
-					}
+					create_simple(sale_price_xml);
+					
 				});
 			},billing_type_data);
 			////////////////////////////////////////////////
@@ -6809,14 +6851,8 @@ function modal112_action(func)
 							"<value>"+value+"</value>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</attributes>";
-					if(is_online())
-					{
-						server_create_simple(attribute_xml);
-					}
-					else
-					{
-						local_create_simple(attribute_xml);
-					}
+					create_simple(attribute_xml);
+					
 				}
 			});
 
@@ -6829,14 +6865,8 @@ function modal112_action(func)
 							"<target_id>"+data_id+"</target_id>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</documents>";
-				if(is_online())
-				{
-					server_create_simple(pic_xml);
-				}
-				else
-				{
-					local_create_simple(pic_xml);
-				}	
+				create_simple(pic_xml);
+					
 			}
 		}
 		else
@@ -7043,18 +7073,24 @@ function modal114_action(func)
 	var fdescription=form.elements[3];
 	var fpictureinfo=form.elements[4];
 	var fpicture=form.elements[5];
-	var flength=form.elements[7];
-	var fbreadth=form.elements[8];
-	var fheight=form.elements[9];
-	var fvolume=form.elements[10];
-	var funit=form.elements[11];
-	var fweight=form.elements[12];
-	var fpacking=form.elements[13];
-	var fbarcode=form.elements[14];
-	var auto_generate=form.elements[15];
+	var dummy_button=form.elements[6];
+	var flength=form.elements[8];
+	var fbreadth=form.elements[9];
+	var fheight=form.elements[10];
+	var fvolume=form.elements[11];
+	var funit=form.elements[12];
+	var fweight=form.elements[13];
+	var fpacking=form.elements[14];
+	var fbarcode=form.elements[15];
+	var auto_generate=form.elements[16];
 	
 	//fbarcode.value=get_my_time()*10+Math.round(Math.random()*10);
 	//auto_generate.checked=true;
+	$(dummy_button).on('click',function (e) 
+	{
+		e.preventDefault();
+		$(fpicture).trigger('click');
+	});
 	
 	fbarcode.value="";
 	auto_generate.checked=false;
@@ -7148,22 +7184,22 @@ function modal114_action(func)
 			description = description.replace(/â/g,'');
 			description = description.replace(/&/g, "and");
 
-			var tax=form.elements[6].value;
+			var tax=form.elements[7].value;
 			var data_id=get_new_key();
 			var pic_id=get_new_key();
 			var url=$(fpictureinfo).find('div').find('img').attr('src');
-			var length=form.elements[7].value;
-			var breadth=form.elements[8].value;
-			var height=form.elements[9].value;
-			var volume=form.elements[10].value;
-			var unit=form.elements[11].value;
-			var weight=form.elements[12].value;
-			var packing=form.elements[13].value;
+			var length=form.elements[8].value;
+			var breadth=form.elements[9].value;
+			var height=form.elements[10].value;
+			var volume=form.elements[11].value;
+			var unit=form.elements[12].value;
+			var weight=form.elements[13].value;
+			var packing=form.elements[14].value;
 
 			packing = packing.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			packing = packing.replace(/â/g,'');
 
-			var barcode=form.elements[14].value;
+			var barcode=form.elements[15].value;
 			var last_updated=get_my_time();
 			var data_xml="<product_master>" +
 						"<id>"+data_id+"</id>" +
@@ -9486,7 +9522,7 @@ function modal137_action(bill_ids)
 	{
 		rowsHTML+="<tr>"+
 				"<td>"+bill_id.bill_num+"</td>"+
-				"<td><a onclick=\"element_display('"+bill_id.bill_id+"','form122'); $('#modal137').dialog('close');\"><u style='cursor:pointer;'>View</u></a></td>"+
+				"<td><a onclick=\"element_display('"+bill_id.bill_id+"','form122',['form136']); $('#modal137').dialog('close');\"><u style='cursor:pointer;'>View</u></a></td>"+
 				"</tr>";
 	});
 
@@ -12017,12 +12053,12 @@ function modal155_action()
 					"<id></id>" +
 					//"<type exact='yes'>"+receipt_type+"</type>" +
 					"<type></type>"+					
+					"<status exact='yes'>pending</status>" +
 					"<acc_name exact='yes'>"+account_name+"</acc_name>" +
 					"<date></date>" +
 					"<total_amount></total_amount>" +
 					"<paid_amount></paid_amount>" +
 					"<notes></notes>" +
-					"<status>pending</status>" +
 					"</payments>";
 			
 			fetch_requested_data('',accounts_data,function(accounts)
@@ -12051,12 +12087,39 @@ function modal155_action()
 					}
 				}
 				
+				total_amount=total_amount-counter_payment;
+				
+				if(total_amount>0)
+				{
+					accounts.sort(function(a,b)
+					{
+						if(a.type>b.type)
+						{	return 1;}
+						else 
+						{	return -1;}
+					});
+					console.log(accounts);					
+				}
+				else
+				{
+					accounts.sort(function(a,b)
+					{
+						if(a.type<b.type)
+						{	return 1;}
+						else 
+						{	return -1;}
+					});
+					console.log(accounts);					
+				}
+
+				console.log(total_amount);
+				
 				var new_id=get_new_key();
 				var last_updated=get_my_time();
 				accounts.forEach(function(account)
 				{
 					new_id++;
-					if(total_amount==counter_payment)
+					if(total_amount==0)
 					{
 						var notes=account.notes+"\nClosed by receipt # "+receipt_id;
 						var payment_xml="<payments>" +
@@ -12071,13 +12134,12 @@ function modal155_action()
 								"<receipt_id>"+receipt_id+"</receipt_id>" +
 								"<payment_id>"+account.id+"</payment_id>" +
 								"<type>"+account.type+"</type>" +
-								"<amount>"+counter_payment+"</amount>" +
+								"<amount>"+(parseFloat(account.total_amount)-parseFloat(account.paid_amount))+"</amount>" +
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</receipts_payment_mapping>";
 						
 						update_simple(payment_xml);
-						create_simple(receipts_xml);
-						
+						create_simple(receipts_xml);	
 					}
 					else
 					{
@@ -12085,6 +12147,7 @@ function modal155_action()
 						{
 							if(total_amount>0)
 							{
+								var notes=account.notes+"\nClosed by receipt # "+receipt_id;
 								var payment_xml="<payments>" +
 									"<id>"+account.id+"</id>" +
 									"<paid_amount>"+account.total_amount+"</paid_amount>" +
@@ -12105,77 +12168,155 @@ function modal155_action()
 							
 								update_simple(payment_xml);
 								create_simple(receipts_xml);
-								
-							}
-						}
-						else 
-						{
-							var pending_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount);
-							if(pending_amount<=counter_payment)
-							{
-								var notes=account.notes+"\nClosed by receipt # "+receipt_id;
-								var payment_xml="<payments>" +
-										"<id>"+account.id+"</id>" +
-										"<paid_amount>"+account.total_amount+"</paid_amount>" +
-										"<status>closed</status>" +
-										"<notes>"+notes+"</notes>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</payments>";
-								var receipts_xml="<receipts_payment_mapping>" +
-										"<id>"+new_id+"</id>" +
-										"<receipt_id>"+receipt_id+"</receipt_id>" +
-										"<payment_id>"+account.id+"</payment_id>" +
-										"<type>"+receipt_type+"</type>" +
-										"<amount>"+pending_amount+"</amount>" +
-										"<acc_name>"+account_name+"</acc_name>" +
-										"<date>"+last_updated+"</date>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</receipts_payment_mapping>";
-				
-								update_simple(payment_xml);
-								create_simple(receipts_xml);
-								
-								counter_payment-=pending_amount;
 							}
 							else
 							{
-								var paid_amount=parseFloat(account.paid_amount)+counter_payment;
-								var notes=account.notes+"\n Rs."+counter_payment+" balanced against receipt # "+receipt_id;
-								var payment_xml="<payments>" +
+								if(parseFloat(account.total_amount)>-(total_amount))
+								{
+									var balanced_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount)+total_amount;
+									var notes=account.notes+"\n Rs."+balanced_amount+" balanced against receipt # "+receipt_id;
+									var payment_xml="<payments>" +
 										"<id>"+account.id+"</id>" +
-										"<paid_amount>"+paid_amount+"</paid_amount>" +
+										"<paid_amount>"+(parseFloat(account.total_amount)+total_amount)+"</paid_amount>" +
 										"<status>pending</status>" +
 										"<notes>"+notes+"</notes>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</payments>";
-								var receipts_xml="<receipts_payment_mapping>" +
+									var receipts_xml="<receipts_payment_mapping>" +
 										"<id>"+new_id+"</id>" +
 										"<receipt_id>"+receipt_id+"</receipt_id>" +
 										"<payment_id>"+account.id+"</payment_id>" +
-										"<type>"+receipt_type+"</type>" +
-										"<amount>"+counter_payment+"</amount>" +
+										"<type>"+account.type+"</type>" +
+										"<amount>"+balanced_amount+"</amount>" +
 										"<acc_name>"+account_name+"</acc_name>" +
 										"<date>"+last_updated+"</date>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</receipts_payment_mapping>";
-					
+								
+									update_simple(payment_xml);
+									create_simple(receipts_xml);
+									total_amount=0;
+								}
+								else
+								{
+									var notes=account.notes+"\n Rs."+account.paid_amount+" balanced against receipt # "+receipt_id;
+									var payment_xml="<payments>" +
+										"<id>"+account.id+"</id>" +
+										"<paid_amount>0</paid_amount>" +
+										"<status>pending</status>" +
+										"<notes>"+notes+"</notes>" +
+										"<last_updated>"+last_updated+"</last_updated>" +
+										"</payments>";
+									var receipts_xml="<receipts_payment_mapping>" +
+										"<id>"+new_id+"</id>" +
+										"<receipt_id>"+receipt_id+"</receipt_id>" +
+										"<payment_id>"+account.id+"</payment_id>" +
+										"<type>"+account.type+"</type>" +
+										"<amount>"+account.paid_amount+"</amount>" +
+										"<acc_name>"+account_name+"</acc_name>" +
+										"<date>"+last_updated+"</date>" +
+										"<last_updated>"+last_updated+"</last_updated>" +
+										"</receipts_payment_mapping>";
+								
+									update_simple(payment_xml);
+									create_simple(receipts_xml);
+									total_amount=total_amount+parseFloat(account.total_amount);
+								}								
+							}
+						}
+						else 
+						{
+							if(total_amount<0)
+							{
+								var notes=account.notes+"\nClosed by receipt # "+receipt_id;
+								var payment_xml="<payments>" +
+									"<id>"+account.id+"</id>" +
+									"<paid_amount>"+account.total_amount+"</paid_amount>" +
+									"<status>closed</status>" +
+									"<notes>"+notes+"</notes>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</payments>";
+								var receipts_xml="<receipts_payment_mapping>" +
+									"<id>"+new_id+"</id>" +
+									"<receipt_id>"+receipt_id+"</receipt_id>" +
+									"<payment_id>"+account.id+"</payment_id>" +
+									"<type>"+account.type+"</type>" +
+									"<amount>"+(parseFloat(account.total_amount)-parseFloat(account.paid_amount))+"</amount>" +
+									"<acc_name>"+account_name+"</acc_name>" +
+									"<date>"+last_updated+"</date>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</receipts_payment_mapping>";
+							
 								update_simple(payment_xml);
 								create_simple(receipts_xml);
-								counter_payment=0;
+							}
+							else
+							{
+								if(parseFloat(account.total_amount)>total_amount)
+								{
+									var balanced_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount)-total_amount;
+									var notes=account.notes+"\n Rs."+balanced_amount+" balanced against receipt # "+receipt_id;
+									var payment_xml="<payments>" +
+										"<id>"+account.id+"</id>" +
+										"<paid_amount>"+(parseFloat(account.total_amount)-total_amount)+"</paid_amount>" +
+										"<status>pending</status>" +
+										"<notes>"+notes+"</notes>" +
+										"<last_updated>"+last_updated+"</last_updated>" +
+										"</payments>";
+									var receipts_xml="<receipts_payment_mapping>" +
+										"<id>"+new_id+"</id>" +
+										"<receipt_id>"+receipt_id+"</receipt_id>" +
+										"<payment_id>"+account.id+"</payment_id>" +
+										"<type>"+account.type+"</type>" +
+										"<amount>"+balanced_amount+"</amount>" +
+										"<acc_name>"+account_name+"</acc_name>" +
+										"<date>"+last_updated+"</date>" +
+										"<last_updated>"+last_updated+"</last_updated>" +
+										"</receipts_payment_mapping>";
+								
+									update_simple(payment_xml);
+									create_simple(receipts_xml);
+									total_amount=0;
+								}
+								else
+								{
+									var notes=account.notes+"\n Rs."+account.paid_amount+" balanced against receipt # "+receipt_id;
+									var payment_xml="<payments>" +
+										"<id>"+account.id+"</id>" +
+										"<paid_amount>0</paid_amount>" +
+										"<status>pending</status>" +
+										"<notes>"+notes+"</notes>" +
+										"<last_updated>"+last_updated+"</last_updated>" +
+										"</payments>";
+									var receipts_xml="<receipts_payment_mapping>" +
+										"<id>"+new_id+"</id>" +
+										"<receipt_id>"+receipt_id+"</receipt_id>" +
+										"<payment_id>"+account.id+"</payment_id>" +
+										"<type>"+account.type+"</type>" +
+										"<amount>"+account.paid_amount+"</amount>" +
+										"<acc_name>"+account_name+"</acc_name>" +
+										"<date>"+last_updated+"</date>" +
+										"<last_updated>"+last_updated+"</last_updated>" +
+										"</receipts_payment_mapping>";
+								
+									update_simple(payment_xml);
+									create_simple(receipts_xml);
+									total_amount=total_amount-parseFloat(account.total_amount);
+								}								
 							}
 						}
 					}
 				});
-				
+					
 				var p_id=get_new_key();				
-				if(counter_payment>0)
+				if(total_amount<0)
 				{
 					var payment_xml="<payments>" +
 								"<id>"+p_id+"</id>" +
 								"<status>pending</status>" +
 								"<type>paid</type>" +
 								"<date>"+get_my_time()+"</date>" +
-								"<total_amount>"+counter_payment+"</total_amount>" +
+								"<total_amount>"+(-total_amount)+"</total_amount>" +
 								"<paid_amount>0</paid_amount>" +
 								"<acc_name>"+account_name+"</acc_name>" +
 								"<due_date>"+get_credit_period()+"</due_date>" +
@@ -12186,32 +12327,28 @@ function modal155_action()
 								"<notes>Generated for receipt # "+receipt_id+"</notes>" +	
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</payments>";
-					create_simple(payment_xml);
-					
+					create_simple(payment_xml);		
 				}
 				
 				var receipt_xml="<receipts>" +
 								"<id>"+p_id+"</id>" +
-								"<receipt_id unique='yes'>"+receipt_id+"</receipt_id>" +
+								"<receipt_id>"+receipt_id+"</receipt_id>" +
 								"<type>"+receipt_type+"</type>" +
-								"<amount>"+received_amount+"</amount>" +
+								"<amount>"+amount_filter.value+"</amount>" +
 								"<acc_name>"+account_name+"</acc_name>" +
 								"<date>"+last_updated+"</date>" +
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</receipts>";
-				var receipt_record_xml="<user_preferences>" +
-								"<id>"+receipt_record_id+"</id>" +
-								"<value>"+(parseFloat(receipt_id)+1)+"</value>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</user_preferences>";
 				create_simple(receipt_xml);
-				update_simple(receipt_record_xml);
+				
 			});
 		}
 		else
 		{
 			$("#modal2").dialog("open");
 		}
+		
+		
 		$("#modal155").dialog("close");
 	});
 	

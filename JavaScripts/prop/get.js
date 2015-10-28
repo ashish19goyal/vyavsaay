@@ -376,11 +376,18 @@ function my_obj_array_to_csv(data_array,file_name)
 		{
 			if(typeof data_row[header_array[i]]!= 'undefined')
 			{
-				if(String(data_row[header_array[i]]).search(","))
+				if(header_array[i]=='id')
 				{
-					data_row[header_array[i]]="\""+data_row[header_array[i]]+"\"";
+					data_string+="'"+data_row[header_array[i]]+",";
 				}
-				data_string+=data_row[header_array[i]]+",";
+				else
+				{
+					if(String(data_row[header_array[i]]).search(","))
+					{
+						data_row[header_array[i]]="\""+data_row[header_array[i]]+"\"";
+					}
+					data_string+=data_row[header_array[i]]+",";
+				}
 			}
 			else 
 			{
@@ -435,11 +442,18 @@ function my_obj_array_to_csv_string(data_array)
 		{
 			if(typeof data_row[header_array[i]]!= 'undefined')
 			{
-				if(String(data_row[header_array[i]]).search(","))
+				if(header_array[i]=='id')
 				{
-					data_row[header_array[i]]="\""+data_row[header_array[i]]+"\"";
+					data_string+="'"+data_row[header_array[i]]+",";
 				}
-				data_string+=data_row[header_array[i]]+",";
+				else
+				{
+					if(String(data_row[header_array[i]]).search(","))
+					{
+						data_row[header_array[i]]="\""+data_row[header_array[i]]+"\"";
+					}
+					data_string+=data_row[header_array[i]]+",";
+				}
 			}
 			else 
 			{
@@ -519,6 +533,10 @@ function csv_string_to_obj_array(csvString)
 				}
 				columns[j]=columns[j].replace(/&/g, "and");
 				columns[j]=columns[j].replace(/^\"+|\"+$/gm,'');
+				if(header_cols[j]=='id')
+				{
+					columns[j]=columns[j].replace(/'/gm,'');
+				}
 				col_result[header_cols[j]]=columns[j];
 			}
 			//console.log(col_result);

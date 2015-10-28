@@ -784,15 +784,10 @@ function form39_delete_item(button)
 			var name=form.elements[0].value;
 			var make=form.elements[1].value;
 			var description=form.elements[2].value;
-			var tax=form.elements[5].value;
-			var data_id=form.elements[6].value;
+			var data_id=form.elements[7].value;
 			var last_updated=get_my_time();
 			var data_xml="<product_master>" +
 						"<id>"+data_id+"</id>" +
-						"<make>"+make+"</make>" +
-						"<name>"+name+"</name>" +
-						"<description>"+description+"</description>" +
-						"<tax>"+tax+"</tax>" +
 						"</product_master>";	
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
@@ -4572,19 +4567,12 @@ function form145_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var data_id=form.elements[6].value;
+			var data_id=form.elements[7].value;
 				
 			var data_xml="<store_movement>" +
 					"<id>"+data_id+"</id>" +
 					"</store_movement>";	
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-			}				
+			delete_simple(data_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -5318,8 +5306,7 @@ function form169_delete_item(button)
 			var name=form.elements[0].value;
 			var description=form.elements[1].value;
 			var make=form.elements[2].value;
-			var tax=form.elements[5].value;
-			var data_id=form.elements[6].value;
+			var data_id=form.elements[7].value;
 			var last_updated=get_my_time();
 			var data_xml="<product_master>" +
 						"<id>"+data_id+"</id>" +
@@ -5971,14 +5958,8 @@ function form185_delete_item(button)
 						"<notes>"+name+" task</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-			}	
+			delete_row(data_xml,activity_xml);
+				
 			$(button).parent().parent().remove();
 		});
 	}
@@ -6012,10 +5993,15 @@ function form186_delete_item(button)
 			var batch_raw_xml="<batch_raw_material>"+
 						"<production_id>"+data_id+"</production_id>"+
 						"</batch_raw_material>";
+			var move_xml="<store_movement>"+
+						"<record_source>production_plan_item</record_source>"+
+						"<source_id>"+data_id+"</source_id>"+
+						"</store_movement>";
 										
 			delete_simple(data_xml);
 			delete_simple(task_xml);
 			delete_simple(batch_raw_xml);
+			delete_simple(move_xml);
 			$(button).parent().parent().remove();
 		});
 	}

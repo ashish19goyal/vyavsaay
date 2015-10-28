@@ -873,6 +873,17 @@ tbody tr:hover{
 	vertical-align:middle;
 }
 
+.csv_red_icon{
+	height:25px;
+	width: 25px;
+	background:url('/images/csv_red.png') no-repeat left top;
+	border: 0;
+	cursor: pointer;
+	background-size: 25px 25px;
+	color:transparent;
+	vertical-align:middle;
+}
+
 a.small_cross_icon{
 	width:10px;
 	height:10px;
@@ -923,8 +934,8 @@ a.small_cross_icon{
   border: 2px solid white; 
   -webkit-box-shadow: 0 3px 10px #ccc; 
   -moz-box-shadow: 0 3px 10px #ccc;
-  -webkit-transform: rotate(5deg); 
-  -moz-transform: rotate(5deg);
+  -webkit-transform: rotate(2deg); 
+  -moz-transform: rotate(2deg);
   -webkit-transition: all 0.7s ease; 
   -moz-transition: all 1s ease;
   position: relative;
@@ -943,8 +954,8 @@ a.small_cross_icon{
 
 .figure:active{
   outline: none;
-  -webkit-transform: rotate(-3deg) scale(2.5); 
-  -moz-transform: rotate(-3deg) scale(2.5);
+  -webkit-transform: rotate(-1deg) scale(2.5); 
+  -moz-transform: rotate(-1deg) scale(2.5);
   -webkit-box-shadow: 0 3px 10px #666; 
   -moz-box-shadow: 0 3px 10px #666;
   z-index: 9999;
@@ -1507,7 +1518,7 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 		min-width:1px;
 	}
 	
-	.save_icon,.delete_icon,.share_icon,.edit_icon,.refresh_icon,.copy_icon,.add_icon,.add_image,.print_icon,.csv_icon{
+	.save_icon,.delete_icon,.share_icon,.edit_icon,.refresh_icon,.copy_icon,.add_icon,.add_image,.print_icon,.csv_icon,.csv_red_icon{
 		min-width:40px;		
 		height:40px;
 		width:40px;

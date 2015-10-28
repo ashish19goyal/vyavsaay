@@ -764,11 +764,14 @@
 			<item_name index='yes' type="TEXT"></item_name>
 			<batch index='yes' type="TEXT"></batch>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
-			<source index='yes' type="VARCHAR(25)"></source>			
-			<target index='yes' type="VARCHAR(25)"></target>
+			<source index='yes' type="TEXT"></source>			
+			<target index='yes' type="TEXT"></target>
 			<status index='yes' type="VARCHAR(25)"></status><!--pending/dispatched/received/cancelled-->
 			<dispatcher index='no' type="TEXT"></dispatcher>
 			<receiver index='no' type="TEXT"></receiver>
+			<record_source index='yes' type="TEXT"></record_source>			
+			<source_id index='yes' type="BIGINT"></source_id>			
+			<applicable_from index='yes' type="BIGINT"></applicable_from>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</store_movement>
@@ -1532,7 +1535,7 @@
 			<brand index='yes' type="TEXT"></brand>
 			<order_no index='yes' type="INT"></order_no>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
-			<status index='yes' type='VARCHAR(30)'></status><!--pending/completed/overdue-->
+			<status index='yes' type='VARCHAR(30)'></status><!--pending/completed/overdue/inventoried-->
 			<from_time index='yes' type="BIGINT"></from_time>
 			<to_time index='yes' type="BIGINT"></to_time>
 			<last_updated index='yes' type="BIGINT"></last_updated>

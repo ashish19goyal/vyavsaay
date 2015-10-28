@@ -1378,6 +1378,7 @@ function generate_attendance_records()
 		if(results.length===0)
 		{
 			var staff_columns="<staff>" +
+					"<id></id>"+
 					"<acc_name></acc_name>" +
 					"<status exact='yes'>active</status>" +
 					"</staff>";
@@ -1386,7 +1387,7 @@ function generate_attendance_records()
 				staff_names.forEach(function(staff_name)
 				{
 					//console.log('creating attendance record for'+staff_name.acc_name);
-					var id=get_new_key();
+					var id=parseFloat(staff_name.id)+today;
 					var data_xml="<attendance>" +
 								"<id>"+id+"</id>" +
 								"<acc_name>"+staff_name.acc_name+"</acc_name>" +

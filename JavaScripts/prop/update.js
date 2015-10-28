@@ -2000,8 +2000,8 @@ function form39_update_item(form)
 		var name=form.elements[0].value;
 		var make=form.elements[1].value;
 		var description=form.elements[2].value;
-		var tax=form.elements[5].value;
-		var data_id=form.elements[6].value;
+		var tax=form.elements[6].value;
+		var data_id=form.elements[7].value;
 		var last_updated=get_my_time();
 		var pic_id=$("#img_form39_"+data_id).parent().attr('name');
 		var url=$("#img_form39_"+data_id).attr('src');
@@ -2029,19 +2029,12 @@ function form39_update_item(form)
 					"<target_id>"+data_id+"</target_id>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</documents>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-			server_update_simple(pic_xml);
-			server_create_simple(pic_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-			local_update_simple(pic_xml);
-			local_create_simple(pic_xml);
-		}	
-		for(var i=0;i<6;i++)
+		
+		update_row(data_xml,activity_xml);
+		update_simple(pic_xml);
+		create_simple(pic_xml);
+		
+		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -7577,14 +7570,7 @@ function form144_update_expense(form)
 					"<detail>"+details+"</detail>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</expenses>";
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}	
+		update_simple(data_xml);
 		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -7611,7 +7597,7 @@ function form145_dispatch_item(button)
 		var source=form.elements[3].value;
 		form.elements[5].value='dispatched';
 		
-		var data_id=form.elements[6].value;
+		var data_id=form.elements[7].value;
 		var last_updated=get_my_time();
 		var data_xml="<store_movement>" +
 					"<id>"+data_id+"</id>" +
@@ -7626,15 +7612,8 @@ function form145_dispatch_item(button)
 					"<notes>Product "+product_name+" from store "+source+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
-		for(var i=0;i<6;i++)
+		update_row(data_xml,activity_xml);
+		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -7661,7 +7640,7 @@ function form145_receive_item(button)
 		var target=form.elements[4].value;
 		form.elements[5].value='received';
 		
-		var data_id=form.elements[6].value;
+		var data_id=form.elements[7].value;
 		var last_updated=get_my_time();
 		var data_xml="<store_movement>" +
 					"<id>"+data_id+"</id>" +
@@ -7676,15 +7655,9 @@ function form145_receive_item(button)
 					"<notes>Product "+product_name+" at store "+target+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
-		for(var i=0;i<6;i++)
+		update_row(data_xml,activity_xml);
+			
+		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -7711,7 +7684,7 @@ function form145_cancel_item(button)
 		var source=form.elements[3].value;
 		form.elements[5].value='cancelled';
 		
-		var data_id=form.elements[6].value;
+		var data_id=form.elements[7].value;
 		var last_updated=get_my_time();
 		var data_xml="<store_movement>" +
 					"<id>"+data_id+"</id>" +
@@ -7726,15 +7699,9 @@ function form145_cancel_item(button)
 					"<notes>Movement of product "+product_name+" from store "+source+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
-		for(var i=0;i<6;i++)
+		update_row(data_xml,activity_xml);
+			
+		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -9428,8 +9395,8 @@ function form169_update_item(form)
 		var name=form.elements[0].value;
 		var description=form.elements[1].value;
 		var make=form.elements[2].value;
-		var tax=form.elements[5].value;
-		var data_id=form.elements[6].value;
+		var tax=form.elements[6].value;
+		var data_id=form.elements[7].value;
 		var last_updated=get_my_time();
 		var pic_id=$("#img_form169_"+data_id).parent().attr('name');
 		var url=$("#img_form169_"+data_id).attr('src');
@@ -9457,18 +9424,10 @@ function form169_update_item(form)
 					"<target_id>"+data_id+"</target_id>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</documents>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-			server_update_simple(pic_xml);
-			server_create_simple(pic_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-			local_update_simple(pic_xml);
-			local_create_simple(pic_xml);
-		}	
+		update_row(data_xml,activity_xml);
+		update_simple(pic_xml);
+		create_simple(pic_xml);
+		
 		for(var i=0;i<6;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -10145,19 +10104,87 @@ function form184_update_item(form)
 					"<status>"+status+"</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</business_processes>";
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}	
+		update_simple(data_xml);	
 		
 		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Track production
+ * @formNo 185
+ * @param button
+ */
+function form185_update_item(form)
+{
+	if(is_update_access('form185'))
+	{
+		var name=fields.elements[0].value;
+		var details=fields.elements[1].value;
+		var assignee=fields.elements[2].value;
+		var from=get_raw_time(fields.elements[3].value);
+		var due=get_raw_time(fields.elements[4].value);
+		var status=fields.elements[5].value;
+		var data_id=form.elements[7].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<task_instances>"+
+					"<id>"+data_id+"</id>"+
+					"<name>"+name+"</name>" +
+					"<description>"+details+"</description>" +
+					"<assignee>"+assignee+"</assignee>" +
+					"<t_due>"+due+"</t_due>" +
+					"<t_initiated>"+from+"</t_initiated>" +
+					"<status>"+status+"</status>" +
+					"<source>business process</source>" +
+					"<source_id>"+data_id+"</source_id>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</task_instances>";
+				
+		var prod_xml="<production_plan_items>" +
+				"<id>"+data_id+"</id>" +
+				"<order_no>"+order+"</order_no>" +
+				"<item>"+item+"</item>" +
+				"<brand>"+brand+"</brand>" +
+				"<quantity>"+quantity+"</quantity>" +
+				"<from_time>"+from+"</from_time>" +
+				"<to_time>"+to+"</to_time>" +
+				"<status>"+status+"</status>" +
+				"<plan_id>"+plan_id+"</plan_id>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</production_plan_items>";
+		update_simple(data_xml);
+		update_simple(prod_xml);
+		
+		var store_movement_xml="<store_movement>"+
+							"<id></id>"+
+							"<record_source exact='yes'>production_plan_item</record_source>"+
+							"<source_id exact='yes'>"+data_id+"</source_id>"+
+							"</store_movement>";
+		fetch_requested_data('',store_movement_xml,function (movs) 
+		{
+			movs.forEach(function (mov) 
+			{
+				var mov_xml="<store_movement>"+
+					"<id>"+mov.id+"</id>"+
+					"<applicable_from>"+from+"</applicable_from>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</store_movement>";
+				update_simple(mov_xml);	
+			});
+		});					
+				
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}		
 	}
 	else
 	{
@@ -10210,6 +10237,24 @@ function form186_update_item(form)
 			
 		update_simple(data_xml);
 		update_simple(task_xml);
+
+		var store_movement_xml="<store_movement>"+
+							"<id></id>"+
+							"<record_source exact='yes'>production_plan_item</record_source>"+
+							"<source_id exact='yes'>"+data_id+"</source_id>"+
+							"</store_movement>";
+		fetch_requested_data('',store_movement_xml,function (movs) 
+		{
+			movs.forEach(function (mov) 
+			{
+				var mov_xml="<store_movement>"+
+					"<id>"+mov.id+"</id>"+
+					"<applicable_from>"+from+"</applicable_from>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</store_movement>";
+				update_simple(mov_xml);	
+			});
+		});					
 				
 		for(var i=0;i<7;i++)
 		{
@@ -13686,6 +13731,12 @@ function form256_update_item(form)
 					"<quantity>"+quantity+"</quantity>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</batch_raw_material>";
+		var item_subtracted_xml="<inventory_adjust>"+
+					"<id>"+data_id+"</id>"+
+					"<quantity>-"+quantity+"</quantity>"+
+					"<last_updated>"+last_updated+"</last_updated>"+
+					"</inventory_adjust>";
+		
 		update_simple(data_xml);
 		
 		for(var i=0;i<3;i++)
@@ -13705,8 +13756,8 @@ function form256_update_item(form)
  */
 function form256_update_form()
 {
-	if(is_create_access('form256'))
-	{	
+	if(is_update_access('form256'))
+	{
 		$("[id^='save_form256_']").click();
 	}
 	else

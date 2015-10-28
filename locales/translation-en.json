@@ -423,6 +423,8 @@
 	"manage_receivables":"Manage Receivables",
 	"manage_payables":"Manage Payables",
 	"receipts_cps":"Receipts (CPS)",
+	"receipts_receivable":"Receipts (Receivable)",
+	"receipts_payable":"Receipts (Payable)",
 	"inventory_finished":"Inventory (Finished Goods)",
 	"add_stock":"Add Stock",
 	"pending_sale_order_items":"Pending Sale Order Items",

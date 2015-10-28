@@ -18,13 +18,15 @@
 			{
 				$values=array($product,$batch,$store);
 				$query1_values=array($product,$batch,$store,'yes');
+				$query6_values=array($product,$batch,$store,'received','dispatched');
+				$query61_values=array($product,$batch,$store,'received');
 				$query1="select sum(quantity) from bill_items where item_name=? and batch=? and storage=? and (hired <> ? or hired is null)";
 				$query2="select sum(quantity) from supplier_bill_items where product_name=? and batch=? and storage=?";
 				$query3="select sum(quantity) from customer_return_items where item_name=? and batch=? and storage=?";
 				$query4="select sum(quantity) from supplier_return_items where item_name=? and batch=? and storage=?";
 				$query5="select sum(quantity) from customer_return_items where item_name=? and exchange_batch=? and storage=?";
-				$query6="select sum(quantity) from store_movement where item_name=? and batch=? and source=?";
-				$query61="select sum(quantity) from store_movement where item_name=? and batch=? and target=?";
+				$query6="select sum(quantity) from store_movement where item_name=? and batch=? and source=? and (status=? or status=?)";
+				$query61="select sum(quantity) from store_movement where item_name=? and batch=? and target=? and status=?";
 				$query7="select sum(quantity) from discarded where product_name=? and batch=? and storage=?";
 				$query8="select sum(quantity) from unbilled_sale_items where item_name=? and batch=? and storage=?";
 				$query9="select sum(quantity) from unbilled_purchase_items where item_name=? and batch=? and storage=?";
@@ -34,13 +36,15 @@
 				{
 					$values=array($product,$store);
 					$query1_values=array($product,$store,'yes');
+					$query6_values=array($product,$store,'received','dispatched');
+					$query61_values=array($product,$store,'received');
 					$query1="select sum(quantity) from bill_items where item_name=? and storage=? and (hired <> ? or hired is null)";
 					$query2="select sum(quantity) from supplier_bill_items where product_name=? and storage=?";
 					$query3="select sum(quantity) from customer_return_items where item_name=? and type=? and storage=?";
 					$query4="select sum(quantity) from supplier_return_items where item_name=? and storage=?";
 					//$query5="select sum(quantity) from customer_return_items where item_name=? and type=?";
-					$query6="select sum(quantity) from store_movement where item_name=? and source=?";
-					$query61="select sum(quantity) from store_movement where item_name=? and target=?";
+					$query6="select sum(quantity) from store_movement where item_name=? and source=? and (status=? or status=?)";
+					$query61="select sum(quantity) from store_movement where item_name=? and target=? and status=?";
 					$query7="select sum(quantity) from discarded where product_name=? and storage=?";
 					$query8="select sum(quantity) from unbilled_sale_items where item_name=? and storage=?";
 					$query9="select sum(quantity) from unbilled_purchase_items where item_name=? and storage=?";
@@ -92,12 +96,12 @@
 				}
 				
 				$stmt6=$conn->conn->prepare($query6);
-				$stmt6->execute($values);
+				$stmt6->execute($query6_values);
 				$res6=$stmt6->fetch(PDO::FETCH_NUM);
 				$store_source=$res6[0];
 				
 				$stmt61=$conn->conn->prepare($query61);
-				$stmt61->execute($values);
+				$stmt61->execute($query61_values);
 				$res61=$stmt61->fetch(PDO::FETCH_NUM);
 				$store_target=$res61[0];
 				

@@ -142,7 +142,8 @@
 				<label>Make: <input type="text"></label><br>
 				<label>Description: <textarea></textarea></label><br>
 				<label>Picture: <output></output>
-								<input type="file"></label><br>
+								<input type='file' style='display:none'>
+								<input type='button' class='generic_red_icon' value='Select Picture'></label><br>
 				<label>Tax (%): <input type="number" step='any'></label><br>
 				<label>Bar Code: <input type="text"></label>
 				<label><input type='checkbox'>Auto generate</label><br>
@@ -883,7 +884,8 @@
 				<label>Make: <input type="text"></label><br>
 				<label>Description: <textarea></textarea></label><br>
 				<label>Picture: <output></output>
-								<input type="file"></label><br>
+								<input type='file' style='display:none'>
+								<input type='button' class='generic_red_icon' value='Select Picture'></label><br>
 				<label>Tax (%): <input type="number" step='any'></label><br>
 				<label>Cost Price: <input type="number" step='any'></label><br>
 				<label>Sale Price: <input type="number" step='any'></label><br>
@@ -917,7 +919,8 @@
 				<label>Name: <textarea></textarea></label><br>
 				<label>Brand: <textarea></textarea></label><br>
 				<label>Picture: <output></output>
-								<input type="file"></label><br>
+								<input type='file' style='display:none'>
+								<input type='button' class='generic_red_icon' value='Select Picture'></label><br>
 				<label>Tax (%): <input type="number" step='any'></label><br>
 				<label>Length: <input type="number" step='any'></label><br>
 				<label>Breadth: <input type="number" step='any'></label><br>

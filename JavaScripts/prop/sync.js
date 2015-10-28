@@ -197,7 +197,7 @@ function sync_server_to_local(func)
 	  	   }
 	  	   else
 	  	   {
-	  	   		progress_value=progress_dummy+(1-(online_counter/50))*20;
+	  	   		progress_value=progress_dummy+(1-(online_counter/100))*20;
 	  	   }
 	     },1000);	
 	 }

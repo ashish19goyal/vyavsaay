@@ -1963,7 +1963,7 @@ function report90_header_ini()
 	$('.report_result_count').off('click');
 	$('.report_result_count').add('.report_result_count_selected').on('click',function () 
 	{
-		console.log('something');
+		//console.log('something');
 		$('.report_result_count_selected').attr('class','report_result_count');
 		$(this).attr('class','report_result_count_selected');
 	});
