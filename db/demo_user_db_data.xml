@@ -3492,7 +3492,7 @@
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--payments--transactions--</tables>
+			<tables>--payments--transactions--receipts--receipts_payment_mapping--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -3757,6 +3757,39 @@
 			<shortcut></shortcut>
 			<sync>checked</sync>
 			<tables>--rto--logistics_orders--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form268</name>
+			<display_name>delivery_challan_details</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--delivery_challans--delivery_challan_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form269</name>
+			<display_name>manage_delivery_challans</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--delivery_challans--delivery_challan_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form270</name>
+			<display_name>enter_purchases_nvs</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--supplier_bills--supplier_bill_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
 	</user_preferences>
@@ -7153,6 +7186,39 @@
 			<username>master</username>
 			<element_id>form267</element_id>
 			<element_name>rto_status</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form268</element_id>
+			<element_name>delivery_challan_details</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form269</element_id>
+			<element_name>manage_delivery_challans</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form270</element_id>
+			<element_name>enter_purchases_nvs</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

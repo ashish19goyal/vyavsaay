@@ -552,32 +552,6 @@ function form165_get_totals()
 	master_form.elements['pending_count'].value=total_tbp-total_placed;
 }
 
-/**
- * @form Order picklist
- * @formNo 90
- * @param button
- */
-/*function report90_get_totals()
-{
-	var master_form=document.getElementById('report90_header');
-
-	var total_tbp=0;
-	var total_picked=0;
-	
-	$("[id^='row_report90_']").each(function(index)
-	{
-		if(!isNaN(parseFloat(this.elements[3].value)))
-		{
-			total_tbp+=parseFloat(this.elements[3].value);
-		}		
-		if(!isNaN(parseFloat(this.elements[4].value)))
-		{
-			total_picked+=parseFloat(this.elements[4].value);
-		}
-	});	
-	master_form.elements['pending_count'].value=total_tbp-total_picked;
-}
-*/
 
 function form178_get_totals()
 {
@@ -905,6 +879,80 @@ function form250_update_serial_numbers()
 	form.elements['weight'].value=weight;
 }
 
+function form258_get_totals()
+{
+	$('#form258_item_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)').html(index+1);
+	});
+
+	$('#form258_spare_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)').html(index+1);
+	});
+
+	$('#form258_spec_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)').html(index+1);
+	});
+
+	$('#form258_bank_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)').html(index+1);
+	});
+
+	$('#form258_tc_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)').html(index+1);
+	});
+	
+	var amount=0;
+	var tax=0;
+	var total=0;
+	var total_quantity=0;
+
+	$("[id^='save_form258_item_']").each(function(index)
+	{
+		var subform_id=$(this).attr('form');
+		var subform=document.getElementById(subform_id);
+
+		if(!isNaN(parseFloat(subform.elements[1].value)))
+			total_quantity+=parseFloat(subform.elements[1].value);
+		if(!isNaN(parseFloat(subform.elements[3].value)))
+			amount+=parseFloat(subform.elements[3].value);
+		if(!isNaN(parseFloat(subform.elements[4].value)))
+			tax+=parseFloat(subform.elements[4].value);
+		if(!isNaN(parseFloat(subform.elements[5].value)))
+			total+=parseFloat(subform.elements[5].value);
+	});
+
+	var cartage=0;
+	var other_charges=0;
+	
+	if(document.getElementById('form258_cartage'))
+	{
+		cartage=parseFloat(document.getElementById('form258_cartage').value);
+		other_charges=parseFloat(document.getElementById('form258_other_charges').value);
+	}
+	
+	var amount=my_round(amount,2);		
+	var tax=my_round(tax,2);		
+	var total=my_round((total+cartage+other_charges),0);
+
+	var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
+						"<td>Amount:<br>Tax:<br>Cartage: <br>Other Charges: <br>Total: </td>" +
+						"<td>Rs. "+amount+"</br>" +
+						"Rs. "+tax+" <br>" +
+						"Rs. <input type='number' value='"+my_round(cartage,2)+"' step='any' id='form258_cartage' class='dblclick_editable'><br>" +
+						"Rs. <input type='number' value='"+my_round(other_charges,2)+"' step='any' id='form258_other_charges' class='dblclick_editable'><br>" +
+						"Rs. "+total+"</td>" +
+						"<td></td>" +
+						"</tr>";
+					
+	$('#form258_item_foot').html(total_row);
+	longPressEditable($('.dblclick_editable'));
+}
+
 function form262_update_serial_numbers()
 {
 	$('#form262_body').find('tr').each(function(index)
@@ -983,4 +1031,70 @@ function form267_get_totals()
 							"<td></td>" +
 							"</tr>";
 	$('#form267_foot').html(total_row);
+}
+
+function form268_get_totals()
+{
+	var total_quantity=0;
+
+	$("[id^='save_form268']").each(function(index)
+	{
+		var subform_id=$(this).attr('form');
+		var subform=document.getElementById(subform_id);
+		
+		if(!isNaN(parseFloat(subform.elements[2].value)))
+			total_quantity+=parseFloat(subform.elements[2].value);
+	});
+
+	var total_row="<tr><td colspan='4' data-th='Total'>Total Quantity: "+total_quantity+"</td></tr>";
+						
+	$('#form268_foot').html(total_row);
+	longPressEditable($('.dblclick_editable'));
+}
+
+
+function form270_get_totals()
+{
+	var amount=0;
+	var tax=0;
+	var total=0;
+	var total_quantity=0;
+
+	$("[id^='save_form270']").each(function(index)
+	{
+		var subform_id=$(this).attr('form');
+		var subform=document.getElementById(subform_id);
+		
+		if(!isNaN(parseFloat(subform.elements[1].value)))
+			total_quantity+=parseFloat(subform.elements[1].value);
+		if(!isNaN(parseFloat(subform.elements[3].value)))
+			amount+=parseFloat(subform.elements[3].value);
+		if(!isNaN(parseFloat(subform.elements[4].value)))
+			tax+=parseFloat(subform.elements[4].value);
+		if(!isNaN(parseFloat(subform.elements[5].value)))
+			total+=parseFloat(subform.elements[5].value);
+	});
+
+	var cartage=0;
+	
+	if(document.getElementById('form270_cartage'))
+	{
+		cartage=parseFloat(document.getElementById('form270_cartage').value);
+	}
+	
+	var amount=my_round(amount,2);		
+	var tax=my_round(tax,2);		
+	var total=my_round((total+cartage),0);
+
+	var total_row="<tr><td colspan='2' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
+						"<td>Amount:<br>Tax:<br>Cartage: <br>Total: </td>" +
+						"<td>Rs. "+amount+"</br>" +
+						"Rs. "+tax+" <br>" +
+						"Rs. <input type='number' value='"+my_round(cartage,2)+"' step='any' id='form270_cartage' class='dblclick_editable'><br>" +
+						"Rs. "+total+"</td>" +
+						"<td></td>" +
+						"</tr>";
+					
+	$('#form270_foot').html(total_row);
+	longPressEditable($('.dblclick_editable'));
 }

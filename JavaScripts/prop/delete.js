@@ -1218,8 +1218,8 @@ function form53_delete_item(button)
 			var bill_id=form.elements[0].value;
 			var supplier=form.elements[1].value;
 			var data_id=form.elements[5].value;
-			var transaction_id=form.elements[8].value;
-			var order_id=form.elements[9].value;
+			var transaction_id=form.elements[7].value;
+			var order_id=form.elements[8].value;
 			var last_updated=get_my_time();
 			var bill_xml="<supplier_bills>" +
 						"<id>"+data_id+"</id>" +
@@ -5133,14 +5133,7 @@ function form158_delete_item(button)
 						"<id>"+data_id+"</id>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
 						"</supplier_bill_items>";	
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-			}
+			delete_simple(data_xml);
 					
 			$(button).parent().parent().remove();
 		});
@@ -5746,16 +5739,9 @@ function form179_delete_item(button)
 			var other_delete="<purchase_order_items>" +
 					"<order_id>"+data_id+"</order_id>" +
 					"</purchase_order_items>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-				server_delete_simple(other_delete);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-				local_delete_simple(other_delete);
-			}	
+			
+			delete_row(data_xml,activity_xml);
+			delete_simple(other_delete);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -8322,6 +8308,47 @@ function form257_delete_item(button)
 	}
 }
 
+/**
+ * @form Manage Quotations (NVS)
+ * @param button
+ */
+function form259_delete_item(button)
+{
+	if(is_delete_access('form259'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var quot_num=form.elements[0].value;
+			var data_id=form.elements[4].value;
+			var data_xml="<quotation>" +
+						"<id>"+data_id+"</id>" +
+						"</quotation>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>quotation</tablename>" +
+						"<link_to>form259</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Quotation # "+quot_num+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			var item_xml="<quotation_items>"+
+						"<quotation_id>"+data_id+"</quotation_id>"+
+						"</quotation_items>";
+							
+			delete_row(data_xml,activity_xml);
+			delete_simple(item_xml);
+			
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
 
 /**
  * @form Bank Accounts
@@ -8534,6 +8561,121 @@ function form266_delete_item(button)
 			},rto_items_xml);
 			
 			delete_row(data_xml,activity_xml);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Delivery Challan Details
+ * @formNo form268
+ */
+function form268_delete_item(button)
+{
+	if(is_delete_access('form268'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);			
+			var data_id=form.elements[3].value;
+			
+			var data_xml="<delivery_challan_items>" +
+						"<id>"+data_id+"</id>" +
+						"</delivery_challan_items>";	
+			var inventory_xml="<inventory_adjust>" +
+						"<id>"+data_id+"</id>" +
+						"<source>delivery challan</source>"+						
+						"</inventory_adjust>";	
+			
+			delete_simple(data_xml);
+			delete_simple(inventory_xml);
+					
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Manage Delivery Challans
+ * @param button
+ */
+function form269_delete_item(button)
+{
+	if(is_delete_access('form269'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var challan_num=form.elements[0].value;
+			var data_id=form.elements[4].value;
+			var data_xml="<delivery_challans>" +
+						"<id>"+data_id+"</id>" +
+						"</delivery_challans>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>delivery_challans</tablename>" +
+						"<link_to>form269</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Challan # "+challan_num+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			var item_xml="<delivery_challan_items>"+
+						"<challan_id>"+data_id+"</challan_id>"+
+						"</delivery_challan_items>";
+			var inventory_xml="<inventory_adjust>" +
+						"<source>delivery challan</source>"+						
+						"<source_id>"+data_id+"</source_id>"+
+						"</inventory_adjust>";	
+
+			delete_row(data_xml,activity_xml);
+			delete_simple(item_xml);
+			delete_simple(inventory_xml);
+			
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+
+/**
+ * @form Enter Purchase Bill (NVS)
+ * @formNo form270
+ */
+function form270_delete_item(button)
+{
+	if(is_delete_access('form270'))
+	{
+		modal115_action(function()
+		{
+			var master_form=document.getElementById("form270_master");
+			var bill_id=master_form.elements['bill_id'].value;
+
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var data_id=form.elements[6].value;
+			
+			var data_xml="<supplier_bill_items>" +
+						"<id>"+data_id+"</id>" +
+						"</supplier_bill_items>";	
+			delete_simple(data_xml);
+					
 			$(button).parent().parent().remove();
 		});
 	}

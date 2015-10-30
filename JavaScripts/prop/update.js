@@ -9041,14 +9041,8 @@ function form161_update_item(form)
 					"<status>"+status+"</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</checklist_items>";
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}
+		update_simple(data_xml);
+		
 		for(var i=0;i<3;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -9080,14 +9074,8 @@ function form162_update_item(form)
 					"<item>"+item+"</item>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</checklist_mapping>";
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}
+		update_simple(data_xml);
+		
 		for(var i=0;i<3;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -9127,14 +9115,8 @@ function form163_update_item(form)
 					"<packing>"+packing+"</packing>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</product_master>";
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}
+		update_simple(data_xml);
+		
 		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -9864,14 +9846,8 @@ function form178_update_form()
 					"<notes>Purchase order # "+order_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
+		update_row(data_xml,activity_xml);
+		
 		$("[id^='save_form178_']").click();
 	}
 	else
@@ -9911,14 +9887,8 @@ function form179_update_item(form)
 					"<notes>Purchase Order # "+order_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
+		update_row(data_xml,activity_xml);
+		
 		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -13826,6 +13796,192 @@ function form257_update_item(form)
 }
 
 /**
+ * @form Prepare Quotation
+ * @param button
+ */
+function form258_update_form()
+{
+	if(is_update_access('form258'))
+	{
+		var form=document.getElementById("form258_master");
+		
+		var customer=form.elements['customer'].value;
+		var quot_num=form.elements['quot_num'].value;
+		var quot_date=get_raw_time(form.elements['date'].value);
+		var valid_upto=get_raw_time(form.elements['valid'].value);
+		var type=form.elements['type'].value;
+		var status=form.elements['status'].value;
+		var issued_by=form.elements['issued'].value;
+		var address=form.elements['address'].value;
+		var data_id=form.elements['id'].value;
+		var save_button=form.elements['save'];
+		var last_updated=get_my_time();
+		
+		var amount=0;
+		var tax=0;
+		var total=0;
+		var total_quantity=0;
+	
+		$("[id^='save_form258_item_']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+	
+			if(!isNaN(parseFloat(subform.elements[1].value)))
+				total_quantity+=parseFloat(subform.elements[1].value);
+			if(!isNaN(parseFloat(subform.elements[3].value)))
+				amount+=parseFloat(subform.elements[3].value);
+			if(!isNaN(parseFloat(subform.elements[4].value)))
+				tax+=parseFloat(subform.elements[4].value);
+			if(!isNaN(parseFloat(subform.elements[5].value)))
+				total+=parseFloat(subform.elements[5].value);
+		});
+	
+		var cartage=0;
+		var other_charges=0;
+		
+		if(document.getElementById('form258_cartage'))
+		{
+			cartage=parseFloat(document.getElementById('form258_cartage').value);
+			other_charges=parseFloat(document.getElementById('form258_other_charges').value);
+		}
+		
+		var amount=my_round(amount,2);		
+		var tax=my_round(tax,2);		
+		var total=my_round((total+cartage+other_charges),0);
+	
+		var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
+							"<td>Amount:<br>Tax:<br>Cartage: <br>Other Charges: <br>Total: </td>" +
+							"<td>Rs. "+amount+"</br>" +
+							"Rs. "+tax+" <br>" +
+							"Rs. <input type='number' value='"+my_round(cartage,2)+"' step='any' id='form258_cartage' class='dblclick_editable'><br>" +
+							"Rs. <input type='number' value='"+my_round(other_charges,2)+"' step='any' id='form258_other_charges' class='dblclick_editable'><br>" +
+							"Rs. "+total+"</td>" +
+							"<td></td>" +
+							"</tr>";
+		
+		$('#form258_item_foot').html(total_row);
+		longPressEditable($('.dblclick_editable'));
+
+		var spec_array=[];
+		var banks_array=[];
+		var spares_array=[];
+		var items_array=[];
+		var terms_array=[];						
+	
+		$("[id^='save_form258_item_']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+	
+			var item_obj=new Object();
+			item_obj.item=subform.elements[0].value;
+			item_obj.quantity=subform.elements[1].value;
+			item_obj.price=subform.elements[2].value;
+			item_obj.amount=subform.elements[3].value;
+			item_obj.tax=subform.elements[4].value;
+			item_obj.total=subform.elements[5].value;
+			items_array.push(item_obj);	
+		});
+
+		$("[id^='save_form258_spare_']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+	
+			var item_obj=new Object();
+			item_obj.item=subform.elements[0].value;
+			item_obj.description=subform.elements[1].value;
+			item_obj.quantity=subform.elements[2].value;
+			spares_array.push(item_obj);	
+		});
+
+		$("[id^='save_form258_spec_']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+	
+			var item_obj=new Object();
+			item_obj.item=subform.elements[0].value;
+			item_obj.spec=subform.elements[1].value;
+			item_obj.details=subform.elements[2].value;
+			spec_array.push(item_obj);	
+		});
+
+		$("[id^='save_form258_bank_']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+	
+			var item_obj=new Object();
+			item_obj.name=subform.elements[0].value;
+			item_obj.bank=subform.elements[1].value;
+			item_obj.ifsc=subform.elements[2].value;
+			item_obj.account_name=subform.elements[3].value;
+			item_obj.account_num=subform.elements[4].value;
+			banks_array.push(item_obj);		
+		});
+
+		$("[id^='save_form258_tc_']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+	
+			var item_obj=new Object();
+			item_obj.type=subform.elements[0].value;
+			item_obj.tc=subform.elements[1].value;
+			terms_array.push(item_obj);	
+		});	
+	
+		console.log(spec_array);
+		var specifications=JSON.stringify(spec_array);
+		var banks=JSON.stringify(banks_array);
+		var spares=JSON.stringify(spares_array);
+		var items=JSON.stringify(items_array);
+		var terms=JSON.stringify(terms_array);
+				
+		var data_xml="<quotation>" +
+					"<id>"+data_id+"</id>" +
+					"<quot_num>"+quot_num+"</quot_num>" +
+					"<customer>"+customer+"</customer>" +
+					"<date>"+quot_date+"</date>" +
+					"<valid_upto>"+valid_upto+"</valid_upto>" +
+					"<type>"+type+"</type>" +
+					"<status>"+status+"</status>" +
+					"<issued_by>"+issued_by+"</issued_by>" +
+					"<address>"+address+"</address>" +
+					"<amount>"+amount+"</amount>"+
+					"<tax>"+tax+"</tax>"+
+					"<cartage>"+cartage+"</cartage>"+
+					"<other_charges>"+other_charges+"</other_charges>"+
+					"<total>"+total+"</total>"+
+					"<specifications>"+specifications+"</specifications>"+
+					"<spares>"+spares+"</spares>"+
+					"<banks>"+banks+"</banks>"+
+					"<terms>"+terms+"</terms>"+
+					"<items>"+items+"</items>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</quotation>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>quotation</tablename>" +
+					"<link_to>form259</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Quotation # "+quot_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		
+		update_row(data_xml,activity_xml);
+		
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
  * @form User accounts
  * @param button
  */
@@ -14138,6 +14294,209 @@ function form267_update_item(form)
 				e.preventDefault();
 			});	
 		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Delivery challan Details
+ * @param button
+ */
+function form268_update_form()
+{
+	if(is_update_access('form268'))
+	{
+		var form=document.getElementById("form268_master");
+		
+		var customer=form.elements['customer'].value;
+		var challan_num=form.elements['challan_num'].value;
+		var challan_date=get_raw_time(form.elements['date'].value);
+		var awb_num=form.elements['awb_num'].value;
+		var vehicle_num=form.elements['vehicle_num'].value;
+		var type=form.elements['type'].value;
+		//var status=form.elements['status'].value;
+		var prepared_by=form.elements['prepared'].value;
+		var address=form.elements['address'].value;
+		var data_id=form.elements['id'].value;
+		var save_button=form.elements['save'];
+		var last_updated=get_my_time();
+		
+		var total_quantity=0;
+
+		$("[id^='save_form268']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+			
+			if(!isNaN(parseFloat(subform.elements[2].value)))
+				total_quantity+=parseFloat(subform.elements[2].value);
+		});
+		
+		var total_row="<tr><td colspan='4' data-th='Total'>Total Quantity: "+total_quantity+"</td></tr>";
+					
+		$('#form268_foot').html(total_row);
+		longPressEditable($('.dblclick_editable'));
+
+		
+		var data_xml="<delivery_challans>" +
+					"<id>"+data_id+"</id>" +
+					"<challan_num>"+challan_num+"</challan_num>" +
+					"<customer>"+customer+"</customer>" +
+					"<challan_date>"+challan_date+"</challan_date>" +
+					"<awb_num>"+awb_num+"</awb_num>" +
+					"<vehicle_num>"+vehicle_num+"</vehicle_num>" +
+					//"<status>"+status+"</status>" +
+					"<prepared_by>"+prepared_by+"</prepared_by>" +
+					"<address>"+address+"</address>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</delivery_challans>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>delivery_challans</tablename>" +
+					"<link_to>form269</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Delivery challan # "+challan_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		
+		update_row(data_xml,activity_xml);
+		
+		$("[id^='save_form268_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Enter Purchase Bill (NVS)
+ * @param button
+ */
+function form270_update_form()
+{
+	if(is_update_access('form270'))
+	{
+		var form=document.getElementById("form270_master");
+		
+		var supplier=form.elements['supplier'].value;
+		var bill_id=form.elements['bill_num'].value;
+		var bill_date=get_raw_time(form.elements['date'].value);
+		
+		var amount=0;
+		var tax=0;
+		var total=0;
+		var total_quantity=0;
+
+		$("[id^='save_form270']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+			
+			if(!isNaN(parseFloat(subform.elements[1].value)))
+				total_quantity+=parseFloat(subform.elements[1].value);
+			if(!isNaN(parseFloat(subform.elements[3].value)))
+				amount+=parseFloat(subform.elements[3].value);
+			if(!isNaN(parseFloat(subform.elements[4].value)))
+				tax+=parseFloat(subform.elements[4].value);
+			if(!isNaN(parseFloat(subform.elements[5].value)))
+				total+=parseFloat(subform.elements[5].value);
+		});
+
+		var cartage=0;
+		
+		if(document.getElementById('form270_cartage'))
+		{
+			cartage=parseFloat(document.getElementById('form270_cartage').value);
+		}
+		
+		var amount=my_round(amount,2);		
+		var tax=my_round(tax,2);		
+		var total=my_round((total+cartage),0);
+
+		var total_row="<tr><td colspan='2' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
+							"<td>Amount:<br>Tax:<br>Cartage: <br>Total: </td>" +
+							"<td>Rs. "+amount+"</br>" +
+							"Rs. "+tax+" <br>" +
+							"Rs. <input type='number' value='"+my_round(cartage,2)+"' step='any' id='form270_cartage' class='dblclick_editable'><br>" +
+							"Rs. "+total+"</td>" +
+							"<td></td>" +
+							"</tr>";
+						
+		$('#form270_foot').html(total_row);
+		longPressEditable($('.dblclick_editable'));
+
+		var data_id=form.elements['bill_id'].value;
+		var last_updated=get_my_time();
+								
+		var data_xml="<supplier_bills>" +
+					"<id>"+data_id+"</id>" +
+					"<bill_id>"+bill_id+"</bill_id>" +
+					"<supplier>"+supplier+"</supplier>" +
+					"<bill_date>"+bill_date+"</bill_date>" +
+					"<total>"+total+"</total>" +
+					"<amount>"+amount+"</amount>" +
+					"<tax>"+tax+"</tax>" +
+					"<cartage>"+cartage+"</cartage>"+
+					"<transaction_id>"+data_id+"</transaction_id>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</supplier_bills>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>supplier_bills</tablename>" +
+					"<link_to>form53</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Purchase Bill # "+bill_id+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var transaction_xml="<transactions>" +
+					"<id>"+data_id+"</id>" +
+					"<trans_date>"+get_my_time()+"</trans_date>" +
+					"<amount>"+total+"</amount>" +
+					"<receiver>master</receiver>" +
+					"<giver>"+supplier+"</giver>" +
+					"<tax>"+(-tax)+"</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</transactions>";
+		update_row(data_xml,activity_xml);
+		update_simple(transaction_xml);
+		
+		var payment_data="<payments>" +
+				"<id></id>" +
+				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
+				"</payments>";
+		get_single_column_data(function(payments)
+		{
+			if(payments.length>0)
+			{
+				var payment_xml="<payments>" +
+							"<id>"+payments[0]+"</id>" +
+							"<type>paid</type>" +
+							"<total_amount>"+total+"</total_amount>" +
+							"<acc_name>"+supplier+"</acc_name>" +
+							"<transaction_id>"+payments[0]+"</transaction_id>" +
+							"<bill_id>"+data_id+"</bill_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</payments>";
+				var pt_xml="<transactions>" +
+							"<id>"+payments[0]+"</id>" +
+							"<amount>"+total+"</amount>" +
+							"<receiver>"+supplier+"</receiver>" +
+							"<giver>master</giver>" +
+							"<tax>0</tax>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</transactions>";
+				update_simple_func(payment_xml,function()
+				{
+					modal28_action(payments[y]);
+				});
+			}
+		},payment_data);
+			
+		$("[id^='save_form270_']").click();
 	}
 	else
 	{

@@ -454,6 +454,9 @@
 	"manage_grids":"Manage Grids",
 	"create_rto":"Create RTO",
 	"manage_rto":"Manage RTO",
-	"rto_status":"Update RTO Status"
+	"rto_status":"Update RTO Status",
+	"delivery_challan_details":"Delivery Challan Details",
+	"manage_delivery_challans":"Manage Delivery Challans",
+	"enter_purchases_nvs":"Enter Purchases (NVS)"
 	}
 }

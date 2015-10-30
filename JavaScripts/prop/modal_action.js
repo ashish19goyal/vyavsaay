@@ -8517,15 +8517,8 @@ function modal126_action(po_id,po_num)
 				"<updated_by>"+get_name()+"</updated_by>" +
 				"</activity>";
 			
-		if(is_online())
-		{
-			server_update_row(po_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(po_xml,activity_xml);
-		}
-	
+		update_row(po_xml,activity_xml);
+		
 		$("#modal126").dialog("close");
 	});
 		
@@ -11957,9 +11950,10 @@ function modal155_action()
 	var form=document.getElementById("modal155_form");
 	var receipt_filter=form.elements[1];
 	var account_filter=form.elements[2];
-	var amount_filter=form.elements[3];
-	var balance_filter=form.elements[4];
-	var type_filter=form.elements[5];
+	var narration_filter=form.elements[3];
+	var amount_filter=form.elements[4];
+	var balance_filter=form.elements[5];
+	var type_filter=form.elements[6];
 	var receipt_record_id="";
 	
 	var receipt_id_xml="<user_preferences count='1'>"+
@@ -12335,6 +12329,7 @@ function modal155_action()
 								"<receipt_id>"+receipt_id+"</receipt_id>" +
 								"<type>"+receipt_type+"</type>" +
 								"<amount>"+amount_filter.value+"</amount>" +
+								"<narration>"+narration_filter.value+"</narration>" +
 								"<acc_name>"+account_name+"</acc_name>" +
 								"<date>"+last_updated+"</date>" +
 								"<last_updated>"+last_updated+"</last_updated>" +

@@ -30,6 +30,8 @@
 			<li><a id='form118_link' href='#form118' onclick='form118_header_ini(); form118_ini();' data-i18n='form.create_bill'></a></li>
 			<li><a id='form141_link' href='#form141' onclick='form141_header_ini(); form141_ini();' data-i18n='form.manage_order'></a></li>
 			<li><a id='report92_link' href='#report92' onclick='report92_header_ini();' data-i18n='form.pending_sale_order_items'></a></li>
+			<li><a id='form268_link' href='#form268' onclick="form268_header_ini(); form268_ini();" data-i18n='form.delivery_challan_details'></a></li>
+			<li><a id='form269_link' href='#form269' onclick="form269_header_ini(); form269_ini();" data-i18n='form.manage_delivery_challans'></a></li>
 		</ul>
 
 	<?php 
@@ -63,5 +65,7 @@
 			include "forms/form118.php";
 			include "forms/form141.php";
 			include "reports/report92.php";
+			include "forms/form268.php";
+			include "forms/form269.php";			
 	?>
 </div>

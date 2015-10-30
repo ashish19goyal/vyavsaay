@@ -1475,6 +1475,7 @@
 			<fieldset>
 				<label>Receipt Id: <input type='text' readonly="readonly" required></label><br>
 				<label>Account: <input type="text" required></label><br>
+				<label>Narration: <textarea></textarea></label><br>
 				<label>Receipt Amount: Rs. <input type="number" min='0' step='any' required></label><br>
 				<label>Balance <input type="text" readonly='readonly'></label><br>
 				<input type="hidden" name='type'>

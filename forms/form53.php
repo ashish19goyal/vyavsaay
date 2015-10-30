@@ -9,7 +9,7 @@
 					<th>Total</th>
 					<th>Notes</th>
 					<th>
-						<input type='button' form='form53_header' value='EXPORT' class='export_icon'>
+						<input type='button' form='form53_header' name='export' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form53_header' style='visibility: hidden;'>
 					</th>
 			</tr>

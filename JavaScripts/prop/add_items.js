@@ -15690,6 +15690,353 @@ function form257_add_item()
 }
 
 /**
+ * @form Prepare Quotation
+ * @formNo 258
+ */
+function form258_add_item()
+{
+	if(is_create_access('form258'))
+	{
+		var id=get_new_key();
+		var	item_rowsHTML="<tr>";
+			item_rowsHTML+="<form id='form258_item_"+id+"' autocomplete='off'></form>";
+				item_rowsHTML+="<td data-th='S.No.'>";
+				item_rowsHTML+="</td>";
+				item_rowsHTML+="<td data-th='Item'>";
+					item_rowsHTML+="<input type='text' form='form258_item_"+id+"'>";
+				item_rowsHTML+="</td>";
+				item_rowsHTML+="<td data-th='Quantity'>";
+					item_rowsHTML+="<input type='number' form='form258_item_"+id+"' step='any'>";
+				item_rowsHTML+="</td>";
+				item_rowsHTML+="<td data-th='Price'>";
+					item_rowsHTML+="<input type='number' form='form258_item_"+id+"' step='any'>";
+				item_rowsHTML+="</td>";
+				item_rowsHTML+="<td data-th='Amount'>";
+					item_rowsHTML+="<b>Amount</b>:<input type='number' readonly='readonly' form='form258_item_"+id+"' step='any'>";
+					item_rowsHTML+="<br><b>Tax</b>:<input type='number' form='form258_item_"+id+"' step='any'>";
+					item_rowsHTML+="<br><b>Total</b>:<input type='number' readonly='readonly' form='form258_item_"+id+"' step='any'>";
+				item_rowsHTML+="</td>";
+				item_rowsHTML+="<td data-th='Action'>";
+					item_rowsHTML+="<input type='hidden' form='form258_item_"+id+"' value='"+id+"'>";
+					item_rowsHTML+="<input type='button' class='submit_hidden' form='form258_item_"+id+"' id='save_form258_item_"+id+"' >";
+					item_rowsHTML+="<input type='button' class='delete_icon' form='form258_item_"+id+"' id='delete_form258_item_"+id+"' onclick='$(this).parent().parent().remove(); form258_get_totals();'>";
+					item_rowsHTML+="<input type='hidden' form='form258_item_"+id+"' name='tax_unit'>";
+				item_rowsHTML+="</td>";
+			item_rowsHTML+="</tr>";
+		$('#form258_item_body').append(item_rowsHTML);
+		
+		var fields=document.getElementById("form258_item_"+id);
+		var name_filter=fields.elements[0];
+		var quantity_filter=fields.elements[1];
+		var price_filter=fields.elements[2];
+		var amount_filter=fields.elements[3];
+		var tax_filter=fields.elements[4];
+		var total_filter=fields.elements[5];
+		var id_filter=fields.elements[6];
+		var tax_unit_filter=fields.elements['tax_unit'];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form258_add_item();
+		});
+		
+		var product_data="<attributes>" +
+				"<name></name>" +
+				"<value exact='yes'>no</value>"+
+				"<attribute exact='yes'>Spare Part</attribute>"+
+				"</attributes>";
+		set_my_value_list_func(product_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		});
+
+		$(name_filter).on('blur',function(event)
+		{
+			var tax_data="<product_master>"+
+						"<tax></tax>"+
+						"<name exact='yes'>"+name_filter.value+"</name>"+
+						"</product_master>";
+			set_my_value(tax_data,tax_unit_filter);			
+		});		
+
+		$(quantity_filter).add(price_filter).on('change blur',function(event)
+		{
+			amount_filter.value=my_round((parseFloat(price_filter.value)*parseFloat(quantity_filter.value)),2);
+			tax_filter.value=my_round((parseFloat(tax_unit_filter.value)*parseFloat(amount_filter.value)),2);
+			$(amount_filter).trigger('change');
+		});
+
+		$(amount_filter).add(tax_filter).on('change blur',function(event)
+		{
+			total_filter.value=my_round((parseFloat(amount_filter.value)+parseFloat(tax_filter.value)),0);
+		});
+
+		form258_get_totals();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Prepare Quotation
+ * @formNo 258
+ */
+function form258_add_spare()
+{
+	if(is_create_access('form258'))
+	{
+		var id=get_new_key();
+		var	spare_rowsHTML="<tr>";
+			spare_rowsHTML+="<form id='form258_spare_"+id+"' autocomplete='off'></form>";
+				spare_rowsHTML+="<td data-th='S.No.'>";
+				spare_rowsHTML+="</td>";
+				spare_rowsHTML+="<td data-th='Part Name'>";
+					spare_rowsHTML+="<input type='text' form='form258_spare_"+id+"'>";
+				spare_rowsHTML+="</td>";
+				spare_rowsHTML+="<td data-th='Description'>";
+					spare_rowsHTML+="<textarea form='form258_spare_"+id+"' ></textarea>";
+				spare_rowsHTML+="</td>";
+				spare_rowsHTML+="<td data-th='Quantity'>";
+					spare_rowsHTML+="<input type='number' form='form258_spare_"+id+"' step='any'>";
+				spare_rowsHTML+="</td>";
+				spare_rowsHTML+="<td data-th='Action'>";
+					spare_rowsHTML+="<input type='hidden' form='form258_spare_"+id+"' value='"+id+"'>";
+					spare_rowsHTML+="<input type='button' class='submit_hidden' form='form258_spare_"+id+"' id='save_form258_spare_"+id+"' >";
+					spare_rowsHTML+="<input type='button' class='delete_icon' form='form258_spare_"+id+"' id='delete_form258_spare_"+id+"' onclick='$(this).parent().parent().remove();form258_get_totals();'>";
+				spare_rowsHTML+="</td>";
+			spare_rowsHTML+="</tr>";
+		$('#form258_spare_body').append(spare_rowsHTML);
+		
+		var fields=document.getElementById("form258_spare_"+id);
+		var name_filter=fields.elements[0];
+		var desc_filter=fields.elements[1];
+		var quantity_filter=fields.elements[2];
+		var id_filter=fields.elements[3];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form258_add_spare();
+		});
+		
+		var product_data="<attributes>" +
+				"<name></name>" +
+				"<value exact='yes'>yes</value>"+
+				"<attribute exact='yes'>Spare Part</attribute>"+
+				"</attributes>";
+		set_my_value_list_func(product_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		});
+
+		$(name_filter).on('blur',function(event)
+		{
+			var desc_data="<product_master>"+
+						"<description></description>"+
+						"<name exact='yes'>"+name_filter.value+"</name>"+
+						"</product_master>";
+			set_my_value(desc_data,desc_filter);			
+		});		
+
+		form258_get_totals();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Prepare Quotation
+ * @formNo 258
+ */
+function form258_add_spec()
+{
+	if(is_create_access('form258'))
+	{
+		var id=get_new_key();
+		var	spec_rowsHTML="<tr>";
+			spec_rowsHTML+="<form id='form258_spec_"+id+"' autocomplete='off'></form>";
+				spec_rowsHTML+="<td data-th='S.No.'>";
+				spec_rowsHTML+="</td>";
+				spec_rowsHTML+="<td data-th='Item'>";
+					spec_rowsHTML+="<input type='text' form='form258_spec_"+id+"'>";
+				spec_rowsHTML+="</td>";
+				spec_rowsHTML+="<td data-th='Specification'>";
+					spec_rowsHTML+="<input type='text' form='form258_spec_"+id+"'>";
+				spec_rowsHTML+="</td>";
+				spec_rowsHTML+="<td data-th='Detail'>";
+					spec_rowsHTML+="<textarea form='form258_spec_"+id+"'></textarea>";
+				spec_rowsHTML+="</td>";
+				spec_rowsHTML+="<td data-th='Action'>";
+					spec_rowsHTML+="<input type='hidden' form='form258_spec_"+id+"' value='"+id+"'>";
+					spec_rowsHTML+="<input type='button' class='submit_hidden' form='form258_spec_"+id+"' id='save_form258_spec_"+id+"' >";
+					spec_rowsHTML+="<input type='button' class='delete_icon' form='form258_spec_"+id+"' id='delete_form258_spec_"+id+"' onclick='$(this).parent().parent().remove();form258_get_totals();'>";
+				spec_rowsHTML+="</td>";
+			spec_rowsHTML+="</tr>";
+		$('#form258_spec_body').append(spec_rowsHTML);
+		
+		var fields=document.getElementById("form258_spec_"+id);
+		var name_filter=fields.elements[0];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form258_add_spec();
+		});
+		
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list_func(product_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		});
+
+		form258_get_totals();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Prepare Quotation
+ * @formNo 258
+ */
+function form258_add_bank()
+{
+	if(is_create_access('form258'))
+	{
+		var id=get_new_key();
+		var	bank_rowsHTML="<tr>";
+			bank_rowsHTML+="<form id='form258_bank_"+id+"' autocomplete='off'></form>";
+				bank_rowsHTML+="<td data-th='S.No.'>";
+				bank_rowsHTML+="</td>";
+				bank_rowsHTML+="<td data-th='Name'>";
+					bank_rowsHTML+="<input type='text' form='form258_bank_"+id+"'>";
+				bank_rowsHTML+="</td>";
+				bank_rowsHTML+="<td data-th='Bank'>";
+					bank_rowsHTML+="<b>Bank</b>:<input type='text' readonly='readonly' form='form258_bank_"+id+"'>";
+					bank_rowsHTML+="<br><b>IFSC</b>:<input type='text' readonly='readonly' form='form258_bank_"+id+"'>";
+				bank_rowsHTML+="</td>";
+				bank_rowsHTML+="<td data-th='Account'>";
+					bank_rowsHTML+="<b>Account Name</b>:<input type='text' readonly='readonly' form='form258_bank_"+id+"'>";
+					bank_rowsHTML+="<br><b>Account #</b>:<input type='text' readonly='readonly' form='form258_bank_"+id+"'>";
+				bank_rowsHTML+="</td>";
+				bank_rowsHTML+="<td data-th='Action'>";
+					bank_rowsHTML+="<input type='hidden' form='form258_bank_"+id+"' value='"+id+"'>";
+					bank_rowsHTML+="<input type='button' class='submit_hidden' form='form258_bank_"+id+"' id='save_form258_bank_"+id+"' >";
+					bank_rowsHTML+="<input type='button' class='delete_icon' form='form258_bank_"+id+"' id='delete_form258_bank_"+id+"' onclick='$(this).parent().parent().remove();form258_get_totals();'>";
+				bank_rowsHTML+="</td>";
+			bank_rowsHTML+="</tr>";
+		$('#form258_bank_body').append(bank_rowsHTML);
+		
+		var fields=document.getElementById("form258_bank_"+id);
+		var name_filter=fields.elements[0];
+		var bank_filter=fields.elements[1];
+		var ifsc_filter=fields.elements[2];
+		var acc_filter=fields.elements[3];
+		var acc_num_filter=fields.elements[4];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form258_add_bank();
+		});
+		
+		var bank_data="<bank_accounts>" +
+				"<name></name>" +
+				"<status exact='yes'>active</status>"+
+				"</bank_accounts>";
+		set_my_value_list_func(bank_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		});
+
+		$(name_filter).on('blur',function () 
+		{
+			var details_xml="<bank_accounts>"+
+							"<bank></bank>"+
+							"<ifsc></ifsc>"+
+							"<account_name></account_name>"+
+							"<account_num></account_num>"+
+							"<name exact='yes'>"+name_filter.value+"</name>"+
+							"</bank_accounts>";
+			fetch_requested_data('',details_xml,function (accounts) 
+			{
+				if(accounts.length>0)
+				{
+					bank_filter.value=accounts[0].bank;
+					ifsc_filter.value=accounts[0].ifsc;
+					acc_filter.value=accounts[0].account_name;
+					acc_num_filter.value=accounts[0].account_num;
+				}
+			});				
+		});
+		
+		form258_get_totals();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Prepare Quotation
+ * @formNo 258
+ */
+function form258_add_tc()
+{
+	if(is_create_access('form258'))
+	{
+		var id=get_new_key();
+		var	rowsHTML="<tr>";
+			rowsHTML+="<form id='form258_tc_"+id+"' autocomplete='off'></form>";
+				rowsHTML+="<td data-th='S.No.'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Type'>";
+					rowsHTML+="<input type='text' form='form258_tc_"+id+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='T&C'>";
+					rowsHTML+="<textarea required form='form258_tc_"+id+"'></textarea>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Action'>";
+					rowsHTML+="<input type='hidden' form='form258_tc_"+id+"' value='"+id+"'>";
+					rowsHTML+="<input type='button' class='submit_hidden' form='form258_tc_"+id+"' id='save_form258_tc_"+id+"' >";
+					rowsHTML+="<input type='button' class='delete_icon' form='form258_tc_"+id+"' id='delete_form258_tc_"+id+"' onclick='$(this).parent().parent().remove();form258_get_totals();'>";
+				rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+		$('#form258_tc_body').append(rowsHTML);
+		
+		var fields=document.getElementById("form258_tc_"+id);
+		var type_filter=fields.elements[0];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form258_add_tc();
+		});
+		
+		set_static_value_list('terms_and_conditions','type',type_filter);
+		
+		form258_get_totals();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * @form User Accounts
  * @formNo 261
  */
@@ -16192,6 +16539,206 @@ function form265_add_item()
 
 		$('textarea').autosize();
 		form265_update_serial_numbers();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Delivery Challan Details
+ * @formNo 268
+ */
+function form268_add_item()
+{
+	if(is_create_access('form268'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form268_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='text' class='wideinput' required form='form268_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Specification'>";
+				rowsHTML+="<textarea form='form268_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' step='any' required form='form268_"+id+"'> <b id='form268_unit_"+id+"'></b>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form268_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='submit_hidden' form='form268_"+id+"' id='save_form268_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form268_"+id+"' id='delete_form268_"+id+"' onclick='$(this).parent().parent().remove();form268_get_totals();'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form268_"+id+"'>";
+			rowsHTML+="</td>";
+		rowsHTML+="</tr>";
+	
+		$('#form268_body').append(rowsHTML);
+		
+		var fields=document.getElementById("form268_"+id);
+		var name_filter=fields.elements[0];
+		var spec_filter=fields.elements[1];
+		var quantity_filter=fields.elements[2];
+		var id_filter=fields.elements[3];
+		var save_button=fields.elements[4];
+		
+		$(save_button).on("click", function(event)
+		{
+			event.preventDefault();
+			form268_create_item(fields);
+		});
+
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form268_add_item();
+		});
+		
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list_func(product_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		});
+
+		$(name_filter).on('blur',function(event)
+		{
+			var unit_data="<attributes count='1'>"+
+							"<value></value>"+
+							"<attribute exact='yes'>unit</attribute>"+
+							"<name exact='yes'>"+name_filter.value+"</name>"+
+							"</attributes>";
+			get_single_column_data(function(units)
+			{
+				if(units.length>0)
+					$('#form268_unit_'+id).html(units[0]);
+			},unit_data);			
+										
+			var desc_data="<product_master>"+
+						"<description></description>"+
+						"<name exact='yes'>"+name_filter.value+"</name>"+
+						"</product_master>";
+			set_my_value(desc_data,spec_filter);			
+		});		
+		form268_get_totals();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Enter Purchase Bill (NVS)
+ * @formNo 270
+ */
+function form270_add_item()
+{
+	if(is_create_access('form270'))
+	{
+		var filter_fields=document.getElementById('form270_master');
+		
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form270_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='text' class='wideinput' required form='form270_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' step='any' required form='form270_"+id+"'> <b id='form270_unit_"+id+"'></b>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Price'>";
+				rowsHTML+="<input type='number' form='form270_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Amount'>";
+				rowsHTML+="<b>Amount</b>:<input type='number' step='any' form='form270_"+id+"' readonly='readonly'>";
+				rowsHTML+="<br><b>Tax</b>: <input type='number' form='form270_"+id+"' value='' step='any'>";
+				rowsHTML+="<br><b>Total</b>: <input type='number' form='form270_"+id+"' value='' step='any' readonly='readonly'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form270_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='submit_hidden' form='form270_"+id+"' id='save_form270_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form270_"+id+"' id='delete_form270_"+id+"' onclick='$(this).parent().parent().remove();form270_get_totals();'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form270_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form270_"+id+"' name='tax_unit'>";
+			rowsHTML+="</td>";
+		rowsHTML+="</tr>";
+	
+		$('#form270_body').append(rowsHTML);
+		
+		var fields=document.getElementById("form270_"+id);
+		var name_filter=fields.elements[0];
+		var quantity_filter=fields.elements[1];
+		var price_filter=fields.elements[2];
+		var amount_filter=fields.elements[3];
+		var tax_filter=fields.elements[4];
+		var total_filter=fields.elements[5];
+		var id_filter=fields.elements[6];
+		var save_button=fields.elements[7];
+		var tax_unit_filter=fields.elements[10];
+		
+		$(save_button).on("click", function(event)
+		{
+			event.preventDefault();
+			form270_create_item(fields);
+		});
+
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form270_add_item();
+		});
+		
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list_func(product_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		});
+
+		$(name_filter).on('blur',function(event)
+		{
+			var unit_data="<attributes count='1'>"+
+							"<value></value>"+
+							"<attribute exact='yes'>unit</attribute>"+
+							"<name exact='yes'>"+name_filter.value+"</name>"+
+							"</attributes>";
+			get_single_column_data(function(units)
+			{
+				if(units.length>0)
+					$('#form270_unit_'+id).html(units[0]);
+			},unit_data);			
+							
+			var price_data="<supplier_bill_items count='1'>" +
+					"<unit_price></unit_price>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+					"</supplier_bill_items>";
+			set_my_value(price_data,price_filter);	
+			
+			var tax_data="<product_master>"+
+						"<tax></tax>"+
+						"<name exact='yes'>"+name_filter.value+"</name>"+
+						"</product_master>";
+			set_my_value(tax_data,tax_unit_filter);			
+		});
+		
+		$(quantity_filter).add(price_filter).on('change blur',function(event)
+		{
+			amount_filter.value=my_round((parseFloat(price_filter.value)*parseFloat(quantity_filter.value)),2);
+			tax_filter.value=my_round((parseFloat(tax_unit_filter.value)*parseFloat(amount_filter.value)),2);
+			$(amount_filter).trigger('change');
+		});
+
+		$(amount_filter).add(tax_filter).on('change blur',function(event)
+		{
+			total_filter.value=my_round((parseFloat(amount_filter.value)+parseFloat(tax_filter.value)),0);
+		});
+
+		form270_get_totals();
 	}
 	else
 	{
