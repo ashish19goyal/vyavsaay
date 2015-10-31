@@ -4882,7 +4882,7 @@ function print_form258(func)
 	var item_table_heading=document.createElement('div');
 	item_table_heading.innerHTML="<br><b>Items</b>";
 	var item_table=document.createElement('table');
-	item_table.setAttribute('style','width:100%;font-size:12px;border:1px solid black;text-align:left;');
+	item_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
 	item_table.setAttribute('class','plain_table');
 	var table_header="<tr>"+
 				"<td style='border: 1px solid #000;text-align:left;width:10%;'>S.No.</td>"+
@@ -4943,7 +4943,7 @@ function print_form258(func)
 	var spec_table_heading=document.createElement('div');
 	spec_table_heading.innerHTML="<br><b>Specifications</b>";
 	var spec_table=document.createElement('table');
-	spec_table.setAttribute('style','width:100%;font-size:12px;border:1px solid black;text-align:left;');
+	spec_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
 	spec_table.setAttribute('class','plain_table');
 	var table_header="<tr>"+
 				"<td style='border: 1px solid #000;text-align:left;width:10%;'>S.No.</td>"+
@@ -4977,7 +4977,7 @@ function print_form258(func)
 	var spare_table_heading=document.createElement('div');
 	spare_table_heading.innerHTML="<br><b>Spare Parts</b>";
 	var spare_table=document.createElement('table');
-	spare_table.setAttribute('style','width:100%;font-size:12px;border:1px solid black;text-align:left;');
+	spare_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
 	spare_table.setAttribute('class','plain_table');
 	var table_header="<tr>"+
 				"<td style='border: 1px solid #000;text-align:left;width:10%;'>S.No.</td>"+
@@ -5011,7 +5011,7 @@ function print_form258(func)
 	var bank_table_heading=document.createElement('div');
 	bank_table_heading.innerHTML="<br><b>Account Details</b>";
 	var bank_table=document.createElement('table');
-	bank_table.setAttribute('style','width:100%;font-size:12px;border:1px solid black;text-align:left;');
+	bank_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
 	bank_table.setAttribute('class','plain_table');
 	var table_header="<tr>"+
 				"<td style='border: 1px solid #000;text-align:left;width:10%;'>S.No.</td>"+
@@ -5048,7 +5048,7 @@ function print_form258(func)
 	var terms_table_heading=document.createElement('div');
 	terms_table_heading.innerHTML="<br><b>Terms & Conditions</b>";
 	var terms_table=document.createElement('table');
-	terms_table.setAttribute('style','width:100%;font-size:12px;border:1px solid black;text-align:left;');
+	terms_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
 	terms_table.setAttribute('class','plain_table');
 	var table_header="<tr>"+
 				"<td style='border: 1px solid #000;text-align:left;width:10%;'>S.No.</td>"+
