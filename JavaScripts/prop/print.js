@@ -4831,14 +4831,14 @@ function print_form258(func)
 
 ////////////setting styles for containers/////////////////////////
 
-	header.setAttribute('style','width:100%;min-height:100px;text-align:center');
-		logo.setAttribute('style','width:100%;text-align:center;font-weight:600;font-size:32px;line-height:40px;');
-		business_intro.setAttribute('style','width:100%;text-align:center');
-		business_contact.setAttribute('style','width:100%;text-align:left');
-	info_section.setAttribute('style','width:100%;min-height:100px');
+	header.setAttribute('style','width:98%;min-height:100px;text-align:center');
+		logo.setAttribute('style','width:98%;text-align:center;margin:5px;font-weight:600;font-size:32px;line-height:40px;');
+		business_intro.setAttribute('style','width:98%;text-align:center');
+		business_contact.setAttribute('style','width:98%;text-align:left');
+	info_section.setAttribute('style','width:98%;min-height:100px');
 		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:100px;border: 1px solid #00f;border-radius:5px;');
 		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:100px;border: 1px solid #00f;border-radius:5px;');
-	footer.setAttribute('style','width:100%;min-height:50px');
+	footer.setAttribute('style','width:98%;min-height:50px');
 		tandc.setAttribute('style','float:left;width:60%;min-height:50px');
 		signature.setAttribute('style','float:right;width:30%;min-height:50px');
 
