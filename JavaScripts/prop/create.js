@@ -18008,7 +18008,7 @@ function form258_create_form()
 			modal101_action('Quotation from - '+bt,customer,'customer',function (func) 
 			{
 				print_form258(func);
-			},'csv',message_attachment);
+			});
 		});
 		
 		var amount=0;
