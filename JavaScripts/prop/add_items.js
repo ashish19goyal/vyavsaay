@@ -1400,10 +1400,13 @@ function form56_add_item()
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new account' id='form56_add_account_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Type'>";
-				rowsHTML+="<input type='text' required form='form56_"+id+"' value=''>";
+				rowsHTML+="<input type='text' required form='form56_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+="<input type='number' required step='any' form='form56_"+id+"' value=''>";
+				rowsHTML+="<input type='number' required step='any' form='form56_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Date'>";
+				rowsHTML+="<input type='text' required form='form56_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Notes'>";
 				rowsHTML+="<textarea form='form56_"+id+"'></textarea>";
@@ -1419,6 +1422,10 @@ function form56_add_item()
 		var fields=document.getElementById("form56_"+id);
 		var account_filter=fields.elements[0];
 		var type_filter=fields.elements[1];
+		var date_filter=fields.elements[3];
+		
+		$(date_filter).datepicker();
+		date_filter.value=get_my_date();
 		
 		$(fields).on("submit", function(event)
 		{

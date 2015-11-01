@@ -2823,8 +2823,8 @@ function form56_update_item(form)
 		var account=form.elements[0].value;
 		var type=form.elements[1].value;
 		var amount=form.elements[2].value;
-		var notes=form.elements[3].value;
-		var data_id=form.elements[4].value;
+		var notes=form.elements[4].value;
+		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
 		var receiver=account;
 		var giver="master";
@@ -2849,14 +2849,8 @@ function form56_update_item(form)
 					"<notes>Cash record of amount "+amount+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
+		update_row(data_xml,activity_xml);
+		
 		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');

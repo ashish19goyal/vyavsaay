@@ -2026,24 +2026,36 @@ function form56_create_item(form)
 		var account=form.elements[0].value;
 		var type=form.elements[1].value;
 		var amount=form.elements[2].value;
-		var notes=form.elements[3].value;
-		var data_id=form.elements[4].value;
+		var date=get_raw_time(form.elements[3].value);
+		var notes=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var del_button=form.elements[7];
 		var last_updated=get_my_time();
 		var receiver=account;
 		var giver="master";
-		var due_time=get_debit_period();
+		
+		var period=localStorage.getItem('debit_period');
+
 		if(type=='received')
 		{
+			period=localStorage.getItem('credit_period');
 			giver=account;
 			receiver="master";
-			due_time=get_credit_period();
 		}
+
+		if(period==null || period=='')
+		{
+			period=0;
+		}
+		var due_time=date+(parseFloat(period)*86400000);
+
 		var data_xml="<cash_register>" +
 					"<id>"+data_id+"</id>" +
 					"<type>"+type+"</type>" +
 					"<acc_name>"+account+"</acc_name>" +
 					"<notes>"+notes+"</notes>" +
 					"<amount>"+amount+"</amount>" +
+					"<date>"+date+"</date>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</cash_register>";	
 		var activity_xml="<activity>" +
@@ -2056,7 +2068,7 @@ function form56_create_item(form)
 					"</activity>";
 		var transaction_xml="<transactions>" +
 					"<id>"+data_id+"</id>" +
-					"<trans_date>"+get_my_time()+"</trans_date>" +
+					"<trans_date>"+date+"</trans_date>" +
 					"<amount>"+amount+"</amount>" +
 					"<receiver>"+giver+"</receiver>" +
 					"<giver>"+receiver+"</giver>" +
@@ -2066,7 +2078,7 @@ function form56_create_item(form)
 		var payment_id=get_my_time();
 		var transaction2_xml="<transactions>" +
 					"<id>"+payment_id+"</id>" +
-					"<trans_date>"+get_my_time()+"</trans_date>" +
+					"<trans_date>"+date+"</trans_date>" +
 					"<amount>"+amount+"</amount>" +
 					"<receiver>"+receiver+"</receiver>" +
 					"<giver>"+giver+"</giver>" +
@@ -2080,32 +2092,24 @@ function form56_create_item(form)
 					"<total_amount>"+amount+"</total_amount>" +
 					"<paid_amount>"+amount+"</paid_amount>" +
 					"<status>closed</status>" +
-					"<date>"+get_my_time()+"</date>" +
+					"<date>"+date+"</date>" +
 					"<due_date>"+due_time+"</due_date>" +
 					"<mode>cash</mode>" +
 					"<transaction_id>"+payment_id+"</transaction_id>" +
 					"<bill_id>"+data_id+"</bill_id>" +
 					"<last_updated>"+get_my_time()+"</last_updated>" +
 					"</payments>";
-		if(is_online())
-		{
-			server_create_row(data_xml,activity_xml);
-			server_create_simple(transaction_xml);
-			server_create_simple(transaction2_xml);
-			server_create_simple(payment_xml);
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-			local_create_simple(transaction_xml);
-			local_create_simple(transaction2_xml);
-			local_create_simple(payment_xml);
-		}
+			
+		create_row(data_xml,activity_xml);
+		create_simple(transaction_xml);
+		create_simple(transaction2_xml);
+		create_simple(payment_xml);
+		
 		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[6];
+
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{

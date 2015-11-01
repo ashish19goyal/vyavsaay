@@ -4314,6 +4314,7 @@ function form56_ini()
 			"<type>"+ftype+"</type>" +
 			"<acc_name>"+faccount+"</acc_name>" +
 			"<notes></notes>" +
+			"<date></date>" +
 			"<amount></amount>" +
 			"<last_updated></last_updated>" +
 			"</cash_register>";
@@ -4335,6 +4336,9 @@ function form56_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Amount'>";
 						rowsHTML+="<input type='number' readonly='readonly' step='any' form='form56_"+result.id+"' value='"+result.amount+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form56_"+result.id+"' value='"+get_my_past_date(result.date)+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Notes'>";
 						rowsHTML+="<textarea readonly='readonly' form='form56_"+result.id+"' class='dblclick_editable'>"+result.notes+"</textarea>";
@@ -4387,7 +4391,7 @@ function form56_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Expenses');
+			get_export_data(columns,'Cash Register');
 		});
 		hide_loader();
 	});

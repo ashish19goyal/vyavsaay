@@ -1376,11 +1376,12 @@ function form56_import(data_array,import_type)
 				"<acc_name>"+row.acc_name+"</acc_name>" +
 				"<amount>"+row.amount+"</amount>" +
 				"<notes>"+row.notes+"</notes>" +
+				"<date>"+get_raw_time(row.date)+"</date>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 		transaction_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
-				"<trans_date>"+get_my_time()+"</trans_date>" +
+				"<trans_date>"+get_raw_time(row.date)+"</trans_date>" +
 				"<amount>"+row.amount+"</amount>" +
 				"<receiver>"+giver+"</receiver>" +
 				"<giver>"+receiver+"</giver>" +
@@ -1389,7 +1390,7 @@ function form56_import(data_array,import_type)
 				"</row>";
 		transaction2_xml+="<row>" +
 				"<id>"+(payment_id+counter)+"</id>" +
-				"<trans_date>"+get_my_time()+"</trans_date>" +
+				"<trans_date>"+get_raw_time(row.date)+"</trans_date>" +
 				"<amount>"+row.amount+"</amount>" +
 				"<receiver>"+receiver+"</receiver>" +
 				"<giver>"+giver+"</giver>" +
@@ -1403,7 +1404,7 @@ function form56_import(data_array,import_type)
 				"<total_amount>"+row.amount+"</total_amount>" +
 				"<paid_amount>"+row.amount+"</paid_amount>" +
 				"<status>closed</status>" +
-				"<date>"+get_my_time()+"</date>" +
+				"<date>"+get_raw_time(row.date)+"</date>" +
 				"<due_date>"+get_my_time()+"</due_date>" +
 				"<mode>cash</mode>" +
 				"<transaction_id>"+payment_id+"</transaction_id>" +

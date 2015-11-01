@@ -6,6 +6,7 @@
 					<th>Account <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form56_header'></th>
 					<th>Type <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form56_header'></th>
 					<th>Amount</th>
+					<th>Date</th>
 					<th>Notes</th>
 					<th><input type="button" value='Add expense item' form='form56_header' class='add_icon' onclick="form56_add_item();">
 						<input type='button' form='form56_header' value='EXPORT' class='export_icon'>

@@ -257,7 +257,7 @@ function form53_import_template()
 */
 function form56_import_template()
 {
-	var data_array=['id','type','acc_name','amount','notes'];
+	var data_array=['id','type','acc_name','amount','date','notes'];
 	my_array_to_csv(data_array);
 };
 

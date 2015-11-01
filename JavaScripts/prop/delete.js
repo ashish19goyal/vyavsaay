@@ -1375,13 +1375,10 @@ function form56_delete_item(button)
 			var type=form.elements[1].value;
 			var amount=form.elements[2].value;
 			var notes=form.elements[3].value;
-			var data_id=form.elements[4].value;
+			var data_id=form.elements[5].value;
 			var last_updated=get_my_time();
 			var data_xml="<cash_register>" +
 						"<id>"+data_id+"</id>" +
-						"<type>"+type+"</type>" +
-						"<acc_name>"+account+"</acc_name>" +
-						"<amount>"+amount+"</amount>" +
 						"</cash_register>";	
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
@@ -1393,52 +1390,32 @@ function form56_delete_item(button)
 						"</activity>";
 			var transaction_xml="<transactions>" +
 						"<id>"+data_id+"</id>" +
-						"<amount>"+amount+"</amount>" +
 						"</transactions>";
 			var payment_data="<payments>" +
 						"<id></id>" +
 						"<acc_name exact='yes'>"+account+"</acc_name>" +
 						"<type>"+type+"</type>" +
 						"<bill_id exact='yes'>"+data_id+"</bill_id>" +
-						"<total_amount>"+amount+"</total_amount>" +
 						"</payments>";
 			fetch_requested_data('',payment_data,function(payments)
 			{
-				for(var i in payments)
+				if(payments.length>0)
 				{
 					var transaction2_xml="<transactions>" +
-								"<id>"+payments[i].id+"</id>" +
-								"<amount>"+amount+"</amount>" +
+								"<id>"+payments[0].id+"</id>" +
 								"</transactions>";
 					var payment_xml="<payments>" +
-								"<id>"+payments[i].id+"</id>" +
-								"<total_amount>"+amount+"</total_amount>" +
+								"<id>"+payments[0].id+"</id>" +
 								"</payments>";
-					if(is_online())
-					{
-						server_delete_simple(payment_xml);
-						server_delete_simple(transaction2_xml);
-					}
-					else
-					{
-						local_delete_simple(payment_xml);
-						local_delete_simple(transaction2_xml);
-					}	
-	
-					break;
+					delete_simple(payment_xml);
+					delete_simple(transaction2_xml);					
 				}
 	
 			});
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-				server_delete_simple(transaction_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-				local_delete_simple(transaction_xml);
-			}	
+			
+			delete_row(data_xml,activity_xml);
+			delete_simple(transaction_xml);
+				
 			$(button).parent().parent().remove();
 		});
 	}
