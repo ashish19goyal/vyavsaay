@@ -25,6 +25,10 @@
 	<div id='location_icon' class='menu_icon'>
 		<img title='Log location' src='./images/location.png' class="icon" onclick='modal111_action();'>
 	</div>
+
+	<div id='api_sync_icon' class='menu_icon'>
+		<img title='Sync APIs' src='./images/api_sync.png' class="icon" onclick='sync_logistics_apis();'>
+	</div>
 	
 	<div id='settings_icon' class='menu_icon'>
 		<img title='Settings' src='./images/settings.png' class="icon" onclick='show_settings();'>

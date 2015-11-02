@@ -741,6 +741,14 @@
 		Your responses have been captured. Thanks!
 	</div>
 
+	<div id="modal80" title="Data Sync Success!">
+		All order status have been updated on partner sites.
+	</div>
+
+	<div id="modal81" title="Data Sync Failed!">
+		Something wrong happened. Please try again.
+	</div>
+
 	<div id="modal101" title="Email Document">
 		<form id='modal101_form' autocomplete="off">
 			<fieldset>

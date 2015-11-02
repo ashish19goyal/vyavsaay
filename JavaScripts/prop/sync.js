@@ -210,10 +210,8 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
 	var re_access=get_session_var('re');
 	var db_name="re_local_" + domain;
 	//console.log(last_sync_time);
-	ajax_with_custom_func("./ajax/sync_download_json.php",{domain:domain,username:username,re:re_access,start_table:start_table,start_offset:start_offset,last_sync_time:last_sync_time},function(e)
+	ajax_json("./ajax_json/sync_download.php",{domain:domain,username:username,re:re_access,start_table:start_table,start_offset:start_offset,last_sync_time:last_sync_time},function(response_object)
 	{
-		var response=e.responseText;
-		//console.log(e.responseText);
 		if(typeof static_local_db=='undefined')
 		{
 			open_local_db(function()
@@ -223,8 +221,6 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
 		}
 		else
 		{
-			var response_object=JSON.parse(response);
-						
 			var end_table=response_object.end_table;
 			var end_offset=response_object.end_offset;
 			//console.log(end_table);
@@ -351,10 +347,10 @@ function sync_local_to_server(func)
 				}
 				var log_data_chunk=JSON.stringify(log_data_sub_array);				
 				//console.log(log_data_chunk);
-				ajax_with_custom_func("./ajax/sync_upload_json.php",{run_daemons:run_daemons,domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,data:log_data_chunk,last_sync:last_sync_time},function(e)
+				ajax_json("./ajax_json/sync_upload.php",{run_daemons:run_daemons,domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,data:log_data_chunk,last_sync:last_sync_time},function(response_object)
 				{
-					console.log(e.responseText);
-					set_activities_to_synced(e);
+					console.log(response_object);
+					set_activities_to_synced(response_object);
 				});
 			});
 
@@ -445,69 +441,59 @@ function set_activities_to_synced(response)
 	}
 	else
 	{
-		//console.log(response.responseText);
-		if(response.responseText!=null)
+		//var delete_ids=response.responseXML.childNodes[0].childNodes[0].getElementsByTagName('id');
+		var update_ids=response;
+		var transaction=static_local_db.transaction(['activities'],"readwrite");
+		var objectStore=transaction.objectStore('activities');
+		localdb_open_requests+=update_ids.length;
+		
+		transaction.onabort = function(e) 
 		{
-			//var delete_ids=response.responseXML.childNodes[0].childNodes[0].getElementsByTagName('id');
-			var update_ids=JSON.parse(response.responseText);
-			var transaction=static_local_db.transaction(['activities'],"readwrite");
-			var objectStore=transaction.objectStore('activities');
-			localdb_open_requests+=update_ids.length;
-			
-			transaction.onabort = function(e) 
+			console.log("aborted");
+			console.log(this.error);
+		};
+		transaction.oncomplete = function(e) 
+		{
+			console.log("transaction complete"); 
+		};
+		
+		function local_update_record(row_index)
+		{
+			if(row_index<update_ids.length)
 			{
-				console.log("aborted");
-				console.log(this.error);
-			};
-			transaction.oncomplete = function(e) 
-			{
-				console.log("transaction complete"); 
-			};
-			
-			function local_update_record(row_index)
-			{
-				if(row_index<update_ids.length)
+				var record_id=update_ids[row_index];
+				var req=objectStore.get(record_id);
+				req.onsuccess=function(e)
 				{
-					var record_id=update_ids[row_index];
-					var req=objectStore.get(record_id);
-					req.onsuccess=function(e)
+					var data=req.result;
+					row_index+=1;
+					if(data)
 					{
-						var data=req.result;
-						row_index+=1;
-						if(data)
-						{
-							data['status']='synced';
-							data['data_xml']='';
-							var put_req=objectStore.put(data);
-							put_req.onsuccess=function(e)
-							{
-								localdb_open_requests-=1;
-								local_update_record(row_index);
-							};
-							put_req.onerror=function(e)
-							{
-								localdb_open_requests-=1;
-								local_update_record(row_index);
-							};
-						}
-						else
+						data['status']='synced';
+						data['data_xml']='';
+						var put_req=objectStore.put(data);
+						put_req.onsuccess=function(e)
 						{
 							localdb_open_requests-=1;
 							local_update_record(row_index);
-						}
-					};
-				}
-			};
-			
-			local_update_record(0);
+						};
+						put_req.onerror=function(e)
+						{
+							localdb_open_requests-=1;
+							local_update_record(row_index);
+						};
+					}
+					else
+					{
+						localdb_open_requests-=1;
+						local_update_record(row_index);
+					}
+				};
+			}
+		};
 		
-		}
-		else
-		{
-			console.log(response.responseText);
-		}
+		local_update_record(0);	
 	}
-
 }
 
 /**

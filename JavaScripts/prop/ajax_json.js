@@ -154,3 +154,25 @@ function server_generate_report_json(report_id,callback)
 		hide_loader();
 	});
 }
+
+function sync_logistics_apis()
+{
+	show_loader();
+	var domain=get_domain();
+	var username=get_username();
+	var re_access=get_session_var('re');
+	ajax_json("./ajax_json/logistics_api.php",{domain:domain,username:username,re:re_access},function(response_object)
+	{
+		console.log(response_object);
+		//console.log(response_object.rows);
+		hide_loader();
+		if(response_object.status=='success')
+		{		
+			$("#modal80").dialog("open");
+		}
+		else 
+		{
+			$("#modal81").dialog("open");
+		}
+	});
+}

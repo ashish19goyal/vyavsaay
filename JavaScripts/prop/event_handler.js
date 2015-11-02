@@ -291,7 +291,7 @@ function modal_forms_ini()
 	   		}
 		});
 	}
-	for(var i=50;i<=79;i++)
+	for(var i=50;i<=81;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
@@ -401,9 +401,13 @@ function hide_menu_items()
 	//console.log("hiding menu items");
 	var loc=get_session_var('capture_location');
 	$('#location_icon').hide();
-	//console.log(loc);
 	if(loc=='yes')
 		$('#location_icon').show();
+	
+	var api_sync=get_session_var('api_sync');
+	$('#api_sync_icon').hide();
+	if(api_sync=='yes')
+		$('#api_sync_icon').show();
 		
 	var offline=get_session_var('offline');
 	if(offline=="online")
