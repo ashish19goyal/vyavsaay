@@ -7351,7 +7351,7 @@ function form136_add_item()
 		var barcode_filter=document.getElementById("form136_barcode_"+id);
 		$(barcode_filter).on('click',function () 
 		{
-			print_product_barcode(String(id),name_fitler.value,batch_filter.value);
+			print_product_barcode(String(id),name_filter.value,batch_filter.value);
 		});
 				
 		$(save_button).on("click", function(event)
