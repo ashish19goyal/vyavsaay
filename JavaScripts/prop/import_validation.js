@@ -45,8 +45,8 @@ function form30_import_validate(data_array)
 */
 function form39_import_validate(data_array)
 {
-	var validate_template_array=[{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z_.,()-]+$')},
-							{column:'make',regex:new RegExp('^[0-9a-zA-Z _.,@\'()-]+$')},
+	var validate_template_array=[{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z /_.,()-]+$')},
+							{column:'make',regex:new RegExp('^[0-9a-zA-Z _.,@\'/()-]+$')},
 							{column:'description',regex:new RegExp('^[0-9a-zA-Z _.,/\'+@!$()-]+$')},
 							{column:'tax',required:'yes',regex:new RegExp('^[0-9.]+$')},
 							{column:'bar_code',regex:new RegExp('^[a-zA-Z0-9]+$')}];

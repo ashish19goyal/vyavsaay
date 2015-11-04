@@ -4266,14 +4266,9 @@ function form155_import(data_array,import_type)
 							"<quantity>"+new_quantity+"</quantity>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</inventory_adjust>";
-					if(is_online())
-					{
-						server_create_simple_no_warning(adjust_xml);
-					}
-					else
-					{
-						local_create_simple_no_warning(adjust_xml);
-					}
+					
+					create_simple_no_warning(adjust_xml);
+					
 				}
 			});
 		}
@@ -4283,25 +4278,11 @@ function form155_import(data_array,import_type)
 	
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 }
 
