@@ -18913,3 +18913,53 @@ function form270_create_form()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Enter COD Collections
+ * @formNo 271
+ * @param button
+ */
+function form271_create_item(form)
+{
+	if(is_create_access('form271'))
+	{
+		var person=form.elements[0].value;
+		var date=get_raw_time(form.elements[1].value);
+		var amount=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var save_button=form.elements[4];
+		var del_button=form.elements[5];
+		var last_updated=get_my_time();
+		
+		var data_xml="<cod_collections>" +
+				"<id>"+data_id+"</id>" +
+				"<acc_name>"+person+"</acc_name>" +
+				"<date>"+date+"</date>" +
+				"<amount>"+amount+"</amount>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</cod_collections>";	
+		
+		create_simple(data_xml);
+				
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form271_delete_item(del_button);
+		});
+
+		$(form).off('submit');
+		$(form).on('submit',function (e) 
+		{
+			e.preventDefault();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

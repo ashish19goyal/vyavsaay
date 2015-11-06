@@ -1363,3 +1363,13 @@ function form261_import_template()
 	var data_array=['id','name','bank','branch','ifsc','account_name','account_num','status'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Enter COD Collections
+* @formNo 271
+*/
+function form271_import_template()
+{
+	var data_array=['id','person','date','amount'];
+	my_array_to_csv(data_array);
+};

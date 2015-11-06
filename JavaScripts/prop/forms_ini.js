@@ -2514,7 +2514,7 @@ function form39_ini()
 				},false);
 				
 				longPressEditable($('.dblclick_editable'));
-				
+				$('textarea').autosize();
 			});
 		});
 
@@ -2542,8 +2542,6 @@ function form39_ini()
 		}
 		/////////////
 
-		$('textarea').autosize();
-		
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -29078,4 +29076,101 @@ function form270_ini()
 			});
 		});
 	}
+}
+
+/**
+ * @form Enter COD Collections
+ * @formNo 271
+ * @Loading light
+ */
+function form271_ini()
+{
+	show_loader();
+	var fid=$("#form271_link").attr('data_id');
+	if(fid==null)
+		fid="";
+	
+	$('#form271_body').html("");
+	
+	var filter_fields=document.getElementById('form271_header');
+	
+	var fperson=filter_fields.elements[0].value;
+	var fdate=get_raw_time(filter_fields.elements[1].value);
+	
+	////indexing///
+	var index_element=document.getElementById('form271_index');
+	var prev_element=document.getElementById('form271_prev');
+	var next_element=document.getElementById('form271_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var new_columns=new Object();
+		new_columns.count=25;
+		new_columns.start_index=start_index;
+		new_columns.data_store='cod_collections';
+		
+		new_columns.indexes=[{index:'id',value:fid},
+							{index:'acc_name',value:fperson},
+							{index:'date',value:fdate},
+							{index:'amount'}];
+	
+	read_json_rows('',new_columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var rowsHTML="<tr>";
+				rowsHTML+="<form id='form271_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Person'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form271_"+result.id+"' value='"+result.acc_name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form271_"+result.id+"' value='"+get_my_past_date(result.date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Amount'>";
+						rowsHTML+="Rs. <input type='number' readonly='readonly' form='form271_"+result.id+"' step='any' value='"+result.amount+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form271_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form271_"+result.id+"' title='Delete' onclick='form271_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form271_body').append(rowsHTML);
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements['export'];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_limited_export_data(new_columns,'COD Collections');
+		});
+		hide_loader();
+	});
 }

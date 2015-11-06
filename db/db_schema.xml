@@ -415,6 +415,14 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>		
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</credit_notes>
+	<cod_collections>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<amount index='no' type="DECIMAL(12,2)"></amount>
+			<date index='yes' type="BIGINT"></date>
+			<acc_name index='yes' type="TEXT"></acc_name>
+			<last_updated index='yes' type="BIGINT"></last_updated>		
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</cod_collections>
 	<offers>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<offer_name index='yes' type='VARCHAR(30)' unique='yes'></offer_name>
@@ -1657,8 +1665,11 @@
 			<rto_id index='yes' type="BIGINT"></rto_id>
 			<rto_time index='no' type="BIGINT"></rto_time>
 			<received_by index='no' type="TEXT"></received_by>
+			<received_by_phone index='no' type="TEXT"></received_by_phone>
+			<received_by_sign index='no' type="blob"></received_by_sign>
 			<bag_num index='yes' type="VARCHAR(20)"></bag_num>
 			<bag_id index='yes' type="BIGINT"></bag_id>
+			<delivery_time index='yes' type="BIGINT"></delivery_time>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</logistics_orders>

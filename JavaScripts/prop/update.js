@@ -11370,6 +11370,7 @@ function form206_update_item(form)
 					"<id>"+id+"</id>" +
 					//"<awb_num>"+awb_num+"</awb_num>" +
 					"<status>"+status+"</status>" +
+					"<delivery_time>"+history_object.timeStamp+"</delivery_time>" +
 					"<order_history>"+order_history_string+"</order_history>" +
 					"<comments>"+comments+"</comments>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
@@ -11770,6 +11771,7 @@ function form211_update_item(form)
 		var remarks=form.elements[3].value;
 		var id=form.elements[4].value;
 		var last_updated=get_my_time();
+		var delivery_string="<delivery_time></delivery_time>";
 		
 		if(status!="")
 		{
@@ -11791,6 +11793,7 @@ function form211_update_item(form)
 			else if(status=='delivered')
 			{
 				history_object.location="";
+				delivery_string="<delivery_time>"+history_object.timeStamp+"</delivery_time>";
 			}
 			else if(status=='undelivered')
 			{
@@ -11805,6 +11808,7 @@ function form211_update_item(form)
 						"<status>"+status+"</status>" +
 						"<comments>"+remarks+"</comments>" +
 						"<order_history>"+order_history_string+"</order_history>" +
+						delivery_string+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</logistics_orders>";
 			update_simple(data_xml);
@@ -11839,7 +11843,8 @@ function form212_update_item(form)
 		var remarks=form.elements[2].value;
 		var id=form.elements[3].value;
 		var last_updated=get_my_time();
-
+		var delivery_string="<delivery_time></delivery_time>";
+		
 		var old_order_history=form.elements[5].value;
 		var order_history=JSON.parse(old_order_history);
 		var history_object=new Object();
@@ -11858,6 +11863,7 @@ function form212_update_item(form)
 		else if(status=='delivered')
 		{
 			history_object.location="";
+			delivery_string="<delivery_time>"+history_object.timeStamp+"</delivery_time>";			
 		}
 		else if(status=='undelivered')
 		{
@@ -11873,6 +11879,7 @@ function form212_update_item(form)
 					"<status>"+status+"</status>" +
 					"<comments>"+remarks+"</comments>" +
 					"<order_history>"+order_history_string+"</order_history>" +
+					delivery_string+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</logistics_orders>";
 		var activity_xml="<activity>" +

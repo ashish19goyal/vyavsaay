@@ -6696,3 +6696,45 @@ function form261_import(data_array,import_type)
 		update_batch(data_xml);
 	}
 };
+
+/**
+* @form Enter COD Collections
+* @formNo 271
+*/
+function form271_import(data_array,import_type)
+{
+	var data_xml="<cod_collections>";
+	var counter=1;
+	var last_updated=get_my_time();
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</cod_collections><separator></separator><cod_collections>";
+		}
+
+		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+					"<acc_name>"+row.person+"</acc_name>" +
+					"<date>"+get_raw_time(row.date)+"</date>" +
+					"<amount>"+row.amount+"</amount>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</row>";
+	});
+	
+	data_xml+="</cod_collections>";
+	if(import_type=='create_new')
+	{
+		create_batch(data_xml);
+	}
+	else
+	{
+		update_batch(data_xml);
+	}
+};

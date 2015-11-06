@@ -17,6 +17,8 @@
 			<li><a id='report58_link' href='#report58' onclick='report58_header_ini();' data-i18n='form.ledger'></a></li>
 			<li><a id='report60_link' href='#report60' onclick='report60_header_ini();' data-i18n='form.trial_balance'></a></li>
 			<li><a id='form261_link' href='#form261' onclick='form261_header_ini(); form261_ini();' data-i18n='form.bank_accounts'></a></li>
+			<li><a id='form271_link' href='#form271' onclick='form271_header_ini(); form271_ini();' data-i18n='form.enter_cod_collection'></a></li>
+			<li><a id='report96_link' href='#report96' onclick='report96_header_ini();' data-i18n='form.collection_report'></a></li>
 		</ul>
 
 	<?php 
@@ -36,6 +38,8 @@
 			include "reports/report58.php";
 			include "reports/report60.php";		
 			include "forms/form261.php";
+			include "forms/form271.php";
+			include "reports/report96.php";
 	?>		
 	
 </div>

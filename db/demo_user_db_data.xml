@@ -1251,6 +1251,17 @@
 			<tables>--logistics_orders--pincodes--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>		
+			<name>report96</name>
+			<display_name>collection_report</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--logistics_orders--cod_collections--</tables>
+			<last_updated>1</last_updated>
+		</row>
 		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
@@ -3792,6 +3803,28 @@
 			<tables>--supplier_bills--supplier_bill_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form271</name>
+			<display_name>enter_cod_collection</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--cod_collections--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form272</name>
+			<display_name>capture_receiving</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--logistics_orders--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -4678,6 +4711,17 @@
 			<username>master</username>
 			<element_id>report95</element_id>
 			<element_name>order_sorting</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report96</element_id>
+			<element_name>collection_report</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -7219,6 +7263,28 @@
 			<username>master</username>
 			<element_id>form270</element_id>
 			<element_name>enter_purchases_nvs</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form271</element_id>
+			<element_name>enter_cod_collection</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form272</element_id>
+			<element_name>capture_receiving</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

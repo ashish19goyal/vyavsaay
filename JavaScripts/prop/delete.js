@@ -8661,3 +8661,32 @@ function form270_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Enter COD Collections
+ * @formNo form271
+ */
+function form271_delete_item(button)
+{
+	if(is_delete_access('form271'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);			
+			var data_id=form.elements[3].value;
+			
+			var data_xml="<cod_collections>" +
+						"<id>"+data_id+"</id>" +
+						"</cod_collections>";	
+			
+			delete_simple(data_xml);
+					
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

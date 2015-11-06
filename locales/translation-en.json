@@ -457,6 +457,9 @@
 	"rto_status":"Update RTO Status",
 	"delivery_challan_details":"Delivery Challan Details",
 	"manage_delivery_challans":"Manage Delivery Challans",
-	"enter_purchases_nvs":"Enter Purchases (NVS)"
+	"enter_purchases_nvs":"Enter Purchases (NVS)",
+	"enter_cod_collection":"Enter COD Collections",
+	"collection_report":"Collection Report",
+	"capture_receiving":"Capture Receiving"
 	}
 }

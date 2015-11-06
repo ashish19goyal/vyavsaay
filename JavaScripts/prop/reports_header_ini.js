@@ -2194,3 +2194,35 @@ function report95_header_ini()
 
 	$(awb_filter).focus(); 		
 }
+
+/**
+ * @reportNo 96
+ * @report Collection Report
+ */
+function report96_header_ini()
+{	
+	var form=document.getElementById('report96_header');
+	var person_filter=form.elements['person'];
+	var date_filter=form.elements['date'];
+
+	$('#report96_body').html('');
+	$('#report96_foot').html('');
+
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report96_ini();
+	});
+
+	$(date_filter).datepicker();
+	date_filter.value=get_my_date();
+	
+	var person_data="<staff>"+
+					"<acc_name></acc_name>"+
+					"</staff>";	
+	set_my_value_list(person_data,person_filter,function () 
+	{
+		$(person_filter).focus();
+	});	
+}

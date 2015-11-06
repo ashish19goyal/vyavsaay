@@ -16752,3 +16752,106 @@ function form270_add_item()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Enter COD collections
+ * @formNo 271
+ */
+function form271_add_item()
+{
+	if(is_create_access('form271'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form271_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Person'>";
+				rowsHTML+="<input type='text' required form='form271_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Date'>";
+				rowsHTML+="<input type='text' form='form271_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Amount'>";
+				rowsHTML+="Rs. <input type='number' step='any' required min='0' form='form271_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form271_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form271_"+id+"' id='save_form271_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form271_"+id+"' id='delete_form271_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";
+		rowsHTML+="</tr>";
+	
+		$('#form271_body').append(rowsHTML);
+		
+		var fields=document.getElementById("form271_"+id);
+		var person_filter=fields.elements[0];
+		var date_filter=fields.elements[1];
+		var amount_filter=fields.elements[2];
+		var save_button=fields.elements[4];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form271_create_item(fields);
+		});
+		
+		var person_data="<staff>" +
+				"<acc_name></acc_name>" +
+				"</staff>";
+		set_my_value_list(person_data,person_filter,function () 
+		{
+			$(person_filter).focus();
+		});
+		
+		$(date_filter).datepicker();
+		date_filter.value=get_my_date();
+		
+		$(person_filter).add(date_filter).on('blur change',function () 
+		{
+			var start_time=get_raw_time(date_filter.value);
+			var end_time=start_time+86399000;
+			
+			var list_data=new Object();
+				list_data.count=0;
+				list_data.start_index=0;
+				list_data.data_store='cod_collections';		
+				list_data.return_column='amount';
+				
+				list_data.indexes=[{index:'acc_name',exact:person_filter.value},
+									{index:'date',exact:start_time}];
+		
+			read_json_single_column(list_data,function(collections)
+			{
+
+				var list2_data=new Object();
+					list2_data.count=0;
+					list2_data.start_index=0;
+					list2_data.data_store='logistics_orders';		
+					list2_data.return_column='collectable_value';
+					
+					list2_data.indexes=[{index:'delivery_person',exact:person_filter.value},
+										{index:'status',exact:'delivered'},
+										{index:'type',exact:'COD'},
+										{index:'delivery_time',lowerbound:start_time,upperbound:end_time}];
+			
+				read_json_single_column(list2_data,function(orders_collection)
+				{
+					var am=0;
+					for(var a in orders_collection)
+					{
+						am+=parseFloat(orders_collection[a]);
+					}
+					for(var b in collections)
+					{
+						am-=parseFloat(collections[b]);
+					}
+					amount_filter.setAttribute('placeholder',am);
+					
+				});				
+			});					
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

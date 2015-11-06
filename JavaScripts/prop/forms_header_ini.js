@@ -10784,3 +10784,28 @@ function form270_header_ini()
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
 }
+
+/**
+ * @form Enter COD Collection
+ * @formNo 271
+ */
+function form271_header_ini()
+{
+	var filter_fields=document.getElementById('form271_header');
+	var person_filter=filter_fields.elements[0];
+	var date_filter=filter_fields.elements[1];
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form271_ini();
+	});
+
+	var staff_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+	
+	set_my_filter(staff_data,person_filter);
+	$(date_filter).datepicker();
+};

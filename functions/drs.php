@@ -11,6 +11,7 @@
 			<li><a id='form265_link' href='#form265' onclick="form265_header_ini(); form265_ini();" data-i18n='form.create_rto'></a></li>
 			<li><a id='form266_link' href='#form266' onclick='form266_header_ini(); form266_ini();' data-i18n='form.manage_rto'></a></li>
 			<li><a id='form267_link' href='#form267' onclick='form267_header_ini();' data-i18n='form.rto_status'></a></li>
+			<li><a id='form272_link' href='#form272' onclick='form272_header_ini();' data-i18n='form.capture_receiving'></a></li>
 		</ul>
 
 	<?php
@@ -25,6 +26,7 @@
 			include "forms/form265.php";
 			include "forms/form266.php";
 			include "forms/form267.php";
+			include "forms/form272.php";
 		?>
 	
 </div>
