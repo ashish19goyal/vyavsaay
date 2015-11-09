@@ -10809,3 +10809,44 @@ function form271_header_ini()
 	set_my_filter(staff_data,person_filter);
 	$(date_filter).datepicker();
 };
+
+/**
+ * @form Capture Receiving
+ * @formNo 272
+ */
+function form272_header_ini()
+{
+	var filter_fields=document.getElementById('form272_master');
+	var awb_filter=filter_fields.elements['awb'];
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form272_ini();
+	});
+
+	var form272_form=document.getElementById('form272_form');
+	form272_form.reset();	
+	$(form272_form).hide();
+
+	$("#form272_canvas_div").html('');
+	$("#form272_canvas_div").jSignature({width:300,height:200,color:"#00F","background-color":"#F5F4A8"}); // inits the jSignature widget.
+
+	var save_button=form272_form.elements['save'];
+	$(save_button).off('click'); 
+	$(save_button).on('click',function (e) 
+	{
+		e.preventDefault();
+		form272_update_item();
+	});
+
+	var reset_button=form272_form.elements['reset_button'];
+	$(reset_button).off('click'); 
+	$(reset_button).on('click',function () 
+	{
+		$("#form272_canvas_div").jSignature("reset"); // clears the canvas and rerenders the decor on it.
+	});	
+	
+	$(awb_filter).focus();
+};

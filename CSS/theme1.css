@@ -1035,6 +1035,16 @@ a.small_cross_icon{
 	width: 100%;
 }
 
+#form272_canvas_div canvas,#form198_canvas_div canvas{
+	position:relative;
+}
+
+#form272_canvas_div, #form198_canvas_div{
+	width:300px;
+	border:1px solid #dadada;
+	float:right;
+}
+
 /** report sizing and display ***/
 canvas{ 
 	display:block;

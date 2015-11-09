@@ -749,6 +749,10 @@
 		Something wrong happened. Please try again.
 	</div>
 
+	<div id="modal82" title="Incorrect">
+		Selected AWB # is not marked for delivery. Please check again.
+	</div>
+
 	<div id="modal101" title="Email Document">
 		<form id='modal101_form' autocomplete="off">
 			<fieldset>

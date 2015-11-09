@@ -14504,3 +14504,68 @@ function form270_update_form()
 		$("#modal2").dialog("open");
 	}
 }
+
+
+/**
+ * @form Capture Receiving
+ * @param button
+ */
+function form272_update_item()
+{
+	if(is_update_access('form272'))
+	{
+		var form=document.getElementById('form272_form');
+		var received_by=form.elements[5].value;
+		var received_by_phone=form.elements[6].value;
+		var id=form.elements['id'].value;
+		var last_updated=get_my_time();
+		
+		var old_order_history=form.elements['history'].value;
+		var order_history=JSON.parse(old_order_history);
+		var history_object=new Object();
+		history_object.timeStamp=get_my_time();
+		history_object.details="Received By "+received_by;
+		history_object.status='delivered';
+		history_object.location="";
+
+		var signature_data=$('#form272_canvas_div').jSignature('getData','base30');
+		console.log(signature_data);
+		console.log(signature_data[1]);
+		
+		order_history.push(history_object);
+		var order_history_string=JSON.stringify(order_history);		
+		
+		var data_xml="<logistics_orders>" +
+					"<id>"+id+"</id>" +
+					"<status>delivered</status>" +
+					"<comments>Received By "+received_by+"</comments>" +
+					"<order_history>"+order_history_string+"</order_history>" +
+					"<delivery_time>"+history_object.timeStamp+"</delivery_time>"+
+					"<received_by>"+received_by+"</received_by>"+
+					"<received_by_phone>"+received_by_phone+"</received_by_phone>"+
+					"<received_by_sign>"+signature_data[1]+"</received_by_sign>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</logistics_orders>";
+		update_simple(data_xml);
+		
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		
+		var save_button=form.elements['save'];
+		$(save_button).off('click');
+		$(save_button).on('click',function (e) 
+		{
+			e.preventDefault();
+		});
+
+		var form272_form=document.getElementById('form272_form');
+		form272_form.reset();
+		$(form272_form).hide();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

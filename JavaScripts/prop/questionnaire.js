@@ -13,12 +13,16 @@ function add_questionnaires(func)
 		{
 			if(is_create_access(struct.name))
 			{
-				var link="<li><a id='"+struct.name+"_link' href='#"+struct.name+"' onclick=\"initialize_questionnaires('"+struct.id+"','"+struct.name+"')\">"+struct.display_name+"</a></li>";	
+				var link="<li><a id='"+struct.name+"_link' href='#"+struct.name+"' onclick=\"initialize_questionnaires('"+struct.id+"','"+struct.name+"');\">"+struct.display_name+"</a></li>";	
 				var content="<div id='"+struct.name+"' class='function_detail'></div>";
 				var func_element=$("#"+struct.func+"_main");
 				//console.log(func_element);			
 				$("#"+struct.func+"_main").append(content);			
 				$("#"+struct.func+"_main").find('ul').first().append(link);
+				$('#'+struct.name+'_link').on('click',function () 
+				{
+					initialize_questionnaires(struct.id,struct.name);
+				});
 			}
 		});
 		func();

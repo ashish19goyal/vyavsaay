@@ -4,6 +4,7 @@ namespace RetailingEssentials;
 include_once "../Classes/db.php";
 use RetailingEssentials\db_connect;
 use \PDO;
+use \DateTime;
 
 class paytm_api
 {
@@ -46,7 +47,8 @@ class paytm_api
 				$shipments_array=$this->get_delivered();
 				if(count($shipments_array)>0)
 				{
-					$delivered_string=update_delivered_status($token,$shipments_array);
+					$delivered_string=$this->update_delivered_status($token,$shipments_array);
+					echo $delivered_string;					
 					if($delivered_string=='{200,"Updated Successfully"}' || $delivered_string=='{200, "Updated Successfully"}')
 					{
 						$this->update_delivered_time();
@@ -80,11 +82,11 @@ class paytm_api
 		$ch=curl_init();
 		curl_setopt($ch,CURLOPT_URL, $get_url);
 		curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-		
+		$shipments_string=json_encode($shipments_array);
 		$body = array(
             "status_code:DL",
             "status_description:SHIPMENT DELIVERED",
-            "shipments:$shipments_array",
+            "shipments:$shipments_string",
         );
 		curl_setopt($ch,CURLOPT_POST, count($body));
         curl_setopt($ch, CURLOPT_POSTFIELDS,$body);
@@ -196,7 +198,7 @@ class paytm_api
 		$stmt1=$this->conn->conn->prepare("select name,value from user_preferences where name=?");
 		$stmt1->execute(array('paytm_delivered_sync_time'));
 		$row1=$stmt1->fetch(PDO::FETCH_ASSOC);
-		$last_sync_time=$row2['value'];	
+		$last_sync_time=$row1['value'];	
 		$last_delivered_sync_time=$row1['value'];
 		//////////////////////
 		

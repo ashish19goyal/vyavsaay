@@ -60,13 +60,16 @@ function tabsToAccordions()
 	$(".vy_tabs").each(function(){
 		var e=$("<div class='vy_accordion function_main' id='"+$(this).attr('id')+"' style='width:480px;'>");
 		var t=new Array;
+		//console.log($(this).attr('id'));
+			
 		$(this).find(">ul>li").each(function()
 		{
 			//console.log($(this).find("a").attr('onclick'));
 			var a_tag=$(this).find('a');
 			var onclick=$(a_tag).attr('onclick');
-			$(a_tag).attr('onclick',"");			
-			t.push("<h3 onclick='"+onclick+"'>"+$(this).html()+"</h3>");
+			//console.log(onclick);
+			$(a_tag).attr('onclick',"");
+			t.push("<h3 onclick=\""+onclick+"\">"+$(this).html()+"</h3>");
 		});
 		var n=new Array;
 		$(this).find(">div").each(function()

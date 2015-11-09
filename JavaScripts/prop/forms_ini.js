@@ -21137,6 +21137,9 @@ function form198_ini()
 							{index:'order_history'},
 							{index:'drs_num'},
 							{index:'branch'},
+							{index:'received_by'},
+							{index:'received_by_phone'},
+							{index:'received_by_sign'},
 							{index:'status'}];		
 
 	read_json_rows('form198',new_columns,function(results)
@@ -21196,11 +21199,21 @@ function form198_ini()
 				rowsHTML+="<label>Delivery Person: <input type='text' name='delivery_person'  value='"+result.delivery_person+"'></label>";
 				rowsHTML+="<label>DRS #: <input type='text' name='drs_num'  value='"+result.drs_num+"'></label>";
 				rowsHTML+="<label>Branch: <input type='text' name='branch'  value='"+result.branch+"'></label>";
+				rowsHTML+="<label>Received By: <input type='text' name='received_by'  value='"+result.received_by+"'></label>";
+				rowsHTML+="<label>Received By (Phone): <input type='text' name='received_by_phone'  value='"+result.received_by_phone+"'></label>";
+				rowsHTML+="<label>Signature:<div id='form198_canvas_div'></div></label>";
 				rowsHTML+="<label><input type='button' value='Update' class='generic_icon' name='update' onclick='form198_update_item();'></label>";
 
 			$('#form198_fieldset').html(rowsHTML);
+			if(result.received_by_sign!="" && result.received_by_sign!=null && result.received_by_sign!="null")
+			{
+				dataURL="data:image/jsignature;base30,"+result.received_by_sign;
+				$("#form198_canvas_div").jSignature({width:300,height:200,color:"#00F","background-color":"#F5F4A8"}); // inits the jSignature widget.			
+				$("#form198_canvas_div").jSignature("setData",dataURL);
+			}
 		});
 
+		
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();		
 		hide_loader();
@@ -21578,7 +21591,7 @@ function form203_ini()
 
 	if_data_read_access('store_areas',function(accessible_data)
 	{
-		console.log(accessible_data);
+		//console.log(accessible_data);
 		var branches_array=[];
 		var branch_object={index:'branch',array:branches_array};
 		
@@ -29171,6 +29184,64 @@ function form271_ini()
 		{
 			get_limited_export_data(new_columns,'COD Collections');
 		});
+		hide_loader();
+	});
+}
+
+/**
+ * @form Enter COD Collections
+ * @formNo 272
+ * @Loading light
+ */
+function form272_ini()
+{
+	show_loader();
+
+	var form272_form=document.getElementById('form272_form');
+	form272_form.reset();	
+	$(form272_form).hide();	
+	
+	var filter_fields=document.getElementById('form272_master');	
+	var fawb=filter_fields.elements['awb'].value;
+	//console.log(fawb);
+	var new_columns=new Object();
+		new_columns.count=1;
+		new_columns.start_index=0;
+		new_columns.data_store='logistics_orders';
+		
+		new_columns.indexes=[{index:'id'},
+							{index:'order_num'},
+							{index:'address1'},
+							{index:'address2'},
+							{index:'address3'},
+							{index:'pincode'},
+							{index:'phone'},
+							{index:'ship_to'},
+							{index:'order_history'},
+							{index:'status',exact:'out for delivery'},
+							{index:'awb_num',exact:fawb}];
+	//console.log(new_columns);
+	read_json_rows('form272',new_columns,function(results)
+	{	
+		//console.log(results);
+		results.forEach(function(result)
+		{
+			form272_form.elements[1].value=result.order_num;
+			form272_form.elements[2].value=result.address1+", "+result.address2+", "+result.address3+", "+result.pincode;
+			form272_form.elements[3].value=result.ship_to;
+			form272_form.elements[4].value=result.phone;
+			form272_form.elements['id'].value=result.id;
+			form272_form.elements['history'].value=result.order_history;
+			
+			$(form272_form).show();	
+			$('textarea').autosize();		
+		});
+		
+		if(results.length==0)
+		{
+			$("#modal82").dialog("open");
+		}
+		
 		hide_loader();
 	});
 }

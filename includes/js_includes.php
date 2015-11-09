@@ -17,6 +17,8 @@
 <script src='./JavaScripts/open/shortcuts.min.js'></script>
 <script src='./JavaScripts/open/angular.js'></script>
 
+<script src='./JavaScripts/open/jSignature.min.js'></script>
+
 <script src='./JavaScripts/open/jspdf.js'></script>
 <script src='./JavaScripts/open/html2canvas.js'></script>
 
