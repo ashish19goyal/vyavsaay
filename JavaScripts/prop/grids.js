@@ -768,3 +768,19 @@ function set_grid_item_42()
 		document.getElementById('grid_item_42').innerHTML=results.length;
 	},columns);
 };
+
+/**
+ * @item # DRS (today)
+ * @itemNo 43
+ */
+function set_grid_item_43()
+{
+	var columns="<rto>" +
+		"<id></id>" +
+		"<rto_time lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</rto_time>"+
+		"</rto>";
+	get_single_column_data(function(results)
+	{
+		document.getElementById('grid_item_43').innerHTML=results.length;
+	},columns);
+};

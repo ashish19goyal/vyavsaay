@@ -13291,7 +13291,7 @@ function modal165_action(id,elem)
 				"<function_def>"+htmlentities(def)+"</function_def>" +
 				"<last_updated>"+last_updated+"</last_updated>"+
 				"</system_grid_metrics>";
-		
+		console.log(data_xml);
 		update_simple(data_xml);
 		$("#modal165").dialog("close");
 	});

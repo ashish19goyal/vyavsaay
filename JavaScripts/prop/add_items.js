@@ -16226,7 +16226,7 @@ function form264_add_item()
 		var rowsHTML="<tr>";
 			rowsHTML+="<form id='form264_"+id+"'></form>";
 				rowsHTML+="<td data-th='Id'>";
-					rowsHTML+="<input type='text' readonly='readonly' form='form264_"+id+"'>";
+					rowsHTML+="<input type='text' form='form264_"+id+"'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Name'>";
 					rowsHTML+="<input type='text' form='form264_"+id+"'>";
@@ -16235,7 +16235,7 @@ function form264_add_item()
 					rowsHTML+="<input type='text' class='dblclick_editable' form='form264_"+id+"'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Function'>";
-					rowsHTML+="<input type='text' readonly='readonly' class='input_link dblclick_editable' form='form264_"+id+"' onclick=\"modal165_action('"+id+"',$(this))\">";
+					rowsHTML+="<input type='text' class='input_link dblclick_editable' form='form264_"+id+"' onclick=\"modal165_action('"+id+"',$(this))\">";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Status'>";
 					rowsHTML+="<input type='text' class='dblclick_editable' form='form264_"+id+"' value='active'>";
@@ -16247,19 +16247,19 @@ function form264_add_item()
 				rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 	
-		$('#form264_body').append(rowsHTML);
+		$('#form264_body').prepend(rowsHTML);
 		longPressEditable($('.dblclick_editable'));
 		
 		var fields=document.getElementById("form264_"+id);
 		var grid_filter=fields.elements[2];
 		var status_filter=fields.elements[4];
-					
+
 		var grid_data="<system_grids>"+
 						"<name></name>"+
 						"<status exact='yes'>active</status>"+
 						"</system_grids>";
 		set_my_value_list(grid_data,grid_filter);
-						
+
 		set_static_value_list('system_grid_metrics','status',status_filter);
 			
 		$(fields).on("submit", function(event)

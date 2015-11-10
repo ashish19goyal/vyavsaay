@@ -17,8 +17,8 @@
 	echo "<div id='content_box'>";
 		//central grid display for reports
 		
-		include "includes/grids.php";	
-		//include "includes/grids_dynamic.php";
+		//include "includes/grids.php";	
+		include "includes/grids_dynamic.php";
 		
 		//display for search results, notifications and opportunities
 		include "functions/search.php";
@@ -27,7 +27,7 @@
 		
 	
 		//display for each of the grids
-		include "functions/sale_bills.php";
+/*		include "functions/sale_bills.php";
 		include "functions/logistics.php";
 		include "functions/orders.php";
 		include "functions/drs.php";
@@ -47,8 +47,8 @@
 		include "functions/sale_reports.php";
 		include "functions/maps.php";
 		include "functions/admin.php";
-
-//		include "functions/dynamic.php";
+*/
+		include "functions/dynamic.php";
 		
 		//display for settings
 		include "functions/settings.php";

@@ -740,7 +740,7 @@ function delete_feed(feed_id,element)
 
 function htmlentities(str)
 {
-    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    return String(str).replace(/&/g,'&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 function revert_htmlentities(str)

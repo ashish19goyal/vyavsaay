@@ -361,7 +361,7 @@ function server_update_row(data_xml,activity_xml)
 	var domain=get_domain();
 	var username=get_username();
 	var up_access=get_session_var('up');
-	data_xml=data_xml.replace(/\+/g,'%2B');
+	//data_xml=data_xml.replace(/\+/g,'%2B');
 	ajax_with_custom_func("./ajax/update_row.php",{domain:domain,username:username,up:up_access,data_xml:data_xml,activity_xml:activity_xml},function(e)
 	{
 		console.log(e.responseText);
@@ -375,7 +375,7 @@ function server_update_simple(data_xml)
 	var domain=get_domain();
 	var username=get_username();
 	var up_access=get_session_var('up');
-	data_xml=data_xml.replace(/\+/g,'%2B');
+	//data_xml=data_xml.replace(/\+/g,'%2B');
 	ajax_with_custom_func("./ajax/update_simple.php",{domain:domain,username:username,up:up_access,data_xml:data_xml},function(e)
 	{
 		console.log(e.responseText);
@@ -387,7 +387,7 @@ function server_update_simple_func(data_xml,func)
 	var domain=get_domain();
 	var username=get_username();
 	var up_access=get_session_var('up');
-	data_xml=data_xml.replace(/\+/g,'%2B');
+	//data_xml=data_xml.replace(/\+/g,'%2B');
 	
 	ajax_with_custom_func("./ajax/update_simple.php",{domain:domain,username:username,up:up_access,data_xml:data_xml},function(e)
 	{
@@ -405,7 +405,7 @@ function server_update_batch(data_xml)
 	var domain=get_domain();
 	var username=get_username();
 	var up_access=get_session_var('up');
-	data_xml=data_xml.replace(/\+/g,'%2B');
+	//data_xml=data_xml.replace(/\+/g,'%2B');
 	
 	//console.log('got last sync time');
 	var data_xml_array=data_xml.split("<separator></separator>");

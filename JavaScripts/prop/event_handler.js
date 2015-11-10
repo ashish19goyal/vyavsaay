@@ -26,7 +26,8 @@ function default_load()
 			date_formating();
 			//print_setup();
 			set_footer_message();
-			add_grid_metrics();
+			//add_grid_metrics();
+			calculate_grid_metrics();
 			my_sortable_tables();
 						
 			Chart.defaults.global.responsive = true;
@@ -435,9 +436,9 @@ function hide_all()
 	$("#all_activities_box").hide();
 	$("#notifications_box").hide();
 	
-	//hide_all_grids();
+	hide_all_grids();
 
-
+/*
 	$("#sale_bills_main").hide();
 	$("#logistics_main").hide();
 	$("#orders_main").hide();
@@ -458,7 +459,7 @@ function hide_all()
 	$("#manufacturing_main").hide();
 	$("#sale_reports_main").hide();
 	$("#admin_main").hide();
-
+*/
 
 	hide_menu_items();
 	
