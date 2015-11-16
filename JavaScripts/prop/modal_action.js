@@ -9457,7 +9457,7 @@ function modal136_action(type)
 		                "<sync>checked</sync>"+		                
 		                "<last_updated>"+last_updated+"</last_updated>"+
 						"</user_preferences>";
-			var access_xml+="<access_control>" +
+			var access_xml="<access_control>" +
 							"<id>"+id+"</id>" +
 							"<element_id>"+name+"</element_id>" +
 							"<element_name>"+display_name+"</element_name>" +
