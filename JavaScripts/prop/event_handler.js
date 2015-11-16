@@ -309,7 +309,7 @@ function modal_forms_ini()
 		});
 	}
 
-	for(var i=101;i<=165;i++)
+	for(var i=101;i<=168;i++)
 	{
 		var j=i;
 		$("#modal"+i).dialog({
@@ -492,15 +492,6 @@ function load_tooltips()
 	$(".icon").tooltip();
 }
 
-/**
- * this function displays the fetched results in the search_results_box
- */
-function show_search_results() 
-{
-	hide_all();
-	$("#search_results_box").show();
-	search_ini();
-}
 
 function show_all_activities() 
 {
@@ -1000,9 +991,14 @@ function import_data(form_name)
 		break;
 		case 'form271':modal23_action(form271_import_template,form271_import,form271_import_validate);
 		break;
+		case 'form273':modal23_action(form273_import_template,form273_import,form273_import_validate);
+		break;
+		case 'form274':modal23_action(form274_import_template,form274_import,form274_import_validate);
+		break;
+		case 'form275':modal23_action(form275_import_template,form275_import,form275_import_validate);
+		break;
 	}
 }
-
 
 function set_footer_message()
 {

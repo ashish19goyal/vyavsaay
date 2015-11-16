@@ -14091,7 +14091,7 @@ function form263_update_form()
 			}
 			
 		});
-		
+		var data_id=document.getElementById('form263_master').elements['id'].value;
 		var elements_string=JSON.stringify(elements_array);
 		var last_updated=get_my_time();
 		var data_xml="<system_grids>" +
@@ -14529,8 +14529,8 @@ function form272_update_item()
 		history_object.location="";
 
 		var signature_data=$('#form272_canvas_div').jSignature('getData','base30');
-		console.log(signature_data);
-		console.log(signature_data[1]);
+		//console.log(signature_data);
+		//console.log(signature_data[1]);
 		
 		order_history.push(history_object);
 		var order_history_string=JSON.stringify(order_history);		
@@ -14563,6 +14563,92 @@ function form272_update_item()
 		var form272_form=document.getElementById('form272_form');
 		form272_form.reset();
 		$(form272_form).hide();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Purchase leads
+ * @param button
+ */
+function form273_update_item(form)
+{
+	if(is_update_access('form273'))
+	{
+		var supplier=form.elements[0].value;
+		var detail=form.elements[1].value;
+		var valid_upto=get_raw_time(form.elements[2].value);
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<purchase_leads>" +
+					"<id>"+data_id+"</id>" +
+					"<supplier>"+supplier+"</supplier>" +
+					"<detail>"+detail+"</detail>" +
+					"<valid_date>"+valid_upto+"</valid_date>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</purchase_leads>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>purchase_leads</tablename>" +
+					"<link_to>form273</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Purchase lead for "+supplier+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		update_row(data_xml,activity_xml);
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 275
+ * form In-out (poojaelec)
+ * @param button
+ */
+function form275_update_item(form)
+{
+	if(is_update_access('form275'))
+	{
+		var item=form.elements[0].value;
+		var quantity=form.elements[1].value;
+		var issue_type=form.elements[2].value;
+		var customer=form.elements[3].value;
+		var date=get_raw_time(form.elements[4].value);
+		var notes=form.elements[5].value;
+		var data_id=form.elements[6].value;
+		var last_updated=get_my_time();
+		var data_xml="<bill_items>" +
+					"<id>"+data_id+"</id>" +
+					"<item_name>"+item+"</item_name>" +
+					"<issue_type>"+issue_type+"</issue_type>" +
+					"<issue_date>"+date+"</issue_date>" +
+					"<customer>"+customer+"</customer>" +
+					"<notes>"+notes+"</notes>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</bill_items>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>bill_items</tablename>" +
+					"<link_to>form275</link_to>" +
+					"<title>"+issue_type+"</title>" +
+					"<notes>"+quantity+" pieces of "+item+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		update_row(data_xml,activity_xml);
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
 	}
 	else
 	{

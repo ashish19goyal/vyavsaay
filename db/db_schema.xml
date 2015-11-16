@@ -886,6 +886,18 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</sale_leads>
+	<purchase_leads>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<supplier index='yes' type="TEXT"></supplier>
+			<detail index='no' type="TEXT"></detail>
+			<valid_date index='yes' type="BIGINT"></valid_date>
+			<identified_date index='yes' type="BIGINT"></identified_date>
+			<source_id index='yes' type="BIGINT"></source_id>
+			<status index='yes' type="VARCHAR(20)"></status><!--open/closed-->
+			<type index='yes' type="VARCHAR(20)"></type><!--vendor/customer/telecalling/marketing-->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</purchase_leads>
 	<followups>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<customer index='yes' type="TEXT"></customer>
@@ -897,6 +909,17 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</followups>
+	<purchase_followups>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<supplier index='yes' type="TEXT"></supplier>
+			<response index='yes' type="TEXT"></response><!--warm/cold-->
+			<detail index='no' type="TEXT"></detail>
+			<date index='yes' type="BIGINT"></date>
+			<next_date index='yes' type="TEXT"></next_date>
+			<source_id index='yes' type="BIGINT"></source_id>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</purchase_followups>
 	<user_preferences>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(30)" unique='yes'></name>
@@ -1595,6 +1618,20 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</system_grids>
+	<system_search>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<table_name index='yes' type="VARCHAR(100)"></table_name>
+			<search_column index='yes' type="VARCHAR(100)"></search_column>
+			<return_columns index='no' type="TEXT"></return_columns>
+			<result_title index='no' type="TEXT"></result_title>
+			<result_detail index='no' type="TEXT"></result_detail>
+			<result_form index='no' type="TEXT"></result_form>
+			<result_count index='no' type="INT"></result_count>
+			<search_only_text index='no' type="TEXT"></search_only_text>
+			<status index='yes' type="VARCHAR(30)"></status><!--active/inactive-->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</system_search>
 	<letterheads>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="TEXT"></name>

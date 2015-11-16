@@ -12,8 +12,9 @@
  						exact:'value'
  						upperbound:'value',
  						lowerbound:'value'
- 						array:'value',
- 						unequal:'value'
+ 						array:array,
+ 						unequal:'value',
+ 						approx_array:array,
  					},
  					{
  						index:'column2',
@@ -21,8 +22,9 @@
  						exact:'value',
  						upperbound:'value',
  						lowerbound:'value'
- 						array:'value',
- 						unequal:'value'
+ 						array:array,
+ 						unequal:'value',
+ 						approx_array:array,
  					}
  				]
  			}
@@ -137,6 +139,30 @@
 					}
 					
 					$query=rtrim($query,",");
+					$query.=") and ";
+				}
+				
+				if(isset($col['approx_array']))
+				{
+					$approx_array=(array)$col['approx_array'];
+					$exploded_values=[];
+					foreach ($approx_array as $val) 
+					{
+					    $exploded_values[] = "%".$val."%";
+					}
+					$query.="(";
+					foreach($exploded_values as $value)
+					{
+						$query.=$col['index']." like ? or ";
+						$values_array[]=$value;
+					}
+					if(count($exploded_values)==0)
+					{
+						$query.="?,";
+						$values_array[]="--";						
+					}
+					
+					$query=rtrim($query,", or ");
 					$query.=") and ";
 				}
 				

@@ -9457,9 +9457,22 @@ function modal136_action(type)
 		                "<sync>checked</sync>"+		                
 		                "<last_updated>"+last_updated+"</last_updated>"+
 						"</user_preferences>";
-						
+			var access_xml+="<access_control>" +
+							"<id>"+id+"</id>" +
+							"<element_id>"+name+"</element_id>" +
+							"<element_name>"+display_name+"</element_name>" +
+							"<username>master</username>" +
+							"<re>checked</re>" +
+							"<cr>checked</cr>" +
+							"<up>checked</up>" +
+							"<del>checked</del>" +
+							"<status>active</status>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</access_control>";			
 			create_simple(pref_xml);
+			create_simple(access_xml);
 			
+			/*
 			var username_data="<access_control>"+
 							"<username></username>"+
 							"</access_control>";
@@ -9489,7 +9502,8 @@ function modal136_action(type)
 			
 				data_xml+="</access_control>";
 				create_batch(data_xml);				
-			},username_data);				
+			},username_data);
+			*/				
 		}
 		else
 		{
@@ -10100,6 +10114,7 @@ function modal140_action(i_func)
 			       		var data_xml="<purchase_orders>";
 			       		var data2_xml="<purchase_order_items>";
 						var data3_xml="<suppliers>";
+						var data4_xml="<accounts>";
 						
 						var counter=1;
 						var last_updated=get_my_time();
@@ -10271,6 +10286,7 @@ function modal140_action(i_func)
 								if((counter%500)===0)
 								{
 									data3_xml+="</suppliers><separator></separator><suppliers>";
+									data4_xml+="</accounts><separator></separator><accounts>";
 								}
 								counter+=1;
 								
@@ -10282,16 +10298,28 @@ function modal140_action(i_func)
 				                        "<phone>"+row.phone+"</phone>"+
 				                        "<address>"+row.address+"</address>"+
 				                        "<last_updated>"+last_updated+"</last_updated>" +
-										"</row>";		
+										"</row>";
+								data4_xml+="<row>" +
+										"<id>"+row.id+"</id>" +
+										"<acc_name unique='yes'>"+row.acc_name+"</acc_name>" +
+										"<description></description>" +
+										"<type>supplier</type>" +
+										"<username></username>" +
+										"<status>active</status>"+				
+										"<last_updated>"+last_updated+"</last_updated>" +
+										"</row>";
+		
 							});
 						
 							data_xml+="</purchase_orders>";
 							data2_xml+="</purchase_order_items>";
 							data3_xml+="</suppliers>";
+							data3_xml+="</accounts>";
 							
 							create_batch(data_xml);
 							create_batch(data2_xml);
 							create_batch(data3_xml);
+							create_batch(data4_xml);
 				
 				           	////////////////////
 				        	progress_value=15;
@@ -10797,7 +10825,7 @@ function modal144_action(doc_type,target_id,func)
 
 /**
  * @modalNo 145
- * @modal Add new customer
+ * @modal Update Contact
  * @param button
  */
 function modal145_action(customer_acc_name)
@@ -13298,4 +13326,238 @@ function modal165_action(id,elem)
 	
 	///////////////////////////
 	$("#modal165").dialog("open");	
+}
+
+/**
+ * @modalNo 166
+ * @modal Followup Details
+ */
+function modal166_action(lead_id,supplier,lead_details)
+{
+	var form=document.getElementById('modal166_form');
+	var date_filter=form.elements['date'];
+	var response_filter=form.elements['response'];
+	var detail_filter=form.elements['details'];
+	var next_date_filter=form.elements['next_date'];
+
+	$(date_filter).datepicker();
+	$(next_date_filter).datepicker();
+	
+	date_filter.value=get_my_date();
+
+	set_static_value_list('followups','response',response_filter);
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_update_access('form273'))
+		{
+			var id=get_new_key();
+			var date=get_raw_time(date_filter.value);
+			var response=response_filter.value;
+			var details=detail_filter.value;
+			var next_date=get_raw_time(next_date_filter.value);
+			var last_updated=get_my_time();
+			var new_details=lead_details+"\n\n"+date_filter.value+": "+details;
+
+			var lead_xml="<purchase_leads>"+
+						"<id>"+lead_id+"</id>"+
+		                "<valid_date>"+next_date+"</valid_date>"+
+		                "<detail>"+new_details+"</detail>"+
+		                "<last_updated>"+last_updated+"</last_updated>"+
+						"</purchase_leads>";
+			update_simple(lead_xml);
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal166").dialog("close");
+	});
+	
+	$("#modal166").dialog("open");
+}
+
+/**
+ * @modalNo 167
+ * @modal Update Contact
+ * @param button
+ */
+function modal167_action(supplier_acc_name)
+{
+	var form=document.getElementById('modal167_form');
+	
+	var fname=form.elements[1];
+	var fphone=form.elements[2];
+	var femail=form.elements[3];
+	var faddress=form.elements[4];
+	var fpincode=form.elements[5];
+	var fcity=form.elements[6];
+	var fstate=form.elements[7];
+	var fid=form.elements['id'];
+
+	var supplier_xml="<suppliers count='1'>"+
+					"<id></id>"+
+					"<name></name>"+
+					"<phone></phone>"+
+					"<email></email>"+
+					"<address></address>"+
+					"<city></city>"+
+					"<state></state>"+
+					"<pincode></pincode>"+
+					"<acc_name exact='yes'>"+supplier_acc_name+"</acc_name>"+
+					"</suppliers>";	
+	fetch_requested_data('',supplier_xml,function(suppliers)
+	{
+		if(suppliers.length>0)
+		{
+			fname.value=suppliers[0].name;
+			fphone.value=suppliers[0].phone;
+			femail.value=suppliers[0].email;
+			faddress.value=suppliers[0].address;
+			fpincode.value=suppliers[0].pincode;
+			fcity.value=suppliers[0].city;
+			fstate.value=suppliers[0].state;
+			fid.value=suppliers[0].id;
+		}
+	});
+	
+	////adding attribute fields///////
+	var attribute_label=document.getElementById('modal167_attributes');
+	attribute_label.innerHTML="";
+	var attributes_data="<attributes>" +
+			"<id></id>"+
+			"<attribute></attribute>" +
+			"<value></value>"+
+			"<type exact='yes'>supplier</type>" +
+			"<name exact='yes'>"+supplier_acc_name+"</name>" +
+			"</attributes>";
+	fetch_requested_data('',attributes_data,function(attributes)
+	{
+		attributes.forEach(function(attribute)
+		{
+				var attr_label=document.createElement('label');
+				attr_label.innerHTML=attribute.attribute+" <input type='text' name='"+attribute.id+"' value='"+attribute.value+"'>";
+				attribute_label.appendChild(attr_label);
+				var line_break=document.createElement('br');
+				attribute_label.appendChild(line_break);
+		});
+	});
+	
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_update_access('form30'))
+		{
+			var name=fname.value;
+			
+			name = name.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			name = name.replace(/â/g,'');
+			name = name.replace(/&/g, "and");
+			
+			var phone=fphone.value;
+			var email=femail.value;
+			var address=faddress.value;
+			
+			address = address.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			address = address.replace(/â/g,'');
+			address = address.replace(/&/g, "and");
+			
+			var pincode=fpincode.value;
+			var city=fcity.value;
+			var state=fstate.value;
+			var data_id=fid.value;
+			var last_updated=get_my_time();
+			var data_xml="<suppliers>" +
+						"<id>"+data_id+"</id>" +
+						"<name>"+name+"</name>" +
+						"<phone>"+phone+"</phone>" +
+						"<email>"+email+"</email>" +
+						"<address>"+address+"</address>" +
+						"<pincode>"+pincode+"</pincode>" +
+						"<city>"+city+"</city>" +
+						"<state>"+state+"</state>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</suppliers>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>suppliers</tablename>" +
+						"<link_to>form40</link_to>" +
+						"<title>Updated</title>" +
+						"<notes>Details for supplier "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			update_row(data_xml,activity_xml);
+
+			$("#modal167_attributes").find('input, select').each(function()
+			{
+				var value=$(this).val();
+				var id=$(this).attr('name');
+				
+				var attribute_xml="<attributes>" +
+						"<id>"+id+"</id>" +
+						"<value>"+value+"</value>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</attributes>";
+				update_simple(attribute_xml);
+			});
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal167").dialog("close");
+	});
+	
+	$("#modal167").dialog("open");
+}
+
+/**
+ * @modalNo 168
+ * @modal Close purchase lead
+ */
+function modal168_action(button,lead_id)
+{
+	var form=document.getElementById('modal168_form');
+	var no_button=form.elements['no'];
+	var yes_button=form.elements['yes'];
+
+	$(no_button).off('click');
+	$(no_button).on('click',function()
+	{
+		$("#modal168").dialog("close");
+	});
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_update_access('form213'))
+		{
+			var lead_form_id=$(button).attr('form');
+			var lead_form=document.getElementById(lead_form_id);
+			var data_id=lead_form.elements[4].value;
+			var last_updated=get_my_time();
+
+			var lead_xml="<purchase_leads>"+
+						"<id>"+data_id+"</id>"+
+		                "<valid_date></valid_date>"+
+		                "<status>closed</status>"+
+		                "<last_updated>"+last_updated+"</last_updated>"+
+						"</purchase_leads>";
+			update_simple(lead_xml);
+			$(button).parent().parent().attr('class','cancelled_row');
+			$(button).hide();
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal168").dialog("close");
+	});
+	
+	$("#modal168").dialog("open");
 }

@@ -322,6 +322,22 @@
 	</user_fields_list>
 	<values_list>
 		<row>
+			<tablename>system_search</tablename>
+			<listname>status</listname>
+			<name>active</name>
+			<value>Active</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>system_search</tablename>
+			<listname>status</listname>
+			<name>inactive</name>
+			<value>Inactive</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>delivery_challans</tablename>
 			<listname>status</listname>
 			<name>draft</name>

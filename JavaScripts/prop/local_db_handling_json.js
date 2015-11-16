@@ -71,6 +71,13 @@ function local_read_json_rows(columns,callback,results)
 				filter.push(fil);
 			}
 			
+			if(typeof cols[j].approx_array!='undefined')
+			{
+				fil.value=cols[j].approx_array;
+				fil.type='approx_array';
+				filter.push(fil);
+			}
+			
 			if(typeof cols[j].unequal!='undefined')
 			{
 				fil.value=cols[j].unequal;
@@ -130,7 +137,6 @@ function local_read_json_rows(columns,callback,results)
 						if(filter[i].type!='array')
 						{					
 							var search_word=filter[i].value.toString().toLowerCase();
-							var found=0;
 							
 							if(filter[i].type=='')
 							{
@@ -140,6 +146,7 @@ function local_read_json_rows(columns,callback,results)
 									break;
 								}
 							}
+							
 							if(filter[i].type=='exact')
 							{
 								if(search_word!==string)
@@ -181,6 +188,25 @@ function local_read_json_rows(columns,callback,results)
 								break;
 							}
 						}
+						
+						if(filter[i].type=='approx_array')
+						{
+							var approx_array=filter[i].value;
+							var sub_match=false;
+							for(var ab in approx_array)
+							{
+								if(string.indexOf(approx_array[ab])>-1)
+								{
+									sub_match=true;
+									break;
+								}
+							}
+							if(!sub_match)
+							{
+								match_word=false;
+								break;
+							}
+						}						
 					}
 					else
 					{
@@ -311,6 +337,13 @@ function local_read_json_column(columns,callback,results)
 				filter.push(fil);
 			}
 			
+			if(typeof cols[j].approx_array!='undefined')
+			{
+				fil.value=cols[j].approx_array;
+				fil.type='approx_array';
+				filter.push(fil);
+			}
+			
 			if(typeof cols[j].unequal!='undefined')
 			{
 				fil.value=cols[j].unequal;
@@ -371,7 +404,6 @@ function local_read_json_column(columns,callback,results)
 						{
 												
 							var search_word=filter[i].value.toString().toLowerCase();
-							var found=0;
 							
 							if(filter[i].type=='')
 							{
@@ -417,6 +449,25 @@ function local_read_json_column(columns,callback,results)
 						else if(filter[i].type=='array')
 						{
 							if(filter[i].value.indexOf(string)==-1)
+							{
+								match_word=false;
+								break;
+							}
+						}
+						
+						if(filter[i].type=='approx_array')
+						{
+							var approx_array=filter[i].value;
+							var sub_match=false;
+							for(var ab in approx_array)
+							{
+								if(string.indexOf(approx_array[ab])>-1)
+								{
+									sub_match=true;
+									break;
+								}
+							}
+							if(!sub_match)
 							{
 								match_word=false;
 								break;

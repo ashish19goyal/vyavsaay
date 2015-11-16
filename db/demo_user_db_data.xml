@@ -3825,6 +3825,50 @@
 			<tables>--logistics_orders--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form273</name>
+			<display_name>purchase_leads</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--purchase_leads--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form274</name>
+			<display_name>inventory_pooja</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--product_instances--product_master--inventory_adjust--bill_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form275</name>
+			<display_name>in_out_pooja</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--product_instances--product_master--inventory_adjust--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form276</name>
+			<display_name>search_queries</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--system_search--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -7285,6 +7329,50 @@
 			<username>master</username>
 			<element_id>form272</element_id>
 			<element_name>capture_receiving</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form273</element_id>
+			<element_name>purchase_leads</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form274</element_id>
+			<element_name>inventory_pooja</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form275</element_id>
+			<element_name>in_out_pooja</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form276</element_id>
+			<element_name>search_queries</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

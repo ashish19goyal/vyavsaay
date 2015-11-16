@@ -212,6 +212,19 @@ input[type="text"]#search_box{
 	vertical-align:middle;
 }
 
+.doc_search_icon{
+	height: 25px;
+	width: 25px;
+	background:url('/images/document_search.png') no-repeat left top;
+	border: 0;
+	cursor: pointer;
+	background-size: 25px 25px;
+	color:transparent;
+	float: right;		
+	margin: 0.5% 1% .5% 0%;
+	vertical-align:middle;
+}
+
 a div{
 	cursor: pointer;
 }
@@ -1009,9 +1022,9 @@ a.small_cross_icon{
 	background-color: #C37E4C;
 	border: 2px solid #FFFFFF;
 	color:#F5F3EE;
-	padding: 1% 5% 1% 5%;
+	padding: 1% 2%;
 	float:left;
-	width:90%;
+	width:96%;
 }
 
 .notification_detail a{
@@ -1030,9 +1043,13 @@ a.small_cross_icon{
 	background-color: #AB7D44;
 	border: 2px solid #FFFFFF;
 	color:#F5F3EE;
-	padding: 1% 5% 1% 5%;
+	padding: 1% 2%;
 	float:left;
-	width: 100%;
+	width: 96%;
+}
+
+.search_detail a{
+	cursor: pointer;
 }
 
 #form272_canvas_div canvas,#form198_canvas_div canvas{
@@ -1528,7 +1545,7 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 		min-width:1px;
 	}
 	
-	.save_icon,.delete_icon,.share_icon,.edit_icon,.refresh_icon,.copy_icon,.add_icon,.add_image,.print_icon,.csv_icon,.csv_red_icon{
+	.save_icon,.delete_icon,.share_icon,.edit_icon,.refresh_icon,.copy_icon,.add_icon,.add_image,.print_icon,.csv_icon,.csv_red_icon,.doc_search_icon{
 		min-width:40px;		
 		height:40px;
 		width:40px;

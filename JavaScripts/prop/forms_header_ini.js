@@ -10850,3 +10850,85 @@ function form272_header_ini()
 	
 	$(awb_filter).focus();
 };
+
+/**
+ * @form Purchase leads
+ * @formNo 273
+ */
+function form273_header_ini()
+{
+	var filter_fields=document.getElementById('form273_header');	
+	var names_filter=filter_fields.elements[0];
+	var date_filter=filter_fields.elements[2];
+
+	//setting autocompletes 
+	var names_data="<suppliers>" +
+			"<acc_name></acc_name>" +
+			"</suppliers>";
+
+	set_my_filter(names_data,names_filter);
+
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form273_ini();
+	});	
+	
+	$(date_filter).datepicker();
+}
+
+/**
+ * @form Inventory (poojaelec)
+ * @formNo 274
+ */
+function form274_header_ini()
+{
+	var filter_fields=document.getElementById('form274_header');	
+	var item_filter=filter_fields.elements[0];
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form274_ini();
+	});
+	//setting autocompletes 
+	var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	
+	set_my_filter(products_data,item_filter);
+};
+
+/**
+ * @form In-out (poojaelec)
+ * @formNo 275
+ */
+function form275_header_ini()
+{
+	var filter_fields=document.getElementById('form275_header');	
+	var item_filter=filter_fields.elements[0];
+	var type_filter=filter_fields.elements[1];
+	var customer_filter=filter_fields.elements[2];
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form275_ini();
+	});
+
+	var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	
+	set_my_filter(products_data,item_filter);	
+
+	set_static_filter('bill_items','issue_type',type_filter);
+	
+	var customer_data="<customers>"+
+					"<acc_name></acc_name>"+
+					"</customers>";
+	set_my_filter(customer_data,customer_filter);
+};

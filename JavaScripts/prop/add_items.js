@@ -14162,9 +14162,9 @@ function form230_add_item()
 		{
 			modal11_action(function()
 			{	
-				var customer_data="<customers>" +
+				var customer_data="<accounts>" +
 						"<acc_name></acc_name>" +
-						"</customers>";
+						"</accounts>";
 				set_my_value_list_func(customer_data,customer_filter,function () 
 				{
 					$(customer_filter).focus();
@@ -16132,7 +16132,7 @@ function form262_add_item()
 				rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 	
-		$('#form262_body').append(rowsHTML);
+		$('#form262_body').prepend(rowsHTML);
 		longPressEditable($('.dblclick_editable'));
 		
 		var fields=document.getElementById("form262_"+id);
@@ -16192,18 +16192,18 @@ function form263_add_item()
 		var name_filter=item_form.elements[1];
 		var save_button=item_form.elements[5];
 		
-		set_static_value_list('system_grid_elements','type',type_filter);
-		
+		set_static_value_list('system_grid_elements','type',type_filter,function () 
+		{
+			$(type_filter).focus();
+		});
+
 		var name_data="<user_preferences>" +
 				"<name></name>" +
 				"<value exact='yes'>checked</value>"+
-				"<type array='yes'>--report--form--</value>"+
+				"<type array='yes'>--report--form--</type>"+
 				"</user_preferences>";
-		set_my_value_list(name_data,name_filter,function () 
-		{
-			$(name_filter).focus();
-		});
-
+		set_my_value_list(name_data,name_filter);
+		
 		$('textarea').autosize();
 		form263_update_serial_numbers();
 	}
@@ -16849,6 +16849,192 @@ function form271_add_item()
 				});				
 			});					
 		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Purchase Leads
+ * @formNo 273
+ */
+function form273_add_item()
+{
+	if(is_create_access('form273'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form273_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Supplier'>";
+				rowsHTML+="<input type='text' form='form273_"+id+"' required>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new supplier' id='form273_add_supplier_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Details'>";
+				rowsHTML+="<textarea form='form273_"+id+"' class='dblclick_editable'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Valid Upto'>";
+				rowsHTML+="<input type='text' class='dblclick_editable' form='form273_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Identified Date'>";
+				rowsHTML+="<input type='text' form='form273_"+id+"' readonly='readonly' required value='"+get_my_date()+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form273_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form273_"+id+"'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form273_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+				rowsHTML+="<input type='button' class='generic_icon' form='form273_"+id+"' value='Follow-up' onclick='modal166_action();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form273_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form273_"+id);
+		var supplier_filter=fields.elements[0];
+		var detail_filter=fields.elements[1];
+		var valid_filter=fields.elements[2];
+		var date_filter=fields.elements[3];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form273_create_item(fields);
+		});
+					
+		var supplier_data="<suppliers>" +
+			"<acc_name></acc_name>" +
+			"</suppliers>";	
+		set_my_value_list_func(supplier_data,supplier_filter,function () 
+		{
+			$(supplier_filter).focus();
+		});
+
+		$(valid_filter).datepicker();
+		$(date_filter).datepicker();
+
+		var add_supplier=document.getElementById('form273_add_supplier_'+id);
+		$(add_supplier).on('click',function()
+		{
+			modal13_action(function()
+			{	
+				var supplier_data="<suppliers>" +
+					"<acc_name></acc_name>" +
+					"</suppliers>";	
+				set_my_value_list_func(supplier_data,supplier_filter,function () 
+				{
+					$(supplier_filter).focus();
+				});
+			});
+		});
+		
+		$('textarea').autosize();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
+ * @form In-out (POOJAELEC)
+ * @formNo 275
+ */
+function form275_add_item()
+{
+	if(is_create_access('form275'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form275_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='text' form='form275_"+id+"' required>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form275_add_product_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' step='any' required form='form275_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Type'>";
+				rowsHTML+="<input type='text' form='form275_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='To/From'>";
+				rowsHTML+="<input type='text' form='form275_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' id='form275_add_customer_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Details'>";
+				rowsHTML+="Date: <input type='text' required readonly='readonly' form='form275_"+id+"' value='"+get_my_date()+"'>";
+				rowsHTML+="<br><textarea placeholder='Notes' form='form275_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form275_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form275_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form275_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form275_body').prepend(rowsHTML);
+		var fields=document.getElementById("form275_"+id);
+		var item_filter=fields.elements[0];
+		var issue_filter=fields.elements[2];
+		var customer_filter=fields.elements[3];
+		var date_filter=fields.elements[4];
+		
+		$(date_filter).datepicker();
+
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form275_create_item(fields);
+		});
+	
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list_func(product_data,item_filter,function () 
+		{
+			$(item_filter).focus();
+		});
+
+		var add_product=document.getElementById('form275_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal112_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,item_filter,function () 
+				{
+					$(item_filter).focus();
+				});
+			});
+		});
+
+		set_static_value_list('bill_items','issue_type',issue_filter);
+
+		var customer_data="<accounts>" +
+				"<acc_name></acc_name>" +
+				"</accounts>";
+		set_my_value_list(customer_data,customer_filter);
+		
+		var add_customer=document.getElementById('form275_add_customer_'+id);
+		$(add_customer).on('click',function()
+		{
+			modal11_action(function()
+			{	
+				var customer_data="<accounts>" +
+						"<acc_name></acc_name>" +
+						"</accounts>";
+				set_my_value_list_func(customer_data,customer_filter,function () 
+				{
+					$(customer_filter).focus();
+				});
+			});
+		});
+
+		$('textarea').autosize();
 	}
 	else
 	{

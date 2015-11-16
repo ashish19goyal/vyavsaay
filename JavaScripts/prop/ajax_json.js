@@ -16,8 +16,14 @@
  */
 function ajax_json(url,kvp,func)
 {
-	number_active_ajax+=1;
-		
+	if(typeof number_active_ajax=='undefined')
+	{
+		number_active_ajax=1;
+	}
+	else {
+		number_active_ajax+=1;
+	}	
+	
 	$.ajax(
 	{
 		type: "POST",
@@ -167,7 +173,27 @@ function sync_logistics_apis()
 		//console.log(response_object.rows);
 		hide_loader();
 		if(response_object.status=='success')
-		{		
+		{
+			if(response_object.data['delivered']=='success' && response_object.data['rto delivered']=='success' && response_object.data['rto picked']=='success')	
+			{
+				$("#modal80").html('All order status have been successfully updated on partner sites.');
+			}
+			else
+			{
+				$("#modal80").html('Updates failed for following type of orders: <br>');
+				if(response_object.data['delivered']!='success')
+				{
+					$("#modal80").append('Delivered orders<br>');
+				}
+				if(response_object.data['rto delivered']!='success')
+				{
+					$("#modal80").append('RTO Delivered orders<br>');
+				}
+				if(response_object.data['rto picked']!='success')
+				{
+					$("#modal80").append('RTO Picked orders<br>');
+				}
+			}
 			$("#modal80").dialog("open");
 		}
 		else 

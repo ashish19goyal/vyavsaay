@@ -1373,3 +1373,33 @@ function form271_import_template()
 	var data_array=['id','person','date','amount'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Purchase leads
+* @formNo 273
+*/
+function form273_import_template()
+{
+	var data_array=['id','name','phone','email','address','lead detail','valid upto date','identified date'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Inventory (poojaelec)
+* @formNo 274
+*/
+function form274_import_template()
+{
+	var data_array=['id','item','quantity'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form In-out (poojaelec)
+* @formNo 275
+*/
+function form275_import_template()
+{
+	var data_array=['id','item','quantity','type','date','to/from','notes'];
+	my_array_to_csv(data_array);
+};

@@ -18963,3 +18963,126 @@ function form271_create_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Purchase leads
+ * @param button
+ */
+function form273_create_item(form)
+{
+	if(is_create_access('form273'))
+	{
+		var supplier=form.elements[0].value;
+		var detail=form.elements[1].value;
+		var valid_upto=get_raw_time(form.elements[2].value);
+		var identified_date=get_raw_time(form.elements[3].value);
+		var data_id=form.elements[4].value;
+		var del_button=form.elements[6];
+		
+		var last_updated=get_my_time();
+		var data_xml="<purchase_leads>" +
+					"<id>"+data_id+"</id>" +
+					"<supplier>"+supplier+"</supplier>" +
+					"<detail>"+detail+"</detail>" +
+					"<valid_date>"+valid_upto+"</valid_date>" +
+					"<identified_date>"+identified_date+"</identified_date>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</purchase_leads>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>purchase_leads</tablename>" +
+					"<link_to>form273</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Purchase lead from "+supplier+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		create_row(data_xml,activity_xml);
+		
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form273_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form273_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 275
+ * form In-out (poojaelec)
+ * @param button
+ */
+function form275_create_item(form)
+{
+	if(is_create_access('form275'))
+	{
+		var item=form.elements[0].value;
+		var quantity=form.elements[1].value;
+		var issue_type=form.elements[2].value;
+		var negative="";		
+		if(issue_type=='out' && parseFloat(quantity)>0)
+		{
+			negative="-";
+		}
+		var customer=form.elements[3].value;
+		var date=get_raw_time(form.elements[4].value);
+		var notes=form.elements[5].value;
+		var data_id=form.elements[6].value;
+		var del_button=form.elements[8];
+		var last_updated=get_my_time();
+		var data_xml="<bill_items>" +
+					"<id>"+data_id+"</id>" +
+					"<item_name>"+item+"</item_name>" +
+					"<issue_type>"+issue_type+"</issue_type>" +
+					"<issue_date>"+date+"</issue_date>" +
+					"<customer>"+customer+"</customer>" +
+					"<notes>"+notes+"</notes>" +
+					"<quantity>"+negative+quantity+"</quantity>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</bill_items>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>bill_items</tablename>" +
+					"<link_to>form275</link_to>" +
+					"<title>"+issue_type+"</title>" +
+					"<notes>"+quantity+" pieces of "+item+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		create_row(data_xml,activity_xml);
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form275_delete_item(del_button);
+		});
+
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form275_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

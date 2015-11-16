@@ -460,6 +460,10 @@
 	"enter_purchases_nvs":"Enter Purchases (NVS)",
 	"enter_cod_collection":"Enter COD Collections",
 	"collection_report":"Collection Report",
-	"capture_receiving":"Capture Receiving"
+	"capture_receiving":"Capture Receiving",
+	"purchase_leads":"Purchase Leads",
+	"inventory_pooja":"Inventory (Electronics)",
+	"in_out_pooja":"In-out (Electronics)",
+	"search_queries":"Search Queries"
 	}
 }

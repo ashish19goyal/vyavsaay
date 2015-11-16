@@ -1619,4 +1619,45 @@
 		</form>
 	</div>
 	
+	<div id="modal166" title="Follow-up Details">
+		<form id='modal166_form' autocomplete="off">
+			<fieldset>
+				<label>Date: <input readonly='readonly' name='date' required type="text"></label><br>
+				<label>Response: <input name='response' autofocus required type="text"></label><br>
+				<label>Details: <textarea name='details'></textarea></label><br>
+				<label>Valid Upto Date: <input name='next_date' type="text"></label><br>
+				<input type="submit" value='Save' name='save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal167" title="Update Contact">
+		<form id='modal167_form' autocomplete="off">
+			<fieldset>
+				<label>Name: <input readonly='readonly' type='text' required></label><br>
+				<label>Phone: <input type="tel"></label><br>
+				<label>Email: <input type="text"></label><br>
+				<label>Address: <textarea></textarea></label><br>
+				<label>Pincode: <input type="number"></label><br>
+				<label>City: <input type="text"></label><br>
+				<label>State: <input type="text"></label><br>
+				<label id='modal167_attributes'></label><br>
+				<input type="hidden" name='id'>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal168" title="Close Purchase Lead">
+		Are you sure you want to close this lead?
+		<br>
+		<br>
+		<form id='modal168_form' autocomplete="off">
+			<fieldset>
+				<input type="submit" class='modal_submit' name='yes' value='Yes'>
+				<input type="button" class='modal_submit' name='no' value='No'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

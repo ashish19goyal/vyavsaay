@@ -6738,3 +6738,220 @@ function form271_import(data_array,import_type)
 		update_batch(data_xml);
 	}
 };
+
+/**
+* @form Purchase leads (followups)
+* @formNo 273
+*/
+function form273_import(data_array,import_type)
+{
+	var data_xml="<purchase_leads>";
+	var data2_xml="<suppliers>";
+	var data3_xml="<accounts>";
+	var counter=1;
+	var last_updated=get_my_time();
+	var supplier_array=[];
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</purchase_leads><separator></separator><purchase_leads>";
+		}
+		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<supplier>"+row.name+" ("+row.phone+")"+"</supplier>" +
+				"<detail>"+row['lead detail']+"</detail>" +
+				"<valid_date>"+get_raw_time(row['valid upto date'])+"</valid_date>" +
+				"<identified_date>"+get_raw_time(row['identified date'])+"</identified_date>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+
+		var supplier=row.name+" ("+row.phone+")";
+		var supplier_object=new Object();
+		supplier_object.id=last_updated+counter;
+		supplier_object.name=row.name;
+		supplier_object.acc_name=supplier;
+        supplier_object.email=row.email;
+        supplier_object.phone=row.phone;
+        supplier_object.address=row.address;
+        
+        var add_supplier=true;
+        
+        for(var i=0;i<supplier_array.length;i++)
+        {
+        	if(supplier_array[i].acc_name==supplier_object.acc_name)
+        	{
+        		add_supplier=false;
+        		break;
+        	}
+        }
+
+    	if(add_supplier)
+    	{
+    		supplier_array.push(supplier_object);
+    	}            	
+	});
+	
+	counter=1;
+	supplier_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data2_xml+="</suppliers><separator></separator><suppliers>";
+			data3_xml+="</accounts><separator></separator><accounts>";
+		}
+		counter+=1;
+		
+		data2_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<name>"+row.name+"</name>"+
+                "<acc_name unique='yes'>"+row.acc_name+"</acc_name>"+
+                "<email>"+row.email+"</email>"+
+                "<phone>"+row.phone+"</phone>"+
+                "<address>"+row.address+"</address>"+
+                "<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";		
+
+		data3_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<acc_name unique='yes'>"+row.acc_name+"</acc_name>" +
+				"<description></description>" +
+				"<type>supplier</type>" +
+				"<username></username>" +
+				"<status>active</status>"+				
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+
+	data_xml+="</purchase_leads>";
+	data2_xml+="</suppliers>";
+	data3_xml+="</accounts>";
+
+	if(import_type=='create_new')
+	{
+		create_batch(data_xml);
+		create_batch(data2_xml);
+		create_batch(data3_xml);
+	}
+	else
+	{
+		update_batch(data_xml);
+		update_batch(data2_xml);
+		update_batch(data3_xml);
+	}
+}
+
+/**
+* @form Inventory (poojaelec)
+* @formNo 274
+*/
+function form274_import(data_array,import_type)
+{
+	var data_xml="<product_master>";
+	var data1_xml="<product_instances>";
+	var data2_xml="<inventory_adjust>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</product_master><separator></separator><product_master>";
+			data1_xml+="</product_instances><separator></separator><product_instances>";
+			data2_xml+="</inventory_adjust><separator></separator><inventory_adjust>";
+		}
+		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<name unique='yes'>"+row.item+"</name>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+		data1_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<product_name unique='yes'>"+row.item+"</product_name>" +
+				"<batch>"+row.item+"</batch>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+		data2_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<product_name>"+row.item+"</product_name>" +
+				"<batch>"+row.item+"</batch>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</product_master>";
+	data1_xml+="</product_instances>";
+	data2_xml+="</inventory_adjust>";
+	
+	if(import_type=='create_new')
+	{
+		create_batch(data_xml);
+		create_batch(data1_xml);
+		create_batch(data2_xml);
+	}
+	else
+	{
+		update_batch(data2_xml);
+	}
+};
+
+
+/**
+* @form In-out (poojaelec)
+* @formNo 275
+*/
+function form275_import(data_array,import_type)
+{
+	var data_xml="<bill_items>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</bill_items><separator></separator><bill_items>";
+		}
+		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<item_name>"+row.item+"</item_name>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<issue_date>"+get_raw_time(row.date)+"</issue_date>" +
+				"<issue_type>"+row.type+"</issue_type>" +
+				"<customer>"+row['to/from']+"</customer>" +
+				"<notes>"+row.notes+"</notes>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</bill_items>";
+	if(import_type=='create_new')
+	{
+		create_batch(data_xml);
+	}
+	else
+	{
+		update_batch(data_xml);
+	}
+};

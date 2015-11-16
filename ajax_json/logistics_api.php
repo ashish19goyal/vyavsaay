@@ -3,20 +3,13 @@
  * output data format: 
  *	{
  		status:"success/invalid session",
- 		types:
+ 		data:
  		{
- 			delivered:{
- 					count:'',
- 					status:'success/failed'
- 					},
- 			RTO delivered:{
- 					count:'',
- 					status:'success/failed'
- 					},
- 			RTO picked:{
- 				count:'',
- 				status:'success/failed'
- 			}
+ 			delivered:'success/fail',
+ 			rto delivered:'success/fail',
+ 			rto picked:'success/fail',
+ 			token:'fail',
+ 			code:'fail'
  		}
  	}
 */
@@ -39,14 +32,8 @@
 			$paytm_api=new paytm_api($domain);
 			$result=$paytm_api->sync_api();
 
-			if($result)
-			{
-				$jsonresponse['status']='success';
-			}
-			else 
-			{
-				$jsonresponse['status']='failed';
-			}				
+			$jsonresponse['status']='success';
+			$jsonresponse['data']=$result;
 		}
 		else
 		{
