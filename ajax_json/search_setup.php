@@ -67,7 +67,7 @@ use \PDO;
 		for($i=0;$i<count($get_res);$i++)
 		{
 			$dbname=$get_res[$i]['table_schema'];
-			grids_json($dbname);
+			search_json($dbname);
 		}
 	}
 
