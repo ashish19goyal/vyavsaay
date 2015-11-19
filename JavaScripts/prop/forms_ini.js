@@ -29593,3 +29593,78 @@ function form275_ini()
 		hide_loader();
 	});
 };
+
+/**
+ * @form Search Queries
+ * @formNo 276
+ * @Loading light
+ */
+function form276_ini()
+{
+	show_loader();
+	var fid=$("#form276_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form276_header');
+	
+	var	ftable=filter_fields.elements[0].value;
+	
+	$('#form276_body').html("");
+
+	var new_columns=new Object();
+			new_columns.count=0;
+			new_columns.start_index=0;
+			new_columns.data_store='system_search';		
+			
+			new_columns.indexes=[{index:'id',value:fid},
+								{index:'search_column'},
+								{index:'table_name',value:ftable},
+								{index:'result_title'},
+								{index:'result_detail'},
+								{index:'result_form'},
+								{index:'result_count'},
+								{index:'return_columns'},
+								{index:'search_only_text'}];
+		
+	read_json_rows('form276',new_columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var rowsHTML="<tr>";
+				rowsHTML+="<form id='form276_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Table'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form276_"+result.id+"' value='"+result.table_name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Search'>";
+						rowsHTML+="<b>Column</b>: <input type='text' readonly='readonly' form='form276_"+result.id+"' value='"+result.search_column+"'>";
+						rowsHTML+="<br><b>Text</b>: <input type='text' readonly='readonly' form='form276_"+result.id+"' value='"+result.search_only_text+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Result'>";
+						rowsHTML+="<b>Title</b>:<input type='text' readonly='readonly' form='form276_"+result.id+"' value='"+result.result_title+"'>";
+						rowsHTML+="<br><b>Detail</b>:<textarea readonly='readonly' form='form276_"+result.id+"'>"+result.result_detail+"</textarea>";
+						rowsHTML+="<br><b>Form</b>:<input type='text' readonly='readonly' form='form276_"+result.id+"' value='"+result.result_form+"'>";
+						rowsHTML+="<br><b>Count</b>:<input type='number' readonly='readonly' form='form276_"+result.id+"' value='"+result.result_count+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form276_"+result.id+"' value='"+result.id+"'>";	
+						rowsHTML+="<input type='hidden' form='form276_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form276_"+result.id+"' title='Delete' onclick='form276_delete_item($(this));'>";
+						rowsHTML+="<input type='button' class='generic_icon' form='form276_"+result.id+"' value='Return Columns' onclick=\"modal169_action('"+result.id+"')\">";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form276_body').append(rowsHTML);			
+		});
+
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements['export'];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_limited_export_data(new_columns,'Search Queries');
+		});
+		hide_loader();
+	});
+}

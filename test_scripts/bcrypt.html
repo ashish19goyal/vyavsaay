@@ -2,33 +2,29 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Password testing</title>
+<title>Generate Hash</title>
 <script src='../JavaScripts/open/bcrypt.js'></script>
 <script>
-	var password='beacon';
-	var username='beacontest';
-	var salt='$2a$10$'+username+'1234567891234567891234';
-	var salt_22=salt.substring(0, 29);
-	//console.log("salt: "+salt_22);
-	var bcrypt = new bCrypt();
-	
-/*	function return_pass_hash(newhash){
-		console.log("this is passhash: "+newhash);
-	}	
-*/
-	var pass_hash="this is currently not set";
-	bcrypt.hashpw(password, salt_22, function(newhash)
+	function generate_hash()
 	{
-		pass_hash=newhash;
-		//alert("this is pass: "+newhash);
-		console.log("this is pass: "+newhash+" for user: "+username);
-	}, function() {});
-
-	//alert(pass_hash);
+		var password=document.getElementById('i_pass').value;
+		var salt='$2a$10$123456789123456789123456789123456789';
+		var salt_22=salt.substring(0, 29);
+		var bcrypt = new bCrypt();
+		
+		bcrypt.hashpw(password, salt_22, function(newhash)
+		{
+			document.getElementById('o_hash').value=newhash;
+		}, function() {});
+	}
+		
 </script>
 
 </head>
 <body>
-
+	<input type='password' id='i_pass' placeholder='enter password'>
+	<input type='button' value='Generate Hash' onclick='generate_hash();'>
+	<br>
+	<output id='o_hash'></output>
 </body>
 </html>

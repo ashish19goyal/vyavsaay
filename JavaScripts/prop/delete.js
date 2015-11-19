@@ -8764,3 +8764,31 @@ function form275_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Search Queries
+ * @param button
+ */
+function form276_delete_item(button)
+{
+	if(is_delete_access('form276'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var data_id=form.elements[7].value;
+			var data_xml="<system_search>" +
+						"<id>"+data_id+"</id>" +
+						"</system_search>";
+							
+			delete_simple(data_xml);			
+			
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

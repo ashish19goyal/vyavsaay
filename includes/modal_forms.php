@@ -1660,4 +1660,14 @@
 		</form>
 	</div>
 
+	<div id="modal169" title="Search Return Columns">
+		<form id='modal169_form' autocomplete="off">
+			<fieldset>
+				<label id='modal168_columns'></label><br>
+				<input type="hidden" name='id'>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

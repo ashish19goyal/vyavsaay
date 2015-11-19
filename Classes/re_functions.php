@@ -20,7 +20,6 @@ class re_functions
 
 	public function re_session_start()
 	{
-
 		//$session_name = 're_session_id';   // Set a custom session name
 	    //$secure = 'SECURE';
 	    // This stops JavaScript being able to access the session id.
@@ -43,7 +42,6 @@ class re_functions
 	    session_start();            // Start the PHP session 
 	    session_regenerate_id();    // regenerated the session, delete the old one. 
 	}
-	
 }	
 	
 ?>

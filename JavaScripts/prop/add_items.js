@@ -17041,3 +17041,62 @@ function form275_add_item()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form System Search
+ * @formNo 276
+ */
+function form276_add_item()
+{
+	if(is_create_access('form276'))
+	{
+		var id=get_new_key();
+
+		var rowsHTML="<tr>";
+				rowsHTML+="<form id='form276_"+id+"'></form>";
+					rowsHTML+="<td data-th='Table'>";
+						rowsHTML+="<input type='text' form='form276_"+id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Search'>";
+						rowsHTML+="<b>Column</b>: <input type='text' form='form276_"+id+"'>";
+						rowsHTML+="<br><b>Text</b>: <input type='text' form='form276_"+id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Result'>";
+						rowsHTML+="<b>Title</b>:<input type='text' form='form276_"+id+"'>";
+						rowsHTML+="<br><b>Detail</b>:<textarea form='form276_"+id+"'></textarea>";
+						rowsHTML+="<br><b>Form</b>:<input type='text' form='form276_"+id+"'>";
+						rowsHTML+="<br><b>Count</b>:<input type='number' form='form276_"+id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form276_"+id+"' value='"+id+"'>";	
+						rowsHTML+="<input type='submit' class='save_icon' form='form276_"+id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form276_"+id+"' title='Delete' onclick='onclick='$(this).parent().parent().remove();'>";
+						rowsHTML+="<input type='button' class='generic_icon' form='form276_"+id+"' value='Return Columns' onclick=\"modal169_action('"+id+"')\">";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+				
+		$('#form276_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form276_"+id);
+		var form_filter=fields.elements[5];
+		var status_filter=fields.elements[7];			
+		
+		var form_data="<user_preferences>"+
+					"<name></name>"+
+					"<value exact='yes'>checked</value>"+
+					"<status exact='yes'>active</status>"+
+					"</user_preferences>";
+		set_my_value_list(form_data,form_filter);
+
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form276_create_item(fields);
+		});					
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}

@@ -10932,3 +10932,26 @@ function form275_header_ini()
 					"</customers>";
 	set_my_filter(customer_data,customer_filter);
 };
+
+/**
+ * @form Search Queries
+ * @formNo 276
+ */
+function form276_header_ini()
+{
+	var filter_fields=document.getElementById('form276_header');
+	var table_filter=filter_fields.elements[0];
+		
+	var name_data="<system_search>" +
+		"<table_name></table_name>" +
+		"</system_search>";
+
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form276_ini();
+	});
+
+	set_my_filter(name_data,table_filter);
+};

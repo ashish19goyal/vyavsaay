@@ -38,8 +38,7 @@ function login_action()
 			else
 			{
 				login_online(username,domain,pass);
-			}
-			
+			}			
 		}, function() {});
 		
 	},function()
