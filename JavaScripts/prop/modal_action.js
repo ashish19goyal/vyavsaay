@@ -441,15 +441,8 @@ function modal10_action(func)
 					"<notes>Asset "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_create_row_func(data_xml,activity_xml,func);
-		}
-		else
-		{
-			local_create_row_func(data_xml,activity_xml,func);
-		}
-
+		create_row_func(data_xml,activity_xml,func);
+		
 		var id=get_new_key();
 		$("#modal10_attributes").find('input, select').each(function()
 		{
@@ -466,14 +459,7 @@ function modal10_action(func)
 						"<value>"+value+"</value>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</attributes>";
-				if(is_online())
-				{
-					server_create_simple(attribute_xml);
-				}
-				else
-				{
-					local_create_simple(attribute_xml);
-				}
+				create_simple(attribute_xml);
 			}
 		});
 		
@@ -10537,7 +10523,7 @@ function modal141_action(button)
 			id++;
 			var batch=$(this).find('input:first-child').val();
 			var item_quantity=$(this).find('input:nth-child(2)').val();
-			console.log(batch+" "+item_quantity);
+			//console.log(batch+" "+item_quantity);
 			var requisite=$(this).attr('data-name');
 			if(item_quantity!=0)
 			{
@@ -13560,4 +13546,83 @@ function modal168_action(button,lead_id)
 	});
 	
 	$("#modal168").dialog("open");
+}
+
+/**
+ * @modalNo 169
+ * @modal Return columns
+ */
+function modal169_action(search_id)
+{
+	var form=document.getElementById('modal169_form');
+	var add_button=form.elements['add_button'];
+	var delete_button=form.elements['delete_button'];
+
+	$(add_button).off('click');
+	$(add_button).on('click',function () 
+	{
+		var content="<label>Key: <input type='text'><br>Column: <input type='text'></label>";
+		$(attribute_label).append(content);
+	});		
+
+	$(delete_button).off('click');
+	$(delete_button).on('click',function () 
+	{
+		var label_elem=$('#modal169_columns').find('label:first-child');
+		console.log(label_elem);
+		$(label_elem).remove();
+	});		
+	
+	var attribute_label=document.getElementById('modal169_columns');
+	attribute_label.innerHTML="";
+	var attributes_data="<system_search count='1'>" +
+			"<id>"+search_id+"</id>" +
+			"<return_columns></return_columns>" +
+			"</system_search>";
+	fetch_requested_data('',attributes_data,function(attributes)
+	{
+		if(attributes.length>0)
+		{
+			var values_array=JSON.parse(attributes[0].return_columns);
+			var content="";
+			values_array.forEach(function(fvalue)
+			{
+				content+="<label>Key: <input type='text' value='"+fvalue.key+"'><br>Column: <input type='text' value='"+fvalue.column+"'></label>";
+			});
+			$(attribute_label).html(content);
+		}
+	});
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_update_access('form276'))
+		{
+			var last_updated=get_my_time();
+			var returns_column_array=[];
+			$("#modal169_columns").find('label').each(function()
+			{
+				var return_obj=new Object();
+				return_obj.key=$(this).find('input:first-child').val();
+				return_obj.column=$(this).find('input:nth-child(3)').val();
+				returns_column_array.push(return_obj);
+			});
+
+			var return_columns=JSON.stringify(returns_column_array);
+			var search_xml="<system_search>" +
+						"<id>"+search_id+"</id>" +
+						"<return_columns>"+return_columns+"</return_columns>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</system_search>";
+			update_simple(search_xml);					
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal169").dialog("close");
+	});
+	
+	$("#modal169").dialog("open");
 }

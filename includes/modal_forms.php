@@ -1663,8 +1663,9 @@
 	<div id="modal169" title="Search Return Columns">
 		<form id='modal169_form' autocomplete="off">
 			<fieldset>
-				<label id='modal168_columns'></label><br>
-				<input type="hidden" name='id'>
+				<input type="button" class='add_icon' name='add_button'>
+				<input type="button" class='delete_icon' name='delete_button'>
+				<div id='modal169_columns'></div><br>
 				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>
 		</form>

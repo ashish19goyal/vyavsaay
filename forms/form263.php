@@ -1,7 +1,7 @@
 <div id='form263' class='function_detail'>
 	<form id='form263_master' autocomplete="off">
 		<fieldset>	    
-		   <label>Gird Name: <input type='text' required name='grid'></label>
+		   <label>Grid Name: <input type='text' required name='grid'></label>
 		   	<label>	<input type='hidden' name='id'>
 		   			<input type='button' class='save_icon' name='save'>
 		   	</label>
