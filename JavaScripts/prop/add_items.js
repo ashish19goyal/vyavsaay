@@ -17070,11 +17070,11 @@ function form276_add_item()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form276_"+id+"' value='"+id+"'>";	
 						rowsHTML+="<input type='submit' class='save_icon' form='form276_"+id+"'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form276_"+id+"' title='Delete' onclick='onclick='$(this).parent().parent().remove();'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form276_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
 						rowsHTML+="<input type='button' class='generic_icon' form='form276_"+id+"' value='Return Columns' onclick=\"modal169_action('"+id+"')\">";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-				
+
 		$('#form276_body').prepend(rowsHTML);
 		longPressEditable($('.dblclick_editable'));
 		
