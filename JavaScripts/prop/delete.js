@@ -4328,8 +4328,12 @@ function form136_delete_item(button)
 			var batch_xml="<product_instances>" +
 						"<id>"+data_id+"</id>" +
 						"</product_instances>";	
+			var return_xml="<supplier_return_items>" +
+						"<id>"+data_id+"</id>" +
+						"</supplier_return_items>";
 			delete_simple(data_xml);
 			delete_simple(batch_xml);
+			delete_simple(return_xml);
 					
 			$(button).parent().parent().remove();
 			form136_get_totals();

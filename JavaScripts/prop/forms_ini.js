@@ -13342,6 +13342,7 @@ function form136_ini()
 				"<po_tax></po_tax>"+				
 				"<quantity></quantity>" +
 				"<storage></storage>" +
+				"<qc></qc>"+
 				"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
 				"</supplier_bill_items>";
 		
@@ -13375,6 +13376,12 @@ function form136_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form136_"+id+"' value='"+result.storage+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
+						if(result.qc=='accepted')
+						{						
+							rowsHTML+=" <img id='form136_check_image_"+id+"' src='./images/green_circle.png' class='green_circle' title='Accepted' data-accepted='accepted'>";
+						}else {
+							rowsHTML+=" <img id='form136_check_image_"+id+"' src='./images/red_circle.png' class='red_circle' title='Rejected' data-accepted='rejected'>";
+						}
 						rowsHTML+="<input type='hidden' form='form136_"+id+"' value='"+id+"'>";
 						rowsHTML+="<input type='submit' class='submit_hidden' form='form136_"+id+"' id='save_form136_"+id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form136_"+id+"' id='delete_form136_"+id+"' onclick='form136_delete_item($(this));'>";
@@ -22493,10 +22500,10 @@ function form213_ini()
 					rowsHTML+="<td data-th='Details'>";
 						rowsHTML+="<textarea readonly='readonly' form='form213_"+result.id+"' class='dblclick_editable'>"+result.detail+"</textarea>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Due Date'>";
+					rowsHTML+="<td data-th='Followup Date'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form213_"+result.id+"' class='dblclick_editable' value='"+get_my_past_date(result.due_date)+"'>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Identified By'>";
+					rowsHTML+="<td data-th='Identified By/PoC'>";
 					if(result.identified_by=="")
 						rowsHTML+="<input type='text' readonly='readonly' form='form213_"+result.id+"' class='dblclick_editable' value='"+result.identified_by+"'>";
 					else

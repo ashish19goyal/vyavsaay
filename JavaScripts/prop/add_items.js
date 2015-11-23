@@ -7317,6 +7317,7 @@ function form136_add_item()
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new storage' id='form136_add_storage_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+=" <img id='form136_check_image_"+id+"' src='./images/green_circle.png' class='green_circle' title='Accepted' data-accepted='accepted'>";
 				rowsHTML+="<input type='hidden' form='form136_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='button' class='submit_hidden' form='form136_"+id+"' id='save_form136_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form136_"+id+"' id='delete_form136_"+id+"' onclick='$(this).parent().parent().remove(); form136_get_totals();'>";
@@ -7347,7 +7348,26 @@ function form136_add_item()
 		var po_tax_rate_filter=fields.elements[14];
 
 		batch_filter.value=String(bill_id).substr(1,8);
-			
+
+		var qc_image=document.getElementById('form136_check_image_'+id);
+		$(qc_image).on('click',function(event)
+		{
+			if(qc_image.getAttribute('data-accepted')=='rejected')
+			{
+				qc_image.setAttribute('src','./images/green_circle.png');
+				qc_image.setAttribute('class','green_circle');
+				qc_image.setAttribute('data-accepted','accepted');							
+				qc_image.setAttribute('title','Accepted');							
+			}
+			else
+			{
+				qc_image.setAttribute('src','./images/red_circle.png');
+				qc_image.setAttribute('class','red_circle');			
+				qc_image.setAttribute('data-accepted','rejected');
+				qc_image.setAttribute('title','Rejected');							
+			}
+		});
+
 		var barcode_filter=document.getElementById("form136_barcode_"+id);
 		$(barcode_filter).on('click',function () 
 		{
@@ -12623,10 +12643,10 @@ function form213_add_item()
 			rowsHTML+="<td data-th='Details'>";
 				rowsHTML+="<textarea form='form213_"+id+"' class='dblclick_editable'></textarea>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Due Date'>";
+			rowsHTML+="<td data-th='Followup Date'>";
 				rowsHTML+="<input type='text' class='dblclick_editable' form='form213_"+id+"'>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Identified By'>";
+			rowsHTML+="<td data-th='Identified By/PoC'>";
 				rowsHTML+="<input type='text' form='form213_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' id='form213_add_staff_"+id+"'>";
 			rowsHTML+="</td>";

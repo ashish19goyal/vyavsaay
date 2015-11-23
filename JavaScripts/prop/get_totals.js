@@ -282,12 +282,19 @@ function form136_get_totals()
 	{
 		var subform_id=$(this).attr('form');
 		var subform=document.getElementById(subform_id);
-		if(!isNaN(parseFloat(subform.elements[4].value)))
-			amount+=parseFloat(subform.elements[4].value);
-		if(!isNaN(parseFloat(subform.elements[5].value)))
-			tax+=parseFloat(subform.elements[5].value);
-		if(!isNaN(parseFloat(subform.elements[2].value)))
-			total_quantity+=parseFloat(subform.elements[2].value);
+				
+		var qc_id=subform.elements[10].value;
+		var qc=document.getElementById('form136_check_image_'+qc_id).getAttribute('data-accepted');
+		
+		if(qc=='accepted')
+		{
+			if(!isNaN(parseFloat(subform.elements[4].value)))
+				amount+=parseFloat(subform.elements[4].value);
+			if(!isNaN(parseFloat(subform.elements[5].value)))
+				tax+=parseFloat(subform.elements[5].value);
+			if(!isNaN(parseFloat(subform.elements[2].value)))
+				total_quantity+=parseFloat(subform.elements[2].value);
+		}
 	});
 
 	amount=my_round(amount,2);

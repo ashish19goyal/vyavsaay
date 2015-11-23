@@ -10618,6 +10618,8 @@ function form136_create_item(form)
 	if(is_create_access('form136'))
 	{
 		var bill_id=document.getElementById("form136_master").elements['id'].value;
+		var supplier=document.getElementById("form136_master").elements['supplier'].value;
+		var entry_date=get_raw_time(document.getElementById("form136_master").elements['entry_date'].value);
 		
 		var name=form.elements[0].value;
 		var batch=form.elements[1].value;
@@ -10635,9 +10637,10 @@ function form136_create_item(form)
 		var data_id=form.elements[10].value;
 		var save_button=form.elements[11];
 		var del_button=form.elements[12];
-				
+		
+		var qc=document.getElementById('form136_check_image_'+data_id).getAttribute('data-accepted');
 		var last_updated=get_my_time();
-			
+
 		var data_xml="<supplier_bill_items>" +
 				"<id>"+data_id+"</id>" +
 				"<product_name>"+name+"</product_name>" +
@@ -10652,6 +10655,7 @@ function form136_create_item(form)
 				"<po_price>"+po_unit+"</po_price>" +
 				"<bill_id>"+bill_id+"</bill_id>" +
 				"<storage>"+storage+"</storage>" +
+				"<qc>"+qc+"</qc>"+
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</supplier_bill_items>";	
 		var batch_xml="<product_instances>" +
@@ -10663,6 +10667,29 @@ function form136_create_item(form)
 				"</product_instances>";
 		create_simple(batch_xml);
 		create_simple(data_xml);
+		
+		if(qc=='rejected')
+		{
+			var return_xml="<supplier_returns>" +
+					"<id>"+bill_id+"</id>" +
+					"<supplier>"+supplier+"</supplier>" +
+					"<return_date>"+entry_date+"</return_date>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</supplier_returns>";
+		
+			var return_data_xml="<supplier_return_items>" +
+						"<id>"+data_id+"</id>" +
+						"<return_id>"+bill_id+"</return_id>"+					
+						"<item_name>"+name+"</item_name>" +
+						"<batch>"+batch+"</batch>" +
+						"<quantity>"+quantity+"</quantity>" +
+						"<storage>"+storage+"</storage>"+
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</supplier_return_items>";
+			
+			create_simple(return_data_xml);
+			create_simple_no_warning(return_xml);
+		}
 				
 		for(var i=0;i<10;i++)
 		{
@@ -10734,12 +10761,19 @@ function form136_create_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			if(!isNaN(parseFloat(subform.elements[4].value)))
-				amount+=parseFloat(subform.elements[4].value);
-			if(!isNaN(parseFloat(subform.elements[5].value)))
-				tax+=parseFloat(subform.elements[5].value);
-			if(!isNaN(parseFloat(subform.elements[2].value)))
-				total_quantity+=parseFloat(subform.elements[2].value);
+			
+			var qc_id=subform.elements[10].value;
+			var qc=document.getElementById('form136_check_image_'+qc_id).getAttribute('data-accepted');
+		
+			if(qc=='accepted')
+			{
+				if(!isNaN(parseFloat(subform.elements[4].value)))
+					amount+=parseFloat(subform.elements[4].value);
+				if(!isNaN(parseFloat(subform.elements[5].value)))
+					tax+=parseFloat(subform.elements[5].value);
+				if(!isNaN(parseFloat(subform.elements[2].value)))
+					total_quantity+=parseFloat(subform.elements[2].value);
+			}
 		});
 		
 		amount=my_round(amount,2);
