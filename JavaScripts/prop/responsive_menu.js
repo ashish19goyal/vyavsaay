@@ -124,6 +124,7 @@ function init_functions_tabs()
 			activate:function(e, ui) 
 		    {
 		    	e.currentTarget.blur();
+				/*				
 				if(func=='customers')
 				{				
 					if(typeof map41 != 'undefined')
@@ -160,6 +161,7 @@ function init_functions_tabs()
 					if(typeof map85 != 'undefined')		    	
 		    			map85.invalidateSize(false);
 				}
+				*/
 				vyavsaay_active_tab=ui.newPanel.attr('id');
 		    },
 		    beforeActivate:function(event,ui)
@@ -188,6 +190,7 @@ function init_functions_accordion()
 			activate:function(e, ui) 
 		    {
 		    	//e.currentTarget.blur();
+				/*
 				if(func=='customers')
 				{				
 					if(typeof map41 != 'undefined')
@@ -222,6 +225,7 @@ function init_functions_accordion()
 					if(typeof map85 != 'undefined')		    	
 		    			map85.invalidateSize(false);
 				}
+				*/
 				vyavsaay_active_tab=ui.newPanel.attr('id');
 		    },
 		    beforeActivate:function(event,ui)

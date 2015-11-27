@@ -74,6 +74,7 @@
 		echo "<script type='text/javascript'>";
 		echo "function hide_all_grids(){".$hide_string."};";
 		echo "system_grids_array=".$function_array_string."];";
+		echo "system_grids_array.push('settings');";		
 		echo $script_content;
 		echo "</script>";
 	}
