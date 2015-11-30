@@ -934,24 +934,21 @@ function form258_get_totals()
 	});
 
 	var cartage=0;
-	var other_charges=0;
 	
 	if(document.getElementById('form258_cartage'))
 	{
 		cartage=parseFloat(document.getElementById('form258_cartage').value);
-		other_charges=parseFloat(document.getElementById('form258_other_charges').value);
 	}
 	
 	var amount=my_round(amount,2);		
 	var tax=my_round(tax,2);		
-	var total=my_round((total+cartage+other_charges),0);
+	var total=my_round((total+cartage),0);
 
 	var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
-						"<td>Amount:<br>Tax:<br>Cartage: <br>Other Charges: <br>Total: </td>" +
+						"<td>Amount:<br>Tax:<br>Transport Charges: <br>Total: </td>" +
 						"<td>Rs. "+amount+"</br>" +
 						"Rs. "+tax+" <br>" +
 						"Rs. <input type='number' value='"+my_round(cartage,2)+"' step='any' id='form258_cartage' class='dblclick_editable'><br>" +
-						"Rs. <input type='number' value='"+my_round(other_charges,2)+"' step='any' id='form258_other_charges' class='dblclick_editable'><br>" +
 						"Rs. "+total+"</td>" +
 						"<td></td>" +
 						"</tr>";

@@ -10152,13 +10152,13 @@ function form258_header_ini()
 						spec_rowsHTML+="<form id='form258_spec_"+id+"' autocomplete='off'></form>";
 							spec_rowsHTML+="<td data-th='S.No.'>";
 							spec_rowsHTML+="</td>";
-							spec_rowsHTML+="<td data-th='Item'>";
-								spec_rowsHTML+="<input type='text' readonly='readonly' form='form258_spec_"+id+"' value='"+attribute.name+"'>";
-							spec_rowsHTML+="</td>";
-							spec_rowsHTML+="<td data-th='Specification'>";
+							//spec_rowsHTML+="<td data-th='Item'>";
+							//	spec_rowsHTML+="<input type='text' readonly='readonly' form='form258_spec_"+id+"' value='"+attribute.name+"'>";
+							//spec_rowsHTML+="</td>";
+							spec_rowsHTML+="<td data-th='Type'>";
 								spec_rowsHTML+="<input type='text' readonly='readonly' form='form258_spec_"+id+"' value='"+spec_split[0]+"'>";
 							spec_rowsHTML+="</td>";
-							spec_rowsHTML+="<td data-th='Detail'>";
+							spec_rowsHTML+="<td data-th='Specification'>";
 								spec_rowsHTML+="<textarea form='form258_spec_"+id+"' readonly='readonly'>"+spec_split[1]+"</textarea>";
 							spec_rowsHTML+="</td>";
 							spec_rowsHTML+="<td data-th='Action'>";

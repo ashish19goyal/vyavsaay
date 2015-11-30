@@ -58,15 +58,14 @@
 	</table>
 
 	<br>
-	<b>Specifications <input type='checkbox' id='checkbox_form258_spec' name='specs'></b>
+	<b>Technical Specifications <input type='checkbox' id='checkbox_form258_spec'></b>
 	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form258_spec_header'></form>
 					<th style='width:50px;'>S.No.</th>
-					<th>Item </th>
+					<th>Type</th>
 					<th>Specification</th>
-					<th>Detail</th>
 					<th><input type='button' class='add_icon' form='form258_spec_header' title='Add Specification' onclick='form258_add_spec();'></th>			
 			</tr>
 		</thead>

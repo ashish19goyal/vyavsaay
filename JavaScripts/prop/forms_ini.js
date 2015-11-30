@@ -27514,6 +27514,10 @@ function form258_ini()
 				"<specifications></specifications>" +
 				"<spares></spares>"+
 				"<items></items>"+
+				"<amount></amount>"+
+				"<tax></tax>"+
+				"<cartage></cartage>"+
+				"<total></total>"+					
 				"</quotation>";
 		
 		var filter_fields=document.getElementById('form258_master');
@@ -27572,6 +27576,7 @@ function form258_ini()
 				});
 				$('#form258_tc_body').html(rowsHTML);
 
+				
 				/////////////////banks////////////////
 				var bank_array=JSON.parse(quot_results[0].banks);
 				var bank_id=get_new_key();
@@ -27607,7 +27612,7 @@ function form258_ini()
 				$('#form258_bank_body').html(bank_rowsHTML);
 
 				/////////////////specifications////////////////
-				console.log(quot_results[0].specifications);
+				//console.log(quot_results[0].specifications);
 				var spec_array=JSON.parse(quot_results[0].specifications);
 				var spec_id=get_new_key();
 				var spec_counter=0;
@@ -27621,13 +27626,13 @@ function form258_ini()
 						spec_rowsHTML+="<td data-th='S.No.'>";
 						spec_rowsHTML+=spec_counter;
 						spec_rowsHTML+="</td>";
-						spec_rowsHTML+="<td data-th='Item'>";
-							spec_rowsHTML+="<input type='text' readonly='readonly' form='form258_spec_"+id+"' value='"+spec.item+"'>";
-						spec_rowsHTML+="</td>";
-						spec_rowsHTML+="<td data-th='Specification'>";
+						//spec_rowsHTML+="<td data-th='Item'>";
+						//	spec_rowsHTML+="<input type='text' readonly='readonly' form='form258_spec_"+id+"' value='"+spec.item+"'>";
+						//spec_rowsHTML+="</td>";
+						spec_rowsHTML+="<td data-th='Type'>";
 							spec_rowsHTML+="<input type='text' readonly='readonly' form='form258_spec_"+id+"' value='"+spec.spec+"'>";
 						spec_rowsHTML+="</td>";
-						spec_rowsHTML+="<td data-th='Detail'>";
+						spec_rowsHTML+="<td data-th='Specification'>";
 							spec_rowsHTML+="<textarea readonly='readonly' form='form258_spec_"+id+"'>"+spec.details+"</textarea>";
 						spec_rowsHTML+="</td>";
 						spec_rowsHTML+="<td data-th='Action'>";
@@ -27710,7 +27715,30 @@ function form258_ini()
 				});
 				
 				$('#form258_item_body').html(item_rowsHTML);
-				form258_get_totals();
+				
+				var total_quantity=0;
+			
+				$("[id^='save_form258_item_']").each(function(index)
+				{
+					var subform_id=$(this).attr('form');
+					var subform=document.getElementById(subform_id);
+			
+					if(!isNaN(parseFloat(subform.elements[1].value)))
+						total_quantity+=parseFloat(subform.elements[1].value);
+				});
+			
+				var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
+								"<td>Amount:<br>Tax:<br>Transport Charges: <br>Total: </td>" +
+								"<td>Rs. "+quot_results[0].amount+"</br>" +
+								"Rs. "+quot_results[0].tax+" <br>" +
+								"Rs. <input type='number' value='"+quot_results[0].cartage+"' step='any' id='form258_cartage' class='dblclick_editable'><br>" +
+								"Rs. "+quot_results[0].total+"</td>" +
+								"<td></td>" +
+								"</tr>";
+				
+				$('#form258_item_foot').html(total_row);
+				
+				//form258_get_totals();
 				
 				
 				///////////csv preparation///////////

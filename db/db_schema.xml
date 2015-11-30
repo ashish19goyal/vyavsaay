@@ -262,7 +262,7 @@
 	<supplier_bills>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<bill_id index='yes' type="VARCHAR(50)"></bill_id>
-			<order_num index='yes' type="VARCHAR(50)"></order_num>
+			<order_num index='yes' type="TEXT"></order_num>
 			<order_id index='yes' type="BIGINT"></order_id>
 			<supplier index='yes' type="TEXT"></supplier>
 			<bill_date index='yes' type="BIGINT"></bill_date>
@@ -449,7 +449,7 @@
 	</offers>
 	<sale_orders>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<order_num index='yes' type="VARCHAR(20)"></order_num>
+			<order_num index='yes' type="TEXT"></order_num>
 			<bill_id index='yes' type="TEXT"></bill_id>
 			<return_id index='yes' type="BIGINT"></return_id>
 			<channel index='yes' type="TEXT"></channel>
@@ -496,9 +496,9 @@
 	<bills>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<customer_name index='yes' type="TEXT"></customer_name>
-			<bill_num index='yes' type="VARCHAR(20)"></bill_num>
+			<bill_num index='yes' type="TEXT"></bill_num>
 			<order_id index='yes' type="BIGINT"></order_id>
-			<order_num index='yes' type="VARCHAR(20)"></order_num>
+			<order_num index='yes' type="TEXT"></order_num>
 			<bill_date index='yes' type="BIGINT"></bill_date>
 			<due_date index='yes' type="BIGINT"></due_date>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
@@ -528,7 +528,7 @@
 			<status index='yes' type="VARCHAR(30)"></status><!--cancelled-->
 			<cform index='no' type="VARCHAR(30)"></cform><!--yes/no-->
 			<pick_bag_num index='yes' type="VARCHAR(20)"></pick_bag_num>
-			<manifest_num index="yes" type="VARCHAR(30)"></manifest_num>
+			<manifest_num index="yes" type="TEXT"></manifest_num>
 			<manifest_id index="yes" type="BIGINT"></manifest_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
@@ -982,7 +982,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<provider index='yes' type="TEXT"></provider>
 			<type index='yes' type="VARCHAR(15)"></type><!-- positive/negative -->
-			<order_num index='yes' type="BIGINT"></order_num>
+			<order_num index='yes' type="TEXT"></order_num>
 			<detail index='no' type="TEXT"></detail>
 			<rating index='no' type="VARCHAR(10)"></rating><!-- 1/2/3/4/5-->
 			<date index='yes' type="BIGINT"></date>
@@ -1650,7 +1650,7 @@
 			<awb_num index='yes' type="VARCHAR(20)"></awb_num>
 			<channel_name index='yes' type="TEXT"></channel_name>
 			<type index='yes' type="VARCHAR(10)"></type><!--COD/RTM/PREPAID-->
-			<order_num index='no' type="VARCHAR(20)"></order_num>
+			<order_num index='no' type="TEXT"></order_num>
 			<manifest_id index='no' type="VARCHAR(20)"></manifest_id>
 			<merchant_name index='no' type="TEXT"></merchant_name>
 			<ship_to index='no' type="TEXT"></ship_to>
@@ -1866,7 +1866,7 @@
 			<customer index='yes' type="TEXT"></customer>
 			<challan_num index='yes' type="TEXT"></challan_num>
 			<bill_id index='yes' type="BIGINT"></bill_id>
-			<bill_num index='yes' type="VARCHAR(20)"></bill_num>
+			<bill_num index='yes' type="TEXT"></bill_num>
 			<challan_date index='yes' type="BIGINT"></challan_date>
 			<total_quantity index='yes' type="DECIMAL(12,2)"></total_quantity>
 			<type index="yes" type="VARCHAR(10)"></type><!-- sale/repair/service -->

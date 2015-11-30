@@ -4947,9 +4947,9 @@ function print_form258(func)
 	spec_table.setAttribute('class','plain_table');
 	var table_header="<tr>"+
 				"<td style='border: 1px solid #000;text-align:left;width:10%;'>S.No.</td>"+
-				"<td style='border: 1px solid #000;text-align:left;width:30%;'>Item</td>"+
-				"<td style='border: 1px solid #000;text-align:left;width:30%'>Type</td>"+
-				"<td style='border: 1px solid #000;text-align:left;width:30%'>Details</td></tr>";
+				//"<td style='border: 1px solid #000;text-align:left;width:30%;'>Item</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:45%'>Type</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:45%'>Specification</td></tr>";
 				
 	var table_rows=table_header;
 	var counter=0;
@@ -4958,13 +4958,13 @@ function print_form258(func)
 	{
 		counter+=1;
 		var form=$(this)[0];
-		var item=form.elements[0].value;
-		var spec=form.elements[1].value;
-		var details=form.elements[2].value;
+		//var item=form.elements[0].value;
+		var spec=form.elements[0].value;
+		var details=form.elements[1].value;
 		
 		table_rows+="<tr>"+
 				"<td style='border: 1px solid #000;text-align:left;'>"+counter+"</td>"+
-				"<td style='border: 1px solid #000;text-align:left;'>"+item+"</td>"+
+				//"<td style='border: 1px solid #000;text-align:left;'>"+item+"</td>"+
 				"<td style='border: 1px solid #000;text-align:left;'>"+spec+"</td>"+
 				"<td style='border: 1px solid #000;text-align:left;'>"+details+"</td></tr>";
 	});

@@ -18070,12 +18070,10 @@ function form258_create_form()
 		});
 	
 		var cartage=0;
-		var other_charges=0;
 		
 		if(document.getElementById('form258_cartage'))
 		{
 			cartage=parseFloat(document.getElementById('form258_cartage').value);
-			other_charges=parseFloat(document.getElementById('form258_other_charges').value);
 		}
 		
 		var amount=my_round(amount,2);		
@@ -18083,11 +18081,10 @@ function form258_create_form()
 		var total=my_round((total+cartage+other_charges),0);
 	
 		var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
-							"<td>Amount:<br>Tax:<br>Cartage: <br>Other Charges: <br>Total: </td>" +
+							"<td>Amount:<br>Tax:<br>Transport Charges: <br>Total: </td>" +
 							"<td>Rs. "+amount+"</br>" +
 							"Rs. "+tax+" <br>" +
 							"Rs. <input type='number' value='"+my_round(cartage,2)+"' step='any' id='form258_cartage' class='dblclick_editable'><br>" +
-							"Rs. <input type='number' value='"+my_round(other_charges,2)+"' step='any' id='form258_other_charges' class='dblclick_editable'><br>" +
 							"Rs. "+total+"</td>" +
 							"<td></td>" +
 							"</tr>";
@@ -18144,11 +18141,11 @@ function form258_create_form()
 			var subform=document.getElementById(subform_id);
 	
 			var item_obj=new Object();
-			item_obj.item=subform.elements[0].value;
-			item_obj.spec=subform.elements[1].value;
-			item_obj.details=subform.elements[2].value;
+			//item_obj.item=subform.elements[0].value;
+			item_obj.spec=subform.elements[0].value;
+			item_obj.details=subform.elements[1].value;
 			spec_array.push(item_obj);	
-			for(var i=0;i<3;i++)
+			for(var i=0;i<2;i++)
 			{
 				$(subform.elements[i]).attr('readonly','readonly');
 			}
@@ -18208,7 +18205,6 @@ function form258_create_form()
 					"<amount>"+amount+"</amount>"+
 					"<tax>"+tax+"</tax>"+
 					"<cartage>"+cartage+"</cartage>"+
-					"<other_charges>"+other_charges+"</other_charges>"+
 					"<total>"+total+"</total>"+
 					"<specifications>"+specifications+"</specifications>"+
 					"<spares>"+spares+"</spares>"+

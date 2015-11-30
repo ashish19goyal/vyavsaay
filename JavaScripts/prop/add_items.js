@@ -7314,7 +7314,6 @@ function form136_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Storage Area'>";
 				rowsHTML+="<input type='text' form='form136_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new storage' id='form136_add_storage_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+=" <img id='form136_check_image_"+id+"' src='./images/green_circle.png' class='green_circle' title='Accepted' data-accepted='accepted'>";
@@ -15890,13 +15889,13 @@ function form258_add_spec()
 			spec_rowsHTML+="<form id='form258_spec_"+id+"' autocomplete='off'></form>";
 				spec_rowsHTML+="<td data-th='S.No.'>";
 				spec_rowsHTML+="</td>";
-				spec_rowsHTML+="<td data-th='Item'>";
+				//spec_rowsHTML+="<td data-th='Item'>";
+				//	spec_rowsHTML+="<input type='text' form='form258_spec_"+id+"'>";
+				//spec_rowsHTML+="</td>";
+				spec_rowsHTML+="<td data-th='Type'>";
 					spec_rowsHTML+="<input type='text' form='form258_spec_"+id+"'>";
 				spec_rowsHTML+="</td>";
 				spec_rowsHTML+="<td data-th='Specification'>";
-					spec_rowsHTML+="<input type='text' form='form258_spec_"+id+"'>";
-				spec_rowsHTML+="</td>";
-				spec_rowsHTML+="<td data-th='Detail'>";
 					spec_rowsHTML+="<textarea form='form258_spec_"+id+"'></textarea>";
 				spec_rowsHTML+="</td>";
 				spec_rowsHTML+="<td data-th='Action'>";
@@ -15908,7 +15907,8 @@ function form258_add_spec()
 		$('#form258_spec_body').append(spec_rowsHTML);
 		
 		var fields=document.getElementById("form258_spec_"+id);
-		var name_filter=fields.elements[0];
+		var type_filter=fields.elements[0];
+		$(type_filter).focus();
 		
 		$(fields).on("submit", function(event)
 		{
@@ -15916,6 +15916,8 @@ function form258_add_spec()
 			form258_add_spec();
 		});
 		
+		/*
+		var name_filter=fields.elements[0];
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
@@ -15923,7 +15925,8 @@ function form258_add_spec()
 		{
 			$(name_filter).focus();
 		});
-
+		*/
+		
 		form258_get_totals();
 	}
 	else

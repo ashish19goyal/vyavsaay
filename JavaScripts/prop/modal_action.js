@@ -938,7 +938,7 @@ function modal14_action(func)
 	var fdescription=form.elements[3];
 	var fpictureinfo=form.elements[4];
 	var fpicture=form.elements[5];
-	var dummy_button=fields.elements[6];
+	var dummy_button=form.elements[6];
 	var fbarcode=form.elements[8];
 	var auto_generate=form.elements[9];
 	
