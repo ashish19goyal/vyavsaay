@@ -2,7 +2,9 @@
 	
 	include_once "./Classes/db.php";
 	use RetailingEssentials\db_connect;
-	
+
+	if(isset($_SESSION['domain']))
+	{	
 		$domain=$_SESSION['domain'];
 		$db_name="re_user_".$domain;
 		$conn=new db_connect($db_name);
@@ -61,6 +63,7 @@
 					"$('#search_results').html('Type atleast 3 letters to find any results');}};";
 		$search_ini.="</script>";
 		echo $search_ini;
+	}
 ?>
 
 <div id='search_results_box'>

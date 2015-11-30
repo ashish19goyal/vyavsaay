@@ -529,6 +529,7 @@
 			<cform index='no' type="VARCHAR(30)"></cform><!--yes/no-->
 			<pick_bag_num index='yes' type="VARCHAR(20)"></pick_bag_num>
 			<manifest_num index="yes" type="TEXT"></manifest_num>
+			<awb_num index="yes" type="TEXT"></awb_num>
 			<manifest_id index="yes" type="BIGINT"></manifest_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
@@ -1632,6 +1633,38 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</system_search>
+	<system_notifications>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="TEXT"></name>
+			<description index='no' type="TEXT"></description>
+			<function_name index='no' type="TEXT"></function_name>
+			<function_def index='no' type="TEXT"></function_def>
+			<initial_delay index='no' type="INT"></initial_delay>
+			<repeat_delay index='no' type="INT"></repeat_delay>
+			<status index='yes' type="VARCHAR(30)"></status><!--active/inactive-->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</system_notifications>
+	<system_values_list>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<tablename index='yes' type="VARCHAR(50)"></tablename>
+			<listname index='yes' type="VARCHAR(50)"></listname>
+			<values_array index='no' type="TEXT"></values_array>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</system_values_list>
+	<system_popboxes>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<box_id index='yes' type="TEXT"></box_id>
+			<box_title index='yes' type="TEXT"></box_title>
+			<box_type index='yes' type="VARCHAR(20)"></box_type><!--information/actionable-->
+			<box_content index='no' type="TEXT"></box_content>
+			<function_name index='no' type="TEXT"></function_name>
+			<function_def index='no' type="TEXT"></function_def>
+			<status index='yes' type="VARCHAR(30)"></status><!--active/inactive-->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</system_popboxes>
 	<letterheads>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="TEXT"></name>

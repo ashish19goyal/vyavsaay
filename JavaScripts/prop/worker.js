@@ -572,14 +572,7 @@ function notifications4_add()
 									"<target_user></target_user>"+
 									"<last_updated>"+last_updated+"</last_updated>" +
 									"</notifications>";
-							if(is_online())
-							{
-								server_create_simple_no_warning(product_xml);
-							}
-							else
-							{
-								local_create_simple_no_warning(product_xml);
-							}
+							create_simple_no_warning(product_xml);
 						}
 					});
 				});

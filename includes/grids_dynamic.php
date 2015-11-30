@@ -89,6 +89,9 @@
 						"else{".
 							"window.location.assign('main.php');}".
 					"});}".
+			"system_grids_array=['settings'];".
+			"function calculate_grid_metrics(){};".
+			"function hide_all_grids(){};".
 			"</script>";
 	}
 ?>
