@@ -464,6 +464,11 @@
 	"purchase_leads":"Purchase Leads",
 	"inventory_pooja":"Inventory (Electronics)",
 	"in_out_pooja":"In-out (Electronics)",
-	"search_queries":"Search Queries"
+	"search_queries":"Search Queries",
+	"manage_notifications":"Manage Notifications",
+	"values_list_compact":"Manage Values List (compact)",
+	"to_do":"To-Do list",
+	"dispatch_orders":"Dispatch Orders",
+	"manage_pop_boxes":"Manage Pop-boxes"
 	}
 }

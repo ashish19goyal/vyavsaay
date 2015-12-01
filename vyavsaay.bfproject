@@ -1,7 +1,8 @@
 c2e.convert_special: 0
 e2c.convert_num: 0
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/main.php:0:0:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/includes/grids_dynamic.php:3074:2000:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/includes/grids_dynamic.php:2987:2000:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/db/master_db_data.xml:8272:0:1:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -13,7 +14,7 @@ view_left_panel: 1
 default_mime_type: text/plain
 e2c.convert_xml: 1
 c2e.convert_iso: 0
-opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/includes
+opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/db
 wrap_text_default: 0
 bookmarks_filename_mode: 0
 ssearch_text: templ
@@ -49,7 +50,6 @@ ssearch_regex: 0
 e2c.convert_iso: 0
 ssearch_casesens: 0
 charmap_block: 1
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/add_items%20(ashish%20goyal's%20conflicted%20copy%202015-11-29).js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/footer%20(ashish%20goyal's%20conflicted%20copy%202015-11-29).html
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/footer.html
@@ -79,8 +79,9 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/includes/modal
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/vyavsaay.appcache
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/main.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/includes/grids_dynamic.php
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/db/master_db_data.xml
 snr_replacetype: 0
-savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/includes
+savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/db
 spell_check_default: 1
 spell_insert_entities: 0
 last_filefilter: 

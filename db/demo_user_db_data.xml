@@ -3869,6 +3869,61 @@
 			<tables>--system_search--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form277</name>
+			<display_name>manage_notifications</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--system_notifications--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form278</name>
+			<display_name>values_list_compact</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--system_values_list--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form279</name>
+			<display_name>to_do</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--task_instances--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form280</name>
+			<display_name>dispatch_orders</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--bills--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form281</name>
+			<display_name>manage_pop_boxes</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--system_popboxes--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -7373,6 +7428,61 @@
 			<username>master</username>
 			<element_id>form276</element_id>
 			<element_name>search_queries</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form277</element_id>
+			<element_name>manage_notifications</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form278</element_id>
+			<element_name>values_list_compact</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form279</element_id>
+			<element_name>to_do</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form280</element_id>
+			<element_name>dispatch_orders</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form281</element_id>
+			<element_name>manage_pop_boxes</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

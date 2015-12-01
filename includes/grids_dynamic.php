@@ -86,11 +86,11 @@
 						"var applicationCache = window.applicationCache;".
 						"applicationCache.update();".						
 
-						"if(response_object.status=='Failed Authentication'){".
+						//"if(response_object.status=='Failed Authentication'){".
 							"delete_session();".
 							"hide_loader();}".
-						"else{".
-							"window.location.assign('main.php');}".
+						//"else{".
+						//	"window.location.assign('main.php');}".
 					"});}".
 			"system_grids_array=['settings'];".
 			"function calculate_grid_metrics(){};".
