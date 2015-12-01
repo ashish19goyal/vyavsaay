@@ -88,7 +88,7 @@
 
 						//"if(response_object.status=='Failed Authentication'){".
 							"delete_session();".
-							"hide_loader();}".
+							"hide_loader();".
 						//"else{".
 						//	"window.location.assign('main.php');}".
 					"});}".

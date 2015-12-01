@@ -1,5 +1,4 @@
 CACHE MANIFEST
-
 #An application's cache is only updated when its manifest file changes.
 #Updating the date and version in a comment line is one way to make the browser re-cache files.
 #Modify the manifest file itself to inform the browser to refresh cached files.
@@ -225,7 +224,7 @@ locales/translation-pa.json
 #
 #Files listed under this header require a connection to the server, and will never be cached 
 
-NETWROK:
+NETWORK:
 *
 
 #
