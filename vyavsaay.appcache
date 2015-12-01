@@ -222,15 +222,6 @@ JavaScripts/prop/get_totals.js
 locales/translation-en.json
 locales/translation-hi.json
 locales/translation-pa.json
-templates/credit_note/default_credit_note.css
-templates/pamphlet/default_pamphlet.css
-templates/payment_receipt/default_payment_receipt.css
-templates/product_bill/default_product_sale_bill.css
-templates/purchase_order/default_purchase_order.css
-templates/return_receipt/default_return_receipt.css
-templates/supplier_return/default_supplier_return.css
-templates/sale_bill/default_sale_bill.css
-templates/service_bill/default_service_sale_bill.css
 #
 #Files listed under this header require a connection to the server, and will never be cached 
 

@@ -83,7 +83,10 @@
 		echo "<div><input type='password' placeholder='Enter password' id='cache_clear_password'><input type='button' value='Enter' onclick=loading_main_page();></div>";
 		echo "<script>function loading_main_page(){".
 					"ajax_json('./ajax_json/login.php',{domain:get_session_var('domain'),user:get_session_var('username'),pass:document.getElementById('cache_clear_password').value},function(response_object){".
-						"if(response_object.status!='Failed Authentication'){".
+						"var applicationCache = window.applicationCache;".
+						"applicationCache.update();".						
+
+						"if(response_object.status=='Failed Authentication'){".
 							"delete_session();".
 							"hide_loader();}".
 						"else{".
