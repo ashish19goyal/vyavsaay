@@ -33,83 +33,106 @@ function worker_update_orders_status()
 								"</bill_items>";
 			get_single_column_data(function (pick_items) 
 			{
-				var packed_pending_xml="<bill_items>"+
-								"<bill_id array='yes'>"+bill_id_string+"</bill_id>"+
-								"<packing_status exact='yes'>pending</packing_status>"+
-								"</bill_items>";
-				get_single_column_data(function (pack_items)
+				var picked_pending_adjust_xml="<inventory_adjust>"+
+								"<source_id array='yes'>"+bill_id_string+"</source_id>"+
+								"<picked_status exact='yes'>pending</picked_status>"+
+								"</inventory_adjust>";
+				get_single_column_data(function (pick_adjust_items) 
 				{
-					var data_xml="<sale_orders>";
-					var counter=1;
-					var last_updated=get_my_time();
-				
-					orders.forEach(function(row)
+					pick_adjust_items.forEach(function(pick_adjust)
 					{
-						var bill_id_array=JSON.parse(row.bill_id);
-						var picked=true;
-						var packed=true;
-						
-						var partially="";
-						
-						if(row.status.indexOf('partially')>-1)
-						{
-							partially="partially ";
-						}
-						for(var y in bill_id_array)
-						{
-							for(var x in pick_items)
-							{
-								if(pick_items[x]==bill_id_array[y].bill_id)
-								{
-									picked=false;
-									break;
-								}
-							}
-						}
-						
-						for(var y in bill_id_array)
-						{
-							for(var x in pack_items)
-							{
-								if(pack_items[x]==bill_id_array[y].bill_id)
-								{
-									packed=false;
-									break;
-								}
-							}
-						}
-
-						if(picked && packed)
-						{
-							row.status='packed';
-						}
-						else if(picked)
-						{
-							row.status='picked';
-						}
-
-						if(row.status!='billed' && row.status!='partially billed')
-						{
-							if((counter%500)===0)
-							{
-								data_xml+="</sale_orders><separator></separator><sale_orders>";
-							}
-
-							counter+=1;						
-							data_xml+="<row>" +
-								"<id>"+row.id+"</id>" +
-								"<status>"+partially+row.status+"</status>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</row>";
-						}
+						pick_items.push(pick_adjust);
 					});
-					data_xml+="</sale_orders>";
 					
-					update_batch(data_xml);
-					hide_loader();
-					form108_ini();
-					
-				},packed_pending_xml);				
+					var packed_pending_xml="<bill_items>"+
+									"<bill_id array='yes'>"+bill_id_string+"</bill_id>"+
+									"<packing_status exact='yes'>pending</packing_status>"+
+									"</bill_items>";
+					get_single_column_data(function (pack_items)
+					{
+						var packed_pending_adjust_xml="<inventory_adjust>"+
+										"<source_id array='yes'>"+bill_id_string+"</source_id>"+
+										"<packing_status exact='yes'>pending</packing_status>"+
+										"</inventory_adjust>";
+						get_single_column_data(function (pack_adjust_items) 
+						{
+							pack_adjust_items.forEach(function(pack_adjust)
+							{
+								pack_items.push(pack_adjust);
+							});
+						
+							var data_xml="<sale_orders>";
+							var counter=1;
+							var last_updated=get_my_time();
+						
+							orders.forEach(function(row)
+							{
+								var bill_id_array=JSON.parse(row.bill_id);
+								var picked=true;
+								var packed=true;
+								
+								var partially="";
+								
+								if(row.status.indexOf('partially')>-1)
+								{
+									partially="partially ";
+								}
+								for(var y in bill_id_array)
+								{
+									for(var x in pick_items)
+									{
+										if(pick_items[x]==bill_id_array[y].bill_id)
+										{
+											picked=false;
+											break;
+										}
+									}
+								}
+								
+								for(var y in bill_id_array)
+								{
+									for(var x in pack_items)
+									{
+										if(pack_items[x]==bill_id_array[y].bill_id)
+										{
+											packed=false;
+											break;
+										}
+									}
+								}
+		
+								if(picked && packed)
+								{
+									row.status='packed';
+								}
+								else if(picked)
+								{
+									row.status='picked';
+								}
+		
+								if(row.status!='billed' && row.status!='partially billed')
+								{
+									if((counter%500)===0)
+									{
+										data_xml+="</sale_orders><separator></separator><sale_orders>";
+									}
+		
+									counter+=1;						
+									data_xml+="<row>" +
+										"<id>"+row.id+"</id>" +
+										"<status>"+partially+row.status+"</status>" +
+										"<last_updated>"+last_updated+"</last_updated>" +
+										"</row>";
+								}
+							});
+							data_xml+="</sale_orders>";
+							
+							update_batch(data_xml);
+							hide_loader();
+							form108_ini();
+						},packed_pending_adjust_xml);						
+					},packed_pending_xml);
+				},picked_pending_adjust_xml);			
 			},picked_pending_xml);	
 		});
 	}
