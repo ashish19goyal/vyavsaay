@@ -10955,3 +10955,63 @@ function form276_header_ini()
 
 	set_my_filter(name_data,table_filter);
 };
+
+/**
+ * @form Dispatch Orders
+ * @formNo 280
+ */
+function form280_header_ini()
+{
+	var filter_fields=document.getElementById('form280_master');	
+	var channel_filter=filter_fields.elements['channel'];
+	var start_date=filter_fields.elements['start_date'];
+	var end_date=filter_fields.elements['end_date'];
+	var export_button=filter_fields.elements['export'];
+	
+	$(start_date).datepicker();
+	$(end_date).datepicker();
+	
+	var channel_data="<sale_channels>"+
+					"<name></name>"+
+					"</sale_channels>";
+	set_my_value_list(channel_data,channel_filter);
+					
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function (e) 
+	{
+		e.preventDefault();
+		var columns=new Object();
+		columns.count=0;
+		columns.start_index=0;
+		columns.data_store='bills';		
+		
+		columns.indexes=[{index:'id'},
+						{index:'bill_num'},
+						{index:'order_num'},
+						{index:'order_id'},
+						{index:'status'},
+						{index:'awb_num'},
+						{index:'channel',value:channel_filter.value},
+						{index:'bill_date',lowerbound:get_raw_time(start_date.value),upperbound:get_raw_time(end_date.value)}];		
+		//console.log(columns);
+		get_export_data_restructured(columns,'Order Status for Dispatch',function(new_results)
+		{
+			var sorted_array=[];
+			new_results.forEach(function(new_result)
+			{
+				var sorted_element=new Object();
+				sorted_element['ID']=new_result.id;
+				sorted_element['Order ID']=new_result.order_id;
+				sorted_element['Invoice Number']=new_result.bill_num;
+				sorted_element['Order Number']=new_result.order_num;
+				sorted_element['Channel']=new_result.channel;
+				sorted_element['Invoice Date']=get_my_past_date(new_result.bill_date);
+				sorted_element['AWB Number']=new_result.awb_num;
+				sorted_element['Status']=new_result.status;
+				
+				sorted_array.push(sorted_element);
+			});
+			return sorted_array;
+		});
+	});	
+};

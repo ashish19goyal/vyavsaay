@@ -2303,21 +2303,28 @@ function form69_add_item()
 			}
 		});
 
-		$(sp_filter).on('change',function(event)
+		$(sp_filter).on('change blur',function(event)
 		{
-			unit_price_filter.value=my_round(parseFloat(sp_filter.value)/(1+parseFloat(tax_unit_filter.value)/100),2);			
+			unit_price_filter.value=my_round(parseFloat(sp_filter.value)/(1+parseFloat(tax_unit_filter.value)/100),2);
+			$(unit_price_filter).trigger('change');			
 		});
 		
 		$(quantity_filter).add(unit_price_filter).on('change',function(event)
 		{
 			amount_filter.value=my_round(parseFloat(quantity_filter.value)*parseFloat(unit_price_filter.value),2);
 			freight_filter.value=my_round((parseFloat(freight_unit_filter.value)*parseFloat(quantity_filter.value)),2);			
-						
+					
 			tax_filter.value=my_round(((parseFloat(tax_unit_filter.value)*(parseFloat(amount_filter.value)))/100),2);			
 			if(isNaN(parseFloat(tax_filter.value)))
 				tax_filter.value=0;
 			if(isNaN(parseFloat(freight_filter.value)))
 				freight_filter.value=0;	
+			total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value)+parseFloat(freight_filter.value));
+			
+		});
+
+		$(freight_filter).on('change blur',function(event)
+		{
 			total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value)+parseFloat(freight_filter.value));
 		});
 
@@ -3475,12 +3482,17 @@ function form91_add_item()
 			tax_filter.value=0;
 		});
 
-		$(quantity_filter).on('blur',function(event)
+		$(quantity_filter).on('change blur',function(event)
 		{
 			var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
 			amount_filter.value=amount;
 			freight_filter.value=my_round((parseFloat(freight_unit_filter.value)*parseFloat(quantity_filter.value)),2);			
 			tax_filter.value=my_round(((parseFloat(tax_unit_filter.value)*amount)/100),2);			
+			total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value)+parseFloat(freight_filter.value));
+		});
+
+		$(freight_filter).on('change blur',function(event)
+		{
 			total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value)+parseFloat(freight_filter.value));
 		});
 

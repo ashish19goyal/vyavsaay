@@ -1671,4 +1671,16 @@
 		</form>
 	</div>
 
+	<div id="modal170" title="Import Disaptch Information">
+		<form id='modal170_form' autocomplete="off">
+			<fieldset>
+				<input type="file" required value='Select file' accept=".csv" style='display:none'>
+				<input type='button' class='generic_red_icon' value='Select File'>
+				<br>
+				<output name='selected_file'></output><br>
+				<input type="submit" value='Import' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

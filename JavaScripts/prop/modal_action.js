@@ -13626,3 +13626,151 @@ function modal169_action(search_id)
 	
 	$("#modal169").dialog("open");
 }
+
+/**
+ * @modal Import Dispatch Information
+ */
+function modal170_action()
+{
+	var form=document.getElementById('modal170_form');
+	
+	var select_file=form.elements[1];
+	var dummy_button=form.elements[2];
+	var selected_file=form.elements[3];
+	var import_button=form.elements[4];
+
+	$(dummy_button).off('click'); 
+	$(dummy_button).on('click',function (e) 
+	{
+		e.preventDefault();
+		$(select_file).trigger('click');
+	});
+
+	dummy_button.setAttribute('class','generic_red_icon');
+	select_file.value="";
+	selected_file.value="";
+	
+	$(select_file).off('change');
+	$(select_file).on('change',function () 
+	{
+		var file_name=select_file.value;
+		if(file_name!="" && (file_name.indexOf('csv')>-1))
+		{
+			dummy_button.setAttribute('class','generic_green_icon');
+			selected_file.value=file_name;
+		}
+		else 
+		{
+			dummy_button.setAttribute('class','generic_red_icon');
+			select_file.value="";
+			selected_file.value="";
+		}
+	});
+
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		show_progress();
+							
+		var file=select_file.files[0];
+        var fileType = /csv/gi;
+		
+        selected_file.value = "Uploading!! Please don't refresh";
+    	var reader = new FileReader();
+        reader.onload = function(e)
+        {        	
+        	progress_value=2;
+	       	var content=reader.result;
+	       	var data_array=csv_string_to_obj_array(content);
+
+	       	progress_value=5;
+	    				
+			
+			var validate_template_array=[{column:'ID',required:'yes'},
+									{column:'Order ID'},
+									{column:'AWB Number',regex:new RegExp('^[0-9a-zA-Z -]+$')},
+									{column:'Status',list:['dispatched','','null']}];
+		
+			var error_array=validate_import_array(data_array,validate_template_array);
+			if(error_array.status=='success')
+			{
+        		progress_value=10;
+    	
+		    	var data_xml="<bills>";
+	       		var data2_xml="<sale_orders>";
+	       		var counter=1;
+				var last_updated=get_my_time();
+				
+				
+				data_array.forEach(function(row)
+				{
+					if((counter%500)===0)
+					{
+						data_xml+="</bills><separator></separator><bills>";
+						data2_xml+="</sale_orders><separator></separator><sale_orders>";
+					}
+					counter+=1;
+					data_xml+="<row>" +
+							"<id>"+row['ID']+"</id>" +
+							"<awb_num>"+row['AWB Number']+"</awb_num>"+
+							"<status>"+row['Status']+"</status>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</row>";
+					if(row['Order ID']!="")
+					{
+						data2_xml+="<row>" +
+							"<id>"+row['Order ID']+"</id>" +
+							"<status>"+row['Status']+"</status>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</row>";
+					}
+				});
+	
+				
+				data_xml+="</bills>";
+				data2_xml+="</sale_orders>";
+				
+				update_batch(data_xml);
+				update_batch(data2_xml);
+				
+	           	////////////////////
+	        	progress_value=15;
+	        	
+	        	//console.log(data_array.length);
+	        	
+	        	var ajax_complete=setInterval(function()
+	        	{
+	        		//console.log(number_active_ajax);
+	        		if(number_active_ajax===0)
+	        		{
+	        			progress_value=15+(1-(localdb_open_requests/(2*data_array.length)))*85;
+	        		}
+	        		else if(localdb_open_requests===0)
+	        		{
+	        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
+	        		}
+	        		
+	        		if(number_active_ajax===0 && localdb_open_requests===0)
+	        		{
+	        			hide_progress();
+	        			selected_file.value="Upload complete";
+	        			$(select_file).val('');
+	        			$("#modal170").dialog("close");
+	        			clearInterval(ajax_complete);
+	        		}
+	        	},1000);
+	        }
+	        else 
+	        {
+	        	hide_progress();
+    			$(select_file).val('');
+    			$("#modal170").dialog("close");
+    			modal164_action(error_array);
+	        }
+	     };
+	     reader.readAsText(file);    
+    });
+	
+	$("#modal170").dialog("open");
+}
