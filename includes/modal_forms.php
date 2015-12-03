@@ -1683,4 +1683,17 @@
 		</form>
 	</div>
 
+	<div id="modal171" title="Email Document">
+		<form id='modal171_form' autocomplete="off">
+			<fieldset>
+				<label>To: <input type='text' readonly="readonly"></label><br>
+				<label>Email: <textarea required title='Separate email IDs with semicolon(;)'></textarea></label><br>
+				<label>Subject: <textarea></textarea></label><br>
+				<label>Body: <textarea></textarea></label><br>
+				<input type='hidden'>
+				<input type="submit" value='Send' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

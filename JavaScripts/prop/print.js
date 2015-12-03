@@ -2976,7 +2976,10 @@ function print_form195(id,func)
 	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	business_details.innerHTML=business_address+"<br>Phone: "+business_phone+"<br>Email: "+business_email+"<br>Web: "+business_website;
 	date_info.innerHTML=date;
-	subject_info.innerHTML="Subject: "+subject;
+	if(subject!="")	
+	{
+		subject_info.innerHTML="Subject: "+subject;
+	}
 	to_info.innerHTML=to;
 	salutation_info.innerHTML=salutation;
 	
@@ -4826,8 +4829,8 @@ function print_form258(func)
 		var business_info=document.createElement('div');
 
 	var footer=document.createElement('div');
-		var tandc=document.createElement('div');
 		var signature=document.createElement('div');
+		var jurisdiction=document.createElement('div');
 
 ////////////setting styles for containers/////////////////////////
 
@@ -4839,8 +4842,8 @@ function print_form258(func)
 		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:100px;border: 1px solid #00f;border-radius:5px;');
 		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:100px;border: 1px solid #00f;border-radius:5px;');
 	footer.setAttribute('style','width:98%;min-height:50px');
-		tandc.setAttribute('style','float:left;width:60%;min-height:50px');
 		signature.setAttribute('style','float:right;width:30%;min-height:50px');
+		jurisdiction.setAttribute('style','margin:10px;width:100%;min-height:20px;text-align:left;font-size:11px;');
 
 ///////////////getting the content////////////////////////////////////////
 
@@ -4860,9 +4863,15 @@ function print_form258(func)
 	var quot_no=master_form.elements['quot_num'].value;
 	var customer_address=master_form.elements['address'].value;
 	var quot_type=master_form.elements['type'].value;
+	var computer_generated=master_form.elements['computer_generated'].checked;
 		
-	var signature_text="<br>Computer Generated<br><br><br>Signature Not Required<br>";
-	
+	var signature_text="<br><br><br>Signature<br>";
+	if(computer_generated)
+	{
+		var signature_text="<br>Computer Generated. Signature Not Required<br>";
+		signature.setAttribute('style','text-align:center;min-height:20px;');
+	}
+
 	////////////////filling in the content into the containers//////////////////////////
 
 	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
@@ -4875,7 +4884,7 @@ function print_form258(func)
 	business_info.innerHTML="Quotation #:"+quot_no+"<br>Date: "+date+"<br>Valid Upto:"+valid_date+"<br>Issued By: "+issued_by+"<br>Type: "+quot_type;
 	
 	signature.innerHTML=signature_text;
-
+	jurisdiction.innerHTML="Note: All disputes subjected to Delhi Jurisdiction";
 	
 	/////////////adding item table //////////////////////////////////////////////////////	
 	var item_table_element=document.getElementById(form_id+'_item_body');
@@ -5100,8 +5109,8 @@ function print_form258(func)
 	info_section.appendChild(customer_info);
 	info_section.appendChild(business_info);
 	
-	footer.appendChild(tandc);
 	footer.appendChild(signature);
+	footer.appendChild(jurisdiction);
 	
 	func(container);
 }

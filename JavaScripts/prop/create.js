@@ -18078,7 +18078,7 @@ function form258_create_form()
 		
 		var amount=my_round(amount,2);		
 		var tax=my_round(tax,2);		
-		var total=my_round((total+cartage+other_charges),0);
+		var total=my_round((total+cartage),0);
 	
 		var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 							"<td>Amount:<br>Tax:<br>Transport Charges: <br>Total: </td>" +
@@ -18124,15 +18124,17 @@ function form258_create_form()
 			var subform=document.getElementById(subform_id);
 	
 			var item_obj=new Object();
+			
 			item_obj.item=subform.elements[0].value;
 			item_obj.description=subform.elements[1].value;
 			item_obj.quantity=subform.elements[2].value;
+			var id=subform.elements[3].value;
+			item_obj.unit=document.getElementById('form258_spare_unit_'+id).innerHTML;
 			spares_array.push(item_obj);
 			for(var i=0;i<3;i++)
 			{
 				$(subform.elements[i]).attr('readonly','readonly');
 			}
-	
 		});
 
 		$("[id^='save_form258_spec_']").each(function(index)
@@ -18232,9 +18234,10 @@ function form258_create_form()
 		{
 			if(num_ids.length>0)
 			{
+				var quot_num_array=quot_num.split("-");
 				var num_xml="<user_preferences>"+
 								"<id>"+num_ids[0]+"</id>"+
-								"<value>"+(parseInt(quot_num)+1)+"</value>"+
+								"<value>"+(parseInt(quot_num_array[1])+1)+"</value>"+
 								"<last_updated>"+last_updated+"</last_updated>"+
 								"</user_preferences>";
 				update_simple(num_xml);

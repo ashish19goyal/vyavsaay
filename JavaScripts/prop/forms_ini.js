@@ -27666,7 +27666,7 @@ function form258_ini()
 							spare_rowsHTML+="<textarea readonly='readonly' form='form258_spare_"+id+"' >"+spare.description+"</textarea>";
 						spare_rowsHTML+="</td>";
 						spare_rowsHTML+="<td data-th='Quantity'>";
-							spare_rowsHTML+="<input type='number' readonly='readonly' form='form258_spare_"+id+"' step='any' value='"+spare.quantity+"'>";
+							spare_rowsHTML+="<input type='number' readonly='readonly' form='form258_spare_"+id+"' step='any' value='"+spare.quantity+"'><vy id='form258_spare_unit_"+id+"'>"+spare.unit+"</vy>";
 						spare_rowsHTML+="</td>";
 						spare_rowsHTML+="<td data-th='Action'>";
 							spare_rowsHTML+="<input type='hidden' form='form258_spare_"+id+"' value='"+id+"'>";
@@ -27775,11 +27775,10 @@ function form258_ini()
 				$(share_button).show();
 				$(share_button).click(function()
 				{
-					modal101_action('Quotation from - '+bt,filter_fields.elements['customer'].value,'customer',function (func) 
+					modal171_action('Quotation from - '+bt,filter_fields.elements['customer'].value,'customer',function (func) 
 					{
 						print_form258(func);
-					//},'csv',message_attachment);
-					});
+					},'image');
 				});
 			}
 					

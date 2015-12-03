@@ -13774,3 +13774,149 @@ function modal170_action()
 	
 	$("#modal170").dialog("open");
 }
+
+/**
+ * @modal Email documents (body editable)
+ * @modalNo 171
+ */
+function modal171_action(doc_type,person,person_type,func,attachment_type)
+{
+	show_loader();
+	var form=document.getElementById('modal171_form');
+	
+	func(function(container)
+	{
+		var business_title=get_session_var('title');
+		
+		var message_attachment=container.innerHTML;
+		var from=get_session_var('email');
+
+		var person_filter=form.elements[1];
+		$(person_filter).off('blur');
+		form.elements[3].value=doc_type;
+		
+		$("#modal171").dialog("open");
+						
+		if(person!="")
+		{
+			var email_id_xml="<suppliers>"+
+					"<email></email>"+
+					"<name></name>"+
+					"<acc_name exact='yes'>"+person+"</acc_name>"+
+					"</suppliers>";
+			if(person_type=='customer')			
+			{
+				email_id_xml="<customers>"+
+						"<email></email>"+
+						"<name></name>"+
+						"<acc_name exact='yes'>"+person+"</acc_name>"+
+						"</customers>";
+			}
+			else if(person_type=='staff')			
+			{
+				email_id_xml="<staff>"+
+						"<email></email>"+
+						"<name></name>"+
+						"<acc_name exact='yes'>"+person+"</acc_name>"+
+						"</staff>";
+			}
+	
+			fetch_requested_data('',email_id_xml,function(emails)
+			{
+				if(emails.length>0)
+				{
+					form.elements[1].value=person;
+					form.elements[2].value=emails[0].email;
+					form.elements[5].value=emails[0].name;
+				}
+				$('textarea').autosize();
+				hide_loader();			
+			});
+		}		
+		else
+		{
+			var person_xml="<suppliers>"+
+						"<acc_name></acc_name>"+
+						"</suppliers>";
+			if(person_type=='customer')			
+			{
+				person_xml="<customers>"+
+						"<acc_name></acc_name>"+
+						"</customers>";
+			}
+			else if(person_type=='staff')			
+			{
+				person_xml="<staff>"+
+						"<acc_name></acc_name>"+
+						"</staff>";
+			}
+			
+			person_filter.removeAttribute('readonly');
+			
+			set_my_value_list_func(person_xml,person_filter,function () 
+			{
+				$(person_filter).focus();
+			});
+			
+			$(person_filter).on('blur',function () 
+			{
+				var email_id_xml="<suppliers count='1'>"+
+					"<email></email>"+
+					"<name></name>"+
+					"<acc_name exact='yes'>"+person_filter.value+"</acc_name>"+
+					"</suppliers>";
+				
+				if(person_type=='customer')			
+				{
+					email_id_xml="<customers>"+
+							"<email></email>"+
+							"<name></name>"+
+							"<acc_name exact='yes'>"+person_filter.value+"</acc_name>"+
+							"</customers>";
+				}
+				else if(person_type=='staff')			
+				{
+					email_id_xml="<staff>"+
+							"<email></email>"+
+							"<name></name>"+
+							"<acc_name exact='yes'>"+person_filter.value+"</acc_name>"+
+							"</staff>";
+				}
+				fetch_requested_data('',email_id_xml,function(emails)
+				{
+					form.elements[2].value=emails[0].email;
+					form.elements[5].value=emails[0].name;
+				});
+			});
+			$('textarea').autosize();
+			hide_loader();
+		}	
+		
+		$(form).off("submit");
+		$(form).on("submit",function(event)
+		{
+			event.preventDefault();
+			show_loader();
+			var receiver=form.elements[5].value+":"+form.elements[2].value;
+			var sub=form.elements[3].value;
+			var email_message=form.elements[4].value;
+			email_message=email_message.replace(/\n/g,'<br>');
+			if(typeof attachment_type!='undefined')
+			{
+				//console.log(message_attachment);
+				send_email_attachment(receiver,from,business_title,sub,email_message,message_attachment,attachment_type,function()
+				{
+					hide_loader();
+				});
+			}
+			else 
+			{				
+				send_email(receiver,from,business_title,sub,email_message,function()
+				{
+					hide_loader();
+				});
+			}
+			$("#modal171").dialog("close");
+		});
+	});
+}

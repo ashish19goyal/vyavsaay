@@ -1,3 +1,4 @@
+/*
 function add_questionnaires(func)
 {
 	var struct_data="<ques_struct>"+
@@ -11,12 +12,13 @@ function add_questionnaires(func)
 	{
 		structs.forEach(function(struct)
 		{
-			if(is_create_access(struct.name))
+			if(is_read_access(struct.name))
 			{
 				var link="<li><a id='"+struct.name+"_link' href='#"+struct.name+"' onclick=\"initialize_questionnaires('"+struct.id+"','"+struct.name+"');\">"+struct.display_name+"</a></li>";	
 				var content="<div id='"+struct.name+"' class='function_detail'></div>";
-				var func_element=$("#"+struct.func+"_main");
+				//var func_element=$("#"+struct.func+"_main");
 				//console.log(func_element);			
+				
 				$("#"+struct.func+"_main").append(content);			
 				$("#"+struct.func+"_main").find('ul').first().append(link);
 				$('#'+struct.name+'_link').on('click',function () 
@@ -28,7 +30,7 @@ function add_questionnaires(func)
 		func();
 	});
 }
-
+*/
 
 function initialize_questionnaires(id,ques_name)
 {

@@ -19,8 +19,8 @@ function default_load()
 	
 	if(is_set_session())
 	{
-		add_questionnaires(function()
-		{
+		//add_questionnaires(function()
+		//{
 			responsive_tabs();
 			set_menu_shortcuts();
 			date_formating();
@@ -47,7 +47,7 @@ function default_load()
 			});
 			document.getElementById('master_title').innerHTML=get_session_var('title');			
 			hide_loader();					
-		});
+		//});
 	}
 	else
 	{
@@ -309,7 +309,7 @@ function modal_forms_ini()
 		});
 	}
 
-	for(var i=101;i<=170;i++)
+	for(var i=101;i<=171;i++)
 	{
 		var j=i;
 		$("#modal"+i).dialog({

@@ -15839,7 +15839,7 @@ function form258_add_spare()
 					spare_rowsHTML+="<textarea form='form258_spare_"+id+"' ></textarea>";
 				spare_rowsHTML+="</td>";
 				spare_rowsHTML+="<td data-th='Quantity'>";
-					spare_rowsHTML+="<input type='number' form='form258_spare_"+id+"' step='any'>";
+					spare_rowsHTML+="<input type='number' form='form258_spare_"+id+"' step='any'><vy id='form258_spare_unit_"+id+"'></vy>";
 				spare_rowsHTML+="</td>";
 				spare_rowsHTML+="<td data-th='Action'>";
 					spare_rowsHTML+="<input type='hidden' form='form258_spare_"+id+"' value='"+id+"'>";
@@ -15877,7 +15877,21 @@ function form258_add_spare()
 						"<description></description>"+
 						"<name exact='yes'>"+name_filter.value+"</name>"+
 						"</product_master>";
-			set_my_value(desc_data,desc_filter);			
+			set_my_value(desc_data,desc_filter);
+			
+			var unit_data="<attributes count='1'>"+
+						"<value></value>"+
+						"<attribute exact='yes'>Unit</attribute>"+
+						"<type exact='yes'>product</type>"+
+						"<name exact='yes'>"+name_filter.value+"</name>"+
+						"</attributes>";
+			get_single_column_data(function(units)
+			{
+				if(units.length>0)
+				{
+					document.getElementById('form258_spare_unit_'+id).innerHTML=units[0];
+				}
+			},unit_data);			
 		});		
 
 		form258_get_totals();
@@ -16164,7 +16178,7 @@ function form262_add_item()
 					rowsHTML+="<input type='hidden' form='form262_"+id+"' value='"+id+"'>";
 					rowsHTML+="<input type='submit' class='save_icon' form='form262_"+id+"'>";	
 					rowsHTML+="<input type='button' class='delete_icon' form='form262_"+id+"' onclick='$(this).parent().parent().remove(); form262_update_serial_numbers();'>";	
-				rowsHTML+="</td>";			
+				rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 	
 		$('#form262_body').prepend(rowsHTML);

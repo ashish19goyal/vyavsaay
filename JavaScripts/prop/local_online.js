@@ -415,27 +415,64 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
 	var pdf_elem=document.getElementById('pdf_print_div');
 	
 	if(email_enabled=='yes')
-	{	    	
-		if(is_online())
+	{
+		if(attachment_type=='image')
 		{
-			server_send_email_attachment(to,from,from_name,subject,message,message_attachment,func,attachment_type);
+			pdf_elem.innerHTML=message_attachment;
+			html2canvas(pdf_elem, 
+			{
+		        onrendered: function(canvas) 
+		        {   
+		        	new_message_attachment=canvas.toDataURL("image/jpeg");
+					pdf_elem.innerHTML="";
+		
+					if(is_online())
+					{
+						server_send_email(to,from,from_name,subject,message,new_message_attachment,func);
+					}
+					else
+					{
+						var email_data="<emails>"+
+									"<id>"+get_new_key()+"</id>"+
+									"<subject>"+subject+"</subject>"+
+									"<message>"+htmlentities(message)+"</message>"+
+									"<message_attachment>"+message_attachment+"</message_attachment>"+
+									"<receivers>"+to+"</receivers>"+
+									"<sender>"+from+"</sender>"+
+									"<sender_name>"+from_name+"</sender_name>"+
+									"<attachment_type>"+attachment_type+"</attachment_type>"+
+									"<status>pending</status>"+
+									"<last_updated>"+get_my_time()+"</last_updated>"+
+									"</emails>";
+						local_create_simple(email_data);			
+						func();
+					}	    
+		        }
+		    });
 		}
-		else
-		{
-			var email_data="<emails>"+
-						"<id>"+get_new_key()+"</id>"+
-						"<subject>"+subject+"</subject>"+
-						"<message>"+htmlentities(message)+"</message>"+
-						"<message_attachment>"+message_attachment+"</message_attachment>"+
-						"<receivers>"+to+"</receivers>"+
-						"<sender>"+from+"</sender>"+
-						"<sender_name>"+from_name+"</sender_name>"+
-						"<attachment_type>"+attachment_type+"</attachment_type>"+
-						"<status>pending</status>"+
-						"<last_updated>"+get_my_time()+"</last_updated>"+
-						"</emails>";
-			local_create_simple(email_data);			
-			func();
+		else 
+		{	    	
+			if(is_online())
+			{
+				server_send_email_attachment(to,from,from_name,subject,message,message_attachment,func,attachment_type);
+			}
+			else
+			{
+				var email_data="<emails>"+
+							"<id>"+get_new_key()+"</id>"+
+							"<subject>"+subject+"</subject>"+
+							"<message>"+htmlentities(message)+"</message>"+
+							"<message_attachment>"+message_attachment+"</message_attachment>"+
+							"<receivers>"+to+"</receivers>"+
+							"<sender>"+from+"</sender>"+
+							"<sender_name>"+from_name+"</sender_name>"+
+							"<attachment_type>"+attachment_type+"</attachment_type>"+
+							"<status>pending</status>"+
+							"<last_updated>"+get_my_time()+"</last_updated>"+
+							"</emails>";
+				local_create_simple(email_data);			
+				func();
+			}
 		}	        		
 	}
 	else

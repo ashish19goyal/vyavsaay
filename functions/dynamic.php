@@ -9,9 +9,14 @@
 		$db_name="re_user_".$domain;
 		$conn=new db_connect($db_name);
 		$query="select * from system_grids where status=?;";
+		$query2="select * from ques_struct where status=?;";
 		$stmt=$conn->conn->prepare($query);
 		$stmt->execute(array('active'));
 		$struct_res=$stmt->fetchAll(PDO::FETCH_ASSOC);
+		
+		$stmt2=$conn->conn->prepare($query2);
+		$stmt2->execute(array('active'));
+		$struct_res2=$stmt2->fetchAll(PDO::FETCH_ASSOC);
 		
 		for($i=0;$i<count($struct_res);$i++)
 		{
@@ -24,11 +29,28 @@
 				{
 					echo "<li><a id='".$elements_array[$x]['name']."_link' href='#".$elements_array[$x]['name']."' onclick='".$elements_array[$x]['onclick']."'>".$elements_array[$x]['display_name']."</a></li>";
 				}
+				
+				for($y=0;$y<count($struct_res2);$y++)
+				{
+					if($struct_res2[$y]['func']==$struct_res[$i]['name'])
+					{
+						echo "<li><a id='".$struct_res2[$y]['name']."_link' href='#".$struct_res2[$y]['name']."' onclick=initialize_questionnaires('".$struct_res2[$y]['id']."','".$struct_res2[$y]['name']."');>".$struct_res2[$y]['display_name']."</a></li>";
+					}
+				}
+				
 			echo "</ul>";
 			
 				for($x=0;$x<count($elements_array);$x++)
 				{
 					include $elements_array[$x]['type']."/".$elements_array[$x]['name'].".php";
+				}
+	
+				for($y=0;$y<count($struct_res2);$y++)
+				{
+					if($struct_res2[$y]['func']==$struct_res[$i]['name'])
+					{
+						echo "<div id='".$struct_res2[$y]['name']."' class='function_detail'></div>";
+					}
 				}
 			echo "</div>";	
 		}		

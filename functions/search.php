@@ -8,7 +8,7 @@
 		$domain=$_SESSION['domain'];
 		$db_name="re_user_".$domain;
 		$conn=new db_connect($db_name);
-		$query="select * from system_search where status=?;";
+		$query="select * from system_search where status=? order by id desc;";
 		$stmt=$conn->conn->prepare($query);
 		$stmt->execute(array('active'));
 		$struct_res=$stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -18,7 +18,10 @@
 					"$('#search_results').html('');".
 					"var length=searchStr.length;".
 					"if(length>=3){";
-		$search_ini.="var search_array=searchStr.split(' ');";			
+		$search_ini.="var new_search_array=searchStr.split(' ');";			
+
+		$search_ini.="var search_array=[searchStr];";
+		$search_ini.="new_search_array.forEach(function(new_search_string){search_array.push(new_search_string)});";			
 		
 		for($i=0;$i<count($struct_res);$i++)
 		{
@@ -40,11 +43,33 @@
 			
 			$search_ini.="read_json_rows('',search".$i."_columns,function(results){".
 						"var result_html='';".
+						"results.forEach(function(result)".
+						"{".
+							"result.search_priority=100;".
+							"for(var i in search_array)".
+							"{".
+								"if(result['".$struct_res[$i]['search_column']."'].indexOf(search_array[i])>-1)".
+								"{".
+									"result.search_priority=i;".
+									"break;".
+								"}".
+							"}".
+						"});".
+						"results.sort(function(a,b)".
+						"{".
+							"if(parseInt(a.search_priority)>parseInt(b.search_priority))".
+							"{	return 1;}".
+							"else". 
+							"{	return -1;}".
+						"});".
 						"results.forEach(function(result){".
 							"var record_detail='".$struct_res[$i]['result_detail']."';";
 							for($x=0;$x<count($return_columns);$x++)
 							{
-								$search_ini.="record_detail=record_detail.replace(/".$return_columns[$x]['key']."/g,result.".$return_columns[$x]['column'].");";
+								$search_ini.="if(result.".$return_columns[$x]['column']."!='' && result.".$return_columns[$x]['column']."!=null)".
+								"{record_detail=record_detail.replace(/".$return_columns[$x]['key']."/g,result.".$return_columns[$x]['column'].");}".
+								"else".								
+								"{record_detail=record_detail.replace(/".$return_columns[$x]['key']."/g,'');}";
 							}							
 							$search_ini.="if(record_detail!='' && record_detail!=null && record_detail!='null'){";
 							if($struct_res[$i]['table_name']=='activities')

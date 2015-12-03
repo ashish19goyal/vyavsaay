@@ -13886,7 +13886,12 @@ function form258_update_form()
 			item_obj.amount=subform.elements[3].value;
 			item_obj.tax=subform.elements[4].value;
 			item_obj.total=subform.elements[5].value;
-			items_array.push(item_obj);	
+			items_array.push(item_obj);
+			
+			for(var i=0;i<6;i++)
+			{
+				$(subform.elements[i]).attr('readonly','readonly');
+			}
 		});
 
 		$("[id^='save_form258_spare_']").each(function(index)
@@ -13898,7 +13903,14 @@ function form258_update_form()
 			item_obj.item=subform.elements[0].value;
 			item_obj.description=subform.elements[1].value;
 			item_obj.quantity=subform.elements[2].value;
-			spares_array.push(item_obj);	
+			var id=subform.elements[3].value;
+			item_obj.unit=document.getElementById('form258_spare_unit_'+id).innerHTML;
+			
+			spares_array.push(item_obj);
+			for(var i=0;i<3;i++)
+			{
+				$(subform.elements[i]).attr('readonly','readonly');
+			}	
 		});
 
 		$("[id^='save_form258_spec_']").each(function(index)
@@ -13911,6 +13923,10 @@ function form258_update_form()
 			item_obj.spec=subform.elements[0].value;
 			item_obj.details=subform.elements[1].value;
 			spec_array.push(item_obj);	
+			for(var i=0;i<2;i++)
+			{
+				$(subform.elements[i]).attr('readonly','readonly');
+			}
 		});
 
 		$("[id^='save_form258_bank_']").each(function(index)
@@ -13924,7 +13940,11 @@ function form258_update_form()
 			item_obj.ifsc=subform.elements[2].value;
 			item_obj.account_name=subform.elements[3].value;
 			item_obj.account_num=subform.elements[4].value;
-			banks_array.push(item_obj);		
+			banks_array.push(item_obj);	
+			for(var i=0;i<5;i++)
+			{
+				$(subform.elements[i]).attr('readonly','readonly');
+			}	
 		});
 
 		$("[id^='save_form258_tc_']").each(function(index)
@@ -13936,9 +13956,13 @@ function form258_update_form()
 			item_obj.type=subform.elements[0].value;
 			item_obj.tc=subform.elements[1].value;
 			terms_array.push(item_obj);	
+			for(var i=0;i<2;i++)
+			{
+				$(subform.elements[i]).attr('readonly','readonly');
+			}
 		});	
 	
-		console.log(spec_array);
+		//console.log(spec_array);
 		var specifications=JSON.stringify(spec_array);
 		var banks=JSON.stringify(banks_array);
 		var spares=JSON.stringify(spares_array);

@@ -9,7 +9,8 @@
 			<label>Issued By<br><input type='text' name='issued'></label>
 			<br>
 			<label>Status<br><input type='text' name='status'></label>
-			<label>	
+			<label>Computer Generated<br><input type='checkbox' name='computer_generated'></label>
+			<label>
 				<input type='hidden' name='id'>
 				<input type='hidden' name='address'>	
 			</label>

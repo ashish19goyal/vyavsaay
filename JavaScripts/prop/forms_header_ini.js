@@ -10010,7 +10010,10 @@ function form258_header_ini()
 				"<value></value>"+
 				"<name exact='yes'>quotation_num</name>"+
 				"</user_preferences>";
-		set_my_value(quot_num_data,quot_num);
+		set_my_value(quot_num_data,quot_num,function()
+		{
+			quot_num.value=get_session_var('quot_num_prefix')+"-"+quot_num.value;
+		});
 	}
 			
 	$(save_button).off('click');
