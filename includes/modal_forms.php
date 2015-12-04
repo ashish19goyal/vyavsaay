@@ -813,10 +813,11 @@
 	<div id="modal106" title="Add Ledger Entry">
 		<form id='modal106_form' autocomplete="off">
 			<fieldset>
-				<label>Account: <input type='text' required></label><br>
-				<label>Particulars: <textarea required></textarea></label><br>
-				<label>Type: <input type='text' required></label><br>
-				<label>Amount: <input type='number' step='2' required></label><br>
+				<label>Account: <input type='text' name='account' required></label><br>
+				<label>Date: <input type='text' name='date' required></label><br>
+				<label>Particulars: <textarea name='particulars' required></textarea></label><br>
+				<label>Type: <input type='text' name='type' required></label><br>
+				<label>Amount: <input type='number' name='amount' step='2' required></label><br>
 				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>
 		</form>
@@ -1485,11 +1486,12 @@
 	<div id="modal155" title="Add Receipt">
 		<form id='modal155_form' autocomplete="off">
 			<fieldset>
-				<label>Receipt Id: <input type='text' readonly="readonly" required></label><br>
-				<label>Account: <input type="text" required></label><br>
-				<label>Narration: <textarea></textarea></label><br>
-				<label>Receipt Amount: Rs. <input type="number" min='0' step='any' required></label><br>
-				<label>Balance <input type="text" readonly='readonly'></label><br>
+				<label>Receipt Id: <input type='text' name='receipt_id' readonly="readonly" required></label><br>
+				<label>Date: <input type="text" name='date' required></label><br>
+				<label>Account: <input type="text" name='account' required></label><br>
+				<label>Narration: <textarea name='narration'></textarea></label><br>
+				<label>Receipt Amount: Rs. <input type="number" min='0' step='any' name='amount' required></label><br>
+				<label>Balance <input type="text" readonly='readonly' name='balance'></label><br>
 				<input type="hidden" name='type'>
 				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>
@@ -1699,11 +1701,12 @@
 	<div id="modal172" title="Add Receipt">
 		<form id='modal172_form' autocomplete="off">
 			<fieldset>
-				<label>Receipt Id: <input type='text' required></label><br>
-				<label>Account: <input type="text" required></label><br>
-				<label>Narration: <textarea></textarea></label><br>
-				<label>Receipt Amount: Rs. <input type="number" min='0' step='any' required></label><br>
-				<label>Balance <input type="text" readonly='readonly'></label><br>
+				<label>Receipt Id: <input type='text' name='receipt_id' required></label><br>
+				<label>Date: <input type="text" name='date' required></label><br>
+				<label>Account: <input type="text" name='account' required></label><br>
+				<label>Narration: <textarea name='narration'></textarea></label><br>
+				<label>Receipt Amount: Rs. <input type="number" min='0' step='any' name='amount' required></label><br>
+				<label>Balance <input type="text" readonly='readonly' name='balance'></label><br>
 				<input type="hidden" name='type'>
 				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>

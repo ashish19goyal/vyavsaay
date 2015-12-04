@@ -2140,6 +2140,7 @@ function modal22_action(func)
 				if(found)
 				{
 		            $(this).val('');
+		            $(this).attr('placeholder','Batch Exists');
 		        }
 			});
 		},batch_data);
@@ -2994,6 +2995,7 @@ function modal29_action(button)
 function modal30_action()
 {
 	var form=document.getElementById("modal30_form");
+	var receipt_filter=form.elements[1];
 	var account_filter=form.elements[2];
 	var amount_filter=form.elements[3];
 	var balance_filter=form.elements[4];
@@ -3005,6 +3007,23 @@ function modal30_action()
 	set_my_value_list(accounts_data,account_filter);
 	set_static_value_list('receipts','type',type_filter);
 	
+	var receipts_data="<receipts>" +
+			"<receipt_id></receipt_id>" +
+			"</receipts>";
+	get_single_column_data(function(receipts)
+	{
+		$(receipt_filter).off('blur');
+		$(receipt_filter).on('blur',function(event)
+		{
+			var found = $.inArray($(this).val(), receipts) > -1;
+			if(found)
+			{
+	            $(this).val('');
+	            $(this).attr('placeholder','Duplicate Receipt Number');
+	        }
+		});
+	},receipts_data);
+
 	$(account_filter).off('blur');
 	$(account_filter).on('blur',function(e)
 	{
@@ -3151,6 +3170,8 @@ function modal30_action()
 								"<payment_id>"+account.id+"</payment_id>" +
 								"<type>"+account.type+"</type>" +
 								"<amount>"+(parseFloat(account.total_amount)-parseFloat(account.paid_amount))+"</amount>" +
+								"<acc_name>"+account_name+"</acc_name>" +
+								"<date>"+last_updated+"</date>" +
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</receipts_payment_mapping>";
 						
@@ -3389,7 +3410,7 @@ function modal31_action()
 	$(receipt_filter).off('blur');
 	$(receipt_filter).on('blur',function(e)
 	{
-		var receipts_data="<receipts>" +
+		var receipts_data="<receipts count='1'>" +
 				"<id></id>" +
 				"<receipt_id exact='yes'>"+receipt_filter.value+"</receipt_id>" +
 				"<amount></amount>" +
@@ -3457,17 +3478,19 @@ function modal31_action()
 		event.preventDefault();
 		var receipt_id=form.elements[1].value;
 		
-		if(is_delete_access('form124'))
+		console.log(receipt_id);
+		if(is_delete_access('form124') || is_delete_access('form243') || is_delete_access('form282'))
 		{
 			var receipts_data="<receipts_payment_mapping>" +
 				"<id></id>" +
-				"<receipt_id exact='yes'>"+receipt_filter.value+"</receipt_id>" +
+				"<receipt_id exact='yes'>"+receipt_id+"</receipt_id>" +
 				"<payment_id></payment_id>" +
 				"<amount></amount>" +
 				"</receipts_payment_mapping>";
 
 			fetch_requested_data('',receipts_data,function(receipts)
 			{
+				console.log(receipts);
 				receipts.forEach(function(receipt)
 				{	
 					var payments_data="<payments>" +
@@ -3492,13 +3515,13 @@ function modal31_action()
 						});
 						
 						var receipt_xml="<receipts>" +
-							"<receipt_id>"+receipt_filter.value+"</receipt_id>" +
+							"<receipt_id>"+receipt_id+"</receipt_id>" +
 							"</receipts>";
 						var receipt_payment_xml="<receipts_payment_mapping>" +
-							"<receipt_id>"+receipt_filter.value+"</receipt_id>" +
+							"<receipt_id>"+receipt_id+"</receipt_id>" +
 							"</receipts_payment_mapping>";
 						var payment_xml="<payments>" +
-							"<bill_id>"+receipt_filter.value+"</bill_id>" +
+							"<bill_id>"+receipt_id+"</bill_id>" +
 							"<source_info>receipts</source_info>" +
 							"</payments>";
 												
@@ -6118,13 +6141,17 @@ function modal106_action()
 {
 	var form=document.getElementById('modal106_form');
 
-	var account_filter=form.elements[1];
-	var type_filter=form.elements[3];
+	var account_filter=form.elements['account'];
+	var date_filter=form.elements['date'];
+	var type_filter=form.elements['type'];
 
+	$(date_filter).datepicker();
+	date_filter.value=get_my_date();
+	
 	set_static_value_list('modal106','type',type_filter);
 	var account_data="<accounts>"+
-						"<acc_name></acc_name>"+
-						"</accounts>";	
+					"<acc_name></acc_name>"+
+					"</accounts>";	
 	set_my_value_list(account_data,account_filter);
 		
 	$(form).off("submit");
@@ -6132,18 +6159,19 @@ function modal106_action()
 	{
 		event.preventDefault();
 		
-		var account=form.elements[1].value;
-		var particulars=form.elements[2].value;
+		var account=form.elements['account'].value;
+		var particulars=form.elements['particulars'].value;
+		var entry_date=get_raw_time(form.elements['date'].value);
 		var type='received';		
 		var receiver='master';
 		var giver=account;
-		if(form.elements[3].value=='debit')
+		if(form.elements['type'].value=='debit')
 		{
 			type='paid';
 			receiver=account;
 			giver='master';
 		}		
-		var amount=form.elements[4].value;
+		var amount=form.elements['amount'].value;
 		var data_id=get_new_key();
 		var last_updated=get_my_time();
 		var data_xml="<payments>" +
@@ -6153,28 +6181,21 @@ function modal106_action()
 					"<total_amount>"+amount+"</total_amount>" +
 					"<paid_amount>0</paid_amount>"+
 					"<status>pending</status>"+
-					"<date>"+last_updated+"</date>"+
+					"<date>"+entry_date+"</date>"+
 					"<transaction_id>"+data_id+"</transaction_id>"+
 					"<source_info>"+particulars+"</source_info>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</payments>";
 		var pt_xml="<transactions>" +
-						"<id>"+data_id+"</id>" +
-						"<trans_date>"+last_updated+"</trans_date>" +
-						"<amount>"+amount+"</amount>" +
-						"<receiver>"+receiver+"</receiver>" +
-						"<giver>"+giver+"</giver>" +
-						"<tax>0</tax>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</transactions>";
-		if(is_online())
-		{
-			server_create_simple(data_xml);
-		}
-		else
-		{
-			local_create_simple(data_xml);
-		}	
+					"<id>"+data_id+"</id>" +
+					"<trans_date>"+entry_date+"</trans_date>" +
+					"<amount>"+amount+"</amount>" +
+					"<receiver>"+receiver+"</receiver>" +
+					"<giver>"+giver+"</giver>" +
+					"<tax>0</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</transactions>";
+		create_simple(data_xml);
 		
 		$("#modal106").dialog("close");
 	});
@@ -7975,6 +7996,7 @@ function modal120_action(func,product_name,required)
 				if(found)
 				{
 		            $(this).val('');
+		            $(this).attr('placeholder','Batch Exists');
 		        }
 			});
 		},batch_data);
@@ -7996,6 +8018,7 @@ function modal120_action(func,product_name,required)
 				if(found)
 				{
 		            $(this).val('');
+		            $(this).attr('placeholder','Batch Exists');
 		        }
 			});
 		},batch_data);
@@ -10591,6 +10614,7 @@ function modal142_action(func)
 				if(found)
 				{
 		            $(this).val('');
+		            $(this).attr('placeholder','Batch Exists');
 		        }
 			});
 		},batch_data);
@@ -10612,6 +10636,7 @@ function modal142_action(func)
 				if(found)
 				{
 		            $(this).val('');
+		            $(this).attr('placeholder','Batch Exists');
 		        }
 			});
 		},batch_data);
@@ -11962,20 +11987,23 @@ function modal154_action(bill_ids)
 function modal155_action()
 {
 	var form=document.getElementById("modal155_form");
-	var receipt_filter=form.elements[1];
-	var account_filter=form.elements[2];
-	var narration_filter=form.elements[3];
-	var amount_filter=form.elements[4];
-	var balance_filter=form.elements[5];
-	var type_filter=form.elements[6];
-	//var receipt_record_id="";
+	var receipt_filter=form.elements['receipt_id'];
+	var date_filter=form.elements['date'];
+	var account_filter=form.elements['account'];
+	var narration_filter=form.elements['narration'];
+	var amount_filter=form.elements['amount'];
+	var balance_filter=form.elements['balance'];
+	var type_filter=form.elements['type'];
+	var receipt_record_id="";
+	
+	$(date_filter).datepicker();
+	date_filter.value=get_my_date();
 	
 	var receipt_id_xml="<user_preferences count='1'>"+
+					"<id></id>"+
 					"<value></value>"+
 					"<name exact='yes'>receipt_id_series</name>"+
 					"</user_preferences>";
-	set_my_value(receipt_id_xml,receipt_filter);
-/*	
 	fetch_requested_data('',receipt_id_xml,function (receipts) 
 	{
 		if(receipts.length>0)
@@ -11984,7 +12012,7 @@ function modal155_action()
 			receipt_record_id=receipts[0].id;
 		}
 	});
-*/	
+	
 	var accounts_data="<customers>" +
 			"<acc_name></acc_name>" +
 			"</customers>";
@@ -12050,6 +12078,7 @@ function modal155_action()
 		///////////////////////////////////////
 		event.preventDefault();
 		var received_amount=amount_filter.value;
+		var receipt_date=get_raw_time(date_filter.value);
 		var receipt_id=form.elements[1].value;
 		var receipt_type=type_filter.value;
 		var account_name=account_filter.value;
@@ -12143,6 +12172,8 @@ function modal155_action()
 								"<payment_id>"+account.id+"</payment_id>" +
 								"<type>"+account.type+"</type>" +
 								"<amount>"+(parseFloat(account.total_amount)-parseFloat(account.paid_amount))+"</amount>" +
+								"<acc_name>"+account_name+"</acc_name>" +
+								"<date>"+receipt_date+"</date>" +
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</receipts_payment_mapping>";
 						
@@ -12170,7 +12201,7 @@ function modal155_action()
 									"<type>"+account.type+"</type>" +
 									"<amount>"+(parseFloat(account.total_amount)-parseFloat(account.paid_amount))+"</amount>" +
 									"<acc_name>"+account_name+"</acc_name>" +
-									"<date>"+last_updated+"</date>" +
+									"<date>"+receipt_date+"</date>" +
 									"<last_updated>"+last_updated+"</last_updated>" +
 									"</receipts_payment_mapping>";
 							
@@ -12197,7 +12228,7 @@ function modal155_action()
 										"<type>"+account.type+"</type>" +
 										"<amount>"+balanced_amount+"</amount>" +
 										"<acc_name>"+account_name+"</acc_name>" +
-										"<date>"+last_updated+"</date>" +
+										"<date>"+receipt_date+"</date>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</receipts_payment_mapping>";
 								
@@ -12222,7 +12253,7 @@ function modal155_action()
 										"<type>"+account.type+"</type>" +
 										"<amount>"+account.paid_amount+"</amount>" +
 										"<acc_name>"+account_name+"</acc_name>" +
-										"<date>"+last_updated+"</date>" +
+										"<date>"+receipt_date+"</date>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</receipts_payment_mapping>";
 								
@@ -12251,7 +12282,7 @@ function modal155_action()
 									"<type>"+account.type+"</type>" +
 									"<amount>"+(parseFloat(account.total_amount)-parseFloat(account.paid_amount))+"</amount>" +
 									"<acc_name>"+account_name+"</acc_name>" +
-									"<date>"+last_updated+"</date>" +
+									"<date>"+receipt_date+"</date>" +
 									"<last_updated>"+last_updated+"</last_updated>" +
 									"</receipts_payment_mapping>";
 							
@@ -12278,7 +12309,7 @@ function modal155_action()
 										"<type>"+account.type+"</type>" +
 										"<amount>"+balanced_amount+"</amount>" +
 										"<acc_name>"+account_name+"</acc_name>" +
-										"<date>"+last_updated+"</date>" +
+										"<date>"+receipt_date+"</date>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</receipts_payment_mapping>";
 								
@@ -12303,7 +12334,7 @@ function modal155_action()
 										"<type>"+account.type+"</type>" +
 										"<amount>"+account.paid_amount+"</amount>" +
 										"<acc_name>"+account_name+"</acc_name>" +
-										"<date>"+last_updated+"</date>" +
+										"<date>"+receipt_date+"</date>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</receipts_payment_mapping>";
 								
@@ -12316,6 +12347,7 @@ function modal155_action()
 					}
 				});
 					
+				new_id++;	
 				var p_id=get_new_key();				
 				if(total_amount<0)
 				{
@@ -12323,7 +12355,7 @@ function modal155_action()
 								"<id>"+p_id+"</id>" +
 								"<status>pending</status>" +
 								"<type>paid</type>" +
-								"<date>"+get_my_time()+"</date>" +
+								"<date>"+receipt_date+"</date>" +
 								"<total_amount>"+(-total_amount)+"</total_amount>" +
 								"<paid_amount>0</paid_amount>" +
 								"<acc_name>"+account_name+"</acc_name>" +
@@ -12335,6 +12367,18 @@ function modal155_action()
 								"<notes>Generated for receipt # "+receipt_id+"</notes>" +	
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</payments>";
+					var receipts_xml="<receipts_payment_mapping>" +
+								"<id>"+new_id+"</id>" +
+								"<receipt_id>"+receipt_id+"</receipt_id>" +
+								"<payment_id>"+p_id+"</payment_id>" +
+								"<type>paid</type>" +
+								"<amount>"+(-total_amount)+"</amount>" +
+								"<acc_name>"+account_name+"</acc_name>" +
+								"<date>"+receipt_date+"</date>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</receipts_payment_mapping>";
+						
+					create_simple(receipts_xml);
 					create_simple(payment_xml);		
 				}
 				
@@ -12345,18 +12389,22 @@ function modal155_action()
 								"<amount>"+amount_filter.value+"</amount>" +
 								"<narration>"+narration_filter.value+"</narration>" +
 								"<acc_name>"+account_name+"</acc_name>" +
-								"<date>"+last_updated+"</date>" +
+								"<date>"+receipt_date+"</date>" +
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</receipts>";
 				create_simple(receipt_xml);
 				
+				var receipt_id_xml="<user_preferences>"+
+						"<id>"+receipt_record_id+"</id>"+						
+						"<value>"+(parseInt(receipt_id)+1)+"</value>"+
+						"</user_preferences>";
+				update_simple(receipt_id_xml);
 			});
 		}
 		else
 		{
 			$("#modal2").dialog("open");
 		}
-		
 		
 		$("#modal155").dialog("close");
 	});
@@ -12402,6 +12450,7 @@ function modal156_action(product_type,product_name)
 				if(found)
 				{
 		            $(this).val('');
+		            $(this).attr('placeholder','Batch Exists');
 		        }
 			});
 		},batch_data);
@@ -12423,6 +12472,7 @@ function modal156_action(product_type,product_name)
 				if(found)
 				{
 		            $(this).val('');
+		            $(this).attr('placeholder','Batch Exists');
 		        }
 			});
 		},batch_data);
@@ -13928,19 +13978,39 @@ function modal171_action(doc_type,person,person_type,func,attachment_type)
 function modal172_action()
 {
 	var form=document.getElementById("modal172_form");
-	var receipt_filter=form.elements[1];
-	var account_filter=form.elements[2];
-	var narration_filter=form.elements[3];
-	var amount_filter=form.elements[4];
-	var balance_filter=form.elements[5];
-	var type_filter=form.elements[6];
-	//var receipt_record_id="";
+	var receipt_filter=form.elements['receipt_id'];
+	var date_filter=form.elements['date'];
+	var account_filter=form.elements['account'];
+	var narration_filter=form.elements['narration'];
+	var amount_filter=form.elements['amount'];
+	var balance_filter=form.elements['balance'];
+	var type_filter=form.elements['type'];
 	
+	$(date_filter).datepicker();
+	date_filter.value=get_my_date();
+
 	var accounts_data="<customers>" +
 			"<acc_name></acc_name>" +
 			"</customers>";
 	set_my_value_list(accounts_data,account_filter);
 	
+	var receipts_data="<receipts>" +
+			"<receipt_id></receipt_id>" +
+			"</receipts>";
+	get_single_column_data(function(receipts)
+	{
+		$(receipt_filter).off('blur');
+		$(receipt_filter).on('blur',function(event)
+		{
+			var found = $.inArray($(this).val(), receipts) > -1;
+			if(found)
+			{
+	            $(this).val('');
+	            $(this).attr('placeholder','Duplicate Receipt Number');
+	        }
+		});
+	},receipts_data);
+
 	$(account_filter).off('blur');
 	$(account_filter).on('blur',function(e)
 	{
@@ -13992,7 +14062,9 @@ function modal172_action()
 	{
 		///////////////////////////////////////
 		event.preventDefault();
-		var received_amount=amount_filter.value;
+		var paid_amount=amount_filter.value;
+		var receipt_date=get_raw_time(date_filter.value);
+		var narration=narration_filter.value;
 		var receipt_id=form.elements[1].value;
 		var receipt_type=type_filter.value;
 		var account_name=account_filter.value;
@@ -14085,6 +14157,8 @@ function modal172_action()
 								"<payment_id>"+account.id+"</payment_id>" +
 								"<type>"+account.type+"</type>" +
 								"<amount>"+(parseFloat(account.total_amount)-parseFloat(account.paid_amount))+"</amount>" +
+								"<acc_name>"+account_name+"</acc_name>" +
+								"<date>"+receipt_date+"</date>" +
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</receipts_payment_mapping>";
 						
@@ -14112,7 +14186,7 @@ function modal172_action()
 									"<type>"+account.type+"</type>" +
 									"<amount>"+(parseFloat(account.total_amount)-parseFloat(account.paid_amount))+"</amount>" +
 									"<acc_name>"+account_name+"</acc_name>" +
-									"<date>"+last_updated+"</date>" +
+									"<date>"+receipt_date+"</date>" +
 									"<last_updated>"+last_updated+"</last_updated>" +
 									"</receipts_payment_mapping>";
 							
@@ -14139,7 +14213,7 @@ function modal172_action()
 										"<type>"+account.type+"</type>" +
 										"<amount>"+balanced_amount+"</amount>" +
 										"<acc_name>"+account_name+"</acc_name>" +
-										"<date>"+last_updated+"</date>" +
+										"<date>"+receipt_date+"</date>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</receipts_payment_mapping>";
 								
@@ -14164,7 +14238,7 @@ function modal172_action()
 										"<type>"+account.type+"</type>" +
 										"<amount>"+account.paid_amount+"</amount>" +
 										"<acc_name>"+account_name+"</acc_name>" +
-										"<date>"+last_updated+"</date>" +
+										"<date>"+receipt_date+"</date>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</receipts_payment_mapping>";
 								
@@ -14193,7 +14267,7 @@ function modal172_action()
 									"<type>"+account.type+"</type>" +
 									"<amount>"+(parseFloat(account.total_amount)-parseFloat(account.paid_amount))+"</amount>" +
 									"<acc_name>"+account_name+"</acc_name>" +
-									"<date>"+last_updated+"</date>" +
+									"<date>"+receipt_date+"</date>" +
 									"<last_updated>"+last_updated+"</last_updated>" +
 									"</receipts_payment_mapping>";
 							
@@ -14220,7 +14294,7 @@ function modal172_action()
 										"<type>"+account.type+"</type>" +
 										"<amount>"+balanced_amount+"</amount>" +
 										"<acc_name>"+account_name+"</acc_name>" +
-										"<date>"+last_updated+"</date>" +
+										"<date>"+receipt_date+"</date>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</receipts_payment_mapping>";
 								
@@ -14245,7 +14319,7 @@ function modal172_action()
 										"<type>"+account.type+"</type>" +
 										"<amount>"+account.paid_amount+"</amount>" +
 										"<acc_name>"+account_name+"</acc_name>" +
-										"<date>"+last_updated+"</date>" +
+										"<date>"+receipt_date+"</date>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</receipts_payment_mapping>";
 								
@@ -14257,7 +14331,8 @@ function modal172_action()
 						}
 					}
 				});
-					
+				
+				new_id++;	
 				var p_id=get_new_key();				
 				if(total_amount<0)
 				{
@@ -14265,7 +14340,7 @@ function modal172_action()
 								"<id>"+p_id+"</id>" +
 								"<status>pending</status>" +
 								"<type>received</type>" +
-								"<date>"+get_my_time()+"</date>" +
+								"<date>"+receipt_date+"</date>" +
 								"<total_amount>"+(-total_amount)+"</total_amount>" +
 								"<paid_amount>0</paid_amount>" +
 								"<acc_name>"+account_name+"</acc_name>" +
@@ -14277,6 +14352,19 @@ function modal172_action()
 								"<notes>Generated for receipt # "+receipt_id+"</notes>" +	
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</payments>";
+					var receipts_xml="<receipts_payment_mapping>" +
+								"<id>"+new_id+"</id>" +
+								"<receipt_id>"+receipt_id+"</receipt_id>" +
+								"<payment_id>"+p_id+"</payment_id>" +
+								"<type>received</type>" +
+								"<amount>"+(-total_amount)+"</amount>" +
+								"<acc_name>"+account_name+"</acc_name>" +
+								"<date>"+receipt_date+"</date>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</receipts_payment_mapping>";
+						
+					create_simple(receipts_xml);
+								
 					create_simple(payment_xml);		
 				}
 				
@@ -14284,16 +14372,15 @@ function modal172_action()
 								"<id>"+p_id+"</id>" +
 								"<receipt_id>"+receipt_id+"</receipt_id>" +
 								"<type>"+receipt_type+"</type>" +
-								"<amount>"+amount_filter.value+"</amount>" +
-								"<narration>"+narration_filter.value+"</narration>" +
+								"<amount>"+paid_amount+"</amount>" +
+								"<narration>"+narration+"</narration>" +
 								"<acc_name>"+account_name+"</acc_name>" +
-								"<date>"+last_updated+"</date>" +
+								"<date>"+receipt_date+"</date>" +
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</receipts>";
 				create_simple(receipt_xml);
-				
 			});
-		}
+		}	
 		else
 		{
 			$("#modal2").dialog("open");

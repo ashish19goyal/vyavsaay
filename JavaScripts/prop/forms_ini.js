@@ -25889,7 +25889,8 @@ function form243_ini()
 						rowsHTML+="<input type='hidden' form='form243_"+result.id+"' value='"+result.id+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Narration'>";
-						rowsHTML+="<textarea readonly='readonly' form='form243_"+result.id+"'>"+result.narration+"</textarea>";
+						rowsHTML+="<b>Issued on</b>: "+get_my_past_date(result.date);
+						rowsHTML+="<br><textarea readonly='readonly' form='form243_"+result.id+"'>"+result.narration+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Document'>";
 						rowsHTML+="<br><div id='form243_documents_"+result.id+"'></div>";
@@ -29765,7 +29766,8 @@ function form282_ini()
 						rowsHTML+="<input type='hidden' form='form282_"+result.id+"' value='"+result.id+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Narration'>";
-						rowsHTML+="<textarea readonly='readonly' form='form282_"+result.id+"'>"+result.narration+"</textarea>";
+						rowsHTML+="<b>Issued on</b>: "+get_my_past_date(result.date);
+						rowsHTML+="<br><textarea readonly='readonly' form='form282_"+result.id+"'>"+result.narration+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Document'>";
 						rowsHTML+="<br><div id='form282_documents_"+result.id+"'></div>";
