@@ -12008,7 +12008,7 @@ function modal155_action()
 	{
 		if(receipts.length>0)
 		{
-			receipt_filter.value=receipts[0].value;
+			receipt_filter.value=get_session_var('receipt_id_prefix')+"-"+receipts[0].value;
 			receipt_record_id=receipts[0].id;
 		}
 	});
@@ -12394,9 +12394,10 @@ function modal155_action()
 								"</receipts>";
 				create_simple(receipt_xml);
 				
+				var receipt_id_array=receipt_id.split('-');
 				var receipt_id_xml="<user_preferences>"+
-						"<id>"+receipt_record_id+"</id>"+						
-						"<value>"+(parseInt(receipt_id)+1)+"</value>"+
+						"<id>"+receipt_record_id+"</id>"+				
+						"<value>"+(parseInt(receipt_id_array[1])+1)+"</value>"+
 						"</user_preferences>";
 				update_simple(receipt_id_xml);
 			});
