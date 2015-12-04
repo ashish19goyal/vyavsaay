@@ -1,4 +1,3 @@
-
 /**
 * Print barcodes
 */
@@ -4523,20 +4522,20 @@ function print_modal131(func,order_num,received_quantity,total_quantity,supplier
  * @form receipt
  * @modalNo 243
  */
-function form243_print(receipt_id,acc_name,amount,date)
+function form243_print(receipt_id,acc_name,amount,date,narration,pan_text)
 {
 	print_form243(function(container)
 	{
 		$.print(container);
 		container.innerHTML="";	
-	},receipt_id,acc_name,amount,date);	
+	},receipt_id,acc_name,amount,date,narration,pan_text);	
 }
 
 /**
  * @form receipts
  * @formNo 243
  */
-function print_form243(func,receipt_id,acc_name,amount,date)
+function print_form243(func,receipt_id,acc_name,amount,date,narration,pan_text)
 {	
 	////////////setting up containers///////////////////////	
 	var container=document.createElement('div');
@@ -4577,7 +4576,7 @@ function print_form243(func,receipt_id,acc_name,amount,date)
 	business_title.innerHTML="<b>"+bt+"</b><br>"+business_address+"<br>"+business_phone;
 	invoice_box.innerHTML="Payment Receipt";
 	
-	info_section.innerHTML="<b>Receipt Number</b>: "+receipt_id+"<br><b>Date</b>: "+get_my_past_date(date)+"<br><b>Amount Received</b>: "+amount+"<br><b>From</b>: "+acc_name;
+	info_section.innerHTML="<b>Receipt Number</b>: "+receipt_id+"<br><b>Date</b>: "+get_my_past_date(date)+"<br><b>Amount Received</b>: "+amount+"<br><b>From</b>: "+acc_name+"<br><b>Narration</b>: "+narration;
 	
 	////////////////filling in the content into the containers//////////////////////////
 	
@@ -4905,16 +4904,19 @@ function print_form258(func)
 	var table_rows=table_header;
 	var counter=0;
 	
+	var item_details="";
+		
 	$(item_table_element).find('form').each(function(index)
 	{
 		counter+=1;
 		var form=$(this)[0];
 		var item_name=form.elements[0].value;
-		var quantity=""+form.elements[1].value;
-		var price=form.elements[2].value;
-		var amount=form.elements[3].value;
-		var tax=form.elements[4].value;		
-		var total=form.elements[5].value;
+		item_details=form.elements[1].value;
+		var quantity=""+form.elements[2].value;
+		var price=form.elements[3].value;
+		var amount=form.elements[4].value;
+		var tax=form.elements[5].value;		
+		var total=form.elements[6].value;
 
 		table_rows+="<tr>"+
 				"<td style='border: 1px solid #000;text-align:left;'>"+counter+"</td>"+
@@ -4936,8 +4938,17 @@ function print_form258(func)
 	var table_foot=document.getElementById(form_id+'_item_foot');
 	var total_quantity=$(table_foot).find('tr>td:first')[0].innerHTML;
 	var total_text=$(table_foot).find('tr>td:nth-child(2)')[0].innerHTML;
-	var total_amount=$(table_foot).find('tr>td:nth-child(3)')[0].innerHTML;
+	var total_amount_element=$(table_foot).find('tr>td:nth-child(3)');
 	
+	$(total_amount_element).find("input").each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+	$(total_amount_element).find('textarea').each(function(index)
+	{
+		$(this).replaceWith($(this).attr('value'));
+	});
+	var total_amount=$(total_amount_element).html();
 	var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
 				"<td colspan='2' style='border: 1px solid #000;text-align:left;'>"+total_quantity+"</td>"+
 				"<td colspan='3' style='border: 1px solid #000;text-align:left;'>"+total_text+"</td>"+
@@ -4945,6 +4956,38 @@ function print_form258(func)
 		
 	table_rows+=table_foot_row;
 	item_table.innerHTML=table_rows;
+	
+	/////////////adding cabinet details table //////////////////////////////////////////////////////	
+	
+	var details_table_heading=document.createElement('div');
+	details_table_heading.innerHTML="<br><b>Cabinet Details</b>";
+	var details_table=document.createElement('table');
+	details_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
+	details_table.setAttribute('class','plain_table');
+	var table_header="<tr>"+
+				"<td style='border: 1px solid #000;text-align:left;width:10%;'>S.No.</td>"+
+				//"<td style='border: 1px solid #000;text-align:left;width:30%;'>Item</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:45%'>Type</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:45%'>Details</td></tr>";
+				
+	var table_rows=table_header;
+	var counter=0;
+	var item_details_array=item_details.split("\n");
+	item_details_array.forEach(function(item_detail_row)
+	{
+		counter+=1;
+		var detail_row=item_detail_row.split(":");
+		var type=detail_row[0];
+		var details=detail_row[1];
+
+		table_rows+="<tr>"+
+				"<td style='border: 1px solid #000;text-align:left;'>"+counter+"</td>"+
+				//"<td style='border: 1px solid #000;text-align:left;'>"+item+"</td>"+
+				"<td style='border: 1px solid #000;text-align:left;'>"+type+"</td>"+
+				"<td style='border: 1px solid #000;text-align:left;'>"+details+"</td></tr>";
+	});
+	
+	details_table.innerHTML=table_rows;
 	
 	/////////////adding spec table //////////////////////////////////////////////////////	
 	
@@ -5087,6 +5130,9 @@ function print_form258(func)
 	
 	container.appendChild(item_table_heading);
 	container.appendChild(item_table);
+
+	container.appendChild(details_table_heading);
+	container.appendChild(details_table);
 
 	container.appendChild(spec_table_heading);
 	container.appendChild(spec_table);

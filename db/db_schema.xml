@@ -373,6 +373,7 @@
 			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<acc_name index='yes' type="TEXT"></acc_name>
 			<narration index='no' type="TEXT"></narration>
+			<mode_payment index='yes' type="TEXT"></mode_payment><!--cash/checque/bank/card-->
 			<date index='yes' type="BIGINT"></date>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>

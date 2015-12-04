@@ -29,6 +29,7 @@
 				<form id='form258_item_header'></form>
 					<th style='width:50px;'>S.No.</th>
 					<th>Item</th>
+					<th>Details</th>
 					<th>Quantity </th>
 					<th>Price </th>
 					<th>Amount </th>

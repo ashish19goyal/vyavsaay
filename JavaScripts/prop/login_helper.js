@@ -21,8 +21,11 @@ function login_action()
 		username=l_id.substr(0,index);
 	}
 	var pass=form.elements[2].value;
+	console.log('going to try local login');
+
 	try_local_db_login(username,domain,function(result)
 	{
+		console.log('trying local login');
 		var password="p";
 		if(result) { password=result.password;}
 		var salt='$2a$10$'+domain+'1234567891234567891234';
@@ -43,6 +46,7 @@ function login_action()
 		
 	},function()
 	{
+		console.log('trying online login');
 		login_online(username,domain,pass);
 	});
 }
@@ -282,27 +286,28 @@ function try_local_db_login(username,domain,func_success,func_failure)
 	////////////checking if indexed db is supported/////////////////
 	if("indexedDB" in window && indexedDB!=null)
 	{
-		//console.log("3.1");
+		console.log("3.1");
 		var db_name="re_local_" + domain;
 		var request = indexedDB.open(db_name);
+		//console.log("3.1.1");
 		
 		request.onsuccess=function(e)
 		{
-			//console.log("3.2");
+			console.log("3.2");
 			var db=e.target.result;
 			if(!db.objectStoreNames.contains("accounts"))
 			{
-				//console.log("3.3");
+				console.log("3.3");
 				var deleterequest=indexedDB.deleteDatabase(db_name);
 				deleterequest.onsuccess=function(ev)
 				{
-					//console.log("3.3.1");
+					console.log("3.3.1");
 					func_failure();
 				};
 			}
 			else
 			{
-				//console.log("3.4");
+				console.log("3.4");
 				var tran=db.transaction("accounts","readonly");
 				var table = tran.objectStore("accounts");
 				
@@ -314,30 +319,40 @@ function try_local_db_login(username,domain,func_success,func_failure)
 				{
 					var result=records.result;
 					func_success(result);
-					//console.log("3.5");	
+					console.log("3.5");	
 				};
 				records.onerror=function(e)
 				{
-					//console.log("3.6");
+					console.log("3.6");
 					func_failure();
 				};
 			}
-			//console.log("3.7");
+			console.log("3.7");
 			db.close();
 		};
 		
 		request.onerror = function(e)
 		{
-			//console.log("3.8");
+			console.log("3.8");
 			var db=e.target.result;
 			if(db)
 				db.close();
 			func_failure();
 		};
+		
+		request.onabort=function(e)
+		{
+			console.log("3.9");
+		    var db=e.target.result;
+			if(db)		    
+		    	db.close();
+		    console.log(this.error);
+		    func_failure();
+		};
 	}
 	else
 	{
-		//alert('you browser doesnt support offline mode. Please upgrade');
+		console.log("3.11");
 		func_failure();
 	}
 };

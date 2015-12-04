@@ -18059,14 +18059,14 @@ function form258_create_form()
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
 	
-			if(!isNaN(parseFloat(subform.elements[1].value)))
-				total_quantity+=parseFloat(subform.elements[1].value);
-			if(!isNaN(parseFloat(subform.elements[3].value)))
-				amount+=parseFloat(subform.elements[3].value);
+			if(!isNaN(parseFloat(subform.elements[2].value)))
+				total_quantity+=parseFloat(subform.elements[2].value);
 			if(!isNaN(parseFloat(subform.elements[4].value)))
-				tax+=parseFloat(subform.elements[4].value);
+				amount+=parseFloat(subform.elements[4].value);
 			if(!isNaN(parseFloat(subform.elements[5].value)))
-				total+=parseFloat(subform.elements[5].value);
+				tax+=parseFloat(subform.elements[5].value);
+			if(!isNaN(parseFloat(subform.elements[6].value)))
+				total+=parseFloat(subform.elements[6].value);
 		});
 	
 		var cartage=0;
@@ -18080,7 +18080,7 @@ function form258_create_form()
 		var tax=my_round(tax,2);		
 		var total=my_round((total+cartage),0);
 	
-		var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
+		var total_row="<tr><td colspan='4' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 							"<td>Amount:<br>Tax:<br>Transport Charges: <br>Total: </td>" +
 							"<td>Rs. "+amount+"</br>" +
 							"Rs. "+tax+" <br>" +
@@ -18105,14 +18105,15 @@ function form258_create_form()
 	
 			var item_obj=new Object();
 			item_obj.item=subform.elements[0].value;
-			item_obj.quantity=subform.elements[1].value;
-			item_obj.price=subform.elements[2].value;
-			item_obj.amount=subform.elements[3].value;
-			item_obj.tax=subform.elements[4].value;
-			item_obj.total=subform.elements[5].value;
+			item_obj.details=subform.elements[1].value;
+			item_obj.quantity=subform.elements[2].value;
+			item_obj.price=subform.elements[3].value;
+			item_obj.amount=subform.elements[4].value;
+			item_obj.tax=subform.elements[5].value;
+			item_obj.total=subform.elements[6].value;
 			items_array.push(item_obj);
 			
-			for(var i=0;i<6;i++)
+			for(var i=0;i<7;i++)
 			{
 				$(subform.elements[i]).attr('readonly','readonly');
 			}				

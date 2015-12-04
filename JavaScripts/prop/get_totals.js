@@ -944,7 +944,7 @@ function form258_get_totals()
 	var tax=my_round(tax,2);		
 	var total=my_round((total+cartage),0);
 
-	var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
+	var total_row="<tr><td colspan='4' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 						"<td>Amount:<br>Tax:<br>Transport Charges: <br>Total: </td>" +
 						"<td>Rs. "+amount+"</br>" +
 						"Rs. "+tax+" <br>" +

@@ -1696,4 +1696,18 @@
 		</form>
 	</div>
 
+	<div id="modal172" title="Add Receipt">
+		<form id='modal172_form' autocomplete="off">
+			<fieldset>
+				<label>Receipt Id: <input type='text' required></label><br>
+				<label>Account: <input type="text" required></label><br>
+				<label>Narration: <textarea></textarea></label><br>
+				<label>Receipt Amount: Rs. <input type="number" min='0' step='any' required></label><br>
+				<label>Balance <input type="text" readonly='readonly'></label><br>
+				<input type="hidden" name='type'>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

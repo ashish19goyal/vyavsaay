@@ -15743,6 +15743,9 @@ function form258_add_item()
 				item_rowsHTML+="<td data-th='Item'>";
 					item_rowsHTML+="<input type='text' form='form258_item_"+id+"'>";
 				item_rowsHTML+="</td>";
+				item_rowsHTML+="<td data-th='Details'>";
+					item_rowsHTML+="<textarea form='form258_item_"+id+"'></textarea>";
+				item_rowsHTML+="</td>";
 				item_rowsHTML+="<td data-th='Quantity'>";
 					item_rowsHTML+="<input type='number' form='form258_item_"+id+"' step='any'>";
 				item_rowsHTML+="</td>";
@@ -15765,12 +15768,13 @@ function form258_add_item()
 		
 		var fields=document.getElementById("form258_item_"+id);
 		var name_filter=fields.elements[0];
-		var quantity_filter=fields.elements[1];
-		var price_filter=fields.elements[2];
-		var amount_filter=fields.elements[3];
-		var tax_filter=fields.elements[4];
-		var total_filter=fields.elements[5];
-		var id_filter=fields.elements[6];
+		var detail_filter=fields.elements[1];
+		var quantity_filter=fields.elements[2];
+		var price_filter=fields.elements[3];
+		var amount_filter=fields.elements[4];
+		var tax_filter=fields.elements[5];
+		var total_filter=fields.elements[6];
+		var id_filter=fields.elements[7];
 		var tax_unit_filter=fields.elements['tax_unit'];
 		
 		$(fields).on("submit", function(event)
@@ -15811,6 +15815,7 @@ function form258_add_item()
 		});
 
 		form258_get_totals();
+		$('textarea').autosize();
 	}
 	else
 	{

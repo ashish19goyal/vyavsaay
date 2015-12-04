@@ -25864,6 +25864,7 @@ function form243_ini()
 			"<receipt_id>"+rid+"</receipt_id>" +
 			"<acc_name>"+faccount+"</acc_name>" +
 			"<amount></amount>" +
+			"<type exact='yes'>received</type>" +
 			"<narration></narration>"+
 			"<date></date>"+
 			"</receipts>";
@@ -25905,10 +25906,10 @@ function form243_ini()
 			var doc_filter=fields.elements[5];
 			var print_button=fields.elements[6];
 			var share_button=fields.elements[7];
-
+			
 			$(print_button).on('click',function () 
 			{
-				form243_print(result.receipt_id,result.acc_name,result.amount,result.date);
+				form243_print(result.receipt_id,result.acc_name,result.amount,result.date,result.narration);
 			});
 
 			var bt=get_session_var('title');
@@ -25916,7 +25917,7 @@ function form243_ini()
 			{
 				modal101_action('Payment Receipt - '+BT,result.acc_name,'customer',function (func) 
 				{
-					print_form243(func,result.receipt_id,result.acc_name,result.amount,result.date);
+					print_form243(func,result.receipt_id,result.acc_name,result.amount,result.date,result.narration);
 				});
 			});
 
@@ -25979,7 +25980,7 @@ function form243_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'receipts');
+			get_export_data(columns,'Receivable Receipts');
 		});
 		hide_loader();
 	});
@@ -27695,6 +27696,9 @@ function form258_ini()
 						item_rowsHTML+="<td data-th='Item'>";
 							item_rowsHTML+="<input type='text' readonly='readonly' form='form258_item_"+id+"' value='"+item.item+"'>";
 						item_rowsHTML+="</td>";
+						item_rowsHTML+="<td data-th='Details'>";
+							item_rowsHTML+="<textarea readonly='readonly' form='form258_item_"+id+"' class='dblclick_editable'>"+item.details+"</textarea>";
+						item_rowsHTML+="</td>";
 						item_rowsHTML+="<td data-th='Quantity'>";
 							item_rowsHTML+="<input type='number' readonly='readonly' form='form258_item_"+id+"' step='any' value='"+item.quantity+"'>";
 						item_rowsHTML+="</td>";
@@ -27727,7 +27731,7 @@ function form258_ini()
 						total_quantity+=parseFloat(subform.elements[1].value);
 				});
 			
-				var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
+				var total_row="<tr><td colspan='4' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 								"<td>Amount:<br>Tax:<br>Transport Charges: <br>Total: </td>" +
 								"<td>Rs. "+quot_results[0].amount+"</br>" +
 								"Rs. "+quot_results[0].tax+" <br>" +
@@ -27770,7 +27774,10 @@ function form258_ini()
 				message_attachment+=my_obj_array_to_csv_string(tc_array)+"\n\n";
 		*/		
 				///////////////////////////
-								
+					
+				longPressEditable($('.dblclick_editable'));
+				$('textarea').autosize();
+
 				var share_button=filter_fields.elements['share'];
 				$(share_button).show();
 				$(share_button).click(function()
@@ -29702,3 +29709,137 @@ function form276_ini()
 		hide_loader();
 	});
 }
+
+
+/**
+ * @form Receipts (Payable)
+ * @formNo 282
+ * @Loading light
+ */
+function form282_ini()
+{
+	show_loader();
+	var fid=$("#form282_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form282_header');
+	
+	var rid=filter_fields.elements[0].value;
+	var faccount=filter_fields.elements[1].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form282_index');
+	var prev_element=document.getElementById('form282_prev');
+	var next_element=document.getElementById('form282_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<receipts count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<receipt_id>"+rid+"</receipt_id>" +
+			"<acc_name>"+faccount+"</acc_name>" +
+			"<amount></amount>" +
+			"<type exact='yes'>paid</type>" +
+			"<narration></narration>"+
+			"<date></date>"+
+			"</receipts>";
+
+	$('#form282_body').html("");
+
+	fetch_requested_data('form282',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form282_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Receipt Id'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form282_"+result.id+"' value='"+result.receipt_id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Account'>";
+						rowsHTML+="<textarea readonly='readonly' form='form282_"+result.id+"'>"+result.acc_name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Amount'>";
+						rowsHTML+="<input type='number' readonly='readonly' form='form282_"+result.id+"' value='"+result.amount+"'>";
+						rowsHTML+="<input type='hidden' form='form282_"+result.id+"' value='"+result.id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Narration'>";
+						rowsHTML+="<textarea readonly='readonly' form='form282_"+result.id+"'>"+result.narration+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Document'>";
+						rowsHTML+="<br><div id='form282_documents_"+result.id+"'></div>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='button' form='form282_"+result.id+"' value='Add document' class='generic_icon'>";
+					rowsHTML+="</td>";				
+			rowsHTML+="</tr>";
+			
+			$('#form282_body').append(rowsHTML);
+			var fields=document.getElementById('form282_'+result.id);
+			var doc_filter=fields.elements[5];
+			
+			$(doc_filter).on('click',function () 
+			{
+				modal144_action('receipts',result.id,function (url,doc_name) 
+				{
+					var docHTML="<a href='"+url+"' download='"+doc_name+"'><u>"+doc_name+"</u></a><br>";
+					var doc_container=document.getElementById('form282_documents_'+result.id);
+					$(doc_container).append(docHTML);
+				});
+			});
+			
+			var doc_column="<documents>" +
+							"<id></id>" +
+							"<url></url>" +
+							"<doc_name></doc_name>"+
+							"<doc_type exact='yes'>receipts</doc_type>" +
+							"<target_id exact='yes'>"+result.id+"</target_id>" +
+							"</documents>";
+			fetch_requested_data('form282',doc_column,function(doc_results)
+			{
+				var docHTML="";
+				for (var j in doc_results)
+				{
+					var updated_url=doc_results[j].url.replace(/ /g,"+");
+					docHTML+="<a href='"+updated_url+"' download='"+doc_results[j].doc_name+"'><u>"+doc_results[j].doc_name+"</u></a><br>";							
+				}
+				document.getElementById('form282_documents_'+result.id).innerHTML=docHTML;
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+		
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'Payable Receipts');
+		});
+		hide_loader();
+	});
+};

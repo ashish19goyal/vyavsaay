@@ -2260,7 +2260,7 @@
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--payments--transactions--</tables>
+			<tables>--payments--transactions--receipts--receipts_payment_mapping--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -3497,7 +3497,7 @@
 		</row>
 		<row>
 			<name>form243</name>
-			<display_name>receipts_cps</display_name>
+			<display_name>receipts_receivable</display_name>
 			<status>active</status>
 			<value>unchecked</value>
 			<type>form</type>
@@ -3922,6 +3922,17 @@
 			<shortcut></shortcut>
 			<sync>checked</sync>
 			<tables>--system_popboxes--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form282</name>
+			<display_name>receipts_payable</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--payments--transactions--receipts--receipts_payment_mapping--</tables>
 			<last_updated>1</last_updated>
 		</row>
 	</user_preferences>
@@ -7064,7 +7075,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form243</element_id>
-			<element_name>receipts_cps</element_name>
+			<element_name>receipts_receivable</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -7489,6 +7500,17 @@
 			<up>checked</up>
 			<del>checked</del>
 			<last_updated>1</last_updated>
-		</row>				
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form282</element_id>
+			<element_name>receipts_payable</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>						
 	</access_control>
 </re_xml>
