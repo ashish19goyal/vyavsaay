@@ -30,16 +30,19 @@ function login_action()
 		if(result) { password=result.password;}
 		var salt='$2a$10$'+domain+'1234567891234567891234';
 		var salt_22=salt.substring(0, 29);
-		
+		console.log(password);
 		var bcrypt = new bCrypt();
 		bcrypt.hashpw(pass, salt_22, function(newhash)
 		{
+			console.log(newhash);
 			if(newhash.substring(3)==password.substring(3))
 			{
+				console.log('logged in offline');
 				set_session_variables(domain,username,pass);
 			}
 			else
 			{
+				console.log('logging online'+username+"-"+pass+"-"+domain);
 				login_online(username,domain,pass);
 			}			
 		}, function() {});
@@ -56,7 +59,7 @@ function login_online(username,domain,pass)
 {
 	ajax_json("./ajax_json/login.php",{domain:domain,user:username,pass:pass},function(response_object)
 	{
-		//console.log(response_object);
+		console.log(response_object);
 		//console.log(response_object.status);
 		
 		if(response_object.status=="Failed Authentication")

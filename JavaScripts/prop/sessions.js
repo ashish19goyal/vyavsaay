@@ -240,59 +240,86 @@ function get_pamphlet_template()
  */
 function set_session_online(func)
 {
+	console.log('5.1');
 	if("indexedDB" in window && indexedDB!=null)
 	{
+		//console.log('5.2');
 		var db_name="re_local_"+get_domain();
 		var request = indexedDB.open(db_name);
 		request.onsuccess=function(e)
 		{
+			//console.log('5.3');
 			static_local_db=e.target.result;
 			if(static_local_db.objectStoreNames.contains("user_preferences"))
 			{
+				//console.log('5.4');
 				var transaction=static_local_db.transaction(['user_preferences'],"readwrite");
 				var objectStore=transaction.objectStore('user_preferences');
 				var kv=IDBKeyRange.bound(['offline','0'],['offline','99999999']);
 				var req=objectStore.index('name').get(kv);
 				req.onsuccess=function(e)
 				{
+					//console.log('5.5');
 					var data=req.result;
 					if(data)
 					{
+						//console.log('5.6');
 						data.value='online';
 						var put_req=objectStore.put(data);
 						put_req.onsuccess=function(e)
 						{
+							//console.log('5.7');
+							set_session_var('offline','online');
+							hide_menu_items();
+							func();
+						};
+						put_req.onerror=function(e)
+						{
+							//console.log('5.7.1');
 							set_session_var('offline','online');
 							hide_menu_items();
 							func();
 						};
 					}
+					else 
+					{
+						//console.log('5.6.1');
+						set_session_var('offline','online');
+						hide_menu_items();						
+						func();
+					}
 				};
 			}
 			else
 			{
+//				console.log('5.8');
 				set_session_var('offline','online');
 				func();
 			}
 		};
 		request.onerror=function(e)
 		{
+	//		console.log('5.9');
 		    var db=e.target.result;
 		    if(db)
-		    	db.close();
+		    {	db.close();}
 			console.log(this.error);
 			func();
 		};
 		request.onabort=function(e)
 		{
+		//	console.log('5.10');
 		    var db=e.target.result;
-		    db.close();
+		    if(db)
+		    {	db.close();}
+			db.close();
 		    console.log(this.error);
 		    func();
 		};
 	}
 	else 
 	{
+		//console.log('5.11');
 		set_session_var('offline','online');
 		hide_menu_items();
 		func();
