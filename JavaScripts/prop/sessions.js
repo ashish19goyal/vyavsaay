@@ -21,7 +21,8 @@ function set_session(session_data)
 	{
 		localStorage.setItem(field,session_data[field]);
 	}
-	window.location.assign("main.php");	
+	var domain=get_session_var('domain');
+	window.location.assign("main.php?dn="+domain);	
 }
 
 /**

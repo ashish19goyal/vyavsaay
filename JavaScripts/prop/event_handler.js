@@ -6,7 +6,8 @@ function default_load()
 	var location=window.location.pathname;
 	if(((location.indexOf("index")>-1) || (location.indexOf(".php")==-1)) && is_set_session())
 	{
-		window.location.assign("main.php");
+		var domain=get_session_var('domain');
+		window.location.assign("main.php?dn="+domain);
 	}
 	else if(!is_set_session() && (location.indexOf("main")>-1))
 	{

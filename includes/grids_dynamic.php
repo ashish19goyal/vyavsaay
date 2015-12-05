@@ -2,10 +2,22 @@
 
 	include_once "./Classes/db.php";
 	use RetailingEssentials\db_connect;
+
+	$domain="";
 	
-	if(isset($_SESSION['domain']))
+	if(isset($_GET['dn']))
 	{
-		$domain=$_SESSION['domain'];
+		$domain=$_GET['dn'];
+	}
+
+//	echo $domain;
+//	echo $_GET['dn'];
+
+	if(isset($_SESSION['domain']) || $domain!="")
+	{
+		if($domain=="")
+		{	$domain=$_SESSION['domain'];}
+		
 		$db_name="re_user_".$domain;
 		$conn=new db_connect($db_name);
 		$query="select name,display_name,head_color,back_color from system_grids where status=? order by grid_order asc;";
