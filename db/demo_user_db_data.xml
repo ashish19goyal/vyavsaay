@@ -3935,6 +3935,28 @@
 			<tables>--payments--transactions--receipts--receipts_payment_mapping--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form283</name>
+			<display_name>manage_performa_invoice</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--bills--bill_items--transactions--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form284</name>
+			<display_name>create_performa_invoice</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--bill_items--bills--transactions--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -7505,6 +7527,28 @@
 			<username>master</username>
 			<element_id>form282</element_id>
 			<element_name>receipts_payable</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>						
+		<row>
+			<username>master</username>
+			<element_id>form283</element_id>
+			<element_name>manage_performa_invoice</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>						
+		<row>
+			<username>master</username>
+			<element_id>form284</element_id>
+			<element_name>create_performa_invoice</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

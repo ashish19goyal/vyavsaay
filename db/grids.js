@@ -4,18 +4,21 @@
  */
 function set_grid_item_1()
 {
-	var columns="<bills count='1'>" +
-		"<bill_num></bill_num>" +
-		"</bills>";
-	
-	get_single_column_data(function(results)
+	var new_columns=new Object();
+		new_columns.count=1;
+		new_columns.start_index=0;
+		new_columns.data_store='bills';
+		new_columns.indexes=[{index:'bill_num'}];		
+		new_columns.return_column='bill_num';
+
+	read_json_single_column(new_columns,function(results)
 	{
 		if(results.length>0)
 		{
 			var grid_item=document.getElementById('grid_item_1');
-			grid_item.innerHTML=results[0];
+			$(grid_item).html(results[0]);
 		}
-	},columns);
+	});
 	
 	setTimeout(set_grid_item_1,600000);
 };
@@ -26,45 +29,43 @@ function set_grid_item_1()
  */
 function set_grid_item_2()
 {
-	var columns="<bills>" +
-		"<id></id>" +
-		"<bill_date lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</bill_date>" +
-		"<bill_date upperbound='yes'>"+(get_raw_time(get_my_date())+86400000)+"</bill_date>" +
-		"</bills>";
-	
-	get_single_column_data(function(results)
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='bills';
+		new_columns.indexes=[{index:'bill_date',lowerbound:(get_raw_time(get_my_date())-1000),upperbound:(get_raw_time(get_my_date())+86399999)}];		
+
+	read_json_count(new_columns,function(bill_count)
 	{
-		document.getElementById('grid_item_2').innerHTML=results.length;
-	},columns);
+		var grid_item=document.getElementById('grid_item_2');
+		$(grid_item).html(bill_count);
+	});
 
 	setTimeout(set_grid_item_2,600000);
 };
 
 /**
- * @item # Last bill No
+ * @item # Last Purchase Bill No
  * @itemNo 3
  */
 function set_grid_item_3()
 {
-	var columns="<supplier_bills count='1'>" +
-			"<id></id>" +
-			"<bill_id></bill_id>" +
-			"</supplier_bills>";
+	var new_columns=new Object();
+		new_columns.count=1;
+		new_columns.start_index=0;
+		new_columns.data_store='supplier_bills';
+		new_columns.indexes=[{index:'bill_id'}];		
+		new_columns.return_column='bill_id';
 
-	fetch_requested_data('',columns,function(results)
+	read_json_single_column(new_columns,function(results)
 	{
 		if(results.length>0)
 		{
 			var grid_item=document.getElementById('grid_item_3');
-			$(grid_item).off('click');
-			$(grid_item).on('click',function(ev)
-			{
-				element_display(results[0].id,'form53');
-			});
-			grid_item.innerHTML=results[0].bill_id;
+			$(grid_item).html(results[0]);
 		}
 	});
-
+	
 	setTimeout(set_grid_item_3,3600000);
 };
 
@@ -74,18 +75,19 @@ function set_grid_item_3()
  */
 function set_grid_item_4()
 {
-	var columns="<supplier_bills>" +
-		"<id></id>" +
-		"<entry_date lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</entry_date>" +
-		"<entry_date upperbound='yes'>"+(get_raw_time(get_my_date())+86400000)+"</entry_date>" +
-		"</supplier_bills>";
-	
-	get_single_column_data(function(results)
-	{
-		document.getElementById('grid_item_4').innerHTML=results.length;
-	},columns);
-	setTimeout(set_grid_item_4,3600000);
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='supplier_bills';
+		new_columns.indexes=[{index:'entry_date',lowerbound:(get_raw_time(get_my_date())-1000),upperbound:(get_raw_time(get_my_date())+86399999)}];		
 
+	read_json_count(new_columns,function(bill_count)
+	{
+		var grid_item=document.getElementById('grid_item_4');
+		$(grid_item).html(bill_count);
+	});
+	
+	setTimeout(set_grid_item_4,3600000);
 };
 
 
@@ -95,24 +97,26 @@ function set_grid_item_4()
  */
 function set_grid_item_5()
 {
-	var columns="<payments>" +
-		"<total_amount></total_amount>" +
-		"<type exact='yes'>received</type>" +
-		"<date lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</date>" +
-		"<date upperbound='yes'>"+(get_raw_time(get_my_date())+86400000)+"</date>" +
-		"<status array='yes'>--pending--closed--</status>" +
-		"</payments>";
-	get_single_column_data(function(results)
-	{
-		var income=0;
-		for (var i in results)
-		{
-			income+=parseFloat(results[i]);
-		}
-		document.getElementById('grid_item_5').innerHTML="Rs. "+income;
-	},columns);
-	setTimeout(set_grid_item_5,3600000);
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.sum='yes';
+		new_columns.data_store='payments';
+		new_columns.return_column='total_amount';
+		new_columns.indexes=[{index:'date',lowerbound:(get_raw_time(get_my_date())-1000),upperbound:(get_raw_time(get_my_date())+86399999)},
+							{index:'type',exact:'received'},
+							{index:'status',array:{'pending','closed'}}];
 
+	read_json_single_column(new_columns,function(results)
+	{
+		if(results.length>0)
+		{
+			var grid_item=document.getElementById('grid_item_5');
+			$(grid_item).html("Rs. "+results[0]);
+		}
+	});
+	
+	setTimeout(set_grid_item_5,3600000);
 };
 
 /**
@@ -121,24 +125,26 @@ function set_grid_item_5()
  */
 function set_grid_item_6()
 {
-	var columns="<payments>" +
-		"<total_amount></total_amount>" +
-		"<type exact='yes'>paid</type>" +
-		"<date lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</date>" +
-		"<date upperbound='yes'>"+(get_raw_time(get_my_date())+86400000)+"</date>" +
-		"<status array='yes'>--pending--closed--</status>" +
-		"</payments>";
-	get_single_column_data(function(results)
-	{
-		var expenses=0;
-		for (var i in results)
-		{
-			expenses+=parseFloat(results[i]);
-		}
-		document.getElementById('grid_item_6').innerHTML="Rs. "+expenses;
-	},columns);
-	setTimeout(set_grid_item_6,3600000);
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.sum='yes';
+		new_columns.data_store='payments';
+		new_columns.return_column='total_amount';
+		new_columns.indexes=[{index:'date',lowerbound:(get_raw_time(get_my_date())-1000),upperbound:(get_raw_time(get_my_date())+86399999)},
+							{index:'type',exact:'paid'},
+							{index:'status',array:{'pending','closed'}}];
 
+	read_json_single_column(new_columns,function(results)
+	{
+		if(results.length>0)
+		{
+			var grid_item=document.getElementById('grid_item_6');
+			$(grid_item).html("Rs. "+results[0]);
+		}
+	});
+
+	setTimeout(set_grid_item_6,3600000);
 };
 
 /**
@@ -147,13 +153,17 @@ function set_grid_item_6()
  */
 function set_grid_item_7()
 {
-	var columns="<product_master>" +
-		"<name></name>" +
-		"</product_master>";
-	get_single_column_data(function(results)
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='product_master';
+		new_columns.indexes=[{index:'name'}];
+
+	read_json_count(new_columns,function(item_count)
 	{
-		document.getElementById('grid_item_7').innerHTML=results.length;
-	},columns);
+		var grid_item=document.getElementById('grid_item_7');
+		$(grid_item).html(item_count);
+	});	
 };
 
 /**
@@ -162,13 +172,15 @@ function set_grid_item_7()
  */
 function set_grid_item_8()
 {
-	var columns="<bill_items>" +
-			"<id></id>" +
-			"<item_name></item_name>" +
-			"<total></total>" +
-			"<last_updated lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</last_updated>" +
-			"</bill_items>";
-	fetch_requested_data('',columns,function(results)
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='bill_items';
+		new_columns.indexes=[{index:'item_name'},
+							{index:'total'},
+							{index:'last_updated',lowerbound:(get_raw_time(get_my_date())-1000)}];
+
+	read_json_rows('',columns,function(results)
 	{
 		for(var i=0; i<results.length;i++)
 		{
@@ -192,7 +204,8 @@ function set_grid_item_8()
 		});
 		if(results.length>0)
 		{
-			document.getElementById('grid_item_8').innerHTML=results[0].item_name;
+			var grid_item=document.getElementById('grid_item_8');
+			$(grid_item).html(results[0].item_name);
 		}
 	});
 	setTimeout(set_grid_item_8,3600000);
@@ -205,13 +218,17 @@ function set_grid_item_8()
  */
 function set_grid_item_9()
 {
-	var columns="<services>" +
-		"<name></name>" +
-		"</services>";
-	get_single_column_data(function(results)
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='services';
+		new_columns.indexes=[{index:'name'}];
+
+	read_json_count(new_columns,function(item_count)
 	{
-		document.getElementById('grid_item_9').innerHTML=results.length;
-	},columns);
+		var grid_item=document.getElementById('grid_item_9');
+		$(grid_item).html(item_count);
+	});
 };
 
 
@@ -689,6 +706,19 @@ function set_grid_item_38()
  */
 function set_grid_item_39()
 {
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='logistics_orders';
+		new_columns.indexes=[{index:'status',array:{'pending','undelivered','received','out for delivery'}},
+							];
+
+	read_json_count(new_columns,function(item_count)
+	{
+		var grid_item=document.getElementById('grid_item_40');
+		$(grid_item).html(item_count);
+	});
+
 	var columns="<logistics_orders>" +
 		"<id></id>" +
 		"<status array='yes'>--pending--undelivered--received--out for delivery--</status>"+
@@ -714,14 +744,17 @@ function set_grid_item_39()
  */
 function set_grid_item_40()
 {
-	var columns="<treatment_plans>" +
-		"<id></id>" +
-		"<status exact='yes'>active</status>"+
-		"</treatment_plans>";
-	get_single_column_data(function(results)
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='treatment_plans';
+		new_columns.indexes=[{index:'status',exact:'active'}];
+
+	read_json_count(new_columns,function(item_count)
 	{
-		document.getElementById('grid_item_40').innerHTML=results.length;
-	},columns);
+		var grid_item=document.getElementById('grid_item_40');
+		$(grid_item).html(item_count);
+	});
 };
 
 /**
@@ -730,14 +763,16 @@ function set_grid_item_40()
  */
 function set_grid_item_41()
 {
-	var columns="<sms>" +
-		"<id></id>" +
-		"<message></message>"+
-		"<receiver></receiver>"+
-		"<status exact='yes'>sent</status>"+
-		"<billing_status exact='yes'>pending</billing_status>"+
-		"</sms>";
-	fetch_requested_data('',columns,function(results)
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='sms';
+		new_columns.indexes=[{index:'message'},
+							{index:'receiver'}
+							{index:'status',exact:'sent'}
+							{index:'billing_status',exact:'pending'}];
+
+	read_json_rows('',new_columns,function(results)
 	{
 		var sms_char_length=160;
 		var total_credits=0;
@@ -749,7 +784,8 @@ function set_grid_item_41()
 			
 			total_credits+=result.sms_credit;
 		});
-		document.getElementById('grid_item_41').innerHTML=total_credits;
+		var grid_item=document.getElementById('grid_item_41');
+		$(grid_item).html(total_credits);
 	});
 };
 
@@ -759,28 +795,34 @@ function set_grid_item_41()
  */
 function set_grid_item_42()
 {
-	var columns="<drs>" +
-		"<id></id>" +
-		"<drs_time lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</drs_time>"+
-		"</drs>";
-	get_single_column_data(function(results)
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='drs';
+		new_columns.indexes=[{index:'drs_time',lowebound:(get_raw_time(get_my_date())-1000)}];
+
+	read_json_count(new_columns,function(item_count)
 	{
-		document.getElementById('grid_item_42').innerHTML=results.length;
-	},columns);
+		var grid_item=document.getElementById('grid_item_42');
+		$(grid_item).html(item_count);
+	});
 };
 
 /**
- * @item # DRS (today)
+ * @item # RTO (today)
  * @itemNo 43
  */
 function set_grid_item_43()
 {
-	var columns="<rto>" +
-		"<id></id>" +
-		"<rto_time lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</rto_time>"+
-		"</rto>";
-	get_single_column_data(function(results)
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='rto';
+		new_columns.indexes=[{index:'rto_time',lowebound:(get_raw_time(get_my_date())-1000)}];
+
+	read_json_count(new_columns,function(item_count)
 	{
-		document.getElementById('grid_item_43').innerHTML=results.length;
-	},columns);
+		var grid_item=document.getElementById('grid_item_43');
+		$(grid_item).html(item_count);
+	});
 };

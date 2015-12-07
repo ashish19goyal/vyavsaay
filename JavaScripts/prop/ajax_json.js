@@ -144,6 +144,19 @@ function server_read_json_column(columns,callback,results)
 	});
 }
 
+function server_read_json_count(columns,callback)
+{
+	var domain=get_domain();
+	var username=get_username();
+	var re_access=get_session_var('re');
+	
+	var string_columns=JSON.stringify(columns);
+	ajax_json("./ajax_json/get_count.php",{domain:domain,username:username,re:re_access,data:string_columns},function(response_object)
+	{
+		callback(response_object.count);
+	});
+}
+
 
 function server_generate_report_json(report_id,callback)
 {

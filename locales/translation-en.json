@@ -469,6 +469,8 @@
 	"values_list_compact":"Manage Values List (compact)",
 	"to_do":"To-Do list",
 	"dispatch_orders":"Dispatch Orders",
-	"manage_pop_boxes":"Manage Pop-boxes"
+	"manage_pop_boxes":"Manage Pop-boxes",
+	"manage_performa_invoice":"Manage Performa Invoice",
+	"create_performa_invoice":"Create Performa Invoice"
 	}
 }

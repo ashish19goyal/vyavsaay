@@ -4888,8 +4888,10 @@ function print_form258(func)
 	/////////////adding item table //////////////////////////////////////////////////////	
 	var item_table_element=document.getElementById(form_id+'_item_body');
 	var item_table_heading=document.createElement('div');
-	item_table_heading.innerHTML="<br><b>Items</b>";
+	item_table_heading.innerHTML="<br><b>Items</b><br>";
 	var item_table=document.createElement('table');
+	item_table_heading.appendChild(item_table);
+	item_table_heading.setAttribute('class','print_element');
 	item_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
 	item_table.setAttribute('class','plain_table');
 	var table_header="<tr>"+
@@ -4960,8 +4962,10 @@ function print_form258(func)
 	/////////////adding cabinet details table //////////////////////////////////////////////////////	
 	
 	var details_table_heading=document.createElement('div');
-	details_table_heading.innerHTML="<br><b>Cabinet Details</b>";
+	details_table_heading.innerHTML="<br><b>Cabinet Details</b><br>";
 	var details_table=document.createElement('table');
+	details_table_heading.appendChild(details_table);
+	details_table_heading.setAttribute('class','print_element');
 	details_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
 	details_table.setAttribute('class','plain_table');
 	var table_header="<tr>"+
@@ -4993,8 +4997,11 @@ function print_form258(func)
 	
 	var spec_table_element=document.getElementById(form_id+'_spec_body');
 	var spec_table_heading=document.createElement('div');
-	spec_table_heading.innerHTML="<br><b>Specifications</b>";
+	spec_table_heading.innerHTML="<br><b>Specifications</b><br>";
 	var spec_table=document.createElement('table');
+	spec_table_heading.appendChild(spec_table);
+	spec_table_heading.setAttribute('class','print_element');
+	spec_table_heading.setAttribute('style','page-break-before:always;');
 	spec_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
 	spec_table.setAttribute('class','plain_table');
 	var table_header="<tr>"+
@@ -5027,8 +5034,10 @@ function print_form258(func)
 	
 	var spare_table_element=document.getElementById(form_id+'_spare_body');
 	var spare_table_heading=document.createElement('div');
-	spare_table_heading.innerHTML="<br><b>Spare Parts</b>";
+	spare_table_heading.innerHTML="<br><b>Spare Parts</b><br>";
 	var spare_table=document.createElement('table');
+	spare_table_heading.appendChild(spare_table);
+	spare_table_heading.setAttribute('class','print_element');
 	spare_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
 	spare_table.setAttribute('class','plain_table');
 	var table_header="<tr>"+
@@ -5061,8 +5070,10 @@ function print_form258(func)
 	
 	var bank_table_element=document.getElementById(form_id+'_bank_body');
 	var bank_table_heading=document.createElement('div');
-	bank_table_heading.innerHTML="<br><b>Account Details</b>";
+	bank_table_heading.innerHTML="<br><b>Account Details</b><br>";
 	var bank_table=document.createElement('table');
+	bank_table_heading.appendChild(bank_table);
+	bank_table_heading.setAttribute('class','print_element');
 	bank_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
 	bank_table.setAttribute('class','plain_table');
 	var table_header="<tr>"+
@@ -5098,8 +5109,10 @@ function print_form258(func)
 	
 	var terms_table_element=document.getElementById(form_id+'_tc_body');
 	var terms_table_heading=document.createElement('div');
-	terms_table_heading.innerHTML="<br><b>Terms & Conditions</b>";
+	terms_table_heading.innerHTML="<br><b>Terms & Conditions</b><br>";
 	var terms_table=document.createElement('table');
+	terms_table_heading.appendChild(terms_table);
+	terms_table_heading.setAttribute('class','print_element');
 	terms_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
 	terms_table.setAttribute('class','plain_table');
 	var table_header="<tr>"+
@@ -5129,22 +5142,19 @@ function print_form258(func)
 	container.appendChild(info_section);
 	
 	container.appendChild(item_table_heading);
-	container.appendChild(item_table);
+	//container.appendChild(item_table);
 
 	container.appendChild(details_table_heading);
-	container.appendChild(details_table);
-
-	container.appendChild(spec_table_heading);
-	container.appendChild(spec_table);
+	//container.appendChild(details_table);
 
 	container.appendChild(spare_table_heading);
-	container.appendChild(spare_table);
+	//container.appendChild(spare_table);
 
 	container.appendChild(bank_table_heading);
-	container.appendChild(bank_table);
+	//container.appendChild(bank_table);
 
 	container.appendChild(terms_table_heading);
-	container.appendChild(terms_table);
+	//container.appendChild(terms_table);
 
 	container.appendChild(footer);
 	
@@ -5157,6 +5167,9 @@ function print_form258(func)
 	
 	footer.appendChild(signature);
 	footer.appendChild(jurisdiction);
+
+	container.appendChild(spec_table_heading);
+	container.appendChild(spec_table);
 	
 	func(container);
 }
@@ -5376,6 +5389,7 @@ function print_form268(func)
 	var address=master_form.elements['address'].value;
 	var date=master_form.elements['date'].value;	
 	var challan_no=master_form.elements['challan_num'].value;
+	var prepared_by=master_form.elements['prepared'].value;
 	var tin_no=get_session_var('tin');
 	////////////////filling in the content into the containers//////////////////////////
 
@@ -5385,7 +5399,7 @@ function print_form268(func)
 	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Delivery Challan #: "+challan_no+"</b></div><hr style='border: 1px solid #00f;'>";
 	
 	customer_info.innerHTML="<b>Customer: </b><br>"+customer_name+"<br>"+address;
-	business_info.innerHTML="<b>Seller</b><br>TIN #: "+tin_no+"<br>Date: "+date+"<br>Challan No: "+challan_no;
+	business_info.innerHTML="<b>Seller</b><br>TIN #: "+tin_no+"<br>Date: "+date+"<br>Challan No: "+challan_no+"<br>Prepared By: "+prepared_by;
 
 	var table_element=document.getElementById(form_id+'_body');
 

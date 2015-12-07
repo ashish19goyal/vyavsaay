@@ -10590,7 +10590,7 @@ function form268_header_ini()
 	var address_filter=fields.elements['address'];
 	var id_filter=fields.elements['id'];
 	var save_button=fields.elements['save'];
-	var share_button=fields.elements['share'];
+	var share_button=fields.elements['email'];
 
 	$(share_button).off('click');
 	

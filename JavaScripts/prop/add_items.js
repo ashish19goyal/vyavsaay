@@ -15474,7 +15474,7 @@ function form254_add_item()
 				});
 			});
 		});
-	
+
 		$('textarea').autosize();
 	}
 	else
@@ -16668,7 +16668,7 @@ function form268_add_item()
 		{
 			var unit_data="<attributes count='1'>"+
 							"<value></value>"+
-							"<attribute exact='yes'>unit</attribute>"+
+							"<attribute exact='yes'>Unit</attribute>"+
 							"<name exact='yes'>"+name_filter.value+"</name>"+
 							"</attributes>";
 			get_single_column_data(function(units)

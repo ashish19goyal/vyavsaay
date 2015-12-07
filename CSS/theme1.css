@@ -1601,13 +1601,14 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 	}
 }
 
-table.printing_tables{
-}
-
 table.printing_tables tr>td>div{
 	page-break-inside:avoid; 
 	page-break-after:auto;
 	page-break-before:auto;
+}
+
+.print_element{
+	page-break-inside:avoid; 
 }
 
 @media print {

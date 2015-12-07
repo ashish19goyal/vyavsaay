@@ -28387,7 +28387,8 @@ function form264_ini()
 		});
 
 		$('textarea').autosize();
-		
+		longPressEditable($('.dblclick_editable'));
+
 		var export_button=filter_fields.elements['export'];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)

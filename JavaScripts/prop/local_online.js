@@ -362,6 +362,23 @@ function read_json_single_column(columns,callback)
 	}
 }
 
+/**
+ * @param columns
+ * @param callback
+ */
+function read_json_count(columns,callback)
+{
+	var results=new Array();
+	if(is_online())
+	{
+		server_read_json_count(columns,callback)
+	}
+	else
+	{
+		local_read_json_count(columns,callback);
+	}
+}
+
 function send_email(to,from,from_name,subject,message,func)
 {
 	var email_enabled=get_session_var('email_enabled');

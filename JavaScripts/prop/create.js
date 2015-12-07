@@ -18663,6 +18663,7 @@ function form268_create_form()
 		var address=form.elements['address'].value;
 		var data_id=form.elements['id'].value;
 		var save_button=form.elements['save'];
+		var share_button=form.elements['email'];
 		var last_updated=get_my_time();
 		
 		$(share_button).off('click');
