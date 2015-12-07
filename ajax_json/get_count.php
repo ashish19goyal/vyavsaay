@@ -189,7 +189,7 @@
 			$conn=new db_connect($db_name);
 			$stmt=$conn->conn->prepare($query);
 			$stmt->execute($values_array);
-			$struct_res=$stmt->fetch(PDO::FETCH_ASSOC);
+			$struct_res=$stmt->fetch(PDO::FETCH_NUM);
 			
 			$response_object['status']='success';
 			$response_object['data_store']=$table;

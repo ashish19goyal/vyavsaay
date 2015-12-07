@@ -826,3 +826,44 @@ function set_grid_item_43()
 		$(grid_item).html(item_count);
 	});
 };
+
+/**
+ * @item # Quotations (last 30 days)
+ * @itemNo 44
+ */
+function set_grid_item_44()
+{
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='quotation';
+		new_columns.indexes=[{index:'date',lowebound:(get_raw_time(get_my_date())-2592000000)}];
+
+	read_json_count(new_columns,function(item_count)
+	{
+		var grid_item=document.getElementById('grid_item_44');
+		$(grid_item).html(item_count);
+	});
+};
+
+/**
+ * @item # Different Spare Parts
+ * @itemNo 45
+ */
+function set_grid_item_45()
+{
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='attributes';		
+			
+		new_columns.indexes=[{index:'type',exact:'product'},
+							{index:'value',exact:'yes'},
+							{index:'attribute',exact:'Spare Part'}];
+	
+	read_json_count(new_columns,function(item_count)
+	{
+		var grid_item=document.getElementById('grid_item_45');
+		$(grid_item).html(item_count);
+	});
+};

@@ -30,11 +30,11 @@ function login_action()
 		if(result) { password=result.password;}
 		var salt='$2a$10$'+domain+'1234567891234567891234';
 		var salt_22=salt.substring(0, 29);
-		console.log(password);
+		//console.log(password);
 		var bcrypt = new bCrypt();
 		bcrypt.hashpw(pass, salt_22, function(newhash)
 		{
-			console.log(newhash);
+			//console.log(newhash);
 			if(newhash.substring(3)==password.substring(3))
 			{
 				console.log('logged in offline');
