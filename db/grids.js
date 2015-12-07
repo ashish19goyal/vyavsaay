@@ -711,31 +711,13 @@ function set_grid_item_39()
 		new_columns.start_index=0;
 		new_columns.data_store='logistics_orders';
 		new_columns.indexes=[{index:'status',array:{'pending','undelivered','received','out for delivery'}},
-							];
+							{index:'import_date',exact:get_raw_time(get_my_date())}];
 
 	read_json_count(new_columns,function(item_count)
 	{
-		var grid_item=document.getElementById('grid_item_40');
+		var grid_item=document.getElementById('grid_item_39');
 		$(grid_item).html(item_count);
 	});
-
-	var columns="<logistics_orders>" +
-		"<id></id>" +
-		"<status array='yes'>--pending--undelivered--received--out for delivery--</status>"+
-		"<import_date exact='yes'>"+get_raw_time(get_my_date())+"</import_date>"+
-		"</logistics_orders>";
-	get_single_column_data(function(results)
-	{
-		var count=0;
-		for(var i in results)
-		{
-			if(results[i].current_location!="" && results[i].current_location!="null")
-			{
-				count+=1;
-			}
-		}
-		document.getElementById('grid_item_39').innerHTML=count;
-	},columns);
 };
 
 /**
@@ -768,8 +750,8 @@ function set_grid_item_41()
 		new_columns.start_index=0;
 		new_columns.data_store='sms';
 		new_columns.indexes=[{index:'message'},
-							{index:'receiver'}
-							{index:'status',exact:'sent'}
+							{index:'receiver'},
+							{index:'status',exact:'sent'},
 							{index:'billing_status',exact:'pending'}];
 
 	read_json_rows('',new_columns,function(results)

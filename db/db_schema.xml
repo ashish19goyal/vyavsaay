@@ -531,6 +531,7 @@
 			<pick_bag_num index='yes' type="VARCHAR(20)"></pick_bag_num>
 			<manifest_num index="yes" type="TEXT"></manifest_num>
 			<awb_num index="yes" type="TEXT"></awb_num>
+			<performa index="yes" type="VARCHAR(20)"></performa><!--yes/no-->
 			<manifest_id index="yes" type="BIGINT"></manifest_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>

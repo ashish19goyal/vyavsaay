@@ -11046,3 +11046,31 @@ function form282_header_ini()
 	set_my_filter(id_data,id_filter);
 	set_my_filter(account_data,account_filter);
 };
+
+/**
+ * @form Manage Performa Invoices
+ * @formNo 283
+ */
+function form283_header_ini()
+{
+	var filter_fields=document.getElementById('form283_header');
+	var bill_filter=filter_fields.elements[0];
+	var name_filter=filter_fields.elements[1];
+	
+	var bill_data="<bills>" +
+			"<bill_num></bill_num>" +
+			"</bills>";
+	var cust_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form283_ini();
+	});
+
+	set_my_filter(bill_data,bill_filter);
+	set_my_filter(cust_data,name_filter);
+};

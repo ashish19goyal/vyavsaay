@@ -29846,3 +29846,127 @@ function form282_ini()
 		hide_loader();
 	});
 };
+
+/**
+ * @form Manage Performa Invoices
+ * @formNo 283
+ * @Loading light
+ */
+function form283_ini()
+{
+	show_loader();
+	var fid=$("#form283_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form283_header');
+	
+	//populating form 
+	var fnum=filter_fields.elements[0].value;
+	var fname=filter_fields.elements[1].value;
+
+	////indexing///
+	var index_element=document.getElementById('form283_index');
+	var prev_element=document.getElementById('form283_prev');
+	var next_element=document.getElementById('form283_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+	$('#form283_body').html("");
+
+	var new_columns=new Object();
+		new_columns.count=25;
+		new_columns.start_index=start_index;
+		new_columns.data_store='bills';
+		new_columns.indexes=[{index:'id',value:fid},
+							{index:'bill_num',fnum},
+							{index:'customer_name',fname},
+							{index:'bill_date'},
+							{index:'total'},
+							{index:'type'},
+							{index:'transaction_id'},
+							{index:'status'},
+							{index:'performa',exact:'yes'}];
+
+	read_json_rows('form283',new_columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var cancelled_bill="";
+			if(result.status=='cancelled')
+			{
+				cancelled_bill="style='opacity:0.5' title='This bill was cancelled'";
+			}
+			
+			var rowsHTML="<tr "+cancelled_bill+">";
+				rowsHTML+="<form id='form283_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Invoice #'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='input_link' form='form283_"+result.id+"' value='"+result.bill_num+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Customer'>";
+						rowsHTML+="<textarea readonly='readonly' form='form283_"+result.id+"'>"+result.customer_name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form283_"+result.id+"' value='"+get_my_past_date(result.bill_date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Amount'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form283_"+result.id+"' value='"+result.total+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form283_"+result.id+"' value='"+result.id+"'>";
+					if(result.status!='cancelled')
+					{
+						rowsHTML+="<input type='button' class='delete_icon' form='form283_"+result.id+"' title='Delete Bill' onclick='form283_delete_item($(this));'>";
+					}
+						rowsHTML+="<input type='hidden' form='form283_"+result.id+"' value='"+result.transaction_id+"'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form283_body').append(rowsHTML);
+			var fields=document.getElementById("form283_"+result.id);
+			
+			if(result.status!='cancelled')
+			{			
+				var input_link=fields.elements[0];
+				$(input_link).on("click", function(event)
+				{
+					event.preventDefault();
+					element_display(result.id,'form284');
+				});
+			}
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements['export'];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'Performa Invoices');
+		});
+		hide_loader();
+	});
+}

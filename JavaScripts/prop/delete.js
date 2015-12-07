@@ -8796,3 +8796,76 @@ function form276_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Manage Performa Invoice
+ * @param button
+ */
+function form283_delete_item(button)
+{
+	if(is_delete_access('form283'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var bill_num=form.elements[0].value;
+			var customer_name=form.elements[1].value;
+			var amount=form.elements[3].value;
+			var data_id=form.elements[4].value;
+			var transaction_id=form.elements[6].value;
+			var last_updated=get_my_time();
+			var bill_xml="<bills>" +
+						"<id>"+data_id+"</id>" +
+						"</bills>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>bills</tablename>" +
+						"<link_to>form283</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Invoice #"+bill_num+" for customer "+customer_name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			var transaction_xml="<transactions>" +
+						"<id>"+transaction_id+"</id>" +
+						"</transactions>";
+			var items_data="<bill_items>" +
+					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
+					"</bill_items>";
+			delete_simple(items_data);	
+
+			delete_row(bill_xml,activity_xml);
+			delete_simple(transaction_xml);
+			
+			var payment_xml="<payments>" +
+					"<id></id>" +
+					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
+					"<status array='yes'>--pending--cancelled--</status>" +
+					"<transaction_id></transaction_id>" +
+					"</payments>";
+			fetch_requested_data('',payment_xml,function(payments)
+			{
+				for(var x in payments)
+				{
+					var pt_xml="<transactions>" +
+							"<id>"+payments[x].transaction_id+"</id>" +
+							"</transactions>";
+					var pay_xml="<payments>" +
+							"<id>"+payments[x].id+"</id>" +
+							"<bill_id></bill_id>" +
+							"<transaction_id></transaction_id>" +
+							"</payments>";
+	
+					delete_simple(pay_xml);
+					delete_simple(pt_xml);
+					break;
+				}
+			});	
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
