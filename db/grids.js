@@ -849,3 +849,23 @@ function set_grid_item_45()
 		$(grid_item).html(item_count);
 	});
 };
+
+/**
+ * @item # Challans today
+ * @itemNo 46
+ */
+function set_grid_item_46()
+{
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='delivery_challans';		
+			
+		new_columns.indexes=[{index:'challan_date',lowebound:(get_raw_time(get_my_date())-1000)}];
+	
+	read_json_count(new_columns,function(item_count)
+	{
+		var grid_item=document.getElementById('grid_item_46');
+		$(grid_item).html(item_count);
+	});
+};

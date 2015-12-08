@@ -471,6 +471,7 @@
 	"dispatch_orders":"Dispatch Orders",
 	"manage_pop_boxes":"Manage Pop-boxes",
 	"manage_performa_invoice":"Manage Performa Invoice",
-	"create_performa_invoice":"Create Performa Invoice"
+	"create_performa_invoice":"Create Performa Invoice",
+	"inventory_nvs":"Inventory (NVS)"
 	}
 }

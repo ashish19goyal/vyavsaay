@@ -12229,15 +12229,8 @@ function form154_create_hiring_item(form)
 				"<fresh>"+fresh+"</fresh>"+
 				"</bill_items>";	
 	
-		if(is_online())
-		{
-			server_create_simple(data_xml);
-		}
-		else
-		{
-			local_create_simple(data_xml);
-		}
-
+		create_simple(data_xml);
+		
 		for(var i=0;i<8;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -18724,9 +18717,10 @@ function form268_create_form()
 		{
 			if(num_ids.length>0)
 			{
+				var challan_num_array=challan_num.split("-");
 				var num_xml="<user_preferences>"+
 								"<id>"+num_ids[0]+"</id>"+
-								"<value>"+(parseInt(challan_num)+1)+"</value>"+
+								"<value>"+(parseInt(challan_num_array[1])+1)+"</value>"+
 								"<last_updated>"+last_updated+"</last_updated>"+
 								"</user_preferences>";
 				update_simple(num_xml);
@@ -19171,6 +19165,230 @@ function form276_create_item(form)
 		{
 			event.preventDefault();
 		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Create Performa Invoice
+ * @formNo 284
+ * @param button
+ */
+function form284_create_item(form)
+{
+	if(is_create_access('form284'))
+	{
+		var bill_id=document.getElementById("form284_master").elements['bill_id'].value;
+		
+		var name=form.elements[0].value;
+		var details=form.elements[1].value;
+		var quantity=form.elements[2].value;
+		var price=form.elements[3].value;
+		var amount=form.elements[4].value;
+		//var tax=form.elements[5].value;
+		//var total=form.elements[6].value;
+		var data_id=form.elements[5].value;
+		var save_button=form.elements[6];
+		var del_button=form.elements[7];
+		
+		var unit=$('#form284_unit_'+data_id).html();
+		var last_updated=get_my_time();
+		
+		var data_xml="<bill_items>" +
+				"<id>"+data_id+"</id>" +
+				"<item_name>"+name+"</item_name>" +
+				"<item_desc>"+details+"</item_desc>" +
+				"<batch>"+name+"</batch>" +
+				"<unit_price>"+price+"</unit_price>" +
+				"<quantity>"+quantity+"</quantity>" +
+				"<unit>"+unit+"</unit>"+				
+				"<amount>"+amount+"</amount>" +
+				//"<total>"+total+"</total>" +
+				//"<tax>"+tax+"</tax>" +
+				"<bill_id>"+bill_id+"</bill_id>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</bill_items>";
+		var adjust_xml="<inventory_adjust>" +
+				"<id>"+data_id+"</id>" +
+				"<product_name>"+name+"</product_name>" +
+				"<batch>"+name+"</batch>" +
+				"<quantity>"+quantity+"</quantity>" +
+				"<source>sale</source>" +
+				"<source_id>"+bill_id+"</source_id>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</inventory_adjust>";	
+	
+		create_simple(data_xml);
+		create_simple(adjust_xml);
+		
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form284_delete_item(del_button);
+		});
+
+		$(save_button).off('click');
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Create Performa Invoice
+ * @formNo 284
+ * @param button
+ */
+function form284_create_form()
+{
+	if(is_create_access('form284'))
+	{
+		var form=document.getElementById("form284_master");
+		
+		var customer=form.elements['customer'].value;
+		var bill_type=form.elements['bill_type'].value;
+		var bill_date=get_raw_time(form.elements['date'].value);
+		var narration=form.elements['narration'].value;		
+		var bill_num=form.elements['bill_num'].value;
+
+		var amount=0;
+		var tax_rate=0;
+		var cartage=0;
+		
+		if(document.getElementById('form284_cartage'))
+		{
+			tax_rate=parseFloat(document.getElementById('form284_tax').value);
+			cartage=parseFloat(document.getElementById('form284_cartage').value);
+		}
+		
+		$("[id^='save_form284']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+			if(!isNaN(parseFloat(subform.elements[4].value)))
+				amount+=parseFloat(subform.elements[4].value);
+		});
+
+		amount=my_round(amount,2);		
+		var tax=my_round((tax_rate*((amount)/100)),2);		
+		var total=my_round(amount+tax+cartage,0);
+	
+		var data_id=form.elements['bill_id'].value;
+		var save_button=form.elements['save'];
+		var last_updated=get_my_time();
+		
+		var data_xml="<bills>" +
+					"<id>"+data_id+"</id>" +
+					"<bill_num>"+bill_num+"</bill_num>"+
+					"<customer_name>"+customer+"</customer_name>" +
+					"<bill_date>"+bill_date+"</bill_date>" +
+					"<amount>"+amount+"</amount>" +
+					"<total>"+total+"</total>" +
+					"<billing_type>"+bill_type+"</billing_type>" +
+					"<cartage>"+cartage+"</cartage>" +
+					"<tax>"+tax+"</tax>" +
+					"<tax_rate>"+tax_rate+"</tax_rate>"+
+					"<transaction_id>"+data_id+"</transaction_id>" +
+					"<notes>"+narration+"</notes>"+
+					"<performa>yes</performa>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</bills>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>bills</tablename>" +
+					"<link_to>form283</link_to>" +
+					"<title>Saved</title>" +
+					"<notes>Invoice #"+bill_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var transaction_xml="<transactions>" +
+					"<id>"+data_id+"</id>" +
+					"<trans_date>"+get_my_time()+"</trans_date>" +
+					"<amount>"+total+"</amount>" +
+					"<receiver>"+customer+"</receiver>" +
+					"<giver>master</giver>" +
+					"<tax>"+tax+"</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</transactions>";
+		var pt_tran_id=get_new_key();
+		var payment_xml="<payments>" +
+					"<id>"+pt_tran_id+"</id>" +
+					"<status>pending</status>" +
+					"<type>received</type>" +
+					"<date>"+get_my_time()+"</date>" +
+					"<total_amount>"+total+"</total_amount>" +
+					"<paid_amount>"+total+"</paid_amount>" +
+					"<acc_name>"+customer+"</acc_name>" +
+					"<due_date>"+get_credit_period()+"</due_date>" +
+					"<mode>"+get_payment_mode()+"</mode>" +
+					"<transaction_id>"+pt_tran_id+"</transaction_id>" +
+					"<bill_id>"+data_id+"</bill_id>" +
+					"<source_info>for sale bill #"+bill_num+"</source_info>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</payments>";
+		var pt_xml="<transactions>" +
+					"<id>"+pt_tran_id+"</id>" +
+					"<trans_date>"+get_my_time()+"</trans_date>" +
+					"<amount>"+total+"</amount>" +
+					"<receiver>master</receiver>" +
+					"<giver>"+customer+"</giver>" +
+					"<tax>0</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</transactions>";
+		var num_data="<user_preferences>"+
+					"<id></id>"+						
+					"<name exact='yes'>"+bill_type+"_bill_num</name>"+												
+					"</user_preferences>";
+		get_single_column_data(function (bill_num_ids)
+		{
+			if(bill_num_ids.length>0)
+			{
+				var bill_num_array=bill_num.split("-");
+				var num_xml="<user_preferences>"+
+							"<id>"+bill_num_ids[0]+"</id>"+
+							"<value>"+(parseInt(bill_num_array[1])+1)+"</value>"+
+							"<last_updated>"+last_updated+"</last_updated>"+
+							"</user_preferences>";
+				update_simple(num_xml);
+			}
+		},num_data);
+
+		create_row(data_xml,activity_xml);
+		create_simple(transaction_xml);
+		create_simple(pt_xml);
+		create_simple_func(payment_xml,function()
+		{
+			//modal26_action(pt_tran_id);
+		});
+		
+		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+					"<td>Amount:<br>Tax:@ <input type='number' value='"+tax_rate+"' step='any' readonly='readonly' id='form284_tax' class='dblclick_editable'>%<br>Cartage: <br>Total: </td>" +
+					"<td>Rs. "+amount+"</br>" +
+					"Rs. "+tax+"<br>" +
+					"Rs. <input type='number' value='"+cartage+"' step='any' id='form284_cartage' readonly='readonly' class='dblclick_editable'></br>" +
+					"Rs. "+total+"</td>" +
+					"<td></td>" +
+					"</tr>";
+		
+		$('#form284_foot').html(total_row);
+		longPressEditable($('.dblclick_editable'));
+
+		$(save_button).off('click');
+		$(save_button).on('click',function(event)
+		{
+			event.preventDefault();
+			form284_update_form();
+		});
+		
+		$("[id^='save_form284_']").click();
 	}
 	else
 	{

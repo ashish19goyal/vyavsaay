@@ -17154,3 +17154,128 @@ function form276_add_item()
 		$("#modal2").dialog("open");
 	}		
 }
+
+
+/**
+ * @form Create Performa Invoice
+ * @formNo 284
+ */
+function form284_add_item()
+{
+	var filter_fields=document.getElementById('form284_master');
+	var bill_type=filter_fields.elements['bill_type'].value;
+	var customer_name=filter_fields.elements['customer'].value;
+	
+	if(is_create_access('form284'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form284_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='S.No.'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='text' class='wideinput' required form='form284_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Details'>";
+				rowsHTML+="<textarea form='form284_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' min='0' required form='form284_"+id+"' step='any'> <b id='form284_unit_"+id+"'></b>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Amount'>";
+				rowsHTML+="<b>Price</b>:<input type='number' required form='form284_"+id+"' step='any'>";
+				rowsHTML+="<br><b>Amount</b>:<input type='number' required readonly='readonly' form='form284_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form284_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='submit_hidden' form='form284_"+id+"' id='save_form284_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form284_"+id+"' id='delete_form284_"+id+"' onclick='$(this).parent().parent().remove();form284_update_serial_numbers(); form284_get_totals();'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form284_"+id+"'>";
+			//	rowsHTML+="<input type='hidden' form='form284_"+id+"' name='tax_unit'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form284_body').append(rowsHTML);
+		
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+
+		var fields=document.getElementById("form284_"+id);
+		var name_filter=fields.elements[0];
+		var detail_filter=fields.elements[1];
+		var quantity_filter=fields.elements[2];
+		var price_filter=fields.elements[3];
+		var amount_filter=fields.elements[4];
+		//var tax_filter=fields.elements[5];
+		//var total_filter=fields.elements[6];
+		var id_filter=fields.elements[5];
+		var save_button=fields.elements[6];
+		//var tax_unit_filter=fields.elements[11];
+		
+		$(save_button).on("click", function(event)
+		{
+			event.preventDefault();
+			form284_create_item(fields);
+		});
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form284_add_item();
+		});
+		
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";		
+		set_my_value_list_func(product_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		});
+
+		$(name_filter).on('blur',function(event)
+		{
+			var desc_data="<product_master>" +
+				"<description></description>"+
+				"<name exact='yes'>"+name_filter.value+"</name>" +
+				"</product_master>";		
+			set_my_value(desc_data,detail_filter);
+/*
+			var tax_data="<product_master>" +
+				"<tax></tax>"+
+				"<name exact='yes'>"+name_filter.value+"</name>" +
+				"</product_master>";		
+			set_my_value(tax_data,tax_unit_filter);
+	*/		
+			var unit_data="<attributes count='1'>"+
+						"<value></value>"+
+						"<attribute exact='yes'>Unit</attribute>"+
+						"<name exact='yes'>"+name_filter.value+"</name>"+
+						"</attributes>";
+			get_single_column_data(function(units)
+			{
+				if(units.length>0)
+					$('#form284_unit_'+id).html(units[0]);
+			},unit_data);			
+		});
+
+		$(price_filter).add(quantity_filter).on('blur',function(event)
+		{
+			amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(price_filter.value)),2);
+			//tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
+			//total_filter.value=my_round((amount_filter.value+tax_filter.value),2);				
+		});
+
+/*
+		$(tax_filter).on('blur',function(event)
+		{
+			total_filter.value=my_round((amount_filter.value+tax_filter.value),2);				
+		});
+*/
+		form284_update_serial_numbers();
+		form284_get_totals();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

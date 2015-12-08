@@ -3957,6 +3957,17 @@
 			<tables>--bill_items--bills--transactions--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form285</name>
+			<display_name>inventory_nvs</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--product_master--product_instances--inventory_adjust--bill_items--supplier_bill_items--customer_return_items--supplier_return_items--</tables>
+			<last_updated>1</last_updated>
+		</row>		
 	</user_preferences>
 	<access_control>
 		<row>
@@ -7555,6 +7566,17 @@
 			<up>checked</up>
 			<del>checked</del>
 			<last_updated>1</last_updated>
-		</row>						
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form285</element_id>
+			<element_name>inventory_nvs</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>												
 	</access_control>
 </re_xml>

@@ -10644,7 +10644,13 @@ function form268_header_ini()
 				"<value></value>"+
 				"<name exact='yes'>delivery_challan_num</name>"+
 				"</user_preferences>";
-		set_my_value(challan_num_data,challan_num);
+		get_single_column_data(function(nums)
+		{
+			if(nums.length>0)
+			{
+				challan_num.value=get_session_var('challan_number_prefix')+"-"+nums[0];
+			}
+		},challan_num_data);		
 	}
 			
 	$(save_button).off('click');
@@ -11073,4 +11079,199 @@ function form283_header_ini()
 
 	set_my_filter(bill_data,bill_filter);
 	set_my_filter(cust_data,name_filter);
+};
+
+/**
+ * @form Create Bill (DLM)
+ * @formNo 284
+ */
+function form284_header_ini()
+{
+	var fields=document.getElementById('form284_master');
+	
+	var customers_filter=fields.elements['customer'];
+	var bill_type=fields.elements['bill_type'];
+	var bill_date=fields.elements['date'];
+	var narration=fields.elements['narration'];
+	var bill_num=fields.elements['bill_num'];
+	fields.elements['bill_id'].value=get_new_key();
+	var save_button=fields.elements['save'];
+	var cst_filter=fields.elements['cst'];
+	var tin_filter=fields.elements['tin'];
+	var customer_info=fields.elements['customer_info'];
+	
+	narration.value="";
+	bill_type.removeAttribute('readonly');
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form284_create_form();
+	});
+	
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) 
+	{
+		if( event.keyCode == 83 && event.ctrlKey) 
+		{
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form284_add_item();
+	});
+	
+	var customers_data="<customers>" +
+		"<acc_name></acc_name>" +
+		"</customers>";
+	set_my_value_list(customers_data,customers_filter,function () 
+	{
+		$(customers_filter).focus();
+	});
+
+	var add_customer=document.getElementById('form284_add_customer');
+	$(add_customer).off('click');
+	$(add_customer).on('click',function()
+	{
+		modal11_action(function()
+		{
+			var customers_data="<customers>" +
+				"<acc_name></acc_name>" +
+				"</customers>";			
+			set_my_value_list(customers_data,customers_filter);
+		});
+	});	
+
+	var type_data="<bill_types>" +
+		"<name></name>" +
+		"<status exact='yes'>active</status>" +
+		"</bill_types>";
+	set_my_value_list(type_data,bill_type);
+	
+	var bill_id=$("#form284_link").attr('data_id');
+	if(bill_id==null || bill_id=='')
+	{	
+		get_single_column_data(function (bill_types) 
+		{
+			if(bill_types.length>0)
+			{
+				bill_type.value=bill_types[0];
+				var bill_num_data="<user_preferences count='1'>"+
+							"<value></value>"+
+							"<name exact='yes'>"+bill_type.value+"_bill_num</name>"+
+							"</user_preferences>";
+				get_single_column_data(function(nums)
+				{
+					if(nums.length>0)
+					{
+						bill_num.value=get_session_var('invoice_number_prefix')+"-"+nums[0];
+					}
+				},bill_num_data);
+			}
+			else 
+			{
+				var bill_num_data="<user_preferences count='1'>"+
+							"<value></value>"+
+							"<name exact='yes'>bill_num</name>"+
+							"</user_preferences>";
+				get_single_column_data(function(nums)
+				{
+					if(nums.length>0)
+					{
+						bill_num.value=get_session_var('invoice_number_prefix')+"-"+nums[0];
+					}
+				},bill_num_data);
+			}
+		},type_data);
+	}
+
+	$(bill_type).off('blur');
+	$(bill_type).on('blur',function (e) 
+	{
+		var bill_num_data="<user_preferences count='1'>"+
+						"<value></value>"+
+						"<name exact='yes'>"+bill_type.value+"_bill_num</name>"+
+						"</user_preferences>";
+		get_single_column_data(function(nums)
+		{
+			if(nums.length>0)
+			{
+				bill_num.value=get_session_var('invoice_number_prefix')+"-"+nums[0];
+			}
+		},bill_num_data);	
+	});	
+	
+	$(customers_filter).off('blur');
+	$(customers_filter).on('blur',function(e)
+	{
+		var address_data="<customers>" +
+				"<address></address>" +
+				"<city></city>" +
+				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
+				"</customers>";
+		fetch_requested_data('',address_data,function(addresses)
+		{
+			var address_string="";
+			if(addresses.length>0)
+			{
+				address_string+=addresses[0].address+", "+addresses[0].city;
+				customer_info.value="Address\n"+address_string;
+			}
+			else
+			{
+				customer_info.value="";
+			}
+		});
+		
+		var cst_data="<attributes>"+
+					"<value></value>"+
+					"<type exact='yes'>customer</type>"+
+					"<attribute exact='yes'>CST#</attribute>"+
+					"<name exact='yes'>"+customers_filter.value+"</name>"+
+					"</attributes>";
+		set_my_value(cst_data,cst_filter);
+
+		var tin_data="<attributes>"+
+					"<value></value>"+
+					"<type exact='yes'>customer</type>"+
+					"<attribute exact='yes'>TIN#</attribute>"+
+					"<name exact='yes'>"+customers_filter.value+"</name>"+
+					"</attributes>";
+		set_my_value(tin_data,tin_filter);
+	});
+
+	$(bill_date).datepicker();
+	$(bill_date).val(get_my_date());
+	customers_filter.value='';
+}
+
+/**
+ * @form Inventory (NVS)
+ * @formNo 285
+ */
+function form285_header_ini()
+{
+	var filter_fields=document.getElementById('form285_header');	
+	var name_filter=filter_fields.elements[0];
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form285_ini();
+	});
+
+	var item_data="<attributes>" +
+		"<name></name>" +
+		"<type exact='yes'>product</type>"+
+		"<value exact='yes'>no</value>"+
+		"<attribute exact='yes'>Spare Part</attribute>"+
+		"</attributes>";	
+	set_my_filter(item_data,name_filter);
 };

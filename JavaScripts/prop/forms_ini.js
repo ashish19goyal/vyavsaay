@@ -29970,3 +29970,267 @@ function form283_ini()
 		hide_loader();
 	});
 }
+
+/**
+ * @form Create Performa Bill
+ * @formNo 284
+ * @Loading light
+ */
+function form284_ini()
+{
+	var bill_id=$("#form284_link").attr('data_id');
+	if(bill_id==null)
+		bill_id="";	
+	
+	$('#form284_body').html("");
+	$('#form284_foot').html("");
+	
+	if(bill_id!="")
+	{
+		show_loader();
+		var bill_columns="<bills>" +
+				"<id>"+bill_id+"</id>" +
+				"<bill_num></bill_num>"+
+				"<customer_name></customer_name>" +
+				"<total></total>" +
+				"<bill_date></bill_date>" +
+				"<amount></amount>" +
+				"<discount></discount>" +
+				"<cartage></cartage>"+
+				"<tax></tax>" +
+				"<tax_rate></tax_rate>"+
+				"<billing_type></billing_type>" +
+				"<tax_type></tax_type>"+
+				"<type></type>" +
+				"<storage></storage>"+
+				"<notes></notes>"+
+				"</bills>";
+		var bill_items_column="<bill_items>" +
+				"<id></id>" +
+				"<item_name></item_name>" +
+				"<item_desc></item_desc>"+
+				"<unit_price></unit_price>" +
+				"<quantity></quantity>" +
+				"<unit></unit>"+				
+				"<amount></amount>" +
+				"<total></total>" +
+				"<discount></discount>" +
+				"<type></type>" +
+				"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
+				"<tax></tax>" +
+				"<from_date></from_date>"+
+				"<to_date></to_date>"+
+				"</bill_items>";
+	
+		////separate fetch function to get bill details like customer name, total etc.
+		fetch_requested_data('',bill_columns,function(bill_results)
+		{
+			var filter_fields=document.getElementById('form284_master');
+			if(bill_results.length>0)
+			{
+				filter_fields.elements['customer'].value=bill_results[0].customer_name;
+				filter_fields.elements['bill_type'].value=bill_results[0].billing_type;
+				filter_fields.elements['date'].value=get_my_past_date(bill_results[0].bill_date);
+				filter_fields.elements['narration'].value=bill_results[0].notes;
+				filter_fields.elements['bill_num'].value=bill_results[0].bill_num;
+				filter_fields.elements['bill_id'].value=bill_id;				
+				var save_button=filter_fields.elements['save'];
+				var customer_info=filter_fields.elements['customer_info'];
+				filter_fields.elements['bill_type'].setAttribute('readonly','readonly');
+				var cst_filter=filter_fields.elements['cst'];
+				var tin_filter=filter_fields.elements['tin'];
+
+				if(filter_fields.elements['bill_type'].value=='Retail' || filter_fields.elements['bill_type'].value=='Tax')
+				{
+					var cst_data="<attributes>"+
+								"<value></value>"+
+								"<type exact='yes'>customer</type>"+
+								"<attribute exact='yes'>CST#</attribute>"+
+								"<name exact='yes'>"+bill_results[0].customer_name+"</name>"+
+								"</attributes>";
+					set_my_value(cst_data,cst_filter);
+
+					var tin_data="<attributes>"+
+								"<value></value>"+
+								"<type exact='yes'>customer</type>"+
+								"<attribute exact='yes'>TIN#</attribute>"+
+								"<name exact='yes'>"+bill_results[0].customer_name+"</name>"+
+								"</attributes>";
+					set_my_value(tin_data,tin_filter);
+				}
+								
+				var address_data="<customers>" +
+						"<address></address>" +
+						"<city></city>" +
+						"<acc_name exact='yes'>"+bill_results[0].customer_name+"</acc_name>" +
+						"</customers>";
+				fetch_requested_data('',address_data,function(addresses)
+				{
+					var address_string="";
+					if(addresses.length>0)
+					{
+						address_string+=addresses[0].address+", "+addresses[0].city;
+					}
+					customer_info.value="Address<br>"+address_string;
+				});
+								
+				$(save_button).off('click');
+				$(save_button).on("click", function(event)
+				{
+					event.preventDefault();
+					form284_update_form();
+				});
+
+				var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+							"<td>Amount:<br>Tax:@ <input type='number' value='"+bill_results[0].tax_rate+"' step='any' id='form284_tax' class='dblclick_editable'>%<br>Cartage: <br>Total: </td>" +
+							"<td>Rs. "+bill_results[0].amount+"</br>" +
+							"Rs. "+bill_results[0].tax+" <br>" +
+							"Rs. <input type='number' value='"+bill_results[0].cartage+"' step='any' id='form284_cartage' class='dblclick_editable'><br>" +
+							"Rs. "+bill_results[0].total+"</td>" +
+							"<td></td>" +
+							"</tr>";
+				
+				$('#form284_foot').html(total_row);
+				longPressEditable($('.dblclick_editable'));
+			}
+		
+			fetch_requested_data('',bill_items_column,function(results)
+			{
+				results.forEach(function(result)
+				{
+					var id=result.id;
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form284_"+id+"'></form>";
+						rowsHTML+="<td data-th='S.No.'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Item'>";
+							rowsHTML+="<textarea readonly='readonly' form='form284_"+id+"'>"+result.item_name+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Details'>";
+							rowsHTML+="<textarea readonly='readonly' form='form284_"+id+"'>"+result.item_desc+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Quantity'>";
+							rowsHTML+="<input type='number' readonly='readonly' form='form284_"+id+"' value='"+result.quantity+"' step='any'> <b>"+result.unit+"</b>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Amount'>";
+								rowsHTML+="<b>Price</b>:<input type='number' readonly='readonly' form='form284_"+id+"' value='"+result.unit_price+"'>";
+								rowsHTML+="<br><b>Amount</b>:<input type='number' readonly='readonly' form='form284_"+id+"' value='"+result.amount+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form284_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='button' class='submit_hidden' form='form284_"+id+"' id='save_form284_"+id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form284_"+id+"' id='delete_form284_"+id+"' onclick='form284_delete_item($(this)); form284_get_totals();'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";
+				
+					$('#form284_body').prepend(rowsHTML);	
+				});
+			
+				form284_update_serial_numbers();
+				$('textarea').autosize();
+				hide_loader();
+			});
+		});
+	}
+}
+
+/**
+ * @form Inventory (Cabinets)
+ * @formNo 285
+ * @Loading heavy
+ */
+function form285_ini()
+{
+	show_loader();
+	var fid=$("#form285_link").attr('data_id');
+	if(fid==null)
+		fid="";
+	
+	var filter_fields=document.getElementById('form285_header');
+	
+	var fname=filter_fields.elements[0].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form285_index');
+	var prev_element=document.getElementById('form285_prev');
+	var next_element=document.getElementById('form285_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+	
+	$('#form285_body').html("");
+
+	var new_columns=new Object();
+			new_columns.count=25;
+			new_columns.start_index=start_index;
+			new_columns.data_store='attributes';		
+			
+			new_columns.indexes=[{index:'id',value:fid},
+								{index:'name',value:fname},
+								{index:'type',exact:'product'},
+								{index:'value',exact:'no'},
+								{index:'attribute',exact:'Spare Part'}];
+		
+	read_json_rows('form285',new_columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form285_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Item'>";
+						rowsHTML+="<textarea readonly='readonly' form='form285_"+result.id+"'>"+result.name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Quantity'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form285_"+result.id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form285_"+result.id+"' value='"+result.id+"'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form285_body').append(rowsHTML);
+			var fields=document.getElementById("form285_"+result.id);
+			var sys_inventory=fields.elements[1];
+			
+			get_inventory(result.name,'',function(inventory)
+			{
+				sys_inventory.value=inventory;
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+		
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+
+		var export_button=filter_fields.elements[2];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'Inventory - Cabinets');
+		});
+		hide_loader();	
+	});
+};

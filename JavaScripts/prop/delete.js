@@ -8833,7 +8833,12 @@ function form283_delete_item(button)
 			var items_data="<bill_items>" +
 					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
 					"</bill_items>";
+			var adjust_data="<inventory_adjust>" +
+					"<source exact='yes'>sale</source>" +
+					"<source_id exact='yes'>"+data_id+"</source_id>" +
+					"</inventory_adjust>";
 			delete_simple(items_data);	
+			delete_simple(adjust_data);	
 
 			delete_row(bill_xml,activity_xml);
 			delete_simple(transaction_xml);
@@ -8861,7 +8866,42 @@ function form283_delete_item(button)
 					delete_simple(pt_xml);
 					break;
 				}
-			});	
+			});			
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Create Performa Invoice
+ * @formNo 284
+ * @param button
+ */
+function form284_delete_item(button)
+{
+	if(is_delete_access('form284'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var data_id=form.elements[5].value;
+					
+			var data_xml="<bill_items>" +
+						"<id>"+data_id+"</id>" +
+						"</bill_items>";	
+			var adjust_xml="<inventory_adjust>" +
+						"<id>"+data_id+"</id>" +
+						"</inventory_adjust>";	
+			delete_simple(data_xml);
+			delete_simple(adjust_xml);
+					
+			$(button).parent().parent().remove();
+			form284_update_serial_numbers();
 		});
 	}
 	else

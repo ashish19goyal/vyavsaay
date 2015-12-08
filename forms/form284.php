@@ -4,7 +4,6 @@
 			<label>Customer <img src='./images/add_image.png' class='add_image' id='form284_add_customer'><br>
 				<input type='text' required name='customer'></label>
 			<label>Type<br><input type='text' name='bill_type' required></label>
-			<label>Tax Type<br><input type='text' name='tax_type'></label>
 			<label>Date<br><input type='text' name='date' required></label>
 			<br>
 			<label>Narration<br><textarea style='width:200px;' name='narration'></textarea></label>
@@ -13,6 +12,7 @@
 			<label>	<input type='button' title='Print Bill' class='print_icon' name='print' onclick='form284_print_form();'></label>
 			<label>	<input type='button' title='Share Bill' class='share_icon' name='share'></label>
 			<label>	<input type='submit' class='submit_hidden'>
+					<input type='hidden' name='customer_info'>
 					<input type='hidden' name='bill_id'>
 					<input type='hidden' name='cst'>
 					<input type='hidden' name='tin'>
@@ -28,7 +28,7 @@
 				<th>Details</th>
 				<th>Quantity</th>
 				<th>Amount</th>
-				<th><input type='button' title='Add Item' class='add_icon' onclick='form284_add_product();'></th>
+				<th><input type='button' title='Add Item' class='add_icon' onclick='form284_add_item();'></th>
 			</tr>
 		</thead>
 		<tbody id='form284_body'>
