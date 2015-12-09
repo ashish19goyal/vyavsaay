@@ -359,7 +359,7 @@ function form271_import_validate(data_array)
 */
 function form273_import_validate(data_array)
 {
-	var validate_template_array=[{column:'valid upto date',required:'yes',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
+	var validate_template_array=[{column:'price',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
 							{column:'identified date',required:'yes',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
 							{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
 							{column:'phone',regex:new RegExp('^[0-9 .,+()-]+$')},

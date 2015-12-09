@@ -19003,7 +19003,7 @@ function form273_create_item(form)
 	{
 		var supplier=form.elements[0].value;
 		var detail=form.elements[1].value;
-		var valid_upto=get_raw_time(form.elements[2].value);
+		var price=form.elements[2].value;
 		var identified_date=get_raw_time(form.elements[3].value);
 		var data_id=form.elements[4].value;
 		var del_button=form.elements[6];
@@ -19013,7 +19013,7 @@ function form273_create_item(form)
 					"<id>"+data_id+"</id>" +
 					"<supplier>"+supplier+"</supplier>" +
 					"<detail>"+detail+"</detail>" +
-					"<valid_date>"+valid_upto+"</valid_date>" +
+					"<price>"+price+"</price>" +
 					"<identified_date>"+identified_date+"</identified_date>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</purchase_leads>";

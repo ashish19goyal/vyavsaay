@@ -1380,7 +1380,7 @@ function form271_import_template()
 */
 function form273_import_template()
 {
-	var data_array=['id','name','phone','email','address','lead detail','valid upto date','identified date'];
+	var data_array=['id','name','phone','email','address','lead detail','price','identified date'];
 	my_array_to_csv(data_array);
 };
 

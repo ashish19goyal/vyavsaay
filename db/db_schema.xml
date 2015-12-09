@@ -893,6 +893,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<supplier index='yes' type="TEXT"></supplier>
 			<detail index='no' type="TEXT"></detail>
+			<price index='no' type="TEXT"></price>
 			<valid_date index='yes' type="BIGINT"></valid_date>
 			<identified_date index='yes' type="BIGINT"></identified_date>
 			<source_id index='yes' type="BIGINT"></source_id>

@@ -6768,7 +6768,7 @@ function form273_import(data_array,import_type)
 				"<id>"+row.id+"</id>" +
 				"<supplier>"+row.name+" ("+row.phone+")"+"</supplier>" +
 				"<detail>"+row['lead detail']+"</detail>" +
-				"<valid_date>"+get_raw_time(row['valid upto date'])+"</valid_date>" +
+				"<price>"+row['price']+"</price>" +
 				"<identified_date>"+get_raw_time(row['identified date'])+"</identified_date>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";

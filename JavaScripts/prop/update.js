@@ -14601,14 +14601,14 @@ function form273_update_item(form)
 	{
 		var supplier=form.elements[0].value;
 		var detail=form.elements[1].value;
-		var valid_upto=get_raw_time(form.elements[2].value);
+		var price=form.elements[2].value;
 		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
 		var data_xml="<purchase_leads>" +
 					"<id>"+data_id+"</id>" +
 					"<supplier>"+supplier+"</supplier>" +
 					"<detail>"+detail+"</detail>" +
-					"<valid_date>"+valid_upto+"</valid_date>" +
+					"<price>"+price+"</price>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</purchase_leads>";
 		var activity_xml="<activity>" +

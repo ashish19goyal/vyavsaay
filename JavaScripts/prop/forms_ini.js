@@ -29307,7 +29307,6 @@ function form273_ini()
 	var filter_fields=document.getElementById('form273_header');
 	var fname=filter_fields.elements[0].value;
 	var fdetails=filter_fields.elements[1].value;
-	var fdate=get_raw_time(filter_fields.elements[2].value);
 	
 	////indexing///
 	var index_element=document.getElementById('form273_index');
@@ -29327,13 +29326,11 @@ function form273_ini()
 							{index:'detail',value:fdetails},
 							{index:'status'},
 							{index:'identified_date'},
-							{index:'valid_date',value:fdate}];
-	//console.log(new_columns);
+							{index:'price'}];
 	read_json_rows('form273',new_columns,function(results)
 	{	
 		results.forEach(function(result)
 		{
-			//console.log(result.detail);
 			var row_class="";
 			if(result.status=='closed')
 			{
@@ -29348,8 +29345,8 @@ function form273_ini()
 					rowsHTML+="<td data-th='Details'>";
 						rowsHTML+="<textarea readonly='readonly' form='form273_"+result.id+"' class='dblclick_editable'>"+result.detail+"</textarea>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Valid Upto'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form273_"+result.id+"' class='dblclick_editable' value='"+get_my_past_date(result.valid_date)+"'>";
+					rowsHTML+="<td data-th='Price'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form273_"+result.id+"' class='dblclick_editable' value='"+result.price+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Identified date'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form273_"+result.id+"' value='"+get_my_past_date(result.identified_date)+"'>";	

@@ -16929,7 +16929,7 @@ function form273_add_item()
 			rowsHTML+="<td data-th='Details'>";
 				rowsHTML+="<textarea form='form273_"+id+"' class='dblclick_editable'></textarea>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Valid Upto'>";
+			rowsHTML+="<td data-th='Price'>";
 				rowsHTML+="<input type='text' class='dblclick_editable' form='form273_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Identified Date'>";
@@ -16949,7 +16949,7 @@ function form273_add_item()
 		var fields=document.getElementById("form273_"+id);
 		var supplier_filter=fields.elements[0];
 		var detail_filter=fields.elements[1];
-		var valid_filter=fields.elements[2];
+		//var valid_filter=fields.elements[2];
 		var date_filter=fields.elements[3];
 		
 		$(fields).on("submit", function(event)
@@ -16966,7 +16966,7 @@ function form273_add_item()
 			$(supplier_filter).focus();
 		});
 
-		$(valid_filter).datepicker();
+		//$(valid_filter).datepicker();
 		$(date_filter).datepicker();
 
 		var add_supplier=document.getElementById('form273_add_supplier_'+id);

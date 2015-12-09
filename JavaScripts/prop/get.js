@@ -586,13 +586,33 @@ function validate_import_array(data_array,vt)
 				
 				if((typeof vt[a].list!='undefined') && $.inArray(data_row[vt[a].column],vt[a].list)==-1)
 				{
-					error_array.logs.push({row:row_count,column:vt[a].column,error:"Data doesn't match system list",data:data_row[vt[a].column]});
+					var list_string="";
+					
+					if(vt[a].list.length<10)
+					{
+						list_string=" - ";
+						for(var x in vt[a].list)
+						{
+							list_string+=vt[a].list[x]+";";
+						}
+					}
+					error_array.logs.push({row:row_count,column:vt[a].column,error:"Data doesn't match system list"+list_string,data:data_row[vt[a].column]});
 					error_array.status='error';
 				}
 
 				if((typeof vt[a].anti_list!='undefined') && $.inArray(data_row[vt[a].column],vt[a].anti_list)!=-1)
 				{
-					error_array.logs.push({row:row_count,column:vt[a].column,error:"Duplicate Data",data:data_row[vt[a].column]});
+					var list_string="";
+					
+					if(vt[a].list.length<10)
+					{
+						list_string=" - ";
+						for(var x in vt[a].list)
+						{
+							list_string+=vt[a].list[x]+";";
+						}
+					}
+					error_array.logs.push({row:row_count,column:vt[a].column,error:"Duplicate Data - "+list_string,data:data_row[vt[a].column]});
 					error_array.status='error';
 				}
 			}			

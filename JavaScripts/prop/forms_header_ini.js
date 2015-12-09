@@ -10868,8 +10868,7 @@ function form273_header_ini()
 {
 	var filter_fields=document.getElementById('form273_header');	
 	var names_filter=filter_fields.elements[0];
-	var date_filter=filter_fields.elements[2];
-
+	
 	//setting autocompletes 
 	var names_data="<suppliers>" +
 			"<acc_name></acc_name>" +
@@ -10883,8 +10882,6 @@ function form273_header_ini()
 		event.preventDefault();
 		form273_ini();
 	});	
-	
-	$(date_filter).datepicker();
 }
 
 /**

@@ -3,11 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <title>Shipment Tracking</title>
+    
+    <link href="api.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+    <header>
+        <nav class="main_menu">
+                <ul>
+                    <li><a href="index.html" class="menu_item">Home</a></li>
+                    <li><a href="about-us.html" class="menu_item">About Us</a></li>
+                    <li><a href="index.html#contact" class="menu_item">Contact Us</a></li>
+                </ul>
+            </nav>
+        
+        <img class=logo src="images/7horses-crop-u3509.png" />
+        
+        
+    </header>
+    <div class="banner">
+    <div class="banner_text">TRACK YOUR ORDER</div>
+    <img class="hero_banner" src="images/about us.jpg">
+    </div>
+    
+    
 	<form id='tracking_form'>	
-		<input class="tracktext" type='text' name='awb_num' id='awb_num' placeholder="Enter AWB Number">
-		<input type='submit' value='Get Details'>
+		<input class="tracktext" type='text' name='awb_num' id='awb_num' placeholder="Enter AWB Number" title='For tracking multiple AWB numbers, separate using comma (,)'>
+		<input class="button" type='submit' value='Track'>
 	</form>
 	<div class="order_details" id="result">       
 	</div>
@@ -17,6 +38,16 @@
 	
 	$(window).load(function()
 	{
+		var vars = {};
+		var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+				vars[key] = value;
+		});
+		if(typeof vars['awbNo']!='undefined' && vars['awbNo']!=null && vars['awbNo']!="")
+		{		
+			document.getElementById('awb_num').value=vars['awbNo'];
+			api_func();
+		}
+		
 		var tracking_form=document.getElementById('tracking_form');
 		$(tracking_form).on('submit',function (e) {
 			e.preventDefault();
@@ -26,9 +57,9 @@
 	
 	function api_func()
 	{
-		var my_div=document.getElementById('result');
 		var awb_num=document.getElementById('awb_num').value;
-
+		var result_div=document.getElementById('result');
+				
 		$.ajax(
 		{
 			type: "POST",
@@ -36,15 +67,14 @@
 			data: {awb_num:awb_num},
 			error:function(xhr)
 			{
-				my_div.innerHTML="Result not found. Enter a valid AWB number";
+				result_div.innerHTML="oops!. Something weird happened. Please bear with us. We will be there soon.";
 				console.log(xhr.responseText);
 			},
 			success: function(return_data,return_status,e)
 			{
 				$("#result").html;
-				console.log(e.responseText);
+				//console.log(e.responseText);
 								
-				var result_div=document.getElementById('result');
 				$(result_div).html('');
 								
 				var response_object=JSON.parse(e.responseText);
@@ -53,34 +83,40 @@
 				{
 					var result_rows=response_object.rows;
 					if(result_rows.length>0)
-					{ 
-						var result_table=document.createElement('table');
-						//add styling to the table here.	Styling can be added directly or through classes				
-						//result_table.setAttribute('style','width:100%');
-						//result_table.setAttribute('class','style_class');
+					{
+						var result_master_head_box=document.createElement('div');
+						result_master_head_box.innerHTML="<br>Consignment Summary";
+
+						var result_master_table=document.createElement('table');
+						result_master_table.innerHTML="<th>AWB #</th><th>Destination</th><th>Pickup Date</th><th>Status</th>";					
 						
-						var result_table_heading=document.createElement('tr');
-						result_table.innerHTML="<td>Time</td><td>Details</td><td>Location</td><td>Status</td>";					
-						//add styling to the header row here.	Styling can be added directly or through classes				
-						//result_table_heading.setAttribute('style','width:100%');
-						//result_table_heading.setAttribute('class','style_class');
-	
-						result_table.appendChild(result_table_heading);
-						
-						var order_history=result_rows[0].order_history;
-						order_history.forEach(function(history)
+						result_div.appendChild(result_master_head_box);
+						result_div.appendChild(result_master_table);
+
+						result_rows.forEach(function(result_row)
 						{
-							var result_table_row=document.createElement('tr');
-							result_table_row.innerHTML="<td>"+get_my_datetime(history.timeStamp)+"</td><td>"+history.details+"</td><td>"+history.location+"</td><td>"+history.status+"</td>";					
+							var result_master_table_row=document.createElement('tr');
+							result_master_table_row.innerHTML="<td>"+result_row.awb_num+"</td><td>"+result_row.city+"</td><td>"+get_my_datetime(result_row.import_date)+"</td><td>"+result_row.status+"</td>";					
 	
-							//add styling to the data row here.	Styling can be added directly or through classes				
-							//result_table_row.setAttribute('style','width:100%');
-							//result_table_row.setAttribute('class','style_class');
+							result_master_table.appendChild(result_master_table_row);							
+						
+							var result_head_box=document.createElement('div');
+							var result_table=document.createElement('table');
 							
-							result_table.appendChild(result_table_row);
-						});
-	
-						result_div.appendChild(result_table);
+							result_head_box.innerHTML="<br>"+result_row.awb_num+" On Spot Tracking";
+							result_table.innerHTML="<th>Time</th><th>Details</th><th>Location</th><th>Status</th>";					
+							
+							var order_history=result_row.order_history;
+							order_history.forEach(function(history)
+							{
+								var result_table_row=document.createElement('tr');
+								result_table_row.innerHTML="<td>"+get_my_datetime(history.timeStamp)+"</td><td>"+history.details+"</td><td>"+history.location+"</td><td>"+history.status+"</td>";					
+								result_table.appendChild(result_table_row);
+							});
+							
+							result_div.appendChild(result_head_box);
+							result_div.appendChild(result_table);
+						});						
 					}
 					else {
 						result_div.innerHTML="Sorry! we couldn't find any orders corresponding to this tracking number. Please re-verify and try again.";
