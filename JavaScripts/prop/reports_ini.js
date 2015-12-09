@@ -5477,11 +5477,12 @@ function report75_ini()
 function report76_ini()
 {
 	var form=document.getElementById('report76_header');
-	var awb_filter=form.elements[1].value;
-	var manifest_filter=form.elements[2].value;
-	var status_filter=form.elements[3].value;
-	var start_filter=get_raw_time(form.elements[4].value);
-	var end_filter=get_raw_time(form.elements[5].value)+86399999;
+	var awb_filter=form.elements['awb'].value;
+	var channel_filter=form.elements['channel'].value;
+	var manifest_filter=form.elements['manifest'].value;
+	var status_filter=form.elements['status'].value;
+	var start_filter=get_raw_time(form.elements['start'].value);
+	var end_filter=get_raw_time(form.elements['end'].value)+86399999;
 	
 	show_loader();
 	$('#report76_body').html('');	
@@ -5495,7 +5496,7 @@ function report76_ini()
 
 	if_data_read_access('store_areas',function(accessible_data)
 	{
-		console.log(accessible_data);
+		//console.log(accessible_data);
 		var branches_array=[];
 		var branch_object={index:'branch',array:branches_array};
 		
@@ -5523,6 +5524,7 @@ function report76_ini()
 						{index:'pieces'},
 						{index:'status',value:status_filter},
 						{index:'manifest_id',value:manifest_filter},
+						{index:'channel_name',value:channel_filter},
 						{index:'manifest_type'},
 						{index:'merchant_name'},
 						{index:'phone'},
@@ -5548,7 +5550,7 @@ function report76_ini()
 			{
 				rowsHTML+="<tr>";
 				rowsHTML+="<form id='report76_"+item.id+"'></form>";
-				rowsHTML+="<td data-th='AWB #' onclick=\"element_display('"+item.id+"','form198')\">";
+				rowsHTML+="<td data-th='AWB #' style='text-decoration:underline;cursor:pointer;' onclick=\"element_display('"+item.id+"','form198')\">";
 					rowsHTML+=item.awb_num;
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Manifest Id'>";
@@ -5606,6 +5608,7 @@ function report76_ini()
 						sorted_element['Order Id']=new_result.order_num;
 						sorted_element['Manifest Import Date']=get_my_past_date(new_result.import_date);
 						sorted_element['Manifest Id']=new_result.manifest_id;
+						sorted_element['Channel']=new_result.channel_name;
 						sorted_element['Status']=new_result.status;
 						sorted_element['Wt']=new_result.weight;
 						sorted_element['Pcs']=new_result.pieces;

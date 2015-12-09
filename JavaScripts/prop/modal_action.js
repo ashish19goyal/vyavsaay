@@ -13339,8 +13339,11 @@ function modal165_action(id,elem)
 			def_columns.data_store='system_grid_metrics';		
 			def_columns.return_column='function_def';
 			def_columns.indexes=[{index:'id',value:id}];
-	set_my_value_json(def_columns,def_filter);
-				
+	set_my_value_json(def_columns,def_filter,function () 
+	{
+		$('textarea').autosize();
+	});
+
 	$(form).off('submit');
 	$(form).on('submit',function(event) 
 	{
@@ -13356,7 +13359,7 @@ function modal165_action(id,elem)
 				"<function_def>"+htmlentities(def)+"</function_def>" +
 				"<last_updated>"+last_updated+"</last_updated>"+
 				"</system_grid_metrics>";
-		console.log(data_xml);
+		//console.log(data_xml);
 		update_simple(data_xml);
 		$("#modal165").dialog("close");
 	});

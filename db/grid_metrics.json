@@ -60,7 +60,7 @@
 			{
 				"metric_id":"grid_item_7",
 				"display_name":"Products Offered",
-				"grid":"finances",
+				"grid":"products",
 				"function_name":"set_grid_item_7();",
 				"function_def": "function set_grid_item_7(){var columns=\"<product_master><name></name></product_master>\";get_single_column_data(function(results){document.getElementById('grid_item_7').innerHTML=results.length;},columns);};",
 				"status": "active",

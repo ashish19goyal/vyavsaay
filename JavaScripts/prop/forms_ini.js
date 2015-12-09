@@ -21391,7 +21391,7 @@ function form201_ini()
 	
 	if_data_read_access('store_areas',function(accessible_data)
 	{
-		console.log(accessible_data);
+		//console.log(accessible_data);
 		var branches_array=[];
 		var branch_object={index:'branch',array:branches_array};
 		
@@ -21405,7 +21405,7 @@ function form201_ini()
 			}
 		}
 
-		console.log(branches_array);
+		//console.log(branches_array);
 		
 		var type_object={index:'type'};
 		if(ftype!="")

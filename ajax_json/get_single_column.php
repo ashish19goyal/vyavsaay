@@ -94,7 +94,7 @@
 			
 			if(isset($input_object['sum']))
 			{
-				$query="select sum(".$result_column.") from $table where ";
+				$query="select sum(".$return_column.") from $table where ";
 			}
 			//parsing the indexes for filtering of results
 			foreach($columns_array as $col)
@@ -191,7 +191,7 @@
 				$query="select ".$return_column." from $table";
 				if(isset($input_object['sum']))
 				{
-					$query="select sum(".$result_column.") from $table";
+					$query="select sum(".$return_column.") from $table";
 				}
 			}
 			$query.=$order_by."id DESC";

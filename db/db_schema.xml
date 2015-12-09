@@ -1607,6 +1607,7 @@
 			<function_name index='no' type="TEXT"></function_name>
 			<function_def index='no' type="TEXT"></function_def>
 			<status index='yes' type="VARCHAR(30)"></status><!--active/inactive-->
+			<repeat_time index='yes' type="INT"></repeat_time><!--in seconds-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</system_grid_metrics>
@@ -1619,7 +1620,6 @@
 			<status index='yes' type="VARCHAR(30)"></status><!--active/inactive-->
 			<elements index='no' type="TEXT"></elements>
 			<grid_order index='yes' type="INT"></grid_order>
-			<repeat_time index='yes' type="INT"></repeat_time><!--in seconds-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</system_grids>

@@ -8,46 +8,49 @@ use RetailingEssentials\db_connect;
 use \DOMDocument;
 use \PDO;
 
-	function grid_metrics_json($dbname)
+	function grid_metrics_js($dbname,$table_name)
 	{
 		$conn=new db_connect($dbname);
 		
-		$json_file=file_get_contents("../db/grid_metrics.json");
-		$file = json_decode($json_file,true);
-		$parent_json=$file['re_xml'];
+		$js_file=file_get_contents("../db/grid_metrics.js");
+		$grids_array = explode('/***function limiter***/',$js_file);
 		
-		foreach($parent_json as $table_name => $table)
+		foreach($grids_array as $i => $grid_string)
 	    {
-			foreach ($table as $row_num => $row)
-		    {
-				$data_array=Array();
-				$q_string="insert into $table_name(";
-				
-						
-				foreach ($row as $column_name => $col_value)
-	    		{
-					$q_string.=$column_name.",";
-				}
+	    	$grid_string=str_replace("\n","",$grid_string);
+	    	$grid_string=str_replace("\t","",$grid_string);
+	    	$grid_string=str_replace("/*","",$grid_string);
+	    	$grid_string=str_replace("*/","",$grid_string);
+	    	$grid_object_array=explode('*@*',$grid_string);
+
+			$data_array=Array();
+			$q_string="insert into ".$table_name."(";
 					
-				$q_string=rtrim($q_string,",");
-				$q_string.=") values(";
-				foreach ($row as $column_name => $col_value)
-	    		{
-						$q_string.="?,";
-						$data_array[]=$col_value;
-				}
-				$q_string=rtrim($q_string,",");
-				$q_string.=");";
-	
-				try{
-					$stmt=$conn->conn->prepare($q_string);
-					$stmt->execute($data_array);
-					echo "added grid metric<br>";
-				}catch(PDOException $ex)
-				{
-					echo "Could not setup table $table_name: " .$ex->getMessage() ."</br>";
-				}
+			foreach ($grid_object_array as $x => $col_value)
+    		{
+    			$col_array=explode('*:*',$col_value);
+				$q_string.=$col_array[0].",";
+				$data_array[]=$col_array[1];
 			}
+
+			$q_string=rtrim($q_string,",");
+			$q_string.=") values(";
+			foreach ($grid_object_array as $x => $col_value)
+    		{
+					$q_string.="?,";
+			}
+			$q_string=rtrim($q_string,",");
+			$q_string.=");";
+
+			try{
+				$stmt=$conn->conn->prepare($q_string);
+				$stmt->execute($data_array);
+				echo "added grid metric<br>";
+			}catch(PDOException $ex)
+			{
+				echo "Could not setup table $table_name: " .$ex->getMessage() ."</br>";
+			}
+			
 		}
 	}	
 	
@@ -67,14 +70,14 @@ use \PDO;
 		for($i=0;$i<count($get_res);$i++)
 		{
 			$dbname=$get_res[$i]['table_schema'];
-			grid_mterics_json($dbname);
+			grid_metrics_js($dbname,'system_grid_metrics');
 		}
 	}
 
 	if(isset($_GET['db_name']))
 	{
 		$db_name=$_GET['db_name'];
-		grid_metrics_json($db_name);
+		grid_metrics_js($db_name,'system_grid_metrics');
 	}
 	else if(isset($_GET['all']))
 	{

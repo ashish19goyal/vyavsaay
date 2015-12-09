@@ -1574,11 +1574,12 @@ function report75_header_ini()
 function report76_header_ini()
 {	
 	var form=document.getElementById('report76_header');
-	var awb_filter=form.elements[1];
-	var manifest_filter=form.elements[2];
-	var status_filter=form.elements[3];
-	var start_filter=form.elements[4];
-	var end_filter=form.elements[5];
+	var awb_filter=form.elements['awb'];
+	var channel_filter=form.elements['channel'];
+	var manifest_filter=form.elements['manifest'];
+	var status_filter=form.elements['status'];
+	var start_filter=form.elements['start'];
+	var end_filter=form.elements['end'];
 	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
@@ -1587,19 +1588,13 @@ function report76_header_ini()
 		report76_ini();
 	});
 	
-	/*
-	var awb_data="<logistics_orders>"+
-				"<awb_num></awb_num>"+
-				"</logistics_orders>";
-	set_my_filter(awb_data,awb_filter);
-*/
-
 	var manifest_data="<logistics_orders>"+
 				"<manifest_id></manifest_id>"+
 				"</logistics_orders>";
 	set_my_filter(manifest_data,manifest_filter);
 	
 	set_static_filter('logistics_orders','status',status_filter);	
+	set_static_value_list('logistics_orders','channel',channel_filter);
 	
 	$(start_filter).datepicker();
 	$(end_filter).datepicker();

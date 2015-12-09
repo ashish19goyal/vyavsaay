@@ -2,6 +2,7 @@
 	<form id='report76_header' autocomplete="off">
 		<fieldset>
 			<label>AWB #<br><input type='text' name='awb'></label>
+			<label>Channel<br><input name='channel' type='text'></label>
 			<label>Manifest Id<br><input name='manifest' type='text'></label>
 			<label>Status<br><input type='text' name='status'></label>
 			<label>Start Date<br><input type='text' required name='start'></label>

@@ -21,8 +21,8 @@ class user_setup
 		$this->get_data_from_xml('master_db_data.xml');
 		$this->get_data_from_xml('demo_user_db_data.xml');
 		$this->get_data_from_xml('user_demo_data.xml');
-		$this->get_data_from_json('grid_metrics.json');
 		$this->get_data_from_json('grids.json');
+		$this->get_data_from_js('grid_metrics.js','system_grid_metrics');
 	}
 
 	public function __destruct()
@@ -156,16 +156,63 @@ class user_setup
 				$q_string=rtrim($q_string,",");
 				$q_string.=");";
 	
-				try{
+				try
+				{
 					$stmt=$this->conn->conn->prepare($q_string);
 					$stmt->execute($data_array);
-				}catch(PDOException $ex)
+				}
+				catch(PDOException $ex)
 				{
 					echo "Could not setup table $table_name: " .$ex->getMessage() ."</br>";
 				}
 			}
 		}
 	}
+	
+	function get_data_from_js($filename,$table_name)
+	{
+		$js_file=file_get_contents("../db/".$filename);
+		$grids_array = explode('/***function limiter***/',$js_file);
+		
+		foreach($grids_array as $i => $grid_string)
+	    {
+	    	$grid_string=str_replace("\n","",$grid_string);
+	    	$grid_string=str_replace("\t","",$grid_string);
+	    	$grid_string=str_replace("/*","",$grid_string);
+	    	$grid_string=str_replace("*/","",$grid_string);
+	    	$grid_object_array=explode('*@*',$grid_string);
+
+			$data_array=Array();
+			$q_string="insert into ".$table_name."(";
+					
+			foreach ($grid_object_array as $x => $col_value)
+    		{
+    			$col_array=explode('*:*',$col_value);
+				$q_string.=$col_array[0].",";
+				$data_array[]=$col_array[1];
+			}
+
+			$q_string=rtrim($q_string,",");
+			$q_string.=") values(";
+			foreach ($grid_object_array as $x => $col_value)
+    		{
+					$q_string.="?,";
+			}
+			$q_string=rtrim($q_string,",");
+			$q_string.=");";
+
+			try
+			{
+				$stmt=$this->conn->conn->prepare($q_string);
+				$stmt->execute($data_array);
+			}
+			catch(PDOException $ex)
+			{
+				echo "Could not setup table $table_name: " .$ex->getMessage() ."</br>";
+			}
+			
+		}
+	}	
 }
 
 class master_setup

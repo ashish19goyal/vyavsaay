@@ -1,7 +1,12 @@
-/**
- * @item Last Sale Bill Id
- * @itemNo 1
- */
+/*metric_id*:*grid_item_1
+*@*display_name*:*Last Sale Bill #
+*@*grid*:*sales
+*@*function_name*:*set_grid_item_1();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_1()
 {
 	var new_columns=new Object();
@@ -19,14 +24,19 @@ function set_grid_item_1()
 			$(grid_item).html(results[0]);
 		}
 	});
-	
-	setTimeout(set_grid_item_1,600000);
 };
 
-/**
- * @item # Sale bills today
- * @itemNo 2
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_2
+*@*display_name*:*# Sale Bills today
+*@*grid*:*sales
+*@*function_name*:*set_grid_item_2();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_2()
 {
 	var new_columns=new Object();
@@ -40,14 +50,19 @@ function set_grid_item_2()
 		var grid_item=document.getElementById('grid_item_2');
 		$(grid_item).html(bill_count);
 	});
-
-	setTimeout(set_grid_item_2,600000);
 };
 
-/**
- * @item # Last Purchase Bill No
- * @itemNo 3
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_3
+*@*display_name*:*Last Bill #
+*@*grid*:*purchase
+*@*function_name*:*set_grid_item_3();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_3()
 {
 	var new_columns=new Object();
@@ -65,14 +80,19 @@ function set_grid_item_3()
 			$(grid_item).html(results[0]);
 		}
 	});
-	
-	setTimeout(set_grid_item_3,3600000);
 };
 
-/**
- * @item # bills entered today
- * @itemNo 4
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_4
+*@*display_name*:*# Bills entered today
+*@*grid*:*purchase
+*@*function_name*:*set_grid_item_4();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_4()
 {
 	var new_columns=new Object();
@@ -86,15 +106,19 @@ function set_grid_item_4()
 		var grid_item=document.getElementById('grid_item_4');
 		$(grid_item).html(bill_count);
 	});
-	
-	setTimeout(set_grid_item_4,3600000);
 };
 
+/***function limiter***/
 
-/**
- * @item Today's Income
- * @itemNo 5
- */
+/*metric_id*:*grid_item_5
+*@*display_name*:*Income (today)
+*@*grid*:*finances
+*@*function_name*:*set_grid_item_5();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_5()
 {
 	var new_columns=new Object();
@@ -105,7 +129,7 @@ function set_grid_item_5()
 		new_columns.return_column='total_amount';
 		new_columns.indexes=[{index:'date',lowerbound:(get_raw_time(get_my_date())-1000),upperbound:(get_raw_time(get_my_date())+86399999)},
 							{index:'type',exact:'received'},
-							{index:'status',array:{'pending','closed'}}];
+							{index:'status',array:['pending','closed']}];
 
 	read_json_single_column(new_columns,function(results)
 	{
@@ -115,14 +139,19 @@ function set_grid_item_5()
 			$(grid_item).html("Rs. "+results[0]);
 		}
 	});
-	
-	setTimeout(set_grid_item_5,3600000);
 };
 
-/**
- * @item Today's Expenses
- * @itemNo 6
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_6
+*@*display_name*:*Expenses (today)
+*@*grid*:*finances
+*@*function_name*:*set_grid_item_6();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_6()
 {
 	var new_columns=new Object();
@@ -133,7 +162,7 @@ function set_grid_item_6()
 		new_columns.return_column='total_amount';
 		new_columns.indexes=[{index:'date',lowerbound:(get_raw_time(get_my_date())-1000),upperbound:(get_raw_time(get_my_date())+86399999)},
 							{index:'type',exact:'paid'},
-							{index:'status',array:{'pending','closed'}}];
+							{index:'status',array:['pending','closed']}];
 
 	read_json_single_column(new_columns,function(results)
 	{
@@ -143,14 +172,19 @@ function set_grid_item_6()
 			$(grid_item).html("Rs. "+results[0]);
 		}
 	});
-
-	setTimeout(set_grid_item_6,3600000);
 };
 
-/**
- * @item # Products offered 
- * @itemNo 7
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_7
+*@*display_name*:*# Products offered
+*@*grid*:*products
+*@*function_name*:*set_grid_item_7();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_7()
 {
 	var new_columns=new Object();
@@ -166,10 +200,17 @@ function set_grid_item_7()
 	});	
 };
 
-/**
- * @item Today's Best selling product
- * @itemNo 8
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_8
+*@*display_name*:*Bestseller (today)
+*@*grid*:*products
+*@*function_name*:*set_grid_item_8();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_8()
 {
 	var new_columns=new Object();
@@ -180,7 +221,7 @@ function set_grid_item_8()
 							{index:'total'},
 							{index:'last_updated',lowerbound:(get_raw_time(get_my_date())-1000)}];
 
-	read_json_rows('',columns,function(results)
+	read_json_rows('',new_columns,function(results)
 	{
 		for(var i=0; i<results.length;i++)
 		{
@@ -208,14 +249,19 @@ function set_grid_item_8()
 			$(grid_item).html(results[0].item_name);
 		}
 	});
-	setTimeout(set_grid_item_8,3600000);
 };
 
+/***function limiter***/
 
-/**
- * @item # Services offered 
- * @itemNo 9
- */
+/*metric_id*:*grid_item_9
+*@*display_name*:*# Services Offered
+*@*grid*:*services
+*@*function_name*:*set_grid_item_9();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_9()
 {
 	var new_columns=new Object();
@@ -231,11 +277,17 @@ function set_grid_item_9()
 	});
 };
 
+/***function limiter***/
 
-/**
- * @item Most expensive product
- * @itemNo 11
- */
+/*metric_id*:*grid_item_11
+*@*display_name*:*Most Expensive
+*@*grid*:*products
+*@*function_name*:*set_grid_item_11();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_11()
 {
 	var columns="<product_instances>" +
@@ -266,10 +318,17 @@ function set_grid_item_11()
 	});
 };
 
-/**
- * @item Highest Margin product
- * @itemNo 12
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_12
+*@*display_name*:*Highest Margin Product
+*@*grid*:*products
+*@*function_name*:*set_grid_item_12();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_12()
 {
 	var columns="<product_instances>" +
@@ -308,10 +367,17 @@ function set_grid_item_12()
 	});
 };
 
-/**
- * @item Today's unique customers 
- * @itemNo 13
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_13
+*@*display_name*:*# Customers Today
+*@*grid*:*people
+*@*function_name*:*set_grid_item_13();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_13()
 {
 	var columns="<bills>" +
@@ -323,13 +389,19 @@ function set_grid_item_13()
 	{
 		document.getElementById('grid_item_13').innerHTML=results.length;
 	},columns);
-	setTimeout(set_grid_item_13,600000);
 };
 
-/**
- * @item Last customer
- * @itemNo 14
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_14
+*@*display_name*:*Last Customer
+*@*grid*:*people
+*@*function_name*:*set_grid_item_14();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_14()
 {
 	var columns="<bills count='1'>" +
@@ -342,13 +414,19 @@ function set_grid_item_14()
 			document.getElementById('grid_item_14').innerHTML=results[0];
 		}
 	},columns);
-	setTimeout(set_grid_item_14,100000);
 };
 
-/**
- * @item Last supplier
- * @itemNo 15
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_15
+*@*display_name*:*Last Supplier
+*@*grid*:*people
+*@*function_name*:*set_grid_item_15();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_15()
 {
 	var columns="<supplier_bills count='1'>" +
@@ -361,14 +439,19 @@ function set_grid_item_15()
 			document.getElementById('grid_item_15').innerHTML=results[0];
 		}
 	},columns);
-	setTimeout(set_grid_item_15,3600000);
-
 };
 
-/**
- * @item Payments due to suppliers
- * @itemNo 16
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_16
+*@*display_name*:*Payments due to suppliers
+*@*grid*:*finances
+*@*function_name*:*set_grid_item_16();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_16()
 {
 	var columns="<payments>" +
@@ -387,14 +470,19 @@ function set_grid_item_16()
 		}
 		document.getElementById('grid_item_16').innerHTML="Rs. "+payments;
 	},columns);
-	setTimeout(set_grid_item_16,3600000);
-
 };
 
-/**
- * @item # staff present
- * @itemNo 17
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_17
+*@*display_name*:*# Staff present
+*@*grid*:*people
+*@*function_name*:*set_grid_item_17();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_17()
 {
 	var columns="<attendance>" +
@@ -410,10 +498,17 @@ function set_grid_item_17()
 	},columns);
 };
 
-/**
- * @item # pending tasks
- * @itemNo 18
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_18
+*@*display_name*:*# Pending Tasks
+*@*grid*:*projects
+*@*function_name*:*set_grid_item_18();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_18()
 {
 	var columns="<task_instances>" +
@@ -425,13 +520,19 @@ function set_grid_item_18()
 	{
 		document.getElementById('grid_item_18').innerHTML=results.length;
 	},columns);
-	setTimeout(set_grid_item_18,600000);
 };
 
-/**
- * @item # storage areas
- * @itemNo 19
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_19
+*@*display_name*:*# Storage Areas
+*@*grid*:*store
+*@*function_name*:*set_grid_item_19();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_19()
 {
 	var columns="<store_areas>" +
@@ -445,10 +546,17 @@ function set_grid_item_19()
 	},columns);
 };
 
-/**
- * @item # pending orders
- * @itemNo 20
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_20
+*@*display_name*:*# Pending Orders
+*@*grid*:*ecommerce
+*@*function_name*:*set_grid_item_20();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_20()
 {
 	var columns="<sale_orders>" +
@@ -460,13 +568,19 @@ function set_grid_item_20()
 	{
 		document.getElementById('grid_item_20').innerHTML=results.length;
 	},columns);
-	setTimeout(set_grid_item_20,600000);
 };
 
-/**
- * @item Latest offer
- * @itemNo 22
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_22
+*@*display_name*:*Latest Offer
+*@*grid*:*promotion
+*@*function_name*:*set_grid_item_22();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_22()
 {
 	var columns="<offers count='1'>" +
@@ -482,14 +596,22 @@ function set_grid_item_22()
 	},columns);
 };
 
-/**
- * @item # Sale leads
- * @itemNo 23
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_23
+*@*display_name*:*# Open Sale Leads
+*@*grid*:*promotion
+*@*function_name*:*set_grid_item_23();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_23()
 {
 	var columns="<sale_leads>" +
 		"<id></id>" +
+		"<status exact='yes'>open</status>"+		
 		"</sale_leads>";
 	get_single_column_data(function(results)
 	{
@@ -497,42 +619,17 @@ function set_grid_item_23()
 	},columns);
 };
 
-/**
- * @item # Verified customer addresses
- * @itemNo 24
- */
-function set_grid_item_24()
-{
-	var columns="<customers>" +
-		"<id></id>" +
-		"<address_status exact='yes'>confirmed</address_status>" +
-		"</customers>";
-	get_single_column_data(function(results)
-	{
-		document.getElementById('grid_item_24').innerHTML=results.length;
-	},columns);
-};
+/***function limiter***/
 
-/**
- * @item # Verified supplier addresses
- * @itemNo 25
- */
-function set_grid_item_25()
-{
-	var columns="<suppliers>" +
-		"<id></id>" +
-		"<address_status exact='yes'>confirmed</address_status>" +
-		"</suppliers>";
-	get_single_column_data(function(results)
-	{
-		document.getElementById('grid_item_25').innerHTML=results.length;
-	},columns);
-};
-
-/**
- * @item Today's total sale
- * @itemNo 26
- */
+/*metric_id*:*grid_item_26
+*@*display_name*:*Total Sale today
+*@*grid*:*reports
+*@*function_name*:*set_grid_item_26();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_26()
 {
 	var columns="<bills>" +
@@ -549,13 +646,19 @@ function set_grid_item_26()
 		}
 		document.getElementById('grid_item_26').innerHTML="Rs. "+sale;
 	},columns);
-	setTimeout(set_grid_item_26,600000);
 };
 
-/**
- * @item # Active projects
- * @itemNo 27
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_27
+*@*display_name*:*# Active Projects
+*@*grid*:*projects
+*@*function_name*:*set_grid_item_27();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_27()
 {
 	var columns="<projects>" +
@@ -568,10 +671,17 @@ function set_grid_item_27()
 	},columns);
 };
 
-/**
- * @item # Completed projects
- * @itemNo 28
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_28
+*@*display_name*:*# Completed Projects
+*@*grid*:*projects
+*@*function_name*:*set_grid_item_28();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_28()
 {
 	var columns="<projects>" +
@@ -584,10 +694,17 @@ function set_grid_item_28()
 	},columns);
 };
 
-/**
- * @item # Customer reports
- * @itemNo 29
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_29
+*@*display_name*:*# Customer Reports
+*@*grid*:*admin
+*@*function_name*:*set_grid_item_29();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_29()
 {
 	var columns="<reports>" +
@@ -599,11 +716,17 @@ function set_grid_item_29()
 	},columns);
 };
 
+/***function limiter***/
 
-/**
- * @item # Active Tabs
- * @itemNo 30
- */
+/*metric_id*:*grid_item_30
+*@*display_name*:*# Active Tabs
+*@*grid*:*admin
+*@*function_name*:*set_grid_item_30();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_30()
 {
 	var columns="<user_preferences>" +
@@ -617,10 +740,17 @@ function set_grid_item_30()
 	},columns);
 };
 
-/**
- * @item # Open service requests
- * @itemNo 31
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_31
+*@*display_name*:*# Open Service Requests
+*@*grid*:*customer_service
+*@*function_name*:*set_grid_item_31();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_31()
 {
 	var columns="<service_requests>" +
@@ -633,10 +763,17 @@ function set_grid_item_31()
 	},columns);
 };
 
-/**
- * @item Service requests closed today
- * @itemNo 32
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_32
+*@*display_name*:*Service requests closed today
+*@*grid*:*customer_service
+*@*function_name*:*set_grid_item_32();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_32()
 {
 	var columns="<service_requests>" +
@@ -650,10 +787,17 @@ function set_grid_item_32()
 	},columns);
 };
 
-/**
- * @item Today's # logisitcs orders
- * @itemNo 36
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_36
+*@*display_name*:*Orders Imported Today
+*@*grid*:*orders
+*@*function_name*:*set_grid_item_36();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_36()
 {
 	var columns="<logistics_orders>" +
@@ -666,51 +810,24 @@ function set_grid_item_36()
 	},columns);
 };
 
-/**
- * @item Today's # undelivered orders
- * @itemNo 37
- */
-function set_grid_item_37()
-{
-	var columns="<logistics_orders>" +
-		"<id></id>" +
-		"<status exact='yes'>undelivered</status>"+
-		"<import_date exact='yes'>"+get_raw_time(get_my_date())+"</import_date>"+
-		"</logistics_orders>";
-	get_single_column_data(function(results)
-	{
-		document.getElementById('grid_item_37').innerHTML=results.length;
-	},columns);
-};
+/***function limiter***/
 
-/**
- * @item Today's # pending orders
- * @itemNo 38
- */
-function set_grid_item_38()
-{
-	var columns="<logistics_orders>" +
-		"<id></id>" +
-		"<status exact='yes'>pending</status>"+
-		"<import_date exact='yes'>"+get_raw_time(get_my_date())+"</import_date>"+
-		"</logistics_orders>";
-	get_single_column_data(function(results)
-	{
-		document.getElementById('grid_item_38').innerHTML=results.length;
-	},columns);
-};
-
-/**
- * @item Today's # pending branch orders
- * @itemNo 39
- */
+/*metric_id*:*grid_item_39
+*@*display_name*:*# Pending Orders
+*@*grid*:*drs
+*@*function_name*:*set_grid_item_39();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_39()
 {
 	var new_columns=new Object();
 		new_columns.count=0;
 		new_columns.start_index=0;
 		new_columns.data_store='logistics_orders';
-		new_columns.indexes=[{index:'status',array:{'pending','undelivered','received','out for delivery'}},
+		new_columns.indexes=[{index:'status',array:['pending','undelivered','received','out for delivery']},
 							{index:'import_date',exact:get_raw_time(get_my_date())}];
 
 	read_json_count(new_columns,function(item_count)
@@ -720,10 +837,17 @@ function set_grid_item_39()
 	});
 };
 
-/**
- * @item # active treatments
- * @itemNo 40
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_40
+*@*display_name*:*# Active treatments
+*@*grid*:*treatment
+*@*function_name*:*set_grid_item_40();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_40()
 {
 	var new_columns=new Object();
@@ -739,10 +863,17 @@ function set_grid_item_40()
 	});
 };
 
-/**
- * @item unbilled sms credits
- * @itemNo 41
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_41
+*@*display_name*:*Unbilld SMS credits
+*@*grid*:*promotion
+*@*function_name*:*set_grid_item_41();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_41()
 {
 	var new_columns=new Object();
@@ -771,10 +902,17 @@ function set_grid_item_41()
 	});
 };
 
-/**
- * @item # DRS (today)
- * @itemNo 42
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_42
+*@*display_name*:*# DRS (today)
+*@*grid*:*drs
+*@*function_name*:*set_grid_item_42();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_42()
 {
 	var new_columns=new Object();
@@ -790,10 +928,17 @@ function set_grid_item_42()
 	});
 };
 
-/**
- * @item # RTO (today)
- * @itemNo 43
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_43
+*@*display_name*:*# RTO (today)
+*@*grid*:*rto
+*@*function_name*:*set_grid_item_43();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_43()
 {
 	var new_columns=new Object();
@@ -809,10 +954,17 @@ function set_grid_item_43()
 	});
 };
 
-/**
- * @item # Quotations (last 30 days)
- * @itemNo 44
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_44
+*@*display_name*:*# Quotations (last 30 days)
+*@*grid*:*quotation
+*@*function_name*:*set_grid_item_44();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_44()
 {
 	var new_columns=new Object();
@@ -828,10 +980,17 @@ function set_grid_item_44()
 	});
 };
 
-/**
- * @item # Different Spare Parts
- * @itemNo 45
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_45
+*@*display_name*:*# Different Spare Parts
+*@*grid*:*inventory
+*@*function_name*:*set_grid_item_45();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_45()
 {
 	var new_columns=new Object();
@@ -850,10 +1009,17 @@ function set_grid_item_45()
 	});
 };
 
-/**
- * @item # Challans today
- * @itemNo 46
- */
+/***function limiter***/
+
+/*metric_id*:*grid_item_46
+*@*display_name*:*# Challans today
+*@*grid*:*challan
+*@*function_name*:*set_grid_item_46();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
 function set_grid_item_46()
 {
 	var new_columns=new Object();
