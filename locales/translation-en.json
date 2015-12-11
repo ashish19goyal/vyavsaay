@@ -472,6 +472,9 @@
 	"manage_pop_boxes":"Manage Pop-boxes",
 	"manage_performa_invoice":"Manage Performa Invoice",
 	"create_performa_invoice":"Create Performa Invoice",
-	"inventory_nvs":"Inventory (NVS)"
+	"inventory_nvs":"Inventory (NVS)",
+	"system_billing":"System Billing",
+	"system_table_structure":"System Table Structure",
+	"user_form_definition":"User Form Definition"
 	}
 }

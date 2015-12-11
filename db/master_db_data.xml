@@ -322,6 +322,38 @@
 	</user_fields_list>
 	<values_list>
 		<row>
+			<tablename>system_billing</tablename>
+			<listname>display</listname>
+			<name>show</name>
+			<value>show</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>system_billing</tablename>
+			<listname>display</listname>
+			<name>hide</name>
+			<value>hide</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>system_billing</tablename>
+			<listname>payment_status</listname>
+			<name>pending</name>
+			<value>pending</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>system_billing</tablename>
+			<listname>payment_status</listname>
+			<name>paid</name>
+			<value>paid</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>system_popboxes</tablename>
 			<listname>status</listname>
 			<name>active</name>

@@ -1669,6 +1669,19 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</system_popboxes>
+	<system_billing>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<order_id index='yes' type="TEXT"></order_id>
+			<narration index='yes' type="TEXT"></narration>
+			<amount index='no' type="DECIMAL(12,2)"></amount>
+			<currency index='yes' type="TEXT"></currency>
+			<period_start index='yes' type="BIGINT"></period_start>
+			<period_end index='yes' type="BIGINT"></period_end>
+			<display index='yes' type="VARCHAR(30)"></display><!--show/hide-->
+			<payment_status index='yes' type="VARCHAR(30)"></payment_status><!--paid/pending-->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</system_billing>
 	<letterheads>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="TEXT"></name>

