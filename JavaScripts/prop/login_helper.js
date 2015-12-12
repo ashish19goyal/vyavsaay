@@ -21,7 +21,7 @@ function login_action()
 		username=l_id.substr(0,index);
 	}
 	var pass=form.elements[2].value;
-	console.log('going to try local login');
+	//console.log('going to try local login');
 
 	try_local_db_login(username,domain,function(result)
 	{

@@ -229,8 +229,8 @@
 			},
 			{
 				"name":"system_config",
-				"display_name":"System Configuration",
-				"head_color":"#E6C462",
+				"display_name":"System",
+				"head_color":"#C4A240",
 				"back_color":"#E6C462",
 				"status": "active",
 				"last_updated":1,

@@ -7866,6 +7866,7 @@ function report93_ini()
 	var results=[];
 	fetch_requested_data('report93',master_data,function(products)
 	{
+		products=array_unique(products);
 		//console.log(products);
 		var sku_string="--";
 		for(var i in products)
@@ -7880,6 +7881,7 @@ function report93_ini()
 								"</product_instances>";
 		fetch_requested_data('report93',product_instances_xml,function(product_instances)
 		{
+			product_instances=array_unique(product_instances);
 			//console.log(product_instances);
 
 			var report93_count=product_instances.length;
@@ -7894,6 +7896,7 @@ function report93_ini()
 							"</area_utilization>";
 				fetch_requested_data('report93',area_util_xml,function(areas)
 				{
+					area=array_unique(areas);
 					//console.log(areas);
 					for(var l=0;l<areas.length;l++)
 					{
