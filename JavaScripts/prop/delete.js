@@ -60,8 +60,8 @@ function form1_delete_item(button)
 						"</inventory_adjust>";	
 			
 			delete_row(data_xml,activity_xml);
-			delete_simple(other_delete);
-			delete_simple(other_delete2);
+			//delete_simple(other_delete);
+			//delete_simple(other_delete2);
 			$(button).parent().parent().remove();
 		});
 	}

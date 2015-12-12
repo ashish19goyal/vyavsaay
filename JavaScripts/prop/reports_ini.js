@@ -7881,9 +7881,19 @@ function report93_ini()
 								"</product_instances>";
 		fetch_requested_data('report93',product_instances_xml,function(product_instances)
 		{
-			product_instances=array_unique(product_instances);
+			//product_instances=array_unique(product_instances);
 			//console.log(product_instances);
-
+			for(var l=0;l<product_instances.length;l++)
+			{
+				for(var m=l+1;m<product_instances.length;m++)
+				{
+					if(product_instances[m].name==product_instances[l].name && product_instances[m].item_name==product_instances[l].item_name && product_instances[m].batch==product_instances[l].batch)
+					{
+						product_instances.splice(m,1);
+						m--;
+					}
+				}
+			}
 			var report93_count=product_instances.length;
 				
 			product_instances.forEach(function(product_instance)
@@ -7896,7 +7906,6 @@ function report93_ini()
 							"</area_utilization>";
 				fetch_requested_data('report93',area_util_xml,function(areas)
 				{
-					area=array_unique(areas);
 					//console.log(areas);
 					for(var l=0;l<areas.length;l++)
 					{
