@@ -802,6 +802,82 @@ function set_grid_item_32()
 
 /***function limiter***/
 
+/*metric_id*:*grid_item_33
+*@*display_name*:*Active Production Plans
+*@*grid*:*manufacturing
+*@*function_name*:*set_grid_item_33();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_33()
+{
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='production_plan';
+		new_columns.indexes=[{index:'status',array:['approved','overdue']}];
+	
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_33').html(item_count);	
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_34
+*@*display_name*:*# Pending Tasks (today)
+*@*grid*:*manufacturing
+*@*function_name*:*set_grid_item_34();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_34()
+{
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='task_instances';
+		new_columns.indexes=[{index:'t_due',upperbound:(get_raw_time(get_my_date())+86399000)}];
+	
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_34').html(item_count);	
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_35
+*@*display_name*:*# Items under production
+*@*grid*:*manufacturing
+*@*function_name*:*set_grid_item_35();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_35()
+{
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='production_plan_items';
+		new_columns.indexes=[{index:'from_time',upperbound:get_my_time()},
+							{index:'to_time',lowerbound:get_my_time()}];
+	
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_35').html(item_count);	
+	});
+};
+
+/***function limiter***/
+
 /*metric_id*:*grid_item_36
 *@*display_name*:*Orders Imported Today
 *@*grid*:*orders

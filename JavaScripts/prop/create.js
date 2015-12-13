@@ -3685,6 +3685,7 @@ function form81_create_item(form)
 					"<detail>"+detail+"</detail>" +
 					"<due_date>"+due_date+"</due_date>" +
 					"<identified_by>"+identified_by+"</identified_by>" +
+					"<status>open</status>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</sale_leads>";
 		var activity_xml="<activity>" +
@@ -3695,14 +3696,8 @@ function form81_create_item(form)
 					"<notes>Sale lead for customer "+customer+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_create_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-		}	
+		create_row(data_xml,activity_xml);
+		
 		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -15275,6 +15270,7 @@ function form213_create_item(form)
 					"<customer>"+customer+"</customer>" +
 					"<detail>"+detail+"</detail>" +
 					"<due_date>"+due_date+"</due_date>" +
+					"<status>open</status>" +
 					"<identified_by>"+identified_by+"</identified_by>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</sale_leads>";
@@ -15396,6 +15392,7 @@ function form214_create_item()
 				"<customer>"+acc_name+"</customer>" +
 				"<detail>"+details+"</detail>"+
                 "<due_date>"+get_raw_time(due_date)+"</due_date>"+
+                "<sale_leads>open</sale_leads>"+
                 "<identified_by>"+identified_by+"</identified_by>"+
                 "<last_updated>"+last_updated+"</last_updated>" +
 				"</sale_leads>";
@@ -17499,6 +17496,7 @@ function form252_create_item(form)
 					"<detail>"+detail+"</detail>" +
 					"<due_date>"+due_date+"</due_date>" +
 					"<identified_by>"+identified_by+"</identified_by>" +
+					"<status>open</status>"+
 					"<type>vendor</type>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</sale_leads>";
@@ -17594,6 +17592,7 @@ function form253_create_item(form)
 					"<detail>"+detail+"</detail>" +
 					"<due_date>"+due_date+"</due_date>" +
 					"<identified_by>"+identified_by+"</identified_by>" +
+					"<status>open</status>"+
 					"<type>customer</type>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</sale_leads>";
@@ -17690,6 +17689,7 @@ function form254_create_item(form)
 					"<due_date>"+due_date+"</due_date>" +
 					"<identified_by>"+identified_by+"</identified_by>" +
 					"<type>telecalling</type>" +
+					"<status>open</status>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</sale_leads>";
 		var activity_xml="<activity>" +
@@ -17785,6 +17785,7 @@ function form255_create_item(form)
 					"<due_date>"+due_date+"</due_date>" +
 					"<identified_by>"+identified_by+"</identified_by>" +
 					"<type>marketing</type>" +
+					"<status>open</status>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</sale_leads>";
 		var activity_xml="<activity>" +
