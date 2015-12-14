@@ -17275,7 +17275,7 @@ function form166_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'pricing');
+			get_export_data(columns,'Pricing');
 		});
 		
 		hide_loader();

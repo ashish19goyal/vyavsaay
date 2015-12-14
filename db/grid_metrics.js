@@ -1172,3 +1172,242 @@ function set_grid_item_48()
 		$('#grid_item_48').html(item_count);
 	});
 };
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_49
+*@*display_name*:*# Pending Sale Challans
+*@*grid*:*admin
+*@*function_name*:*set_grid_item_49();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_49()
+{
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='unbilled_sale_items';		
+
+		new_columns.indexes=[{index:'bill_status',exact:'pending'}];
+	
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_49').html(item_count);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_50
+*@*display_name*:*# Pending Purchase Challans
+*@*grid*:*admin
+*@*function_name*:*set_grid_item_50();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_50()
+{
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='unbilled_purchase_items';		
+
+		new_columns.indexes=[{index:'bill_status',exact:'pending'}];
+	
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_50').html(item_count);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_51
+*@*display_name*:*# Product Batches
+*@*grid*:*inventory
+*@*function_name*:*set_grid_item_51();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_51()
+{
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='product_instances';
+		new_columns.indexes=[{index:'batch'}];
+
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_51').html(item_count);
+	});	
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_52
+*@*display_name*:*Quantity Stocked Today
+*@*grid*:*inventory
+*@*function_name*:*set_grid_item_52();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_52()
+{
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='inventory_adjust';
+		new_columns.return_column='quantity';
+		new_columns.sum='yes';
+		
+		new_columns.indexes=[{index:'source',exact:'manual'},
+							{index:'last_updated',lowerbound:get_raw_time(get_my_date())}];
+
+	read_json_single_column(new_columns,function(item_count)
+	{
+		$('#grid_item_52').html(item_count);
+	});	
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_53
+*@*display_name*:*Quantity to pick
+*@*grid*:*inventory
+*@*function_name*:*set_grid_item_53();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_53()
+{
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='inventory_adjust';
+		
+		new_columns.indexes=[{index:'picked_status',exact:'pending'},
+							{index:'quantity'},{index:'picked_quantity'}];
+
+	read_json_rows('',new_columns,function(adjusts)
+	{
+		var adjust_quantity=0;
+		
+		for(var a in adjusts)
+		{
+			if(!isNaN(adjusts[a].picked_quantity) && adjusts[a].picked_quantity!=null)
+				adjust_quantity+=parseFloat(adjusts[a].picked_quantity);
+			if(!isNaN(adjusts[a].quantity) && adjusts[a].quantity!=null)
+				adjust_quantity-=parseFloat(adjusts[a].quantity);
+		}
+		var new_columns2=new Object();
+			new_columns2.count=0;
+			new_columns2.start_index=0;
+			new_columns2.data_store='bill_items';
+			
+			new_columns2.indexes=[{index:'picked_status',exact:'pending'},
+								{index:'quantity'},{index:'picked_quantity'}];
+	
+		read_json_rows('',new_columns2,function(bill_items)
+		{
+			for(var b in bill_items)
+			{
+				if(!isNaN(bill_items[b].quantity) && bill_items[b].quantity!=null)
+					adjust_quantity+=parseFloat(bill_items[b].quantity);
+				if(!isNaN(adjusts[b].picked_quantity) && adjusts[b].picked_quantity!=null)
+					adjust_quantity-=parseFloat(bill_items[b].picked_quantity);
+			}
+			$('#grid_item_53').html(adjust_quantity);
+		});	
+	});	
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_54
+*@*display_name*:*Quantity to put-away
+*@*grid*:*inventory
+*@*function_name*:*set_grid_item_54();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_54()
+{
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='inventory_adjust';
+		
+		new_columns.indexes=[{index:'put_away_status',exact:'pending'},
+							{index:'quantity'},{index:'placed_quantity'}];
+
+	read_json_rows('',new_columns,function(adjusts)
+	{
+		var adjust_quantity=0;
+		
+		for(var a in adjusts)
+		{
+			if(!isNaN(adjusts[a].quantity) && adjusts[a].quantity!=null)
+				adjust_quantity+=parseFloat(adjusts[a].quantity);
+			if(!isNaN(adjusts[a].placed_quantity) && adjusts[a].placed_quantity!=null)
+				adjust_quantity-=parseFloat(adjusts[a].placed_quantity);
+		}
+		var new_columns2=new Object();
+			new_columns2.count=0;
+			new_columns2.start_index=0;
+			new_columns2.data_store='supplier_bill_items';
+			
+			new_columns2.indexes=[{index:'put_away_status',exact:'pending'},
+							{index:'quantity'},{index:'placed_quantity'}];
+	
+		read_json_rows('',new_columns2,function(bill_items)
+		{
+			for(var b in bill_items)
+			{
+				if(!isNaN(bill_items[b].quantity) && bill_items[b].quantity!=null)			
+					adjust_quantity+=parseFloat(bill_items[b].quantity);
+				if(!isNaN(bill_items[b].placed_quantity) && bill_items[b].placed_quantity!=null)
+					adjust_quantity-=parseFloat(bill_items[b].placed_quantity);
+			}
+			$('#grid_item_54').html(adjust_quantity);
+		});	
+	});	
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_55
+*@*display_name*:*Pending Reviews
+*@*grid*:*inventory
+*@*function_name*:*set_grid_item_55();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_55()
+{
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='discarded';
+		new_columns.indexes=[{index:'status',exact:'pending approval'}];
+
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_55').html(item_count);
+	});	
+};

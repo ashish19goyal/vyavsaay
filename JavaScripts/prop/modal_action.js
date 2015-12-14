@@ -13352,6 +13352,8 @@ function modal165_action(id,elem)
 		var name=name_filter.value;
 		var def=def_filter.value;
 		var last_updated=get_my_time();
+		def=def.replace(/\n/g,'');
+		def=def.replace(/\t/g,'');
 		
 		var data_xml="<system_grid_metrics>"+
 				"<id>"+id+"</id>" +

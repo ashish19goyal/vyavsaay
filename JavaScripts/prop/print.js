@@ -4976,21 +4976,23 @@ function print_form258(func)
 				
 	var table_rows=table_header;
 	var counter=0;
-	var item_details_array=item_details.split("\n");
-	item_details_array.forEach(function(item_detail_row)
+	if(item_details!="")
 	{
-		counter+=1;
-		var detail_row=item_detail_row.split(":");
-		var type=detail_row[0];
-		var details=detail_row[1];
-
-		table_rows+="<tr>"+
-				"<td style='border: 1px solid #000;text-align:left;'>"+counter+"</td>"+
-				//"<td style='border: 1px solid #000;text-align:left;'>"+item+"</td>"+
-				"<td style='border: 1px solid #000;text-align:left;'>"+type+"</td>"+
-				"<td style='border: 1px solid #000;text-align:left;'>"+details+"</td></tr>";
-	});
+		var item_details_array=item_details.split("\n");
+		item_details_array.forEach(function(item_detail_row)
+		{
+			counter+=1;
+			var detail_row=item_detail_row.split(":");
+			var type=detail_row[0];
+			var details=detail_row[1];
 	
+			table_rows+="<tr>"+
+					"<td style='border: 1px solid #000;text-align:left;'>"+counter+"</td>"+
+					//"<td style='border: 1px solid #000;text-align:left;'>"+item+"</td>"+
+					"<td style='border: 1px solid #000;text-align:left;'>"+type+"</td>"+
+					"<td style='border: 1px solid #000;text-align:left;'>"+details+"</td></tr>";
+		});
+	}	
 	details_table.innerHTML=table_rows;
 	
 	/////////////adding spec table //////////////////////////////////////////////////////	
