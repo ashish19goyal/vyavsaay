@@ -1032,8 +1032,8 @@
 			<fieldset>
 				<label>Item: <input type="text" required></label><br>
 				<label>Batch: <input type='text' required></label><br>
-				<label>Expiry: <input type="text"></label><br>
-				<label>MRP: Rs. <input type="number" step='any'></label><br>
+				<label>Expiry: <input type="text" required></label><br>
+				<label>MRP: Rs. <input type="number" step='any' required min=".1"></label><br>
 				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>
 		</form>
