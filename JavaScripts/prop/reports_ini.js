@@ -7887,7 +7887,7 @@ function report93_ini()
 			{
 				for(var m=l+1;m<product_instances.length;m++)
 				{
-					if(product_instances[m].name==product_instances[l].name && product_instances[m].item_name==product_instances[l].item_name && product_instances[m].batch==product_instances[l].batch)
+					if(product_instances[m].product_name==product_instances[l].product_name && product_instances[m].batch==product_instances[l].batch)
 					{
 						product_instances.splice(m,1);
 						m--;

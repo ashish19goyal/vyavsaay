@@ -206,6 +206,30 @@
 				"search_only_text": "Search only purchase leads",
 				"status": "active",
 				"last_updated":1
+			},
+			{
+				"table_name":"treatment_plans",
+				"search_column":"plan_num",
+				"return_columns":"[{\"key\":\"customer_name\",\"column\":\"customer\"},{\"key\":\"plan_detail\",\"column\":\"details\"},{\"key\":\"plan_status\",\"column\":\"status\"},{\"key\":\"plan_num\",\"column\":\"plan_num\"}]",
+				"result_title":"Found a treatment plan",
+				"result_detail": "A plan_status treatment plan # plan_num for customer_name: plan_detail",
+				"result_form": "form208",
+				"result_count": 5,
+				"search_only_text": "Search only treatment plans",
+				"status": "active",
+				"last_updated":1
+			},
+			{
+				"table_name":"treatment_plans",
+				"search_column":"details",
+				"return_columns":"[{\"key\":\"customer_name\",\"column\":\"customer\"},{\"key\":\"plan_detail\",\"column\":\"details\"},{\"key\":\"plan_status\",\"column\":\"status\"},{\"key\":\"plan_num\",\"column\":\"plan_num\"}]",
+				"result_title":"Found a treatment plan",
+				"result_detail": "A plan_status treatment plan # plan_num for customer_name: plan_detail",
+				"result_form": "form208",
+				"result_count": 5,
+				"search_only_text": "Search only treatment plans",
+				"status": "active",
+				"last_updated":1
 			}
 		]
 	}

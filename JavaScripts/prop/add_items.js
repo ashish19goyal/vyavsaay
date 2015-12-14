@@ -16305,9 +16305,12 @@ function form264_add_item()
 		longPressEditable($('.dblclick_editable'));
 		
 		var fields=document.getElementById("form264_"+id);
+		var id_filter=fields.elements[0];
 		var grid_filter=fields.elements[2];
 		var status_filter=fields.elements[4];
-
+		
+		$(id_filter).focus();
+		
 		var grid_data="<system_grids>"+
 						"<name></name>"+
 						"<status exact='yes'>active</status>"+
