@@ -254,6 +254,30 @@
 				"search_only_text": "Search only Store areas",
 				"status": "active",
 				"last_updated":1
+			},
+			{
+				"table_name":"projects",
+				"search_column":"name",
+				"return_columns":"[{\"key\":\"project_name\",\"column\":\"name\"},{\"key\":\"project_detail\",\"column\":\"details\"},{\"key\":\"project_status\",\"column\":\"status\"}]",
+				"result_title":"Found a project",
+				"result_detail": "A project_status project project_name: project_detail",
+				"result_form": "form101",
+				"result_count": 5,
+				"search_only_text": "Search only Projects",
+				"status": "active",
+				"last_updated":1
+			},
+			{
+				"table_name":"projects",
+				"search_column":"details",
+				"return_columns":"[{\"key\":\"project_name\",\"column\":\"name\"},{\"key\":\"project_detail\",\"column\":\"details\"},{\"key\":\"project_status\",\"column\":\"status\"}]",
+				"result_title":"Found a project",
+				"result_detail": "A project_status project project_name: project_detail",
+				"result_form": "form101",
+				"result_count": 5,
+				"search_only_text": "Search only Projects",
+				"status": "active",
+				"last_updated":1
 			}
 		]
 	}
