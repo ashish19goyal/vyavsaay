@@ -16929,13 +16929,17 @@ function form273_add_item()
 				rowsHTML+="<input type='text' form='form273_"+id+"' required>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new supplier' id='form273_add_supplier_"+id+"'>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Details'>";
-				rowsHTML+="<textarea form='form273_"+id+"' class='dblclick_editable'></textarea>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Price'>";
+			rowsHTML+="<td data-th='Item'>";
 				rowsHTML+="<input type='text' class='dblclick_editable' form='form273_"+id+"'>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Identified Date'>";
+			rowsHTML+="<td data-th='Price'>";
+				rowsHTML+="<b>Price</b>:<input type='text' class='dblclick_editable' form='form273_"+id+"'>";
+				rowsHTML+="<br><b>Quantity</b><input type='number' required value='1' step='any' class='dblclick_editable' form='form273_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Comments'>";
+				rowsHTML+="<textarea form='form273_"+id+"' class='dblclick_editable'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Date'>";
 				rowsHTML+="<input type='text' form='form273_"+id+"' readonly='readonly' required value='"+get_my_date()+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
@@ -16947,29 +16951,39 @@ function form273_add_item()
 		rowsHTML+="</tr>";
 	
 		$('#form273_body').prepend(rowsHTML);
-		longPressEditable($('.dblclick_editable'));
 		
 		var fields=document.getElementById("form273_"+id);
 		var supplier_filter=fields.elements[0];
-		var detail_filter=fields.elements[1];
-		//var valid_filter=fields.elements[2];
-		var date_filter=fields.elements[3];
+		var item_filter=fields.elements[1];
+		var price_filter=fields.elements[2];
+		var comment_filter=fields.elements[4];
+		var date_filter=fields.elements[5];
 		
 		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
 			form273_create_item(fields);
 		});
-					
-		var supplier_data="<suppliers>" +
-			"<acc_name></acc_name>" +
-			"</suppliers>";	
-		set_my_value_list_func(supplier_data,supplier_filter,function () 
+		
+		var names_data=new Object();
+			names_data.count=0;
+			names_data.start_index=0;
+			names_data.data_store='suppliers';
+			names_data.indexes=[{index:'acc_name'}];		
+			names_data.return_column='acc_name';
+		set_my_value_list_json(names_data,supplier_filter,function () 
 		{
-			$(supplier_filter).focus();
+			$(supplier_filter).focus();			
 		});
-
-		//$(valid_filter).datepicker();
+		
+		var item_data=new Object();
+			item_data.count=0;
+			item_data.start_index=0;
+			item_data.data_store='product_master';
+			item_data.indexes=[{index:'name'}];		
+			item_data.return_column='name';
+		set_my_value_list_json(item_data,item_filter);
+	
 		$(date_filter).datepicker();
 
 		var add_supplier=document.getElementById('form273_add_supplier_'+id);
@@ -16977,17 +16991,21 @@ function form273_add_item()
 		{
 			modal13_action(function()
 			{	
-				var supplier_data="<suppliers>" +
-					"<acc_name></acc_name>" +
-					"</suppliers>";	
-				set_my_value_list_func(supplier_data,supplier_filter,function () 
+				var names_data=new Object();
+					names_data.count=0;
+					names_data.start_index=0;
+					names_data.data_store='suppliers';
+					names_data.indexes=[{index:'acc_name'}];		
+					names_data.return_column='acc_name';
+				set_my_value_list_json(names_data,supplier_filter,function () 
 				{
-					$(supplier_filter).focus();
+					$(supplier_filter).focus();			
 				});
 			});
 		});
-		
+
 		$('textarea').autosize();
+		longPressEditable($('.dblclick_editable'));
 	}
 	else
 	{
@@ -17281,4 +17299,103 @@ function form284_add_item()
 	{
 		$("#modal2").dialog("open");
 	}
+}
+
+/**
+ * @form Buyer Leads
+ * @formNo 289
+ */
+function form289_add_item()
+{
+	if(is_create_access('form289'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form289_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Customer'>";
+				rowsHTML+="<input type='text' form='form289_"+id+"' required>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' id='form289_add_customer_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='text' class='dblclick_editable' form='form289_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Price'>";
+				rowsHTML+="<b>Price</b>:<input type='text' class='dblclick_editable' form='form289_"+id+"'>";
+				rowsHTML+="<br><b>Quantity</b><input type='number' step='any' required value='1' class='dblclick_editable' form='form289_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Comments'>";
+				rowsHTML+="<textarea form='form289_"+id+"' class='dblclick_editable'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Date'>";
+				rowsHTML+="<input type='text' form='form289_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form289_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form289_"+id+"'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form289_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+			rowsHTML+="</td>";
+		rowsHTML+="</tr>";
+	
+		$('#form289_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form289_"+id);
+		var customer_filter=fields.elements[0];
+		var item_filter=fields.elements[1];
+		var price_filter=fields.elements[2];
+		var comment_filter=fields.elements[4];
+		var date_filter=fields.elements[5];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form289_create_item(fields);
+		});
+		
+		var names_data=new Object();
+			names_data.count=0;
+			names_data.start_index=0;
+			names_data.data_store='customers';
+			names_data.indexes=[{index:'acc_name'}];		
+			names_data.return_column='acc_name';
+		set_my_value_list_json(names_data,customer_filter,function () 
+		{
+			$(customer_filter).focus();			
+		});
+		
+		var item_data=new Object();
+			item_data.count=0;
+			item_data.start_index=0;
+			item_data.data_store='product_master';
+			item_data.indexes=[{index:'name'}];		
+			item_data.return_column='name';
+		set_my_value_list_json(item_data,item_filter);
+	
+		$(date_filter).datepicker();
+
+		var add_customer=document.getElementById('form289_add_customer_'+id);
+		$(add_customer).on('click',function()
+		{
+			modal11_action(function()
+			{	
+				var names_data=new Object();
+					names_data.count=0;
+					names_data.start_index=0;
+					names_data.data_store='customers';
+					names_data.indexes=[{index:'acc_name'}];		
+					names_data.return_column='acc_name';
+				set_my_value_list_json(names_data,customer_filter,function () 
+				{
+					$(customer_filter).focus();			
+				});
+			});
+		});
+
+		$('textarea').autosize();
+		longPressEditable($('.dblclick_editable'));
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
 }

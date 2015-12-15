@@ -4001,6 +4001,17 @@
 			<tables></tables>
 			<last_updated>1</last_updated>
 		</row>		
+		<row>
+			<name>form289</name>
+			<display_name>buyer_leads</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--sale_leads--</tables>
+			<last_updated>1</last_updated>
+		</row>		
 	</user_preferences>
 	<access_control>
 		<row>
@@ -7637,6 +7648,17 @@
 			<username>master</username>
 			<element_id>form288</element_id>
 			<element_name>user_form_definition</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>												
+		<row>
+			<username>master</username>
+			<element_id>form289</element_id>
+			<element_name>buyer_leads</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

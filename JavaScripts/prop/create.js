@@ -19003,18 +19003,23 @@ function form273_create_item(form)
 	if(is_create_access('form273'))
 	{
 		var supplier=form.elements[0].value;
-		var detail=form.elements[1].value;
+		var item=form.elements[1].value;
 		var price=form.elements[2].value;
-		var identified_date=get_raw_time(form.elements[3].value);
-		var data_id=form.elements[4].value;
-		var del_button=form.elements[6];
+		var quantity=form.elements[3].value;
+		var detail=form.elements[4].value;
+		var identified_date=get_raw_time(form.elements[5].value);
+		var data_id=form.elements[6].value;
+		var del_button=form.elements[8];
 		
 		var last_updated=get_my_time();
 		var data_xml="<purchase_leads>" +
 					"<id>"+data_id+"</id>" +
 					"<supplier>"+supplier+"</supplier>" +
+					"<item_name>"+item+"</item_name>" +
 					"<detail>"+detail+"</detail>" +
 					"<price>"+price+"</price>" +
+					"<quantity>"+quantity+"</quantity>" +
+					"<status>open</status>" +
 					"<identified_date>"+identified_date+"</identified_date>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</purchase_leads>";
@@ -19028,7 +19033,7 @@ function form273_create_item(form)
 					"</activity>";
 		create_row(data_xml,activity_xml);
 		
-		for(var i=0;i<4;i++)
+		for(var i=0;i<6;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -19390,6 +19395,69 @@ function form284_create_form()
 		});
 		
 		$("[id^='save_form284_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Buyer leads
+ * @param button
+ */
+function form289_create_item(form)
+{
+	if(is_create_access('form289'))
+	{
+		var customer=form.elements[0].value;
+		var item=form.elements[1].value;
+		var price=form.elements[2].value;
+		var quantity=form.elements[3].value;
+		var detail=form.elements[4].value;
+		var due_date=get_raw_time(form.elements[5].value);
+		var data_id=form.elements[6].value;
+		var del_button=form.elements[8];
+		
+		var last_updated=get_my_time();
+		var data_xml="<sale_leads>" +
+					"<id>"+data_id+"</id>" +
+					"<customer>"+customer+"</customer>" +
+					"<item_name>"+item+"</item_name>" +
+					"<detail>"+detail+"</detail>" +
+					"<price>"+price+"</price>" +
+					"<quantity>"+quantity+"</quantity>" +
+					"<due_date>"+due_date+"</due_date>" +
+					"<status>open</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_leads>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>sale_leads</tablename>" +
+					"<link_to>form289</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Sale lead for "+customer+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		create_row(data_xml,activity_xml);
+		
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form289_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form289_update_item(form);
+		});
 	}
 	else
 	{

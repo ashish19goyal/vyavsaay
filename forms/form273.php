@@ -4,9 +4,10 @@
 			<tr>
 				<form id='form273_header'></form>
 					<th>Supplier <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form273_header'></th>
-					<th>Details <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form273_header'></th>
+					<th>Item <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form273_header'></th>
 					<th>Price </th>
-					<th>Date Identified</th>
+					<th>Comments <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form273_header'></th>
+					<th>Date <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form273_header'></th>
 					<th><input type='button' form='form273_header' title='Add new' class='add_icon' onclick='form273_add_item();'>
 						<input type='button' form='form273_header' name='export' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form273_header' style='visibility: hidden;'>

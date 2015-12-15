@@ -9291,7 +9291,6 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
  */
 function modal134_action(lead_id,customer,lead_details)
 {
-	console.log('134');
 	var form=document.getElementById('modal134_form');
 	var date_filter=form.elements['date'];
 	var response_filter=form.elements['response'];
@@ -9309,7 +9308,7 @@ function modal134_action(lead_id,customer,lead_details)
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		if(is_update_access('form213'))
+		if(is_update_access('form213') || is_update_access('form289'))
 		{
 			var id=get_new_key();
 			var date=get_raw_time(date_filter.value);
@@ -11927,15 +11926,13 @@ function modal153_action(button,lead_id)
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		if(is_update_access('form213'))
+		if(is_update_access('form213') || is_update_access('form289'))
 		{
 			var lead_form_id=$(button).attr('form');
-			var lead_form=document.getElementById(lead_form_id);
-			var data_id=lead_form.elements[4].value;
 			var last_updated=get_my_time();
 
 			var lead_xml="<sale_leads>"+
-						"<id>"+data_id+"</id>"+
+						"<id>"+lead_id+"</id>"+
 		                "<due_date></due_date>"+
 		                "<status>closed</status>"+
 		                "<last_updated>"+last_updated+"</last_updated>"+
@@ -13577,15 +13574,13 @@ function modal168_action(button,lead_id)
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		if(is_update_access('form213'))
+		if(is_update_access('form273'))
 		{
 			var lead_form_id=$(button).attr('form');
-			var lead_form=document.getElementById(lead_form_id);
-			var data_id=lead_form.elements[4].value;
 			var last_updated=get_my_time();
 
 			var lead_xml="<purchase_leads>"+
-						"<id>"+data_id+"</id>"+
+						"<id>"+lead_id+"</id>"+
 		                "<valid_date></valid_date>"+
 		                "<status>closed</status>"+
 		                "<last_updated>"+last_updated+"</last_updated>"+

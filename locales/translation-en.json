@@ -475,6 +475,7 @@
 	"inventory_nvs":"Inventory (NVS)",
 	"system_billing":"System Billing",
 	"system_table_structure":"System Table Structure",
-	"user_form_definition":"User Form Definition"
+	"user_form_definition":"User Form Definition",
+	"buyer_leads":"Buyer Leads"
 	}
 }

@@ -6746,8 +6746,10 @@ function form273_import(data_array,import_type)
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<supplier>"+row.name+" ("+row.phone+")"+"</supplier>" +
-				"<detail>"+row['lead detail']+"</detail>" +
+				"<detail>"+row['comments']+"</detail>" +
+				"<item_name>"+row['item']+"</item_name>" +
 				"<price>"+row['price']+"</price>" +
+				"<quantity>"+row['quantity']+"</quantity>" +
 				"<identified_date>"+get_raw_time(row['identified date'])+"</identified_date>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
@@ -6934,3 +6936,114 @@ function form275_import(data_array,import_type)
 		update_batch(data_xml);
 	}
 };
+
+/**
+* @form Buyer Leads
+* @formNo 289
+*/
+function form289_import(data_array,import_type)
+{
+	var data_xml="<sale_leads>";
+	var data2_xml="<customers>";
+	var data3_xml="<accounts>";
+	var counter=1;
+	var last_updated=get_my_time();
+	var supplier_array=[];
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</sale_leads><separator></separator><sale_leads>";
+		}
+		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<customer>"+row.name+" ("+row.phone+")"+"</customer>" +
+				"<detail>"+row['comments']+"</detail>" +
+				"<item_name>"+row['item']+"</item_name>" +
+				"<price>"+row['price']+"</price>" +
+				"<quantity>"+row['quantity']+"</quantity>" +
+				"<due_date>"+get_raw_time(row['followup date'])+"</due_date>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+
+		var supplier=row.name+" ("+row.phone+")";
+		var supplier_object=new Object();
+		supplier_object.id=last_updated+counter;
+		supplier_object.name=row.name;
+		supplier_object.acc_name=supplier;
+        supplier_object.email=row.email;
+        supplier_object.phone=row.phone;
+        supplier_object.address=row.address;
+        
+        var add_supplier=true;
+        
+        for(var i=0;i<supplier_array.length;i++)
+        {
+        	if(supplier_array[i].acc_name==supplier_object.acc_name)
+        	{
+        		add_supplier=false;
+        		break;
+        	}
+        }
+
+    	if(add_supplier)
+    	{
+    		supplier_array.push(supplier_object);
+    	}            	
+	});
+	
+	counter=1;
+	supplier_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data2_xml+="</customers><separator></separator><customers>";
+			data3_xml+="</accounts><separator></separator><accounts>";
+		}
+		counter+=1;
+		
+		data2_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<name>"+row.name+"</name>"+
+                "<acc_name unique='yes'>"+row.acc_name+"</acc_name>"+
+                "<email>"+row.email+"</email>"+
+                "<phone>"+row.phone+"</phone>"+
+                "<address>"+row.address+"</address>"+
+                "<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";		
+
+		data3_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<acc_name unique='yes'>"+row.acc_name+"</acc_name>" +
+				"<description></description>" +
+				"<type>customer</type>" +
+				"<username></username>" +
+				"<status>active</status>"+				
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+
+	data_xml+="</sale_leads>";
+	data2_xml+="</customers>";
+	data3_xml+="</accounts>";
+
+	if(import_type=='create_new')
+	{
+		create_batch(data_xml);
+		create_batch(data2_xml);
+		create_batch(data3_xml);
+	}
+	else
+	{
+		update_batch(data_xml);
+		update_batch(data2_xml);
+		update_batch(data3_xml);
+	}
+}

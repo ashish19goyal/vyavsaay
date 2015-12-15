@@ -10867,13 +10867,27 @@ function form273_header_ini()
 {
 	var filter_fields=document.getElementById('form273_header');	
 	var names_filter=filter_fields.elements[0];
+	var item_filter=filter_fields.elements[1];
+	var comment_filter=filter_fields.elements[2];
+	var date_filter=filter_fields.elements[3];
 	
-	//setting autocompletes 
-	var names_data="<suppliers>" +
-			"<acc_name></acc_name>" +
-			"</suppliers>";
+	$(date_filter).datepicker();
 
-	set_my_filter(names_data,names_filter);
+	var names_data=new Object();
+		names_data.count=0;
+		names_data.start_index=0;
+		names_data.data_store='suppliers';
+		names_data.indexes=[{index:'acc_name'}];		
+		names_data.return_column='acc_name';
+	set_my_filter_json(names_data,names_filter);
+
+	var item_data=new Object();
+		item_data.count=0;
+		item_data.start_index=0;
+		item_data.data_store='product_master';
+		item_data.indexes=[{index:'name'}];		
+		item_data.return_column='name';
+	set_my_filter_json(item_data,item_filter);
 
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
@@ -11271,3 +11285,41 @@ function form285_header_ini()
 		"</attributes>";	
 	set_my_filter(item_data,name_filter);
 };
+
+/**
+ * @form Buyer leads
+ * @formNo 289
+ */
+function form289_header_ini()
+{
+	var filter_fields=document.getElementById('form289_header');	
+	var names_filter=filter_fields.elements[0];
+	var item_filter=filter_fields.elements[1];
+	var comment_filter=filter_fields.elements[2];
+	var date_filter=filter_fields.elements[3];
+	
+	$(date_filter).datepicker();
+
+	var names_data=new Object();
+		names_data.count=0;
+		names_data.start_index=0;
+		names_data.data_store='customers';
+		names_data.indexes=[{index:'acc_name'}];		
+		names_data.return_column='acc_name';
+	set_my_filter_json(names_data,names_filter);
+
+	var item_data=new Object();
+		item_data.count=0;
+		item_data.start_index=0;
+		item_data.data_store='product_master';
+		item_data.indexes=[{index:'name'}];		
+		item_data.return_column='name';
+	set_my_filter_json(item_data,item_filter);
+
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form289_ini();
+	});	
+}

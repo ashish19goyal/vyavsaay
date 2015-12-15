@@ -6822,7 +6822,12 @@ function form213_delete_item(button)
 						"<notes>Sale lead for customer "+customer+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
+			var follow_xml="<followups>"+
+			            "<source_id>"+data_id+"</source_id>"+		                
+		    			"</followups>";
+						
 			delete_row(data_xml,activity_xml);
+			delete_simple(follow_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -8708,7 +8713,7 @@ function form273_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			var supplier=form.elements[0].value;
-			var data_id=form.elements[4].value;
+			var data_id=form.elements[6].value;
 			var data_xml="<purchase_leads>" +
 						"<id>"+data_id+"</id>" +
 						"</purchase_leads>";
@@ -8902,6 +8907,47 @@ function form284_delete_item(button)
 					
 			$(button).parent().parent().remove();
 			form284_update_serial_numbers();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Buyer Leads
+ * @param button
+ */
+function form289_delete_item(button)
+{
+	if(is_delete_access('form289'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var customer=form.elements[0].value;
+			var data_id=form.elements[6].value;
+			var data_xml="<sale_leads>" +
+						"<id>"+data_id+"</id>" +
+						"</sale_leads>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>sale_leads</tablename>" +
+						"<link_to>form289</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Sale lead from "+customer+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			var follow_xml="<followups>"+
+			            "<source_id>"+data_id+"</source_id>"+		                
+		    			"</followups>";
+						
+			delete_row(data_xml,activity_xml);
+			delete_simple(follow_xml);
+			
+			$(button).parent().parent().remove();
 		});
 	}
 	else

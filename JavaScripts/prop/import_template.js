@@ -1380,7 +1380,7 @@ function form271_import_template()
 */
 function form273_import_template()
 {
-	var data_array=['id','name','phone','email','address','lead detail','price','identified date'];
+	var data_array=['id','name','phone','email','address','item','price','quantity','comments','identified date'];
 	my_array_to_csv(data_array);
 };
 
@@ -1401,5 +1401,15 @@ function form274_import_template()
 function form275_import_template()
 {
 	var data_array=['id','item','quantity','type','date','to/from','notes'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Buyer leads
+* @formNo 289
+*/
+function form289_import_template()
+{
+	var data_array=['id','name','phone','email','address','item','price','quantity','comments','followup date'];
 	my_array_to_csv(data_array);
 };

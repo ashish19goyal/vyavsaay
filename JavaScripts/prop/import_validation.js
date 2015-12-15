@@ -361,11 +361,13 @@ function form273_import_validate(data_array)
 {
 	var validate_template_array=[{column:'price',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
 							{column:'identified date',required:'yes',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
+							{column:'quantity',required:'yes',regex:new RegExp('^[0-9]+$')},
 							{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
 							{column:'phone',regex:new RegExp('^[0-9 .,+()-]+$')},
 							{column:'email',regex:new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z_.-]+$')},
 							{column:'address',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
-							{column:'lead detail',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')}];
+							{column:'comments',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
+							{column:'item',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')}];
 					
 	var error_array=validate_import_array(data_array,validate_template_array);
 	return error_array;					
@@ -396,6 +398,26 @@ function form275_import_validate(data_array)
 							{column:'type',required:'yes',regex:new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z_.-]+$')},
 							{column:'to/from',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
 							{column:'notes',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')}];
+					
+	var error_array=validate_import_array(data_array,validate_template_array);
+	return error_array;					
+}
+
+/**
+* @form Buyer Leads
+* @formNo 289
+*/
+function form289_import_validate(data_array)
+{
+	var validate_template_array=[{column:'price',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
+							{column:'followup date',required:'yes',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
+							{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
+							{column:'quantity',required:'yes',regex:new RegExp('^[0-9]+$')},
+							{column:'phone',regex:new RegExp('^[0-9 .,+()-]+$')},
+							{column:'email',regex:new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z_.-]+$')},
+							{column:'address',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
+							{column:'comments',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
+							{column:'item',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')}];
 					
 	var error_array=validate_import_array(data_array,validate_template_array);
 	return error_array;					

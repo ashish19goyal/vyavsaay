@@ -14600,15 +14600,19 @@ function form273_update_item(form)
 	if(is_update_access('form273'))
 	{
 		var supplier=form.elements[0].value;
-		var detail=form.elements[1].value;
+		var item=form.elements[1].value;
 		var price=form.elements[2].value;
-		var data_id=form.elements[4].value;
+		var quantity=form.elements[3].value;
+		var detail=form.elements[4].value;
+		var data_id=form.elements[6].value;
 		var last_updated=get_my_time();
 		var data_xml="<purchase_leads>" +
 					"<id>"+data_id+"</id>" +
 					"<supplier>"+supplier+"</supplier>" +
 					"<detail>"+detail+"</detail>" +
+					"<item_name>"+item+"</item_name>" +
 					"<price>"+price+"</price>" +
+					"<quantity>"+quantity+"</quantity>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</purchase_leads>";
 		var activity_xml="<activity>" +
@@ -14620,7 +14624,7 @@ function form273_update_item(form)
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		update_row(data_xml,activity_xml);
-		for(var i=0;i<4;i++)
+		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -14842,6 +14846,50 @@ function form284_update_form()
 		},payment_data);
 	
 		$("[id^='save_form284_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Buyer leads
+ * @param button
+ */
+function form289_update_item(form)
+{
+	if(is_update_access('form289'))
+	{
+		var customer=form.elements[0].value;
+		var item=form.elements[1].value;
+		var price=form.elements[2].value;
+		var quantity=form.elements[3].value;
+		var detail=form.elements[4].value;
+		var data_id=form.elements[6].value;
+		var last_updated=get_my_time();
+		var data_xml="<sale_leads>" +
+					"<id>"+data_id+"</id>" +
+					"<customer>"+customer+"</customer>" +
+					"<detail>"+detail+"</detail>" +
+					"<item_name>"+item+"</item_name>" +
+					"<price>"+price+"</price>" +
+					"<quantity>"+quantity+"</quantity>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_leads>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>sale_leads</tablename>" +
+					"<link_to>form289</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Sale lead for "+customer+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		update_row(data_xml,activity_xml);
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
 	}
 	else
 	{
