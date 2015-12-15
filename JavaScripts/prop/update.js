@@ -14678,6 +14678,49 @@ function form275_update_item(form)
 }
 
 /**
+ * formNo 276
+ * form Search Queries
+ * @param button
+ */
+function form276_update_item(form)
+{
+	if(is_update_access('form276'))
+	{
+		var table_name=form.elements[0].value;
+		var search_column=form.elements[1].value;
+		var search_only_text=form.elements[2].value;
+		var result_title=form.elements[3].value;
+		var result_detail=form.elements[4].value;
+		var result_form=form.elements[5].value;
+		var result_count=form.elements[6].value;
+		var data_id=form.elements[7].value;
+		
+		var last_updated=get_my_time();
+		var data_xml="<system_search>" +
+					"<id>"+data_id+"</id>" +
+					"<table_name>"+table_name+"</table_name>" +
+					"<search_column>"+search_column+"</search_column>" +
+					"<result_title>"+result_title+"</result_title>" +
+					"<result_detail>"+result_detail+"</result_detail>" +
+					"<result_form>"+result_form+"</result_form>" +
+					"<result_count>"+result_count+"</result_count>" +
+					"<status>active</status>" +
+					"<search_only_text>"+search_only_text+"</search_only_text>" +					
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</system_search>";
+		update_simple(data_xml);
+		for(var i=0;i<7;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * @form Create Performa Invoice
  * @formNo 284
  * @param button

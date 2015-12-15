@@ -1411,3 +1411,113 @@ function set_grid_item_55()
 		$('#grid_item_55').html(item_count);
 	});	
 };
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_56
+*@*display_name*:*Quantity In (today)
+*@*grid*:*inventory
+*@*function_name*:*set_grid_item_56();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_56()
+{
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='bill_items';
+		new_columns.sum='yes';
+		new_columns.return_column='quantity';
+		new_columns.indexes=[{index:'issue_type',exact:'in'},
+							{index:'issue_date',exact:get_raw_time(get_my_date())}];
+
+	read_json_single_column(new_columns,function(items)
+	{
+		$('#grid_item_56').html(items[0]);
+	});	
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_57
+*@*display_name*:*Quantity Out (today)
+*@*grid*:*inventory
+*@*function_name*:*set_grid_item_57();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_57()
+{
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='bill_items';
+		new_columns.sum='yes';
+		new_columns.return_column='quantity';
+		new_columns.indexes=[{index:'issue_type',exact:'out'},
+							{index:'issue_date',exact:get_raw_time(get_my_date())}];
+
+	read_json_single_column(new_columns,function(items)
+	{
+		$('#grid_item_57').html(-items[0]);
+	});	
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_58
+*@*display_name*:*# Sale Entries (today)
+*@*grid*:*inventory
+*@*function_name*:*set_grid_item_58();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_58()
+{
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='bill_items';
+		new_columns.indexes=[{index:'issue_type',exact:'out'},
+							{index:'hiring_type',exact:'sale'},
+							{index:'issue_date',exact:get_raw_time(get_my_date())}];
+
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_58').html(item_count);
+	});	
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_59
+*@*display_name*:*# Purchase Entries (today)
+*@*grid*:*inventory
+*@*function_name*:*set_grid_item_59();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_59()
+{
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='bill_items';
+		new_columns.indexes=[{index:'issue_type',exact:'in'},
+							{index:'hiring_type',exact:'purchase'},
+							{index:'issue_date',exact:get_raw_time(get_my_date())}];
+
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_59').html(item_count);
+	});	
+};

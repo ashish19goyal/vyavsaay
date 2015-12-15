@@ -230,6 +230,30 @@
 				"search_only_text": "Search only treatment plans",
 				"status": "active",
 				"last_updated":1
+			},
+			{
+				"table_name":"supplier_bills",
+				"search_column":"bill_id",
+				"return_columns":"[{\"key\":\"supplier_name\",\"column\":\"supplier\"},{\"key\":\"bill_num\",\"column\":\"bill_id\"}]",
+				"result_title":"Found a purchase bill",
+				"result_detail": "A purchase bill # bill_num from supplier_name",
+				"result_form": "form53",
+				"result_count": 5,
+				"search_only_text": "Search only Purchase Bills",
+				"status": "active",
+				"last_updated":1
+			},
+			{
+				"table_name":"store_areas",
+				"search_column":"name",
+				"return_columns":"[{\"key\":\"store_name\",\"column\":\"name\"},{\"key\":\"store_parent\",\"column\":\"parent\"}]",
+				"result_title":"Found a storage area",
+				"result_detail": "A storage named store_name exists in store_parent",
+				"result_form": "form83",
+				"result_count": 5,
+				"search_only_text": "Search only Store areas",
+				"status": "active",
+				"last_updated":1
 			}
 		]
 	}

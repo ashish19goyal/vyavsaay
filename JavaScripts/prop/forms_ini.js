@@ -29582,7 +29582,7 @@ function form275_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form275_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='button' class='save_icon' form='form275_"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form275_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form275_"+result.id+"' onclick='form275_delete_item($(this));'>";	
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
@@ -29678,27 +29678,35 @@ function form276_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form276_"+result.id+"' value='"+result.table_name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Search'>";
-						rowsHTML+="<b>Column</b>: <input type='text' readonly='readonly' form='form276_"+result.id+"' value='"+result.search_column+"'>";
-						rowsHTML+="<br><b>Text</b>: <input type='text' readonly='readonly' form='form276_"+result.id+"' value='"+result.search_only_text+"'>";
+						rowsHTML+="<b>Column</b>: <input type='text' readonly='readonly' class='dblclick_editable' form='form276_"+result.id+"' value='"+result.search_column+"'>";
+						rowsHTML+="<br><b>Text</b>: <input type='text' readonly='readonly' class='dblclick_editable' form='form276_"+result.id+"' value='"+result.search_only_text+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Result'>";
-						rowsHTML+="<b>Title</b>:<input type='text' readonly='readonly' form='form276_"+result.id+"' value='"+result.result_title+"'>";
-						rowsHTML+="<br><b>Detail</b>:<textarea readonly='readonly' form='form276_"+result.id+"'>"+result.result_detail+"</textarea>";
-						rowsHTML+="<br><b>Form</b>:<input type='text' readonly='readonly' form='form276_"+result.id+"' value='"+result.result_form+"'>";
-						rowsHTML+="<br><b>Count</b>:<input type='number' readonly='readonly' form='form276_"+result.id+"' value='"+result.result_count+"'>";
+						rowsHTML+="<b>Title</b>:<input type='text' readonly='readonly' class='dblclick_editable' form='form276_"+result.id+"' value='"+result.result_title+"'>";
+						rowsHTML+="<br><b>Detail</b>:<textarea readonly='readonly' class='dblclick_editable' form='form276_"+result.id+"'>"+result.result_detail+"</textarea>";
+						rowsHTML+="<br><b>Form</b>:<input type='text' class='dblclick_editable' readonly='readonly' form='form276_"+result.id+"' value='"+result.result_form+"'>";
+						rowsHTML+="<br><b>Count</b>:<input type='number' class='dblclick_editable' readonly='readonly' form='form276_"+result.id+"' value='"+result.result_count+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form276_"+result.id+"' value='"+result.id+"'>";	
-						rowsHTML+="<input type='hidden' form='form276_"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form276_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form276_"+result.id+"' title='Delete' onclick='form276_delete_item($(this));'>";
 						rowsHTML+="<input type='button' class='generic_icon' form='form276_"+result.id+"' value='Return Columns' onclick=\"modal169_action('"+result.id+"')\">";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form276_body').append(rowsHTML);			
+			$('#form276_body').append(rowsHTML);
+			var fields=document.getElementById('form276_'+result.id);
+			
+			$(fields).on('submit',function (ev) 
+			{
+				ev.preventDefault();
+				form276_update_item(fields);
+			});
 		});
 
 		$('textarea').autosize();
+		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements['export'];
 		$(export_button).off("click");
