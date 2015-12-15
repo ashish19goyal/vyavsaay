@@ -1151,7 +1151,7 @@ function set_grid_item_47()
 
 /*metric_id*:*grid_item_48
 *@*display_name*:*# Customer Profiles
-*@*grid*:*admin
+*@*grid*:*people
 *@*function_name*:*set_grid_item_48();
 *@*status*:*active
 *@*last_updated*:*1

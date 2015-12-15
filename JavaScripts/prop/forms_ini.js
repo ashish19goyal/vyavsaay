@@ -8663,6 +8663,7 @@ function form96_ini()
 	
 	var fcustomer=filter_fields.elements[0].value;
 	var fattribute=filter_fields.elements[1].value;
+	var fvalue=filter_fields.elements[2].value;
 	
 	////indexing///
 	var index_element=document.getElementById('form96_index');
@@ -8671,18 +8672,19 @@ function form96_ini()
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
 
-	var columns="<attributes count='25' start_index='"+start_index+"'>" +
-			"<id>"+fid+"</id>" +
-			"<name>"+fcustomer+"</name>" +
-			"<type exact='yes'>customer</type>" +
-			"<attribute>"+fattribute+"</attribute>" +
-			"<value></value>" +
-			"<last_updated></last_updated>" +
-			"</attributes>";
-
 	$('#form96_body').html("");
 
-	fetch_requested_data('form96',columns,function(results)
+	var new_columns=new Object();
+		new_columns.count=25;
+		new_columns.start_index=start_index;
+		new_columns.data_store='attributes';
+		new_columns.indexes=[{index:'id',value:fid},
+							{index:'name',value:fcustomer},
+							{index:'type',exact:'customer'},
+							{index:'attribute',value:fattribute},
+							{index:'value',value:fvalue}];
+
+	read_json_rows('form96',new_columns,function(results)
 	{
 		results.forEach(function(result)
 		{
@@ -8741,7 +8743,7 @@ function form96_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[3];
+		var export_button=filter_fields.elements['export'];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{

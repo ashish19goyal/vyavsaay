@@ -2925,7 +2925,6 @@ function form96_header_ini()
 	set_my_filter(customer_data,customer_filter);
 	set_my_filter(attribute_data,attribute_filter);
 	
-	
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
 	{
