@@ -14493,7 +14493,7 @@ function modal172_action()
 function modal173_action(item_name)
 {
 	var form=document.getElementById("modal173_form");
-	var item_filter=form.elements['item'];
+	var item_filter=form.elements['item_name'];
 	var stock_filter=form.elements['stock'];
 	var buyer_filter=form.elements['buyer'];
 	var seller_filter=form.elements['seller'];
