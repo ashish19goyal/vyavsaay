@@ -476,6 +476,8 @@
 	"system_billing":"System Billing",
 	"system_table_structure":"System Table Structure",
 	"user_form_definition":"User Form Definition",
-	"buyer_leads":"Buyer Leads"
+	"buyer_leads":"Buyer Leads",
+	"cities":"Cities",
+	"leads_search":"Leads Search"
 	}
 }

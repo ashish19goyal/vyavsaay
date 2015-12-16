@@ -1004,6 +1004,8 @@ function import_data(form_name)
 		break;
 		case 'form289':modal23_action(form289_import_template,form289_import,form289_import_validate);
 		break;
+		case 'form290':modal23_action(form290_import_template,form290_import,form290_import_validate);
+		break;
 	}
 }
 

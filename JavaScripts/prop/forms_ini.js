@@ -30412,3 +30412,98 @@ function form289_ini()
 		hide_loader();
 	});
 };
+
+/**
+ * @form Cities
+ * @formNo 290
+ * @Loading light
+ */
+function form290_ini()
+{
+	show_loader();
+	var fid=$("#form290_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form290_header');
+	var fcity=filter_fields.elements[0].value;
+	var fstate=filter_fields.elements[1].value;
+	var fcountry=filter_fields.elements[2].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form290_index');
+	var prev_element=document.getElementById('form290_prev');
+	var next_element=document.getElementById('form290_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+	$('#form290_body').html("");
+
+	var new_columns=new Object();
+		new_columns.count=25;
+		new_columns.start_index=start_index;
+		new_columns.data_store='cities';
+		
+		new_columns.indexes=[{index:'id',value:fid},
+							{index:'city',value:fcity},
+							{index:'state',value:fstate},
+							{index:'country',value:fcountry}];
+	read_json_rows('form290',new_columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var rowsHTML="<tr>";
+				rowsHTML+="<form id='form290_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='City'>";
+						rowsHTML+="<textarea readonly='readonly' form='form290_"+result.id+"'>"+result.city+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='State'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form290_"+result.id+"' value='"+result.state+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Country'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form290_"+result.id+"' value='"+result.country+"'>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form290_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='button' class='save_icon' form='form290_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form290_"+result.id+"' onclick='form290_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form290_body').append(rowsHTML);
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements['export'];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_limited_export_data(new_columns,'Cities');
+		});
+		hide_loader();
+	});
+};

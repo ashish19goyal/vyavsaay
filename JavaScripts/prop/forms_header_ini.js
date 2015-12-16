@@ -11323,3 +11323,37 @@ function form289_header_ini()
 		form289_ini();
 	});	
 }
+
+/**
+ * @form Cities
+ * @formNo 290
+ */
+function form290_header_ini()
+{
+	var filter_fields=document.getElementById('form290_header');	
+	var state_filter=filter_fields.elements[1];
+	var country_filter=filter_fields.elements[2];
+	
+	var names_data=new Object();
+		names_data.count=0;
+		names_data.start_index=0;
+		names_data.data_store='cities_data';
+		names_data.indexes=[{index:'state'}];		
+		names_data.return_column='state';
+	set_my_filter_json(names_data,state_filter);
+
+	var item_data=new Object();
+		item_data.count=0;
+		item_data.start_index=0;
+		item_data.data_store='cities_data';
+		item_data.indexes=[{index:'country'}];		
+		item_data.return_column='country';
+	set_my_filter_json(item_data,country_filter);
+
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form290_ini();
+	});	
+}

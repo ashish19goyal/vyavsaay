@@ -10,7 +10,7 @@
 				"result_title":"Found a product",
 				"result_detail": "product_name",
 				"result_form": "form87",
-				"result_count": 10,
+				"result_count": 5,
 				"search_only_text": "Search only products",
 				"status": "active",
 				"last_updated":1
@@ -18,11 +18,23 @@
 			{
 				"table_name":"product_instances",
 				"search_column":"product_name",
-				"return_columns":"[{\"key\":\"product_name\",\"column\":\"product_name\"}]",
+				"return_columns":"[{\"key\":\"product_name\",\"column\":\"product_name\"},{\"key\":\"batch_name\",\"column\":\"batch\"}]",
 				"result_title":"Found an inventory record for product",
-				"result_detail": "product_name",
+				"result_detail": "Batch batch_name for product product_name",
 				"result_form": "form1",
-				"result_count": 10,
+				"result_count": 5,
+				"search_only_text": "Search only inventory",
+				"status": "active",
+				"last_updated":1
+			},
+			{
+				"table_name":"product_instances",
+				"search_column":"batch",
+				"return_columns":"[{\"key\":\"product_name\",\"column\":\"product_name\"},{\"key\":\"batch_name\",\"column\":\"batch\"}]",
+				"result_title":"Found an inventory record for product",
+				"result_detail": "Batch batch_name for product product_name",
+				"result_form": "form1",
+				"result_count": 5,
 				"search_only_text": "Search only inventory",
 				"status": "active",
 				"last_updated":1
@@ -34,7 +46,7 @@
 				"result_title":"Providing a service",
 				"result_detail": "service_name",
 				"result_form": "form57",
-				"result_count": 10,
+				"result_count": 5,
 				"search_only_text": "Search only services",
 				"status": "active",
 				"last_updated":1
@@ -46,7 +58,7 @@
 				"result_title":"Found a customer",
 				"result_detail": "a_name - Phone: acc_phone, Email: acc_email",
 				"result_form": "form30",
-				"result_count": 10,
+				"result_count": 5,
 				"search_only_text": "Search only customers",
 				"status": "active",
 				"last_updated":1
@@ -58,7 +70,7 @@
 				"result_title":"Found a customer",
 				"result_detail": "a_name - Phone: acc_phone, Email: acc_email",
 				"result_form": "form30",
-				"result_count": 10,
+				"result_count": 5,
 				"search_only_text": "Search only customers",
 				"status": "active",
 				"last_updated":1
@@ -70,7 +82,7 @@
 				"result_title":"Found a supplier",
 				"result_detail": "a_name - Phone: acc_phone, Email: acc_email",
 				"result_form": "form40",
-				"result_count": 10,
+				"result_count": 5,
 				"search_only_text": "Search only suppliers",
 				"status": "active",
 				"last_updated":1
@@ -82,7 +94,7 @@
 				"result_title":"Found a supplier",
 				"result_detail": "a_name - Phone: acc_phone, Email: acc_email",
 				"result_form": "form40",
-				"result_count": 10,
+				"result_count": 5,
 				"search_only_text": "Search only suppliers",
 				"status": "active",
 				"last_updated":1
@@ -94,7 +106,7 @@
 				"result_title":"Found a staff",
 				"result_detail": "a_name - Phone: acc_phone, Email: acc_email",
 				"result_form": "form8",
-				"result_count": 10,
+				"result_count": 5,
 				"search_only_text": "Search only staff",
 				"status": "active",
 				"last_updated":1
@@ -106,7 +118,7 @@
 				"result_title":"Found a staff",
 				"result_detail": "a_name - Phone: acc_phone, Email: acc_email",
 				"result_form": "form8",
-				"result_count": 10,
+				"result_count": 5,
 				"search_only_text": "Search only staff",
 				"status": "active",
 				"last_updated":1
@@ -118,7 +130,7 @@
 				"result_title":"Found an order",
 				"result_detail": "AWB #:awb_num - Order #: order_num to be shipped to ship_to",
 				"result_form": "form198",
-				"result_count": 10,
+				"result_count": 5,
 				"search_only_text": "Search only orders",
 				"status": "active",
 				"last_updated":1
@@ -130,7 +142,7 @@
 				"result_title":"Found an order",
 				"result_detail": "AWB #:awb_num - Order #: order_num to be shipped to ship_to",
 				"result_form": "form198",
-				"result_count": 10,
+				"result_count": 5,
 				"search_only_text": "Search only orders",
 				"status": "active",
 				"last_updated":1
@@ -142,7 +154,7 @@
 				"result_title":"Found a DRS",
 				"result_detail": "DRS #:drs_num assigned to employee_name",
 				"result_form": "form200",
-				"result_count": 10,
+				"result_count": 5,
 				"search_only_text": "Search only DRS",
 				"status": "active",
 				"last_updated":1
@@ -154,7 +166,7 @@
 				"result_title":"Recent activity",
 				"result_detail": "activity_notes",
 				"result_form": "activities",
-				"result_count": 10,
+				"result_count": 5,
 				"search_only_text": "Search only activities",
 				"status": "active",
 				"last_updated":1
@@ -166,7 +178,7 @@
 				"result_title":"Found a sales lead",
 				"result_detail": "a lead_status lead for customer_name: lead_detail",
 				"result_form": "form213",
-				"result_count": 10,
+				"result_count": 5,
 				"search_only_text": "Search only sale leads",
 				"status": "active",
 				"last_updated":1
@@ -178,7 +190,7 @@
 				"result_title":"Found a sales lead",
 				"result_detail": "a lead_status lead for customer_name: lead_detail",
 				"result_form": "form213",
-				"result_count": 10,
+				"result_count": 5,
 				"search_only_text": "Search only sale leads",
 				"status": "active",
 				"last_updated":1
@@ -190,7 +202,7 @@
 				"result_title":"Found a purchase lead",
 				"result_detail": "a lead_status lead for supplier_name: lead_detail",
 				"result_form": "form273",
-				"result_count": 10,
+				"result_count": 5,
 				"search_only_text": "Search only purchase leads",
 				"status": "active",
 				"last_updated":1
@@ -202,7 +214,7 @@
 				"result_title":"Found a purchase lead",
 				"result_detail": "a lead_status lead for supplier_name: lead_detail",
 				"result_form": "form273",
-				"result_count": 10,
+				"result_count": 5,
 				"search_only_text": "Search only purchase leads",
 				"status": "active",
 				"last_updated":1

@@ -19464,3 +19464,51 @@ function form289_create_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+
+/**
+ * @form Cities
+ * @param button
+ */
+function form290_create_item(form)
+{
+	if(is_create_access('form290'))
+	{
+		var city=form.elements[0].value;
+		var state=form.elements[1].value;
+		var country=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var del_button=form.elements[5];
+		
+		var last_updated=get_my_time();
+		var data_xml="<cities_data>" +
+					"<id>"+data_id+"</id>" +
+					"<city>"+city+"</city>" +
+					"<state>"+state+"</state>" +
+					"<country>"+country+"</country>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</cities_data>";
+		create_simple(data_xml);
+		
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form290_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

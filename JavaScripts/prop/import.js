@@ -7134,3 +7134,47 @@ function form289_import(data_array,import_type)
 		update_batch(data3_xml);
 	}
 }
+
+
+/**
+* @form Cities
+* @formNo 290
+*/
+function form290_import(data_array,import_type)
+{
+	var data_xml="<cities_data>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</cities_data><separator></separator><cities_data>";
+		}
+		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<city>"+row['city']+"</city>" +
+				"<state>"+row['state']+"</state>" +
+				"<country>"+row['country']+"</country>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";		            	
+	});
+	
+	data_xml+="</cities_data>";
+
+	if(import_type=='create_new')
+	{
+		create_batch(data_xml);
+	}
+	else
+	{
+		update_batch(data_xml);
+	}
+}

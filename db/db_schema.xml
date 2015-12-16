@@ -1916,6 +1916,14 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</export_log>
+	<cities_data>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<city index='yes' type="TEXT"></city>
+			<state index='yes' type="TEXT"></state>
+			<country index='yes' type="TEXT"></country>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</cities_data>
 	<delivery_challans>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<customer index='yes' type="TEXT"></customer>

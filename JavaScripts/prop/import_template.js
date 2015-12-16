@@ -1433,3 +1433,13 @@ function form289_import_template()
 	var data_array=['id','name','phone','email','address','item','price','quantity','comments','followup date'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Cities
+* @formNo 290
+*/
+function form290_import_template()
+{
+	var data_array=['id','city','state','country'];
+	my_array_to_csv(data_array);
+};

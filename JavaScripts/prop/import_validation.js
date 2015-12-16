@@ -448,3 +448,17 @@ function form289_import_validate(data_array)
 	var error_array=validate_import_array(data_array,validate_template_array);
 	return error_array;					
 }
+
+/**
+* @form Cities
+* @formNo 290
+*/
+function form290_import_validate(data_array)
+{
+	var validate_template_array=[{column:'city',regex:new RegExp('^[0-9a-zA-Z _.,\'()-]+$')},
+							{column:'state',regex:new RegExp('^[0-9a-zA-Z _.,\'()-]+$')},
+							{column:'country',regex:new RegExp('^[0-9a-zA-Z _.,\'()-]+$')}];
+					
+	var error_array=validate_import_array(data_array,validate_template_array);
+	return error_array;					
+}

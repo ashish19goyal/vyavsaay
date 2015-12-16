@@ -8955,3 +8955,30 @@ function form289_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Cities
+ * @param button
+ */
+function form290_delete_item(button)
+{
+	if(is_delete_access('form290'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var data_id=form.elements[3].value;
+			var data_xml="<cities_data>" +
+						"<id>"+data_id+"</id>" +
+						"</cities_data>";
+						
+			delete_simple(data_xml);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

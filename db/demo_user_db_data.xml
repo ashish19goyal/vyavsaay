@@ -1262,6 +1262,17 @@
 			<tables>--logistics_orders--cod_collections--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>		
+			<name>report97</name>
+			<display_name>leads_search</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--sale_leads--customers--</tables>
+			<last_updated>1</last_updated>
+		</row>
 		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
@@ -4012,6 +4023,17 @@
 			<tables>--sale_leads--</tables>
 			<last_updated>1</last_updated>
 		</row>		
+		<row>
+			<name>form290</name>
+			<display_name>cities</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--cities_data--</tables>
+			<last_updated>1</last_updated>
+		</row>		
 	</user_preferences>
 	<access_control>
 		<row>
@@ -4909,6 +4931,17 @@
 			<username>master</username>
 			<element_id>report96</element_id>
 			<element_name>collection_report</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report97</element_id>
+			<element_name>leads_search</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -7659,6 +7692,17 @@
 			<username>master</username>
 			<element_id>form289</element_id>
 			<element_name>buyer_leads</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>												
+		<row>
+			<username>master</username>
+			<element_id>form290</element_id>
+			<element_name>cities</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

@@ -13722,7 +13722,7 @@ function form225_add_item()
 			event.preventDefault();
 			form225_add_item();
 		});
-		
+
 		var product_data="<attributes>" +
 				"<name></name>" +
 				"<type exact='yes'>product</type>"+
@@ -17390,6 +17390,73 @@ function form289_add_item()
 				});
 			});
 		});
+
+		$('textarea').autosize();
+		longPressEditable($('.dblclick_editable'));
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
+ * @form Cities
+ * @formNo 290
+ */
+function form290_add_item()
+{
+	if(is_create_access('form290'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form290_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Cities'>";
+				rowsHTML+="<input type='text' form='form290_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='State'>";
+				rowsHTML+="<input type='text' form='form290_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Country'>";
+				rowsHTML+="<input type='text' form='form290_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form290_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form290_"+id+"'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form290_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+			rowsHTML+="</td>";
+		rowsHTML+="</tr>";
+	
+		$('#form290_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form290_"+id);
+		var city_filter=fields.elements[0];
+		var state_filter=fields.elements[1];
+		var country_filter=fields.elements[2];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form290_create_item(fields);
+		});
+		
+		$(city_filter).focus();
+		
+		var names_data=new Object();
+			names_data.count=0;
+			names_data.start_index=0;
+			names_data.data_store='cities_data';
+			names_data.indexes=[{index:'state'}];		
+			names_data.return_column='state';
+		set_my_filter_json(names_data,state_filter);
+		
+		var item_data=new Object();
+			item_data.count=0;
+			item_data.start_index=0;
+			item_data.data_store='cities_data';
+			item_data.indexes=[{index:'country'}];		
+			item_data.return_column='country';
+		set_my_value_list_json(item_data,country_filter);
 
 		$('textarea').autosize();
 		longPressEditable($('.dblclick_editable'));
