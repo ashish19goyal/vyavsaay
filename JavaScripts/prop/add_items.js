@@ -17456,7 +17456,7 @@ function form290_add_item()
 			item_data.data_store='cities_data';
 			item_data.indexes=[{index:'country'}];		
 			item_data.return_column='country';
-		set_my_value_list_json(item_data,country_filter);
+		set_my_filter_json(item_data,country_filter);
 
 		$('textarea').autosize();
 		longPressEditable($('.dblclick_editable'));
