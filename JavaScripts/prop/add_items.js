@@ -17366,7 +17366,7 @@ function form289_add_item()
 			//console.log(e.keyCode);
 			if(e.keyCode==118)
 			{
-				//e.preventDefault();
+				e.preventDefault();
 				modal173_action(item_filter.value);
 			}
 		});

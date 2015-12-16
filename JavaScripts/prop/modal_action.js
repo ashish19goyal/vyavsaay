@@ -14534,4 +14534,6 @@ function modal173_action(item_name)
 		buyer_data.indexes=[{index:'status',exact:'open'},
 							{index:'item_name',exact:item_name}];
 	set_my_value_json(buyer_data,buyer_filter);			
+
+	$("#modal173").dialog("open");
 }
