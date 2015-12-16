@@ -17363,6 +17363,7 @@ function form289_add_item()
 		
 		$(item_filter).on('keydown',function(e)
 		{
+			console.log(e.keyCode);
 			if(e.keyCode==118)
 			{
 				e.preventDefault();
