@@ -30441,7 +30441,7 @@ function form290_ini()
 	var new_columns=new Object();
 		new_columns.count=25;
 		new_columns.start_index=start_index;
-		new_columns.data_store='cities';
+		new_columns.data_store='cities_data';
 		
 		new_columns.indexes=[{index:'id',value:fid},
 							{index:'city',value:fcity},
