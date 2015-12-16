@@ -13720,7 +13720,7 @@ function form225_add_item()
 		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
-			form225_add_product();
+			form225_add_item();
 		});
 		
 		var product_data="<attributes>" +

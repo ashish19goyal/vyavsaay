@@ -1355,6 +1355,16 @@ function form247_import_template()
 };
 
 /**
+* @form Inventory (Spares)
+* @formNo 260
+*/
+function form260_import_template()
+{
+	var data_array=['id','item','quantity'];
+	my_array_to_csv(data_array);
+};
+
+/**
 * @form Bank Accounts
 * @formNo 261
 */
@@ -1401,6 +1411,16 @@ function form274_import_template()
 function form275_import_template()
 {
 	var data_array=['id','item','quantity','type','date','to/from','notes'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Inventory (cabinets)
+* @formNo 285
+*/
+function form285_import_template()
+{
+	var data_array=['id','item','quantity'];
 	my_array_to_csv(data_array);
 };
 

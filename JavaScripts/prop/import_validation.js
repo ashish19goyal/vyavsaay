@@ -321,6 +321,19 @@ function form245_import_validate(data_array)
 }
 
 /**
+* @form Inventory (Spares)
+* @formNo 260
+*/
+function form260_import_validate(data_array)
+{
+	var validate_template_array=[{column:'quantity',required:'yes',regex:new RegExp('^[0-9]+$')},
+							{column:'item',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')}];
+					
+	var error_array=validate_import_array(data_array,validate_template_array);
+	return error_array;					
+}
+
+/**
 * @form bank Accounts
 * @formNo 261
 */
@@ -398,6 +411,19 @@ function form275_import_validate(data_array)
 							{column:'type',required:'yes',regex:new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z_.-]+$')},
 							{column:'to/from',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
 							{column:'notes',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')}];
+					
+	var error_array=validate_import_array(data_array,validate_template_array);
+	return error_array;					
+}
+
+/**
+* @form Inventory (Cabinets)
+* @formNo 285
+*/
+function form285_import_validate(data_array)
+{
+	var validate_template_array=[{column:'quantity',required:'yes',regex:new RegExp('^[0-9]+$')},
+							{column:'item',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')}];
 					
 	var error_array=validate_import_array(data_array,validate_template_array);
 	return error_array;					

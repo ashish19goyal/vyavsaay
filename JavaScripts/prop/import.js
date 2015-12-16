@@ -6631,6 +6631,49 @@ function form247_import(data_array,import_type)
 };
 
 /**
+* @form Inventory (spares)
+* @formNo 260
+*/
+function form260_import(data_array,import_type)
+{
+	var data_xml="<inventory_adjust>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</inventory_adjust><separator></separator><inventory_adjust>";
+		}
+		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<product_name>"+row.item+"</product_name>" +
+				"<batch>"+row.item+"</batch>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<source>imported</source>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</inventory_adjust>";
+	if(import_type=='create_new')
+	{
+		create_batch(data_xml);
+	}
+	else
+	{
+		update_batch(data_xml);
+	}
+};
+
+/**
 * @form Bank Accounts
 * @formNo 261
 */
@@ -6936,6 +6979,50 @@ function form275_import(data_array,import_type)
 		update_batch(data_xml);
 	}
 };
+
+/**
+* @form Inventory (cabinets)
+* @formNo 285
+*/
+function form285_import(data_array,import_type)
+{
+	var data_xml="<inventory_adjust>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</inventory_adjust><separator></separator><inventory_adjust>";
+		}
+		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<product_name>"+row.item+"</product_name>" +
+				"<batch>"+row.item+"</batch>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<source>imported</source>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</inventory_adjust>";
+	if(import_type=='create_new')
+	{
+		create_batch(data_xml);
+	}
+	else
+	{
+		update_batch(data_xml);
+	}
+};
+
 
 /**
 * @form Buyer Leads
