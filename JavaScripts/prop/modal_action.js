@@ -498,7 +498,37 @@ function modal11_action(func)
 	fstate.value="";
 	fcountry.value="";
 	fnotes.value="";
+
+	$(fcity).off('blur');
+	$(fcity).off('change');
 	
+	var city_data=new Object();
+		city_data.count=0;
+		city_data.start_index=0;
+		city_data.data_store='cities_data';
+		city_data.indexes=[{index:'city'}];		
+		city_data.return_column='city';
+	set_my_filter_json(city_data,fcity);
+
+	$(fcity).on('blur change',function () 
+	{	
+		var state_data=new Object();
+			state_data.count=1;
+			state_data.start_index=0;
+			state_data.data_store='cities_data';
+			state_data.indexes=[{index:'city',exact:fcity.value}];		
+			state_data.return_column='state';
+		set_my_value_json(state_data,fstate);
+
+		var country_data=new Object();
+			country_data.count=1;
+			country_data.start_index=0;
+			country_data.data_store='cities_data';
+			country_data.indexes=[{index:'city',exact:fcity.value}];		
+			country_data.return_column='country';
+		set_my_value_json(country_data,fcountry);
+	});
+
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal11_attributes');
 	attribute_label.innerHTML="";
