@@ -1713,4 +1713,16 @@
 		</form>
 	</div>
 
+	<div id="modal173" title="Inventory">
+		<form id='modal173_form' autocomplete="off">
+			<fieldset>
+				<label>Item: <input type='text' readonly='readonly' name='item'></label><br>
+				<label>Stock Qty: <input type="number" step='any' readonly='readonly' name='stock'></label><br>
+				<label>Seller Qty: <input type="number" step='any' readonly='readonly' name='seller'></label><br>
+				<label>Buyer Qty: <input type="number" step='any' readonly='readonly' name='buyer'></label><br>
+				<input type="button" value='Ok' name='ok' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+	
 </div>

@@ -16965,6 +16965,15 @@ function form273_add_item()
 			form273_create_item(fields);
 		});
 		
+		$(item_filter).on('keydown',function(e)
+		{
+			if(e.keyCode==118)
+			{
+				e.preventDefault();
+				modal173_action(item_filter.value);
+			}
+		});
+		
 		var names_data=new Object();
 			names_data.count=0;
 			names_data.start_index=0;
@@ -17350,6 +17359,15 @@ function form289_add_item()
 		{
 			event.preventDefault();
 			form289_create_item(fields);
+		});
+		
+		$(item_filter).on('keydown',function(e)
+		{
+			if(e.keyCode==118)
+			{
+				e.preventDefault();
+				modal173_action(item_filter.value);
+			}
 		});
 		
 		var names_data=new Object();

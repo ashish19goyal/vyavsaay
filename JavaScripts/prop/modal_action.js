@@ -808,6 +808,36 @@ function modal13_action(func)
 	var fcountry=form.elements[8];
 	var fnotes=form.elements[9];
 	
+	$(fcity).off('blur');
+	$(fcity).off('change');
+	
+	var city_data=new Object();
+		city_data.count=0;
+		city_data.start_index=0;
+		city_data.data_store='cities_data';
+		city_data.indexes=[{index:'city'}];		
+		city_data.return_column='city';
+	set_my_filter_json(city_data,fcity);
+
+	$(fcity).on('blur change',function () 
+	{	
+		var state_data=new Object();
+			state_data.count=1;
+			state_data.start_index=0;
+			state_data.data_store='cities_data';
+			state_data.indexes=[{index:'city',exact:fcity.value}];		
+			state_data.return_column='state';
+		set_my_value_json(state_data,fstate);
+
+		var country_data=new Object();
+			country_data.count=1;
+			country_data.start_index=0;
+			country_data.data_store='cities_data';
+			country_data.indexes=[{index:'city',exact:fcity.value}];		
+			country_data.return_column='country';
+		set_my_value_json(country_data,fcountry);
+	});
+
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal13_attributes');
 	attribute_label.innerHTML="";
@@ -1210,6 +1240,40 @@ function modal16_action(func)
 	var form=document.getElementById('modal16_form');
 	var fusername=form.elements[2];
 	
+	var fcity=form.elements[7];
+	var fstate=form.elements[8];
+	var fcountry=form.elements[9];
+	
+	$(fcity).off('blur');
+	$(fcity).off('change');
+	
+	var city_data=new Object();
+		city_data.count=0;
+		city_data.start_index=0;
+		city_data.data_store='cities_data';
+		city_data.indexes=[{index:'city'}];		
+		city_data.return_column='city';
+	set_my_filter_json(city_data,fcity);
+
+	$(fcity).on('blur change',function () 
+	{	
+		var state_data=new Object();
+			state_data.count=1;
+			state_data.start_index=0;
+			state_data.data_store='cities_data';
+			state_data.indexes=[{index:'city',exact:fcity.value}];		
+			state_data.return_column='state';
+		set_my_value_json(state_data,fstate);
+
+		var country_data=new Object();
+			country_data.count=1;
+			country_data.start_index=0;
+			country_data.data_store='cities_data';
+			country_data.indexes=[{index:'city',exact:fcity.value}];		
+			country_data.return_column='country';
+		set_my_value_json(country_data,fcountry);
+	});
+
 	$(fusername).on('blur',function(e)
 	{
 		var match=fusername.value.match(/[a-z0-9]*/i);
@@ -1217,7 +1281,7 @@ function modal16_action(func)
 		{
 			fusername.value="";
 		}
-	});
+	});	
 	
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal16_attributes');
@@ -14420,4 +14484,54 @@ function modal172_action()
 		$("#modal172").dialog("close");
 	});	
 	$("#modal172").dialog("open");
+}
+
+/**
+ * @modalNo 173
+ * @modal Inventory (poojaelec)
+ */
+function modal173_action(item_name)
+{
+	var form=document.getElementById("modal173_form");
+	var item_filter=form.elements['item'];
+	var stock_filter=form.elements['stock'];
+	var buyer_filter=form.elements['buyer'];
+	var seller_filter=form.elements['seller'];
+	var ok_button=form.elements['ok'];
+	
+	$(ok_button).off('click');
+	$(ok_button).on('click',function () 
+	{
+		$("#modal173").dialog("close");
+	});	
+	
+	item_filter.value=item_name;
+	stock_filter.value="";
+	buyer_filter.value="";
+	seller_filter.value="";
+	
+	get_inventory(item_name,'',function(inventory)
+	{
+		stock_filter.value=-parseFloat(inventory);
+	});
+	
+	var seller_data=new Object();
+		seller_data.count=0;
+		seller_data.start_index=0;
+		seller_data.data_store='purchase_leads';
+		seller_data.return_column='quantity';
+		seller_data.sum='yes';
+		seller_data.indexes=[{index:'status',exact:'open'},
+							{index:'item_name',exact:item_name}];
+	set_my_value_json(seller_data,seller_filter);
+
+	var buyer_data=new Object();
+		buyer_data.count=0;
+		buyer_data.start_index=0;
+		buyer_data.data_store='sale_leads';
+		buyer_data.return_column='quantity';
+		buyer_data.sum='yes';
+		buyer_data.indexes=[{index:'status',exact:'open'},
+							{index:'item_name',exact:item_name}];
+	set_my_value_json(buyer_data,buyer_filter);			
 }
