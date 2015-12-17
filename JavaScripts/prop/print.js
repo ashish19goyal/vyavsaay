@@ -5821,9 +5821,9 @@ function print_form291(func,receipt_id,acc_name,amount,date,narration,pan_text)
 		info_div.setAttribute('style','width:96%;padding:5px;font-size:13px;line-height:14px;');
 		info_table.setAttribute('style','display:block;margin:2px;width:100%;text-align:left;font-size:13px;');
 	footer.setAttribute('style','width:100%;min-height:50px');
-		signature.setAttribute('style','float:right;width:100%;text-align:right;');
+		signature.setAttribute('style','display:block;float:right;width:100%;text-align:right;');
 		jurisdiction.setAttribute('style','display:block;margin:5px;width:100%;text-align:left;font-size:11px;');
-		business_contact.setAttribute('style','margin:5px;padding:0px;line-height:10px;display:block;width:100%;text-align:center;font-size:10px;');
+		business_contact.setAttribute('style','display:block;margin:5px;padding:0px;line-height:11px;width:100%;text-align:center;font-size:11px;');
 
 	///////////////getting the content////////////////////////////////////////
 
