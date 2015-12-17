@@ -13961,7 +13961,7 @@ function form228_add_item()
 		var add_product=document.getElementById('form228_add_product_'+id);
 		$(add_product).on('click',function()
 		{
-			modal112_action(function()
+			modal174_action(function()
 			{	
 				var product_data="<product_master>" +
 						"<name></name>" +
@@ -14061,7 +14061,7 @@ function form229_add_item()
 		var add_product=document.getElementById('form229_add_product_'+id);
 		$(add_product).on('click',function()
 		{
-			modal112_action(function()
+			modal174_action(function()
 			{	
 				var product_data="<product_master>" +
 						"<name></name>" +
@@ -14168,7 +14168,7 @@ function form230_add_item()
 		var add_product=document.getElementById('form230_add_product_'+id);
 		$(add_product).on('click',function()
 		{
-			modal112_action(function()
+			modal174_action(function()
 			{	
 				var product_data="<product_master>" +
 						"<name></name>" +
