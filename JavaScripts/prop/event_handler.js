@@ -310,7 +310,7 @@ function modal_forms_ini()
 		});
 	}
 
-	for(var i=101;i<=173;i++)
+	for(var i=101;i<=174;i++)
 	{
 		var j=i;
 		$("#modal"+i).dialog({

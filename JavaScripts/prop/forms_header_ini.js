@@ -8941,7 +8941,11 @@ function form234_header_ini()
 	$(add_filter).off('click'); 	
 	$(add_filter).on('click',function () 
 	{
-		if(!is_read_access('form1') && !is_read_access('form155') && !is_read_access('form207') && !is_read_access('form183'))
+		if(is_read_access('form274'))
+		{
+			modal174_action();
+		}
+		else if(!is_read_access('form1') && !is_read_access('form155') && !is_read_access('form207') && !is_read_access('form183'))
 		{
 			modal112_action();
 		}

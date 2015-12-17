@@ -14537,3 +14537,183 @@ function modal173_action(item_name)
 
 	$("#modal173").dialog("open");
 }
+
+/**
+ * @modalNo 174
+ * @modal Add new product (poojaelec)
+ * @param button
+ */
+function modal174_action(func)
+{
+	var form=document.getElementById('modal174_form');
+	
+	var fname=form.elements[1];
+	var fmake=form.elements[2];
+	var fdescription=form.elements[3];
+	var fpictureinfo=form.elements[4];
+	var fpicture=form.elements[5];
+	var dummy_button=form.elements[6];
+	
+	$(dummy_button).on('click',function (e) 
+	{
+		e.preventDefault();
+		$(fpicture).trigger('click');
+	});
+	
+	var make_data=new Object();
+		make_data.count=0;
+		make_data.start_index=0;
+		make_data.data_store='product_master';
+		make_data.return_column='make';
+		make_data.indexes=[{index:'make'}];
+	set_my_filter_json(make_data,fmake);
+	
+	fpicture.addEventListener('change',function(evt)
+	{
+		select_picture(evt,fpictureinfo,function(dataURL)
+		{
+			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";			
+		});
+	},false);
+	
+	////adding attribute fields///////
+	var attribute_label=document.getElementById('modal174_attributes');
+	attribute_label.innerHTML="";
+
+	var attributes_data=new Object();
+		attributes_data.count=0;
+		attributes_data.start_index=0;
+		attributes_data.data_store='mandatory_attributes';
+		attributes_data.indexes=[{index:'attribute'},{index:'status'},{index:'value'},{index:'object',exact:'product'}];
+	
+	read_json_rows('',attributes_data,function(attributes)
+	{
+		attributes.forEach(function(attribute)
+		{
+			if(attribute.status!='inactive')
+			{
+				var required="";
+				if(attribute.status=='required')
+					required='required'
+				var attr_label=document.createElement('label');
+				if(attribute.value=="")
+				{
+					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
+				}				
+				else 
+				{
+					var values_array=attribute.value.split(";");
+					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					values_array.forEach(function(fvalue)
+					{
+						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
+					});
+					content+="</select>";
+					attr_label.innerHTML=content;
+				}				
+				attribute_label.appendChild(attr_label);
+				var line_break=document.createElement('br');
+				attribute_label.appendChild(line_break);
+			}
+		});
+	});
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form39'))
+		{
+			var name=form.elements[1].value;
+			var make=form.elements[2].value;
+			var description=form.elements[3].value;
+			
+			name = name.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			name = name.replace(/â/g,'');
+			name = name.replace(/&/g, "and");
+			make = make.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			make = make.replace(/â/g,'');
+			make = make.replace(/&/g, "and");
+			description = description.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			description = description.replace(/â/g,'');
+			description = description.replace(/&/g, "and");
+			
+			var mrp=form.elements[7].value;
+			var data_id=get_new_key();
+			var pic_id=get_new_key();
+			var discount=form.elements[8].value;
+			var sale_price=form.elements[9].value;
+			var cost_price=form.elements[9].value;
+			var url=$(fpictureinfo).find('div').find('img').attr('src');
+			var last_updated=get_my_time();
+			var data_xml="<product_master>" +
+							"<id>"+data_id+"</id>" +
+							"<make>"+make+"</make>" +
+							"<name>"+name+"</name>" +
+							"<description>"+description+"</description>" +
+							"<tax>0</tax>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</product_master>";	
+			var instance_xml="<product_instances>"+
+							"<id>"+data_id+"</id>"+
+							"<product_name>"+name+"</product_name>"+
+							"<batch>"+name+"</batch>"+
+							"<mrp>"+mrp+"</mrp>"+
+							"<cost_price>"+cost_price+"</cost_price>"+
+							"<sale_price>"+sale_price+"</sale_price>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</product_instances>";			
+			var activity_xml="<activity>" +
+							"<data_id>"+data_id+"</data_id>" +
+							"<tablename>product_master</tablename>" +
+							"<link_to>form234</link_to>" +
+							"<title>Added</title>" +
+							"<notes>Product "+name+" to inventory</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+			create_row_func(data_xml,activity_xml,func);
+			create_simple(instance_xml);
+			
+			var id=get_new_key();
+			$("#modal174_attributes").find('input, select').each(function()
+			{
+				id++;
+				var value=$(this).val();
+				var attribute=$(this).attr('name');
+				if(value!="")
+				{
+					var attribute_xml="<attributes>" +
+							"<id>"+id+"</id>" +
+							"<name>"+name+"</name>" +
+							"<type>product</type>" +
+							"<attribute>"+attribute+"</attribute>" +
+							"<value>"+value+"</value>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</attributes>";
+					create_simple(attribute_xml);
+					
+				}
+			});
+
+			if(url!="")
+			{
+				var pic_xml="<documents>" +
+							"<id>"+pic_id+"</id>" +
+							"<url>"+url+"</url>" +
+							"<doc_type>product_master</doc_type>" +
+							"<target_id>"+data_id+"</target_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</documents>";
+				create_simple(pic_xml);
+					
+			}
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal174").dialog("close");
+	});
+	
+	$("#modal174").dialog("open");
+}

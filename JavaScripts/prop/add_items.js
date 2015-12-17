@@ -17084,7 +17084,7 @@ function form275_add_item()
 		var add_product=document.getElementById('form275_add_product_'+id);
 		$(add_product).on('click',function()
 		{
-			modal112_action(function()
+			modal174_action(function()
 			{	
 				var product_data="<product_master>" +
 						"<name></name>" +

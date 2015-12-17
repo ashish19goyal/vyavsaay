@@ -1725,4 +1725,23 @@
 		</form>
 	</div>
 	
+	<div id="modal174" title="Add new product">
+		<form id='modal174_form' autocomplete="off">
+			<fieldset>
+				<label>Name: <input type="text" required></label><br>
+				<label>Make: <input type="text"></label><br>
+				<label>Description: <textarea></textarea></label><br>
+				<label>Picture: <output></output>
+								<input type='file' style='display:none'>
+								<input type='button' class='generic_red_icon' value='Select Picture'></label><br>
+				<label>MRP: <input type="number" step='any'></label><br>
+				<label>Discount: <input type="number" step='any'></label><br>
+				<label>Sale Price: <input type="number" step='any'></label><br>
+				<label>Cost Price: <input type="number" step='any'></label><br>
+				<label id='modal174_attributes'></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>
