@@ -925,39 +925,42 @@ function form258_get_totals()
 	var tax=0;
 	var total=0;
 	var total_quantity=0;
-
+	var tax_rate=0;
+	var cartage=0;
+	
 	$("[id^='save_form258_item_']").each(function(index)
 	{
 		var subform_id=$(this).attr('form');
 		var subform=document.getElementById(subform_id);
 
-		if(!isNaN(parseFloat(subform.elements[1].value)))
-			total_quantity+=parseFloat(subform.elements[1].value);
-		if(!isNaN(parseFloat(subform.elements[3].value)))
-			amount+=parseFloat(subform.elements[3].value);
+		if(!isNaN(parseFloat(subform.elements[2].value)))
+			total_quantity+=parseFloat(subform.elements[2].value);
 		if(!isNaN(parseFloat(subform.elements[4].value)))
+			amount+=parseFloat(subform.elements[4].value);
+	/*	if(!isNaN(parseFloat(subform.elements[4].value)))
 			tax+=parseFloat(subform.elements[4].value);
 		if(!isNaN(parseFloat(subform.elements[5].value)))
 			total+=parseFloat(subform.elements[5].value);
+	*/
 	});
 
-	var cartage=0;
 	
 	if(document.getElementById('form258_cartage'))
 	{
 		cartage=parseFloat(document.getElementById('form258_cartage').value);
+		tax_rate=parseFloat(document.getElementById('form258_tax').value);
 	}
 	
 	var amount=my_round(amount,2);		
-	var tax=my_round(tax,2);		
-	var total=my_round((total+cartage),0);
+	var tax=my_round(tax_rate*(amount/100),2);		
+	var total=my_round((amount+tax+cartage),0);
 
 	var total_row="<tr><td colspan='4' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
-						"<td>Amount:<br>Tax:<br>Transport Charges: <br>Total: </td>" +
+						"<td>Amount:<br>Tax:@ <input type='number' value='"+tax_rate+"' step='any' id='form258_tax'><br>Transport Charges: <br>Total: </td>" +
 						"<td>Rs. "+amount+"</br>" +
 						"Rs. "+tax+" <br>" +
 						"Rs. <input type='number' value='"+my_round(cartage,2)+"' step='any' id='form258_cartage' class='dblclick_editable'><br>" +
-						"Rs. "+total+"</td>" +
+						"Rs. <vtotal>"+total+"</vtotal></td>" +
 						"<td></td>" +
 						"</tr>";
 					
@@ -1152,7 +1155,7 @@ function form284_get_totals()
 				"<td>Rs. "+amount+"</br>" +
 				"Rs. "+tax+" <br>" +
 				"Rs. <input type='number' value='"+cartage+"' step='any' id='form284_cartage' class='dblclick_editable'></br>" +
-				"Rs. "+total+"</td>" +
+				"Rs. <vtotal>"+total+"</vtotal></td>" +
 				"<td></td>" +
 				"</tr>";
 	$('#form284_foot').html(total_row);

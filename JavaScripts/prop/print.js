@@ -4818,8 +4818,6 @@ function print_form258(func)
 	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
-		var business_intro=document.createElement('div');
-		var business_contact=document.createElement('div');
 	
 	var invoice_line=document.createElement('div');
 	
@@ -4830,30 +4828,31 @@ function print_form258(func)
 	var footer=document.createElement('div');
 		var signature=document.createElement('div');
 		var jurisdiction=document.createElement('div');
+		var business_contact=document.createElement('div');
 
 ////////////setting styles for containers/////////////////////////
 
 	header.setAttribute('style','width:98%;min-height:100px;text-align:center');
 		logo.setAttribute('style','width:98%;text-align:center;margin:5px;font-weight:600;font-size:32px;line-height:40px;');
-		business_intro.setAttribute('style','width:98%;text-align:center');
-		business_contact.setAttribute('style','width:98%;text-align:left');
-	info_section.setAttribute('style','width:98%;min-height:100px');
-		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:100px;border: 1px solid #00f;border-radius:5px;');
-		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:100px;border: 1px solid #00f;border-radius:5px;');
-	footer.setAttribute('style','width:98%;min-height:50px');
-		signature.setAttribute('style','float:right;width:30%;min-height:50px');
-		jurisdiction.setAttribute('style','margin:10px;width:100%;min-height:20px;text-align:left;font-size:11px;');
+	invoice_line.setAttribute('style','width:98%;margin:2px;');
+	info_section.setAttribute('style','width:98%;min-height:85px;font-size:11px;');
+		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;font-size:11px;');
+		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;font-size:11px;');
+	footer.setAttribute('style','width:98%;min-height:50px;font-size:11px;');
+		signature.setAttribute('style','float:right;width:98%;text-align:right;font-size:11px;');
+		jurisdiction.setAttribute('style','margin:10px;width:98%;text-align:left;font-size:11px;');
+		business_contact.setAttribute('style','margin:0px;padding:0px;width:98%;text-align:center;page-break-inside:avoid;font-size:11px;');
 
 ///////////////getting the content////////////////////////////////////////
 
 	var bt=get_session_var('title');
 	var logo_image=get_session_var('logo');
-	var business_intro_text=get_session_var('business_intro');
 	var business_address=get_session_var('address');
 	var business_phone=get_session_var('phone');
 	var business_email=get_session_var('email');
-	//var business_website=get_session_var('website');
-
+	var tin=get_session_var('tin');
+	var pan=get_session_var('pan');
+	
 	var master_form=document.getElementById(form_id+'_master');
 	var customer_name=master_form.elements['customer'].value;
 	var date=master_form.elements['date'].value;	
@@ -4864,26 +4863,25 @@ function print_form258(func)
 	var quot_type=master_form.elements['type'].value;
 	var computer_generated=master_form.elements['computer_generated'].checked;
 		
-	var signature_text="<br><br><br>Signature<br>";
+	var signature_text="For "+bt+"<br><br>Auth. Signatory<br>";
 	if(computer_generated)
 	{
 		var signature_text="<br>Computer Generated. Signature Not Required<br>";
-		signature.setAttribute('style','text-align:center;min-height:20px;');
+		signature.setAttribute('style','text-align:center;');
 	}
 
 	////////////////filling in the content into the containers//////////////////////////
 
 	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
-	business_intro.innerHTML=bt;
-	business_contact.innerHTML="<hr style='border: 1px solid #00f;'>Address: "+business_address+"<br>Phone: "+business_phone+"<br>E-Mail: "+business_email;
 	
 	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Quotation Sheet</b></div><hr style='border: 1px solid #00f;'>";
 	
 	customer_info.innerHTML="<b>Customer: </b><br>"+customer_name+"<br>"+customer_address;
-	business_info.innerHTML="Quotation #:"+quot_no+"<br>Date: "+date+"<br>Valid Upto:"+valid_date+"<br>Issued By: "+issued_by+"<br>Type: "+quot_type;
+	business_info.innerHTML="Quotation #: "+quot_no+"<br>Date: "+date+"<br>Valid Upto: "+valid_date+"<br>Issued By: "+issued_by+"<br>Type: "+quot_type;
 	
 	signature.innerHTML=signature_text;
 	jurisdiction.innerHTML="Note: All disputes subjected to Delhi Jurisdiction";
+	business_contact.innerHTML="<hr style='border: 1px solid #00f;margin:5px;'>Address: "+business_address+"<br>Phone: "+business_phone+", E-Mail: "+business_email+"<br>TIN: "+tin+", PAN: "+pan+"<hr style='border: 1px solid #00f;margin:5px;'>";
 	
 	/////////////adding item table //////////////////////////////////////////////////////	
 	var item_table_element=document.getElementById(form_id+'_item_body');
@@ -4892,16 +4890,16 @@ function print_form258(func)
 	var item_table=document.createElement('table');
 	item_table_heading.appendChild(item_table);
 	item_table_heading.setAttribute('class','print_element');
-	item_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
+	item_table.setAttribute('style','width:98%;font-size:11px;border:1px solid black;text-align:left;');
 	item_table.setAttribute('class','plain_table');
 	var table_header="<tr>"+
-				"<td style='border: 1px solid #000;text-align:left;width:10%;'>S.No.</td>"+
-				"<td style='border: 1px solid #000;text-align:left;width:35%;'>Item Name</td>"+
-				"<td style='border: 1px solid #000;text-align:left;width:10%'>Quantity</td>"+
-				"<td style='border: 1px solid #000;text-align:left;width:10%'>Price</td>"+
-				"<td style='border: 1px solid #000;text-align:left;width:10%'>Amount</td>"+
-				"<td style='border: 1px solid #000;text-align:left;width:10%'>Tax</td>"+
-				"<td style='border: 1px solid #000;text-align:left;width:15%'>Total</td></tr>";
+				"<td style='border: 1px solid #000;text-align:left;width:5%;'>S.No.</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:40%;'>Item Name</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:15%'>Quantity</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:20%'>Rate</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:20%'>Amount</td></tr>";
+				//"<td style='border: 1px solid #000;text-align:left;width:10%'>Tax</td>"+
+				//"<td style='border: 1px solid #000;text-align:left;width:15%'>Total</td></tr>";
 				
 	var table_rows=table_header;
 	var counter=0;
@@ -4917,44 +4915,42 @@ function print_form258(func)
 		var quantity=""+form.elements[2].value;
 		var price=form.elements[3].value;
 		var amount=form.elements[4].value;
-		var tax=form.elements[5].value;		
-		var total=form.elements[6].value;
+		//var tax=form.elements[5].value;		
+		//var total=form.elements[6].value;
 
 		table_rows+="<tr>"+
 				"<td style='border: 1px solid #000;text-align:left;'>"+counter+"</td>"+
 				"<td style='border: 1px solid #000;text-align:left;'>"+item_name+"</td>"+
 				"<td style='border: 1px solid #000;text-align:left;'>"+quantity+"</td>"+
 				"<td style='border: 1px solid #000;text-align:left;'>"+price+"</td>"+
-				"<td style='border: 1px solid #000;text-align:left;'>"+amount+"</td>"+
-				"<td style='border: 1px solid #000;text-align:left;'>"+tax+"</td>"+
-				"<td style='border: 1px solid #000;text-align:left;'>"+total+"</td></tr>";
+				"<td style='border: 1px solid #000;text-align:left;'>"+amount+"</td></tr>";
+				//"<td style='border: 1px solid #000;text-align:left;'>"+tax+"</td>"+
+				//"<td style='border: 1px solid #000;text-align:left;'>"+total+"</td></tr>";
 	});
-	/*
-	var row_count=$(item_table_element).find('tbody>tr').length;
-	var rows_to_add=4-row_count;
-	for(var i=0;i<rows_to_add;i++)
-	{
-		table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
-	}
-*/
+	
+	
 	var table_foot=document.getElementById(form_id+'_item_foot');
 	var total_quantity=$(table_foot).find('tr>td:first')[0].innerHTML;
-	var total_text=$(table_foot).find('tr>td:nth-child(2)')[0].innerHTML;
+	var total_text_element=$(table_foot).find('tr>td:nth-child(2)');
 	var total_amount_element=$(table_foot).find('tr>td:nth-child(3)');
+	
+	var total_amount_number=$(total_amount_element).find('vtotal').html();
+	var wording_total=number2text(total_amount_number);
 	
 	$(total_amount_element).find("input").each(function(index)
 	{
 		$(this).replaceWith($(this).val());
 	});
-	$(total_amount_element).find('textarea').each(function(index)
+	$(total_text_element).find('input').each(function(index)
 	{
-		$(this).replaceWith($(this).attr('value'));
+		$(this).replaceWith($(this).val());
 	});
 	var total_amount=$(total_amount_element).html();
+	var total_text=$(total_text_element).html();
 	var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
-				"<td colspan='2' style='border: 1px solid #000;text-align:left;'>"+total_quantity+"</td>"+
-				"<td colspan='3' style='border: 1px solid #000;text-align:left;'>"+total_text+"</td>"+
-				"<td colspan='2' style='border: 1px solid #000;text-align:left;'>"+total_amount+"</td></tr>";
+				"<td colspan='2' style='border: 1px solid #000;text-align:left;'>"+total_quantity+"<br>Total (in words): "+wording_total+"</td>"+
+				"<td colspan='2' style='border: 1px solid #000;text-align:left;'>"+total_text+"</td>"+
+				"<td colspan='1' style='border: 1px solid #000;text-align:left;'>"+total_amount+"</td></tr>";
 		
 	table_rows+=table_foot_row;
 	item_table.innerHTML=table_rows;
@@ -4962,11 +4958,11 @@ function print_form258(func)
 	/////////////adding cabinet details table //////////////////////////////////////////////////////	
 	
 	var details_table_heading=document.createElement('div');
-	details_table_heading.innerHTML="<br><b>Cabinet Details</b><br>";
+	details_table_heading.innerHTML="<br><b>Additional Details</b><br>";
 	var details_table=document.createElement('table');
 	details_table_heading.appendChild(details_table);
 	details_table_heading.setAttribute('class','print_element');
-	details_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
+	details_table.setAttribute('style','width:98%;font-size:11px;border:1px solid black;text-align:left;');
 	details_table.setAttribute('class','plain_table');
 	var table_header="<tr>"+
 				"<td style='border: 1px solid #000;text-align:left;width:10%;'>S.No.</td>"+
@@ -5004,7 +5000,7 @@ function print_form258(func)
 	spec_table_heading.appendChild(spec_table);
 	spec_table_heading.setAttribute('class','print_element');
 	spec_table_heading.setAttribute('style','page-break-before:always;');
-	spec_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
+	spec_table.setAttribute('style','width:98%;font-size:11px;border:1px solid black;text-align:left;');
 	spec_table.setAttribute('class','plain_table');
 	var table_header="<tr>"+
 				"<td style='border: 1px solid #000;text-align:left;width:10%;'>S.No.</td>"+
@@ -5040,7 +5036,7 @@ function print_form258(func)
 	var spare_table=document.createElement('table');
 	spare_table_heading.appendChild(spare_table);
 	spare_table_heading.setAttribute('class','print_element');
-	spare_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
+	spare_table.setAttribute('style','width:98%;font-size:11px;border:1px solid black;text-align:left;');
 	spare_table.setAttribute('class','plain_table');
 	var table_header="<tr>"+
 				"<td style='border: 1px solid #000;text-align:left;width:10%;'>S.No.</td>"+
@@ -5076,7 +5072,7 @@ function print_form258(func)
 	var bank_table=document.createElement('table');
 	bank_table_heading.appendChild(bank_table);
 	bank_table_heading.setAttribute('class','print_element');
-	bank_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
+	bank_table.setAttribute('style','width:98%;font-size:11px;border:1px solid black;text-align:left;');
 	bank_table.setAttribute('class','plain_table');
 	var table_header="<tr>"+
 				"<td style='border: 1px solid #000;text-align:left;width:10%;'>S.No.</td>"+
@@ -5115,7 +5111,7 @@ function print_form258(func)
 	var terms_table=document.createElement('table');
 	terms_table_heading.appendChild(terms_table);
 	terms_table_heading.setAttribute('class','print_element');
-	terms_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
+	terms_table.setAttribute('style','width:98%;font-size:11px;border:1px solid black;text-align:left;');
 	terms_table.setAttribute('class','plain_table');
 	var table_header="<tr>"+
 				"<td style='border: 1px solid #000;text-align:left;width:10%;'>S.No.</td>"+
@@ -5162,14 +5158,15 @@ function print_form258(func)
 	
 	header.appendChild(logo);
 	//header.appendChild(business_intro);
-	header.appendChild(business_contact);
+	//header.appendChild(business_contact);
 	
 	info_section.appendChild(customer_info);
 	info_section.appendChild(business_info);
 	
 	footer.appendChild(signature);
 	footer.appendChild(jurisdiction);
-
+	footer.appendChild(business_contact);
+	
 	container.appendChild(spec_table_heading);
 	container.appendChild(spec_table);
 	
@@ -5631,8 +5628,6 @@ function print_form284(func)
 	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
-		var business_intro=document.createElement('div');
-		var business_contact=document.createElement('div');
 	
 	var invoice_line=document.createElement('div');
 	
@@ -5641,17 +5636,26 @@ function print_form284(func)
 		var business_info=document.createElement('div');
 
 	var table_container=document.createElement('div');
-
+	
+	var footer=document.createElement('div');
+		var signature=document.createElement('div');
+		var jurisdiction=document.createElement('div');
+		var business_contact=document.createElement('div');
+	
 ////////////setting styles for containers/////////////////////////
 
-	header.setAttribute('style','width:100%;min-height:100px;text-align:center');
-		logo.setAttribute('style','width:100%;text-align:center;font-weight:600;font-size:32px;line-height:40px;');
-		business_intro.setAttribute('style','width:100%;text-align:center');
-		business_contact.setAttribute('style','width:100%;text-align:left');
-	info_section.setAttribute('style','width:100%;min-height:80px');
+	header.setAttribute('style','width:100%;text-align:center');
+		logo.setAttribute('style','width:100%;text-align:center;');
+	
+	info_section.setAttribute('style','width:100%;height:85px;font-size:11px;');
 		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;');
 		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;');
 	
+	footer.setAttribute('style','width:98%;min-height:100px;');
+		signature.setAttribute('style','width:98%;min-height:50px;text-align:right;font-size:11px;');
+		jurisdiction.setAttribute('style','margin:10px;width:98%;min-height:20px;text-align:left;font-size:11px;');
+		business_contact.setAttribute('style','margin:0px;padding:0px;width:98%;text-align:center;page-break-inside:avoid;font-size:11px;');
+
 ///////////////getting the content////////////////////////////////////////
 
 	var bt=get_session_var('title');
@@ -5665,18 +5669,23 @@ function print_form284(func)
 	var address=master_form.elements['customer_info'].value;
 	var date=master_form.elements['date'].value;
 	var bill_no=master_form.elements['bill_num'].value;
+	var invoice_type=master_form.elements['bill_type'].value;
 	var narration=master_form.elements['narration'].value;
-	var tin_no=get_session_var('tin');
+	var tin=get_session_var('tin');
+	var pan=get_session_var('pan');
 	////////////////filling in the content into the containers//////////////////////////
 
-	logo.innerHTML=bt;
-	business_contact.innerHTML="<hr style='border: 1px solid #00f;'>Address: "+business_address+"<br>Contact Nos.: "+business_phone+"<br>E-Mail: "+business_email;
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	
-	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Invoice #: "+bill_no+"</b></div><hr style='border: 1px solid #00f;'>";
+	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>"+invoice_type+" Invoice</b></div><hr style='border: 1px solid #00f;'>";
 	
 	customer_info.innerHTML="<b>Customer: </b><br>"+customer_name+"<br>"+address;
-	business_info.innerHTML="<b>Seller</b><br>TIN #: "+tin_no+"<br>Date: "+date+"<br>Narration: "+narration;
+	business_info.innerHTML="<b>Seller</b><br>Bill #: "+bill_no+"<br>Date: "+date+"<br>Narration: "+narration;
 
+	jurisdiction.innerHTML="All disputes subjected to Delhi jurisdiction.<br>This is a computer generated invoice.";
+	signature.innerHTML="For "+bt+"<br><br>Auth. Signatory<br>";
+	business_contact.innerHTML="<hr style='border: 1px solid #00f;margin:5px;'>Address: "+business_address+"<br>Phone: "+business_phone+", E-Mail: "+business_email+"<br>TIN: "+tin+", PAN: "+pan+"<hr style='border: 1px solid #00f;margin:5px;'>";
+	
 	var table_element=document.getElementById(form_id+'_body');
 
 	/////////////adding new table //////////////////////////////////////////////////////	
@@ -5726,6 +5735,9 @@ function print_form284(func)
 	var total_text_element=$(table_foot).find('tr>td:nth-child(2)');
 	var total_amount_element=$(table_foot).find('tr>td:nth-child(3)');
 	
+	var total_amount_number=$(total_amount_element).find('vtotal').html();
+	var wording_total=number2text(total_amount_number);
+	
 	$(total_amount_element).add(total_text_element).find("input").each(function(index)
 	{
 		$(this).replaceWith($(this).val());
@@ -5735,7 +5747,7 @@ function print_form284(func)
 	var total_amount=$(total_amount_element)[0].innerHTML;
 	
 	var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
-				"<td colspan='2' style='border: 1px solid #000;text-align:left;'>"+total_quantity+"</td>"+
+				"<td colspan='2' style='border: 1px solid #000;text-align:left;'>Total (in words): "+wording_total+"</td>"+
 				"<td colspan='2' style='border: 1px solid #000;text-align:left;'>"+total_text+"</td>"+
 				"<td colspan='2' style='border: 1px solid #000;text-align:left;font-size:1.2em;font-weight:bold;'>"+total_amount+"</td></tr>";
 		
@@ -5749,6 +5761,7 @@ function print_form284(func)
 	container.appendChild(info_section);
 	
 	container.appendChild(new_table);
+	container.appendChild(footer);
 	
 	header.appendChild(logo);
 	header.appendChild(business_contact);
@@ -5756,5 +5769,110 @@ function print_form284(func)
 	info_section.appendChild(customer_info);
 	info_section.appendChild(business_info);
 	
+	footer.appendChild(jurisdiction);
+	footer.appendChild(signature);
+	footer.appendChild(business_contact);
+	
+	func(container);
+}
+
+/**
+ * @form receipt
+ * @modalNo 291
+ */
+function form291_print(receipt_id,acc_name,amount,date,narration,pan_text)
+{
+	print_form291(function(container)
+	{
+		$.print(container);
+		container.innerHTML="";	
+	},receipt_id,acc_name,amount,date,narration,pan_text);	
+}
+
+/**
+ * @form receipts (NVS)
+ * @formNo 291
+ */
+function print_form291(func,receipt_id,acc_name,amount,date,narration,pan_text)
+{	
+	////////////setting up containers///////////////////////	
+	var container=document.createElement('div');
+	var header=document.createElement('div');
+		var logo=document.createElement('div');
+	
+	var invoice_box=document.createElement('div');
+
+	var info_section=document.createElement('div');	
+		var info_div=document.createElement('div');
+		var info_table=document.createElement('div');
+
+	var footer=document.createElement('div');
+		var signature=document.createElement('div');
+		var jurisdiction=document.createElement('div');
+		var business_contact=document.createElement('div');
+		
+	////////////setting styles for containers/////////////////////////
+
+	container.setAttribute('style','width:100%;');
+	header.setAttribute('style','width:100%;height:auto;');
+		logo.setAttribute('style','width:100%;text-align:center;margin:5px;line-height:40px;');
+	invoice_box.setAttribute('style','width:100%;margin:10px;text-align:center;font-size:20px;');
+	info_section.setAttribute('style','width:100%;min-height:60px;margin:10px 5px;padding:2px;');
+		info_div.setAttribute('style','width:96%;padding:5px;font-size:13px;line-height:14px;');
+		info_table.setAttribute('style','display:block;margin:2px;width:100%;text-align:left;font-size:13px;');
+	footer.setAttribute('style','width:100%;min-height:50px');
+		signature.setAttribute('style','float:right;width:100%;text-align:right;');
+		jurisdiction.setAttribute('style','display:block;margin:5px;width:100%;text-align:left;font-size:11px;');
+		business_contact.setAttribute('style','margin:5px;padding:0px;line-height:10px;display:block;width:100%;text-align:center;font-size:10px;');
+
+	///////////////getting the content////////////////////////////////////////
+
+	var bt=get_session_var('title');
+	var logo_image=get_session_var('logo');
+	var business_address=get_session_var('address');
+	var business_phone=get_session_var('phone');
+	var business_email=get_session_var('email');
+	var tin=get_session_var('tin');
+	var pan=get_session_var('pan');
+	var signature_text="For "+bt+"<br><br><br>Auth. Signatory<br>";
+	
+	////////////////filling in the content into the containers//////////////////////////
+	var wording_total=number2text(amount);
+	
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
+	invoice_box.innerHTML="<hr style='border: 1px solid #00f;margin:5px;'>Receipt Voucher<hr style='border: 1px solid #00f;margin:5px;'>";
+	
+	info_div.innerHTML="<div style='width:50%;float:left;text-align:left;'>Receipt #: "+receipt_id+"</div><div style='width:50%;float:right;text-align:right;'>Dated: "+get_my_past_date(date)+"</div>";
+	
+	///////////central information table///////////
+	var table_text="<table style='border:none;text-align:left;font-size:13px;'><tr style='border-top:1px solid #555;border-bottom:1px solid #555;'><th style='width:70%;border-right:1px solid #555;font-weight:400;'>Particulars</th><th style='font-weight:400;width:30%;'>Amount</th></tr>";
+		table_text+="<tr style='height:40px;'><td style='text-align:left;border-right:1px solid #555;'>Account: "+acc_name+"</td><td></td></tr>";
+		table_text+="<tr style='height:40px;'><td style='text-align:left;border-right:1px solid #555;'>Remarks: "+narration+"</td><td></td></tr>";
+		table_text+="<tr style='border-top:1px solid #555;border-bottom:1px solid #555;text-align:left;'><td style='text-align:left;border-right:1px solid #555;'>Amount (in words): "+wording_total+"</td><td style='text-align:left;'>Rs. "+amount+"</td></tr></table>";
+	
+	/////////////////////////////////////////////
+	info_table.innerHTML=table_text;	
+	
+	////////////////filling in the content into the containers//////////////////////////
+	
+	signature.innerHTML=signature_text;
+	jurisdiction.innerHTML="All disputes subjected to Delhi jurisdiction.";
+	business_contact.innerHTML="<hr style='border: 1px solid #00f;margin:5px;'>Address: "+business_address+"<br>Phone: "+business_phone+", E-Mail: "+business_email+"<br>TIN: "+tin+", PAN: "+pan+"<hr style='border: 1px solid #00f;margin:5px;'>";
+	///////////////////////////////////////
+
+	container.appendChild(header);
+	container.appendChild(invoice_box);
+	container.appendChild(info_section);
+	container.appendChild(footer);
+
+	header.appendChild(logo);
+
+	info_section.appendChild(info_div);
+	info_section.appendChild(info_table);
+	
+	footer.appendChild(jurisdiction);
+	footer.appendChild(signature);
+	footer.appendChild(business_contact);
+
 	func(container);
 }

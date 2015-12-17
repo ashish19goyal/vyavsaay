@@ -15749,13 +15749,13 @@ function form258_add_item()
 				item_rowsHTML+="<td data-th='Quantity'>";
 					item_rowsHTML+="<input type='number' form='form258_item_"+id+"' step='any'>";
 				item_rowsHTML+="</td>";
-				item_rowsHTML+="<td data-th='Price'>";
+				item_rowsHTML+="<td data-th='Rate'>";
 					item_rowsHTML+="<input type='number' form='form258_item_"+id+"' step='any'>";
 				item_rowsHTML+="</td>";
 				item_rowsHTML+="<td data-th='Amount'>";
-					item_rowsHTML+="<b>Amount</b>:<input type='number' readonly='readonly' form='form258_item_"+id+"' step='any'>";
-					item_rowsHTML+="<br><b>Tax</b>:<input type='number' form='form258_item_"+id+"' step='any'>";
-					item_rowsHTML+="<br><b>Total</b>:<input type='number' readonly='readonly' form='form258_item_"+id+"' step='any'>";
+					item_rowsHTML+="<input type='number' readonly='readonly' form='form258_item_"+id+"' step='any'>";
+				//	item_rowsHTML+="<br><b>Tax</b>:<input type='number' form='form258_item_"+id+"' step='any'>";
+				//	item_rowsHTML+="<br><b>Total</b>:<input type='number' readonly='readonly' form='form258_item_"+id+"' step='any'>";
 				item_rowsHTML+="</td>";
 				item_rowsHTML+="<td data-th='Action'>";
 					item_rowsHTML+="<input type='hidden' form='form258_item_"+id+"' value='"+id+"'>";
@@ -15772,9 +15772,9 @@ function form258_add_item()
 		var quantity_filter=fields.elements[2];
 		var price_filter=fields.elements[3];
 		var amount_filter=fields.elements[4];
-		var tax_filter=fields.elements[5];
-		var total_filter=fields.elements[6];
-		var id_filter=fields.elements[7];
+		//var tax_filter=fields.elements[5];
+		//var total_filter=fields.elements[6];
+		var id_filter=fields.elements[5];
 		var tax_unit_filter=fields.elements['tax_unit'];
 		
 		$(fields).on("submit", function(event)
@@ -15793,6 +15793,7 @@ function form258_add_item()
 			$(name_filter).focus();
 		});
 
+/*
 		$(name_filter).on('blur',function(event)
 		{
 			var tax_data="<product_master>"+
@@ -15801,19 +15802,19 @@ function form258_add_item()
 						"</product_master>";
 			set_my_value(tax_data,tax_unit_filter);			
 		});		
-
+*/
 		$(quantity_filter).add(price_filter).on('change blur',function(event)
 		{
 			amount_filter.value=my_round((parseFloat(price_filter.value)*parseFloat(quantity_filter.value)),2);
-			tax_filter.value=my_round((parseFloat(tax_unit_filter.value)*parseFloat(amount_filter.value)),2);
-			$(amount_filter).trigger('change');
+			//tax_filter.value=my_round((parseFloat(tax_unit_filter.value)*parseFloat(amount_filter.value)),2);
+			//$(amount_filter).trigger('change');
 		});
-
+/*
 		$(amount_filter).add(tax_filter).on('change blur',function(event)
 		{
 			total_filter.value=my_round((parseFloat(amount_filter.value)+parseFloat(tax_filter.value)),0);
 		});
-
+*/
 		form258_get_totals();
 		$('textarea').autosize();
 	}
@@ -17213,7 +17214,7 @@ function form284_add_item()
 				rowsHTML+="<input type='number' min='0' required form='form284_"+id+"' step='any'> <b id='form284_unit_"+id+"'></b>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+="<b>Price</b>:<input type='number' required form='form284_"+id+"' step='any'>";
+				rowsHTML+="<b>Rate</b>:<input type='number' required form='form284_"+id+"' step='any'>";
 				rowsHTML+="<br><b>Amount</b>:<input type='number' required readonly='readonly' form='form284_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
@@ -17221,7 +17222,7 @@ function form284_add_item()
 				rowsHTML+="<input type='button' class='submit_hidden' form='form284_"+id+"' id='save_form284_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form284_"+id+"' id='delete_form284_"+id+"' onclick='$(this).parent().parent().remove();form284_update_serial_numbers(); form284_get_totals();'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form284_"+id+"'>";
-			//	rowsHTML+="<input type='hidden' form='form284_"+id+"' name='tax_unit'>";
+				//rowsHTML+="<input type='hidden' form='form284_"+id+"' name='tax_unit'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	

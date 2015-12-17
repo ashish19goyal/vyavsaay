@@ -18047,7 +18047,9 @@ function form258_create_form()
 		var tax=0;
 		var total=0;
 		var total_quantity=0;
-	
+		var tax_rate=0;
+		var cartage=0;
+		
 		$("[id^='save_form258_item_']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
@@ -18057,29 +18059,30 @@ function form258_create_form()
 				total_quantity+=parseFloat(subform.elements[2].value);
 			if(!isNaN(parseFloat(subform.elements[4].value)))
 				amount+=parseFloat(subform.elements[4].value);
-			if(!isNaN(parseFloat(subform.elements[5].value)))
+		/*	if(!isNaN(parseFloat(subform.elements[5].value)))
 				tax+=parseFloat(subform.elements[5].value);
 			if(!isNaN(parseFloat(subform.elements[6].value)))
 				total+=parseFloat(subform.elements[6].value);
+		*/
 		});
 	
-		var cartage=0;
 		
 		if(document.getElementById('form258_cartage'))
 		{
 			cartage=parseFloat(document.getElementById('form258_cartage').value);
+			tax_rate=parseFloat(document.getElementById('form258_tax').value);
 		}
 		
 		var amount=my_round(amount,2);		
-		var tax=my_round(tax,2);		
-		var total=my_round((total+cartage),0);
+		var tax=my_round(tax_rate*(amount/100),2);		
+		var total=my_round((tax+amount+cartage),0);
 	
 		var total_row="<tr><td colspan='4' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
-							"<td>Amount:<br>Tax:<br>Transport Charges: <br>Total: </td>" +
+							"<td>Amount:<br>Tax:@ <input type='number' value='"+tax_rate+"' step='any' id='form258_tax'><br>Transport Charges: <br>Total: </td>" +
 							"<td>Rs. "+amount+"</br>" +
 							"Rs. "+tax+" <br>" +
 							"Rs. <input type='number' value='"+my_round(cartage,2)+"' step='any' id='form258_cartage' class='dblclick_editable'><br>" +
-							"Rs. "+total+"</td>" +
+							"Rs. <vtotal>"+total+"</vtotal></td>" +
 							"<td></td>" +
 							"</tr>";
 		
@@ -18103,11 +18106,11 @@ function form258_create_form()
 			item_obj.quantity=subform.elements[2].value;
 			item_obj.price=subform.elements[3].value;
 			item_obj.amount=subform.elements[4].value;
-			item_obj.tax=subform.elements[5].value;
-			item_obj.total=subform.elements[6].value;
+			//item_obj.tax=subform.elements[5].value;
+			//item_obj.total=subform.elements[6].value;
 			items_array.push(item_obj);
 			
-			for(var i=0;i<7;i++)
+			for(var i=0;i<5;i++)
 			{
 				$(subform.elements[i]).attr('readonly','readonly');
 			}				
@@ -18201,6 +18204,7 @@ function form258_create_form()
 					"<address>"+address+"</address>" +
 					"<amount>"+amount+"</amount>"+
 					"<tax>"+tax+"</tax>"+
+					"<tax_rate>"+tax_rate+"</tax_rate>"+
 					"<cartage>"+cartage+"</cartage>"+
 					"<total>"+total+"</total>"+
 					"<specifications>"+specifications+"</specifications>"+
@@ -19380,7 +19384,7 @@ function form284_create_form()
 					"<td>Rs. "+amount+"</br>" +
 					"Rs. "+tax+"<br>" +
 					"Rs. <input type='number' value='"+cartage+"' step='any' id='form284_cartage' readonly='readonly' class='dblclick_editable'></br>" +
-					"Rs. "+total+"</td>" +
+					"Rs. <vtotal>"+total+"</vtotal></td>" +
 					"<td></td>" +
 					"</tr>";
 		

@@ -31,7 +31,7 @@
 					<th>Item</th>
 					<th>Details</th>
 					<th>Quantity </th>
-					<th>Price </th>
+					<th>Rate </th>
 					<th>Amount </th>
 					<th><input type='button' class='add_icon' form='form258_item_header' title='Add Item' onclick='form258_add_item();'></th>
 			</tr>
@@ -60,7 +60,7 @@
 	</table>
 
 	<br>
-	<b>Technical Specifications <input type='checkbox' id='checkbox_form258_spec'></b>
+	<b>Detailed Specifications <input type='checkbox' id='checkbox_form258_spec'></b>
 	<table class='rwd-table'>
 		<thead>
 			<tr>

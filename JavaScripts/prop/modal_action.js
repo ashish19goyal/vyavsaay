@@ -3573,7 +3573,7 @@ function modal31_action()
 		var receipt_id=form.elements[1].value;
 		
 		console.log(receipt_id);
-		if(is_delete_access('form124') || is_delete_access('form243') || is_delete_access('form282'))
+		if(is_delete_access('form124') || is_delete_access('form243') || is_delete_access('form291') || is_delete_access('form282'))
 		{
 			var receipts_data="<receipts_payment_mapping>" +
 				"<id></id>" +
@@ -12175,7 +12175,7 @@ function modal155_action()
 		var account_name=account_filter.value;
 		var counter_payment=parseFloat(amount_filter.value);
 
-		if(is_create_access('form124') || is_create_access('form243'))
+		if(is_create_access('form124') || is_create_access('form243') || is_create_access('form291'))
 		{
 			var accounts_data="<payments>" +
 					"<id></id>" +
