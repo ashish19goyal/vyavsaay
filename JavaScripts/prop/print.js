@@ -4860,6 +4860,7 @@ function print_form258(func)
 	var issued_by=master_form.elements['issued'].value;	
 	var quot_no=master_form.elements['quot_num'].value;
 	var customer_address=master_form.elements['address'].value;
+	var email=master_form.elements['email'].value;
 	var quot_type=master_form.elements['type'].value;
 	var computer_generated=master_form.elements['computer_generated'].checked;
 		
@@ -4876,7 +4877,7 @@ function print_form258(func)
 	
 	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Quotation Sheet</b></div><hr style='border: 1px solid #00f;'>";
 	
-	customer_info.innerHTML="<b>Customer: </b><br>"+customer_name+"<br>"+customer_address;
+	customer_info.innerHTML="<b>Customer: </b><br>"+customer_name+"<br>"+customer_address+"<br>Email: "+email;
 	business_info.innerHTML="Quotation #: "+quot_no+"<br>Date: "+date+"<br>Valid Upto: "+valid_date+"<br>Issued By: "+issued_by+"<br>Type: "+quot_type;
 	
 	signature.innerHTML=signature_text;
@@ -5673,14 +5674,15 @@ function print_form284(func)
 	var narration=master_form.elements['narration'].value;
 	var tin=get_session_var('tin');
 	var pan=get_session_var('pan');
+	var email=get_session_var('email');
 	////////////////filling in the content into the containers//////////////////////////
 
 	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	
 	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>"+invoice_type+" Invoice</b></div><hr style='border: 1px solid #00f;'>";
 	
-	customer_info.innerHTML="<b>Customer: </b><br>"+customer_name+"<br>"+address;
-	business_info.innerHTML="<b>Seller</b><br>Bill #: "+bill_no+"<br>Date: "+date+"<br>Narration: "+narration;
+	customer_info.innerHTML="<b>Customer: </b><br>"+customer_name+"<br>"+address+"<br>Email: "+email;
+	business_info.innerHTML="<b>Seller</b><br>Bill #: "+bill_no+"<br>Date: "+date+"<br>Remarks: "+narration;
 
 	jurisdiction.innerHTML="All disputes subjected to Delhi jurisdiction.<br>This is a computer generated invoice.";
 	signature.innerHTML="For "+bt+"<br><br>Auth. Signatory<br>";
@@ -5780,20 +5782,20 @@ function print_form284(func)
  * @form receipt
  * @modalNo 291
  */
-function form291_print(receipt_id,acc_name,amount,date,narration,pan_text)
+function form291_print(receipt_id,acc_name,amount,date,narration,address)
 {
 	print_form291(function(container)
 	{
 		$.print(container);
 		container.innerHTML="";	
-	},receipt_id,acc_name,amount,date,narration,pan_text);	
+	},receipt_id,acc_name,amount,date,narration,address,pan_text);	
 }
 
 /**
  * @form receipts (NVS)
  * @formNo 291
  */
-function print_form291(func,receipt_id,acc_name,amount,date,narration,pan_text)
+function print_form291(func,receipt_id,acc_name,amount,date,narration,address)
 {	
 	////////////setting up containers///////////////////////	
 	var container=document.createElement('div');
@@ -5832,7 +5834,7 @@ function print_form291(func,receipt_id,acc_name,amount,date,narration,pan_text)
 	var business_address=get_session_var('address');
 	var business_phone=get_session_var('phone');
 	var business_email=get_session_var('email');
-	var tin=get_session_var('tin');
+	var cin=get_session_var('cin');
 	var pan=get_session_var('pan');
 	var signature_text="For "+bt+"<br><br><br>Auth. Signatory<br>";
 	
@@ -5846,7 +5848,7 @@ function print_form291(func,receipt_id,acc_name,amount,date,narration,pan_text)
 	
 	///////////central information table///////////
 	var table_text="<table style='border:none;text-align:left;font-size:13px;'><tr style='border-top:1px solid #555;border-bottom:1px solid #555;'><th style='width:70%;border-right:1px solid #555;font-weight:400;'>Particulars</th><th style='font-weight:400;width:30%;'>Amount</th></tr>";
-		table_text+="<tr style='height:40px;'><td style='text-align:left;border-right:1px solid #555;'>Account: "+acc_name+"</td><td></td></tr>";
+		table_text+="<tr style='height:40px;'><td style='text-align:left;border-right:1px solid #555;'>Account: "+acc_name+"<br>Address: "+address+"</td><td></td></tr>";
 		table_text+="<tr style='height:40px;'><td style='text-align:left;border-right:1px solid #555;'>Remarks: "+narration+"</td><td></td></tr>";
 		table_text+="<tr style='border-top:1px solid #555;border-bottom:1px solid #555;text-align:left;'><td style='text-align:left;border-right:1px solid #555;'>Amount (in words): "+wording_total+"</td><td style='text-align:left;'>Rs. "+amount+"</td></tr></table>";
 	
@@ -5856,8 +5858,8 @@ function print_form291(func,receipt_id,acc_name,amount,date,narration,pan_text)
 	////////////////filling in the content into the containers//////////////////////////
 	
 	signature.innerHTML=signature_text;
-	jurisdiction.innerHTML="All disputes subjected to Delhi jurisdiction.";
-	business_contact.innerHTML="<hr style='border: 1px solid #00f;margin:5px;'>Address: "+business_address+"<br>Phone: "+business_phone+", E-Mail: "+business_email+"<br>TIN: "+tin+", PAN: "+pan+"<hr style='border: 1px solid #00f;margin:5px;'>";
+	jurisdiction.innerHTML="All disputes subjected to Delhi jurisdiction.<br>This is a computer generated invoice.";
+	business_contact.innerHTML="<hr style='border: 1px solid #00f;margin:5px;'>Address: "+business_address+"<br>Phone: "+business_phone+", E-Mail: "+business_email+"<br>CIN: "+cin+", PAN: "+pan+"<hr style='border: 1px solid #00f;margin:5px;'>";
 	///////////////////////////////////////
 
 	container.appendChild(header);

@@ -27542,7 +27542,14 @@ function form258_ini()
 				filter_fields.elements['status'].value=quot_results[0].status;
 				filter_fields.elements['issued'].value=quot_results[0].issued_by;
 				filter_fields.elements['address'].value=quot_results[0].address;
-
+				var email_filter=filter_fields['email'];
+				
+				var email_data="<customers>"+
+								"<email></email>"+
+								"<acc_name exact='yes'>"+quot_results[0].customer+"</acc_name>"+
+								"</customers>";
+				set_my_value(email_data,email_filter);
+								
 				var save_button=filter_fields.elements['save'];
 
 				$(save_button).off('click');
@@ -30170,8 +30177,19 @@ function form284_ini()
 				
 					$('#form284_body').prepend(rowsHTML);	
 				});
-			
+
 				form284_update_serial_numbers();
+				var bt=get_session_var('title');
+				var share_button=filter_fields.elements['share'];
+				$(share_button).show();
+				$(share_button).click(function()
+				{
+					modal101_action('Invoice from - '+bt,filter_fields.elements['customer'].value,'customer',function (func) 
+					{
+						print_form284(func);
+					});
+				});
+				
 				$('textarea').autosize();
 				hide_loader();
 			});
@@ -30295,8 +30313,9 @@ function form289_ini()
 	var filter_fields=document.getElementById('form289_header');
 	var fname=filter_fields.elements[0].value;
 	var fitem=filter_fields.elements[1].value;
-	var fcomment=filter_fields.elements[2].value;
-	var fdate=get_raw_time(filter_fields.elements[3].value);
+	var fpoc=filter_fields.elements[2].value;
+	var fcomment=filter_fields.elements[3].value;
+	var fdate=get_raw_time(filter_fields.elements[4].value);
 	
 	////indexing///
 	var index_element=document.getElementById('form289_index');
@@ -30315,6 +30334,7 @@ function form289_ini()
 							{index:'customer',value:fname},
 							{index:'detail',value:fcomment},
 							{index:'item_name',value:fitem},
+							{index:'identified_by',value:fpoc},
 							{index:'price'},
 							{index:'quantity'},
 							{index:'status'},
@@ -30335,11 +30355,12 @@ function form289_ini()
 						rowsHTML+="<textarea readonly='readonly' form='form289_"+result.id+"'>"+result.customer+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Item'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form289_"+result.id+"' value='"+result.item_name+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Price'>";
-						rowsHTML+="<b>Price</b>:<input type='text' readonly='readonly' form='form289_"+result.id+"' class='dblclick_editable' value='"+result.price+"'>";
+						rowsHTML+="<b>Name</b>:<input type='text' readonly='readonly' form='form289_"+result.id+"' value='"+result.item_name+"'>";
+						rowsHTML+="<br><b>Price</b>:<input type='text' readonly='readonly' form='form289_"+result.id+"' class='dblclick_editable' value='"+result.price+"'>";
 						rowsHTML+="<br><b>Quantity</b>:<input type='number' step='any' readonly='readonly' form='form289_"+result.id+"' class='dblclick_editable' value='"+result.quantity+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='PoC'>";
+						rowsHTML+="<textarea readonly='readonly' form='form289_"+result.id+"'>"+result.identified_by+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Comments'>";
 						rowsHTML+="<textarea readonly='readonly' form='form289_"+result.id+"' class='dblclick_editable'>"+result.detail+"</textarea>";
@@ -30573,6 +30594,7 @@ function form291_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='button' form='form291_"+result.id+"' value='Print Receipt' class='print_icon'>";
 						rowsHTML+="<input type='button' form='form291_"+result.id+"' value='Email Receipt' class='share_icon'>";
+						rowsHTML+="<input type='hidden' form='form291_"+result.id+"' name='address'>";
 					rowsHTML+="</td>";				
 			rowsHTML+="</tr>";
 			
@@ -30581,10 +30603,24 @@ function form291_ini()
 			var doc_filter=fields.elements[5];
 			var print_button=fields.elements[6];
 			var share_button=fields.elements[7];
+			var address_filter=fields.elements['address'];
+			
+			var address_data="<customers>"+
+							"<address></address>"+
+							"<city></city>"+
+							"<acc_name exact='yes'>"+result.acc_name+"</acc_name>"+
+							"</customers>";
+			fetch_requested_data('',address_data,function (addresses) 
+			{
+				if(addresses.length>0)
+				{
+					address_filter.value=addresses[0].address+", "+addresses[0].city;
+				}
+			});				
 			
 			$(print_button).on('click',function () 
 			{
-				form291_print(result.receipt_id,result.acc_name,result.amount,result.date,result.narration);
+				form291_print(result.receipt_id,result.acc_name,result.amount,result.date,result.narration,address_filter.value);
 			});
 
 			var bt=get_session_var('title');
@@ -30592,7 +30628,7 @@ function form291_ini()
 			{
 				modal101_action('Payment Receipt - '+BT,result.acc_name,'customer',function (func) 
 				{
-					print_form291(func,result.receipt_id,result.acc_name,result.amount,result.date,result.narration);
+					print_form291(func,result.receipt_id,result.acc_name,result.amount,result.date,result.narration,address_filter.value);
 				});
 			});
 
@@ -30651,7 +30687,7 @@ function form291_ini()
 		
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[4];
+		var export_button=filter_fields.elements['export'];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{

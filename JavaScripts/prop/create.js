@@ -19418,10 +19418,11 @@ function form289_create_item(form)
 		var item=form.elements[1].value;
 		var price=form.elements[2].value;
 		var quantity=form.elements[3].value;
-		var detail=form.elements[4].value;
-		var due_date=get_raw_time(form.elements[5].value);
-		var data_id=form.elements[6].value;
-		var del_button=form.elements[8];
+		var poc=form.elements[4].value;
+		var detail=form.elements[5].value;
+		var due_date=get_raw_time(form.elements[6].value);
+		var data_id=form.elements[7].value;
+		var del_button=form.elements[9];
 		
 		var last_updated=get_my_time();
 		var data_xml="<sale_leads>" +
@@ -19431,6 +19432,7 @@ function form289_create_item(form)
 					"<detail>"+detail+"</detail>" +
 					"<price>"+price+"</price>" +
 					"<quantity>"+quantity+"</quantity>" +
+					"<identified_by>"+poc+"</identified_by>" +
 					"<due_date>"+due_date+"</due_date>" +
 					"<status>open</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
@@ -19444,8 +19446,8 @@ function form289_create_item(form)
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		create_row(data_xml,activity_xml);
-		
-		for(var i=0;i<6;i++)
+
+		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -19468,7 +19470,6 @@ function form289_create_item(form)
 		$("#modal2").dialog("open");
 	}
 }
-
 
 /**
  * @form Cities

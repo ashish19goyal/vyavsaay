@@ -441,6 +441,7 @@ function form289_import_validate(data_array)
 							{column:'quantity',required:'yes',regex:new RegExp('^[0-9]+$')},
 							{column:'phone',regex:new RegExp('^[0-9 .,+()-]+$')},
 							{column:'email',regex:new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z_.-]+$')},
+							{column:'point-of-contact',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
 							{column:'address',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
 							{column:'comments',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
 							{column:'item',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')}];

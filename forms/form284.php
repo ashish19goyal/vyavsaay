@@ -16,6 +16,7 @@
 					<input type='hidden' name='bill_id'>
 					<input type='hidden' name='cst'>
 					<input type='hidden' name='tin'>
+					<input type='hidden' name='email'>
 			</label>	
 		</fieldset>
 	</form>

@@ -10,7 +10,7 @@
 					<th>Documents</th>
 					<th><input type="button" value='Add Receipt' form='form291_header' class='add_icon' onclick="modal155_action();">
 						<input type="button" value='Delete Receipt' form='form291_header' class='delete_icon' onclick="modal31_action();">
-						<input type='button' form='form291_header' value='EXPORT' class='export_icon'>
+						<input type='button' form='form291_header' value='EXPORT' class='export_icon' name='export'>
 						<input type='submit' form='form291_header' style='visibility: hidden;'>
 					</th>
 			</tr>

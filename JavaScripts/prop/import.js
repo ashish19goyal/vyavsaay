@@ -7055,6 +7055,7 @@ function form289_import(data_array,import_type)
 				"<detail>"+row['comments']+"</detail>" +
 				"<item_name>"+row['item']+"</item_name>" +
 				"<price>"+row['price']+"</price>" +
+				"<identified_by>"+row['point-of-contact']+"</identified_by>" +
 				"<quantity>"+row['quantity']+"</quantity>" +
 				"<due_date>"+get_raw_time(row['followup date'])+"</due_date>" +
 				"<last_updated>"+last_updated+"</last_updated>" +

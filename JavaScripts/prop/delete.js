@@ -8928,7 +8928,7 @@ function form289_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			var customer=form.elements[0].value;
-			var data_id=form.elements[6].value;
+			var data_id=form.elements[7].value;
 			var data_xml="<sale_leads>" +
 						"<id>"+data_id+"</id>" +
 						"</sale_leads>";

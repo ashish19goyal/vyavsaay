@@ -1430,7 +1430,7 @@ function form285_import_template()
 */
 function form289_import_template()
 {
-	var data_array=['id','name','phone','email','address','item','price','quantity','comments','followup date'];
+	var data_array=['id','name','phone','email','address','item','price','point-of-contact','quantity','comments','followup date'];
 	my_array_to_csv(data_array);
 };
 

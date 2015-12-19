@@ -9945,6 +9945,7 @@ function form258_header_ini()
 	var status_filter=fields.elements['status'];
 	var issued_filter=fields.elements['issued'];
 	var address_filter=fields.elements['address'];
+	var email_filter=fields.elements['email'];
 	var id_filter=fields.elements['id'];
 	var save_button=fields.elements['save'];
 	var share_button=fields.elements['share'];
@@ -9980,6 +9981,7 @@ function form258_header_ini()
 						"<address></address>"+
 						"<city></city>"+
 						"<pincode></pincode>"+
+						"<email></email>"+
 						"<acc_name exact='yes'>"+customer_filter.value+"</acc_name>"+
 						"</customers>";
 		fetch_requested_data('',address_data,function (addresses) 
@@ -9987,10 +9989,12 @@ function form258_header_ini()
 			if(addresses.length>0)
 			{
 				address_filter.value=addresses[0].address+", "+addresses[0].city+", "+addresses[0].pincode;
+				email_filter.value=addresses[0].email;
 			}
 			else 
 			{
 				address_filter.value="";
+				email_filter.value="";
 			}
 		});				
 	});
@@ -11102,6 +11106,7 @@ function form284_header_ini()
 	var cst_filter=fields.elements['cst'];
 	var tin_filter=fields.elements['tin'];
 	var customer_info=fields.elements['customer_info'];
+	var email_filter=fields.elements['share'];
 	
 	narration.value="";
 	bill_type.removeAttribute('readonly');
@@ -11216,19 +11221,20 @@ function form284_header_ini()
 		var address_data="<customers>" +
 				"<address></address>" +
 				"<city></city>" +
+				"<email></email>"+	
 				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
 				"</customers>";
 		fetch_requested_data('',address_data,function(addresses)
 		{
-			var address_string="";
 			if(addresses.length>0)
 			{
-				address_string+=addresses[0].address+", "+addresses[0].city;
-				customer_info.value="Address\n"+address_string;
+				customer_info.value="Address\n"+addresses[0].address+", "+addresses[0].city;
+				email_filter.value=addresses[0].email;
 			}
 			else
 			{
 				customer_info.value="";
+				email_filter.value="";
 			}
 		});
 		
@@ -11288,8 +11294,9 @@ function form289_header_ini()
 	var filter_fields=document.getElementById('form289_header');	
 	var names_filter=filter_fields.elements[0];
 	var item_filter=filter_fields.elements[1];
-	var comment_filter=filter_fields.elements[2];
-	var date_filter=filter_fields.elements[3];
+	var poc_filter=filter_fields.elements[2];
+	var comment_filter=filter_fields.elements[3];
+	var date_filter=filter_fields.elements[4];
 	
 	$(date_filter).datepicker();
 
@@ -11300,6 +11307,14 @@ function form289_header_ini()
 		names_data.indexes=[{index:'acc_name'}];		
 		names_data.return_column='acc_name';
 	set_my_filter_json(names_data,names_filter);
+
+	var staff_data=new Object();
+		staff_data.count=0;
+		staff_data.start_index=0;
+		staff_data.data_store='staff';
+		staff_data.indexes=[{index:'acc_name'}];		
+		staff_data.return_column='acc_name';
+	set_my_filter_json(staff_data,poc_filter);
 
 	var item_data=new Object();
 		item_data.count=0;

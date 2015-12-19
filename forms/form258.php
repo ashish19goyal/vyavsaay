@@ -13,6 +13,7 @@
 			<label>
 				<input type='hidden' name='id'>
 				<input type='hidden' name='address'>	
+				<input type='hidden' name='email'>	
 			</label>
 			<label>	<input type='button' title='Save' class='save_icon' name='save'></label>
 			<label>	<input type='button' title='Print' class='print_icon' onclick='form258_print_form();'></label>

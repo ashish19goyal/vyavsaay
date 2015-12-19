@@ -5,7 +5,7 @@
 				<form id='form289_header'></form>
 					<th>Customer <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form289_header'></th>
 					<th>Item <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form289_header'></th>
-					<th>Price </th>
+					<th>PoC <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form289_header'></th>
 					<th>Comments <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form289_header'></th>
 					<th>Followup Date <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form289_header'></th>
 					<th><input type='button' form='form289_header' title='Add new' class='add_icon' onclick='form289_add_item();'>

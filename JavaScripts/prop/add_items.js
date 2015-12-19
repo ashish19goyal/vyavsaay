@@ -17328,11 +17328,12 @@ function form289_add_item()
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' id='form289_add_customer_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Item'>";
-				rowsHTML+="<input type='text' class='dblclick_editable' form='form289_"+id+"'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Price'>";
-				rowsHTML+="<b>Price</b>:<input type='text' class='dblclick_editable' form='form289_"+id+"'>";
+				rowsHTML+="<b>Name</b>:<input type='text' class='dblclick_editable' form='form289_"+id+"'>";
+				rowsHTML+="<br><b>Price</b>:<input type='text' class='dblclick_editable' form='form289_"+id+"'>";
 				rowsHTML+="<br><b>Quantity</b><input type='number' step='any' required value='1' class='dblclick_editable' form='form289_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='PoC'>";
+				rowsHTML+="<input type='text' form='form289_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Comments'>";
 				rowsHTML+="<textarea form='form289_"+id+"' class='dblclick_editable'></textarea>";
@@ -17353,8 +17354,9 @@ function form289_add_item()
 		var customer_filter=fields.elements[0];
 		var item_filter=fields.elements[1];
 		var price_filter=fields.elements[2];
-		var comment_filter=fields.elements[4];
-		var date_filter=fields.elements[5];
+		var staff_filter=fields.elements[4];
+		var comment_filter=fields.elements[5];
+		var date_filter=fields.elements[6];
 		
 		$(fields).on("submit", function(event)
 		{
@@ -17391,6 +17393,14 @@ function form289_add_item()
 			item_data.return_column='name';
 		set_my_value_list_json(item_data,item_filter);
 	
+		var staff_data=new Object();
+			staff_data.count=0;
+			staff_data.start_index=0;
+			staff_data.data_store='staff';
+			staff_data.indexes=[{index:'acc_name'}];		
+			staff_data.return_column='acc_name';
+		set_my_value_list_json(staff_data,staff_filter);
+		
 		$(date_filter).datepicker();
 
 		var add_customer=document.getElementById('form289_add_customer_'+id);
