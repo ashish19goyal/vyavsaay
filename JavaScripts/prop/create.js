@@ -19268,6 +19268,17 @@ function form284_create_form()
 		var bill_date=get_raw_time(form.elements['date'].value);
 		var narration=form.elements['narration'].value;		
 		var bill_num=form.elements['bill_num'].value;
+		var share_button=form.elements['share'].value;
+
+		var bt=get_session_var('title');
+		$(share_button).off('click');
+		$(share_button).on('click',function()
+		{
+			modal101_action('Invoice from :'+bt,customer,'customer',function (func) 
+			{
+				print_form268(func);
+			});
+		});
 
 		var amount=0;
 		var tax_rate=0;

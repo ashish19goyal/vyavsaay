@@ -10586,7 +10586,7 @@ function form268_header_ini()
 	var address_filter=fields.elements['address'];
 	var id_filter=fields.elements['id'];
 	var save_button=fields.elements['save'];
-	var share_button=fields.elements['email'];
+	var share_button=fields.elements['share'];
 
 	$(share_button).off('click');
 	
@@ -11106,7 +11106,10 @@ function form284_header_ini()
 	var cst_filter=fields.elements['cst'];
 	var tin_filter=fields.elements['tin'];
 	var customer_info=fields.elements['customer_info'];
-	var email_filter=fields.elements['share'];
+	var email_filter=fields.elements['email'];
+	var share_button=fields.elements['share'];
+
+	$(share_button).off('click');
 	
 	narration.value="";
 	bill_type.removeAttribute('readonly');
@@ -11238,18 +11241,10 @@ function form284_header_ini()
 			}
 		});
 		
-		var cst_data="<attributes>"+
-					"<value></value>"+
-					"<type exact='yes'>customer</type>"+
-					"<attribute exact='yes'>CST#</attribute>"+
-					"<name exact='yes'>"+customers_filter.value+"</name>"+
-					"</attributes>";
-		set_my_value(cst_data,cst_filter);
-
 		var tin_data="<attributes>"+
 					"<value></value>"+
 					"<type exact='yes'>customer</type>"+
-					"<attribute exact='yes'>TIN#</attribute>"+
+					"<attribute exact='yes'>TIN</attribute>"+
 					"<name exact='yes'>"+customers_filter.value+"</name>"+
 					"</attributes>";
 		set_my_value(tin_data,tin_filter);

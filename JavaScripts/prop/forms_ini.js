@@ -30094,18 +30094,10 @@ function form284_ini()
 
 				if(filter_fields.elements['bill_type'].value=='Retail' || filter_fields.elements['bill_type'].value=='Tax')
 				{
-					var cst_data="<attributes>"+
-								"<value></value>"+
-								"<type exact='yes'>customer</type>"+
-								"<attribute exact='yes'>CST#</attribute>"+
-								"<name exact='yes'>"+bill_results[0].customer_name+"</name>"+
-								"</attributes>";
-					set_my_value(cst_data,cst_filter);
-
 					var tin_data="<attributes>"+
 								"<value></value>"+
 								"<type exact='yes'>customer</type>"+
-								"<attribute exact='yes'>TIN#</attribute>"+
+								"<attribute exact='yes'>TIN</attribute>"+
 								"<name exact='yes'>"+bill_results[0].customer_name+"</name>"+
 								"</attributes>";
 					set_my_value(tin_data,tin_filter);

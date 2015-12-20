@@ -16,7 +16,7 @@
 			</label>
 			<label>	<input type='button' title='Save' class='save_icon' name='save'></label>
 			<label>	<input type='button' title='Print' class='print_icon' name='print' onclick='form268_print_form();'></label>
-			<label>	<input type='button' title='Email' class='share_icon' name='email'></label>
+			<label>	<input type='button' title='Email' class='share_icon' name='share'></label>
 			<label>	<input type='submit' class='submit_hidden'></label>
 		</fieldset>
 	</form>

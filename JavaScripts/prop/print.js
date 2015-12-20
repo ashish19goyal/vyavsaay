@@ -4850,7 +4850,7 @@ function print_form258(func)
 	var business_address=get_session_var('address');
 	var business_phone=get_session_var('phone');
 	var business_email=get_session_var('email');
-	var tin=get_session_var('tin');
+	var cin=get_session_var('cin');
 	var pan=get_session_var('pan');
 	
 	var master_form=document.getElementById(form_id+'_master');
@@ -4882,7 +4882,7 @@ function print_form258(func)
 	
 	signature.innerHTML=signature_text;
 	jurisdiction.innerHTML="Note: All disputes subjected to Delhi Jurisdiction";
-	business_contact.innerHTML="<hr style='border: 1px solid #00f;margin:5px;'>Address: "+business_address+"<br>Phone: "+business_phone+", E-Mail: "+business_email+"<br>TIN: "+tin+", PAN: "+pan+"<hr style='border: 1px solid #00f;margin:5px;'>";
+	business_contact.innerHTML="<hr style='border: 1px solid #00f;margin:5px;'>Address: "+business_address+"<br>Phone: "+business_phone+", E-Mail: "+business_email+"<br>CIN: "+cin+", PAN: "+pan+"<hr style='border: 1px solid #00f;margin:5px;'>";
 	
 	/////////////adding item table //////////////////////////////////////////////////////	
 	var item_table_element=document.getElementById(form_id+'_item_body');
@@ -5356,7 +5356,6 @@ function print_form268(func)
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
 		var business_intro=document.createElement('div');
-		var business_contact=document.createElement('div');
 	
 	var invoice_line=document.createElement('div');
 	
@@ -5366,16 +5365,25 @@ function print_form268(func)
 
 	var table_container=document.createElement('div');
 
+	var footer=document.createElement('div');
+		var signature=document.createElement('div');
+		var jurisdiction=document.createElement('div');
+		var business_contact=document.createElement('div');	
+
 ////////////setting styles for containers/////////////////////////
 
 	header.setAttribute('style','width:100%;min-height:100px;text-align:center');
-		logo.setAttribute('style','width:100%;text-align:center;font-weight:600;font-size:32px;line-height:40px;');
+		logo.setAttribute('style','width:100%;text-align:center;');
 		business_intro.setAttribute('style','width:100%;text-align:center');
 		business_contact.setAttribute('style','width:100%;text-align:left');
 	info_section.setAttribute('style','width:100%;min-height:80px');
 		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;');
 		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;');
-	
+	footer.setAttribute('style','width:98%;min-height:100px;');
+		signature.setAttribute('style','width:98%;min-height:50px;font-size:11px;');
+		jurisdiction.setAttribute('style','margin:10px;width:98%;min-height:20px;text-align:left;font-size:11px;');
+		business_contact.setAttribute('style','margin:0px;padding:0px;width:98%;text-align:center;page-break-inside:avoid;font-size:11px;');
+
 ///////////////getting the content////////////////////////////////////////
 
 	var bt=get_session_var('title');
@@ -5390,19 +5398,24 @@ function print_form268(func)
 	var date=master_form.elements['date'].value;	
 	var challan_no=master_form.elements['challan_num'].value;
 	var prepared_by=master_form.elements['prepared'].value;
-	var tin_no=get_session_var('tin');
+	var cin=get_session_var('cin');
+	var pan=get_session_var('pan');
 	////////////////filling in the content into the containers//////////////////////////
 
-	logo.innerHTML=bt;
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	business_contact.innerHTML="<hr style='border: 1px solid #00f;'>Address: "+business_address+"<br>Contact Nos.: "+business_phone+"<br>E-Mail: "+business_email;
 	
-	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Delivery Challan #: "+challan_no+"</b></div><hr style='border: 1px solid #00f;'>";
+	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Delivery Challan</b></div><hr style='border: 1px solid #00f;'>";
 	
 	customer_info.innerHTML="<b>Customer: </b><br>"+customer_name+"<br>"+address;
-	business_info.innerHTML="<b>Seller</b><br>TIN #: "+tin_no+"<br>Date: "+date+"<br>Challan No: "+challan_no+"<br>Prepared By: "+prepared_by;
+	business_info.innerHTML="<b>Seller</b><br>Challan No: "+challan_no+"<br>Date: "+date+"<br>Prepared By: "+prepared_by;
 
-	var table_element=document.getElementById(form_id+'_body');
+	jurisdiction.innerHTML="All disputes subjected to Delhi jurisdiction.<br>This is a computer generated challan.";
+	signature.innerHTML="<div style='float:left;text-align:left;width:50%;'><br>Customer's Seal & Sign.<br><br><br></div><div style='float:right;width:50%;text-align:right;'><br>For "+bt+"<br><br>Auth. Signatory<br></div>";
+	business_contact.innerHTML="<hr style='border: 1px solid #00f;margin:5px;'>Address: "+business_address+"<br>Phone: "+business_phone+", E-Mail: "+business_email+"<br>CIN: "+cin+", PAN: "+pan+"<hr style='border: 1px solid #00f;margin:5px;'>";
 
+	var table_element=document.getElementById(form_id+'_body');	
+	
 	/////////////adding new table //////////////////////////////////////////////////////	
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','width:100%;font-size:11px;border:1px solid black;text-align:left;');
@@ -5454,12 +5467,16 @@ function print_form268(func)
 	container.appendChild(info_section);
 	
 	container.appendChild(new_table);
+	container.appendChild(footer);
 	
 	header.appendChild(logo);
-	header.appendChild(business_contact);
 	
 	info_section.appendChild(customer_info);
 	info_section.appendChild(business_info);
+	
+	footer.appendChild(signature);
+	footer.appendChild(jurisdiction);
+	footer.appendChild(business_contact);
 	
 	func(container);
 }
@@ -5653,7 +5670,7 @@ function print_form284(func)
 		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;');
 	
 	footer.setAttribute('style','width:98%;min-height:100px;');
-		signature.setAttribute('style','width:98%;min-height:50px;text-align:right;font-size:11px;');
+		signature.setAttribute('style','width:98%;min-height:50px;font-size:11px;');
 		jurisdiction.setAttribute('style','margin:10px;width:98%;min-height:20px;text-align:left;font-size:11px;');
 		business_contact.setAttribute('style','margin:0px;padding:0px;width:98%;text-align:center;page-break-inside:avoid;font-size:11px;');
 
@@ -5672,22 +5689,23 @@ function print_form284(func)
 	var bill_no=master_form.elements['bill_num'].value;
 	var invoice_type=master_form.elements['bill_type'].value;
 	var narration=master_form.elements['narration'].value;
-	var tin=get_session_var('tin');
+	var cin=get_session_var('cin');
 	var pan=get_session_var('pan');
-	var email=get_session_var('email');
+	var customer_email=master_form.elements['email'].value;
+	var customer_tin=master_form.elements['tin'].value;
 	////////////////filling in the content into the containers//////////////////////////
 
 	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	
 	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>"+invoice_type+" Invoice</b></div><hr style='border: 1px solid #00f;'>";
 	
-	customer_info.innerHTML="<b>Customer: </b><br>"+customer_name+"<br>"+address+"<br>Email: "+email;
+	customer_info.innerHTML="<b>Customer: </b><br>"+customer_name+"<br>"+address+"<br>Email: "+customer_email+"<br>TIN: "+customer_tin;
 	business_info.innerHTML="<b>Seller</b><br>Bill #: "+bill_no+"<br>Date: "+date+"<br>Remarks: "+narration;
 
 	jurisdiction.innerHTML="All disputes subjected to Delhi jurisdiction.<br>This is a computer generated invoice.";
-	signature.innerHTML="For "+bt+"<br><br>Auth. Signatory<br>";
-	business_contact.innerHTML="<hr style='border: 1px solid #00f;margin:5px;'>Address: "+business_address+"<br>Phone: "+business_phone+", E-Mail: "+business_email+"<br>TIN: "+tin+", PAN: "+pan+"<hr style='border: 1px solid #00f;margin:5px;'>";
-	
+	signature.innerHTML="<div style='float:left;text-align:left;width:50%;'>Customer's Seal & Sign.<br><br><br></div><div style='float:right;width:50%;text-align:right;'>For "+bt+"<br><br>Auth. Signatory<br></div>";
+	business_contact.innerHTML="<hr style='border: 1px solid #00f;margin:5px;'>Address: "+business_address+"<br>Phone: "+business_phone+", E-Mail: "+business_email+"<br>CIN: "+cin+", PAN: "+pan+"<hr style='border: 1px solid #00f;margin:5px;'>";
+
 	var table_element=document.getElementById(form_id+'_body');
 
 	/////////////adding new table //////////////////////////////////////////////////////	
@@ -5704,7 +5722,7 @@ function print_form284(func)
 
 	var table_rows=table_header;
 	var counter=0;
-	
+
 	$(table_element).find('form').each(function(index)
 	{
 		counter+=1;
@@ -5858,7 +5876,7 @@ function print_form291(func,receipt_id,acc_name,amount,date,narration,address)
 	////////////////filling in the content into the containers//////////////////////////
 	
 	signature.innerHTML=signature_text;
-	jurisdiction.innerHTML="All disputes subjected to Delhi jurisdiction.<br>This is a computer generated invoice.";
+	jurisdiction.innerHTML="All disputes subjected to Delhi jurisdiction.<br>This is a computer generated receipt.";
 	business_contact.innerHTML="<hr style='border: 1px solid #00f;margin:5px;'>Address: "+business_address+"<br>Phone: "+business_phone+", E-Mail: "+business_email+"<br>CIN: "+cin+", PAN: "+pan+"<hr style='border: 1px solid #00f;margin:5px;'>";
 	///////////////////////////////////////
 
