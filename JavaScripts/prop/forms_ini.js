@@ -30290,6 +30290,84 @@ function form285_ini()
 	});
 };
 
+
+/**
+ * @form System Billing
+ * @formNo 286
+ * @Loading light
+ */
+function form286_ini()
+{
+	show_loader();	
+
+	var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='system_billing';		
+		
+		new_columns.indexes=[{index:'id'},
+							{index:'order_id'},
+							{index:'narration'},
+							{index:'amount'},
+							{index:'currency'},
+							{index:'period_start'},
+							{index:'period_end'},
+							{index:'display',exact:'show'},
+							{index:'payment_status',exact:'pending'}];		
+
+	read_json_rows('form286',new_columns,function(results)
+	{
+		var due_amount=0;
+		var currency="";
+		results.forEach(function(result)
+		{
+			currency=result.currency;
+			due_amount+=parseFloat(result.amount);	
+		});
+		
+		var rowsHTML="<label>Active user accounts: <input type='text' readonly='readonly' name='user_accounts'></label>";
+			rowsHTML+="<label>Credit Period: <input type='text' readonly='readonly' name='credit_period' value='45 Days'></label>";
+			rowsHTML+="<label>Business User Id: <input type='text' readonly='readonly' value='"+get_session_var('domain')+"' name='user_id'></label>";
+			rowsHTML+="<label>Payment Due: <input type='text' readonly='readonly' name='payment_due' value='"+currency+" "+due_amount+"'></label>";
+		$('#form286_fieldset').html(rowsHTML);
+				
+		var pending_table_HTML="<tr style='background-color:#4eac72'><td>Order Id</td><td>Period</td><td>Remarks</td><td>Amount</td><td>Action</td></tr>";
+		results.forEach(function(result)
+		{
+			pending_table_HTML+="<tr><td>"+result.order_id+"</td><td>"+get_my_past_date(result.period_start)+"-"+get_my_past_date(result.period_end)+"</td><td>"+result.narration+"</td><td>"+result.currency+" "+result.amount+"</td><td><input type='button' value='Make a payment' class='generic_icon'></td></tr>";
+		});		
+		$('#form286_pending_payments').html(pending_table_HTML);
+		
+		var all_table_HTML="<tr style='background-color:#4eac72'><td>Order Id</td><td>Period</td><td>Remarks</td><td>Amount</td><td>Action</td></tr>";
+		results.forEach(function(result)
+		{
+			all_table_HTML+="<tr><td>"+result.order_id+"</td><td>"+get_my_past_date(result.period_start)+"-"+get_my_past_date(result.period_end)+"</td><td>"+result.narration+"</td><td>"+result.currency+" "+result.amount+"</td><td><input type='button' title='Print Invoice' class='print_icon'></td></tr>";
+		});
+
+		$('#form286_all_payments').html(all_table_HTML);
+		
+		var master_form=document.getElementById('form286_master');
+		var user_accounts_field=master_form.elements['user_accounts'];
+		
+		var new_columns=new Object();
+		new_columns.count=0;
+		new_columns.start_index=0;
+		new_columns.data_store='accounts';		
+			
+		new_columns.indexes=[{index:'username',unequal:""},
+							{index:'type',array:['master','staff']},
+							{index:'status',value:'active'}];
+	
+		read_json_count(new_columns,function(item_count)
+		{
+			user_accounts_field.value=item_count;
+		});
+
+		$('textarea').autosize();		
+		hide_loader();
+	});
+};
+
 /**
  * @form buyer Leads
  * @formNo 289

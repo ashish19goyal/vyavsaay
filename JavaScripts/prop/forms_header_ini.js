@@ -11281,6 +11281,16 @@ function form285_header_ini()
 };
 
 /**
+ * @form System Billing
+ * @formNo 286
+ */
+function form286_header_ini()
+{
+	var fields=document.getElementById('form286_master');
+	$('#form286_fieldset').html("");
+}
+
+/**
  * @form Buyer leads
  * @formNo 289
  */

@@ -3719,7 +3719,7 @@
 			<name>form262</name>
 			<display_name>manage_grids</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -3730,7 +3730,7 @@
 			<name>form263</name>
 			<display_name>arrange_grid_tabs</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -3873,7 +3873,7 @@
 			<name>form276</name>
 			<display_name>search_queries</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -3884,7 +3884,7 @@
 			<name>form277</name>
 			<display_name>manage_notifications</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -3895,7 +3895,7 @@
 			<name>form278</name>
 			<display_name>values_list_compact</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -3928,7 +3928,7 @@
 			<name>form281</name>
 			<display_name>manage_pop_boxes</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -3983,7 +3983,7 @@
 			<name>form286</name>
 			<display_name>system_billing</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -3994,7 +3994,7 @@
 			<name>form287</name>
 			<display_name>system_table_structure</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -4005,7 +4005,7 @@
 			<name>form288</name>
 			<display_name>user_form_definition</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
