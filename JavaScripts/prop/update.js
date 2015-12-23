@@ -14900,3 +14900,34 @@ function form289_update_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Vyavsaay Accounts
+ * @param button
+ */
+function form293_update_item(form)
+{
+	if(is_update_access('form293'))
+	{
+		var new_columns=new Object();
+		new_columns.data_store='user_profile';
+		new_columns.database='0';
+		
+		new_columns.indexes=[{index:'id',value:form.elements[6].value},
+							{index:'phone',value:form.elements[2].value},
+							{index:'name',value:form.elements[1].value},
+							{index:'status',value:form.elements[5].value},
+							{index:'email',value:form.elements[3].value},
+							{index:'last_updated',value:get_my_time()}];
+						
+		server_update_master(new_columns);
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

@@ -1,6 +1,7 @@
 <?php
 /*	input data format: 
  * 			{
+ 				database:'',
  				data_store:'',
  				count:'',
  				start_index:'',
@@ -31,10 +32,24 @@
 
  *	output data format: 
  *			{
+ 				database:'',
  				data_store:'',
  				count:'',
  				end_index:'',
- 				status:''
+ 				status:'',
+ 				rows:
+ 				[
+ 					{
+ 						column1:'value1',
+ 						column2:'value2',
+ 						column3:'value3'
+ 					},
+ 					{
+ 						column1:'valuex',
+ 						column2:'valuey',
+ 						column3:'valuez'
+ 					}
+ 				]
  			}
 */
 
@@ -49,6 +64,7 @@
 	
 	$input_object=json_decode($input_data,true);
 
+	$database=$input_object['database'];
 	$table=$input_object['data_store'];
 	$start_index=$input_object['start_index'];
 	$columns_array=(array)$input_object['indexes'];
@@ -57,7 +73,7 @@
 			
 	if(isset($_SESSION['session']))
 	{
-		if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['username']==$username && $_SESSION['re']==$read_access)
+		if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['domain']=='vyavsaay' && $_SESSION['username']==$username && $_SESSION['re']==$read_access)
 		{
 			///setting the number of return results
 			$limit_count=0;
@@ -77,8 +93,15 @@
 			$columns_to_display="";
 			$values_array=array();
 			
+			foreach($columns_array as $col)
+			{
+				$columns_to_display.=$col['index'].",";			
+			}
+			
+			$columns_to_display=rtrim($columns_to_display,",");
+			
 			///formulating the query
-			$query="select count(*) from $table where ";
+			$query="select ".$columns_to_display." from $table where ";
 			$limit=" limit ?,?";
 			
 			//parsing the indexes for filtering of results
@@ -173,9 +196,10 @@
 			
 			if(count($values_array)===0)
 			{
-				$query="select count(*) from $table";
+				$query="select ".$columns_to_display." from $table";
 			}
-			
+			$query.=" ORDER BY id DESC";
+
 			if($limit_count!=0)
 			{
 				$query.=$limit;
@@ -183,16 +207,33 @@
 				$values_array[]=$limit_count;
 			}
 			
-			$db_name="re_user_".$domain;
-			$conn=new db_connect($db_name);
+			//echo $query;
+			$conn=new db_connect($database);
 			$stmt=$conn->conn->prepare($query);
 			$stmt->execute($values_array);
-			$struct_res=$stmt->fetch(PDO::FETCH_NUM);
+			$struct_res=$stmt->fetchAll(PDO::FETCH_ASSOC);
 			
 			$response_object['status']='success';
+			$response_object['database']=$database;
 			$response_object['data_store']=$table;
-			$response_object['count']=$struct_res[0];
-			$response_object['end_index']=$start_index+$struct_res[0];		
+			$response_object['count']=count($struct_res);
+			$response_object['end_index']=$start_index+count($struct_res);
+			
+			$response_rows=[];
+	
+			for($i=0;$i<count($struct_res);$i++)
+			{
+				$response_rows[$i]=[];
+				foreach($struct_res[$i] as $key => $value)
+				{
+					$response_rows[$i][$key]=$value;
+				}
+				if(isset($response_rows[$i]['id']))
+				{			
+					$response_rows[$i]['id']="".$response_rows[$i]['id'];
+				}
+			}
+			$response_object['rows']=$response_rows;
 		}
 		else
 		{

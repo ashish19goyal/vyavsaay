@@ -69,5 +69,4 @@
 	{
 		echo "Invalid session";
 	}
-	
 ?>

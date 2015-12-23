@@ -10,7 +10,8 @@
 			"industry":{"index": "no","type": "VARCHAR(50)"},
 			"status":{"index": "no","type": "VARCHAR(45)"},
 			"dbname":{"index": "no","type": "VARCHAR(100)"},
-			"email":{"index": "no","type": "VARCHAR(100)"}
+			"email":{"index": "no","type": "VARCHAR(100)"},
+			"last_updated":{"index": "yes","type": "BIGINT"}
 		},
 		"api_key_mapping":
 		{
@@ -20,7 +21,8 @@
 			"status":{"index": "no","type": "VARCHAR(45)"},
 			"dbname":{"index": "no","type": "VARCHAR(100)"},
 			"call_limit":{"index": "no","type": "DECIMAL(12,2)"},
-			"data_stores":{"index": "no","type": "TEXT"}
+			"data_stores":{"index": "no","type": "TEXT"},
+			"last_updated":{"index": "yes","type": "BIGINT"}
 		}
 	}
 }

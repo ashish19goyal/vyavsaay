@@ -8306,7 +8306,7 @@ function report97_ini()
 	
 	var type_filter=form.elements['type'].value;
 	var city_filter=form.elements['city'].value;
-	var item_filter=form.elements['item'].value;
+	var item_filter=form.elements['item_name'].value;
 	var customer_filter=form.elements['customer'].value;
 	
 	$('#report97_body').html('');

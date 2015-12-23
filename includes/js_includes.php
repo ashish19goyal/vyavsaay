@@ -34,6 +34,7 @@
 <script src='./JavaScripts/prop/add_items.js'></script>
 <script src='./JavaScripts/prop/ajax.js'></script>
 <script src='./JavaScripts/prop/ajax_json.js'></script>
+<script src='./JavaScripts/prop/ajax_master.js'></script>
 <script src='./JavaScripts/prop/create.js'></script>
 <script src='./JavaScripts/prop/delete.js'></script>
 <script src='./JavaScripts/prop/event_handler.js'></script>

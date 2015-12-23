@@ -8698,7 +8698,7 @@ function form96_ini()
 						rowsHTML+="<textarea readonly='readonly' form='form96_"+result.id+"'>"+result.attribute+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Value'>";
-						rowsHTML+="<input type='text' class='dblclick_editable' readonly='readonly' form='form96_"+result.id+"' value='"+result.value+"'>";
+						rowsHTML+="<textarea class='dblclick_editable' readonly='readonly' form='form96_"+result.id+"'>"+result.value+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form96_"+result.id+"' value='"+result.id+"'>";
@@ -30762,6 +30762,265 @@ function form291_ini()
 		$(export_button).on("click", function(event)
 		{
 			get_export_data(columns,'Receivable Receipts');
+		});
+		hide_loader();
+	});
+};
+
+/**
+ * @form vyavsaay Billing
+ * @formNo 292
+ * @Loading light
+ */
+function form292_ini()
+{
+	show_loader();
+	var fid=$("#form292_link").attr('data_id');
+	if(fid==null)
+		fid="";
+	
+	var filter_fields=document.getElementById('form292_header');
+	var fname=filter_fields.elements[0].value;
+	var finvoice=filter_fields.elements[1].value;
+	var fstatus=filter_fields.elements[2].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form292_index');
+	var prev_element=document.getElementById('form292_prev');
+	var next_element=document.getElementById('form292_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+	$('#form292_body').html("");
+
+	var new_columns=new Object();
+		new_columns.count=25;
+		new_columns.start_index=start_index;
+		new_columns.data_store='bills';
+		
+		new_columns.indexes=[{index:'id',value:fid},
+							{index:'customer_name',value:fname},
+							{index:'bill_num',value:finvoice},
+							{index:'amount'},
+							{index:'tax'},
+							{index:'total'},
+							{index:'status',value:fstatus},
+							{index:'total_quantity'},
+							{index:'period_start'},
+							{index:'period_end'},
+							{index:'user_accounts'},
+							{index:'notes'}];
+							
+	read_json_rows('form292',new_columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var rowsHTML="<tr>";
+				rowsHTML+="<form id='form292_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Customer'>";
+						rowsHTML+="<textarea readonly='readonly' form='form292_"+result.id+"'>"+result.customer_name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Period'>";
+						rowsHTML+="<b>From</b>:<input type='text' readonly='readonly' form='form292_"+result.id+"' value='"+get_my_past_date(result.period_start)+"'>";
+						rowsHTML+="<br><b>To</b>:<input type='text' readonly='readonly' form='form292_"+result.id+"' value='"+get_my_past_date(result.period_end)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Details'>";
+						rowsHTML+="<b>Invoice #</b>:<input type='text' readonly='readonly' form='form292_"+result.id+"' value='"+result.bill_num+"'>";
+						rowsHTML+="<br><b>Remarks</b>:<textarea readonly='readonly' form='form292_"+result.id+"' class='dblclick_editable'>"+result.notes+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Amount'>";
+						rowsHTML+="<b>User Accounts</b>:<input type='number' step='any' readonly='readonly' form='form292_"+result.id+"' class='dblclick_editable' value='"+result.total_quantity+"'>";
+						rowsHTML+="<br><b>Amount</b>: Rs <input type='number' step='any' readonly='readonly' form='form292_"+result.id+"' class='dblclick_editable' value='"+result.amount+"'>";
+						rowsHTML+="<br><b>Tax</b>: Rs <input type='number' step='any' readonly='readonly' form='form292_"+result.id+"' class='dblclick_editable' value='"+result.tax+"'>";
+						rowsHTML+="<br><b>Total</b>: Rs <input type='number' step='any' readonly='readonly' form='form292_"+result.id+"' value='"+result.total+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form292_"+result.id+"' value='"+result.status+"'>";	
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form292_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form292_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form292_"+result.id+"' onclick='form292_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form292_body').append(rowsHTML);
+			var fields=document.getElementById("form292_"+result.id);
+			var amount_filter=fields.elements[6];
+			var tax_filter=fields.elements[7];
+			var total_filter=fields.elements[8];
+			var status_filter=fields.elements[9];
+			
+			$(amount_filter).on('blur change',function () 
+			{
+				tax_filter.value=parseFloat(amount_filter.value)*parseFloat(tax_rate);
+				total_filter.value=my_round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value),0);
+			});
+			
+			$(tax_filter).on('blur change',function () 
+			{
+				total_filter.value=my_round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value),0);
+			});
+
+			set_static_value_list_json('system_billing','payment_status',status_filter);
+			
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form292_update_item(fields);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements['export'];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_limited_export_data(new_columns,'Vyavsaay Billing');
+		});
+		hide_loader();
+	});
+};
+
+/**
+ * @form vyavsaay accounts
+ * @formNo 293
+ * @Loading light
+ */
+function form293_ini()
+{
+	show_loader();
+	var fid=$("#form293_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form293_header');
+	var fuser=filter_fields.elements[0].value;
+	var fname=filter_fields.elements[1].value;
+	var fdb=filter_fields.elements[2].value;
+	var fstatus=filter_fields.elements[3].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form293_index');
+	var prev_element=document.getElementById('form293_prev');
+	var next_element=document.getElementById('form293_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+	$('#form293_body').html("");
+
+	var new_columns=new Object();
+		new_columns.count=25;
+		new_columns.start_index=start_index;
+		new_columns.data_store='user_profile';
+		new_columns.database='0';
+		
+		new_columns.indexes=[{index:'id',value:fid},
+							{index:'username',value:fuser},
+							{index:'phone'},
+							{index:'name',value:fname},
+							{index:'status',value:fstatus},
+							{index:'email'},
+							{index:'dbname',value:fdb}];
+							
+	read_json_rows_master('form293',new_columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var rowsHTML="<tr>";
+				rowsHTML+="<form id='form293_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Username'>";
+						rowsHTML+="<textarea readonly='readonly' form='form293_"+result.id+"'>"+result.username+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Contact Person'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form293_"+result.id+"' value='"+result.name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Contact Details'>";
+						rowsHTML+="<b>Phone</b>:<input type='text' readonly='readonly' form='form293_"+result.id+"' class='dblclick_editable' value='"+result.phone+"'>";
+						rowsHTML+="<br><b>Email</b>:<input type='text' readonly='readonly' form='form293_"+result.id+"' class='dblclick_editable' value='"+result.email+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='DB'>";
+						rowsHTML+="<textarea readonly='readonly' form='form293_"+result.id+"' class='dblclick_editable'>"+result.dbname+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form293_"+result.id+"' value='"+result.status+"'>";	
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form293_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form293_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form293_"+result.id+"' onclick='form293_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form293_body').append(rowsHTML);
+			var fields=document.getElementById("form293_"+result.id);
+			var status_filter=fields.elements[5];
+			
+			set_static_value_list_json('user_profile','status',status_filter);
+			
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form293_update_item(fields);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements['export'];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_limited_export_data(new_columns,'Vyavsaay Accounts');
 		});
 		hide_loader();
 	});

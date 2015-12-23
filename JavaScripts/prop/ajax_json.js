@@ -64,6 +64,12 @@ function ajax_json(url,kvp,func)
 								delete_session();
 								hide_loader();
 							}
+							else if(response_object.status=="Account Inactive")
+							{
+								alert("This account has been deactivated.");
+								delete_session();
+								hide_loader();
+							}
 							else
 							{
 								var	session_vars=response_object.data;

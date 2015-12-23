@@ -3,7 +3,7 @@
 		<fieldset>
 			<label>Type<br><input type='text' required name='type'></label>
 			<label>City<br><input type='text' name='city'></label>
-			<label>Item<br><input type='text' name='item'></label>
+			<label>Item<br><input type='text' name='item_name'></label>
 			<label>Person<br><input type='text' name='customer'></label>
 			<input type='submit' class='generic_icon' value='Refresh'>
 			<input type='button' class='print_icon' name='print'>

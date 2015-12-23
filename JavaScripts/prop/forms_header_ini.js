@@ -2913,6 +2913,7 @@ function form96_header_ini()
 	var filter_fields=document.getElementById('form96_header');
 	var customer_filter=filter_fields.elements[0];
 	var attribute_filter=filter_fields.elements[1];
+	var value_filter=filter_fields.elements[2];
 	
 	var customer_data="<customers>" +
 			"<acc_name></acc_name>" +
@@ -2921,9 +2922,15 @@ function form96_header_ini()
 			"<attribute></attribute>" +
 			"<type exact='yes'>customer</type>" +
 			"</attributes>";
+
+	var value_data="<attributes>" +
+			"<value></value>" +
+			"<type exact='yes'>customer</type>" +
+			"</attributes>";
 	
 	set_my_filter(customer_data,customer_filter);
 	set_my_filter(attribute_data,attribute_filter);
+	set_my_filter(value_data,value_filter);
 	
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
@@ -11398,3 +11405,87 @@ function form291_header_ini()
 	set_my_filter(id_data,id_filter);
 	set_my_filter(account_data,account_filter);
 };
+
+/**
+ * @form Vyavsaay Billing
+ * @formNo 292
+ */
+function form292_header_ini()
+{
+	var filter_fields=document.getElementById('form292_header');	
+	var name_filter=filter_fields.elements[0];
+	var invoice_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+	
+	var name_data=new Object();
+		name_data.count=0;
+		name_data.start_index=0;
+		name_data.data_store='user_profile';
+		name_data.database='0';
+		name_data.indexes=[{index:'username'}];		
+		name_data.return_column='username';
+	set_master_filter_json(name_data,name_filter);
+
+	var invoice_data=new Object();
+		invoice_data.count=0;
+		invoice_data.start_index=0;
+		invoice_data.data_store='bills';
+		invoice_data.indexes=[{index:'bill_num'}];		
+		invoice_data.return_column='bill_num';
+	set_my_filter_json(invoice_data,invoice_filter);
+
+	set_static_filter_json('system_billing','payment_status',status_filter);
+
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form292_ini();
+	});	
+}
+/**
+ * @form Vyavsaay Accounts
+ * @formNo 293
+ */
+function form293_header_ini()
+{
+	var filter_fields=document.getElementById('form293_header');	
+	var user_filter=filter_fields.elements[0];
+	var name_filter=filter_fields.elements[1];
+	var db_filter=filter_fields.elements[2];
+	var status_filter=filter_fields.elements[3];
+	
+	var user_data=new Object();
+		user_data.count=0;
+		user_data.start_index=0;
+		user_data.database='0';
+		user_data.data_store='user_profile';
+		user_data.indexes=[{index:'username'}];		
+		user_data.return_column='username';
+	set_master_filter_json(user_data,user_filter);
+
+	var name_data=new Object();
+		name_data.count=0;
+		name_data.start_index=0;
+		name_data.data_store='user_profile';
+		name_data.database='0';
+		name_data.indexes=[{index:'name'}];		
+		name_data.return_column='name';
+	set_master_filter_json(name_data,name_filter);
+
+	var db_data=new Object();
+		db_data.count=0;
+		db_data.start_index=0;
+		db_data.data_store='user_profile';
+		db_data.database='0';
+		db_data.indexes=[{index:'dbname'}];		
+		db_data.return_column='dbname';
+	set_master_filter_json(db_data,db_filter);
+
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form293_ini();
+	});	
+}

@@ -2025,7 +2025,7 @@
 			<name>form99</name>
 			<display_name>delete_storage</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2949,7 +2949,7 @@
 			<name>form191</name>
 			<display_name>manage_values_lists</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -4044,7 +4044,7 @@
 			<sync>checked</sync>
 			<tables>--payments--transactions--receipts--receipts_payment_mapping--</tables>
 			<last_updated>1</last_updated>
-		</row>		
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>

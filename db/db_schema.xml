@@ -533,6 +533,8 @@
 			<awb_num index="yes" type="TEXT"></awb_num>
 			<performa index="yes" type="VARCHAR(20)"></performa><!--yes/no-->
 			<manifest_id index="yes" type="BIGINT"></manifest_id>
+			<period_start index='yes' type="BIGINT"></period_start>
+			<period_end index='yes' type="BIGINT"></period_end>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</bills>
@@ -859,6 +861,7 @@
 			<type index='yes' type="VARCHAR(10)"></type><!-- create/delete/update -->
 			<data_id index='yes' type="BIGINT"></data_id>
 			<data_xml index='no' type="TEXT"></data_xml>
+			<data_type index='no' type="VARCHAR(10)"></data_type><!--xml/json-->
 			<user_display index='yes' type="VARCHAR(3)"></user_display><!-- yes/no -->
 			<status index='yes' type="VARCHAR(20)"></status><!-- online/synced/unsynced -->
 			<updated_by index='yes' type='TEXT'></updated_by>
@@ -1678,6 +1681,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<order_id index='yes' type="TEXT"></order_id>
 			<narration index='yes' type="TEXT"></narration>
+			<user_accounts index='no' type="INT"></user_accounts>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<currency index='yes' type="TEXT"></currency>
 			<period_start index='yes' type="BIGINT"></period_start>

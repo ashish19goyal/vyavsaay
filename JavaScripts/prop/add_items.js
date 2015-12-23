@@ -3525,7 +3525,7 @@ function form96_add_item()
 				rowsHTML+="<input type='text' form='form96_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Value'>";
-				rowsHTML+="<input type='text' class='dblclick_editable' form='form96_"+id+"' required>";
+				rowsHTML+="<textarea class='dblclick_editable' form='form96_"+id+"' required></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form96_"+id+"' value='"+id+"'>";
@@ -17488,6 +17488,62 @@ function form290_add_item()
 			item_data.return_column='country';
 		set_my_filter_json(item_data,country_filter);
 
+		$('textarea').autosize();
+		longPressEditable($('.dblclick_editable'));
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
+ * @form Vyavsaay Accounts
+ * @formNo 293
+ */
+function form293_add_item()
+{
+	if(is_create_access('form293'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+			rowsHTML+="<form id='form293_"+id+"'></form>";
+				rowsHTML+="<td data-th='Username'>";
+					rowsHTML+="<textarea form='form293_"+id+"'></textarea>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Contact Person'>";
+					rowsHTML+="<input type='text' form='form293_"+id+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Contact Details'>";
+					rowsHTML+="<b>Phone</b>:<input type='text' form='form293_"+id+"' class='dblclick_editable'>";
+					rowsHTML+="<br><b>Email</b>:<input type='text' form='form293_"+id+"' class='dblclick_editable'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='DB'>";
+					rowsHTML+="<textarea form='form293_"+id+"' class='dblclick_editable'></textarea>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Status'>";
+					rowsHTML+="<input type='text' class='dblclick_editable' form='form293_"+id+"'>";	
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Action'>";
+					rowsHTML+="<input type='hidden' form='form293_"+id+"' value='"+id+"'>";
+					rowsHTML+="<input type='submit' class='save_icon' form='form293_"+id+"'>";
+					rowsHTML+="<input type='button' class='delete_icon' form='form293_"+id+"' onclick='form293_delete_item($(this));'>";
+				rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+		
+		$('#form293_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form293_"+id);
+		var status_filter=fields.elements[5];
+		
+		set_static_value_list_json('user_profile','status',status_filter);
+
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form293_create_item(fields);
+		});
+		
 		$('textarea').autosize();
 		longPressEditable($('.dblclick_editable'));
 	}

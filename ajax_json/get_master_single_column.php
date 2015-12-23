@@ -1,9 +1,12 @@
 <?php
 /*	input data format: 
  * 			{
+ 				database:'',
  				data_store:'',
  				count:'',
  				start_index:'',
+ 				return_column:'',
+ 				sum:'yes/no',
  				indexes:
  				[
  					{
@@ -14,7 +17,7 @@
  						lowerbound:'value'
  						array:array,
  						unequal:'value',
- 						approx_array:array,
+ 						approx_array:array
  					},
  					{
  						index:'column2',
@@ -22,19 +25,26 @@
  						exact:'value',
  						upperbound:'value',
  						lowerbound:'value'
- 						array:array,
+ 						array:'value',
  						unequal:'value',
- 						approx_array:array,
+ 						approx_array:array
  					}
  				]
  			}
 
  *	output data format: 
  *			{
+ 				database:'',
  				data_store:'',
  				count:'',
  				end_index:'',
- 				status:''
+ 				status:'',
+ 				rows:
+ 				[
+ 					0:'value1',
+ 					1:'value2',
+ 					2:'value3'
+ 				]
  			}
 */
 
@@ -49,15 +59,18 @@
 	
 	$input_object=json_decode($input_data,true);
 
+	$database=$input_object['database'];
 	$table=$input_object['data_store'];
 	$start_index=$input_object['start_index'];
+	$return_column=$input_object['return_column'];
+	
 	$columns_array=(array)$input_object['indexes'];
 
 	$response_object=[];
 			
 	if(isset($_SESSION['session']))
 	{
-		if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['username']==$username && $_SESSION['re']==$read_access)
+		if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['domain']=='vyavsaay' && $_SESSION['username']==$username && $_SESSION['re']==$read_access)
 		{
 			///setting the number of return results
 			$limit_count=0;
@@ -74,13 +87,17 @@
 			}
 
 			///seting the indexes to be returned
-			$columns_to_display="";
 			$values_array=array();
 			
+			
 			///formulating the query
-			$query="select count(*) from $table where ";
+			$query="select ".$return_column." from $table where ";
 			$limit=" limit ?,?";
 			
+			if(isset($input_object['sum']))
+			{
+				$query="select sum(".$return_column.") from $table where ";
+			}
 			//parsing the indexes for filtering of results
 			foreach($columns_array as $col)
 			{
@@ -173,9 +190,14 @@
 			
 			if(count($values_array)===0)
 			{
-				$query="select count(*) from $table";
+				$query="select ".$return_column." from $table";
+				if(isset($input_object['sum']))
+				{
+					$query="select sum(".$return_column.") from $table";
+				}
 			}
-			
+			$query.=" ORDER BY id DESC";
+
 			if($limit_count!=0)
 			{
 				$query.=$limit;
@@ -183,16 +205,33 @@
 				$values_array[]=$limit_count;
 			}
 			
-			$db_name="re_user_".$domain;
-			$conn=new db_connect($db_name);
+			//echo $query;
+			$conn=new db_connect($database);
 			$stmt=$conn->conn->prepare($query);
 			$stmt->execute($values_array);
-			$struct_res=$stmt->fetch(PDO::FETCH_NUM);
+			$struct_res=$stmt->fetchAll(PDO::FETCH_NUM);
 			
 			$response_object['status']='success';
+			$response_object['database']=$database;
 			$response_object['data_store']=$table;
-			$response_object['count']=$struct_res[0];
-			$response_object['end_index']=$start_index+$struct_res[0];		
+			$response_object['count']=count($struct_res);
+			$response_object['end_index']=$start_index+count($struct_res);
+			
+			$response_rows=[];
+	
+			for($i=0;$i<count($struct_res);$i++)
+			{
+				if($struct_res[$i][0]==null || $struct_res[$i][0]=="null")
+				{
+					$response_rows[]="0";
+				}
+				else 
+				{
+					$response_rows[]=$struct_res[$i][0];
+				}
+			}
+			
+			$response_object['rows']=$response_rows;
 		}
 		else
 		{

@@ -379,6 +379,40 @@ function read_json_count(columns,callback)
 	}
 }
 
+read_json_single_column_master
+/**
+ * @param columns
+ * @param callback
+ */
+function read_json_single_column_master(columns,callback)
+{
+	if(is_online())
+	{
+		server_read_json_column_master(columns,callback)
+	}
+}
+
+/**
+ * @param columns
+ * @param callback
+ */
+function read_json_rows_master(element_id,columns,callback)
+{
+	if(is_read_access(element_id))
+	{
+		if(is_online())
+		{
+			server_read_json_rows_master(columns,callback);
+		}
+	}
+	else
+	{
+		hide_loader();
+		$("#modal2").dialog("open");
+	}
+}
+
+
 function send_email(to,from,from_name,subject,message,func)
 {
 	var email_enabled=get_session_var('email_enabled');

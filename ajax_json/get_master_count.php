@@ -1,6 +1,7 @@
 <?php
 /*	input data format: 
  * 			{
+ 				database:'',
  				data_store:'',
  				count:'',
  				start_index:'',
@@ -31,6 +32,7 @@
 
  *	output data format: 
  *			{
+ 				database:'',
  				data_store:'',
  				count:'',
  				end_index:'',
@@ -50,6 +52,7 @@
 	$input_object=json_decode($input_data,true);
 
 	$table=$input_object['data_store'];
+	$database=$input_object['database'];
 	$start_index=$input_object['start_index'];
 	$columns_array=(array)$input_object['indexes'];
 
@@ -183,13 +186,13 @@
 				$values_array[]=$limit_count;
 			}
 			
-			$db_name="re_user_".$domain;
-			$conn=new db_connect($db_name);
+			$conn=new db_connect($database);
 			$stmt=$conn->conn->prepare($query);
 			$stmt->execute($values_array);
 			$struct_res=$stmt->fetch(PDO::FETCH_NUM);
 			
 			$response_object['status']='success';
+			$response_object['database']=$database;
 			$response_object['data_store']=$table;
 			$response_object['count']=$struct_res[0];
 			$response_object['end_index']=$start_index+$struct_res[0];		

@@ -15,7 +15,7 @@ class db_connect
 		//$this->fr=new file_reader("../../Config/config.prop");
 		$this->fr=new file_reader($_SERVER['DOCUMENT_ROOT']."/../Config/config.prop");
 		$dbhost=$this->fr->attributes["host"];
-		if($db_name===0)
+		if($db_name===0 || $db_name=='0')
 			$dbname= $this->fr->attributes["database"];
 		else
 			$dbname=$db_name;

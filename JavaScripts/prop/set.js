@@ -354,3 +354,4 @@ function set_my_max_value(filter_data,filter_element)
 		$(filter_element).attr('min',"0");
 	},filter_data);
 }
+

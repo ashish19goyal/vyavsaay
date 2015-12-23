@@ -19,7 +19,7 @@ class user_setup
 		$this->conn=new db_connect($this->dbname);
 		$this->setup();
 		$this->get_data_from_xml('master_db_data.xml');
-		$this->get_data_from_xml('demo_user_db_data.xml');
+		$this->get_data_from_xml('user_db_data.xml');
 		$this->get_data_from_xml('user_demo_data.xml');
 		$this->get_data_from_json('grids.json');
 		$this->get_data_from_json('search.json');

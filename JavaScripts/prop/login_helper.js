@@ -68,6 +68,11 @@ function login_online(username,domain,pass)
 			document.getElementById("failed_auth").innerHTML="Login failed, try again!";
 			hide_loader();
 		}
+		else if(response_object.status=="Account Inactive")
+		{
+			document.getElementById("failed_auth").innerHTML="Invalid domain or account deactivated.";
+			hide_loader();
+		}
 		else
 		{
 			var session_vars=response_object.data;

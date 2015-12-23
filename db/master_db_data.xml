@@ -508,16 +508,16 @@
 		<row>
 			<tablename>system_grid_elements</tablename>
 			<listname>type</listname>
-			<name>report</name>
-			<value>Report</value>
+			<name>reports</name>
+			<value>Reports</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<tablename>system_grid_elements</tablename>
 			<listname>type</listname>
-			<name>form</name>
-			<value>Form</value>
+			<name>forms</name>
+			<value>Forms</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>

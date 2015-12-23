@@ -186,6 +186,7 @@ JavaScripts/prop/access.js
 JavaScripts/prop/add_items.js
 JavaScripts/prop/ajax.js
 JavaScripts/prop/ajax_json.js
+JavaScripts/prop/ajax_master.js
 JavaScripts/prop/create.js
 JavaScripts/prop/delete.js
 JavaScripts/prop/event_handler.js

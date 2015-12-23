@@ -296,3 +296,90 @@ function set_my_max_value_json(filter_data,filter_element)
 		$(filter_element).attr('min',"0");
 	});
 }
+
+function set_master_filter_json(filter_data,filter_element,func)
+{
+	read_json_single_column_master(filter_data,function(data)
+	{
+		var form=filter_element.form;
+		var datalist=document.createElement('datalist');
+		data.forEach(function(d)
+		{
+			var option=document.createElement('option');
+			option.setAttribute('value',d);
+			datalist.appendChild(option);
+		});
+		
+		var list_id=filter_element.getAttribute('list');
+		if(list_id=='' || list_id==null)
+		{
+			list_id="list_"+get_new_key();
+			filter_element.setAttribute('list',list_id);
+		}
+		else
+		{
+			var oldlist=document.getElementById(list_id);
+			form.removeChild(oldlist);
+		}
+		
+		form.appendChild(datalist);
+		datalist.setAttribute('id',list_id);
+		
+		if(typeof func!='undefined')
+		{
+			func();
+		}
+	});		
+}
+
+function set_master_list_json(filter_data,filter_element,func)
+{	
+	read_json_single_column_master(filter_data,function(data)
+	{
+		var form=filter_element.form;
+		var datalist=document.createElement('datalist');
+		data.forEach(function(d)
+		{
+			var option=document.createElement('option');
+			option.setAttribute('value',d);
+			datalist.appendChild(option);
+		});
+		
+		var list_id=filter_element.getAttribute('list');
+		if(list_id=='' || list_id==null)
+		{
+			list_id="list_"+get_new_key();
+			filter_element.setAttribute("list",list_id);
+		}
+		else
+		{
+			var oldlist=document.getElementById(list_id);
+			form.removeChild(oldlist);
+		}
+		
+		form.appendChild(datalist);
+		datalist.setAttribute('id',list_id);
+
+		var active_element=document.activeElement;
+				
+		if(active_element==filter_element)
+		{
+			$(filter_element).blur();
+			$(filter_element).focus();
+		}
+
+		$(filter_element).off("change");
+		$(filter_element).on("change",function(event)
+		{
+			var found = $.inArray($(this).val(), data) > -1;
+			if(!found)
+			{
+	            $(this).val('');
+	        }
+		});
+		if(typeof func!='undefined')
+		{
+			func();
+		}
+	});
+}

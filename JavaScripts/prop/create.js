@@ -19528,3 +19528,52 @@ function form290_create_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Vyavsaay Accounts
+ * @param button
+ */
+function form293_create_item(form)
+{
+	if(is_create_access('form293'))
+	{
+		var new_columns=new Object();
+		new_columns.data_store='user_profile';
+		new_columns.database='0';
+		
+		new_columns.indexes=[{index:'id',value:form.elements[6].value},
+							{index:'username',value:form.elements[0].value},
+							{index:'phone',value:form.elements[2].value},
+							{index:'name',value:form.elements[1].value},
+							{index:'status',value:form.elements[5].value},
+							{index:'email',value:form.elements[3].value},
+							{index:'dbname',value:form.elements[4].value},
+							{index:'last_updated',value:get_my_time()}];
+	
+		var del_button=form.elements[8];
+		
+		server_create_master(new_columns);
+
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form293_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form293_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

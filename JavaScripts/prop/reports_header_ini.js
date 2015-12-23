@@ -2231,8 +2231,8 @@ function report97_header_ini()
 	var form=document.getElementById('report97_header');
 	var type_filter=form.elements['type'];
 	var city_filter=form.elements['city'];
-	var item_filter=form.elements['item'];
-	var customer_filter=form.elements['customer'];
+	var item_filter=form.elements['item_name'];
+	var cust_filter=form.elements['customer'];
 	
 	$('#report97_body').html('');
 
@@ -2262,12 +2262,12 @@ function report97_header_ini()
 	var cust_data=new Object();
 		cust_data.count=0;
 		cust_data.start_index=0;
-		cust_data.data_store='customers';
+		cust_data.data_store='accounts';
 		cust_data.indexes=[{index:'acc_name'}];		
 		cust_data.return_column='acc_name';
-	set_my_filter_json(customer_data,cust_filter);
+	set_my_filter_json(cust_data,cust_filter);
 
-	set_static_filter_json('leads_type','type',type_data,function () 
+	set_static_filter_json('leads_type','type',type_filter,function () 
 	{
 		$(type_filter).focus();
 	});
