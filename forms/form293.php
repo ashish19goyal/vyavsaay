@@ -9,7 +9,7 @@
 					<th>DB <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form293_header'></th>
 					<th>Status <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form293_header'></th>
 					<th><input type='button' form='form293_header' title='Add new' class='add_icon' onclick='form293_add_item();'>
-						<input type='button' form='form293_header' value='EXPORT' class='export_icon'>
+						<input type='button' form='form293_header' name='export' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form293_header' style='display:none;visibility: hidden;'>
 					</th>
 			</tr>

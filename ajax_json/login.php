@@ -13,13 +13,12 @@ use RetailingEssentials\db_connect;
 	
 	try 
 	{
-		/*
 		$master_conn=new db_connect(0);
 		$master_stmt=$master_conn->conn->prepare("select * from user_profile where username=? and status=?");
 		$master_stmt->execute(array($domain,'active'));
 		if($master_stmt->rowCount()!=0)
 		{
-			*/
+			
 			$conn=new db_connect("re_user_".$domain);
 			$stmt=$conn->conn->prepare("select password from accounts where username=?");
 			$stmt->execute(array($user));
@@ -148,13 +147,13 @@ use RetailingEssentials\db_connect;
 					$_SESSION['name']=$row2['name'];
 				}
 			}
-		/*
+		
 		}
 		else 
 		{
 			$response_object['status']='Account Inactive';		
 		}
-		*/
+		
 	}
 	catch(PDOException $ex)
 	{
