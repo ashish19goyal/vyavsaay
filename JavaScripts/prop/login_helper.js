@@ -60,7 +60,7 @@ function login_online(username,domain,pass)
 	ajax_json("./ajax_json/login.php",{domain:domain,user:username,pass:pass},function(response_object)
 	{
 		//console.log(response_object);
-		//console.log(response_object.status);
+		console.log(response_object.status);
 		
 		if(response_object.status=="Failed Authentication")
 		{
