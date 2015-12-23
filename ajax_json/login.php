@@ -18,7 +18,6 @@ use RetailingEssentials\db_connect;
 		$master_stmt->execute(array($domain,'active'));
 		if($master_stmt->rowCount()!=0)
 		{
-			
 			$conn=new db_connect("re_user_".$domain);
 			$stmt=$conn->conn->prepare("select password from accounts where username=?");
 			$stmt->execute(array($user));
