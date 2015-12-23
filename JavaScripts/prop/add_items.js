@@ -17498,6 +17498,123 @@ function form290_add_item()
 }
 
 /**
+ * @form Vyavsaay Billing
+ * @formNo 292
+ */
+function form292_add_item()
+{
+	if(is_create_access('form292'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+			rowsHTML+="<form id='form292_"+id+"'></form>";
+				rowsHTML+="<td data-th='Customer'>";
+					rowsHTML+="<b>Name</b>:<input type='text' readonly='readonly' form='form292_"+id+"'>";
+					rowsHTML+="<br><b>Domain</b><input type='text' required form='form292_"+id+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Period'>";
+					rowsHTML+="<b>From</b>:<input type='text' form='form292_"+id+"'>";
+					rowsHTML+="<br><b>To</b>:<input type='text' form='form292_"+id+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Details'>";
+					rowsHTML+="<b>Invoice #</b>:<input type='text' form='form292_"+id+"' required readonly='readonly'>";
+					rowsHTML+="<br><b>Remarks</b>:<textarea form='form292_"+id+"' class='dblclick_editable'></textarea>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Amount'>";
+					rowsHTML+="<b>User Accounts</b>:<input type='number' step='any' form='form292_"+id+"' class='dblclick_editable'>";
+					rowsHTML+="<br><b>Amount</b>: Rs <input type='number' step='any' form='form292_"+id+"' class='dblclick_editable'>";
+					rowsHTML+="<br><b>Tax</b>: Rs <input type='number' step='any' form='form292_"+id+"' class='dblclick_editable'>";
+					rowsHTML+="<br><b>Total</b>: Rs <input type='number' step='any' readonly='readonly' form='form292_"+id+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Status'>";
+					rowsHTML+="<b>Payment</b>:<input type='text' required class='dblclick_editable' form='form292_"+id+"'>";
+					rowsHTML+="<b>Display</b>:<input type='text' required class='dblclick_editable' value='show' form='form292_"+id+"'>";	
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Action'>";
+					rowsHTML+="<input type='hidden' form='form292_"+id+"' value='"+id+"'>";
+					rowsHTML+="<input type='submit' class='save_icon' form='form292_"+id+"'>";
+					rowsHTML+="<input type='button' class='delete_icon' form='form292_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+		
+		$('#form292_body').append(rowsHTML);
+		var fields=document.getElementById("form292_"+id);
+		var customer_filter=fields.elements[0];
+		var domain_filter=fields.elements[1];
+		var start_filter=fields.elements[2];
+		var end_filter=fields.elements[3];
+		var invoice_filter=fields.elements[4];
+		var amount_filter=fields.elements[7];
+		var tax_filter=fields.elements[8];
+		var total_filter=fields.elements[9];
+		var status_filter=fields.elements[10];
+		var display_filter=fields.elements[11];
+		
+		var name_data=new Object();
+			name_data.data_store='user_profile';
+			name_data.database='0';
+			name_data.indexes=[{index:'username'}];		
+			name_data.return_column='username';
+		set_master_list_json(name_data,domain_filter,function () 
+		{
+			$(domain_filter).focus();
+		});
+
+		$(domain_filter).on('blur',function () 
+		{
+			var domain_data=new Object();
+				domain_data.data_store='user_profile';
+				domain_data.database='0';
+				domain_data.indexes=[{index:'username',exact:domain_filter.value}];		
+				domain_data.return_column='name';
+			set_master_value_json(domain_data,customer_filter);
+		});
+		
+		$(start_filter).datepicker();
+		$(end_filter).datepicker();
+		
+		var invoice_data=new Object();
+			invoice_data.data_store='user_preferences';
+			invoice_data.indexes=[{index:'name',exact:'bill_num'}];		
+			invoice_data.return_column='value';
+		read_json_single_column(invoice_data,function (nums) 
+		{
+			if(nums.length>0)
+			{
+				invoice_filter.value=get_session_var('bill_num_prefix')+"-"+nums[0];
+			}
+		});
+		
+		var tax_rate=get_session_var('service_tax_rate');
+		$(amount_filter).on('blur change',function () 
+		{
+			tax_filter.value=parseFloat(amount_filter.value)*parseFloat(tax_rate)/100;
+			total_filter.value=my_round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value),0);
+		});
+		
+		$(tax_filter).on('blur change',function () 
+		{
+			total_filter.value=my_round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value),0);
+		});
+
+		set_static_value_list_json('system_billing','payment_status',status_filter);
+		set_static_value_list_json('system_billing','display',display_filter);
+			
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form292_create_item(fields);
+		});
+		$('textarea').autosize();
+		longPressEditable($('.dblclick_editable'));
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
  * @form Vyavsaay Accounts
  * @formNo 293
  */
@@ -17509,7 +17626,7 @@ function form293_add_item()
 		var rowsHTML="<tr>";
 			rowsHTML+="<form id='form293_"+id+"'></form>";
 				rowsHTML+="<td data-th='Username'>";
-					rowsHTML+="<textarea form='form293_"+id+"'></textarea>";
+					rowsHTML+="<textarea form='form293_"+id+"' required></textarea>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Contact Person'>";
 					rowsHTML+="<input type='text' form='form293_"+id+"'>";
@@ -17519,15 +17636,15 @@ function form293_add_item()
 					rowsHTML+="<br><b>Email</b>:<input type='text' form='form293_"+id+"' class='dblclick_editable'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='DB'>";
-					rowsHTML+="<textarea form='form293_"+id+"' class='dblclick_editable'></textarea>";
+					rowsHTML+="<textarea form='form293_"+id+"' required class='dblclick_editable'></textarea>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Status'>";
-					rowsHTML+="<input type='text' class='dblclick_editable' form='form293_"+id+"'>";	
+					rowsHTML+="<input type='text' class='dblclick_editable' requried form='form293_"+id+"'>";	
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Action'>";
 					rowsHTML+="<input type='hidden' form='form293_"+id+"' value='"+id+"'>";
 					rowsHTML+="<input type='submit' class='save_icon' form='form293_"+id+"'>";
-					rowsHTML+="<input type='button' class='delete_icon' form='form293_"+id+"' onclick='form293_delete_item($(this));'>";
+					rowsHTML+="<input type='button' class='delete_icon' form='form293_"+id+"' onclick='$(this).parent().parent().remove();'>";
 				rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 		

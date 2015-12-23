@@ -383,3 +383,22 @@ function set_master_list_json(filter_data,filter_element,func)
 		}
 	});
 }
+
+function set_master_value_json(filter_data,filter_element,func)
+{
+	read_json_single_column_master(filter_data,function(data)
+	{
+		if(data.length>0)
+		{
+			filter_element.value=data[0];
+		}
+		else 
+		{
+			filter_element.value="";
+		}
+		if(typeof func!='undefined')
+		{
+			func();
+		}
+	});
+}

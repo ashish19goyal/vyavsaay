@@ -58,7 +58,6 @@
 	$input_object=json_decode($input_data,true);
 
 	$table=$input_object['data_store'];
-	$start_index=$input_object['start_index'];
 	$return_column=$input_object['return_column'];
 	
 	$columns_array=(array)$input_object['indexes'];
@@ -78,9 +77,9 @@
 
 			///setting the starting index
 			$limit_start_index=0;
-			if(isset($start_index))
+			if(isset($input_object['start_index']))
 			{
-				$limit_start_index=$start_index;
+				$limit_start_index=$input_object['start_index'];
 			}
 
 			///seting the indexes to be returned
@@ -213,7 +212,7 @@
 			$response_object['status']='success';
 			$response_object['data_store']=$table;
 			$response_object['count']=count($struct_res);
-			$response_object['end_index']=$start_index+count($struct_res);
+			$response_object['end_index']=$limit_start_index+count($struct_res);
 			
 			$response_rows=[];
 	

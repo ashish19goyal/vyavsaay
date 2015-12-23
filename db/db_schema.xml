@@ -497,6 +497,7 @@
 	<bills>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<customer_name index='yes' type="TEXT"></customer_name>
+			<domain index='yes' type="TEXT"></domain>
 			<bill_num index='yes' type="TEXT"></bill_num>
 			<order_id index='yes' type="BIGINT"></order_id>
 			<order_num index='yes' type="TEXT"></order_num>
@@ -527,6 +528,7 @@
 			<print_1_job index='yes' type="VARCHAR(25)"></print_1_job><!--yes/no-->
 			<notes index='no' type="TEXT"></notes>
 			<status index='yes' type="VARCHAR(30)"></status><!--cancelled-->
+			<display index='yes' type="VARCHAR(30)"></display><!--show/hide-->
 			<cform index='no' type="VARCHAR(30)"></cform><!--yes/no-->
 			<pick_bag_num index='yes' type="VARCHAR(20)"></pick_bag_num>
 			<manifest_num index="yes" type="TEXT"></manifest_num>
@@ -1681,8 +1683,11 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<order_id index='yes' type="TEXT"></order_id>
 			<narration index='yes' type="TEXT"></narration>
+			<account_name index='yes' type="TEXT"></account_name>
 			<user_accounts index='no' type="INT"></user_accounts>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
+			<tax index='yes' type="DECIMAL(12,2)"></tax>
+			<total index='yes' type="DECIMAL(12,2)"></total>
 			<currency index='yes' type="TEXT"></currency>
 			<period_start index='yes' type="BIGINT"></period_start>
 			<period_end index='yes' type="BIGINT"></period_end>

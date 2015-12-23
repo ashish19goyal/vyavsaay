@@ -66,7 +66,6 @@
 
 	$database=$input_object['database'];
 	$table=$input_object['data_store'];
-	$start_index=$input_object['start_index'];
 	$columns_array=(array)$input_object['indexes'];
 
 	$response_object=[];
@@ -84,9 +83,9 @@
 
 			///setting the starting index
 			$limit_start_index=0;
-			if(isset($start_index))
+			if(isset($input_object['start_index']))
 			{
-				$limit_start_index=$start_index;
+				$limit_start_index=$input_object['start_index'];
 			}
 
 			///seting the indexes to be returned
@@ -217,7 +216,7 @@
 			$response_object['database']=$database;
 			$response_object['data_store']=$table;
 			$response_object['count']=count($struct_res);
-			$response_object['end_index']=$start_index+count($struct_res);
+			$response_object['end_index']=$limit_start_index+count($struct_res);
 			
 			$response_rows=[];
 	

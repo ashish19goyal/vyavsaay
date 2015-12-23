@@ -30308,12 +30308,16 @@ function form286_ini()
 		new_columns.indexes=[{index:'id'},
 							{index:'order_id'},
 							{index:'narration'},
+							{index:'account_name'},
+							{index:'user_accounts'},
 							{index:'amount'},
+							{index:'tax'},
+							{index:'total'},
 							{index:'currency'},
 							{index:'period_start'},
 							{index:'period_end'},
 							{index:'display',exact:'show'},
-							{index:'payment_status',exact:'pending'}];		
+							{index:'payment_status'}];		
 
 	read_json_rows('form286',new_columns,function(results)
 	{
@@ -30322,7 +30326,10 @@ function form286_ini()
 		results.forEach(function(result)
 		{
 			currency=result.currency;
-			due_amount+=parseFloat(result.amount);	
+			if(result.payment_status=='pending')
+			{
+				due_amount+=parseFloat(result.amount);
+			}	
 		});
 		
 		var rowsHTML="<label>Active user accounts: <input type='text' readonly='readonly' name='user_accounts'></label>";
@@ -30331,17 +30338,23 @@ function form286_ini()
 			rowsHTML+="<label>Payment Due: <input type='text' readonly='readonly' name='payment_due' value='"+currency+" "+due_amount+"'></label>";
 		$('#form286_fieldset').html(rowsHTML);
 				
-		var pending_table_HTML="<tr style='background-color:#4eac72'><td>Order Id</td><td>Period</td><td>Remarks</td><td>Amount</td><td>Action</td></tr>";
+		var pending_table_HTML="<tr style='background-color:#4eac72'><td>Invoice #</td><td>Period</td><td>Remarks</td><td>Amount</td><td>Action</td></tr>";
 		results.forEach(function(result)
 		{
-			pending_table_HTML+="<tr><td>"+result.order_id+"</td><td>"+get_my_past_date(result.period_start)+"-"+get_my_past_date(result.period_end)+"</td><td>"+result.narration+"</td><td>"+result.currency+" "+result.amount+"</td><td><input type='button' value='Make a payment' class='generic_icon'></td></tr>";
-		});		
+			if(result.payment_status=='pending')
+			{
+				pending_table_HTML+="<tr><td>"+result.order_id+"</td><td>"+get_my_past_date(result.period_start)+"-"+get_my_past_date(result.period_end)+"</td><td>"+result.narration+"</td><td title='User Accounts:"+result.user_accounts+"\nAmount:"+result.amount+"\nTax:"+result.tax+"'>"+result.currency+" "+result.total+"</td><td><input type='button' value='Make a payment' class='generic_icon'></td></tr>";
+			}
+		});
 		$('#form286_pending_payments').html(pending_table_HTML);
 		
-		var all_table_HTML="<tr style='background-color:#4eac72'><td>Order Id</td><td>Period</td><td>Remarks</td><td>Amount</td><td>Action</td></tr>";
+		var all_table_HTML="<tr style='background-color:#4eac72'><td>Invoice #</td><td>Period</td><td>Remarks</td><td>Amount</td><td>Action</td></tr>";
 		results.forEach(function(result)
 		{
-			all_table_HTML+="<tr><td>"+result.order_id+"</td><td>"+get_my_past_date(result.period_start)+"-"+get_my_past_date(result.period_end)+"</td><td>"+result.narration+"</td><td>"+result.currency+" "+result.amount+"</td><td><input type='button' title='Print Invoice' class='print_icon'></td></tr>";
+			if(result.payment_status=='paid')
+			{
+				all_table_HTML+="<tr><td>"+result.order_id+"</td><td>"+get_my_past_date(result.period_start)+"-"+get_my_past_date(result.period_end)+"</td><td>"+result.narration+"</td><td title='User Accounts:"+result.user_accounts+"\nAmount:"+result.amount+"\nTax:"+result.tax+"'>"+result.currency+" "+result.total+"</td><td><input type='button' title='Print Invoice' class='print_icon' onclick=\"form286_print_form('"+result.account_name+"','"+get_my_past_date(result.period_start)+"','"+get_my_past_date(result.period_end)+"','"+result.order_id+"','"+result.narration+"','"+result.user_accounts+"','"+result.amount+"','"+result.tax+"','"+result.total+"');\"></td></tr>";
+			} 
 		});
 
 		$('#form286_all_payments').html(all_table_HTML);
@@ -30365,7 +30378,7 @@ function form286_ini()
 
 		$('textarea').autosize();		
 		hide_loader();
-	});
+	});	
 };
 
 /**
@@ -30801,23 +30814,27 @@ function form292_ini()
 							{index:'customer_name',value:fname},
 							{index:'bill_num',value:finvoice},
 							{index:'amount'},
+							{index:'domain'},
+							{index:'display'},
 							{index:'tax'},
 							{index:'total'},
 							{index:'status',value:fstatus},
 							{index:'total_quantity'},
 							{index:'period_start'},
 							{index:'period_end'},
-							{index:'user_accounts'},
-							{index:'notes'}];
+							{index:'notes'},
+							{index:'bill_date'}];
 							
 	read_json_rows('form292',new_columns,function(results)
 	{	
+		var bt=get_session_var('title');
 		results.forEach(function(result)
 		{
 			var rowsHTML="<tr>";
 				rowsHTML+="<form id='form292_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Customer'>";
-						rowsHTML+="<textarea readonly='readonly' form='form292_"+result.id+"'>"+result.customer_name+"</textarea>";
+						rowsHTML+="<b>Name</b>:<textarea readonly='readonly' form='form292_"+result.id+"'>"+result.customer_name+"</textarea>";
+						rowsHTML+="<br><b>Domain</b>:<input type='text' readonly='readonly' form='form292_"+result.id+"' value='"+result.domain+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Period'>";
 						rowsHTML+="<b>From</b>:<input type='text' readonly='readonly' form='form292_"+result.id+"' value='"+get_my_past_date(result.period_start)+"'>";
@@ -30834,25 +30851,47 @@ function form292_ini()
 						rowsHTML+="<br><b>Total</b>: Rs <input type='number' step='any' readonly='readonly' form='form292_"+result.id+"' value='"+result.total+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
-						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form292_"+result.id+"' value='"+result.status+"'>";	
+						rowsHTML+="<b>Payment</b>:<input type='text' readonly='readonly' required class='dblclick_editable' form='form292_"+result.id+"' value='"+result.status+"'>";
+						rowsHTML+="<b>Display</b>:<input type='text' readonly='readonly' required class='dblclick_editable' form='form292_"+result.id+"' value='"+result.display+"'>";	
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form292_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form292_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form292_"+result.id+"' onclick='form292_delete_item($(this));'>";
+						rowsHTML+="<input type='button' class='share_icon' form='form292_"+result.id+"' name='share'>";
+						rowsHTML+="<input type='button' class='print_icon' form='form292_"+result.id+"' name='print'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
 			$('#form292_body').append(rowsHTML);
 			var fields=document.getElementById("form292_"+result.id);
-			var amount_filter=fields.elements[6];
-			var tax_filter=fields.elements[7];
-			var total_filter=fields.elements[8];
-			var status_filter=fields.elements[9];
+			var invoice_filter=fields.elements[4];
+			var amount_filter=fields.elements[7];
+			var tax_filter=fields.elements[8];
+			var total_filter=fields.elements[9];
+			var status_filter=fields.elements[10];
+			var display_filter=fields.elements[11];
+			var share_button=fields.elements['share'];
+			var print_button=fields.elements['print'];
 			
+			$(share_button).on('click',function () 
+			{
+				modal101_action('Invoice # '+invoice_filter.value+' from - '+bt,result.customer_name,'customer',function (func) 
+				{
+					print_form292(result.id,func);
+				});
+			});
+
+			$(print_button).on('click',function () 
+			{
+				form292_print_form(result.id);
+			});
+
+			var tax_rate=get_session_var('service_tax_rate');
+		
 			$(amount_filter).on('blur change',function () 
 			{
-				tax_filter.value=parseFloat(amount_filter.value)*parseFloat(tax_rate);
+				tax_filter.value=parseFloat(amount_filter.value)*parseFloat(tax_rate)/100;
 				total_filter.value=my_round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value),0);
 			});
 			
@@ -30862,6 +30901,7 @@ function form292_ini()
 			});
 
 			set_static_value_list_json('system_billing','payment_status',status_filter);
+			set_static_value_list_json('system_billing','display',display_filter);
 			
 			$(fields).on("submit", function(event)
 			{
@@ -30964,10 +31004,10 @@ function form293_ini()
 						rowsHTML+="<br><b>Email</b>:<input type='text' readonly='readonly' form='form293_"+result.id+"' class='dblclick_editable' value='"+result.email+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='DB'>";
-						rowsHTML+="<textarea readonly='readonly' form='form293_"+result.id+"' class='dblclick_editable'>"+result.dbname+"</textarea>";
+						rowsHTML+="<textarea readonly='readonly' form='form293_"+result.id+"' required class='dblclick_editable'>"+result.dbname+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
-						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form293_"+result.id+"' value='"+result.status+"'>";	
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' required form='form293_"+result.id+"' value='"+result.status+"'>";	
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form293_"+result.id+"' value='"+result.id+"'>";

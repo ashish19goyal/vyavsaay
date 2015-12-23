@@ -11422,8 +11422,8 @@ function form292_header_ini()
 		name_data.start_index=0;
 		name_data.data_store='user_profile';
 		name_data.database='0';
-		name_data.indexes=[{index:'username'}];		
-		name_data.return_column='username';
+		name_data.indexes=[{index:'name'}];		
+		name_data.return_column='name';
 	set_master_filter_json(name_data,name_filter);
 
 	var invoice_data=new Object();

@@ -4,10 +4,10 @@
 		</fieldset>
 	</form>
 	<br>
-	<b>Pending Payments</b>
+	<b>Pending Charges</b>
 	<br><table class='plain_table' id='form286_pending_payments'></table>
 	<br>
 	<br>
-	<b>All Payments</b>
+	<b>Paid Charges</b>
 	<br><table class='plain_table' id='form286_all_payments'></table>	
 </div>
