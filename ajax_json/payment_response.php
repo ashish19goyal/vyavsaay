@@ -4,7 +4,7 @@
 	include_once "../Classes/db.php";
 	use RetailingEssentials\db_connect;
 
-	error_reporting(0);
+	//error_reporting(0);
 	
 	$working_key='EA256A49C184883BBB18457997D673F6';
 	$encResponse=$_POST["encResp"];			//This is the response sent by the CCAvenue Server
@@ -21,8 +21,9 @@
 		$response_array[$information[0]]=$information[1];
 		//echo $information[0]."=".$information[1]."<br>";
 	}
-
-	if($response_array['order_status']==="Success")
+	echo $response_array['merchant_param1'];
+	
+	if($response_array['order_status']==="Success" || $response_array['order_status']==="Aborted")
 	{
 		//update status in vyavsaay and user accounts
 		$conn=new db_connect('re_user_vyavsaay');
