@@ -22,7 +22,7 @@
 		//echo $information[0]."=".$information[1]."<br>";
 	}
 	
-	if($response_array['order_status']==="Success" || $response_array['order_status']==="Aborted")
+	if($response_array['order_status']==="Success")
 	{
 		//update status in vyavsaay and user accounts
 		$conn=new db_connect('re_user_vyavsaay');
@@ -37,19 +37,19 @@
 		$stmt2=$conn2->conn->prepare($query2);
 		$stmt2->execute($data_array2);
 
-		echo "Payment was successful. You can close this window now.";
+		echo "<b>Payment was successful. You can close this window now.</b>";
 	}
 	else if($response_array['order_status']==="Aborted")
 	{
 		//nothing is to be updated
-		echo "The payment was aborted. Please try again.";	
+		echo "<b>The payment was aborted. Please try again.</b>";	
 	}
 	else if($response_array['order_status']==="Failure")
 	{
-		echo "The payment was declined. Please try again.";	
+		echo "<b>The payment was declined. Please try again.</b>";	
 	}
 	else
 	{
-		echo "Illegal access was detected. Please try again.";
+		echo "<b>Illegal access was detected. Please try again.</b>";
 	}
 ?>
