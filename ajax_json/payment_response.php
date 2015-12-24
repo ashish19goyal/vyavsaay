@@ -12,14 +12,14 @@
 	$decryptValues=explode('&', $rcvdString);
 	$dataSize=sizeof($decryptValues);
 	
-	echo $rcvdString;
+	//echo $rcvdString;
 	$response_array=[];
 	
 	for($i = 0; $i < $dataSize; $i++) 
 	{
 		$information=explode('=',$decryptValues[$i]);
 		$response_array[$information[0]]=$information[1];
-		echo $information[0]."=".$information[1]."<br>";
+		//echo $information[0]."=".$information[1]."<br>";
 	}
 
 	if($response_array['order_status']==="Success")
@@ -37,7 +37,7 @@
 		$stmt2=$conn->conn->prepare($query2);
 		$stmt2->execute($data_array2);
 			
-		echo "Payment was successful. Please refresh you Vyavsaay screen and continue your operations.";
+		echo "Payment was successful. You can close this window now.";
 	}
 	else if($response_array['order_status']==="Aborted")
 	{
