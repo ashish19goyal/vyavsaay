@@ -30328,7 +30328,7 @@ function form286_ini()
 			currency=result.currency;
 			if(result.payment_status=='pending')
 			{
-				due_amount+=parseFloat(result.amount);
+				due_amount+=parseFloat(result.total);
 			}	
 		});
 		
