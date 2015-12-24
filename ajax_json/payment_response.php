@@ -9,16 +9,17 @@
 	$working_key='EA256A49C184883BBB18457997D673F6';
 	$encResponse=$_POST["encResp"];			//This is the response sent by the CCAvenue Server
 	$rcvdString=decrypt($encResponse,$workingKey);		//Crypto Decryption used as per the specified working key.
-	$order_status="";
 	$decryptValues=explode('&', $rcvdString);
 	$dataSize=sizeof($decryptValues);
 	
+	echo $rcvdString;
 	$response_array=[];
 	
 	for($i = 0; $i < $dataSize; $i++) 
 	{
 		$information=explode('=',$decryptValues[$i]);
 		$response_array[$information[0]]=$information[1];
+		echo $information[0]."=".$information[1]."<br>";
 	}
 
 	if($response_array['order_status']==="Success")
