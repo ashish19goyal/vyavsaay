@@ -19,7 +19,7 @@
 	{
 		$information=explode('=',$decryptValues[$i]);
 		$response_array[$information[0]]=$information[1];
-		echo $information[0]."=".$information[1]."<br>";
+		//echo $information[0]."=".$information[1]."<br>";
 	}
 
 	if($response_array['order_status']==="Success")
@@ -34,7 +34,7 @@
 		$conn2=new db_connect('re_user_'+$response_array['merchant_param1']);
 		$query2="update system_billing set payment_status=? where order_id=?";
 		$data_array2=array('paid',$response_array['order_id']);
-		$stmt2=$conn->conn->prepare($query2);
+		$stmt2=$conn2->conn->prepare($query2);
 		$stmt2->execute($data_array2);
 			
 		echo "Payment was successful. You can close this window now.";
