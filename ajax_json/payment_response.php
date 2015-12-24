@@ -3,7 +3,7 @@
 
 	error_reporting(0);
 	
-	$working_key='312200B83E822AAD5A0FD06ED3F7EAFE';
+	$working_key='EA256A49C184883BBB18457997D673F6';
 	$encResponse=$_POST["encResp"];			//This is the response sent by the CCAvenue Server
 	$rcvdString=decrypt($encResponse,$workingKey);		//Crypto Decryption used as per the specified working key.
 	$order_status="";
