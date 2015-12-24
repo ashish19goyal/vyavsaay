@@ -63,6 +63,6 @@
 		    $count+=2; 
         	} 
   	        return $binString; 
-    	  } 
+   	} 
 ?>
 

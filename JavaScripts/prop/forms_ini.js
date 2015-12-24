@@ -30343,7 +30343,21 @@ function form286_ini()
 		{
 			if(result.payment_status=='pending')
 			{
-				pending_table_HTML+="<tr><td>"+result.order_id+"</td><td>"+get_my_past_date(result.period_start)+"-"+get_my_past_date(result.period_end)+"</td><td>"+result.narration+"</td><td title='User Accounts:"+result.user_accounts+"\nAmount:"+result.amount+"\nTax:"+result.tax+"'>"+result.currency+" "+result.total+"</td><td><input type='button' value='Make a payment' class='generic_icon'></td></tr>";
+				pending_table_HTML+="<tr><td>"+result.order_id+"</td><td>"+get_my_past_date(result.period_start)+"-"+get_my_past_date(result.period_end)+"</td><td>"+result.narration+"</td><td title='User Accounts:"+result.user_accounts+"\nAmount:"+result.amount+"\nTax:"+result.tax+"'>"+result.currency+" "+result.total+"</td><td>";
+
+				pending_table_HTML+="<form method='post' action='./ajax_json/payment_request.php' target='_blank'>"+
+									"<input type='hidden' name='order_id' value='"+result.order_id+"'>"+
+									"<input type='hidden' name='currency' value='INR'>"+
+									"<input type='hidden' name='amount' value='"+result.total+"'>"+
+									"<input type='hidden' name='redirect_url' value='https://vyavsaay.com/ajax_json/payment_response.php'>"+
+									"<input type='hidden' name='billing_name' value='"+result.account_name+"'>"+
+									"<input type='hidden' name='billing_address' value='"+get_session_var('address')+"'>"+
+									"<input type='hidden' name='billing_tel' value='"+get_session_var('phone')+"'>"+
+									"<input type='hidden' name='billing_email' value='"+get_session_var('email')+"'>"+
+									"<input type='hidden' name='merchant_param1' value='"+get_session_var('domain')+"'>"+
+									"<input type='submit' value='Make a payment' class='generic_icon'></form>";
+				
+				pending_table_HTML+="</td></tr>";
 			}
 		});
 		$('#form286_pending_payments').html(pending_table_HTML);
