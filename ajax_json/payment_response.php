@@ -19,7 +19,7 @@
 	{
 		$information=explode('=',$decryptValues[$i]);
 		$response_array[$information[0]]=$information[1];
-		//echo $information[0]."=".$information[1]."<br>";
+		echo $information[0]."=".$information[1]."<br>";
 	}
 
 	if($response_array['order_status']==="Success")
