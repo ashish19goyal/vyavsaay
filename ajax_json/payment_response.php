@@ -1,5 +1,8 @@
-<?php include('../Classes/ccavenue/Crypto.php')?>
-<?php
+<?php 
+
+	include('../Classes/ccavenue/Crypto.php');
+	include_once "../Classes/db.php";
+	use RetailingEssentials\db_connect;
 
 	error_reporting(0);
 	
@@ -9,43 +12,43 @@
 	$order_status="";
 	$decryptValues=explode('&', $rcvdString);
 	$dataSize=sizeof($decryptValues);
-	echo "<center>";
-
+	
+	$response_array=[];
+	
 	for($i = 0; $i < $dataSize; $i++) 
 	{
 		$information=explode('=',$decryptValues[$i]);
-		if($i==3)	$order_status=$information[1];
+		$response_array[$information[0]]=$information[1];
 	}
 
-	if($order_status==="Success")
+	if($response_array['order_status']==="Success")
 	{
-		echo "<br>Thank you for shopping with us. Your credit card has been charged and your transaction is successful. We will be shipping your order to you soon.";
-		
+		//update status in vyavsaay and user accounts
+		$conn=new db_connect('re_user_vyavsaay');
+		$query1="update bills set status=? where bill_num=?";
+		$data_array1=array('paid',$response_array['order_id']);
+		$stmt1=$conn->conn->prepare($query1);
+		$stmt1->execute($data_array1);
+			
+		$conn2=new db_connect('re_user_'+$response_array['merchant_param1']);
+		$query2="update system_billing set payment_status=? where order_id=?";
+		$data_array2=array('paid',$response_array['order_id']);
+		$stmt2=$conn->conn->prepare($query2);
+		$stmt2->execute($data_array2);
+			
+		echo "Payment was successful. Please refresh you Vyavsaay screen and continue your operations.";
 	}
-	else if($order_status==="Aborted")
+	else if($response_array['order_status']==="Aborted")
 	{
-		echo "<br>Thank you for shopping with us.We will keep you posted regarding the status of your order through e-mail";
-	
+		//nothing is to be updated
+		echo "The payment was aborted. Please try again.";	
 	}
-	else if($order_status==="Failure")
+	else if($response_array['order_status']==="Failure")
 	{
-		echo "<br>Thank you for shopping with us.However,the transaction has been declined.";
+		echo "The payment was declined. Please try again.";	
 	}
 	else
 	{
-		echo "<br>Security Error. Illegal access detected";
-	
+		echo "Illegal access was detected. Please try again.";
 	}
-
-	echo "<br><br>";
-
-	echo "<table cellspacing=4 cellpadding=4>";
-	for($i = 0; $i < $dataSize; $i++) 
-	{
-		$information=explode('=',$decryptValues[$i]);
-	    	echo '<tr><td>'.$information[0].'</td><td>'.$information[1].'</td></tr>';
-	}
-
-	echo "</table><br>";
-	echo "</center>";
 ?>
