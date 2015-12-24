@@ -30352,6 +30352,7 @@ function form286_ini()
 									"<input type='hidden' name='redirect_url' value='https://vyavsaay.com/ajax_json/payment_response.php'>"+
 									"<input type='hidden' name='billing_name' value='"+result.account_name+"'>"+
 									"<input type='hidden' name='billing_address' value='"+get_session_var('address')+"'>"+
+									"<input type='hidden' name='billing_country' value='India'>"+
 									"<input type='hidden' name='billing_tel' value='"+get_session_var('phone')+"'>"+
 									"<input type='hidden' name='billing_email' value='"+get_session_var('email')+"'>"+
 									"<input type='hidden' name='merchant_param1' value='"+get_session_var('domain')+"'>"+
