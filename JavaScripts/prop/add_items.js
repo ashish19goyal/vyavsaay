@@ -17651,7 +17651,10 @@ function form293_add_item()
 		$('#form293_body').prepend(rowsHTML);
 		
 		var fields=document.getElementById("form293_"+id);
+		var user_filter=fields.elements[0];
 		var status_filter=fields.elements[5];
+		
+		$(user_filter).focus();
 		
 		set_static_value_list_json('user_profile','status',status_filter);
 

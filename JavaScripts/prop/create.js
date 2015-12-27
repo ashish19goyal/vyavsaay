@@ -19638,7 +19638,7 @@ function form293_create_item(form)
 		new_columns.database='0';
 		
 		new_columns.indexes=[{index:'id',value:form.elements[6].value},
-							{index:'username',value:form.elements[0].value},
+							{index:'username',value:form.elements[0].value,unique:'yes'},
 							{index:'phone',value:form.elements[2].value},
 							{index:'name',value:form.elements[1].value},
 							{index:'status',value:form.elements[5].value},
