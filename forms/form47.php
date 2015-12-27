@@ -3,7 +3,7 @@
 		<fieldset>
 				<label>Current Password: <input type="password" form='form47_master'></label><br>
 				<label>New Password: <input type="password" form='form47_master'></label><br>
-				<label>Retype Password: <input type="password" form='form47_master' onkeydown="form47_verify_password($(this));"></label>
+				<label>Retype Password: <input type="password" form='form47_master' onkeyup="form47_verify_password($(this));"></label>
 				<br><label class="form47_verify"></label><br>
 				<label><input type="button" title="Save" class='save_icon' form='form47_master' onclick="form47_update_form();" disabled='true'></label>
 		</fieldset>
