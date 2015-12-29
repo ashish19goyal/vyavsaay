@@ -17672,3 +17672,162 @@ function form293_add_item()
 		$("#modal2").dialog("open");
 	}		
 }
+
+/**
+ * @form Create bill (Sehgal)
+ * @formNo 294
+ */
+function form294_add_item()
+{
+	var filter_fields=document.getElementById('form294_master');
+	var bill_type=filter_fields.elements['tax_type'].value;
+	var customer_name=filter_fields.elements['customer'].value;
+	
+	if(is_create_access('form294'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form294_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='S.No.'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='text' class='wideinput' required form='form294_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new item' id='form294_add_product_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' min='0' required form='form294_"+id+"' step='any'> <b id='form294_unit_"+id+"'></b>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Price'>";
+				rowsHTML+="<b>Rate</b>: Rs. <input type='number' required form='form294_"+id+"' step='any'>";
+				rowsHTML+="<br><b>Amount</b>: Rs. <input type='number' required readonly='readonly' form='form294_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Store'>";
+				rowsHTML+="<input type='text' required form='form294_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form294_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='submit_hidden' form='form294_"+id+"' id='save_form294_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form294_"+id+"' id='delete_form294_"+id+"' onclick='$(this).parent().parent().remove();form294_update_serial_numbers(); form294_get_totals();'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form294_"+id+"'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form294_body').append(rowsHTML);
+		
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+
+		var fields=document.getElementById("form294_"+id);
+		var name_filter=fields.elements[0];
+		var quantity_filter=fields.elements[1];
+		var price_filter=fields.elements[2];
+		var amount_filter=fields.elements[3];
+		var storage_filter=fields.elements[4];
+		var id_filter=fields.elements[5];
+		var save_button=fields.elements[6];
+		
+		$(save_button).on("click", function(event)
+		{
+			event.preventDefault();
+			form294_create_item(fields);
+		});
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form294_add_item();
+		});
+		
+		var add_product=document.getElementById('form294_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal112_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
+		});
+
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+				
+		set_my_value_list_func(product_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		});
+
+		var store_data="<store_areas>" +
+				"<name></name>" +
+				"</store_areas>";				
+		set_my_value_list(store_data,storage_filter);
+
+		$(name_filter).on('keydown',function(e)
+		{
+			if(e.keyCode==118)
+			{
+				e.preventDefault();
+				modal83_action(name_filter.value);
+			}
+		});
+
+		$(name_filter).on('blur',function(event)
+		{
+			var unit_data="<attributes count='1'>"+
+						"<value></value>"+
+						"<attribute exact='yes'>Unit</attribute>"+
+						"<name exact='yes'>"+name_filter.value+"</name>"+
+						"</attributes>";
+			get_single_column_data(function(units)
+			{
+				if(units.length>0)
+					$('#form294_unit_'+id).html(units[0]);
+			},unit_data);			
+
+			
+			if(bill_type=='undefined' || bill_type=='')
+			{
+				var price_data="<product_instances count='1'>" +
+					"<sale_price></sale_price>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+					"</product_instances>";
+				set_my_value(price_data,price_filter);
+			}
+			else
+			{
+				var price_data="<sale_prices count='1'>" +
+						"<sale_price></sale_price>" +
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+						"<billing_type>"+bill_type+"</billing_type>" +
+						"</sale_prices>";
+				set_my_value(price_data,price_filter);
+			}
+
+			get_inventory(name_filter.value,'',function(inventory)
+			{
+				$(quantity_filter).attr('placeholder',parseFloat(inventory));
+			});
+
+			quantity_filter.value="";
+			amount_filter.value=0;
+		});
+
+		$(price_filter).add(quantity_filter).on('blur',function(event)
+		{
+			var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
+			amount_filter.value=my_round(amount,2);				
+		});
+
+		form294_update_serial_numbers();
+		form294_get_totals();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

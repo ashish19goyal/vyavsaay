@@ -293,7 +293,7 @@ function modal_forms_ini()
 	   		}
 		});
 	}
-	for(var i=50;i<=82;i++)
+	for(var i=50;i<=83;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,

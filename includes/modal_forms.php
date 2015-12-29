@@ -649,8 +649,7 @@
 		<br>
 		Previous Quotations
 		<table id='modal57_quot_table'>
-		</table>
-		
+		</table>	
 	</div>
 
 	<div id="modal58" title="Promotions Sent">
@@ -753,6 +752,11 @@
 		Selected AWB # is not marked for delivery. Please check again.
 	</div>
 
+	<div id="modal83" title="Store Inventory">
+		<table id='modal83_inventory_table'>
+		</table>
+	</div>
+	
 	<div id="modal101" title="Email Document">
 		<form id='modal101_form' autocomplete="off">
 			<fieldset>

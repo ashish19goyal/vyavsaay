@@ -8227,7 +8227,7 @@ function form92_ini()
 			$(edit_button).on("click", function(event)
 			{
 				event.preventDefault();
-				element_display(result.id,'form119',['form91','form130','form154','form225']);
+				element_display(result.id,'form119',['form91','form130','form154','form225','form294']);
 			});
 		});
 
@@ -31082,3 +31082,163 @@ function form293_ini()
 		hide_loader();
 	});
 };
+
+/**
+ * @form Create Bills (Sehgal)
+ * @formNo 294
+ * @Loading light
+ */
+function form294_ini()
+{
+	var bill_id=$("#form294_link").attr('data_id');
+	if(bill_id==null)
+		bill_id="";	
+	
+	$('#form294_body').html("");
+	$('#form294_foot').html("");
+	document.getElementById('form294_customer_info').innerHTML="";
+	
+	if(bill_id!="")
+	{
+		show_loader();
+		var bill_columns="<bills>" +
+				"<id>"+bill_id+"</id>" +
+				"<bill_num></bill_num>"+
+				"<customer_name></customer_name>" +
+				"<total></total>" +
+				"<bill_date></bill_date>" +
+				"<amount></amount>" +
+				"<discount></discount>" +
+				"<cartage></cartage>"+
+				"<tax></tax>" +
+				"<tax_rate></tax_rate>"+
+				"<billing_type></billing_type>" +
+				"<transaction_id></transaction_id>" +
+				"</bills>";
+		var bill_items_column="<bill_items>" +
+				"<id></id>" +
+				"<item_name></item_name>" +
+				"<item_desc></item_desc>"+
+				"<unit_price></unit_price>" +
+				"<quantity></quantity>" +
+				"<storage></storage>"+				
+				"<unit></unit>"+				
+				"<amount></amount>" +
+				"<total></total>" +
+				"<discount></discount>" +
+				"<type></type>" +
+				"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
+				"<tax></tax>" +
+				"</bill_items>";
+	
+		////separate fetch function to get bill details like customer name, total etc.
+		fetch_requested_data('',bill_columns,function(bill_results)
+		{
+			var filter_fields=document.getElementById('form294_master');
+			if (bill_results.length>0)
+			{
+				filter_fields.elements['customer'].value=bill_results[0].customer_name;
+				filter_fields.elements['tax_type'].value=bill_results[0].billing_type;
+				filter_fields.elements['date'].value=get_my_past_date(bill_results[0].bill_date);
+				filter_fields.elements['bill_num'].value=bill_results[0].bill_num;
+				filter_fields.elements['bill_id'].value=bill_id;				
+
+				var save_button=filter_fields.elements['save'];
+				var cst_filter=filter_fields.elements['cst'];
+				var tin_filter=filter_fields.elements['tin'];
+
+				var cst_data="<attributes>"+
+							"<value></value>"+
+							"<type exact='yes'>customer</type>"+
+							"<attribute exact='yes'>CST#</attribute>"+
+							"<name exact='yes'>"+bill_results[0].customer_name+"</name>"+
+							"</attributes>";
+				set_my_value(cst_data,cst_filter);
+
+				var tin_data="<attributes>"+
+							"<value></value>"+
+							"<type exact='yes'>customer</type>"+
+							"<attribute exact='yes'>TIN#</attribute>"+
+							"<name exact='yes'>"+bill_results[0].customer_name+"</name>"+
+							"</attributes>";
+				set_my_value(tin_data,tin_filter);
+								
+				var address_data="<customers>" +
+						"<address></address>" +
+						"<city></city>" +
+						"<acc_name exact='yes'>"+bill_results[0].customer_name+"</acc_name>" +
+						"</customers>";
+				fetch_requested_data('',address_data,function(addresses)
+				{
+					var address_string="";
+					if(addresses.length>0)
+					{
+						address_string+=addresses[0].address+", "+addresses[0].city;
+					}
+					document.getElementById('form294_customer_info').innerHTML="Address<br>"+address_string;
+				});
+
+				$(save_button).off('click');
+				$(save_button).on("click", function(event)
+				{
+					event.preventDefault();
+					form294_update_form();
+				});
+
+				var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+							"<td>Amount:<disc><br>Discount: </disc><br>Tax:@ <input type='number' value='"+bill_results[0].tax_rate+"' step='any' id='form294_tax' class='dblclick_editable'>%<br>Cartage: <br>Total: </td>" +
+							"<td>Rs. "+bill_results[0].amount+"</br>" +
+							"<disc_amount>Rs. <input type='number' value='"+bill_results[0].discount+"' step='any' id='form294_discount' class='dblclick_editable'><br></disc_amount>" +
+							"Rs. "+bill_results[0].tax+" <br>" +
+							"Rs. <input type='number' value='"+bill_results[0].cartage+"' step='any' id='form294_cartage' class='dblclick_editable'><br>" +
+							"Rs. "+bill_results[0].total+"</td>" +
+							"<td></td>" +
+							"</tr>";
+				
+				$('#form294_foot').html(total_row);
+				longPressEditable($('.dblclick_editable'));				
+			}
+		
+			fetch_requested_data('',bill_items_column,function(results)
+			{
+				results.forEach(function(result)
+				{
+					var id=result.id;
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form294_"+id+"'></form>";
+						rowsHTML+="<td data-th='S.No.'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Item'>";
+							rowsHTML+="<textarea readonly='readonly' form='form294_"+id+"'>"+result.item_name+"</textarea>";
+							if(result.item_desc!='undefined' || result.item_desc!="")
+							{							
+								rowsHTML+="<br>"+result.item_desc;
+							}							
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Quantity'>";
+							rowsHTML+="<input type='number' readonly='readonly' form='form294_"+id+"' value='"+result.quantity+"' step='any'> <b>"+result.unit+"</b>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Price'>";
+							rowsHTML+="<b>Rate</b>: Rs. <input type='number' readonly='readonly' form='form294_"+id+"' value='"+result.unit_price+"' step='any'>";
+							rowsHTML+="<br><b>Amount</b>: Rs. <input type='number' readonly='readonly' form='form294_"+id+"' value='"+result.amount+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Store'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form294_"+id+"' value='"+result.storage+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form294_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='button' class='submit_hidden' form='form294_"+id+"' id='save_form294_"+id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form294_"+id+"' id='delete_form294_"+id+"' onclick='form294_delete_item($(this)); form294_get_totals();'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";
+				
+					$('#form294_body').prepend(rowsHTML);	
+				});
+			
+				form294_update_serial_numbers();
+				$('textarea').autosize();
+				hide_loader();
+			});
+		});
+	}
+}

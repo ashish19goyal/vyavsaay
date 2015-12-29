@@ -481,6 +481,8 @@
 	"leads_search":"Leads Search",
 	"receipts_receivable_nvs":"Receipts Receivable (NVS)",
 	"vyavsaay_billing":"Vyavsaay Billing",
-	"vyavsaay_accounts":"Vyavsaay Accounts"
+	"vyavsaay_accounts":"Vyavsaay Accounts",
+	"create_bill_sehgal":"Create Bill (Sehgal)",
+	"create_purchase_bill_sehgal":"Create Purchase Bill (Sehgal)"
 	}
 }

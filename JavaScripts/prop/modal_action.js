@@ -5855,6 +5855,35 @@ function modal57_action(item_name,customer)
 	$("#modal57").dialog("open");
 }
 
+/**
+ * @modalNo 83
+ * @modal Store Inventory
+ */
+function modal83_action(item_name)
+{
+	var utilization_xml="<area_utilization>"+
+						"<name></name>"+
+						"<item_name></item_name>"+
+						"</area_utilization>";
+	fetch_requested_data('',utilization_xml,function (areas) 
+	{
+		var item_table=document.getElementById("modal83_inventory_table");
+		item_table.innerHTML="";
+		var item_head=document.createElement('tr');
+		item_head.innerHTML="<th>Storage</th><th>Quantity</th>";
+		item_table.appendChild(item_head);
+		areas.forEach(function(area)
+		{
+			var item_row=document.createElement('tr');
+			get_store_inventory(area.name,area.item_name,'',function(inventory)
+			{
+				item_row.innerHTML="<td>"+area.name+"</td><td>"+inventory+"</td>";
+				item_table.appendChild(item_row);
+			});
+		});
+	});	
+	$("#modal83").dialog("open");
+}
 
 /**
  * @modal Email documents

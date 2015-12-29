@@ -6174,3 +6174,204 @@ function print_form292(id,func)
 	
 	func(container);
 }
+
+function form294_print_form()
+{
+	print_form294(function(container)
+	{
+		$.print(container);
+		container.innerHTML="";	
+	});
+}
+
+/**
+ * @form Create Bill (Sehgal)
+ * @formNo 294
+ */
+function print_form294(func)
+{
+	var form_id='form294';
+	
+////////////setting up containers///////////////////////	
+	var container=document.createElement('div');
+	var header=document.createElement('div');
+		var logo=document.createElement('div');
+		var business_intro=document.createElement('div');
+	
+	var invoice_line=document.createElement('div');
+	
+	var info_section=document.createElement('div');	
+		var customer_info=document.createElement('div');
+		var business_info=document.createElement('div');
+
+	var table_container=document.createElement('div');
+
+	var footer=document.createElement('div');
+		var tandc=document.createElement('div');
+		var signature=document.createElement('div');
+		var business_contact=document.createElement('div');
+	
+////////////setting styles for containers/////////////////////////
+
+	header.setAttribute('style','width:100%;text-align:center');
+		business_intro.setAttribute('style','width:100%;text-align:center;font-size:18px;margin:10px;');
+		invoice_line.setAttribute('style','width:100%;text-align:center;font-size:18px;margin:10px;');
+	info_section.setAttribute('style','width:100%;font-size:14px;');
+		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:90px;border: 1px solid #000;border-radius:5px;');
+		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:90px;border: 1px solid #000;border-radius:5px;');
+	footer.setAttribute('style','width:100%;min-height:100px;font-size:14px;');
+		tandc.setAttribute('style','float:left;width:60%;min-height:50px');
+		signature.setAttribute('style','float:right;width:30%;min-height:60px');
+	business_contact.setAttribute('style','width:100%;text-align:center;margin:10px;');
+	
+///////////////getting the content////////////////////////////////////////
+
+	var bt=get_session_var('title');
+	var font_size=get_session_var('print_size');
+	var logo_image=get_session_var('logo');
+	var business_intro_text=get_session_var('business_intro');
+	var business_address=get_session_var('address');
+	var business_phone=get_session_var('phone');
+	var business_email=get_session_var('email');
+	var business_website=get_session_var('website');
+
+	var master_form=document.getElementById('form294_master');
+	var customer_name=master_form.elements['customer'].value;
+	var customer_address1=document.getElementById('form294_customer_info').innerHTML;
+	var customer_address=customer_address1.replace("Address<br>","");
+	var date=master_form.elements['date'].value;
+	var invoice_no=master_form.elements['bill_num'].value;
+	var customer_cst=master_form.elements['cst'].value;	
+	var customer_tin=master_form.elements['tin'].value;
+	var tin_no=get_session_var('tin');
+	var sales_tax_no=get_session_var('sales_tax_no');	
+	var service_tax_no=get_session_var('service_tax_no');	
+	var tax_text="Tin No: "+tin_no;
+	
+	var invoice_text="Invoice";
+	var tandc_text=get_session_var('bill_message');
+	var signature_text="<br>For "+bt+"<br><br><br>Auth. Signatory<br>";
+	
+	////////////////filling in the content into the containers//////////////////////////
+
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
+	business_intro.innerHTML="<hr style='border: 1px solid #000;margin:2px;'>"+business_intro_text;
+	business_contact.innerHTML="<hr style='border: 1px solid #000;margin:2px;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website+"<hr style='border: 1px solid #000;margin:2px;'>";
+	invoice_line.innerHTML="<hr style='border: 1px solid #000;margin:2px'><div style='text-align:center;'><b style='text-size:1.2em'>"+invoice_text+"</b></div><hr style='border: 1px solid #000;margin:2px'>";
+
+	customer_info.innerHTML="<b>Customer</b><br>"+customer_name+"<br>"+customer_address+"<br>CST#: "+customer_cst+"<br>TIN#: "+customer_tin;
+
+	business_info.innerHTML=tax_text+"<br>Date: "+date+"<br>Invoice No: "+invoice_no;
+
+	tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
+	signature.innerHTML=signature_text;
+
+	var table_element=document.getElementById(form_id+'_body');
+	/////////////adding new table //////////////////////////////////////////////////////	
+
+	var new_table=document.createElement('table');
+	new_table.setAttribute('style','width:100%;font-size:14px;border:1px solid black;text-align:left;');
+	new_table.setAttribute('class','plain_table');
+	var table_header="<tr>"+
+				"<td style='border: 1px solid #000;text-align:left;width:8%;'>S.No.</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:32%;'>Item Name</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:20%'>Quantity</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:20%'>Rate</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:20%'>Amount</td></tr>";
+
+	var table_rows=table_header;
+	var counter=0;
+
+	$(table_element).find('form').each(function(index)
+	{
+		counter+=1;
+		var form=$(this)[0];
+		var item_name=form.elements[0].value;
+		var quantity=""+form.elements[1].value;
+		var rate=form.elements[2].value;
+		var amount=form.elements[3].value;
+		
+		table_rows+="<tr>"+
+				"<td style='border: 1px solid #000;text-align:left;'>"+counter+"</td>"+
+				"<td style='border: 1px solid #000;text-align:left;'>"+item_name+"</td>"+
+				"<td style='border: 1px solid #000;text-align:left;'>"+quantity+"</td>"+
+				"<td style='border: 1px solid #000;text-align:left;'>"+rate+"</td>"+
+				"<td style='border: 1px solid #000;text-align:left;'>"+amount+"</td></tr>";
+	});
+
+	var total_amount=0;
+	$("[id^='save_form294']").each(function(index)
+	{
+		var subform_id=$(this).attr('form');
+		var subform=document.getElementById(subform_id);
+		if(!isNaN(parseFloat(subform.elements[3].value)))
+			total_amount+=parseFloat(subform.elements[3].value);		
+	});
+
+	var tax_rate=0;
+	var discount=0;
+	var cartage=0;
+	if(document.getElementById('form294_discount'))
+	{
+		discount=parseFloat(document.getElementById('form294_discount').value);
+		tax_rate=parseFloat(document.getElementById('form294_tax').value);
+		cartage=parseFloat(document.getElementById('form294_cartage').value);
+	}
+
+	var total_amount=my_round(total_amount,2);
+	var tax=my_round((tax_rate*((total_amount-discount)/100)),2);		
+	var total_total=my_round(total_amount+tax-discount+cartage,0);
+
+	var wording_total=number2text(total_total);
+	
+	var row_count=$(table_element).find('tbody>tr').length;
+	var rows_to_add=12-row_count;
+	
+	for(var i=0;i<rows_to_add;i++)
+	{
+		table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td></tr>";
+	}
+
+	var table_foot=document.getElementById(form_id+'_foot');
+	var total_quantity=$(table_foot).find('tr>td:first')[0].innerHTML;
+	var total_text_element=$(table_foot).find('tr>td:nth-child(2)');
+	var total_amount_element=$(table_foot).find('tr>td:nth-child(3)');
+	
+	$(total_amount_element).add(total_text_element).find("input").each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+
+	var total_text=$(total_text_element)[0].innerHTML;
+	var total_amount=$(total_amount_element)[0].innerHTML;
+	
+	var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
+				"<td colspan='2' style='border: 1px solid #000;text-align:left;'>Total (in words): "+wording_total+"</td>"+
+				"<td colspan='1' style='border: 1px solid #000;text-align:left;'>"+total_text+"</td>"+
+				"<td colspan='2' style='border: 1px solid #000;text-align:left;font-size:1.2em;font-weight:bold;'>"+total_amount+"</td></tr>";
+		
+	table_rows+=table_foot_row;
+	new_table.innerHTML=table_rows;
+	
+	/////////////placing the containers //////////////////////////////////////////////////////	
+	
+	container.appendChild(header);
+	container.appendChild(invoice_line);
+	container.appendChild(info_section);
+	
+	container.appendChild(new_table);
+	container.appendChild(footer);
+	
+	header.appendChild(logo);
+	header.appendChild(business_intro);
+	
+	info_section.appendChild(customer_info);
+	info_section.appendChild(business_info);
+	
+	footer.appendChild(tandc);
+	footer.appendChild(signature);
+	
+	container.appendChild(business_contact);
+	
+	func(container);
+}

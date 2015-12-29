@@ -9048,3 +9048,33 @@ function form293_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Create Bills (Sehgal)
+ * @formNo 294
+ * @param button
+ */
+function form294_delete_item(button)
+{
+	if(is_delete_access('form294'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var data_id=form.elements[5].value;
+					
+			var data_xml="<bill_items>" +
+						"<id>"+data_id+"</id>" +
+						"</bill_items>";	
+			delete_simple(data_xml);
+					
+			$(button).parent().parent().remove();
+			form294_update_serial_numbers();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
