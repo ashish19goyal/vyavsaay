@@ -9078,3 +9078,33 @@ function form294_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Create Purchase Bills (Sehgal)
+ * @formNo 295
+ * @param button
+ */
+function form295_delete_item(button)
+{
+	if(is_delete_access('form295'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var data_id=form.elements[5].value;
+					
+			var data_xml="<supplier_bill_items>" +
+						"<id>"+data_id+"</id>" +
+						"</supplier_bill_items>";	
+			delete_simple(data_xml);
+					
+			$(button).parent().parent().remove();
+			form295_update_serial_numbers();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

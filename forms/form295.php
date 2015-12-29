@@ -20,8 +20,7 @@
 					<th style='width:50px'>S.No</th>
 					<th>Item</th>
 					<th>Quantity</th>
-					<th>Rate</th>					
-					<th>Amount</th>					
+					<th>Price</th>					
 					<th>Store</th>
 					<th><input type='button' form='form295_header' title='Add item' class='add_icon' onclick='form295_add_item();'></th>
 			</tr>

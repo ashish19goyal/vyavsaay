@@ -17831,3 +17831,137 @@ function form294_add_item()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Create Purchase bill (Sehgal)
+ * @formNo 295
+ */
+function form295_add_item()
+{
+	var filter_fields=document.getElementById('form295_master');
+	var supplier_name=filter_fields.elements['supplier'].value;
+	
+	if(is_create_access('form295'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form295_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='S.No.'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='text' class='wideinput' required form='form295_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new item' id='form295_add_product_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' min='0' required form='form295_"+id+"' step='any'> <b id='form295_unit_"+id+"'></b>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Price'>";
+				rowsHTML+="<b>Rate</b>: Rs. <input type='number' required form='form295_"+id+"' step='any'>";
+				rowsHTML+="<br><b>Amount</b>: Rs. <input type='number' required readonly='readonly' form='form295_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Store'>";
+				rowsHTML+="<input type='text' required form='form295_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form295_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='submit_hidden' form='form295_"+id+"' id='save_form295_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form295_"+id+"' id='delete_form295_"+id+"' onclick='$(this).parent().parent().remove();form295_update_serial_numbers(); form295_get_totals();'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form295_"+id+"'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form295_body').append(rowsHTML);
+		
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+
+		var fields=document.getElementById("form295_"+id);
+		var name_filter=fields.elements[0];
+		var quantity_filter=fields.elements[1];
+		var price_filter=fields.elements[2];
+		var amount_filter=fields.elements[3];
+		var storage_filter=fields.elements[4];
+		var id_filter=fields.elements[5];
+		var save_button=fields.elements[6];
+		
+		$(save_button).on("click", function(event)
+		{
+			event.preventDefault();
+			form295_create_item(fields);
+		});
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form295_add_item();
+		});
+		
+		var add_product=document.getElementById('form295_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal112_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
+		});
+
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list_func(product_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		});
+
+		var store_data="<store_areas>" +
+				"<name></name>" +
+				"</store_areas>";				
+		set_my_value_list(store_data,storage_filter);
+
+		$(name_filter).on('keydown',function(e)
+		{
+			if(e.keyCode==118)
+			{
+				e.preventDefault();
+				modal83_action(name_filter.value);
+			}
+		});
+
+		$(name_filter).on('blur',function(event)
+		{
+			var unit_data="<attributes count='1'>"+
+						"<value></value>"+
+						"<attribute exact='yes'>Unit</attribute>"+
+						"<name exact='yes'>"+name_filter.value+"</name>"+
+						"</attributes>";
+			get_single_column_data(function(units)
+			{
+				if(units.length>0)
+					$('#form295_unit_'+id).html(units[0]);
+			},unit_data);			
+
+			
+			quantity_filter.value="";
+			amount_filter.value=0;
+		});
+
+		$(price_filter).add(quantity_filter).on('blur',function(event)
+		{
+			var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
+			amount_filter.value=my_round(amount,2);				
+		});
+
+		form295_update_serial_numbers();
+		form295_get_totals();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

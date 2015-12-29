@@ -1213,3 +1213,53 @@ function form294_get_totals()
 	$('#form294_foot').html(total_row);
 	longPressEditable($('.dblclick_editable'));
 }
+
+function form295_update_serial_numbers()
+{
+	$('#form295_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)').html(index+1);
+	});
+}
+
+function form295_get_totals()
+{
+	var form=document.getElementById("form295_master");
+		
+	var amount=0;
+	var discount=0;
+	var cartage=0;
+	var tax_rate=0;
+	
+	if(document.getElementById('form295_discount'))
+	{
+		discount=parseFloat(document.getElementById('form295_discount').value);
+		tax_rate=parseFloat(document.getElementById('form295_tax').value);
+		cartage=parseFloat(document.getElementById('form295_cartage').value);
+	}
+
+	$("[id^='save_form295']").each(function(index)
+	{
+		var subform_id=$(this).attr('form');
+		var subform=document.getElementById(subform_id);
+		if(!isNaN(parseFloat(subform.elements[3].value)))
+			amount+=parseFloat(subform.elements[3].value);		
+	});
+
+	var amount=my_round(amount,2);
+	var tax=my_round((tax_rate*((amount-discount)/100)),2);		
+	var total=my_round(amount+tax-discount+cartage,0);
+	
+	var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+				"<td>Amount:<disc><br>Discount: </disc><br>Tax:@ <input type='number' value='"+tax_rate+"' step='any' id='form295_tax' class='dblclick_editable'>% <br>Cartage: <br>Total: </td>" +
+				"<td>Rs. "+amount+"</br>" +
+				"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form295_discount' class='dblclick_editable'></br></disc_amount>" +
+				"Rs. "+tax+" <br>" +
+				"Rs. <input type='number' value='0.00' step='any' id='form295_cartage' class='dblclick_editable'></br>" +
+				"Rs. "+total+"</td>" +
+				"<td></td>" +
+				"</tr>";
+	
+	$('#form295_foot').html(total_row);
+	longPressEditable($('.dblclick_editable'));
+}

@@ -15123,3 +15123,135 @@ function form294_update_form()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Create Purchase Bill(Sehgal)
+ * @formNo 295
+ * @param button
+ */
+function form295_update_form()
+{
+	if(is_update_access('form295'))
+	{
+		var form=document.getElementById("form295_master");
+		
+		var form=document.getElementById("form295_master");
+		var supplier=form.elements['supplier'].value;
+		var bill_date=get_raw_time(form.elements['date'].value);
+		var entry_date=get_raw_time(form.elements['entry_date'].value);
+		var bill_num=form.elements['bill_num'].value;
+
+		var amount=0;
+		var discount=0;
+		var tax_rate=0;
+		var cartage=0;
+		
+		if(document.getElementById('form295_discount'))
+		{
+			discount=parseFloat(document.getElementById('form295_discount').value);
+			tax_rate=parseFloat(document.getElementById('form295_tax').value);
+			cartage=parseFloat(document.getElementById('form295_cartage').value);
+		}
+		
+		$("[id^='save_form295']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+			if(!isNaN(parseFloat(subform.elements[3].value)))
+				amount+=Math.round(parseFloat(subform.elements[3].value));
+		});
+
+		var amount=my_round(amount,2);
+		var tax=my_round((tax_rate*((amount-discount))/100),2);
+		var total=my_round(amount+tax-discount+cartage,0);
+
+		var data_id=form.elements['bill_id'].value;
+		var last_updated=get_my_time();		
+		
+		var data_xml="<supplier_bills>" +
+					"<id>"+data_id+"</id>" +
+					"<supplier>"+supplier+"</supplier>" +
+					"<bill_date>"+bill_date+"</bill_date>" +
+					"<entry_date>"+entry_date+"</entry_date>" +
+					"<amount>"+amount+"</amount>" +
+					"<total>"+total+"</total>" +
+					"<bill_id>"+bill_num+"</bill_id>" +
+					"<discount>"+discount+"</discount>" +
+					"<cartage>"+cartage+"</cartage>" +
+					"<tax>"+tax+"</tax>" +
+					"<tax_rate>"+tax_rate+"</tax_rate>"+
+					"<transaction_id>"+data_id+"</transaction_id>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</supplier_bills>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>bills</tablename>" +
+					"<link_to>form53</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Purchase Bill # "+bill_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var transaction_xml="<transactions>" +
+					"<id>"+data_id+"</id>" +
+					"<trans_date>"+get_my_time()+"</trans_date>" +
+					"<amount>"+total+"</amount>" +
+					"<giver>"+supplier+"</giver>" +
+					"<receiver>master</receiver>" +
+					"<tax>"+tax+"</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</transactions>";
+		update_row(data_xml,activity_xml);
+		update_simple(transaction_xml);
+
+		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+					"<td>Amount:<disc><br>Discount:</disc><br>Tax:@ <input type='number' value='"+tax_rate+"' step='any' id='form295_tax' class='dblclick_editable'>% <br>Cartage: <br>Total: </td>" +
+					"<td>Rs. "+amount+"</br>" +
+					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form295_discount' class='dblclick_editable'><br></disc_amount>" +
+					"Rs. "+tax+" <br>" +
+					"Rs. <input type='number' value='"+cartage+"' step='any' id='form295_cartage' class='dblclick_editable'></br>" +
+					"Rs. "+total+"</td>" +
+					"<td></td>" +
+					"</tr>";
+		
+		$('#form295_foot').html(total_row);
+		longPressEditable($('.dblclick_editable'));
+
+		var payment_data="<payments>" +
+				"<id></id>" +
+				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
+				"</payments>";
+		get_single_column_data(function(payments)
+		{
+			if(payments.length>0)
+			{
+				var payment_xml="<payments>" +
+							"<id>"+payments[0]+"</id>" +
+							"<type>paid</type>" +
+							"<total_amount>"+total+"</total_amount>" +
+							"<acc_name>"+supplier+"</acc_name>" +
+							"<transaction_id>"+payments[0]+"</transaction_id>" +
+							"<bill_id>"+data_id+"</bill_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</payments>";
+				var pt_xml="<transactions>" +
+							"<id>"+payments[0]+"</id>" +
+							"<amount>"+total+"</amount>" +
+							"<giver>master</giver>" +
+							"<receiver>"+supplier+"</receiver>" +
+							"<tax>0</tax>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</transactions>";
+				update_simple_func(payment_xml,function()
+				{
+					modal28_action(payments[0]);
+				});
+			}
+		},payment_data);
+
+		$("[id^='save_form295_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
