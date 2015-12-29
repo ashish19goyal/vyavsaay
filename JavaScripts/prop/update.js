@@ -15255,3 +15255,136 @@ function form295_update_form()
 		$("#modal2").dialog("open");
 	}
 }
+
+
+/**
+ * @form New Purchase Order
+ * @param button
+ */
+function form296_update_form()
+{
+	if(is_update_access('form296'))
+	{
+		var form=document.getElementById("form296_master");
+		
+		var supplier=form.elements['supplier'].value;
+		var order_date=get_raw_time(form.elements['date'].value);		
+		var order_num=form.elements['order_num'].value;
+		var status=form.elements['status'].value;		
+		var data_id=form.elements['order_id'].value;
+		var last_updated=get_my_time();
+		
+		var amount=0;
+		var tax=0;
+		var total=0;
+		var total_quantity=0;
+		
+		$("[id^='save_form296']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+			
+			if(!isNaN(parseFloat(subform.elements[6].value)))
+			{
+				amount+=parseFloat(subform.elements[6].value);
+				tax+=parseFloat(subform.elements[8].value);
+				total+=parseFloat(subform.elements[9].value);
+			}
+			if(!isNaN(parseFloat(subform.elements[2].value)))			
+				total_quantity+=parseFloat(subform.elements[2].value);						
+		
+		});
+		
+		total=amount+tax;
+		
+		if(form.elements['cst'].checked)
+		{
+			cst='yes';
+			//tax+=my_round(.02*amount,2);
+			//total+=my_round(.02*amount,2);
+		}
+
+		amount=my_round(amount,2);
+		tax=my_round(tax,2);
+		total=my_round(total,2);
+	
+		var total_row="<tr><td colspan='2' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
+								"<td>Amount:<br>Tax: <br>Total: </td>" +
+								"<td>Rs. "+amount+"<br>" +
+								"Rs. "+tax+"<br> " +
+								"Rs. "+total+"</td>" +
+								"<td></td>" +
+								"</tr>";
+						
+		$('#form296_foot').html(total_row);		
+
+		var data_xml="<purchase_orders>" +
+					"<id>"+data_id+"</id>" +
+					"<supplier>"+supplier+"</supplier>" +
+					"<order_date>"+order_date+"</order_date>" +
+					"<status>"+status+"</status>" +
+					"<order_num>"+order_num+"</order_num>" +
+					"<amount>"+amount+"</amount>" +
+					"<tax>"+tax+"</tax>" +
+					"<total>"+total+"</total>" +
+					"<total_quantity>"+total_quantity+"</total_quantity>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</purchase_orders>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>purchase_orders</tablename>" +
+					"<link_to>form297</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Purchase order # "+order_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		update_row(data_xml,activity_xml);
+		$("[id^='save_form296_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage Purchase orders (Sehgal)
+ * @param button
+ */
+function form297_update_item(form)
+{
+	if(is_update_access('form297'))
+	{
+		var order_num=form.elements[0].value;
+		var supplier_name=form.elements[1].value;
+		var order_date=get_raw_time(form.elements[2].value);
+		var status=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<purchase_orders>" +
+					"<id>"+data_id+"</id>" +
+					"<supplier>"+supplier_name+"</supplier>" +
+					"<order_date>"+order_date+"</order_date>" +
+					"<status>"+status+"</status>" +
+					"<order_num>"+order_num+"</order_num>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</purchase_orders>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>purchase_orders</tablename>" +
+					"<link_to>form297</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Purchase Order # "+order_num+" for supplier "+supplier_name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		update_row(data_xml,activity_xml);
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

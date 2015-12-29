@@ -1263,3 +1263,42 @@ function form295_get_totals()
 	$('#form295_foot').html(total_row);
 	longPressEditable($('.dblclick_editable'));
 }
+
+function form296_get_totals()
+{
+	var amount=0;
+	var tax=0;
+	var total=0;
+	var total_quantity=0;
+	
+	$("[id^='save_form296']").each(function(index)
+	{
+		var subform_id=$(this).attr('form');
+		var subform=document.getElementById(subform_id);
+		
+		if(!isNaN(parseFloat(subform.elements[6].value)))
+		{
+			amount+=parseFloat(subform.elements[6].value);
+			tax+=parseFloat(subform.elements[8].value);
+			total+=parseFloat(subform.elements[9].value);
+		}
+		if(!isNaN(parseFloat(subform.elements[2].value)))			
+			total_quantity+=parseFloat(subform.elements[2].value);		
+	});
+	
+	var form=document.getElementById("form296_master");
+	
+	amount=my_round(amount,2);
+	tax=my_round(tax,2);
+	total=my_round(total,2);
+		
+	var total_row="<tr><td colspan='2' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
+							"<td>Amount:<br>Tax: <br>Total: </td>" +
+							"<td>Rs. "+amount+"<br>" +
+							"Rs. "+tax+"<br> " +
+							"Rs. "+total+"</td>" +
+							"<td></td>" +
+							"</tr>";
+					
+	$('#form296_foot').html(total_row);
+}

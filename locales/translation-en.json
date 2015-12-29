@@ -483,6 +483,8 @@
 	"vyavsaay_billing":"Vyavsaay Billing",
 	"vyavsaay_accounts":"Vyavsaay Accounts",
 	"create_bill_sehgal":"Create Bill (Sehgal)",
-	"create_purchase_bill_sehgal":"Create Purchase Bill (Sehgal)"
+	"create_purchase_bill_sehgal":"Create Purchase Bill (Sehgal)",
+	"create_purchase_order_sehgal":"Create Purchase Order (Sehgal)",
+	"manage_purchase_order_sehgal":"Manage Purchase Order (Sehgal)"
 	}
 }

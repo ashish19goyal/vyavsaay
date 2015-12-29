@@ -1017,7 +1017,6 @@ function form43_delete_item(button)
 }
 
 
-
 /**
  * @form Manage Pamphlets
  * @param button
@@ -4780,14 +4779,8 @@ function form151_delete_expense(button)
 						"<notes>Expense for SR# "+request_id+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-			}	
+			delete_row(data_xml,activity_xml);
+				
 			$(button).parent().parent().remove();
 		});
 	}
@@ -4826,14 +4819,7 @@ function form152_delete_item(button)
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 	
-			if(is_online())
-			{
-				server_delete_row(bill_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(bill_xml,activity_xml);
-			}	
+			delete_row(bill_xml,activity_xml);
 			$(button).parent().parent().remove();
 	
 			
@@ -4842,14 +4828,8 @@ function form152_delete_item(button)
 					"<quotation_id exact='yes'>"+data_id+"</quotation_id>" +
 					"</quotation_items>";
 						
-			if(is_online())
-			{
-				server_delete_simple(items_data);
-			}
-			else
-			{
-				local_delete_simple(items_data);
-			}
+			delete_simple(items_data);
+			
 		});
 	}
 	else
@@ -9101,6 +9081,76 @@ function form295_delete_item(button)
 					
 			$(button).parent().parent().remove();
 			form295_update_serial_numbers();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage Purchase Orders (Sehgal)
+ * @param button
+ */
+function form297_delete_item(button)
+{
+	if(is_delete_access('form297'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var order_num=form.elements[0].value;
+			var supplier_name=form.elements[1].value;
+			var data_id=form.elements[4].value;
+			var last_updated=get_my_time();
+			var data_xml="<purchase_orders>" +
+						"<id>"+data_id+"</id>" +
+						"</purchase_orders>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>purchase_orders</tablename>" +
+						"<link_to>form297</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Purchase order # "+order_num+" for supplier "+supplier_name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			var other_delete="<purchase_order_items>" +
+					"<order_id>"+data_id+"</order_id>" +
+					"</purchase_order_items>";
+			delete_row(data_xml,activity_xml);
+			delete_simple(other_delete);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Create Purchase Order (Sehgal)
+ * @param button
+ */
+function form296_delete_item(button)
+{
+	if(is_delete_access('form296'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var data_id=form.elements[10].value;
+			var data_xml="<purchase_order_items>" +
+						"<id>"+data_id+"</id>" +
+						"</purchase_order_items>";	
+			delete_simple(data_xml);
+				
+			$(button).parent().parent().remove();
 		});
 	}
 	else

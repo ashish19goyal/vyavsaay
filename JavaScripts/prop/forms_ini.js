@@ -31273,6 +31273,8 @@ function form295_ini()
 				"<total></total>" +
 				"<tax_rate></tax_rate>"+
 				"<transaction_id></transaction_id>" +
+				"<order_id></order_id>" +
+				"<order_num></order_num>" +
 				"</supplier_bills>";
 		var bill_items_column="<supplier_bill_items>" +
 				"<id></id>" +
@@ -31299,6 +31301,8 @@ function form295_ini()
 				filter_fields.elements['date'].value=get_my_past_date(bill_results[0].bill_date);
 				filter_fields.elements['entry_date'].value=get_my_past_date(bill_results[0].entry_date);
 				filter_fields.elements['bill_num'].value=bill_results[0].bill_id;
+				filter_fields.elements['po_num'].value=bill_results[0].order_num;
+				filter_fields.elements['order_id'].value=bill_results[0].order_id;
 				filter_fields.elements['bill_id'].value=bill_id;	
 
 				var save_button=filter_fields.elements['save'];
@@ -31361,6 +31365,298 @@ function form295_ini()
 				});
 			
 				form295_update_serial_numbers();
+				$('textarea').autosize();
+				hide_loader();
+			});
+		});
+	}
+}
+
+/**
+ * @form Manage Purchase orders (Sehgal)
+ * @formNo 297
+ * @Loading light
+ */
+function form297_ini()
+{
+	show_loader();
+	var fid=$("#form297_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form297_header');
+	
+	//populating form 
+	var fnum=filter_fields.elements[0].value;
+	var fname=filter_fields.elements[1].value;
+	var fstatus=filter_fields.elements[2].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form297_index');
+	var prev_element=document.getElementById('form297_prev');
+	var next_element=document.getElementById('form297_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<purchase_orders count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<order_num>"+fnum+"</order_num>"+
+			"<supplier>"+fname+"</supplier>" +
+			"<order_date></order_date>" +
+			"<status>"+fstatus+"</status>" +
+			"<bill_id></bill_id>"+
+			"<cst></cst>"+
+			"</purchase_orders>";
+
+	$('#form297_body').html("");
+
+	fetch_requested_data('form297',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form297_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Order #'>";
+						rowsHTML+="<input type='text' class='input_link' onclick=\"element_display('"+result.id+"','form296');\" style='width:100%;'readonly='readonly' form='form297_"+result.id+"' value='"+result.order_num+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Supplier'>";
+						rowsHTML+="<textarea readonly='readonly' form='form297_"+result.id+"'>"+result.supplier+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Order Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form297_"+result.id+"' value='"+get_my_past_date(result.order_date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form297_"+result.id+"' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form297_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form297_"+result.id+"' title='Save order'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form297_"+result.id+"' title='Delete order' onclick='form297_delete_item($(this));'>";
+					if(result.status=='order placed' || result.status=='received' || result.status=='partially received' || result.status=='completely received')
+					{
+						rowsHTML+="<br><input type='button' name='issue_grn' class='generic_icon' form='form297_"+result.id+"' value='Issue GRN'>";
+					}
+					if(result.bill_id!='' && result.bill_id!='null')
+					{
+						rowsHTML+="<br><input type='button' name='view_bill' class='generic_icon' form='form297_"+result.id+"' value='View Bill'>";
+					}
+					
+					rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+
+			$('#form297_body').append(rowsHTML);
+			var fields=document.getElementById("form297_"+result.id);
+			var status_filter=fields.elements[3];
+
+			set_static_value_list('purchase_orders','status',status_filter);
+
+			$(fields).on("submit",function(event)
+			{
+				event.preventDefault();
+				form297_update_item(fields);
+			});
+			
+			if(result.bill_id!='' && result.bill_id!='null')
+			{
+				var view_button=fields.elements['view_bill'];
+				$(view_button).on('click',function()
+				{
+					modal137_action(result.bill_id);
+				});
+			}
+
+			if(result.status=='order placed' || result.status=='received' || result.status=='partially received' || result.status=='completely received')
+			{
+				var issue_button=fields.elements['issue_grn'];
+				$(issue_button).on('click',function()
+				{
+					element_display('','form295');
+					var master_form=document.getElementById('form295_master');
+					master_form.elements['supplier'].value=result.supplier;
+					master_form.elements['po_num'].value=result.order_num;
+					master_form.elements['order_id'].value=result.id;
+					
+					$(master_form.elements['bill_num']).focus();
+				});				
+			}
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements['export'];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'Purchase Orders');
+		});
+		hide_loader();
+	});
+};
+
+/**
+ * @form Create Purchase order (Sehgal)
+ * @formNo 296
+ * @Loading light
+ */
+function form296_ini()
+{
+	var order_id=$("#form296_link").attr('data_id');
+	if(order_id==null)
+		order_id="";	
+	
+	$('#form296_body').html("");
+	$('#form296_foot').html("");
+	
+	if(order_id!="")
+	{
+		show_loader();
+		var order_columns="<purchase_orders>" +
+				"<id>"+order_id+"</id>" +
+				"<order_num></order_num>"+
+				"<supplier></supplier>" +
+				"<order_date></order_date>" +
+				"<status></status>" +
+				"<amount></amount>"+
+				"<tax></tax>"+
+				"<total></total>"+
+				"</purchase_orders>";
+		var order_items_column="<purchase_order_items>" +
+				"<id></id>" +
+				"<item_name></item_name>" +
+				"<item_desc></item_desc>" +
+				"<quantity></quantity>" +
+				"<order_id exact='yes'>"+order_id+"</order_id>" +
+				"<make></make>" +
+				"<mrp></mrp>"+
+				"<price></price>" +
+				"<amount></amount>"+
+				"<tax></tax>"+
+				"<tax_rate></tax_rate>"+
+				"<total></total>"+				
+				"</purchase_order_items>";
+	
+		////separate fetch function to get order details like customer name, total etc.
+		fetch_requested_data('',order_columns,function(order_results)
+		{
+			var filter_fields=document.getElementById('form296_master');
+			
+			if(order_results.length>0)
+			{
+				filter_fields.elements['supplier'].value=order_results[0].supplier;
+				filter_fields.elements['date'].value=get_my_past_date(order_results[0].order_date);
+				filter_fields.elements['order_num'].value=order_results[0].order_num;
+				filter_fields.elements['status'].value=order_results[0].status;
+				filter_fields.elements['order_id'].value=order_id;
+				
+				var save_button=filter_fields.elements['save'];
+				
+				$(save_button).off('click');
+				$(save_button).on("click", function(event)
+				{
+					event.preventDefault();
+					form296_update_form();
+				});
+				
+				var supplier_address="<suppliers>"+
+									"<address></address>"+
+									"<pincode></pincode>"+
+									"<acc_name exact='yes'>"+order_results[0].supplier+"</acc_name>"+
+									"</suppliers>";
+				fetch_requested_data('',supplier_address,function(addresses)
+				{
+					if(addresses.length>0)
+					{
+						filter_fields.elements['address'].value=addresses[0].address+"-"+addresses[0].pincode;
+					}
+				});				
+			}
+		
+			fetch_requested_data('',order_items_column,function(results)
+			{
+				var data_array=[];
+				var counter=0;
+				results.forEach(function(result)
+				{
+					counter+=1;
+					var new_object=new Object();
+					new_object['S.No.']=counter;					
+					new_object['Item Name']=result.item_name;
+					new_object['Description']=result.item_desc;
+					new_object['Quantity']=result.quantity;
+					new_object['MRP']=result.mrp;
+					new_object['Price']=result.price;
+					new_object['Tax']=result.tax_rate;
+					new_object['Total']=result.total;
+					data_array.push(new_object);
+					var rowsHTML="";
+					var id=result.id;
+					rowsHTML+="<tr>";
+					rowsHTML+="<form id='form296_"+id+"'></form>";
+						rowsHTML+="<td data-th='Item Name'>";
+							rowsHTML+="<input readonly='readonly' type='text' required form='form296_"+id+"' value='"+result.item_name+"'>";
+							rowsHTML+="<br><textarea readonly='readonly' form='form296_"+id+"'>"+result.item_desc+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Quantity'>";
+							rowsHTML+="<input type='number' readonly='readonly' required form='form296_"+id+"' value='"+result.quantity+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Make'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form296_"+id+"' value='"+result.make+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Price'>";
+							rowsHTML+="MRP: <input type='number' readonly='readonly' required form='form296_"+id+"' value='"+result.mrp+"' step='any'>";
+							rowsHTML+="<br>Price: <input type='number' readonly='readonly' required form='form296_"+id+"' value='"+result.price+"' step='any'>";
+							rowsHTML+="<br>Amount: <input type='number' readonly='readonly' required form='form296_"+id+"' value='"+result.amount+"' step='any'>";
+							rowsHTML+="<br>Tax Rate: <input type='number' readonly='readonly' form='form296_"+id+"' value='"+result.tax_rate+"' step='any'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' readonly='readonly' form='form296_"+id+"' value='"+result.tax+"'>";
+							rowsHTML+="<input type='hidden' readonly='readonly' form='form296_"+id+"' value='"+result.total+"'>";
+							rowsHTML+="<input type='hidden' form='form296_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='button' class='submit_hidden' form='form296_"+id+"' id='save_form296_"+id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form296_"+id+"' id='delete_form296_"+id+"' onclick='form296_delete_item($(this)); form296_get_totals();'>";
+						rowsHTML+="</td>";
+					rowsHTML+="</tr>";
+				
+					$('#form296_body').append(rowsHTML);
+				});
+
+				var message_attachment=my_obj_array_to_csv_string(data_array);
+				var bt=get_session_var('title');
+				$('#form296_share').show();
+				$('#form296_share').click(function()
+				{
+					modal101_action(bt+' - PO# '+filter_fields.elements['order_num'].value+' - '+filter_fields.elements['supplier'].value,filter_fields.elements['supplier'].value,'supplier',function (func) 
+					{
+						print_form296(func);
+					},'csv',message_attachment);
+				});
+				form296_get_totals();
 				$('textarea').autosize();
 				hide_loader();
 			});

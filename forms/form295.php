@@ -4,10 +4,12 @@
 			<label>Supplier <img src='./images/add_image.png' class='add_image' id='form295_add_supplier'><br>
 			<input type='text' required name='supplier'></label>
 			<label>Bill #<br><input type='text' required name='bill_num'></label>
+			<label>Order #<br><input type='text' readonly="readonly" name='po_num'></label>
 			<label>Bill Date<br><input type='text' required name='date'></label>
 			<label>Entry Date<br><input type='text' required name='entry_date'></label>
 			<label>
 				<input type='hidden' name='bill_id'>
+				<input type='hidden' name='order_id'>
 			</label>
 			<label>	<input type='button' title='Save Bill' class='save_icon' name='save'></label>
 			<label>	<input type='submit' class='submit_hidden'></label>

@@ -4067,6 +4067,28 @@
 			<tables>--supplier_bills--supplier_bill_items--payments--transactions--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form296</name>
+			<display_name>create_purchase_order_sehgal</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--purchase_orders--purchase_order_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form297</name>
+			<display_name>manage_purchase_orders_sehgal</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--purchase_orders--purchase_order_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -7769,6 +7791,28 @@
 			<username>master</username>
 			<element_id>form295</element_id>
 			<element_name>create_purchase_bill_sehgal</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>												
+		<row>
+			<username>master</username>
+			<element_id>form296</element_id>
+			<element_name>create_purchase_order_sehgal</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>												
+		<row>
+			<username>master</username>
+			<element_id>form297</element_id>
+			<element_name>manage_purchase_order_sehgal</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

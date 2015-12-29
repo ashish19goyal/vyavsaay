@@ -6375,3 +6375,174 @@ function print_form294(func)
 	
 	func(container);
 }
+
+/**
+ * @form Create Purchase order (Sehgal)
+ * @formNo 296
+ */
+function form296_print_form()
+{	
+	print_form296(function(container)
+	{
+		$.print(container);
+		container.innerHTML="";	
+	});	
+}
+
+/**
+* This function prepares the printing template for the documents like bills and purchase orders
+*/
+function print_form296(func)
+{
+	var form_id='form296';
+	////////////setting up containers///////////////////////	
+	var container=document.createElement('div');
+	var header=document.createElement('div');
+		var logo=document.createElement('div');
+		var business_intro=document.createElement('div');
+		var business_contact=document.createElement('div');
+	
+	var invoice_line=document.createElement('div');
+	
+	var info_section=document.createElement('div');	
+		var customer_info=document.createElement('div');
+		var business_info=document.createElement('div');
+
+	var table_container=document.createElement('div');
+
+	var footer=document.createElement('div');
+		var tandc=document.createElement('div');
+		var signature=document.createElement('div');
+
+////////////setting styles for containers/////////////////////////
+
+	header.setAttribute('style','width:100%;min-height:100px;text-align:center');
+		logo.setAttribute('style','width:100%;text-align:center;font-weight:600;font-size:32px;line-height:40px;');
+		business_intro.setAttribute('style','width:100%;text-align:center');
+		business_contact.setAttribute('style','width:100%;text-align:left');
+	info_section.setAttribute('style','width:100%;min-height:80px');
+		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;');
+		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;');
+	footer.setAttribute('style','width:100%;min-height:100px');
+		tandc.setAttribute('style','float:left;width:60%;min-height:50px');
+		signature.setAttribute('style','float:right;width:30%;min-height:60px');
+
+///////////////getting the content////////////////////////////////////////
+
+	var bt=get_session_var('title');
+	var font_size=get_session_var('print_size');
+	var logo_image=get_session_var('logo');
+	//var business_intro_text=get_session_var('business_intro');
+	var business_address=get_session_var('address');
+	var business_phone=get_session_var('phone');
+	var business_email=get_session_var('email');
+	//var business_website=get_session_var('website');
+
+	var master_form=document.getElementById(form_id+'_master');
+	var supplier_name=master_form.elements['supplier'].value;
+	var date=master_form.elements['date'].value;	
+	var order_no=master_form.elements['order_num'].value;
+	var supplier_address=master_form.elements['address'].value;
+	var vat_no=get_session_var('vat');
+	var tin_no=get_session_var('tin');
+		
+	var tandc_text=get_session_var('po_message').replace(/\n/g,"<br>");
+	var signature_text="<br>"+bt+"<br><br><br>Auth. Signatory<br>";
+	
+	////////////////filling in the content into the containers//////////////////////////
+
+	//logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
+	logo.innerHTML=bt;
+	business_contact.innerHTML="<hr style='border: 1px solid #00f;'>Billing Address: "+business_address+"<br>Buyer VAT #:"+vat_no+"<br>Contact Nos.: "+business_phone+"<br>E-Mail: "+business_email;
+	
+	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Purchase Order #: "+order_no+"</b></div><hr style='border: 1px solid #00f;'>";
+	
+	customer_info.innerHTML="<b>Supplier: </b><br>"+supplier_name+"<br>"+supplier_address;
+	business_info.innerHTML="<b>Buyer</b><br>TIN #: "+tin_no+"<br>PO Issue Date: "+date+"<br>Purchase Order No: "+order_no;
+	
+	tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
+	signature.innerHTML=signature_text;
+
+	var table_element=document.getElementById(form_id+'_body');
+	
+	/////////////adding new table //////////////////////////////////////////////////////	
+	var new_table=document.createElement('table');
+	new_table.setAttribute('style','width:100%;font-size:11px;border:1px solid black;text-align:left;');
+	new_table.setAttribute('class','plain_table');
+	var table_header="<tr>"+
+				"<td style='border: 1px solid #000;text-align:left;width:8%;'>S.No.</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:20%;'>Item Name</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:20%'>Description</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:10%'>Qty</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:10%'>MRP</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:10%'>Price</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:10%'>Tax</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:10%;font-size:1.2em;font-weight:bold'>Total(inc taxes)</td></tr>";
+				
+	var table_rows=table_header;
+	var counter=0;
+	
+	$(table_element).find('form').each(function(index)
+	{
+		counter+=1;
+		var form=$(this)[0];
+		var item_desc=form.elements[1].value;
+		var item_name=form.elements[0].value;
+		var quantity=""+form.elements[2].value;
+		var mrp=form.elements[4].value;
+		var price=form.elements[5].value;
+		var tax_rate=form.elements[7].value;		
+		var total=form.elements[9].value;
+
+		table_rows+="<tr>"+
+				"<td style='border: 1px solid #000;text-align:left;'>"+counter+"</td>"+
+				"<td style='border: 1px solid #000;text-align:left;'>"+item_name+"</td>"+
+				"<td style='border: 1px solid #000;text-align:left;'>"+item_desc+"</td>"+
+				"<td style='border: 1px solid #000;text-align:left;'>"+quantity+"</td>"+
+				"<td style='border: 1px solid #000;text-align:left;'>"+mrp+"</td>"+
+				"<td style='border: 1px solid #000;text-align:left;'>"+price+"</td>"+
+				"<td style='border: 1px solid #000;text-align:left;'>"+tax_rate+"</td>"+
+				"<td style='border: 1px solid #000;text-align:left;font-size:1.2em;font-weight:bold;'>"+total+"</td></tr>";
+	});
+	
+	var row_count=$(table_element).find('tbody>tr').length;
+	var rows_to_add=9-row_count;
+	for(var i=0;i<rows_to_add;i++)
+	{
+		table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+	}
+
+	var table_foot=document.getElementById(form_id+'_foot');
+	var total_quantity=$(table_foot).find('tr>td:first')[0].innerHTML;
+	var total_text=$(table_foot).find('tr>td:nth-child(2)')[0].innerHTML;
+	var total_amount=$(table_foot).find('tr>td:nth-child(3)')[0].innerHTML;
+	
+	var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
+				"<td colspan='4' style='border: 1px solid #000;text-align:left;'>"+total_quantity+"</td>"+
+				"<td colspan='3' style='border: 1px solid #000;text-align:left;'>"+total_text+"</td>"+
+				"<td colspan='2' style='border: 1px solid #000;text-align:left;font-size:1.2em;font-weight:bold;'>"+total_amount+"</td></tr>";
+		
+	table_rows+=table_foot_row;
+	new_table.innerHTML=table_rows;
+	
+	/////////////placing the containers //////////////////////////////////////////////////////	
+	
+	container.appendChild(header);
+	container.appendChild(invoice_line);
+	container.appendChild(info_section);
+	
+	container.appendChild(new_table);
+	container.appendChild(footer);
+	
+	header.appendChild(logo);
+	//header.appendChild(business_intro);
+	header.appendChild(business_contact);
+	
+	info_section.appendChild(customer_info);
+	info_section.appendChild(business_info);
+	
+	footer.appendChild(tandc);
+	footer.appendChild(signature);
+	
+	func(container);
+}

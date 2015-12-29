@@ -11704,3 +11704,129 @@ function form295_header_ini()
 	
 	supplier_filter.value='';
 }
+
+/**
+ * @form Create Purchase Order (Sehgal)
+ * @formNo 296
+ */
+function form296_header_ini()
+{
+	var fields=document.getElementById('form296_master');
+	
+	var supplier_filter=fields.elements['supplier'];
+	var order_date=fields.elements['date'];
+	var order_num=fields.elements['order_num'];
+	var status_filter=fields.elements['status'];
+	fields.elements['order_id'].value=get_new_key();
+	var save_button=fields.elements['save'];
+	var share_button=fields.elements['share'];	
+	
+	$(share_button).hide();
+
+	$(supplier_filter).off('blur');	
+	$(supplier_filter).on('blur',function () 
+	{
+		var supplier_address="<suppliers>"+
+							"<address></address>"+
+							"<pincode></pincode>"+
+							"<acc_name exact='yes'>"+supplier_filter.value+"</acc_name>"+
+							"</suppliers>";
+		fetch_requested_data('',supplier_address,function(addresses)
+		{
+			if(addresses.length>0)
+			{
+				fields.elements['address'].value=addresses[0].address+"-"+addresses[0].pincode;
+			}
+		});					
+	});	
+	
+	var po_id=$("#form296_link").attr('data_id');
+	if(po_id==null || po_id=='')
+	{
+		var po_num_data="<user_preferences count='1'>"+
+							"<value></value>"+
+							"<name exact='yes'>po_num</name>"+
+							"</user_preferences>";
+		set_my_value(po_num_data,order_num);
+	}
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form296_create_form();
+	});
+
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form296_add_item();
+	});
+
+	var add_supplier=document.getElementById('form296_add_supplier');
+	$(add_supplier).off('click');
+	$(add_supplier).on('click',function()
+	{
+		modal13_action(function()
+		{
+			var supplier_data="<suppliers>" +
+				"<acc_name></acc_name>" +
+				"</suppliers>";	
+			set_my_value_list(supplier_data,supplier_filter);
+		});
+	});
+
+	var supplier_data="<suppliers>" +
+		"<acc_name></acc_name>" +
+		"</suppliers>";	
+	set_my_value_list(supplier_data,supplier_filter,function () 
+	{
+		$(supplier_filter).focus();
+	});
+	
+	$(order_date).datepicker();
+	order_date.value=get_my_date();
+	set_static_filter('purchase_orders','status',status_filter);
+	status_filter.value='draft';
+	supplier_filter.value='';
+}
+
+
+/**
+ * @form Manage Purchase Orders (Sehgal)
+ * @formNo 297
+ */
+function form297_header_ini()
+{
+	var filter_fields=document.getElementById('form297_header');
+	var order_filter=filter_fields.elements[0];
+	var name_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];	
+	
+	var order_data="<purchase_orders>" +
+			"<order_num></order_num>" +
+			"</purchase_orders>";
+	var name_data="<suppliers>" +
+			"<acc_name></acc_name>" +
+			"</suppliers>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form297_ini();
+	});
+
+	set_my_filter(order_data,order_filter);
+	set_my_filter(name_data,name_filter);
+	set_static_filter('purchase_orders','status',status_filter);
+};

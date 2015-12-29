@@ -9660,7 +9660,7 @@ function modal137_action(bill_ids)
 	{
 		rowsHTML+="<tr>"+
 				"<td>"+bill_id.bill_num+"</td>"+
-				"<td><a onclick=\"element_display('"+bill_id.bill_id+"','form122',['form136']); $('#modal137').dialog('close');\"><u style='cursor:pointer;'>View</u></a></td>"+
+				"<td><a onclick=\"element_display('"+bill_id.bill_id+"','form122',['form136','form295']); $('#modal137').dialog('close');\"><u style='cursor:pointer;'>View</u></a></td>"+
 				"</tr>";
 	});
 
