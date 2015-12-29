@@ -15111,7 +15111,7 @@ function form294_update_form()
 							"</transactions>";
 				update_simple_func(payment_xml,function()
 				{
-					modal26_action(payments[0]);
+					//modal26_action(payments[0]);
 				});
 			}
 		},payment_data);
@@ -15243,7 +15243,7 @@ function form295_update_form()
 							"</transactions>";
 				update_simple_func(payment_xml,function()
 				{
-					modal28_action(payments[0]);
+					//modal28_action(payments[0]);
 				});
 			}
 		},payment_data);

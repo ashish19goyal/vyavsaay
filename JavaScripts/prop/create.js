@@ -19864,7 +19864,7 @@ function form294_create_form()
 		create_simple(pt_xml);
 		create_simple_func(payment_xml,function()
 		{
-			modal26_action(pt_tran_id);
+			//modal26_action(pt_tran_id);
 		});
 
 		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
@@ -20076,7 +20076,7 @@ function form295_create_form()
 		create_simple(pt_xml);
 		create_simple_func(payment_xml,function()
 		{
-			modal28_action(pt_tran_id);
+			//modal28_action(pt_tran_id);
 		});
 
 		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
