@@ -3009,6 +3009,179 @@ function print_form195(id,func)
 }
 
 /**
+* This function prepares the printing template for the newsletter
+*/
+function form196_print_form(nl_name,nl_id,print_type,func)
+{
+	var container=document.createElement('div');
+	var header=document.createElement('div');
+		var logo=document.createElement('div');
+		var business_intro=document.createElement('div');
+	
+	var nl_content=document.createElement('div');
+	
+	var footer=document.createElement('div');
+		var business_contact=document.createElement('div');
+		var powered_by=document.createElement('div');
+		
+////////////setting styles for containers/////////////////////////
+
+	header.setAttribute('style','width:98%;min-height:100px;text-align:center');
+		business_intro.setAttribute('style','width:98%;text-align:center');
+	
+	nl_content.setAttribute('style','display:block;width:98%;min-height:60px');
+
+	footer.setAttribute('style','display:block;width:98%;');
+		business_contact.setAttribute('style','display:block;width:98%;text-align:center');
+		powered_by.setAttribute('style','display:block;width:98%;text-align:center');
+	
+///////////////getting the content////////////////////////////////////////
+
+	var bt=get_session_var('title');
+	var logo_image=get_session_var('logo');
+	var business_intro_text=get_session_var('business_intro');
+	var business_address=get_session_var('address');
+	var business_phone=get_session_var('phone');
+	var business_email=get_session_var('email');
+	var business_website=get_session_var('website');
+	var tandc_text=get_session_var('bill_message');
+	var powered_by_text=get_session_var('powered_by');	
+	var powered_by_link=get_session_var('powered_by_link');
+	var domain=get_session_var('domain');
+	
+////////////////filling in the content into the containers/////////////////////////////////////
+
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
+	business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text+"<hr style='border: 1px solid #000;'>";
+		
+	business_contact.innerHTML="<hr style='border: 1px solid #000;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website;	
+
+	if(powered_by_text!="")	
+	{
+		powered_by.innerHTML="<hr style='border: 1px solid #000;'><a href='"+powered_by_link+"'>Powered By: "+powered_by_text+"</a> | <a href='https://vyavsaay.com/f/u.htm?d="+domain+"&i={{customer_id}}'>Unsubscribe</a>";
+	}	
+	else 
+	{
+		powered_by.innerHTML="<hr style='border: 1px solid #000;'><a href='https://vyavsaay.com'>Powered By: Vyavsaay ERP</a> | <a href='https://vyavsaay.com/f/u.htm?d="+domain+"&i={{customer_id}}'>Unsubscribe</a>";
+	}
+/////////////placing the containers //////////////////////////////////////////////////////	
+	
+	container.appendChild(header);
+	container.appendChild(nl_content);
+	container.appendChild(footer);
+	
+	header.appendChild(logo);
+	header.appendChild(business_intro);
+	
+	footer.appendChild(business_contact);
+	footer.appendChild(powered_by);
+
+/////////////////populating the content section with newsletter items//////////////////////////
+	var newsletter_items_data="<newsletter_items>" +
+			"<item_type></item_type>" +
+			"<item_name></item_name>" +
+			"<item_detail></item_detail>" +
+			"<data_blob></data_blob>" +
+			"<pic_url></pic_url>"+
+			"<url></url>"+
+			"<column_size></column_size>"+
+			"<nl_id exact='yes'>"+nl_id+"</nl_id>" +
+			"</newsletter_items>";
+	
+	fetch_requested_data('',newsletter_items_data,function(results)
+	{
+		var right=false;
+		results.forEach(function(result)
+		{
+			var nl_item=document.createElement('div');
+			var nl_item_heading=document.createElement('div');
+			var nl_item_pic=document.createElement('div');
+			var nl_item_detail=document.createElement('div');
+			var nl_item_link=document.createElement('a');
+			
+			var type=result.item_type;
+			var name=result.item_name;
+			var detail=result.item_detail.replace(/\n/g,"<br>");
+			var blob=result.data_blob.replace(/ /g,"+");
+			var pic_url=result.pic_url;
+							
+			var url=result.url;
+			var size=result.column_size;
+			
+			nl_item.style.display='block';
+			nl_item.style.margin='2px';
+			nl_item.style.padding='2px';
+			nl_item.style.border='1px solid #444';
+			nl_item.style.minHeight='150px';
+			
+			nl_item_link.style.textDecoration='none';
+			nl_item_pic.width='90%';			
+			
+			if(size=='2')
+			{
+				nl_item.style.width='98%';
+				nl_item.style.float='left';
+			}
+			else 
+			{
+				nl_item.style.width='48%';
+				if(right)
+				{
+					nl_item.style.float='right';
+					right=false;
+				}
+				else{
+					nl_item.style.float='left';
+					right=true;
+				}
+			}
+			
+			nl_item_heading.setAttribute('style','display:block;margin:2px;padding:2px;width:90%');
+			
+			nl_item_pic.setAttribute('style','float:left;margin:2px;padding:2px;');
+			if(url!="")
+			{
+				nl_item_link.setAttribute('href',url);
+			}			
+			
+			nl_item_heading.innerHTML="<b>"+name+"</b>";
+			nl_item_detail.innerHTML=detail;
+			
+			nl_content.appendChild(nl_item);
+			nl_item.appendChild(nl_item_link);
+			nl_item_link.appendChild(nl_item_heading);			
+			
+			var item_clear_div=document.createElement('div');
+			item_clear_div.setAttribute('style','clear:both;');
+			nl_item.appendChild(item_clear_div);			
+			
+			if(blob!='undefined' && blob!="")
+			{
+				if(print_type=='mail')
+				{
+					nl_item_pic.innerHTML="<img src='https://vyavsaay.com/"+pic_url+"'>";
+				}
+				else
+				{
+					nl_item_pic.innerHTML="<img src='"+blob+"'>";
+				}
+				nl_item_link.appendChild(nl_item_pic);				
+			}
+
+			nl_item_link.appendChild(nl_item_detail);
+						
+		});
+		
+		var clear_div=document.createElement('div');
+		clear_div.setAttribute('style','clear:both;');
+		nl_content.appendChild(clear_div);
+		
+		func(container);
+	});
+}
+
+
+/**
  * @form Create DRS
  * @formNo 200
  */
@@ -4515,6 +4688,121 @@ function print_modal131(func,order_num,received_quantity,total_quantity,supplier
 	footer.appendChild(signature);
 
 	func(container);
+}
+
+/**
+* This function prepares the printing template for the newsletter
+*/
+function form237_print_form(nl_name,nl_id,print_type,func)
+{
+	var container=document.createElement('div');
+	var header=document.createElement('div');
+		var logo=document.createElement('div');
+		var business_intro=document.createElement('div');
+	
+	var nl_content=document.createElement('div');
+	
+	var footer=document.createElement('div');
+		var business_contact=document.createElement('div');
+		var powered_by=document.createElement('div');
+	
+////////////setting styles for containers/////////////////////////
+
+	header.setAttribute('style','width:98%;min-height:100px;text-align:center');
+		business_intro.setAttribute('style','width:98%;text-align:center');
+	
+	nl_content.setAttribute('style','display:block;width:98%;height:auto;');
+
+	footer.setAttribute('style','width:98%;min-height:100px;text-align:center;margin:5px;');
+		business_contact.setAttribute('style','width:98%;text-align:center');
+		powered_by.setAttribute('style','width:98%;text-align:center');
+	
+///////////////getting the content////////////////////////////////////////
+
+	var bt=get_session_var('title');
+	var logo_image=get_session_var('logo');
+	var business_intro_text=get_session_var('business_intro');
+	var business_address=get_session_var('address');
+	var business_phone=get_session_var('phone');
+	var business_email=get_session_var('email');
+	var business_website=get_session_var('website');
+	var tandc_text=get_session_var('bill_message');
+	var powered_by_text=get_session_var('powered_by');	
+	var powered_by_link=get_session_var('powered_by_link');
+	
+////////////////filling in the content into the containers/////////////////////////////////////
+
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
+	business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text+"<hr style='border: 1px solid #000;'>";
+		
+	business_contact.innerHTML="<hr style='border: 1px solid #000;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website;	
+
+	if(powered_by_text!="")	
+	{
+		powered_by.innerHTML="<hr style='border: 1px solid #000;'><a href='"+powered_by_link+"'>Powered By: "+powered_by_text+"</a> | <a href='https://vyavsaay.com/f/u.htm?d="+domain+"&i={{customer_id}}'>Unsubscribe</a>";
+	}	
+	else 
+	{
+		powered_by.innerHTML="<hr style='border: 1px solid #000;'><a href='https://vyavsaay.com'>Powered By: Vyavsaay ERP</a> | <a href='https://vyavsaay.com/f/u.htm?d="+domain+"&i={{customer_id}}'>Unsubscribe</a>";
+	}
+	
+/////////////placing the containers //////////////////////////////////////////////////////	
+	container.appendChild(header);
+	container.appendChild(nl_content);
+	container.appendChild(footer);
+	
+	header.appendChild(logo);
+	header.appendChild(business_intro);
+	
+	footer.appendChild(business_contact);
+	footer.appendChild(powered_by);
+
+/////////////////populating the content section with newsletter items//////////////////////////
+	var newsletter_data="<newsletter>" +
+			"<id>"+nl_id+"</id>" +
+			"<html_content></html_content>" +
+			"<pic_url></pic_url>"+
+			"</newsletter>";
+	
+	fetch_requested_data('',newsletter_data,function(results)
+	{
+		if(results.length>0)
+		{
+			var updated_content=revert_htmlentities(results[0].html_content);
+			$(nl_content).html(updated_content);
+			
+			$(nl_content).find('img').each(function(index)
+			{
+				var image_elem=$(this)[0];
+				var data_src=image_elem.getAttribute('data-src');
+
+				image_elem.src="https://s3-ap-southeast-1.amazonaws.com/vyavsaay-newsletter/"+data_src;	
+				image_elem.removeAttribute('onclick');
+				image_elem.removeAttribute('onmouseup');
+				image_elem.removeAttribute('onmousedown');
+				image_elem.removeAttribute('onchange');
+				image_elem.removeAttribute('contenteditable');			
+			});
+	
+			$(nl_content).find('div').each(function () 
+			{
+				var div_element=$(this)[0];
+				div_element.removeAttribute('onclick');
+				div_element.removeAttribute('onmouseup');
+				div_element.removeAttribute('onmousedown');
+				div_element.removeAttribute('onchange');
+				div_element.removeAttribute('contenteditable');
+			});
+
+			//var image_src="https://s3-ap-southeast-1.amazonaws.com/vyavsaay-newsletter/Firefox_wallpaper.png";
+			//var image_src="https://s3-ap-southeast-1.amazonaws.com/vyavsaay-newsletter/"+results[0].pic_url;
+			//var image_elem=document.createElement('img');
+			//image_elem.setAttribute('src',image_src);
+			//nl_content.appendChild(image_elem);
+		}
+		//console.log(container.innerHTML);
+		func(container);
+	});
 }
 
 

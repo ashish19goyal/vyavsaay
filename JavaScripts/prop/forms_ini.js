@@ -20752,32 +20752,28 @@ function form196_ini()
 	if(nl_id!="" || nl_name!="" || sms_content!="")
 	{
 		show_loader();
-		var attributes_columns="<attributes>"+
-							"<name></name>"+
-							"<attribute exact='yes'>"+list+"</attribute>"+
-							"<type exact='yes'>customer</type>"+
-							"<value>"+list_value+"</value>"+
-							"</attributes>";
 		
-		fetch_requested_data('',attributes_columns,function(attributes)
+		var attributes_columns=new Object();
+				attributes_columns.data_store='attributes';
+				attributes_columns.return_column='name';
+				attributes_columns.indexes=[{index:'attribute',exact:list},
+								{index:'type',exact:'customer'},
+								{index:'value',exact:list_value}];
+		
+		read_json_single_column(attributes_columns,function(attributes)
 		{
-			var customer_string="--";
-			
-			for(var i in attributes)
+			var customer_columns=new Object();
+				customer_columns.data_store='customers';
+				customer_columns.indexes=[{index:'id'},
+								{index:'name'},
+								{index:'email'},
+								{index:'phone'},
+								{index:'acc_name',array:attributes},
+								{index:'email_subscription',unequal:'no'}];
+				
+			read_json_rows('',customer_columns,function(results)
 			{
-				customer_string+=attributes[i].name+"--";
-			}
-						
-			var customer_columns="<customers>" +
-					"<id></id>" +
-					"<name></name>" +
-					"<email></email>" +
-					"<phone></phone>"+
-					"<acc_name array='yes'>"+customer_string+"</acc_name>" +
-					"</customers>";
-			fetch_requested_data('',customer_columns,function(results)
-			{
-				print_newsletter(nl_name,nl_id,'mail',function(container)
+				form196_print_form(nl_name,nl_id,'mail',function(container)
 				{
 					var business_title=get_session_var('title');
 					var subject=nl_name;
@@ -20838,17 +20834,18 @@ function form196_ini_all()
 	{
 		show_loader();
 		
-		var customer_columns="<customers>" +
-				"<id></id>" +
-				"<name></name>" +
-				"<email></email>" +
-				"<phone></phone>"+
-				"<acc_name></acc_name>" +
-				"</customers>";
+		var customer_columns=new Object();
+			customer_columns.data_store='customers';
+			customer_columns.indexes=[{index:'id'},
+								{index:'name'},
+								{index:'email'},
+								{index:'phone'},
+								{index:'acc_name'},
+								{index:'email_subscription',unequal:'no'}];
 		
-		fetch_requested_data('',customer_columns,function(results)
+		read_json_rows('',customer_columns,function(results)
 		{
-			print_newsletter(nl_name,nl_id,'mail',function(container)
+			form196_print_form(nl_name,nl_id,'mail',function(container)
 			{
 				var business_title=get_session_var('title');
 				var subject=nl_name;
@@ -25185,32 +25182,27 @@ function form237_ini()
 	if(nl_id!="" || nl_name!="" || sms_content!="")
 	{
 		show_loader();
-		var attributes_columns="<attributes>"+
-							"<name></name>"+
-							"<attribute exact='yes'>"+list+"</attribute>"+
-							"<type exact='yes'>customer</type>"+
-							"<value>"+list_value+"</value>"+
-							"</attributes>";
+		var attribute_columns=new Object();
+			attribute_columns.data_store='attributes';
+			attribute_columns.return_column='name';
+			attribute_columns.indexes=[{index:'attribute',exact:list},
+									{index:'type',exact:'customer'},
+									{index:'value',exact:list_value}];
 		
-		fetch_requested_data('',attributes_columns,function(attributes)
+		read_json_single_column(attributes_columns,function(attributes)
 		{
-			var customer_string="--";
-			
-			for(var i in attributes)
+			var customer_columns=new Object();
+			customer_columns.data_store='customers';
+			customer_columns.indexes=[{index:'id'},
+								{index:'name'},
+								{index:'email'},
+								{index:'phone'},
+								{index:'acc_name',array:attributes},
+								{index:'email_subscription',unequal:'no'}];
+
+			read_json_rows('',customer_columns,function(results)
 			{
-				customer_string+=attributes[i].name+"--";
-			}
-						
-			var customer_columns="<customers>" +
-					"<id></id>" +
-					"<name></name>" +
-					"<email></email>" +
-					"<phone></phone>"+
-					"<acc_name array='yes'>"+customer_string+"</acc_name>" +
-					"</customers>";
-			fetch_requested_data('',customer_columns,function(results)
-			{
-				print_flex_newsletter(nl_name,nl_id,'mail',function(container)
+				form237_print_form(nl_name,nl_id,'mail',function(container)
 				{
 					var business_title=get_session_var('title');
 					var subject=nl_name;
@@ -25240,7 +25232,7 @@ function form237_ini()
 					});
 					
 					var email_to=email_id_string.replace(/;\s*$/, "");
-					console.log(email_to);
+					//console.log(email_to);
 										
 					send_email(email_to,from,business_title,subject,email_message,function()
 					{
@@ -25271,17 +25263,18 @@ function form237_ini_all()
 	{
 		show_loader();
 		
-		var customer_columns="<customers>" +
-				"<id></id>" +
-				"<name></name>" +
-				"<email></email>" +
-				"<phone></phone>"+
-				"<acc_name></acc_name>" +
-				"</customers>";
+		var customer_columns=new Object();
+			customer_columns.data_store='customers';
+			customer_columns.indexes=[{index:'id'},
+								{index:'name'},
+								{index:'email'},
+								{index:'phone'},
+								{index:'acc_name'},
+								{index:'email_subscription',unequal:'no'}];
 		
-		fetch_requested_data('',customer_columns,function(results)
+		read_json_rows('',customer_columns,function(results)
 		{
-			print_flex_newsletter(nl_name,nl_id,'mail',function(container)
+			form237_print_form(nl_name,nl_id,'mail',function(container)
 			{
 				var business_title=get_session_var('title');
 				var subject=nl_name;
@@ -25312,7 +25305,7 @@ function form237_ini_all()
 				});
 					
 				var email_to=email_id_string.replace(/;\s*$/, "");		
-				console.log(email_to);
+				//console.log(email_to);
 				send_email(email_to,from,business_title,subject,email_message,function()
 				{
 					$("#modal58").dialog("open");
