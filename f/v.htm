@@ -35,7 +35,7 @@
 		var comment_data=form.elements['complaint'].value;
 		var domain=form.elements['domain'].value;
 		
-		xmlhttp.open("POST","../ajax/feedback.php",true);
+		xmlhttp.open("POST","../ajax_json/feedback.php",true);
 		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		xmlhttp.send("id="+id_data+"&rating="+rating_data+"&comment="+comment_data+"&domain="+domain);
 		//xmlhttp.send("domain=laundry");

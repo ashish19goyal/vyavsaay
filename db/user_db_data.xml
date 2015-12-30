@@ -4089,6 +4089,28 @@
 			<tables>--purchase_orders--purchase_order_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form298</name>
+			<display_name>newsletter_components</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--newsletter--newsletter_components--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form299</name>
+			<display_name>newsletter_assembly</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--newsletter_components--newsletter--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -7813,6 +7835,28 @@
 			<username>master</username>
 			<element_id>form297</element_id>
 			<element_name>manage_purchase_order_sehgal</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>												
+		<row>
+			<username>master</username>
+			<element_id>form298</element_id>
+			<element_name>newsletter_components</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>												
+		<row>
+			<username>master</username>
+			<element_id>form297</element_id>
+			<element_name>newsletter_assembly</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

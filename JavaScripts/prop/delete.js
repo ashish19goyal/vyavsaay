@@ -1031,11 +1031,10 @@ function form44_delete_item(button)
 			var form=document.getElementById(form_id);
 			
 			var name=form.elements[0].value;
-			var data_id=form.elements[2].value;
+			var data_id=form.elements[3].value;
 			var last_updated=get_my_time();
 			var data_xml="<newsletter>" +
 						"<id>"+data_id+"</id>" +
-						"<name>"+name+"</name>" +
 						"</newsletter>";	
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +

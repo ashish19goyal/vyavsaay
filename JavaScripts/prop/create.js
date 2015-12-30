@@ -94,6 +94,7 @@ function form2_create_form()
 					"<id>"+data_id+"</id>" +
 					"<name unique='yes'>"+name+"</name>" +
 					"<description>"+description+"</description>"+
+					"<status>active</status>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</newsletter>";
 		var activity_xml="<activity>" +
@@ -104,15 +105,8 @@ function form2_create_form()
 					"<notes>NewsLetter "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_create_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-		}
-	
+		create_row(data_xml,activity_xml);
+		
 		$(save_button).off('click');
 		$(save_button).on('click',function(event)
 		{
@@ -16852,6 +16846,7 @@ function form233_create_item()
 					"<id>"+data_id+"</id>" +
 					"<name>"+name+"</name>" +
 					"<description>"+description+"</description>" +
+					"<status>active</status>" +
 					"<html_content>"+html_content+"</html_content>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</newsletter>";

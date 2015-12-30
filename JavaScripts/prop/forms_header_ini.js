@@ -1238,20 +1238,20 @@ function form44_header_ini()
 {
 	var filter_fields=document.getElementById('form44_header');
 	var name_filter=filter_fields.elements[0];
+	var status_filter=filter_fields.elements[1];
 	
-	var name_data="<newsletter>" +
-			"<name></name>" +
-			"</newsletter>";
+	var name_columns=new Object();
+		name_columns.data_store='newsletter';
+		name_columns.indexes=[{index:'name'}];		
+		name_columns.return_column='name';
+	set_my_filter_json(name_columns,name_filter);
 	
-	set_my_filter(name_data,name_filter);
-
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
 	{
 		event.preventDefault();
 		form44_ini();
 	});
-
 };
 
 /**
@@ -7214,6 +7214,28 @@ function form193_header_ini()
 }
 
 /**
+ * @form LetterHeads
+ * @formNo 195
+ */
+function form195_header_ini()
+{
+	var filter_fields=document.getElementById('form195_header');
+	var name_filter=filter_fields.elements[0];
+	
+	var name_data="<letterheads>" +
+			"<name></name>" +
+			"</letterheads>";
+	set_my_filter(name_data,name_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form195_ini();
+	});
+};
+
+/**
  * @form Promotion Emails
  * @formNo 196
  */
@@ -7246,76 +7268,58 @@ function form196_header_ini()
 		form196_ini_all();
 	});
 
-	var list_data="<attributes>"+
-				"<attribute></attribute>"+
-				"<type exact='yes'>customer</type>"+
-				"</attributes>";		
-	set_my_value_list(list_data,list_filter);
+	var list_columns=new Object();
+		list_columns.data_store='attributes';
+		list_columns.indexes=[{index:'type',exact:'customer'}];		
+		list_columns.return_column='attribute';
+	set_my_value_list_json(list_columns,list_filter);
 
 	$(list_filter).off('blur');
 	$(list_filter).on('blur',function()
 	{
-		var value_data="<attributes>"+
-				"<value></value>"+
-				"<type exact='yes'>customer</type>"+
-				"<attribute exact='yes'>"+list_filter.value+"</attribute>"+
-				"</attributes>";
-		set_my_value_list(value_data,value_filter);				
+		var value_columns=new Object();
+			value_columns.data_store='attributes';
+			value_columns.indexes=[{index:'type',exact:'customer'},
+									{index:'attribute',exact:list_filter.value}];		
+			value_columns.return_column='value';
+		set_my_value_list_json(value_columns,value_filter);
 	});
-	
 	
 	sms_filter.value=get_session_var('sms_content');
-	var name_data="<newsletter>" +
-			"<name></name>" +
-			"</newsletter>";
-	set_my_value_list_func(name_data,name_filter,function () 
+
+	var name_columns=new Object();
+		name_columns.data_store='newsletter';
+		name_columns.indexes=[{index:'status',exact:'active'}];		
+		name_columns.return_column='name';
+	set_my_value_list_json(name_columns,name_filter,function () 
 	{
-		$(name_filter).focus();
+		$(name_filter).focus();		
 	});
-	
+
 	$(name_filter).off('blur');
 	$(name_filter).on('blur',function()
 	{
-		var nl_id_data="<newsletter>" +
-				"<id></id>" +
-				"<name>"+name_filter.value+"</name>" +
-				"</newsletter>";
-		set_my_value(nl_id_data,id_filter);				
+		var nl_columns=new Object();
+			nl_columns.count=1;
+			nl_columns.data_store='newsletter';
+			nl_columns.indexes=[{index:'name',exact:name_filter.value}];		
+			nl_columns.return_column='id';
+		set_my_value_json(nl_columns,id_filter);		
 	});
 
 	my_datalist_change(name_filter,function () 
 	{
-		var nl_id_data="<newsletter>" +
-				"<id></id>" +
-				"<name>"+name_filter.value+"</name>" +
-				"</newsletter>";
-		set_my_value(nl_id_data,id_filter);				
+		var nl_columns=new Object();
+			nl_columns.count=1;
+			nl_columns.data_store='newsletter';
+			nl_columns.indexes=[{index:'name',exact:name_filter.value}];		
+			nl_columns.return_column='id';
+		set_my_value_json(nl_columns,id_filter);		
 	});
 	
 	$('textarea').autosize();
 }
 
-/**
- * @form LetterHeads
- * @formNo 195
- */
-function form195_header_ini()
-{
-	var filter_fields=document.getElementById('form195_header');
-	var name_filter=filter_fields.elements[0];
-	
-	var name_data="<letterheads>" +
-			"<name></name>" +
-			"</letterheads>";
-	set_my_filter(name_data,name_filter);
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form195_ini();
-	});
-};
 
 /**
  * @form Supplier Item Mapping
@@ -9071,49 +9075,55 @@ function form237_header_ini()
 		form237_ini_all();
 	});
 
-	var list_data="<attributes>"+
-				"<attribute></attribute>"+
-				"<type exact='yes'>customer</type>"+
-				"</attributes>";		
-	set_my_value_list(list_data,list_filter);
+	var list_columns=new Object();
+		list_columns.data_store='attributes';
+		list_columns.indexes=[{index:'type',exact:'customer'}];		
+		list_columns.return_column='attribute';
+	set_my_value_list_json(list_columns,list_filter);
 
 	$(list_filter).off('blur');
 	$(list_filter).on('blur',function()
 	{
-		var value_data="<attributes>"+
-				"<value></value>"+
-				"<type exact='yes'>customer</type>"+
-				"<attribute exact='yes'>"+list_filter.value+"</attribute>"+
-				"</attributes>";
-		set_my_value_list(value_data,value_filter);				
+
+		var value_columns=new Object();
+		value_columns.data_store='attributes';
+		value_columns.indexes=[{index:'type',exact:'customer'},
+							{index:'attribute',exact:list_filter.value}];		
+		value_columns.return_column='value';
+		
+		set_my_value_list_json(value_columns,value_filter);
 	});
 	
 	sms_filter.value=get_session_var('sms_content');
-	var name_data="<newsletter>" +
-			"<name></name>" +
-			"</newsletter>";
-	set_my_value_list_func(name_data,name_filter,function () 
+	
+	var name_columns=new Object();
+		name_columns.data_store='newsletter';
+		name_columns.indexes=[{index:'status',exact:'active'}];		
+		name_columns.return_column='name';
+	set_my_value_list_json(name_columns,name_filter,function () 
 	{
 		$(name_filter).focus();
 	});
-	
+
 	$(name_filter).off('blur');
 	$(name_filter).on('blur',function()
 	{
-		var nl_id_data="<newsletter>" +
-				"<id></id>" +
-				"<name>"+name_filter.value+"</name>" +
-				"</newsletter>";
-		set_my_value(nl_id_data,id_filter);				
+		var nl_columns=new Object();
+			nl_columns.count=1;
+			nl_columns.data_store='newsletter';
+			nl_columns.indexes=[{index:'name',exact:name_filter.value}];		
+			nl_columns.return_column='id';
+		set_my_value_json(nl_columns,id_filter);
 	});
 
 	my_datalist_change(name_filter,function () 
 	{
-		var nl_id_data="<newsletter>" +
-				"<id></id>" +
-				"<name>"+name_filter.value+"</name>" +
-				"</newsletter>";
-		set_my_value(nl_id_data,id_filter);				
+		var nl_columns=new Object();
+			nl_columns.count=1;
+			nl_columns.data_store='newsletter';
+			nl_columns.indexes=[{index:'name',exact:name_filter.value}];		
+			nl_columns.return_column='id';
+		set_my_value_json(nl_columns,id_filter);
 	});
 	
 	$('textarea').autosize();

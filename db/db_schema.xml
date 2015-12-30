@@ -60,6 +60,8 @@
 			<name index='yes' type='TEXT'></name>
 			<acc_name index='yes' type='TEXT' unique='yes' required='yes'></acc_name>
 			<email index='yes' type="TEXT"></email>
+			<email_subscription index='yes' type="VARCHAR(10)"></email_subscription><!--yes/no-->
+			<reason_unsubscribe index='no' type="TEXT"></reason_unsubscribe>
 			<phone index='yes' type="TEXT"></phone>
 			<status index='yes' type='VARCHAR(45)'></status><!--active/archived/overcredit-->
 			<promotion_status index='yes' type='VARCHAR(45)'></promotion_status><!--active/suspended-->
@@ -838,6 +840,7 @@
 			<pic_url index='no' type="TEXT"></pic_url>
 			<count_items index='no' type="INT"></count_items>
 			<valid_until index='yes' type="BIGINT"></valid_until>
+			<status index='yes' type="VARCHAR(10)"></status><!--active/inactive-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</newsletter>
@@ -854,6 +857,16 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</newsletter_items>
+	<newsletter_components>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="TEXT"></name>
+			<detail index='no' type="TEXT"></detail>
+			<html_code index='no' type="TEXT"></html_code>
+			<markers index='no' type="TEXT"></markers>
+			<pics index='no' type="TEXT"></pics>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</newsletter_components>
 	<activities>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<title index='yes' type="VARCHAR(300)"></title>
