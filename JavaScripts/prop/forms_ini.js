@@ -6653,6 +6653,7 @@ function form78_ini()
 							rowsHTML+="<td data-th='Select'>";
 								rowsHTML+="<input type='checkbox' form='row_form78_"+id+"' checked>";
 								rowsHTML+="<input type='hidden' form='row_form78_"+id+"' value='"+result.name+"'>";
+								rowsHTML+="<input type='hidden' form='row_form78_"+id+"' value='"+result.id+"'>";
 							rowsHTML+="</td>";
 						rowsHTML+="</tr>";
 					
@@ -20787,22 +20788,23 @@ function form196_ini()
 					{
 						sms_type='transaction';
 					}
+					var to_array=[];
 					results.forEach(function (result) 
 					{
-						var to=result.email;
 						var customer_phone=result.phone;
 						var customer_name=result.name;
 						var message=sms_content.replace(/customer_name/g,customer_name);
 						message=message.replace(/business_title/g,business_title);
 						
 						send_sms(customer_phone,message,sms_type);
-						if(to!="")
+						if(result.email!="")
 						{
-							email_id_string+=customer_name+":"+to+";";
-						}				
+							var to={"email":result.email,"name":result.name,"customer_id":result.id};
+							to_array.push(to);
+						}						
 					});
 					
-					var email_to=email_id_string.replace(/;\s*$/, "");
+					var email_to=JSON.stringify(to_array);
 					console.log(email_to);
 										
 					send_email(email_to,from,business_title,subject,email_message,function()
@@ -20859,10 +20861,10 @@ function form196_ini_all()
 				{
 					sms_type='transaction';
 				}
-					
+				var to_array=[];
+				
 				results.forEach(function (result) 
 				{
-					var to=result.email;
 					var customer_phone=result.phone;
 					var customer_name=result.name;
 					var message=sms_content.replace(/customer_name/g,customer_name);
@@ -20870,13 +20872,14 @@ function form196_ini_all()
 						
 					send_sms(customer_phone,message,sms_type);
 				
-					if(to!="")
+					if(result.email!="")
 					{
-						email_id_string+=customer_name+":"+to+";";
+						var to={"email":result.email,"name":result.name,"customer_id":result.id};
+						to_array.push(to);
 					}				
 				});
 					
-				var email_to=email_id_string.replace(/;\s*$/, "");		
+				var email_to=JSON.stringify(to_array);
 				console.log(email_to);
 				send_email(email_to,from,business_title,subject,email_message,function()
 				{
@@ -25216,22 +25219,24 @@ function form237_ini()
 					{
 						sms_type='transaction';
 					}
+					var to_array=[];
 					results.forEach(function (result) 
 					{
-						var to=result.email;
 						var customer_phone=result.phone;
 						var customer_name=result.name;
 						var message=sms_content.replace(/customer_name/g,customer_name);
 						message=message.replace(/business_title/g,business_title);
 							
 						send_sms(customer_phone,message,sms_type);
-						if(to!="")
+						
+						if(result.email!="")
 						{
-							email_id_string+=customer_name+":"+to+";";
+							var to={"email":result.email,"name":result.name,"customer_id":result.id};
+							to_array.push(to);
 						}				
 					});
 					
-					var email_to=email_id_string.replace(/;\s*$/, "");
+					var email_to=JSON.stringify(to_array);
 					//console.log(email_to);
 										
 					send_email(email_to,from,business_title,subject,email_message,function()
@@ -25288,9 +25293,9 @@ function form237_ini_all()
 				{
 					sms_type='transaction';
 				}					
+				var to_array=[];
 				results.forEach(function (result) 
 				{
-					var to=result.email;
 					var customer_phone=result.phone;
 					var customer_name=result.name;
 					var message=sms_content.replace(/customer_name/g,customer_name);
@@ -25298,14 +25303,15 @@ function form237_ini_all()
 						
 					send_sms(customer_phone,message,sms_type);
 				
-					if(to!="")
+					if(result.email!="")
 					{
-						email_id_string+=customer_name+":"+to+";";
+						var to={"email":result.email,"name":result.name,"customer_id":result.id};
+						to_array.push(to);
 					}				
 				});
 					
-				var email_to=email_id_string.replace(/;\s*$/, "");		
-				//console.log(email_to);
+				var email_to=JSON.stringify(to_array);		
+				
 				send_email(email_to,from,business_title,subject,email_message,function()
 				{
 					$("#modal58").dialog("open");

@@ -3707,6 +3707,7 @@ function form81_create_item(form)
 		}
 
 		var customer_data="<customers>"+
+						"<id></id>"+
 						"<name></name>"+
 						"<phone></phone>"+
 						"<email></email>"+
@@ -3736,7 +3737,8 @@ function form81_create_item(form)
 				print_newsletter(nl_name,nl_id,'mail',function(container)
 				{
 					var message=container.innerHTML;
-					var to=customer_name+":"+customers[0].email;
+					var to_array=[{"name":customers[0].name,"email":customers[0].email,"customer_id":customers[0].id}];					
+					var to=JSON.stringify(to_array);
 					var from=get_session_var('email');
 					send_email(to,from,business_title,subject,message,function(){});
 				});
@@ -15293,6 +15295,7 @@ function form213_create_item(form)
 		}
 
 		var customer_data="<customers>"+
+						"<id></id>"+
 						"<name></name>"+
 						"<phone></phone>"+
 						"<email></email>"+
@@ -15322,8 +15325,9 @@ function form213_create_item(form)
 				print_newsletter(nl_name,nl_id,'mail',function(container)
 				{
 					var message=container.innerHTML;
-					var to=customer_name+":"+customers[0].email;
 					var from=get_session_var('email');
+					var to_array=[{"name":customers[0].name,"email":customers[0].email,"customer_id":customers[0].id}];					
+					var to=JSON.stringify(to_array);
 					send_email(to,from,business_title,subject,message,function(){});
 				});
 			},nl_id_xml);
@@ -15431,7 +15435,8 @@ function form214_create_item()
 			print_newsletter(nl_name,nl_id,'mail',function(container)
 			{
 				var message=container.innerHTML;
-				var to=name+":"+email;
+				var to_array=[{"name":name,"email":email,"customer_id":id}];					
+				var to=JSON.stringify(to_array);
 				var from=get_session_var('email');
 				send_email(to,from,business_title,subject,message,function(){});
 			});
@@ -17520,6 +17525,7 @@ function form252_create_item(form)
 		}
 
 		var customer_data="<customers>"+
+						"<id></id>"+
 						"<name></name>"+
 						"<phone></phone>"+
 						"<email></email>"+
@@ -17549,8 +17555,9 @@ function form252_create_item(form)
 				print_newsletter(nl_name,nl_id,'mail',function(container)
 				{
 					var message=container.innerHTML;
-					var to=customer_name+":"+customers[0].email;
 					var from=get_session_var('email');
+					var to_array=[{"name":customers[0].name,"email":customers[0].email,"customer_id":customers[0].id}];					
+					var to=JSON.stringify(to_array);
 					send_email(to,from,business_title,subject,message,function(){});
 				});
 			},nl_id_xml);
@@ -17616,6 +17623,7 @@ function form253_create_item(form)
 		}
 
 		var customer_data="<customers>"+
+						"<id></id>"+
 						"<name></name>"+
 						"<phone></phone>"+
 						"<email></email>"+
@@ -17645,8 +17653,9 @@ function form253_create_item(form)
 				print_newsletter(nl_name,nl_id,'mail',function(container)
 				{
 					var message=container.innerHTML;
-					var to=customer_name+":"+customers[0].email;
 					var from=get_session_var('email');
+					var to_array=[{"name":customers[0].name,"email":customers[0].email,"customer_id":customers[0].id}];					
+					var to=JSON.stringify(to_array);
 					send_email(to,from,business_title,subject,message,function(){});
 				});
 			},nl_id_xml);
@@ -17712,6 +17721,7 @@ function form254_create_item(form)
 		}
 
 		var customer_data="<customers>"+
+						"<id></id>"+
 						"<name></name>"+
 						"<phone></phone>"+
 						"<email></email>"+
@@ -17741,7 +17751,8 @@ function form254_create_item(form)
 				print_newsletter(nl_name,nl_id,'mail',function(container)
 				{
 					var message=container.innerHTML;
-					var to=customer_name+":"+customers[0].email;
+					var to_array=[{"name":customers[0].name,"email":customers[0].email,"customer_id":customers[0].id}];					
+					var to=JSON.stringify(to_array);
 					var from=get_session_var('email');
 					send_email(to,from,business_title,subject,message,function(){});
 				});
@@ -17808,6 +17819,7 @@ function form255_create_item(form)
 		}
 
 		var customer_data="<customers>"+
+						"<id></id>"+
 						"<name></name>"+
 						"<phone></phone>"+
 						"<email></email>"+
@@ -17837,8 +17849,9 @@ function form255_create_item(form)
 				print_newsletter(nl_name,nl_id,'mail',function(container)
 				{
 					var message=container.innerHTML;
-					var to=customer_name+":"+customers[0].email;
 					var from=get_session_var('email');
+					var to_array=[{"name":customers[0].name,"email":customers[0].email,"customer_id":customers[0].id}];					
+					var to=JSON.stringify(to_array);
 					send_email(to,from,business_title,subject,message,function(){});
 				});
 			},nl_id_xml);

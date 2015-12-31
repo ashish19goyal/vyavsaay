@@ -11,7 +11,6 @@ function set_grid_item_1()
 {
 	var new_columns=new Object();
 		new_columns.count=1;
-		new_columns.start_index=0;
 		new_columns.data_store='bills';
 		new_columns.indexes=[{index:'bill_num'}];		
 		new_columns.return_column='bill_num';
@@ -39,8 +38,6 @@ function set_grid_item_1()
 function set_grid_item_2()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='bills';
 		new_columns.indexes=[{index:'bill_date',lowerbound:(get_raw_time(get_my_date())-1000),upperbound:(get_raw_time(get_my_date())+86399999)}];		
 
@@ -65,7 +62,6 @@ function set_grid_item_3()
 {
 	var new_columns=new Object();
 		new_columns.count=1;
-		new_columns.start_index=0;
 		new_columns.data_store='supplier_bills';
 		new_columns.indexes=[{index:'bill_id'}];		
 		new_columns.return_column='bill_id';
@@ -93,8 +89,6 @@ function set_grid_item_3()
 function set_grid_item_4()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='supplier_bills';
 		new_columns.indexes=[{index:'entry_date',lowerbound:(get_raw_time(get_my_date())-1000),upperbound:(get_raw_time(get_my_date())+86399999)}];		
 
@@ -118,8 +112,6 @@ function set_grid_item_4()
 function set_grid_item_5()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.sum='yes';
 		new_columns.data_store='payments';
 		new_columns.return_column='total_amount';
@@ -150,8 +142,6 @@ function set_grid_item_5()
 function set_grid_item_6()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.sum='yes';
 		new_columns.data_store='payments';
 		new_columns.return_column='total_amount';
@@ -182,8 +172,6 @@ function set_grid_item_6()
 function set_grid_item_7()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='product_master';
 		new_columns.indexes=[{index:'name'}];
 
@@ -207,8 +195,6 @@ function set_grid_item_7()
 function set_grid_item_8()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='bill_items';
 		new_columns.indexes=[{index:'item_name'},
 							{index:'total'},
@@ -257,8 +243,6 @@ function set_grid_item_8()
 function set_grid_item_9()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='services';
 		new_columns.indexes=[{index:'name'}];
 
@@ -282,8 +266,6 @@ function set_grid_item_9()
 function set_grid_item_11()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='product_instances';
 		new_columns.indexes=[{index:'id'},{index:'product_name'},{index:'sale_price'}];
 
@@ -318,8 +300,6 @@ function set_grid_item_11()
 function set_grid_item_12()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='product_instances';
 		new_columns.indexes=[{index:'id'},{index:'product_name'},{index:'sale_price'},{index:'cost_price'}];
 
@@ -361,8 +341,6 @@ function set_grid_item_12()
 function set_grid_item_13()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='bills';
 		new_columns.return_column='customer_name';
 		new_columns.indexes=[{index:'bill_date',lowerbound:(get_raw_time(get_my_date())-1000),upperbound:(get_raw_time(get_my_date())+86399000)}];
@@ -388,7 +366,6 @@ function set_grid_item_14()
 {
 	var new_columns=new Object();
 		new_columns.count=1;
-		new_columns.start_index=0;
 		new_columns.data_store='bills';
 		new_columns.return_column='customer_name';
 		new_columns.indexes=[{index:'customer_name'}];
@@ -417,7 +394,6 @@ function set_grid_item_15()
 {
 	var new_columns=new Object();
 		new_columns.count=1;
-		new_columns.start_index=0;
 		new_columns.data_store='supplier_bills';
 		new_columns.return_column='supplier';
 		new_columns.indexes=[{index:'supplier'}];
@@ -445,8 +421,6 @@ function set_grid_item_15()
 function set_grid_item_16()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='payments';
 		new_columns.return_column='total_amount';
 		new_columns.indexes=[{index:'due_date',upperbound:get_my_time()},
@@ -478,8 +452,6 @@ function set_grid_item_16()
 function set_grid_item_17()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='attendance';
 		new_columns.indexes=[{index:'presence',exact:'present'},
 							{index:'date',lowerbound:(get_raw_time(get_my_date())-1000),upperbound:(get_raw_time(get_my_date())+86399000)}];
@@ -504,8 +476,6 @@ function set_grid_item_17()
 function set_grid_item_18()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='task_instances';
 		new_columns.indexes=[{index:'status',exact:'pending'}];
 	
@@ -529,8 +499,6 @@ function set_grid_item_18()
 function set_grid_item_19()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='store_areas';
 		new_columns.indexes=[{index:'area_type',exact:'storage'}];
 	
@@ -554,8 +522,6 @@ function set_grid_item_19()
 function set_grid_item_20()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='sale_orders';
 		new_columns.indexes=[{index:'status',exact:'pending'}];
 	
@@ -580,7 +546,6 @@ function set_grid_item_22()
 {
 	var new_columns=new Object();
 		new_columns.count=1;
-		new_columns.start_index=0;
 		new_columns.data_store='offers';
 		new_columns.return_column='offer_name';
 		new_columns.indexes=[{index:'status',array:['active','extended']}];
@@ -605,8 +570,6 @@ function set_grid_item_22()
 function set_grid_item_23()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='sale_leads';
 		new_columns.indexes=[{index:'status',exact:'open'}];
 	
@@ -630,8 +593,6 @@ function set_grid_item_23()
 function set_grid_item_26()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='bills';
 		new_columns.return_column='total';
 		
@@ -662,8 +623,6 @@ function set_grid_item_26()
 function set_grid_item_27()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='projects';
 		new_columns.indexes=[{index:'status',exact:'active'}];
 	
@@ -687,8 +646,6 @@ function set_grid_item_27()
 function set_grid_item_28()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='projects';
 		new_columns.indexes=[{index:'status',exact:'completed'}];
 	
@@ -712,8 +669,6 @@ function set_grid_item_28()
 function set_grid_item_29()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='reports';
 		new_columns.indexes=[{index:'id'}];
 	
@@ -737,8 +692,6 @@ function set_grid_item_29()
 function set_grid_item_30()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='user_preferences';
 		new_columns.indexes=[{index:'type',array:['form','report']},
 							{index:'value',exact:'checked'}];
@@ -763,8 +716,6 @@ function set_grid_item_30()
 function set_grid_item_31()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='service_requests';
 		new_columns.indexes=[{index:'status',exact:'open'}];
 	
@@ -788,8 +739,6 @@ function set_grid_item_31()
 function set_grid_item_32()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='service_requests';
 		new_columns.indexes=[{index:'status',exact:'closed'},
 							{index:'last_updated',lowerbound:(get_raw_time(get_my_date())-1000)}];
@@ -814,8 +763,6 @@ function set_grid_item_32()
 function set_grid_item_33()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='production_plan';
 		new_columns.indexes=[{index:'status',array:['approved','overdue']}];
 	
@@ -839,8 +786,6 @@ function set_grid_item_33()
 function set_grid_item_34()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='task_instances';
 		new_columns.indexes=[{index:'t_due',upperbound:(get_raw_time(get_my_date())+86399000)}];
 	
@@ -864,8 +809,6 @@ function set_grid_item_34()
 function set_grid_item_35()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='production_plan_items';
 		new_columns.indexes=[{index:'from_time',upperbound:get_my_time()},
 							{index:'to_time',lowerbound:get_my_time()}];
@@ -890,8 +833,6 @@ function set_grid_item_35()
 function set_grid_item_36()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='logistics_orders';
 		new_columns.indexes=[{index:'import_date',exact:get_raw_time(get_my_date())}];
 	
@@ -915,8 +856,6 @@ function set_grid_item_36()
 function set_grid_item_39()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='logistics_orders';
 		new_columns.indexes=[{index:'status',array:['pending','undelivered','received','out for delivery']},
 							{index:'import_date',exact:get_raw_time(get_my_date())}];
@@ -941,8 +880,6 @@ function set_grid_item_39()
 function set_grid_item_40()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='treatment_plans';
 		new_columns.indexes=[{index:'status',exact:'active'}];
 
@@ -966,8 +903,6 @@ function set_grid_item_40()
 function set_grid_item_41()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='sms';
 		new_columns.indexes=[{index:'message'},
 							{index:'receiver'},
@@ -1004,8 +939,6 @@ function set_grid_item_41()
 function set_grid_item_42()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='drs';
 		new_columns.indexes=[{index:'drs_time',lowebound:(get_raw_time(get_my_date())-1000)}];
 
@@ -1029,8 +962,6 @@ function set_grid_item_42()
 function set_grid_item_43()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='rto';
 		new_columns.indexes=[{index:'rto_time',lowebound:(get_raw_time(get_my_date())-1000)}];
 
@@ -1054,8 +985,6 @@ function set_grid_item_43()
 function set_grid_item_44()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='quotation';
 		new_columns.indexes=[{index:'date',lowebound:(get_raw_time(get_my_date())-2592000000)}];
 
@@ -1079,8 +1008,6 @@ function set_grid_item_44()
 function set_grid_item_45()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='attributes';		
 			
 		new_columns.indexes=[{index:'type',exact:'product'},
@@ -1107,8 +1034,6 @@ function set_grid_item_45()
 function set_grid_item_46()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='delivery_challans';		
 			
 		new_columns.indexes=[{index:'challan_date',lowebound:(get_raw_time(get_my_date())-1000)}];
@@ -1133,8 +1058,6 @@ function set_grid_item_46()
 function set_grid_item_47()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='accounts';		
 			
 		new_columns.indexes=[{index:'username',unequal:""},
@@ -1161,8 +1084,6 @@ function set_grid_item_47()
 function set_grid_item_48()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='customers';		
 			
 		new_columns.indexes=[{index:'id'}];
@@ -1187,8 +1108,6 @@ function set_grid_item_48()
 function set_grid_item_49()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='unbilled_sale_items';		
 
 		new_columns.indexes=[{index:'bill_status',exact:'pending'}];
@@ -1213,8 +1132,6 @@ function set_grid_item_49()
 function set_grid_item_50()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='unbilled_purchase_items';		
 
 		new_columns.indexes=[{index:'bill_status',exact:'pending'}];
@@ -1239,8 +1156,6 @@ function set_grid_item_50()
 function set_grid_item_51()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='product_instances';
 		new_columns.indexes=[{index:'batch'}];
 
@@ -1264,8 +1179,6 @@ function set_grid_item_51()
 function set_grid_item_52()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='inventory_adjust';
 		new_columns.return_column='quantity';
 		new_columns.sum='yes';
@@ -1293,8 +1206,6 @@ function set_grid_item_52()
 function set_grid_item_53()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='inventory_adjust';
 		
 		new_columns.indexes=[{index:'picked_status',exact:'pending'},
@@ -1347,8 +1258,6 @@ function set_grid_item_53()
 function set_grid_item_54()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='inventory_adjust';
 		
 		new_columns.indexes=[{index:'put_away_status',exact:'pending'},
@@ -1401,8 +1310,6 @@ function set_grid_item_54()
 function set_grid_item_55()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='discarded';
 		new_columns.indexes=[{index:'status',exact:'pending approval'}];
 
@@ -1426,8 +1333,6 @@ function set_grid_item_55()
 function set_grid_item_56()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='bill_items';
 		new_columns.sum='yes';
 		new_columns.return_column='quantity';
@@ -1454,8 +1359,6 @@ function set_grid_item_56()
 function set_grid_item_57()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='bill_items';
 		new_columns.sum='yes';
 		new_columns.return_column='quantity';
@@ -1482,8 +1385,6 @@ function set_grid_item_57()
 function set_grid_item_58()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='bill_items';
 		new_columns.indexes=[{index:'issue_type',exact:'out'},
 							{index:'hiring_type',exact:'sale'},
@@ -1509,8 +1410,6 @@ function set_grid_item_58()
 function set_grid_item_59()
 {
 	var new_columns=new Object();
-		new_columns.count=0;
-		new_columns.start_index=0;
 		new_columns.data_store='bill_items';
 		new_columns.indexes=[{index:'issue_type',exact:'in'},
 							{index:'hiring_type',exact:'purchase'},
@@ -1519,5 +1418,28 @@ function set_grid_item_59()
 	read_json_count(new_columns,function(item_count)
 	{
 		$('#grid_item_59').html(item_count);
+	});	
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_60
+*@*display_name*:*# Email Unsubscribes
+*@*grid*:*promotion
+*@*function_name*:*set_grid_item_60();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_60()
+{
+	var new_columns=new Object();
+		new_columns.data_store='customers';
+		new_columns.indexes=[{index:'email_subscription',exact:'no'}];
+
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_60').html(item_count);
 	});	
 };

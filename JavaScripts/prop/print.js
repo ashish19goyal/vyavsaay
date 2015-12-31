@@ -244,7 +244,7 @@ function print_newsletter(nl_name,nl_id,print_type,func)
 	var tandc_text=get_session_var('bill_message');
 	var powered_by_text=get_session_var('powered_by');	
 	var powered_by_link=get_session_var('powered_by_link');
-	
+	var domain=get_session_var('domain');
 ////////////////filling in the content into the containers/////////////////////////////////////
 
 	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
@@ -253,8 +253,14 @@ function print_newsletter(nl_name,nl_id,print_type,func)
 	business_contact.innerHTML="<hr style='border: 1px solid #000;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website;	
 
 	if(powered_by_text!="")	
-		powered_by.innerHTML="<hr style='border: 1px solid #000;'><a href='"+powered_by_link+"'>Powered By: "+powered_by_text+"</a>";	
-	
+	{
+		powered_by.innerHTML="<hr style='border: 1px solid #000;'>Powered By: <a href='"+powered_by_link+"'>"+powered_by_text+"</a> | <a href='https://vyavsaay.com/f/u.htm?d="+domain+"&i=*|customer_id|*'>Unsubscribe</a>";
+	}	
+	else 
+	{
+		powered_by.innerHTML="<hr style='border: 1px solid #000;'>Powered By: <a href='https://vyavsaay.com'>Vyavsaay ERP</a> | <a href='https://vyavsaay.com/f/u.htm?d="+domain+"&i=*|customer_id|*'>Unsubscribe</a>";
+	}
+
 /////////////placing the containers //////////////////////////////////////////////////////	
 	
 	container.appendChild(header);
@@ -410,6 +416,7 @@ function print_flex_newsletter(nl_name,nl_id,print_type,func)
 	var tandc_text=get_session_var('bill_message');
 	var powered_by_text=get_session_var('powered_by');	
 	var powered_by_link=get_session_var('powered_by_link');
+	var domain=get_session_var('domain');
 	
 ////////////////filling in the content into the containers/////////////////////////////////////
 
@@ -419,8 +426,14 @@ function print_flex_newsletter(nl_name,nl_id,print_type,func)
 	business_contact.innerHTML="<hr style='border: 1px solid #000;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website;	
 
 	if(powered_by_text!="")	
-		powered_by.innerHTML="<hr style='border: 1px solid #000;'><a href='"+powered_by_link+"'>Powered By: "+powered_by_text+"</a>";	
-	
+	{
+		powered_by.innerHTML="<hr style='border: 1px solid #000;'>Powered By: <a href='"+powered_by_link+"'>"+powered_by_text+"</a> | <a href='https://vyavsaay.com/f/u.htm?d="+domain+"&i=*|customer_id|*'>Unsubscribe</a>";
+	}	
+	else 
+	{
+		powered_by.innerHTML="<hr style='border: 1px solid #000;'>Powered By: <a href='https://vyavsaay.com'>Vyavsaay ERP</a> | <a href='https://vyavsaay.com/f/u.htm?d="+domain+"&i=*|customer_id|*'>Unsubscribe</a>";
+	}
+
 /////////////placing the containers //////////////////////////////////////////////////////	
 	container.appendChild(header);
 	container.appendChild(nl_content);
@@ -3058,11 +3071,11 @@ function form196_print_form(nl_name,nl_id,print_type,func)
 
 	if(powered_by_text!="")	
 	{
-		powered_by.innerHTML="<hr style='border: 1px solid #000;'><a href='"+powered_by_link+"'>Powered By: "+powered_by_text+"</a> | <a href='https://vyavsaay.com/f/u.htm?d="+domain+"&i={{customer_id}}'>Unsubscribe</a>";
+		powered_by.innerHTML="<hr style='border: 1px solid #000;'>Powered By: <a href='"+powered_by_link+"'>"+powered_by_text+"</a> | <a href='https://vyavsaay.com/f/u.htm?d="+domain+"&i=*|customer_id|*'>Unsubscribe</a>";
 	}	
 	else 
 	{
-		powered_by.innerHTML="<hr style='border: 1px solid #000;'><a href='https://vyavsaay.com'>Powered By: Vyavsaay ERP</a> | <a href='https://vyavsaay.com/f/u.htm?d="+domain+"&i={{customer_id}}'>Unsubscribe</a>";
+		powered_by.innerHTML="<hr style='border: 1px solid #000;'>Powered By: <a href='https://vyavsaay.com'>Vyavsaay ERP</a> | <a href='https://vyavsaay.com/f/u.htm?d="+domain+"&i=*|customer_id|*'>Unsubscribe</a>";
 	}
 /////////////placing the containers //////////////////////////////////////////////////////	
 	
@@ -4729,6 +4742,7 @@ function form237_print_form(nl_name,nl_id,print_type,func)
 	var tandc_text=get_session_var('bill_message');
 	var powered_by_text=get_session_var('powered_by');	
 	var powered_by_link=get_session_var('powered_by_link');
+	var domain=get_session_var('domain');
 	
 ////////////////filling in the content into the containers/////////////////////////////////////
 
@@ -4739,11 +4753,11 @@ function form237_print_form(nl_name,nl_id,print_type,func)
 
 	if(powered_by_text!="")	
 	{
-		powered_by.innerHTML="<hr style='border: 1px solid #000;'><a href='"+powered_by_link+"'>Powered By: "+powered_by_text+"</a> | <a href='https://vyavsaay.com/f/u.htm?d="+domain+"&i={{customer_id}}'>Unsubscribe</a>";
+		powered_by.innerHTML="<hr style='border: 1px solid #000;'>Powered By: <a href='"+powered_by_link+"'>"+powered_by_text+"</a> | <a href='https://vyavsaay.com/f/u.htm?d="+domain+"&i=*|customer_id|*'>Unsubscribe</a>";
 	}	
 	else 
 	{
-		powered_by.innerHTML="<hr style='border: 1px solid #000;'><a href='https://vyavsaay.com'>Powered By: Vyavsaay ERP</a> | <a href='https://vyavsaay.com/f/u.htm?d="+domain+"&i={{customer_id}}'>Unsubscribe</a>";
+		powered_by.innerHTML="<hr style='border: 1px solid #000;'>Powered By: <a href='https://vyavsaay.com'>Vyavsaay ERP</a> | <a href='https://vyavsaay.com/f/u.htm?d="+domain+"&i=*|customer_id|*'>Unsubscribe</a>";
 	}
 	
 /////////////placing the containers //////////////////////////////////////////////////////	

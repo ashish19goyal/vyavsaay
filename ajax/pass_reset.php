@@ -1,9 +1,9 @@
 <?php
 
 	include_once "../Classes/db.php";
-	include_once "../Classes/mailer.php";
+	include_once "../Classes/mailer_json.php";
 	use RetailingEssentials\db_connect;
-	use RetailingEssentials\send_mailer;
+	use RetailingEssentials\send_mailer_json;
 
 	$userNameString=$_POST['userName'];
 	$userEmail=$_POST['userEmail'];
@@ -39,18 +39,24 @@
 			$stmt2=$conn->conn->prepare("update accounts set password=? where username=?");
 			$stmt2->execute(array($pass_hash,$username));
 			
-			echo $password;
-			
 			$message = '<html><head><title>'.$subject.
 			'</title></head><body><table><tr><td>Your Vyavsaay password has been changed to : <b>'.$password.'</b></td></tr>'.
-			'<tr><td>Please login with this password and change it as soon as possible. </td></tr>'.
+			'<tr><td>Please login and change it as soon as possible. </td></tr>'.
 			'</table></body></html>';
 
 			$from = "info@vyavsaay.com";
-			$from_name = "info@vyavsaay.com";					
-			$email_instance=new send_mailer();
-			$email_instance->direct_send($subject,$message,'',"User:".$userEmail,$from,$from_name);
-			$email_instance->log_mailer($domain,$subject,$message,"User:".$userEmail,$from,$from_name);	
+			$from_name = "Vyavsaay ERP";
+			
+			$to_array=array(
+				array("email" => $userEmail,
+					"name" => 'User'
+				) 
+			);
+			$to = json_encode($to_array);
+				
+			$email_instance=new send_mailer_json();
+			$email_instance->direct_send($subject,$message,'',$to,$from,$from_name);
+			$email_instance->log_mailer($domain,$subject,$message,'',$to,$from,$from_name);	
 		}
 		else
 		{

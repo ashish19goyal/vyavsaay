@@ -7,7 +7,7 @@ use RetailingEssentials\db_connect;
 use \PDO;
 use \Mandrill;
 
-class send_mailer
+class send_mailer_json
 {
 	public $username=null;
 	public $password=null;
@@ -25,53 +25,43 @@ class send_mailer
 	{
 		$merge_vars=array();
 	    $to=array();    
-		$receivers_array=explode(';',$receivers);		
+		$receivers_array=json_decode($receivers,true);
+
+		$global_merge_vars=array(
+				array(
+					'name' => 'business_title',
+					'content' => $from_name
+			)
+		);
 
 		foreach($receivers_array as $r_item)
 		{
-			$receiver_var=explode(':',$r_item);
-			
-			if($r_item!=';' && count($receiver_var)>1)
+			$vars_array=array();
+			foreach($r_item as $key => $value)
 			{
-				$merge_var=array(
-		       		'rcpt' => $receiver_var[1],
-		            'vars' => array(
-		            	array(
-		                	'customer_name' => $receiver_var[0],
-		                	'business_title'=> $from_name
-		            	)
-		        	)
+				$var_item=array(
+						'name' => $key,
+						'content' => $value
+				);
+				$vars_array[]=$var_item;
+			}
+			$merge_var=array(
+		       		'rcpt' => $r_item['email'],
+		            'vars' => $vars_array
 		        );
-		    	$to_var=array(
-		        	'email' => $receiver_var[1],
-		            'name' => $receiver_var[0],
+
+	    	$to_var=array(
+		        	'email' => $r_item['email'],
+		            'name' => $r_item['name'],
 		            'type' => 'to'
 		        );
 	
-				array_push($merge_vars, $merge_var);
-				array_push($to, $to_var);
-			}
-			else if($r_item!=';' && count($receiver_var)==1)
-			{
-				$merge_var=array(
-		       		'rcpt' => $receiver_var[0],
-		            'vars' => array(
-		            	array(
-		                	'customer_name' => 'Sir',
-		                	'business_title'=> $from_name
-		            	)
-		        	)
-		        );
-		    	$to_var=array(
-		        	'email' => $receiver_var[0],
-		            'name' => $receiver_var[0],
-		            'type' => 'to'
-		        );
-	
-				array_push($merge_vars, $merge_var);
-				array_push($to, $to_var);
-			}
+			$merge_vars[]= $merge_var;
+			$to[]= $to_var;
 		}		
+		
+		//$merge_vars_string=json_encode($merge_vars);
+		//echo $merge_vars_string;
 		
 		$final_message = array(
 	        'html' => $message,
@@ -83,6 +73,7 @@ class send_mailer
 	        'preserve_recipients' => false,
 	        'merge' => true,
 	        'merge_language' => 'mailchimp',
+	        'global_merge_vars' => $global_merge_vars,
 	        'merge_vars' => $merge_vars
 	    );
 	    
@@ -107,7 +98,8 @@ class send_mailer
 		        'preserve_recipients' => false,
 		        'merge' => true,
 		        'merge_language' => 'mailchimp',
-		        'merge_vars' => $merge_vars,
+		        'global_merge_vars' => $global_merge_vars,
+	        	'merge_vars' => $merge_vars,
 		        'images' => $attachment
 		    );
 	    }
@@ -122,53 +114,40 @@ class send_mailer
 	{
 		$merge_vars=array();
 	    $to=array();    
-		$receivers_array=explode(';',$receivers);		
+		$receivers_array=json_decode($receivers,true);
+
+		$global_merge_vars=array(
+				0 => array(
+					'name'=> 'business_title',
+					'content'=> $from_name
+			)
+		);
 
 		foreach($receivers_array as $r_item)
 		{
-			$receiver_var=explode(':',$r_item);
-			
-			if($r_item!=';' && count($receiver_var)>1)
+			$vars_array=array();
+			foreach($r_item as $key => $value)
 			{
-				$merge_var=array(
-		       		'rcpt' => $receiver_var[1],
-		            'vars' => array(
-		            	array(
-		                	'customer_name' => $receiver_var[0],
-		                	'business_title'=> $from_name
-		            	)
-		        	)
+				$var_item=array(
+						'name' => $key,
+						'content' => $value
+				);
+				$vars_array[]=$var_item;
+			}
+			$merge_var=array(
+		       		'rcpt' => $r_item['email'],
+		            'vars' => $vars_array
 		        );
-		    	$to_var=array(
-		        	'email' => $receiver_var[1],
-		            'name' => $receiver_var[0],
+
+	    	$to_var=array(
+		        	'email' => $r_item['email'],
+		            'name' => $r_item['name'],
 		            'type' => 'to'
 		        );
 	
-				array_push($merge_vars, $merge_var);
-				array_push($to, $to_var);
-			}
-			else if($r_item!=';' && count($receiver_var)==1)
-			{
-				$merge_var=array(
-		       		'rcpt' => $receiver_var[0],
-		            'vars' => array(
-		            	array(
-		                	'customer_name' => 'Sir',
-		                	'business_title'=> $from_name
-		            	)
-		        	)
-		        );
-		    	$to_var=array(
-		        	'email' => $receiver_var[0],
-		            'name' => $receiver_var[0],
-		            'type' => 'to'
-		        );
-	
-				array_push($merge_vars, $merge_var);
-				array_push($to, $to_var);
-			}
-		}		
+			$merge_vars[]= $merge_var;
+			$to[]= $to_var;
+		}
 		
 		$final_message = array(
 	        'html' => $message,
@@ -180,6 +159,7 @@ class send_mailer
 	        'preserve_recipients' => false,
 	        'merge' => true,
 	        'merge_language' => 'mailchimp',
+	        'global_merge_vars' => $global_merge_vars,
 	        'merge_vars' => $merge_vars
 	    );
 	    
@@ -204,7 +184,8 @@ class send_mailer
 		        'preserve_recipients' => false,
 		        'merge' => true,
 		        'merge_language' => 'mailchimp',
-		        'merge_vars' => $merge_vars,
+		        'global_merge_vars' => $global_merge_vars,
+	        	'merge_vars' => $merge_vars,
 		        'attachments' => $attachment
 		    );
 	    }

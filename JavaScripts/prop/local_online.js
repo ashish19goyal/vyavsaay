@@ -429,10 +429,18 @@ function send_email(to,from,from_name,subject,message,func)
 	        {   
 	        	message_attachment=canvas.toDataURL("image/jpeg");
 				pdf_elem.innerHTML="";
-	
+				
+				var data={"to":to,
+							"from":from,
+							"from_name":from_name,
+							"subject":subject,
+							"message":message,
+							"message_attachment":message_attachment,
+							"attachment_type":""};
+				var data_string=JSON.stringify(data);			
 				if(is_online())
 				{
-					server_send_email(to,from,from_name,subject,message,message_attachment,func);
+					server_send_email(data_string,func);
 				}
 				else
 				{
@@ -444,6 +452,7 @@ function send_email(to,from,from_name,subject,message,func)
 								"<receivers>"+to+"</receivers>"+
 								"<sender>"+from+"</sender>"+
 								"<sender_name>"+from_name+"</sender_name>"+
+								"<attachment_type></attachment_type>"+
 								"<status>pending</status>"+
 								"<last_updated>"+get_my_time()+"</last_updated>"+
 								"</emails>";
@@ -476,10 +485,19 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
 		        {   
 		        	new_message_attachment=canvas.toDataURL("image/jpeg");
 					pdf_elem.innerHTML="";
-		
+					
+					var data={"to":to,
+								"from":from,
+								"from_name":from_name,
+								"subject":subject,
+								"message":message,
+								"message_attachment":new_message_attachment,
+								"attachment_type":""};
+					var data_string=JSON.stringify(data);			
+					
 					if(is_online())
 					{
-						server_send_email(to,from,from_name,subject,message,new_message_attachment,func);
+						server_send_email(data_string,func);
 					}
 					else
 					{
@@ -502,10 +520,19 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
 		    });
 		}
 		else 
-		{	    	
+		{
+			var data={"to":to,
+						"from":from,
+						"from_name":from_name,
+						"subject":subject,
+						"message":message,
+						"message_attachment":message_attachment,
+						"attachment_type":attachment_type};
+			var data_string=JSON.stringify(data);			
+					    	
 			if(is_online())
 			{
-				server_send_email_attachment(to,from,from_name,subject,message,message_attachment,func,attachment_type);
+				server_send_email_attachment(data_string,func);
 			}
 			else
 			{

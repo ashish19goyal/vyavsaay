@@ -10,7 +10,7 @@ class user_setup
 	private $conn=null;
  	private $dbname="";
  	
-	public function __construct($username,$industry)
+	public function __construct($username)
 	{
 		$this->dbname="re_user_".$username;
 		$this->conn=new db_connect(0);

@@ -5520,6 +5520,7 @@ function modal50_action()
 		var email_id_string="";
 		var email_message=container.innerHTML;
 		var from=get_session_var('email');
+		var to_array=[];
 		
 		$("[id^='row_form78_']").each(function(index)
 		{
@@ -5528,22 +5529,23 @@ function modal50_action()
 			
 			if(form.elements[3].checked)
 			{
-				var to=form.elements[1].value;
+				var customer_email=form.elements[1].value;
 				var customer_phone=form.elements[2].value;
 				var customer_name=form.elements[4].value;
-				email_id_string+=customer_name+":"+to;
+				var customer_id=form.elements[5].value;
 				var message=sms_content.replace(/customer_name/g,customer_name);
 				message=message.replace(/business_title/g,business_title);
 				
 				send_sms(customer_phone,message,'transaction');
-				if(to!="")
+				if(customer_email!="")
 				{
-					email_id_string+=";";				
+					var to={"email":customer_email,"name":customer_name,"customer_id":customer_id};
+					to_array.push(to);
 				}				
 			}
 		});	
 
-		var email_to=email_id_string;
+		var email_to=JSON.stringify(to_array);
 		send_email(email_to,from,business_title,subject,email_message,function()
 		{
 			$("#modal58").dialog("open");
@@ -6007,7 +6009,8 @@ function modal101_action(doc_type,person,person_type,func,attachment_type,messag
 		{
 			event.preventDefault();
 			show_loader();
-			var receiver=form.elements[4].value+":"+form.elements[2].value;
+			var receiver_array=[{"email":form.elements[2].value,"name":form.elements[4].value}];
+			var receiver=JSON.stringify(receiver_array);
 			var sub=form.elements[3].value;
 			
 			if(typeof attachment_type!='undefined')
@@ -14071,7 +14074,9 @@ function modal171_action(doc_type,person,person_type,func,attachment_type)
 		{
 			event.preventDefault();
 			show_loader();
-			var receiver=form.elements[5].value+":"+form.elements[2].value;
+			var receiver_array=[{"email":form.elements[2].value,"name":form.elements[5].value}];
+			var receiver=JSON.stringify(receiver_array);
+						
 			var sub=form.elements[3].value;
 			var email_message=form.elements[4].value;
 			email_message=email_message.replace(/\n/g,'<br>');

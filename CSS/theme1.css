@@ -136,7 +136,7 @@ a:hover {
 	color: #445a71;	
 }
 
-input.input_link{
+.input_link{
 	cursor: pointer;
 	text-decoration: underline;
 }

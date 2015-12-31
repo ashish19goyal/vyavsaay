@@ -62,23 +62,7 @@
 						<input class='form__field pull-right' type="tel" required placeholder='Contact No:'>
 						<input class='form__field pull-left' type="password" required placeholder='Password'>
 						<input class='form__field pull-right' type="password" onkeyup="match_password()" required placeholder='Retype Password:'>
-						<select class='form__field--full' id="r_industry" required>
-							<option value="general" selected="selected">General Store</option>
-							<option value="hardware">Hardware</option>
-							<option value="clothing">Clothing & Footwear</option>
-							<option value="pharmacy">Pharmacy (medicine store)</option>
-							<option value="wholesale">Wholesale or Distributor</option>
-							<option value="clinic">Nursing Home & clinics</option>
-							<option value="food">Restaurant, Bakery & food joints</option>
-							<option value="hotel">Hotel & Guest house</option>
-							<option value="opticals">Opticals</option>
-							<option value="lawyer">Lawyer or law firm</option>
-							<option value="ca">CA or CA firm</option>
-							<option value="events">Event Management (Marriages,Parties,Performances)</option>
-							<option value="it">IT services & consulting</option>
-							<option value="manufacture">Manufacturing</option>
-						</select>
-              		<button class="btn btn-info btn-lg btn--highlight" id="submit-btn" name="submit-btn" type="submit">Register</button>
+						<button class="btn btn-info btn-lg btn--highlight" id="submit-btn" name="submit-btn" type="submit">Register</button>
 					</form>                
 				</div>
 			</div>
@@ -144,12 +128,6 @@
 	{
 		event.preventDefault();
 		register_click();
-	});
-
-	$('#reseller_registeration').on('submit',function(event)
-	{
-		event.preventDefault();
-		reseller_register_click();
 	});
 		
 </script>

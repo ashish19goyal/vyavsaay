@@ -50,7 +50,6 @@
 	$input_object=json_decode($input_data,true);
 
 	$table=$input_object['data_store'];
-	$start_index=$input_object['start_index'];
 	$columns_array=(array)$input_object['indexes'];
 
 	$response_object=[];
@@ -68,9 +67,9 @@
 
 			///setting the starting index
 			$limit_start_index=0;
-			if(isset($start_index))
+			if(isset($input_object['start_index']))
 			{
-				$limit_start_index=$start_index;
+				$limit_start_index=$input_object['start_index'];
 			}
 
 			///seting the indexes to be returned
@@ -98,7 +97,7 @@
 				
 				if(isset($col['unequal']))
 				{
-					$query.=$col['index']." <> ? and ";
+					$query.="(".$col['index']." <> ? or isNull(".$col['index'].")) and ";
 					$values_array[]=$col['unequal'];
 				}
 				
@@ -192,7 +191,7 @@
 			$response_object['status']='success';
 			$response_object['data_store']=$table;
 			$response_object['count']=$struct_res[0];
-			$response_object['end_index']=$start_index+$struct_res[0];		
+			$response_object['end_index']=$limit_start_index+$struct_res[0];		
 		}
 		else
 		{

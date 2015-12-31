@@ -2,9 +2,9 @@
 
 	include_once "../Classes/db.php";
 	include_once "../Classes/sms.php";
-	include_once "../Classes/mailer.php";
+	include_once "../Classes/mailer_json.php";
 	use RetailingEssentials\send_sms;
-	use RetailingEssentials\send_mailer;
+	use RetailingEssentials\send_mailer_json;
 	use RetailingEssentials\db_connect;
 	
 	$status="failed_registration";
@@ -13,7 +13,6 @@
 	$email=$_POST['email'];
 	$name=$_POST['name'];
 	$pass=$_POST['pass'];
-	$industry=$_POST['industry'];
 	$phone=$_POST['phone'];
 	
 	$salt=$username."1234567891234567891234";
@@ -23,8 +22,8 @@
 	
 	$conn=new db_connect(0);
 	
-	$stmt=$conn->conn->prepare("insert into user_profile (username,email,name,phone,status,dbname,industry) values(?,?,?,?,?,?,?)");
-	$stmt->execute(array($username,$email,$name,$phone,'active','re_user_'.$username,$industry));	
+	$stmt=$conn->conn->prepare("insert into user_profile (username,email,name,phone,status,dbname) values(?,?,?,?,?,?)");
+	$stmt->execute(array($username,$email,$name,$phone,'active','re_user_'.$username));	
 	$id_user=$conn->conn->lastInsertId();
 	
 	$status="successful";
@@ -33,7 +32,6 @@
 	{
 		$conn2=new db_connect("re_user_".$username);
 
-		set_user_preferences($conn2,$industry);
 		set_user_profiles($conn2,$pass_hash,$name,$email,$phone);
 		
 	}catch(PDOException $ex)
@@ -49,20 +47,21 @@
 	$sms_instance->log_sms($username,$message,$phone,'transaction');		
 
 	$from = "info@vyavsaay.com";
-	$from_name = "info@vyavsaay.com";					
-	$email_message="Congratulations!! Your Vyavsaay ERP account has been successfully setup.".
-					"<br>Your account details are as follows".
-					"Url: https://vyavsaay.com<br>".
-					"Login: ".$username.
-					"Password: ".$pass;
-	$email_instance=new send_mailer();
-	$email_instance->direct_send('Vyavsaay: Account Setup',$message,'',"User:".$email,$from,$from_name);
-	
-	function set_user_preferences($conn2,$industry)
-	{
-		$stmt1=$conn2->conn->prepare("insert into user_preferences (name,display_name,status,value,type,last_updated) values(?,?,?,?,?,?)");
-		$stmt1->execute(array('industry','industry','active',$industry,'other',1000*time()));
-	}
+	$from_name = "Vyavsaay ERP";
+	$email_message="Congratulations *|name|*!! Your *|business_title|* account has been successfully setup.".
+					"<br>Your account details are as follows. Please login and change your password.".
+					"<br>Url: https://vyavsaay.com".
+					"<br>Login: ".$username.
+					"<br>Password: ".$pass;
+	$to_array=array(
+				array("email" => $email,
+					"name" => $name
+				) 
+			);
+	$to = json_encode($to_array);
+				
+	$email_instance=new send_mailer_json();
+	$email_instance->direct_send('Vyavsaay: Account Setup',$email_message,'',$to,$from,$from_name);
 	
 	function set_user_profiles($conn2,$pass_hash,$name,$email,$phone)
 	{
