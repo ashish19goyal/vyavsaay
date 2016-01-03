@@ -7179,3 +7179,47 @@ function form290_import(data_array,import_type)
 		update_batch(data_xml);
 	}
 }
+
+/**
+* @form Newsletter Components
+* @formNo 298
+*/
+function form298_import(data_array,import_type)
+{
+	var data_xml="<newsletter_components>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</newsletter_components><separator></separator><newsletter_components>";
+		}
+		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<name>"+row['name']+"</name>" +
+				"<detail>"+row['detail']+"</detail>" +
+				"<html_code>"+htmlentities(row['html_code'])+"</html_code>" +
+				"<markers>"+row['markers']+"</markers>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";		            	
+	});
+	
+	data_xml+="</newsletter_components>";
+
+	if(import_type=='create_new')
+	{
+		create_batch(data_xml);
+	}
+	else
+	{
+		update_batch(data_xml);
+	}
+}

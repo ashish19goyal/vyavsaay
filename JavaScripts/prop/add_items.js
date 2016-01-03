@@ -18110,3 +18110,71 @@ function form296_add_item()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form New Purchase Order (Sehgal)
+ * @formNo 298
+ */
+function form298_add_item()
+{
+	if(is_create_access('form298'))
+	{
+		var id=get_new_key();
+		
+		var rowsHTML="<tr>";
+			rowsHTML+="<form id='form298_"+id+"'></form>";
+				rowsHTML+="<td data-th='Name'>";
+					rowsHTML+="<input type='text' form='form298_"+id+"' required>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Description'>";
+					rowsHTML+="<textarea class='dblclick_editable' form='form298_"+id+"'></textarea>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Code'>";
+					rowsHTML+="<textarea class='dblclick_editable' form='form298_"+id+"' required></textarea>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Markers'>";
+					rowsHTML+="<textarea class='dblclick_editable' form='form298_"+id+"'></textarea>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Images'>";
+					rowsHTML+="<br><div id='form298_images_"+id+"'></div>";
+					rowsHTML+="<input type='button' form='form298_"+id+"' value='Add Image' class='generic_icon'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Action'>";
+					rowsHTML+="<input type='hidden' form='form298_"+id+"' value='"+id+"'>";
+					rowsHTML+="<input type='submit' class='save_icon' form='form298_"+id+"' title='Save'>";
+					rowsHTML+="<input type='button' class='delete_icon' form='form298_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="</td>";
+		rowsHTML+="</tr>";
+
+		$('#form298_body').prepend(rowsHTML);
+
+		var fields=document.getElementById("form298_"+id);
+		var name_filter=fields.elements[0];
+		var img_filter=fields.elements[4];
+		
+		$(name_filter).focus();
+		
+		$(img_filter).on('click',function () 
+		{
+			modal176_action(id,'newsletter_components',function (pic_id,url,doc_name) 
+			{
+				var docHTML="<a href='"+url+"' download='"+doc_name+"'><u>"+doc_name+"</u></a><br>";
+				var doc_container=document.getElementById('form298_images_'+id);
+				$(doc_container).append(docHTML);
+			});
+		});
+				
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form298_create_item(fields);
+		});
+		
+		longPressEditable($('.dblclick_editable'));	
+		$('textarea').autosize();	
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

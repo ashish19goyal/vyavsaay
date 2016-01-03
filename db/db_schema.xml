@@ -840,6 +840,7 @@
 			<pic_url index='no' type="TEXT"></pic_url>
 			<count_items index='no' type="INT"></count_items>
 			<valid_until index='yes' type="BIGINT"></valid_until>
+			<components index='no' type="TEXT"></components>
 			<status index='yes' type="VARCHAR(10)"></status><!--active/inactive-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
@@ -863,7 +864,6 @@
 			<detail index='no' type="TEXT"></detail>
 			<html_code index='no' type="TEXT"></html_code>
 			<markers index='no' type="TEXT"></markers>
-			<pics index='no' type="TEXT"></pics>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</newsletter_components>

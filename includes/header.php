@@ -12,6 +12,7 @@
 			include "css_includes.php";
 		?>
 		<link rel="icon" href="./images/icon.jpeg">
+		<link rel="stylesheet" href="/appic/css/font-awesome.css">   
 	</head>
 	<body onload="default_load();">
 			<div id="loading_icon"><img src="./images/loader.gif"></div>

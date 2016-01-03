@@ -757,6 +757,10 @@
 		</table>
 	</div>
 	
+	<div id="modal84" title="Design Preview">
+		<div id='modal84_preview'></div>
+	</div>
+
 	<div id="modal101" title="Email Document">
 		<form id='modal101_form' autocomplete="off">
 			<fieldset>
@@ -1743,6 +1747,31 @@
 				<label>Sale Price: <input type="number" step='any'></label><br>
 				<label>Cost Price: <input type="number" step='any'></label><br>
 				<label id='modal174_attributes'></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal175" title="Add Newsletter Component">
+		<form id='modal175_form' autocomplete="off">
+			<fieldset>
+				<label>Name: <input type="text" name='nname' required></label><br>
+				<label>Template: <input type="text" name='tname' required></label><br>
+				<label id='modal175_markers'></label><br>
+				<input type="hidden" name='html_code'>
+				<input type="hidden" name='t_id'>
+				<input type="submit" value='Add' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal176" title="Add Image">
+		<form id='modal176_form' autocomplete="off">
+			<fieldset>
+				<label>Name: <input type="text" required></label><br>
+				<label>Picture: <output></output>
+								<input type='file' style='display:none'>
+								<input type='button' class='generic_red_icon' value='Select Image'></label><br>
 				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>
 		</form>

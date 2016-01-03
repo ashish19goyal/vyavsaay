@@ -15429,3 +15429,101 @@ function form297_update_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Newsletter Components
+ * @param button
+ */
+function form298_update_item(form)
+{
+	if(is_update_access('form298'))
+	{
+		var name=form.elements[0].value;
+		var desc=form.elements[1].value;
+		var code=form.elements[2].value;
+		code=code.replace(/\n/g,'');
+		code=code.replace(/\t/g,'');
+		code=htmlentities(code);
+
+		var markers=form.elements[3].value;
+		var data_id=form.elements[5].value;
+		var save_button=form.elements[6];
+		var del_button=form.elements[7];
+		var last_updated=get_my_time();
+		var data_xml="<newsletter_components>" +
+				"<id>"+data_id+"</id>" +
+				"<name>"+name+"</name>" +
+				"<detail>"+desc+"</detail>" +
+				"<html_code>"+code+"</html_code>" +
+				"<markers>"+markers+"</markers>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</newsletter_components>";	
+	
+		update_simple(data_xml);
+		
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}	
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Newsletter Assembly
+ * @param button
+ */
+function form299_update_item()
+{
+	if(is_update_access('form299'))
+	{
+		show_loader();
+		var form=document.getElementById("form299_form");
+		
+		var data_id=form.elements['id'].value;
+		var name=form.elements['name'].value;
+		
+		$('#form299_section').find("img").each(function(index)
+		{
+			var image_elem=$(this)[0];
+			resize_picture(image_elem,image_elem.width);			
+		});
+
+		var components_array=[];	
+		$("#form299_navigation").find('li').each(function()
+		{
+			var c=new Object();
+			c.name=$(this).attr('data-name');
+			c.id=$(this).attr('data-id');
+			components_array.push(c);
+		});
+		var components=JSON.stringify(components_array);		
+		
+		var html_content=htmlentities(document.getElementById('form299_section').innerHTML);
+		var last_updated=get_my_time();
+		var data_xml="<newsletter>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+name+"</name>" +
+					"<html_content>"+html_content+"</html_content>" +
+					"<components>"+components+"</components>" +
+					"<status>active</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</newsletter>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>newsletter</tablename>" +
+					"<link_to>form44</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Newsletter "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		update_row(data_xml,activity_xml);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

@@ -31684,3 +31684,236 @@ function form297_ini()
 		hide_loader();
 	});
 };
+
+/**
+ * @form Newsletter Template Components
+ * @formNo 298
+ * @Loading light
+ */
+function form298_ini()
+{
+	show_loader();
+	var fid=$("#form298_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form298_header');
+	
+	//populating form 
+	var fname=filter_fields.elements[0].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form298_index');
+	var prev_element=document.getElementById('form298_prev');
+	var next_element=document.getElementById('form298_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	$('#form298_body').html("");
+	
+	var new_columns=new Object();
+		new_columns.count=25;
+		new_columns.start_index=start_index;
+		new_columns.data_store='newsletter_components';
+		
+		new_columns.indexes=[{index:'id',value:fid},
+							{index:'name',value:fname},
+							{index:'detail'},
+							{index:'html_code'},
+							{index:'markers'}];
+	
+	read_json_rows('form298',new_columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="<tr>";
+				rowsHTML+="<form id='form298_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Name'>";
+						rowsHTML+="<input type='text' required readonly='readonly' form='form298_"+result.id+"' value='"+result.name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Description'>";
+						rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form298_"+result.id+"'>"+result.detail+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Code'>";
+						rowsHTML+="<textarea readonly='readonly' required class='dblclick_editable widebox' form='form298_"+result.id+"'>"+result.html_code+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Markers'>";
+						rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form298_"+result.id+"'>"+result.markers+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Images'>";
+						rowsHTML+="<br><div id='form298_images_"+result.id+"'></div>";
+						rowsHTML+="<input type='button' form='form298_"+result.id+"' value='Add Image' class='generic_icon'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form298_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form298_"+result.id+"' title='Save'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form298_"+result.id+"' title='Delete' onclick='form298_delete_item($(this));'>";
+						rowsHTML+="<input type='button' class='print_icon' form='form298_"+result.id+"' title='Print' name='print'>";
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form298_"+result.id+"' value='Preview' name='preview'>";
+					rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+
+			$('#form298_body').append(rowsHTML);
+			var fields=document.getElementById("form298_"+result.id);
+			
+			var code_filter=fields.elements[2];
+			var img_filter=fields.elements[4];
+			var preview_button=fields.elements['preview'];
+			var print_button=fields.elements['print'];
+			
+			$(print_button).on('click',function () 
+			{
+				form298_print(code_filter.value,result.id);
+			});
+			
+			$(preview_button).on('click',function () 
+			{
+				modal84_action(code_filter.value,result.id);
+			});		
+			
+			$(img_filter).on('click',function () 
+			{
+				modal176_action(result.id,'newsletter_components',function (pic_id,url,doc_name) 
+				{
+					var docHTML="<a href='"+url+"' download='"+doc_name+"'><u>"+doc_name+"</u></a><br>";
+					var doc_container=document.getElementById('form298_images_'+result.id);
+					$(doc_container).append(docHTML);
+				});
+			});
+			
+			var doc_columns=new Object();
+				doc_columns.count=5;
+				doc_columns.data_store='documents';
+				doc_columns.indexes=[{index:'id'},
+									{index:'url'},
+									{index:'doc_name'},
+									{index:'doc_type',exact:'newsletter_components'},
+									{index:'target_id',exact:result.id}];
+			
+			read_json_rows('form298',doc_columns,function(doc_results)
+			{
+				var docHTML="";
+				for (var j in doc_results)
+				{
+					var updated_url=doc_results[j].url.replace(/ /g,"+");
+					docHTML+="<a href='"+updated_url+"' download='"+doc_results[j].doc_name+"'><u>"+doc_results[j].doc_name+"</u></a><br>";							
+				}
+				document.getElementById('form298_images_'+result.id).innerHTML=docHTML;
+			});
+			
+			$(fields).on("submit",function(event)
+			{
+				event.preventDefault();
+				form298_update_item(fields);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements['export'];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_limited_export_data(new_columns,'Newsletter Template Components');
+		});
+		hide_loader();
+	});
+};
+
+/**
+ * @form Newsletter Assembly
+ * @formNo 299
+ * @Loading light
+ */
+function form299_ini()
+{
+	var fid=$("#form299_link").attr('data_id');
+	if(fid==null)
+		fid="";
+	
+	if(fid!="")
+	{
+		show_loader();
+
+		var new_columns=new Object();
+		new_columns.count=1;
+		new_columns.data_store='newsletter';
+		
+		new_columns.indexes=[{index:'id',value:fid},
+							{index:'name'},
+							{index:'html_content'},
+							{index:'components'}];
+	
+		read_json_rows('form299',new_columns,function(newsletters)
+		{
+			if(newsletters.length>0)
+			{
+				var master_form=document.getElementById('form299_form');
+				master_form.elements['name'].value=newsletters[0].name;
+				master_form.elements['id'].value=newsletters[0].id;
+
+				$(master_form).off('submit');
+				$(master_form).on('submit',function (e) 
+				{
+					e.preventDefault();
+					form299_update_item();
+				});
+
+				//console.log(revert_htmlentities(newsletters[0].html_content));
+				var updated_content=revert_htmlentities(newsletters[0].html_content);
+				$('#form299_section').html(updated_content);
+
+				var components_array=JSON.parse(newsletters[0].components);
+				components_array.forEach(function (component) 
+				{
+					var component_elem="<li class='newsletter_component' id='form299_nc_"+component.id+"' data-name='"+component.name+"' data-id='"+component.id+"'><div style='float:left;width:80%'>"+component.name+"</div><i style='float:right;width:20%;' class='fa fa-times' onclick=\"form299_delete_item('"+component.id+"');\"></i></li>";
+					$('#form299_navigation').append(component_elem);
+				});
+			}
+			hide_loader();
+		});	
+		
+		var img_columns=new Object();
+		img_columns.data_store='documents';
+		
+		img_columns.indexes=[{index:'id'},
+							{index:'doc_type',exact:'newsletter'},
+							{index:'target_id',exact:fid},
+							{index:'url'},
+							{index:'doc_name'}];
+
+		read_json_rows('form299',img_columns,function(images)
+		{
+			images.forEach(function (image) 
+			{
+				var image_elem="<li class='newsletter_component' id='form299_image_"+image.id+"' data-name='"+image.doc_name+"' data-id='"+image.id+"' data-url='"+image.url+"'><div style='float:left;width:80%'>"+image.doc_name+"</div><i style='float:right;width:20%;' class='fa fa-times' onclick=\"form299_delete_image('"+image.id+"');\"></i></li>";
+				$('#form299_images').append(image_elem);
+			});
+		});	
+	}
+};

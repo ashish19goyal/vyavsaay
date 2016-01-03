@@ -293,7 +293,7 @@ function modal_forms_ini()
 	   		}
 		});
 	}
-	for(var i=50;i<=83;i++)
+	for(var i=50;i<=84;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
@@ -310,7 +310,7 @@ function modal_forms_ini()
 		});
 	}
 
-	for(var i=101;i<=174;i++)
+	for(var i=101;i<=176;i++)
 	{
 		var j=i;
 		$("#modal"+i).dialog({
@@ -1005,6 +1005,8 @@ function import_data(form_name)
 		case 'form289':modal23_action(form289_import_template,form289_import,form289_import_validate);
 		break;
 		case 'form290':modal23_action(form290_import_template,form290_import,form290_import_validate);
+		break;
+		case 'form298':modal23_action(form298_import_template,form298_import,form298_import_validate);
 		break;
 	}
 }

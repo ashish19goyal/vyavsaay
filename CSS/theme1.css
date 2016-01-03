@@ -1096,7 +1096,7 @@ input.ultrawidebox{
 .print_navigation {
     line-height:30px;
     background-color:#eeeeee;
-    height:11.69in;
+    height:auto;
     width:20%;
     float:left;
     padding:5px;
@@ -1141,7 +1141,7 @@ input.ultrawidebox{
 
 .print_section {
     width:8in;
-    height:10in;
+    min-height:10in;
     float:left;
     /*padding:5px;*/
     padding:5px;
@@ -1253,6 +1253,18 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 	float:left;
 	border: 1px solid #234f32;
 	color: #fff;
+}
+
+.newsletter_component{
+	border:1px solid #555555;
+	background-color: #888888;
+	height: 30px;
+	margin: 5px;
+	width:100%;
+}
+
+.newsletter_component>i{
+	cursor: pointer;
 }
 
 @media screen and (min-width: 550px) {

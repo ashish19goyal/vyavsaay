@@ -1047,8 +1047,14 @@ function form44_delete_item(button)
 			var other_delete="<newsletter_items>" +
 					"<nl_id>"+data_id+"</nl_id>" +
 					"</newsletter_items>";
+			var other2_delete="<documents>" +
+					"<target_id>"+data_id+"</target_id>" +
+					"<doc_type>newsletter</doc_type>" +
+					"</documents>";
+			
 			delete_row(data_xml,activity_xml);
 			delete_simple(other_delete);
+			delete_simple(other2_delete);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -9150,6 +9156,82 @@ function form296_delete_item(button)
 			delete_simple(data_xml);
 				
 			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Newsletter Components
+ * @param button
+ */
+function form298_delete_item(button)
+{
+	if(is_delete_access('form298'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var data_id=form.elements[5].value;
+			var data_xml="<newsletter_components>" +
+						"<id>"+data_id+"</id>" +
+						"</newsletter_components>";	
+			var data2_xml="<documents>" +
+						"<target_id>"+data_id+"</target_id>" +
+						"<doc_type>newsletter_components</doc_type>" +
+						"</documents>";	
+			delete_simple(data_xml);
+			delete_simple(data2_xml);
+
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Newsletter Components
+ * @param button
+ */
+function form299_delete_item(id)
+{
+	if(is_delete_access('form299'))
+	{
+		modal115_action(function()
+		{
+			$('#form299_nc_'+id).remove();
+			$('#form299_sc_'+id).remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Newsletter Components
+ * @param button
+ */
+function form299_delete_image(id)
+{
+	if(is_delete_access('form299'))
+	{
+		modal115_action(function()
+		{
+			var image_xml="<documents>"+
+						"<id>"+id+"</id>"+
+						"</documents>";
+			delete_simple(image_xml);			
+			$('#form299_image_'+id).remove();
 		});
 	}
 	else

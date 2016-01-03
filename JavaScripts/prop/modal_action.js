@@ -5888,6 +5888,36 @@ function modal83_action(item_name)
 }
 
 /**
+ * @modalNo 84
+ * @modal Design Preview
+ */
+function modal84_action(html_code,id)
+{
+	var doc_columns=new Object();
+		doc_columns.data_store='documents';
+		doc_columns.indexes=[{index:'id'},
+							{index:'url'},
+							{index:'doc_name'},
+							{index:'doc_type',exact:'newsletter_components'},
+							{index:'target_id',exact:id}];
+	
+	read_json_rows('',doc_columns,function(doc_results)
+	{
+		var docHTML="";
+		doc_results.forEach(function (doc)
+		{
+			var updated_url=doc.url.replace(/ /g,"+");
+			var replace_word="{{"+doc.doc_name+"}}";
+			var re=new RegExp(replace_word,"g");	
+			html_code=html_code.replace(re,updated_url);
+		});
+		$('#modal84_preview').html(html_code);
+	});
+
+	$("#modal84").dialog("open");
+}
+
+/**
  * @modal Email documents
  * @modalNo 101
  */
@@ -14595,8 +14625,6 @@ function modal174_action(func)
 	});
 	
 	var make_data=new Object();
-		make_data.count=0;
-		make_data.start_index=0;
 		make_data.data_store='product_master';
 		make_data.return_column='make';
 		make_data.indexes=[{index:'make'}];
@@ -14615,8 +14643,6 @@ function modal174_action(func)
 	attribute_label.innerHTML="";
 
 	var attributes_data=new Object();
-		attributes_data.count=0;
-		attributes_data.start_index=0;
 		attributes_data.data_store='mandatory_attributes';
 		attributes_data.indexes=[{index:'attribute'},{index:'status'},{index:'value'},{index:'object',exact:'product'}];
 	
@@ -14750,4 +14776,270 @@ function modal174_action(func)
 	});
 	
 	$("#modal174").dialog("open");
+}
+
+/**
+ * @modalNo 175
+ * @modal Add newsletter components
+ * @param button
+ */
+function modal175_action(func)
+{
+	var form=document.getElementById('modal175_form');
+	
+	var fname=form.elements['nname'];
+	var ftemplate=form.elements['tname'];
+	var fhtml=form.elements['html_code'];
+	var ftid=form.elements['t_id'];
+	
+	var tname_data=new Object();
+		tname_data.data_store='newsletter_components';
+		tname_data.return_column='name';
+		tname_data.indexes=[{index:'name'}];
+	set_my_value_list_json(tname_data,ftemplate);
+	
+	////adding attribute fields///////
+	var markers_label=document.getElementById('modal175_markers');
+	markers_label.innerHTML="";
+
+	$(ftemplate).off('blur');
+	$(ftemplate).on('blur',function () 
+	{
+		var markers_data=new Object();
+			markers_data.count=1;
+			markers_data.data_store='newsletter_components';
+			markers_data.indexes=[{index:'name',exact:ftemplate.value},
+								{index:'markers'},{index:'html_code'},{index:'id'}];
+		
+		read_json_rows('',markers_data,function(newsletter_markers)
+		{
+			markers_label.innerHTML="";
+			if(newsletter_markers.length>0)
+			{
+				var markers=[];
+				if(newsletter_markers[0].markers!="")
+				{
+					markers=JSON.parse(newsletter_markers[0].markers);
+				}
+
+				markers.forEach(function(marker)
+				{
+					var marker_label=document.createElement('label');
+					marker_label.innerHTML=marker+" <textarea name='"+marker+"'></textarea>";
+									
+					markers_label.appendChild(marker_label);
+					var line_break=document.createElement('br');
+					markers_label.appendChild(line_break);
+				});
+				fhtml.value=newsletter_markers[0].html_code;
+				ftid.value=newsletter_markers[0].id;
+			}
+			else 
+			{
+				fhtml.value="";
+				ftid.value="";				
+			}
+		});
+	});
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form39'))
+		{
+			var name=form.elements['nname'].value;
+			var template=form.elements['tname'].value;
+			
+			var id=get_new_key();
+			
+			var component_elem="<li class='newsletter_component' id='form299_nc_"+id+"' data-name='"+name+"' data-id='"+id+"'><div style='float:left;width:80%'>"+name+"</div><i style='float:right;width:20%;' class='fa fa-times' onclick=\"form299_delete_item('"+id+"');\"></i></li>";
+			$('#form299_navigation').append(component_elem);
+			
+			var markers_array=[];	
+			$("#modal175_markers").find('textarea').each(function()
+			{
+				var value=$(this).val();
+				var marker=$(this).attr('name');
+				if(value!="")
+				{
+					var marker_obj={'marker':marker,'value':value};
+					markers_array.push(marker_obj);
+				}
+			});
+
+			var images_array=[];	
+			$("#form299_images").children('li').each(function()
+			{
+				var image=new Object();
+				image.name=$(this).attr('data-name');
+				image.id=$(this).attr('data-id');
+				image.url=$(this).attr('data-url');
+				images_array.push(image);
+			});
+
+			////////////////////////////////////////////////			
+			var html_code=fhtml.value;
+			var doc_columns=new Object();
+				doc_columns.count=5;
+				doc_columns.data_store='documents';
+				doc_columns.indexes=[{index:'id'},
+									{index:'url'},
+									{index:'doc_name'},
+									{index:'doc_type',exact:'newsletter_components'},
+									{index:'target_id',exact:ftid.value}];
+			
+			read_json_rows('',doc_columns,function(doc_results)
+			{
+				var docHTML="";
+				doc_results.forEach(function (doc)
+				{
+					var updated_url=doc.url.replace(/ /g,"+");
+					updated_url=updated_url+"\" data-src=\""+doc.id+".jpeg";
+					var replace_word="{{"+doc.doc_name+"}}";
+					var re=new RegExp(replace_word,"g");	
+					html_code=html_code.replace(re,updated_url);
+				});
+				
+				markers_array.forEach(function (marker) 
+				{
+					var replace_word="{{"+marker.marker+"}}";
+					var re=new RegExp(replace_word,"g");	
+					html_code=html_code.replace(re,marker.value);	
+				});
+				
+				images_array.forEach(function (image) 
+				{
+					var replace_word="image:"+image.name;
+					var updated_url=image.url+"\" data-src=\""+image.id+".jpeg";
+					var re=new RegExp(replace_word,"g");	
+					html_code=html_code.replace(re,updated_url);	
+				});
+				var div_dummy=document.createElement('div');
+				$(div_dummy).html(html_code);
+				
+				var html_elem="";
+				$(div_dummy).children('div').each(function (index) 
+				{
+					html_elem=$(this);
+					$(html_elem).attr('id','form299_sc_'+id);
+					$(html_elem).attr('data-id',id);
+				});
+				$(div_dummy).remove();
+				$('#form299_section').append(html_elem);
+				
+			});			
+			/////////////////////////////////////////////////
+		}		
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal175").dialog("close");
+	});
+	
+	$("#modal175").dialog("open");
+}
+
+/**
+ * @modalNo 176
+ * @modal Add Image to newsletter
+ * @param button
+ */
+function modal176_action(data_id,doc_type,func)
+{
+	var form=document.getElementById('modal176_form');
+	
+	var fname=form.elements[1];
+	var fpictureinfo=form.elements[2];
+	var fpicture=form.elements[3];
+	var dummy_button=form.elements[4];
+	
+	$(dummy_button).on('click',function (e) 
+	{
+		e.preventDefault();
+		$(fpicture).trigger('click');
+	});
+		
+	fpicture.addEventListener('change',function(evt)
+	{
+		select_picture_unsized(evt,function(dataURL)
+		{
+			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";			
+		});
+	},false);
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form299') || is_create_access('form298'))
+		{
+			var name=form.elements[1].value;
+			var pic_id=get_new_key();
+			var url=$(fpictureinfo).find('div').find('img').attr('src');
+			var last_updated=get_my_time();
+			
+			if(url!="")
+			{
+				var pic_xml="<documents>" +
+							"<id>"+pic_id+"</id>" +
+							"<url>"+url+"</url>" +
+							"<doc_name>"+name+"</doc_name>" +
+							"<doc_type>"+doc_type+"</doc_type>" +
+							"<target_id>"+data_id+"</target_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</documents>";
+				create_simple(pic_xml);
+				
+				if(typeof func!='undefined')
+				{
+					func(pic_id,url,name);
+				}
+				
+				/////////saving s3 object///////////////
+				var blob_name=pic_id+".jpeg";
+	
+				if(is_online())
+				{				
+					$.ajax(
+					{
+						type: "POST",
+						url: "./ajax/s3_doc.php",
+						data: 
+						{
+							blob: url,
+							name:blob_name,
+							content_type:'image/jpeg'
+						},
+						success: function(return_data,return_status,e)
+						{
+							console.log(e.responseText);
+						}
+					});
+				}
+				else
+				{
+					var s3_xml="<s3_objects>"+
+								"<id>"+pic_id+"</id>"+
+								"<data_blob>"+url+"</data_blob>"+
+								"<name>"+blob_name+"</name>"+
+								"<type>image/jpeg</type>"+
+								"<status>pending</status>"+
+								"<last_updated>"+get_my_time()+"</last_updated>"+
+								"</s3_objects>";
+					create_simple(s3_xml);			
+				}
+						
+				//////////////////////////////////////////
+			}
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal176").dialog("close");
+	});
+	
+	$("#modal176").dialog("open");
 }
