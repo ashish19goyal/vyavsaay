@@ -25,6 +25,7 @@
 			<li>3. When adding design blocks, select image by specifying the image name as 'image:name'.</li>
 			<li>4. Re-order blocks by dragging and dropping with mouse.</li>
 			<li>5. Click cross icon against design block or image to delete them.</li>
+			<li>6. Business logo will be included by default as the header of the mail.</li>
 		</ul>
 		
 	</div>
