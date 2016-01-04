@@ -1393,7 +1393,7 @@ function form51_add_item()
 		var rowsHTML="<tr>";
 			rowsHTML+="<form id='form51_"+id+"'></form>";
 				rowsHTML+="<td data-th='Name'>";
-					rowsHTML+="<textarea readonly='readonly' form='form51_"+id+"' data-i18n='form."+result.element_name+"'></textarea>";
+					rowsHTML+="<input type='text' form='form51_"+id+"'></textarea>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Read'>";
 					rowsHTML+="<input type='checkbox' form='form51_"+id+"'>";
@@ -8221,7 +8221,7 @@ function form148_add_item()
 		var rowsHTML="<tr>";
 			rowsHTML+="<form id='form148_"+id+"'></form>";
 				rowsHTML+="<td data-th='Name'>";
-					rowsHTML+="<textarea readonly='readonly' form='form148_"+id+"' data-i18n='form."+result.element_name+"'></textarea>";
+					rowsHTML+="<input type='text' form='form148_"+id+"'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Read'>";
 					rowsHTML+="<input type='checkbox' form='form148_"+id+"'>";
