@@ -22,6 +22,7 @@ class user_setup
 		$this->get_data_from_xml('user_db_data.xml');
 		$this->get_data_from_xml('user_demo_data.xml');
 		$this->get_data_from_json('grids.json');
+		$this->get_data_from_json('newsletter_components.json');
 		$this->get_data_from_json('search.json');
 		$this->get_data_from_js('grid_metrics.js','system_grid_metrics');
 	}

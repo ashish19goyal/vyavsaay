@@ -9,10 +9,25 @@ use RetailingEssentials\db_connect;
 	$pass=$_POST['pass'];
 	$user=$_POST['user'];
 	
+	$os="";
+	$browser="";
+	if(isset($_POST['os']))
+	{
+		$os=$_POST['os'];
+	}
+	if(isset($_POST['browser']))
+	{
+		$browser=$_POST['browser'];
+	}
+	
+	$attempt_status="success";
+	$attempt_reason="";
+	$master_pass_verify=false;
+	
 	$response_object=[];
 	
 	try 
-	{
+	{		
 		$master_conn=new db_connect(0);
 		$master_stmt=$master_conn->conn->prepare("select * from user_profile where username=? and status=?");
 		$master_stmt->execute(array($domain,'active'));
@@ -21,20 +36,27 @@ use RetailingEssentials\db_connect;
 			$conn=new db_connect("re_user_".$domain);
 			$stmt=$conn->conn->prepare("select password from accounts where username=?");
 			$stmt->execute(array($user));
-			
+						
 			if(!$stmt || $stmt->rowCount()!=1)
 			{
 				$response_object['status']='Failed Authentication';
+				$attempt_status="fail";
+				$attempt_reason="Username doesn't exist or inactive";
 			}
 			else
 			{
 				$row=$stmt->fetch(PDO::FETCH_ASSOC);
 				$pass_hash=$row['password'];
 				$master_pass_hash="$2a$10$123456789123456789123uUoA0OwKfcqzFZ73xlJP2A3ZVQPdmugi";
+				$user_pass_verify=password_verify($pass,$pass_hash);
+				$master_pass_verify=password_verify($pass,$master_pass_hash);
+				
 				///vy@v5@@y11122015
-				if(!password_verify($pass,$pass_hash) && !password_verify($pass,$master_pass_hash))
+				if(!$user_pass_verify && !$master_pass_verify)
 				{
-					$response_object['status']='Failed Authentication';			
+					$response_object['status']='Failed Authentication';
+					$attempt_status="fail";
+					$attempt_reason="Invalid password";	
 				}
 				else	
 				{
@@ -145,14 +167,20 @@ use RetailingEssentials\db_connect;
 					$_SESSION['del']=$del_access;
 					$_SESSION['name']=$row2['name'];
 				}
-			}
-		
+			}		
 		}
 		else 
 		{
-			$response_object['status']='Account Inactive';		
+			$response_object['status']='Account Inactive';
+			$attempt_status="fail";
+			$attempt_reason="Account inactive";	
 		}
-		
+		if(!$master_pass_verify)
+		{
+			$attempt_query="insert into logon_attempts (username,os,browser,status,reason,attempt_time,last_updated) values(?,?,?,?,?,?,?);";
+			$attempt_stmt=$conn->conn->prepare($attempt_query);
+			$attempt_stmt->execute(array($user,$os,$browser,$attempt_status,$attempt_reason,time()*1000,time()*1000));
+		}			
 	}
 	catch(PDOException $ex)
 	{

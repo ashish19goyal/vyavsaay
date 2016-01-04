@@ -57,7 +57,8 @@ function login_action()
 
 function login_online(username,domain,pass)
 {
-	ajax_json("./ajax_json/login.php",{domain:domain,user:username,pass:pass},function(response_object)
+	var user_kvp={domain:domain,user:username,pass:pass,os:navigator.platform,browser:navigator.userAgent};
+	ajax_json("./ajax_json/login.php",user_kvp,function(response_object)
 	{
 		//console.log(response_object);
 		console.log(response_object.status);
@@ -422,7 +423,6 @@ function register_click()
 
 		ajax_with_custom_func("./ajax/user_db_creation.php",{userid:userid},function(e2)
 		{
-			console.log(e2.responseText);
 			if(e2.responseText=="")
 			{
 				ajax_with_custom_func("./ajax/register.php",post_data,function(e)
@@ -522,11 +522,12 @@ function verify_login(pass,func_success,func_failure)
 	var username=get_username();
 	if(is_online())
 	{
-		ajax_with_custom_func("./ajax/login.php",{domain:domain,user:username,pass:pass},function(e)
+		var user_kvp={domain:domain,user:username,pass:pass,os:navigator.platform,browser:navigator.userAgent};
+		ajax_json("./ajax_json/login.php",user_kvp,function(response_object)
 		{
-			login_status=e.responseText;
-			var session_xml=e.responseXML;
-			if(login_status=="failed_auth")
+			//console.log(response_object);
+			//console.log(response_object.status);
+			if(response_object.status=="Failed Authentication")
 			{
 				func_failure();
 			}

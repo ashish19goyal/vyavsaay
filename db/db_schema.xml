@@ -1979,4 +1979,15 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</delivery_challan_items>
+	<logon_attempts>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<username index='yes' type="TEXT"></username>
+			<browser index='yes' type="TEXT"></browser>
+			<os index='yes' type="TEXT"></os>
+			<status index='yes' type="VARCHAR(10)"></status><!--success/fail-->
+			<reason index='yes' type="TEXT"></reason><!--success/fail-->
+			<attempt_time index='yes' type="BIGINT"></attempt_time>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</logon_attempts>
 </re_xml>

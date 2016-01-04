@@ -3741,7 +3741,7 @@
 			<name>form264</name>
 			<display_name>grid_metrics</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
