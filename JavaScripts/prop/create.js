@@ -1969,7 +1969,14 @@ function form51_create_item(form)
 		var name=master_form.elements[2].value;
 			
 		var element_name=form.elements[0].getAttribute('data-i18n');
-		element_name=element_name.substr(element_name.indexOf('.')+1);
+		if(element_name!=null)
+		{
+			element_name=element_name.substr(element_name.indexOf('.')+1);
+		}
+		else 
+		{
+			element_name=form.elements[0].value;
+		}
 		var re='unchecked';
 		if(form.elements[1].checked)
 			re='checked';
@@ -11558,7 +11565,14 @@ function form148_create_item(form)
 		var role=master_form.elements[1].value;
 			
 		var element_name=form.elements[0].getAttribute('data-i18n');
-		element_name=element_name.substr(element_name.indexOf('.')+1);
+		if(element_name!=null)
+		{
+			element_name=element_name.substr(element_name.indexOf('.')+1);
+		}
+		else 
+		{
+			element_name=form.elements[0].value;
+		}	
 		var re='unchecked';
 		if(form.elements[1].checked)
 			re='checked';
