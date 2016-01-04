@@ -4043,8 +4043,7 @@ function form51_ini()
 			results.forEach(function(result)
 			{
 				//console.log('existing user');
-				var rowsHTML="";
-				rowsHTML+="<tr>";
+				var rowsHTML="<tr>";
 					rowsHTML+="<form id='form51_"+result.id+"'></form>";
 						rowsHTML+="<td data-th='Name'>";
 							rowsHTML+="<textarea readonly='readonly' form='form51_"+result.id+"' data-i18n='form."+result.element_name+"'></textarea>";

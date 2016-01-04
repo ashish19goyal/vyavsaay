@@ -11586,14 +11586,7 @@ function form148_create_item(form)
 					"<status>active</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</access_control>";	
-		if(is_online())
-		{
-			server_create_simple(data_xml);
-		}
-		else
-		{
-			local_create_simple(data_xml);
-		}	
+		create_simple(data_xml);
 		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');

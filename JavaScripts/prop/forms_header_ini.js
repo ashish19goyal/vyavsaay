@@ -1402,8 +1402,8 @@ function form50_header_ini()
 function form51_header_ini()
 {
 	var fields=document.getElementById('form51_master');
-	var users_filter=fields.elements[1];
-	var save_button=fields.elements[5];
+	var users_filter=fields.elements['username'];
+	var save_button=fields.elements['save'];
 	
 	var username_data="<accounts>" +
 			"<username></username>" +
@@ -5452,8 +5452,8 @@ function form147_header_ini()
 function form148_header_ini()
 {
 	var fields=document.getElementById('form148_master');
-	var role_filter=fields.elements[1];
-	var save_button=fields.elements[3];
+	var role_filter=fields.elements['role'];
+	var save_button=fields.elements['save'];
 	
 	var role_data="<roles>" +
 			"<role_name></role_name>" +

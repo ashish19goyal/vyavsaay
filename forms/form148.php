@@ -1,9 +1,10 @@
 <div id='form148' class='function_detail'>
 	<form id='form148_master' autocomplete="off">
 		<fieldset>
-			<label>Role<br><input type='text' required></label>
+			<label>Role<br><input type='text' required name='role'></label>
 			<label>	<input type='hidden' name='id'></label>
-			<label>	<input type='button' title='Save Role' class='save_icon'></label>
+			<label>	<input type='button' title='Save Role' class='save_icon' name='save'></label>
+			<label>	<input type='button' title='Add permission' class='add_icon' name='add' onclick='form148_add_item();'></label>
 			<label>	<input type='submit' class='submit_hidden'>	</label>	
 		</fieldset>
 	</form>
