@@ -29949,8 +29949,8 @@ function form283_ini()
 		new_columns.start_index=start_index;
 		new_columns.data_store='bills';
 		new_columns.indexes=[{index:'id',value:fid},
-							{index:'bill_num',fnum},
-							{index:'customer_name',fname},
+							{index:'bill_num',value:fnum},
+							{index:'customer_name',value:fname},
 							{index:'bill_date'},
 							{index:'total'},
 							{index:'type'},

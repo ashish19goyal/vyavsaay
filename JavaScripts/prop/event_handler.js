@@ -348,7 +348,7 @@ function hide_unreadable_elements()
 {
 	var forms_array=[];
 	var reports_array=[];
-	for (var i=1;i<300;i++)
+	for (var i=1;i<350;i++)
 	{
 		forms_array.push("form"+i);
 		reports_array.push("report"+i);
