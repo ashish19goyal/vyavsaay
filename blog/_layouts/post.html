@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">		
+	<meta name="description" content="{{site.description}}">
+  	<meta name="keywords" content="ERP, Vyavsaay, Mobile, Cloud"><!--Change content-->	
+	<meta name="author" content="{{page.author}}" > 	<!--Change content-->						
+  	<link rel="image_src" href="appic/images/blog/{{page.image}}">  <!-- Stylesheet -->
+   <title>{{site.title}}</title>	<!--Change title-->
+   <link href="/appic/css/style.css" rel="stylesheet">  <!-- Stylesheet -->
+   <style>
+	#loading_icon{
+		width:30%;
+	    height: 30%;
+	    position: fixed;
+	    top: 35%;
+	    left: 42%;
+	    z-index:1000;
+	}
+	
+	#transparent_layer{
+		width:100%;
+		height:100%;
+		position:fixed;
+		top: 0;
+		left: 0;
+		z-index:999;
+		opacity: 0.8;
+		background-color: #333333;
+	}
+</style>
+    
+</head>
+
+<body>
+<div class="wrapper">
+<div id="loading_icon"><img src="./images/loader.gif"></div>
+<div id="transparent_layer"></div>
+	<!-- Begin header -->
+	<header id='index_header'>
+	</header>
+	<!-- End header -->
+	
+
+
+
+	<!-- Begin main content -->
+	<section class="container">
+		<div class="">
+            <div class="col-sm-12">
+
+            	<!-- Begin article -->
+            	<article class="post">
+            		<h1>{{page.title}}</h1>
+
+            		<!-- Post image -->
+            		<div class="post__image post__image--full">
+            			<img src="./appic/images/blog/{{page.image}}" alt="">
+            		</div>
+            		<!-- End Post image -->
+
+            		<!-- Post detail -->
+            		<ul class="post__detail">
+	        				<li class="post__detail__item">Date: <span class="post__data">{{page.date}}</span></li>
+                     <li class="post__detail__item">Author: <span class="post__data">{{page.author}}</span></li>
+                  </ul>
+            		<!-- End Post detail -->
+						
+						{{content}}
+            	</article>
+            	<!-- End article -->
+            	<br>
+            	<!-- Share section-->
+                <div class="share-box">
+                	<span class="share-box__title">Share:</span>
+					<div class="addthis_toolbox addthis_default_style">
+						<a style='margin:0 20px;' class="fa fa-facebook fa-3x" href="{{page.facebook}}"></a> 
+						<a style='margin:0 20px;' class="fa fa-linkedin fa-3x" href="{{page.linkedin}}"></a> 
+						<a style='margin:0 20px;' class="fa fa-twitter fa-3x" href="{{page.twitter}}"></a>
+					</div>
+                </div>
+                <!-- End Share section-->
+
+                <!-- About author-->
+                <section class="author">
+                	<div class="author__photo triangled-box">
+						<img src="./appic/images/blog/{{page.author_image}}" alt="">	
+						<div class="author__name">{{page.author}}</div>
+					</div>
+                	<div class="author__about">
+						<h4 class="author__title">About author</h4>
+                        <p>{{page.author_description}}</p>
+					</div>					
+                </section>
+                <!-- End About author-->
+
+                <!-- Comments-->
+                <section class="comments" id="comments">		
+                	<div>
+                      {% if page.comments %}
+                           <div id="disqus_thread"></div>
+                           <script>
+                              var disqus_config = function () {
+                              this.page.url = "https://vyavsaay.com";
+                              this.page.identifier = "{{post.identifier}}";
+                              };
+                                                                    
+	                           (function() 
+	                           {
+	                           	var d = document, s = d.createElement('script');
+	                              s.src = '//vyavsaay.disqus.com/embed.js';
+	                              s.setAttribute('data-timestamp', +new Date());
+	                              (d.head || d.body).appendChild(s);
+	                          })();
+	                      	</script>
+	                        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments.</a></noscript>
+                      {% endif %}
+                  </div>
+
+                </section>
+                <!-- End Comments-->
+    		</div>			
+		</div>
+		<!-- End row -->		
+	</section>
+
+
+	<!--Begin footer -->
+	<footer class="footer-wrapper" id='index_footer'>
+	</footer>
+	<!--End footer -->
+</div>
+
+<!--End wrapper -->
+<script src='./JavaScripts/open/jquery-1.11.1.min.js'></script>	
+<script src="./appic/external/bootstrap/js/bootstrap.min.js"></script>				<!--Bootstrap JavaScript-->
+<script src="./appic/external/jquery-event/jquery.event.drag-2.2.js"></script>		<!--Script jquery event Drag-->
+<script src="./appic/external/jquery-event/jquery.event.drop-2.2.js"></script>		<!--Script jquery event Drop-->
+<script src="./appic/external/jquery-easing/jquery.easing.1.3.js"></script>			<!--Script jquery Easing-->
+<script src="./appic/external/jquery-roundabout/jquery.roundabout.min.js"></script>	<!--Script Roundabout-->
+<script src="./appic/external/swiper/idangerous.swiper.min.js"></script>			<!--Script Swiper slider -->	
+<script src="./appic/external/gozha-nav/jquery.mobile.menu.js"></script>			<!--Script Mobile menu-->
+<script src="./appic/external/modernizr/modernizr.custom.91224.js"></script>		<!--Script Modernizr-->
+<script src="./appic/external/colorbox/jquery.colorbox.js"></script>				<!--Script Сolorbox-->
+<script src="./appic/js/custom.js"></script>
+<script src="./appic/js/form.js"></script>
+
+<script src='./JavaScripts/open/bcrypt.js'></script>
+<script src='./JavaScripts/open/indexeddb.js'></script>
+<script src='./JavaScripts/open/jquery.autosize.min.js'></script>
+<script src='./JavaScripts/open/jquery-ui.min.js'></script>
+<script src='./JavaScripts/prop/event_handler.js'></script>
+<script src='./JavaScripts/prop/ajax.js'></script>
+<script src='./JavaScripts/prop/ajax_json.js'></script>
+<script src='./JavaScripts/prop/get.js'></script>
+<script src='./JavaScripts/prop/local_db_handling.js'></script>
+<script src='./JavaScripts/prop/login_helper.js'></script>
+<script src='./JavaScripts/prop/sessions.js'></script>
+
+<script>
+$(window).load(function()
+{
+	$('#index_header').load('header.html',function () 
+	{
+		default_load();
+		$("#login_box").dialog({
+	   		autoOpen: false,
+	   		width: 300,
+	   		modal: true,
+	   		show: "slide",
+	   		closeOnEscape: true,
+		});
+
+		init_Button ();	
+	});
+	$('#index_footer').load('footer.html');		
+});
+
+</script>
+
+</body>
+</html>

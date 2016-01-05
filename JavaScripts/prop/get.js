@@ -46,6 +46,49 @@ function select_picture(evt,pictureinfo,func)
 	}
 }
 
+function select_picture_large(evt,func)
+{
+	var file=evt.target.files[0];
+	if(file.type.match('image.*'))
+	{	
+		var reader = new FileReader();
+						
+		reader.onloadend=function()
+		{
+		    var tempImg = new Image();
+		    tempImg.src = reader.result;
+		    tempImg.onload = function()
+		    {
+		        var MAX_WIDTH = 1600;
+		        var MAX_HEIGHT = 1200;
+		        var tempW = tempImg.width;
+		        var tempH = tempImg.height;
+		        if (tempW > tempH) {
+		            if (tempW > MAX_WIDTH) {
+		               tempH *= MAX_WIDTH / tempW;
+		               tempW = MAX_WIDTH;
+		            }
+		        } else {
+		            if (tempH > MAX_HEIGHT) {
+		               tempW *= MAX_HEIGHT / tempH;
+		               tempH = MAX_HEIGHT;
+		            }
+		        }
+		 
+		        var canvas = document.createElement('canvas');
+		        canvas.width = tempW;
+		        canvas.height = tempH;
+		        var ctx = canvas.getContext("2d");
+		        ctx.drawImage(this, 0, 0, tempW, tempH);
+		        var dataURL = canvas.toDataURL("image/jpeg");
+		        func(dataURL);
+		    };
+		 
+		};
+		reader.readAsDataURL(file);
+	}
+}
+
 function select_picture_unsized(evt,func)
 {
 	var file=evt.target.files[0];

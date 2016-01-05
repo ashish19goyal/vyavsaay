@@ -14963,7 +14963,7 @@ function modal176_action(data_id,doc_type,func)
 		
 	fpicture.addEventListener('change',function(evt)
 	{
-		select_picture_unsized(evt,function(dataURL)
+		select_picture_large(evt,function(dataURL)
 		{
 			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";			
 		});
