@@ -1,8 +1,8 @@
 c2e.convert_special: 0
 e2c.convert_num: 0
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/blog/_layouts/page.html:0:0:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/blog/blog.html:17:0:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/blog/_layouts/post.html:937:647:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/careers/index.html:2730:2847:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/careers/_config.yml:0:0:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/careers/_posts/2015-04-25-intern-graphics.markdown:52:0:1:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -14,10 +14,10 @@ view_left_panel: 1
 default_mime_type: text/plain
 e2c.convert_xml: 1
 c2e.convert_iso: 0
-opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/blog/_layouts
+opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/careers/_posts
 wrap_text_default: 0
 bookmarks_filename_mode: 0
-ssearch_text: pictureinfo
+ssearch_text: dental
 snr_casesens: 0
 view_blocks: 1
 name: vyavsaay
@@ -50,10 +50,6 @@ ssearch_regex: 0
 e2c.convert_iso: 0
 ssearch_casesens: 0
 charmap_block: 1
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax_json/sync_upload.php
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/Classes/s3_objects.php
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/access.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/test_scripts/html.htm
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax_json/login.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/ajax_json.js
@@ -80,8 +76,12 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/pr
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/blog/_layouts/page.html
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/blog/blog.html
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/blog/_layouts/post.html
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/index.html
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/careers/index.html
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/careers/_config.yml
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/careers/_posts/2015-04-25-intern-graphics.markdown
 snr_replacetype: 0
-savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/blog
+savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/careers/_posts
 spell_check_default: 1
 spell_insert_entities: 0
 last_filefilter: 
@@ -91,10 +91,6 @@ snr_escape_chars: 0
 htmlbar_view: 0
 spell_lang: en
 ssearch_dotmatchall: 0
-searchlist: form4_
-searchlist: form44_
-searchlist: 38
-searchlist: 148_
 searchlist: m49
 searchlist: m50
 searchlist: m46
@@ -106,6 +102,10 @@ searchlist: 51_
 searchlist: 51_
 searchlist: m51_
 searchlist: pictureinfo
+searchlist: favicon
+searchlist: logo
+searchlist: icon
+searchlist: dental
 autocomplete: 1
 outputb_show_all_output: 0
 bookmarks_show_mode: 0

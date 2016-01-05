@@ -35,6 +35,25 @@
 </head>
 
 <body>
+		<!--for facebook-->
+		<script>
+		  window.fbAsyncInit = function() {
+		    FB.init({
+		      appId      : '1703640253188426',
+		      xfbml      : true,
+		      version    : 'v2.5'
+		    });
+		  };
+		
+		  (function(d, s, id){
+		     var js, fjs = d.getElementsByTagName(s)[0];
+		     if (d.getElementById(id)) {return;}
+		     js = d.createElement(s); js.id = id;
+		     js.src = "//connect.facebook.net/en_US/sdk.js";
+		     fjs.parentNode.insertBefore(js, fjs);
+		   }(document, 'script', 'facebook-jssdk'));
+		</script>
+		<!--for facebook-->
 <div class="wrapper">
 <div id="loading_icon"><img src="./images/loader.gif"></div>
 <div id="transparent_layer"></div>
