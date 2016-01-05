@@ -435,7 +435,7 @@ function send_email(to,from,from_name,subject,message,func)
 							"from_name":from_name,
 							"subject":subject,
 							"message":message,
-							"message_attachment":message_attachment,
+							"message_attachment":"",
 							"attachment_type":""};
 				var data_string=JSON.stringify(data);			
 				if(is_online())

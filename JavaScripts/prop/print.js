@@ -4462,7 +4462,7 @@ function form237_print_form(nl_name,nl_id,print_type,func)
 
 	header.setAttribute('style','width:98%;min-height:100px;text-align:center');
 	
-	nl_content.setAttribute('style','display:block;width:98%;height:auto;');
+	nl_content.setAttribute('style','display:block;width:98%;height:auto;text-align:center;');
 
 	footer.setAttribute('style','width:98%;min-height:100px;text-align:center;margin:5px;');
 		powered_by.setAttribute('style','width:98%;text-align:center');
