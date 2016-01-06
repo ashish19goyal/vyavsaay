@@ -28,5 +28,5 @@ Mostly, the marketers don't care about your problem. They just want to sell thei
     <li>If multiple solutions can address your high weighted problems, choose the one that can also solve the medium weighted ones.</li>
     <li>Once you are sure about the solutions to the high and medium weighted problems, you can pick the shiniest or the best value for money solution.</li>
 </ul>
-
+<br>
 If you haven't prepared such a list, go prepare it. Otherwise, every rupee invested will be money wasted. Eventually, you will have to go back to the market with some bitter experience.

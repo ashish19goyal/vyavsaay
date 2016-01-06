@@ -2256,7 +2256,7 @@ function form44_update_item(form)
 {
 	if(is_update_access('form44'))
 	{
-		var name=form.elements[1].value;
+		var name=form.elements[0].value;
 		var description=form.elements[1].value;
 		var status=form.elements[2].value;
 		var data_id=form.elements[3].value;

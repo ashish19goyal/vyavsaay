@@ -82,7 +82,7 @@
 
             		<!-- Post detail -->
             		<ul class="post__detail">
-	        				<li class="post__detail__item">Date: <span class="post__data">{{page.date}}</span></li>
+	        				<li class="post__detail__item">Date: <span class="post__data">{{ page.date | date: "%b %-d, %Y" }}</span></li>
                      <li class="post__detail__item">Author: <span class="post__data">{{page.author}}</span></li>
                   </ul>
             		<!-- End Post detail -->
