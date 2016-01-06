@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">		
+<title>QRCODE</title>
+
+<style type="text/css">
+</style>
+
+
+<script type="text/javascript" src="../JavaScripts/open/jsqrcode/grid.js"></script>
+<script type="text/javascript" src="../JavaScripts/open/jsqrcode/version.js"></script>
+<script type="text/javascript" src="../JavaScripts/open/jsqrcode/detector.js"></script>
+<script type="text/javascript" src="../JavaScripts/open/jsqrcode/formatinf.js"></script>
+<script type="text/javascript" src="../JavaScripts/open/jsqrcode/errorlevel.js"></script>
+<script type="text/javascript" src="../JavaScripts/open/jsqrcode/bitmat.js"></script>
+<script type="text/javascript" src="../JavaScripts/open/jsqrcode/datablock.js"></script>
+<script type="text/javascript" src="../JavaScripts/open/jsqrcode/bmparser.js"></script>
+<script type="text/javascript" src="../JavaScripts/open/jsqrcode/datamask.js"></script>
+<script type="text/javascript" src="../JavaScripts/open/jsqrcode/rsdecoder.js"></script>
+<script type="text/javascript" src="../JavaScripts/open/jsqrcode/gf256poly.js"></script>
+<script type="text/javascript" src="../JavaScripts/open/jsqrcode/gf256.js"></script>
+<script type="text/javascript" src="../JavaScripts/open/jsqrcode/decoder.js"></script>
+<script type="text/javascript" src="../JavaScripts/open/jsqrcode/qrcode.js"></script>
+<script type="text/javascript" src="../JavaScripts/open/jsqrcode/findpat.js"></script>
+<script type="text/javascript" src="../JavaScripts/open/jsqrcode/alignpat.js"></script>
+<script type="text/javascript" src="../JavaScripts/open/jsqrcode/databr.js"></script>
+
+<script type="text/javascript">
+
+var localMediaStream = null;
+
+function capture_output(data) {
+	console.log(data);
+}
+
+function load() 
+{
+    var context = canvas.getContext('2d');
+	if(localMediaStream)
+	{
+		try
+		{		
+	    	context.drawImage( video, 0, 0);
+			try 
+			{
+				qrcode.callback=capture_output;		
+				qrcode.decode();
+    			localMediaStream.stop();
+			}
+			catch (e) 
+			{				
+				setTimeout(load,500);
+			}			
+    	}
+    	catch(e)
+    	{
+    		setTimeout(load,500);
+    	}
+ 	}
+}
+            
+</script>
+
+</head>
+
+<body>
+<video id='my_video' autoplay></video>
+<button onclick="load()">Capture Image</button><br>
+<canvas id="qr-canvas" width="640" height="480"></canvas>
+<script>
+	var canvas = document.getElementById('qr-canvas');
+    var video = document.getElementById('my_video');
+	var img = document.getElementById('my_img');
+
+	window.navigator = window.navigator || {};
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || null;
+
+	navigator.getUserMedia({video: true}, function(stream) 
+	{
+	    video.src = window.URL.createObjectURL(stream);
+    	localMediaStream = stream;
+  	},function (e) {
+  		console.log('error');
+  	});   
+
+</script>
+</body>
+
+</html>
