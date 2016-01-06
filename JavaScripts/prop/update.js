@@ -14646,16 +14646,18 @@ function form273_update_item(form)
 	{
 		var supplier=form.elements[0].value;
 		var item=form.elements[1].value;
-		var price=form.elements[2].value;
-		var quantity=form.elements[3].value;
-		var detail=form.elements[4].value;
-		var data_id=form.elements[6].value;
+		var make=form.elements[2].value;
+		var price=form.elements[3].value;
+		var quantity=form.elements[4].value;
+		var detail=form.elements[5].value;
+		var data_id=form.elements[7].value;
 		var last_updated=get_my_time();
 		var data_xml="<purchase_leads>" +
 					"<id>"+data_id+"</id>" +
 					"<supplier>"+supplier+"</supplier>" +
 					"<detail>"+detail+"</detail>" +
 					"<item_name>"+item+"</item_name>" +
+					"<item_company>"+make+"</item_company>" +
 					"<price>"+price+"</price>" +
 					"<quantity>"+quantity+"</quantity>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
@@ -14669,7 +14671,7 @@ function form273_update_item(form)
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		update_row(data_xml,activity_xml);
-		for(var i=0;i<5;i++)
+		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}

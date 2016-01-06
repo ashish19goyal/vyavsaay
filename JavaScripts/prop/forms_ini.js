@@ -29357,6 +29357,7 @@ function form273_ini()
 							{index:'supplier',value:fname},
 							{index:'detail',value:fcomment},
 							{index:'item_name',value:fitem},
+							{index:'item_company'},
 							{index:'price'},
 							{index:'quantity'},
 							{index:'status'},
@@ -29377,7 +29378,8 @@ function form273_ini()
 						rowsHTML+="<textarea readonly='readonly' form='form273_"+result.id+"'>"+result.supplier+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Item'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form273_"+result.id+"' value='"+result.item_name+"'>";
+						rowsHTML+="<b>Model</b>:<input type='text' readonly='readonly' form='form273_"+result.id+"' value='"+result.item_name+"'>";
+						rowsHTML+="<br><b>Company</b>:<input type='text' readonly='readonly' form='form273_"+result.id+"' value='"+result.item_company+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Price'>";
 						rowsHTML+="<b>Price</b>:<input type='text' readonly='readonly' form='form273_"+result.id+"' class='dblclick_editable' value='"+result.price+"'>";

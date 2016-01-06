@@ -919,6 +919,7 @@
 			<price index='no' type="TEXT"></price>
 			<quantity index='no' type="TEXT"></quantity>
 			<item_name index='yes' type="TEXT"></item_name>
+			<item_company index='yes' type="TEXT"></item_company>
 			<valid_date index='yes' type="BIGINT"></valid_date>
 			<identified_date index='yes' type="BIGINT"></identified_date>
 			<source_id index='yes' type="BIGINT"></source_id>

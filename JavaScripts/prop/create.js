@@ -19032,18 +19032,20 @@ function form273_create_item(form)
 	{
 		var supplier=form.elements[0].value;
 		var item=form.elements[1].value;
-		var price=form.elements[2].value;
-		var quantity=form.elements[3].value;
-		var detail=form.elements[4].value;
-		var identified_date=get_raw_time(form.elements[5].value);
-		var data_id=form.elements[6].value;
-		var del_button=form.elements[8];
+		var make=form.elements[2].value;
+		var price=form.elements[3].value;
+		var quantity=form.elements[4].value;
+		var detail=form.elements[5].value;
+		var identified_date=get_raw_time(form.elements[6].value);
+		var data_id=form.elements[7].value;
+		var del_button=form.elements[9];
 		
 		var last_updated=get_my_time();
 		var data_xml="<purchase_leads>" +
 					"<id>"+data_id+"</id>" +
 					"<supplier>"+supplier+"</supplier>" +
 					"<item_name>"+item+"</item_name>" +
+					"<item_company>"+make+"</item_company>" +
 					"<detail>"+detail+"</detail>" +
 					"<price>"+price+"</price>" +
 					"<quantity>"+quantity+"</quantity>" +
@@ -19061,7 +19063,7 @@ function form273_create_item(form)
 					"</activity>";
 		create_row(data_xml,activity_xml);
 		
-		for(var i=0;i<6;i++)
+		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}

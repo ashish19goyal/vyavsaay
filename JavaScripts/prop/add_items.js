@@ -17067,7 +17067,8 @@ function form273_add_item()
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new supplier' id='form273_add_supplier_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Item'>";
-				rowsHTML+="<input type='text' class='dblclick_editable' form='form273_"+id+"'>";
+				rowsHTML+="<b>Model</b>:<input type='text' class='dblclick_editable' form='form273_"+id+"'>";
+				rowsHTML+="<br><b>Company</b>:<input type='text' class='dblclick_editable' form='form273_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Price'>";
 				rowsHTML+="<b>Price</b>:<input type='text' class='dblclick_editable' form='form273_"+id+"'>";
@@ -17092,9 +17093,10 @@ function form273_add_item()
 		var fields=document.getElementById("form273_"+id);
 		var supplier_filter=fields.elements[0];
 		var item_filter=fields.elements[1];
-		var price_filter=fields.elements[2];
-		var comment_filter=fields.elements[4];
-		var date_filter=fields.elements[5];
+		var company_filter=fields.elements[2];
+		var price_filter=fields.elements[3];
+		var comment_filter=fields.elements[5];
+		var date_filter=fields.elements[6];
 		
 		$(fields).on("submit", function(event)
 		{
@@ -17112,8 +17114,6 @@ function form273_add_item()
 		});
 		
 		var names_data=new Object();
-			names_data.count=0;
-			names_data.start_index=0;
 			names_data.data_store='suppliers';
 			names_data.indexes=[{index:'acc_name'}];		
 			names_data.return_column='acc_name';
@@ -17123,13 +17123,21 @@ function form273_add_item()
 		});
 		
 		var item_data=new Object();
-			item_data.count=0;
-			item_data.start_index=0;
 			item_data.data_store='product_master';
 			item_data.indexes=[{index:'name'}];		
 			item_data.return_column='name';
 		set_my_value_list_json(item_data,item_filter);
-	
+		
+		$(item_filter).on('blur',function () 
+		{
+			var company_data=new Object();
+				company_data.count=1;
+				company_data.data_store='product_master';
+				company_data.indexes=[{index:'name',exact:item_filter.value}];		
+				company_data.return_column='make';
+			set_my_value_json(company_data,company_filter);
+		});
+		
 		$(date_filter).datepicker();
 
 		var add_supplier=document.getElementById('form273_add_supplier_'+id);
@@ -17138,8 +17146,6 @@ function form273_add_item()
 			modal13_action(function()
 			{	
 				var names_data=new Object();
-					names_data.count=0;
-					names_data.start_index=0;
 					names_data.data_store='suppliers';
 					names_data.indexes=[{index:'acc_name'}];		
 					names_data.return_column='acc_name';

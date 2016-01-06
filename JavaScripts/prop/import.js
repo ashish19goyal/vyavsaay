@@ -6791,6 +6791,7 @@ function form273_import(data_array,import_type)
 				"<supplier>"+row.name+" ("+row.phone+")"+"</supplier>" +
 				"<detail>"+row['comments']+"</detail>" +
 				"<item_name>"+row['item']+"</item_name>" +
+				"<item_company>"+row['company']+"</item_company>" +
 				"<price>"+row['price']+"</price>" +
 				"<quantity>"+row['quantity']+"</quantity>" +
 				"<identified_date>"+get_raw_time(row['identified date'])+"</identified_date>" +
