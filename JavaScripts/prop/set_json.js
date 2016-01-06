@@ -4,6 +4,7 @@ function set_my_filter_json(filter_data,filter_element,func)
 	{
 		var form=filter_element.form;
 		var datalist=document.createElement('datalist');
+		data=array_unique(data);		
 		data.forEach(function(d)
 		{
 			var option=document.createElement('option');
@@ -57,6 +58,7 @@ function set_static_filter_json(table,list,filter_element)
 		{
 			var form=document.getElementById('master_datalist_form');
 			var datalist=document.createElement('datalist');
+			data=array_unique(data);
 			data.forEach(function(d)
 			{
 				var option=document.createElement('option');
@@ -97,6 +99,7 @@ function set_static_value_list_json(table,list,filter_element,func)
 		{
 			var form=document.getElementById('master_datalist_form');
 			var datalist=document.createElement('datalist');
+			data=array_unique(data);		
 			data.forEach(function(d)
 			{
 				var option=document.createElement('option');
@@ -156,6 +159,7 @@ function set_my_value_list_json(filter_data,filter_element,func)
 	{
 		var form=filter_element.form;
 		var datalist=document.createElement('datalist');
+		data=array_unique(data);		
 		data.forEach(function(d)
 		{
 			var option=document.createElement('option');
@@ -253,6 +257,7 @@ function set_multiple_value_list_json(filter_data_array,filter_element)
 	{
 		read_json_single_column(filter_data,function(data)
 		{
+			data=array_unique(data);		
 			data.forEach(function(d)
 			{
 				var option=document.createElement('option');
@@ -303,6 +308,7 @@ function set_master_filter_json(filter_data,filter_element,func)
 	{
 		var form=filter_element.form;
 		var datalist=document.createElement('datalist');
+		data=array_unique(data);		
 		data.forEach(function(d)
 		{
 			var option=document.createElement('option');
@@ -338,6 +344,7 @@ function set_master_list_json(filter_data,filter_element,func)
 	{
 		var form=filter_element.form;
 		var datalist=document.createElement('datalist');
+		data=array_unique(data);		
 		data.forEach(function(d)
 		{
 			var option=document.createElement('option');

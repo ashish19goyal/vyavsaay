@@ -25191,7 +25191,7 @@ function form237_ini()
 									{index:'type',exact:'customer'},
 									{index:'value',exact:list_value}];
 		
-		read_json_single_column(attributes_columns,function(attributes)
+		read_json_single_column(attribute_columns,function(attributes)
 		{
 			var customer_columns=new Object();
 			customer_columns.data_store='customers';
