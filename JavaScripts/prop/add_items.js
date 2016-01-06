@@ -17464,7 +17464,8 @@ function form289_add_item()
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' id='form289_add_customer_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Item'>";
-				rowsHTML+="<b>Name</b>:<input type='text' class='dblclick_editable' form='form289_"+id+"'>";
+				rowsHTML+="<b>Model</b>:<input type='text' class='dblclick_editable' form='form289_"+id+"'>";
+				rowsHTML+="<br><b>Company</b>:<input type='text' class='dblclick_editable' form='form289_"+id+"'>";
 				rowsHTML+="<br><b>Price</b>:<input type='text' class='dblclick_editable' form='form289_"+id+"'>";
 				rowsHTML+="<br><b>Quantity</b><input type='number' step='any' required value='1' class='dblclick_editable' form='form289_"+id+"'>";
 			rowsHTML+="</td>";
@@ -17489,10 +17490,11 @@ function form289_add_item()
 		var fields=document.getElementById("form289_"+id);
 		var customer_filter=fields.elements[0];
 		var item_filter=fields.elements[1];
-		var price_filter=fields.elements[2];
-		var staff_filter=fields.elements[4];
-		var comment_filter=fields.elements[5];
-		var date_filter=fields.elements[6];
+		var company_filter=fields.elements[2];
+		var price_filter=fields.elements[3];
+		var staff_filter=fields.elements[5];
+		var comment_filter=fields.elements[6];
+		var date_filter=fields.elements[7];
 		
 		$(fields).on("submit", function(event)
 		{
@@ -17522,16 +17524,22 @@ function form289_add_item()
 		});
 		
 		var item_data=new Object();
-			item_data.count=0;
-			item_data.start_index=0;
 			item_data.data_store='product_master';
 			item_data.indexes=[{index:'name'}];		
 			item_data.return_column='name';
 		set_my_value_list_json(item_data,item_filter);
 	
+		$(item_filter).on('blur',function () 
+		{
+			var company_data=new Object();
+				company_data.count=1;
+				company_data.data_store='product_master';
+				company_data.indexes=[{index:'name',exact:item_filter.value}];		
+				company_data.return_column='make';
+			set_my_value_json(company_data,company_filter);
+		});
+			
 		var staff_data=new Object();
-			staff_data.count=0;
-			staff_data.start_index=0;
 			staff_data.data_store='staff';
 			staff_data.indexes=[{index:'acc_name'}];		
 			staff_data.return_column='acc_name';
@@ -17545,8 +17553,6 @@ function form289_add_item()
 			modal11_action(function()
 			{	
 				var names_data=new Object();
-					names_data.count=0;
-					names_data.start_index=0;
 					names_data.data_store='customers';
 					names_data.indexes=[{index:'acc_name'}];		
 					names_data.return_column='acc_name';

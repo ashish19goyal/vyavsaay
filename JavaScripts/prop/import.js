@@ -7057,6 +7057,7 @@ function form289_import(data_array,import_type)
 				"<customer>"+row.name+" ("+row.phone+")"+"</customer>" +
 				"<detail>"+row['comments']+"</detail>" +
 				"<item_name>"+row['item']+"</item_name>" +
+				"<item_company>"+row['company']+"</item_company>" +
 				"<price>"+row['price']+"</price>" +
 				"<identified_by>"+row['point-of-contact']+"</identified_by>" +
 				"<quantity>"+row['quantity']+"</quantity>" +

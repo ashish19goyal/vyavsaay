@@ -30453,6 +30453,7 @@ function form289_ini()
 							{index:'customer',value:fname},
 							{index:'detail',value:fcomment},
 							{index:'item_name',value:fitem},
+							{index:'item_company'},
 							{index:'identified_by',value:fpoc},
 							{index:'price'},
 							{index:'quantity'},
@@ -30474,7 +30475,8 @@ function form289_ini()
 						rowsHTML+="<textarea readonly='readonly' form='form289_"+result.id+"'>"+result.customer+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Item'>";
-						rowsHTML+="<b>Name</b>:<input type='text' readonly='readonly' form='form289_"+result.id+"' value='"+result.item_name+"'>";
+						rowsHTML+="<b>Model</b>:<input type='text' readonly='readonly' form='form289_"+result.id+"' value='"+result.item_name+"'>";
+						rowsHTML+="<br><b>Company</b>:<input type='text' readonly='readonly' form='form289_"+result.id+"' value='"+result.item_company+"'>";
 						rowsHTML+="<br><b>Price</b>:<input type='text' readonly='readonly' form='form289_"+result.id+"' class='dblclick_editable' value='"+result.price+"'>";
 						rowsHTML+="<br><b>Quantity</b>:<input type='number' step='any' readonly='readonly' form='form289_"+result.id+"' class='dblclick_editable' value='"+result.quantity+"'>";
 					rowsHTML+="</td>";

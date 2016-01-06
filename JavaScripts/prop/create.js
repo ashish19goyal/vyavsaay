@@ -19451,19 +19451,21 @@ function form289_create_item(form)
 	{
 		var customer=form.elements[0].value;
 		var item=form.elements[1].value;
-		var price=form.elements[2].value;
-		var quantity=form.elements[3].value;
-		var poc=form.elements[4].value;
-		var detail=form.elements[5].value;
-		var due_date=get_raw_time(form.elements[6].value);
-		var data_id=form.elements[7].value;
-		var del_button=form.elements[9];
+		var make=form.elements[2].value;
+		var price=form.elements[3].value;
+		var quantity=form.elements[4].value;
+		var poc=form.elements[5].value;
+		var detail=form.elements[6].value;
+		var due_date=get_raw_time(form.elements[7].value);
+		var data_id=form.elements[8].value;
+		var del_button=form.elements[10];
 		
 		var last_updated=get_my_time();
 		var data_xml="<sale_leads>" +
 					"<id>"+data_id+"</id>" +
 					"<customer>"+customer+"</customer>" +
 					"<item_name>"+item+"</item_name>" +
+					"<item_company>"+make+"</item_company>" +
 					"<detail>"+detail+"</detail>" +
 					"<price>"+price+"</price>" +
 					"<quantity>"+quantity+"</quantity>" +
@@ -19482,7 +19484,7 @@ function form289_create_item(form)
 					"</activity>";
 		create_row(data_xml,activity_xml);
 
-		for(var i=0;i<7;i++)
+		for(var i=0;i<8;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}

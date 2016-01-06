@@ -446,6 +446,7 @@ function form289_import_validate(data_array)
 							{column:'address',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
 							{column:'city',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
 							{column:'comments',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()/-]+$')},
+							{column:'company',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()/-]+$')},
 							{column:'item',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*() /-]+$')}];
 					
 	var error_array=validate_import_array(data_array,validate_template_array);
