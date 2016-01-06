@@ -11932,3 +11932,44 @@ function form299_header_ini()
     $("#form299_navigation.sortable" ).disableSelection();
   
 };
+
+/**
+ * @form Manage Products (pooja)
+ * @formNo 300
+ */
+function form300_header_ini()
+{
+	var filter_fields=document.getElementById('form300_header');
+	var name_filter=filter_fields.elements[0];
+	var make_filter=filter_fields.elements[1];
+	var category_filter=filter_fields.elements[2];
+
+	var add_button=filter_fields.elements['add'];
+
+	$(add_button).off('click'); 	
+	$(add_button).on('click',function () 
+	{
+		modal177_action();
+	});
+	
+	var make_data="<product_master>" +
+			"<make></make>" +
+			"</product_master>";
+	var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	var category_data="<product_master>" +
+			"<category></category>" +
+			"</product_master>";
+	
+	set_my_filter(make_data,make_filter);
+	set_my_filter(products_data,name_filter);
+	set_my_filter(category_data,category_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form300_ini();
+	});
+};

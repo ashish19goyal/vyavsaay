@@ -1390,7 +1390,7 @@ function form271_import_template()
 */
 function form273_import_template()
 {
-	var data_array=['id','name','phone','email','address','item','price','quantity','comments','identified date'];
+	var data_array=['id','name','phone','email','address','city','item','price','quantity','comments','identified date'];
 	my_array_to_csv(data_array);
 };
 
@@ -1430,7 +1430,7 @@ function form285_import_template()
 */
 function form289_import_template()
 {
-	var data_array=['id','name','phone','email','address','item','price','point-of-contact','quantity','comments','followup date'];
+	var data_array=['id','name','phone','email','address','city','item','price','point-of-contact','quantity','comments','followup date'];
 	my_array_to_csv(data_array);
 };
 
@@ -1451,5 +1451,15 @@ function form290_import_template()
 function form298_import_template()
 {
 	var data_array=['id','name','detail','html_code','markers'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Manage Products (Pooja)
+* @formNo 300
+*/
+function form300_import_template()
+{
+	var data_array=['id','Model','Company','Category','Description','MRP','Cost Price','Sale Price'];
 	my_array_to_csv(data_array);
 };

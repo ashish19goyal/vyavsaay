@@ -15527,3 +15527,58 @@ function form299_update_item()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Manage Products (Pooja)
+ * @param button
+ */
+function form300_update_item(form)
+{
+	if(is_update_access('form300'))
+	{
+		var name=form.elements[0].value;
+		var make=form.elements[1].value;
+		var category=form.elements[2].value;
+		var description=form.elements[3].value;
+		var data_id=form.elements[7].value;
+		var last_updated=get_my_time();
+		var pic_id=$("#img_form300_"+data_id).parent().attr('name');
+		var url=$("#img_form300_"+data_id).attr('src');
+		
+		var data_xml="<product_master>" +
+					"<id>"+data_id+"</id>" +
+					"<make>"+make+"</make>" +
+					"<name>"+name+"</name>" +
+					"<description>"+description+"</description>" +
+					"<category>"+category+"</category>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</product_master>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>product_master</tablename>" +
+					"<link_to>form300</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Product "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var pic_xml="<documents>" +
+					"<id>"+pic_id+"</id>" +
+					"<url>"+url+"</url>" +
+					"<doc_type>product_master</doc_type>" +
+					"<target_id>"+data_id+"</target_id>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</documents>";
+		update_row(data_xml,activity_xml);
+		update_simple(pic_xml);
+		create_simple(pic_xml);
+		
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

@@ -373,14 +373,15 @@ function form271_import_validate(data_array)
 function form273_import_validate(data_array)
 {
 	var validate_template_array=[{column:'price',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
-							{column:'identified date',required:'yes',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
+							{column:'identified date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
 							{column:'quantity',required:'yes',regex:new RegExp('^[0-9]+$')},
-							{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
+							{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()/-]+$')},
 							{column:'phone',regex:new RegExp('^[0-9 .,+()-]+$')},
 							{column:'email',regex:new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z_.-]+$')},
-							{column:'address',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
-							{column:'comments',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
-							{column:'item',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')}];
+							{column:'address',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()/-]+$')},
+							{column:'city',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
+							{column:'comments',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()/-]+$')},
+							{column:'item',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()/ -]+$')}];
 					
 	var error_array=validate_import_array(data_array,validate_template_array);
 	return error_array;					
@@ -435,16 +436,17 @@ function form285_import_validate(data_array)
 */
 function form289_import_validate(data_array)
 {
-	var validate_template_array=[{column:'price',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
-							{column:'followup date',required:'yes',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
-							{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
+	var validate_template_array=[{column:'price',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()/-]+$')},
+							{column:'followup date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
+							{column:'name',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$() /-]+$')},
 							{column:'quantity',required:'yes',regex:new RegExp('^[0-9]+$')},
 							{column:'phone',regex:new RegExp('^[0-9 .,+()-]+$')},
 							{column:'email',regex:new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z_.-]+$')},
 							{column:'point-of-contact',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
 							{column:'address',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
-							{column:'comments',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
-							{column:'item',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')}];
+							{column:'city',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
+							{column:'comments',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()/-]+$')},
+							{column:'item',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*() /-]+$')}];
 					
 	var error_array=validate_import_array(data_array,validate_template_array);
 	return error_array;					
@@ -474,6 +476,24 @@ function form298_import_validate(data_array)
 							{column:'detail',regex:new RegExp('^[0-9a-zA-Z _.,\\<>\'+@!$#%\*()-]+$')},
 							{column:'markers',regex:new RegExp('^[0-9a-zA-Z _.,{}:\'()-]+$')},
 							{column:'html_code',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,\\<>#\'()-]+$')}];
+					
+	var error_array=validate_import_array(data_array,validate_template_array);
+	return error_array;					
+}
+
+/**
+* @form Manage Products (without tax) 
+* @formNo 300
+*/
+function form300_import_validate(data_array)
+{
+	var validate_template_array=[{column:'Model',required:'yes',regex:new RegExp('^[0-9a-zA-Z_.,()/\' -]+$')},
+							{column:'Company',regex:new RegExp('^[0-9a-zA-Z_ .,@\'()-]+$')},
+							{column:'Category',regex:new RegExp('^[0-9a-zA-Z_ .,@\'()-]+$')},
+							{column:'Description',regex:new RegExp('^[0-9a-zA-Z _.,/\'+@!$()-]+$')},
+							{column:'MRP',required:'yes',regex:new RegExp('^[0-9.]+$')},
+							{column:'Cost Price',regex:new RegExp('^[0-9.]+$')},
+							{column:'Sale Price',regex:new RegExp('^[0-9.]+$')}];
 					
 	var error_array=validate_import_array(data_array,validate_template_array);
 	return error_array;					

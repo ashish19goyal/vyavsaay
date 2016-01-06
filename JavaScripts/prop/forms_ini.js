@@ -31916,3 +31916,156 @@ function form299_ini()
 		});	
 	}
 };
+
+/**
+ * @form Manage Products (pooja)
+ * @formNo 300
+ * @Loading light
+ */
+function form300_ini()
+{
+	show_loader();
+	var fid=$("#form300_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form300_header');
+	
+	var fname=filter_fields.elements[0].value;
+	var fmakes=filter_fields.elements[1].value;
+	var fcategory=filter_fields.elements[2].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form300_index');
+	var prev_element=document.getElementById('form300_prev');
+	var next_element=document.getElementById('form300_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+	$('#form300_body').html("");
+
+	var new_columns=new Object();
+		new_columns.count=25;
+		new_columns.start_index=start_index;
+		new_columns.data_store='product_master';
+		
+		new_columns.indexes=[{index:'id',value:fid},
+							{index:'name',value:fname},
+							{index:'make',value:fmakes},
+							{index:'category',value:fcategory},
+							{index:'description'}];
+	
+	read_json_rows('form300',new_columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form300_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Model'>";
+						rowsHTML+="<textarea readonly='readonly' form='form300_"+result.id+"'>"+result.name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Company'>";
+						rowsHTML+="<textarea readonly='readonly' form='form300_"+result.id+"' class='dblclick_editable'>"+result.make+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Category'>";
+						rowsHTML+="<textarea readonly='readonly' form='form300_"+result.id+"' class='dblclick_editable'>"+result.category+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Description'>";
+						rowsHTML+="<textarea readonly='readonly' form='form300_"+result.id+"' class='dblclick_editable'>"+result.description+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Picture'>";
+							rowsHTML+="<output form='form300_"+result.id+"'><div class='figure' id='figure_form300_"+result.id+"' name='"+get_new_key()+"'><img id='img_form300_"+result.id+"'></div></output>";
+							rowsHTML+="<input type='file' style='display:none' form='form300_"+result.id+"'>";
+							rowsHTML+="<input type='button' class='generic_red_icon' form='form300_"+result.id+"' value='Change Picture'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form300_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form300_"+result.id+"' value='saved'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form300_"+result.id+"' value='saved' onclick='form300_delete_item($(this));'>";	
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+		
+			$('#form300_body').append(rowsHTML);
+			var fields=document.getElementById("form300_"+result.id);
+			var pictureinfo=fields.elements[4];
+			var picture=fields.elements[5];
+			var dummy_button=fields.elements[6];
+
+			$(fields).on("submit",function(event)
+			{
+				event.preventDefault();
+				form300_update_item(fields);
+			});
+			
+			var pic_columns=new Object();
+				pic_columns.count=1;
+				pic_columns.data_store='documents';
+				
+				pic_columns.indexes=[{index:'id'},
+									{index:'url'},
+									{index:'doc_type',exact:'product_master'},
+									{index:'target_id',exact:result.id}];
+			
+			read_json_rows('',pic_columns,function(pic_results)
+			{
+				if(pic_results.length>0)
+				{
+					var updated_url=pic_results[0].url.replace(/ /g,"+");
+					$('#img_form300_'+result.id).attr('src',updated_url);
+					$('#figure_form300_'+result.id).attr('name',pic_results[0].id);				
+				}
+			});
+			
+	
+			$(dummy_button).on('click',function (e) 
+			{
+				e.preventDefault();
+				$(picture).trigger('click');
+			});
+			
+			picture.addEventListener('change',function(evt)
+			{
+				select_picture(evt,pictureinfo,function(dataURL)
+				{
+					var pic_result_id=$('#figure_form300_'+result.id).attr('name');
+					pictureinfo.innerHTML="<div class='figure' name='"+pic_result_id+"'><img id='img_form300_"+result.id+"' src='"+dataURL+"'></div>";			
+				});
+			},false);		
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements['export'];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_limited_export_data(new_columns,'Products');
+		});
+		hide_loader();
+	});	
+};

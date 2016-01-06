@@ -4111,6 +4111,17 @@
 			<tables>--newsletter_components--newsletter--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form300</name>
+			<display_name>manage_products_pooja</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--product_master--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -7855,7 +7866,7 @@
 		</row>												
 		<row>
 			<username>master</username>
-			<element_id>form297</element_id>
+			<element_id>form299</element_id>
 			<element_name>newsletter_assembly</element_name>
 			<status>active</status>
 			<re>checked</re>
@@ -7863,6 +7874,17 @@
 			<up>checked</up>
 			<del>checked</del>
 			<last_updated>1</last_updated>
-		</row>												
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form300</element_id>
+			<element_name>manage_products_pooja</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
 	</access_control>
 </re_xml>

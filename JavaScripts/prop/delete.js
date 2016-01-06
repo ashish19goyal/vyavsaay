@@ -9239,3 +9239,54 @@ function form299_delete_image(id)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Manage Products (Pooja)
+ * @param button
+ */
+function form300_delete_item(button)
+{
+	if(is_delete_access('form300'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var name=form.elements[0].value;
+			var data_id=form.elements[7].value;
+			var data_xml="<product_master>" +
+						"<id>"+data_id+"</id>" +
+						"</product_master>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>product_master</tablename>" +
+						"<link_to>form300</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Product "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			var other_delete="<product_instances>" +
+					"<product_name>"+name+"</product_name>" +
+					"</product_instances>";
+			var other_delete2="<documents>" +
+					"<doc_type>product_master</doc_type>" +
+					"<target_id>"+data_id+"</target_id>" +
+					"</documents>";
+			var other_delete4="<attributes>" +
+					"<name exact='yes'>"+name+"</name>" +
+					"<type>product</type>" +
+					"</attributes>";
+			
+			delete_row(data_xml,activity_xml);
+			delete_simple(other_delete);
+			delete_simple(other_delete2);
+			delete_simple(other_delete4);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

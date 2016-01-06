@@ -487,6 +487,7 @@
 	"create_purchase_order_sehgal":"Create Purchase Order (Sehgal)",
 	"manage_purchase_order_sehgal":"Manage Purchase Order (Sehgal)",
 	"newsletter_components":"Newsletter Components",
-	"newsletter_assembly":"Creator Newsletter from components"
+	"newsletter_assembly":"Creator Newsletter from components",
+	"manage_products_pooja": "Manage Products (Pooja Elec)"
 	}
 }

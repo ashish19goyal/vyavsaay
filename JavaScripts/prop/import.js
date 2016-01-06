@@ -6794,6 +6794,7 @@ function form273_import(data_array,import_type)
 				"<price>"+row['price']+"</price>" +
 				"<quantity>"+row['quantity']+"</quantity>" +
 				"<identified_date>"+get_raw_time(row['identified date'])+"</identified_date>" +
+				"<status>open</status>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 
@@ -6805,6 +6806,7 @@ function form273_import(data_array,import_type)
         supplier_object.email=row.email;
         supplier_object.phone=row.phone;
         supplier_object.address=row.address;
+        supplier_object.city=row.city;
         
         var add_supplier=true;
         
@@ -6840,6 +6842,7 @@ function form273_import(data_array,import_type)
                 "<email>"+row.email+"</email>"+
                 "<phone>"+row.phone+"</phone>"+
                 "<address>"+row.address+"</address>"+
+                "<city>"+row.city+"</city>"+
                 "<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";		
 
@@ -7058,6 +7061,7 @@ function form289_import(data_array,import_type)
 				"<identified_by>"+row['point-of-contact']+"</identified_by>" +
 				"<quantity>"+row['quantity']+"</quantity>" +
 				"<due_date>"+get_raw_time(row['followup date'])+"</due_date>" +
+				"<status>open</status>"+				
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 
@@ -7069,6 +7073,7 @@ function form289_import(data_array,import_type)
         supplier_object.email=row.email;
         supplier_object.phone=row.phone;
         supplier_object.address=row.address;
+        supplier_object.city=row.city;
         
         var add_supplier=true;
         
@@ -7104,6 +7109,7 @@ function form289_import(data_array,import_type)
                 "<email>"+row.email+"</email>"+
                 "<phone>"+row.phone+"</phone>"+
                 "<address>"+row.address+"</address>"+
+                "<city>"+row.city+"</city>"+
                 "<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";		
 
@@ -7116,6 +7122,7 @@ function form289_import(data_array,import_type)
 				"<status>active</status>"+				
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
+
 	});
 
 	data_xml+="</sale_leads>";
@@ -7223,3 +7230,60 @@ function form298_import(data_array,import_type)
 		update_batch(data_xml);
 	}
 }
+
+/**
+* @form Manage Products (Pooja)
+* @formNo 300
+*/
+function form300_import(data_array,import_type)
+{
+	var data_xml="<product_master>";
+	var data2_xml="<product_instances>";
+	var counter=1;
+	var last_updated=get_my_time();
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</product_master><separator></separator><product_master>";
+			data2_xml+="</product_instances><separator></separator><product_instances>";
+		}
+		
+		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<name unique='yes'>"+row['Model']+"</name>" +
+				"<make>"+row['Company']+"</make>" +
+				"<description>"+row['Company']+"</description>" +
+				"<category>"+row['Category']+"</category>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+		data2_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<product_name>"+row['Model']+"</product_name>" +
+				"<batch>"+row['Model']+"</batch>" +
+				"<cost_price>"+row['Cost Price']+"</cost_price>" +
+				"<sale_price>"+row['Sale Price']+"</sale_price>" +
+				"<mrp>"+row['MRP']+"</mrp>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</product_master>";
+	data2_xml+="</product_instances>";
+	if(import_type=='create_new')
+	{
+		create_batch(data_xml);
+		create_batch(data2_xml);
+	}
+	else
+	{
+		update_batch(data_xml);
+		update_batch(data2_xml);
+	}
+};

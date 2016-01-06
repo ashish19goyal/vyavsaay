@@ -704,6 +704,7 @@
 			<name index='yes' type="TEXT" unique='yes'></name>
 			<description index='yes' type="TEXT"></description>
 			<make index='yes' type="TEXT"></make>
+			<category index='yes' type="TEXT"></category>
 			<tax index='no' type="DECIMAL(12,4)"></tax>
 			<len index='no' type="DECIMAL(12,4)"></len>
 			<breadth index='no' type="DECIMAL(12,4)"></breadth>
