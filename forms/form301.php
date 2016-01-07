@@ -5,7 +5,7 @@
 		<label><input type='button' name='cancel' value='Cancel' class='generic_red_icon' onclick='form301_cancel_capture();'></label>		
 	
 		<label><video id="form301_video" autoplay></video></label>
-		<label><canvas id="qr-canvas" width="400" height="300" style="display:none;float:left;"></canvas></label>
+		<label><canvas id="qr-canvas" width="640" height="480" style="display:none;float:left;"></canvas></label>
 	</form>
 	
 	<script type="text/javascript" src="./JavaScripts/open/jsqrcode/grid.js"></script>
