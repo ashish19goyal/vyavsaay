@@ -4,8 +4,8 @@
 		<label><input type='submit' name='capture' value='Scan' class='generic_icon'></label>		
 		<label><input type='button' name='cancel' value='Cancel' class='generic_red_icon' onclick='form301_cancel_capture();'></label>		
 	
-		<label><canvas id="form301_canvas" style="width:500px;height:500px;float:left;"></canvas></label>
-		<label><video id='form301_video' style='display:none;' width="500" height="500" autoplay></video></label>
+		<label><video id="form301_video" autoplay></video></label>
+		<label><canvas id="qr-canvas" width="400" height="300" style="display:none;float:left;"></canvas></label>
 	</form>
 	
 	<script type="text/javascript" src="./JavaScripts/open/jsqrcode/grid.js"></script>
@@ -68,14 +68,12 @@
 
 	function form301_capture() 
 	{
-	    var canvas = document.getElementById('form301_canvas');
-	    var video = document.getElementById('form301_video');
+	    var canvas = document.getElementById('qr-canvas');
+		var video = document.getElementById('form301_video');
 		var context = canvas.getContext('2d');
 		
 		if(form301_stream)
 		{
-			console.log('streaming');
-			//form301_stream.start();
 			try
 			{		
 		    	context.drawImage(video,0,0);
@@ -84,15 +82,19 @@
 					qrcode.callback=form301_create_item;		
 					qrcode.decode();
 	    			form301_stream.stop();
+	    			context.clearRect(0, 0, canvas.width, canvas.height);
+	    			video.src="";
 				}
 				catch (e) 
 				{
+					console.log(e);
 					if(form301_capture_handle)
 						setTimeout(form301_capture,500);
 				}			
 	    	}
 	    	catch(e)
 	    	{
+	    		console.log(e);
 				if(form301_capture_handle)
 		    		setTimeout(form301_capture,500);
 	    	}
@@ -107,6 +109,7 @@
 	    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || null;
 
 		var constraints={video:true};
+/*		
 		MediaStreamTrack.getSources(function(sourceInfos) 
 		{
 	              var videoSourceId;

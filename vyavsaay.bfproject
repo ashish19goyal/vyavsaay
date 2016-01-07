@@ -1,7 +1,7 @@
 c2e.convert_special: 0
 e2c.convert_num: 0
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form301.php:4212:4004:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/test_scripts/qrcode.html:3335:2240:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form301.php:3432:3024:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/test_scripts/qrcode.html:3359:1785:0:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -16,7 +16,7 @@ c2e.convert_iso: 0
 opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/test_scripts
 wrap_text_default: 0
 bookmarks_filename_mode: 0
-ssearch_text: upperbound
+ssearch_text: canvas
 snr_casesens: 0
 view_blocks: 1
 name: vyavsaay
@@ -90,7 +90,6 @@ snr_escape_chars: 0
 htmlbar_view: 0
 spell_lang: en
 ssearch_dotmatchall: 0
-searchlist: read_json_sin
 searchlist: 198
 searchlist: ../
 searchlist: form301_stream
@@ -105,6 +104,7 @@ searchlist: 98_
 searchlist: hide_all
 searchlist: rowsHTML
 searchlist: upperbound
+searchlist: canvas
 autocomplete: 1
 outputb_show_all_output: 0
 bookmarks_show_mode: 0

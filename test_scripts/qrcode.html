@@ -79,6 +79,7 @@ function load()
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || null;
 
 	var constraints={video:true};
+/*	
 	MediaStreamTrack.getSources(function(sourceInfos) 
 	{
               var videoSourceId;
@@ -95,7 +96,7 @@ function load()
                 }
               };
     });
-
+*/
 	navigator.getUserMedia(constraints, function(stream) 
 	{
 	    video.src = window.URL.createObjectURL(stream);
