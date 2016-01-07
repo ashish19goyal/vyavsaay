@@ -3,9 +3,9 @@
 		<label>Source: <input type='text' name='source' class='widebox' required></label>
 		<label><input type='submit' name='capture' value='Scan' class='generic_icon'></label>		
 		<label><input type='button' name='cancel' value='Cancel' class='generic_red_icon' onclick='form301_cancel_capture();'></label>		
-	
-		<label><video id="form301_video" autoplay></video></label>
+
 		<label><canvas id="qr-canvas" width="640" height="480" style="float:left;"></canvas></label>
+		<label><video id="form301_video" autoplay></video></label>
 	</form>
 	
 	<script type="text/javascript" src="./JavaScripts/open/jsqrcode/grid.js"></script>
