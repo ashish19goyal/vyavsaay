@@ -79,24 +79,6 @@ function load()
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || null;
 
 	var constraints={video:true};
-/*	
-	MediaStreamTrack.getSources(function(sourceInfos) 
-	{
-              var videoSourceId;
-              for (var i = 0; i != sourceInfos.length; ++i) {
-                var sourceInfo = sourceInfos[i];
-                if(sourceInfo.kind == "video" && sourceInfo.facing == "environment") {
-                  videoSourceId = sourceInfo.id;
-                }
-              }
-              constraints = {
-                audio: false,
-                video: {
-                  optional: [{sourceId: videoSourceId}]
-                }
-              };
-    });
-*/
 	navigator.getUserMedia(constraints, function(stream) 
 	{
 	    video.src = window.URL.createObjectURL(stream);

@@ -1,7 +1,8 @@
 c2e.convert_special: 0
 e2c.convert_num: 0
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form301.php:4137:3808:1:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/test_scripts/qrcode.html:3359:1785:0:
+openfiles: /home/ashish/Dropbox/dentalarch/dentalarch.github.io/blog.html:0:0:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form301.php:4472:4340:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/test_scripts/qrcode.html:0:2555:0:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -16,7 +17,7 @@ c2e.convert_iso: 0
 opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/test_scripts
 wrap_text_default: 0
 bookmarks_filename_mode: 0
-ssearch_text: form301_gotSources
+ssearch_text: script
 snr_casesens: 0
 view_blocks: 1
 name: vyavsaay
@@ -49,10 +50,6 @@ ssearch_regex: 0
 e2c.convert_iso: 0
 ssearch_casesens: 0
 charmap_block: 1
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/db/user_db_data.xml
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/locales/translation-en.json
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/db/grids.json
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/reports/report98.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/reports/report97.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/reports/report90.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/reports/report89.php
@@ -70,7 +67,6 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/pr
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/update.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/delete.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/local_online.js
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form301.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form198.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/includes/js_includes.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/includes/modal_forms.php
@@ -78,6 +74,11 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/CSS/theme1.css
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/reports_ini.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/event_handler.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/local_db_handling_json.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/open/jSignature.min.js
+recent_files: file:///home/ashish/Dropbox/dentalarch/dentalarch.github.io/blog.html
+recent_files: file:///home/ashish/Dropbox/dentalarch/dentalarch.github.io/index.html
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/index.html
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form301.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/test_scripts/qrcode.html
 snr_replacetype: 0
 savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms
@@ -90,10 +91,6 @@ snr_escape_chars: 0
 htmlbar_view: 0
 spell_lang: en
 ssearch_dotmatchall: 0
-searchlist: ../
-searchlist: form301_stream
-searchlist: stream
-searchlist: canvas
 searchlist: video
 searchlist: 85
 searchlist: 198
@@ -105,6 +102,10 @@ searchlist: rowsHTML
 searchlist: upperbound
 searchlist: canvas
 searchlist: form301_gotSources
+searchlist: angular.min.js.map
+searchlist: map
+searchlist: css
+searchlist: script
 autocomplete: 1
 outputb_show_all_output: 0
 bookmarks_show_mode: 0

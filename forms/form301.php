@@ -5,7 +5,7 @@
 		<label><input type='button' name='cancel' value='Cancel' class='generic_red_icon' onclick='form301_cancel_capture();'></label>		
 	
 		<label><video id="form301_video" autoplay></video></label>
-		<label><canvas id="qr-canvas" width="640" height="480" style="display:none;float:left;"></canvas></label>
+		<label><canvas id="qr-canvas" width="640" height="480" style="float:left;"></canvas></label>
 	</form>
 	
 	<script type="text/javascript" src="./JavaScripts/open/jsqrcode/grid.js"></script>
@@ -73,13 +73,15 @@
 			
 	    var canvas = document.getElementById('qr-canvas');
 		var video = document.getElementById('form301_video');
+		//canvas.width=video.width;
+		//canvas.height=video.height;
 		var context = canvas.getContext('2d');
 		
 		if(form301_stream)
 		{
 			try
 			{		
-		    	context.drawImage(video,0,0);
+		    	context.drawImage(video,0,0,canvas.width,canvas.height);
 				try 
 				{
 					qrcode.callback=form301_create_item;		
@@ -124,6 +126,12 @@
 	function form301_header_ini()
 	{           
 		var video = document.getElementById('form301_video');
+		var canvas = document.getElementById('qr-canvas');
+		console.log($(video).attr('width'));
+		console.log($(video).attr('height'));
+		
+		$(canvas).attr('width',$(video).attr('width'));
+		$(canvas).attr('height',$(video).attr('height'));
 		
 		window.navigator = window.navigator || {};
 	    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || null;
@@ -137,11 +145,10 @@
 		}
 		    
 	  	var filter_fields=document.getElementById('form301_master');
-		var source_filter=filter_fields.elements['source'];
-		
+		var source_filter=filter_fields.elements['source'];		
 		var source_data=new Object();
 			source_data.data_store='qr_contexts';
-			source_data.indexes=[{index:'source'}];		
+			source_data.indexes=[{index:'source'}];
 			source_data.return_column='source';
 		set_my_value_list_json(source_data,source_filter);	
 		
