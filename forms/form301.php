@@ -4,8 +4,8 @@
 		<label><input type='submit' name='capture' value='Scan' class='generic_icon'></label>		
 		<label><input type='button' name='cancel' value='Cancel' class='generic_red_icon' onclick='form301_cancel_capture();'></label>		
 	
-		<label><canvas id="form301_canvas" style="width:300px;height:300px;float:left;"></canvas></label>
-		<label><video id='form301_video' style='display:none;' width="300" height="300" autoplay></video></label>
+		<label><canvas id="form301_canvas" style="width:500px;height:500px;float:left;"></canvas></label>
+		<label><video id='form301_video' style='display:none;' width="500" height="500" autoplay></video></label>
 	</form>
 	
 	<script type="text/javascript" src="./JavaScripts/open/jsqrcode/grid.js"></script>
