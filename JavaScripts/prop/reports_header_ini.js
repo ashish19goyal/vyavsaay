@@ -2244,24 +2244,18 @@ function report97_header_ini()
 	});
 
 	var city_data=new Object();
-		city_data.count=0;
-		city_data.start_index=0;
 		city_data.data_store='cities_data';
 		city_data.indexes=[{index:'city'}];		
 		city_data.return_column='city';
 	set_my_filter_json(city_data,city_filter);
 
 	var item_data=new Object();
-		item_data.count=0;
-		item_data.start_index=0;
 		item_data.data_store='product_master';
 		item_data.indexes=[{index:'name'}];		
 		item_data.return_column='name';
 	set_my_filter_json(item_data,item_filter);
 
 	var cust_data=new Object();
-		cust_data.count=0;
-		cust_data.start_index=0;
 		cust_data.data_store='accounts';
 		cust_data.indexes=[{index:'acc_name'}];		
 		cust_data.return_column='acc_name';
@@ -2270,6 +2264,39 @@ function report97_header_ini()
 	set_static_filter_json('leads_type','type',type_filter,function () 
 	{
 		$(type_filter).focus();
+	});	
+}
+
+/**
+ * @reportNo 98
+ * @report QR Scan Report
+ */
+function report98_header_ini()
+{	
+	var form=document.getElementById('report98_header');
+	var source_filter=form.elements['source'];
+	var status_filter=form.elements['status'];
+	var keyword_filter=form.elements['keyword'];
+	var start_date=form.elements['start'];
+	var end_date=form.elements['end'];
+
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report98_ini();
 	});
+
+	var source_data=new Object();
+		source_data.data_store='qr_scans';
+		source_data.indexes=[{index:'source'}];		
+		source_data.return_column='source';
+	set_my_filter_json(source_data,source_filter);
 	
+	set_static_filter_json('qr_scans','status',status_filter);
+					
+	$(start_date).datepicker();
+	$(end_date).datepicker();
+	start_date.value=get_my_past_date((get_my_time()-(30*86400000)));
+	end_date.value=get_my_date();
 }

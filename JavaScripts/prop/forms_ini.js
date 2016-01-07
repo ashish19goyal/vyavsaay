@@ -32073,3 +32073,141 @@ function form300_ini()
 		hide_loader();
 	});	
 };
+
+/**
+ * @form Convert QR Scan Data
+ * @formNo 302
+ * @Loading light
+ */
+function form302_ini()
+{
+	show_loader();
+	var fid=$("#form302_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form302_header');
+	
+	var fsource=filter_fields.elements[0].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form302_index');
+	var prev_element=document.getElementById('form302_prev');
+	var next_element=document.getElementById('form302_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+	$('#form302_body').html("");
+
+	var new_columns=new Object();
+		new_columns.count=25;
+		new_columns.start_index=start_index;
+		new_columns.data_store='qr_contexts';
+		
+		new_columns.indexes=[{index:'id',value:fid},
+							{index:'source',value:fsource},
+							{index:'format'},
+							{index:'conversion_func'}];
+	
+	read_json_rows('form302',new_columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="<tr>";
+				rowsHTML+="<form id='form302_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Source'>";
+						rowsHTML+="<textarea readonly='readonly' form='form302_"+result.id+"'>"+result.source+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Format'>";
+						rowsHTML+="<textarea readonly='readonly' form='form302_"+result.id+"' class='dblclick_editable'>"+result.format+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Conversion Function'>";
+						rowsHTML+="<textarea readonly='readonly' form='form302_"+result.id+"' class='dblclick_editable'>"+result.conversion_func+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Pending Records'>";
+						rowsHTML+="<input type='number' readonly='readonly' form='form302_"+result.id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form302_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form302_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form302_"+result.id+"' onclick='form302_delete_item($(this));'>";	
+						rowsHTML+="<input type='button' class='generic_icon' value='Convert' form='form302_"+result.id+"'>";	
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+		
+			$('#form302_body').append(rowsHTML);
+			var fields=document.getElementById("form302_"+result.id);
+			var pending_count=fields.elements[3];
+			var convert_button=fields.elements[7];
+
+			$(fields).on("submit",function(event)
+			{
+				event.preventDefault();
+				form302_update_item(fields);
+			});
+			
+			var count_columns=new Object();
+				count_columns.data_store='qr_scans';
+				count_columns.indexes=[{index:'source',exact:result.source},
+									{index:'status',exact:'pending'}];
+		
+			read_json_count(count_columns,function(item_count)
+			{
+				pending_count.value=item_count;
+			});
+	
+			$(convert_button).on('click',function (e) 
+			{
+				e.preventDefault();
+				var qr_columns=new Object();
+					qr_columns.data_store='qr_scans';
+					qr_columns.return_column='data';
+					qr_columns.indexes=[{index:'source',exact:result.source},
+										{index:'status',exact:'pending'}];
+			
+				read_json_single_column(qr_columns,function(items)
+				{
+					var my_func="function form302_dummy_function(results){"+result.conversion_func+"};";
+					$('#form302_script_tag').html(my_func);
+					form302_dummy_function(items);
+					$("#modal85").dialog("open");
+					$('#form302_script_tag').html();
+				});					
+			});		
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements['export'];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_limited_export_data(new_columns,'QR Sources');
+		});
+		hide_loader();
+	});	
+};

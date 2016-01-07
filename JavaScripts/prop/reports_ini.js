@@ -8420,3 +8420,95 @@ function report97_ini()
 		});
 	}
 };
+
+/**
+ * @reportNo 98
+ * @report QR Scan Report
+ */
+function report98_ini()
+{
+	var form=document.getElementById('report98_header');
+	var source_filter=form.elements['source'].value;
+	var status_filter=form.elements['status'].value;
+	var keyword_filter=form.elements['keyword'].value;
+	var start_date=get_raw_time(form.elements['start'].value);
+	var end_date=get_raw_time(form.elements['end'].value)+86400000;
+	
+	show_loader();
+	$('#report98_body').html('');	
+	
+	////indexing///
+	var index_element=document.getElementById('report98_index');
+	var prev_element=document.getElementById('report98_prev');
+	var next_element=document.getElementById('report98_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var qr_data=new Object();
+			qr_data.count=25;
+			qr_data.start_index=start_index;
+			qr_data.data_store='qr_scans';		
+					
+			qr_data.indexes=[{index:'id'},
+							{index:'source',value:source_filter},
+							{index:'status',value:status_filter},
+							{index:'data',value:keyword_filter},
+							{index:'time',lowerbound:start_date,upperbound:end_date}];
+	
+	read_json_rows('report98',qr_data,function(items)
+	{
+		var rowsHTML="";
+		items.forEach(function(item)
+		{
+			item.time=get_my_datetime(item.time);
+			rowsHTML+="<tr>";
+			rowsHTML+="<form id='report98_"+item.id+"'></form>";
+			rowsHTML+="<td data-th='Source'>";
+				rowsHTML+=item.source;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Data'>";
+				rowsHTML+=item.data;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Date'>";
+				rowsHTML+=item.time;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+=item.status;
+			rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+		});
+		$('#report98_body').append(rowsHTML);
+		
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(items.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		hide_loader();
+		var csv_button=form.elements['csv'];
+		$(csv_button).off("click");
+		$(csv_button).on("click", function(event)
+		{
+			csv_download_report(items,'QR Scan Data');
+		});	
+	});
+};

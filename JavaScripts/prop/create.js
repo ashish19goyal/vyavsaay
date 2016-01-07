@@ -20491,3 +20491,54 @@ function form299_create_item()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Convert QR Data
+ * @param button
+ */
+function form302_create_item(form)
+{
+	if(is_create_access('form302'))
+	{
+		var source=form.elements[0].value;
+		var format=form.elements[1].value;
+		var func=form.elements[2].value;
+		format=htmlentities(format);
+		func=htmlentities(func);
+		var data_id=form.elements[4].value;
+		var save_button=form.elements[5];
+		var del_button=form.elements[6];
+		var last_updated=get_my_time();
+		var data_xml="<qr_contexts>" +
+				"<id>"+data_id+"</id>" +
+				"<source unique='yes'>"+source+"</source>" +
+				"<format>"+format+"</format>" +
+				"<conversion_func>"+func+"</conversion_func>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</qr_contexts>";	
+	
+		create_simple(data_xml);
+		
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form302_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function (e) 
+		{
+			e.preventDefault();
+			form302_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

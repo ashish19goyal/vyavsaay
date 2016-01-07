@@ -37,7 +37,7 @@ function local_read_json_rows(columns,callback,results)
 			
 			if(typeof cols[j].lowerbound!='undefined')
 			{
-				fil.value=cols[j].lowerbound;
+				fil.value=""+cols[j].lowerbound;
 				fil.type='lowerbound';
 				filter.push(fil);
 				lowerbound=[fil.value,'0'];
@@ -51,7 +51,7 @@ function local_read_json_rows(columns,callback,results)
 			}
 			if(typeof cols[j].upperbound!='undefined')
 			{
-				fil.value=cols[j].upperbound;
+				fil.value=""+cols[j].upperbound;
 				fil.type='upperbound';
 				filter.push(fil);
 				upperbound=[fil.value,'999999999999'];
@@ -303,7 +303,7 @@ function local_read_json_column(columns,callback,results)
 			
 			if(typeof cols[j].lowerbound!='undefined')
 			{
-				fil.value=cols[j].lowerbound;
+				fil.value=""+cols[j].lowerbound;
 				fil.type='lowerbound';
 				filter.push(fil);
 				lowerbound=[fil.value,'0'];
@@ -317,7 +317,7 @@ function local_read_json_column(columns,callback,results)
 			}
 			if(typeof cols[j].upperbound!='undefined')
 			{
-				fil.value=cols[j].upperbound;
+				fil.value=""+cols[j].upperbound;
 				fil.type='upperbound';
 				filter.push(fil);
 				upperbound=[fil.value,'999999999999'];
@@ -571,7 +571,7 @@ function local_read_json_count(columns,callback)
 			
 			if(typeof cols[j].lowerbound!='undefined')
 			{
-				fil.value=cols[j].lowerbound;
+				fil.value=""+cols[j].lowerbound;
 				fil.type='lowerbound';
 				filter.push(fil);
 				lowerbound=[fil.value,'0'];
@@ -585,7 +585,7 @@ function local_read_json_count(columns,callback)
 			}
 			if(typeof cols[j].upperbound!='undefined')
 			{
-				fil.value=cols[j].upperbound;
+				fil.value=""+cols[j].upperbound;
 				fil.type='upperbound';
 				filter.push(fil);
 				upperbound=[fil.value,'999999999999'];

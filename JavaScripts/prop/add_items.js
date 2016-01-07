@@ -18260,7 +18260,7 @@ function form296_add_item()
 }
 
 /**
- * @form New Purchase Order (Sehgal)
+ * @form Newsletter Components
  * @formNo 298
  */
 function form298_add_item()
@@ -18316,6 +18316,58 @@ function form298_add_item()
 		{
 			event.preventDefault();
 			form298_create_item(fields);
+		});
+		
+		longPressEditable($('.dblclick_editable'));	
+		$('textarea').autosize();	
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Convert QR Data
+ * @formNo 302
+ */
+function form302_add_item()
+{
+	if(is_create_access('form302'))
+	{
+		var id=get_new_key();
+		
+			var rowsHTML="<tr>";
+				rowsHTML+="<form id='form302_"+id+"'></form>";
+					rowsHTML+="<td data-th='Source'>";
+						rowsHTML+="<textarea form='form302_"+id+"' required></textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Format'>";
+						rowsHTML+="<textarea form='form302_"+id+"' class='dblclick_editable'></textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Conversion Function'>";
+						rowsHTML+="<textarea form='form302_"+id+"' class='dblclick_editable'></textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Pending Records'>";
+						rowsHTML+="<input type='number' readonly='readonly' form='form302_"+id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form302_"+id+"' value='"+id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form302_"+id+"' title='Save'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form302_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";	
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+		
+		$('#form302_body').append(rowsHTML);
+		var fields=document.getElementById("form302_"+id);
+		var source_filter=fields.elements[0];
+		
+		$(source_filter).focus();
+						
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form302_create_item(fields);
 		});
 		
 		longPressEditable($('.dblclick_editable'));	

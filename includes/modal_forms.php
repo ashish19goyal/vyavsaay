@@ -761,6 +761,14 @@
 		<div id='modal84_preview'></div>
 	</div>
 
+	<div id="modal85" title="QR Data Conversion">
+		QR Scan data conversion has been completed.
+	</div>
+
+	<div id="modal86" title="QR Scan Saved">
+		QR scan was successfully saved.
+	</div>
+
 	<div id="modal101" title="Email Document">
 		<form id='modal101_form' autocomplete="off">
 			<fieldset>

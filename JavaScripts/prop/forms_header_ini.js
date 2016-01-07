@@ -11973,3 +11973,26 @@ function form300_header_ini()
 		form300_ini();
 	});
 };
+
+/**
+ * @form Convert Scan Data
+ * @formNo 302
+ */
+function form302_header_ini()
+{
+	var filter_fields=document.getElementById('form302_header');
+	var source_filter=filter_fields.elements[0];
+	
+	var source_data=new Object();
+		source_data.data_store='qr_contexts';
+		source_data.indexes=[{index:'source'}];		
+		source_data.return_column='source';
+	set_my_filter_json(source_data,source_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form302_ini();
+	});
+};

@@ -1993,4 +1993,21 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</logon_attempts>
+	<qr_scans>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<source index='yes' type="TEXT"></source>
+			<data index='yes' type="TEXT"></data>
+			<time index='yes' type="BIGINT"></time>
+			<status index='yes' type="VARCHAR(10)"></status><!--pending/converted-->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</qr_scans>
+	<qr_contexts>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<source index='yes' type="TEXT"></source>
+			<format index='yes' type="TEXT"></format>
+			<conversion_func index='no' type="TEXT"></conversion_func>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</qr_contexts>
 </re_xml>

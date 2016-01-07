@@ -488,6 +488,9 @@
 	"manage_purchase_order_sehgal":"Manage Purchase Order (Sehgal)",
 	"newsletter_components":"Newsletter Components",
 	"newsletter_assembly":"Creator Newsletter from components",
-	"manage_products_pooja": "Manage Products (Pooja Elec)"
+	"manage_products_pooja": "Manage Products (Pooja Elec)",
+	"qr_scan_report":"QR Scan Report",
+	"scan_qr_code":"Scan QR Codes",
+	"convert_qr_data":"Convert QR Code Data"
 	}
 }

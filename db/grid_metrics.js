@@ -1443,3 +1443,49 @@ function set_grid_item_60()
 		$('#grid_item_60').html(item_count);
 	});	
 };
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_61
+*@*display_name*:*Total QR Scans
+*@*grid*:*qr_scan
+*@*function_name*:*set_grid_item_61();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_61()
+{
+	var new_columns=new Object();
+		new_columns.data_store='qr_scans';
+		new_columns.indexes=[{index:'id'}];
+
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_61').html(item_count);
+	});	
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_62
+*@*display_name*:*Pending Conversions
+*@*grid*:*qr_scan
+*@*function_name*:*set_grid_item_62();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_62()
+{
+	var new_columns=new Object();
+		new_columns.data_store='qr_scans';
+		new_columns.indexes=[{index:'status',exact:'pending'}];
+
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_62').html(item_count);
+	});	
+};

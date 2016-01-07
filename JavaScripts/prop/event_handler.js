@@ -293,7 +293,7 @@ function modal_forms_ini()
 	   		}
 		});
 	}
-	for(var i=50;i<=84;i++)
+	for(var i=50;i<=86;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
@@ -463,7 +463,10 @@ function hide_all()
 */
 
 	hide_menu_items();
-	
+	if(typeof form301_cancel_capture!='undefined')
+	{
+		form301_cancel_capture();
+	}
 	$("#home_grid").hide();
 	$('.filter').hide();
 	hide_loader();

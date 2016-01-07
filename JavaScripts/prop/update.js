@@ -15585,3 +15585,39 @@ function form300_update_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Convert QR Data
+ * @param button
+ */
+function form302_update_item(form)
+{
+	if(is_update_access('form302'))
+	{
+		var source=form.elements[0].value;
+		var format=form.elements[1].value;
+		var func=form.elements[2].value;
+		format=htmlentities(format);
+		func=htmlentities(func);
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<qr_contexts>" +
+				"<id>"+data_id+"</id>" +
+				"<source>"+source+"</source>" +
+				"<format>"+format+"</format>" +
+				"<conversion_func>"+func+"</conversion_func>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</qr_contexts>";	
+	
+		update_simple(data_xml);
+		
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}	
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

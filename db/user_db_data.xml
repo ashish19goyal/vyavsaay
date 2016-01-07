@@ -1273,6 +1273,17 @@
 			<tables>--sale_leads--customers--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>		
+			<name>report98</name>
+			<display_name>qr_scan_report</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--qr_scans--</tables>
+			<last_updated>1</last_updated>
+		</row>
 		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
@@ -4122,6 +4133,28 @@
 			<tables>--product_master--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form301</name>
+			<display_name>scan_qr_code</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--qr_scans--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form302</name>
+			<display_name>convert_qr_data</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--qr_scans--qr_contexts--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -5030,6 +5063,17 @@
 			<username>master</username>
 			<element_id>report97</element_id>
 			<element_name>leads_search</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report98</element_id>
+			<element_name>qr_scan_report</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -7879,6 +7923,28 @@
 			<username>master</username>
 			<element_id>form300</element_id>
 			<element_name>manage_products_pooja</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form301</element_id>
+			<element_name>scan_qr_code</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form302</element_id>
+			<element_name>convert_qr_data</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

@@ -9290,3 +9290,31 @@ function form300_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Convert QR Data
+ * @param button
+ */
+function form302_delete_item(button)
+{
+	if(is_delete_access('form302'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var data_id=form.elements[4].value;
+			var data_xml="<qr_contexts>" +
+						"<id>"+data_id+"</id>" +
+						"</qr_contexts>";	
+			delete_simple(data_xml);
+			
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

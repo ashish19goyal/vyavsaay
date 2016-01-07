@@ -322,6 +322,22 @@
 	</user_fields_list>
 	<values_list>
 		<row>
+			<tablename>qr_scans</tablename>
+			<listname>status</listname>
+			<name>pending</name>
+			<value>pending</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>qr_scans</tablename>
+			<listname>status</listname>
+			<name>converted</name>
+			<value>converted</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>newsletter</tablename>
 			<listname>status</listname>
 			<name>active</name>
