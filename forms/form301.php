@@ -106,6 +106,24 @@
 		window.navigator = window.navigator || {};
 	    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || null;
 
+		var constraints={video:true};
+		MediaStreamTrack.getSources(function(sourceInfos) 
+		{
+	              var videoSourceId;
+	              for (var i = 0; i != sourceInfos.length; ++i) {
+	                var sourceInfo = sourceInfos[i];
+	                if(sourceInfo.kind == "video" && sourceInfo.facing == "environment") {
+	                  videoSourceId = sourceInfo.id;
+	                }
+	              }
+	              constraints = {
+	                audio: false,
+	                video: {
+	                  optional: [{sourceId: videoSourceId}]
+	                }
+	              };
+	    });
+
 /*	
 		navigator.getUserMedia({video: true}, function(stream) 
 		{
@@ -130,7 +148,7 @@
 			e.preventDefault();
 			form301_capture_handle=true;
 			
-			navigator.getUserMedia({video: true}, function(stream) 
+			navigator.getUserMedia(constraints, function(stream) 
 			{
 			    video.src = window.URL.createObjectURL(stream);
 		    	form301_stream = stream;
