@@ -29,6 +29,7 @@
 	
 	form301_stream = null;
 	form301_capture_handle = false;
+	form301_video_source= null;
 	
 	function form301_create_item(data)
 	{
@@ -68,6 +69,8 @@
 
 	function form301_capture() 
 	{
+		console.log(form301_stream);
+			
 	    var canvas = document.getElementById('qr-canvas');
 		var video = document.getElementById('form301_video');
 		var context = canvas.getContext('2d');
@@ -100,42 +103,39 @@
 	    	}
 	 	}
 	}
-	 
+ 
+ 	function form301_gotSources(sourceInfos) 
+ 	{
+	  for (var i = 0; i != sourceInfos.length; ++i) 
+	  {
+	    var sourceInfo = sourceInfos[i];
+	    //console.log(sourceInfo);
+	    if (sourceInfo.kind === 'video' && sourceInfo.facing == "environment") 
+	    {
+	      form301_video_source = sourceInfo.id;
+	    }
+	    if(sourceInfo.kind === 'video' && form301_video_source==null)
+	    {
+	    	form301_video_source = sourceInfo.id;
+	    }
+	  }
+ 	}
+ 	
 	function form301_header_ini()
 	{           
 		var video = document.getElementById('form301_video');
 		
 		window.navigator = window.navigator || {};
 	    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || null;
-
+		
 		var constraints={video:true};
-/*		
-		MediaStreamTrack.getSources(function(sourceInfos) 
+		
+		if (typeof MediaStreamTrack != 'undefined' && typeof MediaStreamTrack.getSources!='undefined')
 		{
-	              var videoSourceId;
-	              for (var i = 0; i != sourceInfos.length; ++i) {
-	                var sourceInfo = sourceInfos[i];
-	                if(sourceInfo.kind == "video" && sourceInfo.facing == "environment") {
-	                  videoSourceId = sourceInfo.id;
-	                }
-	              }
-	              constraints = {
-	                audio: false,
-	                video: {
-	                  optional: [{sourceId: videoSourceId}]
-	                }
-	              };
-	    });
-
-/*	
-		navigator.getUserMedia({video: true}, function(stream) 
-		{
-		    video.src = window.URL.createObjectURL(stream);
-	    	form301_stream = stream;
-	  	},function (e) {
-	  		console.log('error');
-	  	});   
-*/	  	
+			MediaStreamTrack.getSources(form301_gotSources);
+			constraints={video: {optional: [{sourceId: form301_video_source}]}};
+		}
+		    
 	  	var filter_fields=document.getElementById('form301_master');
 		var source_filter=filter_fields.elements['source'];
 		
@@ -146,20 +146,19 @@
 		set_my_value_list_json(source_data,source_filter);	
 		
 		$(filter_fields).off('submit');
-		$(filter_fields).on('submit',function (e) 
+		$(filter_fields).on('submit',function (ev) 
 		{
-			e.preventDefault();
+			ev.preventDefault();
 			form301_capture_handle=true;
 			
 			navigator.getUserMedia(constraints, function(stream) 
 			{
 			    video.src = window.URL.createObjectURL(stream);
 		    	form301_stream = stream;
+		    	form301_capture();
 		  	},function (e) {
-		  		console.log('error');
-		  	});   
-	  	
-			form301_capture();
+		  		console.log(e);
+		  	});	  	
 		});
 	}
 </script>
