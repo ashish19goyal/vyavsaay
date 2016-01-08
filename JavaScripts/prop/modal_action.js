@@ -14845,26 +14845,29 @@ function modal175_action(func)
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		if(is_create_access('form39'))
+		if(is_create_access('form299'))
 		{
 			var name=form.elements['nname'].value;
 			var template=form.elements['tname'].value;
 			
 			var id=get_new_key();
 			
-			var component_elem="<li class='newsletter_component' id='form299_nc_"+id+"' data-name='"+name+"' data-id='"+id+"'><div style='float:left;width:80%'>"+name+"</div><i style='float:right;width:20%;' class='fa fa-times' onclick=\"form299_delete_item('"+id+"');\"></i></li>";
-			$('#form299_navigation').append(component_elem);
-			
 			var markers_array=[];	
 			$("#modal175_markers").find('textarea').each(function()
 			{
 				var value=$(this).val();
 				var marker=$(this).attr('name');
-				if(value!="")
-				{
-					var marker_obj={'marker':marker,'value':value};
-					markers_array.push(marker_obj);
-				}
+				var marker_obj={'marker':marker,'value':value};
+				markers_array.push(marker_obj);
+			});
+			var attr=JSON.stringify(markers_array);
+			attr=attr.replace(/"/g,"'");
+			var component_elem="<li class='newsletter_component' id='form299_nc_"+id+"' data-name='"+name+"' data-id='"+id+"' data-tid='"+ftid.value+"'><div style='float:left;width:80%'>"+name+"</div><i style='float:right;width:20%;' class='fa fa-times' onclick=\"form299_delete_item('"+id+"');\"></i><i style='float:right;width:20%;' class='fa fa-pencil-square-o' id='form299_nc_edit_"+id+"'></i></li>";
+			$('#form299_navigation').append(component_elem);
+			$('#form299_nc_'+id).attr('data-attr',attr);
+			$('#form299_nc_edit_'+id).on('click',function () 
+			{
+				modal179_action(name,id,attr,ftid.value);
 			});
 
 			var images_array=[];	
@@ -15273,4 +15276,176 @@ function modal178_action(id,elem)
 	
 	///////////////////////////
 	$("#modal178").dialog("open");	
+}
+
+/**
+ * @modalNo 179
+ * @modal Add newsletter components
+ * @param button
+ */
+function modal179_action(cname,id,attr,template_id)
+{
+	var form=document.getElementById('modal179_form');
+	
+	var fname=form.elements['nname'];
+	var fhtml=form.elements['html_code'];
+	var ftid=form.elements['t_id'];
+	ftid.value=template_id;
+	fname.value=cname;
+	
+	var attr_array=[];
+	if(attr!="" && attr!='undefined' && attr!=null)
+	{
+		attr=attr.replace(/\'/g,"\"");
+		attr_array=JSON.parse(attr);
+	}
+
+	var markers_label=document.getElementById('modal179_markers');
+	markers_label.innerHTML="";
+
+	var markers_data=new Object();
+		markers_data.count=1;
+		markers_data.data_store='newsletter_components';
+		markers_data.indexes=[{index:'id',value:template_id},
+							{index:'markers'},{index:'html_code'}];
+	
+	read_json_rows('',markers_data,function(newsletter_markers)
+	{
+		markers_label.innerHTML="";
+		if(newsletter_markers.length>0)
+		{
+			var markers=[];
+			if(newsletter_markers[0].markers!="")
+			{
+				markers=JSON.parse(newsletter_markers[0].markers);
+			}
+
+			markers.forEach(function(marker)
+			{
+				var marker_value="";
+			
+				for(var i in attr_array)
+				{
+					if(attr_array[i].marker==marker)
+					{
+						marker_value=attr_array[i].value;
+						break;
+					}
+				}
+				var marker_label=document.createElement('label');
+				marker_label.innerHTML=marker+" <textarea name='"+marker+"'>"+marker_value+"</textarea>";
+								
+				markers_label.appendChild(marker_label);
+				var line_break=document.createElement('br');
+				markers_label.appendChild(line_break);
+			});
+			fhtml.value=newsletter_markers[0].html_code;
+			ftid.value=newsletter_markers[0].id;
+		}
+		else 
+		{
+			fhtml.value="";
+			ftid.value="";				
+		}
+	});
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_update_access('form299'))
+		{
+			var name=form.elements['nname'].value;
+			var markers_array=[];	
+			
+			$("#modal179_markers").find('textarea').each(function()
+			{
+				var value=$(this).val();
+				var marker=$(this).attr('name');
+				var marker_obj={'marker':marker,'value':value};
+				markers_array.push(marker_obj);
+			});
+			
+			var attr=JSON.stringify(markers_array);
+			attr=attr.replace(/\"/g,"'");
+			var component_elem=$('#form299_nc_'+id);
+			$(component_elem).attr('data-name',name);
+			$(component_elem).attr('data-attr',attr);
+			$(component_elem).html("<div style='float:left;width:80%'>"+name+"</div><i style='float:right;width:20%;' class='fa fa-times' onclick=\"form299_delete_item('"+id+"');\"></i><i style='float:right;width:20%;' class='fa fa-pencil-square-o' id='form299_nc_edit_"+id+"'></i>");
+			$('#form299_nc_edit_'+id).on('click',function () 
+			{
+				modal179_action(name,id,attr,ftid.value);
+			});
+			
+			var images_array=[];	
+			$("#form299_images").children('li').each(function()
+			{
+				var image=new Object();
+				image.name=$(this).attr('data-name');
+				image.id=$(this).attr('data-id');
+				image.url=$(this).attr('data-url');
+				images_array.push(image);
+			});
+
+			////////////////////////////////////////////////			
+			var html_code=fhtml.value;
+			var doc_columns=new Object();
+				doc_columns.count=5;
+				doc_columns.data_store='documents';
+				doc_columns.indexes=[{index:'id'},
+									{index:'url'},
+									{index:'doc_name'},
+									{index:'doc_type',exact:'newsletter_components'},
+									{index:'target_id',exact:ftid.value}];
+			
+			read_json_rows('',doc_columns,function(doc_results)
+			{
+				var docHTML="";
+				doc_results.forEach(function (doc)
+				{
+					var updated_url=doc.url.replace(/ /g,"+");
+					updated_url=updated_url+"\" data-src=\""+doc.id+".jpeg";
+					var replace_word="{{"+doc.doc_name+"}}";
+					var re=new RegExp(replace_word,"g");	
+					html_code=html_code.replace(re,updated_url);
+				});
+				
+				markers_array.forEach(function (marker) 
+				{
+					var replace_word="{{"+marker.marker+"}}";
+					var re=new RegExp(replace_word,"g");	
+					html_code=html_code.replace(re,marker.value);	
+				});
+				
+				images_array.forEach(function (image) 
+				{
+					var replace_word="image:"+image.name;
+					var updated_url=image.url+"\" data-src=\""+image.id+".jpeg";
+					var re=new RegExp(replace_word,"g");	
+					html_code=html_code.replace(re,updated_url);	
+				});
+				
+				var div_dummy=document.createElement('div');
+				$(div_dummy).html(html_code);
+				
+				var html_elem="";
+				$(div_dummy).children('div').each(function (index) 
+				{
+					html_elem=$(this);
+					$(html_elem).attr('id','form299_sc_'+id);
+					$(html_elem).attr('data-id',id);
+				});
+				$(div_dummy).remove();
+				$('#form299_sc_'+id).replaceWith(html_elem);
+			});			
+			/////////////////////////////////////////////////
+		}		
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal179").dialog("close");
+	});
+	
+	$("#modal179").dialog("open");
 }

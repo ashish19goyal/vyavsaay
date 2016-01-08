@@ -455,7 +455,7 @@ function my_obj_array_to_csv(data_array,file_name)
 				}
 				else
 				{
-					if(String(data_row[header_array[i]]).search(","))
+					if(String(data_row[header_array[i]]).search(",") || String(data_row[header_array[i]]).search(";"))
 					{
 						data_row[header_array[i]]="\""+data_row[header_array[i]]+"\"";
 					}

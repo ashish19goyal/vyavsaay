@@ -25,6 +25,7 @@ class user_setup
 		$this->get_data_from_json('newsletter_components.json');
 		$this->get_data_from_json('search.json');
 		$this->get_data_from_js('grid_metrics.js','system_grid_metrics');
+		$this->get_data_from_js('notifications.js','system_notifications');
 	}
 
 	public function __destruct()

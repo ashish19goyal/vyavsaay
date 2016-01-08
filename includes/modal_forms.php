@@ -1815,4 +1815,16 @@
 		</form>
 	</div>
 	
+	<div id="modal179" title="Update Newsletter Component">
+		<form id='modal179_form' autocomplete="off">
+			<fieldset>
+				<label>Name: <input type="text" name='nname' required></label><br>
+				<label id='modal179_markers'></label><br>
+				<input type="hidden" name='html_code'>
+				<input type="hidden" name='t_id'>
+				<input type="submit" value='Update' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

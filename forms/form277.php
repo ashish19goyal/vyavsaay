@@ -99,7 +99,7 @@
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Timing'>";
 								rowsHTML+="<b>Initital Delay</b>:<input type='number' readonly='readonly' class='dblclick_editable' form='form277_"+result.id+"' value='"+result.initial_delay+"'>";
-								rowsHTML+="<b>Repeat Delay</b>:<input type='number' readonly='readonly' class='dblclick_editable' form='form277_"+result.id+"' value='"+result.repeat_delay+"'>";
+								rowsHTML+="<br><b>Repeat Delay</b>:<input type='number' readonly='readonly' class='dblclick_editable' form='form277_"+result.id+"' value='"+result.repeat_delay+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Status'>";
 								rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form277_"+result.id+"' value='"+result.status+"'>";
@@ -188,7 +188,7 @@
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form277_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='submit' class='save_icon' form='form277_"+id+"'>";	
-							rowsHTML+="<input type='button' class='delete_icon' form='form277_"+id+"' onclick='$(this).parent().parent().remove();>";	
+							rowsHTML+="<input type='button' class='delete_icon' form='form277_"+id+"' onclick='$(this).parent().parent().remove();'>";	
 						rowsHTML+="</td>";			
 					rowsHTML+="</tr>";
 			

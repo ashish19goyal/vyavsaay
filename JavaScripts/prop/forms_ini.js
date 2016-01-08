@@ -31894,8 +31894,13 @@ function form299_ini()
 				var components_array=JSON.parse(newsletters[0].components);
 				components_array.forEach(function (component) 
 				{
-					var component_elem="<li class='newsletter_component' id='form299_nc_"+component.id+"' data-name='"+component.name+"' data-id='"+component.id+"'><div style='float:left;width:80%'>"+component.name+"</div><i style='float:right;width:20%;' class='fa fa-times' onclick=\"form299_delete_item('"+component.id+"');\"></i></li>";
+					var component_elem="<li class='newsletter_component' id='form299_nc_"+component.id+"' data-name='"+component.name+"' data-id='"+component.id+"' data-tid='"+component.tid+"'><div style='float:left;width:80%'>"+component.name+"</div><i style='float:right;width:20%;' class='fa fa-times' onclick=\"form299_delete_item('"+component.id+"');\"></i><i style='float:right;width:20%;' class='fa fa-pencil-square-o' id='form299_nc_edit_"+component.id+"'></i></li>";
 					$('#form299_navigation').append(component_elem);
+					$('#form299_nc_'+component.id).attr('data-attr',component.attr);
+					$('#form299_nc_edit_'+component.id).on('click',function () 
+					{
+						modal179_action(component.name,component.id,component.attr,component.tid);
+					});
 				});
 			}
 			hide_loader();

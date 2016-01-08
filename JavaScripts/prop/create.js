@@ -20454,6 +20454,8 @@ function form299_create_item()
 			var c=new Object();
 			c.name=$(this).attr('data-name');
 			c.id=$(this).attr('data-id');
+			c.attr=$(this).attr('data-attr');
+			c.tid=$(this).attr('data-tid');
 			components_array.push(c);
 		});
 		var components=JSON.stringify(components_array);		
