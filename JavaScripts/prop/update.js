@@ -15341,13 +15341,6 @@ function form296_update_form()
 		
 		total=amount+tax;
 		
-		if(form.elements['cst'].checked)
-		{
-			cst='yes';
-			//tax+=my_round(.02*amount,2);
-			//total+=my_round(.02*amount,2);
-		}
-
 		amount=my_round(amount,2);
 		tax=my_round(tax,2);
 		total=my_round(total,2);

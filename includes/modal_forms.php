@@ -1805,4 +1805,14 @@
 		</form>
 	</div>
 
+	<div id="modal178" title="Function Definition">
+		<form id='modal178_form' autocomplete="off">
+			<fieldset>
+				<label>Function Name: <input type='text' name='name'></label><br>
+				<label>Definition: <textarea required name='def'></textarea></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+	
 </div>

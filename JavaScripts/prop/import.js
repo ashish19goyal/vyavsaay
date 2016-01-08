@@ -6720,6 +6720,52 @@ function form261_import(data_array,import_type)
 };
 
 /**
+* @form Grid Metrics
+* @formNo 264
+*/
+function form264_import(data_array,import_type)
+{
+	var data_xml="<system_grid_metrics>";
+	var counter=1;
+	var last_updated=get_my_time();
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</system_grid_metrics><separator></separator><system_grid_metrics>";
+		}
+
+		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
+		data_xml+="<row>" +
+					"<id>"+row.id+"</id>" +
+					"<metric_id unique='yes'>"+row.metric_id+"</metric_id>" +
+					"<display_name>"+row.display_name+"</display_name>" +
+					"<grid>"+row.grid+"</grid>" +
+					"<function_name>"+row.function_name+"</function_name>" +
+					"<function_def>"+htmlentities(row.function_def)+"</function_def>" +
+					"<repeat_time>"+row.repeat_time+"</repeat_time>" +
+					"<status>"+row.status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</row>";		
+	});
+	
+	data_xml+="</system_grid_metrics>";
+	if(import_type=='create_new')
+	{
+		create_batch(data_xml);
+	}
+	else
+	{
+		update_batch(data_xml);
+	}
+};
+
+/**
 * @form Enter COD Collections
 * @formNo 271
 */

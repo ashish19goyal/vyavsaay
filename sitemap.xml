@@ -5,11 +5,15 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://vyavsaay.com/register.html</loc>
+    <loc>https://vyavsaay.com/prices.html</loc>
     <changefreq>weekly</changefreq> 
   </url>
   <url>
-    <loc>https://vyavsaay.com/prices.html</loc>
+    <loc>https://vyavsaay.com/blog.html</loc>
+    <changefreq>weekly</changefreq> 
+  </url>
+  <url>
+    <loc>https://vyavsaay.com/register.html</loc>
     <changefreq>weekly</changefreq> 
   </url>
 </urlset>

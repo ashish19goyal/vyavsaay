@@ -1375,6 +1375,16 @@ function form261_import_template()
 };
 
 /**
+* @form Grid Metrics
+* @formNo 264
+*/
+function form264_import_template()
+{
+	var data_array=['id','metric_id','display_name','grid','function_name','function_def','status','repeat_time'];
+	my_array_to_csv(data_array);
+};
+
+/**
 * @form Enter COD Collections
 * @formNo 271
 */

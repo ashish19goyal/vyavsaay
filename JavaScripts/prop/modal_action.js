@@ -13488,7 +13488,6 @@ function modal165_action(id,elem)
 	
 	var def_columns=new Object();
 			def_columns.count=1;
-			def_columns.start_index=0;
 			def_columns.data_store='system_grid_metrics';		
 			def_columns.return_column='function_def';
 			def_columns.indexes=[{index:'id',value:id}];
@@ -15224,4 +15223,54 @@ function modal177_action(func)
 	});
 	
 	$("#modal177").dialog("open");
+}
+
+/**
+ * @modalNo 178
+ * @modal Notification Function Definition
+ */
+function modal178_action(id,elem)
+{
+	var form=document.getElementById('modal178_form');
+	
+	var name_filter=form.elements['name'];
+	var def_filter=form.elements['def'];
+	
+	name_filter.value=$(elem).val();
+	def_filter.value="";
+	
+	var def_columns=new Object();
+			def_columns.count=1;
+			def_columns.data_store='system_notifications';		
+			def_columns.return_column='function_def';
+			def_columns.indexes=[{index:'id',value:id}];
+	set_my_value_json(def_columns,def_filter,function () 
+	{
+		$('textarea').autosize();
+	});
+
+	$(form).off('submit');
+	$(form).on('submit',function(event) 
+	{
+		event.preventDefault();
+		
+		var name=name_filter.value;
+		var def=def_filter.value;
+		var last_updated=get_my_time();
+		def=def.replace(/\n/g,'');
+		def=def.replace(/\t/g,'');
+		
+		var data_xml="<system_notifications>"+
+				"<id>"+id+"</id>" +
+				"<function_name>"+name+"</function_name>" +
+				"<function_def>"+htmlentities(def)+"</function_def>" +
+				"<last_updated>"+last_updated+"</last_updated>"+
+				"</system_notifications>";
+		
+		update_simple(data_xml);
+		$("#modal178").dialog("close");
+	});
+	
+	///////////////////////////
+	$("#modal178").dialog("open");	
 }
