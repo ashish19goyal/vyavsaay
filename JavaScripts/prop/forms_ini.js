@@ -31723,6 +31723,7 @@ function form298_ini()
 							{index:'name',value:fname},
 							{index:'detail'},
 							{index:'html_code'},
+							{index:'preview'},
 							{index:'markers'}];
 	
 	read_json_rows('form298',new_columns,function(results)
@@ -31737,8 +31738,9 @@ function form298_ini()
 					rowsHTML+="<td data-th='Description'>";
 						rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form298_"+result.id+"'>"+result.detail+"</textarea>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Code'>";
-						rowsHTML+="<textarea readonly='readonly' required class='dblclick_editable widebox' form='form298_"+result.id+"'>"+result.html_code+"</textarea>";
+					rowsHTML+="<td data-th='Design'>";
+						rowsHTML+="<input type='button' class='generic_icon' form='form298_"+result.id+"' value='Update Code' name='code'>";
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form298_"+result.id+"' value='Preview' name='preview'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Markers'>";
 						rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form298_"+result.id+"'>"+result.markers+"</textarea>";
@@ -31751,28 +31753,25 @@ function form298_ini()
 						rowsHTML+="<input type='hidden' form='form298_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form298_"+result.id+"' title='Save'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form298_"+result.id+"' title='Delete' onclick='form298_delete_item($(this));'>";
-						rowsHTML+="<input type='button' class='print_icon' form='form298_"+result.id+"' title='Print' name='print'>";
-						rowsHTML+="<br><input type='button' class='generic_icon' form='form298_"+result.id+"' value='Preview' name='preview'>";
 					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 
 			$('#form298_body').append(rowsHTML);
 			var fields=document.getElementById("form298_"+result.id);
 			
-			var code_filter=fields.elements[2];
-			var img_filter=fields.elements[4];
+			var img_filter=fields.elements[5];
 			var preview_button=fields.elements['preview'];
-			var print_button=fields.elements['print'];
-			
-			$(print_button).on('click',function () 
-			{
-				form298_print(code_filter.value,result.id);
-			});
+			var code_button=fields.elements['code'];
 			
 			$(preview_button).on('click',function () 
 			{
-				modal84_action(code_filter.value,result.id);
+				modal181_action(result.id,result.preview);
 			});		
+
+			$(code_button).on('click',function () 
+			{
+				modal180_action(result.id,result.html_code);
+			});
 			
 			$(img_filter).on('click',function () 
 			{

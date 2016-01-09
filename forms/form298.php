@@ -5,7 +5,7 @@
 				<form id='form298_header'></form>
 					<th>Name<img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form298_header'></th>
 					<th>Description</th>
-					<th style='width:30%;'>Code</th>
+					<th>Design</th>
 					<th>Markers</th>
 					<th>Images</th>
 					<th>

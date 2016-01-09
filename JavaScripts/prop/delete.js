@@ -9177,7 +9177,7 @@ function form298_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var data_id=form.elements[5].value;
+			var data_id=form.elements[6].value;
 			var data_xml="<newsletter_components>" +
 						"<id>"+data_id+"</id>" +
 						"</newsletter_components>";	

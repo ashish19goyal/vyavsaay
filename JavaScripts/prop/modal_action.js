@@ -15449,3 +15449,107 @@ function modal179_action(cname,id,attr,template_id)
 	
 	$("#modal179").dialog("open");
 }
+
+/**
+ * @modalNo 180
+ * @modal Add/Update Code
+ * @param button
+ */
+function modal180_action(data_id,code)
+{
+	var form=document.getElementById('modal180_form');
+	
+	var fid=form.elements[1];
+	var fcode=form.elements[2];
+	
+	fid.value=data_id;
+	fcode.value=code;
+	$('textarea').autosize();
+		
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form298') || is_update_access('form298'))
+		{
+			var code=fcode.value;
+			code=code.replace(/\n/g,'');
+			code=code.replace(/\t/g,'');
+			code=htmlentities(code);
+		
+			var last_updated=get_my_time();
+			
+			var pic_xml="<newsletter_components>" +
+						"<id>"+data_id+"</id>" +
+						"<html_code>"+code+"</html_code>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</newsletter_components>";
+			update_simple(update_xml);
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal180").dialog("close");
+	});
+	
+	$("#modal180").dialog("open");
+}
+
+/**
+ * @modalNo 181
+ * @modal Add/Update Preview
+ * @param button
+ */
+function modal181_action(data_id,preview)
+{
+	var form=document.getElementById('modal181_form');
+	
+	var fid=form.elements[1];
+	var fpictureinfo=form.elements[2];
+	var fpicture=form.elements[3];
+	var dummy_button=form.elements[4];
+	
+	preview=revert_htmlentities(preview);
+	fid.value=data_id;
+	fpictureinfo.innerHTML="<div><img src='"+preview+"'/></div>";
+	
+	$(dummy_button).on('click',function (e) 
+	{
+		e.preventDefault();
+		$(fpicture).trigger('click');
+	});
+		
+	fpicture.addEventListener('change',function(evt)
+	{
+		select_picture(evt,fpictureinfo,function(dataURL)
+		{
+			fpictureinfo.innerHTML="<div><img src='"+dataURL+"'/></div>";			
+		});
+	},false);
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form298') || is_update_access('form298'))
+		{
+			var url=$(fpictureinfo).find('div').find('img').attr('src');
+			var last_updated=get_my_time();
+			
+			var pic_xml="<newsletter_components>" +
+						"<id>"+data_id+"</id>" +
+						"<preview>"+url+"</preview>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</newsletter_components>";
+			update_simple(pic_xml);
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal181").dialog("close");
+	});
+	
+	$("#modal181").dialog("open");
+}

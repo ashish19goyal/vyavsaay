@@ -1827,4 +1827,26 @@
 		</form>
 	</div>
 
+	<div id="modal180" title="Update Code">
+		<form id='modal180_form' autocomplete="off">
+			<fieldset>
+				<input type="hidden" name='nc_id'>
+				<label>Code: <textarea></textarea></label>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal181" title="Preview">
+		<form id='modal181_form' autocomplete="off">
+			<fieldset>
+				<input type="hidden" name='nc_id'>
+				<label>Preview: <output></output>
+								<input type='file' style='display:none'>
+								<input type='button' class='generic_red_icon' value='Select Image'></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

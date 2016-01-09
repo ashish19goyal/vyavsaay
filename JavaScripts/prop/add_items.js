@@ -18277,8 +18277,9 @@ function form298_add_item()
 				rowsHTML+="<td data-th='Description'>";
 					rowsHTML+="<textarea class='dblclick_editable' form='form298_"+id+"'></textarea>";
 				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Code'>";
-					rowsHTML+="<textarea class='dblclick_editable' form='form298_"+id+"' required></textarea>";
+				rowsHTML+="<td data-th='Design'>";
+					rowsHTML+="<input type='button' class='generic_icon' form='form298_"+id+"' value='Update Code' name='code'>";
+					rowsHTML+="<br><input type='button' class='generic_icon' form='form298_"+id+"' value='Preview' name='preview'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Markers'>";
 					rowsHTML+="<textarea class='dblclick_editable' form='form298_"+id+"'></textarea>";
@@ -18298,7 +18299,19 @@ function form298_add_item()
 
 		var fields=document.getElementById("form298_"+id);
 		var name_filter=fields.elements[0];
-		var img_filter=fields.elements[4];
+		var img_filter=fields.elements[5];
+		var preview_button=fields.elements['preview'];
+		var code_button=fields.elements['code'];
+		
+		$(preview_button).on('click',function () 
+		{
+			modal181_action(id,"");
+		});		
+	
+		$(code_button).on('click',function () 
+		{
+			modal180_action(id,"");
+		});
 		
 		$(name_filter).focus();
 		

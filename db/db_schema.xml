@@ -864,6 +864,7 @@
 			<name index='yes' type="TEXT"></name>
 			<detail index='no' type="TEXT"></detail>
 			<html_code index='no' type="TEXT"></html_code>
+			<preview index='no' type="BLOB"></preview>
 			<markers index='no' type="TEXT"></markers>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
