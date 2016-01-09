@@ -52,7 +52,6 @@
 	use RetailingEssentials\send_sms;
 	use RetailingEssentials\s3_object;
 	
-	//username required to identify the database
 	$domain=$_POST['domain'];
 	$del_access=$_POST['del'];
 	$username=$_POST['username'];
@@ -63,7 +62,6 @@
 	
 	$post_data=$_POST['data'];
 	$post_data=preg_replace('/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u',' ',$post_data);
-	//echo $post_data;
 	
 	$ids_for_update=[];
 			
@@ -76,7 +74,7 @@
 			$json_input=json_decode($post_data,true);
 			
 			$sync_time=1000*time();
-			$q_string="insert into activities (id,tablename,type,data_id,data_xml,last_updated,status,link_to,user_display,title,notes,updated_by,last_sync_time) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$q_string="insert into activities (id,tablename,type,data_id,data_type,data_xml,last_updated,status,link_to,user_display,title,notes,updated_by,last_sync_time) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			$stmt=$conn->conn->prepare($q_string);
 				
 			foreach($json_input as $row)
@@ -87,6 +85,7 @@
 					$table_name='';
 					$type='';
 					$data_id='';
+					$data_type='';
 					$data_xml='';
 					$last_updated='';
 					$link_to='';
@@ -135,14 +134,17 @@
 					{
 						$notes=$row['updated_by'];
 					}
+					if(isset($row['data_type']))
+					{
+						$data_type=$row['data_type'];
+					}
 					if(isset($row['data_xml']))
 					{
 						$data_xml=$row['data_xml'];
 					}
 					
 					try{
-						if($user_display=='yes')
-							$stmt->execute(array($id,$table_name,$type,$data_id,$data_xml,$last_updated,'synced',$link_to,$user_display,$title,$notes,$updated_by,$sync_time));
+						$stmt->execute(array($id,$table_name,$type,$data_id,$data_type,$data_xml,$last_updated,'synced',$link_to,$user_display,$title,$notes,$updated_by,$sync_time));
 					}
 					catch(PDOException $e)
 					{
@@ -159,14 +161,11 @@
 						$result1=$stmt1->fetch(PDO::FETCH_ASSOC);
 						$server_last_update=$result1['last_updated'];
 						
-						$xmlresponse_xml=new DOMDocument();
-						$xmlresponse_xml->loadXML($data_xml);
-						$data=$xmlresponse_xml->documentElement;
-									
-						if($data->hasChildNodes()) 
+						if($server_last_update<$last_updated || !($server_last_update))
 						{
-							if($server_last_update<$last_updated || !($server_last_update))
+							if($data_type=='json')
 							{
+								$data=json_decode($data_xml,true);
 								$q_string2="";
 								
 								switch($type)
@@ -174,28 +173,20 @@
 									case 'create': 
 										$data_array=array();
 										$q_string2="insert into $table_name (";
-										foreach($data->childNodes as $column)
+										foreach($data as $column)
 										{
-											if($column->nodeName!='#text')
-												$q_string2.=$column->nodeName.",";
+											$q_string2.=$column['index'].",";
 										}
-										//$q_string2=rtrim($q_string2,",");
 										$q_string2.="last_sync_time) values(";
 																			
-										foreach($data->childNodes as $column)
+										foreach($data as $column)
 										{
-											if($column->nodeName!='#text')
-											{
-												$q_string2.="?,";
-												$data_array[]=$column->nodeValue;
-												//echo $column->nodeValue;
-											}
+											$q_string2.="?,";
+											$data_array[]=$column['value'];
 										}
-										//$q_string2=rtrim($q_string2,",");
 										$q_string2.="?);";
 										$data_array[]=$sync_time;
 										
-										//echo $q_string2;								
 										$stmt2=$conn->conn->prepare($q_string2);
 										
 										try{
@@ -209,15 +200,11 @@
 									case 'update': 
 										$q_string2="update $table_name set ";
 										$data_array=array();
-										foreach($data->childNodes as $column)
+										foreach($data as $column)
 										{
-											if($column->nodeName!='#text')
-											{
-												$q_string2.=$column->nodeName."=?,";
-												$data_array[]=$column->nodeValue;
-											}
+											$q_string2.=$column['index']."=?,";
+											$data_array[]=$column['value'];
 										}
-										//$q_string2=rtrim($q_string2,",");
 										$q_string2.="last_sync_time=? where id=?";
 										$data_array[]=$sync_time;
 										
@@ -234,10 +221,89 @@
 										$stmt2=$conn->conn->prepare($q_string2);
 										$stmt2->execute(array($data_id));
 										break;
-								}	
+								}							
 							}
-							$ids_for_update[]=$id;
+							else 
+							{							
+								$xmlresponse_xml=new DOMDocument();
+								$xmlresponse_xml->loadXML($data_xml);
+								$data=$xmlresponse_xml->documentElement;
+											
+								if($data->hasChildNodes()) 
+								{
+								
+									$q_string2="";
+									
+									switch($type)
+									{
+										case 'create': 
+											$data_array=array();
+											$q_string2="insert into $table_name (";
+											foreach($data->childNodes as $column)
+											{
+												if($column->nodeName!='#text')
+													$q_string2.=$column->nodeName.",";
+											}
+											//$q_string2=rtrim($q_string2,",");
+											$q_string2.="last_sync_time) values(";
+																				
+											foreach($data->childNodes as $column)
+											{
+												if($column->nodeName!='#text')
+												{
+													$q_string2.="?,";
+													$data_array[]=$column->nodeValue;
+													//echo $column->nodeValue;
+												}
+											}
+											//$q_string2=rtrim($q_string2,",");
+											$q_string2.="?);";
+											$data_array[]=$sync_time;
+											
+											//echo $q_string2;								
+											$stmt2=$conn->conn->prepare($q_string2);
+											
+											try{
+												$stmt2->execute($data_array);
+											}
+											catch(PDOException $e)
+											{
+												
+											}
+											break;
+										case 'update': 
+											$q_string2="update $table_name set ";
+											$data_array=array();
+											foreach($data->childNodes as $column)
+											{
+												if($column->nodeName!='#text')
+												{
+													$q_string2.=$column->nodeName."=?,";
+													$data_array[]=$column->nodeValue;
+												}
+											}
+											//$q_string2=rtrim($q_string2,",");
+											$q_string2.="last_sync_time=? where id=?";
+											$data_array[]=$sync_time;
+											
+											$data_array[]=$data_id;
+											$stmt2=$conn->conn->prepare($q_string2);
+											try{
+												$stmt2->execute($data_array);
+											}
+											catch(PDOException $e)
+											{
+											}
+											break;
+										case 'delete': $q_string2="delete from $table_name where id=?";
+											$stmt2=$conn->conn->prepare($q_string2);
+											$stmt2->execute(array($data_id));
+											break;
+									}	
+								}
+							}
 						}
+						$ids_for_update[]=$id;
 					}
 				}
 				catch(Exception $x)

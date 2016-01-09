@@ -206,7 +206,7 @@ function count_notif()
 				{
 					if(accessible_data[x].record_id==notifs[i].id || accessible_data[x].record_id=='all')
 					{
-						if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || notifs[i][accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
+						if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || accessible_data[x].criteria_field=="null" || notifs[i][accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
 						{
 							if(accessible_data[x].access_type=='all' || accessible_data[x].access_type=='read')
 							{
@@ -224,8 +224,10 @@ function count_notif()
 					notifs.splice(i,1);
 					i--;
 				}
+				
 			}
-
+			
+			console.log(notifs);
 			var num_res=notifs.length;
 			
 			if(num_res===0)

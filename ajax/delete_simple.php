@@ -60,8 +60,8 @@
 				foreach($data_ids as $id)
 				{
 					$new_id=(1000*time()+rand(0,999))."".rand(0,999);
-					$act_data=array($new_id,'no',$table,$id['id'],$data_xml,'online',1000*time(),'delete');
-					$query3="insert into activities (id,user_display,tablename,data_id,data_xml,status,last_updated,type) values(?,?,?,?,?,?,?,?)";
+					$act_data=array($new_id,'no',$table,$id['id'],$data_xml,'online',1000*time(),'delete',$_SESSION['name']);
+					$query3="insert into activities (id,user_display,tablename,data_id,data_xml,status,last_updated,type,updated_by) values(?,?,?,?,?,?,?,?,?)";
 					$stmt3=$conn->conn->prepare($query3);
 					
 					$stmt3->execute($act_data);	

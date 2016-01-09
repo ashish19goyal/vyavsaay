@@ -97,13 +97,7 @@
 						$response_row=[];
 						foreach($stmt_res[$i] as $key => $value)
 						{
-							/*if(json_decode($value,true))
-							{
-								$response_row[$key]=json_decode($value,true);
-							}
-							else {
-							*/	$response_row[$key]=$value;
-							//}
+							$response_row[$key]=$value;
 						}
 						$response_row['id']="".$response_row['id'];
 						$response_row['last_updated']="".$response_row['last_updated'];

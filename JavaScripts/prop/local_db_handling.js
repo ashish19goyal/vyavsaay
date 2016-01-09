@@ -2162,7 +2162,7 @@ function local_delete_row(data_xml,activity_xml)
 			   clearInterval(local_delete_complete);
      		   hide_loader();
 		   }
-        },2000);
+        },500);
 	}
 };
 

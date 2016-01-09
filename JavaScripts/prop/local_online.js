@@ -412,6 +412,18 @@ function read_json_rows_master(element_id,columns,callback)
 	}
 }
 
+function delete_json(data_json,func)
+{
+	if(is_online())
+	{
+		server_delete_json(data_json,func);
+	}
+	else
+	{
+		local_delete_json(data_json,func);
+	}
+}
+
 
 function send_email(to,from,from_name,subject,message,func)
 {

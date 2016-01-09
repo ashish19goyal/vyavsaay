@@ -5957,7 +5957,7 @@ function notifications_ini()
 				{
 					if(accessible_data[x].record_id==notif.id || accessible_data[x].record_id=='all')
 					{
-						if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || notif[accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
+						if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || accessible_data[x].criteria_field=="null" || notif[accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
 						{
 							if(accessible_data[x].access_type=='all')
 							{

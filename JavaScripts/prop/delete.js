@@ -1514,18 +1514,9 @@ function form58_delete_item(button)
 			var form=document.getElementById(form_id);
 			
 			var service=form.elements[0].value;
-			var type=form.elements[1].value;
-			var requisite=form.elements[2].value;
-			var quantity=form.elements[3].value;
 			var data_id=form.elements[4].value;
-			var last_updated=get_my_time();
 			var data_xml="<pre_requisites>" +
 						"<id>"+data_id+"</id>" +
-						"<name>"+service+"</name>" +
-						"<type>service</type>" +
-						"<requisite_type>"+type+"</requisite_type>" +
-						"<requisite_name>"+requisite+"</requisite_name>" +
-						"<quantity>"+quantity+"</quantity>" +
 						"</pre_requisites>";	
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
@@ -1535,14 +1526,29 @@ function form58_delete_item(button)
 						"<notes>Pre-requisite for service "+service+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-			}	
+			delete_row(data_xml,activity_xml);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+function form58_delete_item(button)
+{
+	if(is_delete_access('form58'))
+	{
+		modal115_action(function()
+		{
+			console.log('delete_json');
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var data_json={data_store:'pre_requisites',
+ 							data:[{index:'id',value:form.elements[4].value}]
+			 				};
+			delete_json(data_json);
 			$(button).parent().parent().remove();
 		});
 	}

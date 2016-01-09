@@ -248,3 +248,25 @@ function server_send_email_attachment(data,func)
 		func();
 	});
 }
+
+/**
+ * this function delete a row of data from the server database
+ */
+function server_delete_json(data_json,func)
+{
+	show_loader();
+	var domain=get_domain();
+	var username=get_username();
+	var del_access=get_session_var('del');
+	var string_columns=JSON.stringify(data_json);
+	
+	ajax_json("./ajax_json/delete.php",{domain:domain,username:username,del:del_access,data:string_columns},function(response_object)
+	{
+		console.log(response_object.status);
+		hide_loader();
+		if(typeof func!="undefined")
+		{
+			func();
+		}
+	});
+}

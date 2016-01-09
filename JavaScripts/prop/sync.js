@@ -13,9 +13,9 @@ function switch_to_online()
 		var del_access=get_session_var('del');
 		var re_access=get_session_var('re');
 		
-		ajax_with_custom_func("./ajax/connection_testing.php",{domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,re:re_access},function(e)
+		ajax_json("./ajax_json/connection_testing.php",{domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,re:re_access},function(response_object)
 		{
-			if(e.responseText==='connected')
+			if(response_object.status==='connected')
 			{
 				show_progress();
 				show_loader();
@@ -32,6 +32,10 @@ function switch_to_online()
 						});
 					});
 				});
+			}
+			else 
+			{
+				$('#modal74').dialog("open");
 			}
 		});
 	}
@@ -346,7 +350,6 @@ function sync_local_to_server(func)
 					run_daemons='yes';
 				}
 				var log_data_chunk=JSON.stringify(log_data_sub_array);				
-				//console.log(log_data_chunk);
 				ajax_json("./ajax_json/sync_upload.php",{run_daemons:run_daemons,domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,data:log_data_chunk,last_sync:last_sync_time},function(response_object)
 				{
 					console.log(response_object);
