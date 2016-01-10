@@ -227,7 +227,7 @@ function count_notif()
 				
 			}
 			
-			console.log(notifs);
+			//console.log(notifs);
 			var num_res=notifs.length;
 			
 			if(num_res===0)

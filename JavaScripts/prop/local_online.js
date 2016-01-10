@@ -424,6 +424,30 @@ function delete_json(data_json,func)
 	}
 }
 
+function create_json(data_json,func)
+{
+	if(is_online())
+	{
+		server_create_json(data_json,func);
+	}
+	else
+	{
+		local_create_json(data_json,func);
+	}
+}
+
+function create_batch_json(data_json,func)
+{
+	if(is_online())
+	{
+		server_create_batch_json(data_json,func);
+	}
+	else
+	{
+		local_create_batch_json(data_json,func);
+	}
+}
+
 
 function send_email(to,from,from_name,subject,message,func)
 {

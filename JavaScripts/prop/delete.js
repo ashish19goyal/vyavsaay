@@ -1512,42 +1512,10 @@ function form58_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
-			var service=form.elements[0].value;
-			var data_id=form.elements[4].value;
-			var data_xml="<pre_requisites>" +
-						"<id>"+data_id+"</id>" +
-						"</pre_requisites>";	
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>pre_requisites</tablename>" +
-						"<link_to>form58</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Pre-requisite for service "+service+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			delete_row(data_xml,activity_xml);
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
-function form58_delete_item(button)
-{
-	if(is_delete_access('form58'))
-	{
-		modal115_action(function()
-		{
-			console.log('delete_json');
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
 			var data_json={data_store:'pre_requisites',
- 							data:[{index:'id',value:form.elements[4].value}]
-			 				};
+ 							data:[{index:'id',value:form.elements[4].value}],
+ 							log:'yes',
+ 							log_data:{title:"Deleted",notes:"Pre-requisite for service "+form.elements[0].value,link_to:"form58"}};
 			delete_json(data_json);
 			$(button).parent().parent().remove();
 		});
@@ -8992,13 +8960,13 @@ function form292_delete_item(button)
 			var new_columns=new Object();
 			new_columns.data_store='system_billing';
 			new_columns.database='re_user_'+domain;			
-			new_columns.indexes=[{index:'id',value:form.elements[12].value}];
+			new_columns.data=[{index:'id',value:form.elements[12].value}];
 			server_delete_master(new_columns);
 
 			var two_columns=new Object();
 			two_columns.data_store='bills';
 			two_columns.database='re_user_vyavsaay';			
-			two_columns.indexes=[{index:'id',value:form.elements[12].value},
+			two_columns.data=[{index:'id',value:form.elements[12].value},
 								{index:'status',value:'cancelled'},
 								{index:'last_updated',value:get_my_time()}];
 			server_update_master(two_columns);			
@@ -9027,7 +8995,7 @@ function form293_delete_item(button)
 			new_columns.data_store='user_profile';
 			new_columns.database='0';
 			
-			new_columns.indexes=[{index:'id',value:form.elements[6].value}];
+			new_columns.data=[{index:'id',value:form.elements[6].value}];
 					
 			server_delete_master(new_columns);
 			

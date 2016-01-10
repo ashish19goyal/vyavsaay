@@ -1077,16 +1077,96 @@ function local_delete_json(columns,func)
 				if(data)
 				{
 					var match_word=true;
+					
 					for(var i=1;i<filter.length;i++)
 					{
-						var string=data[filter[i].name].toString().toLowerCase();
-						var search_word=filter[i].value.toString().toLowerCase();
-						if(string!=search_word)
+						if(typeof record[filter[i].name]!="undefined")
 						{
-							match_word=false;
-							break;
+							var string=record[filter[i].name].toString().toLowerCase();
+							if(filter[i].type!='array')
+							{					
+								var search_word=filter[i].value.toString().toLowerCase();
+								
+								if(filter[i].type=='')
+								{
+									if(string.indexOf(search_word)===-1)
+									{
+										match_word=false;
+										break;
+									}
+								}
+								
+								if(filter[i].type=='exact')
+								{
+									if(search_word!==string)
+									{
+										match_word=false;
+										break;
+									}
+								}
+								if(filter[i].type=='unequal')
+								{
+									if(search_word==string)
+									{
+										match_word=false;
+										break;
+									}
+								}
+								if(filter[i].type=='upperbound') 
+								{
+									if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
+									{
+										match_word=false;
+										break;
+									}
+								}
+								else if(filter[i].type=='lowerbound') 
+								{
+									if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
+									{
+										match_word=false;
+										break;
+									}
+								}
+							}
+							else if(filter[i].type=='array')
+							{
+								if(filter[i].value.indexOf(string)==-1)
+								{
+									match_word=false;
+									break;
+								}
+							}
+							
+							if(filter[i].type=='approx_array')
+							{
+								var approx_array=filter[i].value;
+								var sub_match=false;
+								for(var ab in approx_array)
+								{
+									if(string.indexOf(approx_array[ab])>-1)
+									{
+										sub_match=true;
+										break;
+									}
+								}
+								if(!sub_match)
+								{
+									match_word=false;
+									break;
+								}
+							}						
+						}
+						else
+						{
+							if(filter[i].type!='unequal')
+							{
+								match_word=false;
+								break;
+							}
 						}
 					}
+					
 					if(match_word===true)
 					{
 						localdb_open_requests+=1;
@@ -1105,9 +1185,9 @@ function local_delete_json(columns,func)
 									last_updated:""+get_my_time()};
 							if(log=='yes')
 							{
-								act_row['title']=log;
-								act_row['notes']=log;
-								act_row['link_to']=log;
+								act_row['title']=activity_data['title'];
+								act_row['notes']=activity_data['notes'];
+								act_row['link_to']=activity_data['link_to'];
 							}
 							
 							static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
@@ -1271,9 +1351,9 @@ function local_delete_json(columns,func)
 									last_updated:""+get_my_time()};
 							if(log=='yes')
 							{
-								act_row['title']=log;
-								act_row['notes']=log;
-								act_row['link_to']=log;
+								act_row['title']=activity_data['title'];
+								act_row['notes']=activity_data['notes'];
+								act_row['link_to']=activity_data['link_to'];
 							}
 							
 							os2.put(act_row).onsuccess=function(e)
@@ -1307,3 +1387,333 @@ function local_delete_json(columns,func)
 		},500);
 	}
 };
+
+function local_create_json(data_json,func)
+{
+	if(typeof static_local_db=='undefined')
+	{
+		open_local_db(function()
+		{
+			local_create_json(data_json,func);
+		});
+	}
+	else
+	{
+		localdb_open_requests+=1;
+		show_loader();
+		
+		var table=data_json.data_store;
+		var cols=data_json.data;
+		var log='no';
+		var activity_data=[];
+		if(typeof data_json.log!='undefined')
+		{
+			log=data_json.log;
+		}
+		if(typeof data_json.log_data!='undefined')
+		{
+			activity_data=data_json.log_data;
+		}
+				
+		var unique=new Array();
+		var indexed_col=new Array();
+		
+		for(var j=0;j<cols.length;j++)
+		{
+			if(typeof cols[j]['unique']!='undefined' && cols[j]['unique']=='yes')
+			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+				fil.value=cols[j].value;
+				unique.push(fil);
+			}
+			else if(typeof cols[j]['uniqueWith']!='undefined')
+			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+				fil.value=cols[j].value;
+				fil.uniqueWith=cols[j]['uniqueWith'];				
+				unique.push(fil);
+			}
+			indexed_col[cols[j].index]=cols[j].value;
+		}
+
+		var data_id=indexed_col['id'];
+				
+		var objectStore=static_local_db.transaction([table],"readwrite").objectStore(table);
+		
+		function local_create_json_put()
+		{
+			var data_row=new Object();
+			for(var j=0;j<cols.length;j++)
+			{
+				data_row[cols[j].index]=""+cols[j].value;
+			}
+			var put_req=objectStore.put(data_row);
+			put_req.onsuccess=function(e)
+			{
+				var id=get_new_key();
+				var act_row={id:""+id,
+						type:'create',
+						status:'unsynced',
+						data_type:'json',
+						data_xml:JSON.stringify(cols),
+						user_display:log,
+						tablename:table,
+						data_id:data_id,
+						updated_by:get_name(),
+						last_updated:""+get_my_time()};
+				if(log=='yes')
+				{
+					act_row['title']=activity_data['title'];
+					act_row['notes']=activity_data['notes'];
+					act_row['link_to']=activity_data['link_to'];		
+				}
+				
+				static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
+				{
+					localdb_open_requests-=1;
+					hide_loader();
+					if(typeof func!="undefined")
+					{					
+						func();
+					}					
+				};
+			};
+		};
+		
+		function local_create_json_unique(index)
+		{
+			if(index<unique.length)
+			{
+				var unique_element=unique[index];
+				var key=IDBKeyRange.bound([unique_element.value,'0'],[unique_element.value,'99999999']);
+				objectStore.index(unique_element.name).openCursor(key).onsuccess=function(e)
+				{
+					var result=e.target.result;
+					if(result)
+					{
+						var match_word=true;
+						if(typeof unique_element.uniqueWith!='undefined')
+						{
+							var record=result.value;
+							for(var i in unique_element.uniqueWith)
+							{
+								if(record[unique_element.uniqueWith[i]]!=indexed_col[unique_element.uniqueWith[i]])
+								{
+									match_word=false;
+									break;
+								}
+							}
+						}
+						if(match_word) 
+						{
+							localdb_open_requests-=1;
+							hide_loader();
+							if(typeof data_json['warning']!='undefined' && data_json['warning']=='no')
+							{}
+							else 
+							{
+								$("#modal5").dialog("open");
+							}
+						}
+						else 
+						{
+							result.continue();
+						}
+					}
+					else
+					{
+						local_create_json_unique(index+1);
+					}
+				};
+			}
+			else 
+			{
+				local_create_json_put();
+			}
+		};
+		local_create_json_unique(0);		
+	}
+}
+
+function local_create_batch_json(data_json,func)
+{
+	if(typeof static_local_db=='undefined')
+	{
+		open_local_db(function()
+		{
+			local_create_batch_json(data_json,func);
+		});
+	}
+	else
+	{
+		if(typeof data_json.loader!='undefined' && data_json.loader=='no')
+		{}else{show_loader();}
+	
+		var table=data_json.data_store;
+		var rows=data_json.data;
+		var log='no';
+		var activity_data=[];
+		var result_count=0;
+		
+		if(typeof data_json.log!='undefined')
+		{
+			log=data_json.log;
+		}
+		if(typeof data_json.log_data!='undefined')
+		{
+			activity_data=data_json.log_data;
+		}
+				
+		var unique=new Array();
+		
+		var cols=rows[0];
+		for(var j=0;j<cols.length;j++)
+		{
+			if(typeof cols[j]['unique']!='undefined' && cols[j]['unique']=='yes')
+			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+				unique.push(fil);
+			}
+			else if(typeof cols[j]['uniqueWith']!='undefined')
+			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+				fil.uniqueWith=cols[j]['uniqueWith'];				
+				unique.push(fil);
+			}
+		}
+		
+		var transaction=static_local_db.transaction([table,'activities'],"readwrite");
+		var os1=transaction.objectStore(table);
+		var os2=transaction.objectStore('activities');
+		var activity_id=get_new_key();
+		
+		var i=0;
+		var success_count=0;
+		
+		function create_records()
+		{
+			if(i<rows.length)
+			{
+				var cols=rows[i];
+				localdb_open_requests+=1;				
+				local_create_json_unique(cols,0);
+			}
+		};
+
+		function local_create_json_put(data_row,cols)
+		{
+			os1.put(data_row).onsuccess=function(e)
+			{
+				success_count+=1;
+				
+				var id=get_new_key();
+				var act_row={id:""+(activity_id+i),
+						type:'create',
+						status:'unsynced',
+						data_type:'json',
+						data_xml:JSON.stringify(cols),
+						user_display:'no',
+						tablename:table,
+						data_id:data_row['id'],
+						updated_by:get_name(),
+						last_updated:""+get_my_time()};
+				
+				os2.put(act_row).onsuccess=function(e)
+				{
+					i+=1;
+					localdb_open_requests-=1;
+					create_records();					
+				};
+			};
+		};
+		
+		function local_create_json_unique(cols,index)
+		{
+			var data_row=new Object();
+			for(var j=0;j<cols.length;j++)
+			{
+				data_row[cols[j].index]=""+cols[j].value;
+			}				
+
+			if(index<unique.length)
+			{				
+				var kv=IDBKeyRange.bound([data_row[unique[index].name],'0'],[data_row[unique[index].name],'99999999']);
+				os1.index(unique[index].name).openCursor(kv).onsuccess=function(e)
+				{
+					var result=e.target.result;
+					if(result)
+					{
+						var match_word=true;
+						if(typeof unique[index].uniqueWith!='undefined')
+						{
+							var record=result.value;
+							for(var x in unique[index].uniqueWith)
+							{
+								if(record[unique[index].uniqueWith[x]]!=data_row[unique[index].uniqueWith[x]])
+								{
+									match_word=false;
+									break;
+								}
+							}
+						}
+						if(match_word) 
+						{
+							i+=1;
+							localdb_open_requests-=1;
+							create_records();
+						}
+						else 
+						{
+							result.continue();
+						}
+					}
+					else
+					{
+						local_create_json_unique(cols,index+1);
+					}
+				};
+			}
+			else 
+			{
+				local_create_json_put(data_row,cols);
+			}
+		};		
+		
+		create_records();
+		var local_create_complete=setInterval(function()
+		{
+			if(localdb_open_requests===0)
+			{
+				var act_row={id:""+(activity_id+i+5),
+						type:'create',
+						status:'unsynced',
+						title:'Data import',
+						notes:'Added '+success_count+' records for '+activity_data['title'],
+						data_xml:JSON.stringify(rows),
+						data_type:'json',
+						user_display:log,
+						data_id:"",
+						tablename:"",
+						link_to:activity_data['link_to'],
+						updated_by:""+get_name(),
+						last_updated:""+get_my_time()};
+				var transaction=static_local_db.transaction([table,'activities'],"readwrite");		
+				var os3=transaction.objectStore('activities');		
+				os3.put(act_row).onsuccess=function(e){};
+				clearInterval(local_create_complete);
+
+				if(typeof data_json.loader!='undefined' && data_json.loader=='no')
+				{}else{hide_loader();}
+				
+				if(typeof func!='undefined')
+				{
+					func();
+				}
+			}
+		},2000);
+	}
+}

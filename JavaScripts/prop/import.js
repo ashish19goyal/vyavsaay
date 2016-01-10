@@ -1500,6 +1500,45 @@ function form58_import(data_array,import_type)
 	}
 };
 
+function form58_import(data_array,import_type)
+{
+	var data_json={data_store:'pre_requisites',
+ 					loader:'no',
+ 					log:'yes',
+ 					data:[],
+ 					log_data:{title:'pre requisites for services',link_to:'form58'}};
+
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+		
+		var data_json_array=[{index:'id',value:row.id},
+						{index:'name',value:row.name,uniqueWith:['type']},
+						{index:'type',value:row.type},
+						{index:'requisite_type',value:row.requisite_type},
+						{index:'requisite_name',value:row.requisite_name},
+						{index:'quantity',value:row.quantity},
+						{index:'last_updated',value:last_updated}];
+		data_json.data.push(data_json_array);
+	});
+	
+	if(import_type=='create_new')
+	{
+		create_batch_json(data_json);
+	}
+	else
+	{
+		update_batch_json(data_json);
+	}
+};
+
 /**
 * @form product pre-requisites
 * @formNo 59

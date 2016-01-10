@@ -2153,33 +2153,21 @@ function form58_create_item(form)
 		var type=form.elements[1].value;
 		var requisite=form.elements[2].value;
 		var quantity=form.elements[3].value;
-		var data_id=form.elements[4].value;
+		var data_id=form.elements[4].value;		
 		var last_updated=get_my_time();
-		var data_xml="<pre_requisites>" +
-					"<id>"+data_id+"</id>" +
-					"<name>"+service+"</name>" +
-					"<type>service</type>" +
-					"<requisite_type>"+type+"</requisite_type>" +
-					"<requisite_name>"+requisite+"</requisite_name>" +
-					"<quantity>"+quantity+"</quantity>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</pre_requisites>";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>pre_requisites</tablename>" +
-					"<link_to>form58</link_to>" +
-					"<title>Added</title>" +
-					"<notes>Pre-requisite for service "+service+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_create_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-		}	
+		
+		var data_json={data_store:'pre_requisites',
+	 				log:'yes',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'name',value:service},
+	 					{index:'type',value:'service'},
+	 					{index:'requisite_type',value:type},
+	 					{index:'requisite_name',value:requisite},
+	 					{index:'quantity',value:quantity},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Added',notes:'Pre-requisite for service '+service,link_to:'form58'}};
+ 						
+		create_json(data_json);
 		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -2203,7 +2191,6 @@ function form58_create_item(form)
 		$("#modal2").dialog("open");
 	}
 }
-
 /**
  * formNo 59
  * form Manage product pre-requisites
@@ -19572,7 +19559,7 @@ function form292_create_item(form)
 		new_columns.data_store='system_billing';
 		new_columns.database='re_user_'+domain;
 		
-		new_columns.indexes=[{index:'id',value:form.elements[12].value},
+		new_columns.data=[{index:'id',value:form.elements[12].value},
 							{index:'account_name',value:form.elements[0].value},
 							{index:'period_start',value:get_raw_time(form.elements[2].value)},
 							{index:'period_end',value:get_raw_time(form.elements[3].value)},
@@ -19591,7 +19578,7 @@ function form292_create_item(form)
 		two_columns.data_store='bills';
 		two_columns.database='re_user_vyavsaay';
 		
-		two_columns.indexes=[{index:'id',value:form.elements[12].value},
+		two_columns.data=[{index:'id',value:form.elements[12].value},
 							{index:'customer_name',value:form.elements[0].value},
 							{index:'domain',value:form.elements[1].value},
 							{index:'period_start',value:get_raw_time(form.elements[2].value)},
@@ -19665,7 +19652,7 @@ function form293_create_item(form)
 		new_columns.data_store='user_profile';
 		new_columns.database='0';
 		
-		new_columns.indexes=[{index:'id',value:form.elements[6].value},
+		new_columns.data=[{index:'id',value:form.elements[6].value},
 							{index:'username',value:form.elements[0].value,unique:'yes'},
 							{index:'phone',value:form.elements[2].value},
 							{index:'name',value:form.elements[1].value},

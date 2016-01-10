@@ -14958,7 +14958,7 @@ function form292_update_item(form)
 		new_columns.data_store='system_billing';
 		new_columns.database='re_user_'+domain;
 		
-		new_columns.indexes=[{index:'id',value:form.elements[12].value},
+		new_columns.data=[{index:'id',value:form.elements[12].value},
 							{index:'account_name',value:form.elements[0].value},
 							{index:'period_start',value:get_raw_time(form.elements[2].value)},
 							{index:'period_end',value:get_raw_time(form.elements[3].value)},
@@ -14976,7 +14976,7 @@ function form292_update_item(form)
 		two_columns.data_store='bills';
 		two_columns.database='re_user_vyavsaay';
 		
-		two_columns.indexes=[{index:'id',value:form.elements[12].value},
+		two_columns.data=[{index:'id',value:form.elements[12].value},
 							{index:'customer_name',value:form.elements[0].value},
 							{index:'domain',value:form.elements[1].value},
 							{index:'period_start',value:get_raw_time(form.elements[2].value)},
@@ -15018,7 +15018,7 @@ function form293_update_item(form)
 		new_columns.data_store='user_profile';
 		new_columns.database='0';
 		
-		new_columns.indexes=[{index:'id',value:form.elements[6].value},
+		new_columns.data=[{index:'id',value:form.elements[6].value},
 							{index:'phone',value:form.elements[2].value},
 							{index:'name',value:form.elements[1].value},
 							{index:'status',value:form.elements[5].value},

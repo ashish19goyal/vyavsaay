@@ -3,7 +3,7 @@
  * 			{
  				database:'',
  				data_store:'',
- 				indexes:
+ 				data:
  				[
  					{
  						index:'column1',
@@ -49,7 +49,7 @@
 
 	$database=$input_object['database'];
 	$table=$input_object['data_store'];
-	$columns_array=(array)$input_object['indexes'];
+	$columns_array=(array)$input_object['data'];
 
 	$response_object=[];
 	

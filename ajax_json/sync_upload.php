@@ -132,7 +132,7 @@
 					}
 					if(isset($row['updated_by']))
 					{
-						$notes=$row['updated_by'];
+						$updated_by=$row['updated_by'];
 					}
 					if(isset($row['data_type']))
 					{
@@ -146,12 +146,8 @@
 					try{
 						$stmt->execute(array($id,$table_name,$type,$data_id,$data_type,$data_xml,$last_updated,'synced',$link_to,$user_display,$title,$notes,$updated_by,$sync_time));
 					}
-					catch(PDOException $e)
-					{
-					/*	echo $e;
-						echo "activity id=".$id."\n";
-					*/
-					}		
+					catch(PDOException $e){}
+							
 					if($table_name!="")
 					{		
 						$q_string1="select last_updated from $table_name where id=?;";
@@ -189,13 +185,8 @@
 										
 										$stmt2=$conn->conn->prepare($q_string2);
 										
-										try{
-											$stmt2->execute($data_array);
-										}
-										catch(PDOException $e)
-										{
-											
-										}
+										try{$stmt2->execute($data_array);}
+										catch(PDOException $e){echo $e;}
 										break;
 									case 'update': 
 										$q_string2="update $table_name set ";
@@ -210,12 +201,8 @@
 										
 										$data_array[]=$data_id;
 										$stmt2=$conn->conn->prepare($q_string2);
-										try{
-											$stmt2->execute($data_array);
-										}
-										catch(PDOException $e)
-										{
-										}
+										try{$stmt2->execute($data_array);}
+										catch(PDOException $e){echo $e;}
 										break;
 									case 'delete': $q_string2="delete from $table_name where id=?";
 										$stmt2=$conn->conn->prepare($q_string2);

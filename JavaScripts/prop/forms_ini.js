@@ -4551,7 +4551,6 @@ function form58_ini()
 			"<requisite_type>"+ftype+"</requisite_type>" +
 			"<requisite_name>"+frequisite+"</requisite_name>" +
 			"<quantity></quantity>" +
-			"<last_updated></last_updated>" +
 			"</pre_requisites>";
 
 	$('#form58_body').html("");

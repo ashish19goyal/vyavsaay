@@ -1,8 +1,9 @@
 <?php
 /*	input data format: 
  * 			{
- 				database:'',
  				data_store:'',
+ 				warning:'yes/no',
+ 				log:'yes/no',
  				data:
  				[
  					{
@@ -14,13 +15,19 @@
  						index:'column2',
  						value:'value2',
  					}
- 				]
+ 				],
+ 				log_data:
+ 				{
+ 					title: 'title',
+ 					notes: 'notes',
+ 					link_to: 'formid'
+ 				}
  			}
 
  *	output data format: 
  *			{
- 				database:'',
  				data_store:'',
+ 				warning:'yes/no',
  				status:''
  			}
 */
@@ -36,21 +43,27 @@
 	
 	$input_object=json_decode($input_data,true);
 
-	$database=$input_object['database'];
 	$table=$input_object['data_store'];
 	$columns_array=(array)$input_object['data'];
+	$warning="yes";
+	if(isset($input_object['warning']))
+	{
+		$warning=$input_object['warning'];
+	}
 
 	$response_object=[];	
 		
 	if(isset($_SESSION['session']))
 	{
-		if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['domain']=='vyavsaay' && $_SESSION['username']==$username && $_SESSION['cr']==$cr_access)
+		if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['username']==$username && $_SESSION['cr']==$cr_access)
 		{
+			$database="re_user_".$domain;
 			$conn=new db_connect($database);
 			$data_array=array();
 
 			$unique=0;
 			$unique_column_value=array();
+			$indexed_columns=array();
 
 			$select_query="select count(*) from $table where ";
 			
@@ -71,7 +84,7 @@
 					}
 					$subcondition=rtrim($subcondition," and ");			
 					$select_query.="(".$subcondition.") or ";
-				}
+				}	
 				$indexed_columns[$col['index']]=$col['value'];							
 			}
 			
@@ -92,7 +105,6 @@
 			}
 			
 			$id=$indexed_columns['id'];
-			
 			$select_query=rtrim($select_query,"or ");
 			
 			if(count($unique_column_value)>0)
@@ -122,24 +134,38 @@
 				
 				$insert_query=rtrim($insert_query,",");
 				$insert_query.=");";
-				$act_type='create';
 				$stmt2=$conn->conn->prepare($insert_query);
 				$stmt2->execute($data_array);
-				
-				if($database!='0' && $database!=0)
+
+				if(isset($input_object['log']) && $input_object['log']=='yes')
 				{
-					$act_data=array('no',$table,$id,$input_data,'json','online',1000*time(),$act_type,$_SESSION['name']);
+					$log_array=$input_object['log_data'];
+					$act_title=$log_array['title'];
+					$act_notes=$log_array['notes'];
+					$link_to=$log_array['link_to'];
+					
+					$act_data=array($act_title,$act_notes,$link_to,'json',$_SESSION['name'],'yes',$table,$id,json_encode($columns_array),'online',1000*time(),'create');
+					$query3="insert into activities (title,notes,link_to,data_type,updated_by,user_display,tablename,data_id,data_xml,status,last_updated,type) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+					$stmt3=$conn->conn->prepare($query3);
+					$stmt3->execute($act_data);	
+					
+					$response_object['log']='yes';
+				}
+				else 
+				{
+					$act_data=array('no',$table,$id,json_encode($columns_array),'json','online',1000*time(),'create',$_SESSION['name']);
 					$query3="insert into activities (user_display,tablename,data_id,data_xml,data_type,status,last_updated,type,updated_by) values(?,?,?,?,?,?,?,?,?)";
 					$stmt3=$conn->conn->prepare($query3);
 					$stmt3->execute($act_data);
 				}
-				$response_object['database']=$database;
+				
 				$response_object['data_store']=$table;
 				$response_object['status']="record created";
 			}
 			else
 			{
 				$response_object['status']="duplicate record";
+				$response_object['warning']=$warning;
 			}
 		}
 		else
