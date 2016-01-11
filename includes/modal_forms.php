@@ -752,7 +752,7 @@
 	</div>
 
 	<div id="modal83" title="Store Inventory">
-		<table id='modal83_inventory_table'>
+		<table id='modal83_inventory_table' class="plain_table">
 		</table>
 	</div>
 	
