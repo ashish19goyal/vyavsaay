@@ -1688,10 +1688,23 @@ function form151_print_form()
  * @formNo 153
  */
 function form153_print_form()
+{	
+	print_form153(function(container)
+	{
+		$.print(container);
+		container.innerHTML="";	
+	});
+}
+
+/**
+ * @form Prepare Quotation
+ * @formNo 153
+ */
+function print_form153(func)
 {
 	var form_id='form153';
-	
-////////////setting up containers///////////////////////	
+
+	////////////setting up containers///////////////////////	
 	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
@@ -1809,7 +1822,7 @@ function form153_print_form()
 	footer.appendChild(tandc);
 	footer.appendChild(signature);
 	
-	$.print(container);
+	func(container);
 }
 
 

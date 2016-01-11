@@ -5580,12 +5580,12 @@ function form151_header_ini()
 function form152_header_ini()
 {
 	var filter_fields=document.getElementById('form152_header');
-	var id_filter=filter_fields.elements[0];
+	var num_filter=filter_fields.elements[0];
 	var type_filter=filter_fields.elements[1];
 	var customer_filter=filter_fields.elements[2];
 	
-	var id_data="<quotation>" +
-			"<id></id>" +
+	var num_data="<quotation>" +
+			"<quot_num></quot_num>" +
 			"</quotation>";
 	var type_data="<bill_types>" +
 			"<name></name>" +
@@ -5594,7 +5594,7 @@ function form152_header_ini()
 			"<acc_name></acc_name>" +
 			"</customers>";
 	
-	set_my_filter(id_data,id_filter);
+	set_my_filter(num_data,num_filter);
 	set_my_filter(type_data,type_filter);
 	set_my_filter(cust_data,customer_filter);
 	
@@ -5613,17 +5613,23 @@ function form152_header_ini()
 function form153_header_ini()
 {
 	var fields=document.getElementById('form153_master');
-	
-	var customers_filter=fields.elements[1];
+
+	var customers_filter=fields.elements['customer'];
 	customers_filter.value='';
 		
-	var quot_type=fields.elements[2];
-	var date=fields.elements[3];
-	fields.elements[5].value=get_new_key();
-	fields.elements[6].value="";
-	var save_button=fields.elements[7];
-	var print_button=fields.elements[8];
+	var quot_type=fields.elements['type'];
+	var date=fields.elements['date'];
+	var quot_id_filter=fields.elements['quot_id'];
+	var quot_num_filter=fields.elements['quot_num'];
+	quot_id_filter.value=get_new_key();
+	quot_num_filter.value="";
+	var save_button=fields.elements['save'];
+	var print_button=fields.elements['print'];
+	var share_button=fields.elements['share'];
 	
+	$(share_button).hide();
+	$(share_button).off('click');
+
 	$(print_button).off('click');
 	$(print_button).on('click',function()
 	{
@@ -5652,6 +5658,26 @@ function form153_header_ini()
 		form153_add_product();
 	});
 	
+	var quot_id=$("#form153_link").attr('data_id');
+	if(quot_id==null || quot_id=='')
+	{	
+		var quot_num_data="<user_preferences count='1'>"+
+						"<value></value>"+
+						"<name exact='yes'>quot_num</name>"+
+						"</user_preferences>";
+		get_single_column_data(function (quot_nums)
+		{
+			if(quot_nums.length>0)
+			{
+				quot_num_filter.value=get_session_var('quot_prefix')+"-"+quot_nums[0];
+			}
+		},quot_num_data);
+	}
+	else 
+	{
+		quot_id_filter.value=quot_id;
+	}
+
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
@@ -5705,7 +5731,7 @@ function form153_header_ini()
 	});
 
 	$(date).datepicker();
-	$(date).val(get_my_date());
+	date.value=get_my_date();
 }
 
 /**
@@ -11514,6 +11540,11 @@ function form294_header_ini()
 	var cst_filter=fields.elements['cst'];
 	var tin_filter=fields.elements['tin'];
 
+	var share_button=fields.elements['share'];
+	
+	$(share_button).hide();
+	$(share_button).off('click');
+
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
 	{
@@ -11730,6 +11761,7 @@ function form296_header_ini()
 	var share_button=fields.elements['share'];	
 	
 	$(share_button).hide();
+	$(share_button).off('click');
 
 	$(supplier_filter).off('blur');	
 	$(supplier_filter).on('blur',function () 

@@ -14,6 +14,7 @@
 			<br>
 			<label>	<input type='button' title='Save Bill' name='save' class='save_icon'></label>
 			<label>	<input type='button' title='Print Bill' class='print_icon' name='print' onclick='form294_print_form();'></label>
+			<label>	<input type='button' id='form294_share' class='share_icon' style='display:none;' name='share'></label>
 			<label>	<input type='submit' class='submit_hidden'>
 					<input type='hidden' name='cst'>
 					<input type='hidden' name='tin'>

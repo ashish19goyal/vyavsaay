@@ -4775,18 +4775,18 @@ function form152_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var data_id=form.elements[0].value;
+			var quot_num=form.elements[0].value;
+			var data_id=form.elements[5].value;
 			var customer=form.elements[2].value;
 			var bill_xml="<quotation>" +
 						"<id>"+data_id+"</id>" +
-						"<customer>"+customer+"</customer>" +
 						"</quotation>";	
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>quotation</tablename>" +
 						"<link_to>form152</link_to>" +
 						"<title>Deleted</title>" +
-						"<notes>Quotation id "+data_id+" for customer "+customer+"</notes>" +
+						"<notes>Quotation # "+quot_num+" for customer "+customer+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 	

@@ -11865,7 +11865,7 @@ function form153_create_item(form)
 {
 	if(is_create_access('form153'))
 	{
-		var quot_id=document.getElementById("form153_master").elements[5].value;
+		var quot_id=document.getElementById("form153_master").elements['quot_id'].value;
 		
 		var name=form.elements[0].value;
 		var description=form.elements[1].value;
@@ -11887,10 +11887,7 @@ function form153_create_item(form)
 				"<unit_price>"+price+"</unit_price>" +
 				"<quantity>"+quantity+"</quantity>" +
 				"<amount>"+amount+"</amount>" +
-				//"<total>"+total+"</total>" +
-				//"<discount>"+discount+"</discount>" +
 				"<type>"+type+"</type>" +
-				//"<tax>"+tax+"</tax>" +
 				"<quotation_id>"+quot_id+"</quotation_id>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</quotation_items>";	
@@ -11929,11 +11926,23 @@ function form153_create_form()
 	{
 		var form=document.getElementById("form153_master");
 		
-		var customer=form.elements[1].value;
-		var quot_type=form.elements[2].value;
-		var quot_date=get_raw_time(form.elements[3].value);
-		var intro_notes=form.elements[4].value;
-		var save_button=form.elements[7];
+		var customer=form.elements['customer'].value;
+		var quot_type=form.elements['type'].value;
+		var quot_date=get_raw_time(form.elements['date'].value);
+		var intro_notes=form.elements['notes'].value;
+		var quot_num=form.elements['quot_num'].value;
+		var save_button=form.elements['save'];
+		var data_id=form.elements['quot_id'].value;
+		
+		var bt=get_session_var('title');
+		$('#form153_share').show();
+		$('#form153_share').click(function()
+		{
+			modal101_action('Quotation from '+bt+' - '+quot_num,customer,'customer',function (func) 
+			{
+				print_form153(func);
+			});
+		});
 		
 		var amount=0;
 		var discount=0;
@@ -11956,11 +11965,11 @@ function form153_create_form()
 		var tax=my_round((tax_rate*((amount-discount)/100)),0);
 		var total=my_round(amount+tax-discount,0);
 
-		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
 	
 		var data_xml="<quotation>" +
 					"<id>"+data_id+"</id>" +
+					"<quot_num>"+quot_num+"</quot_num>" +
 					"<customer>"+customer+"</customer>" +
 					"<date>"+quot_date+"</date>" +
 					"<amount>"+amount+"</amount>" +
@@ -11978,7 +11987,7 @@ function form153_create_form()
 					"<tablename>quotation</tablename>" +
 					"<link_to>form152</link_to>" +
 					"<title>Saved</title>" +
-					"<notes>Quotation Id "+data_id+"</notes>" +
+					"<notes>Quotation # "+quot_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 
@@ -11986,8 +11995,8 @@ function form153_create_form()
 		
 		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 					"<td>Amount:</br>Discount: </br>Tax:@ <input type='number' value='"+tax_rate+"' title='specify tax rate' step='any' id='form153_tax' class='dblclick_editable'>%</br>Total: </td>" +
-					"<td>Rs. "+amount.toFixed(2)+"</br>" +
-					"Rs. <input type='number' value='"+discount.toFixed(2)+"' step='any' id='form153_discount' class='dblclick_editable'></br>" +
+					"<td>Rs. "+amount+"</br>" +
+					"Rs. <input type='number' value='"+discount+"' step='any' id='form153_discount' class='dblclick_editable'></br>" +
 					"Rs. "+tax+" <br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
@@ -11995,6 +12004,24 @@ function form153_create_form()
 		$('#form153_foot').html(total_row);
 
 		longPressEditable($('.dblclick_editable'));
+
+		var num_data="<user_preferences>"+
+					"<id></id>"+						
+					"<name exact='yes'>quot_num</name>"+												
+					"</user_preferences>";
+		get_single_column_data(function (num_ids)
+		{
+			if(num_ids.length>0)
+			{
+				var quot_num_array=quot_num.split("-");
+				var num_xml="<user_preferences>"+
+								"<id>"+num_ids[0]+"</id>"+
+								"<value>"+(parseInt(quot_num_array[1])+1)+"</value>"+
+								"<last_updated>"+last_updated+"</last_updated>"+
+								"</user_preferences>";
+				update_simple(num_xml);
+			}
+		},num_data);
 
 		$(save_button).off('click');
 		$(save_button).on('click',function(event)
@@ -19759,6 +19786,16 @@ function form294_create_form()
 		var bill_date=get_raw_time(form.elements['date'].value);
 		var bill_num=form.elements['bill_num'].value;
 
+		var bt=get_session_var('title');
+		$('#form294_share').show();
+		$('#form294_share').click(function()
+		{
+			modal101_action('Invoice from '+bt+' - '+bill_num,customer,'customer',function (func) 
+			{
+				print_form294(func);
+			});
+		});
+		
 		var amount=0;
 		var discount=0;
 		var tax_rate=0;

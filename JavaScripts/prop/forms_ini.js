@@ -15440,7 +15440,8 @@ function form152_ini()
 	
 	//populating form
 	if(fid==null)
-		fid=filter_fields.elements[0].value;
+		fid="";
+	var	fnum=filter_fields.elements[0].value;
 	var ftype=filter_fields.elements[1].value;
 	var fname=filter_fields.elements[2].value;
 	
@@ -15454,6 +15455,7 @@ function form152_ini()
 	var columns="<quotation count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<customer>"+fname+"</customer>" +
+			"<quot_num>"+fnum+"</quot_num>" +
 			"<date></date>" +
 			"<total></total>" +
 			"<type></type>" +
@@ -15509,8 +15511,8 @@ function form152_ini()
 					var rowsHTML="";
 					rowsHTML+="<tr>";
 						rowsHTML+="<form id='form152_"+result.id+"'></form>";
-							rowsHTML+="<td data-th='Id'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form152_"+result.id+"' value='"+result.id+"'>";
+							rowsHTML+="<td data-th='Quot #'>";
+								rowsHTML+="<input type='text' readonly='readonly' class='input_link' form='form152_"+result.id+"' value='"+result.quot_num+"' onclick=\"element_display('"+result.id+"','form153');\">";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Type'>";
 								rowsHTML+="<input type='text' readonly='readonly' form='form152_"+result.id+"' value='"+result.billing_type+"'>";
@@ -15525,7 +15527,7 @@ function form152_ini()
 								rowsHTML+="<input type='text' readonly='readonly' form='form152_"+result.id+"' value='"+Math.round(result.total)+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
-								rowsHTML+="<input type='button' class='edit_icon' form='form152_"+result.id+"' title='Edit Quotation'>";
+								rowsHTML+="<input type='hidden' form='form152_"+result.id+"' value='"+result.id+"'>";
 								rowsHTML+="<input type='button' class='delete_icon' form='form152_"+result.id+"' title='Delete Quotation' onclick='form152_delete_item($(this));'>";
 							if(result.status=='generated' && update)
 							{
@@ -15540,13 +15542,6 @@ function form152_ini()
 					rowsHTML+="</tr>";
 					
 					$('#form152_body').append(rowsHTML);
-					var fields=document.getElementById("form152_"+result.id);
-					var edit_button=fields.elements[5];
-					$(edit_button).on("click", function(event)
-					{
-						event.preventDefault();
-						element_display(result.id,'form153');
-					});
 				}
 			});
 			
@@ -15576,7 +15571,7 @@ function form152_ini()
 	
 			$('textarea').autosize();
 			
-			var export_button=filter_fields.elements[3];
+			var export_button=filter_fields.elements['export'];
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
@@ -15608,6 +15603,7 @@ function form153_ini()
 		show_loader();
 		var quot_columns="<quotation>" +
 				"<id>"+quot_id+"</id>" +
+				"<quot_num></quot_num>" +
 				"<customer></customer>" +
 				"<total></total>" +
 				"<date></date>" +
@@ -15615,7 +15611,6 @@ function form153_ini()
 				"<discount></discount>" +
 				"<tax></tax>" +
 				"<tax_rate></tax_rate>" +
-				"<offer></offer>" +
 				"<billing_type></billing_type>" +
 				"<intro_notes></intro_notes>"+
 				"</quotation>";
@@ -15642,12 +15637,13 @@ function form153_ini()
 			
 			for (var i in quot_results)
 			{
-				filter_fields.elements[1].value=quot_results[i].customer;
-				filter_fields.elements[2].value=quot_results[i].billing_type;
-				filter_fields.elements[3].value=get_my_past_date(quot_results[i].date);
-				filter_fields.elements[4].value=quot_results[i].intro_notes;								
-				filter_fields.elements[5].value=quot_id;				
-				var save_button=filter_fields.elements[7];
+				filter_fields.elements['customer'].value=quot_results[i].customer;
+				filter_fields.elements['type'].value=quot_results[i].billing_type;
+				filter_fields.elements['date'].value=get_my_past_date(quot_results[i].date);
+				filter_fields.elements['notes'].value=quot_results[i].intro_notes;								
+				filter_fields.elements['quot_num'].value=quot_results[i].quot_num;								
+				filter_fields.elements['quot_id'].value=quot_id;				
+				var save_button=filter_fields.elements['save'];
 				
 				var address_data="<customers>" +
 						"<address></address>" +
@@ -15723,6 +15719,16 @@ function form153_ini()
 					rowsHTML+="</tr>";
 				
 					$('#form153_body').append(rowsHTML);					
+				});
+				
+				var bt=get_session_var('title');
+				$('#form153_share').show();
+				$('#form153_share').click(function()
+				{
+					modal101_action("Quotation from "+bt+' - '+filter_fields.elements['quot_num'].value,filter_fields.elements['customer'].value,'customer',function (func) 
+					{
+						print_form153(func);
+					});
 				});
 				
 				hide_loader();
@@ -31251,9 +31257,20 @@ function form294_ini()
 				
 					$('#form294_body').prepend(rowsHTML);	
 				});
-			
+				
 				form294_update_serial_numbers();
 				$('textarea').autosize();
+				
+				var bt=get_session_var('title');
+				$('#form294_share').show();
+				$('#form294_share').click(function()
+				{
+					modal101_action("Invoice from "+bt+' - '+filter_fields.elements['bill_num'].value,filter_fields.elements['customer'].value,'customer',function (func) 
+					{
+						print_form294(func);
+					});
+				});
+								
 				hide_loader();
 			});
 		});

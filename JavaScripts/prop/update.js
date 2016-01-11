@@ -8203,7 +8203,7 @@ function form152_approve_item(button)
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 
-		var data_id=form.elements[0].value;
+		var data_id=form.elements[5].value;
 		var status='approved';
 		var last_updated=get_my_time();
 		var reject_button=form.elements[8];
@@ -8218,14 +8218,8 @@ function form152_approve_item(button)
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</quotation>";	
 
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}	
+		update_simple(data_xml);
+			
 	}
 	else
 	{
@@ -8245,7 +8239,7 @@ function form152_reject_item(button)
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 
-		var data_id=form.elements[0].value;
+		var data_id=form.elements[5].value;
 		var status='rejected';
 		var last_updated=get_my_time();
 		var approve_button=form.elements[7];
@@ -8258,16 +8252,9 @@ function form152_reject_item(button)
 					"<id>"+data_id+"</id>" +
 					"<status>"+status+"</status>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</quotation>";	
-
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}	
+					"</quotation>";
+		update_simple(data_xml);
+			
 	}
 	else
 	{
@@ -8287,10 +8274,12 @@ function form153_update_form()
 	{
 		var form=document.getElementById("form153_master");
 		
-		var customer=form.elements[1].value;
-		var quot_type=form.elements[2].value;
-		var quot_date=get_raw_time(form.elements[3].value);
-		var intro_notes=form.elements[4].value;
+		var customer=form.elements['customer'].value;
+		var quot_type=form.elements['type'].value;
+		var quot_date=get_raw_time(form.elements['date'].value);
+		var intro_notes=form.elements['notes'].value;
+		var quot_num=form.elements['quot_num'].value;
+		var data_id=form.elements['quot_id'].value;
 		
 		var amount=0;
 		var discount=0;
@@ -8316,11 +8305,11 @@ function form153_update_form()
 		var tax=my_round((tax_rate*((amount-discount)/100)),0);
 		var total=my_round(amount+tax-discount,0);
 
-		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();		
 		
 		var data_xml="<quotation>" +
 					"<id>"+data_id+"</id>" +
+					"<quot_num>"+quot_num+"</quot_num>" +
 					"<customer>"+customer+"</customer>" +
 					"<date>"+quot_date+"</date>" +
 					"<amount>"+amount+"</amount>" +
@@ -8337,15 +8326,15 @@ function form153_update_form()
 					"<tablename>quotation</tablename>" +
 					"<link_to>form152</link_to>" +
 					"<title>Updated</title>" +
-					"<notes>Quotation Id "+data_id+"</notes>" +
+					"<notes>Quotation # "+quot_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		update_row(data_xml,activity_xml);
 		
 		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 					"<td>Amount:</br>Discount: </br>Tax: @ <input type='number' value='"+tax_rate+"' title='specify tax rate' step='any' id='form153_tax' class='dblclick_editable'>%</br>Total: </td>" +
-					"<td>Rs. "+amount.toFixed(2)+"</br>" +
-					"Rs. <input type='number' value='"+discount.toFixed(2)+"' step='any' id='form153_discount' class='dblclick_editable'><br>" +
+					"<td>Rs. "+amount+"</br>" +
+					"Rs. <input type='number' value='"+discount+"' step='any' id='form153_discount' class='dblclick_editable'><br>" +
 					"Rs. "+tax+" <br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +

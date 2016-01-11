@@ -2,19 +2,19 @@
 	<form id='form153_master' autocomplete="off">
 		<fieldset>
 			<label>Customer <img src='./images/add_image.png' class='add_image' id='form153_add_customer'><br>
-					<input type='text' required></label>
+					<input type='text' required name='customer'></label>
 			<label id='form153_customer_info'></label>
-			<label>Type<br><input type='text' required></label>
-			<label>Date<br><input type='text' required></label>
+			<label>Type<br><input type='text' required name='type'></label>
+			<label>Date<br><input type='text' required name='date'></label>
 			<br>
-			<label>Introductory Notes<br><textarea style='width:300px'></textarea></label>
+			<label>Quotation #<br><input type='text' readonly='readonly' name='quot_num' required></label>
+			<label>Introductory Notes<br><textarea style='width:300px' name='notes'></textarea></label>
 			<label>
 				<input type='hidden' name='quot_id'>
-				<input type='hidden' name='offer'>
 			</label>
-			<label>	<input type='button' title='Save Quotation' class='save_icon'></label>
-			<label>	<input type='button' title='Print Quotation' class='print_icon'></label>
-			<label>	<input type='button' id='form153_share' class='share_icon' style='display:none;'></label>
+			<label>	<input type='button' title='Save Quotation' class='save_icon' name='save'></label>
+			<label>	<input type='button' title='Print Quotation' class='print_icon' name='print'></label>
+			<label>	<input type='button' id='form153_share' class='share_icon' style='display:none;' name='share'></label>
 			<label>	<input type='submit' class='submit_hidden'>	</label>
 		</fieldset>
 	</form>

@@ -3,12 +3,12 @@
 		<thead>
 			<tr>
 				<form id='form152_header'></form>
-					<th>Id <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form152_header'></th>
+					<th>Quot #<img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form152_header'></th>
 					<th>Type <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form152_header'></th>
 					<th>Customer <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form152_header'></th>
 					<th>Date</th>
 					<th>Amount</th>
-					<th><input type='button' form='form152_header' value='EXPORT' class='export_icon'>
+					<th><input type='button' form='form152_header' name='export' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form152_header' style='visibility: hidden;'>
 					</th>
 			</tr>

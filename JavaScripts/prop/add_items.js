@@ -8500,8 +8500,8 @@ function form151_add_expense()
 function form153_add_product()
 {
 	var filter_fields=document.getElementById('form153_master');
-	var bill_type=filter_fields.elements[2].value;
-	var customer_name=filter_fields.elements[1].value;
+	var bill_type=filter_fields.elements['type'].value;
+	var customer_name=filter_fields.elements['customer'].value;
 	
 	var hiring=false;
 	if(filter_fields.elements[2].value=='Hiring')
@@ -8653,30 +8653,6 @@ function form153_add_product()
 			{
 				$(quantity_filter).attr('placeholder',quantity);
 			});
-
-/*			if(hiring)
-			{
-				var tax_data="<attributes>" +
-						"<value></value>"+						
-						"<attribute exact='yes'>hiring tax rate</attribute>" +
-						"<name exact='yes'>"+name_filter.value+"</name>" +
-						"</attributes>";
-				set_my_value(tax_data,tax_unit_filter);
-			}
-			else 
-			{
-				var tax_data="<product_master>" +
-					"<tax></tax>" +
-					"<name exact='yes'>"+name_filter.value+"</name>" +
-					"</product_master>";
-				set_my_value(tax_data,tax_unit_filter);
-			}
-*/
-			quantity_filter.value="";
-//			total_filter.value=0;
-			amount_filter.value=0;
-//			discount_filter.value=0;
-//			tax_filter.value=0;
 		});
 
 		
@@ -8689,12 +8665,6 @@ function form153_add_product()
 			//total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value));			
 		});
 		
-/*		
-		$(tax_filter).on('blur',function () 
-		{
-			total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value));
-		});
-*/		
 		form153_get_totals();
 	}
 	else
@@ -8711,8 +8681,8 @@ function form153_add_product()
 function form153_add_service()
 {
 	var filter_fields=document.getElementById('form153_master');
-	var bill_type=filter_fields.elements[2].value;
-	var customer_name=filter_fields.elements[1].value;
+	var bill_type=filter_fields.elements['type'].value;
+	var customer_name=filter_fields.elements['customer'].value;
 				
 	if(is_create_access('form153'))
 	{
@@ -8732,12 +8702,9 @@ function form153_add_service()
 				rowsHTML+="<input type='number' required form='form153_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Amount'>";
-				//rowsHTML+="Tax: <input type='number' form='form153_"+id+"' value='0'>";
 				rowsHTML+="<input type='number' required readonly='readonly' form='form153_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
-				//rowsHTML+="<input type='hidden' form='form153_"+id+"' value='0'>";
-				//rowsHTML+="<input type='hidden' form='form153_"+id+"' value='0'>";
 				rowsHTML+="<input type='hidden' form='form153_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='button' class='submit_hidden' form='form153_"+id+"' id='save_form153_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form153_"+id+"' id='delete_form153_"+id+"' onclick='$(this).parent().parent().remove(); form153_get_totals();'>";
@@ -8757,13 +8724,9 @@ function form153_add_service()
 		var desc_filter=fields.elements[1];
 		var quantity_filter=fields.elements[2];
 		var price_filter=fields.elements[4];
-		//var tax_filter=fields.elements[5];
 		var amount_filter=fields.elements[5];
-		//var total_filter=fields.elements[7];
-		//var discount_filter=fields.elements[8];
 		var id_filter=fields.elements[6];
 		var save_button=fields.elements[7];
-		//var tax_unit_filter=fields.elements[14];
 		
 		$(save_button).on("click", function(event)
 		{
@@ -8788,32 +8751,6 @@ function form153_add_service()
 			}
 		});
 
-/*		$(name_filter).on('blur',function(event)
-		{
-			var desc_data="<services>"+
-						"<description></description>"+
-						"<name exact='yes'>"+name_filter.value+"</name>"+
-						"</services>";
-			set_my_value(desc_data,desc_filter);						
-			
-			var price_data="<services>" +
-				"<price></price>" +
-				"<tax></tax>"+
-				"<name exact='yes'>"+name_filter.value+"</name>" +
-				"</services>";
-			fetch_requested_data('',price_data,function(prices)
-			{
-				if(prices.length>0)
-				{
-					//tax_unit_filter.value=prices[0].tax;
-					price_filter.value=prices[0].price;
-					amount_filter.value=Math.round(prices[0].price);					
-					//tax_filter.value=parseFloat((parseFloat(prices[0].tax)*(prices[0].price))/100);
-					//total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
-				}	
-			});			
-		});
-*/
 		$(price_filter).on('blur',function(event)
 		{
 			var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
@@ -8823,12 +8760,6 @@ function form153_add_service()
 			//total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
 		});
 		
-		/*
-		$(tax_filter).on('blur',function()
-		{
-			total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
-		});
-		*/
 		form153_get_totals();
 
 	}
