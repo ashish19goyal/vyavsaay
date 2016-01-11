@@ -366,18 +366,16 @@ function form153_get_totals()
 		if(isNaN(parseFloat(subform.elements[5].value)))
 			amount+=0;
 		else
-			amount+=Math.round(parseFloat(subform.elements[5].value));	
-		//total+=Math.round(parseFloat(subform.elements[7].value));
-		//discount+=parseFloat(subform.elements[8].value);
+			amount+=my_round(parseFloat(subform.elements[5].value),0);	
 	});
 
-	var tax=Math.round((tax_rate*((amount-discount)/100))).toFixed(2);
-	var total=Math.round(amount+tax-discount).toFixed(2);
+	var tax=my_round((tax_rate*((amount-discount)/100)),0);
+	var total=my_round(amount+tax-discount,0);
 
 	var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 					"<td>Amount:</br>Discount: </br>Tax:@ <input type='number' value='"+tax_rate+"' title='specify tax rate' step='any' id='form153_tax' class='dblclick_editable'>% </br>Total: </td>" +
-					"<td>Rs. "+amount.toFixed(2)+"</br>" +
-					"Rs. <input type='number' value='"+discount.toFixed(2)+"' step='any' id='form153_discount' class='dblclick_editable'></br>" +
+					"<td>Rs. "+amount+"</br>" +
+					"Rs. <input type='number' value='"+discount+"' step='any' id='form153_discount' class='dblclick_editable'></br>" +
 					"Rs. "+tax+"<br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +

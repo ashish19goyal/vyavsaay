@@ -8308,13 +8308,13 @@ function form153_update_form()
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
 			//tax+=parseFloat(subform.elements[5].value);
-			amount+=Math.round(parseFloat(subform.elements[5].value));
+			amount+=my_round(parseFloat(subform.elements[5].value),0);
 			//total+=Math.round(parseFloat(subform.elements[7].value));
 			//discount+=parseFloat(subform.elements[8].value);
 		});
 		
-		var tax=Math.round((tax_rate*((amount-discount)/100))).toFixed(2);
-		var total=Math.round(amount+tax-discount).toFixed(2);
+		var tax=my_round((tax_rate*((amount-discount)/100)),0);
+		var total=my_round(amount+tax-discount,0);
 
 		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();		
@@ -8340,14 +8340,7 @@ function form153_update_form()
 					"<notes>Quotation Id "+data_id+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
+		update_row(data_xml,activity_xml);
 		
 		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 					"<td>Amount:</br>Discount: </br>Tax: @ <input type='number' value='"+tax_rate+"' title='specify tax rate' step='any' id='form153_tax' class='dblclick_editable'>%</br>Total: </td>" +

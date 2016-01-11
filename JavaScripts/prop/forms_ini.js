@@ -15673,10 +15673,10 @@ function form153_ini()
 
 				var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 							"<td>Amount:</br>Discount: </br>Tax:@ <input type='number' value='"+quot_results[i].tax_rate+"' step='any' id='form153_tax' class='dblclick_editable'>% </br>Total: </td>" +
-							"<td>Rs. "+Math.round(quot_results[i].amount).toFixed(2)+"</br>" +
-							"Rs. <input type='number' value='"+Math.round(quot_results[i].discount).toFixed(2)+"' step='any' id='form153_discount' class='dblclick_editable'><br>" +
-							"Rs. "+Math.round(quot_results[i].tax).toFixed(2)+"<br>" +
-							"Rs. "+Math.round(quot_results[i].total).toFixed(2)+"</td>" +
+							"<td>Rs. "+quot_results[i].amount+"</br>" +
+							"Rs. <input type='number' value='"+quot_results[i].discount+"' step='any' id='form153_discount' class='dblclick_editable'><br>" +
+							"Rs. "+quot_results[i].tax+"<br>" +
+							"Rs. "+quot_results[i].total+"</td>" +
 							"<td></td>" +
 							"</tr>";
 				$('#form153_foot').html(total_row);

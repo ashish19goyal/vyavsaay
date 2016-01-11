@@ -11872,10 +11872,7 @@ function form153_create_item(form)
 		var quantity=form.elements[2].value;
 		var unit=form.elements[3].value;
 		var price=form.elements[4].value;
-		//var tax=form.elements[5].value;
 		var amount=form.elements[5].value;
-		//var total=form.elements[7].value;
-		//var discount=form.elements[8].value;
 		var data_id=form.elements[6].value;		
 		var save_button=form.elements[7];
 		var del_button=form.elements[8];
@@ -11898,15 +11895,7 @@ function form153_create_item(form)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</quotation_items>";	
 	
-		if(is_online())
-		{
-			server_create_simple(data_xml);
-		}
-		else
-		{
-			local_create_simple(data_xml);
-		}
-
+		create_simple(data_xml);
 		
 		for(var i=0;i<6;i++)
 		{
@@ -11961,14 +11950,11 @@ function form153_create_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			//tax+=parseFloat(subform.elements[5].value);
-			amount+=Math.round(parseFloat(subform.elements[5].value));
-			//total+=Math.round(parseFloat(subform.elements[7].value));
-			//discount+=parseFloat(subform.elements[8].value);
+			amount+=my_round(parseFloat(subform.elements[5].value),0);
 		});
 		
-		var tax=Math.round((tax_rate*((amount-discount)/100))).toFixed(2);
-		var total=Math.round(amount+tax-discount).toFixed(2);
+		var tax=my_round((tax_rate*((amount-discount)/100)),0);
+		var total=my_round(amount+tax-discount,0);
 
 		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
@@ -11996,14 +11982,7 @@ function form153_create_form()
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 
-		if(is_online())
-		{
-			server_create_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-		}
+		create_row(data_xml,activity_xml);
 		
 		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 					"<td>Amount:</br>Discount: </br>Tax:@ <input type='number' value='"+tax_rate+"' title='specify tax rate' step='any' id='form153_tax' class='dblclick_editable'>%</br>Total: </td>" +
