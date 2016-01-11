@@ -2190,11 +2190,10 @@ function form83_delete_item(button)
 			var form=document.getElementById(form_id);
 			
 			var name=form.elements[0].value;
-			var data_id=form.elements[3].value;
+			var data_id=form.elements[2].value;
 			var last_updated=get_my_time();
 			var data_xml="<store_areas>" +
 						"<id>"+data_id+"</id>" +
-						"<name>"+name+"</name>" +
 						"</store_areas>";	
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
@@ -2204,14 +2203,7 @@ function form83_delete_item(button)
 						"<notes>Store area "+name+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-			}	
+			delete_row(data_xml,activity_xml);
 			$(button).parent().parent().remove();
 		});
 	}

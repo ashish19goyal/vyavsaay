@@ -437,7 +437,7 @@ function form82_import_template()
 */
 function form83_import_template()
 {
-	var data_array=['id','name','parent','owner','area_type','height','breadth','length','unit'];
+	var data_array=['id','name','parent','owner'];
 	my_array_to_csv(data_array);
 };
 

@@ -1463,45 +1463,6 @@ function form57_import(data_array,import_type)
 */
 function form58_import(data_array,import_type)
 {
-	var data_xml="<pre_requisites>";
-	var counter=1;
-	var last_updated=get_my_time();
-
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</pre_requisites><separator></separator><pre_requisites>";
-		}
-		counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<name>"+row.name+"</name>" +
-				"<type>"+row.type+"</type>" +
-				"<requisite_type>"+row.requisite_type+"</requisite_type>" +
-				"<requisite_name>"+row.requisite_name+"</requisite_name>" +
-				"<quantity>"+row.quantity+"</quantity>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	data_xml+="</pre_requisites>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-	}
-};
-
-function form58_import(data_array,import_type)
-{
 	var data_json={data_store:'pre_requisites',
  					loader:'no',
  					log:'yes',
@@ -2187,11 +2148,6 @@ function form83_import(data_array,import_type)
 				"<name>"+row.name+"</name>" +
 				"<parent>"+row.parent+"</parent>" +
 				"<owner>"+row.owner+"</owner>"+
-				"<area_type>"+row.area_type+"</area_type>" +
-				"<height>"+row.length+"</height>" +
-				"<breadth>"+row.breadth+"</breadth>" +
-				"<len>"+row.length+"</len>" +
-				"<unit>"+row.unit+"</unit>"+
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});

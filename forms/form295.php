@@ -7,6 +7,7 @@
 			<label>Order #<br><input type='text' readonly="readonly" name='po_num'></label>
 			<label>Bill Date<br><input type='text' required name='date'></label>
 			<label>Entry Date<br><input type='text' required name='entry_date'></label>
+			<br><label>Notes<br><textarea name='notes'></textarea></label>
 			<label>
 				<input type='hidden' name='bill_id'>
 				<input type='hidden' name='order_id'>

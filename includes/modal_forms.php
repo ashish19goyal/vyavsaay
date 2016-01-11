@@ -420,7 +420,6 @@
 			<fieldset>
 				<label>Name: <input type='text' required></label><br>
 				<label>Owner: <input type='text'></label><br>
-				<label>Area Type: <input type="text" value='storage'></label><br>
 				<label id='modal35_attributes'></label><br>
 				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>

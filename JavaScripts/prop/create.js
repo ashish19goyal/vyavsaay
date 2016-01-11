@@ -20009,6 +20009,7 @@ function form295_create_form()
 		var bill_num=form.elements['bill_num'].value;
 		var order_num=form.elements['po_num'].value;
 		var order_id=form.elements['order_id'].value;
+		var notes=form.elements['notes'].value;
 
 		var amount=0;
 		var discount=0;
@@ -20052,6 +20053,7 @@ function form295_create_form()
 					"<tax>"+tax+"</tax>" +
 					"<tax_rate>"+tax_rate+"</tax_rate>"+
 					"<transaction_id>"+data_id+"</transaction_id>" +
+					"<notes>"+notes+"</notes>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</supplier_bills>";
 		var activity_xml="<activity>" +

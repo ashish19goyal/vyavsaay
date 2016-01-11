@@ -1717,3 +1717,217 @@ function local_create_batch_json(data_json,func)
 		},2000);
 	}
 }
+
+function local_update_json(data_json,func)
+{
+	if(typeof static_local_db=='undefined')
+	{
+		open_local_db(function()
+		{
+			local_update_json(data_json,func);
+		});
+	}
+	else
+	{
+		localdb_open_requests+=1;
+		
+		var table=data_json.data_store;
+		var cols=data_json.data;
+		var log='no';
+		var activity_data=[];
+		if(typeof data_json.log!='undefined')
+		{
+			log=data_json.log;
+		}
+		if(typeof data_json.log_data!='undefined')
+		{
+			activity_data=data_json.log_data;
+		}
+				
+		var data_id=cols[0]['value'];
+		
+		console.log(table+"-"+data_id);
+		
+		var os1=static_local_db.transaction([table],"readwrite").objectStore(table);
+		var req=os1.get(data_id);
+		req.onsuccess=function(e)
+		{
+			var data_record=req.result;
+			if(data_record)
+			{
+				console.log('found local record '+data_record);
+				for(var j=0;j<cols.length;j++)
+				{
+					data_record[cols[j]['index']]=""+cols[j]['value'];
+				}
+				
+				var put_req=os1.put(data_record);
+				put_req.onsuccess=function(e)
+				{
+					var id=get_new_key();
+					var act_row={id:""+id,
+							type:'update',
+							status:'unsynced',
+							data_type:'json',
+							data_xml:JSON.stringify(cols),
+							user_display:log,
+							tablename:table,
+							data_id:data_id,
+							updated_by:get_name(),
+							last_updated:""+get_my_time()};
+					if(log=='yes')
+					{
+						act_row['title']=activity_data['title'];
+						act_row['notes']=activity_data['notes'];
+						act_row['link_to']=activity_data['link_to'];		
+					}
+					
+					static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
+					{
+						localdb_open_requests-=1;
+						if(typeof func!="undefined")
+						{					
+							func();
+						}
+					};
+				};
+			}
+		};
+	}
+}
+
+function local_update_batch_json(data_json,func)
+{
+	if(typeof static_local_db=='undefined')
+	{
+		open_local_db(function()
+		{
+			local_update_batch_json(data_json,func);
+		});
+	}
+	else
+	{
+		if(typeof data_json.loader!='undefined' && data_json.loader=='no')
+		{}else{show_loader();}
+	
+		var table=data_json.data_store;
+		var rows=data_json.data;
+		var log='no';
+		var activity_data=[];
+		var result_count=0;
+		
+		if(typeof data_json.log!='undefined')
+		{
+			log=data_json.log;
+		}
+		if(typeof data_json.log_data!='undefined')
+		{
+			activity_data=data_json.log_data;
+		}
+				
+		//console.log(rows.length);
+		
+		var transaction=static_local_db.transaction([table,'activities'],"readwrite");
+		var os1=transaction.objectStore(table);
+		var os2=transaction.objectStore('activities');
+		
+		var i=0;
+		var success_count=0;
+		var activity_id=get_new_key();
+
+		function update_records()
+		{
+			if(i<rows.length)
+			{
+				var cols=rows[i];
+				var data_id=cols[0]['value'];
+				localdb_open_requests+=1;
+								
+				var req=os1.get(data_id);
+				req.onsuccess=function(e)
+				{
+					var data_record=req.result;
+					if(data_record)
+					{
+						for(var j=0;j<cols.length;j++)
+						{
+							data_record[cols[j]['index']]=""+cols[j]['value'];
+						}
+						
+						var put_req=os1.put(data_record);
+						put_req.onsuccess=function(e)
+						{
+							var id=get_new_key();
+							var act_row={id:""+(activity_id+i),
+									type:'update',
+									status:'unsynced',
+									data_type:'json',
+									data_xml:JSON.stringify(cols),
+									user_display:'no',
+									tablename:table,
+									data_id:data_record['id'],
+									updated_by:get_name(),
+									last_updated:""+get_my_time()};
+							
+							os2.put(act_row).onsuccess=function(e)
+							{
+								i++;
+								success_count+=1;
+								localdb_open_requests-=1;
+								update_records();					
+							};
+						};
+					}
+					else
+					{
+						i++;
+						localdb_open_requests-=1;
+						update_records();
+					}
+				};
+				req.onerror=function(e)
+				{
+					i++;
+					localdb_open_requests-=1;
+					update_records();
+				};
+			}
+		};
+		
+		update_records();
+		
+		var local_update_complete=setInterval(function()
+		{
+			console.log(localdb_open_requests);
+			if(localdb_open_requests===0)
+			{
+				var act_row={id:""+(activity_id+i+5),
+						type:'update',
+						status:'unsynced',
+						title:'Data import',
+						notes:'Updated '+success_count+' records for '+activity_data['title'],
+						data_xml:JSON.stringify(rows),
+						data_type:'json',
+						user_display:log,
+						data_id:"",
+						tablename:"",
+						link_to:activity_data['link_to'],
+						updated_by:""+get_name(),
+						last_updated:""+get_my_time()};
+				
+				var transaction=static_local_db.transaction(['activities'],"readwrite");		
+				var os3=transaction.objectStore('activities');		
+				os3.put(act_row).onsuccess=function(e){};
+				clearInterval(local_update_complete);
+
+				if(typeof data_json.loader!='undefined' && data_json.loader=='no')
+				{}else{hide_loader();}
+				
+				if(typeof func!='undefined')
+				{
+					func();
+				}
+			}
+		},2000);
+	}
+}

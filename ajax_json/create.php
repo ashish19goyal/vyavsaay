@@ -157,6 +157,7 @@
 					$query3="insert into activities (user_display,tablename,data_id,data_xml,data_type,status,last_updated,type,updated_by) values(?,?,?,?,?,?,?,?,?)";
 					$stmt3=$conn->conn->prepare($query3);
 					$stmt3->execute($act_data);
+					$response_object['log']='no';
 				}
 				
 				$response_object['data_store']=$table;

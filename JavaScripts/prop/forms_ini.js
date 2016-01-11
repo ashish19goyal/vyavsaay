@@ -6947,7 +6947,6 @@ function form83_ini()
 	var filter_fields=document.getElementById('form83_header');
 	var fname=filter_fields.elements[0].value;
 	var fowner=filter_fields.elements[1].value;
-	var ftype=filter_fields.elements[2].value;
 	
 	////indexing///
 	var index_element=document.getElementById('form83_index');
@@ -6960,7 +6959,6 @@ function form83_ini()
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
 			"<owner>"+fowner+"</owner>"+
-			"<area_type>"+ftype+"</area_type>" +
 			"<last_updated></last_updated>" +
 			"</store_areas>";
 
@@ -6978,9 +6976,6 @@ function form83_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Owner'>";
 						rowsHTML+="<input type='text' style='width:auto;' readonly='readonly' class='dblclick_editable' form='form83_"+result.id+"' value='"+result.owner+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Type'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form83_"+result.id+"' value='"+result.area_type+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form83_"+result.id+"' value='"+result.id+"'>";
@@ -7031,7 +7026,7 @@ function form83_ini()
 		$('textarea').autosize();
 		longPressEditable($('.dblclick_editable'));
 				
-		var export_button=filter_fields.elements[4];
+		var export_button=filter_fields.elements['export'];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
@@ -16470,7 +16465,7 @@ function form157_ini()
 									rowsHTML+="<input type='hidden' form='form157_"+result.id+"' value='"+result.id+"'>";
 							if(update)
 							{
-									if(result.status!='received')									
+									if(result.status!='received' && result.status!='cancelled')									
 										rowsHTML+="<input type='button' class='generic_icon' form='form157_"+result.id+"' value='Cancel' onclick='form157_cancel_item($(this));'>";
 									if(result.status=='pending')									
 										rowsHTML+="<input type='button' class='generic_icon' form='form157_"+result.id+"' value='Dispatch' onclick='form157_dispatch_item($(this));'>";
@@ -31297,6 +31292,7 @@ function form295_ini()
 				"<transaction_id></transaction_id>" +
 				"<order_id></order_id>" +
 				"<order_num></order_num>" +
+				"<notes></notes>"+
 				"</supplier_bills>";
 		var bill_items_column="<supplier_bill_items>" +
 				"<id></id>" +
@@ -31326,7 +31322,8 @@ function form295_ini()
 				filter_fields.elements['po_num'].value=bill_results[0].order_num;
 				filter_fields.elements['order_id'].value=bill_results[0].order_id;
 				filter_fields.elements['bill_id'].value=bill_id;	
-
+				filter_fields.elements['notes'].value=bill_results[0].notes;
+				
 				var save_button=filter_fields.elements['save'];
 
 				$(save_button).off('click');

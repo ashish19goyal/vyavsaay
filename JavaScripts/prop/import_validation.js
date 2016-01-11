@@ -113,12 +113,7 @@ function form83_import_validate(data_array)
 {
 	var validate_template_array=[{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z_.,()-]+$')},
 							{column:'parent',regex:new RegExp('^[0-9a-zA-Z_.,()-]+$')},
-							{column:'owner',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
-							{column:'area_type',required:'yes',regex:new RegExp('^[0-9a-zA-Z_.,()-]+$')},
-							{column:'length',regex:new RegExp('^[0-9.]+$')},
-							{column:'width',regex:new RegExp('^[0-9.]+$')},
-							{column:'height',regex:new RegExp('^[0-9.]+$')},
-							{column:'unit',regex:new RegExp('^[a-zA-Z.()-]+$')}];
+							{column:'owner',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')}];
 					
 	var error_array=validate_import_array(data_array,validate_template_array);
 	return error_array;					

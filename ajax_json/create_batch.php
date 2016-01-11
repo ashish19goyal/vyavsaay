@@ -2,7 +2,6 @@
 /*	input data format: 
  * 			{
  				data_store:'',
- 				warning:'yes/no',
  				log:'yes/no',
  				data:
  				[
@@ -37,7 +36,6 @@
  *	output data format: 
  *			{
  				data_store:'',
- 				warning:'yes/no',
  				status:''
  			}
 */
@@ -55,12 +53,7 @@
 
 	$table=$input_object['data_store'];
 	$data_columns_array=(array)$input_object['data'];
-	$warning="yes";
-	if(isset($input_object['warning']))
-	{
-		$warning=$input_object['warning'];
-	}
-
+	
 	$response_object=[];	
 		
 	if(isset($_SESSION['session']))
@@ -172,7 +165,7 @@
 					}
 				}
 			}
-
+		
 			if(isset($input_object['log']) && $input_object['log']=='yes')
 			{
 				$log_array=$input_object['log_data'];

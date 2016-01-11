@@ -2953,6 +2953,7 @@ function form57_update_item(form)
 	}
 }
 
+
 /**
  * formNo 58
  * form Manage Service pre-requisites
@@ -2966,34 +2967,21 @@ function form58_update_item(form)
 		var type=form.elements[1].value;
 		var requisite=form.elements[2].value;
 		var quantity=form.elements[3].value;
-		var data_id=form.elements[4].value;
+		var data_id=form.elements[4].value;		
 		var last_updated=get_my_time();
-		var table='pre_requisites';
-		var data_xml="<pre_requisites>" +
-					"<id>"+data_id+"</id>" +
-					"<name>"+service+"</name>" +
-					"<type>service</type>" +
-					"<requisite_type>"+type+"</requisite_type>" +
-					"<requisite_name>"+requisite+"</requisite_name>" +
-					"<quantity>"+quantity+"</quantity>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</pre_requisites>";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>pre_requisites</tablename>" +
-					"<link_to>form58</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Pre-requisite for service "+service+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
+		
+		var data_json={data_store:'pre_requisites',
+	 				log:'yes',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'name',value:service},
+	 					{index:'type',value:'service'},
+	 					{index:'requisite_type',value:type},
+	 					{index:'requisite_name',value:requisite},
+	 					{index:'quantity',value:quantity},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Updated',notes:'Pre-requisite for service '+service,link_to:'form58'}};
+ 						
+		update_json(data_json);
 		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -3935,13 +3923,11 @@ function form83_update_item(form)
 	{
 		var name=form.elements[0].value;
 		var owner=form.elements[1].value;
-		var area_type=form.elements[2].value;
-		var data_id=form.elements[3].value;
+		var data_id=form.elements[2].value;
 		var last_updated=get_my_time();
 		var data_xml="<store_areas>" +
 					"<id>"+data_id+"</id>" +
 					"<owner>"+owner+"</owner>" +
-					"<area_type>"+area_type+"</area_type>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</store_areas>";
 		var activity_xml="<activity>" +
@@ -3952,15 +3938,8 @@ function form83_update_item(form)
 					"<notes>Owner for store area "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
-		for(var i=0;i<3;i++)
+		update_row(data_xml,activity_xml);
+		for(var i=0;i<2;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -8747,14 +8726,7 @@ function form157_dispatch_item(button)
 					"<notes>Product "+product_name+" from store "+source+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
+		update_row(data_xml,activity_xml);
 		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -8797,14 +8769,7 @@ function form157_receive_item(button)
 					"<notes>Product "+product_name+" at store "+target+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
+		update_row(data_xml,activity_xml);
 		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -8877,14 +8842,8 @@ function form157_cancel_item(button)
 					"<notes>Movement of product "+product_name+" from store "+source+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
+		update_row(data_xml,activity_xml);
+			
 		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -15184,6 +15143,7 @@ function form295_update_form()
 		var bill_date=get_raw_time(form.elements['date'].value);
 		var entry_date=get_raw_time(form.elements['entry_date'].value);
 		var bill_num=form.elements['bill_num'].value;
+		var notes=form.elements['notes'].value;
 
 		var amount=0;
 		var discount=0;
@@ -15225,6 +15185,7 @@ function form295_update_form()
 					"<tax>"+tax+"</tax>" +
 					"<tax_rate>"+tax_rate+"</tax_rate>"+
 					"<transaction_id>"+data_id+"</transaction_id>" +
+					"<notes>"+notes+"</notes>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</supplier_bills>";
 		var activity_xml="<activity>" +

@@ -3824,14 +3824,11 @@ function modal35_action(func)
 {
 	var form=document.getElementById("modal35_form");
 	var owner_filter=form.elements[2];
-	var area_type_filter=form.elements[3];
 
 	var owner_data="<staff>"+
 				"<acc_name></acc_name>"+
 				"</staff>";
 	set_my_value_list(owner_data,owner_filter);
-	
-	set_static_value_list('store_areas','area_type',area_type_filter);
 	
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal35_attributes');
@@ -3884,13 +3881,11 @@ function modal35_action(func)
 			var data_id=get_new_key();
 			var name=form.elements[1].value;
 			var owner=form.elements[2].value;
-			var area_type=form.elements[3].value;
 			var last_updated=get_my_time();
 			var data_xml="<store_areas>" +
 						"<id>"+data_id+"</id>" +
 						"<name unique='yes'>"+name+"</name>" +
 						"<owner>"+owner+"</owner>" +
-						"<area_type>"+area_type+"</area_type>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</store_areas>";
 			var activity_xml="<activity>" +
@@ -3901,14 +3896,7 @@ function modal35_action(func)
 						"<notes>Store area "+name+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_create_row_func(data_xml,activity_xml,func);
-			}
-			else
-			{
-				local_create_row_func(data_xml,activity_xml,func);
-			}
+			create_row_func(data_xml,activity_xml,func);
 			
 			var id=get_new_key();
 			$("#modal35_attributes").find('input, select').each(function()
@@ -3926,14 +3914,7 @@ function modal35_action(func)
 							"<value>"+value+"</value>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</attributes>";
-					if(is_online())
-					{
-						server_create_simple(attribute_xml);
-					}
-					else
-					{
-						local_create_simple(attribute_xml);
-					}
+					create_simple(attribute_xml);
 				}
 			});
 		}
@@ -5863,11 +5844,12 @@ function modal57_action(item_name,customer)
  */
 function modal83_action(item_name)
 {
-	var utilization_xml="<area_utilization>"+
-						"<name></name>"+
-						"<item_name></item_name>"+
-						"</area_utilization>";
-	fetch_requested_data('',utilization_xml,function (areas) 
+	var utilization_json=new Object();
+		utilization_json.data_store='area_utilization';
+		utilization_json.return_column='name';
+		utilization_json.indexes=[{index:'item_name',exact:item_name}];
+
+	read_json_single_column(utilization_json,function (areas) 
 	{
 		var item_table=document.getElementById("modal83_inventory_table");
 		item_table.innerHTML="";
@@ -5877,9 +5859,9 @@ function modal83_action(item_name)
 		areas.forEach(function(area)
 		{
 			var item_row=document.createElement('tr');
-			get_store_inventory(area.name,area.item_name,'',function(inventory)
+			get_store_inventory(area,item_name,'',function(inventory)
 			{
-				item_row.innerHTML="<td>"+area.name+"</td><td>"+inventory+"</td>";
+				item_row.innerHTML="<td>"+area+"</td><td>"+inventory+"</td>";
 				item_table.appendChild(item_row);
 			});
 		});

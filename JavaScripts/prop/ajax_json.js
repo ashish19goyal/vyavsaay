@@ -302,12 +302,8 @@ function server_create_json(data_json,func)
 function server_create_batch_json(data_json,func)
 {
 	if(typeof data_json.loader!='undefined' && data_json.loader=='no')
-	{
-	}
-	else 
-	{
-		show_loader();
-	}
+	{}else 
+	{show_loader();}
 
 	var domain=get_domain();
 	var username=get_username();
@@ -315,19 +311,21 @@ function server_create_batch_json(data_json,func)
 	
 	var data_arrays = [];
 	var array_size = 500;
-	var a=1;
-	while (a > 0)
+	
+	while (data_json.data.length > 0)
 	{
 		var new_size=Math.max(array_size,data_json.data.length);
 		
 		var new_data_object=new Object();
-		new_data_object=data_json;
+		for(var i in data_json)
+		{
+			new_data_object[i]=data_json[i];
+		}
 		new_data_object.data=data_json.data.splice(0, new_size);
     	data_arrays.push(new_data_object);
-    	a--;
     };
-    console.log(data_json);
-	data_arrays.forEach(function(data_chunk)
+    
+    data_arrays.forEach(function(data_chunk)
 	{
 		var string_columns=JSON.stringify(data_chunk);
 		ajax_json("./ajax_json/create_batch.php",{domain:domain,username:username,cr:cr_access,data:string_columns},function(response_object)
@@ -342,12 +340,77 @@ function server_create_batch_json(data_json,func)
 		{
 			clearInterval(server_create_complete);
 			if(typeof data_json.loader!='undefined' && data_json.loader=='no')
+			{}else{hide_loader();}
+			
+			if(typeof func!="undefined")
 			{
+				func();
 			}
-			else 
-			{
-				hide_loader();
-			}
+		}
+	},1000);		
+}
+
+function server_update_json(data_json,func)
+{
+	show_loader();
+	var domain=get_domain();
+	var username=get_username();
+	var up_access=get_session_var('up');
+	var string_columns=JSON.stringify(data_json);
+	ajax_json("./ajax_json/update.php",{domain:domain,username:username,up:up_access,data:string_columns},function(response_object)
+	{
+		console.log(response_object.status);
+		hide_loader();
+		if(typeof func!="undefined")
+		{
+			func();
+		}
+	});
+}
+
+function server_update_batch_json(data_json,func)
+{
+	if(typeof data_json.loader!='undefined' && data_json.loader=='no')
+	{}else 
+	{show_loader();}
+
+	var domain=get_domain();
+	var username=get_username();
+	var up_access=get_session_var('cr');
+	
+	var data_arrays = [];
+	var array_size = 500;
+	
+	while (data_json.data.length > 0)
+	{
+		var new_size=Math.max(array_size,data_json.data.length);
+		
+		var new_data_object=new Object();
+		for(var i in data_json)
+		{
+			new_data_object[i]=data_json[i];
+		}
+		new_data_object.data=data_json.data.splice(0, new_size);
+    	data_arrays.push(new_data_object);
+    };
+
+	data_arrays.forEach(function(data_chunk)
+	{
+		var string_columns=JSON.stringify(data_chunk);
+		ajax_json("./ajax_json/update_batch.php",{domain:domain,username:username,up:up_access,data:string_columns},function(response_object)
+		{
+			console.log(response_object);
+		});
+	});
+	
+	var server_update_complete=setInterval(function()
+	{
+		if(number_active_ajax===0)
+		{
+			clearInterval(server_update_complete);
+			if(typeof data_json.loader!='undefined' && data_json.loader=='no')
+			{}else{hide_loader();}
+			
 			if(typeof func!="undefined")
 			{
 				func();

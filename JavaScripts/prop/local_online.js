@@ -448,6 +448,29 @@ function create_batch_json(data_json,func)
 	}
 }
 
+function update_json(data_json,func)
+{
+	if(is_online())
+	{
+		server_update_json(data_json,func);
+	}
+	else
+	{
+		local_update_json(data_json,func);
+	}
+}
+
+function update_batch_json(data_json,func)
+{
+	if(is_online())
+	{
+		server_update_batch_json(data_json,func);
+	}
+	else
+	{
+		local_update_batch_json(data_json,func);
+	}
+}
 
 function send_email(to,from,from_name,subject,message,func)
 {

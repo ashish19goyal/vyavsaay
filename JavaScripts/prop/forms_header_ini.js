@@ -2285,7 +2285,6 @@ function form83_header_ini()
 	var filter_fields=document.getElementById('form83_header');
 	var name_filter=filter_fields.elements[0];
 	var owner_filter=filter_fields.elements[1];
-	var type_filter=filter_fields.elements[2];
 	
 	var area_data="<store_areas>" +
 			"<name></name>" +
@@ -2296,7 +2295,6 @@ function form83_header_ini()
 					"<acc_name></acc_name>"+
 					"</staff>";
 	set_my_filter(owner_data,owner_filter);
-	set_static_filter('store_areas','type',type_filter);					
 				
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
@@ -2304,7 +2302,6 @@ function form83_header_ini()
 		event.preventDefault();
 		form83_ini();
 	});
-
 };
 
 /**
@@ -11660,6 +11657,7 @@ function form295_header_ini()
 	var entry_date=fields.elements['entry_date'];
 	var bill_num=fields.elements['bill_num'];
 	fields.elements['bill_id'].value=get_new_key();
+	fields.elements['notes'].value="";
 	var save_button=fields.elements['save'];
 	
 	$(save_button).off('click');
