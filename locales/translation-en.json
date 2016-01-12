@@ -491,6 +491,9 @@
 	"manage_products_pooja": "Manage Products (Pooja Elec)",
 	"qr_scan_report":"QR Scan Report",
 	"scan_qr_code":"Scan QR Codes",
-	"convert_qr_data":"Convert QR Code Data"
+	"convert_qr_data":"Convert QR Code Data",
+	"inventory_sehgal":"Inventory (Sehgal)",
+	"in-out_sehgal":"In-out (Sehgal)",
+	"store_placement_sehgal":"Store Placement (Sehgal)"
 	}
 }

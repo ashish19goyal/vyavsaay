@@ -8612,14 +8612,7 @@ function form155_update_item(form)
 					"<notes>Inventory for product "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
+		update_row(data_xml,activity_xml);
 		for(var i=0;i<6;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');

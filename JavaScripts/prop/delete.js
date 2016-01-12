@@ -4990,14 +4990,7 @@ function form156_delete_item(button)
 						"<notes>Item "+product_name+" from storage area "+name+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-			}	
+			delete_row(data_xml,activity_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -5025,14 +5018,7 @@ function form157_delete_item(button)
 			var data_xml="<store_movement>" +
 					"<id>"+data_id+"</id>" +
 					"</store_movement>";	
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-			}				
+			delete_simple(data_xml);
 			$(button).parent().parent().remove();
 		});
 	}
