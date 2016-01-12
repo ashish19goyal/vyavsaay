@@ -1,0 +1,78 @@
+<!Doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Unsubscribe</title>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
+<script>
+	function set_id()
+	{
+		var vars = {};
+		var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+				vars[key] = value;
+		});
+		var form=document.getElementById('reason_form');
+		form.elements['id'].value=vars['i'];
+		form.elements['domain'].value=vars['d'];
+
+		if(vars['i']!=null && vars['i']!='undefined' && vars['d']!="")
+		{
+			var xmlhttp = new XMLHttpRequest();
+			var id_data=form.elements['id'].value;
+			var reason_data="";
+			var comment_data="";
+			var domain=form.elements['domain'].value;
+	
+			xmlhttp.open("POST","../ajax_json/unsubscribe.php",true);
+			xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			xmlhttp.send("id="+id_data+"&reason="+reason_data+"&comment="+comment_data+"&domain="+domain);
+		}
+	};
+	
+	function myFunction()
+	{
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange=function()
+	    {
+	     	if(xmlhttp.readyState==4 && xmlhttp.status==200)
+		   	{
+		   		console.log(xmlhttp.responseText);
+		     	//$("#myDiv").hide();
+		        document.getElementById("myDiv").setAttribute('style','display:none;');	                 
+	            document.getElementById("thankYou").innerHTML="Thank you.";
+		   	}
+		}
+		var form=document.getElementById('reason_form');
+		var id_data=form.elements['id'].value;
+		var reason_data=form.elements['reason'].value;
+		var comment_data=form.elements['complaint'].value;
+		var domain=form.elements['domain'].value;
+		
+		xmlhttp.open("POST","../ajax_json/unsubscribe.php",true);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xmlhttp.send("id="+id_data+"&reason="+reason_data+"&comment="+comment_data+"&domain="+domain);
+	}
+</script>
+</head>
+<body onload='set_id();'>
+<div id="myDiv">
+<h1>You have been successfully unsubscribed.</h1>
+<form id='reason_form'>
+<input type="hidden" name="id">
+<input type="hidden" name="domain">
+<p>Please let us know the reason for your going away:</p>
+   <input type="radio" name="reason" value="frequent">Too frequent mails</input><br>
+   <input type="radio" name="reason" value="irrelevant">Irrelevant content</input><br>
+   <input type="radio" name="reason" value="spam">Spam</input><br>
+   <input type="radio" name="reason" value="unknowingly">You subscribed unknowingly</input><br>
+   <input type="radio" name="reason" value="back" checked>You will be back soon</input>
+<br>
+<p>Other comments</p>
+<textarea name="complaint" rows="10" style="width:300px;"></textarea><br><br>
+
+<button type="button" onclick="myFunction();">submit</button>
+</form> 
+</div>
+<h1 id="thankYou"></h1> 
+</body>
+</html>
