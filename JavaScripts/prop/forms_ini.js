@@ -29726,14 +29726,15 @@ function form276_ini()
 			new_columns.data_store='system_search';		
 			
 			new_columns.indexes=[{index:'id',value:fid},
-								{index:'search_column'},
+								{index:'search_column_array'},
 								{index:'table_name',value:ftable},
 								{index:'result_title'},
 								{index:'result_detail'},
 								{index:'result_form'},
 								{index:'result_count'},
 								{index:'return_columns'},
-								{index:'search_only_text'}];
+								{index:'tab_order'},
+								{index:'tab_name'}];
 		
 	read_json_rows('form276',new_columns,function(results)
 	{	
@@ -29744,9 +29745,12 @@ function form276_ini()
 					rowsHTML+="<td data-th='Table'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form276_"+result.id+"' value='"+result.table_name+"'>";
 					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Tab'>";
+						rowsHTML+="<b>Name</b>:<input type='text' readonly='readonly' class='dblclick_editable' form='form276_"+result.id+"' value='"+result.tab_name+"'>";
+						rowsHTML+="<br><b>Order</b>:<input type='number' readonly='readonly' class='dblclick_editable' form='form276_"+result.id+"' value='"+result.tab_order+"'>";
+					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Search'>";
-						rowsHTML+="<b>Column</b>: <input type='text' readonly='readonly' class='dblclick_editable' form='form276_"+result.id+"' value='"+result.search_column+"'>";
-						rowsHTML+="<br><b>Text</b>: <input type='text' readonly='readonly' class='dblclick_editable' form='form276_"+result.id+"' value='"+result.search_only_text+"'>";
+						rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form276_"+result.id+"'>"+result.search_column_array+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Result'>";
 						rowsHTML+="<b>Title</b>:<input type='text' readonly='readonly' class='dblclick_editable' form='form276_"+result.id+"' value='"+result.result_title+"'>";

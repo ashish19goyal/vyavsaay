@@ -5,7 +5,7 @@
 	include "functions/grids_dynamic.php";
 
 	//include "functions/extra_search.php";
-	include "functions/extra_search.php";
+	include "functions/search.php";
 	include "functions/notifications.php";
 	include "functions/logs.php";
 	include "functions/dynamic.php";

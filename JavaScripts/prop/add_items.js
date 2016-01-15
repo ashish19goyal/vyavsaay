@@ -17212,9 +17212,12 @@ function form276_add_item()
 					rowsHTML+="<td data-th='Table'>";
 						rowsHTML+="<input type='text' form='form276_"+id+"'>";
 					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Tab'>";
+						rowsHTML+="<b>Name</b>:<input type='text' form='form276_"+id+"' class='dblclick_editable'>";
+						rowsHTML+="<br><b>Order</b>:<input type='number' form='form276_"+id+"' class='dblclick_editable'>";
+					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Search'>";
-						rowsHTML+="<b>Column</b>: <input type='text' form='form276_"+id+"'>";
-						rowsHTML+="<br><b>Text</b>: <input type='text' form='form276_"+id+"'>";
+						rowsHTML+="<textarea type='text' form='form276_"+id+"' class='dblclick_editable'></textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Result'>";
 						rowsHTML+="<b>Title</b>:<input type='text' form='form276_"+id+"'>";
@@ -17234,8 +17237,8 @@ function form276_add_item()
 		longPressEditable($('.dblclick_editable'));
 		
 		var fields=document.getElementById("form276_"+id);
-		var form_filter=fields.elements[5];
-		var status_filter=fields.elements[7];			
+		var form_filter=fields.elements[6];
+		var status_filter=fields.elements[8];			
 		
 		var form_data="<user_preferences>"+
 					"<name></name>"+

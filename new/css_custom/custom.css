@@ -8,10 +8,15 @@
 .page-logo>a{
 	margin:2% 0;
 	width:80%;
-	font-size: 1.5em;
+	font-size: 1.4em;
 	text-decoration: none;
 }
 
 .logo-text{
 	color:#fff;
+}
+
+#loading_icon{
+	font-size: 100px;
+	color:#d64635;
 }

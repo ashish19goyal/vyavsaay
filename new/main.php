@@ -6,7 +6,7 @@
 		include "includes/head.php" 
 	?>    
     
-    <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white" onload="default_load();">
+    <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white page-sidebar-closed" onload="default_load();">
         
         <!-- BEGIN HEADER & CONTENT DIVIDER -->
 		<?php include "includes/top_bar.php" ?>

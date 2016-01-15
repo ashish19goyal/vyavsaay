@@ -1654,12 +1654,15 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<table_name index='yes' type="VARCHAR(100)"></table_name>
 			<search_column index='yes' type="VARCHAR(100)"></search_column>
+			<search_column_array index='yes' type="TEXT"></search_column_array>
 			<return_columns index='no' type="TEXT"></return_columns>
 			<result_title index='no' type="TEXT"></result_title>
 			<result_detail index='no' type="TEXT"></result_detail>
 			<result_form index='no' type="TEXT"></result_form>
 			<result_count index='no' type="INT"></result_count>
 			<search_only_text index='no' type="TEXT"></search_only_text>
+			<tab_name index='no' type="TEXT"></tab_name>
+			<tab_order index='no' type="TEXT"></tab_order>
 			<status index='yes' type="VARCHAR(30)"></status><!--active/inactive-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>

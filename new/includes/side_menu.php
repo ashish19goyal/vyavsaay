@@ -1,6 +1,6 @@
 <div class="page-sidebar-wrapper">
     <div class="page-sidebar navbar-collapse collapse">
-        <ul class="page-sidebar-menu page-sidebar-menu-hover-submenu page-sidebar-menu-closed page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px;">
+        <ul class="page-sidebar-menu page-sidebar-menu-closed page-sidebar-menu-hover-submenu page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px;">
             <li class="sidebar-toggler-wrapper hide">
                 <div class="sidebar-toggler"> </div>
             </li>
@@ -36,7 +36,7 @@
 					
 					$db_name="re_user_".$domain;
 					$conn=new db_connect($db_name);
-					$query="select name,display_name,elements from system_grids where status=? order by grid_order asc;";
+					$query="select name,display_name,elements,head_color from system_grids where status=? order by grid_order asc;";
 					
 					$stmt=$conn->conn->prepare($query);
 					$stmt->execute(array('active'));
@@ -46,16 +46,16 @@
 					{
 						$grids_html.="<li class='nav-item'>".
 			                	"<a class='nav-link nav-toggle' onclick=\"show_function('#".$res['name']."');\">".
-			                    "<i class='icon-diamond'></i>".
-			                    "<span class='title'>".$res['display_name']."</span>".
-			                    "<span class='arrow'></span></a>";
+			                    "<i class='fa fa-tasks' style='color:".$res['head_color'].";'></i>".
+			                    "<span class='title' style='color:".$res['head_color'].";font-weight:900;'>".$res['display_name']."</span>".
+			                    "<span class='arrow' style='color:".$res['head_color'].";'></span></a>";
 			            
-			            if($res['elements']!="" && $res['elements']!=null)
+			         if($res['elements']!="" && $res['elements']!=null)
 						{
 							$grids_html.="<ul class='sub-menu'>";
 							$elements_array=json_decode($res['elements'],true);
 							foreach($elements_array as $element)
-			                {
+			            {
 			                	$grids_html.="<li class='nav-item'>".
 			                        "<a onclick=\"element_display('','".$element['name']."');\" class='nav-link'>".
 			                            "<span class='title'>".$element['display_name']."</span>".
@@ -63,8 +63,8 @@
 							}
 							
 							$grids_html.="</ul>";
-			         	}			            
-			            $grids_html.="</li>";            
+			         }			            
+			         $grids_html.="</li>";            
 					}
 				}
 				echo $grids_html;
