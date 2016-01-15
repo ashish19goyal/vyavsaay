@@ -251,7 +251,7 @@ function update_local_db(domain,func,new_version)
 
 function backup_server_db()
 {
-	if(is_create_access('db_backup'))
+	if(is_create_access('form99'))
 	{
 		var domain=get_domain();
 		var username=get_username();
