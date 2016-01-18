@@ -112,7 +112,20 @@ function get_formatted_time(my_time)
 		min="0"+min;
 	var time=date+" "+mon+", "+hr+":"+min;
 	return time;
+}
 
+function get_only_time(my_time)
+{
+	var d=new Date(parseFloat(my_time));
+	
+	var hr = d.getHours();
+	if(hr<10)
+		hr="0"+hr;
+	var min = d.getMinutes();
+	if(min<10)
+		min="0"+min;
+	var time=hr+":"+min;
+	return time;
 }
 
 function get_my_time()

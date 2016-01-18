@@ -35,7 +35,6 @@
 <script src='./js/prop/numeral.js'></script>
 <script src='./js/prop/my_chart.js'></script>
 <script src='./js/prop/print.js'></script>
-<script src='./js/prop/print_dynamic.js'></script>
 <script src='./js/prop/questionnaire.js'></script>
 <script src='./js/prop/reports_ini.js'></script>
 <script src='./js/prop/reports_header_ini.js'></script>
@@ -47,6 +46,4 @@
 <script src='./js/prop/sync.js'></script>
 <script src='./js/prop/update.js'></script>
 <script src='./js/prop/time.js'></script>
-<script src='./js/prop/virtual_store.js'></script>
-<script src='./js/prop/worker.js'></script>
 <script src='./js/prop/get_totals.js'></script>

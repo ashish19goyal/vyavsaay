@@ -1,27 +1,53 @@
-<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown style -->
 <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
-    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+    <a href="javascript:;" onclick=notifications_update_seen(); class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
         <i class="icon-bell"></i>
         <span class="badge badge-default" id='notif_count'>0</span>
     </a>
     <ul class="dropdown-menu">
         <li class="external">
             <h3>
-                <span class="bold">12 </span>pending notifications</h3>
+                <span class="bold" id='notif_count2'>0</span> pending notifications</h3>
             <a onclick='show_notifications();'>view all</a>
         </li>
         <li>
-            <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
-                <li>
-                    <a onclick="element_display('','');">
-                        <span class="time">just now</span>
-                        <span class="details">
-                            <span class="label label-sm label-icon label-success">
-                                <i class="fa fa-plus"></i>
-                            </span> New user registered. </span>
-                    </a>
-                </li>
+            <ul id='topbar_notifications' class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
             </ul>
         </li>
     </ul>
 </li>
+
+<script>	
+	function show_notifications()
+	{
+		hide_all();
+		$("#notifications_box").show();
+		notifications_ini();
+		notifications_update_seen();
+	}
+	
+	function notifications_update_seen()
+	{
+		var columns=new Object();
+			columns.data_store='notifications';
+			columns.indexes=[{index:'id'},{index:'status',exact:'pending'}];
+	
+		if_data_read_access('notifications',function(accessible_data)
+		{	
+			read_json_rows('',columns,function(notifs)
+			{
+				var data_json={data_store:'notifications',loader:'no',log:'no',data:[]};
+				var last_updated=get_my_time();
+
+				notifs.forEach(function(notif)
+				{
+					var data_json_array=[{index:'id',value:(notif.id)},
+								{index:'status',value:'reviewed'},
+								{index:'last_updated',value:last_updated}];
+					data_json.data.push(data_json_array);
+				});
+				
+				update_batch_json(data_json);
+			});
+		});
+	}
+</script>

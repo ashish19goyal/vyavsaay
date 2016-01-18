@@ -951,26 +951,6 @@ a.small_cross_icon{
 	font-size: .9em;
 }
 
-.notification_detail{
-	background-color: #C37E4C;
-	border: 2px solid #FFFFFF;
-	color:#F5F3EE;
-	padding: 1% 2%;
-	float:left;
-	width:96%;
-}
-
-.notification_detail a{
-	cursor: pointer;
-}
-
-.notification_detail input{
-	font-size: .9em;
-}
-
-.notification_status{
-	font-size: .9em;
-}
 
 #form272_canvas_div canvas,#form198_canvas_div canvas{
 	position:relative;

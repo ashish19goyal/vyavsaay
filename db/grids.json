@@ -111,7 +111,7 @@
 				"status": "active",
 				"last_updated":1,
 				"grid_order":10,
-				"elements": "[{\"name\":\"form265\",\"onclick\":\"form265_header_ini(); form265_ini();\",\"display_name\":\"Create RTO Sheet\",\"type\":\"forms\"},{\"name\":\"form266\",\"onclick\":\"form266_header_ini(); form266_ini();\",\"display_name\":\"Manage RTO Sheets\",\"type\":\"forms\"},{\"name\":\"form267\",\"onclick\":\"form267_header_ini();\",\"display_name\":\"Update RTO Status\",\"type\":\"forms\"}]"
+				"elements": "[{\"name\":\"form265\",\"onclick\":\"form265_header_ini(); form265_ini();\",\"display_name\":\"Create RTO Sheet\",\"type\":\"forms\"},{\"name\":\"form266\",\"onclick\":\"form266_header_ini(); form266_ini();\",\"display_name\":\"Manage RTO Sheets\",\"type\":\"forms\"},{\"name\":\"form267\",\"onclick\":\"form267_header_ini();\",\"display_name\":\"Update RTO Status\",\"type\":\"forms\"},{\"name\":\"report99\",\"onclick\":\"report99_header_ini();\",\"display_name\":\"# RTO\",\"type\":\"reports\"}]"
 			},
 			{
 				"name":"transit",

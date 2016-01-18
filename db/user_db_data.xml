@@ -1284,6 +1284,17 @@
 			<tables>--qr_scans--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>		
+			<name>report99</name>
+			<display_name>number_rto</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--rto--logistics_orders--</tables>
+			<last_updated>1</last_updated>
+		</row>
 		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
@@ -5096,6 +5107,17 @@
 			<username>master</username>
 			<element_id>report98</element_id>
 			<element_name>qr_scan_report</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report99</element_id>
+			<element_name>number_rto</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

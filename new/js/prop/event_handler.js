@@ -20,35 +20,30 @@ function default_load()
 	
 	if(is_set_session())
 	{
-		//add_questionnaires(function()
-		//{
-			responsive_tabs();
-			set_menu_shortcuts();
-			date_formating();
-			//print_setup();
-			set_footer_message();
-			//add_grid_metrics();
+		responsive_tabs();
+		date_formating();
+		set_footer_message();
+		my_sortable_tables();
+					
+		Chart.defaults.global.responsive = true;
+		Chart.defaults.global.scaleFontSize= 10;
+		Chart.defaults.global.scaleFontColor="#000";
+		Chart.defaults.global.maintainAspectRatio=false;
+		$('textarea').autosize();
+		i18n_setup();
+		home_display();
+
+		if(typeof calculate_grid_metrics!='undefined')
+		{		
 			calculate_grid_metrics();
-			my_sortable_tables();
-						
-			Chart.defaults.global.responsive = true;
-			Chart.defaults.global.scaleFontSize= 10;
-			Chart.defaults.global.scaleFontColor="#000";
-			Chart.defaults.global.maintainAspectRatio=false;
-			$('textarea').autosize();
-			i18n_setup();
-			home_display();
-			setTimeout(function()
-			{
-				start_workers();
-			},get_worker_delay());
-			deferred_execute(function()
-			{
-				activities_lane_ini();
-			});
-			document.getElementById('master_title').innerHTML=get_session_var('title');			
-			hide_loader();					
-		//});
+		}
+		if(typeof start_workers!='undefined')
+		{
+			start_workers();
+		}
+
+		document.getElementById('master_title').innerHTML=get_session_var('title');			
+		hide_loader();
 	}
 	else
 	{
@@ -61,8 +56,6 @@ function declaring_global_variables()
 	localdb_open_requests=0;
 	number_active_ajax=0;
 	loaderTimer=0;
-	count_notif_timer=0;
-	count_sync_timer=0;
 	show_notif_timer=0;
 	progress_value=0;
 	vyavsaay_active_tab="";
@@ -160,64 +153,30 @@ function deferred_execute(func)
 	}
 }
 
-function start_workers()
-{	
-	deferred_execute(function()
-	{notifications1_add();});
-	
-	deferred_execute(function()
-	{notifications2_add();});
-	
-	deferred_execute(function()
-	{notifications3_add();});
-	
-	deferred_execute(function()
-	{notifications4_add();});
-					
-	deferred_execute(function()
-	{notifications5_add();});
-	
-	deferred_execute(function()
-	{notifications6_add();});
-					
-	deferred_execute(function()
-	{notifications7_add();});
-
-	deferred_execute(function()
-	{notifications8_add();});
-
-	deferred_execute(function()
-	{notifications9_add();});
-
-	deferred_execute(function()
-	{notifications10_add();});
-
-	deferred_execute(function()
-	{notifications11_add();});
-
-	deferred_execute(function()
-	{sale_leads_add();});
-
-	deferred_execute(function()
+function timed_execute(func,initial_delay,repeat_delay)
+{
+	var start_at=1000*parseInt(initial_delay);
+	var repeat_at=1000*parseInt(repeat_delay);
+	setTimeout(function()
 	{
-		if(is_form_access('form7'))
+		if(localdb_open_requests===0 && number_active_ajax===0)
 		{
-			generate_attendance_records();
+			func();
+			setTimeout(function()
+			{
+				timed_execute(func,initial_delay,repeat_delay);
+			},repeat_at);
 		}
-	});
-	
-	deferred_execute(function()
-	{manufactured_products_outofstock();});
-	
-	deferred_execute(function()
-	{loans_interest_processing();});
-	
-	deferred_execute(function()
-	{loans_instalment_processing();});
-	
-	deferred_execute(function()
-	{show_notif();});
+		else
+		{
+			setTimeout(function()
+			{
+				timed_execute(func,initial_delay,repeat_delay);
+			},5000);
+		}
+	},start_at);
 }
+
 
 function my_sortable_tables()
 {
@@ -235,11 +194,6 @@ function my_sortable_tables()
 				var tbody_elem=ui.item.parent();
 				var event=new Event('table_sort');				
 				tbody_elem[0].dispatchEvent(event);
-
-				//ui.item.parent().find('tr').each(function(index)
-				//{
-				//	$(this).find('td:nth-child(2)>input').attr('value',index+1);
-				//});
 			}
 		});
 	});
@@ -331,8 +285,6 @@ function modal_forms_ini()
 function home_display()
 {
 	$(document).off('keydown');
-	count_notif();
-	count_sync();
 	hide_all();
 	$('#home_grid').show();	
 }
@@ -439,29 +391,6 @@ function hide_all()
 	
 	hide_all_grids();
 
-/*
-	$("#sale_bills_main").hide();
-	$("#logistics_main").hide();
-	$("#orders_main").hide();
-	$("#drs_main").hide();
-	$("#transit_main").hide();
-	$("#products_main").hide();
-	$("#purchase_main").hide();
-	$("#services_main").hide();
-	$("#finances_main").hide();
-	$("#ecommerce_main").hide();
-	$("#people_main").hide();
-	$("#customer_service_main").hide();
-	$("#treatment_main").hide();
-	$("#projects_main").hide();
-	$("#store_main").hide();
-	$("#offers_main").hide();
-	$("#maps_main").hide();
-	$("#manufacturing_main").hide();
-	$("#sale_reports_main").hide();
-	$("#admin_main").hide();
-*/
-
 	hide_menu_items();
 	if(typeof form301_cancel_capture!='undefined')
 	{
@@ -488,12 +417,6 @@ function hide_loader()
 {
 	$("#loading_icon").hide();
 	$("#transparent_layer").hide();
-}
-
-
-function load_tooltips()
-{
-	$(".icon").tooltip();
 }
 
 
@@ -591,43 +514,6 @@ function access_display(tablename,record_id)
 	record_filter.setAttribute('readonly','readonly');
 }
 
-
-function set_menu_shortcuts()
-{
-	var shortcuts_data="<user_preferences>" +
-			"<id></id>" +
-			"<name></name>" +
-			"<shortcut></shortcut>" +
-			"<value exact='yes'>checked</value>" +
-			"<type array='yes'>--form--report--</type>" +
-			"</user_preferences>";
-
-	fetch_requested_data('',shortcuts_data,function(results)
-	{
-		results.forEach(function(result)
-		{
-			if(result.shortcut!="" && result.shortcut!="undefined")
-			{	
-				Mousetrap.bind(result.shortcut,function(e)
-				{
-			    	element_display('',result.name);
-				});
-			}
-		});
-	});
-}
-
-
-/**
- * this function displays the notifications in the main content box
- */
-function show_notifications()
-{
-	hide_all();
-	$("#notifications_box").show();
-	notifications_ini();
-}
-
 /**
  * this function shows the settigns screen
  */
@@ -661,24 +547,6 @@ function longPressEditable(element)
 			$(this).removeAttr('readonly');
 		});
 	});
-}
-
-/**
- * set the text value to be editable
- * @param element
- */
-function set_editable(element)
-{
-	$(element).removeAttr('readonly');
-}
-
-/**
- * set the text value to be non-editable
- * @param element
- */
-function set_non_editable(element)
-{
-	$(element).attr('readonly','readonly');
 }
 
 /**

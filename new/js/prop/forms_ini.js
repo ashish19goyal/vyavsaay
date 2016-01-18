@@ -5924,150 +5924,6 @@ function form72_ini()
 	}
 }
 
-/**
- * Notifications screen
- */
-function notifications_ini()
-{
-	show_loader();
-	var columns="<notifications count='100'>" +
-			"<id></id>" +
-			"<title></title>" +
-			"<link_to></link_to>" +
-			"<data_id></data_id>" +
-			"<notes></notes>" +
-			"<t_generated></t_generated>" +
-			"<status exact='yes'>pending</status>" +
-			"<target_user></target_user>"+
-			"<last_updated></last_updated>" +
-			"</notifications>";
-
-	if_data_read_access('notifications',function(accessible_data)
-	{	
-		fetch_requested_data('',columns,function(notifs)
-		{	
-			var result_html="";
-			
-			notifs.forEach(function(notif)
-			{
-				var read=false;
-				var update=false;
-				for(var x in accessible_data)
-				{
-					if(accessible_data[x].record_id==notif.id || accessible_data[x].record_id=='all')
-					{
-						if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || accessible_data[x].criteria_field=="null" || notif[accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
-						{
-							if(accessible_data[x].access_type=='all')
-							{
-								read=true;
-								update=true;
-								break;
-							}
-							if(accessible_data[x].access_type=='read')
-							{
-								read=true;
-							}
-							if(accessible_data[x].access_type=='update')
-							{
-								update=true;
-							}							
-						}
-					}
-				}
-
-				var found=notif.target_user.indexOf(get_account_name());
-				if(read || found>=0)
-				{
-					result_html+="<div class='notification_detail'><b>" +
-						notif.title +
-						"</b><br><a onclick=\"" +
-						"element_display('"+notif.data_id +
-						"','"+notif.link_to+"');\">"+notif.notes+"</a>" +
-						"<div class='notification_status'>" +
-						" Generated @ " +
-						get_formatted_time(notif.t_generated) +
-						"</div>";
-						if(update || found>=0) 
-						{
-							result_html+="<div><input type='button' class='generic_icon' value='Seen' onclick=\"notifications_update($(this),'"+notif.id+"','reviewed')\">" +
-							"<input type='button' class='generic_icon' value='Close' onclick=\"notifications_update($(this),'"+notif.id+"','closed')\">" +
-							"</div>";
-						}
-					result_html+="</div>";
-				}
-			});
-			
-			var columns2="<notifications count='100'>" +
-					"<id></id>" +
-					"<title></title>" +
-					"<link_to></link_to>" +
-					"<data_id></data_id>" +
-					"<notes></notes>" +
-					"<t_generated></t_generated>" +
-					"<status exact='yes'>reviewed</status>" +
-					"<target_user></target_user>"+
-					"<last_updated></last_updated>" +
-					"</notifications>";
-			
-			fetch_requested_data('',columns2,function(notifs2)
-			{	
-				notifs2.forEach(function(notif2)
-				{
-					var read=false;
-					var update=false;
-					for(var x in accessible_data)
-					{
-						if(accessible_data[x].record_id==notif2.id || accessible_data[x].record_id=='all')
-						{
-							if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || notif2[accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
-							{
-								if(accessible_data[x].access_type=='all')
-								{
-									read=true;
-									update=true;
-									break;
-								}
-								if(accessible_data[x].access_type=='read')
-								{
-									read=true;
-								}
-								if(accessible_data[x].access_type=='update')
-								{
-									update=true;
-								}							
-							}
-						}
-					}
-					
-					var found=notif2.target_user.indexOf(get_account_name());
-					if(read || found>=0)
-					{
-						result_html+="<div class='notification_detail'><b>" +
-							notif2.title +
-							"</b><br><a onclick=\"" +
-							"element_display('"+notif2.data_id +
-							"','"+notif2.link_to+"');\">"+notif2.notes+"</a>" +
-							"<div class='notification_status'>" +
-							" Generated @ " +
-							get_formatted_time(notif2.t_generated) +
-							"</div>";
-						if(update || found>=0) 
-						{
-							result_html+="<div><input type='button' class='generic_icon' value='Close' onclick=\"notifications_update($(this),'"+notif2.id+"','closed')\">" +
-							"</div>";
-						}
-						result_html+="</div>";
-					}
-				});
-				$("#notifications_detail").html(result_html);
-				hide_loader();
-			});
-		});
-	});
-}
-
-
 function activities_ini()
 {
 	if(is_create_access('activities'))
@@ -29726,14 +29582,15 @@ function form276_ini()
 			new_columns.data_store='system_search';		
 			
 			new_columns.indexes=[{index:'id',value:fid},
-								{index:'search_column'},
+								{index:'search_column_array'},
 								{index:'table_name',value:ftable},
 								{index:'result_title'},
 								{index:'result_detail'},
 								{index:'result_form'},
 								{index:'result_count'},
 								{index:'return_columns'},
-								{index:'search_only_text'}];
+								{index:'tab_order'},
+								{index:'tab_name'}];
 		
 	read_json_rows('form276',new_columns,function(results)
 	{	
@@ -29744,9 +29601,12 @@ function form276_ini()
 					rowsHTML+="<td data-th='Table'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form276_"+result.id+"' value='"+result.table_name+"'>";
 					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Tab'>";
+						rowsHTML+="<b>Name</b>:<input type='text' readonly='readonly' class='dblclick_editable' form='form276_"+result.id+"' value='"+result.tab_name+"'>";
+						rowsHTML+="<br><b>Order</b>:<input type='number' readonly='readonly' class='dblclick_editable' form='form276_"+result.id+"' value='"+result.tab_order+"'>";
+					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Search'>";
-						rowsHTML+="<b>Column</b>: <input type='text' readonly='readonly' class='dblclick_editable' form='form276_"+result.id+"' value='"+result.search_column+"'>";
-						rowsHTML+="<br><b>Text</b>: <input type='text' readonly='readonly' class='dblclick_editable' form='form276_"+result.id+"' value='"+result.search_only_text+"'>";
+						rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form276_"+result.id+"'>"+result.search_column_array+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Result'>";
 						rowsHTML+="<b>Title</b>:<input type='text' readonly='readonly' class='dblclick_editable' form='form276_"+result.id+"' value='"+result.result_title+"'>";

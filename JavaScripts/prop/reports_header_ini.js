@@ -1804,29 +1804,6 @@ function report84_header_ini()
 }
 
 /**
- * @reportNo 85
- * @report # DRS
- */
-function report85_header_ini()
-{	
-	var form=document.getElementById('report85_header');
-	var start_date=form.elements[1];
-	var end_date=form.elements[2];
-
-	$(form).off('submit');
-	$(form).on('submit',function(event)
-	{
-		event.preventDefault();
-		report85_ini();
-	});
-	
-	$(start_date).datepicker();
-	$(end_date).datepicker();
-	start_date.value=get_my_past_date((get_my_time()-(7*86400000)));
-	end_date.value=get_my_date();	
-}
-
-/**
  * @reportNo 86
  * @report Sales report (Modern)
  */

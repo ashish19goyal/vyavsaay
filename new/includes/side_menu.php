@@ -46,23 +46,23 @@
 					{
 						$grids_html.="<li class='nav-item'>".
 			                	"<a class='nav-link nav-toggle' onclick=\"show_function('#".$res['name']."');\">".
-			                    "<i class='fa fa-tasks' style='color:".$res['head_color'].";'></i>".
+			                    "<i class='fa fa-tasks'></i>".
 			                    "<span class='title' style='color:".$res['head_color'].";font-weight:900;'>".$res['display_name']."</span>".
 			                    "<span class='arrow' style='color:".$res['head_color'].";'></span></a>";
 			            
-			         if($res['elements']!="" && $res['elements']!=null)
-						{
-							$grids_html.="<ul class='sub-menu'>";
-							$elements_array=json_decode($res['elements'],true);
-							foreach($elements_array as $element)
-			            {
-			                	$grids_html.="<li class='nav-item'>".
-			                        "<a onclick=\"element_display('','".$element['name']."');\" class='nav-link'>".
-			                            "<span class='title'>".$element['display_name']."</span>".
-			                        "</a></li>";
-							}
-							
-							$grids_html.="</ul>";
+					if($res['elements']!="" && $res['elements']!=null)
+					{
+						$grids_html.="<ul class='sub-menu'>";
+						$elements_array=json_decode($res['elements'],true);
+						foreach($elements_array as $element)
+		            	{
+		                	$grids_html.="<li class='nav-item'>".
+		                        "<a onclick=\"element_display('','".$element['name']."');\" class='nav-link'>".
+		                            "<span class='title'>".$element['display_name']."</span>".
+		                        "</a></li>";
+						}
+						
+						$grids_html.="</ul>";
 			         }			            
 			         $grids_html.="</li>";            
 					}

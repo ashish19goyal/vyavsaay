@@ -8723,13 +8723,12 @@ function form276_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			var data_id=form.elements[7].value;
+			var data_id=form.elements[8].value;
 			var data_xml="<system_search>" +
 						"<id>"+data_id+"</id>" +
 						"</system_search>";
 							
-			delete_simple(data_xml);			
-			
+			delete_simple(data_xml);
 			$(button).parent().parent().remove();
 		});
 	}

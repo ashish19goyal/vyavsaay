@@ -494,6 +494,7 @@
 	"convert_qr_data":"Convert QR Code Data",
 	"inventory_sehgal":"Inventory (Sehgal)",
 	"in-out_sehgal":"In-out (Sehgal)",
-	"store_placement_sehgal":"Store Placement (Sehgal)"
+	"store_placement_sehgal":"Store Placement (Sehgal)",
+	"number_rto":"Number of RTO"
 	}
 }

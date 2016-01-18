@@ -83,7 +83,7 @@ function login_online(username,domain,pass)
 			set_session_online(function()
 			{
 				set_session(session_vars);
-				console.log(session_vars);
+				//console.log(session_vars);
 			});
 		}
 	});

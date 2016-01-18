@@ -1464,7 +1464,7 @@ function form57_import(data_array,import_type)
 function form58_import(data_array,import_type)
 {
 	var data_json={data_store:'pre_requisites',
- 					loader:'no',
+ 					loader:'yes',
  					log:'yes',
  					data:[],
  					log_data:{title:'pre requisites for services',link_to:'form58'}};

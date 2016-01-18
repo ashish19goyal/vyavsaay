@@ -20,3 +20,27 @@
 	font-size: 100px;
 	color:#d64635;
 }
+
+.notification_check{
+	display:inline-block;
+	width:5%;
+	font-size:40px;
+	color:#4db3a4;
+	cursor: pointer;
+}
+
+.notification_check_grey{
+	display:inline-block;
+	width:5%;
+	font-size:40px;
+	color:#555;
+	cursor: pointer;
+}
+
+.notification_check:hover{
+	color:#555;
+}
+
+.notification_detail{
+	display: inline-block;
+}
