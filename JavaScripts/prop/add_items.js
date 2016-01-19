@@ -8268,7 +8268,7 @@ function form148_add_item()
 					"<name></name>" +
 					"<display_name exact='yes'>"+name_filter.value+"</display_name>"+
 					"</user_preferences>";
-			set_my_value_list(id_data,id_filter);
+			set_my_value(id_data,id_filter);
 		});
 	}
 	else

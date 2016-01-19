@@ -27,6 +27,7 @@
 	font-size:40px;
 	color:#4db3a4;
 	cursor: pointer;
+	vertical-align: top;
 }
 
 .notification_check_grey{
@@ -35,6 +36,7 @@
 	font-size:40px;
 	color:#555;
 	cursor: pointer;
+	vertical-align: top;
 }
 
 .notification_check:hover{
@@ -43,4 +45,15 @@
 
 .notification_detail{
 	display: inline-block;
+	width:90%;
+}
+
+.activity_by{
+	font-size:0.8em;
+	color:#555;
+	text-align:right;
+}
+
+.search-classic{
+	border-bottom: 1px solid #DBDBDB;
 }

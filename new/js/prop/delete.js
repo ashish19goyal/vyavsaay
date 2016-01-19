@@ -2,31 +2,6 @@
  * @form Update Inventory
  * @param button
  */
-function delete_all_activity(data_id,div_elem)
-{
-	if(is_delete_access('activities'))
-	{
-		modal115_action(function()
-		{
-			var data_xml="<activities>" +
-						"<id>"+data_id+"</id>" +
-						"</activities>";	
-			
-			delete_simple(data_xml);
-			$(div_elem).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
-
-/**
- * @form Update Inventory
- * @param button
- */
 function form1_delete_item(button)
 {
 	if(is_delete_access('form1'))

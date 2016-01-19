@@ -386,7 +386,7 @@ function hide_all()
 	$("#settings_main").hide();
 	$("#r_preferences").hide();
 	$("#search_results_box").hide();
-	$("#all_activities_box").hide();
+	$("#activities_box").hide();
 	$("#notifications_box").hide();
 	
 	hide_all_grids();
@@ -419,13 +419,6 @@ function hide_loader()
 	$("#transparent_layer").hide();
 }
 
-
-function show_all_activities() 
-{
-	hide_all();
-	$("#all_activities_box").show();
-	activities_ini();
-}
 
 function grid_click(func)
 {

@@ -230,20 +230,6 @@ a div{
 	background-color: #333333;
 }
 
-#count_notif,#count_sync{
-	float: right;
-	position:absolute;
-	/*right: 5px;*/
-	border-radius: 2px;
-	font-size: .7em;
-	text-align: left;
-	display:none;
-	background-color:#dddd00;
-	padding:0px 3px;
-	/*min-width:15px;*/
-}
-
-
 .filter{
 	top: inherit;
 	left:inherit;
