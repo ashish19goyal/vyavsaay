@@ -57,3 +57,11 @@
 .search-classic{
 	border-bottom: 1px solid #DBDBDB;
 }
+
+.page-lock{
+	display: none;
+}
+
+.modal-body input{
+	margin-bottom: 2%;
+}

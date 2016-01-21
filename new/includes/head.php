@@ -17,7 +17,7 @@
 	<!-- END GLOBAL MANDATORY STYLES -->
 
 	<!-- BEGIN PAGE LEVEL STYLES -->
-	<!-- END PAGE LEVEL STYLES -->
+    <!-- END PAGE LEVEL STYLES -->
 
     <!-- BEGIN THEME GLOBAL STYLES -->
     <link href="./css_open/components.min.css" rel="stylesheet" id="style_components" type="text/css" />

@@ -37,6 +37,7 @@ function setup_grid_display_tabs()
 		if(function_main===0 || function_main===hidden_function_main)
 		{
 			$("#"+func+"_link").hide();
+			$("#nav-"+func).hide();
 		}
 	});
 }
@@ -51,6 +52,7 @@ function setup_grid_display_accordion()
 		if(function_main===0 || function_main===hidden_function_main)
 		{
 			$("#"+func+"_link").hide();
+			$("#nav-"+func).hide();
 		}
 	});
 }
@@ -114,7 +116,6 @@ function accordionsToTabs()
 
 function init_functions_tabs()
 {
-	//var system_grids_array=['sale_bills','logistics','orders','drs','transit','purchase','finances','products','services','customer_service','treatment','projects','people','store','ecommerce','offers','manufacturing','maps','sale_reports','admin','settings'];
 	system_grids_array.forEach(function(func)
 	{
 		var function_main=$("#"+func+"_main");
@@ -124,44 +125,6 @@ function init_functions_tabs()
 			activate:function(e, ui) 
 		    {
 		    	e.currentTarget.blur();
-				/*				
-				if(func=='customers')
-				{				
-					if(typeof map41 != 'undefined')
-					{
-					  	map41.invalidateSize(false);
-					}
-				}
-				else if(func=='customer_service')
-				{
-					$('#form131_calendar').fullCalendar('render');
-		    		$('#form132_calendar').fullCalendar('render');
-					if(typeof map129 != 'undefined')		    	
-			    		map129.invalidateSize(false);
-				}
-				else if(func=='projects')
-				{
-					$('#form104_calendar').fullCalendar('render');
-				}
-				else if(func=='sale_bills')
-				{
-					$('#form89_calendar').fullCalendar('render');
-				}
-				else if(func=='staff')
-				{
-					if(typeof map86 != 'undefined')		    	
-		    		{	
-		    			map86.invalidateSize(false);
-		    		}
-		    		$('#form7_calendar').fullCalendar('render');
-		    		$('#form14_calendar').fullCalendar('render');
-				}
-				else if(func=='suppliers')
-				{
-					if(typeof map85 != 'undefined')		    	
-		    			map85.invalidateSize(false);
-				}
-				*/
 				vyavsaay_active_tab=ui.newPanel.attr('id');
 		    },
 		    beforeActivate:function(event,ui)
@@ -178,7 +141,6 @@ function init_functions_tabs()
 
 function init_functions_accordion()
 {
-	//var system_grids_array=['sale_bills','logistics','orders','drs','transit','purchase','finances','products','services','customer_service','treatment','projects','people','store','ecommerce','offers','manufacturing','maps','sale_reports','admin','settings'];
 	system_grids_array.forEach(function(func)
 	{
 		var function_main=$("#"+func+"_main");
@@ -189,44 +151,7 @@ function init_functions_accordion()
 			active:false,
 			activate:function(e, ui) 
 		    {
-		    	//e.currentTarget.blur();
-				/*
-				if(func=='customers')
-				{				
-					if(typeof map41 != 'undefined')
-					{
-					  	map41.invalidateSize(false);
-					}
-				}
-				else if(func=='customer_service')
-				{
-					$('#form131_calendar').fullCalendar('render');
-		    		$('#form132_calendar').fullCalendar('render');
-					if(typeof map129 != 'undefined')		    	
-			    		map129.invalidateSize(false);
-				}
-				else if(func=='projects')
-				{
-					$('#form104_calendar').fullCalendar('render');
-				}
-				else if(func=='sale_bills')
-				{
-					$('#form89_calendar').fullCalendar('render');
-				}
-				else if(func=='staff')
-				{
-					if(typeof map86 != 'undefined')		    	
-		    			map86.invalidateSize(false);
-		    		$('#form7_calendar').fullCalendar('render');
-		    		$('#form14_calendar').fullCalendar('render');
-				}
-				else if(func=='suppliers')
-				{
-					if(typeof map85 != 'undefined')		    	
-		    			map85.invalidateSize(false);
-				}
-				*/
-				vyavsaay_active_tab=ui.newPanel.attr('id');
+		    	vyavsaay_active_tab=ui.newPanel.attr('id');
 		    },
 		    beforeActivate:function(event,ui)
 		    {

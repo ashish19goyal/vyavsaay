@@ -589,25 +589,6 @@ tbody tr:hover{
 	margin: 2px 0px;
 }
 
-.modal_submit{
-	height: 25px;
-	width: auto;
-	cursor: pointer;
-	border: 2px solid #818060;
-	display: inline-block;
-	color: #FFF;
-	font-size: 1em;
-	text-align: center;
-	-webkit-appearance:none;
-	transition: 0.5s all;
-	-webkit-transition: 0.5s all;
-	-moz-transition: 0.5s all;
-	-o-transition: 0.5s all;
-	background: #818060;
-	outline: none;
-	margin: 2px 5px;
-	float:right;
-}
 
 .generic_head_icon{
 	height: 25px;
@@ -953,14 +934,6 @@ canvas{
 	display:block;
 	position:absolute;
 	border: 1px solid black;
-}
-
-.modal_forms{
-	display:none;
-}
-
-.modal_forms input, .modal_forms textarea{
-	border: 1px solid #dadada;
 }
 
 textarea.widebox{
@@ -1406,7 +1379,7 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 	  width: 170px;
   	}
   	
-	.export_icon, .generic_icon, .import_icon,.modal_submit{
+	.export_icon, .generic_icon, .import_icon{
 		height:30px;
 		font-size: 20px;
 	}
@@ -1452,11 +1425,6 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 	
 	.rwd-table td{
 		margin: 10px 5px;
-	}
-	
-	.modal_forms input,.modal_forms textarea,.modal_forms select{
-		min-width: 200px;
-		width:200px;
 	}
 		
 	v2{

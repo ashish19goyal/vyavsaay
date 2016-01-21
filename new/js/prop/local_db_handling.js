@@ -129,13 +129,6 @@ function open_local_db(func)
 
 function delete_local_db()
 {
-	$("#modal52").dialog(
-	{
-		close:function(e,ui)
-		{
-			delete_session();
-		}
-	});
 	if("indexedDB" in window)
 	{
 		var db_name="re_local_"+get_domain();
@@ -148,7 +141,8 @@ function delete_local_db()
 		var deleterequest=indexedDB.deleteDatabase(db_name);
 		deleterequest.onsuccess=function(ev)
 		{
-			$("#modal52").dialog("open");
+			console.log('delete_local_db');
+			$("#modal52_link").click();
 		};
 		
 		deleterequest.onerror=function(ev)
@@ -163,7 +157,7 @@ function delete_local_db()
 	}
 	else
 	{
-		$("#modal52").dialog("open");
+		$("#modal52_link").click();
 	}
 }
 

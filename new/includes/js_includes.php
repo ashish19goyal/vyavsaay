@@ -1,4 +1,3 @@
-<script src='./js/open/jquery-ui.min.js'></script>
 <script src='./js/open/bcrypt.js'></script>
 <script src='./js/open/indexeddb.js'></script>
 <script src='./js/open/i18next-1.7.4.js'></script>

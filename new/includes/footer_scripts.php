@@ -1,3 +1,4 @@
+<script src='./js/open/jquery-ui.min.js'></script>
 <script src="./js/open/bootstrap.min.js" type="text/javascript"></script>
 <script src="./js/open/js.cookie.min.js" type="text/javascript"></script>
 <script src="./js/open/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
@@ -14,6 +15,7 @@
 <!-- BEGIN THEME LAYOUT SCRIPTS -->
 <script src="./js/open/layout.js" type="text/javascript"></script>
 <script src="./js/open/demo.js" type="text/javascript"></script>
+<script src="./js/open/lock.min.js" type="text/javascript"></script>
 
 <script type='text/javascript'>
 		history.pushState(null, null, 'main.php');

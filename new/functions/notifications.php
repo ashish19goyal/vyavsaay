@@ -1,4 +1,4 @@
-<div id='notifications_box'>
+<div id='notifications_box' style='display:none;'>
 	<h3 class="page-title">Notifications</h3>
 	<div class="row">
 		<div class="col-md-12">

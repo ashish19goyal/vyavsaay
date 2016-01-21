@@ -18,16 +18,18 @@
 		$stmt2->execute(array('active'));
 		$struct_res2=$stmt2->fetchAll(PDO::FETCH_ASSOC);
 		
+		$hide_unreadable_func="<script>	function hide_unreadable_elements(){var elements_array=[];";
+		
 		for($i=0;$i<count($struct_res);$i++)
 		{
 			echo "<div id='".$struct_res[$i]['name']."_main' class='vy_tabs function_main'>";
 			echo "<ul>";
-			//echo $struct_res[$i]['elements'];			
 			$elements_array=json_decode($struct_res[$i]['elements'],true);
-			//echo count($elements_array);
+			
 				for($x=0;$x<count($elements_array);$x++)
 				{
 					echo "<li><a id='".$elements_array[$x]['name']."_link' href='#".$elements_array[$x]['name']."' onclick='".$elements_array[$x]['onclick']."'>".$elements_array[$x]['display_name']."</a></li>";
+					$hide_unreadable_func.="elements_array.push('".$elements_array[$x]['name']."');";
 				}
 				
 				for($y=0;$y<count($struct_res2);$y++)
@@ -53,6 +55,14 @@
 					}
 				}
 			echo "</div>";	
-		}		
+		}
+		
+		$hide_unreadable_func.="elements_array.forEach(function(element)".
+								"{if(!is_read_access(element))".
+								"{jQuery('#'+element+'_link').parent().hide();".
+								"jQuery('#nav-'+element).hide();}});}</script>";
+		
+		echo $hide_unreadable_func;						
+				
 	}
 ?>

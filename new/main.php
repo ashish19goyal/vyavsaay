@@ -8,6 +8,8 @@
     
     <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white page-sidebar-closed" onload="default_load();">
         
+       	<?php include "functions/lock_screen.php"; ?>
+
         <!-- BEGIN HEADER & CONTENT DIVIDER -->
 		<?php include "includes/top_bar.php" ?>
         <div class="clearfix"> </div>

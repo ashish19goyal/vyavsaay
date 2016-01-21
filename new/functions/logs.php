@@ -1,4 +1,4 @@
-<div id='activities_box'>
+<div id='activities_box' style='display:none;'>
 	<h3 class="page-title">Activities</h3>
 	<div style='display:inline-block;float:right;'>
 		<a title='Export All Logs' class='btn btn-icon-only green' class='export_icon' onclick='export_activities();'><i class='fa fa-send'></i></a>

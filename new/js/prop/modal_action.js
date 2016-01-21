@@ -15535,3 +15535,85 @@ function modal181_action(data_id,preview)
 	
 	$("#modal181").dialog("open");
 }
+
+/**
+ * @modalNo 182
+ * @modal Change Password
+ * @param button
+ */
+function modal182_action()
+{
+	var form=document.getElementById('modal182_form');
+	
+	var old_pass=form.elements['current_pass'];
+	var new_password=form.elements['new_pass'];
+	var re_pass=form.elements['re_pass'];
+	
+	old_pass.value="";
+	new_password.value="";
+	re_pass.value="";
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		
+		show_loader();
+		var domain=get_domain();
+		var username=get_username();
+		var current_pass=old_pass.value;
+		var new_pass=new_password.value;
+		var last_updated=get_my_time();
+
+		var user_data=new Object();
+		user_data.count=1;
+		user_data.data_store='accounts';
+		user_data.indexes=[{index:'id'},{index:'password'},{index:'username',exact:username}];
+
+		read_json_rows('',user_data,function(results)
+		{
+			if(results.length>0)
+			{
+				var salt='$2a$10$'+domain+'1234567891234567891234';
+				var salt_22=salt.substring(0, 29);
+				
+				var bcrypt = new bCrypt();
+				bcrypt.hashpw(current_pass, salt_22, function(currenthash)
+				{
+					if(currenthash.substring(3)===results[0].password.substring(3))
+					{
+						//console.log(newhash);
+						var bcrypt = new bCrypt();
+						bcrypt.hashpw(new_pass, salt_22, function(newhash)
+						{
+							var data_json={data_store:'accounts',
+						 				log:'no',
+						 				data:[{index:'id',value:results[0].id},
+						 					{index:'password',value:newhash},
+						 					{index:'last_updated',value:last_updated}]};
+					 						
+							update_json(data_json);
+							
+							$(form).find('.verify').html('Password updated.');
+							old_pass.value="";
+							new_password.value="";
+							re_pass.value="";
+							hide_loader();
+							$(form).find('.close').click();
+						}, function() {});
+					}
+					else
+					{
+						$(form).find('.verify').html('Incorrect password. Try again!');
+						old_pass.value="";
+						new_password.value="";
+						re_pass.value="";
+						hide_loader();
+					}
+				}, function() {});
+			}
+		});
+	});
+	
+	$("#modal182_link").click();
+}

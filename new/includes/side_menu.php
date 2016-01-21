@@ -44,11 +44,12 @@
 			
 					foreach($struct_res as $res)
 					{
-						$grids_html.="<li class='nav-item'>".
-			                	"<a class='nav-link nav-toggle' onclick=\"show_function('#".$res['name']."');\">".
-			                    "<i class='fa fa-tasks'></i>".
-			                    "<span class='title' style='color:".$res['head_color'].";font-weight:900;'>".$res['display_name']."</span>".
-			                    "<span class='arrow' style='color:".$res['head_color'].";'></span></a>";
+						$first_char=substr($res['display_name'],0,1);
+						$grids_html.="<li class='nav-item' id='nav-".$res['name']."'>".
+			                	"<a class='nav-link nav-toggle'>".
+			                    "<b style='color:#999;font-size:1.2em;'>".$first_char."</b>".
+								"<span class='title' style='font-weight:900;color:#999;'>".$res['display_name']."</span>".
+			                    "<span class='arrow'></span></a>";
 			            
 					if($res['elements']!="" && $res['elements']!=null)
 					{
@@ -56,7 +57,7 @@
 						$elements_array=json_decode($res['elements'],true);
 						foreach($elements_array as $element)
 		            	{
-		                	$grids_html.="<li class='nav-item'>".
+		                	$grids_html.="<li class='nav-item' id='nav-".$element['name']."'>".
 		                        "<a onclick=\"element_display('','".$element['name']."');\" class='nav-link'>".
 		                            "<span class='title'>".$element['display_name']."</span>".
 		                        "</a></li>";

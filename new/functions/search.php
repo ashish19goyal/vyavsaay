@@ -1,4 +1,4 @@
-<div id='search_results_box'>
+<div id='search_results_box' style='display:none;'>
 	<h3 class="page-title">Search Results</h3>
 	<div class="row">
 		<div class="col-md-12">

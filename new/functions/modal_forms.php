@@ -1,43 +1,15 @@
-<!--<div id='newsletter_print_div' style='width:8in;background-color:#fff;padding:2px;'>xyz</div>-->
 <div id='pdf_print_div' style='width:8in;background-color:#fff;padding:2px;'>xyz</div>
 
 <div class='modal_forms'>
 	
-	<!--this div is to be populated with pdf content when printing it-->
-
-	<div id="modal1" title="Please type your password again">
+	<div id="modal1" title="Enter password again">
 		<form>
 			<input type="password" id="modal1_pass" required>
 			<input type="submit" class='modal_submit' tabindex="-1" style="position:absolute; top:-1000px">
 		</form>
 	</div>
 	
-	<div id="modal2" title="Access denied">
-		You don't have permissions to perform this operation.
-		To allow this operation, ask your administrator to update your access control.
-	</div>
-	
-	<div id="modal3" title="Saved">
-		Saved Successfully!
-	</div>
-	
-	<div id="modal4" title="Deleted">
-		Deleted successfully!
-	</div>
-	
-	<div id="modal5" title="Duplicate Entry">
-		This operation will result in a duplicate entry. Operation aborted.
-		Please validate whether the required record already exists or try again with different parameters (e.g. different name).
-	</div>
 
-	<div id="modal6" title="Get online">
-		This operation can be performed in online mode only. Please make sure you are connected to internet and change to online mode.
-	</div>
-	
-	<div id="modal7" title="Offer finished">
-		Offer will not be applicable on this purchase as the offered product is out of stock.
-	</div>
-	
 	<div id="modal8" title="Add new Offer">
 		<form id='modal8_form' autocomplete="off">
 			<fieldset>
@@ -619,10 +591,6 @@
 		Please don't close this window immediately.
 	</div>
 	
-	<div id="modal52" title="Local Storage Cleared">
-		Local storage on this system has been cleared. 
-		You will be logged out now. Login again to access the system in online mode.
-	</div>
 	
 	<div id="modal53" title="Scheme to customer">
 		<table id='modal53_table'>
@@ -637,10 +605,6 @@
 	<div id="modal55" title="Server Db backup">
 	</div>
 
-	<div id="modal56" title="Location not available">
-		oops! your location can't be determined at the moment. Please try in a few moments.
-	</div>
-
 	<div id="modal57" title="Pricing History">
 		Previous Bills
 		<table id='modal57_bill_table'>
@@ -649,18 +613,6 @@
 		Previous Quotations
 		<table id='modal57_quot_table'>
 		</table>	
-	</div>
-
-	<div id="modal58" title="Promotions Sent">
-		All selected customers have been sent the news Letter and SMS on their email-ids and phone numbers respectively.
-	</div>
-
-	<div id="modal59" title="Emails disabled">
-		Emails are disabled for this account.
-	</div>
-
-	<div id="modal60" title="SMS Disabled">
-		SMS are disabled for this account.
 	</div>
 
 	<div id="modal61" title="Updating Order Status">
@@ -1848,4 +1800,57 @@
 		</form>
 	</div>
 
+	<a href='#modal182' data-toggle="modal" id='modal182_link'></a>
+	<div id="modal182" class="modal fade draggable-modal bs-modal-lg" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal182_form'>                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Change Password</h4>
+                	</div>
+                    <div class="modal-body">
+	                    <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
+	                        <div class="row">
+								<div class="col-sm-12 col-md-4">Current Password</div>
+				     			<div class="col-sm-12 col-md-8"><input type="password" form='modal182_form' name='current_pass' required class="form-control"></div>
+				     		</div>
+	                        <div class="row">
+							    <div class="col-sm-12 col-md-4">New Password</div>
+				     			<div class="col-sm-12 col-md-8"><input type="password" form='modal182_form' name='new_pass' required class="form-control"></div>
+				     		</div>
+	                        <div class="row">
+							    <div class="col-sm-12 col-md-4">Retype Password</div>
+				     			<div class="col-sm-12 col-md-8"><input type="password" form='modal182_form' name='re_pass' required class="form-control" onkeyup="modal182_verify_password($(this));"></div>
+				     		</div>
+				     		<div class="row">
+								<div class="verify col-md-12 col-lg-12" style='color:#c44030;'></div>
+					     	</div>
+	                    </div>
+	                </div>
+	                <div class="modal-footer">
+	                    <input type="submit" class="btn green" form='modal182_form' name='save' value='Save' disabled="true">
+	                </div>
+                </form>
+            </div>
+        </div>
+       <script>
+		function modal182_verify_password(button)
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var new_pass=form.elements['new_pass'].value;
+			var re_pass=form.elements['re_pass'].value;
+			if(new_pass==re_pass)
+			{
+				$(form).find('.verify').html('Match!');
+				form.elements['save'].disabled=false;
+			}
+			else
+			{
+				$(form).find('.verify').html('Passwords do not match!');				
+			}
+		}
+		</script>
+    </div>
 </div>
