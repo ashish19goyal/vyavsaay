@@ -3,7 +3,7 @@
 *@*function_name*:*notifications_1();
 *@*status*:*active
 *@*last_updated*:*1
-*@*repeat_delay*:*60
+*@*initial_delay*:*60
 *@*repeat_delay*:*3600
 *@*function_def*:*
 */
@@ -62,7 +62,7 @@ function notifications_1()
 *@*function_name*:*notifications_2();
 *@*status*:*active
 *@*last_updated*:*1
-*@*repeat_delay*:*60
+*@*initial_delay*:*60
 *@*repeat_delay*:*3600
 *@*function_def*:*
 */
@@ -119,7 +119,7 @@ function notifications_2()
 *@*function_name*:*notifications_3();
 *@*status*:*active
 *@*last_updated*:*1
-*@*repeat_delay*:*60
+*@*initial_delay*:*60
 *@*repeat_delay*:*3600
 *@*function_def*:*
 */
@@ -127,7 +127,6 @@ function notifications_3()
 {
 	var last_updated=get_my_time();
 	
-	/////overdue sale leads//////////
 	var lead_due_time=parseFloat(get_my_time())+86400000;
 	var lead_past_time=parseFloat(get_my_time())-86400000;
 	
@@ -174,7 +173,7 @@ function notifications_3()
 *@*function_name*:*notifications_4();
 *@*status*:*active
 *@*last_updated*:*1
-*@*repeat_delay*:*60
+*@*initial_delay*:*60
 *@*repeat_delay*:*3600
 *@*function_def*:*
 */
@@ -249,7 +248,7 @@ function notifications_4()
 *@*function_name*:*notifications_5();
 *@*status*:*active
 *@*last_updated*:*1
-*@*repeat_delay*:*60
+*@*initial_delay*:*60
 *@*repeat_delay*:*3600
 *@*function_def*:*
 */
@@ -292,7 +291,7 @@ function notifications_5()
 *@*function_name*:*notifications_6();
 *@*status*:*active
 *@*last_updated*:*1
-*@*repeat_delay*:*60
+*@*initial_delay*:*60
 *@*repeat_delay*:*3600
 *@*function_def*:*
 */
@@ -338,14 +337,13 @@ function notifications_6()
 *@*function_name*:*notifications_7();
 *@*status*:*active
 *@*last_updated*:*1
-*@*repeat_delay*:*60
+*@*initial_delay*:*60
 *@*repeat_delay*:*3600
 *@*function_def*:*
 */
 function notifications_7()
 {
 	var last_updated=get_my_time();
-	/////appointments//////////
 	var app_time=parseFloat(get_my_time())+3600000;
 	
 	var apps_data=new Object();
@@ -385,7 +383,7 @@ function notifications_7()
 *@*function_name*:*notifications_8();
 *@*status*:*active
 *@*last_updated*:*1
-*@*repeat_delay*:*60
+*@*initial_delay*:*60
 *@*repeat_delay*:*3600
 *@*function_def*:*
 */
@@ -435,7 +433,7 @@ function notifications_8()
 *@*function_name*:*notifications_9();
 *@*status*:*active
 *@*last_updated*:*1
-*@*repeat_delay*:*60
+*@*initial_delay*:*60
 *@*repeat_delay*:*3600
 *@*function_def*:*
 */
@@ -448,7 +446,7 @@ function notifications_9()
 		expense_data.indexes=[{index:'id'},{index:'person'},{index:'amount'},{index:'detail'},{index:'expense_date'},
 							{index:'last_updated',lowerbound:(parseFloat(get_my_time())-86400000)},
 							{index:'status',array:['approved','rejected']}];
-		
+
 	read_json_rows('',expense_data,function(expenses)
 	{
 		var data_json={data_store:'notifications',loader:'no',log:'no',data:[]};
@@ -483,7 +481,7 @@ function notifications_9()
 *@*function_name*:*notifications_10();
 *@*status*:*active
 *@*last_updated*:*1
-*@*repeat_delay*:*60
+*@*initial_delay*:*60
 *@*repeat_delay*:*3600
 *@*function_def*:*
 */
@@ -550,7 +548,7 @@ function notifications_10()
 *@*function_name*:*notifications_11();
 *@*status*:*active
 *@*last_updated*:*1
-*@*repeat_delay*:*60
+*@*initial_delay*:*60
 *@*repeat_delay*:*3600
 *@*function_def*:*
 */
@@ -606,7 +604,7 @@ function notifications_11()
 *@*function_name*:*worker_1();
 *@*status*:*active
 *@*last_updated*:*1
-*@*repeat_delay*:*120
+*@*initial_delay*:*120
 *@*repeat_delay*:*7200
 *@*function_def*:*
 */
@@ -636,7 +634,7 @@ function worker_1()
 				var bills_string=[];
 				for (var j in bill_items)
 				{
-					bills_string[]=bill_items[j].bill_id;
+					bills_string.push(bill_items[j].bill_id);
 				}
 				
 				var bills_data=new Object();
@@ -688,7 +686,7 @@ function worker_1()
 *@*function_name*:*worker_2();
 *@*status*:*active
 *@*last_updated*:*1
-*@*repeat_delay*:*120
+*@*initial_delay*:*120
 *@*repeat_delay*:*7200
 *@*function_def*:*
 */
@@ -731,7 +729,7 @@ function worker_2()
 *@*function_name*:*worker_3();
 *@*status*:*active
 *@*last_updated*:*1
-*@*repeat_delay*:*120
+*@*initial_delay*:*120
 *@*repeat_delay*:*7200
 *@*function_def*:*
 */
@@ -827,7 +825,7 @@ function worker_3()
 *@*function_name*:*worker_4();
 *@*status*:*active
 *@*last_updated*:*1
-*@*repeat_delay*:*120
+*@*initial_delay*:*120
 *@*repeat_delay*:*7200
 *@*function_def*:*
 */
@@ -846,7 +844,6 @@ function worker_4()
 	{
 		loans.forEach(function(loan)
 		{
-			//var interest_amount=parseFloat(loan.loan_amount)*(parseFloat(loan.interest_rate)/100);
 			var next_emi_date=parseFloat(loan.next_emi_date)+(parseFloat(loan.emi_period)*86400000);
 			var pending_emi=parseFloat(loan.pending_emi)-1;
 			var receiver="emi";
@@ -909,13 +906,12 @@ function worker_4()
 *@*function_name*:*worker_5();
 *@*status*:*active
 *@*last_updated*:*1
-*@*repeat_delay*:*120
+*@*initial_delay*:*120
 *@*repeat_delay*:*7200
 *@*function_def*:*
 */
 function worker_5()
 {
-	//console.log('creating attendance records');
 	var today=get_raw_time(get_my_date());
 
 	var columns=new Object();
@@ -959,7 +955,7 @@ function worker_5()
 *@*function_name*:*worker_6();
 *@*status*:*active
 *@*last_updated*:*1
-*@*repeat_delay*:*60
+*@*initial_delay*:*60
 *@*repeat_delay*:*3600
 *@*function_def*:*
 */
@@ -1145,10 +1141,6 @@ function worker_6()
 			});
 		});
 	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
 }
 
 /***function limiter***/
@@ -1158,7 +1150,7 @@ function worker_6()
 *@*function_name*:*worker_7();
 *@*status*:*active
 *@*last_updated*:*1
-*@*repeat_delay*:*120
+*@*initial_delay*:*120
 *@*repeat_delay*:*7200
 *@*function_def*:*
 */
@@ -1251,16 +1243,14 @@ function worker_7()
 *@*function_name*:*worker_8();
 *@*status*:*active
 *@*last_updated*:*1
-*@*repeat_delay*:*120
+*@*initial_delay*:*120
 *@*repeat_delay*:*7200
 *@*function_def*:*
 */
 function worker_8()
 {
-if(is_update_access('form108'))
+	if(is_update_access('form108'))
 	{
-		show_loader();
-		
 		var orders_data=new Object();
 			orders_data.data_store='sale_orders';
 			orders_data.indexes=[{index:'id'},{index:'bill_id'},
@@ -1271,12 +1261,12 @@ if(is_update_access('form108'))
 			var bill_id_string=[];
 			for(var i in orders)
 			{
-				bill_id_string[]=orders[i].bill_id;
+				bill_id_string.push(orders[i].bill_id);
 
 				var bill_id_array=JSON.parse(orders[i].bill_id);
 				for(var x in bill_id_array)
 				{
-					bill_id_string[]=bill_id_array[x].bill_id;
+					bill_id_string.push(bill_id_array[x].bill_id);
 				}
 			}
 
@@ -1388,17 +1378,12 @@ if(is_update_access('form108'))
 							});
 							update_batch_json(data_json);
 							
-							hide_loader();
 							form108_ini();
 						});						
 					});
 				});			
 			});	
 		});
-	}
-	else 
-	{
-		$("#modal2").dialog("open");
 	}
 }
 
@@ -1409,12 +1394,14 @@ if(is_update_access('form108'))
 *@*function_name*:*worker_9();
 *@*status*:*active
 *@*last_updated*:*1
-*@*repeat_delay*:*120
+*@*initial_delay*:*120
 *@*repeat_delay*:*7200
 *@*function_def*:*
 */
 function worker_9()
 {
+	var lead_past_time=parseFloat(get_my_time())-86400000;
+	
 	var seasonal_attributes_data=new Object();
 			seasonal_attributes_data.data_store='attributes';
 			seasonal_attributes_data.indexes=[{index:'id'},{index:'name'},{index:'value'},
@@ -1426,7 +1413,7 @@ function worker_9()
 		var items_string=[];
 		for(var i in seasonal_attributes)
 		{
-			items_string[]=seasonal_attributes[i].item_name;
+			items_string.push(seasonal_attributes[i].item_name);
 		}
 		
 		var bill_items_data=new Object();
@@ -1439,7 +1426,7 @@ function worker_9()
 			var bills_string=[];
 			for (var j in bill_items)
 			{
-				bills_string[]=bill_items[j].bill_id;
+				bills_string.push(bill_items[j].bill_id);
 			}
 			
 			var bills_data=new Object();
@@ -1497,4 +1484,232 @@ function worker_9()
 			});
 		});
 	});
+}
+
+/***function limiter***/
+
+/*name*:*worker10
+*@*description*:*Show pending notification count
+*@*function_name*:*worker_10();
+*@*status*:*active
+*@*last_updated*:*1
+*@*initial_delay*:*5
+*@*repeat_delay*:*1200
+*@*function_def*:*
+*/
+function worker_10()
+{
+	var notif_data=new Object();
+		notif_data.data_store='notifications';
+		notif_data.indexes=[{index:'id'},
+							{index:'target_user'},
+							{index:'status',exact:'pending'}];
+
+	if_data_read_access('notifications',function(accessible_data)
+	{
+		read_json_rows('',notif_data,function(notifs)
+		{
+			for(var i=0;i<notifs.length;i++)			
+			{
+				var read=false;
+				for(var x in accessible_data)
+				{
+					if(accessible_data[x].record_id==notifs[i].id || accessible_data[x].record_id=='all')
+					{
+						if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || accessible_data[x].criteria_field=="null" || notifs[i][accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
+						{
+							if(accessible_data[x].access_type=='all' || accessible_data[x].access_type=='read')
+							{
+								read=true;
+								break;
+							}							
+						}
+					}
+				}
+				
+				if(!(read))
+				{
+					notifs.splice(i,1);
+					i--;
+				}
+			}
+			
+			var num_res=notifs.length;
+			if(num_res===0)
+			{	
+				$('#notif_count').html("");
+				$('#notif_count2').html("0");
+				$('#notif_count').hide();
+			}
+			else
+			{	
+				$('#notif_count').html(num_res);
+				$('#notif_count2').html(num_res);
+				$('#notif_count').show(); 
+			}
+		});
+	});	
+}
+
+/***function limiter***/
+
+/*name*:*worker11
+*@*description*:*Show pending notifications summary
+*@*function_name*:*worker_11();
+*@*status*:*active
+*@*last_updated*:*1
+*@*initial_delay*:*10
+*@*repeat_delay*:*1200
+*@*function_def*:*
+*/
+function worker_11()
+{
+	var columns=new Object();
+	columns.data_store='notifications';
+	columns.count=10;
+	columns.indexes=[{index:'id'},
+						{index:'title'},
+						{index:'link_to'},
+						{index:'data_id'},
+						{index:'notes'},
+						{index:'t_generated'},
+						{index:'status',exact:'pending'},
+						{index:'target_user'},
+						{index:'last_updated'}];
+
+	if_data_read_access('notifications',function(accessible_data)
+	{	
+		read_json_rows('',columns,function(notifs)
+		{
+			var result_html="";
+			
+			notifs.forEach(function(notif)
+			{
+				var read=false;
+				var update=false;
+				for(var x in accessible_data)
+				{
+					if(accessible_data[x].record_id==notif.id || accessible_data[x].record_id=='all')
+					{
+						if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || accessible_data[x].criteria_field=="null" || notif[accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
+						{
+							if(accessible_data[x].access_type=='all' || accessible_data[x].access_type=='read')
+							{
+								read=true;
+								break;
+							}
+						}
+					}
+				}
+
+				var found=notif.target_user.indexOf(get_account_name());
+				if(read || found>=0)
+				{
+					result_html+="<li><a onclick=\"element_display('"+notif.data_id+"','"+notif.link_to+"');\">"+
+	                        "<span class='time'>"+get_only_time(notif.t_generated)+"</span>"+
+	                        "<span class='details'><span class='label label-sm label-icon label-info'><i class='fa fa-bullhorn'></i></span>"+notif.title+"</span></a></li>";
+				}
+			});
+			$("#topbar_notifications").html(result_html);
+		});
+	});
+}
+
+/***function limiter***/
+
+/*name*:*worker12
+*@*description*:*Show pending sync count
+*@*function_name*:*worker_12();
+*@*status*:*active
+*@*last_updated*:*1
+*@*initial_delay*:*5
+*@*repeat_delay*:*1200
+*@*function_def*:*
+*/
+function worker_12()
+{
+	var sync_data=new Object();
+		sync_data.data_store='activities';
+		sync_data.return_column='id';
+		sync_data.indexes=[{index:'status',exact:'unsynced'}];
+
+	read_json_count(sync_data,function(sync_count)
+	{
+		if(sync_count==0)
+		{	
+			$('#log_count').html("");
+			$('#log_count2').html("0");
+			$('#log_count').hide();
+		}
+		else
+		{	
+			$('#log_count').html(sync_count);
+			$('#log_count2').html(sync_count);
+			$('#log_count').show(); 
+		}
+	});
+}
+
+/***function limiter***/
+
+/*name*:*worker13
+*@*description*:*Show activities summary
+*@*function_name*:*worker_13();
+*@*status*:*active
+*@*last_updated*:*1
+*@*initial_delay*:*5
+*@*repeat_delay*:*1200
+*@*function_def*:*
+*/
+function worker_13()
+{
+	var columns=new Object();
+	columns.data_store='activities';
+	columns.count=10;
+	columns.indexes=[{index:'id'},
+						{index:'title'},
+						{index:'notes'},
+						{index:'link_to'},
+						{index:'data_id'},
+						{index:'user_display',exact:'yes'},
+						{index:'last_updated'}];
+
+	read_json_rows('',columns,function(activities)
+	{
+		var result_html="";
+		activities.forEach(function(activity)
+		{
+			var icon="fa-bullhorn";
+			var btn_color='label-info';
+			switch(activity.title) 
+			{
+				case 'Added':icon="fa-plus";
+							btn_color="label-success";
+							break;
+				case 'Created':icon="fa-plus";
+							btn_color="label-success";
+							break;
+				case 'Deleted':icon="fa-trash-o";
+							btn_color="label-danger";
+							break;
+				case 'Updated':icon="fa-save";
+							btn_color="label-primary";
+							break;
+				case 'Saved':icon="fa-save";
+							btn_color="label-primary";
+							break;
+				case 'Exported':icon="fa-share";
+							btn_color="label-primary";
+							break;
+				case 'Data Import':icon="fa-upload";
+							btn_color="label-danger";
+							break;
+			};
+			result_html+="<li><a onclick=element_display('"+activity.data_id+"','"+activity.link_to+"');>"+
+                        "<span class='time'>"+get_only_time(activity.last_updated)+"</span>"+
+                        "<span class='details'><span class='label label-sm label-icon "+btn_color+"'><i class='fa "+icon+"'></i></span>"+activity.notes+"</span></a></li>";
+			
+		});
+		$("#topbar_logs").html(result_html);
+	});	
 }
