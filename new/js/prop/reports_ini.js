@@ -1411,7 +1411,7 @@ function report31_ini()
 	}
 	else
 	{
-		$("#modal6").dialog("open");
+		$("#modal6_link").click();
 	}
 }
 
@@ -1474,7 +1474,7 @@ function report32_ini()
 	}
 	else
 	{
-		$("#modal6").dialog("open");
+		$("#modal6_link").click();
 	}
 }
 
@@ -1575,7 +1575,7 @@ function report33_ini()
 	}
 	else
 	{
-		$("#modal6").dialog("open");
+		$("#modal6_link").click();
 	}
 }
 
@@ -1907,7 +1907,7 @@ function report35_ini()
 	}
 	else
 	{
-		$("#modal6").dialog("open");
+		$("#modal6_link").click();
 	}
 }
 
@@ -2000,7 +2000,7 @@ function report36_ini()
 	}
 	else
 	{
-		$("#modal6").dialog("open");
+		$("#modal6_link").click();
 	}
 }
 
@@ -8132,7 +8132,7 @@ function report95_ini()
 				}
 				else
 				{
-					$("#modal76").dialog("open");
+					$("#modal76_link").click();
 				}
 				awb_filter.value="";
 				hide_loader();
@@ -8140,7 +8140,7 @@ function report95_ini()
 		}
 		else 
 		{
-			$("#modal71").dialog("open");
+			$("#modal71_link").click();
 			awb_filter.value="";
 			hide_loader();
 		}	  		   

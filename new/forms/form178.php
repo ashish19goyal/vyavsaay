@@ -1,4 +1,4 @@
-<div id='form178' class='function_detail'>
+<div id='form178' class='tab-pane'>
 	<form id='form178_master' autocomplete="off">
 		<fieldset>
 			<label>Supplier<br><input type='text' name='supplier'></label>

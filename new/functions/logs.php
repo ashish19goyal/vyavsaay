@@ -95,7 +95,7 @@ function delete_activity(div_elem,data_id)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 

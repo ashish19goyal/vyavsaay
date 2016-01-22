@@ -14,15 +14,22 @@ function ini_session(domain,user)
  * @param username
  * @param session_data
  */
-function set_session(session_data)
+function set_session(session_data,func)
 {
-//	console.log(session_data);
 	for(var field in session_data)
 	{
 		localStorage.setItem(field,session_data[field]);
 	}
-	var domain=get_session_var('domain');
-	window.location.assign("main.php?dn="+domain);	
+	
+	if(typeof func=='undefined')
+	{
+		var domain=get_session_var('domain');
+		window.location.assign("main.php?dn="+domain);
+	}	
+	else 
+	{
+		func();
+	}
 }
 
 /**
@@ -240,7 +247,7 @@ function get_pamphlet_template()
  */
 function set_session_online(func)
 {
-	console.log('5.1');
+	//console.log('5.1');
 	if("indexedDB" in window && indexedDB!=null)
 	{
 		//console.log('5.2');

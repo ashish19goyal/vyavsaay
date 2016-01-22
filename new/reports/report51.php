@@ -1,4 +1,4 @@
-<div id='report51' class='function_detail'>
+<div id='report51' class='tab-pane'>
 	<form id='report51_header' autocomplete="off">
 		<fieldset>
 			<label>Product</br><input type='text' title='If this field is blank, all applicable suppliers will be shown'></label>

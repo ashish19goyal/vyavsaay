@@ -1,4 +1,4 @@
-<div id='report4' class='report_detail'>
+<div id='report4' class='tab-pane'>
 	<form id='report4_header' autocomplete="off">
 		<fieldset>
 			<label>Start date</br><input type='text' required></label>

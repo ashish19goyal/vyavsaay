@@ -1,7 +1,4 @@
-<div id='pdf_print_div' style='width:8in;background-color:#fff;padding:2px;'>xyz</div>
-
-<div class='modal_forms'>
-	
+<div class='modal_forms'>	
 	<div id="modal1" title="Enter password again">
 		<form>
 			<input type="password" id="modal1_pass" required>
@@ -615,94 +612,6 @@
 		</table>	
 	</div>
 
-	<div id="modal61" title="Updating Order Status">
-		Please wait while we update the status of the processed orders.
-	</div>
-
-	<div id="modal62" title="Thanks">
-		Thanks! Your details have been saved. We will reach out to you on the suggested follow-up date.
-	</div>
-
-	<div id="modal63" title="Billing Aborted">
-		Bill could not be generated as none of the items were found billable.
-	</div>
-
-	<div id="modal64" title="Partial Billing Not Allowed">
-		Bill could not be generated as partial billing of items is disabled.
-	</div>
-
-	<div id="modal65" title="Repeated Entry">
-		This is a repeated entry. Please check again and continue.
-	</div>
-
-	<div id="modal66" title="Incorrect Barcode">
-		Sorry, we could not find any item corresponding to this bar code. Please try again.
-	</div>
-
-	<div id="modal67" title="Wrong Pick">
-		This item is not desired to be picked. Please put it back
-	</div>
-
-	<div id="modal68" title="Change DRS number">
-		This DRS number has already been taken. Please use a different number.
-	</div>
-
-	<div id="modal69" title="Item packed">
-		Item packed and ready for dispatch.
-	</div>
-
-	<div id="modal70" title="Item rejected">
-		Item rejected. Please put it in the rejected section.
-	</div>
-
-	<div id="modal71" title="Item mismatch">
-		<p style='color:#a00'>Scanned item doesn't match the list.</p>
-	</div>
-
-	<div id="modal72" title="Wrong Placement">
-		This item is designated to be placed somewhere else.
-	</div>
-
-	<div id="modal73" title="Import Aborted">
-		This import will be aborted as all the required criteria are not being met.
-	</div>
-
-	<div id="modal74" title="Netwrok Error">
-		Operation could not be completed because of network error. Please try again.
-	</div>
-
-	<div id="modal75" title="SKU in Inventory">
-		Inventory is listed against this SKU. Are you sure, you want to list this as a combo pack?
-	</div>
-
-	<div id="modal76" title="Pincode not serviced">
-		<p style='color:#a00'>The pincode for this order is not being serviced</p>
-	</div>
-
-	<div id="modal77" title="Change Bag Number">
-		This bag number is already taken. Please use another number.
-	</div>
-
-	<div id="modal78" title="Change MTS Number">
-		This MTS number is already taken. Please use another number.
-	</div>
-
-	<div id="modal79" title="Questionnaire Submitted">
-		Your responses have been captured. Thanks!
-	</div>
-
-	<div id="modal80" title="Data Sync Success!">
-		All order status have been updated on partner sites.
-	</div>
-
-	<div id="modal81" title="Data Sync Failed!">
-		Something wrong happened. Please try again.
-	</div>
-
-	<div id="modal82" title="Incorrect">
-		Selected AWB # is not marked for delivery. Please check again.
-	</div>
-
 	<div id="modal83" title="Store Inventory">
 		<table id='modal83_inventory_table' class="plain_table">
 		</table>
@@ -710,14 +619,6 @@
 	
 	<div id="modal84" title="Design Preview">
 		<div id='modal84_preview'></div>
-	</div>
-
-	<div id="modal85" title="QR Data Conversion">
-		QR Scan data conversion has been completed.
-	</div>
-
-	<div id="modal86" title="QR Scan Saved">
-		QR scan was successfully saved.
 	</div>
 
 	<div id="modal101" title="Email Document">

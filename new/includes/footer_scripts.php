@@ -9,6 +9,7 @@
 <!-- END CORE PLUGINS -->
 
 <!-- BEGIN THEME GLOBAL SCRIPTS -->
+<script src="./js/open/bootstrap-tabdrop.js" type="text/javascript"></script>
 <script src="./js/open/app.min.js" type="text/javascript"></script>
 <!-- END THEME GLOBAL SCRIPTS -->
 

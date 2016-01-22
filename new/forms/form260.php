@@ -1,4 +1,4 @@
-<div id='form260' class='function_detail'>
+<div id='form260' class='tab-pane'>
 	<table class='rwd-table'>
 		<thead>
 			<tr>

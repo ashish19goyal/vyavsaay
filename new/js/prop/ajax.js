@@ -33,7 +33,7 @@ function ajax_with_custom_func(url,kvp,func)
 		{
 			number_active_ajax-=1;
 			hide_loader();
-			//$("#modal74").dialog("open");
+			//$("#modal74_link").click();
 	        //console.log(xhr.status);
 		    console.log(xhr.responseText);    	    
     	    console.log(thrownError);
@@ -47,56 +47,52 @@ function ajax_with_custom_func(url,kvp,func)
 				var user=get_username();
 				var domain=get_domain();
 				
-				$("#modal1").dialog(
+				lock_screen(function()
 				{
-					close:function(e,ui)
+					show_loader();
+					var pass=document.getElementById("lock_form").elements['password'].value;
+					var user_kvp={domain:domain,user:user,pass:pass};
+					ajax_with_custom_func("./ajax/login.php",user_kvp,function(e)
 					{
-						show_loader();
-						var pass=document.getElementById("modal1_pass").value;
-						var user_kvp={domain:domain,user:user,pass:pass};
-						ajax_with_custom_func("./ajax/login.php",user_kvp,function(e)
+						login_status=e.responseText;
+						var session_xml=e.responseXML;
+						if(login_status=="failed_auth")
 						{
-							login_status=e.responseText;
-							var session_xml=e.responseXML;
-							if(login_status=="failed_auth")
+							alert("Password is incorrect. Aborting operation.");
+							delete_session();
+							hide_loader();
+						}
+						else
+						{
+							var session_var=session_xml.getElementsByTagName('session');
+							var session_vars=new Object();
+							var num_svar=session_var[0].childElementCount;
+
+							for(var z=0;z<num_svar;z++)
 							{
-								alert("Password is incorrect. Aborting operation.");
-								delete_session();
-								hide_loader();
+								session_vars[session_var[0].childNodes[z].nodeName]=session_var[0].childNodes[z].textContent;
 							}
-							else
+							var offline=get_session_var('offline');
+							for(var field in session_vars)
 							{
-								var session_var=session_xml.getElementsByTagName('session');
-								var session_vars=new Object();
-								var num_svar=session_var[0].childElementCount;
-
-								for(var z=0;z<num_svar;z++)
-								{
-									session_vars[session_var[0].childNodes[z].nodeName]=session_var[0].childNodes[z].textContent;
-								}
-								var offline=get_session_var('offline');
-								for(var field in session_vars)
-								{
-									localStorage.setItem(field,session_vars[field]);
-								}
-								set_session_var('offline',offline);
-
-								kvp.re_old=kvp.re;
-								kvp.cr_old=kvp.cr;
-								kvp.del_old=kvp.del;
-								kvp.up_old=kvp.up;
-								kvp.cr=session_vars['cr'];
-								kvp.up=session_vars['up'];
-								kvp.del=session_vars['del'];
-								kvp.re=session_vars['re'];
-
-								hide_loader();									
-								ajax_with_custom_func(url,kvp,func);
+								localStorage.setItem(field,session_vars[field]);
 							}
-						});
-					}
-				});
-				$("#modal1").dialog("open");
+							set_session_var('offline',offline);
+
+							kvp.re_old=kvp.re;
+							kvp.cr_old=kvp.cr;
+							kvp.del_old=kvp.del;
+							kvp.up_old=kvp.up;
+							kvp.cr=session_vars['cr'];
+							kvp.up=session_vars['up'];
+							kvp.del=session_vars['del'];
+							kvp.re=session_vars['re'];
+
+							hide_loader();									
+							ajax_with_custom_func(url,kvp,func);
+						}
+					});
+				});				
 			}
 			else
 			{
@@ -239,7 +235,7 @@ function server_create_row(data_xml,activity_xml)
 		hide_loader();
 		if(e.responseText=='duplicate record')
 		{
-			$("#modal5").dialog("open");
+			$("#modal5_link").click();
 		}
 	});
 }
@@ -256,7 +252,7 @@ function server_create_row_func(data_xml,activity_xml,func)
 		hide_loader();
 		if(e.responseText=='duplicate record')
 		{
-			$("#modal5").dialog("open");
+			$("#modal5_link").click();
 		}
 		else
 		{
@@ -278,7 +274,7 @@ function server_create_simple(data_xml)
 		console.log(e.responseText);
 		if(e.responseText=='duplicate record')
 		{
-			$("#modal5").dialog("open");
+			$("#modal5_link").click();
 		}
 	});
 }
@@ -293,7 +289,7 @@ function server_create_simple_func(data_xml,func)
 		console.log(e.responseText);
 		if(e.responseText=='duplicate record')
 		{
-			$("#modal5").dialog("open");
+			$("#modal5_link").click();
 		}
 		else
 		{

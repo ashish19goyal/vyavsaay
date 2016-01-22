@@ -1,4 +1,4 @@
-<div id='report27' class='report_detail'>
+<div id='report27' class='tab-pane'>
 	<form id='report27_header' autocomplete="off">
 		<fieldset>
 			<label>Expiry by</br><input type='text' required></label>

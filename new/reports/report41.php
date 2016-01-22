@@ -1,4 +1,4 @@
-<div id='report41' class='function_detail'>
+<div id='report41' class='tab-pane'>
 	<form id='report41_header' autocomplete="off">
 		<fieldset>
 			<label>Service Name <input type='text' title='If this field is left blank, pre-requisites for all services will be shown'></label>

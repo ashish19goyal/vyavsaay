@@ -1,4 +1,4 @@
-<div id='form250' class='function_detail'>
+<div id='form250' class='tab-pane'>
 	<form id='form250_master' autocomplete="off">
 		<fieldset>
 			<label>MTS # <br><input type='text' name='mts_num' required></label>

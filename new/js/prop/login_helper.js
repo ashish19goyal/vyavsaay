@@ -1,31 +1,32 @@
 /**
  * This function executes the login opertation
  */
-function login_action()
+function login_action(domain,username,pass,func)
 {
 	show_loader();
-	var form=document.getElementById('login');
-
-	var l_id=form.elements[1].value;
-	var index=l_id.indexOf("@");
-	var domain="";
-	var username="";
-	if(index===-1)
+	if(typeof domain=='undefined')
 	{
-		domain=l_id;
-		username="master";
+		var form=document.getElementById('login');
+		var l_id=form.elements[1].value;
+		var index=l_id.indexOf("@");
+		
+		if(index===-1)
+		{
+			domain=l_id;
+			username="master";
+		}
+		else
+		{
+			domain=l_id.substr(index+1);
+			username=l_id.substr(0,index);
+		}
+		pass=form.elements[2].value;
 	}
-	else
-	{
-		domain=l_id.substr(index+1);
-		username=l_id.substr(0,index);
-	}
-	var pass=form.elements[2].value;
-	//console.log('going to try local login');
-
+	
+	//console.log(domain+username+pass);
 	try_local_db_login(username,domain,function(result)
 	{
-		console.log('trying local login');
+		//console.log('trying local login');
 		var password="p";
 		if(result) { password=result.password;}
 		var salt='$2a$10$'+domain+'1234567891234567891234';
@@ -37,31 +38,52 @@ function login_action()
 			//console.log(newhash);
 			if(newhash.substring(3)==password.substring(3))
 			{
-				console.log('logged in offline');
-				set_session_variables(domain,username,pass);
+				//console.log('logged in offline');
+				if(typeof func!='undefined')
+				{
+					set_session_variables(domain,username,pass,func);
+				}
+				else 
+				{
+					set_session_variables(domain,username,pass);
+				}
 			}
 			else
 			{
-				console.log('logging online'+username+"-"+pass+"-"+domain);
-				login_online(username,domain,pass);
+				//console.log('logging online'+username+"-"+pass+"-"+domain);
+				if(typeof func!='undefined')
+				{
+					login_online(username,domain,pass,func);
+				}
+				else 
+				{
+					login_online(username,domain,pass);
+				}
 			}			
 		}, function() {});
 		
 	},function()
 	{
 		//console.log('trying online login');
-		login_online(username,domain,pass);
+		if(typeof func!='undefined')
+		{
+			login_online(username,domain,pass,func);
+		}
+		else 
+		{
+			login_online(username,domain,pass);
+		}
 	});
 }
 
 
-function login_online(username,domain,pass)
+function login_online(username,domain,pass,func)
 {
 	var user_kvp={domain:domain,user:username,pass:pass,os:navigator.platform,browser:navigator.userAgent};
 	ajax_json("./ajax_json/login.php",user_kvp,function(response_object)
 	{
 		//console.log(response_object);
-		console.log(response_object.status);
+		//console.log(response_object.status);
 		
 		if(response_object.status=="Failed Authentication")
 		{
@@ -82,7 +104,14 @@ function login_online(username,domain,pass)
 			//console.log(session_vars);
 			set_session_online(function()
 			{
-				set_session(session_vars);
+				if(typeof func!='undefined')
+				{
+					set_session(session_vars,func);
+				}
+				else 
+				{
+					set_session(session_vars);
+				}
 				//console.log(session_vars);
 			});
 		}
@@ -95,7 +124,7 @@ function login_online(username,domain,pass)
  * @param domain
  * @param username
  */
-function set_session_variables(domain,username,pass)
+function set_session_variables(domain,username,pass,func)
 {
 	var db_name="re_local_"+domain;
 
@@ -139,7 +168,14 @@ function set_session_variables(domain,username,pass)
 				data.username=username;
 				if(data.offline==='online')
 				{
-					login_online(username,domain,pass);
+					if(typeof func!='undefined')
+					{
+						login_online(username,domain,pass,func);
+					}
+					else 
+					{
+						login_online(username,domain,pass);
+					}
 				}
 				else
 				{
@@ -274,7 +310,15 @@ function set_session_variables(domain,username,pass)
 									data.up=up;
 									data.del=del;
 									data.user_roles=user_roles;
-									set_session(data);			  		
+									
+									if(typeof func!='undefined')
+									{
+										set_session(data,func);
+									}
+									else 
+									{
+										set_session(data);
+									}
 							 	} 	
 							 },100);																					
 						};
@@ -296,28 +340,28 @@ function try_local_db_login(username,domain,func_success,func_failure)
 	////////////checking if indexed db is supported/////////////////
 	if("indexedDB" in window && indexedDB!=null)
 	{
-		console.log("3.1");
+		//console.log("3.1");
 		var db_name="re_local_" + domain;
 		var request = indexedDB.open(db_name);
 		//console.log("3.1.1");
 		
 		request.onsuccess=function(e)
 		{
-			console.log("3.2");
+			//console.log("3.2");
 			var db=e.target.result;
 			if(!db.objectStoreNames.contains("accounts"))
 			{
-				console.log("3.3");
+				//console.log("3.3");
 				var deleterequest=indexedDB.deleteDatabase(db_name);
 				deleterequest.onsuccess=function(ev)
 				{
-					console.log("3.3.1");
+					//console.log("3.3.1");
 					func_failure();
 				};
 			}
 			else
 			{
-				console.log("3.4");
+				//console.log("3.4");
 				var tran=db.transaction("accounts","readonly");
 				var table = tran.objectStore("accounts");
 				
@@ -329,21 +373,21 @@ function try_local_db_login(username,domain,func_success,func_failure)
 				{
 					var result=records.result;
 					func_success(result);
-					console.log("3.5");	
+					//console.log("3.5");	
 				};
 				records.onerror=function(e)
 				{
-					console.log("3.6");
+					//console.log("3.6");
 					func_failure();
 				};
 			}
-			console.log("3.7");
+			//console.log("3.7");
 			db.close();
 		};
 		
 		request.onerror = function(e)
 		{
-			console.log("3.8");
+			//console.log("3.8");
 			var db=e.target.result;
 			if(db)
 				db.close();
@@ -362,7 +406,7 @@ function try_local_db_login(username,domain,func_success,func_failure)
 	}
 	else
 	{
-		console.log("3.11");
+		//console.log("3.11");
 		func_failure();
 	}
 };

@@ -263,7 +263,7 @@ function modal8_action()
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal8").dialog("close");
 	});
@@ -353,7 +353,7 @@ function modal9_action()
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal9").dialog("close");
 	});
@@ -666,7 +666,7 @@ function modal11_action(func)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal11").dialog("close");
 	});
@@ -975,7 +975,7 @@ function modal13_action(func)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal13").dialog("close");
 	});
@@ -1157,7 +1157,7 @@ function modal14_action(func)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal14").dialog("close");
 	});
@@ -1414,7 +1414,7 @@ function modal16_action(func)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal16").dialog("close");
 	});
@@ -1874,7 +1874,7 @@ function modal19_action(button)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal19").dialog("close");
 	});
@@ -2001,7 +2001,7 @@ function modal20_action(func)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal20").dialog("close");
 	});
@@ -2187,7 +2187,7 @@ function modal21_action()
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal21").dialog("close");
 	});
@@ -2339,7 +2339,7 @@ function modal22_action(func)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal22").dialog("close");
 	});
@@ -2920,7 +2920,7 @@ function modal27_action(product_name)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal27").dialog("close");
 	});
@@ -3476,7 +3476,7 @@ function modal30_action()
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal30").dialog("close");
 	});
@@ -3629,7 +3629,7 @@ function modal31_action()
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal31").dialog("close");
 		/////////////////////////////////////////
@@ -3785,7 +3785,7 @@ function modal33_action(id)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal33").dialog("close");		
 	});
@@ -3920,7 +3920,7 @@ function modal35_action(func)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal35").dialog("close");		
 	});
@@ -3998,7 +3998,7 @@ function modal36_action(schedule_date)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal36").dialog("close");
 	});
@@ -4089,7 +4089,7 @@ function modal37_action(id)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal37").dialog("close");		
 	});
@@ -4186,7 +4186,7 @@ function modal38_action(father_id,sale_price_value)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal38").dialog("close");
 	});
@@ -4436,7 +4436,7 @@ function modal39_action(schedule_date)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal39").dialog("close");
 	});
@@ -4518,7 +4518,7 @@ function modal40_action(product,batch)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal40").dialog("close");
 	});
@@ -4750,7 +4750,7 @@ function modal41_action(button)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal41").dialog("close");
 	});
@@ -4870,7 +4870,7 @@ function modal43_action(date_initiated,project_id)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal43").dialog("close");
 	});
@@ -5164,7 +5164,7 @@ function modal45_action()
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal45").dialog("close");
 	});
@@ -5288,7 +5288,7 @@ function modal46_action(button)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal46").dialog("close");
 	});
@@ -5378,7 +5378,7 @@ function modal47_action(service_date)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal47").dialog("close");
 	});
@@ -5424,7 +5424,7 @@ function modal48_action(issue_id)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal48").dialog("close");
 	});
@@ -5472,7 +5472,7 @@ function modal49_action(issue_id)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal49").dialog("close");
 	});
@@ -5529,7 +5529,7 @@ function modal50_action()
 		var email_to=JSON.stringify(to_array);
 		send_email(email_to,from,business_title,subject,email_message,function()
 		{
-			$("#modal58").dialog("open");
+			$("#modal58_link").click();
 			hide_loader();			
 		});
 	});		
@@ -5678,7 +5678,7 @@ function modal51_action(object)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6817,7 +6817,7 @@ function modal111_action()
 			$("#modal111").dialog("open");
 		},function()
 		{
-			$("#modal56").dialog("open");
+			$("#modal56_link").click();
 			console.log('error in getting geo-location');
 			hide_loader();
 		});
@@ -7016,7 +7016,7 @@ function modal112_action(func)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal112").dialog("close");
 	});
@@ -7196,7 +7196,7 @@ function modal113_action(func)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal113").dialog("close");		
 	});
@@ -7464,7 +7464,7 @@ function modal114_action(func)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal114").dialog("close");
 	});
@@ -7722,7 +7722,7 @@ function modal117_action(date_initiated)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal117").dialog("close");
 	});
@@ -8009,7 +8009,7 @@ function modal118_action()
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal118").dialog("close");
 	});
@@ -8065,7 +8065,7 @@ function modal119_action(data_id,type)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal119").dialog("close");
 	});
@@ -8369,7 +8369,7 @@ function modal122_action(item_name)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal122").dialog("close");
 	});
@@ -8428,7 +8428,7 @@ function modal123_action(item_name)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal123").dialog("close");
 	});
@@ -8899,7 +8899,7 @@ function modal128_action()
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal128").dialog("close");
 	});
@@ -8997,7 +8997,7 @@ function modal129_action()
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal129").dialog("close");
 	});
@@ -9076,7 +9076,7 @@ function modal131_action(order_id,order_num,total_quantity,supplier_name,order_d
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal131").dialog("close");
 	});
@@ -9477,7 +9477,7 @@ function modal134_action(lead_id,customer,lead_details)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal134").dialog("close");
 	});
@@ -9545,7 +9545,7 @@ function modal135_action(type)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal135").dialog("close");
 	});
@@ -9653,7 +9653,7 @@ function modal136_action(type)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal136").dialog("close");
 	});
@@ -10497,7 +10497,7 @@ function modal140_action(i_func)
 			        		hide_progress();
 		        			$(select_file).val('');
 		        			$("#modal140").dialog("close");
-		        			$("#modal73").dialog("open");
+		        			$("#modal73_link").click();
 				        }*/
 				    }
 				    else
@@ -10826,7 +10826,7 @@ function modal142_action(func)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal142").dialog("close");
 	});
@@ -10903,7 +10903,7 @@ function modal143_action(item_name,batch)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal143").dialog("close");
 	});
@@ -10963,7 +10963,7 @@ function modal144_action(doc_type,target_id,func)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal144").dialog("close");
 	});
@@ -11100,7 +11100,7 @@ function modal145_action(customer_acc_name)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal145").dialog("close");
 	});
@@ -11189,7 +11189,7 @@ function modal146_action(test_data_id,test_id,item)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal146").dialog("close");
 	});
@@ -11266,7 +11266,7 @@ function modal147_action(hiring_type,button)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal147").dialog("close");
 	});
@@ -11854,12 +11854,12 @@ function modal150_action(rack,report_id)
 				
 				if(!product_picked)
 				{
-					$("#modal67").dialog("open");
+					$("#modal67_link").click();
 				}
 			}
 			else 
 			{
-				$("#modal66").dialog("open");
+				$("#modal66_link").click();
 			}
 			barcode_filter.value="";
 		},product_xml);						
@@ -12030,12 +12030,12 @@ function modal152_action(rack)
 
 				if(!product_placed)
 				{
-					$("#modal72").dialog("open");
+					$("#modal72_link").click();
 				}
 			}
 			else 
 			{
-				$("#modal66").dialog("open");
+				$("#modal66_link").click();
 			}
 			barcode_filter.value="";
 		},product_xml);						
@@ -12081,7 +12081,7 @@ function modal153_action(button,lead_id)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal153").dialog("close");
 	});
@@ -12539,7 +12539,7 @@ function modal155_action()
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		
 		$("#modal155").dialog("close");
@@ -12652,7 +12652,7 @@ function modal156_action(product_type,product_name)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal156").dialog("close");
 	});
@@ -13271,7 +13271,7 @@ function modal161_action(support_type,func)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal161").dialog("close");
 	});
@@ -13547,7 +13547,7 @@ function modal166_action(lead_id,supplier,lead_details)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal166").dialog("close");
 	});
@@ -13683,7 +13683,7 @@ function modal167_action(supplier_acc_name)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal167").dialog("close");
 	});
@@ -13728,7 +13728,7 @@ function modal168_action(button,lead_id)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal168").dialog("close");
 	});
@@ -13807,7 +13807,7 @@ function modal169_action(search_id)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal169").dialog("close");
 	});
@@ -14523,7 +14523,7 @@ function modal172_action()
 		}	
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		
 		$("#modal172").dialog("close");
@@ -14751,7 +14751,7 @@ function modal174_action(func)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal174").dialog("close");
 	});
@@ -14918,7 +14918,7 @@ function modal175_action(func)
 		}		
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal175").dialog("close");
 	});
@@ -15021,7 +15021,7 @@ function modal176_action(data_id,doc_type,func)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal176").dialog("close");
 	});
@@ -15203,7 +15203,7 @@ function modal177_action(func)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal177").dialog("close");
 	});
@@ -15424,7 +15424,7 @@ function modal179_action(cname,id,attr,template_id)
 		}		
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal179").dialog("close");
 	});
@@ -15470,7 +15470,7 @@ function modal180_action(data_id,code)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal180").dialog("close");
 	});
@@ -15528,7 +15528,7 @@ function modal181_action(data_id,preview)
 		}
 		else
 		{
-			$("#modal2").dialog("open");
+			$("#modal2_link").click();
 		}
 		$("#modal181").dialog("close");
 	});

@@ -1,4 +1,4 @@
-<div id='form303' class='function_detail'>
+<div id='form303' class='tab-pane'>
 	<table class='rwd-table'>
 		<thead>
 			<tr>
@@ -291,7 +291,7 @@
 			}
 			else
 			{
-				$("#modal2").dialog("open");
+				$("#modal2_link").click();
 			}
 		}
 		
@@ -341,7 +341,7 @@
 			}
 			else
 			{
-				$("#modal2").dialog("open");
+				$("#modal2_link").click();
 			}
 		}
 		
@@ -382,7 +382,7 @@
 			}
 			else
 			{
-				$("#modal2").dialog("open");
+				$("#modal2_link").click();
 			}
 		}
 		
@@ -416,7 +416,7 @@
 			}
 			else
 			{
-				$("#modal2").dialog("open");
+				$("#modal2_link").click();
 			}
 		}
 		

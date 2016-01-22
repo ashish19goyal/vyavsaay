@@ -34,9 +34,7 @@ function ajax_json(url,kvp,func)
 		{
 			number_active_ajax-=1;
 			hide_loader();
-			//$("#modal74").dialog("open");
-	        //console.log(xhr.status);
-    	    console.log(xhr.responseText);
+			console.log(xhr.responseText);
 		},
 		success: function(return_data,return_status,e)
 		{
@@ -50,55 +48,51 @@ function ajax_json(url,kvp,func)
 				var user=get_username();
 				var domain=get_domain();
 				
-				$("#modal1").dialog(
+				lock_screen(function()
 				{
-					close:function(e,ui)
+					show_loader();
+					var pass=document.getElementById("lock_form").elements['password'].value;
+					
+					var user_kvp={domain:domain,user:user,pass:pass,os:navigator.platform,browser:navigator.userAgent};
+					ajax_json("./ajax_json/login.php",user_kvp,function(response_object)
 					{
-						show_loader();
-						var pass=document.getElementById("modal1_pass").value;
-						console.log(navigator);
-						var user_kvp={domain:domain,user:user,pass:pass,os:navigator.platform,browser:navigator.userAgent};
-						ajax_json("./ajax_json/login.php",user_kvp,function(response_object)
+						if(response_object.status=="Failed Authentication")
 						{
-							if(response_object.status=="Failed Authentication")
+							alert("Password is incorrect. Aborting operation.");
+							delete_session();
+							hide_loader();
+						}
+						else if(response_object.status=="Account Inactive")
+						{
+							alert("This account has been deactivated.");
+							delete_session();
+							hide_loader();
+						}
+						else
+						{
+							var session_vars=response_object.data;
+							
+							var offline=get_session_var('offline');
+							for(var field in session_vars)
 							{
-								alert("Password is incorrect. Aborting operation.");
-								delete_session();
-								hide_loader();
+								localStorage.setItem(field,session_vars[field]);
 							}
-							else if(response_object.status=="Account Inactive")
-							{
-								alert("This account has been deactivated.");
-								delete_session();
-								hide_loader();
-							}
-							else
-							{
-								var	session_vars=response_object.data;
-								
-								var offline=get_session_var('offline');
-								for(var field in session_vars)
-								{
-									localStorage.setItem(field,session_vars[field]);
-								}
-								set_session_var('offline',offline);
+							set_session_var('offline',offline);
 
-								kvp.re_old=kvp.re;
-								kvp.cr_old=kvp.cr;
-								kvp.del_old=kvp.del;
-								kvp.up_old=kvp.up;
-								kvp.cr=session_vars['cr'];
-								kvp.up=session_vars['up'];
-								kvp.del=session_vars['del'];
-								kvp.re=session_vars['re'];
+							kvp.re_old=kvp.re;
+							kvp.cr_old=kvp.cr;
+							kvp.del_old=kvp.del;
+							kvp.up_old=kvp.up;
+							kvp.cr=session_vars['cr'];
+							kvp.up=session_vars['up'];
+							kvp.del=session_vars['del'];
+							kvp.re=session_vars['re'];
 
-								hide_loader();									
-								ajax_json(url,kvp,func);
-							}
-						});
-					}
-				});
-				$("#modal1").dialog("open");
+							hide_loader();									
+							ajax_json(url,kvp,func);
+						}
+					});
+				});					
 			}
 			else
 			{
@@ -215,11 +209,11 @@ function sync_logistics_apis()
 					$("#modal80").append('RTO Picked orders<br>');
 				}
 			}
-			$("#modal80").dialog("open");
+			$("#modal80_link").click();
 		}
 		else 
 		{
-			$("#modal81").dialog("open");
+			$("#modal81_link").click();
 		}
 	});
 }
@@ -286,7 +280,7 @@ function server_create_json(data_json,func)
 		{
 			if(response_object.warning!="no")
 			{
-				$("#modal5").dialog("open");
+				$("#modal5_link").click();
 			}
 		}
 		else

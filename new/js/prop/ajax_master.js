@@ -78,7 +78,7 @@ function server_create_master(columns)
 	{
 		if(response_object.status=='duplicate record')
 		{
-			$("#modal5").dialog("open");
+			$("#modal5_link").click();
 		}
 	});
 }

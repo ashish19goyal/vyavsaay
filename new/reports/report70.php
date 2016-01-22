@@ -1,4 +1,4 @@
-<div id='report70' class='function_detail'>
+<div id='report70' class='tab-pane'>
 	<form id='report70_header' autocomplete="off">
 		<fieldset>
 			<label>Min balance amount</br><input type='number' value='0' required title='Customers with balance more than this amount will be shown'></label>

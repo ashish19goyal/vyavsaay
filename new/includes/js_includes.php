@@ -37,7 +37,6 @@
 <script src='./js/prop/questionnaire.js'></script>
 <script src='./js/prop/reports_ini.js'></script>
 <script src='./js/prop/reports_header_ini.js'></script>
-<script src='./js/prop/responsive_menu.js'></script>
 <script src='./js/prop/sessions.js'></script>
 <script src='./js/prop/set.js'></script>
 <script src='./js/prop/set_json.js'></script>

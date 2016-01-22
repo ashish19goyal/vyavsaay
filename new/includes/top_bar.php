@@ -7,7 +7,7 @@
         <div class="page-logo">
             <a href="main.php">
             	<!--<img src="./layouts/layout/img/logo.png" alt="logo" class="logo-default" />-->
-            	<b class='logo-default'><span class="logo-text">Vyavsaay</span> ERP</b>    
+            	<b class='logo-default'><span class="logo-text">Vyavsaay</span> <span class='logo-text2'>ERP</span></b>    
             </a>
             <div class="menu-toggler sidebar-toggler"> </div>
         </div>                

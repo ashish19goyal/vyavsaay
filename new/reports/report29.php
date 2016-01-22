@@ -1,4 +1,4 @@
-<div id='report29' class='function_detail'>
+<div id='report29' class='tab-pane'>
 	<form id='report29_header' autocomplete="off">
 		<fieldset>
 			<label>Product Name <input type='text' title='If this field is left blank, pre-requisites for all products will be shown'></label>

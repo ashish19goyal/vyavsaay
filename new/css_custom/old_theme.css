@@ -162,54 +162,6 @@ a div{
 	cursor: pointer;
 }
 
-#home_grid>ul{
-	list-style-type: none;
-	margin: 1%; 
-	padding: 0;
-	background: #FFFFFF;
-}
-
-#home_grid>ul>li {
-	margin: 1%;
-	padding: 0;
-	float: left;
-	width: 220px;
-	height: 100px;
-	background: #FFFFFF;
-	cursor: pointer;
-}
-
-#home_grid>ul>li>ul{
-	list-style-type: none;	
-	margin: 1%;
-	padding: 1%;
-	float: left;
-	text-align: left;
-	font-size: .9em;
-	color:#ffffff;
-}
-
-
-#home_grid>ul>li>a{
-	width: 100%;	
-}
-
-#home_grid>ul>li>a>div{
-	margin: 0;	
-	padding: 1%;
-	/*background-color:#E66051;*//*changed*/
-	color: #EDEDE4;
-}
-
-.function_detail{
-	align-content: center;
-	text-align: center;
-/*	min-height: inherit;*/
-}
-
-.report_detail{
-}
-
 #loading_icon{
 	width:30%;
     height: 30%;
@@ -1281,36 +1233,6 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 /*this is applicable for mobile screens*/
 @media screen and (max-width: 550px) 
 {	
-	#home_grid{
-		padding-left: 22px;
-		padding-right: 22px;
-	}
-
-	#home_grid>ul>li>ul{
-		display: none;
-	}
-	
-	#home_grid>ul>li {
-		margin: 1%; 	
-		padding: 0;
-		float: left;
-		width: 200px;
-		height: 150px;
-	}	
-	
-	#home_grid>ul>li>a{
-		width: 100%;	
-		height: 100%;
-	}
-	
-	#home_grid>ul>li>a>div{
-		width: 100%;	
-		height: 53%;
-		font-size: 1.5em;
-		text-align: center;
-		padding-top: 70px;
-	}
-	
 	.questionnaire_form input,.questionnaire_form textarea,.questionnaire_form select
 	{
 		float:right;	
@@ -1383,13 +1305,7 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 		height:30px;
 		font-size: 20px;
 	}
-	
-	.function_detail{
-		width:475px;
-		padding: 5px;
-		text-align: center;
-	}
-	
+		
 	canvas{
 		position:relative;
 	}

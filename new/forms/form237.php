@@ -1,4 +1,4 @@
-<div id='form237' class='function_detail'>
+<div id='form237' class='tab-pane'>
 	<form id='form237_master' autocomplete="off" class='questionnaire_form'>
 		<fieldset style='text-align:left;'><br>
 			<label>Newsletter: <input type='text' name='newsletter'></label><br><br>

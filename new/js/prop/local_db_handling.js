@@ -276,7 +276,7 @@ function backup_server_db()
 	}
 	else 
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1144,7 +1144,7 @@ function local_create_row(data_xml,activity_xml)
 				if(result)
 				{
 					localdb_open_requests-=1;
-					$("#modal5").dialog("open");
+					$("#modal5_link").click();
 				}
 				else
 				{
@@ -1268,7 +1268,7 @@ function local_create_row_func(data_xml,activity_xml,func)
 				if(result)
 				{
 					localdb_open_requests-=1;
-					$("#modal5").dialog("open");
+					$("#modal5_link").click();
 				}
 				else
 				{
@@ -1388,7 +1388,7 @@ function local_create_simple(data_xml)
 				if(result)
 				{
 					localdb_open_requests-=1;
-					$("#modal5").dialog("open");
+					$("#modal5_link").click();
 				}
 				else
 				{
@@ -1823,7 +1823,7 @@ function local_create_simple_func(data_xml,func)
 				if(result)
 				{
 					localdb_open_requests-=1;
-					$("#modal5").dialog("open");
+					$("#modal5_link").click();
 				}
 				else
 				{

@@ -1,4 +1,4 @@
-<div id='form299' class='function_detail'>
+<div id='form299' class='tab-pane'>
 
 	<form id='form299_form'>
 		Name: <input type="text" required name='name' title="Name of the Newsletter">

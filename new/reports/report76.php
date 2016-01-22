@@ -1,4 +1,4 @@
-<div id='report76' class='function_detail'>
+<div id='report76' class='tab-pane'>
 	<form id='report76_header' autocomplete="off">
 		<fieldset>
 			<label>AWB #<br><input type='text' name='awb'></label>

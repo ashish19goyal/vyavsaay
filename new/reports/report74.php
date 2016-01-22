@@ -1,4 +1,4 @@
-<div id='report74' class='function_detail'>
+<div id='report74' class='tab-pane'>
 	<form id='report74_header' autocomplete="off">
 		<fieldset>
 			<label>Customer<br><input type='text' name='customer'></label>

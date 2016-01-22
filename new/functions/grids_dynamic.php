@@ -10,9 +10,6 @@
 		$domain=$_GET['dn'];
 	}
 
-//	echo $domain;
-//	echo $_GET['dn'];
-
 	if(isset($_SESSION['domain']) || $domain!="")
 	{
 		if($domain=="")
@@ -58,21 +55,21 @@
 			$function_names.=$struct_res2[$j]['function_name'];
 		}
 		$script_content.="function calculate_grid_metrics() {deferred_execute(function(){".$function_names."});};";
-		
+
+/*		
 		echo "<div id='home_grid'><ul>";
 		
 				
 		for($i=0;$i<count($struct_res);$i++)
 		{
-			echo "<li id='".$struct_res[$i]['name']."_link' onclick=\"grid_click('".$struct_res[$i]['name']."');\" style='background-color:".$struct_res[$i]['back_color']."'>".
-				"<a><div style='background-color:".$struct_res[$i]['head_color']."'><b>".$struct_res[$i]['display_name']."</b></div></a>".
-				"<ul>";
+			echo "<li class='dashboard_grid' id='".$struct_res[$i]['name']."_link' onclick=\"grid_click('".$struct_res[$i]['name']."');\" style='background-color:".$struct_res[$i]['head_color']."'>".
+				"<div><b>".$struct_res[$i]['display_name']."</b></div><ul>";
 			
 			for($j=0;$j<count($struct_res2);$j++)
 			{		
 				if($struct_res[$i]['name']==$struct_res2[$j]['grid'])
 				{
-					echo "<li>".$struct_res2[$j]['display_name'].": <a class='grid_item' id='".$struct_res2[$j]['metric_id']."'></a></li>";
+					echo "<li>".$struct_res2[$j]['display_name'].": <span class='grid_item' id='".$struct_res2[$j]['metric_id']."'></span></li>";
 				}					
 			}
 			
@@ -81,8 +78,28 @@
 		
 		echo "</ul>".
 			"</div>";
+*/				
+		
+		echo "<div id='home_grid' class='row'>";
 				
+		for($i=0;$i<count($struct_res);$i++)
+		{
+			echo "<div class='dashboard_grid' id='".$struct_res[$i]['name']."_link' onclick=\"grid_click('".$struct_res[$i]['name']."');\" style='background-color:".$struct_res[$i]['back_color']."'>".
+				"<div><b>".$struct_res[$i]['display_name']."</b></div><ul>";
 			
+			for($j=0;$j<count($struct_res2);$j++)
+			{		
+				if($struct_res[$i]['name']==$struct_res2[$j]['grid'])
+				{
+					echo "<li>".$struct_res2[$j]['display_name'].": <span class='grid_item' id='".$struct_res2[$j]['metric_id']."'></span></li>";
+				}					
+			}
+			
+			echo "</ul></div>";
+		}
+		
+		echo "</div>";	
+
 		echo "<script type='text/javascript'>";
 		echo "function hide_all_grids(){".$hide_string."};";
 		echo "system_grids_array=".$function_array_string."];";

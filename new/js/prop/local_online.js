@@ -72,7 +72,7 @@ function fetch_requested_data(element_id,columns,callback)
 	else
 	{
 		hide_loader();
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -341,7 +341,7 @@ function read_json_rows(element_id,columns,callback)
 	else
 	{
 		hide_loader();
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -408,7 +408,7 @@ function read_json_rows_master(element_id,columns,callback)
 	else
 	{
 		hide_loader();
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -524,7 +524,7 @@ function send_email(to,from,from_name,subject,message,func)
 	else
 	{
 		hide_loader();
-		//$("#modal59").dialog("open");
+		//$("#modal59_link").click();
 	}
 }
 
@@ -615,7 +615,7 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
 	else
 	{
 		hide_loader();
-		//$("#modal59").dialog("open");
+		//$("#modal59_link").click();
 	}
 }
 
@@ -647,6 +647,6 @@ function send_sms(to,message,type)
 	else 
 	{
 		hide_loader();
-		//$("#modal60").dialog("open");
+		//$("#modal60_link").click();
 	}
 }

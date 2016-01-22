@@ -1,4 +1,4 @@
-<div id='form200' class='function_detail'>
+<div id='form200' class='tab-pane'>
 	<form id='form200_master' autocomplete="off">
 		<fieldset>
 			<label>DRS # <br><input type='text' name='drs_num' required></label>

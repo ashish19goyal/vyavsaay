@@ -1,4 +1,4 @@
-<div id='form205' class='function_detail'>
+<div id='form205' class='tab-pane'>
 	<form id='form205_master' autocomplete="off">
 		<fieldset>
 			<label>Comments: <textarea class='widebox' name='comments'></textarea></label>

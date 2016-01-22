@@ -3,8 +3,17 @@
 	include_once "./Classes/db.php";
 	use RetailingEssentials\db_connect;
 
-	if(isset($_SESSION['domain']))
-	{	
+	$domain="";
+	
+	if(isset($_GET['dn']))
+	{
+		$domain=$_GET['dn'];
+	}
+
+	if(isset($_SESSION['domain']) || $domain!="")
+	{
+		if($domain=="")
+		{	$domain=$_SESSION['domain'];}
 		$domain=$_SESSION['domain'];
 		$db_name="re_user_".$domain;
 		$conn=new db_connect($db_name);

@@ -1,4 +1,4 @@
-<div id='form214' class='function_detail'>
+<div id='form214' class='tab-pane'>
 	<div><img id='form214_logo' style='width:90%;max-height:200px;'></div>
 	<br>
 	<form id='form214_master' autocomplete="off" class='questionnaire_form'>

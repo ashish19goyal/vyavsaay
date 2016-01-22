@@ -1,4 +1,4 @@
-<div id='form134' class='function_detail'>
+<div id='form134' class='tab-pane'>
 	<form id='form134_master' autocomplete="off">
 		<fieldset>
 			<label>Request Id<br><input type='text'></label>

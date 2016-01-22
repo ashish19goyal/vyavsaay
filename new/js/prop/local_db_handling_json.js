@@ -1514,7 +1514,7 @@ function local_create_json(data_json,func)
 							{}
 							else 
 							{
-								$("#modal5").dialog("open");
+								$("#modal5_link").click();
 							}
 						}
 						else 

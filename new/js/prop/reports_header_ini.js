@@ -1277,7 +1277,7 @@ function report64_header_ini()
 				create_simple(discarded_xml);
 				
 				report64_header_ini();
-				$("#modal70").dialog("open");
+				$("#modal70_link").click();
 			});		
 		});
 	});
@@ -1308,7 +1308,7 @@ function report64_header_ini()
 				update_simple(items_xml);
 				
 				report64_header_ini();
-				$("#modal69").dialog("open");				
+				$("#modal69_link").click();				
 			});		
 		});
 	});

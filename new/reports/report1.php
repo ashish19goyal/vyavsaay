@@ -1,4 +1,4 @@
-<div id='report1' class='function_detail'>
+<div id='report1' class='tab-pane'>
 	<form id='report1_header' autocomplete="off">
 		<fieldset>
 			<label>Date Since</br><input type='text' required title='Date since the changes are to be evaluated'></label>

@@ -1,4 +1,4 @@
-<div id='form138' class='function_detail'>
+<div id='form138' class='tab-pane'>
 	<form id='form138_master' autocomplete="off">
 		<fieldset>
 			<label>Project Name: <input type='text' required></label>

@@ -42,7 +42,7 @@ function form1_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -76,7 +76,7 @@ function form2_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -124,7 +124,7 @@ function form5_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -175,7 +175,7 @@ function form8_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -208,7 +208,7 @@ function form10_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -240,7 +240,7 @@ function form12_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -282,7 +282,7 @@ function form14_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -324,7 +324,7 @@ function form15_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -413,7 +413,7 @@ function form16_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -496,7 +496,7 @@ function form17_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -540,7 +540,7 @@ function form19_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -574,7 +574,7 @@ function form21_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -603,7 +603,7 @@ function form24_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -651,7 +651,7 @@ function form30_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -697,7 +697,7 @@ function form35_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -739,7 +739,7 @@ function form38_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -808,7 +808,7 @@ function form39_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -856,7 +856,7 @@ function form40_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -945,7 +945,7 @@ function form42_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -987,7 +987,7 @@ function form43_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1035,7 +1035,7 @@ function form44_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1072,7 +1072,7 @@ function form46_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1106,7 +1106,7 @@ function form48_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1140,7 +1140,7 @@ function form49_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1177,7 +1177,7 @@ function form50_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1331,7 +1331,7 @@ function form53_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1400,7 +1400,7 @@ function form56_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1470,7 +1470,7 @@ function form57_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1497,7 +1497,7 @@ function form58_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1551,7 +1551,7 @@ function form59_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1603,7 +1603,7 @@ function form60_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1654,7 +1654,7 @@ function form61_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1709,7 +1709,7 @@ function form62_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1762,7 +1762,7 @@ function form63_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1813,7 +1813,7 @@ function form64_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1866,7 +1866,7 @@ function form66_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1895,7 +1895,7 @@ function form69_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1942,7 +1942,7 @@ function form70_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1992,7 +1992,7 @@ function form71_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2023,7 +2023,7 @@ function form72_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2067,7 +2067,7 @@ function form79_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2104,7 +2104,7 @@ function form80_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2147,7 +2147,7 @@ function form81_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2184,7 +2184,7 @@ function form83_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2231,7 +2231,7 @@ function form84_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2318,7 +2318,7 @@ function form87_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2365,7 +2365,7 @@ function form88_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2414,7 +2414,7 @@ function form89_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2465,7 +2465,7 @@ function form90_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2498,7 +2498,7 @@ function form91_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2639,7 +2639,7 @@ function form92_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2715,7 +2715,7 @@ function form93_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2760,7 +2760,7 @@ function form96_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2805,7 +2805,7 @@ function form97_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2849,7 +2849,7 @@ function form98_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2905,7 +2905,7 @@ function form101_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2939,7 +2939,7 @@ function form102_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2973,7 +2973,7 @@ function form103_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3006,7 +3006,7 @@ function form104_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3033,7 +3033,7 @@ function form105_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -3076,7 +3076,7 @@ function form108_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3120,7 +3120,7 @@ function form109_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3170,7 +3170,7 @@ function form110_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3205,7 +3205,7 @@ function form111_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3239,7 +3239,7 @@ function form112_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3273,7 +3273,7 @@ function form113_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3307,7 +3307,7 @@ function form114_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3341,7 +3341,7 @@ function form115_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3383,7 +3383,7 @@ function form116_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3419,7 +3419,7 @@ function form118_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3458,7 +3458,7 @@ function form119_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3506,7 +3506,7 @@ function form121_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3539,7 +3539,7 @@ function form122_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3584,7 +3584,7 @@ function form123_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3629,7 +3629,7 @@ function form125_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3676,7 +3676,7 @@ function form126_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3758,7 +3758,7 @@ function form128_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3821,7 +3821,7 @@ function form130_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3870,7 +3870,7 @@ function form131_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3907,7 +3907,7 @@ function form133_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3952,7 +3952,7 @@ function form134_delete_machine(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4007,7 +4007,7 @@ function form134_delete_team(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4053,7 +4053,7 @@ function form134_delete_document(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4098,7 +4098,7 @@ function form134_delete_task(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4154,7 +4154,7 @@ function form135_delete_team(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4201,7 +4201,7 @@ function form135_delete_document(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4247,7 +4247,7 @@ function form135_delete_task(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4286,7 +4286,7 @@ function form136_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4321,7 +4321,7 @@ function form137_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4356,7 +4356,7 @@ function form139_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4391,7 +4391,7 @@ function form140_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4429,7 +4429,7 @@ function form142_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4475,7 +4475,7 @@ function form144_delete_expense(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4504,7 +4504,7 @@ function form145_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4548,7 +4548,7 @@ function form146_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4604,7 +4604,7 @@ function form147_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4648,7 +4648,7 @@ function form149_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4693,7 +4693,7 @@ function form151_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4732,7 +4732,7 @@ function form151_delete_expense(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4780,7 +4780,7 @@ function form152_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4819,7 +4819,7 @@ function form153_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4852,7 +4852,7 @@ function form154_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4892,7 +4892,7 @@ function form154_delete_service_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4931,7 +4931,7 @@ function form154_delete_hiring_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4971,7 +4971,7 @@ function form156_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4999,7 +4999,7 @@ function form157_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5033,7 +5033,7 @@ function form158_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5081,7 +5081,7 @@ function form161_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5127,7 +5127,7 @@ function form162_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5172,7 +5172,7 @@ function form167_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5241,7 +5241,7 @@ function form169_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5287,7 +5287,7 @@ function form170_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5352,7 +5352,7 @@ function form171_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5390,7 +5390,7 @@ function form172_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5429,7 +5429,7 @@ function form173_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5474,7 +5474,7 @@ function form174_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5519,7 +5519,7 @@ function form175_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5564,7 +5564,7 @@ function form177_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5598,7 +5598,7 @@ function form178_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5640,7 +5640,7 @@ function form179_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5670,7 +5670,7 @@ function form180_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5714,7 +5714,7 @@ function form181_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5762,7 +5762,7 @@ function form183_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5806,7 +5806,7 @@ function form184_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5844,7 +5844,7 @@ function form185_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5886,7 +5886,7 @@ function form186_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5930,7 +5930,7 @@ function form187_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5973,7 +5973,7 @@ function form188_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6031,7 +6031,7 @@ function form189_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6071,7 +6071,7 @@ function form190_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6105,7 +6105,7 @@ function form191_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6145,7 +6145,7 @@ function form192_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6179,7 +6179,7 @@ function form195_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6215,7 +6215,7 @@ function form197_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6256,7 +6256,7 @@ function form199_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6292,7 +6292,7 @@ function form200_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6362,7 +6362,7 @@ function form201_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6411,7 +6411,7 @@ function form203_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6456,7 +6456,7 @@ function form202_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6497,7 +6497,7 @@ function form204_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6538,7 +6538,7 @@ function form205_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6579,7 +6579,7 @@ function form206_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6630,7 +6630,7 @@ function form207_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6675,7 +6675,7 @@ function form208_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6704,7 +6704,7 @@ function form209_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6745,7 +6745,7 @@ function form213_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6779,7 +6779,7 @@ function form215_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6815,7 +6815,7 @@ function form217_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6851,7 +6851,7 @@ function form219_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6907,7 +6907,7 @@ function form220_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6942,7 +6942,7 @@ function form221_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6984,7 +6984,7 @@ function form223_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7018,7 +7018,7 @@ function form222_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7051,7 +7051,7 @@ function form224_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7082,7 +7082,7 @@ function form225_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7110,7 +7110,7 @@ function form226_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7153,7 +7153,7 @@ function form228_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7196,7 +7196,7 @@ function form229_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7235,7 +7235,7 @@ function form230_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7263,7 +7263,7 @@ function form231_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7308,7 +7308,7 @@ function form232_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7390,7 +7390,7 @@ function form234_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7461,7 +7461,7 @@ function form235_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7530,7 +7530,7 @@ function form236_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7578,7 +7578,7 @@ function form238_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7621,7 +7621,7 @@ function form239_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7650,7 +7650,7 @@ function form240_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7679,7 +7679,7 @@ function form245_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7745,7 +7745,7 @@ function form246_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7774,7 +7774,7 @@ function form247_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7809,7 +7809,7 @@ function form248_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7880,7 +7880,7 @@ function form249_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7915,7 +7915,7 @@ function form250_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7987,7 +7987,7 @@ function form251_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8023,7 +8023,7 @@ function form252_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8059,7 +8059,7 @@ function form253_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8095,7 +8095,7 @@ function form254_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8131,7 +8131,7 @@ function form255_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8158,7 +8158,7 @@ function form256_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8202,7 +8202,7 @@ function form257_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8243,7 +8243,7 @@ function form259_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8281,7 +8281,7 @@ function form261_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8319,7 +8319,7 @@ function form262_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8356,7 +8356,7 @@ function form264_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8392,7 +8392,7 @@ function form265_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8464,7 +8464,7 @@ function form266_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8498,7 +8498,7 @@ function form268_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8545,7 +8545,7 @@ function form269_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8579,7 +8579,7 @@ function form270_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8608,7 +8608,7 @@ function form271_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8643,7 +8643,7 @@ function form273_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8682,7 +8682,7 @@ function form275_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8709,7 +8709,7 @@ function form276_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8788,7 +8788,7 @@ function form283_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8822,7 +8822,7 @@ function form284_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8863,7 +8863,7 @@ function form289_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8890,7 +8890,7 @@ function form290_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8926,7 +8926,7 @@ function form292_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8956,7 +8956,7 @@ function form293_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8986,7 +8986,7 @@ function form294_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9016,7 +9016,7 @@ function form295_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9058,7 +9058,7 @@ function form297_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9086,7 +9086,7 @@ function form296_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9119,7 +9119,7 @@ function form298_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9139,7 +9139,7 @@ function form299_delete_item(id)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9162,7 +9162,7 @@ function form299_delete_image(id)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9213,7 +9213,7 @@ function form300_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9241,6 +9241,6 @@ function form302_delete_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }

@@ -41,7 +41,7 @@ function switch_to_online()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -80,7 +80,7 @@ function switch_to_offline()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -120,13 +120,13 @@ function sync_local_and_server()
 			}
 			else 
 			{
-				$("#modal74").dialog("open");
+				$("#modal74_link").click();
 			}
 		});
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 

@@ -64,7 +64,7 @@ function form2_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -194,7 +194,7 @@ function form10_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -495,7 +495,7 @@ function form12_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -698,7 +698,7 @@ function form15_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -882,7 +882,7 @@ function form19_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1075,7 +1075,7 @@ function form21_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1259,7 +1259,7 @@ function form24_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1377,7 +1377,7 @@ function form38_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1445,7 +1445,7 @@ function form51_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1527,7 +1527,7 @@ function form56_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1630,7 +1630,7 @@ function form58_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1727,7 +1727,7 @@ function form59_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1804,7 +1804,7 @@ function form60_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1879,7 +1879,7 @@ function form61_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1971,7 +1971,7 @@ function form62_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2062,7 +2062,7 @@ function form63_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2150,7 +2150,7 @@ function form64_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2237,7 +2237,7 @@ function form66_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2402,7 +2402,7 @@ function form69_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2570,7 +2570,7 @@ function form72_add_product()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2686,7 +2686,7 @@ function form72_add_service()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2760,7 +2760,7 @@ function form80_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -2859,7 +2859,7 @@ function form81_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -2991,7 +2991,7 @@ function form82_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3089,7 +3089,7 @@ function form84_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -3172,7 +3172,7 @@ function form88_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -3272,7 +3272,7 @@ function form89_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3317,7 +3317,7 @@ function form90_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -3567,7 +3567,7 @@ function form91_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3646,7 +3646,7 @@ function form96_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3723,7 +3723,7 @@ function form97_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3799,7 +3799,7 @@ function form98_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3854,7 +3854,7 @@ function form101_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3929,7 +3929,7 @@ function form102_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -3989,7 +3989,7 @@ function form103_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -4103,7 +4103,7 @@ function form105_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -4179,7 +4179,7 @@ function form109_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4265,7 +4265,7 @@ function form111_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -4505,7 +4505,7 @@ function form112_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -4777,7 +4777,7 @@ function form114_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -5075,7 +5075,7 @@ function form118_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5459,7 +5459,7 @@ function form119_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5526,7 +5526,7 @@ function form121_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -6013,7 +6013,7 @@ function form122_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6293,7 +6293,7 @@ function form122_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 */
@@ -6350,7 +6350,7 @@ function form123_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6409,7 +6409,7 @@ function form125_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6725,7 +6725,7 @@ function form130_add_product()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6931,7 +6931,7 @@ function form130_add_service()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6988,7 +6988,7 @@ function form134_add_machine()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7059,7 +7059,7 @@ function form134_add_team()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7111,7 +7111,7 @@ function form134_add_document()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7169,7 +7169,7 @@ function form134_add_task()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7242,7 +7242,7 @@ function form135_add_task()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7295,7 +7295,7 @@ function form135_add_document()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7351,7 +7351,7 @@ function form135_add_team()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7594,7 +7594,7 @@ function form136_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7665,7 +7665,7 @@ function form137_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7723,7 +7723,7 @@ function form139_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7783,7 +7783,7 @@ function form140_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7864,7 +7864,7 @@ function form142_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7921,7 +7921,7 @@ function form144_add_expense()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8075,7 +8075,7 @@ function form145_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8157,7 +8157,7 @@ function form146_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -8205,7 +8205,7 @@ function form147_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -8273,7 +8273,7 @@ function form148_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8337,7 +8337,7 @@ function form149_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -8432,7 +8432,7 @@ function form151_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8489,7 +8489,7 @@ function form151_add_expense()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8669,7 +8669,7 @@ function form153_add_product()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8765,7 +8765,7 @@ function form153_add_service()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9258,7 +9258,7 @@ function form154_add_product()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9357,7 +9357,7 @@ function form154_add_service()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9467,7 +9467,7 @@ function form156_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9584,7 +9584,7 @@ function form157_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9760,7 +9760,7 @@ function form158_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9810,7 +9810,7 @@ function form161_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -9871,7 +9871,7 @@ function form162_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -9935,7 +9935,7 @@ function form167_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9983,7 +9983,7 @@ function form171_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -10184,7 +10184,7 @@ function form172_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -10258,7 +10258,7 @@ function form173_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -10321,7 +10321,7 @@ function form174_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -10401,7 +10401,7 @@ function form175_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -10486,7 +10486,7 @@ function form176_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -10543,7 +10543,7 @@ function form177_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -10686,7 +10686,7 @@ function form178_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -10823,7 +10823,7 @@ function form180_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -10893,7 +10893,7 @@ function form184_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -10981,7 +10981,7 @@ function form186_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11045,7 +11045,7 @@ function form187_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -11111,7 +11111,7 @@ function form191_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -11223,7 +11223,7 @@ function form192_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11428,7 +11428,7 @@ function form193_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11486,7 +11486,7 @@ function form197_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11595,14 +11595,14 @@ function form199_add_item()
 							id_filter.value="";
 							order_history.value="";
 							awb_filter.value="";
-							$("#modal65").dialog("open");
+							$("#modal65_link").click();
 						}
 					});
 				}
 				else 
 				{
 					awb_filter.value="";
-					$("#modal65").dialog("open");
+					$("#modal65_link").click();
 				}		
 			}
 		});
@@ -11628,7 +11628,7 @@ function form199_add_item()
 			else 
 			{
 				awb_filter.value="";
-				$("#modal65").dialog("open");
+				$("#modal65_link").click();
 			}
 		});
 
@@ -11637,7 +11637,7 @@ function form199_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11738,7 +11738,7 @@ function form200_add_item()
 					else 
 					{
 						awb_filter.value="";
-						$("#modal65").dialog("open");
+						$("#modal65_link").click();
 					}
 				});
 			}
@@ -11752,7 +11752,7 @@ function form200_add_item()
 				else 
 				{
 					awb_filter.value="";
-					$("#modal65").dialog("open");
+					$("#modal65_link").click();
 				}
 			}
 		});
@@ -11842,14 +11842,14 @@ function form200_add_item()
 									order_history.value="";
 									ship_to.value="";
 									awb_filter.value="";
-									$("#modal65").dialog("open");
+									$("#modal65_link").click();
 								}
 							});
 						}
 						else 
 						{
 							awb_filter.value="";
-							$("#modal65").dialog("open");
+							$("#modal65_link").click();
 						}
 					});
 				}
@@ -11915,14 +11915,14 @@ function form200_add_item()
 								order_history.value="";
 								ship_to.value="";
 								awb_filter.value="";
-								$("#modal65").dialog("open");
+								$("#modal65_link").click();
 							}
 						});
 					}
 					else 
 					{
 						awb_filter.value="";
-						$("#modal65").dialog("open");
+						$("#modal65_link").click();
 					}
 				}
 			}
@@ -11933,7 +11933,7 @@ function form200_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11995,7 +11995,7 @@ function form202_add_item()
 			else 
 			{
 				awb_filter.value="";
-				$("#modal65").dialog("open");
+				$("#modal65_link").click();
 			}
 		});
 
@@ -12048,14 +12048,14 @@ function form202_add_item()
 							id_filter.value="";
 							order_history.value="";
 							awb_filter.value="";
-							$("#modal65").dialog("open");
+							$("#modal65_link").click();
 						}						
 					});
 				}
 				else 
 				{
 					awb_filter.value="";
-					$("#modal65").dialog("open");
+					$("#modal65_link").click();
 				}
 								
 			}
@@ -12065,7 +12065,7 @@ function form202_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12123,7 +12123,7 @@ function form204_add_item()
 			else 
 			{
 				awb_filter.value="";
-				$("#modal65").dialog("open");
+				$("#modal65_link").click();
 			}
 		});
 
@@ -12170,14 +12170,14 @@ function form204_add_item()
 							id_filter.value="";
 							order_history.value="";
 							awb_filter.value="";
-							$("#modal65").dialog("open");					
+							$("#modal65_link").click();					
 						}
 					});
 				}
 				else 
 				{
 					awb_filter.value="";
-					$("#modal65").dialog("open");
+					$("#modal65_link").click();
 				}
 								
 			}
@@ -12185,7 +12185,7 @@ function form204_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12243,7 +12243,7 @@ function form205_add_item()
 			else 
 			{
 				awb_filter.value="";
-				$("#modal65").dialog("open");
+				$("#modal65_link").click();
 			}
 		});
 
@@ -12291,14 +12291,14 @@ function form205_add_item()
 							id_filter.value="";
 							order_history.value="";
 							awb_filter.value="";
-							$("#modal65").dialog("open");					
+							$("#modal65_link").click();					
 						}
 					});
 				}
 				else 
 				{
 					awb_filter.value="";
-					$("#modal65").dialog("open");
+					$("#modal65_link").click();
 				}
 								
 			}
@@ -12306,7 +12306,7 @@ function form205_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12364,7 +12364,7 @@ function form206_add_item()
 			else 
 			{
 				awb_filter.value="";
-				$("#modal65").dialog("open");
+				$("#modal65_link").click();
 			}
 		});
 
@@ -12411,14 +12411,14 @@ function form206_add_item()
 							id_filter.value="";
 							order_history.value="";
 							awb_filter.value="";
-							$("#modal65").dialog("open");					
+							$("#modal65_link").click();					
 						}
 					});
 				}
 				else 
 				{
 					awb_filter.value="";
-					$("#modal65").dialog("open");
+					$("#modal65_link").click();
 				}
 								
 			}
@@ -12426,7 +12426,7 @@ function form206_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12503,7 +12503,7 @@ function form209_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12599,7 +12599,7 @@ function form211_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12695,7 +12695,7 @@ function form212_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12795,7 +12795,7 @@ function form213_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -12868,7 +12868,7 @@ function form215_add_item()
 					else 
 					{
 						bill_id_filter.value="";
-						$("#modal65").dialog("open");
+						$("#modal65_link").click();
 					}
 				});
 			}
@@ -12882,7 +12882,7 @@ function form215_add_item()
 				else 
 				{
 					bill_id_filter.value="";
-					$("#modal65").dialog("open");
+					$("#modal65_link").click();
 				}
 			}
 		});
@@ -12941,14 +12941,14 @@ function form215_add_item()
 									order_filter.value="";
 									id_filter.value=get_new_key();
 									bill_id_filter.value="";
-									$("#modal65").dialog("open");
+									$("#modal65_link").click();
 								}
 							});
 						}
 						else 
 						{
 							bill_id_filter.value="";
-							$("#modal65").dialog("open");
+							$("#modal65_link").click();
 						}
 					});
 				}
@@ -12982,14 +12982,14 @@ function form215_add_item()
 								order_filter.value="";
 								id_filter.value=get_new_key();
 								bill_id_filter.value="";
-								$("#modal65").dialog("open");
+								$("#modal65_link").click();
 							}
 						});
 					}
 					else 
 					{
 						bill_id_filter.value="";
-						$("#modal65").dialog("open");
+						$("#modal65_link").click();
 					}
 				}
 			}
@@ -13000,7 +13000,7 @@ function form215_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13075,7 +13075,7 @@ function form217_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13172,7 +13172,7 @@ function form219_add_item()
 					else 
 					{
 						awb_filter.value="";
-						$("#modal65").dialog("open");
+						$("#modal65_link").click();
 					}
 				});
 			}
@@ -13186,7 +13186,7 @@ function form219_add_item()
 				else 
 				{
 					awb_filter.value="";
-					$("#modal65").dialog("open");
+					$("#modal65_link").click();
 				}
 			}
 		});
@@ -13278,14 +13278,14 @@ function form219_add_item()
 									order_history.value="";
 									ship_to.value="";
 									awb_filter.value="";
-									$("#modal65").dialog("open");
+									$("#modal65_link").click();
 								}
 							});
 						}
 						else 
 						{
 							awb_filter.value="";
-							$("#modal65").dialog("open");
+							$("#modal65_link").click();
 						}
 					});
 				}
@@ -13354,14 +13354,14 @@ function form219_add_item()
 								order_history.value="";
 								ship_to.value="";
 								awb_filter.value="";
-								$("#modal65").dialog("open");
+								$("#modal65_link").click();
 							}
 						});
 					}
 					else 
 					{
 						awb_filter.value="";
-						$("#modal65").dialog("open");
+						$("#modal65_link").click();
 					}
 				}
 			}
@@ -13371,7 +13371,7 @@ function form219_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13429,7 +13429,7 @@ function form220_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13501,7 +13501,7 @@ function form221_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13648,7 +13648,7 @@ function form222_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13712,7 +13712,7 @@ function form224_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13885,7 +13885,7 @@ function form225_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13961,7 +13961,7 @@ function form226_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14061,7 +14061,7 @@ function form228_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14161,7 +14161,7 @@ function form229_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14271,7 +14271,7 @@ function form230_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14355,7 +14355,7 @@ function form231_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14421,7 +14421,7 @@ function form240_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14628,7 +14628,7 @@ function form244_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14704,7 +14704,7 @@ function form245_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14750,7 +14750,7 @@ function form246_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14808,7 +14808,7 @@ function form247_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14893,7 +14893,7 @@ function form248_add_item()
 					else 
 					{
 						awb_filter.value="";
-						$("#modal65").dialog("open");
+						$("#modal65_link").click();
 					}
 				});
 			}
@@ -14907,7 +14907,7 @@ function form248_add_item()
 				else 
 				{
 					awb_filter.value="";
-					$("#modal65").dialog("open");
+					$("#modal65_link").click();
 				}
 			}
 		});
@@ -14984,14 +14984,14 @@ function form248_add_item()
 									id_filter.value="";
 									history_filter.value="";
 									awb_filter.value="";
-									$("#modal65").dialog("open");
+									$("#modal65_link").click();
 								}
 							});
 						}
 						else 
 						{
 							awb_filter.value="";
-							$("#modal65").dialog("open");
+							$("#modal65_link").click();
 						}
 					});
 				}
@@ -15044,14 +15044,14 @@ function form248_add_item()
 								id_filter.value="";
 								awb_filter.value="";
 								history_filter.value="";
-								$("#modal65").dialog("open");
+								$("#modal65_link").click();
 							}
 						});
 					}
 					else 
 					{
 						awb_filter.value="";
-						$("#modal65").dialog("open");
+						$("#modal65_link").click();
 					}
 				}
 			}
@@ -15061,7 +15061,7 @@ function form248_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15143,7 +15143,7 @@ function form250_add_item()
 					else 
 					{
 						bag_filter.value="";
-						$("#modal65").dialog("open");
+						$("#modal65_link").click();
 					}
 				});
 			}
@@ -15157,7 +15157,7 @@ function form250_add_item()
 				else 
 				{
 					bag_filter.value="";
-					$("#modal65").dialog("open");
+					$("#modal65_link").click();
 				}
 			}
 		});
@@ -15219,14 +15219,14 @@ function form250_add_item()
 									weight_filter.value="";
 									id_filter.value="";
 									num_filter.value="";
-									$("#modal65").dialog("open");
+									$("#modal65_link").click();
 								}
 							});
 						}
 						else 
 						{
 							bag_filter.value="";
-							$("#modal65").dialog("open");
+							$("#modal65_link").click();
 						}
 					});
 				}
@@ -15264,14 +15264,14 @@ function form250_add_item()
 								weight_filter.value="";
 								id_filter.value="";
 								num_filter.value="";
-								$("#modal65").dialog("open");
+								$("#modal65_link").click();
 							}
 						});
 					}
 					else 
 					{
 						bag_filter.value="";
-						$("#modal65").dialog("open");
+						$("#modal65_link").click();
 					}
 				}
 			}
@@ -15282,7 +15282,7 @@ function form250_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15369,7 +15369,7 @@ function form252_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -15456,7 +15456,7 @@ function form253_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -15543,7 +15543,7 @@ function form254_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -15630,7 +15630,7 @@ function form255_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -15699,7 +15699,7 @@ function form256_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -15787,7 +15787,7 @@ function form257_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -15884,7 +15884,7 @@ function form258_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15968,7 +15968,7 @@ function form258_add_spare()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -16027,7 +16027,7 @@ function form258_add_spec()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -16111,7 +16111,7 @@ function form258_add_bank()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -16158,7 +16158,7 @@ function form258_add_tc()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -16212,7 +16212,7 @@ function form261_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -16268,7 +16268,7 @@ function form262_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -16328,7 +16328,7 @@ function form263_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -16392,7 +16392,7 @@ function form264_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -16486,7 +16486,7 @@ function form265_add_item()
 					else 
 					{
 						awb_filter.value="";
-						$("#modal65").dialog("open");
+						$("#modal65_link").click();
 					}
 				});
 			}
@@ -16500,7 +16500,7 @@ function form265_add_item()
 				else 
 				{
 					awb_filter.value="";
-					$("#modal65").dialog("open");
+					$("#modal65_link").click();
 				}
 			}
 		});
@@ -16585,14 +16585,14 @@ function form265_add_item()
 									order_history.value="";
 									ship_to.value="";
 									awb_filter.value="";
-									$("#modal65").dialog("open");
+									$("#modal65_link").click();
 								}
 							});
 						}
 						else 
 						{
 							awb_filter.value="";
-							$("#modal65").dialog("open");
+							$("#modal65_link").click();
 						}
 					});
 				}
@@ -16653,14 +16653,14 @@ function form265_add_item()
 								order_history.value="";
 								ship_to.value="";
 								awb_filter.value="";
-								$("#modal65").dialog("open");
+								$("#modal65_link").click();
 							}
 						});
 					}
 					else 
 					{
 						awb_filter.value="";
-						$("#modal65").dialog("open");
+						$("#modal65_link").click();
 					}
 				}
 			}
@@ -16671,7 +16671,7 @@ function form265_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -16755,7 +16755,7 @@ function form268_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -16871,7 +16871,7 @@ function form270_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -16974,7 +16974,7 @@ function form271_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -17089,7 +17089,7 @@ function form273_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -17193,7 +17193,7 @@ function form275_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -17255,7 +17255,7 @@ function form276_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -17380,7 +17380,7 @@ function form284_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -17505,7 +17505,7 @@ function form289_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -17572,7 +17572,7 @@ function form290_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -17689,7 +17689,7 @@ function form292_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -17748,7 +17748,7 @@ function form293_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}		
 }
 
@@ -17907,7 +17907,7 @@ function form294_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -18041,7 +18041,7 @@ function form295_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -18186,7 +18186,7 @@ function form296_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -18267,7 +18267,7 @@ function form298_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -18319,6 +18319,6 @@ function form302_add_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }

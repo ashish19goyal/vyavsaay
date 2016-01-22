@@ -1,4 +1,4 @@
-<div id='form185' class='function_detail'>
+<div id='form185' class='tab-pane'>
 <input type='button' value='Switch view' class='generic_icon' onclick='form185_switch_view();'>
 	<div id="form185_calendar" style="max-width: 900px;margin:20px auto;"></div>
 	<table class='rwd-table'>

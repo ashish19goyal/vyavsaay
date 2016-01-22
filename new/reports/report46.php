@@ -1,4 +1,4 @@
-<div id='report46' class='function_detail'>
+<div id='report46' class='tab-pane'>
 	<form id='report46_header' autocomplete="off">
 		<fieldset>
 			<label>Min balance amount </br><input type='number' value='0' required title='Suppliers with balance more than this amount will be shown'></label>

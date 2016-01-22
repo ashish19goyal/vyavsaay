@@ -1,4 +1,4 @@
-<div id='form186' class='function_detail'>
+<div id='form186' class='tab-pane'>
 	<form id='form186_master' autocomplete="off">
 		<fieldset>
 			<label>Production Plan<br><input type='text' required></label>

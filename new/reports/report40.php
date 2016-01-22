@@ -1,4 +1,4 @@
-<div id='report40' class='report_detail'>
+<div id='report40' class='tab-pane'>
 	<form id='report40_header' autocomplete="off">
 		<fieldset>
 			<label>Number of days</br><input type='number' required title='Inventory is compared to sales over these many number of days'></label>

@@ -47,8 +47,8 @@
 						$first_char=substr($res['display_name'],0,1);
 						$grids_html.="<li class='nav-item' id='nav-".$res['name']."'>".
 			                	"<a class='nav-link nav-toggle'>".
-			                    "<b style='color:#999;font-size:1.2em;'>".$first_char."</b>".
-								"<span class='title' style='font-weight:900;color:#999;'>".$res['display_name']."</span>".
+										"<i class='fa fa-th-large'></i>".		                    
+			               "<span class='title' style='font-weight:900;color:#999;'>".$res['display_name']."</span>".
 			                    "<span class='arrow'></span></a>";
 			            
 					if($res['elements']!="" && $res['elements']!=null)
@@ -56,7 +56,7 @@
 						$grids_html.="<ul class='sub-menu'>";
 						$elements_array=json_decode($res['elements'],true);
 						foreach($elements_array as $element)
-		            	{
+		            {
 		                	$grids_html.="<li class='nav-item' id='nav-".$element['name']."'>".
 		                        "<a onclick=\"element_display('','".$element['name']."');\" class='nav-link'>".
 		                            "<span class='title'>".$element['display_name']."</span>".

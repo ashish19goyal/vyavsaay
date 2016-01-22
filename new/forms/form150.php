@@ -1,4 +1,4 @@
-<div id='form150' class='function_detail'>
+<div id='form150' class='tab-pane'>
 	<div class='feed_item'>
 		<form id='form150_master' autocomplete="off">
 			<fieldset>

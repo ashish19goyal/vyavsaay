@@ -26,6 +26,7 @@ class user_setup
 		$this->get_data_from_json('search.json');
 		$this->get_data_from_js('grid_metrics.js','system_grid_metrics');
 		$this->get_data_from_js('notifications.js','system_notifications');
+		$this->get_data_from_js('static_modals.php','system_popboxes');
 	}
 
 	public function __destruct()

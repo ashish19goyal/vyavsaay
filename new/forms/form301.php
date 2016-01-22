@@ -1,4 +1,4 @@
-<div id='form301' class='function_detail'>
+<div id='form301' class='tab-pane'>
 	<form id='form301_master' autocomplete="off" class='questionnaire_form' style="border:none;">
 		<label>Source: <input type='text' name='source' class='widebox' required></label>
 		<label><input type='submit' name='capture' value='Scan' class='generic_icon'></label>		
@@ -50,11 +50,11 @@
 		
 			create_simple(data_xml);
 			
-			$("#modal86").dialog("open");
+			$("#modal86_link").click();
 		}
 		else
 		{
-			$("#modal2").dialog("open");			
+			$("#modal2_link").click();			
 		}
 	}
 	

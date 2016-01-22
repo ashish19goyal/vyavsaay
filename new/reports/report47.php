@@ -1,4 +1,4 @@
-<div id='report47' class='report_detail'>
+<div id='report47' class='tab-pane'>
 	<form id='report47_header' autocomplete="off">
 		<fieldset>
 			<label>Product</br><input type='text' title='If this field is left blank, top 10 products will be shown'></label>

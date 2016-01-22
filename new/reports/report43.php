@@ -1,4 +1,4 @@
-<div id='report43' class='report_detail'>
+<div id='report43' class='tab-pane'>
 	<form id='report43_header'  autocomplete="off" style='text-align:left;'>
 		<fieldset>
 			<label>Customer</br><input type='text' title='If this field is left blank, top 10 customers will be shown'></label>

@@ -1,4 +1,4 @@
-<div id='form265' class='function_detail'>
+<div id='form265' class='tab-pane'>
 	<form id='form265_master' autocomplete="off">
 		<fieldset>
 			<label>RTO # <br><input type='text' name='rto_num' required></label>

@@ -10,17 +10,17 @@
         <div class="lock-body">
             <div class="pull-left lock-avatar-block">
                 <img src="./images/dummy-user.png" class="lock-avatar"> </div>
-            <form class="lock-form pull-left">
-                <h4>User</h4>
+            <form class="lock-form pull-left" id='lock_form'>
+                <h4 class='username'>User</h4>
                 <div class="form-group">
-                    <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password" /> </div>
+                    <input class="form-control placeholder-no-fix" required type="password" autocomplete="off" placeholder="Password" name="password" /> </div>
                 <div class="form-actions">
                     <button type="submit" class="btn red uppercase">Login</button>
                 </div>
             </form>
         </div>
         <div class="lock-bottom">
-            <a onclick='delete_session();'>Not <span>User</span>?</a>
+            <a onclick='delete_session();'>Not <span class='username'>User</span>?</a>
         </div>
     </div>
 </div>

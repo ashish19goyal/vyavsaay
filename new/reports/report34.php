@@ -1,4 +1,4 @@
-<div id='report34' class='report_detail'>
+<div id='report34' class='tab-pane'>
 	<form id='report34_header' autocomplete="off">
 		<fieldset>
 			<label>Start date</br><input type='text' required title='Period start date for determination of effective margin'></label>

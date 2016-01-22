@@ -1,4 +1,4 @@
-<div id='form267' class='function_detail'>
+<div id='form267' class='tab-pane'>
 	<form id='form267_master' autocomplete="off">
 		<fieldset>
 			<label>RTO #<br><input type='text' name='rto'></label>

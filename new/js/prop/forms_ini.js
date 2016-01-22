@@ -2869,7 +2869,7 @@ function form41_ini()
 	}
 	else
 	{
-		$("#modal6").dialog("open");
+		$("#modal6_link").click();
 	}
 }
 
@@ -6760,7 +6760,7 @@ function form85_ini()
 	}
 	else
 	{
-		$("#modal6").dialog("open");
+		$("#modal6_link").click();
 	}
 }
 
@@ -6865,7 +6865,7 @@ function form86_ini()
 	}
 	else
 	{
-		$("#modal6").dialog("open");
+		$("#modal6_link").click();
 	}
 }
 
@@ -11815,7 +11815,7 @@ function form129_ini()
 	}
 	else
 	{
-		$("#modal6").dialog("open");
+		$("#modal6_link").click();
 	}
 }
 
@@ -20254,7 +20254,7 @@ function form196_ini()
 										
 					send_email(email_to,from,business_title,subject,email_message,function()
 					{
-						$("#modal58").dialog("open");
+						$("#modal58_link").click();
 						hide_loader();			
 					});
 				});		
@@ -20328,7 +20328,7 @@ function form196_ini_all()
 				console.log(email_to);
 				send_email(email_to,from,business_title,subject,email_message,function()
 				{
-					$("#modal58").dialog("open");
+					$("#modal58_link").click();
 					hide_loader();			
 				});
 			});		
@@ -24686,7 +24686,7 @@ function form237_ini()
 										
 					send_email(email_to,from,business_title,subject,email_message,function()
 					{
-						$("#modal58").dialog("open");
+						$("#modal58_link").click();
 						hide_loader();			
 					});
 				});		
@@ -24759,7 +24759,7 @@ function form237_ini_all()
 				
 				send_email(email_to,from,business_title,subject,email_message,function()
 				{
-					$("#modal58").dialog("open");
+					$("#modal58_link").click();
 					hide_loader();			
 				});
 			});		
@@ -28761,7 +28761,7 @@ function form272_ini()
 		
 		if(results.length==0)
 		{
-			$("#modal82").dialog("open");
+			$("#modal82_link").click();
 		}
 		
 		hide_loader();
@@ -31636,7 +31636,7 @@ function form302_ini()
 					var my_func="function form302_dummy_function(results){"+result.conversion_func+"};";
 					$('#form302_script_tag').html(my_func);
 					form302_dummy_function(items);
-					$("#modal85").dialog("open");
+					$("#modal85_link").click();
 					$('#form302_script_tag').html();
 				});					
 			});		

@@ -5,7 +5,7 @@
     </a>
     <ul class="dropdown-menu extended tasks">
         <li class="external">
-            <h3>You have <span class="bold" id="log_count2">0</span> unsynced activities</h3>
+            <h3><span class="bold" id="log_count2">0</span> unsynced activities</h3>
             <a onclick=show_activities();>view all</a>
         </li>
         <li>

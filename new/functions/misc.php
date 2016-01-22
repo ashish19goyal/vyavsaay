@@ -7,3 +7,5 @@
 <div id="loading_icon"><i class='fa fa-spinner fa-spin'></i></div>
 
 <div id="transparent_layer"></div>
+
+<div id='pdf_print_div' style='width:8in;background-color:#fff;padding:2px;'></div>

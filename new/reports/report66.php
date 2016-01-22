@@ -1,4 +1,4 @@
-<div id='report66' class='function_detail'>
+<div id='report66' class='tab-pane'>
 	<form id='report66_header' autocomplete="off">
 		<fieldset>
 			<label>Storage Type<br><input type='text' required></label>

@@ -2758,7 +2758,7 @@ function form91_header_ini()
 				}
 				else
 				{
-					$("#modal2").dialog("open");
+					$("#modal2_link").click();
 				}
 				/////////////////////////////////////////////////////////////
 			});
@@ -3209,7 +3209,7 @@ function form108_header_ini()
 	$(update_order_button).off('click');	
 	$(update_order_button).on('click',function () 
 	{
-		//$("#modal61").dialog("open");
+		//$("#modal61_link").click();
 		worker_update_orders_status();
 	});
 
@@ -4122,7 +4122,7 @@ function form119_header_ini()
 			}
 			else
 			{
-				$("#modal2").dialog("open");
+				$("#modal2_link").click();
 			}
 		});
 		$(unbilled_button).hide();
@@ -4364,7 +4364,7 @@ function form122_header_ini()
 				}
 				else
 				{
-					$("#modal2").dialog("open");
+					$("#modal2_link").click();
 				}
 				/////////////////////////////////////////////////////////////
 			});
@@ -9451,7 +9451,7 @@ function form245_header_ini()
 		{
 			if(invs.length>0)
 			{
-				$("#modal75").dialog("open");
+				$("#modal75_link").click();
 			}
 		},inv_data);
 	});

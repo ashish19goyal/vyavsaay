@@ -10,9 +10,6 @@
 		$domain=$_GET['dn'];
 	}
 
-//	echo $domain;
-//	echo $_GET['dn'];
-
 	if(isset($_SESSION['domain']) || $domain!="")
 	{
 		if($domain=="")

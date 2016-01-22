@@ -1,4 +1,4 @@
-<div id='form286' class='function_detail'>
+<div id='form286' class='tab-pane'>
 	<form id='form286_master' autocomplete="off" class='questionnaire_form'>
 		<fieldset id='form286_fieldset' style='text-align:left;'>
 		</fieldset>

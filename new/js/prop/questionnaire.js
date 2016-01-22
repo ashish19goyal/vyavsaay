@@ -210,7 +210,7 @@ function initialize_questionnaires(id,ques_name)
 						ques3_submit_action(ques_form);
 					}
 			});
-			$("#modal79").dialog("open");	
+			$("#modal79_link").click();	
 			
 			initialize_questionnaires(id,ques_name);
 		});		

@@ -1,4 +1,4 @@
-<div id='form104' class='function_detail'>
+<div id='form104' class='tab-pane'>
 <input type='button' value='Switch view' class='generic_icon' onclick='form104_switch_view();'>
 	<form id='form104_master' autocomplete="off">
 		<fieldset>

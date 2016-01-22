@@ -1,4 +1,4 @@
-<div id='form263' class='function_detail'>
+<div id='form263' class='tab-pane'>
 	<form id='form263_master' autocomplete="off">
 		<fieldset>	    
 		   <label>Grid Name: <input type='text' required name='grid'></label>

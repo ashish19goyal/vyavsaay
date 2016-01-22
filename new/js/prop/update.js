@@ -54,7 +54,7 @@ function report63_update(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -77,7 +77,7 @@ function report67_update(data_id)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -230,7 +230,7 @@ function report72_update(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -452,7 +452,7 @@ function report90_update(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -501,7 +501,7 @@ function form1_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -565,12 +565,12 @@ function form2_update_item(form)
 		}
 		else
 		{
-			$("#modal6").dialog("open");		
+			$("#modal6_link").click();		
 		}
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -607,7 +607,7 @@ function form2_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}	
 }
 
@@ -648,7 +648,7 @@ function form5_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 
 }
@@ -699,7 +699,7 @@ function form7_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -712,7 +712,7 @@ function form7_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -755,7 +755,7 @@ function form8_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -915,7 +915,7 @@ function form10_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -989,7 +989,7 @@ function form11_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1181,7 +1181,7 @@ function form12_update_form()
 						}
 						else
 						{
-							$("#modal7").dialog("open");
+							$("#modal7_link").click();
 						}
 					});
 				}
@@ -1301,7 +1301,7 @@ function form12_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1356,7 +1356,7 @@ function form14_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1487,7 +1487,7 @@ function form15_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1623,7 +1623,7 @@ function form19_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1742,7 +1742,7 @@ function form21_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1838,7 +1838,7 @@ function form24_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1886,7 +1886,7 @@ function form30_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1937,7 +1937,7 @@ function form35_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1985,7 +1985,7 @@ function form38_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2041,7 +2041,7 @@ function form39_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2088,7 +2088,7 @@ function form40_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2134,7 +2134,7 @@ function form41_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2194,7 +2194,7 @@ function form41_update_master(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2244,7 +2244,7 @@ function form43_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2285,7 +2285,7 @@ function form44_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2337,7 +2337,7 @@ function form46_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2352,7 +2352,7 @@ function form46_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2475,7 +2475,7 @@ function form48_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2491,7 +2491,7 @@ function form48_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2546,7 +2546,7 @@ function form49_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2562,7 +2562,7 @@ function form49_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2612,7 +2612,7 @@ function form50_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2627,7 +2627,7 @@ function form50_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2679,7 +2679,7 @@ function form51_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2751,7 +2751,7 @@ function form51_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2780,7 +2780,7 @@ function form53_approve_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2831,7 +2831,7 @@ function form54_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2848,7 +2848,7 @@ function form54_update_form(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2899,7 +2899,7 @@ function form56_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2949,7 +2949,7 @@ function form57_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2989,7 +2989,7 @@ function form58_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3041,7 +3041,7 @@ function form59_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3090,7 +3090,7 @@ function form60_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3139,7 +3139,7 @@ function form61_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3191,7 +3191,7 @@ function form62_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3242,7 +3242,7 @@ function form63_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3292,7 +3292,7 @@ function form64_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3335,7 +3335,7 @@ function form66_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3422,7 +3422,7 @@ function form69_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3469,7 +3469,7 @@ function form70_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3516,7 +3516,7 @@ function form71_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3694,7 +3694,7 @@ function form72_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3742,7 +3742,7 @@ function form77_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3758,7 +3758,7 @@ function form77_update_form(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3805,7 +3805,7 @@ function form79_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3821,7 +3821,7 @@ function form80_update_form(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3870,7 +3870,7 @@ function form81_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3908,7 +3908,7 @@ function form83_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3958,7 +3958,7 @@ function form84_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4005,7 +4005,7 @@ function form85_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4065,7 +4065,7 @@ function form85_update_master(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4109,7 +4109,7 @@ function form87_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4214,7 +4214,7 @@ function form88_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4271,7 +4271,7 @@ function form89_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4311,7 +4311,7 @@ function form90_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4539,7 +4539,7 @@ function form91_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4642,7 +4642,7 @@ function form93_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4683,7 +4683,7 @@ function form94_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4744,7 +4744,7 @@ function form94_accept_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4786,7 +4786,7 @@ function form94_reject_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4829,7 +4829,7 @@ function form96_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4878,7 +4878,7 @@ function form97_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4927,7 +4927,7 @@ function form98_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4979,7 +4979,7 @@ function form100_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4994,7 +4994,7 @@ function form100_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5044,7 +5044,7 @@ function form101_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5088,7 +5088,7 @@ function form102_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5134,7 +5134,7 @@ function form103_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5180,7 +5180,7 @@ function form104_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5220,7 +5220,7 @@ function form108_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5262,7 +5262,7 @@ function form109_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5300,7 +5300,7 @@ function form111_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}	
 }
 
@@ -5490,7 +5490,7 @@ function form118_update_form()
 						}
 						else
 						{
-							$("#modal7").dialog("open");
+							$("#modal7_link").click();
 						}
 					});
 				}
@@ -5638,7 +5638,7 @@ function form118_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5859,7 +5859,7 @@ function form119_update_form()
 						}
 						else
 						{
-							$("#modal7").dialog("open");
+							$("#modal7_link").click();
 						}
 					});
 				}
@@ -5986,7 +5986,7 @@ function form119_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6215,7 +6215,7 @@ function form122_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6258,7 +6258,7 @@ function form123_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6315,7 +6315,7 @@ function form125_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6506,7 +6506,7 @@ function form130_update_form()
 						}
 						else
 						{
-							$("#modal7").dialog("open");
+							$("#modal7_link").click();
 						}
 					});
 				}
@@ -6733,7 +6733,7 @@ function form130_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6778,7 +6778,7 @@ function form134_update_machine(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6820,7 +6820,7 @@ function form134_update_team(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6864,7 +6864,7 @@ function form134_update_task(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6908,7 +6908,7 @@ function form135_update_team(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6953,7 +6953,7 @@ function form135_update_task(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7148,7 +7148,7 @@ function form136_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7187,7 +7187,7 @@ function form137_approve_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7219,7 +7219,7 @@ function form137_reject_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7265,7 +7265,7 @@ function form139_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7310,7 +7310,7 @@ function form140_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7373,7 +7373,7 @@ function form142_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7423,7 +7423,7 @@ function form142_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7477,7 +7477,7 @@ function form143_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7522,7 +7522,7 @@ function form144_update_task(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7561,7 +7561,7 @@ function form144_update_expense(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7604,7 +7604,7 @@ function form145_dispatch_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7648,7 +7648,7 @@ function form145_receive_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7692,7 +7692,7 @@ function form145_cancel_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7745,7 +7745,7 @@ function form146_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7794,7 +7794,7 @@ function form146_suspend_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7845,7 +7845,7 @@ function form147_update_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7905,7 +7905,7 @@ function form148_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7923,7 +7923,7 @@ function form148_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7975,7 +7975,7 @@ function form149_update_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8018,7 +8018,7 @@ function form151_update_task(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8064,7 +8064,7 @@ function form151_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8108,7 +8108,7 @@ function form151_update_expense(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8149,7 +8149,7 @@ function form151_approve_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8185,7 +8185,7 @@ function form152_approve_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8220,7 +8220,7 @@ function form152_reject_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8309,7 +8309,7 @@ function form153_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8540,7 +8540,7 @@ function form154_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8582,7 +8582,7 @@ function form155_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8629,7 +8629,7 @@ function form156_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8672,7 +8672,7 @@ function form157_dispatch_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8745,7 +8745,7 @@ function form157_receive_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8789,7 +8789,7 @@ function form157_cancel_item(button)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8948,7 +8948,7 @@ function form158_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8981,7 +8981,7 @@ function form161_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9014,7 +9014,7 @@ function form162_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9055,7 +9055,7 @@ function form163_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9196,7 +9196,7 @@ function form165_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9240,7 +9240,7 @@ function form166_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9293,7 +9293,7 @@ function form167_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9348,7 +9348,7 @@ function form169_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9403,7 +9403,7 @@ function form170_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9445,7 +9445,7 @@ function form171_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9470,7 +9470,7 @@ function form171_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 */
@@ -9514,7 +9514,7 @@ function form173_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9561,7 +9561,7 @@ function form174_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9609,7 +9609,7 @@ function form175_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9658,7 +9658,7 @@ function form176_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9701,7 +9701,7 @@ function form177_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9783,7 +9783,7 @@ function form178_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9827,7 +9827,7 @@ function form179_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9911,7 +9911,7 @@ function form180_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9971,7 +9971,7 @@ function form181_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -10014,7 +10014,7 @@ function form184_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -10089,7 +10089,7 @@ function form185_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -10164,7 +10164,7 @@ function form186_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -10216,7 +10216,7 @@ function form186_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -10271,7 +10271,7 @@ function form187_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -10325,7 +10325,7 @@ function form189_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -10447,7 +10447,7 @@ function form190_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -10487,7 +10487,7 @@ function form191_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -10604,7 +10604,7 @@ function form192_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -10781,7 +10781,7 @@ function form193_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -10816,7 +10816,7 @@ function form195_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -10913,7 +10913,7 @@ function form198_update_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -10972,7 +10972,7 @@ function form199_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11006,7 +11006,7 @@ function form199_update_lbh(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11034,7 +11034,7 @@ function form200_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11097,13 +11097,13 @@ function form200_update_form()
 			}
 			else 
 			{
-				$("#modal68").dialog("open");
+				$("#modal68_link").click();
 			}
 		});
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11159,7 +11159,7 @@ function form202_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11216,7 +11216,7 @@ function form204_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11272,7 +11272,7 @@ function form205_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11329,7 +11329,7 @@ function form206_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11375,7 +11375,7 @@ function form207_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11412,7 +11412,7 @@ function form208_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11460,7 +11460,7 @@ function form209_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11505,7 +11505,7 @@ function form209_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11599,14 +11599,14 @@ function form210_reject_item(bar_code)
 				});	
 				if(!first_match)
 				{
-					$("#modal71").dialog("open");
+					$("#modal71_link").click();
 				}
 			});
 		});
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}	
 }
 
@@ -11678,20 +11678,20 @@ function form210_accept_item(bar_code)
 								"</"+table_type+">";
 						update_simple(items_xml);
 											
-						//$("#modal69").dialog("open");
+						//$("#modal69_link").click();
 					}
 				}					
 			});	
 			if(!first_match)
 			{
-				$("#modal71").dialog("open");
+				$("#modal71_link").click();
 			}
 	
 		});
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11763,7 +11763,7 @@ function form211_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11836,7 +11836,7 @@ function form212_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11878,7 +11878,7 @@ function form213_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11904,7 +11904,7 @@ function form215_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11999,13 +11999,13 @@ function form215_update_form()
 			}
 			else 
 			{
-				$("#modal68").dialog("open");
+				$("#modal68_link").click();
 			}
 		});
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12050,7 +12050,7 @@ function form217_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12080,7 +12080,7 @@ function form219_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12182,13 +12182,13 @@ function form219_update_form()
 			}
 			else 
 			{
-				$("#modal68").dialog("open");
+				$("#modal68_link").click();
 			}
 		});				
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12240,7 +12240,7 @@ function form220_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12289,7 +12289,7 @@ function form223_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12363,7 +12363,7 @@ function form222_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12403,7 +12403,7 @@ function form224_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12538,7 +12538,7 @@ function form225_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12578,7 +12578,7 @@ function form226_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12623,7 +12623,7 @@ function form231_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12721,7 +12721,7 @@ function form233_update_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12842,7 +12842,7 @@ function form233_update_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 */
@@ -12892,7 +12892,7 @@ function form230_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12934,7 +12934,7 @@ function form234_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12990,7 +12990,7 @@ function form235_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13037,7 +13037,7 @@ function form241_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13084,7 +13084,7 @@ function form242_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13201,7 +13201,7 @@ function form244_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13232,7 +13232,7 @@ function form246_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13264,7 +13264,7 @@ function form247_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13290,7 +13290,7 @@ function form248_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13347,13 +13347,13 @@ function form248_update_form()
 			}
 			else 
 			{
-				$("#modal77").dialog("open");
+				$("#modal77_link").click();
 			}
 		});
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13379,7 +13379,7 @@ function form250_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13447,13 +13447,13 @@ function form250_update_form()
 			}
 			else 
 			{
-				$("#modal77").dialog("open");
+				$("#modal77_link").click();
 			}
 		});
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13494,7 +13494,7 @@ function form252_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13535,7 +13535,7 @@ function form253_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13576,7 +13576,7 @@ function form254_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13617,7 +13617,7 @@ function form255_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13654,7 +13654,7 @@ function form256_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13670,7 +13670,7 @@ function form256_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}	
 }
 
@@ -13729,7 +13729,7 @@ function form257_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13939,7 +13939,7 @@ function form258_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13981,7 +13981,7 @@ function form261_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14022,7 +14022,7 @@ function form262_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14065,7 +14065,7 @@ function form263_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14104,7 +14104,7 @@ function form264_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14132,7 +14132,7 @@ function form265_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14193,13 +14193,13 @@ function form265_update_form()
 			}
 			else 
 			{
-				$("#modal68").dialog("open");
+				$("#modal68_link").click();
 			}
 		});
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14260,7 +14260,7 @@ function form267_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14331,7 +14331,7 @@ function form268_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14463,7 +14463,7 @@ function form270_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14528,7 +14528,7 @@ function form272_update_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14574,7 +14574,7 @@ function form273_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14620,7 +14620,7 @@ function form275_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14665,7 +14665,7 @@ function form276_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14794,7 +14794,7 @@ function form284_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14839,7 +14839,7 @@ function form289_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14900,7 +14900,7 @@ function form292_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14931,7 +14931,7 @@ function form293_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15062,7 +15062,7 @@ function form294_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15196,7 +15196,7 @@ function form295_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15280,7 +15280,7 @@ function form296_update_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15322,7 +15322,7 @@ function form297_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15357,7 +15357,7 @@ function form298_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15415,7 +15415,7 @@ function form299_update_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15470,7 +15470,7 @@ function form300_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15506,6 +15506,6 @@ function form302_update_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }

@@ -10,13 +10,13 @@
         
        	<?php include "functions/lock_screen.php"; ?>
 
-        <!-- BEGIN HEADER & CONTENT DIVIDER -->
-		<?php include "includes/top_bar.php" ?>
-        <div class="clearfix"> </div>
-        <!-- END HEADER & CONTENT DIVIDER -->
+        	<!-- BEGIN HEADER & CONTENT DIVIDER -->
+			<?php include "includes/top_bar.php" ?>
+			<div class="clearfix"> </div>
+        	<!-- END HEADER & CONTENT DIVIDER -->
         
-        <!-- BEGIN CONTAINER -->
-        <div class="page-container">
+        	<!-- BEGIN CONTAINER -->
+			<div class="page-container">
             
             <!-- BEGIN SIDEBAR -->
             <?php include "includes/side_menu.php" ?>
@@ -30,17 +30,16 @@
             </div>
             <!-- END CONTENT -->
 
-        </div>
-        <!-- END CONTAINER -->
+			</div>
+        	<!-- END CONTAINER -->
         
-        <!-- BEGIN FOOTER -->        
-        <?php include "includes/footer.php" ?>
-        <!-- END FOOTER -->
+        	<!-- BEGIN FOOTER -->        
+			<?php include "includes/footer.php" ?>
+        	<!-- END FOOTER -->
 
 		<!-- BEGIN CORE PLUGINS -->
-    	<?php include "includes/footer_scripts.php" ?>    
-        <!-- END THEME LAYOUT SCRIPTS -->
+		<?php include "includes/footer_scripts.php" ?>    
+      <!-- END THEME LAYOUT SCRIPTS -->
         
-    </body>
-
+	</body>
 </html>

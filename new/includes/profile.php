@@ -48,7 +48,7 @@
         <li class="divider"> </li>
 
         <li>
-            <a onclick="show_lock_screen();">
+            <a onclick="lock_screen();">
                 <i class="icon-lock"></i> Lock Screen </a>
         </li>
         <li>

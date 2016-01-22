@@ -1,4 +1,4 @@
-<div id='form105' class='function_detail'>
+<div id='form105' class='tab-pane'>
 	<form id='form105_master' autocomplete="off">
 		<fieldset>
 			<label>Table Name<br><input type='text' required></label>

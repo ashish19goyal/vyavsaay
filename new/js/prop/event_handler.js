@@ -20,7 +20,9 @@ function default_load()
 	
 	if(is_set_session())
 	{
-		responsive_tabs();
+		//responsive_tabs();
+		hide_unreadable_elements();
+		setup_grid_display_tabs();
 		date_formating();
 		set_footer_message();
 		my_sortable_tables();
@@ -31,6 +33,7 @@ function default_load()
 		Chart.defaults.global.maintainAspectRatio=false;
 		$('textarea').autosize();
 		i18n_setup();
+		set_user_name();		
 		home_display();
 
 		if(typeof calculate_grid_metrics!='undefined')
@@ -79,63 +82,6 @@ function hide_progress()
 	$("#progress_bar").val(0);
 	$('#progress_value').html('0 %');
 	progress_value=0;
-}
-
-function add_grid_metrics(func)
-{
-	var grid_xml="<system_grid_metrics>"+
-				"<id></id>"+
-				"<metric_id></metric_id>"+
-				"<display_name></display_name>"+
-				"<grid></grid>"+
-				"<function_name></function_name>"+
-				"<function_def></function_def>"+
-				"<status exact='yes'>active</status>"+
-				"</system_grid_metrics>";
-				
-	fetch_requested_data('',grid_xml,function(metrics)
-	{
-		//console.log(metrics);
-		$('#script_grid_metrics').html("");
-	
-		var metric_by_grid=[];
-		var script_content="";
-		var function_names="";
-		metrics.forEach(function(metric)
-		{
-			var new_grid=true;
-			script_content+=revert_htmlentities(metric.function_def);
-			function_names+=revert_htmlentities(metric.function_name);
-			
-			for(var i in metric_by_grid)
-			{
-				if(metric_by_grid[i].grid==metric.grid)
-				{
-					metric_by_grid[i].html=metric_by_grid[i].html+"<li>"+metric.display_name+": <a class='grid_item' id='"+metric.metric_id+"'></a></li>";
-					new_grid=false;
-					break;
-				}
-			}
-			
-			if(new_grid)
-			{
-				var new_object=new Object();
-				new_object.grid=metric.grid;
-				new_object.html="<li>"+metric.display_name+": <a class='grid_item' id='"+metric.metric_id+"'></a></li>";
-				metric_by_grid.push(new_object);
-			}
-		});
-
-		metric_by_grid.forEach(function(grid)
-		{
-			$('#'+grid.grid+'_link').find('ul').html(grid.html);
-		});
-
-		//to start auto-executing of all these functions		
-		script_content+="(function () {deferred_execute(function(){"+function_names+"});}());";
-
-		$('#script_grid_metrics').html(script_content);
-	});
 }
 
 function deferred_execute(func)
@@ -199,6 +145,19 @@ function my_sortable_tables()
 	});
 }
 
+function setup_grid_display_tabs()
+{
+	system_grids_array.forEach(function(func)
+	{
+		var function_main=$("#"+func+"_main").find('ul').find('li').length;
+		var hidden_function_main=$("#"+func+"_main").find('ul').find('li:hidden').length;
+		if(function_main===0 || function_main===hidden_function_main)
+		{
+			$("#"+func+"_link").hide();
+			$("#nav-"+func).hide();
+		}
+	});
+}
 
 function show_function(function_id)
 {
@@ -219,7 +178,8 @@ function modal_forms_ini()
 		width=400;
 	}
 	
-	for(var i=1;i<2;i++)
+	var static_modal_array=[1,50,51,53,54,55,57,83,84];
+	static_modal_array.forEach(function(i)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
@@ -234,7 +194,7 @@ function modal_forms_ini()
 			event.preventDefault();
 			$(this).parent().dialog("close");
 		});
-	}
+	});
 	
 	for(var i=8;i<50;i++)
 	{
@@ -250,23 +210,6 @@ function modal_forms_ini()
 	   			var form_id="modal"+j+"_form";
 	   			document.getElementById(form_id).reset();
 	   		}
-		});
-	}
-	
-	for(var i=50;i<86;i++)
-	{
-		var dialog=$("#modal"+i).dialog({
-	   		autoOpen: false,
-	   		modal: true,
-	   		width: width,
-	   		show: "slide",
-	   		closeOnEscape: true,
-	       	buttons:{ OK:function(){$(this).dialog("close");}}
-		});
-		dialog.find("form").on("submit", function(event)
-		{
-			event.preventDefault();
-			$(this).parent().dialog("close");
 		});
 	}
 	
@@ -295,11 +238,65 @@ function home_display()
 	$('#home_grid').show();	
 }
 
-function set_menu_username()
+function lock_screen(func)
+{
+	localStorage.removeItem('session');
+	localStorage.removeItem('re');
+	localStorage.removeItem('cr');
+	localStorage.removeItem('up');
+	localStorage.removeItem('del');
+	
+	if(typeof func!='undefined')
+	{
+		$('#lock_form').off('submit'); 
+		$('#lock_form').on('submit',function (e) 
+		{
+			e.preventDefault();
+			hide_lock_screen();
+			func();
+		});
+	}
+	else 
+	{
+		$('#lock_form').off('submit');
+		$('#lock_form').on('submit',function (e) 
+		{
+			e.preventDefault();
+			var domain=get_session_var('domain');
+			var username=get_session_var('username');
+			var pass=document.getElementById("lock_form").elements['password'].value;
+
+			login_action(domain,username,pass,hide_lock_screen);
+		});
+	}
+
+	show_lock_screen();
+}
+
+function show_lock_screen()
+{
+	$('.page-container').hide();
+	$('.page-header').hide();
+	$('.page-footer').hide();
+
+	document.getElementById("lock_form").elements['password'].value="";
+	$('#lock_screen_page').show();	
+}
+
+function hide_lock_screen()
+{
+	$('.page-container').show();
+	$('.page-header').show();
+	$('.page-footer').show();
+	
+	$('#lock_screen_page').hide();
+	hide_loader();
+}
+
+function set_user_name()
 {
 	var name=get_session_var('name');
-	var hello=i18n.t("general.hello");
-	$('#menu_username').html(hello+" "+name);
+	$('.username').html(name);
 }
 
 
@@ -319,11 +316,8 @@ function i18n_setup()
 	    }
 	},function(t)
 	{
-		$('title').i18n();
 		$("#content_box").find('div').i18n();
 		$("#content_box").find('a').i18n();
-		$(".side_lane").find('div').i18n();
-		set_menu_username();
 	});
 }
 

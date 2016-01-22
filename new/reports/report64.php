@@ -1,4 +1,4 @@
-<div id='report64' class='function_detail'>
+<div id='report64' class='tab-pane'>
 	<form id='report64_header' autocomplete="off">
 		<fieldset>
 			<label>Scan Item Barcode: <input type='text'></label>	

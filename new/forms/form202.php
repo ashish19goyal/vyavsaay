@@ -1,4 +1,4 @@
-<div id='form202' class='function_detail'>
+<div id='form202' class='tab-pane'>
 	<form id='form202_master' autocomplete="off">
 		<fieldset>
 			<label>Target Office: <input type='text' name='target' required></label>

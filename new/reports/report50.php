@@ -1,4 +1,4 @@
-<div id='report50' class='function_detail'>
+<div id='report50' class='tab-pane'>
 	<form id='report50_header' autocomplete="off">
 		<fieldset>
 			<label>Make</br><input type='text' title='If this field is blank, all applicable makes will be shown'></label>

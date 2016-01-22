@@ -64,12 +64,12 @@ function form2_create_item(form)
 		}
 		else
 		{
-			$("#modal6").dialog("open");		
+			$("#modal6_link").click();		
 		}
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -118,7 +118,7 @@ function form2_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}	
 }
 
@@ -167,7 +167,7 @@ function form7_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 	
 }
@@ -226,7 +226,7 @@ function form10_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -437,7 +437,7 @@ function form10_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -577,7 +577,7 @@ function form12_create_item(form)
 				}
 				else
 				{
-					$("#modal7").dialog("open");
+					$("#modal7_link").click();
 				}
 			});
 		}
@@ -598,7 +598,7 @@ function form12_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -771,7 +771,7 @@ function form12_create_form()
 						}
 						else
 						{
-							$("#modal7").dialog("open");
+							$("#modal7_link").click();
 						}
 					});
 				}
@@ -915,7 +915,7 @@ function form12_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -987,7 +987,7 @@ function form14_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1112,7 +1112,7 @@ function form15_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1244,7 +1244,7 @@ function form15_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1333,7 +1333,7 @@ function form19_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1470,7 +1470,7 @@ function form19_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1529,7 +1529,7 @@ function form21_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1652,7 +1652,7 @@ function form21_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1716,7 +1716,7 @@ function form24_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1890,7 +1890,7 @@ function form24_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -1952,7 +1952,7 @@ function form38_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2019,7 +2019,7 @@ function form51_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2135,7 +2135,7 @@ function form56_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2188,7 +2188,7 @@ function form58_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 /**
@@ -2252,7 +2252,7 @@ function form59_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2314,7 +2314,7 @@ function form60_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2376,7 +2376,7 @@ function form61_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2441,7 +2441,7 @@ function form62_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2506,7 +2506,7 @@ function form63_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2568,7 +2568,7 @@ function form64_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2632,7 +2632,7 @@ function form66_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2695,7 +2695,7 @@ function form69_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -2810,7 +2810,7 @@ function form69_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3340,7 +3340,7 @@ function form70_bill(order_id)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}	
 }
 
@@ -3396,7 +3396,7 @@ function form72_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3598,7 +3598,7 @@ function form72_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3658,7 +3658,7 @@ function form80_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -3755,7 +3755,7 @@ function form81_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4323,7 +4323,7 @@ function form82_bill()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}	
 }
 
@@ -4388,7 +4388,7 @@ function form84_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -4987,7 +4987,7 @@ function form88_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5058,7 +5058,7 @@ function form89_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5171,7 +5171,7 @@ function form90_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5269,7 +5269,7 @@ function form91_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5463,7 +5463,7 @@ function form91_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5525,7 +5525,7 @@ function form96_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5587,7 +5587,7 @@ function form97_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5649,7 +5649,7 @@ function form98_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5724,7 +5724,7 @@ function form101_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5792,7 +5792,7 @@ function form102_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5865,7 +5865,7 @@ function form103_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -5934,7 +5934,7 @@ function form105_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -6738,18 +6738,18 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 			else
 			{
 				hide_loader();
-				$("#modal63").dialog("open");
+				$("#modal63_link").click();
 			}
 		}
 		else
 		{
 			hide_loader();
-			$("#modal64").dialog("open");			
+			$("#modal64_link").click();			
 		}
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}	
 }
 
@@ -7253,18 +7253,18 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 			else
 			{
 				hide_loader();
-				$("#modal63").dialog("open");
+				$("#modal63_link").click();
 			}
 		}
 		else
 		{
 			hide_loader();
-			$("#modal64").dialog("open");			
+			$("#modal64_link").click();			
 		}
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}	
 }
 */
@@ -7327,7 +7327,7 @@ function form109_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7387,7 +7387,7 @@ function form111_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7432,7 +7432,7 @@ function form111_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}	
 }
 
@@ -7494,7 +7494,7 @@ function form112_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7511,7 +7511,7 @@ function form112_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}	
 }
 
@@ -7594,7 +7594,7 @@ function form114_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7611,7 +7611,7 @@ function form114_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}	
 }
 
@@ -7741,7 +7741,7 @@ function form118_create_item(form)
 				}
 				else
 				{
-					$("#modal7").dialog("open");
+					$("#modal7_link").click();
 				}
 			});
 		}
@@ -7761,7 +7761,7 @@ function form118_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -7933,7 +7933,7 @@ function form118_create_form()
 						}
 						else
 						{
-							$("#modal7").dialog("open");
+							$("#modal7_link").click();
 						}
 					});
 				}
@@ -8111,7 +8111,7 @@ function form118_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8297,7 +8297,7 @@ function form119_create_item(form)
 				}
 				else
 				{
-					$("#modal7").dialog("open");
+					$("#modal7_link").click();
 				}
 			});
 		}
@@ -8320,7 +8320,7 @@ function form119_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8524,7 +8524,7 @@ function form119_create_form()
 						}
 						else
 						{
-							$("#modal7").dialog("open");
+							$("#modal7_link").click();
 						}
 					});
 				}
@@ -8684,7 +8684,7 @@ function form119_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8748,7 +8748,7 @@ function form121_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -8905,7 +8905,7 @@ function form122_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9150,7 +9150,7 @@ function form122_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9213,7 +9213,7 @@ function form123_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9286,7 +9286,7 @@ function form125_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 };
 
@@ -9572,7 +9572,7 @@ function form130_create_item(form)
 				}
 				else
 				{
-					$("#modal7").dialog("open");
+					$("#modal7_link").click();
 				}
 			});
 		}
@@ -9593,7 +9593,7 @@ function form130_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -9767,7 +9767,7 @@ function form130_create_form()
 						}
 						else
 						{
-							$("#modal7").dialog("open");
+							$("#modal7_link").click();
 						}
 					});
 				}
@@ -9993,7 +9993,7 @@ function form130_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -10090,7 +10090,7 @@ function form134_add_issue(button,problem_type,problem_detail,solution)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 };
 
@@ -10160,7 +10160,7 @@ function form134_create_machine(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 };
 
@@ -10237,7 +10237,7 @@ function form134_create_team(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 };
 
@@ -10303,7 +10303,7 @@ function form134_create_document(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 };
 
@@ -10374,7 +10374,7 @@ function form134_create_task(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 };
 
@@ -10448,7 +10448,7 @@ function form135_create_task(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 };
 
@@ -10516,7 +10516,7 @@ function form135_create_document(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 };
 
@@ -10597,7 +10597,7 @@ function form135_create_team(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 };
 
@@ -10722,7 +10722,7 @@ function form136_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -10922,7 +10922,7 @@ function form136_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -10986,7 +10986,7 @@ function form137_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11055,7 +11055,7 @@ function form139_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11113,7 +11113,7 @@ function form140_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11187,7 +11187,7 @@ function form142_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11247,7 +11247,7 @@ function form142_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11318,7 +11318,7 @@ function form144_create_expense(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 };
 
@@ -11406,7 +11406,7 @@ function form145_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11473,7 +11473,7 @@ function form146_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11536,7 +11536,7 @@ function form147_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11601,7 +11601,7 @@ function form148_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11664,7 +11664,7 @@ function form149_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11718,7 +11718,7 @@ function form150_post_feed()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -11789,7 +11789,7 @@ function form151_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 };
 
@@ -11851,7 +11851,7 @@ function form151_create_expense(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 };
 
@@ -11909,7 +11909,7 @@ function form153_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12034,7 +12034,7 @@ function form153_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12098,7 +12098,7 @@ function form154_create_product(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12170,7 +12170,7 @@ function form154_create_service(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12245,7 +12245,7 @@ function form154_create_hiring_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12503,7 +12503,7 @@ function form154_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12563,7 +12563,7 @@ function form156_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12658,7 +12658,7 @@ function form157_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12756,7 +12756,7 @@ function form158_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12916,7 +12916,7 @@ function form158_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -12982,7 +12982,7 @@ function form161_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13040,7 +13040,7 @@ function form162_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13112,7 +13112,7 @@ function form167_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13245,7 +13245,7 @@ function form171_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13323,7 +13323,7 @@ function form172_create_item(fields)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13374,7 +13374,7 @@ function form173_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13427,7 +13427,7 @@ function form174_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13479,7 +13479,7 @@ function form175_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13530,7 +13530,7 @@ function form176_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13591,7 +13591,7 @@ function form177_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13648,7 +13648,7 @@ function form178_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13757,7 +13757,7 @@ function form178_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13816,7 +13816,7 @@ function form180_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -13918,7 +13918,7 @@ function form180_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14247,18 +14247,18 @@ function form181_bill(order_id,bill_type,order_num,customer)
 			else
 			{
 				hide_loader();
-				$("#modal63").dialog("open");
+				$("#modal63_link").click();
 			}
 		}
 		else
 		{
 			hide_loader();
-			$("#modal64").dialog("open");			
+			$("#modal64_link").click();			
 		}
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}	
 }
 
@@ -14324,7 +14324,7 @@ function form184_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14555,7 +14555,7 @@ function form186_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14617,7 +14617,7 @@ function form186_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14683,7 +14683,7 @@ function form187_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14734,7 +14734,7 @@ function form191_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14792,7 +14792,7 @@ function form192_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14915,7 +14915,7 @@ function form192_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -14959,7 +14959,7 @@ function form197_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15025,7 +15025,7 @@ function form200_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15122,13 +15122,13 @@ function form200_create_form(func)
 			}
 			else 
 			{
-				$("#modal68").dialog("open");
+				$("#modal68_link").click();
 			}
 		},drs_columns);
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15189,7 +15189,7 @@ function form209_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15251,7 +15251,7 @@ function form209_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15349,7 +15349,7 @@ function form213_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15468,7 +15468,7 @@ function form214_create_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15519,7 +15519,7 @@ function form215_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15611,13 +15611,13 @@ function form215_create_form(func)
 			}
 			else 
 			{
-				$("#modal68").dialog("open");
+				$("#modal68_link").click();
 			}
 		},drs_columns);
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15668,7 +15668,7 @@ function form217_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15735,7 +15735,7 @@ function form219_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15838,13 +15838,13 @@ function form219_create_form(func)
 			}
 			else 
 			{
-				$("#modal68").dialog("open");
+				$("#modal68_link").click();
 			}
 		},drs_columns);	
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15915,7 +15915,7 @@ function form220_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -15967,7 +15967,7 @@ function form221_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -16024,7 +16024,7 @@ function form222_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 					
@@ -16146,7 +16146,7 @@ function form222_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -16198,7 +16198,7 @@ function form224_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -16256,7 +16256,7 @@ function form225_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -16417,7 +16417,7 @@ function form225_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -16469,7 +16469,7 @@ function form226_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -16527,7 +16527,7 @@ function form228_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -16585,7 +16585,7 @@ function form229_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -16652,7 +16652,7 @@ function form230_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -16708,7 +16708,7 @@ function form231_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -16773,7 +16773,7 @@ function form231_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -16875,7 +16875,7 @@ function form233_create_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -16924,7 +16924,7 @@ function form240_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -16973,7 +16973,7 @@ function form240_create_form(func)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -17039,7 +17039,7 @@ function form245_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -17055,7 +17055,7 @@ function form245_create_form(func)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -17120,7 +17120,7 @@ function form246_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -17179,7 +17179,7 @@ function form247_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -17250,7 +17250,7 @@ function form248_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -17332,13 +17332,13 @@ function form248_create_form(func)
 			}
 			else 
 			{
-				$("#modal77").dialog("open");
+				$("#modal77_link").click();
 			}
 		},bag_columns);
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -17389,7 +17389,7 @@ function form250_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -17475,13 +17475,13 @@ function form250_create_form(func)
 			}
 			else 
 			{
-				$("#modal78").dialog("open");
+				$("#modal78_link").click();
 			}
 		},mts_columns);
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -17579,7 +17579,7 @@ function form252_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -17677,7 +17677,7 @@ function form253_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -17775,7 +17775,7 @@ function form254_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -17873,7 +17873,7 @@ function form255_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -17937,7 +17937,7 @@ function form256_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -18021,7 +18021,7 @@ function form256_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}	
 }
 
@@ -18269,7 +18269,7 @@ function form258_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -18325,7 +18325,7 @@ function form261_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -18379,7 +18379,7 @@ function form262_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -18431,7 +18431,7 @@ function form264_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -18496,7 +18496,7 @@ function form265_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -18583,13 +18583,13 @@ function form265_create_form(func)
 			}
 			else 
 			{
-				$("#modal68").dialog("open");
+				$("#modal68_link").click();
 			}
 		},rto_columns);
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -18652,7 +18652,7 @@ function form268_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -18760,7 +18760,7 @@ function form268_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -18822,7 +18822,7 @@ function form270_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -18961,7 +18961,7 @@ function form270_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -19011,7 +19011,7 @@ function form271_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -19076,7 +19076,7 @@ function form273_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -19141,7 +19141,7 @@ function form275_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -19199,7 +19199,7 @@ function form276_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -19269,7 +19269,7 @@ function form284_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -19434,7 +19434,7 @@ function form284_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -19501,7 +19501,7 @@ function form289_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -19548,7 +19548,7 @@ function form290_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -19644,7 +19644,7 @@ function form292_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -19693,7 +19693,7 @@ function form293_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -19769,7 +19769,7 @@ function form294_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -19931,7 +19931,7 @@ function form294_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -20007,7 +20007,7 @@ function form295_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -20182,7 +20182,7 @@ function form295_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -20243,7 +20243,7 @@ function form296_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -20377,7 +20377,7 @@ function form296_create_form()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -20426,7 +20426,7 @@ function form298_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -20492,7 +20492,7 @@ function form299_create_item()
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }
 
@@ -20543,6 +20543,6 @@ function form302_create_item(form)
 	}
 	else
 	{
-		$("#modal2").dialog("open");
+		$("#modal2_link").click();
 	}
 }

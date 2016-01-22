@@ -1,4 +1,4 @@
-<div id='report33' class='report_detail'>
+<div id='report33' class='tab-pane'>
 	<form id='report33_header' autocomplete="off">
 		<fieldset>
 			<label>Dedit</br><input type='text' name='credit' readonly='readonly'></label>
