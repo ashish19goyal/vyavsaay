@@ -51,27 +51,25 @@ function ajax_with_custom_func(url,kvp,func)
 				{
 					show_loader();
 					var pass=document.getElementById("lock_form").elements['password'].value;
-					var user_kvp={domain:domain,user:user,pass:pass};
-					ajax_with_custom_func("./ajax/login.php",user_kvp,function(e)
+					var user_kvp={domain:domain,user:user,pass:pass,os:navigator.platform,browser:navigator.userAgent};
+					ajax_json("./ajax_json/login.php",user_kvp,function(response_object)
 					{
-						login_status=e.responseText;
-						var session_xml=e.responseXML;
-						if(login_status=="failed_auth")
+						if(response_object.status=="Failed Authentication")
 						{
 							alert("Password is incorrect. Aborting operation.");
 							delete_session();
 							hide_loader();
 						}
+						else if(response_object.status=="Account Inactive")
+						{
+							alert("This account has been deactivated.");
+							delete_session();
+							hide_loader();
+						}
 						else
 						{
-							var session_var=session_xml.getElementsByTagName('session');
-							var session_vars=new Object();
-							var num_svar=session_var[0].childElementCount;
-
-							for(var z=0;z<num_svar;z++)
-							{
-								session_vars[session_var[0].childNodes[z].nodeName]=session_var[0].childNodes[z].textContent;
-							}
+							var session_vars=response_object.data;
+							
 							var offline=get_session_var('offline');
 							for(var field in session_vars)
 							{
@@ -88,8 +86,8 @@ function ajax_with_custom_func(url,kvp,func)
 							kvp.del=session_vars['del'];
 							kvp.re=session_vars['re'];
 
-							hide_loader();									
-							ajax_with_custom_func(url,kvp,func);
+							hide_loader();	
+							ajax_with_custom_func(url,kvp,func);								
 						}
 					});
 				});				

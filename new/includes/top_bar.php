@@ -5,7 +5,7 @@
         
         <!-- BEGIN LOGO -->
         <div class="page-logo">
-            <a href="main.php">
+            <a onclick='home_display();'>
             	<!--<img src="./layouts/layout/img/logo.png" alt="logo" class="logo-default" />-->
             	<b class='logo-default'><span class="logo-text">Vyavsaay</span> <span class='logo-text2'>ERP</span></b>    
             </a>

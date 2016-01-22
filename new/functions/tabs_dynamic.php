@@ -17,7 +17,7 @@
 		
 		$db_name="re_user_".$domain;
 		$conn=new db_connect($db_name);
-		$query="select * from system_grids where status=?;";
+		$query="select * from system_grids where status=? order by grid_order asc;";
 		$query2="select * from ques_struct where status=?;";
 		$stmt=$conn->conn->prepare($query);
 		$stmt->execute(array('active'));

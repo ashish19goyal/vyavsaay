@@ -162,7 +162,7 @@ function setup_grid_display_tabs()
 function show_function(function_id)
 {
 	hide_all();
-	$(function_id).show();
+	$("#"+function_id).show();
 }
 
 function modal_forms_ini()
@@ -392,16 +392,9 @@ function hide_loader()
 
 function grid_click(func)
 {
-	show_function("#"+func+"_main");
+	show_function(func+"_main");
 
-	if($(window).width()>550)
-	{
-		$("#"+func+"_main").find('ul').find('li:visible').find('a').first().click();
-	}
-	else 
-	{
-		$("#"+func+"_main").find('h3:visible').first().click();
-	}	
+	$("#"+func+"_main").find('ul').find('li:visible').find('a').first().click();	
 }
 
 
@@ -409,24 +402,12 @@ function element_display(fid,element_name,elements)
 {
 	if(is_read_access(element_name))
 	{
-		if($(window).width()<=550)
-		{
-			var element_link="#"+element_name+"_link";
-			var function_link=$(element_link).parent().parent().attr('id');
-			show_function("#"+function_link);
-			$(element_link).attr('data_id',fid);
-			$(element_link).parent().click();
-			$(element_link).attr('data_id','');	
-		}
-		else 
-		{
-			var element_link="#"+element_name+"_link";
-			var function_link=$(element_link).parent().parent().parent().attr('id');
-			show_function("#"+function_link);
-			$(element_link).attr('data_id',fid);
-			$(element_link).click();
-			$(element_link).attr('data_id','');	
-		}
+		var element_link="#"+element_name+"_link";
+		var function_link=$(element_link).parent().parent().parent().attr('id');
+		show_function(function_link);
+		$(element_link).attr('data_id',fid);
+		$(element_link).click();
+		$(element_link).attr('data_id','');		
 	}
 	else if(elements)
 	{
@@ -434,26 +415,13 @@ function element_display(fid,element_name,elements)
 		{
 			if(is_read_access(elements[i]))
 			{
-				if($(window).width()<=550)
-				{
-					var element_link="#"+elements[i]+"_link";
-					var function_link=$(element_link).parent().parent().attr('id');
-					show_function("#"+function_link);
-					$(element_link).attr('data_id',fid);
-					$(element_link).parent().click();
-					$(element_link).attr('data_id','');
-					break;
-				}
-				else 
-				{
-					var element_link="#"+elements[i]+"_link";
-					var function_link=$(element_link).parent().parent().parent().attr('id');
-					show_function("#"+function_link);
-					$(element_link).attr('data_id',fid);
-					$(element_link).click();
-					$(element_link).attr('data_id','');
-					break;
-				}
+				var element_link="#"+elements[i]+"_link";
+				var function_link=$(element_link).parent().parent().parent().attr('id');
+				show_function(function_link);
+				$(element_link).attr('data_id',fid);
+				$(element_link).click();
+				$(element_link).attr('data_id','');
+				break;
 			}
 		}
 	}
@@ -463,7 +431,7 @@ function access_display(tablename,record_id)
 {
 	var element_link="#form105_link";
 	var function_link=$(element_link).parent().parent().parent().attr('id');
-	show_function("#"+function_link);
+	show_function(function_link);
 	
 	var fields=document.getElementById('form105_master');
 	var table_filter=fields.elements[1];

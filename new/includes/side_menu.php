@@ -36,12 +36,17 @@
 					
 					$db_name="re_user_".$domain;
 					$conn=new db_connect($db_name);
-					$query="select name,display_name,elements,head_color from system_grids where status=? order by grid_order asc;";
-					
+					$query="select name,display_name,elements from system_grids where status=? order by grid_order asc;";
+					$query2="select * from ques_struct where status=?;";
+		
 					$stmt=$conn->conn->prepare($query);
 					$stmt->execute(array('active'));
 					$struct_res=$stmt->fetchAll(PDO::FETCH_ASSOC);
-			
+					
+					$stmt2=$conn->conn->prepare($query2);
+					$stmt2->execute(array('active'));
+					$struct_res2=$stmt2->fetchAll(PDO::FETCH_ASSOC);
+		
 					foreach($struct_res as $res)
 					{
 						$first_char=substr($res['display_name'],0,1);
@@ -51,20 +56,29 @@
 			               "<span class='title' style='font-weight:900;color:#999;'>".$res['display_name']."</span>".
 			                    "<span class='arrow'></span></a>";
 			            
-					if($res['elements']!="" && $res['elements']!=null)
-					{
-						$grids_html.="<ul class='sub-menu'>";
-						$elements_array=json_decode($res['elements'],true);
-						foreach($elements_array as $element)
-		            {
-		                	$grids_html.="<li class='nav-item' id='nav-".$element['name']."'>".
-		                        "<a onclick=\"element_display('','".$element['name']."');\" class='nav-link'>".
-		                            "<span class='title'>".$element['display_name']."</span>".
-		                        "</a></li>";
-						}
-						
-						$grids_html.="</ul>";
-			         }			            
+						if($res['elements']!="" && $res['elements']!=null)
+						{
+							$grids_html.="<ul class='sub-menu'>";
+							$elements_array=json_decode($res['elements'],true);
+							foreach($elements_array as $element)
+			            {
+			                	$grids_html.="<li class='nav-item' id='nav-".$element['name']."'>".
+			                        "<a onclick=element_display('','".$element['name']."'); class='nav-link'>".
+			                            "<span class='title'>".$element['display_name']."</span></a></li>";
+							}
+							
+							foreach($struct_res2 as $res2)
+			            {
+								if($res2['func']==$res['name'])
+								{
+									$grids_html.="<li class='nav-item' id='nav-".$res2['name']."'>".
+													"<a onclick=element_display('','".$res2['name']."'); class='nav-link'>".
+			                        		"<span class='title'>".$res2['display_name']."</span></a></li>";
+								}
+							}
+							
+							$grids_html.="</ul>";
+				      }			            
 			         $grids_html.="</li>";            
 					}
 				}
