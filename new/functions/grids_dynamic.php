@@ -84,7 +84,7 @@
 				
 		for($i=0;$i<count($struct_res);$i++)
 		{
-			echo "<div class='dashboard_grid' id='".$struct_res[$i]['name']."_link' onclick=\"grid_click('".$struct_res[$i]['name']."');\" style='background-color:".$struct_res[$i]['back_color']."'>".
+			echo "<div class='col-lg-3 col-md-3 col-sm-4 col-xs-6'><div class='dashboard_grid' id='".$struct_res[$i]['name']."_link' onclick=\"grid_click('".$struct_res[$i]['name']."');\" style='background-color:".$struct_res[$i]['back_color']."'>".
 				"<div><b>".$struct_res[$i]['display_name']."</b></div><ul>";
 			
 			for($j=0;$j<count($struct_res2);$j++)
@@ -95,7 +95,7 @@
 				}					
 			}
 			
-			echo "</ul></div>";
+			echo "</ul></div></div>";
 		}
 		
 		echo "</div>";	

@@ -153,7 +153,7 @@ function setup_grid_display_tabs()
 		var hidden_function_main=$("#"+func+"_main").find('ul').find('li:hidden').length;
 		if(function_main===0 || function_main===hidden_function_main)
 		{
-			$("#"+func+"_link").hide();
+			$("#"+func+"_link").parent().hide();
 			$("#nav-"+func).hide();
 		}
 	});

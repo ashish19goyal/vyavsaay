@@ -9,7 +9,7 @@
 			<?php include('../Classes/ccavenue/Crypto.php')?>
 			<?php 
 			
-				error_reporting(0);
+				//error_reporting(0);
 				
 				$merchant_data='merchant_id=84158&';
 				$working_key='EA256A49C184883BBB18457997D673F6';
