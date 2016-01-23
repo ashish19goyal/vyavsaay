@@ -22,7 +22,7 @@
 				//echo $working_key;
 
 				$encrypted_data=encrypt($merchant_data,$working_key); // Method for encrypting the data.
-				echo $encrypted_data;				
+				//echo $encrypted_data;				
 			?>
 			
 			<form method="post" name="redirect" action="https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction"> 
