@@ -44,7 +44,9 @@ function default_load()
 		{
 			start_workers();
 		}
-
+		
+		float_labels();
+		
 		document.getElementById('master_title').innerHTML=get_session_var('title');			
 		hide_loader();
 	}
@@ -65,6 +67,12 @@ function declaring_global_variables()
 	storage_count_tracker=0;
 	total_export_requests=0;	
  	newsletter_element_4_deletion = [];
+ 	status_label_colors={'pending':'label-warning','converted':'label-success','completed':'label-success'};
+}
+
+function float_labels()
+{
+	$('.floatlabel').floatlabel();
 }
 
 function show_progress()
@@ -196,26 +204,19 @@ function modal_forms_ini()
 		});
 	});
 	
+	var dynamic_modal_array=[];
 	for(var i=8;i<50;i++)
 	{
-		var j=i;
-		$("#modal"+i).dialog({
-	   		autoOpen: false,
-	   		width: width,
-	   		modal: true,
-	   		show: "slide",
-	   		closeOnEscape: true,
-	   		close:function(event,ui)
-	   		{
-	   			var form_id="modal"+j+"_form";
-	   			document.getElementById(form_id).reset();
-	   		}
-		});
+		dynamic_modal_array.push(i);
 	}
-	
 	for(var i=101;i<=181;i++)
 	{
-		var j=i;
+		dynamic_modal_array.push(i);
+	}
+	dynamic_modal_array.push(183);
+	
+	dynamic_modal_array.forEach(function(i)
+	{
 		$("#modal"+i).dialog({
 	   		autoOpen: false,
 	   		width: width,
@@ -224,11 +225,11 @@ function modal_forms_ini()
 	   		closeOnEscape: true,
 	   		close:function(event,ui)
 	   		{
-	   			var form_id="modal"+j+"_form";
+	   			var form_id="modal"+i+"_form";
 	   			document.getElementById(form_id).reset();
 	   		}
 		});
-	}	
+	});	
 }
 
 function home_display()
@@ -362,6 +363,12 @@ function hide_all()
 	hide_all_grids();
 
 	hide_menu_items();
+	
+	if(typeof worker_12!='undefined')
+	{
+		worker_12();
+	}
+		
 	if(typeof form301_cancel_capture!='undefined')
 	{
 		form301_cancel_capture();

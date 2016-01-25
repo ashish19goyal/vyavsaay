@@ -893,26 +893,6 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<name>report61</name>
-			<display_name>expiring_inventory</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>report</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>report62</name>
-			<display_name>inventory_prediction</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>report</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
 			<name>report63</name>
 			<display_name>item_picklist</display_name>
 			<status>active</status>
@@ -976,26 +956,6 @@
 		<row>
 			<name>report69</name>
 			<display_name>project_expenses</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>report</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>report70</name>
-			<display_name>inventory_shortage</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>report</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>report71</name>
-			<display_name>ordered_inventory</display_name>
 			<status>active</status>
 			<value>unchecked</value>
 			<type>report</type>
@@ -4698,28 +4658,6 @@
 		</row>
 		<row>
 			<username>master</username>
-			<element_id>report61</element_id>
-			<element_name>expiring_inventory</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report62</element_id>
-			<element_name>inventory_prediction</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
 			<element_id>report63</element_id>
 			<element_name>item_picklist</element_name>
 			<status>active</status>
@@ -4788,28 +4726,6 @@
 			<username>master</username>
 			<element_id>report69</element_id>
 			<element_name>project_expenses</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report70</element_id>
-			<element_name>inventory_shortage</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report71</element_id>
-			<element_name>ordered_inventory</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

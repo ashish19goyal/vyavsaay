@@ -102,14 +102,100 @@ function print_tabular_report(report_name,report_title,print_button)
 	   var table_element=document.getElementById(report_name+"_body").parentNode;
 	   var table_copy=table_element.cloneNode(true);
 	   table_copy.removeAttribute('class');
-	   var font_size=get_session_var('print_size');
-	   $(table_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
+	   $(table_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;");
 	   container.appendChild(business_title);
 	   container.appendChild(title);
 	   container.appendChild(table_copy);
 	   $.print(container);
 	});
 }
+
+
+function print_report_table(report_data,report_title,func)
+{
+	////////////setting up containers///////////////////////	
+	var container=document.createElement('div');
+	var header=document.createElement('div');
+		var logo=document.createElement('div');
+		var business_intro=document.createElement('div');
+	
+	var report_title_line=document.createElement('div');
+	
+	var table_container=document.createElement('div');
+
+	var footer=document.createElement('div');
+		var business_contact=document.createElement('div');
+	
+////////////setting styles for containers/////////////////////////
+
+	header.setAttribute('style','width:100%;text-align:center');
+		report_title_line.setAttribute('style','width:100%;text-align:center;font-size:18px;margin:10px 0px;');
+	footer.setAttribute('style','width:100%;min-height:100px;font-size:14px;');
+		business_contact.setAttribute('style','width:100%;text-align:center;margin:10px 0px;');
+	
+///////////////getting the content////////////////////////////////////////
+
+	var bt=get_session_var('title');
+	var logo_image=get_session_var('logo');
+	var business_address=get_session_var('address');
+	var business_phone=get_session_var('phone');
+	var business_email=get_session_var('email');
+	var business_website=get_session_var('website');
+	
+	////////////////filling in the content into the containers//////////////////////////
+
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
+	business_contact.innerHTML="<hr style='border: 1px solid #000;margin:2px 0px;'><div>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website+"</div><hr style='border: 1px solid #000;margin:2px 0px;'>";
+	report_title_line.innerHTML="<hr style='border: 1px solid #000;margin:2px 0px;'><div style='text-align:center;'><b style='text-size:1.2em'>"+report_title+"</b></div><hr style='border: 1px solid #000;margin:2px 0px;'>";
+
+	/////////////adding new table //////////////////////////////////////////////////////	
+
+	var new_table=document.createElement('table');
+	new_table.setAttribute('style','width:100%;font-size:14px;border:1px solid black;text-align:left;');
+	new_table.setAttribute('class','plain_table');
+
+	var table_rows="";
+	
+	if(report_data.length>0)
+	{
+		var data_row=report_data[0];
+		table_rows+="<tr>";
+		
+		for(var i in data_row)
+		{
+			table_rows+="<th style='border: 1px solid #000;text-align:left;'>"+i+"</th>";				
+		}		
+		table_rows+="</tr>";
+	}
+
+	report_data.forEach(function(data_row)
+	{
+		table_rows+="<tr>";
+		for(var i in data_row)
+		{
+			table_rows+="<td style='border: 1px solid #000;text-align:left;'>"+data_row[i]+"</td>";				
+		}		
+		table_rows+="</tr>";
+	});
+
+	new_table.innerHTML=table_rows;
+	
+	/////////////placing the containers //////////////////////////////////////////////////////	
+	
+	container.appendChild(header);
+	container.appendChild(report_title_line);
+	
+	container.appendChild(new_table);
+	container.appendChild(footer);
+
+	header.appendChild(logo);
+	//footer.appendChild(signature);
+	
+	container.appendChild(business_contact);
+	
+	func(container);
+}
+
 
 /**
  * Print reports in graphical form
@@ -4753,66 +4839,6 @@ function print_form250(func)
 	header.appendChild(mts_barcode);
 
 	func(container);
-}
-
- /**
- * @param report_name
- * @param report_title
- * @param print_button
- */
-function print_report90(report_title,print_button)
-{
-	$(print_button).off('click');
-	$(print_button).on('click',function(event)
-	{
-	   var container=document.createElement('div');
-	   var business_title=document.createElement('div');
-	   var title=document.createElement('div');
-	   var bt=get_session_var('title');
-	   business_title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.5em'><b>"+bt+"</b></div>";
-	   title.innerHTML="<div style='display: block;width:100%;font-size:1.2em'><b>"+report_title+"</b></div>";
-	   var table_element=document.getElementById("report90_body");
-	   
-	   
-	   var font_size=get_session_var('print_size');
-
-		var new_table=document.createElement('table');
-		new_table.setAttribute('style','font-size:11px;border:1px solid #000;text-align:left;');
-		new_table.setAttribute('class','printing_tables');
-
-		var table_header="<tr>"+
-				"<td style='border: 1px solid #000;text-align:left;width:16%'>SKU</td>"+
-				"<td style='border: 1px solid #000;text-align:left;width:30%'>Item Name</td>"+
-				"<td style='border: 1px solid #000;text-align:left;width:16%'>Batch</td>"+
-				"<td style='border: 1px solid #000;text-align:left;width:16%'>Storage</td>"+
-				"<td style='border: 1px solid #000;text-align:left;width:10%'>To Pick</td>"+
-				"<td style='border: 1px solid #000;text-align:left;width:10%'>Picked</td></tr>";
-
-		var table_rows=table_header;
-		var counter=0;
-
-		$(table_element).find('form').each(function(index)
-		{
-			counter+=1;
-			var form=$(this)[0];	
-			table_rows+="<tr>"+
-				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[1].value+"</div></td>"+
-				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[2].value+"</div></td>"+
-				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[3].value+"</div></td>"+
-				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[6].value+"</div></td>"+
-				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[4].value+"</div></td>"+
-				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[5].value+"</div></td></tr>";		
-		});
-		new_table.innerHTML=table_rows;
-		/////////////placing the containers //////////////////////////////////////////////////////	
-
-
-	   //$(table_copy).find('td,th').attr('style',"word-wrap: break-word;border:1px solid black;text-align:left;font-size:"+font_size+"em");
-	   container.appendChild(business_title);
-	   container.appendChild(title);
-	   container.appendChild(new_table);
-	   $.print(container);
-	});
 }
 
 /**

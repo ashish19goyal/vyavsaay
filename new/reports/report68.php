@@ -25,4 +25,8 @@
 		<tbody id='report68_body'>
 		</tbody>
 	</table>
+	
+	<script>
+	
+	</script>
 </div>

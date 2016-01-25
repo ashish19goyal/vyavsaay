@@ -32,7 +32,7 @@
 		for($i=0;$i<count($struct_res);$i++)
 		{
 			echo "<div id='".$struct_res[$i]['name']."_main' class='tabbable-custom boxless nav-justified'>";
-			echo "<ul class='nav nav-pills nav-justified'>";
+			echo "<ul class='nav nav-pills nav-justified tab_color'>";
 			$elements_array=json_decode($struct_res[$i]['elements'],true);
 			
 				for($x=0;$x<count($elements_array);$x++)

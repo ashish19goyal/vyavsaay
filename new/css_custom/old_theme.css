@@ -1,62 +1,9 @@
 @CHARSET "UTF-8";
 
-input[readonly="readonly"],input[readonly="readonly"]:focus{
-	background-color: inherit;
-	color: inherit;
-	border-width: 0;
-	/*width: auto;*/
-}
-
-textarea[readonly="readonly"],textarea[readonly="readonly"]:focus{
-	background-color: inherit;
-	color: inherit;
-	border-width: 0;
-	/*width: 100px;*/
-	resize:none;
-}
-
-textarea{
-	outline:  none !important;
-	background-color: #ffffff;
-	width: 100px;
-	vertical-align:top;
-	border: 1px solid #dadada;
-}
-
-
-input{
-	outline:  none !important;
-	background-color: #ffffff;
-	color: #000000;
-	border: 1px solid #dadada;
-	width: auto;
-}
-
 label{
 	text-align:left;
 	padding: 1px;
 	margin: 0px 5px;
-}
-
-input:not([type="button"]):not([readonly="readonly"]):not([type="submit"]):focus,textarea:not([readonly="readonly"]):focus{
-	background-color: #F5F4A8;
-	outline: none;
-}
-
-td input[type="text"]
-{
-	width:100px;
-	transition: width 0.25s;
-	white-space:normal;
-	word-wrap: break-word;
-}
-
-td input[type="text"].wideinput
-{
-	width:175px;
-	transition: width 0.25s;
-	white-space:normal;
-	word-wrap: break-word;
 }
 
 .questionnaire_form{
@@ -72,46 +19,10 @@ td input[type="text"].wideinput
 	margin: 10px;
 }
 
-.questionnaire_form input,.questionnaire_form textarea, .questionnaire_form select
-{
-	float:right;	
-	width: 300px;
-	border: 1px solid #dadada; 
-}
-
-.rwd-table td{
-	width: 1px;
- /*   white-space: nowrap;*/
-}
-
-input[type="number"]
-{
-	width:75px;
-	transition: width 0.25s;
-}
-
 .dynamic_before:before{
 	content:attr(data-content);
 }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  display:none;
-  margin: 0; 
-}
-
-td:nth-child(2) input[type="text"]{
-	width:150px;
-}
-
-td:nth-child(2) textarea{
-	width:150px;
-}
-
-.rwd-table td:nth-child(2), .rwd-table th:nth-child(2){
-	width:180px;
-}
 
 html {
 	width: 98%;
@@ -125,13 +36,6 @@ html {
 	cursor: pointer;
 	text-decoration: underline;
 }
-
-/*
-img {
-	max-width: 80%;
-}
-*/
-
 
 div.header_person{
 	float: left;
@@ -360,79 +264,7 @@ tr.cancelled_row{
 	opacity:0.5;
 }
 
-/* 
-Table formatting for responsive functionality
-*/
 
-.rwd-table {
-	margin: 1em 0;
-	min-width: 300px;
-	background: #EAF2D3;
-	overflow: hidden;
-}
-.rwd-table tr{
-  border-top: 1px solid #98BF21;
-  border-bottom: 1px solid #98BF21;
-  border-color: #98BF21;
-}
-
-.rwd-table th {
-	display: none;
-	background-color:#2C8A50;
-	color: #fff;
-	margin: .5em 1em;
-	text-align: left;
-}
-.rwd-table thead tr th:last-child{
-	display:block;
-	background-color:#2C8A50;
-}
-.rwd-table td {
-	display: block;
-	margin: .5em 1em;
-	text-align: left;
-}
-.rwd-table td:first-child {
-  padding-top: .5em;
-}
-
-.rwd-table td:last-child {
-  padding-bottom: .5em;
-}
-
-.rwd-table td:before {
-  content: attr(data-th) ": ";
-  font-weight: bold;
-  width: 120px;
-  display: inline-block;
-}
-
-.rwd-table thead tr:first-child{
-	background: #2C8A50;
-}
-
-.rwd-table>td:before{
-	background-color:#2C8A50;
-	color: #fff;
-}
-/* end table formatting */
-
-table{
-	border: 1px solid #98BF21;
-	border-collapse: collapse;
-	table-layout:fixed;
-	width:100%;
-}
-
-tbody>tr>td{
-	text-align: center;
-	vertical-align: middle;
-	padding: 0px 2px;
-}
-
-tbody tr:hover{
-	background:#d8d0b1;
-}
 
 .filter_icon{
 	height:20px;
@@ -888,19 +720,8 @@ canvas{
 	border: 1px solid black;
 }
 
-textarea.widebox{
-	width:225px;
-}
-
-input.widebox{
-	width:225px;
-}
 
 textarea.ultrawidebox{
-	width:400px;
-}
-
-input.ultrawidebox{
 	width:400px;
 }
 
@@ -1147,40 +968,6 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 	}
 }
 
-@media (min-width: 850px)
-{
-	.questionnaire_form input,.questionnaire_form textarea, .questionnaire_form select
-	{
-		float:right;	
-		width: 400px;
-	}
-	
-  .rwd-table td:before {
-    display: none;
-  }
-	.rwd-table th, .rwd-table td {
-	    display: table-cell;
-	    padding: .25em .5em;
-		padding: 1em !important;
-	}
-	.rwd-table thead tr th:last-child{
-		display: table-cell;
-	    padding: .25em .5em;
-	    width:100px;
-	}
-	.rwd-table th:first-child, .rwd-table td:first-child {
-		padding-left: 0;
-  	}
-  	.rwd-table th:last-child, .rwd-table td:last-child {
-    	padding-right: 0;
-    	width:100px;
-  	}
-  	.rwd-table tfoot tr{
-		background-color:#fff;
-		font-weight: bold;
-	}
-}
-
 @media screen and (min-width: 900px) {
 	#content_box{
 		min-width:700px;
@@ -1191,12 +978,7 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 }
 
 @media screen and (min-width: 1100px) {
-	.questionnaire_form input,.questionnaire_form textarea,.questionnaire_form select
-	{
-		float:right;	
-		width: 500px;
-	}
-
+	
 	#content_box{
 		min-width:900px;
 	}
@@ -1223,21 +1005,10 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 	}
 }
 
-@media (max-width: 850px)
-{
-	.rwd-table td{
-	    white-space: nowrap;
-	}
-}
 
 /*this is applicable for mobile screens*/
 @media screen and (max-width: 550px) 
 {	
-	.questionnaire_form input,.questionnaire_form textarea,.questionnaire_form select
-	{
-		float:right;	
-		width: 200px;
-	}
 
 	.customers_pane{
 		max-width:300px;
@@ -1290,17 +1061,7 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 		width:87%;
 	}
 	
-	/**content size in the grids*/
-	.rwd-table{
-		font-size: 20px;
-		margin: 0px;
-		padding:2px;
-	}	
 	
-	.rwd-table td:before {
-	  width: 170px;
-  	}
-  	
 	.export_icon, .generic_icon, .import_icon{
 		height:30px;
 		font-size: 20px;
@@ -1314,20 +1075,7 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 		min-width:300px;
 		font-size: 20px;
 	}
-	
-	input,textarea,select,button{
-		font-size: 20px;
-	}
-	
-	input[type='text'],textarea,select{
-		min-width: 225px;
-		margin: 2px;
-	}
-	input[type='number']{
-		min-width: 150px;
-		margin: 2px;
-	}
-	
+		
 	.submit_hidden{
 		min-width:1px;
 	}
@@ -1338,31 +1086,11 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 		width:40px;
 		background-size: 40px 40px;
 	}
-	
-	.rwd-table td{
-		margin: 10px 5px;
-	}
 		
 	v2{
 		margin-left: 175px;
 	}
 	
-	textarea.widebox{
-		width:300px;
-	}
-	
-	input.widebox{
-		width:300px;
-	}
-	
-	textarea.ultrawidebox{
-		width:300px;
-	}
-	
-	input.ultrawidebox{
-		width:300px;
-	}
-
 	.print_navigation {
 	    line-height:30px;
 	    background-color:#eeeeee;

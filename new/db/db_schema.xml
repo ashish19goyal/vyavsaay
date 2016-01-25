@@ -1765,7 +1765,7 @@
 			<carrier_account index='no' type="TEXT"></carrier_account>
 			<carrier_name index='no' type="TEXT"></carrier_name>
 			<manifest_type index='yes' type="TEXT"></manifest_type>
-			<dispatch_date index='no' type="BIGINT"></dispatch_date>
+			<dispatch_date index='yes' type="BIGINT"></dispatch_date>
 			<import_date index='yes' type="BIGINT"></import_date>
 			<notes index='no' type="TEXT"></notes>
 			<pickup_location index='no' type="TEXT"></pickup_location>

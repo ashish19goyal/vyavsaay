@@ -8,23 +8,23 @@
 		<label><video id="form301_video" autoplay></video></label>
 	</form>
 	
-	<script type="text/javascript" src="./JavaScripts/open/jsqrcode/grid.js"></script>
-	<script type="text/javascript" src="./JavaScripts/open/jsqrcode/version.js"></script>
-	<script type="text/javascript" src="./JavaScripts/open/jsqrcode/detector.js"></script>
-	<script type="text/javascript" src="./JavaScripts/open/jsqrcode/formatinf.js"></script>
-	<script type="text/javascript" src="./JavaScripts/open/jsqrcode/errorlevel.js"></script>
-	<script type="text/javascript" src="./JavaScripts/open/jsqrcode/bitmat.js"></script>
-	<script type="text/javascript" src="./JavaScripts/open/jsqrcode/datablock.js"></script>
-	<script type="text/javascript" src="./JavaScripts/open/jsqrcode/bmparser.js"></script>
-	<script type="text/javascript" src="./JavaScripts/open/jsqrcode/datamask.js"></script>
-	<script type="text/javascript" src="./JavaScripts/open/jsqrcode/rsdecoder.js"></script>
-	<script type="text/javascript" src="./JavaScripts/open/jsqrcode/gf256poly.js"></script>
-	<script type="text/javascript" src="./JavaScripts/open/jsqrcode/gf256.js"></script>
-	<script type="text/javascript" src="./JavaScripts/open/jsqrcode/decoder.js"></script>
-	<script type="text/javascript" src="./JavaScripts/open/jsqrcode/qrcode.js"></script>
-	<script type="text/javascript" src="./JavaScripts/open/jsqrcode/findpat.js"></script>
-	<script type="text/javascript" src="./JavaScripts/open/jsqrcode/alignpat.js"></script>
-	<script type="text/javascript" src="./JavaScripts/open/jsqrcode/databr.js"></script>
+	<script type="text/javascript" src="./js/open/jsqrcode/grid.js"></script>
+	<script type="text/javascript" src="./js/open/jsqrcode/version.js"></script>
+	<script type="text/javascript" src="./js/open/jsqrcode/detector.js"></script>
+	<script type="text/javascript" src="./js/open/jsqrcode/formatinf.js"></script>
+	<script type="text/javascript" src="./js/open/jsqrcode/errorlevel.js"></script>
+	<script type="text/javascript" src="./js/open/jsqrcode/bitmat.js"></script>
+	<script type="text/javascript" src="./js/open/jsqrcode/datablock.js"></script>
+	<script type="text/javascript" src="./js/open/jsqrcode/bmparser.js"></script>
+	<script type="text/javascript" src="./js/open/jsqrcode/datamask.js"></script>
+	<script type="text/javascript" src="./js/open/jsqrcode/rsdecoder.js"></script>
+	<script type="text/javascript" src="./js/open/jsqrcode/gf256poly.js"></script>
+	<script type="text/javascript" src="./js/open/jsqrcode/gf256.js"></script>
+	<script type="text/javascript" src="./js/open/jsqrcode/decoder.js"></script>
+	<script type="text/javascript" src="./js/open/jsqrcode/qrcode.js"></script>
+	<script type="text/javascript" src="./js/open/jsqrcode/findpat.js"></script>
+	<script type="text/javascript" src="./js/open/jsqrcode/alignpat.js"></script>
+	<script type="text/javascript" src="./js/open/jsqrcode/databr.js"></script>
 	<script type="text/javascript">
 	
 	form301_stream = null;
@@ -127,8 +127,8 @@
 	{           
 		var video = document.getElementById('form301_video');
 		var canvas = document.getElementById('qr-canvas');
-		console.log($(video).attr('width'));
-		console.log($(video).attr('height'));
+		//console.log($(video).attr('width'));
+		//console.log($(video).attr('height'));
 		
 		$(canvas).attr('width',$(video).attr('width'));
 		$(canvas).attr('height',$(video).attr('height'));

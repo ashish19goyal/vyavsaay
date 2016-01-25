@@ -13,8 +13,8 @@
     <link href="./css_open/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="./css_open/uniform.default.min.css" rel="stylesheet" type="text/css" />
     <link href="./css_open/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
-    <link href="./css_open/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css">
-	<!-- END GLOBAL MANDATORY STYLES -->
+    <link href="./css_open/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
 
 	<!-- BEGIN PAGE LEVEL STYLES -->
     <!-- END PAGE LEVEL STYLES -->
@@ -29,6 +29,7 @@
 	<link href="./css_custom/old_theme.css" rel="stylesheet" type="text/css" />
     <link href="./css_custom/layout.css" rel="stylesheet" type="text/css" />
     <link href="./css_custom/default.css" rel="stylesheet" type="text/css" id="style_color" />
+    
     <link href="./css_custom/custom.css" rel="stylesheet" type="text/css" />
     <!-- END THEME LAYOUT STYLES -->
 

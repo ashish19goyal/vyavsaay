@@ -8438,12 +8438,6 @@ function form223_header_ini()
 	var name_filter=filter_fields.elements[1];
 	var status_filter=filter_fields.elements[2];
 	
-	$(import_button).off('click');	
-	$(import_button).on('click',function () 
-	{
-		modal140_action();
-	});
-	
 	var order_data="<purchase_orders>" +
 			"<order_num></order_num>" +
 			"</purchase_orders>";

@@ -1,0 +1,101 @@
+/* floatlabel */
+
+input.floatlabel,
+textarea.floatlabel {
+  margin: 0;
+  border: none;
+  background: rgba(0, 0, 0, 0);
+  transition: padding-top 0.2s ease, margin-top 0.2s ease;
+  overflow-x: hidden; /* Hack to make "rows" attribute apply in Firefox. */
+}
+
+/* Underline and Placeholder */
+
+input.floatlabel + label,
+textarea.floatlabel + label {
+  display: block;
+  position: relative;
+  white-space: nowrap;
+  padding: 0;
+  margin: 0;
+  width: 10%;
+  border-top: 1px solid red;
+  -webkit-transition: width 0.4s ease;
+  transition: width 0.4s ease;
+  height: 0px;
+}
+
+input.floatlabel:focus + label,
+textarea.floatlabel:focus + label {
+  width: 80%;
+}
+
+input.floatlabel:focus,
+input.floatlabel:valid {
+  padding-top: 35px;
+}
+
+textarea.floatlabel:valid,
+textarea.floatlabel:focus {
+  margin-top: 35px;
+}
+
+input.floatlabel:focus + label > span,
+input.floatlabel:valid + label > span {
+  top: -100px;
+  font-size: 22px;
+  color: #333;
+}
+
+textarea.floatlabel:focus + label > span,
+textarea.floatlabel:valid + label > span {
+  top: -150px;
+  font-size: 22px;
+  color: #333;
+}
+
+input.floatlabel:valid + label,
+textarea.floatlabel:valid + label {
+  border-color: green;
+}
+
+input.floatlabel:invalid,
+textarea.floatlabel:invalid {
+  box-shadow: none;
+}
+
+input.floatlabel + label > span,
+textarea.floatlabel + label > span {
+  font-weight: 300;
+  margin: 0;
+  position: absolute;
+  color: #8F8F8F;
+  font-size: 48px;
+  top: -66px;
+  left: 0px;
+  z-index: -1;
+  -webkit-transition: top 0.2s ease, font-size 0.2s ease, color 0.2s ease;
+  transition: top 0.2s ease, font-size 0.2s ease, color 0.2s ease;
+}
+
+
+input.floatlabel:valid ~ input[type="submit"], textarea.floatlabel:valid ~ input[type="submit"] {
+  -webkit-animation: appear 1s forwards;
+  animation: appear 1s forwards;
+}
+
+input.floatlabel:invalid ~ input[type="submit"], textarea.floatlabel:invalid ~ input[type="submit"] {
+  display: none;
+}
+
+@-webkit-keyframes appear {
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes appear {
+  100% {
+    opacity: 1;
+  }
+}

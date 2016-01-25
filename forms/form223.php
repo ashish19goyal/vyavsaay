@@ -9,7 +9,6 @@
 					<th>Status <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form223_header'></th>
 					<th>
 						<input type='button' form='form223_header' value='EXPORT' class='export_icon'>
-						<input type='button' form='form223_header' value='Import' name='import' class='export_icon' style='background:#DB0000;border: 2px solid #8B0000;'>
 						<input type='submit' form='form223_header' style='visibility: hidden;'>
 					</th>
 			</tr>

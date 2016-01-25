@@ -1754,4 +1754,16 @@
 		}
 		</script>
     </div>
+    
+  	<div id="modal183" title="Email">
+		<form id='modal183_form' autocomplete="off">
+			<fieldset>
+				<label>Email: <textarea name='email' required title='Separate email IDs with semicolon(;)'></textarea></label><br>
+				<label>Subject: <textarea name='subject' required></textarea></label><br>
+				<input type='hidden'>
+				<input type="submit" value='Send' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

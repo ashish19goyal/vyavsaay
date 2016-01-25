@@ -182,23 +182,18 @@ function get_export_data(columns,filename)
 	{
 		var data_id=get_new_key();
 		var last_updated=get_my_time();
-		var export_xml="<export_log>"+
-					"<id>"+data_id+"</id>"+
-					"<acc_name>"+get_account_name()+"</acc_name>"+
-					"<filename>"+filename+"</filename>"+
-					"<export_time>"+last_updated+"</export_time>"+
-					"<last_updated>"+last_updated+"</last_updated>"+
-					"</export_log>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>export_log</tablename>" +
-					"<link_to></link_to>" +
-					"<title>Exported</title>" +
-					"<notes>"+filename+" report</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		create_row(export_xml,activity_xml);
-		
+		var data_json={data_store:'export_log',
+			 				log:'yes',
+			 				warning:'no',
+			 				data:[{index:'id',value:data_id},
+			 					{index:'acc_name',value:get_account_name()},
+			 					{index:'filename',value:filename},
+			 					{index:'export_time',value:last_updated},
+			 					{index:'last_updated',value:last_updated}],
+			 				log_data:{title:'Exported',notes:filename+" report",link_to:''}};
+		 						
+		create_json(data_json);		
+
 		results.forEach(function(result)
 		{
 			result.last_updated=get_my_datetime(result.last_updated);
@@ -224,23 +219,18 @@ function get_export_data_extended(columns,filename,func)
 	{
 		var data_id=get_new_key();
 		var last_updated=get_my_time();
-		var export_xml="<export_log>"+
-					"<id>"+data_id+"</id>"+
-					"<acc_name>"+get_account_name()+"</acc_name>"+
-					"<filename>"+filename+"</filename>"+
-					"<export_time>"+last_updated+"</export_time>"+
-					"<last_updated>"+last_updated+"</last_updated>"+
-					"</export_log>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>export_log</tablename>" +
-					"<link_to></link_to>" +
-					"<title>Exported</title>" +
-					"<notes>"+filename+" report</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		create_row(export_xml,activity_xml);
-		
+		var data_json={data_store:'export_log',
+			 				log:'yes',
+			 				warning:'no',
+			 				data:[{index:'id',value:data_id},
+			 					{index:'acc_name',value:get_account_name()},
+			 					{index:'filename',value:filename},
+			 					{index:'export_time',value:last_updated},
+			 					{index:'last_updated',value:last_updated}],
+			 				log_data:{title:'Exported',notes:filename+" report",link_to:''}};
+		 						
+		create_json(data_json);		
+
 		results.forEach(function(result)
 		{
 			func(result);
@@ -277,23 +267,18 @@ function get_export_data_restructured(columns,filename,func)
 	{		
 		var data_id=get_new_key();
 		var last_updated=get_my_time();
-		var export_xml="<export_log>"+
-					"<id>"+data_id+"</id>"+
-					"<acc_name>"+get_account_name()+"</acc_name>"+
-					"<filename>"+filename+"</filename>"+
-					"<export_time>"+last_updated+"</export_time>"+
-					"<last_updated>"+last_updated+"</last_updated>"+
-					"</export_log>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>export_log</tablename>" +
-					"<link_to></link_to>" +
-					"<title>Exported</title>" +
-					"<notes>"+filename+" report</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		create_row(export_xml,activity_xml);
-		
+		var data_json={data_store:'export_log',
+			 				log:'yes',
+			 				warning:'no',
+			 				data:[{index:'id',value:data_id},
+			 					{index:'acc_name',value:get_account_name()},
+			 					{index:'filename',value:filename},
+			 					{index:'export_time',value:last_updated},
+			 					{index:'last_updated',value:last_updated}],
+			 				log_data:{title:'Exported',notes:filename+" report",link_to:''}};
+		 						
+		create_json(data_json);		
+
 		var new_result_array=func(results);
 
 		var export_complete=setInterval(function()
@@ -324,22 +309,17 @@ function get_limited_export_data(columns,filename,func)
 	{
 		var data_id=get_new_key();
 		var last_updated=get_my_time();
-		var export_xml="<export_log>"+
-					"<id>"+data_id+"</id>"+
-					"<acc_name>"+get_account_name()+"</acc_name>"+
-					"<filename>"+filename+"</filename>"+
-					"<export_time>"+last_updated+"</export_time>"+
-					"<last_updated>"+last_updated+"</last_updated>"+
-					"</export_log>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>export_log</tablename>" +
-					"<link_to></link_to>" +
-					"<title>Exported</title>" +
-					"<notes>"+filename+" report</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		create_row(export_xml,activity_xml);
+		var data_json={data_store:'export_log',
+			 				log:'yes',
+			 				warning:'no',
+			 				data:[{index:'id',value:data_id},
+			 					{index:'acc_name',value:get_account_name()},
+			 					{index:'filename',value:filename},
+			 					{index:'export_time',value:last_updated},
+			 					{index:'last_updated',value:last_updated}],
+			 				log_data:{title:'Exported',notes:filename+" report",link_to:''}};
+		 						
+		create_json(data_json);		
 		
 		if(typeof func!='undefined')
 		{
@@ -364,6 +344,121 @@ function get_limited_export_data(columns,filename,func)
 }
 
 
+function initialize_tabular_report_buttons(columns,report_title,report_id,func)
+{
+	var csv_button=document.getElementById(report_id+'_csv');
+	var pdf_button=document.getElementById(report_id+'_pdf');
+	var print_button=document.getElementById(report_id+'_print');
+	var email_button=document.getElementById(report_id+'_email');
+	
+	if(typeof csv_button!='undefined')
+	{			
+		$(csv_button).off("click");
+		$(csv_button).on("click", function(event)
+		{
+			get_tabular_report_data(columns,report_title,'csv',func);
+		});	
+	}
+		
+	if(typeof pdf_button!='undefined')
+	{			
+		$(pdf_button).off("click");
+		$(pdf_button).on("click", function(event)
+		{
+			get_tabular_report_data(columns,report_title,'pdf',func);
+		});	
+	}
+	
+	if(typeof print_button!='undefined')
+	{			
+		$(print_button).off("click");
+		$(print_button).on("click", function(event)
+		{
+			get_tabular_report_data(columns,report_title,'print',func);
+		});	
+	}
+	
+	if(typeof email_button!='undefined')
+	{			
+		$(email_button).off("click");
+		$(email_button).on("click", function(event)
+		{
+			get_tabular_report_data(columns,report_title,'email',func);
+		});
+	}
+}
+
+/*
+* Fetches all records for a specified form and exports them to a csv
+*/
+function get_tabular_report_data(columns,filename,action_type,func)
+{
+	show_loader();
+	columns.count=0;
+	columns.start_index=0;
+	columns.batch_size=5000;
+	
+	read_json_rows('',columns,function(results)
+	{
+		var data_id=get_new_key();
+		var last_updated=get_my_time();
+		var data_json={data_store:'export_log',
+			 				log:'yes',
+			 				warning:'no',
+			 				data:[{index:'id',value:data_id},
+			 					{index:'acc_name',value:get_account_name()},
+			 					{index:'filename',value:filename},
+			 					{index:'export_time',value:last_updated},
+			 					{index:'last_updated',value:last_updated}],
+			 				log_data:{title:'Exported',notes:filename+" report",link_to:''}};
+		 						
+		create_json(data_json);		
+
+		if(typeof func!='undefined')
+		{
+			results.forEach(function(result)
+			{
+				func(result);
+			});
+		}
+		
+		var export_complete=setInterval(function()
+		{
+			if(total_export_requests===0)
+			{
+				clearInterval(export_complete);
+				hide_loader();
+				var bt=get_session_var('title');
+				switch(action_type)
+				{
+					case 'csv': my_obj_array_to_csv(results,filename);
+									break;
+					case 'pdf': print_report_table(results,filename,function (container) 
+									{
+										var html_data=container.innerHTML;
+										var content = [];
+										var pdfcreator=new htmlToPdf({html:html_data});										
+										container.innerHTML="";
+									});
+									break;
+					case 'print': print_report_table(results,filename,function (container) 
+										{
+											$.print(container);
+											container.innerHTML="";
+										});
+										break;
+					case 'email': modal183_action(bt+"-"+filename,function (func) 
+										{
+											print_report_table(results,filename,func);
+										});
+										break;													
+				}
+			}
+		},500);
+	});
+}
+
+
 /*
 * Fetches all records for a specified report and exports them to a csv
 */
@@ -371,22 +466,17 @@ function csv_download_report(result_array,filename)
 {
 	var data_id=get_new_key();
 	var last_updated=get_my_time();
-	var export_xml="<export_log>"+
-				"<id>"+data_id+"</id>"+
-				"<acc_name>"+get_account_name()+"</acc_name>"+
-				"<filename>"+filename+"</filename>"+
-				"<export_time>"+last_updated+"</export_time>"+
-				"<last_updated>"+last_updated+"</last_updated>"+
-				"</export_log>";
-	var activity_xml="<activity>" +
-				"<data_id>"+data_id+"</data_id>" +
-				"<tablename>export_log</tablename>" +
-				"<link_to></link_to>" +
-				"<title>Exported</title>" +
-				"<notes>"+filename+" report</notes>" +
-				"<updated_by>"+get_name()+"</updated_by>" +
-				"</activity>";
-	create_row(export_xml,activity_xml);
+	var data_json={data_store:'export_log',
+			 				log:'yes',
+			 				warning:'no',
+			 				data:[{index:'id',value:data_id},
+			 					{index:'acc_name',value:get_account_name()},
+			 					{index:'filename',value:filename},
+			 					{index:'export_time',value:last_updated},
+			 					{index:'last_updated',value:last_updated}],
+			 				log_data:{title:'Exported',notes:filename+" report",link_to:''}};
+		 						
+	create_json(data_json);		
 
 	hide_loader();			
 	my_obj_array_to_csv(result_array,filename);
@@ -732,105 +822,6 @@ function my_datalist_change(element,func)
 	});
 }
 
-
-function like_feed(feed_id,element)
-{
-	var like_xml="<feed_likes>"+
-				"<id>"+get_new_key()+"</id>"+	
-				"<feed_id exact='yes'>"+feed_id+"</feed_id>"+
-				"<person exact='yes'>"+get_account_name()+"</person>"+
-				"<last_updated>"+get_my_time()+"</last_updated>"+						
-				"</feed_likes>";
-	create_simple(like_xml);
-	$(element).attr('src','../images/thumbs_up.png');
-	$(element).attr('title','Unlike this post');
-	$(element).attr("onclick",'');
-	$(element).off('click');	
-	$(element).on('click',function()
-	{
-		dislike_feed(feed_id,element);
-	});
-	var likes_count=parseInt($('#form150_likes_count_'+feed_id).html());
-	$('#form150_likes_count_'+feed_id).html(likes_count+1);
-}
-
-function dislike_feed(feed_id,element)
-{
-	var like_xml="<feed_likes>"+
-				"<feed_id>"+feed_id+"</feed_id>"+
-				"<person>"+get_account_name()+"</person>"+	
-				"</feed_likes>";
-	delete_simple(like_xml);
-	
-	$(element).attr('src','../images/thumbs_up_line.png');
-	$(element).attr('title','Like this post');
-	$(element).attr("onclick",'');
-	$(element).off('click');	
-	$(element).on('click',function()
-	{
-		like_feed(feed_id,element);
-	});
-	var likes_count=parseInt($('#form150_likes_count_'+feed_id).html());
-	$('#form150_likes_count_'+feed_id).html(likes_count-1);
-}
-
-function create_feed_comment(feed_id,element)
-{
-	var comment_text=element.value;
-	var account_name=get_account_name();
-	var data_id=get_new_key();
-	var comment_xml="<feed_comments>"+
-				"<id>"+data_id+"</id>"+	
-				"<feed_id exact='yes'>"+feed_id+"</feed_id>"+
-				"<person exact='yes'>"+account_name+"</person>"+
-				"<comment_text>"+comment_text+"</comment_text>"+
-				"<last_updated>"+get_my_time()+"</last_updated>"+						
-				"</feed_comments>";
-	create_simple(comment_xml);
-	
-	var comments_content="<label>"+account_name+": "+comment_text;
-	comments_content+=" <a class='small_cross_icon' onclick=\"delete_feed_comment('"+data_id+"',$(this));\" title='Delete comment'>&#10006;</a>";
-	comments_content+="</label><br>";
-	comments_content+="<label>"+account_name+": <textarea class='feed_comments' placeholder='comment..'></textarea></label>";
-	$(element).parent().parent().append(comments_content);
-	//$('#form150_comments_'+feed_id).append(comments_content);
-	$(element).parent().parent().find('label').find('textarea').on('keyup',function(e)
-	{
-		if (e.keyCode==13) 
-		{
-			create_feed_comment(feed_id,this);
-		}
-	});
-	$(element).parent().remove();
-}
-
-
-function delete_feed_comment(comment_id,element)
-{
-	var comment_xml="<feed_comments>"+
-					"<id>"+comment_id+"</id>"+
-					"</feed_comments>";
-	delete_simple(comment_xml);
-	$(element).parent().remove();
-}
-
-function delete_feed(feed_id,element)
-{
-	var feed_xml="<feeds>"+
-					"<id>"+feed_id+"</id>"+
-					"</feeds>";
-	var like_xml="<feed_likes>"+
-					"<feed_id>"+feed_id+"</feed_id>"+
-					"</feed_likes>";
-	var comment_xml="<feed_comments>"+
-					"<feed_id>"+feed_id+"</feed_id>"+
-					"</feed_comments>";
-	delete_simple(feed_xml);
-	delete_simple(like_xml);
-	delete_simple(comment_xml);
-	$(element).parent().parent().remove();
-}
-
 function htmlentities(str)
 {
     return String(str).replace(/&/g,'&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -844,24 +835,24 @@ function revert_htmlentities(str)
 
 function get_all_child_storage(store_area,area_array)
 {
-	var child_data="<store_areas>"+
-					"<name></name>"+
-					"<parent exact='yes'>"+store_area+"</parent>" +
-					"</store_areas>";
+	var child_data=new Object();
+		child_data.data_store='store_areas';
+		child_data.return_column='name';		
+		child_data.indexes=[{index:'parent',exact:store_area}];		
+
 	storage_count_tracker+=1;				
-	fetch_requested_data('',child_data,function(children)
+	
+	read_json_single_column(child_data,function(children)
 	{
 		if(children.length>0)
 		{
 			children.forEach(function(child)
 			{
-				area_array.push(child.name);
-				//console.log(storage_count_tracker);
-				get_all_child_storage(child.name,area_array);
+				area_array.push(child);
+				get_all_child_storage(child,area_array);
 			});
 		}
 		storage_count_tracker-=1;
-		//console.log(storage_count_tracker);		
 	});
 }
 

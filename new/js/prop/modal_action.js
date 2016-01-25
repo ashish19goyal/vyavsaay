@@ -15617,3 +15617,36 @@ function modal182_action()
 	
 	$("#modal182_link").click();
 }
+
+function modal183_action(subject,func)
+{
+	var form=document.getElementById('modal183_form');
+	
+	func(function(container)
+	{
+		var business_title=get_session_var('title');
+		
+		var email_message=container.innerHTML;
+		var from=get_session_var('email');
+
+		form.elements['subject'].value=subject;
+		
+		$("#modal183").dialog("open");
+						
+		$(form).off("submit");
+		$(form).on("submit",function(event)
+		{
+			event.preventDefault();
+			show_loader();
+			var receiver_array=[{"email":form.elements['email'].value,"name":''}];
+			var receiver=JSON.stringify(receiver_array);
+			var sub=form.elements['subject'].value;
+			
+			send_email(receiver,from,business_title,sub,email_message,function()
+			{
+				hide_loader();
+			});
+			$("#modal183").dialog("close");
+		});
+	});
+}

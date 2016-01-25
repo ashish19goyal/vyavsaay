@@ -1,17 +1,18 @@
 <script src='./js/open/bcrypt.js'></script>
-<script src='./js/open/indexeddb.js'></script>
 <script src='./js/open/i18next-1.7.4.js'></script>
 <script src='./js/open/jQuery.print.js'></script>
 <script src='./js/open/jquery.autosize.min.js'></script>
 <script src='./js/open/leaflet.js'></script>
 <script src='./js/open/jSignature.min.js'></script>
-<script src='./js/open/jspdf.js'></script>
 <script src='./js/open/html2canvas.js'></script>
 <script src='./js/open/jquery.fn.gantt.min.js'></script>
 <script src='./js/open/JsBarcode.all.min.js'></script>
 <script src='./js/open/moment.min.js'></script>
 <script src='./js/open/chart.js'></script>
 <script src='./js/open/fullcalendar.min.js'></script>
+<script src='./js/open/pdfmake.js'></script>
+<script src='./js/open/vfs_fonts.js'></script>
+<script src="./js/open/bootstrap-datetimepicker.js"></script>
 
 <script src='./js/prop/add_items.js'></script>
 <script src='./js/prop/ajax.js'></script>
@@ -45,3 +46,6 @@
 <script src='./js/prop/update.js'></script>
 <script src='./js/prop/time.js'></script>
 <script src='./js/prop/get_totals.js'></script>
+<script src='./js/prop/jPaginator.js'></script>
+<script src='./js/prop/jHtmlToPdf.js'></script>
+<script src='./js/prop/datepicker.js'></script>

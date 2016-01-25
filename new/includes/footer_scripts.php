@@ -6,6 +6,7 @@
 <script src="./js/open/jquery.blockui.min.js" type="text/javascript"></script>
 <script src="./js/open/jquery.uniform.min.js" type="text/javascript"></script>
 <script src="./js/open/bootstrap-switch.min.js" type="text/javascript"></script>
+<script src="./js/open/floatlabels.js" type="text/javascript"></script>
 <!-- END CORE PLUGINS -->
 
 <!-- BEGIN THEME GLOBAL SCRIPTS -->
