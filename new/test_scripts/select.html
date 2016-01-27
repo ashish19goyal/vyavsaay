@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Select testing</title>
+	<script src="../js/open/jquery-1.11.1.min.js" type="text/javascript"></script>
+</head>
+<body>
+<select>
+	<option value='active'>active</option>
+	<option value='inactive'>inactive</option>
+</select>
+</body>
+	<script>
+		$('select').on('click',function(e)
+		{
+			e.preventDefault();
+			console.log('select click');
+		});	
+	</script>
+</html>

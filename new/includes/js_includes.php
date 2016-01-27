@@ -36,8 +36,6 @@
 <script src='./js/prop/my_chart.js'></script>
 <script src='./js/prop/print.js'></script>
 <script src='./js/prop/questionnaire.js'></script>
-<script src='./js/prop/reports_ini.js'></script>
-<script src='./js/prop/reports_header_ini.js'></script>
 <script src='./js/prop/sessions.js'></script>
 <script src='./js/prop/set.js'></script>
 <script src='./js/prop/set_json.js'></script>
@@ -48,4 +46,5 @@
 <script src='./js/prop/get_totals.js'></script>
 <script src='./js/prop/jPaginator.js'></script>
 <script src='./js/prop/jHtmlToPdf.js'></script>
-<script src='./js/prop/datepicker.js'></script>
+<script src='./js/prop/jDatepicker.js'></script>
+<script src='./js/prop/jFormControl.js'></script>

@@ -1705,22 +1705,22 @@
 	<div id="modal182" class="modal fade draggable-modal bs-modal-lg" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal182_form'>                               
+                <form id='modal182_form' autocomplete="off">                               
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Change Password</h4>
                 	</div>
                     <div class="modal-body">
 	                    <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
-	                        <div class="row">
+	                  <div class="row">
 								<div class="col-sm-12 col-md-4">Current Password</div>
 				     			<div class="col-sm-12 col-md-8"><input type="password" form='modal182_form' name='current_pass' required class="form-control"></div>
 				     		</div>
-	                        <div class="row">
+	                  <div class="row">
 							    <div class="col-sm-12 col-md-4">New Password</div>
 				     			<div class="col-sm-12 col-md-8"><input type="password" form='modal182_form' name='new_pass' required class="form-control"></div>
 				     		</div>
-	                        <div class="row">
+	                  <div class="row">
 							    <div class="col-sm-12 col-md-4">Retype Password</div>
 				     			<div class="col-sm-12 col-md-8"><input type="password" form='modal182_form' name='re_pass' required class="form-control" onkeyup="modal182_verify_password($(this));"></div>
 				     		</div>
@@ -1755,15 +1755,113 @@
 		</script>
     </div>
     
-  	<div id="modal183" title="Email">
-		<form id='modal183_form' autocomplete="off">
-			<fieldset>
-				<label>Email: <textarea name='email' required title='Separate email IDs with semicolon(;)'></textarea></label><br>
-				<label>Subject: <textarea name='subject' required></textarea></label><br>
-				<input type='hidden'>
-				<input type="submit" value='Send' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
+
+	<a href='#modal183' data-toggle="modal" id='modal183_link'></a>
+	<div id="modal183" class="modal fade draggable-modal bs-modal-lg" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal183_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Email</h4>
+                	</div>
+                    <div class="modal-body">
+	               <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
+	                 <div class="row">
+								<div class="col-sm-12 col-md-4">Email</div>
+				     			<div class="col-sm-12 col-md-8"><textarea form='modal183_form' name='email' required></textarea></div>
+				     		</div>
+	                  <div class="row">
+							    <div class="col-sm-12 col-md-4">Subject</div>
+				     			<div class="col-sm-12 col-md-8"><textarea form='modal183_form' name='subject' required></textarea></div>
+				     		</div>
+	               </div>
+	                </div>
+	                <div class="modal-footer">
+	                    <input type="submit" class="btn green" form='modal183_form' name='save' value='Send'>
+	                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+	<a href='#modal184' data-toggle="modal" id='modal184_link'></a>
+	<div id="modal184" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-full">
+            <div class="modal-content">
+                <form id='modal184_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Box Content</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								    <div class="col-sm-12 col-md-12">HTML Content</div>
+					     			<div class="col-sm-12 col-md-12"><textarea form='modal184_form' name='content'></textarea></div>
+					     		</div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<input type="submit" class="btn green" form='modal184_form' name='save' value='Save'>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+	<a href='#modal185' data-toggle="modal" id='modal185_link'></a>
+	<div id="modal185" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-full">
+            <div class="modal-content">
+                <form id='modal185_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Box Function</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
+		                 <div class="row">
+									<div class="col-sm-12 col-md-4">Function Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal185_form' name='name'></div>
+					     		</div>
+		                  <div class="row">
+								    <div class="col-sm-12 col-md-12">Function Definition</div>
+					     			<div class="col-sm-12 col-md-12"><textarea form='modal185_form' name='def'></textarea></div>
+					     		</div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<input type="submit" class="btn green" form='modal185_form' name='save' value='Save'>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+	<a href='#modal186' data-toggle="modal" id='modal186_link'></a>
+	<div id="modal186" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-full">
+            <div class="modal-content">
+                <form id='modal186_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Overwrite Function</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								    <div class="col-sm-12 col-md-12">Function Definition</div>
+					     			<div class="col-sm-12 col-md-12"><textarea form='modal186_form' name='content'></textarea></div>
+					     		</div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<input type="submit" class="btn green" form='modal186_form' name='save' value='Save'>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 </div>

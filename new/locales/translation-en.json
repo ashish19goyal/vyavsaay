@@ -495,6 +495,12 @@
 	"inventory_sehgal":"Inventory (Sehgal)",
 	"in-out_sehgal":"In-out (Sehgal)",
 	"store_placement_sehgal":"Store Placement (Sehgal)",
-	"number_rto":"Number of RTO"
+	"number_rto":"Number of RTO",
+	"master_modal_forms":"Modal Forms (master)",
+	"master_grid_metrics":"Grid Metrics (master)",
+	"master_notifications":"Notifications (master)",
+	"master_table_structure":"Table Structure (master)",
+	"master_values_list":"Values list (master)",
+	"master_overwrite_func":"Overwrite Functions (master)"
 	}
 }

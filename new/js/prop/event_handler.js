@@ -3,6 +3,7 @@
  */
 function default_load()
 {
+	show_loader();
 	var location=window.location.pathname;
 	if(((location.indexOf("index")>-1) || (location.indexOf(".php")==-1)) && is_set_session())
 	{
@@ -67,7 +68,7 @@ function declaring_global_variables()
 	storage_count_tracker=0;
 	total_export_requests=0;	
  	newsletter_element_4_deletion = [];
- 	status_label_colors={'pending':'label-warning','converted':'label-success','completed':'label-success'};
+ 	status_label_colors={'pending':'label-warning','converted':'label-success','completed':'label-success','active':'label-success','inactive':'label-danger'};
 }
 
 function float_labels()
@@ -213,7 +214,6 @@ function modal_forms_ini()
 	{
 		dynamic_modal_array.push(i);
 	}
-	dynamic_modal_array.push(183);
 	
 	dynamic_modal_array.forEach(function(i)
 	{
@@ -800,7 +800,11 @@ function import_data(form_name)
 		break;
 		case 'form277':modal23_action(form277_import_template,form277_import,form277_import_validate);
 		break;
+		case 'form281':modal23_action(form281_import_template,form281_import,form281_import_validate);
+		break;
 		case 'form285':modal23_action(form285_import_template,form285_import,form285_import_validate);
+		break;
+		case 'form288':modal23_action(form288_import_template,form288_import,form288_import_validate);
 		break;
 		case 'form289':modal23_action(form289_import_template,form289_import,form289_import_validate);
 		break;

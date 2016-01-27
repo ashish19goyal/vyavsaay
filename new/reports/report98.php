@@ -66,8 +66,9 @@
 			$(start_date).datepicker();
 			$(end_date).datepicker();
 			start_date.value=get_my_past_date((get_my_time()-(30*86400000)));
-			end_date.value=get_my_date();			
-			$(start_date).add(end_date).trigger('change');
+			end_date.value=get_my_date();
+			
+			$('#report98').formcontrol();
 		}	
 		
 		function report98_ini()
@@ -78,9 +79,6 @@
 			var keyword_filter=form.elements['keyword'].value;
 			var start_date=get_raw_time(form.elements['start'].value);
 			var end_date=get_raw_time(form.elements['end'].value)+86400000;
-			
-			console.log(start_date);
-			console.log(form.elements['end']);
 			
 			show_loader();
 			$('#report98_body').html('');	

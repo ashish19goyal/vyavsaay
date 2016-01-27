@@ -153,6 +153,62 @@ function set_static_value_list_json(table,list,filter_element,func)
 	}
 }
 
+function set_static_select(table,list,filter_element,func)
+{
+	$(filter_element).html('');
+	
+	var list_data=new Object();
+			list_data.data_store='values_list';		
+			list_data.return_column='name';
+			
+			list_data.indexes=[{index:'tablename',exact:table},
+								{index:'status',exact:'active'},
+								{index:'listname',exact:list}];
+	
+	read_json_single_column(list_data,function(data)
+	{
+		data=array_unique(data);		
+		data.forEach(function(d)
+		{
+			var option=document.createElement('option');
+			option.setAttribute('value',d);
+			option.textContent=d;
+			filter_element.appendChild(option);
+		});
+		
+		$(filter_element).selectpicker('refresh');
+		
+		if(typeof func!='undefined')
+		{
+			func();
+		}
+	});
+}
+
+function set_my_select(filter_data,filter_element,func)
+{
+	$(filter_element).html('');
+	
+	read_json_single_column(filter_data,function(data)
+	{
+		data=array_unique(data);		
+		data.forEach(function(d)
+		{
+			var option=document.createElement('option');
+			option.setAttribute('value',d);
+			option.textContent=d;
+			filter_element.appendChild(option);
+		});
+		
+		$(filter_element).selectpicker('refresh');
+
+		if(typeof func!='undefined')
+		{
+			func();
+		}
+	});
+}
+
 function set_my_value_list_json(filter_data,filter_element,func)
 {	
 	read_json_single_column(filter_data,function(data)

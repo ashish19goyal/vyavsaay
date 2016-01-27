@@ -189,7 +189,7 @@
 
 /******form controls**********/
 
-input, textarea{
+input, textarea, select{
 	outline: 0px none !important;
 	width:100%;
 	padding:6px 12px;
@@ -201,6 +201,16 @@ input, textarea{
 	display: block;
 	line-height:1.42857;
 }
+
+input[readonly='readonly'], textarea[readonly='readonly'], select[disabled='disabled'],select[disabled]{
+	border:none;
+	background-color: inherit;
+	resize:none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+
 /****************************/
 
 /********tab color**********/
@@ -217,5 +227,13 @@ input, textarea{
 .tab-pane > .portlet-body{
 	min-height: 450px;
 }
-
 /***************************/
+
+/****buttons inside tables***/
+.table .btn{
+	margin-top: 5px;
+}
+
+.table .btn-group .btn{
+	margin-top: 0px;
+}

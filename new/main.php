@@ -39,6 +39,7 @@
 
 		<!-- BEGIN CORE PLUGINS -->
 		<?php include "includes/footer_scripts.php" ?>    
+      <?php include "includes/overwrite_functions.php" ?>    
       <!-- END THEME LAYOUT SCRIPTS -->
         
 	</body>

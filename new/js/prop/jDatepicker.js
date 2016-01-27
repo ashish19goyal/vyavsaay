@@ -1,5 +1,5 @@
 /**
- * datepicker
+ * jDatepicker
  * Author: Ashish Goyal
  * Copyright: Copyright 2016 | Vyavsaay ERP
  * description: This is a specific instantiation of bootstrap-datetimepicker
@@ -14,5 +14,4 @@
 			$(this).datetimepicker({format:'DD/MM/YYYY'});
       });      
 	};
-	
 }(jQuery));

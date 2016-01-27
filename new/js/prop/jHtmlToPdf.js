@@ -2,6 +2,7 @@
  * jHtmlToPdf
  * Author: Ashish Goyal
  * Copyright: Copyright 2016 | Vyavsaay ERP
+ * Description: This is an extension of PdfMake. It creates PDF from html code
  */
 
 var htmlToPdf = function (options) 

@@ -15631,7 +15631,7 @@ function modal183_action(subject,func)
 
 		form.elements['subject'].value=subject;
 		
-		$("#modal183").dialog("open");
+		$("#modal183_link").click();
 						
 		$(form).off("submit");
 		$(form).on("submit",function(event)
@@ -15646,7 +15646,154 @@ function modal183_action(subject,func)
 			{
 				hide_loader();
 			});
-			$("#modal183").dialog("close");
+			$(form).find('.close').click();
 		});
 	});
+	
+	$("#modal183_link").click();
+}
+
+/**
+ * @modalNo 184
+ * @modal Popup boxes content
+ */
+function modal184_action(id)
+{
+	var form=document.getElementById('modal184_form');
+	
+	var content_filter=form.elements['content'];
+	var cm="";
+	var def_columns=new Object();
+			def_columns.count=1;
+			def_columns.data_store='system_popboxes';		
+			def_columns.return_column='box_content';
+			def_columns.indexes=[{index:'id',value:id}];
+	read_json_single_column(def_columns,function (contents) 
+	{
+		var content="";
+		if(contents.length>0)
+		{
+			content=contents[0];
+		}
+		cm=$(content_filter).codeeditor({mode:'xml',content:content});
+	});	
+
+	$(form).off('submit');
+	$(form).on('submit',function(event) 
+	{
+		event.preventDefault();
+		
+		var content=cm.getValue();
+		console.log(content);
+		var last_updated=get_my_time();
+		
+		var data_json={data_store:'system_popboxes',
+	 				log:'yes',
+	 				data:[{index:'id',value:id},
+	 					{index:'box_content',value:content},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Updated',notes:'Popup box '+name,link_to:'form281'}};
+ 		update_json(data_json);
+ 		$(form).find('.close').click();
+	});
+	
+	$("#modal184_link").click();	
+}
+
+/**
+ * @modalNo 185
+ * @modal Popup Function Definition
+ */
+function modal185_action(id)
+{
+	var form=document.getElementById('modal185_form');
+	
+	var name_filter=form.elements['name'];
+	var def_filter=form.elements['def'];
+	
+	name_filter.value='';
+	var cm="";
+	
+	var def_columns=new Object();
+			def_columns.count=1;
+			def_columns.data_store='system_popboxes';
+			def_columns.indexes=[{index:'id',value:id},{index:'function_name'},{index:'function_def'}];
+	read_json_rows('',def_columns,function (contents) 
+	{
+		var content="";
+		if(contents.length>0)
+		{
+			content=contents[0].function_def;
+			name_filter.value=contents[0].function_name;
+		}
+		cm=$(def_filter).codeeditor({content:content});
+	});
+
+	$(form).off('submit');
+	$(form).on('submit',function(event) 
+	{
+		event.preventDefault();
+		
+		var name=name_filter.value;
+		var def=cm.getValue();
+		var last_updated=get_my_time();
+		
+		var data_json={data_store:'system_popboxes',
+	 				log:'yes',
+	 				data:[{index:'id',value:id},
+	 					{index:'function_name',value:name},
+	 					{index:'function_def',value:def},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Updated',notes:'Popup box '+name,link_to:'form281'}};
+ 		update_json(data_json);
+ 		$(form).find('.close').click();
+	});
+	
+	$("#modal185_link").click();	
+}
+
+/**
+ * @modalNo 186
+ * @modal Overwrite Function
+ */
+function modal186_action(id)
+{
+	var form=document.getElementById('modal186_form');
+	
+	var content_filter=form.elements['content'];
+	var cm="";
+	var def_columns=new Object();
+			def_columns.count=1;
+			def_columns.data_store='system_overwrite_func';		
+			def_columns.return_column='function_def';
+			def_columns.indexes=[{index:'id',value:id}];
+	read_json_single_column(def_columns,function (contents) 
+	{
+		var content="";
+		if(contents.length>0)
+		{
+			content=contents[0];
+		}
+		cm=$(content_filter).codeeditor({content:content});
+	});	
+
+	$(form).off('submit');
+	$(form).on('submit',function(event) 
+	{
+		event.preventDefault();
+		
+		var content=cm.getValue();
+		var last_updated=get_my_time();
+		
+		var data_json={data_store:'system_overwrite_func',
+	 				log:'yes',
+	 				data:[{index:'id',value:id},
+	 					{index:'function_def',value:content},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Updated',notes:'Overwrite function '+name,link_to:'form288'}};
+ 		update_json(data_json);
+ 		$(form).find('.close').click();
+	});
+	
+	$("#modal186_link").click();	
 }

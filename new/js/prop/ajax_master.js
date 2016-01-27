@@ -95,3 +95,45 @@ function server_update_master(columns)
 		console.log(response_object.status);
 	});
 }
+
+/**
+ * this function delete a row of data from the server from all databases
+ * @param data_xml
+ */
+function server_delete_master_all(columns)
+{
+	var domain=get_domain();
+	var username=get_username();
+	var del_access=get_session_var('del');
+	var string_columns=JSON.stringify(columns);
+	ajax_json("./ajax_json/delete_all.php",{domain:domain,username:username,del:del_access,data:string_columns},function(response_object)
+	{
+		console.log(response_object.status);
+	});
+}
+
+function server_create_master_all(columns)
+{
+	var domain=get_domain();
+	var username=get_username();
+	var cr_access=get_session_var('cr');
+	var string_columns=JSON.stringify(columns);
+	
+	ajax_json("./ajax_json/create_all.php",{domain:domain,username:username,cr:cr_access,data:string_columns},function(response_object)
+	{
+		console.log(response_object.status);
+	});
+}
+
+function server_update_master_all(columns)
+{
+	var domain=get_domain();
+	var username=get_username();
+	var up_access=get_session_var('up');
+	var string_columns=JSON.stringify(columns);
+	
+	ajax_json("./ajax_json/update_all.php",{domain:domain,username:username,up:up_access,data:string_columns},function(response_object)
+	{
+		console.log(response_object.status);
+	});
+}

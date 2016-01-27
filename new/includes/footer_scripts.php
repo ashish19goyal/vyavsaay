@@ -7,6 +7,11 @@
 <script src="./js/open/jquery.uniform.min.js" type="text/javascript"></script>
 <script src="./js/open/bootstrap-switch.min.js" type="text/javascript"></script>
 <script src="./js/open/floatlabels.js" type="text/javascript"></script>
+<script src="./js/open/bootstrap-select.min.js" type="text/javascript"></script>
+<script src="./js/open/codemirror.js" type="text/javascript"></script>
+<script src="./js/open/codemirror-javascript.js" type="text/javascript"></script>
+<script src="./js/open/codemirror-xml.js" type="text/javascript"></script>
+<script src="./js/open/codemirror-htmlmixed.js" type="text/javascript"></script>        
 <!-- END CORE PLUGINS -->
 
 <!-- BEGIN THEME GLOBAL SCRIPTS -->
