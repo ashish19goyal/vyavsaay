@@ -87,7 +87,7 @@
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Design'>";
 								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form312_"+result.id+"' onclick=\"modal180_action('"+result.id+"','"+result.name+"','master');\">Code</button>";
-								rowsHTML+="<button type='button' class='btn default yellow-stripe' form='form312_"+result.id+"' onclick=\"modal181_action('"+result.id+"','"+result.preview+"');\">Preview</button>";							
+								rowsHTML+="<button type='button' class='btn default yellow-stripe' form='form312_"+result.id+"' onclick=\"modal181_action('"+result.id+"','"+result.preview+"','"+result.name+"','master');\">Preview</button>";							
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Images'>";
 								rowsHTML+="<button type='button' class='btn default green-stripe' form='form312_"+result.id+"'>Add Image</button>";							
@@ -237,7 +237,7 @@
 
 				$(preview_button).on('click',function () 
 				{
-					modal181_action(data_id,'');
+					modal181_action(data_id,'',name,'master');
 				});
 
 				del_button.removeAttribute("onclick");

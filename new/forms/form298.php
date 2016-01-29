@@ -100,7 +100,7 @@
 							rowsHTML+="</td>";			
 					rowsHTML+="</tr>";
 					
-					$('#form298_body').prepend(rowsHTML);
+					$('#form298_body').append(rowsHTML);
 					var fields=document.getElementById("form298_"+result.id);
 					var img_button=fields.elements[5];
 					
@@ -178,7 +178,7 @@
 						rowsHTML+="</td>";			
 				rowsHTML+="</tr>";
 				
-				$('#form298_body').append(rowsHTML);
+				$('#form298_body').prepend(rowsHTML);
 				var fields=document.getElementById("form298_"+id);
 				var img_button=fields.elements[5];
 				
