@@ -6594,37 +6594,6 @@ function print_form296(func)
 }
 
 /**
- * @form Newsletter components
- * @formNo 298
- */
-function form298_print(html_code,id)
-{
-	var container=document.createElement('div');
-	var doc_columns=new Object();
-		doc_columns.data_store='documents';
-		doc_columns.indexes=[{index:'id'},
-							{index:'url'},
-							{index:'doc_name'},
-							{index:'doc_type',exact:'newsletter_components'},
-							{index:'target_id',exact:id}];
-	
-	read_json_rows('',doc_columns,function(doc_results)
-	{
-		var docHTML="";
-		doc_results.forEach(function (doc)
-		{
-			var updated_url=doc.url.replace(/ /g,"+");
-			var replace_word="{{"+doc.doc_name+"}}";
-			var re=new RegExp(replace_word,"g");	
-			html_code=html_code.replace(re,updated_url);
-		});
-		$(container).html(html_code);
-		$.print(container);
-		$(container).remove();
-	});
-}
-
-/**
  * @form Newsletter Assembly
  * @formNo 299
  */

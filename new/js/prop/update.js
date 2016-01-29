@@ -15252,40 +15252,6 @@ function form297_update_item(form)
 	}
 }
 
-/**
- * @form Newsletter Components
- * @param button
- */
-function form298_update_item(form)
-{
-	if(is_update_access('form298'))
-	{
-		var name=form.elements[0].value;
-		var desc=form.elements[1].value;
-		var markers=form.elements[4].value;
-		var data_id=form.elements[6].value;
-		var save_button=form.elements[7];
-		var del_button=form.elements[8];
-		var last_updated=get_my_time();
-		var data_xml="<newsletter_components>" +
-				"<id>"+data_id+"</id>" +
-				"<name>"+name+"</name>" +
-				"<detail>"+desc+"</detail>" +
-				"<markers>"+markers+"</markers>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</newsletter_components>";	
-	
-		update_simple(data_xml);
-
-		$(form.elements[0]).attr('readonly','readonly');
-		$(form.elements[1]).attr('readonly','readonly');
-		$(form.elements[4]).attr('readonly','readonly');
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Newsletter Assembly

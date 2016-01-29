@@ -15257,7 +15257,7 @@ function modal178_action(id,not_name,master)
 	 					{index:'function_name',value:name},
 	 					{index:'function_def',value:def},
 	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Updated',notes:'Dashboard metric '+name,link_to:'form264'}};
+	 				log_data:{title:'Updated',notes:'System configuration for notification '+name,link_to:'form277'}};
  			update_json(data_json);
  		}
  		$(form).find('.close').click();
@@ -15442,63 +15442,76 @@ function modal179_action(cname,id,attr,template_id)
  * @modal Add/Update Code
  * @param button
  */
-function modal180_action(data_id,code)
+function modal180_action(id,new_name,master)
 {
 	var form=document.getElementById('modal180_form');
 	
-	var fid=form.elements[1];
-	var fcode=form.elements[2];
+	var code_filter=form.elements['code'];	
+	var cm="";
 	
-	fid.value=data_id;
-	fcode.value=code;
-	$('textarea').autosize();
-		
-	$(form).off("submit");
-	$(form).on("submit",function(event)
+	var code_columns=new Object();
+			code_columns.count=1;
+			code_columns.data_store='newsletter_components';
+			code_columns.return_column='html_code';
+			code_columns.indexes=[{index:'id',value:id}];
+	read_json_single_column(code_columns,function (contents) 
+	{
+		var content="";
+		if(contents.length>0)
+		{
+			if(contents[0]!=null && contents[0]!='undefined')
+				content=contents[0];
+		}
+		cm=$(code_filter).codeeditor({mode:'xml',content:content});
+	});
+
+	$(form).off('submit');
+	$(form).on('submit',function(event) 
 	{
 		event.preventDefault();
-		if(is_create_access('form298') || is_update_access('form298'))
-		{
-			var code=fcode.value;
-			code=code.replace(/\n/g,'');
-			code=code.replace(/\t/g,'');
-			code=htmlentities(code);
 		
-			var last_updated=get_my_time();
-			
-			var pic_xml="<newsletter_components>" +
-						"<id>"+data_id+"</id>" +
-						"<html_code>"+code+"</html_code>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</newsletter_components>";
-			update_simple(update_xml);
+		var code=cm.getValue();
+		var last_updated=get_my_time();
+		
+		if(typeof master!='undefined' && master=='master')
+		{
+			var data_json={data_store:'newsletter_components',
+	 				log:'no',
+	 				data:[{index:'name',value:new_name,unique:'yes'},
+	 					{index:'html_code',value:code},
+	 					{index:'last_updated',value:last_updated}]};
+ 			server_update_master_all(data_json);
 		}
 		else
 		{
-			$("#modal2_link").click();
-		}
-		$("#modal180").dialog("close");
+			var data_json={data_store:'newsletter_components',
+	 				log:'yes',
+	 				data:[{index:'id',value:id},
+	 					{index:'html_code',value:code},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Updated',notes:'Newsletter design template '+name,link_to:'form298'}};
+ 			update_json(data_json);
+ 		}
+ 		$(form).find('.close').click();
 	});
 	
-	$("#modal180").dialog("open");
+	$("#modal180_link").click();	
 }
+
 
 /**
  * @modalNo 181
  * @modal Add/Update Preview
  * @param button
  */
-function modal181_action(data_id,preview)
+function modal181_action(id,preview,new_name,master)
 {
 	var form=document.getElementById('modal181_form');
 	
-	var fid=form.elements[1];
-	var fpictureinfo=form.elements[2];
-	var fpicture=form.elements[3];
-	var dummy_button=form.elements[4];
+	var fpictureinfo=form.elements['picture'];
+	var fpicture=form.elements['file_hidden'];
+	var dummy_button=form.elements['dummy'];
 	
-	preview=revert_htmlentities(preview);
-	fid.value=data_id;
 	fpictureinfo.innerHTML="<div><img src='"+preview+"'/></div>";
 	
 	$(dummy_button).on('click',function (e) 
@@ -15514,32 +15527,40 @@ function modal181_action(data_id,preview)
 			fpictureinfo.innerHTML="<div><img src='"+dataURL+"'/></div>";			
 		});
 	},false);
-	
-	$(form).off("submit");
-	$(form).on("submit",function(event)
+
+	$(form).off('submit');
+	$(form).on('submit',function(event) 
 	{
 		event.preventDefault();
-		if(is_create_access('form298') || is_update_access('form298'))
+		
+		var url=$(fpictureinfo).find('div').find('img').attr('src');
+		var last_updated=get_my_time();
+		
+		if(typeof master!='undefined' && master=='master')
 		{
-			var url=$(fpictureinfo).find('div').find('img').attr('src');
-			var last_updated=get_my_time();
-			
-			var pic_xml="<newsletter_components>" +
-						"<id>"+data_id+"</id>" +
-						"<preview>"+url+"</preview>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</newsletter_components>";
-			update_simple(pic_xml);
+			var data_json={data_store:'newsletter_components',
+	 				log:'no',
+	 				data:[{index:'name',value:new_name,unique:'yes'},
+	 					{index:'preview',value:url},
+	 					{index:'last_updated',value:last_updated}]};
+ 			server_update_master_all(data_json);
 		}
 		else
 		{
-			$("#modal2_link").click();
-		}
-		$("#modal181").dialog("close");
+			var data_json={data_store:'newsletter_components',
+	 				log:'yes',
+	 				data:[{index:'id',value:id},
+	 					{index:'preview',value:url},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Updated',notes:'Newsletter design template '+name,link_to:'form298'}};
+ 			update_json(data_json);
+ 		}
+ 		$(form).find('.close').click();
 	});
 	
-	$("#modal181").dialog("open");
+	$("#modal181_link").click();	
 }
+
 
 /**
  * @modalNo 182

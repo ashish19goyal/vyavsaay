@@ -11797,29 +11797,6 @@ function form297_header_ini()
 	set_static_filter('purchase_orders','status',status_filter);
 };
 
-/**
- * @form Newsletter Template Components
- * @formNo 298
- */
-function form298_header_ini()
-{
-	var filter_fields=document.getElementById('form298_header');
-	var name_filter=filter_fields.elements[0];
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form298_ini();
-	});
-	
-	var name_data=new Object();
-		name_data.data_store='newsletter_components';
-		name_data.indexes=[{index:'name'}];		
-		name_data.return_column='name';
-	set_my_filter_json(name_data,name_filter);
-
-};
 
 /**
  * @form Newsletter Assembly

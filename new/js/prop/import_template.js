@@ -1435,15 +1435,6 @@ function form290_import_template()
 	my_array_to_csv(data_array);
 };
 
-/**
-* @form Newsletter Components
-* @formNo 298
-*/
-function form298_import_template()
-{
-	var data_array=['id','name','detail','html_code','markers'];
-	my_array_to_csv(data_array);
-};
 
 /**
 * @form Manage Products (Pooja)

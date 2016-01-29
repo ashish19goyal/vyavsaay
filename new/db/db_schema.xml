@@ -2018,7 +2018,6 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="TEXT"></name>
 			<description index='no' type="TEXT"></description>
-			<function_name index='no' type="TEXT"></function_name>
 			<function_def index='no' type="TEXT"></function_def>
 			<status index='yes' type="VARCHAR(30)"></status><!--active/inactive-->
 			<last_updated index='yes' type="BIGINT"></last_updated>

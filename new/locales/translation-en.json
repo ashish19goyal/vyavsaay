@@ -501,6 +501,7 @@
 	"master_notifications":"Notifications (master)",
 	"master_table_structure":"Table Structure (master)",
 	"master_values_list":"Values list (master)",
-	"master_overwrite_func":"Overwrite Functions (master)"
+	"master_overwrite_func":"Overwrite Functions (master)",
+	"master_newsletter_components":"Newsletter Components (master)"
 	}
 }

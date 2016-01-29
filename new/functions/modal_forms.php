@@ -1717,26 +1717,53 @@
 		</form>
 	</div>
 
-	<div id="modal180" title="Update Code">
-		<form id='modal180_form' autocomplete="off">
-			<fieldset>
-				<input type="hidden" name='nc_id'>
-				<label>Code: <textarea></textarea></label>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
+	<a href='#modal180' data-toggle="modal" id='modal180_link'></a>
+	<div id="modal180" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-full">
+            <div class="modal-content">
+                <form id='modal180_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">HTML Code</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
+		                 <div class="row">
+								    <div class="col-sm-12 col-md-12">Code</div>
+					     			<div class="col-sm-12 col-md-12"><textarea form='modal180_form' name='code'></textarea></div>
+					     		</div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<input type="submit" class="btn green" form='modal180_form' name='save' value='Save'>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-	<div id="modal181" title="Preview">
-		<form id='modal181_form' autocomplete="off">
-			<fieldset>
-				<input type="hidden" name='nc_id'>
-				<label>Preview: <output></output>
-								<input type='file' style='display:none'>
-								<input type='button' class='generic_red_icon' value='Select Image'></label><br>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
+	<a href='#modal181' data-toggle="modal" id='modal181_link'></a>
+	<div id="modal181" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+     <div class="modal-dialog modal-full">
+         <div class="modal-content">
+            <form id='modal181_form' autocomplete="off">                               
+	            <div class="modal-header">
+                  	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                 	<h4 class="modal-title">Preview</h4>
+               </div>
+	            <div class="modal-body">
+		            <div class="scroller" style="height:181px;" data-always-visible="1" data-rail-visible1="1">
+		               	Preview <br><output name='picture'></output>
+								<input type='file' style='display:none;' name='file_hidden'>
+								<br><button type='button' class='btn red' name='dummy'>Select Image</button>
+					   </div>
+		         </div>
+	            <div class="modal-footer">
+	            	<input type="submit" class="btn green" form='modal181_form' name='save' value='Save'>
+	         	</div>
+         	</form>
+      	</div>
+   	</div>
 	</div>
 
 	<a href='#modal182' data-toggle="modal" id='modal182_link'></a>

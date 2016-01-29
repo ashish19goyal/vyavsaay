@@ -20279,54 +20279,6 @@ function form296_create_form()
 	}
 }
 
-/**
- * @form Newsletter Components
- * @param button
- */
-function form298_create_item(form)
-{
-	if(is_create_access('form298'))
-	{
-		var name=form.elements[0].value;
-		var desc=form.elements[1].value;
-		var markers=form.elements[4].value;
-		var data_id=form.elements[6].value;
-		var save_button=form.elements[7];
-		var del_button=form.elements[8];
-		var last_updated=get_my_time();
-		var data_xml="<newsletter_components>" +
-				"<id>"+data_id+"</id>" +
-				"<name unique='yes'>"+name+"</name>" +
-				"<detail>"+desc+"</detail>" +
-				"<markers>"+markers+"</markers>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</newsletter_components>";	
-	
-		create_simple(data_xml);
-		
-		$(form.elements[0]).attr('readonly','readonly');
-		$(form.elements[1]).attr('readonly','readonly');
-		$(form.elements[4]).attr('readonly','readonly');
-
-		
-		del_button.removeAttribute("onclick");
-		$(del_button).on('click',function(event)
-		{
-			form298_delete_item(del_button);
-		});
-		
-		$(form).off('submit');
-		$(form).on('submit',function (e) 
-		{
-			e.preventDefault();
-			form298_update_item(form);
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Newsletter Assembly
