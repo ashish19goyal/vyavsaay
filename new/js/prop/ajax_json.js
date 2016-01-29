@@ -278,7 +278,7 @@ function server_create_json(data_json,func)
 		hide_loader();
 		if(response_object.status=='duplicate record')
 		{
-			if(response_object.warning!="no")
+			if(typeof response_object.warning=='undefined' || response_object.warning!="no")
 			{
 				$("#modal5_link").click();
 			}

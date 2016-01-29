@@ -14687,56 +14687,6 @@ function form187_create_item(form)
 	}
 }
 
-/**
- * @form Manage values List
- * @formNo 191
- */
-function form191_create_item(form)
-{
-	if(is_create_access('form191'))
-	{
-		var table=form.elements[0].value;
-		var list=form.elements[1].value;
-		var name=form.elements[2].value;
-		var status=form.elements[3].value;
-		var data_id=form.elements[4].value;
-		var del_button=form.elements[6];
-		var last_updated=get_my_time();
-		var data_xml="<values_list>" +
-					"<id>"+data_id+"</id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<listname>"+list+"</listname>" +
-					"<name>"+name+"</name>" +
-					"<status>"+status+"</status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</values_list>";
-		
-		create_simple(data_xml);
-		
-
-		for(var i=0;i<4;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-
-		del_button.removeAttribute("onclick");
-		$(del_button).on('click',function(event)
-		{
-			form191_delete_item(del_button);
-		});
-		
-		$(form).off('submit');
-		$(form).on('submit',function(event)
-		{
-			event.preventDefault();
-			form191_update_item(form);
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Enter Purchase Bill (Laundry)
@@ -18375,58 +18325,6 @@ function form262_create_item(form)
 		{
 			event.preventDefault();
 			form262_update_item(form);
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
- * @form System Grid Metrics
- * @param button
- */
-function form264_create_item(form)
-{
-	if(is_create_access('form264'))
-	{
-		var metric_id=form.elements[0].value;
-		var name=form.elements[1].value;
-		var grid=form.elements[2].value;
-		var function_name=form.elements[3].value;
-		var status=form.elements[4].value;
-		var data_id=form.elements[5].value;
-		var del_button=form.elements[7];
-		
-		var last_updated=get_my_time();
-		var data_xml="<system_grid_metrics>" +
-					"<id>"+data_id+"</id>" +
-					"<metric_id unique='yes'>"+metric_id+"</metric_id>" +
-					"<display_name>"+name+"</display_name>" +
-					"<grid>"+grid+"</grid>" +
-					"<function_name>"+function_name+"</function_name>" +
-					"<status>"+status+"</status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</system_grid_metrics>";
-		create_simple(data_xml);
-		
-		for(var i=0;i<5;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-		
-		del_button.removeAttribute("onclick");
-		$(del_button).on('click',function(event)
-		{
-			form264_delete_item(del_button);
-		});
-		
-		$(form).off('submit');
-		$(form).on('submit',function(event)
-		{
-			event.preventDefault();
-			form264_update_item(form);
 		});
 	}
 	else

@@ -47,7 +47,6 @@ function set_static_filter(table,list,filter_element)
 			"<name></name>" +
 			"<tablename exact='yes'>"+table+"</tablename>" +
 			"<listname exact='yes'>"+list+"</listname>" +
-			"<status>active</status>" +
 			"</values_list>";
 		get_single_column_data(function(data)
 		{
@@ -83,7 +82,6 @@ function set_static_value_list(table,list,filter_element,func)
 			"<name></name>" +
 			"<tablename exact='yes'>"+table+"</tablename>" +
 			"<listname exact='yes'>"+list+"</listname>" +
-			"<status>active</status>" +
 			"</values_list>";
 		get_single_column_data(function(data)
 		{

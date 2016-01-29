@@ -818,29 +818,28 @@
 		</form>
 	</div>
 
-	<div id="modal115" title="Delete Confirmation">
-		Are you sure, you want to delete this record?
-		<br>
-		<br>
-		<br>		
-		<form id='modal115_form' autocomplete="off">
-			<fieldset>
-				<input type="button" value='Yes' class='modal_submit'>
-				<input type="button" value='No' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
-
-<!--	
-	<div id="modal116" title="Print Barcode">
-		<div id='modal116_div' style='width:200px;height:100px'>
-			<img style='width:200px;' id='modal116_img'>
-		</div>
-		<br>
-		<form id='modal116_form'></form>
-		<input type="button" id='modal116_print' value='Print' class='modal_submit'>
-	</div>
--->	
+	<a href='#modal115' data-toggle="modal" id='modal115_link'></a>
+	<div id="modal115" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal115_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Delete Confirmation</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:100px;" data-always-visible="1" data-rail-visible1="1">
+		         			Are you sure, you want to delete this record?
+					      </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn red" form='modal115_form' name='yes'>Yes</button>
+	               	<button type="button" class="btn green" name='no' form="modal115_form" data-dismiss='modal'>No</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 	<div id="modal116" title="Map Barcode">
 		<form id='modal116_form' autocomplete="off">
@@ -1479,15 +1478,35 @@
 		<div id='modal164_div'></div>
 	</div>
 
-	<div id="modal165" title="Function Definition">
-		<form id='modal165_form' autocomplete="off">
-			<fieldset>
-				<label>Function Name: <input type='text' name='name'></label><br>
-				<label>Definition: <textarea required name='def'></textarea></label><br>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
+	<a href='#modal165' data-toggle="modal" id='modal165_link'></a>
+	<div id="modal165" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-full">
+            <div class="modal-content">
+                <form id='modal165_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Function</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
+		                 <div class="row">
+									<div class="col-sm-12 col-md-4">Function Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal165_form' name='name'></div>
+					     		</div>
+		                  <div class="row">
+								    <div class="col-sm-12 col-md-12">Function Definition</div>
+					     			<div class="col-sm-12 col-md-12"><textarea form='modal165_form' name='def'></textarea></div>
+					     		</div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<input type="submit" class="btn green" form='modal165_form' name='save' value='Save'>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 	
 	<div id="modal166" title="Follow-up Details">
 		<form id='modal166_form' autocomplete="off">
@@ -1657,16 +1676,35 @@
 		</form>
 	</div>
 
-	<div id="modal178" title="Function Definition">
-		<form id='modal178_form' autocomplete="off">
-			<fieldset>
-				<label>Function Name: <input type='text' name='name'></label><br>
-				<label>Definition: <textarea required name='def'></textarea></label><br>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
-	
+	<a href='#modal178' data-toggle="modal" id='modal178_link'></a>
+	<div id="modal178" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-full">
+            <div class="modal-content">
+                <form id='modal178_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Notification Function</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
+		                 <div class="row">
+									<div class="col-sm-12 col-md-4">Function Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal178_form' name='name'></div>
+					     		</div>
+		                  <div class="row">
+								    <div class="col-sm-12 col-md-12">Function Definition</div>
+					     			<div class="col-sm-12 col-md-12"><textarea form='modal178_form' name='def'></textarea></div>
+					     		</div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<input type="submit" class="btn green" form='modal178_form' name='save' value='Save'>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 	<div id="modal179" title="Update Newsletter Component">
 		<form id='modal179_form' autocomplete="off">
 			<fieldset>

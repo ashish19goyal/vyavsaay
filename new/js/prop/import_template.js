@@ -1158,15 +1158,6 @@ function form190_import_template()
 	my_array_to_csv(data_array);
 };
 
-/**
-* @form Manage Values List
-* @formNo 191
-*/
-function form191_import_template()
-{
-	var data_array=['id','tablename','listname','name','status'];
-	my_array_to_csv(data_array);
-};
 
 /**
 * @form Update Stock
@@ -1371,16 +1362,6 @@ function form260_import_template()
 function form261_import_template()
 {
 	var data_array=['id','name','bank','branch','ifsc','account_name','account_num','status'];
-	my_array_to_csv(data_array);
-};
-
-/**
-* @form Grid Metrics
-* @formNo 264
-*/
-function form264_import_template()
-{
-	var data_array=['id','metric_id','display_name','grid','function_name','function_def','status','repeat_time'];
 	my_array_to_csv(data_array);
 };
 

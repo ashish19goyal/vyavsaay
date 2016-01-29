@@ -43,13 +43,12 @@
 	{
 		if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['domain']=='vyavsaay' && $_SESSION['username']==$username && $_SESSION['cr']==$cr_access)
 		{
+			$info_conn=new db_connect('information_schema');
 			$get_query="select distinct table_schema from information_schema.columns where table_schema like ?";
 			$get_stmt=$info_conn->conn->prepare($get_query);
 			$get_stmt->execute(array('%re_user%'));
 			$get_res=$get_stmt->fetchAll(PDO::FETCH_ASSOC);
 
-			$data_array=array();
-	
 			$unique=0;
 			$unique_column_value=array();
 
@@ -99,7 +98,6 @@
 			for($i=0;$i<count($get_res);$i++)
 			{
 				$database=$get_res[$i]['table_schema'];
-							
 				$conn=new db_connect($database);
 				
 				if(count($unique_column_value)>0)
@@ -107,12 +105,14 @@
 					$select_stmt=$conn->conn->prepare($select_query);
 					$select_stmt->execute($unique_column_value);
 					$unique=$select_stmt->fetchAll(PDO::FETCH_NUM)[0][0];	
+					$select_stmt = null;
 				}
-					
+								
 				if($unique===0 || $unique=="0")
-				{		
+				{
 					$insert_query="insert into $table(";
-					
+					$data_array=array();
+	
 					foreach($columns_array as $col)
 					{
 						$insert_query.=$col['index'].",";
@@ -132,12 +132,15 @@
 					$act_type='create';
 					$stmt2=$conn->conn->prepare($insert_query);
 					$stmt2->execute($data_array);
+					$stmt2=null;
 					
 					$act_data=array('no',$table,$id,$input_data,'json','online',1000*time(),$act_type,$_SESSION['name']);
 					$query3="insert into activities (user_display,tablename,data_id,data_xml,data_type,status,last_updated,type,updated_by) values(?,?,?,?,?,?,?,?,?)";
 					$stmt3=$conn->conn->prepare($query3);
 					$stmt3->execute($act_data);
+					$stmt3=null;
 				}
+				$conn->conn=null;
 			}
 			$response_object['data_store']=$table;
 			$response_object['status']="record created";

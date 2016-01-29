@@ -10452,46 +10452,6 @@ function form190_update_item(form)
 }
 
 /**
- * @form Manage Values list
- * @formNo 191
- * @param button
- */
-function form191_update_item(form)
-{
-	if(is_update_access('form191'))
-	{
-		var value=form.elements[2].value;
-		var status=form.elements[3].value;
-		var data_id=form.elements[4].value;
-		var last_updated=get_my_time();
-		
-		var data_xml="<values_list>" +
-					"<id>"+data_id+"</id>" +
-					"<name>"+value+"</name>" +
-					"<status>"+status+"</status>"+
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</values_list>";
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}	
-		
-		for(var i=0;i<4;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
  * @form Enter Purchase Bill (Laundry)
  * @param button
  */
@@ -14073,40 +14033,6 @@ function form263_update_form()
  * @form Grid Metrics
  * @param button
  */
-function form264_update_item(form)
-{
-	if(is_update_access('form264'))
-	{
-		var metric_id=form.elements[0].value;
-		var name=form.elements[1].value;
-		var grid=form.elements[2].value;
-		var function_name=form.elements[3].value;
-		var status=form.elements[4].value;
-		var data_id=form.elements[5].value;
-		var del_button=form.elements[7];
-		
-		var last_updated=get_my_time();
-		var data_xml="<system_grid_metrics>" +
-					"<id>"+data_id+"</id>" +
-					"<metric_id unique='yes'>"+metric_id+"</metric_id>" +
-					"<display_name>"+name+"</display_name>" +
-					"<grid>"+grid+"</grid>" +
-					"<function_name>"+function_name+"</function_name>" +
-					"<status>"+status+"</status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</system_grid_metrics>";
-		update_simple(data_xml);
-		
-		for(var i=0;i<5;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * formNo 265

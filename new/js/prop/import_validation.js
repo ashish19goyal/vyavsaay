@@ -346,22 +346,6 @@ function form261_import_validate(data_array)
 	return error_array;					
 }
 
-/**
-* @form Grid metrics
-* @formNo 264
-*/
-function form264_import_validate(data_array)
-{
-	var validate_template_array=[{column:'metric_id',required:'yes',regex:new RegExp('^[0-9a-zA-Z_]+$')},
-							{column:'display_name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,/\'+@!$()-]+$')},
-							{column:'grid',regex:new RegExp('^[a-zA-Z0-9_]+$')},
-							{column:'function_name',regex:new RegExp('^[a-zA-Z0-9_() ;]+$')},
-							{column:'status',required:'yes',list:['active','inactive']},
-							{column:'repeat_time',required:'yes',regex:new RegExp('^[0-9]+$')}];
-					
-	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
-}
 
 /**
 * @form Enter COD Collections

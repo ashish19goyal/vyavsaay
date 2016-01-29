@@ -8,7 +8,7 @@
 
 	$dbname="re_user_".$_GET['db'];
 
-		$fr=new file_reader("../../../Config/config.prop");
+		$fr=new file_reader($_SERVER['DOCUMENT_ROOT']."/../Config/config.prop");
 		$dbhost=$fr->attributes["host"];
 		$dbuser = $fr->attributes["user"];
 		$dbpass = $fr->attributes["password"];

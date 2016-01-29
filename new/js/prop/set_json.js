@@ -51,7 +51,6 @@ function set_static_filter_json(table,list,filter_element)
 				list_data.return_column='name';
 				
 				list_data.indexes=[{index:'tablename',exact:table},
-									{index:'status',exact:'active'},
 									{index:'listname',exact:list}];
 		
 		read_json_single_column(list_data,function(data)
@@ -92,7 +91,6 @@ function set_static_value_list_json(table,list,filter_element,func)
 				list_data.return_column='name';
 				
 				list_data.indexes=[{index:'tablename',exact:table},
-									{index:'status',exact:'active'},
 									{index:'listname',exact:list}];
 	
 		read_json_single_column(list_data,function(data)
@@ -162,7 +160,6 @@ function set_static_select(table,list,filter_element,func)
 			list_data.return_column='name';
 			
 			list_data.indexes=[{index:'tablename',exact:table},
-								{index:'status',exact:'active'},
 								{index:'listname',exact:list}];
 	
 	read_json_single_column(list_data,function(data)

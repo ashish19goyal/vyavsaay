@@ -23,7 +23,7 @@ class db_connect
 		$dbpass = $this->fr->attributes["password"];
 		$dsn="mysql:host=".$dbhost.";dbname=".$dbname.";charset=utf8";
 		$options=array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
-		$this->conn = new \PDO($dsn, $dbuser, $dbpass, $options);		
+		$this->conn = new \PDO($dsn, $dbuser, $dbpass, $options);
 	}
 
 	public function __destruct()
@@ -31,5 +31,4 @@ class db_connect
 		unset($this->conn);
 	}
 }
-
 ?>

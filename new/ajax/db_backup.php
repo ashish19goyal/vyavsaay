@@ -13,7 +13,7 @@ use RetailingEssentials\file_reader;
 	{
 		if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['username']==$username && $_SESSION['cr']==$cr_access)
 		{
-			$fr=new file_reader("../../Config/config.prop");
+			$fr=new file_reader($_SERVER['DOCUMENT_ROOT']."/../Config/config.prop");
 			$dbhost=$fr->attributes["host"];
 			$dbname="re_user_".$domain;
 			$dbuser = $fr->attributes["user"];

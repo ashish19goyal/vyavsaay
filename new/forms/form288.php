@@ -20,7 +20,7 @@
 						<th><input type='text' placeholder="Description" class='floatlabel' name='desc' form='form288_header'></th>
 						<th><input type='text' placeholder="Status" class='floatlabel' name='status' form='form288_header'></th>
 						<th><input type='text' placeholder="Content" readonly="readonly" name='content' form='form288_header'></th>
-						<th><input type='submit' form='form264_header' style='visibility: hidden;'></th>
+						<th><input type='submit' form='form288_header' style='visibility: hidden;'></th>
 				</tr>
 			</thead>
 			<tbody id='form288_body'>
@@ -138,7 +138,7 @@
 								rowsHTML+="<select data-style='btn-info' class='dblclick_editable' form='form288_"+id+"'></select>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Details'>";
-								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form288_"+id+"' onclick=\"modal186_action('"+id+"');\">Function</button>";							
+								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form288_"+id+"'>Function</button>";							
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form288_"+id+"' value='"+id+"'>";	
@@ -177,6 +177,7 @@
 				var name=form.elements[0].value;
 				var description=form.elements[1].value;
 				var status=$(form.elements[2]).val();
+				var func_button=form.elements[3];
 				var data_id=form.elements[4].value;
 				var del_button=form.elements[6];
 				
@@ -195,6 +196,11 @@
 
 				$('#form288').readonly();
 				
+				$(func_button).on('click',function () 
+				{
+					modal186_action(data_id);
+				});
+
 				del_button.removeAttribute("onclick");
 				$(del_button).on('click',function(event)
 				{

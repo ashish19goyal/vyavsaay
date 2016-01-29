@@ -6076,40 +6076,6 @@ function form190_delete_item(button)
 }
 
 /**
- * @form Manage Values List
- * @param button
- */
-function form191_delete_item(button)
-{
-	if(is_delete_access('form191'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-
-			var data_id=form.elements[4].value;
-			var data_xml="<values_list>" +
-						"<id>"+data_id+"</id>" +
-						"</values_list>";		
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-			}	
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
  * @form Enter Purchase Bill (Laundry)
  * @formNo form192
  */
@@ -8327,38 +8293,6 @@ function form262_delete_item(button)
  * @form System Grid Metrics
  * @param button
  */
-function form264_delete_item(button)
-{
-	if(is_delete_access('form264'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			var name=form.elements[1].value;
-			var data_id=form.elements[5].value;
-			var data_xml="<system_grid_metrics>" +
-						"<id>"+data_id+"</id>" +
-						"</system_grid_metrics>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>system_grid_metrics</tablename>" +
-						"<link_to>form264</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Grid metrics "+name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-							
-			delete_row(data_xml,activity_xml);			
-			
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * formNo 265

@@ -7480,48 +7480,20 @@ function modal114_action(func)
 function modal115_action(func)
 {
 	var form115=document.getElementById('modal115_form');
-	var yes_button=form115.elements[1];
-	var no_button=form115.elements[2];
+	var yes_button=form115.elements['yes'];
+	var no_button=form115.elements['no'];
 	
 	$(yes_button).off('click');
-	$(yes_button).on('click',function()
+	$(yes_button).on('click',function(e)
 	{
-		$("#modal115").dialog("close");
+		e.preventDefault();
+		$(form115).find('.close').click();
 		func();
 	});
 	
-	$(no_button).off('click');
-	$(no_button).on('click',function()
-	{
-		$("#modal115").dialog("close");
-	});
-
-	$("#modal115").dialog("open");
+	$("#modal115_link").click();
 }
 
-/**
- * @modalNo 116
- * @modal Print Barcode
- * @param button
- */
-/*function modal116_action(string)
-{
-	var print_button=document.getElementById('modal116_print');
-	
-//	$(print_button).off('click');
-//	$(print_button).on('click',function()
-//	{
-		var container=document.getElementById('modal116_div');
-		//$("#modal116").dialog("close");
-//	});
-	
-		var image_element=document.getElementById('modal116_img');
-		$(image_element).JsBarcode(string,{displayValue:true,fontSize:16});
-		$.print(container);
-	
-	//$("#modal116").dialog("open");
-}
-*/
 
 /**
  * @modal Map Barcode
@@ -13456,26 +13428,32 @@ function modal164_action(error_array)
 
 /**
  * @modalNo 165
- * @modal Function Definition
+ * @modal Popup Function Definition
  */
-function modal165_action(id,elem)
+function modal165_action(id,metric_id,master)
 {
 	var form=document.getElementById('modal165_form');
 	
 	var name_filter=form.elements['name'];
 	var def_filter=form.elements['def'];
 	
-	name_filter.value=$(elem).val();
-	def_filter.value="";
+	name_filter.value='';
+	var cm="";
 	
 	var def_columns=new Object();
 			def_columns.count=1;
-			def_columns.data_store='system_grid_metrics';		
-			def_columns.return_column='function_def';
-			def_columns.indexes=[{index:'id',value:id}];
-	set_my_value_json(def_columns,def_filter,function () 
+			def_columns.data_store='system_grid_metrics';
+			def_columns.indexes=[{index:'id',value:id},{index:'function_name'},{index:'function_def'}];
+	read_json_rows('',def_columns,function (contents) 
 	{
-		$('textarea').autosize();
+		var content="";
+		if(contents.length>0)
+		{
+			if(contents[0].function_def!=null && contents[0].function_def!='undefined')
+				content=contents[0].function_def;
+			name_filter.value=contents[0].function_name;
+		}
+		cm=$(def_filter).codeeditor({content:content});
 	});
 
 	$(form).off('submit');
@@ -13484,25 +13462,36 @@ function modal165_action(id,elem)
 		event.preventDefault();
 		
 		var name=name_filter.value;
-		var def=def_filter.value;
+		var def=cm.getValue();
 		var last_updated=get_my_time();
-		def=def.replace(/\n/g,'');
-		def=def.replace(/\t/g,'');
 		
-		var data_xml="<system_grid_metrics>"+
-				"<id>"+id+"</id>" +
-				"<function_name>"+name+"</function_name>" +
-				"<function_def>"+htmlentities(def)+"</function_def>" +
-				"<last_updated>"+last_updated+"</last_updated>"+
-				"</system_grid_metrics>";
-		//console.log(data_xml);
-		update_simple(data_xml);
-		$("#modal165").dialog("close");
+		if(typeof master!='undefined' && master=='master')
+		{
+			var data_json={data_store:'system_grid_metrics',
+	 				log:'no',
+	 				data:[{index:'metric_id',value:metric_id,unique:'yes'},
+	 					{index:'function_name',value:name},
+	 					{index:'function_def',value:def},
+	 					{index:'last_updated',value:last_updated}]};
+ 			server_update_master_all(data_json);
+		}
+		else
+		{
+			var data_json={data_store:'system_grid_metrics',
+	 				log:'yes',
+	 				data:[{index:'id',value:id},
+	 					{index:'function_name',value:name},
+	 					{index:'function_def',value:def},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Updated',notes:'Dashboard metric '+name,link_to:'form264'}};
+ 			update_json(data_json);
+ 		}
+ 		$(form).find('.close').click();
 	});
 	
-	///////////////////////////
-	$("#modal165").dialog("open");	
+	$("#modal165_link").click();	
 }
+
 
 /**
  * @modalNo 166
@@ -15215,24 +15204,30 @@ function modal177_action(func)
  * @modalNo 178
  * @modal Notification Function Definition
  */
-function modal178_action(id,elem)
+function modal178_action(id,not_name,master)
 {
 	var form=document.getElementById('modal178_form');
 	
 	var name_filter=form.elements['name'];
 	var def_filter=form.elements['def'];
 	
-	name_filter.value=$(elem).val();
-	def_filter.value="";
+	name_filter.value='';
+	var cm="";
 	
 	var def_columns=new Object();
 			def_columns.count=1;
-			def_columns.data_store='system_notifications';		
-			def_columns.return_column='function_def';
-			def_columns.indexes=[{index:'id',value:id}];
-	set_my_value_json(def_columns,def_filter,function () 
+			def_columns.data_store='system_notifications';
+			def_columns.indexes=[{index:'id',value:id},{index:'function_name'},{index:'function_def'}];
+	read_json_rows('',def_columns,function (contents) 
 	{
-		$('textarea').autosize();
+		var content="";
+		if(contents.length>0)
+		{
+			if(contents[0].function_def!=null && contents[0].function_def!='undefined')
+				content=contents[0].function_def;
+			name_filter.value=contents[0].function_name;
+		}
+		cm=$(def_filter).codeeditor({content:content});
 	});
 
 	$(form).off('submit');
@@ -15241,24 +15236,34 @@ function modal178_action(id,elem)
 		event.preventDefault();
 		
 		var name=name_filter.value;
-		var def=def_filter.value;
+		var def=cm.getValue();
 		var last_updated=get_my_time();
-		def=def.replace(/\n/g,'');
-		def=def.replace(/\t/g,'');
 		
-		var data_xml="<system_notifications>"+
-				"<id>"+id+"</id>" +
-				"<function_name>"+name+"</function_name>" +
-				"<function_def>"+htmlentities(def)+"</function_def>" +
-				"<last_updated>"+last_updated+"</last_updated>"+
-				"</system_notifications>";
-		
-		update_simple(data_xml);
-		$("#modal178").dialog("close");
+		if(typeof master!='undefined' && master=='master')
+		{
+			var data_json={data_store:'system_notifications',
+	 				log:'no',
+	 				data:[{index:'name',value:not_name,unique:'yes'},
+	 					{index:'function_name',value:name},
+	 					{index:'function_def',value:def},
+	 					{index:'last_updated',value:last_updated}]};
+ 			server_update_master_all(data_json);
+		}
+		else
+		{
+			var data_json={data_store:'system_notifications',
+	 				log:'yes',
+	 				data:[{index:'id',value:id},
+	 					{index:'function_name',value:name},
+	 					{index:'function_def',value:def},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Updated',notes:'Dashboard metric '+name,link_to:'form264'}};
+ 			update_json(data_json);
+ 		}
+ 		$(form).find('.close').click();
 	});
 	
-	///////////////////////////
-	$("#modal178").dialog("open");	
+	$("#modal178_link").click();	
 }
 
 /**
@@ -15657,7 +15662,7 @@ function modal183_action(subject,func)
  * @modalNo 184
  * @modal Popup boxes content
  */
-function modal184_action(id)
+function modal184_action(id,box_id,master)
 {
 	var form=document.getElementById('modal184_form');
 	
@@ -15687,13 +15692,25 @@ function modal184_action(id)
 		console.log(content);
 		var last_updated=get_my_time();
 		
-		var data_json={data_store:'system_popboxes',
+		if(typeof master!='undefined' && master=='master')
+		{
+			var data_json={data_store:'system_popboxes',
+	 				log:'no',
+	 				data:[{index:'box_id',value:box_id,unique:'yes'},
+	 					{index:'box_content',value:content},
+	 					{index:'last_updated',value:last_updated}]};
+ 			server_update_master_all(data_json);
+		}
+		else
+		{
+			var data_json={data_store:'system_popboxes',
 	 				log:'yes',
 	 				data:[{index:'id',value:id},
 	 					{index:'box_content',value:content},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Updated',notes:'Popup box '+name,link_to:'form281'}};
- 		update_json(data_json);
+ 			update_json(data_json);
+ 		}
  		$(form).find('.close').click();
 	});
 	
@@ -15704,7 +15721,7 @@ function modal184_action(id)
  * @modalNo 185
  * @modal Popup Function Definition
  */
-function modal185_action(id)
+function modal185_action(id,box_id,master)
 {
 	var form=document.getElementById('modal185_form');
 	
@@ -15723,7 +15740,8 @@ function modal185_action(id)
 		var content="";
 		if(contents.length>0)
 		{
-			content=contents[0].function_def;
+			if(contents[0].function_def!=null && contents[0].function_def!='undefined')
+				content=contents[0].function_def;
 			name_filter.value=contents[0].function_name;
 		}
 		cm=$(def_filter).codeeditor({content:content});
@@ -15738,14 +15756,27 @@ function modal185_action(id)
 		var def=cm.getValue();
 		var last_updated=get_my_time();
 		
-		var data_json={data_store:'system_popboxes',
+		if(typeof master!='undefined' && master=='master')
+		{
+			var data_json={data_store:'system_popboxes',
+	 				log:'no',
+	 				data:[{index:'box_id',value:box_id,unique:'yes'},
+	 					{index:'function_name',value:name},
+	 					{index:'function_def',value:def},
+	 					{index:'last_updated',value:last_updated}]};
+ 			server_update_master_all(data_json);
+		}
+		else
+		{
+			var data_json={data_store:'system_popboxes',
 	 				log:'yes',
 	 				data:[{index:'id',value:id},
 	 					{index:'function_name',value:name},
 	 					{index:'function_def',value:def},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Updated',notes:'Popup box '+name,link_to:'form281'}};
- 		update_json(data_json);
+ 			update_json(data_json);
+ 		}
  		$(form).find('.close').click();
 	});
 	

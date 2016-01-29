@@ -7073,43 +7073,6 @@ function form190_header_ini()
 };
 
 /**
- * @form Manage Values lists
- * @formNo 191
- */
-function form191_header_ini()
-{
-	var filter_fields=document.getElementById('form191_header');
-	var table_filter=filter_fields.elements[0];
-	var list_filter=filter_fields.elements[1];
-	var value_filter=filter_fields.elements[2];
-	var status_filter=filter_fields.elements[3];
-	
-	var table_data="<values_list>" +
-			"<tablename></tablename>" +
-			"</values_list>";
-	set_my_filter(table_data,table_filter);
-	
-	var list_data="<values_list>" +
-			"<listname></listname>" +
-			"</values_list>";
-	set_my_filter(list_data,list_filter);
-	
-	var value_data="<values_list>" +
-			"<name></name>" +
-			"</values_list>";
-	set_my_filter(value_data,value_filter);
-
-	set_static_filter('values_list','status',status_filter);
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form191_ini();
-	});
-};
-
-/**
  * @form Enter Supplier bills(Laundry)
  * @formNo 192
  */
@@ -10407,37 +10370,6 @@ function form263_header_ini()
 	},false);
 
 }
-
-/**
- * @form Grids Metrics
- * @formNo 264
- */
-function form264_header_ini()
-{
-	var filter_fields=document.getElementById('form264_header');
-	var name_filter=filter_fields.elements[0];
-	var grid_filter=filter_fields.elements[1];
-	var status_filter=filter_fields.elements[2];
-		
-	var name_data="<system_grid_metrics>" +
-		"<display_name></display_name>" +
-		"</system_grid_metrics>";
-
-	var grid_data="<system_grids>" +
-		"<name></name>" +
-		"</system_grids>";
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form264_ini();
-	});
-
-	set_my_filter(grid_data,grid_filter);
-	set_my_filter(name_data,name_filter);
-	set_static_filter('system_grid_metrics','status',status_filter);
-};
 
 /**
  * @form Create RTO

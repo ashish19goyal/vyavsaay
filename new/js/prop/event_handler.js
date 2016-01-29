@@ -210,7 +210,19 @@ function modal_forms_ini()
 	{
 		dynamic_modal_array.push(i);
 	}
-	for(var i=101;i<=181;i++)
+	for(var i=101;i<=114;i++)
+	{
+		dynamic_modal_array.push(i);
+	}
+	for(var i=116;i<=164;i++)
+	{
+		dynamic_modal_array.push(i);
+	}
+	for(var i=166;i<=177;i++)
+	{
+		dynamic_modal_array.push(i);
+	}
+	for(var i=179;i<=181;i++)
 	{
 		dynamic_modal_array.push(i);
 	}

@@ -54,6 +54,7 @@
 	{
 		if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['domain']=='vyavsaay' && $_SESSION['username']==$username && $_SESSION['del']==$del_access)
 		{
+			$info_conn=new db_connect('information_schema');
 			$get_query="select distinct table_schema from information_schema.columns where table_schema like ?";
 			$get_stmt=$info_conn->conn->prepare($get_query);
 			$get_stmt->execute(array('%re_user%'));
@@ -143,18 +144,21 @@
 					$stmt1=$conn->conn->prepare($query1);
 					$stmt1->execute($data_array);
 					$data_ids=$stmt1->fetchAll(PDO::FETCH_ASSOC);
+					$stmt1=null;
 					
 					$stmt2=$conn->conn->prepare($query);
 					$stmt2->execute($data_array);
+					$stmt2=null;
 					
 					foreach($data_ids as $id)
 					{
 						$act_data=array($_SESSION['name'],'json','no',$table,$id['id'],$input_data,'online',1000*time(),'delete');
 						$query3="insert into activities (updated_by,data_type,user_display,tablename,data_id,data_xml,status,last_updated,type) values(?,?,?,?,?,?,?,?,?)";
 						$stmt3=$conn->conn->prepare($query3);
-						
 						$stmt3->execute($act_data);	
+						$stmt3=null;
 					}
+					$conn->conn=null;
 				}
 			}
 			else 

@@ -72,6 +72,7 @@ function fetch_requested_data(element_id,columns,callback)
 	else
 	{
 		hide_loader();
+		console.log("Being called from " + arguments.callee.caller.toString());
 		$("#modal2_link").click();
 	}
 }
@@ -341,6 +342,7 @@ function read_json_rows(element_id,columns,callback)
 	else
 	{
 		hide_loader();
+		console.log("Being called from " + arguments.callee.caller.toString());
 		$("#modal2_link").click();
 	}
 }
@@ -408,6 +410,7 @@ function read_json_rows_master(element_id,columns,callback)
 	else
 	{
 		hide_loader();
+		console.log("Being called from " + arguments.callee.caller.toString());
 		$("#modal2_link").click();
 	}
 }

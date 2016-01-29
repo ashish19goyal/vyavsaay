@@ -21,7 +21,7 @@
 						<th><input type='text' placeholder="Title" class='floatlabel' name='title' form='form281_header'></th>
 						<th><input type='text' placeholder="Status" class='floatlabel' name='status' form='form281_header'></th>
 						<th><input type='text' placeholder="Details" readonly="readonly" name='details' form='form281_header'></th>
-						<th><input type='submit' form='form264_header' style='visibility: hidden;'></th>
+						<th><input type='submit' form='form281_header' style='visibility: hidden;'></th>
 				</tr>
 			</thead>
 			<tbody id='form281_body'>
@@ -159,8 +159,8 @@
 								rowsHTML+="<select data-style='btn-info' class='dblclick_editable' form='form281_"+id+"'></select>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Details'>";
-								rowsHTML+="<button type='button' class='btn default yellow-stripe' form='form281_"+id+"' onclick=\"modal184_action('"+id+"');\">Box Content</button>";							
-								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form281_"+id+"' onclick=\"modal185_action('"+id+"');\">Function</button>";							
+								rowsHTML+="<button type='button' class='btn default yellow-stripe' form='form281_"+id+"'>Box Content</button>";							
+								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form281_"+id+"'>Function</button>";							
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form281_"+id+"' value='"+id+"'>";	
@@ -202,6 +202,8 @@
 				var type=$(form.elements[1]).val();
 				var title=form.elements[2].value;
 				var status=$(form.elements[3]).val();
+				var box_content=form.elements[4];
+				var box_func=form.elements[5];
 				var data_id=form.elements[6].value;
 				var del_button=form.elements[8];
 				
@@ -220,6 +222,16 @@
 				create_json(data_json);
 
 				$('#form281').readonly();
+				
+				$(box_content).on('click',function () 
+				{
+					modal184_action(data_id,name,'master');
+				});
+
+				$(box_func).on('click',function () 
+				{
+					modal185_action(data_id,name,'master');
+				});
 				
 				del_button.removeAttribute("onclick");
 				$(del_button).on('click',function(event)

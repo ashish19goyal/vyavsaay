@@ -9,6 +9,7 @@
 	{
 		return this.each(function() 
 		{
+			$(this).find('.floatlabel').floatlabel();
 			$(this).find('.floatlabel').trigger('change');
 			$(this).find('textarea').autosize();
 			$(this).find('.dblclick_editable').longpresseditable();
@@ -48,12 +49,12 @@
 (function ($) {
 	$.fn.readonly=function(options)
 	{
-		$(this).find('input,textarea').each(function() 
+		$(this).find('tbody input,tbody textarea').each(function() 
 		{
 			$(this).attr('readonly','readonly');
 		});
 		
-		$(this).find('select').each(function() 
+		$(this).find('tbody select').each(function() 
 		{
 			$(this).selectpicker('setStyle', 'btn-info','remove');
 		});
