@@ -278,11 +278,8 @@
 	 					{index:'last_updated',value:last_updated}]};
 				
 				update_json(data_json);
-				
-				for(var i=0;i<5;i++)
-				{
-					$(form.elements[i]).attr('readonly','readonly');
-				}
+
+				$('#form264').readonly();
 			}
 			else
 			{

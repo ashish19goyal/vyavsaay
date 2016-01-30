@@ -1060,7 +1060,7 @@ function set_grid_item_47()
 	var new_columns=new Object();
 		new_columns.data_store='accounts';		
 			
-		new_columns.indexes=[{index:'username',unequal:""},
+		new_columns.indexes=[{index:'username',unequal:"",isnull:'no'},
 							{index:'type',array:['master','staff']},
 							{index:'status',value:'active'}];
 	

@@ -14,6 +14,7 @@
  						lowerbound:'value'
  						array:array,
  						unequal:'value',
+ 						isnull:'yes/no',
  						approx_array:array,
  					},
  					{
@@ -24,6 +25,7 @@
  						lowerbound:'value'
  						array:array,
  						unequal:'value',
+ 						isnull:'yes/no',
  						approx_array:array,
  					}
  				]
@@ -120,6 +122,18 @@
 				{
 					$query.="(".$col['index']." <> ? or isNull(".$col['index'].")) and ";
 					$values_array[]=$col['unequal'];
+				}
+				
+				if(isset($col['isnull']))
+				{
+					if($col['isnull']=='yes')
+					{
+						$query.="isNull(".$col['index'].") and ";
+					}
+					else 
+					{
+						$query.="!isNull(".$col['index'].") and ";
+					}
 				}
 				
 				if(isset($col['array']))

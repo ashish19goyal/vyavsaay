@@ -8188,50 +8188,6 @@ function form256_delete_item(button)
 }
 
 /**
- * @form User Accounts
- * @param button
- */
-function form257_delete_item(button)
-{
-	if(is_delete_access('form257'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			var name=form.elements[0].value;
-			var username=form.elements[1].value;
-			var data_id=form.elements[5].value;
-			var data_xml="<accounts>" +
-						"<id>"+data_id+"</id>" +
-						"<username></username>" +
-						"<password></password>"+
-						"</accounts>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>accounts</tablename>" +
-						"<link_to>form257</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>User account for "+name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var access_xml="<access_control>"+
-							"<username>"+username+"</username>"+
-							"</access_control>";
-							
-			delete_simple(access_xml);			
-			update_row(data_xml,activity_xml);
-			
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
-/**
  * @form Manage Quotations (NVS)
  * @param button
  */

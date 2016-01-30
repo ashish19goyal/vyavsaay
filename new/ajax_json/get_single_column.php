@@ -16,6 +16,7 @@
  						lowerbound:'value'
  						array:array,
  						unequal:'value',
+ 						isnull:'yes/no'
  						approx_array:array
  					},
  					{
@@ -116,6 +117,18 @@
 					$values_array[]=$col['unequal'];
 				}
 				
+				if(isset($col['isnull']))
+				{
+					if($col['isnull']=='yes')
+					{
+						$query.="isNull(".$col['index'].") and ";
+					}
+					else 
+					{
+						$query.="!isNull(".$col['index'].") and ";
+					}
+				}
+				
 				if(isset($col['array']))
 				{
 					$query.=$col['index']." in (";
@@ -123,7 +136,7 @@
 					foreach($exploded_values as $value)
 					{
 						$query.="?,";
-						$values_array[]=$value;
+						$values_array[]=$value;						
 					}
 					if(count($exploded_values)==0)
 					{

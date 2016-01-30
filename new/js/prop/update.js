@@ -13635,65 +13635,6 @@ function form256_update_form()
 }
 
 /**
- * @form User accounts
- * @param button
- */
-function form257_update_item(form)
-{
-	if(is_update_access('form257'))
-	{
-		var name=form.elements[0].value;
-		var username=form.elements[1].value;
-		var password=form.elements[2].value;
-		var type=form.elements[3].value;
-		var status=form.elements[4].value;
-		var data_id=form.elements[5].value;
-		var last_updated=get_my_time();
-		var data_xml="<accounts>" +
-					"<id>"+data_id+"</id>" +
-					"<username unique='yes'>"+username+"</username>" +
-					"<status>"+status+"</status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</accounts>";
-		update_simple(data_xml);
-		
-		if(password!="" && password!="********")
-		{
-			var salt='$2a$10$'+get_domain()+'1234567891234567891234';
-			var salt_22=salt.substring(0, 29);
-			
-			var bcrypt = new bCrypt();
-			bcrypt.hashpw(password, salt_22, function(newhash)
-			{
-				var data_xml="<accounts>" +
-							"<id>"+data_id+"</id>" +
-							"<password>"+newhash+"</password>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</accounts>";
-				var activity_xml="<activity>" +
-							"<data_id>"+data_id+"</data_id>" +
-							"<tablename>accounts</tablename>" +
-							"<link_to>form257</link_to>" +
-							"<title>Updated</title>" +
-							"<notes>Password for "+username+"</notes>" +
-							"<updated_by>"+get_name()+"</updated_by>" +
-							"</activity>";
-				update_row(data_xml,activity_xml);				
-			}, function() {});
-		}
-		
-		for(var i=0;i<5;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
  * @form Prepare Quotation
  * @param button
  */

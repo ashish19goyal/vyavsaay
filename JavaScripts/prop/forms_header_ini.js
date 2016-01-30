@@ -9928,41 +9928,6 @@ function form256_header_ini()
 }
 
 /**
- * @form User Accounts
- * @formNo 257
- */
-function form257_header_ini()
-{
-	var filter_fields=document.getElementById('form257_header');	
-	var names_filter=filter_fields.elements[0];
-	var username_filter=filter_fields.elements[1];
-	var type_filter=filter_fields.elements[2];
-	var status_filter=filter_fields.elements[3];
-	
-	//setting autocompletes 
-	var names_data="<accounts>" +
-			"<acc_name></acc_name>" +
-			"</accounts>";
-	set_my_filter(names_data,names_filter);
-
-
-	var username_data="<accounts>" +
-			"<username></username>" +
-			"</accounts>";
-	set_my_filter(username_data,username_filter);
-	
-	set_static_filter('accounts','status',status_filter);
-	set_static_filter('accounts','type',type_filter);	
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form257_ini();
-	});	
-}
-
-/**
  * @form Quotation Details
  * @formNo 258
  */

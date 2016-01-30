@@ -9,7 +9,7 @@
 			<?php include('../Classes/ccavenue/Crypto.php')?>
 			<?php 
 			
-				error_reporting(0);
+				//error_reporting(0);
 				
 				$merchant_data='merchant_id=84158&';
 				$working_key='EA256A49C184883BBB18457997D673F6';
@@ -21,7 +21,8 @@
 				//echo $merchant_data;
 				//echo $working_key;
 
-				$encrypted_data=encrypt($merchant_data,$working_key); // Method for encrypting the data.				
+				$encrypted_data=encrypt($merchant_data,$working_key); // Method for encrypting the data.
+				//echo $encrypted_data;				
 			?>
 			
 			<form method="post" name="redirect" action="https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction"> 
