@@ -237,3 +237,8 @@ input[readonly='readonly'], textarea[readonly='readonly'], select[disabled='disa
 .table .btn-group .btn{
 	margin-top: 0px;
 }
+/***********************/
+
+i.link{
+	cursor: pointer;
+}

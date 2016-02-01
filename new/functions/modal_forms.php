@@ -1929,4 +1929,98 @@
         </div>
     </div>
 
+	<a href='#modal187' data-toggle="modal" id='modal187_link'></a>
+	<div id="modal187" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal187_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add table</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Table Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal187_form' required name='table'></div>
+					     		</div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal187_form' name='save'>Create</button>
+	               	<button type="button" class="btn red" form='modal187_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+	<a href='#modal188' data-toggle="modal" id='modal188_link'></a>
+	<div id="modal188" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal188_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add Column</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Table Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal188_form' readonly='readonly' name='table'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Column Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal188_form' required name='colname'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Column Type</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal188_form' required name='coltype'></div>
+					     		</div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal188_form' name='save'>Add</button>
+	               	<button type="button" class="btn red" form='modal188_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+	<a href='#modal189' data-toggle="modal" id='modal189_link'></a>
+	<div id="modal189" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal189_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Change Column Type</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Table Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal189_form' readonly='readonly' name='table'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Column Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal189_form' readonly="readonly" name='colname'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Column Type</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal189_form' required name='coltype'></div>
+					     		</div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal189_form' name='save'>Change</button>
+	               	<button type="button" class="btn red" form='modal189_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>

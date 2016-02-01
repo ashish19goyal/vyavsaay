@@ -184,12 +184,12 @@
 				
 				$(img_button).on('click',function () 
 				{
-					modal176_action(result.id,'newsletter_components',function (pic_id,url,doc_name) 
+					modal176_action(id,'newsletter_components',function (pic_id,url,doc_name) 
 					{
 						var docHTML="<a href='"+url+"' download='"+doc_name+"'><u>"+doc_name+"</u></a><br>";
 						var doc_container=document.getElementById('form312_images_'+id);
 						$(doc_container).append(docHTML);
-					});
+					},'master');
 				});
 
 				$(fields).on("submit", function(event)

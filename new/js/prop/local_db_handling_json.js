@@ -32,11 +32,11 @@ function local_read_json_rows(columns,callback,results)
 		
 		for(var j=0;j<cols.length;j++)
 		{
-			var fil=new Object();
-			fil.name=cols[j].index;
-			
 			if(typeof cols[j].lowerbound!='undefined')
 			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
 				fil.value=""+cols[j].lowerbound;
 				fil.type='lowerbound';
 				filter.push(fil);
@@ -51,6 +51,9 @@ function local_read_json_rows(columns,callback,results)
 			}
 			if(typeof cols[j].upperbound!='undefined')
 			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
 				fil.value=""+cols[j].upperbound;
 				fil.type='upperbound';
 				filter.push(fil);
@@ -66,6 +69,9 @@ function local_read_json_rows(columns,callback,results)
 						
 			if(typeof cols[j].array!='undefined')
 			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
 				fil.value=cols[j].array;
 				fil.type='array';
 				filter.push(fil);
@@ -73,6 +79,9 @@ function local_read_json_rows(columns,callback,results)
 			
 			if(typeof cols[j].approx_array!='undefined')
 			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
 				fil.value=cols[j].approx_array;
 				fil.type='approx_array';
 				filter.push(fil);
@@ -80,13 +89,29 @@ function local_read_json_rows(columns,callback,results)
 			
 			if(typeof cols[j].unequal!='undefined')
 			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
 				fil.value=cols[j].unequal;
 				fil.type='unequal';
 				filter.push(fil);
 			}
-
+			
+			if(typeof cols[j].isnull!='undefined')
+			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
+				fil.value=cols[j].isnull;
+				fil.type='isnull';
+				filter.push(fil);
+			}
+			
 			if(typeof cols[j].value!='undefined' && cols[j].value!="")
 			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
 				fil.value=cols[j].value;
 				fil.type='';
 				filter.push(fil);
@@ -105,7 +130,7 @@ function local_read_json_rows(columns,callback,results)
 				bound_count=0;
 			}
 		}
-	
+		
 		var sort_key=IDBKeyRange.bound(lowerbound,upperbound);
 		var objectstore=static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index);
 		
@@ -128,6 +153,8 @@ function local_read_json_rows(columns,callback,results)
 			if(result)
 			{
 				var record=result.value;
+				//console.log(record);
+				
 				var match_word=true;
 				for(var i=0;i<filter.length;i++)
 				{
@@ -137,7 +164,6 @@ function local_read_json_rows(columns,callback,results)
 						if(filter[i].type!='array')
 						{					
 							var search_word=filter[i].value.toString().toLowerCase();
-							
 							if(filter[i].type=='')
 							{
 								if(string.indexOf(search_word)===-1)
@@ -163,6 +189,21 @@ function local_read_json_rows(columns,callback,results)
 									break;
 								}
 							}
+							
+							if(filter[i].type=='isnull')
+							{
+								if(filter[i].value=='no' && string=="null")
+								{
+									match_word=false;
+									break;
+								}
+								else if(filter[i].value=='yes' && string!="null")
+								{
+									march_word=false;
+									break;
+								}
+							}
+							
 							if(filter[i].type=='upperbound') 
 							{
 								if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
@@ -214,6 +255,14 @@ function local_read_json_rows(columns,callback,results)
 						{
 							match_word=false;
 							break;
+						}
+						if(filter[i].type=='isnull')
+						{
+							if(filter[i].value=='no')
+							{
+								match_word=false;
+								break;
+							}
 						}
 					}
 				}
@@ -298,11 +347,11 @@ function local_read_json_column(columns,callback,results)
 		
 		for(var j=0;j<cols.length;j++)
 		{
-			var fil=new Object();
-			fil.name=cols[j].index;
-			
 			if(typeof cols[j].lowerbound!='undefined')
 			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
 				fil.value=""+cols[j].lowerbound;
 				fil.type='lowerbound';
 				filter.push(fil);
@@ -317,6 +366,8 @@ function local_read_json_column(columns,callback,results)
 			}
 			if(typeof cols[j].upperbound!='undefined')
 			{
+				var fil=new Object();
+				fil.name=cols[j].index;
 				fil.value=""+cols[j].upperbound;
 				fil.type='upperbound';
 				filter.push(fil);
@@ -332,6 +383,9 @@ function local_read_json_column(columns,callback,results)
 						
 			if(typeof cols[j].array!='undefined')
 			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
 				fil.value=cols[j].array;
 				fil.type='array';
 				filter.push(fil);
@@ -339,6 +393,9 @@ function local_read_json_column(columns,callback,results)
 			
 			if(typeof cols[j].approx_array!='undefined')
 			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
 				fil.value=cols[j].approx_array;
 				fil.type='approx_array';
 				filter.push(fil);
@@ -346,13 +403,29 @@ function local_read_json_column(columns,callback,results)
 			
 			if(typeof cols[j].unequal!='undefined')
 			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
 				fil.value=cols[j].unequal;
 				fil.type='unequal';
 				filter.push(fil);
 			}
 
+			if(typeof cols[j].isnull!='undefined')
+			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
+				fil.value=cols[j].isnull;
+				fil.type='isnull';
+				filter.push(fil);
+			}
+			
 			if(typeof cols[j].value!='undefined' && cols[j].value!="")
 			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
 				fil.value=cols[j].value;
 				fil.type='';
 				filter.push(fil);
@@ -429,6 +502,20 @@ function local_read_json_column(columns,callback,results)
 									break;
 								}
 							}
+							if(filter[i].type=='isnull')
+							{
+								if(filter[i].value=='no' && string=="null")
+								{
+									match_word=false;
+									break;
+								}
+								else if(filter[i].value=='yes' && string!="null")
+								{
+									march_word=false;
+									break;
+								}
+							}
+
 							if(filter[i].type=='upperbound') 
 							{
 								if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
@@ -480,6 +567,14 @@ function local_read_json_column(columns,callback,results)
 						{
 							match_word=false;
 							break;
+						}
+						if(filter[i].type=='isnull')
+						{
+							if(filter[i].value=='no')
+							{
+								match_word=false;
+								break;
+							}
 						}
 					}
 				}
@@ -566,11 +661,11 @@ function local_read_json_count(columns,callback)
 		
 		for(var j=0;j<cols.length;j++)
 		{
-			var fil=new Object();
-			fil.name=cols[j].index;
-			
 			if(typeof cols[j].lowerbound!='undefined')
 			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+
 				fil.value=""+cols[j].lowerbound;
 				fil.type='lowerbound';
 				filter.push(fil);
@@ -585,6 +680,9 @@ function local_read_json_count(columns,callback)
 			}
 			if(typeof cols[j].upperbound!='undefined')
 			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
 				fil.value=""+cols[j].upperbound;
 				fil.type='upperbound';
 				filter.push(fil);
@@ -600,6 +698,9 @@ function local_read_json_count(columns,callback)
 						
 			if(typeof cols[j].array!='undefined')
 			{
+				var fil=new Object();
+				fil.name=cols[j].index;		
+			
 				fil.value=cols[j].array;
 				fil.type='array';
 				filter.push(fil);
@@ -607,6 +708,9 @@ function local_read_json_count(columns,callback)
 			
 			if(typeof cols[j].approx_array!='undefined')
 			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
 				fil.value=cols[j].approx_array;
 				fil.type='approx_array';
 				filter.push(fil);
@@ -614,13 +718,29 @@ function local_read_json_count(columns,callback)
 			
 			if(typeof cols[j].unequal!='undefined')
 			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
 				fil.value=cols[j].unequal;
 				fil.type='unequal';
 				filter.push(fil);
 			}
-
+			
+			if(typeof cols[j].isnull!='undefined')
+			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
+				fil.value=cols[j].isnull;
+				fil.type='isnull';
+				filter.push(fil);
+			}
+			
 			if(typeof cols[j].value!='undefined' && cols[j].value!="")
 			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+		
 				fil.value=cols[j].value;
 				fil.type='';
 				filter.push(fil);
@@ -697,6 +817,20 @@ function local_read_json_count(columns,callback)
 									break;
 								}
 							}
+							if(filter[i].type=='isnull')
+							{
+								if(filter[i].value=='no' && string=="null")
+								{
+									match_word=false;
+									break;
+								}
+								else if(filter[i].value=='yes' && string!="null")
+								{
+									march_word=false;
+									break;
+								}
+							}
+
 							if(filter[i].type=='upperbound') 
 							{
 								if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
@@ -748,6 +882,14 @@ function local_read_json_count(columns,callback)
 						{
 							match_word=false;
 							break;
+						}
+						if(filter[i].type=='isnull')
+						{
+							if(filter[i].value=='no')
+							{
+								match_word=false;
+								break;
+							}
 						}
 					}
 				}
@@ -1759,7 +1901,7 @@ function local_update_json(data_json,func)
 				
 		var data_id=cols[0]['value'];
 		
-		console.log(table+"-"+data_id);
+		//console.log(table+"-"+data_id);
 		
 		var os1=static_local_db.transaction([table],"readwrite").objectStore(table);
 		var req=os1.get(data_id);
@@ -1768,7 +1910,7 @@ function local_update_json(data_json,func)
 			var data_record=req.result;
 			if(data_record)
 			{
-				console.log('found local record '+data_record);
+				//console.log('found local record '+data_record);
 				for(var j=0;j<cols.length;j++)
 				{
 					data_record[cols[j]['index']]=""+cols[j]['value'];

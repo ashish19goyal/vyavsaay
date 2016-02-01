@@ -14920,7 +14920,7 @@ function modal175_action(func)
  * @modal Add Image to newsletter
  * @param button
  */
-function modal176_action(data_id,doc_type,func)
+function modal176_action(data_id,doc_type,func,master)
 {
 	var form=document.getElementById('modal176_form');
 	
@@ -14956,15 +14956,21 @@ function modal176_action(data_id,doc_type,func)
 			
 			if(url!="")
 			{
-				var pic_xml="<documents>" +
-							"<id>"+pic_id+"</id>" +
-							"<url>"+url+"</url>" +
-							"<doc_name>"+name+"</doc_name>" +
-							"<doc_type>"+doc_type+"</doc_type>" +
-							"<target_id>"+data_id+"</target_id>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</documents>";
-				create_simple(pic_xml);
+				var data_json={data_store:'documents',
+ 				data:[{index:'id',value:pic_id},
+	 					{index:'url',value:url},
+	 					{index:'doc_name',value:name},
+	 					{index:'doc_type',value:doc_type},
+	 					{index:'target_id',value:data_id},
+	 					{index:'last_updated',value:last_updated}]};
+				if(typeof master!='undefined' && master=='master')
+				{
+					server_create_master_all(data_json);
+				}
+				else 
+				{
+					create_json(data_json);
+				}
 				
 				if(typeof func!='undefined')
 				{
@@ -14994,15 +15000,14 @@ function modal176_action(data_id,doc_type,func)
 				}
 				else
 				{
-					var s3_xml="<s3_objects>"+
-								"<id>"+pic_id+"</id>"+
-								"<data_blob>"+url+"</data_blob>"+
-								"<name>"+blob_name+"</name>"+
-								"<type>image/jpeg</type>"+
-								"<status>pending</status>"+
-								"<last_updated>"+get_my_time()+"</last_updated>"+
-								"</s3_objects>";
-					create_simple(s3_xml);			
+					var s3_json={data_store:'s3_objects',
+	 				data:[{index:'id',value:pic_id},
+		 					{index:'data_blob',value:url},
+		 					{index:'name',value:blob_name},
+		 					{index:'type',value:'image/jpeg'},
+		 					{index:'status',value:'pending'},
+		 					{index:'last_updated',value:get_my_time()}]};
+					create_json(data_json);					
 				}
 						
 				//////////////////////////////////////////
@@ -15848,4 +15853,108 @@ function modal186_action(id)
 	});
 	
 	$("#modal186_link").click();	
+}
+
+/**
+ * @modalNo 187
+ * @modal Create Table
+ */
+function modal187_action(master)
+{
+	var form=document.getElementById('modal187_form');
+	
+	var table_filter=form.elements['table'];
+	table_filter.value="";
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event) 
+	{
+		event.preventDefault();
+		
+		var table=table_filter.value;
+		if(typeof master!='undefined')
+		{
+			create_server_table(table,master);
+		}
+		else 
+		{
+			create_server_table(table);
+ 		}
+ 		$(form).find('.close').click();
+	});
+	
+	$("#modal187_link").click();	
+}
+
+/**
+ * @modalNo 188
+ * @modal Create Table Column
+ */
+function modal188_action(tablename,master)
+{
+	var form=document.getElementById('modal188_form');
+	
+	var table_filter=form.elements['table'];
+	var col_filter=form.elements['colname'];
+	var type_filter=form.elements['coltype'];
+	table_filter.value=tablename;
+	col_filter.value="";
+	type_filter.value="";
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event) 
+	{
+		event.preventDefault();
+		
+		var colname=col_filter.value;
+		var coltype=type_filter.value;
+		if(typeof master!='undefined')
+		{
+			create_server_table_column(tablename,colname,coltype,master);
+		}
+		else 
+		{
+			create_server_table_column(tablename,colname,coltype);
+ 		}
+
+ 		$(form).find('.close').click();
+	});
+	
+	$("#modal188_link").click();	
+}
+
+/**
+ * @modalNo 189
+ * @modal Modify Table Column
+ */
+function modal189_action(tablename,colname,col_type,master)
+{
+	var form=document.getElementById('modal189_form');
+	
+	var table_filter=form.elements['table'];
+	var col_filter=form.elements['colname'];
+	var type_filter=form.elements['coltype'];
+	table_filter.value=tablename;
+	col_filter.value=colname;
+	type_filter.value=col_type;
+
+	$(form).off('submit');
+	$(form).on('submit',function(event) 
+	{
+		event.preventDefault();
+		
+		var coltype=type_filter.value;
+		if(typeof master!='undefined')
+		{
+			update_server_table_column(tablename,colname,coltype,master);
+		}
+		else 
+		{
+			update_server_table_column(tablename,colname,coltype);
+ 		}
+
+ 		$(form).find('.close').click();
+	});
+	
+	$("#modal189_link").click();	
 }

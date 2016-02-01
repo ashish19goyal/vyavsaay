@@ -138,7 +138,7 @@
 				$('#form257').formcontrol();
 				paginator.update_index(results.length);				
 				initialize_tabular_report_buttons(new_columns,'User Accounts','form257',function (item){});
-				hide_loader();hide_loader();
+				hide_loader();
 			});
 		};
 		
@@ -221,7 +221,7 @@
 			}
 			else
 			{
-				$("#modal2").dialog("open");
+				$("#modal2_link").click();
 			}		
 		}
 		
@@ -268,7 +268,7 @@
 			}
 			else
 			{
-				$("#modal2").dialog("open");
+				$("#modal2_link").click();
 			}
 		}
 		
@@ -301,7 +301,7 @@
 			}
 			else
 			{
-				$("#modal2").dialog("open");
+				$("#modal2_link").click();
 			}
 		}
 

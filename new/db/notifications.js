@@ -1377,8 +1377,6 @@ function worker_8()
 								}
 							});
 							update_batch_json(data_json);
-							
-							form108_ini();
 						});						
 					});
 				});			

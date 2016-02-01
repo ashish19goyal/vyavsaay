@@ -412,3 +412,117 @@ function server_update_batch_json(data_json,func)
 		}
 	},1000);		
 }
+
+function get_table_structure(tablename,func)
+{
+	show_loader();
+	var domain=get_domain();
+	var username=get_username();
+	var re_access=get_session_var('re');
+	ajax_json("./ajax_json/get_table_structure.php",{domain:domain,username:username,re:re_access,table:tablename},function(response_object)
+	{
+		//console.log(response_object);
+		hide_loader();
+		func(response_object.data);
+	});
+}
+
+function delete_server_table(tablename,master)
+{
+	show_loader();
+	var domain=get_domain();
+	var username=get_username();
+	var del_access=get_session_var('del');
+	var up_access=get_session_var('up');
+	var cr_access=get_session_var('cr');
+	var url="./ajax_json/set_table_structure.php";	
+	if(typeof master!='undefined' && master=='master')
+	{
+		url="./ajax_json/set_table_structure_master.php";
+	}
+	ajax_json(url,{domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,table:tablename,action:'delete_table'},function(response_object)
+	{
+		console.log(response_object.status);
+		hide_loader();
+	});
+}
+
+function delete_server_table_column(tablename,columnname,master)
+{
+	show_loader();
+	var domain=get_domain();
+	var username=get_username();
+	var del_access=get_session_var('del');
+	var up_access=get_session_var('up');
+	var cr_access=get_session_var('cr');
+	var url="./ajax_json/set_table_structure.php";	
+	if(typeof master!='undefined' && master=='master')
+	{
+		url="./ajax_json/set_table_structure_master.php";
+	}
+	ajax_json(url,{domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,table:tablename,column:columnname,action:'delete_column'},function(response_object)
+	{
+		console.log(response_object.status);
+		hide_loader();
+	});
+}
+
+function create_server_table(tablename,master)
+{
+	show_loader();
+	var domain=get_domain();
+	var username=get_username();
+	var del_access=get_session_var('del');
+	var up_access=get_session_var('up');
+	var cr_access=get_session_var('cr');
+	var url="./ajax_json/set_table_structure.php";	
+	if(typeof master!='undefined' && master=='master')
+	{
+		url="./ajax_json/set_table_structure_master.php";
+	}
+	ajax_json(url,{domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,table:tablename,action:'create_table'},function(response_object)
+	{
+		console.log(response_object.status);
+		hide_loader();
+	});
+}
+
+function create_server_table_column(tablename,columnname,columntype,master)
+{
+	show_loader();
+	var domain=get_domain();
+	var username=get_username();
+	var del_access=get_session_var('del');
+	var up_access=get_session_var('up');
+	var cr_access=get_session_var('cr');
+	var url="./ajax_json/set_table_structure.php";	
+	if(typeof master!='undefined' && master=='master')
+	{
+		url="./ajax_json/set_table_structure_master.php";
+	}
+	ajax_json(url,{domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,table:tablename,column:columnname,type:columntype,action:'create_column'},function(response_object)
+	{
+		console.log(response_object.status);
+		hide_loader();
+	});
+}
+
+function update_server_table_column(tablename,columnname,columntype,master)
+{
+	show_loader();
+	var domain=get_domain();
+	var username=get_username();
+	var del_access=get_session_var('del');
+	var up_access=get_session_var('up');
+	var cr_access=get_session_var('cr');
+	var url="./ajax_json/set_table_structure.php";	
+	if(typeof master!='undefined' && master=='master')
+	{
+		url="./ajax_json/set_table_structure_master.php";
+	}
+	ajax_json(url,{domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,table:tablename,column:columnname,type:columntype,action:'update_column'},function(response_object)
+	{
+		console.log(response_object.status);
+		hide_loader();
+	});
+}
