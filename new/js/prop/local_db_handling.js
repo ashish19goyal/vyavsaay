@@ -35,8 +35,9 @@ function create_local_db(domain,func)
 			delete(static_local_db);//="undefined";
 
 			var db_name="re_local_"+domain;
-			ajax_with_custom_func("./db/db_schema.xml","",function(e)
+			get_table_structure('',function(tables)			
 			{
+				show_loader();
 				var request = indexedDB.open(db_name,dbversion);
 
 				request.onsuccess=function(e)
@@ -51,34 +52,25 @@ function create_local_db(domain,func)
 	
 				request.onerror=function(ev)
 				{
+					hide_loader();
 					alert('Could not switch to offline mode. Please refresh your browser and try again.');
 				};
 					
 				request.onupgradeneeded=function(ev)
 				{
 					var db=ev.target.result;
-					var tables=e.responseXML.childNodes[0].childNodes;
-					
-					//console.log(tables);
 					
 					for(var k=0;k<tables.length;k++)
 					{
-						if(tables[k].nodeName!="" && tables[k].nodeName!="#text" && tables[k].nodeName!="#comment")
-						{	
-							//console.log(tables[k].nodeName);
-							var table=db.createObjectStore(tables[k].nodeName,{keyPath:'id'});
+						//console.log(tables[k].nodeName);
+						var table_name=tables[k].tablename;
+						var columns=tables[k].columns;
+						var table=db.createObjectStore(table_name,{keyPath:'id'});
 						
-							for(var i=0;i<tables[k].childNodes.length;i++)
-							{	
-								if(tables[k].childNodes[i].nodeName!="" && tables[k].childNodes[i].nodeName!="#text" && tables[k].childNodes[i].nodeName!="#comment")
-								{	
-									var indexing=tables[k].childNodes[i].getAttribute('index');
-									if(indexing=='yes')
-									{
-										table.createIndex(tables[k].childNodes[i].nodeName,[tables[k].childNodes[i].nodeName,'last_updated']);
-									}
-								}		
-							}
+						for(var i=0;i<columns.length;i++)
+						{	
+							var indexing=columns[i].colname;
+							table.createIndex(columns[i].colname,[columns[i].colname,'last_updated']);
 						}
 					}			
 				};
@@ -171,8 +163,9 @@ function update_local_db(domain,func,new_version)
 	if("indexedDB" in window)
 	{
 		var db_name="re_local_"+domain;
-		ajax_with_custom_func("./db/db_schema.xml","",function(e)
+		get_table_structure('',function (tables)	
 		{
+			show_loader();
 			var request = indexedDB.open(db_name,new_version);
 		
 			request.onsuccess=function(e)
@@ -188,6 +181,7 @@ function update_local_db(domain,func,new_version)
 
 			request.onerror=function(ev)
 			{
+				hide_loader();
 				alert('Could not switch to offline mode. Please refresh your browser and try again.');
 			};
 				
@@ -195,43 +189,28 @@ function update_local_db(domain,func,new_version)
 			{
 				var db=ev.target.result;
 				//console.log(db.version);
-				var tables=e.responseXML.childNodes[0].childNodes;
-				
 				//console.log(tables);
 				
 				for(var k=0;k<tables.length;k++)
 				{
-					if(tables[k].nodeName!="" && tables[k].nodeName!="#text" && tables[k].nodeName!="#comment")
+					var table_name=tables[k].tablename;
+					var columns=tables[k].columns;
+					if(!db.objectStoreNames.contains(table_name))
 					{
-						if(!db.objectStoreNames.contains(tables[k].nodeName))
-						{
-							//console.log(tables[k].nodeName);
-							var table=db.createObjectStore(tables[k].nodeName,{keyPath:'id'});
-						
-							for(var i=0;i<tables[k].childNodes.length;i++)
-							{	
-								if(tables[k].childNodes[i].nodeName!="" && tables[k].childNodes[i].nodeName!="#text" && tables[k].childNodes[i].nodeName!="#comment")
-								{	
-									var indexing=tables[k].childNodes[i].getAttribute('index');
-									if(indexing=='yes')
-									{
-										table.createIndex(tables[k].childNodes[i].nodeName,[tables[k].childNodes[i].nodeName,'last_updated']);
-									}
-								}		
-							}
+						//console.log(tables[k].nodeName);
+						var table=db.createObjectStore(table_name,{keyPath:'id'});
+					
+						for(var i=0;i<columns.length;i++)
+						{	
+							table.createIndex(columns[i].colname,[columns[i].colname,'last_updated']);
 						}
-					}
+					}					
 				}
-				/*
-				if(typeof func!="undefined")
-				{					
-					func();
-				}
-				*/
 			};
 
 			request.onerror=function(ev)
 			{
+				hide_loader();
 				alert('Could not switch to offline mode. Please refresh your browser and try again.');
 			};
 		});

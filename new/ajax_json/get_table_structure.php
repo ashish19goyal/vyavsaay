@@ -1,5 +1,29 @@
 <?php
 
+/*	
+ *	output data format: 
+ *			[{
+ 				tablename:'table1',
+ 				columns:[
+ 					{ colname:'column1',
+ 						coltype:'type1',
+ 					},
+ 					{ colname:'column2',
+ 						coltype:'type2',
+ 					}]
+ 			},
+ 			{
+ 				tablename:'table2',
+ 				columns:[
+ 					{ colname:'column1',
+ 						coltype:'type1',
+ 					},
+ 					{ colname:'column2',
+ 						coltype:'type2',
+ 					}]
+ 			}]
+*/
+
 	session_start();
 	include_once "../Classes/db.php";
 	use RetailingEssentials\db_connect;

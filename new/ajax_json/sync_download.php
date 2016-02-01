@@ -37,11 +37,15 @@
 	{
 		if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['username']==$username && $_SESSION['re']==$re_access)
 		{
-			$conn=new db_connect("re_user_".$domain);
+			$info_conn=new db_connect('information_schema');
+			$get_array=array();			
+			$get_query="select table_name from information_schema.tables where table_schema=?";
+			$get_array[]="re_user_".$domain;
+			$get_stmt=$info_conn->conn->prepare($get_query);
+			$get_stmt->execute($get_array);
+			$get_res=$get_stmt->fetchAll(PDO::FETCH_ASSOC);
 			
-			$db_schema_xml=new DOMDocument();
-			$db_schema_xml->load("../db/db_schema.xml");
-			$db_schema=$db_schema_xml->documentElement;
+			$conn=new db_connect("re_user_".$domain);
 			
 			$jsoneresponse['data']=[];
 			
@@ -62,10 +66,9 @@
 			}
 			//echo $selected_tables;
 			
-			foreach($db_schema->childNodes as $table)
+			foreach($get_res as $table)
 			{	
-				$table_name=$table->nodeName;
-				//echo $table_name;
+				$table_name=$table['table_name'];
 				if($table_name!=$start_table && $first_iteration && $start_table!="")
 				{
 					continue;
@@ -75,7 +78,7 @@
 				$found=strpos($selected_tables, "--".$table_name."--");
 				
 				
-				if($table_name!="#text" && ($found!==false))
+				if($found!==false)
 				{
 					$jsonresponse['data'][$table_name]=[];
 					
