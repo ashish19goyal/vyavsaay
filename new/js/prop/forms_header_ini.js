@@ -1008,29 +1008,6 @@ function form24_header_ini()
 }
 
 /**
- * @form Manage Customers
- * @formNo 30
- */
-function form30_header_ini()
-{
-	var filter_fields=document.getElementById('form30_header');
-	var name_filter=filter_fields.elements[0];
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form30_ini();
-	});
-
-	var name_data="<customers>" +
-			"<name></name>" +
-			"</customers>";
-	
-	set_my_filter(name_data,name_filter);
-};
-
-/**
  * @form Manage Offers
  * @formNo 35
  */
@@ -1254,38 +1231,6 @@ function form44_header_ini()
 	});
 };
 
-/**
- * @form Set defaults
- * @formNo 46
- */
-function form46_header_ini()
-{
-	var filter_fields=document.getElementById('form46_header');
-	var other_element=filter_fields.elements[0];
-	var add_element=filter_fields.elements[1];
-	
-	$(add_element).off('click');
-	$(add_element).on('click',function(e)
-	{
-		modal135_action('');	
-//		form46_update_form();
-	});
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form46_ini();
-	});
-	
-	var other_data="<user_preferences>" +
-			"<display_name></display_name>" +
-			"<type exact='yes'>other</type>" +
-			"</user_preferences>";
-	
-	set_my_filter(other_data,other_element);
-	
-};
 
 /**
  * @form change password
@@ -1298,102 +1243,6 @@ function form47_header_ini()
 	filter_fields.elements[2].value="";
 	filter_fields.elements[3].value="";
 }
-
-/**
- * @form Select Reports
- * @formNo 48
- */
-function form48_header_ini()
-{
-	var filter_fields=document.getElementById('form48_header');
-	var report_filter=filter_fields.elements[0];
-	var save_element=filter_fields.elements['save'];
-	
-	$(save_element).off('click');
-	$(save_element).on('click',function(e)
-	{
-		form48_update_form();
-	});
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form48_ini();
-	});
-	
-	var reports_data="<user_preferences>" +
-			"<display_name></display_name>" +
-			"<type exact='yes'>report</type>" +
-			"</user_preferences>";
-
-	set_my_filter(reports_data,report_filter);
-
-};
-
-
-/**
- * @form Select Forms
- * @formNo 49
- */
-function form49_header_ini()
-{
-	var filter_fields=document.getElementById('form49_header');
-	var form_filter=filter_fields.elements[0];
-	var save_element=filter_fields.elements['save'];
-	
-	$(save_element).off('click');
-	$(save_element).on('click',function(e)
-	{
-		form49_update_form();
-	});
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form49_ini();
-	});
-	
-	var forms_data="<user_preferences>" +
-			"<display_name></display_name>" +
-			"<type exact='yes'>form</type>" +
-			"</user_preferences>";
-
-	set_my_filter(forms_data,form_filter);
-
-};
-
-/**
- * @form Set Accounting Defaults
- * @formNo 50
- */
-function form50_header_ini()
-{
-	var filter_fields=document.getElementById('form50_header');
-	var accounts_filter=filter_fields.elements[0];
-	var add_element=filter_fields.elements[1];
-	
-	$(add_element).off('click');
-	$(add_element).on('click',function(e)
-	{
-		//form50_update_form();
-		modal135_action('accounting');
-	});
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form50_ini();
-	});
-	var accounts_data="<user_preferences>" +
-			"<display_name></display_name>" +
-			"<type exact='yes'>accounting</type>" +
-			"</user_preferences>";
-
-	set_my_filter(accounts_data,accounts_filter);
-};
 
 /**
  * @form Set Access Control

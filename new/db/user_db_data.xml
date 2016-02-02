@@ -4148,6 +4148,28 @@
 			<tables>--product_master--product_instances--inventory_adjust--bill_items--supplier_bill_items--discarded--customer_return_items--supplier_return_items--sale_prices--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form313</name>
+			<display_name>notes</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--notes--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form314</name>
+			<display_name>system_objects</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--system_objects--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -7927,6 +7949,28 @@
 			<username>master</username>
 			<element_id>form304</element_id>
 			<element_name>inventory_sehgal</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form313</element_id>
+			<element_name>notes</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form314</element_id>
+			<element_name>system_objects</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

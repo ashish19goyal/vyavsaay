@@ -214,7 +214,11 @@ function modal_forms_ini()
 	{
 		dynamic_modal_array.push(i);
 	}
-	for(var i=116;i<=164;i++)
+	for(var i=116;i<=134;i++)
+	{
+		dynamic_modal_array.push(i);
+	}
+	for(var i=137;i<=164;i++)
 	{
 		dynamic_modal_array.push(i);
 	}
@@ -368,6 +372,7 @@ function hide_all()
 	$("#search_results_box").hide();
 	$("#activities_box").hide();
 	$("#notifications_box").hide();
+	$(".vyavsaay_objects").hide();
 	
 	hide_all_grids();
 
@@ -442,6 +447,14 @@ function element_display(fid,element_name,elements)
 		}
 	}
 }
+
+function show_object(object_type,obj_name,obj_id) 
+{
+	console.log('showing object');
+	initialize_object(object_type,obj_name,obj_id);
+	$(".vyavsaay_objects").show();	
+	$("#object_"+object_type).click();
+}	
 
 function access_display(tablename,record_id)
 {
@@ -554,16 +567,6 @@ function import_data(form_name)
 		case 'form43':modal23_action(form43_import_template,form43_import);
 		break;
 		case 'form44':modal23_action(form44_import_template,form44_import);
-		break;
-		case 'form46':modal23_action(form46_import_template,form46_import);
-		break;
-		case 'form47':modal23_action(form47_import_template,form47_import);
-		break;
-		case 'form48':modal23_action(form48_import_template,form48_import);
-		break;
-		case 'form49':modal23_action(form49_import_template,form49_import);
-		break;
-		case 'form50':modal23_action(form50_import_template,form50_import);
 		break;
 		case 'form51':modal23_action(form51_import_template,form51_import);
 		break;

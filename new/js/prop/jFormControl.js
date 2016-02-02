@@ -12,6 +12,7 @@
 			$(this).find('.floatlabel').floatlabel();
 			$(this).find('.floatlabel').trigger('change');
 			$(this).find('textarea').autosize();
+			$(this).find("form").attr('autocomplete', 'off');
 			$(this).find('.dblclick_editable').longpresseditable();
       });
 	};

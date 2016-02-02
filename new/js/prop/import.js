@@ -874,67 +874,6 @@ function form24_import(data_array,import_type)
 
 
 /**
-* @form Manage Customers
-* @formNo 30
-*/
-function form30_import(data_array,import_type)
-{
-	var data_xml="<customers>";
-	var account_xml="<accounts>";
-	var counter=1;
-	var last_updated=get_my_time();
-	
-	data_array.forEach(function(row)
-	{
-		//console.log(row);
-		if((counter%500)===0)
-		{
-			data_xml+="</customers><separator></separator><customers>";
-			account_xml+="</accounts><separator></separator><accounts>";
-		}
-		counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<name>"+row.name+"</name>" +
-				"<phone>"+row.phone+"</phone>" +
-				"<email>"+row.email+"</email>" +
-				"<acc_name unique='yes'>"+row.acc_name+"</acc_name>" +
-				"<address>"+row.address+"</address>" +
-				"<pincode>"+row.pincode+"</pincode>" +
-				"<city>"+row.city+"</city>" +
-				"<state>"+row.state+"</state>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-		account_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<acc_name>"+row.acc_name+"</acc_name>" +
-				"<type>customer</type>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	
-	data_xml+="</customers>";
-	account_xml+="</accounts>";
-	console.log(data_xml);
-	
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-		create_batch(account_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-		update_batch(account_xml);
-	}
-}
-
-/**
 * @form Manage Offers
 * @formNo 35
 */

@@ -211,6 +211,11 @@ input[readonly='readonly'], textarea[readonly='readonly'], select[disabled='disa
 	appearance: none;
 }
 
+input[type='checkbox']{
+	width:25px;
+	height:25px;
+	margin:auto;
+}
 /****************************/
 
 /********tab color**********/
@@ -241,4 +246,8 @@ input[readonly='readonly'], textarea[readonly='readonly'], select[disabled='disa
 
 i.link{
 	cursor: pointer;
+}
+
+.vyavsaay_objects{
+	display: none;
 }

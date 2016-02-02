@@ -23,20 +23,21 @@
     <!-- END PAGE LEVEL STYLES -->
 
     <!-- BEGIN THEME GLOBAL STYLES -->
-    <link href="./css_open/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
-    <link href="./css_open/plugins.min.css" rel="stylesheet" type="text/css" />
+	<link href="./css_open/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+	<link href="./css_open/plugins.min.css" rel="stylesheet" type="text/css" />
     <!-- END THEME GLOBAL STYLES -->
 
     <!-- BEGIN THEME LAYOUT STYLES -->
-    <link href="./css_custom/search.css" rel="stylesheet" type="text/css">
+	<link href="./css_custom/profile.css" rel="stylesheet" type="text/css">
+	<link href="./css_custom/search.css" rel="stylesheet" type="text/css">
 	<link href="./css_custom/old_theme.css" rel="stylesheet" type="text/css" />
-    <link href="./css_custom/layout.css" rel="stylesheet" type="text/css" />
-    <link href="./css_custom/default.css" rel="stylesheet" type="text/css" id="style_color" />
+	<link href="./css_custom/layout.css" rel="stylesheet" type="text/css" />
+	<link href="./css_custom/default.css" rel="stylesheet" type="text/css" id="style_color" />
     
-    <link href="./css_custom/custom.css" rel="stylesheet" type="text/css" />
-    <!-- END THEME LAYOUT STYLES -->
+	<link href="./css_custom/custom.css" rel="stylesheet" type="text/css" />
+   <!-- END THEME LAYOUT STYLES -->
 
-    <link rel="shortcut icon" href="favicon.ico" /> 
+	<link rel="shortcut icon" href="favicon.ico" /> 
 	<link rel="icon" href="./images/icon.jpeg">
 	<script src="./js/open/jquery-1.11.1.min.js" type="text/javascript"></script>
 

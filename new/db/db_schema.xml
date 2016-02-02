@@ -2014,6 +2014,17 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</qr_contexts>
+	<notes>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<source index='yes' type="TEXT"></source>
+			<source_id index='yes' type="BIGINT"></source_id>
+			<name index='yes' type="TEXT"></name>
+			<detail index='no' type="TEXT"></detail>
+			<image index='no' type="BLOB"></image>
+			<status index='yes' type="VARCHAR(20)"></status><!--active/inactive-->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</notes>
 	<system_overwrite_func>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="TEXT"></name>
@@ -2023,4 +2034,13 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</system_overwrite_func>
+	<system_objects>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(30)" unique='yes'></name>
+			<display_name index="no" type="TEXT"></display_name>
+			<elements index="no" type="TEXT"></elements>
+			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</system_objects>
 </re_xml>

@@ -21,25 +21,6 @@ function form8_import_validate(data_array)
 }
 
 /**
-* @form Manage Customers
-* @formNo 30
-*/
-function form30_import_validate(data_array)
-{
-	var validate_template_array=[{column:'acc_name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-							{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-							{column:'email',regex:new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z_.-]+$')},
-							{column:'phone',regex:new RegExp('^[0-9 ./,+-]+$')},
-							{column:'address'},
-							{column:'city',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-							{column:'state',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-							{column:'pincode',regex:new RegExp('^[0-9]+$')}];
-					
-	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
-}
-
-/**
 * @form Manage Products 
 * @formNo 39
 */

@@ -1077,30 +1077,82 @@
 		</form>
 	</div>
 
-	<div id="modal135" title="Set User Preferences">
-		<form id='modal135_form' autocomplete="off">
-			<fieldset>
-				<label>Type: <input name='type' required readonly='readonly' class='dblclick_editable' type="text"></label><br>
-				<label>Name: <input name='name' required type="text"></label><br>
-				<label>Display Name: <textarea name='display_name' required></textarea></label><br>
-				<label>Value: <textarea name='value'></textarea></label><br>
-				<input type="submit" value='Save' name='save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
+	<a href='#modal135' data-toggle="modal" id='modal135_link'></a>
+	<div id="modal135" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal135_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add Setting</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		               	<div class="row">
+									<div class="col-sm-12 col-md-4">Type</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' readonly='readonly' form='modal135_form' name='type' class='dblclick_editable'></div>
+					     		</div>
+		                  <div class="row">
+									<div class="col-sm-12 col-md-4">Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' required form='modal135_form' name='name'></div>
+					     		</div>
+					     		<div class="row">
+									<div class="col-sm-12 col-md-4">Display Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' required form='modal135_form' name='display'></div>
+					     		</div>
+					     		<div class="row">
+									<div class="col-sm-12 col-md-4">Value</div>
+					     			<div class="col-sm-12 col-md-8"><textarea required form='modal135_form' name='value'></textarea></div>
+					     		</div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal135_form' name='save'>Save</button>
+	               	<button type="button" data-dismiss='modal' class="btn red" form='modal135_form' name='save'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-	<div id="modal136" title="Add form/report">
-		<form id='modal136_form' autocomplete="off">
-			<fieldset>
-				<label>Type: <input name='type' required readonly='readonly' class='dblclick_editable' type="text"></label><br>
-				<label>Name: <input name='name' required type="text"></label><br>
-				<label>Display Name: <textarea name='display_name' required></textarea></label><br>
-				<label>Tables: <textarea name='tables'></textarea></label><br>
-				<input type="submit" value='Save' name='save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
-
+	<a href='#modal136' data-toggle="modal" id='modal136_link'></a>
+	<div id="modal136" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal136_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add Tab</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		               	<div class="row">
+									<div class="col-sm-12 col-md-4">Type</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' readonly='readonly' form='modal136_form' name='type' class='dblclick_editable'></div>
+					     		</div>
+		                  <div class="row">
+									<div class="col-sm-12 col-md-4">Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' required form='modal136_form' name='name'></div>
+					     		</div>
+					     		<div class="row">
+									<div class="col-sm-12 col-md-4">Display Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' required form='modal136_form' name='display'></div>
+					     		</div>
+					     		<div class="row">
+									<div class="col-sm-12 col-md-4">Tables</div>
+					     			<div class="col-sm-12 col-md-8"><textarea form='modal136_form' name='tables'></textarea></div>
+					     		</div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal136_form' name='save'>Save</button>
+	               	<button type="button" data-dismiss='modal' class="btn red" form='modal136_form' name='save'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
 	<div id="modal137" title="View Bills">
 		<br>		
 		<table id='modal137_item_table'>
@@ -1488,7 +1540,7 @@
                     	<h4 class="modal-title">Function</h4>
                 	</div>
 	                <div class="modal-body">
-		               <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
+		               <div class="scroller" style="height:80%;" data-always-visible="1" data-rail-visible1="1">
 		                 <div class="row">
 									<div class="col-sm-12 col-md-4">Function Name</div>
 					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal165_form' name='name'></div>
@@ -1686,7 +1738,7 @@
                     	<h4 class="modal-title">Notification Function</h4>
                 	</div>
 	                <div class="modal-body">
-		               <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
+		               <div class="scroller" style="height:80%;" data-always-visible="1" data-rail-visible1="1">
 		                 <div class="row">
 									<div class="col-sm-12 col-md-4">Function Name</div>
 					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal178_form' name='name'></div>
@@ -1727,7 +1779,7 @@
                     	<h4 class="modal-title">HTML Code</h4>
                 	</div>
 	                <div class="modal-body">
-		               <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
+		               <div class="scroller" style="height:80%;" data-always-visible="1" data-rail-visible1="1">
 		                 <div class="row">
 								    <div class="col-sm-12 col-md-12">Code</div>
 					     			<div class="col-sm-12 col-md-12"><textarea form='modal180_form' name='code'></textarea></div>
@@ -1752,7 +1804,7 @@
                  	<h4 class="modal-title">Preview</h4>
                </div>
 	            <div class="modal-body">
-		            <div class="scroller" style="height:181px;" data-always-visible="1" data-rail-visible1="1">
+		            <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
 		               	Preview <br><output name='picture'></output>
 								<input type='file' style='display:none;' name='file_hidden'>
 								<br><button type='button' class='btn red' name='dummy'>Select Image</button>
@@ -1776,7 +1828,7 @@
                     	<h4 class="modal-title">Change Password</h4>
                 	</div>
                     <div class="modal-body">
-	                    <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
+	                    <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
 	                  <div class="row">
 								<div class="col-sm-12 col-md-4">Current Password</div>
 				     			<div class="col-sm-12 col-md-8"><input type="password" form='modal182_form' name='current_pass' required class="form-control"></div>
@@ -1831,7 +1883,7 @@
                     	<h4 class="modal-title">Email</h4>
                 	</div>
                     <div class="modal-body">
-	               <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
+	               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
 	                 <div class="row">
 								<div class="col-sm-12 col-md-4">Email</div>
 				     			<div class="col-sm-12 col-md-8"><textarea form='modal183_form' name='email' required></textarea></div>
@@ -1860,7 +1912,7 @@
                     	<h4 class="modal-title">Box Content</h4>
                 	</div>
 	                <div class="modal-body">
-		               <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
+		               <div class="scroller" style="height:80%;" data-always-visible="1" data-rail-visible1="1">
 		                  <div class="row">
 								    <div class="col-sm-12 col-md-12">HTML Content</div>
 					     			<div class="col-sm-12 col-md-12"><textarea form='modal184_form' name='content'></textarea></div>
@@ -1885,7 +1937,7 @@
                     	<h4 class="modal-title">Box Function</h4>
                 	</div>
 	                <div class="modal-body">
-		               <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
+		               <div class="scroller" style="height:80%;" data-always-visible="1" data-rail-visible1="1">
 		                 <div class="row">
 									<div class="col-sm-12 col-md-4">Function Name</div>
 					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal185_form' name='name'></div>
@@ -1914,7 +1966,7 @@
                     	<h4 class="modal-title">Overwrite Function</h4>
                 	</div>
 	                <div class="modal-body">
-		               <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
+		               <div class="scroller" style="height:80%;" data-always-visible="1" data-rail-visible1="1">
 		                  <div class="row">
 								    <div class="col-sm-12 col-md-12">Function Definition</div>
 					     			<div class="col-sm-12 col-md-12"><textarea form='modal186_form' name='content'></textarea></div>
@@ -1939,7 +1991,7 @@
                     	<h4 class="modal-title">Add table</h4>
                 	</div>
 	                <div class="modal-body">
-		               <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
 		                  <div class="row">
 								   <div class="col-sm-12 col-md-4">Table Name</div>
 					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal187_form' required name='table'></div>
@@ -1965,7 +2017,7 @@
                     	<h4 class="modal-title">Add Column</h4>
                 	</div>
 	                <div class="modal-body">
-		               <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
 		                  <div class="row">
 								   <div class="col-sm-12 col-md-4">Table Name</div>
 					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal188_form' readonly='readonly' name='table'></div>
@@ -1999,7 +2051,7 @@
                     	<h4 class="modal-title">Change Column Type</h4>
                 	</div>
 	                <div class="modal-body">
-		               <div class="scroller" style="height:180px;" data-always-visible="1" data-rail-visible1="1">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
 		                  <div class="row">
 								   <div class="col-sm-12 col-md-4">Table Name</div>
 					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal189_form' readonly='readonly' name='table'></div>

@@ -12,7 +12,7 @@
 <script src="./js/open/codemirror-javascript.js" type="text/javascript"></script>
 <script src="./js/open/codemirror-xml.js" type="text/javascript"></script>
 <script src="./js/open/codemirror-htmlmixed.js" type="text/javascript"></script>
-<script src="./js/open/jquery.nestable.js" type="text/javascript"></script>     
+<script src="./js/open/jquery.nestable.js" type="text/javascript"></script>
 <!-- END CORE PLUGINS -->
 
 <!-- BEGIN THEME GLOBAL SCRIPTS -->

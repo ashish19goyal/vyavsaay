@@ -9461,7 +9461,7 @@ function modal134_action(lead_id,customer,lead_details)
  * @modalNo 135
  * @modal Set User preferences
  */
-function modal135_action(type)
+function modal135_action(type,master)
 {
 	var form=document.getElementById('modal135_form');
 	var type_filter=form.elements['type'];
@@ -9495,41 +9495,41 @@ function modal135_action(type)
 			var value=value_filter.value;
 			var last_updated=get_my_time();
 			
-			var pref_xml="<user_preferences>"+
-						"<id>"+id+"</id>"+
-		                "<name unique='yes'>"+name+"</name>"+
-		                "<display_name>"+display_name+"</display_name>"+
-		                "<type>"+type_new+"</type>"+
-		                "<value>"+value+"</value>"+
-		                "<status>active</status>"+
-		                "<shortcut></shortcut>"+
-		                "<sync>checked</sync>"+		                
-		                "<last_updated>"+last_updated+"</last_updated>"+
-						"</user_preferences>";
-			if(is_online())
+			var data_json={data_store:'user_preferences',
+		 				data:[{index:'id',value:id},
+		 					{index:'name',value:name,unique:'yes'},
+		 					{index:'display_name',value:display_name},
+		 					{index:'type',value:type_new},
+		 					{index:'value',value:value},
+		 					{index:'status',value:'active'},
+		 					{index:'shortcut',value:''},
+		 					{index:'sync',value:'checked'},
+		 					{index:'last_updated',value:last_updated}]};
+	 			
+			if(typeof master!='undefined' && master=='master')
 			{
-				server_create_simple(pref_xml);
+				server_create_master_all(data_json);
 			}
 			else
 			{
-				local_create_simple(pref_xml);
-			}
+				create_json(data_json);
+	 		}
 		}
 		else
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal135").dialog("close");
+		$(form).find('.close').click();
 	});
 	
-	$("#modal135").dialog("open");
+	$("#modal135_link").click();
 }
 
 /**
  * @modalNo 136
  * @modal Add form/report
  */
-function modal136_action(type)
+function modal136_action(type,master)
 {
 	var form=document.getElementById('modal136_form');
 	var type_filter=form.elements['type'];
@@ -9563,74 +9563,47 @@ function modal136_action(type)
 			var tables=tables_filter.value;
 			var last_updated=get_my_time();
 			
-			var pref_xml="<user_preferences>"+
-						"<id>"+id+"</id>"+
-		                "<name unique='yes'>"+name+"</name>"+
-		                "<display_name>"+display_name+"</display_name>"+
-		                "<type>"+type_new+"</type>"+
-		                "<tables>"+tables+"</tables>"+
-		                "<value>checked</value>"+
-		                "<status>active</status>"+
-		                "<shortcut></shortcut>"+
-		                "<sync>checked</sync>"+		                
-		                "<last_updated>"+last_updated+"</last_updated>"+
-						"</user_preferences>";
-			var access_xml="<access_control>" +
-							"<id>"+id+"</id>" +
-							"<element_id>"+name+"</element_id>" +
-							"<element_name>"+display_name+"</element_name>" +
-							"<username>master</username>" +
-							"<re>checked</re>" +
-							"<cr>checked</cr>" +
-							"<up>checked</up>" +
-							"<del>checked</del>" +
-							"<status>active</status>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</access_control>";			
-			create_simple(pref_xml);
-			create_simple(access_xml);
-			
-			/*
-			var username_data="<access_control>"+
-							"<username></username>"+
-							"</access_control>";
-			get_single_column_data(function (usernames) 
+			var data_json={data_store:'user_preferences',
+		 				data:[{index:'id',value:id},
+		 					{index:'name',value:name,unique:'yes'},
+		 					{index:'display_name',value:display_name},
+		 					{index:'type',value:type_new},
+		 					{index:'value',value:'checked'},
+		 					{index:'tables',value:tables},
+		 					{index:'status',value:'active'},
+		 					{index:'shortcut',value:''},
+		 					{index:'sync',value:'checked'},
+		 					{index:'last_updated',value:last_updated}]};
+	 		var data2_json={data_store:'access_control',
+		 				data:[{index:'id',value:id},
+		 					{index:'element_id',value:name},
+		 					{index:'element_name',value:display_name},
+		 					{index:'username',value:'master'},
+		 					{index:'re',value:'checked'},
+		 					{index:'cr',value:'checked'},
+		 					{index:'up',value:'checked'},
+		 					{index:'del',value:'checked'},
+		 					{index:'status',value:'active'},
+		 					{index:'last_updated',value:last_updated}]};
+	 			
+			if(typeof master!='undefined' && master=='master')
 			{
-				var data_xml="<access_control>";
-				var counter=1;
-				var last_updated=get_my_time();
-				usernames.forEach(function(username)
-				{
-					counter+=1;
-					var id=last_updated+counter;
-					
-					data_xml+="<row>" +
-							"<id>"+id+"</id>" +
-							"<element_id>"+name+"</element_id>" +
-							"<element_name>"+display_name+"</element_name>" +
-							"<username>"+username+"</username>" +
-							"<re>checked</re>" +
-							"<cr>checked</cr>" +
-							"<up>checked</up>" +
-							"<del>checked</del>" +
-							"<status>active</status>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</row>";
-				});
-			
-				data_xml+="</access_control>";
-				create_batch(data_xml);				
-			},username_data);
-			*/				
+				server_create_master_all(data_json);
+				server_create_master_all(data2_json);
+			}
+			else
+			{
+				create_json(data_json);
+				create_json(data2_json);
+	 		}				
 		}
 		else
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal136").dialog("close");
+		$(form).find('.close').click();
 	});
-	
-	$("#modal136").dialog("open");
+	$("#modal136_link").click();
 }
 
 /**

@@ -159,17 +159,6 @@ function form24_import_template()
 
 
 /**
-* @form Manage Customers
-* @formNo 30
-*/
-function form30_import_template()
-{
-	var data_array=['id','name','phone','email','acc_name','address','city','pincode','state'];
-	my_array_to_csv(data_array);
-};
-
-
-/**
 * @form Manage Offers
 * @formNo 35
 */

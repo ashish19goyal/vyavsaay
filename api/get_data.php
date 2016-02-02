@@ -58,7 +58,6 @@
 	$api_key=$input_object['api_key'];
 	$username=$input_object['username'];
 	$table=$input_object['data_store'];
-	$start_index=$input_object['start_index'];
 	$columns_array=(array)$input_object['indexes'];
 
 	$api_query="select dbname,data_stores from api_key_mapping where api_key=? and username=? and status=?";
@@ -87,9 +86,9 @@
 			}
 
 			$limit_start_index=0;
-			if(isset($start_index))
+			if(isset($input_object['start_index']))
 			{
-				$limit_start_index=$start_index;
+				$limit_start_index=$input_object['start_index'];
 			}
 
 			///////
@@ -171,7 +170,7 @@
 			$response_object['status']='success';
 			$response_object['data_store']=$table;
 			$response_object['length']=count($struct_res);
-			$response_object['end_index']=$start_index+count($struct_res);
+			$response_object['end_index']=$limit_start_index+count($struct_res);
 	
 			$response_rows=[];
 	
