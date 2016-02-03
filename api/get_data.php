@@ -68,7 +68,8 @@
 	$api_struct_res=$api_stmt->fetchAll(PDO::FETCH_ASSOC);
 	
 	//echo $api_struct_res[0]['dbname'];
-	$jsonresponse="";
+	$response_object=[];
+				
 	if(count($api_struct_res)>0)
 	{
 		$db_name=$api_struct_res[0]['dbname'];
@@ -166,7 +167,6 @@
 			$stmt->execute($values_array);
 			$struct_res=$stmt->fetchAll(PDO::FETCH_ASSOC);
 			
-			$response_object=[];
 			$response_object['status']='success';
 			$response_object['data_store']=$table;
 			$response_object['length']=count($struct_res);
@@ -192,19 +192,21 @@
 			}
 
 			$response_object['rows']=$response_rows;
-			$jsonresponse=json_encode($response_object);
+			
 		}
 		else 
 		{
-			$jsonresponse="{'status':'error'}";
+			$response_object['status']='error';
+			$response_object['description']='access to data store not allowed';
 		}
 	}
 	else 
 	{
-		$jsonresponse="{'status':'error'}";
+		$response_object['status']='error';
+		$response_object['description']='api access not allowed';
 	}	
 
-	//header ("Content-Type:text/plain");
+	$jsonresponse=json_encode($response_object);
 	header ("Content-Type:application/json");
 	echo $jsonresponse;
 
