@@ -1,5 +1,5 @@
 <div class="profile-userpic">
-	<img src="../images/user.jpg" class="img-responsive" alt=""> </div>
+	<img src="./images/dummy-user.png" class="img-responsive" style="height:150px;" alt=""> </div>
 	<div class="profile-usertitle">
 		<div class="profile-usertitle-name"> User Name </div>
 		<div class="profile-usertitle-job"> +91-9998887776 </div>

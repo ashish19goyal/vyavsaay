@@ -198,7 +198,7 @@
 
 				create_json(data_json);
 
-				$('#form191').readonly();
+				$(form).readonly();
 				
 				del_button.removeAttribute("onclick");
 				$(del_button).on('click',function(event)
@@ -236,7 +236,7 @@
 	 					{index:'last_updated',value:last_updated}]};
 				update_json(data_json);
 
-				$('#form191').readonly();
+				$(form).readonly();
 			}
 			else
 			{
@@ -293,7 +293,7 @@
 					row.id=last_updated+counter;
 				}
 				
-				var data_json=[{index:'id',value:row.id},
+				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'tablename',value:row.tablename},
 	 					{index:'listname',value:row.listname},
 	 					{index:'name',value:row.value},

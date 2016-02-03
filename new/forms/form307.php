@@ -227,7 +227,7 @@
 
 				server_create_master_all(data_json);
 
-				$('#form307').readonly();
+				$(form).readonly();
 				
 				$(box_func).on('click',function () 
 				{
@@ -277,7 +277,7 @@
 	 					{index:'last_updated',value:last_updated}]};
 
 				server_update_master_all(data_json);
-				$('#form307').readonly();
+				$(form).readonly();
 			}
 			else
 			{

@@ -1,4 +1,13 @@
 /**
+* Print Objects
+*/
+function print_object(object)
+{
+	var container=document.getElementById('vyavsaay_object_'+object);
+	$.print(container);
+}
+
+/**
 * Print barcodes
 */
 function print_barcode(string)

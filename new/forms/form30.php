@@ -1,32 +1,38 @@
-<div id='form30' class='tab-pane'>
-	<table class='rwd-table'>
-		<thead>
-			<tr>
-				<form id='form30_header'></form>
-					<th>Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form30_header'></th>
-					<th>Contact</th>
-					<th>Address</th>
-					<th>Details</th>
-					<th><input type='button' form='form30_header' value='Add item' class='add_icon' onclick='modal11_action();'>
-						<input type='button' form='form30_header' value='EXPORT' class='export_icon'>
-						<input type='submit' form='form30_header' style='visibility: hidden;'>
-					</th>
-			</tr>
-		</thead>
-		<tbody id='form30_body'>
-		</tbody>
-	</table>
-	<div class='form_nav'>
-		<img src='./images/previous.png' id='form30_prev' class='prev_icon' data-index='-25' onclick="$('#form30_index').attr('data-index',$(this).attr('data-index')); form30_ini();">
-		<div style='display:hidden;' id='form30_index' data-index='0'></div>
-		<img src='./images/next.png' id='form30_next' class='next_icon' data-index='25' onclick="$('#form30_index').attr('data-index',$(this).attr('data-index')); form30_ini();">
+<div id='form30' class='tab-pane portlet'>	   
+	<div class="portlet-title">
+		<div class='caption'>		
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form30_add_item();'>Add <i class='fa fa-plus'></i></a>
+		</div>
+		<div class="actions">
+      	<a class='btn btn-default btn-sm' id='form30_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
+      	<a class='btn btn-default btn-sm' id='form30_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
+      	<a class='btn btn-default btn-sm' id='form30_print'><i class='fa fa-print'></i> Print</a>
+      </div>	
+	</div>
+	
+	<div class="portlet-body">
+		<form id='form30_header' autocomplete="off">
+			<fieldset>
+				<label><input type='text' placeholder="Name" class='floatlabel' name='name'></label>
+				<label><input type='text' placeholder="Phone" class='floatlabel' name='contact'></label>
+				<label><input type='text' placeholder="Email" class='floatlabel' name='email'></label>
+				<label><input type='submit' class='submit_hidden'></label>			
+			</fieldset>
+		</form>
+		<br>
+		
+		<div id='form30_body'>
+			
+		</div>
 	</div>
 	
 	<script>
+
 		function form30_header_ini()
 		{
 			var filter_fields=document.getElementById('form30_header');
-			var name_filter=filter_fields.elements[0];
+			var name_filter=filter_fields.elements['name'];
+			var contact_filter=filter_fields.elements['contact'];
 			
 			$(filter_fields).off('submit');
 			$(filter_fields).on('submit',function(event)
@@ -35,11 +41,12 @@
 				form30_ini();
 			});
 		
-			var name_data="<customers>" +
-					"<name></name>" +
-					"</customers>";
+			var name_data=new Object();
+				name_data.data_store="customers";
+				name_data.return_column="name";
+				name_data.indexes=[{index:'id'}];
 			
-			set_my_filter(name_data,name_filter);
+			set_my_filter_json(name_data,name_filter);
 		};
 		
 		function form30_ini()
@@ -49,37 +56,30 @@
 			if(fid==null)
 				fid="";	
 				
-			var filter_fields=document.getElementById('form30_header');
-			
-			var fname=filter_fields.elements[0].value;
-			
-			////indexing///
-			var index_element=document.getElementById('form30_index');
-			var prev_element=document.getElementById('form30_prev');
-			var next_element=document.getElementById('form30_next');
-			var start_index=index_element.getAttribute('data-index');
-			//////////////
-		
-			var columns="<customers count='25' start_index='"+start_index+"'>" +
-					"<id>"+fid+"</id>" +
-					"<name>"+fname+"</name>" +
-					"<acc_name></acc_name>"+
-					"<phone></phone>" +
-					"<email></email>" +
-					"<status></status>" +
-					"<notes></notes>" +
-					"<address></address>" +
-					"<pincode></pincode>" +
-					"<city></city>" +
-					"<state></state>" +
-					"<country></country>" +
-					"<address_status></address_status>" +
-					"<last_updated></last_updated>" +
-					"</customers>";
-		
 			$('#form30_body').html("");
-		
-			fetch_requested_data('form30',columns,function(results)
+			var filter_fields=document.getElementById('form30_header');
+			var fname=filter_fields.elements['name'].value;
+			var fcontact=filter_fields.elements['contact'].value;
+			var femail=filter_fields.elements['email'].value;
+			
+			var paginator=$('#form30_body').paginator({'page_size':24});
+			
+			var columns=new Object();
+					columns.count=paginator.page_size();
+					columns.start_index=paginator.get_index();
+					columns.data_store='customers';
+
+					columns.indexes=[{index:'id',value:fid},
+									{index:'name',value:fname},
+									{index:'acc_name'},
+									{index:'phone',value:fcontact},
+									{index:'email',value:femail},
+									{index:'address'},
+									{index:'city'},
+									{index:'state'},
+									{index:'pincode'}];		
+			
+			read_json_rows('form30',columns,function(results)
 			{
 				results.forEach(function(result)
 				{
@@ -119,59 +119,13 @@
 					{
 						event.preventDefault();
 						form30_update_item(fields);
-					});
-					
-					var attributes_data="<attributes>"+
-										"<name exact='yes'>"+result.acc_name+"</name>" +
-										"<type exact='yes'>customer</type>" +
-										"<attribute></attribute>" +
-										"<value></value>" +
-										"</attributes>";
-					fetch_requested_data('',attributes_data,function(attributes)
-					{
-						var attribute_content="";
-						attributes.forEach(function(attribute)
-						{
-							attribute_content+="<b>"+attribute.attribute+"</b>: "+attribute.value+"<br>";
-						});
-						var td_elem=document.getElementById('form30_'+result.id+'_details');
-						td_elem.innerHTML=attribute_content;
 					});					
 				});
 				
-				////indexing///
-				var next_index=parseInt(start_index)+25;
-				var prev_index=parseInt(start_index)-25;
-				next_element.setAttribute('data-index',next_index);
-				prev_element.setAttribute('data-index',prev_index);
-				index_element.setAttribute('data-index','0');
-				if(results.length<25)
-				{
-					$(next_element).hide();
-				}
-				else
-				{
-					$(next_element).show();
-				}
-				if(prev_index<0)
-				{
-					$(prev_element).hide();
-				}
-				else
-				{
-					$(prev_element).show();
-				}
-				/////////////
-		
-				longPressEditable($('.dblclick_editable'));
-				$('textarea').autosize();
-				
-				var export_button=filter_fields.elements[2];
-				$(export_button).off("click");
-				$(export_button).on("click", function(event)
-				{
-					get_export_data(columns,'Customers');
-				});
+				$('#form277').formcontrol();
+				paginator.update_index(results.length);				
+				initialize_tabular_report_buttons(columns,'Customers','form30',function (item){});
+								
 				hide_loader();
 			});
 		};
@@ -185,33 +139,19 @@
 				var email=form.elements[2].value;
 				var data_id=form.elements[4].value;
 				var last_updated=get_my_time();
-				var data_xml="<customers>" +
-							"<id>"+data_id+"</id>" +
-							"<name>"+name+"</name>" +
-							"<phone>"+phone+"</phone>" +
-							"<email>"+email+"</email>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</customers>";	
-				var activity_xml="<activity>" +
-							"<data_id>"+data_id+"</data_id>" +
-							"<tablename>customers</tablename>" +
-							"<link_to>form30</link_to>" +
-							"<title>Updated</title>" +
-							"<notes>Contact details of customer "+name+"</notes>" +
-							"<updated_by>"+get_name()+"</updated_by>" +
-							"</activity>";
-				if(is_online())
-				{
-					server_update_row(data_xml,activity_xml);
-				}
-				else
-				{
-					local_update_row(data_xml,activity_xml);
-				}
-				for(var i=0;i<4;i++)
-				{
-					$(form.elements[i]).attr('readonly','readonly');
-				}
+				
+				var data_json={data_store:'customers',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'name',value:name},
+	 					{index:'phone',value:phone},
+	 					{index:'email',value:email},
+	 					{index:'last_updated',value:last_updated}],
+	 				log:'yes',
+	 				log_data:{title:'Updated',notes:'Profile of customer '+name,link_to:'form30'}};
+
+				update_json(data_json);
+				
+				$(form).readonly();
 			}
 			else
 			{
@@ -231,28 +171,19 @@
 					var name=form.elements[0].value;
 					var acc_name=form.elements[13].value;
 					var data_id=form.elements[4].value;
-					var data_xml="<customers>" +
-								"<id>"+data_id+"</id>" +
-								"</customers>";	
-					var activity_xml="<activity>" +
-								"<data_id>"+data_id+"</data_id>" +
-								"<tablename>customers</tablename>" +
-								"<link_to>form30</link_to>" +
-								"<title>Deleted</title>" +
-								"<notes>Customer profile "+name+"</notes>" +
-								"<updated_by>"+get_name()+"</updated_by>" +
-								"</activity>";
-					var account_xml="<accounts>" +
-								"<id>"+data_id+"</id>" +
-								"<type>customer</type>" +
-								"</accounts>";
-					var attribute_xml="<attributes>" +
-								"<name>"+acc_name+"</name>" +
-								"<type>customer</type>" +
-								"</attributes>";
-					delete_row(data_xml,activity_xml);
-					delete_simple(account_xml);
-					delete_simple(attribute_xml);
+					
+					var data_json={data_store:'customers',
+ 							data:[{index:'id',value:data_id}],
+ 							log:'yes',
+ 							log_data:{title:"Deleted",notes:"Profile of customer "+name,link_to:"form30"}};
+					var account_json={data_store:'accounts',
+ 							data:[{index:'id',value:data_id},{index:'type',value:'customer'}]};
+					var attribute_json={data_store:'attributes',
+ 							data:[{index:'name',value:acc_name},{index:'type',value:'customer'}]};
+								
+					delete_json(data_json);
+					delete_json(account_json);
+					delete_json(attribute_json);
 					$(button).parent().parent().remove();
 				});
 			}
@@ -268,7 +199,6 @@
 									{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 									{column:'email',regex:new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z_.-]+$')},
 									{column:'phone',regex:new RegExp('^[0-9 ./,+-]+$')},
-									{column:'address'},
 									{column:'city',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 									{column:'state',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 									{column:'pincode',regex:new RegExp('^[0-9]+$')}];
@@ -279,58 +209,60 @@
 		
 		function form30_import(data_array,import_type)
 		{
-			var data_xml="<customers>";
-			var account_xml="<accounts>";
+			var data_json={data_store:'customers',
+ 					loader:'no',
+ 					log:'yes',
+ 					data:[],
+ 					log_data:{title:'Customer profiles',link_to:'form30'}};
+
+			var account_json={data_store:'accounts',
+ 					loader:'no',
+ 					data:[]};
+
 			var counter=1;
 			var last_updated=get_my_time();
-			
+		
 			data_array.forEach(function(row)
 			{
-				//console.log(row);
-				if((counter%500)===0)
-				{
-					data_xml+="</customers><separator></separator><customers>";
-					account_xml+="</accounts><separator></separator><accounts>";
-				}
 				counter+=1;
 				if(import_type=='create_new')
 				{
 					row.id=last_updated+counter;
 				}
-		
-				data_xml+="<row>" +
-						"<id>"+row.id+"</id>" +
-						"<name>"+row.name+"</name>" +
-						"<phone>"+row.phone+"</phone>" +
-						"<email>"+row.email+"</email>" +
-						"<acc_name unique='yes'>"+row.acc_name+"</acc_name>" +
-						"<address>"+row.address+"</address>" +
-						"<pincode>"+row.pincode+"</pincode>" +
-						"<city>"+row.city+"</city>" +
-						"<state>"+row.state+"</state>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</row>";
-				account_xml+="<row>" +
-						"<id>"+row.id+"</id>" +
-						"<acc_name>"+row.acc_name+"</acc_name>" +
-						"<type>customer</type>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</row>";
+				
+				var data_json_array=[{index:'id',value:row.id},
+	 					{index:'name',value:row.name},
+	 					{index:'phone',value:row.phone},
+	 					{index:'email',value:row.email},
+	 					{index:'acc_name',value:row.acc_name,unique:'yes'},
+	 					{index:'address',value:row.address},
+	 					{index:'pincode',value:row.pincode},
+	 					{index:'city',value:row.city},
+	 					{index:'state',value:row.state},
+	 					{index:'last_updated',value:last_updated}];
+
+				data_json.data.push(data_json_array);
+
+				var account_json_array=[{index:'id',value:row.id},
+	 					{index:'name',value:row.name},
+	 					{index:'acc_name',value:row.acc_name,unique:'yes'},
+	 					{index:'type',value:'customer'},
+	 					{index:'username',value:''},
+	 					{index:'status',value:'active'},
+	 					{index:'last_updated',value:last_updated}];
+
+				account_json.data.push(account_json_array);				
 			});
-			
-			data_xml+="</customers>";
-			account_xml+="</accounts>";
-			console.log(data_xml);
 			
 			if(import_type=='create_new')
 			{
-				create_batch(data_xml);
-				create_batch(account_xml);
+				create_batch_json(data_json);
+				create_batch_json(account_json);
 			}
 			else
 			{
-				update_batch(data_xml);
-				update_batch(account_xml);
+				update_batch_json(data_json);
+				update_batch_json(account_json);
 			}
 		}
 		

@@ -198,7 +198,7 @@
 
 				server_create_master_all(data_json);
 
-				$('#form310').readonly();
+				$(form).readonly();
 				
 				del_button.removeAttribute("onclick");
 				$(del_button).on('click',function(event)
@@ -240,7 +240,7 @@
 	 					{index:'last_updated',value:last_updated}]};
 
 				server_update_master_all(data_json);
-				$('#form310').readonly();
+				$(form).readonly();
 			}
 			else
 			{

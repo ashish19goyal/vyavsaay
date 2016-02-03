@@ -17,8 +17,8 @@
 				<tr>
 					<form id='form314_header'></form>
 						<th><input type='text' placeholder="Name" class='floatlabel' name='name' form='form314_header'></th>
-						<th><input type='text' placeholder="Display Name" class='floatlabel' name='display' form='form314_header'></th>
-						<th><input type='text' placeholder="Elements" class='floatlabel' name='elements' form='form314_header'></th>
+						<th><input type='text' placeholder="Display Name" class='floatlabel' name='display_name' form='form314_header'></th>
+						<th><input type='text' placeholder="Grids" class='floatlabel' name='element' form='form314_header'></th>
 						<th><input type='text' placeholder="Status" class='floatlabel' name='status' form='form314_header'></th>
 						<th><input type='submit' form='form314_header' style='visibility: hidden;'></th>
 				</tr>
@@ -53,8 +53,8 @@
 			
 			var form=document.getElementById('form314_header');
 			var name_filter=form.elements['name'].value;
-			var display_filter=form.elements['display'].value;
-			var elements_filter=form.elements['elements'].value;
+			var display_filter=form.elements['display_name'].value;
+			var elements_filter=form.elements['element'].value;
 			var status_filter=form.elements['status'].value;
 			
 			show_loader();
@@ -67,7 +67,7 @@
 					obj_data.start_index=paginator.get_index();
 					obj_data.data_store='system_objects';
 
-					overwrite_data.indexes=[{index:'id',value:fid},
+					obj_data.indexes=[{index:'id',value:fid},
 									{index:'name',value:name_filter},
 									{index:'display_name',value:display_filter},
 									{index:'elements',value:elements_filter},
@@ -85,8 +85,9 @@
 							rowsHTML+="<td data-th='Display Name'>";
 								rowsHTML+="<textarea class='dblclick_editable' readonly='readonly' form='form314_"+result.id+"'>"+result.display_name+"</textarea>";
 							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Elements'>";
-								rowsHTML+="<textarea class='dblclick_editable' readonly='readonly' form='form314_"+result.id+"'>"+result.elements+"</textarea>";
+							rowsHTML+="<td data-th='Grids'>";
+								rowsHTML+="<button type='button' class='btn default green-stripe' form='form314_"+result.id+"'>Add Grid</button>";							
+								rowsHTML+="<div id='form314_grids_"+result.id+"'></div>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Status'>";
 								rowsHTML+="<select class='dblclick_editable' required form='form314_"+result.id+"'></select>";
@@ -101,7 +102,21 @@
 					$('#form314_body').append(rowsHTML);
 					var fields=document.getElementById("form314_"+result.id);
 					var status_filter=fields.elements[3];
-
+					var grid_button=fields.elements[2];
+					
+					$(grid_button).on('click',function () 
+					{
+						modal190_action(result.id,'form314');
+					});
+					
+					var elements_array=JSON.parse(result.elements);
+					var docHTML="";
+					elements_array.forEach(function(element)
+					{
+						docHTML+="<span data-display_name='"+element.display_name+"' data-color='"+element.color+"' data-width='"+element.width+"' data-height='"+element.height+"' data-collapse='"+element.collapse+"'>"+element.name+"<i class='fa fa-times link' onclick=$(this).parent().remove();></i></span><br>";							
+					});
+					document.getElementById('form314_grids_'+result.id).innerHTML=docHTML;
+					
 					set_static_select('system_objects','status',status_filter,function () 
 					{
 						$(status_filter).selectpicker('val',result.status);
@@ -134,8 +149,9 @@
 							rowsHTML+="<td data-th='Display Name'>";
 								rowsHTML+="<textarea class='dblclick_editable' form='form314_"+id+"'></textarea>";
 							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Elements'>";
-								rowsHTML+="<textarea class='dblclick_editable' form='form314_"+id+"'></textarea>";
+							rowsHTML+="<td data-th='Grids'>";
+								rowsHTML+="<button type='button' class='btn default green-stripe' form='form314_"+id+"'>Add Grid</button>";							
+								rowsHTML+="<div id='form314_grids_"+id+"'></div>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Status'>";
 								rowsHTML+="<select class='dblclick_editable' data-style='btn-info' form='form314_"+id+"'></select>";
@@ -150,7 +166,13 @@
 				$('#form314_body').prepend(rowsHTML);
 				var fields=document.getElementById("form314_"+id);
 				var status_filter=fields.elements[3];
-
+				var grid_button=fields.elements[2];
+					
+				$(grid_button).on('click',function () 
+				{
+					modal190_action(id,'form314');
+				});
+					
 				set_static_select('system_objects','status',status_filter);
 				
 				$(fields).on("submit", function(event)
@@ -172,12 +194,25 @@
 			{
 				var name=form.elements[0].value;
 				var display_name=form.elements[1].value;
-				var elements=form.elements[2].value;
 				var status=$(form.elements[3]).val();
 				var data_id=form.elements[4].value;
 				var del_button=form.elements[6];
 				
 				var last_updated=get_my_time();
+				var elements_array=[];
+				$('#form314_grids_'+data_id).find('span').each(function()
+				{
+					var element=new Object();
+					var span=$(this);
+					element.name=$(this).text();
+					element.display_name=$(this).data('display_name');
+					element.color=$(this).data('color');
+					element.collapse=$(this).data('collapse');
+					element.width=$(this).data('width');
+					element.height=$(this).data('height');
+					elements_array.push(element);
+				});				
+				var elements=JSON.stringify(elements_array);
 				
 				var data_json={data_store:'system_objects',
 	 				data:[{index:'id',value:data_id},
@@ -191,7 +226,7 @@
  				
 				create_json(data_json);
 				
-				$('#form314').readonly();
+				$(form).readonly();
 				
 				del_button.removeAttribute("onclick");
 				$(del_button).on('click',function(event)
@@ -218,11 +253,24 @@
 			{
 				var name=form.elements[0].value;
 				var display_name=form.elements[1].value;
-				var elements=form.elements[2].value;
 				var status=$(form.elements[3]).val();
 				var data_id=form.elements[4].value;
 				var del_button=form.elements[6];
 				
+				var elements_array=[];
+				$('#form314_grids_'+data_id).find('span').each(function()
+				{
+					var element=new Object();
+					var span=$(this);
+					element.name=$(this).text();
+					element.display_name=$(this).data('display_name');
+					element.color=$(this).data('color');
+					element.collapse=$(this).data('collapse');
+					element.width=$(this).data('width');
+					element.height=$(this).data('height');
+					elements_array.push(element);
+				});
+				var elements=JSON.stringify(elements_array);
 				var last_updated=get_my_time();
 				
 				var data_json={data_store:'system_objects',
@@ -237,7 +285,7 @@
  				
 				update_json(data_json);
 						
-				$('#form314').readonly();
+				$(form).readonly();
 			}
 			else
 			{

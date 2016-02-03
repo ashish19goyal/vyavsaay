@@ -228,7 +228,7 @@
  						
 				server_create_master_all(data_json);
 
-				$('#form312').readonly();
+				$(form).readonly();
 				
 				$(code_button).on('click',function () 
 				{
@@ -279,7 +279,7 @@
  				
  				server_update_master_all(data_json);
 				
-				$('#form312').readonly();
+				$(form).readonly();
 			}
 			else
 			{

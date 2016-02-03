@@ -227,7 +227,7 @@
 
 				create_json(data_json);
 
-				$('#form264').readonly();
+				$(form).readonly();
 				
 				$(box_func).on('click',function () 
 				{
@@ -279,7 +279,7 @@
 				
 				update_json(data_json);
 
-				$('#form264').readonly();
+				$(form).readonly();
 			}
 			else
 			{
@@ -349,7 +349,7 @@
 					row.id=last_updated+counter;
 				}
 				
-				var data_json=[{index:'id',value:row.id},
+				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'metric_id',value:row.metric_id},
 	 					{index:'display_name',value:row.display_name},
 	 					{index:'grid',value:row.grid},

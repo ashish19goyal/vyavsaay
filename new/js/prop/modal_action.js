@@ -15931,3 +15931,25 @@ function modal189_action(tablename,colname,col_type,master)
 	
 	$("#modal189_link").click();	
 }
+
+/**
+ * @modalNo 190
+ * @modal Add grids to object pages
+ */
+function modal190_action(id,form_id)
+{
+	var form=document.getElementById('modal190_form');
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event) 
+	{
+		event.preventDefault();
+		
+		var docHTML="<span data-display_name='"+form.elements['display'].value+"' data-color='"+form.elements['color'].value+"' data-width='"+form.elements['wid'].value+"' data-height='"+form.elements['hei'].value+"' data-collapse='"+form.elements['collapse'].value+"'>"+form.elements['name'].value+"<i class='fa fa-times link' onclick=$(this).parent().remove();></i></span><br>";							
+		$('#'+form_id+'_grids_'+id).append(docHTML);				
+
+ 		$(form).find('.close').click();
+	});
+	
+	$("#modal190_link").click();	
+}

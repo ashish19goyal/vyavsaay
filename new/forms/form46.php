@@ -132,7 +132,7 @@
  				update_json(data_json);
  				
 				set_session_var(name,values);
-				$('#form46').readonly();
+				$(form).readonly();
 			}
 			else
 			{

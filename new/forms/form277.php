@@ -209,7 +209,7 @@
 
 				create_json(data_json);
 				
-				$('#form277').readonly();
+				$(form).readonly();
 				
 				$(func_button).on('click',function () 
 				{
@@ -261,7 +261,7 @@
 
 				update_json(data_json);				
 				
-				$('#form277').readonly();
+				$(form).readonly();
 			}
 			else
 			{
@@ -334,7 +334,7 @@
 					row.id=last_updated+counter;
 				}
 				
-				var data_json=[{index:'id',value:row.id},
+				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'name',value:row.name},
 	 					{index:'description',value:row.description},
 	 					{index:'initial_delay',value:row.initial_delay},

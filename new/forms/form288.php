@@ -129,13 +129,13 @@
 				var rowsHTML="<tr>";
 						rowsHTML+="<form id='form288_"+id+"'></form>";
 							rowsHTML+="<td data-th='Name'>";
-								rowsHTML+="<input type='text' form='form288_"+id+"'>";
+								rowsHTML+="<input type='text' required form='form288_"+id+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Description'>";
 								rowsHTML+="<textarea class='dblclick_editable' form='form288_"+id+"'></textarea>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Status'>";
-								rowsHTML+="<select data-style='btn-info' class='dblclick_editable' form='form288_"+id+"'></select>";
+								rowsHTML+="<select data-style='btn-info' required class='dblclick_editable' form='form288_"+id+"'></select>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Details'>";
 								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form288_"+id+"'>Function</button>";							
@@ -194,7 +194,7 @@
  						
 				create_json(data_json);
 
-				$('#form288').readonly();
+				$(form).readonly();
 				
 				$(func_button).on('click',function () 
 				{
@@ -242,7 +242,7 @@
 	 				log_data:{title:'Updated',notes:'Overwrite function '+name,link_to:'form288'}};
  				update_json(data_json);
 				
-				$('#form288').readonly();
+				$(form).readonly();
 			}
 			else
 			{
@@ -311,7 +311,7 @@
 					row.id=last_updated+counter;
 				}
 				
-				var data_json=[{index:'id',value:row.id},
+				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'name',value:row.name},
 	 					{index:'description',value:row.description},
 	 					{index:'function_def',value:row.function_def},

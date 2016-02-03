@@ -141,7 +141,7 @@
  				
  				server_update_master_all(data_json);
 				
-				$('#form316').readonly();
+				$(form).readonly();
 			}
 			else
 			{

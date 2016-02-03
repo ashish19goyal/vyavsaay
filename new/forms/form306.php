@@ -219,7 +219,7 @@
  						
 				server_create_master_all(data_json);
 
-				$('#form306').readonly();
+				$(form).readonly();
 				
 				$(box_content).on('click',function () 
 				{
@@ -271,7 +271,7 @@
 	 					{index:'status',value:status},
 	 					{index:'last_updated',value:last_updated}]};
  				server_update_master_all(data_json);
-				$('#form306').readonly();
+				$(form).readonly();
 			}
 			else
 			{

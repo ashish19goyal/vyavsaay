@@ -221,7 +221,7 @@
  						
 				create_json(data_json);
 
-				$('#form281').readonly();
+				$(form).readonly();
 				
 				$(box_content).on('click',function () 
 				{
@@ -277,7 +277,7 @@
 	 				log_data:{title:'Updated',notes:'Popup box '+name,link_to:'form281'}};
  				update_json(data_json);
 				
-				$('#form281').readonly();
+				$(form).readonly();
 			}
 			else
 			{
@@ -348,7 +348,7 @@
 					row.id=last_updated+counter;
 				}
 				
-				var data_json=[{index:'id',value:row.id},
+				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'box_id',value:row.box_id},
 	 					{index:'box_type',value:row.box_type},
 	 					{index:'box_title',value:row.box_title},

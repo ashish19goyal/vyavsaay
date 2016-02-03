@@ -1,21 +1,22 @@
 <?php
 
-	$awb_num=$_POST['awb_num'];
+	//$awb_num=$_POST['awb_num'];
+	$awb_num='828867';	
 	$data_object=[];
-	$data_object['api_key']="12345";
-	$data_object['username']="vyavsaay";
+	$data_object['api_key']="shopclues26082015";
+	$data_object['username']="shopclues";
 	$data_object['data_store']="logistics_orders";
 	//$data_object['count']="1";
-	$data_object['start_index']="0";
+	//$data_object['start_index']="0";
 	$data_object['indexes']=[];
 	$data_object['indexes'][0]=[];
 	$data_object['indexes'][0]['index']='awb_num';
 	$data_object['indexes'][0]['value']=$awb_num;
-	$data_object['indexes'][0]['array']='yes';
+	//$data_object['indexes'][0]['array']='yes';
 
-    $data_string="data=".json_encode($data_object);
+   $data_string="data=".json_encode($data_object);
 	
-	$url="localhost/api/get_data.php";
+	$url="https://vyavsaay.com/api/get_data.php";
 	//$url="https://vyavsaay.com/api/get_data.php";
 
 	$ch=curl_init();

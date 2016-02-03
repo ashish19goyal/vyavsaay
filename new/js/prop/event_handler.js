@@ -450,9 +450,7 @@ function element_display(fid,element_name,elements)
 
 function show_object(object_type,obj_name,obj_id) 
 {
-	console.log('showing object');
 	initialize_object(object_type,obj_name,obj_id);
-	$(".vyavsaay_objects").show();	
 	$("#object_"+object_type).click();
 }	
 

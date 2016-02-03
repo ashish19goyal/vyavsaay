@@ -140,7 +140,7 @@
 	 				log_data:{title:'Updated',notes:'Form Tab '+display_name,link_to:'form49'}};
  				update_json(data_json);
  				
-				$('#form49').readonly();
+				$(form).readonly();
 			}
 			else
 			{

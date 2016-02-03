@@ -2075,4 +2075,50 @@
         </div>
     </div>
 
+	<a href='#modal190' data-toggle="modal" id='modal190_link'></a>
+	<div id="modal190" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal190_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add Grid</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal190_form' required name='name'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Display Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal190_form' name='display'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Color</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal190_form' name='color'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Collapse</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal190_form' name='collapse'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Width</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal190_form' name='wid'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Height</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal190_form' name='hei'></div>
+					     		</div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal190_form' name='save'>Add</button>
+	               	<button type="button" class="btn red" form='modal190_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>

@@ -264,7 +264,7 @@
 					}, function() {});
 				}
 				
-				$('#form257').readonly();
+				$(form).readonly();
 			}
 			else
 			{

@@ -251,3 +251,8 @@ i.link{
 .vyavsaay_objects{
 	display: none;
 }
+
+.portlet > .portlet-title > .tools > a.fullscreen, .portlet .fa-print{
+	font-size: 2em;
+	color: #fdfdfd;
+}

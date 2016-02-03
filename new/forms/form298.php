@@ -228,7 +228,7 @@
  				
 				create_json(data_json);
 				
-				$('#form298').readonly();
+				$(form).readonly();
 				
 				$(code_button).on('click',function () 
 				{
@@ -282,7 +282,7 @@
  				
 				update_json(data_json);
 						
-				$('#form298').readonly();
+				$(form).readonly();
 			}
 			else
 			{
@@ -353,7 +353,7 @@
 					row.id=last_updated+counter;
 				}
 				
-				var data_json=[{index:'id',value:row.id},
+				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'name',value:row.name},
 	 					{index:'detail',value:row.detail},
 	 					{index:'html_code',value:row.html_code},
