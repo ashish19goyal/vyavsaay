@@ -54,7 +54,7 @@
 
 	$input_data=$_POST['data'];
 	$input_object=json_decode($input_data,true);
-
+ 
 	$api_key=$input_object['api_key'];
 	$username=$input_object['username'];
 	$table=$input_object['data_store'];
