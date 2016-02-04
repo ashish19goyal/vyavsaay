@@ -267,7 +267,6 @@
 			var $focusElem = this.$element.find(this.options.focusOn);
 
 			$focusElem = $focusElem.length ? $focusElem : this.$element;
-
 			$focusElem.focus();
 		},
 
@@ -287,7 +286,6 @@
 						.addClass(that.options.attentionAnimation);
 				}, 0);
 			}
-
 
 			this.focus();
 		},

@@ -154,7 +154,6 @@
 			}
 
 			if (!topModal) return;
-
 			topModal.focus();
 		},
 
@@ -172,7 +171,7 @@
 			}
 
 			this.removeContainer(modal);
-
+			
 			this.setFocus();
 		},
 

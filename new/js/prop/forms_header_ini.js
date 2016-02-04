@@ -233,32 +233,6 @@ function form7_switch_view()
 
 
 /**
- * @form Manage Staff
- * @formNo 8
- */
-function form8_header_ini()
-{
-	var filter_fields=document.getElementById('form8_header');
-	var name_filter=filter_fields.elements[0];
-	var status_filter=filter_fields.elements[1];
-	
-	var name_data="<staff>" +
-		"<name></name>" +
-		"</staff>";
-
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form8_ini();
-	});
-
-	set_my_filter(name_data,name_filter);	
-	set_static_filter('staff','status',status_filter);	
-};
-
-
-/**
  * @form Create Service Bills
  * @formNo 10
  */
@@ -1116,31 +1090,6 @@ function form39_header_ini()
 
 
 /**
- * @form Manage Suppliers
- * @formNo 40
- */
-function form40_header_ini()
-{
-	var filter_fields=document.getElementById('form40_header');
-	var name_filter=filter_fields.elements[0];
-	
-	var name_data="<suppliers>" +
-			"<name></name>" +
-			"</suppliers>";
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form40_ini();
-	});
-
-	set_my_filter(name_data,name_filter);
-};
-
-
-
-/**
  * @form Manage Bills
  * @formNo 42
  */
@@ -1243,45 +1192,6 @@ function form47_header_ini()
 	filter_fields.elements[2].value="";
 	filter_fields.elements[3].value="";
 }
-
-/**
- * @form Set Access Control
- * @formNo 51
- */
-function form51_header_ini()
-{
-	var fields=document.getElementById('form51_master');
-	var users_filter=fields.elements['username'];
-	var save_button=fields.elements['save'];
-	
-	var username_data="<accounts>" +
-			"<username></username>" +
-			"</accounts>";
-	set_my_value_list(username_data,users_filter);
-
-	$(fields).off('submit');
-	$(fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form51_ini();
-	});
-	
-	$(save_button).off('click');
-	$(save_button).on('click',function(event)
-	{
-		event.preventDefault();
-		form51_update_form();
-	});
-	
-	$(document).off('keydown');
-	$(document).on('keydown', function(event) {
-		if( event.keyCode == 83 && event.ctrlKey) {
-	    	event.preventDefault();
-	    	$(save_button).trigger('click');
-	    }
-	});
-
-};
 
 /**
  * @form Manage Supplier Bills
@@ -5290,44 +5200,6 @@ function form147_header_ini()
 	});
 };
 
-
-/**
- * @form Create Roles
- * @formNo 148
- */
-function form148_header_ini()
-{
-	var fields=document.getElementById('form148_master');
-	var role_filter=fields.elements['role'];
-	var save_button=fields.elements['save'];
-	
-	var role_data="<roles>" +
-			"<role_name></role_name>" +
-			"</roles>";
-	set_my_value_list(role_data,role_filter);
-	
-	$(fields).off('submit');
-	$(fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form148_ini();
-	});
-	
-	$(save_button).off('click');
-	$(save_button).on('click',function(event)
-	{
-		event.preventDefault();
-		form148_update_form();
-	});
-	
-	$(document).off('keydown');
-	$(document).on('keydown', function(event) {
-		if(event.keyCode == 83 && event.ctrlKey) {
-	    	event.preventDefault();
-	    	$(save_button).trigger('click');
-	    }
-	});
-};
 
 /**
  * @form Assign Roles

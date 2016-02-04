@@ -128,58 +128,6 @@ function form5_delete_item(button)
 	}
 }
 
-
-/**
- * @form Manage Staff
- * @param button
- */
-function form8_delete_item(button)
-{
-	if(is_delete_access('form8'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var name=form.elements[0].value;
-			var data_id=form.elements[5].value;
-			var acc_name=form.elements[14].value;
-			var last_updated=get_my_time();
-			var data_xml="<staff>" +
-						"<id>"+data_id+"</id>" +
-						"<name>"+name+"</name>" +
-						"</staff>";	
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>staff</tablename>" +
-						"<link_to>form8</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Staff profile of "+name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var account_xml="<accounts>" +
-						"<id>"+data_id+"</id>" +
-						"<type>staff</type>" +
-						"</accounts>";
-			var attribute_xml="<attributes>" +
-						"<name>"+acc_name+"</name>" +
-						"<type>staff</type>" +
-						"</attributes>";
-						
-			delete_row(data_xml,activity_xml);
-			delete_simple(account_xml);
-			delete_simple(attribute_xml);
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-
 /**
  * @form Create Service Bill
  * @param button
@@ -756,54 +704,6 @@ function form39_delete_item(button)
 			delete_simple(other_delete4);
 			delete_simple(other_delete5);
 			delete_simple(other_delete6);
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
- * @form Manage Vendors
- * @param button
- */
-function form40_delete_item(button)
-{
-	if(is_delete_access('form40'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var name=form.elements[0].value;
-			var data_id=form.elements[4].value;
-			var acc_name=form.elements[13].value;
-			var data_xml="<suppliers>" +
-						"<id>"+data_id+"</id>" +
-						"</suppliers>";	
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>suppliers</tablename>" +
-						"<link_to>form40</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Supplier profile "+name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var account_xml="<accounts>" +
-						"<id>"+data_id+"</id>" +
-						"<type>supplier</type>" +
-						"</accounts>";
-			var attribute_xml="<attributes>" +
-						"<name>"+acc_name+"</name>" +
-						"<type>supplier</type>" +
-						"</attributes>";
-						
-			delete_row(data_xml,activity_xml);
-			delete_simple(account_xml);
-			delete_simple(attribute_xml);
 			$(button).parent().parent().remove();
 		});
 	}

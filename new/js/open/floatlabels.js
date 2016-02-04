@@ -13,7 +13,7 @@
                 slideInput                      : true,
                 labelStartTop                   : '0px',
                 labelEndTop                     : '0px',
-                paddingOffset                   : '0px',
+                paddingOffset                   : '4px',
                 transitionDuration              : 0.1,
                 transitionEasing                : 'ease-in-out',
                 labelClass                      : '',

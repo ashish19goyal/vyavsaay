@@ -12,7 +12,7 @@
 	$data_object['indexes'][0]=[];
 	$data_object['indexes'][0]['index']='awb_num';
 	$data_object['indexes'][0]['value']=$awb_num;
-	//$data_object['indexes'][0]['array']='yes';
+	$data_object['indexes'][0]['array']='yes';
 	$data_string="data=".json_encode($data_object);
 	echo $data_string;
 	$url="https://vyavsaay.com/api/get_data.php";

@@ -95,7 +95,7 @@
 								rowsHTML+="<input type='hidden' form='form48_"+result.id+"' value='"+result.id+"'>";	
 								rowsHTML+="<input type='hidden' form='form48_"+result.id+"' value='"+result.name+"'>";	
 								rowsHTML+="<button type='submit' class='btn green' form='form48_"+result.id+"' title='Save'><i class='fa fa-save'></i></button>";
-								rowsHTML+="<button class='btn red' form='form48_"+result.id+"' title='Delete' onclick='form48_delete_item($(this));'><i class='fa fa-trash'></i></button>";
+								rowsHTML+="<button type='button' class='btn red' form='form48_"+result.id+"' title='Delete' onclick='form48_delete_item($(this));'><i class='fa fa-trash'></i></button>";
 							rowsHTML+="</td>";			
 					rowsHTML+="</tr>";
 					

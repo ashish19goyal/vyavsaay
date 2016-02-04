@@ -103,71 +103,6 @@ function form5_import(data_array,import_type)
 	}
 };
 
-
-/** 
-* @form Manage Staff
-* @formNo 8
-*/
-function form8_import(data_array,import_type)
-{
-	var data_xml="<staff>";
-	var account_xml="<accounts>";
-	var counter=1;
-	var last_updated=get_my_time();
-	
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</staff><separator></separator><staff>";
-			account_xml+="</accounts><separator></separator><accounts>";
-		}
-		counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<name>"+row.name+"</name>" +
-				"<phone>"+row.phone+"</phone>" +
-				"<email>"+row.email+"</email>" +
-				"<acc_name unique='yes'>"+row.acc_name+"</acc_name>" +
-				"<status>"+row.status+"</status>" +
-				"<address>"+row.address+"</address>" +
-				"<pincode>"+row.pincode+"</pincode>" +
-				"<city>"+row.city+"</city>" +
-				"<state>"+row.state+"</state>" +
-				"<country>"+row.country+"</country>" +
-				"<address_status>pending analysis</address_status>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-		account_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<acc_name>"+row.acc_name+"</acc_name>" +
-				"<description></description>" +
-				"<type>staff</type>" +
-				"<username unique='yes'>"+row.username+"</username>" +
-				"<status>active</status>"+				
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-
-	data_xml+="</staff>";
-	account_xml+="</accounts>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-		create_batch(account_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-		update_batch(account_xml);
-	}
-};
-
 /**
 * @form create service bills
 * @formNo 10
@@ -1017,67 +952,6 @@ function form39_import(data_array,import_type)
 	}
 };
 
-
-/**
-* @form Manage suppliers
-* @formNo 40
-*/
-function form40_import(data_array,import_type)
-{
-	var data_xml="<suppliers>";
-	var account_xml="<accounts>";
-	var counter=1;
-	var last_updated=get_my_time();
-	
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</suppliers><separator></separator><suppliers>";
-			account_xml+="</accounts><separator></separator><accounts>";
-		}
-		counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<name>"+row.name+"</name>" +
-				"<phone>"+row.phone+"</phone>" +
-				"<email>"+row.email+"</email>" +
-				"<acc_name unique='yes'>"+row.acc_name+"</acc_name>" +
-				"<notes>"+row.notes+"</notes>" +
-				"<address>"+row.address+"</address>" +
-				"<pincode>"+row.pincode+"</pincode>" +
-				"<city>"+row.city+"</city>" +
-				"<state>"+row.state+"</state>" +
-				"<country>"+row.country+"</country>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</row>";
-		account_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<acc_name>"+row.acc_name+"</acc_name>" +
-				"<description>"+row.notes+"</description>" +
-				"<type>supplier</type>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</row>";
-	});
-	
-	data_xml+="</suppliers>";
-	account_xml+="</accounts>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-		create_batch(account_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-		update_batch(account_xml);
-	}
-};
 
 /**
 * @form Manage Bills

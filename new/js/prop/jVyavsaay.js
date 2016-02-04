@@ -14,9 +14,11 @@
 			$(this).find('textarea').autosize();
 			$(this).find("form").attr('autocomplete', 'off');
 			$(this).find('.dblclick_editable').longpresseditable();
+			//$(this).find('.vobject_image').roundImage();
       });
 	};
 }(jQuery));
+
 
 (function ($) {
 	$.fn.codeeditor=function(options)
@@ -56,6 +58,16 @@
 		});
 		
 		$(this).closest('tr').find('select').each(function() 
+		{
+			$(this).selectpicker('setStyle', 'btn-info','remove');
+		});
+		
+		$(this).find('input,textarea').each(function() 
+		{
+			$(this).attr('readonly','readonly');
+		});
+		
+		$(this).find('select').each(function() 
 		{
 			$(this).selectpicker('setStyle', 'btn-info','remove');
 		});

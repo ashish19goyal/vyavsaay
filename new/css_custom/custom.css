@@ -200,6 +200,7 @@ input, textarea, select{
 	color: #555;
 	display: block;
 	line-height:1.42857;
+	margin:2px;
 }
 
 input[readonly='readonly'], textarea[readonly='readonly'], select[disabled='disabled'],select[disabled]{
@@ -215,16 +216,60 @@ input[type='checkbox']{
 	width:25px;
 	height:25px;
 	margin:auto;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
 }
 /****************************/
 
 /********tab color**********/
 
+.tab_color{
+  background-color:#67809F;
+  color:#fff;
+}
+
+.tab_color > li:hover{
+  background-color: #fff !important;
+	border-top:2px solid #ed6b75;
+   border-radius: 0;
+   color:#000;
+}
+
+.tab_color > li {
+  border-left: 1px solid #fff;
+  border-right: 1px solid #fff;
+  color:#fff;
+}
+
+.tab_color > li>a {
+  color:inherit;
+}
+
+.tab_color > li > a:hover{
+	background-color: #fff !important;
+	border-top:2px solid #ed6b75;
+   border-radius: 0;
+   color:#000;
+}
+
+.tab_color > li.active:focus,
+.tab_color > li.active:hover,
+.tab_color > li.active{
+	background-color: #fff;
+}
+
+
 .tab_color > li.active > a,
 .tab_color > li.active > a:focus,
-.tab_color > li.active > a:hover {
-    background-color: #67809F;
+.tab_color > li.active > a:hover{
+    background-color: #fff !important;
+    color: #333;
+    border-top: 2px solid #ed6b75;
 }
+
+
+
 /***************************/
 
 /*******tab height***********/
@@ -252,7 +297,70 @@ i.link{
 	display: none;
 }
 
+/********for grid like layout***********/
+.vr_image_container{
+	position:relative;
+	width:100%;
+}
+
+.vr_image_container:before{
+	content:"";
+	display:block;
+	padding-top:75%;
+}
+
+.vr_image{
+	position:absolute;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	border-radius:50% !important;
+	font-size:8em;
+	width: 100%;
+	background-color: #a9a9a9;
+	text-align: center;
+	color:#fff;
+}
+
+.thumbnail-button-bottom{
+	position: absolute;
+	bottom: -25px;
+	right:0px;
+	z-index: 2;
+	text-align: right;
+}
+
+.thumbnail-button-top{
+	position: absolute;
+	top: 0px;
+	right:0px;
+	z-index: 2;
+	text-align: right;
+}
+
+.thumbnail-button-bottom>.btn, .thumbnail-button-top>.btn{
+	background-color: transparent;
+	color:#333;
+}
+
+.thumbnail input, .thumbnail textarea{
+	border-bottom:1px solid #888;
+}
+
+/**************************/
+
 .portlet > .portlet-title > .tools > a.fullscreen, .portlet .fa-print{
 	font-size: 2em;
 	color: #fdfdfd;
+}
+
+a textarea{
+	color:#337ab7;
+	font-weight: bold;
+}
+
+a textarea:hover{
+	text-decoration: underline;
+	cursor:pointer;
 }

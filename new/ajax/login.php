@@ -77,8 +77,8 @@ use RetailingEssentials\db_connect;
 				
 				/////////setting access control session variables
 				$read_access="";
-				$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.re=? and c.status=? union select b.element_id from user_role_mapping a, access_control b where b.username=a.role_name and a.username=? and b.re=? and b.status=?");
-				$stmt1->execute(array($user,'checked','active',$user,'checked','active'));
+				$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.re=? union select b.element_id from user_role_mapping a, access_control b where b.username=a.role_name and a.username=? and b.re=?");
+				$stmt1->execute(array($user,'checked',$user,'checked'));
 				while ($row=$stmt1->fetch(PDO::FETCH_ASSOC))
 				{
 					$read_access.=$row['element_id']."-";
@@ -88,8 +88,8 @@ use RetailingEssentials\db_connect;
 				$session_var.="</re>";
 				
 				$create_access="";
-				$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.cr=? and c.status=? union select b.element_id from user_role_mapping a, access_control b where b.username=a.role_name and a.username=? and b.cr=? and b.status=?");
-				$stmt1->execute(array($user,'checked','active',$user,'checked','active'));
+				$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.cr=? union select b.element_id from user_role_mapping a, access_control b where b.username=a.role_name and a.username=? and b.cr=?");
+				$stmt1->execute(array($user,'checked',$user,'checked'));
 				while ($row=$stmt1->fetch(PDO::FETCH_ASSOC))
 				{
 					$create_access.=$row['element_id']."-";
@@ -99,8 +99,8 @@ use RetailingEssentials\db_connect;
 				$session_var.="</cr>";
 				
 				$update_access="";
-				$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.up=? and c.status=? union select b.element_id from user_role_mapping a, access_control b where b.username=a.role_name and a.username=? and b.up=? and b.status=?");
-				$stmt1->execute(array($user,'checked','active',$user,'checked','active'));
+				$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.up=? union select b.element_id from user_role_mapping a, access_control b where b.username=a.role_name and a.username=? and b.up=?");
+				$stmt1->execute(array($user,'checked',$user,'checked'));
 				while ($row=$stmt1->fetch(PDO::FETCH_ASSOC))
 				{
 					$update_access.=$row['element_id']."-";
@@ -110,8 +110,8 @@ use RetailingEssentials\db_connect;
 				$session_var.="</up>";
 				
 				$del_access="";
-				$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.del=? and c.status=? union select b.element_id from user_role_mapping a,access_control b where b.username=a.role_name and a.username=? and b.del=? and b.status=?");
-				$stmt1->execute(array($user,'checked','active',$user,'checked','active'));
+				$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.del=? union select b.element_id from user_role_mapping a,access_control b where b.username=a.role_name and a.username=? and b.del=?");
+				$stmt1->execute(array($user,'checked',$user,'checked'));
 				while ($row=$stmt1->fetch(PDO::FETCH_ASSOC))
 				{
 					$del_access.=$row['element_id']."-";

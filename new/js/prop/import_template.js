@@ -30,18 +30,6 @@ function form5_import_template()
 
 
 /**
-* @form Manage Staff
-* @formNo 8
-*/
-function form8_import_template()
-{
-	var data_array=['id','name','phone','email','status','acc_name','username',
-	                'address','pincode','city','state','country'];
-	my_array_to_csv(data_array);
-};
-
-
-/**
 * @form Create Service Bills
 * @formNo 10
 * @table bill_items
@@ -193,17 +181,6 @@ function form39_import_template()
 	my_array_to_csv(data_array);
 };
 
-
-/**
-* @form Manage suppliers
-* @formNo 40
-*/
-function form40_import_template()
-{
-	var data_array=['id','name','phone','email','notes','acc_name',
-	                'address','pincode','city','state','country'];
-	my_array_to_csv(data_array);
-};
 
 /**
 * @form Manage Bills

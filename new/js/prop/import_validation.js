@@ -1,26 +1,4 @@
 /**
-* @form Manage Staff
-* @formNo 8
-*/
-function form8_import_validate(data_array)
-{
-	var validate_template_array=[{column:'acc_name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-							{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-							{column:'email',regex:new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z_.-]+$')},
-							{column:'phone',regex:new RegExp('^[0-9 ./,+-]+$')},
-							{column:'username',regex:new RegExp('^[0-9a-zA-Z]+$')},
-							{column:'status',list:['active','suspended','retired']},
-							{column:'address'},
-							{column:'city',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-							{column:'state',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-							{column:'country',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-							{column:'pincode',regex:new RegExp('^[0-9]+$')}];
-					
-	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
-}
-
-/**
 * @form Manage Products 
 * @formNo 39
 */
@@ -36,27 +14,6 @@ function form39_import_validate(data_array)
 	return error_array;					
 }
 
-
-/**
-* @form Manage Suppliers
-* @formNo 40
-*/
-function form40_import_validate(data_array)
-{
-	var validate_template_array=[{column:'acc_name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-							{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-							{column:'email',regex:new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z_.-]+$')},
-							{column:'phone',regex:new RegExp('^[0-9 ./,+-]+$')},
-							{column:'notes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-							{column:'address'},
-							{column:'city',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-							{column:'state',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-							{column:'country',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-							{column:'pincode',regex:new RegExp('^[0-9]+$')}];
-					
-	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
-}
 
 /**
 * @form Product Attributes
