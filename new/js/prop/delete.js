@@ -6533,62 +6533,6 @@ function form219_delete_item(button)
 }
 
 /**
- * @form Manage Projects (CPS)
- * @param button
- */
-function form220_delete_item(button)
-{
-	if(is_delete_access('form220'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var name=form.elements[0].value;
-			var data_id=form.elements[5].value;
-			var last_updated=get_my_time();
-			var data_xml="<projects>" +
-						"<id>"+data_id+"</id>" +
-						"<name>"+name+"</name>" +
-						"</projects>";	
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>projects</tablename>" +
-						"<link_to>form220</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Project "+name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var other_delete="<project_team>" +
-					"<project_id>"+data_id+"</project_id>" +
-					"</project_team>";
-			var other_delete2="<project_phases>" +
-					"<project_id>"+data_id+"</project_id>" +
-					"</project_phases>";
-			var other_delete3="<task_instances>" +
-					"<source_id>"+data_id+"</source_id>" +
-					"<source>projects</source>" +
-					"</task_instances>";
-			var access_xml="<data_access>" +
-					"<tablename>projects</tablename>" +
-					"<record_id>"+data_id+"</record_id>" +
-					"</data_access>";
-			delete_row(data_xml,activity_xml);
-			delete_simple(other_delete);
-			delete_simple(other_delete2);
-			delete_simple(other_delete3);
-			delete_simple(access_xml);
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
  * @form Time sheet
  * @param button
  */

@@ -1205,16 +1205,6 @@ function form217_import_template()
 	my_array_to_csv(data_array);
 };
 
-/**
-* @form manage Projects (CPS)
-* @formNo 220
-* @table projects
-*/
-function form220_import_template()
-{
-	var data_array=['id','name','details','priority','start_date','status'];
-	my_array_to_csv(data_array);
-};
 
 /**
 * @form Timesheet

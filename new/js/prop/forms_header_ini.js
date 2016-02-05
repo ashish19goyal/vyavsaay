@@ -7977,37 +7977,12 @@ function form219_header_ini()
 }
 
 /**
- * @form Manage Projects (CPS)
- * @formNo 220
- */
-function form220_header_ini()
-{
-	var filter_fields=document.getElementById('form220_header');
-	var name_filter=filter_fields.elements[0];
-	var status_filter=filter_fields.elements[1];
-	
-	var name_data="<projects>" +
-			"<name></name>" +
-			"</projects>";
-	
-	set_my_filter(name_data,name_filter);
-	set_static_filter('projects','status',status_filter);
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form220_ini();
-	});
-};
-
-/**
  * @form Timesheet
  * @formNo 221
  */
 function form221_header_ini()
 {
-	var filter_fields=document.getElementById('form220_header');
+	var filter_fields=document.getElementById('form221_header');
 	var name_filter=filter_fields.elements[0];
 	var project_filter=filter_fields.elements[1];
 	var date_filter=filter_fields.elements[2];
@@ -8027,7 +8002,7 @@ function form221_header_ini()
 	$(filter_fields).on('submit',function(event)
 	{
 		event.preventDefault();
-		form220_ini();
+		form221_ini();
 	});
 	
 	$(date_filter).datepicker();

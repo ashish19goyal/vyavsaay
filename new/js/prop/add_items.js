@@ -13172,63 +13172,6 @@ function form219_add_item()
 	}
 }
 
-/**
- * @form Manage Projects (CPS)
- * @formNo 220
- */
-function form220_add_item()
-{
-	if(is_create_access('form220'))
-	{
-		var rowsHTML="";
-		var id=get_new_key();
-		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form220_"+id+"' autocomplete='off'></form>";
-			rowsHTML+="<td data-th='Project Name'>";
-				rowsHTML+="<textarea required form='form220_"+id+"'></textarea>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Details'>";
-				rowsHTML+="<textarea form='form220_"+id+"'></textarea>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Priority'>";
-				rowsHTML+="<input type='number' readonly='readonly' value='0' form='form220_"+id+"'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Start Date'>";
-				rowsHTML+="<input type='text' required form='form220_"+id+"'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Status'>";
-				rowsHTML+="<input type='text' required form='form220_"+id+"' value='active'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Action'>";
-				rowsHTML+="<input type='hidden' form='form220_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form220_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form220_"+id+"' onclick='$(this).parent().parent().remove();'>";
-			rowsHTML+="</td>";			
-		rowsHTML+="</tr>";
-	
-		$('#form220_body').prepend(rowsHTML);
-		
-		var fields=document.getElementById("form220_"+id);
-		var name_filter=fields.elements[0];
-		var start_filter=fields.elements[3];
-		var status_filter=fields.elements[4];
-		
-		$(fields).on("submit", function(event)
-		{
-			event.preventDefault();
-			form220_create_item(fields);
-		});
-				
-		$(name_filter).focus();
-
-		set_static_value_list('projects','status',status_filter);
-		$(start_filter).datepicker();
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Project expenses

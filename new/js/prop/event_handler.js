@@ -450,8 +450,15 @@ function element_display(fid,element_name,elements)
 
 function show_object(object_type,obj_name,obj_id) 
 {
-	initialize_object(object_type,obj_name,obj_id);
-	$("#object_"+object_type).click();
+	if(is_read_object(object_type))
+	{
+		initialize_object(object_type,obj_name,obj_id);
+		$("#object_"+object_type).click();
+	}
+	else
+	{
+		$('#modal2_link').click();
+	}
 }	
 
 function access_display(tablename,record_id)

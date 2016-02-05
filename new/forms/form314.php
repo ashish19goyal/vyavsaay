@@ -224,7 +224,19 @@
 	 				log:'yes',
 	 				log_data:{title:'Added',notes:display_name+' object page',link_to:'form314'}};
  				
+ 				var data2_json={data_store:'access_control',
+		 				data:[{index:'id',value:id},
+		 					{index:'element_id',value:name,uniqueWith:['username']},
+		 					{index:'element_name',value:display_name},
+		 					{index:'username',value:'master'},
+		 					{index:'re',value:'checked'},
+		 					{index:'cr',value:'checked'},
+		 					{index:'up',value:'checked'},
+		 					{index:'del',value:'checked'},
+		 					{index:'last_updated',value:last_updated}]};
+	 		
 				create_json(data_json);
+				create_json(data2_json);
 				
 				$(form).readonly();
 				
@@ -308,8 +320,11 @@
  							data:[{index:'id',value:data_id}],
  							log:'yes',
 			 				log_data:{title:'Deleted',notes:display_name+' object page',link_to:'form314'}};
-								
+					var data2_json={data_store:'access_control',
+								data:[{index:'element_id',value:name}]};
+													
 					delete_json(data_json);
+					delete_json(data2_json);
 
 					$(button).parent().parent().remove();
 				});

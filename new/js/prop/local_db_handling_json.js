@@ -315,7 +315,6 @@ function local_read_json_column(columns,callback,results)
 	else
 	{
 		var table=columns.data_store;
-		var cols=columns.indexes;
 		var count=0;
 		var start_index=0;
 		var result_column_name=columns.return_column;
@@ -345,103 +344,107 @@ function local_read_json_column(columns,callback,results)
 		
 		var bound_count=0;
 		
-		for(var j=0;j<cols.length;j++)
+		if(typeof columns.indexes!='undefined')
 		{
-			if(typeof cols[j].lowerbound!='undefined')
+			var cols=columns.indexes;
+			for(var j=0;j<cols.length;j++)
 			{
-				var fil=new Object();
-				fil.name=cols[j].index;
-			
-				fil.value=""+cols[j].lowerbound;
-				fil.type='lowerbound';
-				filter.push(fil);
-				lowerbound=[fil.value,'0'];
-				sort_index=cols[j].index;
-				
-				if(bound_count==0)
+				if(typeof cols[j].lowerbound!='undefined')
 				{
-					var upperbound=['9999999999','9999999999'];
-				}
-				bound_count+=1;
-			}
-			if(typeof cols[j].upperbound!='undefined')
-			{
-				var fil=new Object();
-				fil.name=cols[j].index;
-				fil.value=""+cols[j].upperbound;
-				fil.type='upperbound';
-				filter.push(fil);
-				upperbound=[fil.value,'999999999999'];
-				sort_index=cols[j].index;
+					var fil=new Object();
+					fil.name=cols[j].index;
 				
-				if(bound_count==0)
-				{
-					lowerbound=['0','0'];
+					fil.value=""+cols[j].lowerbound;
+					fil.type='lowerbound';
+					filter.push(fil);
+					lowerbound=[fil.value,'0'];
+					sort_index=cols[j].index;
+					
+					if(bound_count==0)
+					{
+						var upperbound=['9999999999','9999999999'];
+					}
+					bound_count+=1;
 				}
-				bound_count+=1;
-			}
-						
-			if(typeof cols[j].array!='undefined')
-			{
-				var fil=new Object();
-				fil.name=cols[j].index;
+				if(typeof cols[j].upperbound!='undefined')
+				{
+					var fil=new Object();
+					fil.name=cols[j].index;
+					fil.value=""+cols[j].upperbound;
+					fil.type='upperbound';
+					filter.push(fil);
+					upperbound=[fil.value,'999999999999'];
+					sort_index=cols[j].index;
+					
+					if(bound_count==0)
+					{
+						lowerbound=['0','0'];
+					}
+					bound_count+=1;
+				}
+							
+				if(typeof cols[j].array!='undefined')
+				{
+					var fil=new Object();
+					fil.name=cols[j].index;
+				
+					fil.value=cols[j].array;
+					fil.type='array';
+					filter.push(fil);
+				}
+				
+				if(typeof cols[j].approx_array!='undefined')
+				{
+					var fil=new Object();
+					fil.name=cols[j].index;
+				
+					fil.value=cols[j].approx_array;
+					fil.type='approx_array';
+					filter.push(fil);
+				}
+				
+				if(typeof cols[j].unequal!='undefined')
+				{
+					var fil=new Object();
+					fil.name=cols[j].index;
+				
+					fil.value=cols[j].unequal;
+					fil.type='unequal';
+					filter.push(fil);
+				}
+	
+				if(typeof cols[j].isnull!='undefined')
+				{
+					var fil=new Object();
+					fil.name=cols[j].index;
+				
+					fil.value=cols[j].isnull;
+					fil.type='isnull';
+					filter.push(fil);
+				}
+				
+				if(typeof cols[j].value!='undefined' && cols[j].value!="")
+				{
+					var fil=new Object();
+					fil.name=cols[j].index;
+				
+					fil.value=cols[j].value;
+					fil.type='';
+					filter.push(fil);
+				}
 			
-				fil.value=cols[j].array;
-				fil.type='array';
-				filter.push(fil);
-			}
-			
-			if(typeof cols[j].approx_array!='undefined')
-			{
-				var fil=new Object();
-				fil.name=cols[j].index;
-			
-				fil.value=cols[j].approx_array;
-				fil.type='approx_array';
-				filter.push(fil);
-			}
-			
-			if(typeof cols[j].unequal!='undefined')
-			{
-				var fil=new Object();
-				fil.name=cols[j].index;
-			
-				fil.value=cols[j].unequal;
-				fil.type='unequal';
-				filter.push(fil);
-			}
-
-			if(typeof cols[j].isnull!='undefined')
-			{
-				var fil=new Object();
-				fil.name=cols[j].index;
-			
-				fil.value=cols[j].isnull;
-				fil.type='isnull';
-				filter.push(fil);
-			}
-			
-			if(typeof cols[j].value!='undefined' && cols[j].value!="")
-			{
-				var fil=new Object();
-				fil.name=cols[j].index;
-			
-				fil.value=cols[j].value;
-				fil.type='';
-				filter.push(fil);
-			}
-		
-			if(typeof cols[j].exact!='undefined')
-			{
-				var fil=new Object();
-				fil.name=cols[j].index;
-				fil.value=cols[j].exact;
-				fil.type='exact';
-				filter.push(fil);
-				sort_index=cols[j].index;
-				lowerbound=[fil.value,'0'];
-				upperbound=[fil.value,'99999999'];
-				bound_count=0;
+				if(typeof cols[j].exact!='undefined')
+				{
+					var fil=new Object();
+					fil.name=cols[j].index;
+					fil.value=cols[j].exact;
+					fil.type='exact';
+					filter.push(fil);
+					sort_index=cols[j].index;
+					lowerbound=[fil.value,'0'];
+					upperbound=[fil.value,'99999999'];
+					bound_count=0;
+				}
 			}
 		}
 	
@@ -638,7 +641,6 @@ function local_read_json_count(columns,callback)
 	else
 	{
 		var table=columns.data_store;
-		var cols=columns.indexes;
 		var count=0;
 		var start_index=0;
 		var result_count=0;
@@ -659,104 +661,108 @@ function local_read_json_count(columns,callback)
 		
 		var bound_count=0;
 		
-		for(var j=0;j<cols.length;j++)
+		if(typeof columns.indexes!='undefined')
 		{
-			if(typeof cols[j].lowerbound!='undefined')
+			var cols=columns.indexes;
+			for(var j=0;j<cols.length;j++)
 			{
-				var fil=new Object();
-				fil.name=cols[j].index;
-
-				fil.value=""+cols[j].lowerbound;
-				fil.type='lowerbound';
-				filter.push(fil);
-				lowerbound=[fil.value,'0'];
-				sort_index=cols[j].index;
-				
-				if(bound_count==0)
+				if(typeof cols[j].lowerbound!='undefined')
 				{
-					var upperbound=['9999999999','9999999999'];
+					var fil=new Object();
+					fil.name=cols[j].index;
+	
+					fil.value=""+cols[j].lowerbound;
+					fil.type='lowerbound';
+					filter.push(fil);
+					lowerbound=[fil.value,'0'];
+					sort_index=cols[j].index;
+					
+					if(bound_count==0)
+					{
+						var upperbound=['9999999999','9999999999'];
+					}
+					bound_count+=1;
 				}
-				bound_count+=1;
-			}
-			if(typeof cols[j].upperbound!='undefined')
-			{
-				var fil=new Object();
-				fil.name=cols[j].index;
-			
-				fil.value=""+cols[j].upperbound;
-				fil.type='upperbound';
-				filter.push(fil);
-				upperbound=[fil.value,'999999999999'];
-				sort_index=cols[j].index;
-				
-				if(bound_count==0)
+				if(typeof cols[j].upperbound!='undefined')
 				{
-					lowerbound=['0','0'];
+					var fil=new Object();
+					fil.name=cols[j].index;
+				
+					fil.value=""+cols[j].upperbound;
+					fil.type='upperbound';
+					filter.push(fil);
+					upperbound=[fil.value,'999999999999'];
+					sort_index=cols[j].index;
+					
+					if(bound_count==0)
+					{
+						lowerbound=['0','0'];
+					}
+					bound_count+=1;
 				}
-				bound_count+=1;
-			}
-						
-			if(typeof cols[j].array!='undefined')
-			{
-				var fil=new Object();
-				fil.name=cols[j].index;		
+							
+				if(typeof cols[j].array!='undefined')
+				{
+					var fil=new Object();
+					fil.name=cols[j].index;		
+				
+					fil.value=cols[j].array;
+					fil.type='array';
+					filter.push(fil);
+				}
+				
+				if(typeof cols[j].approx_array!='undefined')
+				{
+					var fil=new Object();
+					fil.name=cols[j].index;
+				
+					fil.value=cols[j].approx_array;
+					fil.type='approx_array';
+					filter.push(fil);
+				}
+				
+				if(typeof cols[j].unequal!='undefined')
+				{
+					var fil=new Object();
+					fil.name=cols[j].index;
+				
+					fil.value=cols[j].unequal;
+					fil.type='unequal';
+					filter.push(fil);
+				}
+				
+				if(typeof cols[j].isnull!='undefined')
+				{
+					var fil=new Object();
+					fil.name=cols[j].index;
+				
+					fil.value=cols[j].isnull;
+					fil.type='isnull';
+					filter.push(fil);
+				}
+				
+				if(typeof cols[j].value!='undefined' && cols[j].value!="")
+				{
+					var fil=new Object();
+					fil.name=cols[j].index;
 			
-				fil.value=cols[j].array;
-				fil.type='array';
-				filter.push(fil);
-			}
+					fil.value=cols[j].value;
+					fil.type='';
+					filter.push(fil);
+				}
 			
-			if(typeof cols[j].approx_array!='undefined')
-			{
-				var fil=new Object();
-				fil.name=cols[j].index;
-			
-				fil.value=cols[j].approx_array;
-				fil.type='approx_array';
-				filter.push(fil);
-			}
-			
-			if(typeof cols[j].unequal!='undefined')
-			{
-				var fil=new Object();
-				fil.name=cols[j].index;
-			
-				fil.value=cols[j].unequal;
-				fil.type='unequal';
-				filter.push(fil);
-			}
-			
-			if(typeof cols[j].isnull!='undefined')
-			{
-				var fil=new Object();
-				fil.name=cols[j].index;
-			
-				fil.value=cols[j].isnull;
-				fil.type='isnull';
-				filter.push(fil);
-			}
-			
-			if(typeof cols[j].value!='undefined' && cols[j].value!="")
-			{
-				var fil=new Object();
-				fil.name=cols[j].index;
-		
-				fil.value=cols[j].value;
-				fil.type='';
-				filter.push(fil);
-			}
-		
-			if(typeof cols[j].exact!='undefined')
-			{
-				var fil=new Object();
-				fil.name=cols[j].index;
-				fil.value=cols[j].exact;
-				fil.type='exact';
-				filter.push(fil);
-				sort_index=cols[j].index;
-				lowerbound=[fil.value,'0'];
-				upperbound=[fil.value,'99999999'];
-				bound_count=0;
+				if(typeof cols[j].exact!='undefined')
+				{
+					var fil=new Object();
+					fil.name=cols[j].index;
+					fil.value=cols[j].exact;
+					fil.type='exact';
+					filter.push(fil);
+					sort_index=cols[j].index;
+					lowerbound=[fil.value,'0'];
+					upperbound=[fil.value,'99999999'];
+					bound_count=0;
+				}
 			}
 		}
 	

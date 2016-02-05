@@ -150,7 +150,7 @@
 					
 					var docs=new Object();
 					docs.data_store='documents';
-					docs.indexes=[{index:'id'},{index:'url'},{index:'doc_type',exact:'staff'},{index:'target_id',exact:result.id}];		
+					docs.indexes=[{index:'id'},{index:'url'},{index:'doc_type',exact:'staff'},{index:'doc_name',exact:'image'},{index:'target_id',exact:result.id}];		
 					read_json_rows('',docs,function(pics)
 					{
 						if(pics.length>0)
@@ -181,6 +181,7 @@
 					 				data:[{index:'id',value:data_id},
 					 					{index:'target_id',value:result.id},
 					 					{index:'url',value:dataURL},
+					 					{index:'doc_name',value:'image'},
 					 					{index:'doc_type',value:'staff'},
 					 					{index:'last_updated',value:last_updated}]};
 								create_json(data_json);
@@ -271,7 +272,7 @@
 					delete_json(data_json);
 					delete_json(account_json);
 					delete_json(attribute_json);
-					$(button).parent().parent().remove();
+					$(button).parent().parent().parent().parent().remove();
 				});
 			}
 			else

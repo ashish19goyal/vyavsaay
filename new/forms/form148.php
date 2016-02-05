@@ -110,7 +110,8 @@
 								var rowsHTML="<tr>";
 									rowsHTML+="<form id='form148_"+data_id+"' class='save_form148'></form>";
 										rowsHTML+="<td data-th='Name'>";
-											rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' title='"+element.element_id+"' form='form148_"+data_id+"'>"+element.element_name+"</textarea>";
+											rowsHTML+="<input type='text' readonly='readonly' class='floatlabel dblclick_editable' placeholder='Tab Name' title='"+element.element_id+"' form='form148_"+data_id+"' value='"+element.element_name+"'>";
+											rowsHTML+="<input type='text' readonly='readonly' class='floatlabel' placeholder='Tab Id' form='form148_"+data_id+"' value='"+element.element_id+"' required name='element_id'>";
 										rowsHTML+="</td>";
 										rowsHTML+="<td data-th='Read'>";
 											rowsHTML+="<input type='checkbox' readonly='readonly' form='form148_"+data_id+"'>";
@@ -126,7 +127,6 @@
 										rowsHTML+="</td>";
 										rowsHTML+="<td data-th='Action'>";
 											rowsHTML+="<input type='hidden' form='form148_"+data_id+"' value='"+data_id+"'>";
-											rowsHTML+="<input type='hidden' form='form148_"+data_id+"' value='"+element.element_id+"'>";
 											rowsHTML+="<button type='submit' class='btn green' form='form148_"+data_id+"' name='save' title='Save' data-action='create'><i class='fa fa-save'></i></button>";	
 											rowsHTML+="<button type='button' class='btn red' form='form148_"+data_id+"' name='delete' title='Delete' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
 										rowsHTML+="</td>";			
@@ -153,7 +153,8 @@
 							var rowsHTML="<tr>";
 								rowsHTML+="<form id='form148_"+result.id+"' class='save_form148'></form>";
 									rowsHTML+="<td data-th='Name'>";
-										rowsHTML+="<textarea readonly='readonly' form='form148_"+result.id+"'>"+result.element_name+"</textarea>";
+										rowsHTML+="<input type='text' class='floatlabel dblclick_editable' readonly='readonly' placeholder='Tab Name' form='form148_"+result.id+"' value='"+result.element_name+"'>";
+										rowsHTML+="<input type='text' class='floatlabel' readonly='readonly' placeholder='Tab Id' form='form148_"+result.id+"' value='"+result.element_id+"' required name='element_id'>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Read'>";
 										rowsHTML+="<input type='checkbox' readonly='readonly' form='form148_"+result.id+"' "+result.re+">";
@@ -169,7 +170,6 @@
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Action'>";
 										rowsHTML+="<input type='hidden' form='form148_"+result.id+"' value='"+result.id+"'>";
-										rowsHTML+="<input type='hidden' form='form148_"+result.id+"' value='"+result.element_id+"'>";
 										rowsHTML+="<button type='submit' class='btn green' form='form148_"+result.id+"' name='save' title='Save' data-action='update'><i class='fa fa-save'></i></button>";
 										rowsHTML+="<button type='button' class='btn red' form='form148_"+result.id+"' name='delete' title='Delete' onclick='form148_delete_item($(this));'><i class='fa fa-trash'></i></button>";
 									rowsHTML+="</td>";			
@@ -202,7 +202,8 @@
 				var rowsHTML="<tr>";
 					rowsHTML+="<form id='form148_"+id+"' class='save_form148'></form>";
 						rowsHTML+="<td data-th='Name'>";
-							rowsHTML+="<input type='text' form='form148_"+id+"'>";
+							rowsHTML+="<input type='text' class='floatlabel dblclick_editable' placeholder='Tab Name' form='form148_"+id+"'>";
+							rowsHTML+="<input type='text' class='floatlabel' placeholder='Tab Id' form='form148_"+id+"' required name='element_id'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Read'>";
 							rowsHTML+="<input type='checkbox' form='form148_"+id+"'>";
@@ -218,7 +219,6 @@
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form148_"+id+"' value='"+id+"'>";
-							rowsHTML+="<input type='hidden' form='form148_"+id+"' required name='element_id'>";
 							rowsHTML+="<button type='submit' class='btn green' form='form148_"+id+"' title='Save' name='save' data-action='create'><i class='fa fa-save'></i></button>";
 							rowsHTML+="<button type='button' class='btn red' form='form148_"+id+"' name='delete' title='Delete' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
 						rowsHTML+="</td>";			
@@ -282,25 +282,25 @@
 				
 				var element_name=form.elements[0].value;
 				var re='unchecked';
-				if(form.elements[1].checked)
+				if(form.elements[2].checked)
 					re='checked';
 				var cr='unchecked';
-				if(form.elements[2].checked)
+				if(form.elements[3].checked)
 					cr='checked';
 				var up='unchecked';
-				if(form.elements[3].checked)
+				if(form.elements[4].checked)
 					up='checked';
 				var del='unchecked';
-				if(form.elements[4].checked)
+				if(form.elements[5].checked)
 					del='checked';
-				var data_id=form.elements[5].value;
-				var element_id=form.elements[6].value;
+				var data_id=form.elements[6].value;
+				var element_id=form.elements[1].value;
 				var last_updated=get_my_time();
 				
 				var data_json={data_store:'access_control',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
-	 					{index:'username',value:username},
+	 					{index:'username',value:username,uniqueWith:['element_id']},
 	 					{index:'element_id',value:element_id},
 	 					{index:'element_name',value:element_name},
 	 					{index:'re',value:re},
@@ -346,19 +346,19 @@
 				
 				var element_name=form.elements[0].value;
 				var re='unchecked';
-				if(form.elements[1].checked)
+				if(form.elements[2].checked)
 					re='checked';
 				var cr='unchecked';
-				if(form.elements[2].checked)
+				if(form.elements[3].checked)
 					cr='checked';
 				var up='unchecked';
-				if(form.elements[3].checked)
+				if(form.elements[4].checked)
 					up='checked';
 				var del='unchecked';
-				if(form.elements[4].checked)
+				if(form.elements[5].checked)
 					del='checked';
-				var data_id=form.elements[5].value;
-				var element_id=form.elements[6].value;
+				var data_id=form.elements[6].value;
+				var element_id=form.elements[1].value;
 				var last_updated=get_my_time();
 				
 				var data_json={data_store:'access_control',
@@ -408,21 +408,21 @@
 					var row=$(this)[0];
 
 					var re='unchecked';
-					if(row.elements[1].checked)
+					if(row.elements[2].checked)
 						re='checked';
 					var cr='unchecked';
-					if(row.elements[2].checked)
+					if(row.elements[3].checked)
 						cr='checked';
 					var up='unchecked';
-					if(row.elements[3].checked)
+					if(row.elements[4].checked)
 						up='checked';
 					var del='unchecked';
-					if(row.elements[4].checked)
+					if(row.elements[5].checked)
 						del='checked';
 					
-					var data_json_array=[{index:'id',value:row.elements[5].value},
+					var data_json_array=[{index:'id',value:row.elements[6].value},
 						{index:'username',value:username,uniqueWith:['element_id']},
-	 					{index:'element_id',value:row.elements[6].value},
+	 					{index:'element_id',value:row.elements[1].value},
 	 					{index:'element_name',value:row.elements[0].value},
 	 					{index:'re',value:re},
 	 					{index:'cr',value:cr},
@@ -460,7 +460,7 @@
 					var form_id=$(button).attr('form');
 					var form=document.getElementById(form_id);
 					
-					var data_id=form.elements[5].value;
+					var data_id=form.elements[6].value;
 					var data_json={data_store:'access_control',
  							data:[{index:'id',value:data_id}]};
 					

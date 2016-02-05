@@ -45,19 +45,19 @@
 			
 			var table_data=new Object();
 				table_data.data_store='values_list';
-				table_data.indexes=[{index:'tablename'}];		
+				//table_data.indexes=[{index:'tablename'}];		
 				table_data.return_column='tablename';			
 			set_my_filter_json(table_data,table_filter);
 			
 			var list_data=new Object();
 				list_data.data_store='values_list';
-				list_data.indexes=[{index:'listname'}];		
+				//list_data.indexes=[{index:'listname'}];		
 				list_data.return_column='listname';
 			set_my_filter_json(list_data,list_filter);
 			
 			var value_data=new Object();
 				value_data.data_store='values_list';
-				value_data.indexes=[{index:'name'}];		
+				//value_data.indexes=[{index:'name'}];		
 				value_data.return_column='name';
 			set_my_filter_json(value_data,value_filter);
 		}	

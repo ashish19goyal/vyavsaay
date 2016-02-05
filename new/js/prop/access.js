@@ -1,3 +1,4 @@
+/**********Access for tabs*****************/
 function is_form_access(form_id)
 {
 	var form=get_session_var('forms');
@@ -61,7 +62,59 @@ function is_delete_access(form_id)
 	else
 		return true;
 }
+/***************/
 
+/*****Access for objects*****/
+
+function is_read_object(obj_name)
+{
+	var re=get_session_var('re');
+	var found=re.search(obj_name+"-");
+	if(found==-1)
+	{
+		return false;
+	}
+	else
+		return true;
+}
+
+function is_create_object(obj_name)
+{
+	var cr=get_session_var('cr');
+	var found=cr.search(obj_name+"-");
+	if(found===-1)
+	{
+		return false;
+	}
+	else
+		return true;
+}
+
+function is_update_object(obj_name)
+{
+	var up=get_session_var('up');
+	var found=up.search(obj_name+"-");
+	if(found===-1)
+	{
+		return false;
+	}
+	else
+		return true;
+}
+
+function is_delete_object(obj_name)
+{
+	var del=get_session_var('del');
+	var found=del.search(obj_name+"-");
+	if(found===-1)
+	{
+		return false;
+	}
+	else
+		return true;
+}
+
+/*****************************/
 
 function if_data_read_access(tablename,func)
 {

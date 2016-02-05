@@ -221,8 +221,20 @@
 	 					{index:'elements',value:elements},
 	 					{index:'status',value:status},
 	 					{index:'last_updated',value:last_updated}]};
- 				
+
+ 				var data2_json={data_store:'access_control',
+		 				data:[{index:'id',value:id},
+		 					{index:'element_id',value:name,uniqueWith:['username']},
+		 					{index:'element_name',value:display_name},
+		 					{index:'username',value:'master'},
+		 					{index:'re',value:'checked'},
+		 					{index:'cr',value:'checked'},
+		 					{index:'up',value:'checked'},
+		 					{index:'del',value:'checked'},
+		 					{index:'last_updated',value:last_updated}]};
+
 				server_create_master_all(data_json);
+				server_create_master_all(data2_json);
 				
 				$(form).readonly();
 				
@@ -302,7 +314,11 @@
 					var data_json={data_store:'system_objects',
  							data:[{index:'name',value:name}]};
 					
+					var data2_json={data_store:'access_control',
+								data:[{index:'element_id',value:name}]};
+
 					server_delete_master_all(data_json);
+					server_delete_master_all(data2_json);
 				
 					$(button).parent().parent().remove();
 				});

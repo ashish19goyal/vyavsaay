@@ -2121,4 +2121,42 @@
         </div>
     </div>
 
+	<a href='#modal191' data-toggle="modal" id='modal191_link'></a>
+	<div id="modal191" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal191_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Create Project</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal191_form' required name='name'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Details</div>
+					     			<div class="col-sm-12 col-md-8"><textarea form='modal191_form' name='detail'></textarea></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Priority</div>
+					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' value='0' form='modal191_form' name='priority'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Status</div>
+					     			<div class="col-sm-12 col-md-8"><select form='modal191_form' required name='status'></select></div>
+					     		</div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal191_form' name='save'>Create</button>
+	               	<button type="button" class="btn red" form='modal191_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>

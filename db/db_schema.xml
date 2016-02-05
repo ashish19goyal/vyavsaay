@@ -1242,6 +1242,26 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</data_access>
+	<object_access>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<tablename index='yes' type="TEXT"></tablename>
+			<record_id index='yes' type="VARCHAR(20)"></record_id>
+			<user_type index='yes' type="VARCHAR(25)"></user_type><!--user/role-->
+			<user index='yes' type="TEXT"></user>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</object_access>
+	<access_conditions>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<tablename index='yes' type="TEXT"></tablename>
+			<access_type index='yes' type="VARCHAR(25)"></access_type><!--all/read/update/delete-->
+			<user_type index='yes' type="VARCHAR(25)"></user_type><!--user/field/role-->
+			<user index='yes' type="TEXT"></user>
+			<criteria_field index='yes' type="TEXT"></criteria_field>
+			<criteria_value index='yes' type="TEXT"></criteria_value>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</access_conditions>
 	<reports>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(200)"></name>

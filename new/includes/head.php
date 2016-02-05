@@ -14,7 +14,7 @@
     <link href="./css_open/uniform.default.min.css" rel="stylesheet" type="text/css" />
     <link href="./css_open/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
     <link href="./css_open/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css" />
-    <link href="./css_open/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+    <link href="./css_open/bootstrap-select.css" rel="stylesheet" type="text/css" />
     <link href="./css_open/codemirror.css" rel="stylesheet" type="text/css" />
     <link href="./css_open/jquery.nestable.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->

@@ -233,25 +233,23 @@ function set_session_variables(domain,username,pass,func)
 										{
 											var record3=result3.value;
 											
-											if(record3.status==='active')
-											{
-												if(record3.re==='checked')
-												{	
-													re+=record3.element_id+"-";
-												}
-												if(record3.cr==='checked')
-												{	
-													cr+=record3.element_id+"-";
-												}
-												if(record3.up==='checked')
-												{
-													up+=record3.element_id+"-";
-												}
-												if(record3.del==='checked')
-												{
-													del+=record3.element_id+"-";
-												}
+											if(record3.re==='checked')
+											{	
+												re+=record3.element_id+"-";
 											}
+											if(record3.cr==='checked')
+											{	
+												cr+=record3.element_id+"-";
+											}
+											if(record3.up==='checked')
+											{
+												up+=record3.element_id+"-";
+											}
+											if(record3.del==='checked')
+											{
+												del+=record3.element_id+"-";
+											}
+											
 											result3.continue();
 										}
 										else{
@@ -270,25 +268,23 @@ function set_session_variables(domain,username,pass,func)
 										{
 											var record3=result3.value;
 											
-											if(record3.status==='active')
-											{
-												if(record3.re==='checked')
-												{	
-													re+=record3.element_id+"-";
-												}
-												if(record3.cr==='checked')
-												{	
-													cr+=record3.element_id+"-";
-												}
-												if(record3.up==='checked')
-												{
-													up+=record3.element_id+"-";
-												}
-												if(record3.del==='checked')
-												{
-													del+=record3.element_id+"-";
-												}
+											if(record3.re==='checked')
+											{	
+												re+=record3.element_id+"-";
 											}
+											if(record3.cr==='checked')
+											{	
+												cr+=record3.element_id+"-";
+											}
+											if(record3.up==='checked')
+											{
+												up+=record3.element_id+"-";
+											}
+											if(record3.del==='checked')
+											{
+												del+=record3.element_id+"-";
+											}
+										
 											result3.continue();
 										}
 										else

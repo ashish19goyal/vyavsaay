@@ -5867,63 +5867,6 @@ function form217_import(data_array,import_type)
 	}
 };
 
-/**
-* @form Manage Projects (CPS)
-* @formNo 220
-*/
-function form220_import(data_array,import_type)
-{
-	var data_xml="<projects>";
-	var counter=1;
-	var last_updated=get_my_time();
-	
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</projects><separator></separator><projects>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<name unique='yes'>"+row.name+"</name>" +
-				"<start_date>"+get_raw_time(row.start_date)+"</start_date>" +
-				"<status>"+row.status+"</status>" +
-				"<details>"+row.details+"</details>" +
-				"<priority>"+row.priority+"</priority>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	
-	data_xml+="</projects>";
-	if(import_type=='create_new')
-	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
-	}
-	else
-	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
-	}
-};
 
 /**
 * @form Timesheet

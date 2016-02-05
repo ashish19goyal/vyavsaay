@@ -9576,14 +9576,13 @@ function modal136_action(type,master)
 		 					{index:'last_updated',value:last_updated}]};
 	 		var data2_json={data_store:'access_control',
 		 				data:[{index:'id',value:id},
-		 					{index:'element_id',value:name},
+		 					{index:'element_id',value:name,uniqueWith:['username']},
 		 					{index:'element_name',value:display_name},
 		 					{index:'username',value:'master'},
 		 					{index:'re',value:'checked'},
 		 					{index:'cr',value:'checked'},
 		 					{index:'up',value:'checked'},
 		 					{index:'del',value:'checked'},
-		 					{index:'status',value:'active'},
 		 					{index:'last_updated',value:last_updated}]};
 	 			
 			if(typeof master!='undefined' && master=='master')
@@ -15952,4 +15951,53 @@ function modal190_action(id,form_id)
 	});
 	
 	$("#modal190_link").click();	
+}
+
+/**
+ * @modalNo 191
+ * @modal Create Project
+ */
+function modal191_action(id)
+{
+	var form=document.getElementById('modal191_form');
+	
+	var name_filter=form.elements['name'];
+	var detail_filter=form.elements['detail'];
+	var priority_filter=form.elements['priority'];
+	var status_filter=form.elements['status'];
+	
+	set_static_select('projects','status',status_filter,function () 
+	{
+		$(status_filter).selectpicker('val',result.status);
+	});
+	
+	name_filter.value="";
+	detail_filter.value="";
+	priority_filter.value="";
+			
+	$(form).off('submit');
+	$(form).on('submit',function(event) 
+	{
+		event.preventDefault();
+		var name=name_filter.value;
+		var details=detail_filter.value;
+		var priority=priority_filter.value;
+		var status=$(status_filter).val();
+		
+		var last_updated=get_my_time();
+		
+		var data_json={data_store:'projects',
+	 				log:'yes',
+	 				data:[{index:'id',value:id},
+	 					{index:'name',value:name},
+	 					{index:'details',value:details},
+	 					{index:'priority',value:priority},
+	 					{index:'status',value:status},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Created',notes:'Project '+name,link_to:'form220'}};
+ 		create_json(data_json);
+ 		$(form).find('.close').click();
+	});
+	
+	$("#modal191_link").click();	
 }

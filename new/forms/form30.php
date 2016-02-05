@@ -40,11 +40,7 @@
 				form30_ini();
 			});
 		
-			var name_data=new Object();
-				name_data.data_store="customers";
-				name_data.return_column="name";
-				name_data.indexes=[{index:'id'}];
-			
+			var name_data={data_store:'customers',return_column:'name'};
 			set_my_filter_json(name_data,name_filter);
 		};
 		
@@ -124,7 +120,7 @@
 							
 					var docs=new Object();
 					docs.data_store='documents';
-					docs.indexes=[{index:'id'},{index:'url'},{index:'doc_type',exact:'customer'},{index:'target_id',exact:result.id}];		
+					docs.indexes=[{index:'id'},{index:'url'},{index:'doc_type',exact:'customer'},{index:'doc_name',exact:'image'},{index:'target_id',exact:result.id}];		
 					read_json_rows('',docs,function(pics)
 					{
 						if(pics.length>0)
@@ -155,6 +151,7 @@
 					 				data:[{index:'id',value:data_id},
 					 					{index:'target_id',value:result.id},
 					 					{index:'url',value:dataURL},
+					 					{index:'doc_name',value:'image'},
 					 					{index:'doc_type',value:'customer'},
 					 					{index:'last_updated',value:last_updated}]};
 								create_json(data_json);
@@ -243,7 +240,7 @@
 					delete_json(data_json);
 					delete_json(account_json);
 					delete_json(attribute_json);
-					$(button).parent().parent().remove();
+					$(button).parent().parent().parent().parent().remove();
 				});
 			}
 			else
