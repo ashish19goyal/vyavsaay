@@ -2353,17 +2353,61 @@ function modal22_action(func)
  * @param t_func function to generate import template
  * @param i_func function to import the generated data_array
  */
+function modal191_action(id)
+{
+	var form=document.getElementById('modal191_form');
+	
+	var name_filter=form.elements['name'];
+	var detail_filter=form.elements['detail'];
+	var priority_filter=form.elements['priority'];
+	var status_filter=form.elements['status'];
+	
+	set_static_select('projects','status',status_filter,function () 
+	{
+		$(status_filter).selectpicker('val',result.status);
+	});
+	
+	name_filter.value="";
+	detail_filter.value="";
+	priority_filter.value="";
+			
+	$(form).off('submit');
+	$(form).on('submit',function(event) 
+	{
+		event.preventDefault();
+		var name=name_filter.value;
+		var details=detail_filter.value;
+		var priority=priority_filter.value;
+		var status=$(status_filter).val();
+		
+		var last_updated=get_my_time();
+		
+		var data_json={data_store:'projects',
+	 				log:'yes',
+	 				data:[{index:'id',value:id},
+	 					{index:'name',value:name},
+	 					{index:'details',value:details},
+	 					{index:'priority',value:priority},
+	 					{index:'status',value:status},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Created',notes:'Project '+name,link_to:'form220'}};
+ 		create_json(data_json);
+ 		$(form).find('.close').click();
+	});
+	
+	$("#modal191_link").click();	
+}
+ 
 function modal23_action(t_func,i_func,v_func)
 {
 	var form=document.getElementById('modal23_form');
 	
-	var template_button=form.elements[1];
-	var new_records=form.elements[2];
-	var update_records=form.elements[3];
-	var select_file=form.elements[4];
-	var dummy_button=form.elements[5];
-	var selected_file=form.elements[6];
-	var import_button=form.elements[7];
+	var template_button=form.elements['download'];
+	var records_action=form.elements['upload_option'];
+	var select_file=form.elements['file'];
+	var dummy_button=form.elements['file_dummy'];
+	var selected_file=form.elements['selected_file'];
+	var import_button=form.elements['save'];
 
 	$(dummy_button).off('click'); 
 	$(dummy_button).on('click',function (e) 
@@ -2372,7 +2416,7 @@ function modal23_action(t_func,i_func,v_func)
 		$(select_file).trigger('click');
 	});
 
-	dummy_button.setAttribute('class','generic_red_icon');
+	dummy_button.setAttribute('class','btn red');
 	select_file.value="";
 	selected_file.value="";
 	
@@ -2382,12 +2426,12 @@ function modal23_action(t_func,i_func,v_func)
 		var file_name=select_file.value;
 		if(file_name!="" && (file_name.indexOf('csv')>-1))
 		{
-			dummy_button.setAttribute('class','generic_green_icon');
+			dummy_button.setAttribute('class','btn green');
 			selected_file.value=file_name;
 		}
 		else 
 		{
-			dummy_button.setAttribute('class','generic_red_icon');
+			dummy_button.setAttribute('class','btn red');
 			select_file.value="";
 			selected_file.value="";
 		}
@@ -2405,12 +2449,12 @@ function modal23_action(t_func,i_func,v_func)
 		event.preventDefault();
 		show_progress();
 		var file=select_file.files[0];
-        var fileType = /csv/gi;
+      var fileType = /csv/gi;
 
-        selected_file.value = "Uploading!! Please don't refresh";
+      selected_file.value = "Uploading!! Please don't refresh";
     	var reader = new FileReader();
-        reader.onload = function(e)
-        {
+      reader.onload = function(e)
+      {
         	progress_value=5;
         	var content=reader.result;
         	var data_array=csv_string_to_obj_array(content);
@@ -2423,11 +2467,57 @@ function modal23_action(t_func,i_func,v_func)
            		var error_array=v_func(data_array);
            		if(error_array.status=='success')
            		{
-           			if(new_records.checked)
+           			if(records_action.value=='new')
+			        	{
+			        		i_func(data_array,'create_new');
+			        	}
+			        	else if(records_action.value=='existing')
+			        	{
+			        		i_func(data_array,'update_records');
+			        	}
+			           
+			        	progress_value=15;
+			        	
+			        	//console.log(data_array.length);
+			        	
+			        	var ajax_complete=setInterval(function()
+			        	{
+			        		//console.log(number_active_ajax);
+			        		if(number_active_ajax===0)
+			        		{
+			        			progress_value=15+(1-(localdb_open_requests/(2*data_array.length)))*85;
+			        		}
+			        		else if(localdb_open_requests===0)
+			        		{
+			        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
+			        		}
+			        		
+			        		if(number_active_ajax===0 && localdb_open_requests===0)
+			        		{
+			        			hide_progress();
+			        			selected_file.value="Upload complete";
+			        			$(select_file).val('');
+			        			$(form).find(".close").click();
+			        			clearInterval(ajax_complete);
+			        		}
+			        	},1000);
+           		}
+           		else 
+           		{
+           			hide_progress();
+	       			selected_file.value="";
+	        			$(select_file).val('');
+	        			$(form).find(".close").click();
+	        			modal164_action(error_array);
+           		}
+           	}
+           	else 
+           	{
+	           	if(records_action.value=='new')
 		        	{
 		        		i_func(data_array,'create_new');
 		        	}
-		        	else if(update_records.checked)
+		        	else if(records_action.value=='existing')
 		        	{
 		        		i_func(data_array,'update_records');
 		        	}
@@ -2453,62 +2543,15 @@ function modal23_action(t_func,i_func,v_func)
 		        			hide_progress();
 		        			selected_file.value="Upload complete";
 		        			$(select_file).val('');
-		        			$("#modal23").dialog("close");
+		        			$(form).find(".close").click();
 		        			clearInterval(ajax_complete);
 		        		}
 		        	},1000);
-           		}
-           		else 
-           		{
-           			hide_progress();
-	       			selected_file.value="";
-	        		$(select_file).val('');
-	        		$("#modal23").dialog("close");
-	        		modal164_action(error_array);
-           		}
-           	}
-           	else 
-           	{
-	           	if(new_records.checked)
-	        	{
-	        		i_func(data_array,'create_new');
-	        	}
-	        	else if(update_records.checked)
-	        	{
-	        		i_func(data_array,'update_records');
-	        	}
-	           
-	        	progress_value=15;
-	        	
-	        	//console.log(data_array.length);
-	        	
-	        	var ajax_complete=setInterval(function()
-	        	{
-	        		//console.log(number_active_ajax);
-	        		if(number_active_ajax===0)
-	        		{
-	        			progress_value=15+(1-(localdb_open_requests/(2*data_array.length)))*85;
-	        		}
-	        		else if(localdb_open_requests===0)
-	        		{
-	        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
-	        		}
-	        		
-	        		if(number_active_ajax===0 && localdb_open_requests===0)
-	        		{
-	        			hide_progress();
-	        			selected_file.value="Upload complete";
-	        			$(select_file).val('');
-	        			$("#modal23").dialog("close");
-	        			clearInterval(ajax_complete);
-	        		}
-	        	},1000);
 	        }
         }
         reader.readAsText(file);    
     });
-	
-	$("#modal23").dialog("open");
+	$("#modal23_link").click();
 }
 
 /**
@@ -13385,16 +13428,16 @@ function modal164_action(error_array)
 	var type="text/csv";
 	var blob = new Blob([response], { type: type });			
 	var URL = window.URL || window.webkitURL;
-    var downloadUrl = URL.createObjectURL(blob);	
+   var downloadUrl = URL.createObjectURL(blob);	
 			
 	var modal_element=document.getElementById('modal164_div');
-	var link=document.createElement('a');
+	var link=document.createElement('span');
 	link.setAttribute('href',downloadUrl);
 	link.setAttribute('download',"error.csv");
-//	link.setAttribute('style',"color:#ff0000");
-	$(link).html("The import was aborted due to file errors. Please <u style='color:#f00'>click here</u> to download the error report.");			
+	$(link).html("The import was aborted due to file errors. Please <a style='color:#f00' download='error.csv' href=\""+downloadUrl+"\">click here</a> to download the error report.");			
 	$(modal_element).html(link);
-	$("#modal164").dialog("open");
+	
+	$("#modal164_link").click();
 	hide_loader();	
 }
 

@@ -2246,30 +2246,6 @@ function form89_switch_view()
 }
 
 /**
- * @form Billing types
- * @formNo 90
- */
-function form90_header_ini()
-{
-	var filter_fields=document.getElementById('form90_header');
-	var name_filter=filter_fields.elements[0];
-	
-	var name_data="<bill_types>" +
-			"<name></name>" +
-			"</bill_types>";
-	
-	set_my_filter(name_data,name_filter);
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form90_ini();
-	});
-
-};
-
-/**
  * @form Create Bill(multiple registers)
  * @formNo 91
  */
@@ -2623,41 +2599,6 @@ function form94_header_ini()
 		event.preventDefault();
 		form94_ini();
 	});
-};
-
-/**
- * @form Data Import
- * @formNo 95
- */
-function form95_header_ini()
-{
-	var filter_fields=document.getElementById('form95_header');	
-	var number_filter=filter_fields.elements[0];
-	var name_filter=filter_fields.elements[1];
-	
-	//setting autocompletes 
-	var number_data="<user_preferences>" +
-			"<name></name>" +
-			"<type exact='yes'>form</type>" +
-			"<value exact='yes'>checked</value>" +
-			"</user_preferences>";
-	
-	var name_data="<user_preferences>" +
-			"<display_name></display_name>" +
-			"<type exact='yes'>form</type>" +
-			"<value exact='yes'>checked</value>" +
-			"</user_preferences>";
-
-	set_my_filter(number_data,number_filter);
-	set_my_filter(name_data,name_filter);
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form95_ini();
-	});
-
 };
 
 /**
@@ -3035,47 +2976,6 @@ function form109_header_ini()
 
 };
 
-/**
- * @form manage Reprots
- * @formNo 110
- */
-function form110_header_ini()
-{
-	var filter_fields=document.getElementById('form110_header');
-	var name_filter=filter_fields.elements[0];
-	
-	var name_data="<reports>" +
-			"<name></name>" +
-			"</reports>";
-	
-	set_my_filter(name_data,name_filter);
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form110_ini();
-	});
-
-};
-
-/**
- * @form Create Reports
- * @formNo 111
- */
-function form111_header_ini()
-{
-	var fields=document.getElementById('form111_master');
-	fields.elements[1].value="";
-	fields.elements[2].value="";
-	fields.elements[3].value=get_new_key();
-	$(fields).off('submit');
-	$(fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form111_create_form();
-	});
-}
 
 /**
  * @form Add Unbilled Items
@@ -4141,32 +4041,6 @@ function form122_header_ini()
 	$(supplier_filter).focus();
 }
 
-/**
- * @form Mandatory Attributes
- * @formNo 123
- */
-function form123_header_ini()
-{
-	var filter_fields=document.getElementById('form123_header');
-	var object_filter=filter_fields.elements[0];
-	var attr_filter=filter_fields.elements[1];
-	var status_filter=filter_fields.elements[2];
-	
-	var attr_data="<mandatory_attributes>" +
-			"<attribute></attribute>" +
-			"</mandatory_attributes>";
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form123_ini();
-	});
-
-	set_my_filter(attr_data,attr_filter);
-	set_static_filter('mandatory_attributes','object',object_filter);
-	set_static_filter('mandatory_attributes','status',status_filter);
-};
 
 /**
  * @form Receipts
@@ -4957,87 +4831,6 @@ function form141_header_ini()
 	set_static_filter('sale_orders','status',status_filter);
 };
 
-/**
- * @form Create Questionnaires
- * @formNo 142
- */
-function form142_header_ini()
-{
-	var fields=document.getElementById('form142_master');
-	
-	var name_filter=fields.elements[1];
-	var display_filter=fields.elements[2];
-	var grid_filter=fields.elements[3];
-	var status_filter=fields.elements[4];
-	fields.elements[5].value=get_new_key();
-	var save_button=fields.elements[6];
-	
-	$(save_button).off('click');
-	$(save_button).on("click", function(event)
-	{
-		event.preventDefault();
-		form142_create_form();
-	});
-	
-	$(document).off('keydown');
-	$(document).on('keydown', function(event) {
-		if( event.keyCode == 83 && event.ctrlKey) {
-	    	event.preventDefault();
-	    	$(save_button).trigger('click');
-	    }
-	});
-
-	$(fields).off('submit');
-	$(fields).on("submit", function(event)
-	{
-		event.preventDefault();
-		form142_add_item();
-	});
-		
-	name_filter.value='';
-	display_filter.value='';
-	grid_filter.value='';
-	status_filter.value='active';
-	set_static_value_list('ques_struct','status',status_filter);
-	$(name_filter).focus();
-}
-
-
-/**
- * @form Manage Questionnaire
- * @formNo 143
- */
-function form143_header_ini()
-{
-	var filter_fields=document.getElementById('form143_header');
-	var id_filter=filter_fields.elements[0];
-	var name_filter=filter_fields.elements[1];
-	var display_filter=filter_fields.elements[2];
-	var status_filter=filter_fields.elements[3];
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form143_ini();
-	});
-
-	var id_data="<ques_struct>" +
-			"<id></id>" +
-			"</ques_struct>";
-	var name_data="<ques_struct>" +
-			"<name></name>" +
-			"</ques_struct>";
-	var display_data="<ques_struct>" +
-			"<display_name></display_name>" +
-			"</ques_struct>";
-	
-	set_my_filter(id_data,id_filter);
-	set_my_filter(name_data,name_filter);
-	set_my_filter(display_data,display_filter);
-	set_static_filter('ques_data','status',status_filter);
-};
-
 
 /**
  * @form Project Budgeting
@@ -5197,38 +4990,6 @@ function form147_header_ini()
 	{
 		event.preventDefault();
 		form147_ini();
-	});
-};
-
-
-/**
- * @form Assign Roles
- * @formNo 149
- */
-function form149_header_ini()
-{
-	var filter_fields=document.getElementById('form149_header');
-	var role_filter=filter_fields.elements[0];
-	var username_filter=filter_fields.elements[1];
-	var status_filter=filter_fields.elements[2];
-	
-	var role_data="<roles>" +
-			"<role_name></role_name>" +
-			"</roles>";	
-	set_my_filter(role_data,role_filter);
-
-	var user_data="<user_role_mapping>"+
-				"<username></username>"+
-				"</user_role_mapping>";
-	set_my_filter(user_data,username_filter);					
-		
-	set_static_filter('roles','status',status_filter);
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form149_ini();
 	});
 };
 
@@ -9925,113 +9686,6 @@ function form261_header_ini()
 	});	
 }
 
-/**
- * @form Manage Grids
- * @formNo 262
- */
-function form262_header_ini()
-{
-	var filter_fields=document.getElementById('form262_header');
-	var grid_filter=filter_fields.elements[0];
-	var name_filter=filter_fields.elements[1];
-	var status_filter=filter_fields.elements[2];
-		
-	var grid_data="<system_grids>" +
-		"<name></name>" +
-		"</system_grids>";
-
-	var name_data="<system_grids>" +
-		"<display_name></display_name>" +
-		"</system_grids>";
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form262_ini();
-	});
-
-	set_my_filter(grid_data,grid_filter);
-	set_my_filter(name_data,name_filter);
-	set_static_filter('system_grids','status',status_filter);
-	
-	var body_elem=document.getElementById('form262_body');
-	body_elem.addEventListener('table_sort',function(e)
-	{
-		form262_update_serial_numbers();
-		$("[id^='save_form262_']").click();
-	},false);
-
-};
-
-/**
- * @form Arrange Grid Tabs
- * @formNo 263
- */
-function form263_header_ini()
-{
-	var fields=document.getElementById('form263_master');
-	
-	var grid_filter=fields.elements['grid'];
-	var id_filter=fields.elements['id'];
-	var save_button=fields.elements['save'];
-	
-	id_filter.value="";
-	grid_filter.value='';
-	
-	$(save_button).off('click');
-	$(save_button).on("click", function(event)
-	{
-		event.preventDefault();
-		form263_update_form();
-	});
-
-	$(document).off('keydown');
-	$(document).on('keydown', function(event) {
-		if( event.keyCode == 83 && event.ctrlKey) {
-	    	event.preventDefault();
-	    	$(save_button).trigger('click');
-	    }
-	});
-
-	$(fields).off('submit');
-	$(fields).on("submit", function(event)
-	{
-		event.preventDefault();
-		form263_ini();
-	});
-
-	var grid_data="<system_grids>" +
-		"<name></name>" +
-		"<status exact='yes'>active</status>" +
-		"</system_grids>";
-	set_my_value_list(grid_data,grid_filter,function () 
-	{
-		$(grid_filter).focus();
-	});
-	
-	$(grid_filter).off('blur');
-	$(grid_filter).off('change');
-	$(grid_filter).off('select');
-
-	$(grid_filter).on('blur change select',function()
-	{
-		var grid_data="<system_grids>" +
-			"<id></id>"+
-			"<name exact='yes'>"+grid_filter.value+"</name>" +
-			"</system_grids>";
-		set_my_value(grid_data,id_filter);
-	});
-	
-	$('#form263_body').html("");
-	
-	var body_elem=document.getElementById('form263_body');
-	body_elem.addEventListener('table_sort',function(e)
-	{
-		form263_update_serial_numbers();
-	},false);
-
-}
 
 /**
  * @form Create RTO
@@ -10907,16 +10561,6 @@ function form285_header_ini()
 		"</attributes>";	
 	set_my_filter(item_data,name_filter);
 };
-
-/**
- * @form System Billing
- * @formNo 286
- */
-function form286_header_ini()
-{
-	var fields=document.getElementById('form286_master');
-	$('#form286_fieldset').html("");
-}
 
 /**
  * @form Buyer leads

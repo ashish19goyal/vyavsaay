@@ -94,7 +94,7 @@
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form288_"+result.id+"' value='"+result.id+"'>";	
 								rowsHTML+="<button type='submit' class='btn green' form='form288_"+result.id+"' title='Save'><i class='fa fa-save'></i></button>";
-								rowsHTML+="<button class='btn red' form='form288_"+result.id+"' title='Delete' onclick='form288_delete_item($(this));'><i class='fa fa-trash'></i></button>";
+								rowsHTML+="<button type='button' class='btn red' form='form288_"+result.id+"' title='Delete' onclick='form288_delete_item($(this));'><i class='fa fa-trash'></i></button>";
 							rowsHTML+="</td>";			
 					rowsHTML+="</tr>";
 					
@@ -143,7 +143,7 @@
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form288_"+id+"' value='"+id+"'>";	
 								rowsHTML+="<button type='submit' class='btn green' form='form288_"+id+"' title='Save'><i class='fa fa-save'></i></button>";
-								rowsHTML+="<button class='btn red' form='form288_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
+								rowsHTML+="<button type='button' class='btn red' form='form288_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
 							rowsHTML+="</td>";			
 					rowsHTML+="</tr>";
 					

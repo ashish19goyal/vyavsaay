@@ -131,22 +131,6 @@ function form109_import_validate(data_array)
 }
 
 /**
-* @form Mandatory Attributes
-* @formNo 123
-*/
-function form123_import_validate(data_array)
-{
-	var validate_template_array=[{column:'object',required:'yes',list:['account','task','storage','product','service',
-							'loan','loyalty program','staff','supplier','customer','asset']},
-							{column:'status',required:'yes',list:['required','active','inactive']},
-							{column:'attribute',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-							{column:'values',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')}];
-					
-	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
-}
-
-/**
 * @form Manage Products (nikki) 
 * @formNo 169
 */

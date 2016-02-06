@@ -966,21 +966,6 @@ function form258_get_totals()
 	longPressEditable($('.dblclick_editable'));
 }
 
-function form262_update_serial_numbers()
-{
-	$('#form262_body').find('tr').each(function(index)
-	{
-		$(this).find('td:nth-child(2)>input').attr('value',index+1);
-	});
-}
-
-function form263_update_serial_numbers()
-{
-	$('#form263_body').find('tr').each(function(index)
-	{
-		$(this).find('td:nth-child(2)').html(index+1);
-	});
-}
 
 function form265_update_serial_numbers()
 {

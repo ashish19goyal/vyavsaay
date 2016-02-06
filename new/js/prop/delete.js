@@ -2129,56 +2129,6 @@ function form89_delete_item(button)
 	}
 }
 
-/**
- * @form Billing types
- * @formNo 90
- * @param button
- */
-function form90_delete_item(button)
-{
-	if(is_delete_access('form90'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var name=form.elements[0].value;
-			var notes=form.elements[1].value;
-			var data_id=form.elements[2].value;
-			var data_xml="<bill_types>" +
-						"<id>"+data_id+"</id>" +
-						"<name>"+name+"</name>" +
-						"<notes>"+notes+"</notes>" +
-						"</bill_types>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>bill_types</tablename>" +
-						"<link_to>form90</link_to>" +
-						"<title>Delete</title>" +
-						"<notes>Billing type "+name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var sale_prices_xml="<sale_prices>" +
-						"<billing_type exact='yes'>"+name+"</billing_type>" +
-						"</sale_prices>";
-			var num_xml="<user_preferences>" +
-						"<id>"+data_id+"</id>" +
-						"<name unique='yes'>"+name+"_bill_num</name>" +
-						"<type>accounting</type>"+
-						"</user_preferences>";
-			
-			delete_row(data_xml,activity_xml);
-			delete_simple(sale_prices_xml);
-			delete_simple(num_xml);
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Create bill(multiple registers)
@@ -2836,91 +2786,6 @@ function form109_delete_item(button)
 }
 
 /**
- * @form Manage Reports
- * @param button
- */
-function form110_delete_item(button)
-{
-	if(is_delete_access('form110'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var name=form.elements[0].value;
-			var data_id=form.elements[2].value;
-			var last_updated=get_my_time();
-			var data_xml="<reports>" +
-						"<id>"+data_id+"</id>" +
-						"<name>"+name+"</name>" +
-						"</reports>";	
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>reports</tablename>" +
-						"<link_to>form110</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Report "+name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var other_delete="<report_items>" +
-					"<report_id>"+data_id+"</report_id>" +
-					"</report_items>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-				server_delete_simple(other_delete);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-				local_delete_simple(other_delete);
-			}	
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-
-/**
- * @form Create Reports
- * @param button
- */
-function form111_delete_item(button)
-{
-	if(is_delete_access('form111'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var data_id=form.elements[6].value;
-			var data_xml="<report_items>" +
-						"<id>"+data_id+"</id>" +
-						"</report_items>";	
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-			}	
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
  * @form Add unbilled sale items
  * @param button
  */
@@ -3254,50 +3119,6 @@ function form122_delete_item(button)
 	}
 }
 
-/**
- * formNo 123
- * form Mandatory Attributes
- * @param button
- */
-function form123_delete_item(button)
-{
-	if(is_delete_access('form123'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var object=form.elements[0].value;
-			var attribute=form.elements[1].value;
-			var data_id=form.elements[4].value;
-			var data_xml="<mandatory_attributes>" +
-						"<id>"+data_id+"</id>" +
-						"</mandatory_attributes>";	
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>mandatory_attributes</tablename>" +
-						"<link_to>form123</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Mandatory attribute "+attribute+" for "+object+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-			}	
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * formNo 125
@@ -4107,44 +3928,6 @@ function form140_delete_item(button)
 }
 
 /**
- * @form Create Questionnaire
- * @param button
- */
-function form142_delete_item(button)
-{
-	if(is_delete_access('form142'))
-	{
-		modal115_action(function()
-		{
-			var ques_id=document.getElementById("form142_master").elements['id'].value;
-			
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var data_id=form.elements[7].value;
-				
-			var data_xml="<ques_fields>" +
-					"<id>"+data_id+"</id>" +
-					"<ques_id>"+ques_id+"</ques_id>" +
-					"</ques_fields>";	
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-			}				
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
  * formNo 144
  * form Project Budgeting - Expense
  * @param button
@@ -4319,49 +4102,6 @@ function form147_delete_item(button)
 	}
 }
 
-/**
- * @form Assign Roles
- * @formNo 149
- * @param button
- */
-function form149_delete_item(button)
-{
-	if(is_delete_access('form149'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var role=form.elements[0].value;
-			var data_id=form.elements[3].value;
-			var data_xml="<user_role_mapping>" +
-						"<id>"+data_id+"</id>" +
-						"</user_role_mapping>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>user_role_mapping</tablename>" +
-						"<link_to>form149</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>User mapping for "+role+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-			}	
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * formNo 151
@@ -7863,48 +7603,6 @@ function form261_delete_item(button)
 	}
 }
 
-/**
- * @form System Grids
- * @param button
- */
-function form262_delete_item(button)
-{
-	if(is_delete_access('form262'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			var name=form.elements[1].value;
-			var data_id=form.elements[6].value;
-			var data_xml="<system_grids>" +
-						"<id>"+data_id+"</id>" +
-						"</system_grids>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>system_grids</tablename>" +
-						"<link_to>form262</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Grid "+name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-							
-			delete_row(data_xml,activity_xml);			
-			
-			$(button).parent().parent().remove();
-			form262_update_serial_numbers();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
- * @form System Grid Metrics
- * @param button
- */
 
 /**
  * formNo 265

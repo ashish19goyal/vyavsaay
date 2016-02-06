@@ -206,7 +206,11 @@ function modal_forms_ini()
 	});
 	
 	var dynamic_modal_array=[];
-	for(var i=8;i<50;i++)
+	for(var i=8;i<=22;i++)
+	{
+		dynamic_modal_array.push(i);
+	}
+	for(var i=24;i<=49;i++)
 	{
 		dynamic_modal_array.push(i);
 	}
@@ -218,7 +222,7 @@ function modal_forms_ini()
 	{
 		dynamic_modal_array.push(i);
 	}
-	for(var i=137;i<=164;i++)
+	for(var i=137;i<=163;i++)
 	{
 		dynamic_modal_array.push(i);
 	}
@@ -452,8 +456,14 @@ function show_object(object_type,obj_name,obj_id)
 {
 	if(is_read_object(object_type))
 	{
-		initialize_object(object_type,obj_name,obj_id);
-		$("#object_"+object_type).click();
+		if_data_access_object(object_type,obj_name,function () 
+		{
+			initialize_object(object_type,obj_name,obj_id);
+			$("#object_"+object_type).click();
+		},function () 
+		{
+			$('#modal2_link').click();
+		});
 	}
 	else
 	{
@@ -637,8 +647,6 @@ function import_data(form_name)
 		break;
 		case 'form89':modal23_action(form89_import_template,form89_import);
 		break;
-		case 'form90':modal23_action(form90_import_template,form90_import);
-		break;
 		case 'form91':modal23_action(form91_import_template,form91_import);
 		break;
 		case 'form92':modal23_action(form92_import_template,form92_import);
@@ -697,15 +705,11 @@ function import_data(form_name)
 		break;
 		case 'form140':modal23_action(form140_import_template,form140_import);
 		break;
-		case 'form142':modal23_action(form142_import_template,form142_import);
-		break;
-		case 'form143':modal23_action(form143_import_template,form143_import);
-		break;
 		case 'form146':modal23_action(form146_import_template,form146_import);
 		break;
 		case 'form147':modal23_action(form147_import_template,form147_import);
 		break;
-		case 'form149':modal23_action(form149_import_template,form149_import);
+		case 'form149':modal23_action(form149_import_template,form149_import,form149_import_validate);
 		break;
 		case 'form154':modal23_action(form154_import_template,form154_import);
 		break;

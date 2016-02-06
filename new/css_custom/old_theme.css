@@ -780,60 +780,6 @@ textarea.ultrawidebox{
     border:1px solid #dddddd;
 }
 
-/*grid items on forms*/
-.form_grid>ul{
-	list-style-type: none;
-	margin: 1%; 
-	padding: 0;
-}
-
-.form_grid>ul>li {
-	margin: 1%;
-	padding: 0;
-	float: left;
-	width: 200px;
-	height: 350px;
-	background-color:#ccffaa;
-}
-
-ul.form_grid_item{
-	list-style-type: none;	
-	margin: 1%;
-	padding: 1%;
-	float: left;
-	text-align: left;
-	font-size: 1em;
-	color:#222222;
-	text-align: center;
-	font-weight: 600;
-}
-
-ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul.form_grid_item textarea{
-	color:#555555;
-}
-
-.form_grid_item img{
-	float:none;
-	margin: 0px auto;
-	width:100px;
-	height:100px;
-	border-radius: 50% !important;
-	text-align: center;
-}
-
-.form_grid_item img:active{
-  outline: none;
-  -webkit-transform: scale(2.5); 
-  -moz-transform: scale(2.5);
-  -webkit-box-shadow: 0 3px 10px #666; 
-  -moz-box-shadow: 0 3px 10px #666;
-  z-index: 9999;
-}
-
-
-.form_grid_item input[type='file']{
-	display: none;
-}
 
 .plain_table th{
 	border: 1px solid #000;

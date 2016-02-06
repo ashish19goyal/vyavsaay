@@ -386,7 +386,7 @@
 			$query="select distinct $columns_to_display from ".$table.$other_tables.$where_conditions.$access_condition_connector.$access_conditions.$order_by.$limit;
 			//echo $query;
 			//var_dump($values_array);
-			
+
 			$stmt=$conn->conn->prepare($query);
 			$stmt->execute($values_array);
 			$struct_res=$stmt->fetchAll(PDO::FETCH_ASSOC);

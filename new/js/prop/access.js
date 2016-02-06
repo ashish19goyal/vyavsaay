@@ -115,6 +115,33 @@ function is_delete_object(obj_name)
 }
 
 /*****************************/
+function if_data_access_object(obj_type,obj_name,func_success,func_fail)
+{
+	var index_name="name";
+	switch(obj_type)
+	{
+		case 'customers':
+		case 'suppliers':
+		case 'staff': index_name='acc_name';
+						break;
+	}
+	
+	var obj_data={data_store:obj_type,
+					access:{},
+					count:1,
+					indexes:[{index:index_name,exact:obj_name}]};
+	read_json_rows('',obj_data,function (objects) 
+	{
+		if(objects.length>0)
+		{
+			func_success();
+		}
+		else 
+		{
+			func_fail();
+		}
+	});				
+}
 
 function if_data_read_access(tablename,func)
 {

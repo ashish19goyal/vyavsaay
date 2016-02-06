@@ -450,16 +450,6 @@ function form89_import_template()
 
 
 /**
-* @form Billing types
-* @formNo 90
-*/
-function form90_import_template()
-{
-	var data_array=['id','name','notes'];
-	my_array_to_csv(data_array);
-};
-
-/**
 * @form Create bills(multiple registers)
 * @formNo 91
 * @table bill_items
@@ -710,16 +700,6 @@ function form122_import_template()
 	my_array_to_csv(data_array);
 };
 
-/**
-* @form Mandatory Attributes
-* @formNo 123
-* @table mandatory_attributes
-*/
-function form123_import_template()
-{
-	var data_array=['id','object','attribute','values','status'];
-	my_array_to_csv(data_array);
-};
 
 /**
 * @form Receipts
@@ -790,29 +770,6 @@ function form140_import_template()
 
 
 /**
-* @form Create Questionnaire
-* @formNo 142
-* @table ques_fields
-*/
-function form142_import_template()
-{
-	var data_array=['id','ques_id','name','display_name','type','fvalues',
-	                'forder','freq','description'];
-	my_array_to_csv(data_array);
-};
-
-/**
-* @form Manage Questionnaire
-* @formNo 143
-* @table ques_struct
-*/
-function form143_import_template()
-{
-	var data_array=['id','name','display_name','func','description','status'];
-	my_array_to_csv(data_array);
-};
-
-/**
 * @form Store Movement
 * @formNo 145
 * @table ques_fields
@@ -841,16 +798,6 @@ function form146_import_template()
 function form147_import_template()
 {
 	var data_array=['id','role_name','description','status'];
-	my_array_to_csv(data_array);
-};
-
-/**
-* @form Assign Roles
-* @formNo 149
-*/
-function form149_import_template()
-{
-	var data_array=['id','role_name','username','status'];
 	my_array_to_csv(data_array);
 };
 

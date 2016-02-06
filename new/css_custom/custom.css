@@ -212,7 +212,7 @@ input[readonly='readonly'], textarea[readonly='readonly'], select[disabled='disa
 	appearance: none;
 }
 
-input[type='checkbox']{
+input[type='checkbox'],input[type='radio']{
 	width:25px;
 	height:25px;
 	margin:auto;
@@ -355,12 +355,12 @@ i.link{
 	color: #fdfdfd;
 }
 
-a textarea{
+a textarea,a input{
 	color:#337ab7;
 	font-weight: bold;
 }
 
-a textarea:hover{
+a textarea:hover, a input:hover{
 	text-decoration: underline;
 	cursor:pointer;
 }

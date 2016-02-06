@@ -316,7 +316,7 @@
 					
 				$(form).readonly();
 
-				del_button.removeAttribute("onclick");
+				delete_button.removeAttribute("onclick");
 				$(delete_button).on('click',function(event)
 				{
 					event.preventDefault();
@@ -433,12 +433,29 @@
 					if(row.elements['save'].getAttribute('data-action')=='create')
 					{
 						data_create.data.push(data_json_array);
+						var save_button=row.elements['save'];
+						var delete_button=row.elements['delete'];
+												
+						save_button.setAttribute('data-action','update');					
+						delete_button.removeAttribute("onclick");
+						$(delete_button).on('click',function(event)
+						{
+							event.preventDefault();
+							form51_delete_item(delete_button);
+						});
+		
+						$(row).off('submit');
+						$(row).on('submit',function(event)
+						{
+							event.preventDefault();
+							form51_update_item(form);
+						});
 					}
 					else
 					{
 						data_update.data.push(data_json_array);
 					}
-
+					
 					$(row).readonly();
 				});
 				

@@ -2155,46 +2155,6 @@ function form89_import(data_array,import_type)
 
 
 /**
-* @form Billing types
-* @formNo 90
-*/
-function form90_import(data_array,import_type)
-{
-	var data_xml="<bill_types>";
-	var counter=1;
-	var last_updated=get_my_time();
-
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</bill_types><separator></separator><bill_types>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<name unique='yes'>"+row.name+"</name>" +
-				"<notes>"+row.notes+"</notes>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	data_xml+="</bill_types>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-	}
-};
-
-/**
 * @form Create Bills(multiple register)
 * @formNo 91
 */
@@ -3314,47 +3274,6 @@ function form122_import(data_array,import_type)
 	}
 };
 
-/**
-* @form Mandatory Attributes
-* @formNo 123
-*/
-function form123_import(data_array,import_type)
-{
-	var data_xml="<mandatory_attributes>";
-	var counter=1;
-	var last_updated=get_my_time();
-
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</mandatory_attributes><separator></separator><mandatory_attributes>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<object>"+row.object+"</object>" +
-				"<attribute>"+row.attribute+"</attribute>" +
-				"<values>"+row.values+"</values>"+
-				"<status>"+row.status+"</status>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	data_xml+="</mandatory_attributes>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-	}
-};
 
 /**
 * @form Receipts
@@ -3632,99 +3551,6 @@ function form140_import(data_array,import_type)
 	}
 };
 
-/**
-* @form Create Questionnaire
-* @formNo 142
-*/
-function form142_import(data_array,import_type)
-{
-	var data_xml="<ques_fields>";
-	var discard_xml="<discarded>";
-	var counter=1;
-	var last_updated=get_my_time();
-	var discard_id=parseFloat(get_new_key());
-	
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</ques_fields><separator></separator><ques_fields>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<ques_id>"+row.ques_id+"</ques_id>" +
-				"<name>"+row.name+"</name>" +
-				"<display_name>"+row.display_name+"</display_name>" +
-				"<description>"+row.description+"</description>" +
-				"<type>"+row.type+"</type>" +
-				"<fvalues>"+row.fvalues+"</fvalues>" +
-				"<forder>"+row.forder+"</forder>" +
-				"<freq>"+row.freq+"</freq>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";		
-	});
-	data_xml+="</ques_fields>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-	}
-};
-
-/**
-* @form Manage Questionnaire
-* @formNo 143
-*/
-function form143_import(data_array,import_type)
-{
-	var data_xml="<ques_struct>";
-	var counter=1;
-	var last_updated=get_my_time();
-	
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</ques_struct><separator></separator><ques_struct>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<name>"+row.name+"</name>" +
-				"<display_name>"+row.display_name+"</display_name>" +
-				"<func>"+row.func+"</func>" +
-				"<description>"+row.description+"</description>" +
-				"<status>"+row.status+"</status>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";		
-	});
-	
-	data_xml+="</ques_struct>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-	}
-};
 
 /**
 * @form Store Movement
@@ -3886,60 +3712,6 @@ function form147_import(data_array,import_type)
 	}
 };
 
-/**
-* @form Assign Roles
-* @formNo 149
-*/
-function form149_import(data_array,import_type)
-{
-	var data_xml="<user_role_mapping>";
-	var counter=1;
-	var last_updated=get_my_time();
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</user_role_mapping><separator></separator><user_role_mapping>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<role_name>"+row.role_name+"</role_name>" +
-				"<username>"+row.username+"</username>"+
-				"<status>"+row.status+"</status>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	
-	data_xml+="</user_role_mapping>";
-	if(import_type=='create_new')
-	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
-	}
-	else
-	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
-	}
-};
 
 /**
 * @form Create Bill (DLM)
