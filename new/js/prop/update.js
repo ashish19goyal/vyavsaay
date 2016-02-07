@@ -2110,47 +2110,6 @@ function form43_update_item(form)
 	}
 }
 
-/**
- * @form Manage Newsletters
- * @param button
- */
-function form44_update_item(form)
-{
-	if(is_update_access('form44'))
-	{
-		var name=form.elements[0].value;
-		var description=form.elements[1].value;
-		var status=form.elements[2].value;
-		var data_id=form.elements[3].value;
-		var last_updated=get_my_time();
-		var data_xml="<newsletter>" +
-					"<id>"+data_id+"</id>" +
-					"<name>"+name+"</name>" +
-					"<description>"+description+"</description>"+
-					"<status>"+status+"</status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</newsletter>";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>newsletter</tablename>" +
-					"<link_to>form44</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Newsletter "+name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		update_row(data_xml,activity_xml);
-		
-		for(var i=0;i<3;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
 
 /**
  * @form set defaults

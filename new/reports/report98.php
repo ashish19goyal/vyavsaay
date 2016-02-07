@@ -55,10 +55,7 @@
 				report98_ini();
 			});
 		
-			var source_data=new Object();
-				source_data.data_store='qr_scans';
-				source_data.indexes=[{index:'source'}];		
-				source_data.return_column='source';
+			var source_data={data_store:'qr_scans',return_column:'source'};
 			set_my_filter_json(source_data,source_filter);
 			
 			set_static_filter_json('qr_scans','status',status_filter);

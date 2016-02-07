@@ -61,9 +61,9 @@
 			var filter_fields=document.getElementById('form213_header');
 			var fname=filter_fields.elements['customer'].value;
 			var fdetail=filter_fields.elements['detail'].value;
-			var fidentify=filter_fields.elements['staff'].value;
+			var fidentity=filter_fields.elements['staff'].value;
 			
-			var paginator=$('#form96_body').paginator();
+			var paginator=$('#form213_body').paginator();
 			
 			var new_columns=new Object();
 					new_columns.count=paginator.page_size();
@@ -71,12 +71,12 @@
 					new_columns.data_store='sale_leads';
 					new_columns.indexes=[{index:'id',value:fid},
 									{index:'customer',value:fname},
-									{index:'detail',exact:fdetail},
+									{index:'detail',value:fdetail},
 									{index:'status'},
 									{index:'due_date'},
 									{index:'identified_by',value:fidentity}];
 					
-			read_json_rows('form213',columns,function(results)
+			read_json_rows('form213',new_columns,function(results)
 			{
 				results.forEach(function(result)
 				{
@@ -109,7 +109,7 @@
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form213_"+result.id+"' name='id' value='"+result.id+"'>";
 								rowsHTML+="<button type='submit' class='btn green' form='form213_"+result.id+"' title='Save' name='save'><i class='fa fa-save'></i></button>";
-								rowsHTML+="<input type='button' class='btn red' form='form213_"+result.id+"' title='Delete' name='delete' onclick='form213_delete_item($(this));'>";
+								rowsHTML+="<button type='button' class='btn red' form='form213_"+result.id+"' title='Delete' name='delete' onclick='form213_delete_item($(this));'><i class='fa fa-trash'></i></button>";
 							if(result.status!='closed')					
 							{					
 								rowsHTML+="<button type='button' class='btn yellow' form='form213_"+result.id+"' onclick=\"modal153_action(this,'"+result.id+"');\">Close Lead</button>";
@@ -153,6 +153,7 @@
 						rowsHTML+="<form id='form213_"+id+"'></form>";
 							rowsHTML+="<td data-th='Customer'>";
 								rowsHTML+="<input type='text' form='form213_"+id+"' name='customer'>";
+								rowsHTML+="<a title='Add new customer profile' class='btn btn-circle btn-icon-only grey-cascade' id='form213_add_customer_"+id+"'><i class='fa fa-plus'></i></a>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Details'>";
 								rowsHTML+="<textarea form='form213_"+id+"' class='dblclick_editable' name='detail'></textarea>";
@@ -162,11 +163,12 @@
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Identified By/PoC'>";
 								rowsHTML+="<input type='text' form='form213_"+id+"' name='staff' class='dblclick_editable'>";
+								rowsHTML+="<a title='Add new staff profile' class='btn btn-circle btn-icon-only grey-cascade' id='form213_add_staff_"+id+"'><i class='fa fa-plus'></i></a>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form213_"+id+"' name='id' value='"+id+"'>";
 								rowsHTML+="<button type='submit' class='btn green' form='form213_"+id+"' title='Save' name='save'><i class='fa fa-save'></i></button>";
-								rowsHTML+="<input type='button' class='btn red' form='form213_"+id+"' title='Delete' name='delete' onclick='$(this).parent().parent().remove();'>";
+								rowsHTML+="<button type='button' class='btn red' form='form213_"+id+"' title='Delete' name='delete' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
 							rowsHTML+="</td>";			
 					rowsHTML+="</tr>";
 					
@@ -228,44 +230,37 @@
 		{
 			if(is_create_access('form213'))
 			{
-				var customer=form.elements[0].value;
-				var detail=form.elements[1].value;
-				var due_date=get_raw_time(form.elements[2].value);
-				var identified_by=form.elements[3].value;
-				var data_id=form.elements[4].value;
+				var customer=form.elements['customer'].value;
+				var detail=form.elements['detail'].value;
+				var due_date=get_raw_time(form.elements['date'].value);
+				var identified_by=form.elements['staff'].value;
+				var data_id=form.elements['id'].value;
 				var last_updated=get_my_time();
-				var data_xml="<sale_leads>" +
-							"<id>"+data_id+"</id>" +
-							"<customer>"+customer+"</customer>" +
-							"<detail>"+detail+"</detail>" +
-							"<due_date>"+due_date+"</due_date>" +
-							"<status>open</status>" +
-							"<identified_by>"+identified_by+"</identified_by>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</sale_leads>";
-				var activity_xml="<activity>" +
-							"<data_id>"+data_id+"</data_id>" +
-							"<tablename>sale_leads</tablename>" +
-							"<link_to>form213</link_to>" +
-							"<title>Added</title>" +
-							"<notes>Sale lead for customer "+customer+"</notes>" +
-							"<updated_by>"+get_name()+"</updated_by>" +
-							"</activity>";
-				create_row(data_xml,activity_xml);
 				
-				for(var i=0;i<4;i++)
-				{
-					$(form.elements[i]).attr('readonly','readonly');
-				}
+				var data_json={data_store:'sale_leads',
+	 				log:'yes',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'customer',value:customer},
+	 					{index:'detail',value:detail},
+	 					{index:'due_date',value:due_date},
+	 					{index:'status',value:'open'},
+	 					{index:'identified_by',value:identified_by},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Added',notes:'Sale lead for customer '+customer,link_to:'form213'}}; 								
+								
+				create_json(data_json);
+				
+				$(form).readonly();
 		
-				var customer_data="<customers>"+
-								"<id></id>"+
-								"<name></name>"+
-								"<phone></phone>"+
-								"<email></email>"+
-								"<acc_name exact='yes'>"+customer+"</acc_name>"+
-								"</customers>";
-				fetch_requested_data('',customer_data,function(customers)
+				var customer_data={data_store:'customers',
+										count:1,
+										indexes:[{index:'id'},
+													{index:'name'},
+													{index:'phone'},
+													{index:'email'},
+													{index:'acc_name',exact:customer}]};
+													
+				read_json_rows('',customer_data,function(customers)
 				{
 					var customer_name=customers[0].name;
 					var customer_phone=customers[0].phone;
@@ -278,11 +273,9 @@
 					///////////////////////////////////////////////////////////////////////////////
 		
 					var nl_name=get_session_var('default_newsletter');
-					var nl_id_xml="<newsletter>"+
-								"<id></id>"+
-								"<name exact='yes'>"+nl_name+"</name>"+
-								"</newsletter>";
-					get_single_column_data(function(nls)
+					var nl_id_xml={data_store:'newsletter',return_column:'id',
+										indexes:[{index:'name',exact:nl_name}]};
+					read_json_single_column(nl_id_xml,function(nls)
 					{
 						var subject=nl_name;
 						var nl_id=nls[0];	
@@ -294,10 +287,10 @@
 							var to=JSON.stringify(to_array);
 							send_email(to,from,business_title,subject,message,function(){});
 						});
-					},nl_id_xml);
+					});
 				});
 		
-				var del_button=form.elements[6];
+				var del_button=form.elements['delete'];
 				del_button.removeAttribute("onclick");
 				$(del_button).on('click',function(event)
 				{
@@ -321,33 +314,24 @@
 		{
 			if(is_update_access('form213'))
 			{
-				var customer=form.elements[0].value;
-				var detail=form.elements[1].value;
-				var due_date=get_raw_time(form.elements[2].value);
-				var identified_by=form.elements[3].value;
-				var data_id=form.elements[4].value;
+				var customer=form.elements['customer'].value;
+				var detail=form.elements['detail'].value;
+				var due_date=get_raw_time(form.elements['date'].value);
+				var identified_by=form.elements['staff'].value;
+				var data_id=form.elements['id'].value;
 				var last_updated=get_my_time();
-				var data_xml="<sale_leads>" +
-							"<id>"+data_id+"</id>" +
-							"<customer>"+customer+"</customer>" +
-							"<detail>"+detail+"</detail>" +
-							"<due_date>"+due_date+"</due_date>" +
-							"<identified_by>"+identified_by+"</identified_by>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</sale_leads>";
-				var activity_xml="<activity>" +
-							"<data_id>"+data_id+"</data_id>" +
-							"<tablename>sale_leads</tablename>" +
-							"<link_to>form213</link_to>" +
-							"<title>Updated</title>" +
-							"<notes>Sale lead for customer "+customer+"</notes>" +
-							"<updated_by>"+get_name()+"</updated_by>" +
-							"</activity>";
-				update_row(data_xml,activity_xml);
-				for(var i=0;i<4;i++)
-				{
-					$(form.elements[i]).attr('readonly','readonly');
-				}
+				var data_json={data_store:'sale_leads',
+	 				log:'yes',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'customer',value:customer},
+	 					{index:'detail',value:detail},
+	 					{index:'due_date',value:due_date},
+	 					{index:'status',value:'open'},
+	 					{index:'identified_by',value:identified_by},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Updated',notes:'Sale lead for customer '+customer,link_to:'form213'}};
+				update_json(data_json);
+				$(form).readonly();
 			}
 			else
 			{
@@ -367,26 +351,17 @@
 				{
 					var form_id=$(button).attr('form');
 					var form=document.getElementById(form_id);
-					var customer=form.elements[0].value;
-					var data_id=form.elements[4].value;
-					var data_xml="<sale_leads>" +
-								"<id>"+data_id+"</id>" +
-								"<customer>"+customer+"</customer>" +
-								"</sale_leads>";
-					var activity_xml="<activity>" +
-								"<data_id>"+data_id+"</data_id>" +
-								"<tablename>sale_leads</tablename>" +
-								"<link_to>form213</link_to>" +
-								"<title>Delete</title>" +
-								"<notes>Sale lead for customer "+customer+"</notes>" +
-								"<updated_by>"+get_name()+"</updated_by>" +
-								"</activity>";
-					var follow_xml="<followups>"+
-					            "<source_id>"+data_id+"</source_id>"+		                
-				    			"</followups>";
-								
-					delete_row(data_xml,activity_xml);
-					delete_simple(follow_xml);
+					var customer=form.elements['customer'].value;
+					var data_id=form.elements['id'].value;
+					var data_json={data_store:'sale_leads',
+	 					log:'yes',
+	 					data:[{index:'id',value:data_id}],
+	 					log_data:{title:'Deleted',notes:'Sale lead for customer '+customer,link_to:'form213'}};
+					var follow_json={data_store:'followups',
+	 					data:[{index:'source_id',value:data_id}]};
+
+					delete_json(data_json);
+					delete_json(follow_json);
 					$(button).parent().parent().remove();
 				});
 			}
@@ -402,11 +377,11 @@
 			my_array_to_csv(data_array);
 		};
 		
-		function form97_import_validate(data_array)
+		function form213_import_validate(data_array)
 		{
-			var validate_template_array=[{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-									{column:'attribute',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-									{column:'value',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')}];
+			var validate_template_array=[{column:'customer',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
+									{column:'detail',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
+									{column:'due_date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')}];
 							
 			var error_array=validate_import_array(data_array,validate_template_array);
 			return error_array;					
@@ -414,40 +389,40 @@
 		
 		function form213_import(data_array,import_type)
 		{
-			var data_xml="<sale_leads>";
+			var data_json={data_store:'sale_leads',
+ 					loader:'no',
+ 					log:'yes',
+ 					data:[],
+ 					log_data:{title:'Sale leads for customers',link_to:'form213'}};
+
 			var counter=1;
 			var last_updated=get_my_time();
 		
 			data_array.forEach(function(row)
 			{
-				if((counter%500)===0)
-				{
-					data_xml+="</sale_leads><separator></separator><sale_leads>";
-				}
-						counter+=1;
+				counter+=1;
 				if(import_type=='create_new')
 				{
 					row.id=last_updated+counter;
 				}
-		
-				data_xml+="<row>" +
-						"<id>"+row.id+"</id>" +
-						"<customer>"+row.customer+"</customer>" +
-						"<detail>"+row.detail+"</detail>" +
-						"<due_date>"+row.due_date+"</due_date>" +
-						"<identified_by>"+row.identified_by+"</identified_by>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</row>";
+				
+				var data_json_array=[{index:'id',value:row.id},
+	 					{index:'customer',value:row.customer},
+	 					{index:'detail',value:row.detail},
+	 					{index:'due_date',value:get_raw_time(row.due_date)},
+	 					{index:'identified_by',value:row.identified_by},
+	 					{index:'last_updated',value:last_updated}];
+
+				data_json.data.push(data_json_array);
 			});
-			data_xml+="</sale_leads>";
-			console.log(data_xml);
+			
 			if(import_type=='create_new')
 			{
-				create_batch(data_xml);
+				create_batch_json(data_json);
 			}
 			else
 			{
-				update_batch(data_xml);
+				update_batch_json(data_json);
 			}
 		}
 

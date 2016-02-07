@@ -48,7 +48,7 @@ function default_load()
 		
 		float_labels();
 		
-		document.getElementById('master_title').innerHTML=get_session_var('title');			
+		document.getElementById('master_title').innerHTML=get_session_var('title');
 		hide_loader();
 	}
 	else
@@ -68,7 +68,13 @@ function declaring_global_variables()
 	storage_count_tracker=0;
 	total_export_requests=0;	
  	newsletter_element_4_deletion = [];
- 	status_label_colors={'pending':'label-warning','converted':'label-success','completed':'label-success','active':'label-success','inactive':'label-danger'};
+ 	status_label_colors={'pending':'label-warning',
+ 								'converted':'label-success',
+ 								'completed':'label-success',
+ 								'active':'label-success',
+ 								'inactive':'label-danger',
+ 								'cold':'label-danger',
+ 								'warm':'label-success'};
 }
 
 function float_labels()
@@ -206,7 +212,13 @@ function modal_forms_ini()
 	});
 	
 	var dynamic_modal_array=[];
-	for(var i=8;i<=22;i++)
+	for(var i=8;i<=10;i++)
+	{
+		dynamic_modal_array.push(i);
+	}
+	dynamic_modal_array.push(14);
+	dynamic_modal_array.push(15);
+	for(var i=17;i<=22;i++)
 	{
 		dynamic_modal_array.push(i);
 	}
@@ -218,11 +230,15 @@ function modal_forms_ini()
 	{
 		dynamic_modal_array.push(i);
 	}
-	for(var i=116;i<=134;i++)
+	for(var i=116;i<=133;i++)
 	{
 		dynamic_modal_array.push(i);
 	}
-	for(var i=137;i<=163;i++)
+	for(var i=137;i<=152;i++)
+	{
+		dynamic_modal_array.push(i);
+	}
+	for(var i=154;i<=163;i++)
 	{
 		dynamic_modal_array.push(i);
 	}
@@ -584,8 +600,6 @@ function import_data(form_name)
 		case 'form42':modal23_action(form42_import_template,form42_import);
 		break;
 		case 'form43':modal23_action(form43_import_template,form43_import);
-		break;
-		case 'form44':modal23_action(form44_import_template,form44_import);
 		break;
 		case 'form53':modal23_action(form53_import_template,form53_import);
 		break;

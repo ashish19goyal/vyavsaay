@@ -1,7 +1,8 @@
 <div id='form286' class='tab-pane'>
 
-	<div class='portlet box'>	
+	<div class='portlet box purple-intense'>	
 		<div class="portlet-title">
+			<div class='caption'>Account Details</div>
 		</div>
 		
 		<div class="portlet-body">

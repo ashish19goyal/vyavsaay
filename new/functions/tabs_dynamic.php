@@ -28,6 +28,7 @@
 		$struct_res2=$stmt2->fetchAll(PDO::FETCH_ASSOC);
 		
 		$hide_unreadable_func="<script>function hide_unreadable_elements(){var elements_array=[];";
+//		echo "<div id='tabs_container' style='display:none;'>";
 		
 		for($i=0;$i<count($struct_res);$i++)
 		{
@@ -72,6 +73,6 @@
 								"jQuery('#nav-'+element).hide();}});}</script>";
 		
 		echo $hide_unreadable_func;						
-				
+	//	echo "</div>";		
 	}
 ?>

@@ -478,67 +478,23 @@ function modal11_action(func)
 {
 	var form=document.getElementById('modal11_form');
 	
-	var fname=form.elements[1];
-	var fphone=form.elements[2];
-	var femail=form.elements[3];
-	var faddress=form.elements[4];
-	var fpincode=form.elements[5];
-	var fcity=form.elements[6];
-	var fstate=form.elements[7];
-	var fcountry=form.elements[8];
-	var fnotes=form.elements[9];
+	var fname=form.elements['name'];
+	var fphone=form.elements['phone'];
+	var femail=form.elements['email'];
+	var faddress=form.elements['address'];
 	
 	///////////////////////////
 	fname.value="";
 	fphone.value="";
 	femail.value="";
 	faddress.value="";
-	fpincode.value="";
-	fcity.value="";
-	fstate.value="";
-	fcountry.value="";
-	fnotes.value="";
 
-	$(fcity).off('blur');
-	$(fcity).off('change');
-	
-	var city_data=new Object();
-		city_data.count=0;
-		city_data.start_index=0;
-		city_data.data_store='cities_data';
-		city_data.indexes=[{index:'city'}];		
-		city_data.return_column='city';
-	set_my_filter_json(city_data,fcity);
-
-	$(fcity).on('blur change',function () 
-	{	
-		var state_data=new Object();
-			state_data.count=1;
-			state_data.start_index=0;
-			state_data.data_store='cities_data';
-			state_data.indexes=[{index:'city',exact:fcity.value}];		
-			state_data.return_column='state';
-		set_my_value_json(state_data,fstate);
-
-		var country_data=new Object();
-			country_data.count=1;
-			country_data.start_index=0;
-			country_data.data_store='cities_data';
-			country_data.indexes=[{index:'city',exact:fcity.value}];		
-			country_data.return_column='country';
-		set_my_value_json(country_data,fcountry);
-	});
-
-	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal11_attributes');
 	attribute_label.innerHTML="";
-	var attributes_data="<mandatory_attributes>" +
-			"<attribute></attribute>" +
-			"<status></status>" +
-			"<value></value>"+
-			"<object exact='yes'>customer</object>" +
-			"</mandatory_attributes>";
-	fetch_requested_data('',attributes_data,function(attributes)
+	var attributes_data={data_store:'mandatory_attributes',
+								indexes:[{index:'attribute'},{index:'status'},{index:'value'},{index:'object',exact:'customer'}]};
+								
+	read_json_rows('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
 		{
@@ -546,26 +502,27 @@ function modal11_action(func)
 			{
 				var required="";
 				if(attribute.status=='required')
-					required='required'
-				var attr_label=document.createElement('label');
+					required='required';
+				var attr_label=document.createElement('div');
+				attr_label.setAttribute('class','row');
 				if(attribute.value=="")
 				{
-					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
+					attr_label.innerHTML="<div class'col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
 				}				
 				else 
 				{
 					var values_array=attribute.value.split(";");
-					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					var content="<div class'col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
 					values_array.forEach(function(fvalue)
 					{
 						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
 					});
-					content+="</select>";
+					content+="</select></div>";
 					attr_label.innerHTML=content;
 				}				
 				attribute_label.appendChild(attr_label);
-				var line_break=document.createElement('br');
-				attribute_label.appendChild(line_break);
 			}
 		});
 	});
@@ -582,60 +539,37 @@ function modal11_action(func)
 			var email=femail.value;
 			var address=faddress.value;
 			
-			name = name.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
 			
-			address = address.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			address = address.replace(/â/g,'');
 			address = address.replace(/&/g, "and");
 			
-			var pincode=fpincode.value;
-			var city=fcity.value;
-			var state=fstate.value;
-			var country=fcountry.value;
-			var notes=fnotes.value;
 			var data_id=get_new_key();
-			var address_id=get_new_key();
 			var last_updated=get_my_time();
-			var data_xml="<customers>" +
-						"<id>"+data_id+"</id>" +
-						"<name>"+name+"</name>" +
-						"<phone>"+phone+"</phone>" +
-						"<email>"+email+"</email>" +
-						"<notes>"+notes+"</notes>" +
-						"<acc_name unique='yes'>"+acc_name+"</acc_name>" +
-						"<status>active</status>" +
-						"<address>"+address+"</address>" +
-						"<pincode>"+pincode+"</pincode>" +
-						"<city>"+city+"</city>" +
-						"<state>"+state+"</state>" +
-						"<country>"+country+"</country>" +
-						"<address_status>pending analysis</address_status>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</customers>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>customers</tablename>" +
-						"<link_to>form30</link_to>" +
-						"<title>Added</title>" +
-						"<notes>New customer "+name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var account_xml="<accounts>" +
-						"<id>"+data_id+"</id>" +
-						"<description>"+notes+"</description>" +
-						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
-						"<type>customer</type>" +
-						"<username></username>"+
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</accounts>";
-			create_row_func(data_xml,activity_xml,func);
-			create_simple(account_xml);
 			
-			var business_title=get_session_var('title');
-			var sms_message="Hi "+name+", thanks for being a valuable customer of "+business_title+". Please visit again.";
-			//send_sms(phone,sms_message,'transaction');			
+			var data_json={data_store:'customers',
+	 				log:'yes',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'name',value:name},
+	 					{index:'phone',value:phone},
+	 					{index:'email',value:email},
+	 					{index:'address',value:address},
+	 					{index:'acc_name',value:acc_name,unique:'yes'},
+	 					{index:'status',value:'active'},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Added',notes:'New customer '+name,link_to:'form30'}}; 								
+			
+			var account_json={data_store:'accounts',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'type',value:'customer'},
+	 					{index:'username',value:''},
+	 					{index:'acc_name',value:acc_name,unique:'yes'},
+	 					{index:'status',value:'active'},
+	 					{index:'last_updated',value:last_updated}]}; 								
+				
+			create_json(data_json,func);
+			create_json(account_json);
 			
 			var id=get_new_key();
 			$("#modal11_attributes").find('input, select').each(function()
@@ -645,22 +579,14 @@ function modal11_action(func)
 				var attribute=$(this).attr('name');
 				if(value!="")
 				{
-					var attribute_xml="<attributes>" +
-							"<id>"+id+"</id>" +
-							"<name>"+acc_name+"</name>" +
-							"<type>customer</type>" +
-							"<attribute>"+attribute+"</attribute>" +
-							"<value>"+value+"</value>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</attributes>";
-					if(is_online())
-					{
-						server_create_simple(attribute_xml);
-					}
-					else
-					{
-						local_create_simple(attribute_xml);
-					}
+					var attribute_json={data_store:'attributes',
+	 				data:[{index:'id',value:id},
+	 					{index:'name',value:acc_name},
+	 					{index:'type',value:'customer'},
+	 					{index:'attribute',value:attribute},
+	 					{index:'value',value:value},
+	 					{index:'last_updated',value:last_updated}]}; 												
+					create_json(attribute_json);
 				}
 			});
 		}
@@ -668,12 +594,11 @@ function modal11_action(func)
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal11").dialog("close");
+		$(form).find(".close").click();
 	});
 	
-	$("#modal11").dialog("open");
+	$("#modal11_link").click();
 }
-
 
 /**
  * @modalNo 12
@@ -684,20 +609,16 @@ function modal12_action(func)
 {
 	var form=document.getElementById('modal12_form');
 	
-	var fname=form.elements[1];
-	var fdescription=form.elements[2];
+	var fname=form.elements['name'];
+	var fdescription=form.elements['desc'];
 	var fdata_id=get_new_key();
 	
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal12_attributes');
 	attribute_label.innerHTML="";
-	var attributes_data="<mandatory_attributes>" +
-			"<attribute></attribute>" +
-			"<status></status>" +
-			"<value></value>"+
-			"<object exact='yes'>account</object>" +
-			"</mandatory_attributes>";
-	fetch_requested_data('',attributes_data,function(attributes)
+	var attributes_data={data_store:'mandatory_attributes',
+								indexes:[{index:'attribute'},{index:'status'},{index:'value'},{index:'object',exact:'account'}]};
+	read_json_rows('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
 		{
@@ -705,26 +626,27 @@ function modal12_action(func)
 			{
 				var required="";
 				if(attribute.status=='required')
-					required='required'
-				var attr_label=document.createElement('label');
+					required='required';
+				var attr_label=document.createElement('div');
+				attr_label.setAttribute('class','row');
 				if(attribute.value=="")
 				{
-					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
+					attr_label.innerHTML="<div class'col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
 				}				
 				else 
 				{
 					var values_array=attribute.value.split(";");
-					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					var content="<div class'col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
 					values_array.forEach(function(fvalue)
 					{
 						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
 					});
-					content+="</select>";
+					content+="</select></div>";
 					attr_label.innerHTML=content;
 				}				
 				attribute_label.appendChild(attr_label);
-				var line_break=document.createElement('br');
-				attribute_label.appendChild(line_break);
 			}
 		});
 	});
@@ -738,23 +660,19 @@ function modal12_action(func)
 		var description=fdescription.value;
 		var data_id=get_new_key();
 		var last_updated=get_my_time();
-		var data_xml="<accounts>" +
-					"<id>"+data_id+"</id>" +
-					"<acc_name unique='yes'>"+name+"</acc_name>" +
-					"<type>"+type+"</type>" +
-					"<username></username>"+
-					"<description>"+description+"</description>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</accounts>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>accounts</tablename>" +
-					"<link_to>form71</link_to>" +
-					"<title>Added</title>" +
-					"<notes>New account "+name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		create_row_func(data_xml,activity_xml,func);
+		
+		var account_json={data_store:'accounts',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'type',value:type},
+	 					{index:'username',value:''},
+	 					{index:'description',value:description},
+	 					{index:'acc_name',value:acc_name,unique:'yes'},
+	 					{index:'status',value:'active'},
+	 					{index:'last_updated',value:last_updated}],
+	 				log:'yes',
+	 				log_data:{title:'Added',notes:'New account '+name,link_to:'form71'}}; 								
+					
+		create_json(data_json,func);
 		
 		var id=get_new_key();
 		$("#modal12_attributes").find('input, select').each(function()
@@ -764,29 +682,21 @@ function modal12_action(func)
 			var attribute=$(this).attr('name');
 			if(value!="")
 			{	
-				var attribute_xml="<attributes>" +
-						"<id>"+id+"</id>" +
-						"<name>"+acc_name+"</name>" +
-						"<type>account</type>" +
-						"<attribute>"+attribute+"</attribute>" +
-						"<value>"+value+"</value>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</attributes>";
-				if(is_online())
-				{
-					server_create_simple(attribute_xml);
-				}
-				else
-				{
-					local_create_simple(attribute_xml);
-				}
+				var attribute_json={data_store:'attributes',
+	 				data:[{index:'id',value:id},
+	 					{index:'name',value:acc_name},
+	 					{index:'type',value:'account'},
+	 					{index:'attribute',value:attribute},
+	 					{index:'value',value:value},
+	 					{index:'last_updated',value:last_updated}]}; 												
+				create_json(attribute_json);
 			}
 		});
 
-		$("#modal12").dialog("close");
+		$(form).find(".close").click();
 	});
 	
-	$("#modal12").dialog("open");
+	$("#modal12_link").click();
 }
 
 /**
@@ -798,56 +708,23 @@ function modal13_action(func)
 {
 	var form=document.getElementById('modal13_form');
 	
-	var fname=form.elements[1];
-	var fphone=form.elements[2];
-	var femail=form.elements[3];
-	var faddress=form.elements[4];
-	var fpincode=form.elements[5];
-	var fcity=form.elements[6];
-	var fstate=form.elements[7];
-	var fcountry=form.elements[8];
-	var fnotes=form.elements[9];
+	var fname=form.elements['name'];
+	var fphone=form.elements['phone'];
+	var femail=form.elements['email'];
+	var faddress=form.elements['address'];
 	
-	$(fcity).off('blur');
-	$(fcity).off('change');
-	
-	var city_data=new Object();
-		city_data.count=0;
-		city_data.start_index=0;
-		city_data.data_store='cities_data';
-		city_data.indexes=[{index:'city'}];		
-		city_data.return_column='city';
-	set_my_filter_json(city_data,fcity);
+	///////////////////////////
+	fname.value="";
+	fphone.value="";
+	femail.value="";
+	faddress.value="";
 
-	$(fcity).on('blur change',function () 
-	{	
-		var state_data=new Object();
-			state_data.count=1;
-			state_data.start_index=0;
-			state_data.data_store='cities_data';
-			state_data.indexes=[{index:'city',exact:fcity.value}];		
-			state_data.return_column='state';
-		set_my_value_json(state_data,fstate);
-
-		var country_data=new Object();
-			country_data.count=1;
-			country_data.start_index=0;
-			country_data.data_store='cities_data';
-			country_data.indexes=[{index:'city',exact:fcity.value}];		
-			country_data.return_column='country';
-		set_my_value_json(country_data,fcountry);
-	});
-
-	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal13_attributes');
 	attribute_label.innerHTML="";
-	var attributes_data="<mandatory_attributes>" +
-			"<attribute></attribute>" +
-			"<status></status>" +
-			"<value></value>"+
-			"<object exact='yes'>supplier</object>" +
-			"</mandatory_attributes>";
-	fetch_requested_data('',attributes_data,function(attributes)
+	var attributes_data={data_store:'mandatory_attributes',
+								indexes:[{index:'attribute'},{index:'status'},{index:'value'},{index:'object',exact:'supplier'}]};
+								
+	read_json_rows('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
 		{
@@ -855,96 +732,73 @@ function modal13_action(func)
 			{
 				var required="";
 				if(attribute.status=='required')
-					required='required'
-				var attr_label=document.createElement('label');
+					required='required';
+				var attr_label=document.createElement('div');
+				attr_label.setAttribute('class','row');
 				if(attribute.value=="")
 				{
-					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
+					attr_label.innerHTML="<div class'col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
 				}				
 				else 
 				{
 					var values_array=attribute.value.split(";");
-					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					var content="<div class'col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
 					values_array.forEach(function(fvalue)
 					{
 						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
 					});
-					content+="</select>";
+					content+="</select></div>";
 					attr_label.innerHTML=content;
 				}				
 				attribute_label.appendChild(attr_label);
-				var line_break=document.createElement('br');
-				attribute_label.appendChild(line_break);
 			}
 		});
 	});
-	
 	
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		if(is_create_access('form40'))
+		if(is_create_access('form30'))
 		{
 			var name=fname.value;
 			var phone=fphone.value;
+			var acc_name=name+" ("+phone+")";
 			var email=femail.value;
 			var address=faddress.value;
-			var pincode=fpincode.value;
-			var city=fcity.value;
-			var state=fstate.value;
-			var country=fcountry.value;
-			var notes=fnotes.value;
 			
-			name = name.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
 			
-			address = address.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			address = address.replace(/â/g,'');
 			address = address.replace(/&/g, "and");
 			
-			notes = notes.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
-			notes = notes.replace(/â/g,'');
-			notes = notes.replace(/&/g, "and");
-
-			var acc_name=name+" ("+phone+")";			
 			var data_id=get_new_key();
-			var address_id=get_new_key();
 			var last_updated=get_my_time();
-			var data_xml="<suppliers>" +
-						"<id>"+data_id+"</id>" +
-						"<name>"+name+"</name>" +
-						"<phone>"+phone+"</phone>" +
-						"<email>"+email+"</email>" +
-						"<notes>"+notes+"</notes>" +
-						"<acc_name unique='yes'>"+acc_name+"</acc_name>" +
-						"<address>"+address+"</address>" +
-						"<pincode>"+pincode+"</pincode>" +
-						"<city>"+city+"</city>" +
-						"<state>"+state+"</state>" +
-						"<country>"+country+"</country>" +
-						"<address_status>pending analysis</address_status>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</suppliers>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>suppliers</tablename>" +
-						"<link_to>form40</link_to>" +
-						"<title>Added</title>" +
-						"<notes>Supplier "+name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var account_xml="<accounts>" +
-						"<id>"+data_id+"</id>" +
-						"<description>"+notes+"</description>" +
-						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
-						"<type>supplier</type>" +
-						"<username></username>"+
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</accounts>";
-			create_row_func(data_xml,activity_xml,func);
-			create_simple(account_xml);
+			
+			var data_json={data_store:'suppliers',
+	 				log:'yes',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'name',value:name},
+	 					{index:'phone',value:phone},
+	 					{index:'email',value:email},
+	 					{index:'address',value:address},
+	 					{index:'acc_name',value:acc_name,unique:'yes'},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Added',notes:'New supplier '+name,link_to:'form30'}}; 								
+			
+			var account_json={data_store:'accounts',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'type',value:'supplier'},
+	 					{index:'username',value:''},
+	 					{index:'acc_name',value:acc_name,unique:'yes'},
+	 					{index:'status',value:'active'},
+	 					{index:'last_updated',value:last_updated}]}; 								
+				
+			create_json(data_json,func);
+			create_json(account_json);
 			
 			var id=get_new_key();
 			$("#modal13_attributes").find('input, select').each(function()
@@ -954,22 +808,14 @@ function modal13_action(func)
 				var attribute=$(this).attr('name');
 				if(value!="")
 				{
-					var attribute_xml="<attributes>" +
-							"<id>"+id+"</id>" +
-							"<name>"+acc_name+"</name>" +
-							"<type>supplier</type>" +
-							"<attribute>"+attribute+"</attribute>" +
-							"<value>"+value+"</value>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</attributes>";
-					if(is_online())
-					{
-						server_create_simple(attribute_xml);
-					}
-					else
-					{
-						local_create_simple(attribute_xml);
-					}
+					var attribute_json={data_store:'attributes',
+	 				data:[{index:'id',value:id},
+	 					{index:'name',value:acc_name},
+	 					{index:'type',value:'supplier'},
+	 					{index:'attribute',value:attribute},
+	 					{index:'value',value:value},
+	 					{index:'last_updated',value:last_updated}]}; 												
+					create_json(attribute_json);
 				}
 			});
 		}
@@ -977,10 +823,10 @@ function modal13_action(func)
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal13").dialog("close");
+		$(form).find(".close").click();
 	});
 	
-	$("#modal13").dialog("open");
+	$("#modal13_link").click();
 }
 
 
@@ -1238,61 +1084,24 @@ function modal15_action()
 function modal16_action(func)
 {
 	var form=document.getElementById('modal16_form');
-	var fusername=form.elements[2];
 	
-	var fcity=form.elements[7];
-	var fstate=form.elements[8];
-	var fcountry=form.elements[9];
+	var fname=form.elements['name'];
+	var fphone=form.elements['phone'];
+	var femail=form.elements['email'];
+	var faddress=form.elements['address'];
 	
-	$(fcity).off('blur');
-	$(fcity).off('change');
-	
-	var city_data=new Object();
-		city_data.count=0;
-		city_data.start_index=0;
-		city_data.data_store='cities_data';
-		city_data.indexes=[{index:'city'}];		
-		city_data.return_column='city';
-	set_my_filter_json(city_data,fcity);
+	///////////////////////////
+	fname.value="";
+	fphone.value="";
+	femail.value="";
+	faddress.value="";
 
-	$(fcity).on('blur change',function () 
-	{	
-		var state_data=new Object();
-			state_data.count=1;
-			state_data.start_index=0;
-			state_data.data_store='cities_data';
-			state_data.indexes=[{index:'city',exact:fcity.value}];		
-			state_data.return_column='state';
-		set_my_value_json(state_data,fstate);
-
-		var country_data=new Object();
-			country_data.count=1;
-			country_data.start_index=0;
-			country_data.data_store='cities_data';
-			country_data.indexes=[{index:'city',exact:fcity.value}];		
-			country_data.return_column='country';
-		set_my_value_json(country_data,fcountry);
-	});
-
-	$(fusername).on('blur',function(e)
-	{
-		var match=fusername.value.match(/[a-z0-9]*/i);
-		if(match[0].length!=fusername.value.length)
-		{
-			fusername.value="";
-		}
-	});	
-	
-	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal16_attributes');
 	attribute_label.innerHTML="";
-	var attributes_data="<mandatory_attributes>" +
-			"<attribute></attribute>" +
-			"<status></status>" +
-			"<value></value>"+
-			"<object exact='yes'>staff</object>" +
-			"</mandatory_attributes>";
-	fetch_requested_data('',attributes_data,function(attributes)
+	var attributes_data={data_store:'mandatory_attributes',
+								indexes:[{index:'attribute'},{index:'status'},{index:'value'},{index:'object',exact:'staff'}]};
+								
+	read_json_rows('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
 		{
@@ -1300,96 +1109,74 @@ function modal16_action(func)
 			{
 				var required="";
 				if(attribute.status=='required')
-					required='required'
-				var attr_label=document.createElement('label');
+					required='required';
+				var attr_label=document.createElement('div');
+				attr_label.setAttribute('class','row');
 				if(attribute.value=="")
 				{
-					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
+					attr_label.innerHTML="<div class'col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
 				}				
 				else 
 				{
 					var values_array=attribute.value.split(";");
-					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					var content="<div class'col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
 					values_array.forEach(function(fvalue)
 					{
 						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
 					});
-					content+="</select>";
+					content+="</select></div>";
 					attr_label.innerHTML=content;
 				}				
 				attribute_label.appendChild(attr_label);
-				var line_break=document.createElement('br');
-				attribute_label.appendChild(line_break);
-			}	
+			}
 		});
 	});
-	
 	
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		if(is_create_access('form8'))
+		if(is_create_access('form30'))
 		{
-			var name=form.elements[1].value;
-			var username=form.elements[2].value;
-			var address=form.elements[5].value;
+			var name=fname.value;
+			var phone=fphone.value;
+			var acc_name=name+" ("+phone+")";
+			var email=femail.value;
+			var address=faddress.value;
 			
-			name = name.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
 			
-			address = address.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			address = address.replace(/â/g,'');
 			address = address.replace(/&/g, "and");
 			
-			var phone=form.elements[3].value;
-			var acc_name=name+" ("+phone+")";
-			var email=form.elements[4].value;
-			var pincode=form.elements[6].value;
-			var city=form.elements[7].value;
-			var state=form.elements[8].value;
-			var country=form.elements[9].value;
 			var data_id=get_new_key();
-			var address_id=get_new_key();
 			var last_updated=get_my_time();
-			var data_xml="<staff>" +
-						"<id>"+data_id+"</id>" +
-						"<name>"+name+"</name>" +
-						"<phone>"+phone+"</phone>" +
-						"<email>"+email+"</email>" +
-						"<acc_name unique='yes'>"+acc_name+"</acc_name>" +
-						"<address>"+address+"</address>" +
-						"<pincode>"+pincode+"</pincode>" +
-						"<city>"+city+"</city>" +
-						"<state>"+state+"</state>" +
-						"<country>"+country+"</country>" +
-						"<address_status>pending analysis</address_status>" +
-						"<status>active</status>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</staff>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>staff</tablename>" +
-						"<link_to>form8</link_to>" +
-						"<title>Added</title>" +
-						"<notes>Staff "+name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var username_string="<username unique='yes'>"+username+"</username>";			
-			if(username=="")
-				username_string="<username></username>";			
-			var account_xml="<accounts>" +
-						"<id>"+data_id+"</id>" +
-						"<description>account for staff "+name+"</description>" +
-						username_string+
-						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
-						"<type>staff</type>" +
-						"<status>active</status>"+						
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</accounts>";
-			create_row_func(data_xml,activity_xml,func);
-			create_simple(account_xml);
+			
+			var data_json={data_store:'staff',
+	 				log:'yes',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'name',value:name},
+	 					{index:'phone',value:phone},
+	 					{index:'email',value:email},
+	 					{index:'address',value:address},
+	 					{index:'status',value:'active'},
+	 					{index:'acc_name',value:acc_name,unique:'yes'},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Added',notes:'New staff '+name,link_to:'form30'}}; 								
+			
+			var account_json={data_store:'accounts',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'type',value:'staff'},
+	 					{index:'username',value:''},
+	 					{index:'acc_name',value:acc_name,unique:'yes'},
+	 					{index:'status',value:'active'},
+	 					{index:'last_updated',value:last_updated}]}; 								
+				
+			create_json(data_json,func);
+			create_json(account_json);
 			
 			var id=get_new_key();
 			$("#modal16_attributes").find('input, select').each(function()
@@ -1398,17 +1185,15 @@ function modal16_action(func)
 				var value=$(this).val();
 				var attribute=$(this).attr('name');
 				if(value!="")
-				{	
-					var attribute_xml="<attributes>" +
-							"<id>"+id+"</id>" +
-							"<name>"+acc_name+"</name>" +
-							"<type>staff</type>" +
-							"<attribute>"+attribute+"</attribute>" +
-							"<value>"+value+"</value>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</attributes>";
-					create_simple(attribute_xml);
-					
+				{
+					var attribute_json={data_store:'attributes',
+	 				data:[{index:'id',value:id},
+	 					{index:'name',value:acc_name},
+	 					{index:'type',value:'staff'},
+	 					{index:'attribute',value:attribute},
+	 					{index:'value',value:value},
+	 					{index:'last_updated',value:last_updated}]}; 												
+					create_json(attribute_json);
 				}
 			});
 		}
@@ -1416,11 +1201,12 @@ function modal16_action(func)
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal16").dialog("close");
+		$(form).find(".close").click();
 	});
 	
-	$("#modal16").dialog("open");
+	$("#modal16_link").click();
 }
+
 
 
 /**
@@ -9455,7 +9241,7 @@ function modal134_action(lead_id,customer,lead_details)
 	
 	date_filter.value=get_my_date();
 	
-	set_static_value_list('followups','response',response_filter);
+	set_static_value_list_json('followups','response',response_filter);
 
 	$(form).off("submit");
 	$(form).on("submit",function(event)
@@ -9471,33 +9257,31 @@ function modal134_action(lead_id,customer,lead_details)
 			var last_updated=get_my_time();
 			var new_details=lead_details+"\n\n"+date_filter.value+": "+details;
 
-			var follow_xml="<followups>"+
-						"<id>"+id+"</id>"+
-		                "<customer>"+customer+"</customer>"+
-		                "<date>"+date+"</date>"+
-		                "<response>"+response+"</response>"+
-		                "<detail>"+details+"</detail>"+
-		                "<next_date>"+next_date+"</next_date>"+
-		                "<source_id>"+lead_id+"</source_id>"+		                
-		                "<last_updated>"+last_updated+"</last_updated>"+
-						"</followups>";
-			var lead_xml="<sale_leads>"+
-						"<id>"+lead_id+"</id>"+
-		                "<due_date>"+next_date+"</due_date>"+
-		                "<detail>"+new_details+"</detail>"+
-		                "<last_updated>"+last_updated+"</last_updated>"+
-						"</sale_leads>";
-			create_simple(follow_xml);
-			update_simple(lead_xml);
+			var follow_json={data_store:'followups',
+		 				data:[{index:'id',value:id},
+		 					{index:'customer',value:customer},
+		 					{index:'date',value:date},
+		 					{index:'response',value:response},
+		 					{index:'detail',value:details},
+		 					{index:'next_date',value:next_date},
+		 					{index:'source_id',value:lead_id},
+		 					{index:'last_updated',value:last_updated}]};
+	 		var lead_json={data_store:'sale_leads',
+		 				data:[{index:'id',value:lead_id},
+		 					{index:'due_date',value:next_date},
+		 					{index:'detail',value:new_details},
+		 					{index:'last_updated',value:last_updated}]};	 		
+			create_json(follow_json);
+			update_json(lead_json);
 		}
 		else
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal134").dialog("close");
+		$(form).find(".close").click();
 	});
 	
-	$("#modal134").dialog("open");
+	$("#modal134_link").click();
 }
 
 /**
@@ -12044,7 +11828,7 @@ function modal153_action(button,lead_id)
 	$(no_button).off('click');
 	$(no_button).on('click',function()
 	{
-		$("#modal153").dialog("close");
+		$(form).find(".close").click();
 	});
 	
 	$(form).off("submit");
@@ -12055,25 +11839,24 @@ function modal153_action(button,lead_id)
 		{
 			var lead_form_id=$(button).attr('form');
 			var last_updated=get_my_time();
-
-			var lead_xml="<sale_leads>"+
-						"<id>"+lead_id+"</id>"+
-		                "<due_date></due_date>"+
-		                "<status>closed</status>"+
-		                "<last_updated>"+last_updated+"</last_updated>"+
-						"</sale_leads>";
-			update_simple(lead_xml);
-			$(button).parent().parent().attr('class','cancelled_row');
+			
+			var data_json={data_store:'sale_leads',
+	 				data:[{index:'id',value:lead_id},
+	 					{index:'due_date',value:''},
+	 					{index:'status',value:'closed'},
+	 					{index:'last_updated',value:last_updated}]};				
+			update_json(data_json);
+			$(button).parent().parent().attr('class','active');
 			$(button).hide();
 		}
 		else
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal153").dialog("close");
+		$(form).find(".close").click();
 	});
 	
-	$("#modal153").dialog("open");
+	$("#modal153_link").click();
 }
 
 /**

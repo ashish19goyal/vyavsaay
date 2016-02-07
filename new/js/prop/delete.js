@@ -846,53 +846,6 @@ function form43_delete_item(button)
 
 
 /**
- * @form Manage Pamphlets
- * @param button
- */
-function form44_delete_item(button)
-{
-	if(is_delete_access('form44'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var name=form.elements[0].value;
-			var data_id=form.elements[3].value;
-			var last_updated=get_my_time();
-			var data_xml="<newsletter>" +
-						"<id>"+data_id+"</id>" +
-						"</newsletter>";	
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>newsletter</tablename>" +
-						"<link_to>form44</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>NewsLetter "+name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var other_delete="<newsletter_items>" +
-					"<nl_id>"+data_id+"</nl_id>" +
-					"</newsletter_items>";
-			var other2_delete="<documents>" +
-					"<target_id>"+data_id+"</target_id>" +
-					"<doc_type>newsletter</doc_type>" +
-					"</documents>";
-			
-			delete_row(data_xml,activity_xml);
-			delete_simple(other_delete);
-			delete_simple(other2_delete);
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
  * @form Manage Supplier Bills
  * @param button
  */

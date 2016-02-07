@@ -1157,31 +1157,6 @@ function form43_header_ini()
 
 
 /**
- * @form Manage Newsletter
- * @formNo 44
- */
-function form44_header_ini()
-{
-	var filter_fields=document.getElementById('form44_header');
-	var name_filter=filter_fields.elements[0];
-	var status_filter=filter_fields.elements[1];
-	
-	var name_columns=new Object();
-		name_columns.data_store='newsletter';
-		name_columns.indexes=[{index:'name'}];		
-		name_columns.return_column='name';
-	set_my_filter_json(name_columns,name_filter);
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form44_ini();
-	});
-};
-
-
-/**
  * @form change password
  * @formNo 47
  */
@@ -7444,41 +7419,6 @@ function form212_header_ini()
 
 
 /**
- * @form Sale Leads (self)
- * @formNo 214
- */
-function form214_header_ini()
-{
-	var fields=document.getElementById('form214_master');
-
-	$(fields).off('submit');
-	$(fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form214_create_item();
-	});
-
-	var date_filter=fields.elements['date'];
-	$(date_filter).datepicker();
-
-	$('#form214_attributes').html("");
-	
-	var logo_image=get_session_var('logo');
-	var business_intro_text=get_session_var('business_intro');
-	var business_address=get_session_var('address');
-	var business_phone=get_session_var('phone');
-	var business_email=get_session_var('email');
-	var business_website=get_session_var('website');
-	//var intro_text=business_intro_text+"<br>Address: "+business_address+"<br>Phone: "+business_phone+"<br>Email: "+
-	//			business_email+"<br>Web: "+business_website;
-	
-	$('#form214_logo').attr('src','./client_images/'+logo_image);
-//	$('#form214_intro').html(intro_text);
-	
-}
-
-
-/**
  * @form Create manifest
  * @formNo 215
  */
@@ -8413,92 +8353,6 @@ function form236_header_ini()
 	$(date_filter).datepicker();
 };
 
-/**
- * @form Promotion (flex newsletter)
- * @formNo 237
- */
-function form237_header_ini()
-{
-	var fields=document.getElementById('form237_master');
-	var name_filter=fields.elements['newsletter'];
-	var sms_filter=fields.elements['sms'];
-	var list_filter=fields.elements['list'];
-	var value_filter=fields.elements['value'];
-	var id_filter=fields.elements['nl_id'];
-	var send_button=fields.elements['send'];
-	var send_all_button=fields.elements['send_all'];
-	id_filter.value="";
-	name_filter.value="";
-	list_filter.value="";
-	fields.elements['nl_id'].value="";
-	
-	$(send_button).off('click');
-	$(send_button).on('click',function(event)
-	{
-		event.preventDefault();
-		form237_ini();
-	});
-
-	$(send_all_button).off('click');
-	$(send_all_button).on('click',function(event)
-	{
-		event.preventDefault();
-		form237_ini_all();
-	});
-
-	var list_columns=new Object();
-		list_columns.data_store='attributes';
-		list_columns.indexes=[{index:'type',exact:'customer'}];		
-		list_columns.return_column='attribute';
-	set_my_value_list_json(list_columns,list_filter);
-
-	$(list_filter).off('blur');
-	$(list_filter).on('blur',function()
-	{
-
-		var value_columns=new Object();
-		value_columns.data_store='attributes';
-		value_columns.indexes=[{index:'type',exact:'customer'},
-							{index:'attribute',exact:list_filter.value}];		
-		value_columns.return_column='value';
-		
-		set_my_value_list_json(value_columns,value_filter);
-	});
-	
-	sms_filter.value=get_session_var('sms_content');
-	
-	var name_columns=new Object();
-		name_columns.data_store='newsletter';
-		name_columns.indexes=[{index:'status',exact:'active'}];		
-		name_columns.return_column='name';
-	set_my_value_list_json(name_columns,name_filter,function () 
-	{
-		$(name_filter).focus();
-	});
-
-	$(name_filter).off('blur');
-	$(name_filter).on('blur',function()
-	{
-		var nl_columns=new Object();
-			nl_columns.count=1;
-			nl_columns.data_store='newsletter';
-			nl_columns.indexes=[{index:'name',exact:name_filter.value}];		
-			nl_columns.return_column='id';
-		set_my_value_json(nl_columns,id_filter);
-	});
-
-	my_datalist_change(name_filter,function () 
-	{
-		var nl_columns=new Object();
-			nl_columns.count=1;
-			nl_columns.data_store='newsletter';
-			nl_columns.indexes=[{index:'name',exact:name_filter.value}];		
-			nl_columns.return_column='id';
-		set_my_value_json(nl_columns,id_filter);
-	});
-	
-	$('textarea').autosize();
-}
 
 /**
  * @form Update Inventory (CPS)

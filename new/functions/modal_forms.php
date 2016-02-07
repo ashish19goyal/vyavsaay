@@ -57,53 +57,115 @@
 		</form>
 	</div>
 	
-	<div id="modal11" title="Add new customer">
-		<form id='modal11_form' autocomplete="off">
-			<fieldset>
-				<label>Name: <input type='text' required></label><br>
-				<label>Phone: <input type="tel"></label><br>
-				<label>Email: <input type="text"></label><br>
-				<label>Address: <textarea></textarea></label><br>
-				<label>Pincode: <input type="number"></label><br>
-				<label>City: <input type="text"></label><br>
-				<label>State: <input type="text"></label><br>
-				<label>Country: <input type="text"></label><br>
-				<label>Notes: <textarea></textarea></label><br>
-				<label id='modal11_attributes'></label><br>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
+	<a href='#modal11' data-toggle="modal" id='modal11_link'></a>
+	<div id="modal11" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal11_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add New Customer</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal11_form' required name='name'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Phone</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal11_form' name='phone'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Email</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal11_form' name='email'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Address</div>
+					     			<div class="col-sm-12 col-md-8"><textarea form='modal11_form' name='address'></textarea></div>
+					     		</div>
+		                  <div id='modal11_attributes'></div>
+		                  </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal11_form' name='save'>Save</button>
+	               	<button type="button" class="btn red" form='modal11_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+	<a href='#modal12' data-toggle="modal" id='modal12_link'></a>
+	<div id="modal12" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal12_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add new account</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal12_form' required name='name'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Description</div>
+					     			<div class="col-sm-12 col-md-8"><textarea form='modal12_form' name='desc'></textarea></div>
+					     		</div>
+		                  <div id='modal12_attributes'></div>
+		                  </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal12_form' name='save'>Save</button>
+	               	<button type="button" class="btn red" form='modal12_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 	
-	<div id="modal12" title="Add new account">
-		<form id='modal12_form' autocomplete="off">
-			<fieldset>
-				<label>Name: <input type='text' required></label><br>
-				<label>Description: <textarea></textarea></label><br>
-				<label id='modal12_attributes'></label><br>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
-	
-	<div id="modal13" title="Add new supplier">
-		<form id='modal13_form' autocomplete="off">
-			<fieldset>
-				<label>Name: <input type='text' required></label><br>
-				<label>Phone: <input type="text"></label><br>
-				<label>Email: <input type="text"></label><br>
-				<label>Address: <textarea></textarea></label><br>
-				<label>Pincode: <input type="number"></label><br>
-				<label>City: <input type="text"></label><br>
-				<label>State: <input type="text"></label><br>
-				<label>Country: <input type="text"></label><br>
-				<label>Notes: <textarea></textarea></label><br>
-				<label id='modal13_attributes'></label><br>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
-	
+	<a href='#modal13' data-toggle="modal" id='modal13_link'></a>
+	<div id="modal13" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal13_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add new Supplier</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal13_form' required name='name'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Phone</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal13_form' name='phone'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Email</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal13_form' name='email'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Address</div>
+					     			<div class="col-sm-12 col-md-8"><textarea form='modal13_form' name='address'></textarea></div>
+					     		</div>
+		                  <div id='modal13_attributes'></div>
+		                  </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal13_form' name='save'>Save</button>
+	               	<button type="button" class="btn red" form='modal13_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 	<div id="modal14" title="Add new product">
 		<form id='modal14_form' autocomplete="off">
 			<fieldset>
@@ -135,23 +197,44 @@
 		</form>
 	</div>
 	
-	<div id="modal16" title="Add new staff">
-		<form id='modal16_form' autocomplete="off">
-			<fieldset>
-				<label>Name: <input type='text' required></label><br>
-				<label>UserName: <input type='text' title='only alphanumeric characters'></label><br>
-				<label>Phone: <input type="text"></label><br>
-				<label>Email: <input type="text"></label><br>
-				<label>Address: <textarea></textarea></label><br>
-				<label>Pincode: <input type="number"></label><br>
-				<label>City: <input type="text"></label><br>
-				<label>State: <input type="text"></label><br>
-				<label>Country: <input type="text"></label><br>
-				<label id='modal16_attributes'></label><br>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
+	<a href='#modal16' data-toggle="modal" id='modal16_link'></a>
+	<div id="modal16" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal16_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add new Supplier</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal16_form' required name='name'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Phone</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal16_form' name='phone'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Email</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal16_form' name='email'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Address</div>
+					     			<div class="col-sm-12 col-md-8"><textarea form='modal16_form' name='address'></textarea></div>
+					     		</div>
+		                  <div id='modal16_attributes'></div>
+		                  </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal16_form' name='save'>Save</button>
+	               	<button type="button" class="btn red" form='modal16_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 	
 	<div id="modal17" title="Add staff details">
 		<form id='modal17_form' autocomplete="off">
@@ -1086,17 +1169,43 @@
 		</form>				
 	</div>
 	
-	<div id="modal134" title="Follow-up Details">
-		<form id='modal134_form' autocomplete="off">
-			<fieldset>
-				<label>Date: <input readonly='readonly' name='date' required type="text"></label><br>
-				<label>Response: <input name='response' autofocus required type="text"></label><br>
-				<label>Details: <textarea name='details'></textarea></label><br>
-				<label>Next Followup Date: <input name='next_date' type="text"></label><br>
-				<input type="submit" value='Save' name='save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
+	<a href='#modal134' data-toggle="modal" id='modal134_link'></a>
+	<div id="modal134" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal134_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Follow up</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		               	<div class="row">
+									<div class="col-sm-12 col-md-4">Date</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' readonly='readonly' form='modal134_form' name='date'></div>
+					     		</div>
+		                  <div class="row">
+									<div class="col-sm-12 col-md-4">Response</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' required form='modal134_form' name='response'></div>
+					     		</div>
+					     		<div class="row">
+									<div class="col-sm-12 col-md-4">Details</div>
+					     			<div class="col-sm-12 col-md-8"><textarea form='modal134_form' name='details'></textarea></div>
+					     		</div>
+					     		<div class="row">
+									<div class="col-sm-12 col-md-4">Next Follow-up Date</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal134_form' class='form-control input-medium date-picker' name='next_date'></div>
+					     		</div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal134_form' name='save'>Save</button>
+	               	<button type="button" data-dismiss='modal' class="btn red" form='modal134_form' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 	<a href='#modal135' data-toggle="modal" id='modal135_link'></a>
 	<div id="modal135" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
@@ -1167,7 +1276,7 @@
 		             </div>
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal136_form' name='save'>Save</button>
-	               	<button type="button" data-dismiss='modal' class="btn red" form='modal136_form' name='save'>Cancel</button>
+	               	<button type="button" data-dismiss='modal' class="btn red" form='modal136_form' name='cancel'>Cancel</button>
 	             	</div>
                 </form>
             </div>
@@ -1400,17 +1509,28 @@
 		</table>		
 	</div>
 
-	<div id="modal153" title="Close Sale Lead">
-		Are you sure you want to close this lead?
-		<br>
-		<br>
-		<form id='modal153_form' autocomplete="off">
-			<fieldset>
-				<input type="submit" class='modal_submit' name='yes' value='Yes'>
-				<input type="button" class='modal_submit' name='no' value='No'>
-			</fieldset>
-		</form>
-	</div>
+	<a href='#modal153' data-toggle="modal" id='modal153_link'></a>
+	<div id="modal153" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal153_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Close Sale lead</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		               	Are you sure you want to close this lead?
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal153_form' name='yes'>Yes</button>
+	               	<button type="button" data-dismiss='modal' class="btn red" form='modal153_form' name='no'>No</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 	<div id="modal154" title="View Invoices">
 		<br>		
