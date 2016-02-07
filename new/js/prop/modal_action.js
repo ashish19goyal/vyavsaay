@@ -13750,28 +13750,26 @@ function modal169_action(search_id)
 	var add_button=form.elements['add_button'];
 	var delete_button=form.elements['delete_button'];
 
+	var attribute_label=document.getElementById('modal169_columns');
+	attribute_label.innerHTML="";
+
 	$(add_button).off('click');
 	$(add_button).on('click',function () 
 	{
-		var content="<label>Key: <input type='text'><br>Column: <input type='text'></label>";
+		var content="<div><input placeholder='Key' class='floatlabel' type='text'> <input placeholder='Column' class='floatlabel' type='text'></div>";
 		$(attribute_label).append(content);
+		$(form).formcontrol();
 	});		
 
 	$(delete_button).off('click');
 	$(delete_button).on('click',function () 
 	{
-		var label_elem=$('#modal169_columns').find('label:first-child');
-		console.log(label_elem);
-		$(label_elem).remove();
+		$('#modal169_columns>div:last-child').remove();
 	});		
 	
-	var attribute_label=document.getElementById('modal169_columns');
-	attribute_label.innerHTML="";
-	var attributes_data="<system_search count='1'>" +
-			"<id>"+search_id+"</id>" +
-			"<return_columns></return_columns>" +
-			"</system_search>";
-	fetch_requested_data('',attributes_data,function(attributes)
+	var attributes_data={data_store:'system_search',count:1,
+								indexes:[{index:'id',value:search_id},{index:'return_columns'}]};
+	read_json_rows('',attributes_data,function(attributes)
 	{
 		if(attributes.length>0)
 		{
@@ -13779,9 +13777,10 @@ function modal169_action(search_id)
 			var content="";
 			values_array.forEach(function(fvalue)
 			{
-				content+="<label>Key: <input type='text' value='"+fvalue.key+"'><br>Column: <input type='text' value='"+fvalue.column+"'></label>";
+				content+="<div><input placeholder='Key' class='floatlabel' type='text' value='"+fvalue.key+"'> <input type='text' placeholder='Column' class='floatlabel' value='"+fvalue.column+"'></div>";
 			});
 			$(attribute_label).html(content);
+			$(form).formcontrol();
 		}
 	});
 
@@ -13793,30 +13792,29 @@ function modal169_action(search_id)
 		{
 			var last_updated=get_my_time();
 			var returns_column_array=[];
-			$("#modal169_columns").find('label').each(function()
+			$("#modal169_columns>div").each(function()
 			{
 				var return_obj=new Object();
-				return_obj.key=$(this).find('input:first-child').val();
-				return_obj.column=$(this).find('input:nth-child(3)').val();
+				return_obj.key=$(this).find('div:first-child>input').val();
+				return_obj.column=$(this).find('div:nth-child(2)>input').val();
 				returns_column_array.push(return_obj);
 			});
 
 			var return_columns=JSON.stringify(returns_column_array);
-			var search_xml="<system_search>" +
-						"<id>"+search_id+"</id>" +
-						"<return_columns>"+return_columns+"</return_columns>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</system_search>";
-			update_simple(search_xml);					
+			var search_json={data_store:'system_search',
+	 				data:[{index:'id',value:search_id},
+	 					{index:'return_columns',value:return_columns},
+	 					{index:'last_updated',value:last_updated}]}; 							
+			update_json(search_json);					
 		}
 		else
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal169").dialog("close");
+		$(form).find(".close").click();
 	});
 	
-	$("#modal169").dialog("open");
+	$("#modal169_link").click();
 }
 
 /**

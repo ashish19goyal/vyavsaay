@@ -495,15 +495,6 @@ function form94_import_template()
 	my_array_to_csv(data_array);
 };
 
-/**
-* @form Customer Attributes
-* @formNo 96
-*/
-function form96_import_template()
-{
-	var data_array=['id','name','attribute','value'];
-	my_array_to_csv(data_array);
-};
 
 /**
 * @form Supplier Attributes
@@ -1132,15 +1123,7 @@ function form207_import_template()
 	my_array_to_csv(data_array);
 };
 
-/**
-* @form Sale leads (followup)
-* @formNo 213
-*/
-function form213_import_template()
-{
-	var data_array=['id','customer','detail','due_date','identified_by'];
-	my_array_to_csv(data_array);
-};
+
 
 /**
 * @form SKU Mapping (Supplier)

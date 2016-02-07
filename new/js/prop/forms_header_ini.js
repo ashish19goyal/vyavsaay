@@ -2601,42 +2601,6 @@ function form94_header_ini()
 	});
 };
 
-/**
- * @form Customer Attributes
- * @formNo 96
- */
-function form96_header_ini()
-{
-	var filter_fields=document.getElementById('form96_header');
-	var customer_filter=filter_fields.elements[0];
-	var attribute_filter=filter_fields.elements[1];
-	var value_filter=filter_fields.elements[2];
-	
-	var customer_data="<customers>" +
-			"<acc_name></acc_name>" +
-			"</customers>";
-	var attribute_data="<attributes>" +
-			"<attribute></attribute>" +
-			"<type exact='yes'>customer</type>" +
-			"</attributes>";
-
-	var value_data="<attributes>" +
-			"<value></value>" +
-			"<type exact='yes'>customer</type>" +
-			"</attributes>";
-	
-	set_my_filter(customer_data,customer_filter);
-	set_my_filter(attribute_data,attribute_filter);
-	set_my_filter(value_data,value_filter);
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form96_ini();
-	});
-
-};
 
 /**
  * @form Supplier Attributes
@@ -7478,36 +7442,6 @@ function form212_header_ini()
 	$('#form212_body').html("");
 }
 
-/**
- * @form Sale leads (followup)
- * @formNo 213
- */
-function form213_header_ini()
-{
-	var filter_fields=document.getElementById('form213_header');	
-	var names_filter=filter_fields.elements[0];
-	var identified_filter=filter_fields.elements[1];
-
-	//setting autocompletes 
-	var names_data="<customers>" +
-			"<acc_name></acc_name>" +
-			"</customers>";
-
-	set_my_filter(names_data,names_filter);
-
-	//setting autocompletes 
-	var identified_data="<staff>" +
-			"<acc_name></acc_name>" +
-			"</staff>";
-	set_my_filter(names_data,names_filter);
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form213_ini();
-	});	
-}
 
 /**
  * @form Sale Leads (self)
@@ -10231,28 +10165,6 @@ function form275_header_ini()
 	set_my_filter(customer_data,customer_filter);
 };
 
-/**
- * @form Search Queries
- * @formNo 276
- */
-function form276_header_ini()
-{
-	var filter_fields=document.getElementById('form276_header');
-	var table_filter=filter_fields.elements[0];
-		
-	var name_data="<system_search>" +
-		"<table_name></table_name>" +
-		"</system_search>";
-
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form276_ini();
-	});
-
-	set_my_filter(name_data,table_filter);
-};
 
 /**
  * @form Dispatch Orders

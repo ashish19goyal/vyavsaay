@@ -2382,51 +2382,6 @@ function form93_delete_item(button)
 
 
 /**
- * formNo 96
- * form Customer Attributes
- * @param button
- */
-function form96_delete_item(button)
-{
-	if(is_delete_access('form96'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var customer=form.elements[0].value;
-			var attribute=form.elements[1].value;
-			var value=form.elements[2].value;
-			var data_id=form.elements[3].value;
-			var last_updated=get_my_time();
-			var data_xml="<attributes>" +
-						"<id>"+data_id+"</id>" +
-						"<name>"+customer+"</name>" +
-						"<type>customer</type>" +
-						"<attribute>"+attribute+"</attribute>" +
-						"<value>"+value+"</value>" +
-						"</attributes>";	
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>attributes</tablename>" +
-						"<link_to>form96</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Attribute "+attribute+" for customer "+customer+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			delete_row(data_xml,activity_xml);
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-
-/**
  * formNo 97
  * form Supplier Attributes
  * @param button
@@ -6125,46 +6080,6 @@ function form209_delete_item(button)
 	}
 }
 
-/**
- * @form Sale Leads
- * @param button
- */
-function form213_delete_item(button)
-{
-	if(is_delete_access('form213'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			var customer=form.elements[0].value;
-			var data_id=form.elements[4].value;
-			var data_xml="<sale_leads>" +
-						"<id>"+data_id+"</id>" +
-						"<customer>"+customer+"</customer>" +
-						"</sale_leads>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>sale_leads</tablename>" +
-						"<link_to>form213</link_to>" +
-						"<title>Delete</title>" +
-						"<notes>Sale lead for customer "+customer+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var follow_xml="<followups>"+
-			            "<source_id>"+data_id+"</source_id>"+		                
-		    			"</followups>";
-						
-			delete_row(data_xml,activity_xml);
-			delete_simple(follow_xml);
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * formNo 215
@@ -7930,32 +7845,6 @@ function form275_delete_item(button)
 	}
 }
 
-/**
- * @form Search Queries
- * @param button
- */
-function form276_delete_item(button)
-{
-	if(is_delete_access('form276'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			var data_id=form.elements[8].value;
-			var data_xml="<system_search>" +
-						"<id>"+data_id+"</id>" +
-						"</system_search>";
-							
-			delete_simple(data_xml);
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Manage Performa Invoice

@@ -364,3 +364,7 @@ a textarea:hover, a input:hover{
 	text-decoration: underline;
 	cursor:pointer;
 }
+
+.submit_hidden{
+	display: none;
+}

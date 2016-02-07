@@ -2372,48 +2372,6 @@ function form94_import(data_array,import_type)
 
 
 /**
-* @form Customer Attributes
-* @formNo 96
-*/
-function form96_import(data_array,import_type)
-{
-	var data_xml="<attributes>";
-	var counter=1;
-	var last_updated=get_my_time();
-
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</attributes><separator></separator><attributes>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<name>"+row.name+"</name>" +
-				"<type>customer</type>" +
-				"<attribute>"+row.attribute+"</attribute>" +
-				"<value>"+row.value+"</value>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	data_xml+="</attributes>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-	}
-};
-
-/**
 * @form Supplier Attributes
 * @formNo 97
 */
@@ -5553,48 +5511,6 @@ function form207_import(data_array,import_type)
 	}
 }
 
-/**
-* @form Sale leads (followups)
-* @formNo 213
-*/
-function form213_import(data_array,import_type)
-{
-	var data_xml="<sale_leads>";
-	var counter=1;
-	var last_updated=get_my_time();
-
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</sale_leads><separator></separator><sale_leads>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<customer>"+row.customer+"</customer>" +
-				"<detail>"+row.detail+"</detail>" +
-				"<due_date>"+row.due_date+"</due_date>" +
-				"<identified_by>"+row.identified_by+"</identified_by>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	data_xml+="</sale_leads>";
-	console.log(data_xml);
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-	}
-}
 
 /**
 * @form SKU Mapping (Supplier)

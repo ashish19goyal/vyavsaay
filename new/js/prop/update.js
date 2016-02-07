@@ -4229,48 +4229,6 @@ function form94_reject_item(form)
 	}
 }
 
-/**
- * formNo 96
- * form Customer Attributes
- * @param button
- */
-function form96_update_item(form)
-{
-	if(is_update_access('form96'))
-	{
-		var customer=form.elements[0].value;
-		var attribute=form.elements[1].value;
-		var value=form.elements[2].value;
-		var data_id=form.elements[3].value;
-		var last_updated=get_my_time();
-		var data_xml="<attributes>" +
-					"<id>"+data_id+"</id>" +
-					"<name>"+customer+"</name>" +
-					"<type>customer</type>" +
-					"<attribute>"+attribute+"</attribute>" +
-					"<value>"+value+"</value>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</attributes>";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>attributes</tablename>" +
-					"<link_to>form96</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Attribute "+attribute+" for customer "+customer+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-
-		update_row(data_xml,activity_xml);
-		for(var i=0;i<3;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * formNo 97
@@ -10864,47 +10822,6 @@ function form212_update_item(form)
 	}
 }
 
-/**
- * @form Sale leads (followups)
- * @param button
- */
-function form213_update_item(form)
-{
-	if(is_update_access('form213'))
-	{
-		var customer=form.elements[0].value;
-		var detail=form.elements[1].value;
-		var due_date=get_raw_time(form.elements[2].value);
-		var identified_by=form.elements[3].value;
-		var data_id=form.elements[4].value;
-		var last_updated=get_my_time();
-		var data_xml="<sale_leads>" +
-					"<id>"+data_id+"</id>" +
-					"<customer>"+customer+"</customer>" +
-					"<detail>"+detail+"</detail>" +
-					"<due_date>"+due_date+"</due_date>" +
-					"<identified_by>"+identified_by+"</identified_by>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</sale_leads>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>sale_leads</tablename>" +
-					"<link_to>form213</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Sale lead for customer "+customer+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		update_row(data_xml,activity_xml);
-		for(var i=0;i<4;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * formNo 215
@@ -13416,50 +13333,6 @@ function form275_update_item(form)
 	}
 }
 
-/**
- * formNo 276
- * form Search Queries
- * @param button
- */
-function form276_update_item(form)
-{
-	if(is_update_access('form276'))
-	{
-		var table_name=form.elements[0].value;
-		var tab_name=form.elements[1].value;
-		var tab_order=form.elements[2].value;
-		var search_column=form.elements[3].value;
-		var result_title=form.elements[4].value;
-		var result_detail=form.elements[5].value;
-		var result_form=form.elements[6].value;
-		var result_count=form.elements[7].value;
-		var data_id=form.elements[8].value;
-		
-		var last_updated=get_my_time();
-		var data_xml="<system_search>" +
-					"<id>"+data_id+"</id>" +
-					"<table_name>"+table_name+"</table_name>" +
-					"<tab_name>"+tab_name+"</tab_name>" +
-					"<tab_order>"+tab_order+"</tab_order>" +
-					"<search_column_array>"+search_column+"</search_column_array>" +
-					"<result_title>"+result_title+"</result_title>" +
-					"<result_detail>"+result_detail+"</result_detail>" +
-					"<result_form>"+result_form+"</result_form>" +
-					"<result_count>"+result_count+"</result_count>" +
-					"<status>active</status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</system_search>";
-		update_simple(data_xml);
-		for(var i=0;i<8;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Create Performa Invoice
