@@ -246,11 +246,11 @@ function modal_forms_ini()
 	{
 		dynamic_modal_array.push(i);
 	}
-	for(var i=170;i<=177;i++)
+	for(var i=170;i<=174;i++)
 	{
 		dynamic_modal_array.push(i);
 	}
-	dynamic_modal_array.push(179);
+	dynamic_modal_array.push(177);
 	
 	dynamic_modal_array.forEach(function(i)
 	{

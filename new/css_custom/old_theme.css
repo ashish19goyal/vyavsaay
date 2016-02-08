@@ -725,62 +725,6 @@ textarea.ultrawidebox{
 	width:400px;
 }
 
-.print_navigation {
-    line-height:30px;
-    background-color:#eeeeee;
-    height:auto;
-    width:20%;
-    float:left;
-    padding:5px;
-}
-
-.print_navigation button{
-	-moz-box-shadow: 3px -1px 50px -2px #3dc21b;
-	-webkit-box-shadow: 3px -1px 50px -2px #3dc21b;
-	box-shadow: 3px -1px 50px -2px #3dc21b;
-	background-color:#44c767;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:18px;
-	padding:2px 5px;
-	margin:5px 5px;
-	text-decoration:none;
-	text-shadow:2px 2px 2px #2f6627;
-}
-
-.print_navigation button:hover {
-	background-color:#4e8033;
-}
-.print_navigation button:active {
-	position:relative;
-	top:1px;
-}
-
-.print_navigation select {
-	background: white;
-	width: 90%;
-	padding: 2px;
-	margin: 5px;
-	font-size: 16px;
- 	line-height: 1;
-	border: 0;
-	border-radius: 0;
-	height: 34px;
-	-webkit-appearance: none;
-}
-
-.print_section {
-    width:8in;
-    min-height:10in;
-    float:left;
-    /*padding:5px;*/
-    padding:5px;
-    border:1px solid #dddddd;
-}
-
-
 .plain_table th{
 	border: 1px solid #000;
 	text-align: left;
@@ -831,18 +775,6 @@ textarea.ultrawidebox{
 	float:left;
 	border: 1px solid #234f32;
 	color: #fff;
-}
-
-.newsletter_component{
-	border:1px solid #555555;
-	background-color: #888888;
-	height: 30px;
-	margin: 5px;
-	width:100%;
-}
-
-.newsletter_component>i{
-	cursor: pointer;
 }
 
 @media screen and (min-width: 550px) {
@@ -1035,20 +967,6 @@ textarea.ultrawidebox{
 		
 	v2{
 		margin-left: 175px;
-	}
-	
-	.print_navigation {
-	    line-height:30px;
-	    background-color:#eeeeee;
-	    width:100%;
-	    float:left;
-	    padding:5px;
-	}
-	.print_section {
-	    width:100%;
-	    height:10in;
-	    float:left;
-	    padding:5px;
 	}
 }
 

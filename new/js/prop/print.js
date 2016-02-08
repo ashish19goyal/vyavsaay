@@ -6468,13 +6468,3 @@ function print_form296(func)
 	
 	func(container);
 }
-
-/**
- * @form Newsletter Assembly
- * @formNo 299
- */
-function form299_print()
-{
-	var container=document.getElementById('form299_section');
-	$.print(container);
-}

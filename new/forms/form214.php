@@ -1,6 +1,6 @@
-<div id='form214' class='tab-pane portlet box grey-cararra'>
-	<div class="portlet-title">
-		<div><img id='form214_logo' style='width:90%;max-height:200px;'></div>	
+<div id='form214' class='tab-pane portlet box grey'>
+	<div class="portlet-title" style='text-align:center;'>
+		<div><img id='form214_logo' style='max-width:90%;max-height:200px;'></div>	
 	</div>
 
 	<div class="portlet-body">

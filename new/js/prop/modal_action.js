@@ -14569,7 +14569,8 @@ function modal175_action(func)
 	markers_label.innerHTML="";
 
 	$(ftemplate).off('blur');
-	$(ftemplate).on('blur',function () 
+	$(ftemplate).off('change');
+	$(ftemplate).on('blur change',function () 
 	{
 		var markers_data=new Object();
 			markers_data.count=1;
@@ -14590,12 +14591,11 @@ function modal175_action(func)
 
 				markers.forEach(function(marker)
 				{
-					var marker_label=document.createElement('label');
-					marker_label.innerHTML=marker+" <textarea name='"+marker+"'></textarea>";
-									
+					var marker_label=document.createElement('div');
+					marker_label.innerHTML="<div class='col-sm-12 col-md-4'>"+marker+"</div>"+
+					     					"<div class='col-sm-12 col-md-8'><textarea form='modal175_form' name='"+marker+"'></textarea></div>";
+					     						
 					markers_label.appendChild(marker_label);
-					var line_break=document.createElement('br');
-					markers_label.appendChild(line_break);
 				});
 				fhtml.value=newsletter_markers[0].html_code;
 				ftid.value=newsletter_markers[0].id;
@@ -14630,7 +14630,9 @@ function modal175_action(func)
 			var attr=JSON.stringify(markers_array);
 			attr=attr.replace(/"/g,"'");
 			var template_id=ftid.value;
-			var component_elem="<li class='newsletter_component' id='form299_nc_"+id+"' data-name='"+name+"' data-id='"+id+"' data-tid='"+ftid.value+"'><div style='float:left;width:80%'>"+name+"</div><i style='float:right;width:20%;' class='fa fa-times' onclick=\"form299_delete_item('"+id+"');\"></i><i style='float:right;width:20%;' class='fa fa-pencil-square-o' id='form299_nc_edit_"+id+"'></i></li>";
+			var component_elem="<li class='list-group-item bg-green bg-font-green' id='form299_nc_"+id+"' data-name='"+name+"' data-id='"+id+"' data-tid='"+ftid.value+"'>"+name+
+									"<a style='float:right;' onclick=form299_delete_item('"+id+"'); class='btn btn-circle btn-icon-only red'><i class='fa fa-times'></i></a>"+
+									"<a style='float:right;' id='form299_nc_edit_"+id+"' class='btn btn-circle btn-icon-only yellow-saffron'><i class='fa fa-pencil'></i></li>";
 			$('#form299_navigation').append(component_elem);
 			$('#form299_nc_'+id).attr('data-attr',attr);
 			$('#form299_nc_edit_'+id).on('click',function () 
@@ -14705,10 +14707,10 @@ function modal175_action(func)
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal175").dialog("close");
+		$(form).find(".close").click();
 	});
 	
-	$("#modal175").dialog("open");
+	$("#modal175_link").click();
 }
 
 /**
@@ -14720,10 +14722,10 @@ function modal176_action(data_id,doc_type,func,master)
 {
 	var form=document.getElementById('modal176_form');
 	
-	var fname=form.elements[1];
-	var fpictureinfo=form.elements[2];
-	var fpicture=form.elements[3];
-	var dummy_button=form.elements[4];
+	var fname=form.elements['name'];
+	var fpictureinfo=form.elements['picture'];
+	var fpicture=form.elements['file'];
+	var dummy_button=form.elements['dummy'];
 	
 	$(dummy_button).on('click',function (e) 
 	{
@@ -14813,10 +14815,10 @@ function modal176_action(data_id,doc_type,func,master)
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal176").dialog("close");
+		$(form).find(".close").click();
 	});
 	
-	$("#modal176").dialog("open");
+	$("#modal176_link").click();
 }
 /**
  * @modalNo 177
@@ -15120,9 +15122,11 @@ function modal179_action(cname,id,attr,template_id)
 						break;
 					}
 				}
-				var marker_label=document.createElement('label');
-				marker_label.innerHTML=marker+" <textarea name='"+marker+"'>"+marker_value+"</textarea>";
-								
+				var marker_label=document.createElement('div');
+				marker_label.setAttribute('class','row');				
+				marker_label.innerHTML="<div class='col-sm-12 col-md-4'>"+marker+"</div>"+
+					     					"<div class='col-sm-12 col-md-8'><textarea form='modal175_form' name='"+marker+"'>"+marker_value+"</textarea></div>";
+					     				
 				markers_label.appendChild(marker_label);
 				var line_break=document.createElement('br');
 				markers_label.appendChild(line_break);
@@ -15159,7 +15163,7 @@ function modal179_action(cname,id,attr,template_id)
 			var component_elem=$('#form299_nc_'+id);
 			$(component_elem).attr('data-name',name);
 			$(component_elem).attr('data-attr',attr);
-			$(component_elem).html("<div style='float:left;width:80%'>"+name+"</div><i style='float:right;width:20%;' class='fa fa-times' onclick=\"form299_delete_item('"+id+"');\"></i><i style='float:right;width:20%;' class='fa fa-pencil-square-o' id='form299_nc_edit_"+id+"'></i>");
+			$(component_elem).html(name+"<a style='float:right;' class='btn btn-circle btn-icon-only red' onclick=form299_delete_item('"+id+"');><i class='fa fa-times'></i></a><a style='float:right;' class='btn btn-circle btn-icon-only yellow-saffron' id='form299_nc_edit_"+id+"'><i class='fa fa-pencil'></i></a>");
 			$('#form299_nc_edit_'+id).on('click',function () 
 			{
 				modal179_action(name,id,attr,ftid.value);
@@ -15232,10 +15236,10 @@ function modal179_action(cname,id,attr,template_id)
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal179").dialog("close");
+		$(form).find(".close").click();
 	});
 	
-	$("#modal179").dialog("open");
+	$("#modal179_link").click();
 }
 
 /**

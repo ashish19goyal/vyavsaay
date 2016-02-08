@@ -1858,30 +1858,72 @@
 		</form>
 	</div>
 
-	<div id="modal175" title="Add Newsletter Component">
-		<form id='modal175_form' autocomplete="off">
-			<fieldset>
-				<label>Name: <input type="text" name='nname' required></label><br>
-				<label>Template: <input type="text" name='tname' required></label><br>
-				<label id='modal175_markers'></label><br>
-				<input type="hidden" name='html_code'>
-				<input type="hidden" name='t_id'>
-				<input type="submit" value='Add' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
-
-	<div id="modal176" title="Add Image">
-		<form id='modal176_form' autocomplete="off">
-			<fieldset>
-				<label>Name: <input type="text" required></label><br>
-				<label>Picture: <output></output>
-								<input type='file' style='display:none'>
-								<input type='button' class='generic_red_icon' value='Select Image'></label><br>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
+	<a href='#modal175' data-toggle="modal" id='modal175_link'></a>
+	<div id="modal175" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal175_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add Newsletter Component</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:80%;" data-always-visible="1" data-rail-visible1="1">
+		                 <div class="row">
+									<div class="col-sm-12 col-md-4">Component Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal175_form' required name='nname'></div>
+					     		</div>
+		                  <div class="row">
+								    <div class="col-sm-12 col-md-4">Template</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal175_form' required name='tname'></div>
+					     		</div>
+					     		<div id='modal175_markers'></div>
+					     		<input type="hidden" name='html_code'>
+								<input type="hidden" name='t_id'>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal175_form' name='save'>Add</button>
+	               	<button type="submit" class="btn red" form='modal175_form' data-dismiss="modal" name='save'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+	
+	<a href='#modal176' data-toggle="modal" id='modal176_link'></a>
+	<div id="modal176" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal176_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add Image</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:80%;" data-always-visible="1" data-rail-visible1="1">
+		                 <div class="row">
+									<div class="col-sm-12 col-md-4">Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal176_form' required name='name'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Picture</div>
+					     			<div class="col-sm-12 col-md-8">
+					     				<output name='picture'></output>
+										<input type='file' style='display:none' name='file'>
+										<button type='button' class='btn yellow' name='dummy'>Select Image</button>
+					     			</div>
+					     		</div>
+					      </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal176_form' name='save'>Add</button>
+	               	<button type="submit" class="btn red" form='modal176_form' data-dismiss="modal" name='save'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 	<div id="modal177" title="Add new product">
 		<form id='modal177_form' autocomplete="off">
@@ -1932,17 +1974,34 @@
         </div>
     </div>
 
-	<div id="modal179" title="Update Newsletter Component">
-		<form id='modal179_form' autocomplete="off">
-			<fieldset>
-				<label>Name: <input type="text" name='nname' required></label><br>
-				<label id='modal179_markers'></label><br>
-				<input type="hidden" name='html_code'>
-				<input type="hidden" name='t_id'>
-				<input type="submit" value='Update' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
+	<a href='#modal179' data-toggle="modal" id='modal179_link'></a>
+	<div id="modal179" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal179_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Update Newsletter Component</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:80%;" data-always-visible="1" data-rail-visible1="1">
+		                 <div class="row">
+									<div class="col-sm-12 col-md-4">Component Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal179_form' required name='nname'></div>
+					     		</div>
+		                  <div id='modal179_markers'></div>
+					     		<input type="hidden" name='html_code'>
+								<input type="hidden" name='t_id'>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal179_form' name='save'>Update</button>
+	               	<button type="submit" class="btn red" form='modal179_form' data-dismiss="modal" name='save'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 	<a href='#modal180' data-toggle="modal" id='modal180_link'></a>
 	<div id="modal180" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">

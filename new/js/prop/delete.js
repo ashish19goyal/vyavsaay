@@ -8178,49 +8178,6 @@ function form296_delete_item(button)
 
 
 /**
- * @form Newsletter Components
- * @param button
- */
-function form299_delete_item(id)
-{
-	if(is_delete_access('form299'))
-	{
-		modal115_action(function()
-		{
-			$('#form299_nc_'+id).remove();
-			$('#form299_sc_'+id).remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
- * @form Newsletter Components
- * @param button
- */
-function form299_delete_image(id)
-{
-	if(is_delete_access('form299'))
-	{
-		modal115_action(function()
-		{
-			var image_xml="<documents>"+
-						"<id>"+id+"</id>"+
-						"</documents>";
-			delete_simple(image_xml);			
-			$('#form299_image_'+id).remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
  * @form Manage Products (Pooja)
  * @param button
  */
