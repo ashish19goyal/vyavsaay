@@ -213,8 +213,8 @@ function if_data_read_access(tablename,func)
 					{
 						for (var key in data2) 
 						{
-			        		obj[key] = data2[key];
-				    	}
+			       		obj[key] = data2[key];
+				    }
 						final_array.push(obj);
 					}					
 				});

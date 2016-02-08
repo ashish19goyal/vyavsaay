@@ -4608,11 +4608,13 @@ function form237_print_form(nl_name,nl_id,print_type,func)
 /////////////////populating the content section with newsletter items//////////////////////////
 	var newsletter_data=new Object();
 		newsletter_data.data_store='newsletter';
+		newsletter_data.count=1;
 		newsletter_data.indexes=[{index:'id',value:nl_id},
 							{index:'html_content'}];
 	
 	read_json_rows('',newsletter_data,function(results)
 	{
+		//console.log(results);
 		if(results.length>0)
 		{
 			var updated_content=revert_htmlentities(results[0].html_content);

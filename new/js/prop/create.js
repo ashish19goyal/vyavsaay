@@ -3658,16 +3658,19 @@ function form81_create_item(form)
 						"</newsletter>";
 			get_single_column_data(function(nls)
 			{
-				var subject=nl_name;
-				var nl_id=nls[0];	
-				print_newsletter(nl_name,nl_id,'mail',function(container)
+				if(nls.length>0)
 				{
-					var message=container.innerHTML;
-					var to_array=[{"name":customers[0].name,"email":customers[0].email,"customer_id":customers[0].id}];					
-					var to=JSON.stringify(to_array);
-					var from=get_session_var('email');
-					send_email(to,from,business_title,subject,message,function(){});
-				});
+					var subject=nl_name;
+					var nl_id=nls[0];	
+					print_newsletter(nl_name,nl_id,'mail',function(container)
+					{
+						var message=container.innerHTML;
+						var to_array=[{"name":customers[0].name,"email":customers[0].email,"customer_id":customers[0].id}];					
+						var to=JSON.stringify(to_array);
+						var from=get_session_var('email');
+						send_email(to,from,business_title,subject,message,function(){});
+					});
+				}
 			},nl_id_xml);
 		});
 
@@ -16542,16 +16545,19 @@ function form252_create_item(form)
 						"</newsletter>";
 			get_single_column_data(function(nls)
 			{
-				var subject=nl_name;
-				var nl_id=nls[0];	
-				print_newsletter(nl_name,nl_id,'mail',function(container)
+				if(nls.length>0)
 				{
-					var message=container.innerHTML;
-					var from=get_session_var('email');
-					var to_array=[{"name":customers[0].name,"email":customers[0].email,"customer_id":customers[0].id}];					
-					var to=JSON.stringify(to_array);
-					send_email(to,from,business_title,subject,message,function(){});
-				});
+					var subject=nl_name;
+					var nl_id=nls[0];	
+					print_newsletter(nl_name,nl_id,'mail',function(container)
+					{
+						var message=container.innerHTML;
+						var from=get_session_var('email');
+						var to_array=[{"name":customers[0].name,"email":customers[0].email,"customer_id":customers[0].id}];					
+						var to=JSON.stringify(to_array);
+						send_email(to,from,business_title,subject,message,function(){});
+					});
+				}
 			},nl_id_xml);
 		});
 
@@ -16640,16 +16646,19 @@ function form253_create_item(form)
 						"</newsletter>";
 			get_single_column_data(function(nls)
 			{
-				var subject=nl_name;
-				var nl_id=nls[0];	
-				print_newsletter(nl_name,nl_id,'mail',function(container)
+				if(nls.length>0)
 				{
-					var message=container.innerHTML;
-					var from=get_session_var('email');
-					var to_array=[{"name":customers[0].name,"email":customers[0].email,"customer_id":customers[0].id}];					
-					var to=JSON.stringify(to_array);
-					send_email(to,from,business_title,subject,message,function(){});
-				});
+					var subject=nl_name;
+					var nl_id=nls[0];	
+					print_newsletter(nl_name,nl_id,'mail',function(container)
+					{
+						var message=container.innerHTML;
+						var from=get_session_var('email');
+						var to_array=[{"name":customers[0].name,"email":customers[0].email,"customer_id":customers[0].id}];					
+						var to=JSON.stringify(to_array);
+						send_email(to,from,business_title,subject,message,function(){});
+					});
+				}
 			},nl_id_xml);
 		});
 
@@ -16738,16 +16747,19 @@ function form254_create_item(form)
 						"</newsletter>";
 			get_single_column_data(function(nls)
 			{
-				var subject=nl_name;
-				var nl_id=nls[0];	
-				print_newsletter(nl_name,nl_id,'mail',function(container)
+				if(nls.length>0)
 				{
-					var message=container.innerHTML;
-					var to_array=[{"name":customers[0].name,"email":customers[0].email,"customer_id":customers[0].id}];					
-					var to=JSON.stringify(to_array);
-					var from=get_session_var('email');
-					send_email(to,from,business_title,subject,message,function(){});
-				});
+					var subject=nl_name;
+					var nl_id=nls[0];	
+					print_newsletter(nl_name,nl_id,'mail',function(container)
+					{
+						var message=container.innerHTML;
+						var to_array=[{"name":customers[0].name,"email":customers[0].email,"customer_id":customers[0].id}];					
+						var to=JSON.stringify(to_array);
+						var from=get_session_var('email');
+						send_email(to,from,business_title,subject,message,function(){});
+					});
+				}
 			},nl_id_xml);
 		});
 
@@ -16836,16 +16848,19 @@ function form255_create_item(form)
 						"</newsletter>";
 			get_single_column_data(function(nls)
 			{
-				var subject=nl_name;
-				var nl_id=nls[0];	
-				print_newsletter(nl_name,nl_id,'mail',function(container)
+				if(nls.length>0)
 				{
-					var message=container.innerHTML;
-					var from=get_session_var('email');
-					var to_array=[{"name":customers[0].name,"email":customers[0].email,"customer_id":customers[0].id}];					
-					var to=JSON.stringify(to_array);
-					send_email(to,from,business_title,subject,message,function(){});
-				});
+					var subject=nl_name;
+					var nl_id=nls[0];	
+					print_newsletter(nl_name,nl_id,'mail',function(container)
+					{
+						var message=container.innerHTML;
+						var from=get_session_var('email');
+						var to_array=[{"name":customers[0].name,"email":customers[0].email,"customer_id":customers[0].id}];					
+						var to=JSON.stringify(to_array);
+						send_email(to,from,business_title,subject,message,function(){});
+					});
+				}
 			},nl_id_xml);
 		});
 

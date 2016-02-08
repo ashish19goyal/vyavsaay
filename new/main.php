@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html manifest="vyavsaay.appcache">
 
     <?php 
     	session_start();			

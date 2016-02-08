@@ -703,8 +703,26 @@
 		</table>
 	</div>
 
-	<div id="modal55" title="Server Db backup">
-	</div>
+	<a href='#modal55' data-toggle="modal" id='modal55_link'></a>
+	<div id="modal55" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal55_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Database Backup</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:100px;" data-always-visible="1" data-rail-visible1="1">
+					      </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="button" class="btn green" name='no' form="modal55_form" data-dismiss='modal'>Ok</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 	<div id="modal57" title="Pricing History">
 		Previous Bills

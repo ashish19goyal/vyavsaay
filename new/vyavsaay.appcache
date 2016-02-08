@@ -1,0 +1,23 @@
+CACHE MANIFEST
+#An application's cache is only updated when its manifest file changes.
+#Updating the date and version in a comment line is one way to make the browser re-cache files.
+#Modify the manifest file itself to inform the browser to refresh cached files.
+#Avoid using a continually-updating timestamp or random string to force updates every time. 
+#The manifest is checked twice during an update,
+#once at the start and once after all cached files have been updated.
+#last updated on 4th Jan 2015 13:08pm
+#these files will be cached
+CACHE:
+#
+#Files listed under this header require a connection to the server, and will never be cached 
+
+NETWORK:
+http://otile1.mqcdn.com/tiles/
+http://otile2.mqcdn.com/tiles/
+http://otile3.mqcdn.com/tiles/
+http://otile4.mqcdn.com/tiles/
+
+#
+#optional section specifying fallback pages if a resource is inaccessible. 
+#FALLBACK:
+#offline.html

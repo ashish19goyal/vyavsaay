@@ -835,9 +835,7 @@ function revert_htmlentities(str)
 
 function get_all_child_storage(store_area,area_array)
 {
-	var child_data=new Object();
-		child_data.data_store='store_areas';
-		child_data.return_column='name';		
+	var child_data={data_store:'store_areas',return_column:'name'};		
 		child_data.indexes=[{index:'parent',exact:store_area}];		
 
 	storage_count_tracker+=1;				
