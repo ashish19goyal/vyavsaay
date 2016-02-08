@@ -14631,8 +14631,8 @@ function modal175_action(func)
 			attr=attr.replace(/"/g,"'");
 			var template_id=ftid.value;
 			var component_elem="<li class='list-group-item bg-green bg-font-green' id='form299_nc_"+id+"' data-name='"+name+"' data-id='"+id+"' data-tid='"+ftid.value+"'>"+name+
-									"<a style='float:right;' onclick=form299_delete_item('"+id+"'); class='btn btn-circle btn-icon-only red'><i class='fa fa-times'></i></a>"+
-									"<a style='float:right;' id='form299_nc_edit_"+id+"' class='btn btn-circle btn-icon-only yellow-saffron'><i class='fa fa-pencil'></i></li>";
+									"<a style='float:right;' onclick=form299_delete_item('"+id+"'); class='btn btn-circle btn-icon-only yellow-saffron'><i class='fa fa-times'></i></a>"+
+									"<a style='float:right;' id='form299_nc_edit_"+id+"' class='btn btn-circle btn-icon-only red'><i class='fa fa-pencil'></i></li>";
 			$('#form299_navigation').append(component_elem);
 			$('#form299_nc_'+id).attr('data-attr',attr);
 			$('#form299_nc_edit_'+id).on('click',function () 
@@ -15163,7 +15163,7 @@ function modal179_action(cname,id,attr,template_id)
 			var component_elem=$('#form299_nc_'+id);
 			$(component_elem).attr('data-name',name);
 			$(component_elem).attr('data-attr',attr);
-			$(component_elem).html(name+"<a style='float:right;' class='btn btn-circle btn-icon-only red' onclick=form299_delete_item('"+id+"');><i class='fa fa-times'></i></a><a style='float:right;' class='btn btn-circle btn-icon-only yellow-saffron' id='form299_nc_edit_"+id+"'><i class='fa fa-pencil'></i></a>");
+			$(component_elem).html(name+"<a style='float:right;' class='btn btn-circle btn-icon-only yellow-saffron' onclick=form299_delete_item('"+id+"');><i class='fa fa-times'></i></a><a style='float:right;' class='btn btn-circle btn-icon-only red' id='form299_nc_edit_"+id+"'><i class='fa fa-pencil'></i></a>");
 			$('#form299_nc_edit_'+id).on('click',function () 
 			{
 				modal179_action(name,id,attr,ftid.value);

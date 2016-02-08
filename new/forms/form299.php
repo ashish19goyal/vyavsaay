@@ -157,8 +157,8 @@
 						components_array.forEach(function (component) 
 						{
 							var component_elem="<li class='list-group-item bg-green bg-font-green' id='form299_nc_"+component.id+"' data-name='"+component.name+"' data-id='"+component.id+"' data-tid='"+component.tid+"'>"+component.name+
-															"<a style='float:right;' class='btn btn-circle btn-icon-only red' onclick=\"form299_delete_item('"+component.id+"');\"><i class='fa fa-times'></i></a>"+
-															"<a style='float:right;' class='btn btn-circle btn-icon-only yellow-saffron' id='form299_nc_edit_"+component.id+"'><i class='fa fa-pencil'></i></a>"+
+															"<a style='float:right;' class='btn btn-circle btn-icon-only yellow-saffron' onclick=\"form299_delete_item('"+component.id+"');\"><i class='fa fa-times'></i></a>"+
+															"<a style='float:right;' class='btn btn-circle btn-icon-only red' id='form299_nc_edit_"+component.id+"'><i class='fa fa-pencil'></i></a>"+
 														"</li>";
 							$('#form299_navigation').append(component_elem);
 							$('#form299_nc_'+component.id).attr('data-attr',component.attr);
