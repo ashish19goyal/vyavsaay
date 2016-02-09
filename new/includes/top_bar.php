@@ -27,8 +27,8 @@
         	$('#search_form').on('submit',function(e)
         	{
         		e.preventDefault();
-					show_search_results();
-			});
+					  show_search_results();
+			    });
         </script>
         <!-- END HEADER SEARCH BOX -->
        
@@ -85,4 +85,3 @@
     <!-- END HEADER INNER -->
 </div>
 <!-- END HEADER -->
-        

@@ -35,7 +35,7 @@
 		$main_search="";		
 		for($i=0;$i<count($struct_res);$i++)
 		{
-			$search_tab_links.="<li><a data-toggle='tab' href='#search_tab_".$struct_res[$i]['table_name']."' onclick=search_".$struct_res[$i]['table_name']."_ini();>".$struct_res[$i]['tab_name']."</a></li>";
+			$search_tab_links.="<li><a data-toggle='tab' id='search_tab_".$struct_res[$i]['table_name']."_link' href='#search_tab_".$struct_res[$i]['table_name']."' onclick=search_".$struct_res[$i]['table_name']."_ini();>".$struct_res[$i]['tab_name']."</a></li>";
 
 			$search_tab_content.="<div id='search_tab_".$struct_res[$i]['table_name']."' class='tab-pane'><div class='row search-form-default'>".
 					"<div class='col-md-12'><form id='search_form_".$struct_res[$i]['table_name']."'>".
@@ -54,7 +54,7 @@
 				$main_search.="function show_search_results(){".
 									"hide_all();".
 									"$('#search_results_box').show();".
-									"search_".$struct_res[$i]['table_name']."_ini();}";
+									"$('#search_tab_".$struct_res[$i]['table_name']."_link').click();}";
 			}
 			
 			$search_column_array=json_decode($struct_res[$i]['search_column_array'],true);
