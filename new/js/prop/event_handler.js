@@ -33,7 +33,6 @@ function default_load()
 		Chart.defaults.global.scaleFontColor="#000";
 		Chart.defaults.global.maintainAspectRatio=false;
 		$('textarea').autosize();
-		i18n_setup();
 		set_user_name();		
 		home_display();
 
@@ -337,27 +336,6 @@ function set_user_name()
 	$('.username').html(name);
 }
 
-
-function i18n_setup()
-{
-	var language=get_session_var('locale');
-	var lan=language.substring(0,2);
-	i18n.init({
-		lng:lan,
-		debug: true,
-	    fallbackLng: false,
-	    load:'unspecific',
-	    resGetPath: "locales/__ns__-__lng__.json",
-	    ns: {
-	        namespaces: ['translation'],
-	        defaultNs: 'translation'
-	    }
-	},function(t)
-	{
-		$("#content_box").find('div').i18n();
-		$("#content_box").find('a').i18n();
-	});
-}
 
 function hide_menu_items()
 {

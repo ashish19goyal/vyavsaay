@@ -8,7 +8,7 @@
   font-family: 'FontAwesome';
   /*src: url('./fontawesome-webfont.eot?v=4.1.0');
   src: url('./fontawesome-webfont.eot?#iefix&v=4.1.0') format('embedded-opentype'), url('./fontawesome-webfont.woff?v=4.1.0') format('woff'), url('./fontawesome-webfont.ttf?v=4.1.0') format('truetype') url('https://netdna.bootstrapcdn.com/font-awesome/4.1.0/fonts/fontawesome-webfont.svg?v=4.1.0#fontawesomeregular') format('svg');*/
-  src: url('./fontawesome-webfont.woff?v=4.1.0') format('woff'); 
+  src: url('./fontawesome-webfont.woff') format('woff'); 
   font-weight: normal;
   font-style: normal;
 }

@@ -1,5 +1,4 @@
 <script src='./js/open/bcrypt.js'></script>
-<script src='./js/open/i18next-1.7.4.js'></script>
 <script src='./js/open/jQuery.print.js'></script>
 <script src='./js/open/jquery.autosize.min.js'></script>
 <script src='./js/open/leaflet.js'></script>
