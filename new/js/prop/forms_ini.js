@@ -16045,112 +16045,6 @@ function form179_ini()
 
 
 /**
- * @form Create sale order (CPS)
- * @formNo 180
- * @Loading light
- */
-function form180_ini()
-{
-	var order_id=$("#form180_link").attr('data_id');
-	if(order_id==null)
-		order_id="";	
-	
-	$('#form180_body').html("");
-	$('#form180_foot').html("");
-
-	if(order_id!="")
-	{
-		show_loader();
-		var order_columns="<sale_orders>" +
-				"<id>"+order_id+"</id>" +
-				"<customer_name></customer_name>" +
-				"<order_num></order_num>"+
-				"<order_date></order_date>" +
-				"<amount></amount>"+
-				"<tax></tax>"+
-				"<total></total>"+
-				"<billing_type></billing_type>"+
-				"<status></status>" +
-				"</sale_orders>";
-		var order_items_column="<sale_order_items>" +
-				"<id></id>" +
-				"<item_name></item_name>" +
-				"<item_desc></item_desc>" +
-				"<quantity></quantity>" +
-				"<mrp></mrp>"+
-				"<amount></amount>"+
-				"<tax></tax>"+
-				"<total></total>"+
-				"<unit_price></unit_price>"+
-				"<order_id exact='yes'>"+order_id+"</order_id>" +
-				"<notes></notes>" +
-				"</sale_order_items>";
-	
-		////separate fetch function to get order details like customer name, total etc.
-		fetch_requested_data('',order_columns,function(order_results)
-		{
-			if(order_results.length>0)
-			{
-				var filter_fields=document.getElementById('form180_master');
-				filter_fields.elements['customer'].value=order_results[0].customer_name;
-				filter_fields.elements['order_date'].value=get_my_past_date(order_results[0].order_date);
-				filter_fields.elements['status'].value=order_results[0].status;
-				filter_fields.elements['order_id'].value=order_id;
-				filter_fields.elements['order_num'].value=order_results[0].order_num;
-				filter_fields.elements['bill_type'].value=order_results[0].billing_type;
-				
-				var save_button=filter_fields.elements['save'];
-				
-				$(save_button).off('click');
-				$(save_button).on("click", function(event)
-				{
-					event.preventDefault();
-					form180_update_form();
-				});
-			}
-		/////////////////////////////////////////////////////////////////////////
-		
-			fetch_requested_data('',order_items_column,function(results)
-			{
-				results.forEach(function(result)
-				{
-					var rowsHTML="";
-					var id=result.id;
-					rowsHTML+="<tr>";
-					rowsHTML+="<form id='form180_"+id+"'></form>";
-						rowsHTML+="<td data-th='Item'>";
-							rowsHTML+="<input type='text' class='wideinput' readonly='readonly' required form='form180_"+id+"' value='"+result.item_name+"'>";
-							rowsHTML+="<br><textarea readonly='readonly' form='form180_"+id+"'>"+result.item_desc+"</textarea>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Quantity'>";
-							rowsHTML+="<input type='number' class='dblclick_editable' readonly='readonly' required form='form180_"+id+"' value='"+result.quantity+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Price'>";
-							rowsHTML+="Price: <input type='number' readonly='readonly' form='form180_"+id+"' value='"+result.unit_price+"' step='any'>";
-							rowsHTML+="<br>MRP: <input type='number' readonly='readonly' form='form180_"+id+"' value='"+result.mrp+"' step='any'>";
-							rowsHTML+="<br>Amount: <input type='number' readonly='readonly' form='form180_"+id+"' value='"+result.amount+"' step='any'>";
-							rowsHTML+="<br>Tax: <input type='number' readonly='readonly' form='form180_"+id+"' value='"+result.tax+"' step='any'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Action'>";
-							rowsHTML+="<input type='hidden' form='form180_"+id+"' value='"+result.total+"'>";
-							rowsHTML+="<input type='hidden' form='form180_"+id+"' value='"+id+"'>";
-							rowsHTML+="<input type='button' class='submit_hidden' form='form180_"+id+"' id='save_form180_"+id+"'>";
-							rowsHTML+="<input type='button' class='delete_icon' form='form180_"+id+"' id='delete_form180_"+id+"' onclick='form180_delete_item($(this));'>";
-						rowsHTML+="</td>";			
-					rowsHTML+="</tr>";
-				
-					$('#form180_body').append(rowsHTML);					
-				});
-				form180_get_totals();
-				$('textarea').autosize();
-				hide_loader();
-				
-			});
-		});		
-	}
-}
-
-/**
  * @form Manage Sale orders
  * @formNo 181
  * @Loading light
@@ -16196,7 +16090,7 @@ function form181_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form181_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Order #'>";
-						rowsHTML+="<input type='text' class='input_link' readonly='readonly' form='form181_"+result.id+"' onclick=\"element_display('"+result.id+"','form180');\" value='"+result.order_num+"'>";
+						rowsHTML+="<input type='text' class='input_link' readonly='readonly' form='form181_"+result.id+"' onclick=\"element_display('"+result.id+"','form180',['form320']);\" value='"+result.order_num+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Customer'>";
 						rowsHTML+="<textarea readonly='readonly' form='form181_"+result.id+"'>"+result.customer_name+"</textarea>";

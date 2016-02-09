@@ -5004,36 +5004,6 @@ function form179_delete_item(button)
 }
 
 /**
- * @form Create Sale Order (CPS)
- * @param button
- */
-function form180_delete_item(button)
-{
-	if(is_delete_access('form180'))
-	{
-		modal115_action(function()
-		{			
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var data_id=form.elements[8].value;
-			var last_updated=get_my_time();
-			var data_xml="<sale_order_items>" +
-						"<id>"+data_id+"</id>" +
-						"</sale_order_items>";	
-			delete_simple(data_xml);
-			$(button).parent().parent().remove();
-			
-			form180_get_totals();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
  * @form Manage Sale Orders (CPS)
  * @param button
  */

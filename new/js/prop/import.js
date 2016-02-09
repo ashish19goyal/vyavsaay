@@ -4760,66 +4760,6 @@ function form179_import(data_array,import_type)
 	}
 };
 
-/**
-* @form Create sale order (CPS)
-* @formNo 180
-*/
-function form180_import(data_array,import_type)
-{
-	var data_xml="<sale_order_items>";
-	var counter=1;
-	var last_updated=get_my_time();
-
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</sale_order_items><separator></separator><sale_order_items>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<order_id>"+row.order_id+"</order_id>" +
-				"<item_name>"+row.item_name+"</item_name>" +
-				"<item_desc>"+row.item_desc+"</item_desc>" +
-				"<quantity>"+row.quantity+"</quantity>" +
-				"<mrp>"+row.mrp+"</mrp>" +
-				"<price>"+row.price+"</price>" +
-				"<amount>"+row.amount+"</amount>" +
-				"<tax>"+row.tax+"</tax>" +
-				"<total>"+row.total+"</total>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	data_xml+="</sale_order_items>";
-	if(import_type=='create_new')
-	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
-	}
-	else
-	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
-	}
-};
 
 /**
 * @form Manage sale order (CPS)
