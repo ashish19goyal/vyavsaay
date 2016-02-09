@@ -8920,14 +8920,8 @@ function form119_ini()
 		
 			fetch_requested_data('',bill_items_column,function(results)
 			{
-				var message_string="Bill from: "+get_session_var('title')+"\nAddress: "+get_session_var('address');
-				
 				results.forEach(function(result)
 				{
-					message_string+="\nItem: "+result.item_name;
-					message_string+=" Quantity: "+result.quantity;
-					message_string+=" Total: "+result.total;
-					
 					var id=result.id;
 					var rowsHTML="<tr>";
 					rowsHTML+="<form id='form119_"+id+"'></form>";
@@ -8990,16 +8984,14 @@ function form119_ini()
 
 				});
 				
-				message_string+="\nAmount: "+bill_results[0].amount;
-				message_string+="\ndiscount: "+bill_results[0].discount;
-				message_string+="\nTax: "+bill_results[0].tax;
-				message_string+="\nTotal: "+bill_results[0].total;
-				
 				var subject="Bill from "+get_session_var('title');
 				$('#form119_share').show();
 				$('#form119_share').click(function()
 				{
-					modal44_action(filter_fields.elements[1].value,subject,message_string);
+					modal101_action(bt+' - bill # '+filter_fields.elements[4].value,filter_fields.elements[1].value,'customer',function (func) 
+					{
+						print_form119(func);
+					});
 				});
 				hide_loader();
 			});

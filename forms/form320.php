@@ -475,7 +475,7 @@
 				{
 					if(num_ids.length>0)
 					{
-						var so_num_array=quot_num.split("-");
+						var so_num_array=order_num.split("-");
 						var num_xml="<user_preferences>"+
 								"<id>"+num_ids[0]+"</id>"+
 								"<value>"+(parseInt(so_num_array[1])+1)+"</value>"+

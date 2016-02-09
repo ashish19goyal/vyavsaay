@@ -7996,8 +7996,6 @@ function form119_create_form()
 		var bill_date=get_raw_time(form.elements[3].value);
 		var bill_num=form.elements[4].value;
 		
-		var message_string="Bill from: "+get_session_var('title')+"\nAddress: "+get_session_var('address');
-		
 		var amount=0;
 		var discount=0;
 		var tax=0;
@@ -8012,9 +8010,6 @@ function form119_create_form()
 			tax+=parseFloat(subform.elements[8].value);
 			total+=parseFloat(subform.elements[9].value);
 			
-			message_string+="\nItem: "+subform.elements[0].value;
-			message_string+=" Quantity: "+parseFloat(subform.elements[2].value)+parseFloat(subform.elements[3].value);
-			message_string+=" Total: "+subform.elements[9].value;
 		});
 		
 		var data_id=form.elements[6].value;
@@ -8313,17 +8308,12 @@ function form119_create_form()
 						"</tr>";
 			$('#form119_foot').html(total_row);
 			
-			message_string+="\nAmount: "+amount;
-			message_string+="\ndiscount: "+discount;
-			message_string+="\nTax: "+tax;
-			message_string+="\nTotal: "+total;
-			
 			var subject="Bill from "+get_session_var('title');
 			$('#form119_share').show();
 			$('#form119_share').off('click');
 			$('#form119_share').click(function()
 			{
-				modal44_action(customer,subject,message_string);
+				
 			});
 
 		});
