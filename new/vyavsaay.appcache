@@ -8,6 +8,7 @@ CACHE MANIFEST
 #last updated on 4th Jan 2015 13:08pm
 #these files will be cached
 CACHE:
+/
 case-studies.html
 footer.html
 header.html
