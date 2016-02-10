@@ -1028,15 +1028,6 @@
 		</form>
 	</div>
 	
-	<div id="modal121" title="Offline Storage Deletion">
-		Any unsynced data will be lost if you delete offline storage. Please re-enter your password to continue.
-		<br>
-		<form id='modal121_form' autocomplete="off">
-			<input type="password" name='pass' required>
-			<input type="submit" class='modal_submit' value='Delete'>
-		</form>
-	</div>
-
 	<div id="modal122" title="Update Inventory">
 		<form id='modal122_form' autocomplete="off">
 			<fieldset>

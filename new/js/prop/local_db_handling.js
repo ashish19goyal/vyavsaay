@@ -118,39 +118,52 @@ function open_local_db(func)
 	
 };
 
-
 function delete_local_db()
 {
-	if("indexedDB" in window)
+	lock_screen(function()
 	{
-		var db_name="re_local_"+get_domain();
-
-		if(typeof static_local_db!=='undefined')
-		{
-			static_local_db.close();
-		}
+		show_loader();
+		var pass=document.getElementById("lock_form").elements['password'].value;
 		
-		var deleterequest=indexedDB.deleteDatabase(db_name);
-		deleterequest.onsuccess=function(ev)
-		{
-			console.log('delete_local_db');
-			$("#modal52_link").click();
-		};
+		verify_login(pass,function () 
+		{	
+			if("indexedDB" in window)
+			{
+				var db_name="re_local_"+get_domain();
 		
-		deleterequest.onerror=function(ev)
+				if(typeof static_local_db!=='undefined')
+				{
+					static_local_db.close();
+				}
+				
+				var deleterequest=indexedDB.deleteDatabase(db_name);
+				deleterequest.onsuccess=function(ev)
+				{
+					console.log('delete_local_db');
+					$("#modal52_link").click();
+				};
+				
+				deleterequest.onerror=function(ev)
+				{
+					alert('Could not delete local storage. Please refresh your browser and try again.');
+				};
+				
+				deleterequest.onblocked=function(ev)
+				{
+					alert('Deleting local storage. Please wait for a few moments.');
+				};
+			}
+			else
+			{
+				$("#modal52_link").click();
+			}
+			
+		},
+		function () 
 		{
-			alert('Could not delete local storage. Please refresh your browser and try again.');
-		};
-		
-		deleterequest.onblocked=function(ev)
-		{
-			alert('Deleting local storage. Please wait for a few moments.');
-		};
-	}
-	else
-	{
-		$("#modal52_link").click();
-	}
+			alert('Credentials could not be verified. Aborting operation.');
+		});
+	});
 }
 
 /**

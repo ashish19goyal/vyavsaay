@@ -37,7 +37,7 @@
                 <i class="icon-cloud-upload"></i> Sync Offline Data </a>
         </li>
         <li>
-            <a onclick="modal121_action();">
+            <a onclick="delete_local_db();">
                 <i class="icon-trash"></i> Delete Offline Data </a>
         </li>
         <li>

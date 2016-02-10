@@ -8004,35 +8004,6 @@ function modal120_action(func,product_name,required)
 	$("#modal120").dialog("open");
 }
 
-/**
- * @modalNo 121
- * @modal Offline Storage Deletion 
- */
-function modal121_action()
-{
-	var form=document.getElementById('modal121_form');
-	
-	$(form).off("submit");
-	$(form).on("submit",function(event)
-	{
-		event.preventDefault();
-		var pass=document.getElementById("modal121_form").elements['pass'].value;
-		
-		verify_login(pass,function () 
-		{
-			hide_loader();
-			delete_local_db();
-		},
-		function () 
-		{
-			alert('Wrong password! aborting operation');								
-			hide_loader();
-		});
-		$("#modal121").dialog("close");
-	});
-	
-	$("#modal121").dialog("open");
-}
 
 /**
  * @modalNo 122
