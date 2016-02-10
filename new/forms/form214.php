@@ -62,6 +62,7 @@
 		
 			$('#form214_attributes').html("");
 			
+			
 			var logo_image=get_session_var('logo');
 			var business_intro_text=get_session_var('business_intro');
 			var business_address=get_session_var('address');
