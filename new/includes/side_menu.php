@@ -36,7 +36,7 @@
 					
 					$db_name="re_user_".$domain;
 					$conn=new db_connect($db_name);
-					$query="select name,display_name,elements from system_grids where status=? order by grid_order asc;";
+					$query="select name,display_name,elements,icon from system_grids where status=? order by grid_order asc;";
 					$query2="select * from ques_struct where status=?;";
 		
 					$stmt=$conn->conn->prepare($query);
@@ -52,7 +52,7 @@
 						$first_char=substr($res['display_name'],0,1);
 						$grids_html.="<li class='nav-item' id='nav-".$res['name']."'>".
 			                	"<a class='nav-link nav-toggle'>".
-										"<i class='fa fa-th-large'></i>".		                    
+										"<i class='fa fa-".$res['icon']."'></i>".		                    
 			               "<span class='title' style='font-weight:900;color:#999;'>".$res['display_name']."</span>".
 			                    "<span class='arrow'></span></a>";
 			            

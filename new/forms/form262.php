@@ -19,7 +19,7 @@
 						<th><input type='text' placeholder="Order" readonly='readonly' name='order' form='form262_header'></th>
 						<th><input type='text' placeholder="Name" class='floatlabel' name='name' form='form262_header'></th>
 						<th><input type='text' placeholder="Display Name" class='floatlabel' name='disp' form='form262_header'></th>
-						<th><input type='text' placeholder="Color" readonly="readonly" name='color' form='form262_header'></th>
+						<th><input type='text' placeholder="Design" readonly="readonly" name='color' form='form262_header'></th>
 						<th><input type='text' placeholder="Status" class='floatlabel' name='status' form='form262_header'></th>
 						<th><input type='submit' form='form262_header' style='visibility: hidden;'></th>
 				</tr>
@@ -82,6 +82,7 @@
 										{index:'back_color'},
 										{index:'elements'},
 										{index:'grid_order'},
+										{index:'icon'},
 										{index:'status',value:fstatus}];
 				
 			read_json_rows('form262',new_columns,function(results)
@@ -107,8 +108,9 @@
 							rowsHTML+="<td data-th='Name'>";
 								rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form262_"+result.id+"' value='"+result.display_name+"'>";
 							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Color'>";
-								rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form262_"+result.id+"' value='"+result.back_color+"'>";
+							rowsHTML+="<td data-th='Design'>";
+								rowsHTML+="<input type='text' readonly='readonly' placeholder='Color' class='dblclick_editable floatlabel' form='form262_"+result.id+"' value='"+result.back_color+"'>";
+								rowsHTML+="<input type='text' readonly='readonly' placeholder='Icon' class='dblclick_editable floatlabel' form='form262_"+result.id+"' value='"+result.icon+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Status'>";
 								rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form262_"+result.id+"' value='"+result.status+"'>";
@@ -156,8 +158,9 @@
 						rowsHTML+="<td data-th='Name'>";
 							rowsHTML+="<input type='text' class='dblclick_editable' form='form262_"+id+"'>";
 						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Color'>";
-							rowsHTML+="<input type='text' class='dblclick_editable' form='form262_"+id+"'>";
+						rowsHTML+="<td data-th='Design'>";
+							rowsHTML+="<input type='text' class='dblclick_editable floatlabel' placeholder='Color' form='form262_"+id+"'>";
+							rowsHTML+="<input type='text' class='dblclick_editable floatlabel' placeholder='Icon' form='form262_"+id+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Status'>";
 							rowsHTML+="<input type='text' class='dblclick_editable' form='form262_"+id+"' value='active'>";
@@ -174,13 +177,13 @@
 				
 				var fields=document.getElementById("form262_"+id);
 				var status_filter=fields.elements[5];
-				
+
 				$(fields).on("submit", function(event)
 				{
 					event.preventDefault();
 					form262_create_item(fields);
 				});
-							
+
 				set_static_value_list('system_grids','status',status_filter);
 				form262_update_serial_numbers();
 				$('#form262').formcontrol();
@@ -199,8 +202,9 @@
 				var name=form.elements[1].value;
 				var display_name=form.elements[2].value;
 				var back_color=form.elements[3].value;
-				var status=form.elements[4].value;
-				var data_id=form.elements[5].value;
+				var icon=form.elements[4].value;
+				var status=form.elements[5].value;
+				var data_id=form.elements[6].value;
 				var del_button=form.elements['delete'];
 				
 				var last_updated=get_my_time();
@@ -212,6 +216,7 @@
 	 					{index:'back_color',value:back_color},
 	 					{index:'grid_order',value:order},
 	 					{index:'status',value:status},
+	 					{index:'icon',value:icon},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Added',notes:'Grid '+display_name+' to Dashboard',link_to:'form262'}};
  								
@@ -246,8 +251,9 @@
 				var name=form.elements[1].value;
 				var display_name=form.elements[2].value;
 				var back_color=form.elements[3].value;
-				var status=form.elements[4].value;
-				var data_id=form.elements[5].value;
+				var icon=form.elements[4].value;
+				var status=form.elements[5].value;
+				var data_id=form.elements[6].value;
 				var del_button=form.elements['delete'];
 				
 				var last_updated=get_my_time();
@@ -259,6 +265,7 @@
 	 					{index:'back_color',value:back_color},
 	 					{index:'grid_order',value:order},
 	 					{index:'status',value:status},
+	 					{index:'icon',value:icon},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Updated',notes:'Grid '+display_name+' on Dashboard',link_to:'form262'}};
  				update_json(data_json);
@@ -281,7 +288,7 @@
 					var form=document.getElementById(form_id);
 					var name=form.elements[1].value;
 					var display_name=form.elements[2].value;
-					var data_id=form.elements[5].value;
+					var data_id=form.elements[6].value;
 					var data_json={data_store:'system_grids',
 		 				log:'yes',
 		 				data:[{index:'id',value:data_id}],

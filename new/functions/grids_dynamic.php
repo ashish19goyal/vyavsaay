@@ -17,7 +17,7 @@
 		
 		$db_name="re_user_".$domain;
 		$conn=new db_connect($db_name);
-		$query="select name,display_name,head_color,back_color from system_grids where status=? order by grid_order asc;";
+		$query="select name,display_name,back_color,icon from system_grids where status=? order by grid_order asc;";
 		
 		$stmt=$conn->conn->prepare($query);
 		$stmt->execute(array('active'));
@@ -95,7 +95,7 @@
 				}					
 			}
 			
-			echo "</ul></div></div>";
+			echo "</ul><i class='fa fa-".$struct_res[$i]['icon']." dashboard_grid_icon'></i></div></div>";
 		}
 		
 		echo "</div>";	

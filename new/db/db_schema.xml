@@ -1664,6 +1664,7 @@
 			<display_name index='yes' type="TEXT"></display_name>
 			<head_color index='no' type="VARCHAR(10)"></head_color>
 			<back_color index='no' type="VARCHAR(10)"></back_color>
+			<icon index='no' type="VARCHAR(50)"></icon>
 			<status index='yes' type="VARCHAR(30)"></status><!--active/inactive-->
 			<elements index='no' type="TEXT"></elements>
 			<grid_order index='yes' type="INT"></grid_order>
