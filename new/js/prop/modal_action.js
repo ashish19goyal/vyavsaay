@@ -7319,8 +7319,16 @@ function modal115_action(func)
 		$(form115).find('.close').click();
 		func();
 	});
-	
+
 	$("#modal115_link").click();
+	$('#modal115').on('keyup',function (e) 
+	{
+		if(e.keyCode==13)
+		{
+			e.preventDefault();
+			$(yes_button).click();
+		}
+	});
 }
 
 

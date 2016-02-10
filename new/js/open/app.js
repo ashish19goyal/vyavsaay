@@ -131,7 +131,7 @@ var App = function() {
 				if(e.keyCode==27)
 				{
 	            e.preventDefault();
-	            console.log('object escaped');
+	            //console.log('object escaped');
 	            var portlet = $(this);
 	            $(this).find('.fullscreen').click();
 	         }

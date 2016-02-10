@@ -22,7 +22,16 @@ function set_session(session_data)
 		localStorage.setItem(field,session_data[field]);
 	}
 	var domain=get_session_var('domain');
-	window.location.assign("main.php?dn="+domain);	
+	var ui_version=get_session_var('ui_version');
+
+	if(ui_version!='undefined' && ui_version!=null && ui_version=='2')
+	{
+		window.location.assign("new/main.php?dn="+domain);
+	}
+	else
+	{
+		window.location.assign("main.php?dn="+domain);
+	}	
 }
 
 /**

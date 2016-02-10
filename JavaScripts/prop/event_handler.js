@@ -3,10 +3,17 @@
  */
 function default_load()
 {
+	var ui_version=get_session_var('ui_version');
+	var domain=get_session_var('domain');
+
+	if(ui_version!='undefined' && ui_version!=null && ui_version=='2')
+	{
+		window.location.assign("new/main.php?dn="+domain);
+	}
+	
 	var location=window.location.pathname;
 	if(((location.indexOf("index")>-1) || (location.indexOf(".php")==-1)) && is_set_session())
 	{
-		var domain=get_session_var('domain');
 		window.location.assign("main.php?dn="+domain);
 	}
 	else if(!is_set_session() && (location.indexOf("main")>-1))
