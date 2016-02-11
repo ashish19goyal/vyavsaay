@@ -61,10 +61,10 @@
 				{
 					if($struct_res2[$y]['func']==$struct_res[$i]['name'])
 					{
-						echo "<div id='".$struct_res2[$y]['name']."' class='tab-pane function_detail'></div>";
+						echo "<div id='".$struct_res2[$y]['name']."' class='tab-pane'>	<div class='portlet box yellow-casablanca'><div class='portlet-title'><div class='caption'></div></div><div class='portlet-body'></div></div><script>".$struct_res2[$y]['function_def']."</script></div>";
 					}
 				}
-			echo "</div></div>";	
+			echo "</div></div>";
 		}
 
 		$hide_unreadable_func.="elements_array.forEach(function(element)".

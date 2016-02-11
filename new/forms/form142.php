@@ -137,7 +137,6 @@
 							if(result.type=='dynamic value list')
 							{
 								values=result.dynamic_values;
-								values=values.replace(/vyavsaay/g,"");
 							}
 							var id=result.id;
 							var rowsHTML="<tr>";
@@ -287,8 +286,8 @@
 				if(type=='value list')
 					values=form.elements[3].value;
 				else if(type=='dynamic value list')
-					dynamic_values="vyavsaay"+htmlentities(form.elements[3].value)+"vyavsaay";
-					
+					dynamic_values=form.elements[3].value;
+
 				var order=form.elements[4].value;
 				var weight=form.elements[5].value;
 				var name=ques_name+'field'+order;
@@ -337,10 +336,6 @@
 		}
 		
 		
-		/**
-		 * @form Create questionnaire
-		 * @param button
-		 */
 		function form142_create_form()
 		{
 			if(is_create_access('form142'))
@@ -382,11 +377,6 @@
 			}
 		}
 		
-		/**
-		 * @form Create Questionnaire
-		 * @formNo 142
-		 * @param button
-		 */
 		function form142_update_item(form)
 		{
 			if(is_update_access('form142'))
@@ -402,8 +392,8 @@
 				if(type=='value list')
 					values=form.elements[3].value;
 				else if(type=='dynamic value list')
-					dynamic_values="vyavsaay"+htmlentities(form.elements[3].value)+"vyavsaay";
-				
+					dynamic_values=form.elements[3].value;
+
 				var order=form.elements[4].value;
 				var weight=form.elements[5].value;
 				var name='field'+order;
@@ -436,10 +426,6 @@
 			}
 		}
 		
-		/**
-		 * @form Create questionnaire
-		 * @param button
-		 */
 		function form142_update_form()
 		{
 			if(is_update_access('form142'))
@@ -471,10 +457,6 @@
 			}
 		}
 		
-		/**
-		 * @form Create Questionnaire
-		 * @param button
-		 */
 		function form142_delete_item(button)
 		{
 			if(is_delete_access('form142'))
