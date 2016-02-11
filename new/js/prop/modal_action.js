@@ -15460,7 +15460,7 @@ function modal183_action(subject,func)
 		});
 	});
 	
-	$("#modal183_link").click();
+	//$("#modal183_link").click();
 }
 
 /**
@@ -15807,4 +15807,53 @@ function modal191_action(id)
 	});
 	
 	$("#modal191_link").click();	
+}
+
+/**
+ * @modalNo 192
+ * @modal Questionnaire submission
+ */
+function modal192_action(id)
+{
+	var form=document.getElementById('modal192_form');
+	
+	var def_filter=form.elements['def'];
+	
+	var cm="";
+	
+	var def_columns=new Object();
+			def_columns.count=1;
+			def_columns.data_store='ques_struct';
+			def_columns.indexes=[{index:'id',value:id},{index:'function_def'}];
+	read_json_rows('',def_columns,function (contents) 
+	{
+		var content="";
+		if(contents.length>0)
+		{
+			if(contents[0].function_def!=null && contents[0].function_def!='undefined')
+				content=contents[0].function_def;
+		}
+		cm=$(def_filter).codeeditor({content:content});
+	});
+
+	$(form).off('submit');
+	$(form).on('submit',function(event) 
+	{
+		event.preventDefault();
+		
+		var def=cm.getValue();
+		var last_updated=get_my_time();
+		
+		var data_json={data_store:'ques_struct',
+	 				log:'yes',
+	 				data:[{index:'id',value:id},
+	 					{index:'function_def',value:def},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Updated',notes:'Updated questionnaire settings',link_to:'form143'}};
+ 		update_json(data_json);
+ 		
+ 		$(form).find('.close').click();
+	});
+	
+	$("#modal192_link").click();	
 }

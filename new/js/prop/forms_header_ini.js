@@ -2576,70 +2576,6 @@ function form94_header_ini()
 	});
 };
 
-
-/**
- * @form Supplier Attributes
- * @formNo 97
- */
-function form97_header_ini()
-{
-	var filter_fields=document.getElementById('form97_header');
-	var supplier_filter=filter_fields.elements[0];
-	var attribute_filter=filter_fields.elements[1];
-	
-	var supplier_data="<suppliers>" +
-			"<acc_name></acc_name>" +
-			"</suppliers>";
-	var attribute_data="<attributes>" +
-			"<attribute></attribute>" +
-			"<type exact='yes'>supplier</type>" +
-			"</attributes>";
-	
-	set_my_filter(supplier_data,supplier_filter);
-	set_my_filter(attribute_data,attribute_filter);
-	
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form97_ini();
-	});
-
-};
-
-/**
- * @form Staff Attributes
- * @formNo 98
- */
-function form98_header_ini()
-{
-	var filter_fields=document.getElementById('form98_header');
-	var staff_filter=filter_fields.elements[0];
-	var attribute_filter=filter_fields.elements[1];
-	
-	var staff_data="<staff>" +
-			"<acc_name></acc_name>" +
-			"</staff>";
-	var attribute_data="<attributes>" +
-			"<attribute></attribute>" +
-			"<type exact='yes'>staff</type>" +
-			"</attributes>";
-	
-	set_my_filter(staff_data,staff_filter);
-	set_my_filter(attribute_data,attribute_filter);
-	
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form98_ini();
-	});
-
-};
-
-
 /**
  * @form Selective Sync
  * @formNo 100
@@ -7530,38 +7466,6 @@ function form219_header_ini()
 	drs_date.value=get_my_date();
 	$('#form219_share').hide();
 }
-
-/**
- * @form Timesheet
- * @formNo 221
- */
-function form221_header_ini()
-{
-	var filter_fields=document.getElementById('form221_header');
-	var name_filter=filter_fields.elements[0];
-	var project_filter=filter_fields.elements[1];
-	var date_filter=filter_fields.elements[2];
-
-	var name_data="<staff>" +
-			"<acc_name></acc_name>" +
-			"</staff>";
-	
-	var project_data="<projects>" +
-			"<name></name>" +
-			"</projects>";
-	
-	set_my_filter(name_data,name_filter);
-	set_my_filter(project_data,project_filter);
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form221_ini();
-	});
-	
-	$(date_filter).datepicker();
-};
 
 /**
  * @form New Purchase Order (Aurilion)

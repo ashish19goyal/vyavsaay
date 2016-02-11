@@ -2138,7 +2138,7 @@
 	               </div>
 	                </div>
 	                <div class="modal-footer">
-	                    <input type="submit" class="btn green" form='modal183_form' name='save' value='Send'>
+	                    <button type="submit" class="btn green" form='modal183_form' name='save'>Send</button>
 	                </div>
                 </form>
             </div>
@@ -2396,6 +2396,31 @@
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal191_form' name='save'>Create</button>
 	               	<button type="button" class="btn red" form='modal191_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+	<a href='#modal192' data-toggle="modal" id='modal192_link'></a>
+	<div id="modal192" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-full">
+            <div class="modal-content">
+                <form id='modal192_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Notification Function</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:80%;" data-always-visible="1" data-rail-visible1="1">
+		                	<div class="row">
+								    <div class="col-sm-12 col-md-12">Function Definition</div>
+					     			<div class="col-sm-12 col-md-12"><textarea form='modal192_form' name='def'></textarea></div>
+					     		</div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<input type="submit" class="btn green" form='modal192_form' name='save' value='Save'>
 	             	</div>
                 </form>
             </div>

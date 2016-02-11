@@ -12,6 +12,7 @@
 						<th><input type='text' placeholder="Display Name" class='floatlabel' name='disp' form='form143_header'></th>
 						<th><input type='text' placeholder="Workflow" readonly="readonly" name='workflow' form='form143_header'></th>
 						<th><input type='text' placeholder="Status" class='floatlabel' name='status' form='form143_header'></th>
+						<th><input type='text' placeholder="Function" readonly='readonly' name='function' form='form143_header'></th>
 						<th><input type='submit' form='form143_header' style='visibility: hidden;'></th>
 				</tr>
 			</thead>
@@ -68,6 +69,7 @@
 									{index:'name',value:fname},
 									{index:'display_name',value:fdisplay},
 									{index:'status',value:fstatus},
+									{index:'function_def'},
 									{index:'reviewer'},{index:'approver'}];					
 
 			read_json_rows('form143',data_json,function(results)
@@ -89,6 +91,9 @@
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Status'>";
 								rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form143_"+result.id+"' value='"+result.status+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Function'>";
+								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form308_"+result.id+"' onclick=\"modal192_action('"+result.id+"');\">Function</button>";							
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form143_"+result.id+"' value='"+result.id+"'>";

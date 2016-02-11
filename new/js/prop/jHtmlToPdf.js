@@ -144,7 +144,7 @@ var htmlToPdf = function (options)
 	                var widths = e.getAttribute("widths");
 	                if (!widths) {
 	                    if (t.table.body.length != 0) {
-	                        if (t.table.body[0].length != 0) for (var k = 0; k < t.table.body[0].length; k++) t.table.widths.push("*");
+	                        if (t.table.body[0].length != 0) for (var k = 0; k < t.table.body[0].length; k++) t.table.widths.push("auto");
 	                    }
 	                } else {
 	                    var w = widths.split(",");

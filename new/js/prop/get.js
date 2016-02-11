@@ -388,9 +388,42 @@ function initialize_tabular_report_buttons(columns,report_title,report_id,func)
 	}
 }
 
-/*
-* Fetches all records for a specified form and exports them to a csv
-*/
+function initialize_static_tabular_report_buttons(report_title,report_id)
+{
+	var csv_button=document.getElementById(report_id+'_csv');
+	var pdf_button=document.getElementById(report_id+'_pdf');
+	var print_button=document.getElementById(report_id+'_print');
+	var email_button=document.getElementById(report_id+'_email');
+	
+	if(typeof pdf_button!='undefined')
+	{			
+		$(pdf_button).off("click");
+		$(pdf_button).on("click", function(event)
+		{
+			get_static_report_data(report_title,'pdf',report_id);
+		});	
+	}
+	
+	if(typeof print_button!='undefined')
+	{			
+		$(print_button).off("click");
+		$(print_button).on("click", function(event)
+		{
+			get_static_report_data(report_title,'print',report_id);
+		});	
+	}
+	
+	if(typeof email_button!='undefined')
+	{			
+		$(email_button).off("click");
+		$(email_button).on("click", function(event)
+		{
+			get_static_report_data(report_title,'email',report_id);
+		});
+	}
+}
+
+
 function get_tabular_report_data(columns,filename,action_type,func)
 {
 	show_loader();
@@ -436,7 +469,6 @@ function get_tabular_report_data(columns,filename,action_type,func)
 					case 'pdf': print_report_table(results,filename,function (container) 
 									{
 										var html_data=container.innerHTML;
-										var content = [];
 										var pdfcreator=new htmlToPdf({html:html_data});										
 										container.innerHTML="";
 									});
@@ -456,6 +488,45 @@ function get_tabular_report_data(columns,filename,action_type,func)
 			}
 		},500);
 	});
+}
+
+function get_static_report_data(filename,action_type,report_id)
+{
+	var data_id=get_new_key();
+	var last_updated=get_my_time();
+	var data_json={data_store:'export_log',
+		 				log:'yes',
+		 				warning:'no',
+		 				data:[{index:'id',value:data_id},
+		 					{index:'acc_name',value:get_account_name()},
+		 					{index:'filename',value:filename},
+		 					{index:'export_time',value:last_updated},
+		 					{index:'last_updated',value:last_updated}],
+		 				log_data:{title:'Exported',notes:filename+" report",link_to:report_id}};
+	create_json(data_json);		
+	
+	var bt=get_session_var('title');
+	switch(action_type)
+	{
+		case 'pdf': print_static_report_table(report_id,filename,function (container) 
+						{
+							var html_data=container.innerHTML;
+							var pdfcreator=new htmlToPdf({html:html_data});										
+							container.innerHTML="";
+						});
+						break;
+		case 'print': print_static_report_table(report_id,filename,function (container) 
+							{
+								$.print(container);
+								container.innerHTML="";
+							});
+							break;
+		case 'email': modal183_action(bt+"-"+filename,function (func) 
+							{
+								print_static_report_table(report_id,filename,func);
+							});
+							break;													
+	}	
 }
 
 

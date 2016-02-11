@@ -73,10 +73,7 @@
 									{index:'acc_name'},
 									{index:'phone',value:fcontact},
 									{index:'email',value:femail},
-									{index:'address'},
-									{index:'city'},
-									{index:'state'},
-									{index:'pincode'}];		
+									{index:'address'}];		
 			
 			read_json_rows('form40',columns,function(results)
 			{
@@ -94,8 +91,8 @@
 											"<div class='thumbnail'>"+
 												"<div class='vr_image_container'>"+
 													"<div class='row thumbnail-button-bottom'>"+
-	            										"<button type='submit' class='btn' form='form40_"+result.id+"' name='save' title='Save'><i class='fa fa-2x fa-save'></i></button>"+
-															"<button type='button' class='btn' form='form40_"+result.id+"' name='delete' title='Delete' onclick='form40_delete_item($(this));'><i class='fa fa-2x fa-trash'></i></button>"+
+	            										"<button type='submit' class='btn green' form='form40_"+result.id+"' name='save' title='Save'><i class='fa fa-2x fa-save'></i></button>"+
+															"<button type='button' class='btn red' form='form40_"+result.id+"' name='delete' title='Delete' onclick='form40_delete_item($(this));'><i class='fa fa-2x fa-trash'></i></button>"+
 													"</div>"+
                                			"<div class='row thumbnail-button-top'>"+
 	            										"<button type='button' class='btn' form='form40_"+result.id+"'name='image' title='Change Picture'><i class='fa fa-2x fa-pencil link'></i></button>"+

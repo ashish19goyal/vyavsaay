@@ -119,6 +119,68 @@ function print_tabular_report(report_name,report_title,print_button)
 	});
 }
 
+function print_static_report_table(report_id,report_title,func)
+{
+	////////////setting up containers///////////////////////	
+	var container=document.createElement('div');
+	var header=document.createElement('div');
+		var logo=document.createElement('div');
+		var business_intro=document.createElement('div');
+	
+	var report_title_line=document.createElement('div');
+	
+	var table_container=document.createElement('div');
+
+	var footer=document.createElement('div');
+		var business_contact=document.createElement('div');
+	
+////////////setting styles for containers/////////////////////////
+
+	header.setAttribute('style','width:100%;text-align:center');
+		report_title_line.setAttribute('style','width:100%;text-align:center;font-size:18px;margin:10px 0px;');
+	footer.setAttribute('style','width:100%;min-height:100px;font-size:14px;');
+		business_contact.setAttribute('style','width:100%;text-align:center;margin:10px 0px;');
+	
+///////////////getting the content////////////////////////////////////////
+
+	var bt=get_session_var('title');
+	var logo_image=get_session_var('logo');
+	var business_address=get_session_var('address');
+	var business_phone=get_session_var('phone');
+	var business_email=get_session_var('email');
+	var business_website=get_session_var('website');
+	
+	////////////////filling in the content into the containers//////////////////////////
+
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
+	business_contact.innerHTML="<hr style='border: 1px solid #000;margin:2px 0px;'><div>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website+"</div><hr style='border: 1px solid #000;margin:2px 0px;'>";
+	report_title_line.innerHTML="<hr style='border: 1px solid #000;margin:2px 0px;'><div style='text-align:center;'><b style='text-size:1.2em'>"+report_title+"</b></div><hr style='border: 1px solid #000;margin:2px 0px;'>";
+
+	/////////////adding new table //////////////////////////////////////////////////////	
+
+	var new_table=document.createElement('table');
+	new_table.setAttribute('style','width:100%;font-size:14px;border:1px solid black;text-align:left;');
+	new_table.setAttribute('class','plain_table');
+
+	$(new_table).html($("#"+report_id+"_body").parent().find('thead').html());
+	$(new_table).append($("#"+report_id+"_body").html());
+	$(new_table).append($("#"+report_id+"_body").parent().find('tfoot').html());
+	
+	/////////////placing the containers //////////////////////////////////////////////////////	
+	
+	container.appendChild(header);
+	container.appendChild(report_title_line);
+	
+	container.appendChild(new_table);
+	container.appendChild(footer);
+
+	header.appendChild(logo);
+	
+	container.appendChild(business_contact);
+	
+	func(container);
+}
+
 
 function print_report_table(report_data,report_title,func)
 {

@@ -2333,95 +2333,6 @@ function form93_delete_item(button)
 	}
 }
 
-
-/**
- * formNo 97
- * form Supplier Attributes
- * @param button
- */
-function form97_delete_item(button)
-{
-	if(is_delete_access('form97'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var supplier=form.elements[0].value;
-			var attribute=form.elements[1].value;
-			var value=form.elements[2].value;
-			var data_id=form.elements[3].value;
-			var last_updated=get_my_time();
-			var data_xml="<attributes>" +
-						"<id>"+data_id+"</id>" +
-						"<name>"+supplier+"</name>" +
-						"<type>supplier</type>" +
-						"<attribute>"+attribute+"</attribute>" +
-						"<value>"+value+"</value>" +
-						"</attributes>";	
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>attributes</tablename>" +
-						"<link_to>form97</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Attribute "+attribute+" for supplier "+supplier+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			delete_row(data_xml,activity_xml);
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
- * formNo 98
- * form Staff Attributes
- * @param button
- */
-function form98_delete_item(button)
-{
-	if(is_delete_access('form98'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var staff=form.elements[0].value;
-			var attribute=form.elements[1].value;
-			var value=form.elements[2].value;
-			var data_id=form.elements[3].value;
-			var last_updated=get_my_time();
-			var data_xml="<attributes>" +
-						"<id>"+data_id+"</id>" +
-						"<name>"+staff+"</name>" +
-						"<type>staff</type>" +
-						"<attribute>"+attribute+"</attribute>" +
-						"<value>"+value+"</value>" +
-						"</attributes>";	
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>attributes</tablename>" +
-						"<link_to>form98</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Attribute "+attribute+" for staff "+staff+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			delete_row(data_xml,activity_xml);
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
 /**
  * @form Manage Projects
  * @param button
@@ -6110,40 +6021,6 @@ function form219_delete_item(button)
 	}
 }
 
-/**
- * @form Time sheet
- * @param button
- */
-function form221_delete_item(button)
-{
-	if(is_delete_access('form221'))
-	{	
-		modal115_action(function()
-		{	
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);	
-			var data_id=form.elements[4].value;
-			
-			var data_xml="<timesheet>" +
-						"<id>"+data_id+"</id>" +
-						"</timesheet>";	
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-			}
-					
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Manage Purchase Orders (Aurilion)

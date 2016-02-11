@@ -1,54 +1,19 @@
-/*
-function add_questionnaires(func)
-{
-	var struct_data="<ques_struct>"+
-					"<id></id>"+
-					"<name></name>"+
-					"<display_name></display_name>"+
-					"<func></func>"+
-					"<status exact='yes'>active</status>"+										
-					"</ques_struct>";
-	fetch_requested_data('',struct_data,function(structs)
-	{
-		structs.forEach(function(struct)
-		{
-			if(is_read_access(struct.name))
-			{
-				var link="<li><a id='"+struct.name+"_link' href='#"+struct.name+"' onclick=\"initialize_questionnaires('"+struct.id+"','"+struct.name+"');\">"+struct.display_name+"</a></li>";	
-				var content="<div id='"+struct.name+"' class='function_detail'></div>";
-				//var func_element=$("#"+struct.func+"_main");
-				//console.log(func_element);			
-				
-				$("#"+struct.func+"_main").append(content);			
-				$("#"+struct.func+"_main").find('ul').first().append(link);
-				$('#'+struct.name+'_link').on('click',function () 
-				{
-					initialize_questionnaires(struct.id,struct.name);
-				});
-			}
-		});
-		func();
-	});
-}
-*/
-
 function initialize_questionnaires(id,ques_name)
 {
-	var fields_data="<ques_fields>"+
-					"<id></id>"+
-					"<ques_id exact='yes'>"+id+"</ques_id>"+
-					"<name></name>"+
-					"<display_name></display_name>"+
-					"<description></description>"+					
-					"<type></type>"+
-					"<fvalues></fvalues>"+
-					"<weight></weight>"+
-					"<dynamic_values></dynamic_values>"+
-					"<fcol></fcol>"+
-					"<forder></forder>"+
-					"<freq></freq>"+
-					"</ques_fields>";
-	fetch_requested_data('',fields_data,function(fields)
+	var fields_data={data_store:'ques_fields',
+						indexes:[{index:'id'},
+									{index:'ques_id',exact:id},
+									{index:'name'},
+									{index:'display_name'},
+									{index:'description'},
+									{index:'type'},
+									{index:'fvalues'},
+									{index:'weight'},
+									{index:'dynamic_values'},
+									{index:'fcol'},
+									{index:'forder'},
+									{index:'freq'}]};
+	read_json_rows('',fields_data,function(fields)
 	{
 		var content="<form id='"+ques_name+"_ques_header'><fieldset>";
 		content+="<label><b>Questionnaire Id</b><br><input type='text' readonly='readonly'></label><label><b>Submitter</b><br><input type='text' readonly='readonly'></label><label><b>Submission Date</b><br><input type='text' readonly='readonly'></label>";
@@ -107,7 +72,7 @@ function initialize_questionnaires(id,ques_name)
 			}
 			content+="<br>";
 		});
-		content+="<label><input type='submit' value='Submit' class='generic_icon'></label>";
+		content+="<label><input type='submit' value='Submit' class='generic_icon' onclick=ques1_submit_action('"+id+"','"+ques_name+"');></label>";
 		content+="</fieldset></form>";
 		$("#"+ques_name).html(content);
 		
@@ -127,8 +92,6 @@ function initialize_questionnaires(id,ques_name)
 						"<id>"+id+"</id>"+
 						"<reviewer></reviewer>"+
 						"<approver></approver>"+
-						"<function_name></function_name>"+
-						"<function_def></function_def>"+
 						"</ques_struct>";
 		fetch_requested_data('',reviewer_data,function(people)
 		{
@@ -136,84 +99,13 @@ function initialize_questionnaires(id,ques_name)
 			{
 				reviewer_filter.value=people[0].reviewer;
 				approver_filter.value=people[0].approver;
-				//var script_content="<script>"+people[0].function_def+"</script>";
-				//$("#"+ques_name).append(script_content);
 			}			
 		});
 
 		var ques_header=document.getElementById(ques_name+"_ques_header");
 		ques_header.elements[1].value=get_new_key();
 		ques_header.elements[2].value=get_account_name();
-		ques_header.elements[3].value=get_my_date();
-		
-		$(ques_form).off('submit');
-		$(ques_form).on('submit',function(event)
-		{
-			event.preventDefault();
-			
-			var data_id=ques_header.elements[1].value;
-			var submitter=ques_header.elements[2].value;
-			var sub_date=get_raw_time(ques_header.elements[3].value);
-			var reviewer=ques_form.elements[1].value;
-			var approver=ques_form.elements[2].value;
-			var last_updated=get_my_time();
-						
-			var total_score=0;
-			var total_weight=0;
-			
-			fields.forEach(function(field)
-			{
-				var field_value=document.getElementById("field"+id+"_"+field.id).value;
-				var field_weight=document.getElementById("field"+id+"_"+field.id).getAttribute('data-weight');
-				
-				if(!isNaN(parseFloat(field_value)) && !isNaN(parseFloat(field_weight)))
-				{
-					total_score+=parseFloat(field_weight)*parseFloat(field_value);
-					total_weight+=parseFloat(field_weight);
-				}				
-				var field_data_id=get_new_key();
-				var field_data="<ques_fields_data>"+
-						"<id>"+field_data_id+"</id>"+
-						"<ques_id>"+data_id+"</ques_id>"+
-						"<field_id>"+field.id+"</field_id>"+
-						"<field_value>"+field_value+"</field_value>"+
-						"<last_updated>"+last_updated+"</last_updated>"+
-						"</ques_fields_data>";
-				create_simple(field_data);				
-			});
-
-			var total_weighted_score=total_score/total_weight;
-			
-			var ques_data="<ques_data>"+
-						"<id>"+data_id+"</id>"+
-						"<ques_struct_id>"+id+"</ques_struct_id>"+
-						"<submitter>"+submitter+"</submitter>"+
-						"<reviewer>"+reviewer+"</reviewer>"+
-						"<approver>"+approver+"</approver>"+
-						"<sub_date>"+sub_date+"</sub_date>"+
-						"<status>approved</status>"+
-						"<total_score>"+total_weighted_score+"</total_score>"+
-						"<last_updated>"+last_updated+"</last_updated>"+
-						"</ques_data>";
-			create_simple_func(ques_data,function () 
-			{
-					if(ques_name=='ques1')
-					{
-						ques1_submit_action(ques_form);
-					}
-					else if(ques_name=='ques2')
-					{
-						ques2_submit_action(ques_form);
-					}
-					else if(ques_name=='ques3')
-					{
-						ques3_submit_action(ques_form);
-					}
-			});
-			$("#modal79_link").click();	
-			
-			initialize_questionnaires(id,ques_name);
-		});		
+		ques_header.elements[3].value=get_my_date();		
 	});
 }
 
@@ -349,13 +241,12 @@ function questionnaire_reviewed(id)
 	var last_updated=get_my_time();
 	var status_element=document.getElementById('ques_status_'+id);
 	status_element.innerHTML='reviewed';
-	var ques_xml="<ques_data>"+
-					"<id>"+id+"</id>"+
-					"<status>reviewed</status>"+
-					"<rev_date>"+last_updated+"</rev_date>"+
-					"<last_updated>"+last_updated+"</last_updated>"+
-					"</ques_data>";
-	update_simple(ques_xml);	
+	var ques_json={data_store:'ques_data',
+	 				data:[{index:'id',value:id},
+	 					{index:'status',value:'reviewed'},
+	 					{index:'rev_date',value:last_updated},
+	 					{index:'last_updated',value:last_updated}]}; 		
+	update_json(ques_json);
 }
 
 function questionnaire_approved(id)
@@ -363,14 +254,12 @@ function questionnaire_approved(id)
 	var last_updated=get_my_time();
 	var status_element=document.getElementById('ques_status_'+id);
 	status_element.innerHTML='approved';
-	var ques_xml="<ques_data>"+
-					"<id>"+id+"</id>"+
-					"<status>approved</status>"+
-					"<rev_date>"+last_updated+"</rev_date>"+
-					"<last_updated>"+last_updated+"</last_updated>"+
-					"</ques_data>";
-	update_simple(ques_xml);
-			
+	var ques_json={data_store:'ques_data',
+	 				data:[{index:'id',value:id},
+	 					{index:'status',value:'approved'},
+	 					{index:'app_date',value:last_updated},
+	 					{index:'last_updated',value:last_updated}]}; 		
+	update_json(ques_json);
 }
 
 
@@ -456,206 +345,293 @@ function filled_questionnaires(struct_id,ques_name,ques_id,submitter,sub_date)
 }
 
 /*Project prioritization*/
-function ques1_submit_action(ques_form)
+function ques1_submit_action(id,ques_name)
 {
-	var project=ques_form.elements[3].value;
-	var project_field_id=ques_form.elements[3].id;
-	var field_ids=project_field_id.split("_");
-	var field_id=field_ids[1];
-
-	var ques_fields_data="<ques_fields_data>"+
-						"<ques_id></ques_id>"+
-						"<field_id exact='yes'>"+field_id+"</field_id>"+
-						"<field_value exact='yes'>"+project+"</field_value>"+
-						"</ques_fields_data>";
-	fetch_requested_data('',ques_fields_data,function (ques_fields)
+	var ques_form=document.getElementById(ques_name+"_ques_main");
+	var ques_header=document.getElementById(ques_name+"_ques_header");
+	var data_id=ques_header.elements[1].value;
+	var submitter=ques_header.elements[2].value;
+	var sub_date=get_raw_time(ques_header.elements[3].value);
+	var reviewer=ques_form.elements[1].value;
+	var approver=ques_form.elements[2].value;
+	var last_updated=get_my_time();
+				
+	var total_score=0;
+	var total_weight=0;
+	
+	fields.forEach(function(field)
 	{
-		var id_array="--";
-		for (var i in ques_fields)
+		var field_value=document.getElementById("field"+id+"_"+field.id).value;
+		var field_weight=document.getElementById("field"+id+"_"+field.id).getAttribute('data-weight');
+		
+		if(!isNaN(parseFloat(field_value)) && !isNaN(parseFloat(field_weight)))
 		{
-			id_array+=ques_fields[i].ques_id+"--";
-		}
+			total_score+=parseFloat(field_weight)*parseFloat(field_value);
+			total_weight+=parseFloat(field_weight);
+		}				
+		var field_data_id=get_new_key();
+		var field_data={data_store:'ques_fields_data',
+ 				data:[{index:'id',value:field_data_id},
+ 					{index:'ques_id',value:data_id},
+ 					{index:'field_id',value:field.id},
+ 					{index:'field_value',value:field_value},
+ 					{index:'last_updated',value:last_updated}]};					
+		create_json(field_data);				
+	});
 
-		var ques_data="<ques_data>"+
-					"<total_score></total_score>"+
-					"<id array='yes'>"+id_array+"</id>"+
-					"</ques_data>";
-		fetch_requested_data('',ques_data,function(quess)
+	var total_weighted_score=total_score/total_weight;
+	
+	var ques_data={data_store:'ques_data',
+ 				data:[{index:'id',value:data_id},
+ 					{index:'ques_struct_id',value:id},
+ 					{index:'submitter',value:submitter},
+ 					{index:'reviewer',value:reviewer},
+ 					{index:'approver',value:approver},
+ 					{index:'sub_date',value:sub_date},
+ 					{index:'status',value:'approved'},
+ 					{index:'total_score',value:total_weighted_score},
+ 					{index:'last_updated',value:last_updated}]};	
+
+	create_json(ques_data,function () 
+	{
+		var project=ques_form.elements[3].value;
+		var project_field_id=ques_form.elements[3].id;
+		var field_ids=project_field_id.split("_");
+		var field_id=field_ids[1];
+	
+		var ques_fields_data={data_store:'ques_fields_data',return_column:'ques_id',
+									indexes:[{index:'field_id',exact:field_id},{index:'field_value',exact:project}]};
+		read_json_single_column(ques_fields_data,function (ques_fields)
 		{
-			var total_count=quess.length;
-			var total_score=0;
-
-			for (var j in quess)
+			var ques_data={data_store:'ques_data',
+								indexes:[{index:'total_score'},{index:'id',array:ques_fields}]};
+			read_json_single_column(ques_data,function(quess)
 			{
-				total_score+=parseFloat(quess[j].total_score);
-			}
-			
-			var avg_score=0;			
-			if(total_count>0)
-			{
-				avg_score=Math.round(total_score/total_count);
-			}
-			
-			var project_data="<projects>"+
-				"<id></id>"+
-				"<name exact='yes'>"+project+"</name>"+
-				"</projects>";
-			get_single_column_data(function(pos)
-			{
-				if(pos.length>0)
+				var total_count=quess.length;
+				var total_score=0;
+	
+				for (var j in quess)
 				{
-					var project_xml="<projects>"+
-							"<id>"+pos[0]+"</id>"+
-							"<priority>"+avg_score+"</priority>"+
-							"<last_updated>"+get_my_time()+"</last_updated>"+
-							"</projects>";
-					if(is_online())
-					{	
-						server_update_simple(project_xml);
-					}
-					else
-					{
-						local_update_simple(project_xml);
-					}		
+					total_score+=parseFloat(quess[j]);
 				}
-			},project_data);
-		});
-	});	
+				
+				var avg_score=0;			
+				if(total_count>0)
+				{
+					avg_score=Math.round(total_score/total_count);
+				}
+				
+				var project_data={data_store:'projects',return_column:'id',
+								indexes:[{index:'name',exact:project}]};
+				read_json_single_column(project_data,function(pos)
+				{
+					if(pos.length>0)
+					{
+						var po_json={data_store:'projects',
+		 				data:[{index:'id',value:pos[0]},
+		 					{index:'priority',value:avg_score},
+		 					{index:'last_updated',value:get_my_time()}]}; 		
+						update_json(po_json);					
+					}
+				});
+			});
+		});	
+	});
+	$("#modal79_link").click();	
+	initialize_questionnaires(id,ques_name);	
 }
 
 
 /*supplier prioritization*/
 function ques2_submit_action(ques_form)
 {
-	var supplier=ques_form.elements[3].value;
-	var supplier_field_id=ques_form.elements[3].id;
-	var field_ids=supplier_field_id.split("_");
-	var field_id=field_ids[1];
-
-	var ques_fields_data="<ques_fields_data>"+
-						"<ques_id></ques_id>"+
-						"<field_id exact='yes'>"+field_id+"</field_id>"+
-						"<field_value exact='yes'>"+supplier+"</field_value>"+
-						"</ques_fields_data>";
-	fetch_requested_data('',ques_fields_data,function (ques_fields)
+	var ques_form=document.getElementById(ques_name+"_ques_main");
+	var ques_header=document.getElementById(ques_name+"_ques_header");
+	var data_id=ques_header.elements[1].value;
+	var submitter=ques_header.elements[2].value;
+	var sub_date=get_raw_time(ques_header.elements[3].value);
+	var reviewer=ques_form.elements[1].value;
+	var approver=ques_form.elements[2].value;
+	var last_updated=get_my_time();
+				
+	var total_score=0;
+	var total_weight=0;
+	
+	fields.forEach(function(field)
 	{
-		var id_array="--";
-		for (var i in ques_fields)
+		var field_value=document.getElementById("field"+id+"_"+field.id).value;
+		var field_weight=document.getElementById("field"+id+"_"+field.id).getAttribute('data-weight');
+		
+		if(!isNaN(parseFloat(field_value)) && !isNaN(parseFloat(field_weight)))
 		{
-			id_array+=ques_fields[i].ques_id+"--";
-		}
+			total_score+=parseFloat(field_weight)*parseFloat(field_value);
+			total_weight+=parseFloat(field_weight);
+		}				
+		var field_data_id=get_new_key();
+		var field_data={data_store:'ques_fields_data',
+ 				data:[{index:'id',value:field_data_id},
+ 					{index:'ques_id',value:data_id},
+ 					{index:'field_id',value:field.id},
+ 					{index:'field_value',value:field_value},
+ 					{index:'last_updated',value:last_updated}]};					
+		create_json(field_data);				
+	});
 
-		var ques_data="<ques_data>"+
-					"<total_score></total_score>"+
-					"<id array='yes'>"+id_array+"</id>"+
-					"</ques_data>";
-		fetch_requested_data('',ques_data,function(quess)
+	var total_weighted_score=total_score/total_weight;
+	
+	var ques_data={data_store:'ques_data',
+ 				data:[{index:'id',value:data_id},
+ 					{index:'ques_struct_id',value:id},
+ 					{index:'submitter',value:submitter},
+ 					{index:'reviewer',value:reviewer},
+ 					{index:'approver',value:approver},
+ 					{index:'sub_date',value:sub_date},
+ 					{index:'status',value:'approved'},
+ 					{index:'total_score',value:total_weighted_score},
+ 					{index:'last_updated',value:last_updated}]};	
+
+	create_json(ques_data,function () 
+	{
+		var supplier=ques_form.elements[3].value;
+		var supplier_field_id=ques_form.elements[3].id;
+		var field_ids=supplier_field_id.split("_");
+		var field_id=field_ids[1];
+	
+		var ques_fields_data={data_store:'ques_fields_data',return_column:'ques_id',
+									indexes:[{index:'field_id',exact:field_id},{index:'field_value',exact:supplier}]};	
+		read_json_single_column(ques_fields_data,function (ques_fields)
 		{
-			var total_count=quess.length;
-			var total_score=0;
-
-			for (var j in quess)
+			var ques_data={data_store:'ques_data',
+								indexes:[{index:'total_score'},{index:'id',array:ques_fields}]};		
+			read_json_single_column(ques_data,function(quess)
 			{
-				total_score+=parseFloat(quess[j].total_score);
-			}
-			
-			var avg_score=0;			
-			if(total_count>0)
-			{
-				avg_score=Math.round(total_score/total_count);
-			}
-			
-			var po_data="<suppliers>"+
-				"<id></id>"+
-				"<acc_name exact='yes'>"+supplier+"</acc_name>"+
-				"</suppliers>";
-			get_single_column_data(function(pos)
-			{
-				if(pos.length>0)
+				var total_count=quess.length;
+				var total_score=0;
+	
+				for (var j in quess)
 				{
-					var po_xml="<suppliers>"+
-							"<id>"+pos[0]+"</id>"+
-							"<score>"+avg_score+"</score>"+
-							"<last_updated>"+get_my_time()+"</last_updated>"+
-							"</suppliers>";
-					if(is_online())
-					{	
-						server_update_simple(po_xml);
-					}
-					else
-					{
-						local_update_simple(po_xml);
-					}		
+					total_score+=parseFloat(quess[j]);
 				}
-			},po_data);
+				
+				var avg_score=0;			
+				if(total_count>0)
+				{
+					avg_score=Math.round(total_score/total_count);
+				}
+				
+				var po_data={data_store:'suppliers',return_column:'id',
+								indexes:[{index:'acc_name',exact:supplier}]};		
+				read_json_single_column(po_data,function(pos)
+				{
+					if(pos.length>0)
+					{
+						var po_json={data_store:'suppliers',
+		 				data:[{index:'id',value:pos[0]},
+		 					{index:'score',value:avg_score},
+		 					{index:'last_updated',value:get_my_time()}]}; 		
+						update_json(po_json);
+					}
+				});
+			});
 		});
-	});	
+	});
+	$("#modal79_link").click();	
+	initialize_questionnaires(id,ques_name);		
 }
 
 /*purchase order prioritization*/
 function ques3_submit_action(ques_form)
 {
-	var po_num=ques_form.elements[3].value;
-	var po_field_id=ques_form.elements[3].id;
-	var field_ids=po_field_id.split("_");
-	var field_id=field_ids[1];
-
-	var ques_fields_data="<ques_fields_data>"+
-						"<ques_id></ques_id>"+
-						"<field_id exact='yes'>"+field_id+"</field_id>"+
-						"<field_value exact='yes'>"+po_num+"</field_value>"+
-						"</ques_fields_data>";
-	fetch_requested_data('',ques_fields_data,function (ques_fields)
+	var ques_form=document.getElementById(ques_name+"_ques_main");
+	var ques_header=document.getElementById(ques_name+"_ques_header");
+	var data_id=ques_header.elements[1].value;
+	var submitter=ques_header.elements[2].value;
+	var sub_date=get_raw_time(ques_header.elements[3].value);
+	var reviewer=ques_form.elements[1].value;
+	var approver=ques_form.elements[2].value;
+	var last_updated=get_my_time();
+				
+	var total_score=0;
+	var total_weight=0;
+	
+	fields.forEach(function(field)
 	{
-		var id_array="--";
-		for (var i in ques_fields)
+		var field_value=document.getElementById("field"+id+"_"+field.id).value;
+		var field_weight=document.getElementById("field"+id+"_"+field.id).getAttribute('data-weight');
+		
+		if(!isNaN(parseFloat(field_value)) && !isNaN(parseFloat(field_weight)))
 		{
-			id_array+=ques_fields[i].ques_id+"--";
-		}
+			total_score+=parseFloat(field_weight)*parseFloat(field_value);
+			total_weight+=parseFloat(field_weight);
+		}				
+		var field_data_id=get_new_key();
+		var field_data={data_store:'ques_fields_data',
+ 				data:[{index:'id',value:field_data_id},
+ 					{index:'ques_id',value:data_id},
+ 					{index:'field_id',value:field.id},
+ 					{index:'field_value',value:field_value},
+ 					{index:'last_updated',value:last_updated}]};					
+		create_json(field_data);				
+	});
 
-		var ques_data="<ques_data>"+
-					"<total_score></total_score>"+
-					"<id array='yes'>"+id_array+"</id>"+
-					"</ques_data>";
-		fetch_requested_data('',ques_data,function(quess)
+	var total_weighted_score=total_score/total_weight;
+	
+	var ques_data={data_store:'ques_data',
+ 				data:[{index:'id',value:data_id},
+ 					{index:'ques_struct_id',value:id},
+ 					{index:'submitter',value:submitter},
+ 					{index:'reviewer',value:reviewer},
+ 					{index:'approver',value:approver},
+ 					{index:'sub_date',value:sub_date},
+ 					{index:'status',value:'approved'},
+ 					{index:'total_score',value:total_weighted_score},
+ 					{index:'last_updated',value:last_updated}]};	
+
+	create_json(ques_data,function () 
+	{	
+		var po_num=ques_form.elements[3].value;
+		var po_field_id=ques_form.elements[3].id;
+		var field_ids=po_field_id.split("_");
+		var field_id=field_ids[1];
+	
+		var ques_fields_data={data_store:'ques_fields_data',return_column:'ques_id',
+									indexes:[{index:'field_id',exact:field_id},{index:'field_value',exact:po_num}]};
+		read_json_single_column(ques_fields_data,function (ques_fields)
 		{
-			var total_count=quess.length;
-			var total_score=0;
-
-			for (var j in quess)
+			var ques_data={data_store:'ques_data',
+								indexes:[{index:'total_score'},{index:'id',array:ques_fields}]};
+			read_json_single_column(ques_data,function(quess)
 			{
-				total_score+=parseFloat(quess[j].total_score);
-			}
-			
-			var avg_score=0;			
-			if(total_count>0)
-			{
-				avg_score=Math.round(total_score/total_count);
-			}
-			
-			var po_data="<purchase_orders>"+
-				"<id></id>"+
-				"<order_num exact='yes'>"+po_num+"</order_num>"+
-				"</purchase_orders>";
-			get_single_column_data(function(pos)
-			{
-				if(pos.length>0)
+				var total_count=quess.length;
+				var total_score=0;
+	
+				for (var j in quess)
 				{
-					var po_xml="<purchase_orders>"+
-							"<id>"+pos[0]+"</id>"+
-							"<priority>"+avg_score+"</priority>"+
-							"<last_updated>"+get_my_time()+"</last_updated>"+
-							"</purchase_orders>";
-					if(is_online())
-					{	
-						server_update_simple(po_xml);
-					}
-					else
-					{
-						local_update_simple(po_xml);
-					}		
+					total_score+=parseFloat(quess[j]);
 				}
-			},po_data);
+				
+				var avg_score=0;			
+				if(total_count>0)
+				{
+					avg_score=Math.round(total_score/total_count);
+				}
+				
+				var po_data={data_store:'purchase_orders',return_column:'id',
+								indexes:[{index:'order_num',exact:po_num}]};
+				read_json_single_column(po_data,function(pos)
+				{
+					if(pos.length>0)
+					{
+						var po_json={data_store:'purchase_orders',
+		 				data:[{index:'id',value:pos[0]},
+		 					{index:'priority',value:avg_score},
+		 					{index:'last_updated',value:get_my_time()}]}; 		
+						update_json(po_json);		
+					}
+				});
+			});
 		});
-	});			
+	});
+	$("#modal79_link").click();	
+	initialize_questionnaires(id,ques_name);				
 }

@@ -497,26 +497,6 @@ function form94_import_template()
 
 
 /**
-* @form Supplier Attributes
-* @formNo 97
-*/
-function form97_import_template()
-{
-	var data_array=['id','name','attribute','value'];
-	my_array_to_csv(data_array);
-};
-
-/**
-* @form staff Attributes
-* @formNo 98
-*/
-function form98_import_template()
-{
-	var data_array=['id','name','attribute','value'];
-	my_array_to_csv(data_array);
-};
-
-/**
 * @form manage Projects
 * @formNo 101
 * @table projects
@@ -1125,17 +1105,6 @@ function form217_import_template()
 	my_array_to_csv(data_array);
 };
 
-
-/**
-* @form Timesheet
-* @formNo 221
-* @table Timesheet
-*/
-function form221_import_template()
-{
-	var data_array=['id','acc_name','project','date','hours_worked'];
-	my_array_to_csv(data_array);
-};
 
 /**
 * @form create Purchase Order

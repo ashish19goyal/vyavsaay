@@ -75,34 +75,6 @@ function form87_import_validate(data_array)
 
 
 /**
-* @form Supplier Attributes
-* @formNo 97
-*/
-function form97_import_validate(data_array)
-{
-	var validate_template_array=[{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-							{column:'attribute',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-							{column:'value',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')}];
-					
-	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
-}
-
-/**
-* @form Staff Attributes
-* @formNo 98
-*/
-function form98_import_validate(data_array)
-{
-	var validate_template_array=[{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-							{column:'attribute',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-							{column:'value',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')}];
-					
-	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
-}
-
-/**
 * @form Asset Attributes
 * @formNo 109
 */

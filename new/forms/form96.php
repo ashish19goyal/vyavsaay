@@ -187,7 +187,7 @@
 	 					{index:'attribute',value:attribute},
 	 					{index:'value',value:value},
 	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Added',notes:'Attribute for customer '+customer,link_to:'form276'}}; 								
+	 				log_data:{title:'Added',notes:'Attribute for customer '+customer,link_to:'form96'}}; 								
 				create_json(data_json);	
 				
 				$(form).readonly();
@@ -229,7 +229,7 @@
 	 					{index:'attribute',value:attribute},
 	 					{index:'value',value:value},
 	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Updated',notes:'Attribute for customer '+customer,link_to:'form276'}}; 								
+	 				log_data:{title:'Updated',notes:'Attribute for customer '+customer,link_to:'form96'}}; 								
 				
 				update_json(data_json);
 				$(form).readonly();
@@ -258,7 +258,7 @@
 					var data_json={data_store:'attributes',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id}],
-	 				log_data:{title:'Deleted',notes:'Attribute for customer '+customer,link_to:'form276'}}; 								
+	 				log_data:{title:'Deleted',notes:'Attribute for customer '+customer,link_to:'form96'}}; 								
 				
 					delete_json(data_json);
 					$(button).parent().parent().remove();

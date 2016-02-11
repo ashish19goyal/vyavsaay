@@ -95,60 +95,7 @@ a div{
 	width: 100px;
 }
 
-#progress_ind
-{
-	display:none;
-	position: fixed;
-    top: 5%;
-    left: 40%;
-    z-index:1000;
-}
 
-progress{  
-	background-color: #fff;  
-	border: 0;
-	height: 25px;
-	width: 150px;
-	border-radius: 9px;
-}
-
-progress::-webkit-progress-bar {
-	background-color: #fff;
-	border-radius: 9px;
-}
-
-progress::-webkit-progress-value {
-	background: #cdeb8e;
-	background: -moz-linear-gradient(top,  #cdeb8e 0%, #a5c956 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cdeb8e), color-stop(100%,#a5c956));
-	background: -webkit-linear-gradient(top,  #cdeb8e 0%,#a5c956 100%);
-	background: -o-linear-gradient(top,  #cdeb8e 0%,#a5c956 100%);
-	background: -ms-linear-gradient(top,  #cdeb8e 0%,#a5c956 100%);
-	background: linear-gradient(to bottom,  #cdeb8e 0%,#a5c956 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cdeb8e', endColorstr='#a5c956',GradientType=0 );
-	border-radius: 9px;
-}
-progress::-moz-progress-bar {
-	background: #cdeb8e;
-	background: -moz-linear-gradient(top,  #cdeb8e 0%, #a5c956 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cdeb8e), color-stop(100%,#a5c956));
-	background: -webkit-linear-gradient(top,  #cdeb8e 0%,#a5c956 100%);
-	background: -o-linear-gradient(top,  #cdeb8e 0%,#a5c956 100%);
-	background: -ms-linear-gradient(top,  #cdeb8e 0%,#a5c956 100%);
-	background: linear-gradient(to bottom,  #cdeb8e 0%,#a5c956 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cdeb8e', endColorstr='#a5c956',GradientType=0 );
-	border-radius: 9px;
-}
-#progress_value {
-	padding: 0px 5px;
-	line-height: 25px;
-	margin-left: 5px;
-	font-size: 1em;
-	color: #fff;
-	font-weight:bold;
-	height: 25px;
-	float: right;
-}
 
 /* 
 formatting for feeds
