@@ -224,7 +224,7 @@
 					}
 				});
 		
-				$('#modal62').dialog('open');
+				$('#modal62_link').click();
 				form214_ini();
 			}
 			else
