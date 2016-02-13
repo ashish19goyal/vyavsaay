@@ -77,9 +77,22 @@
 			show_loader();
 			
 			var master_form=document.getElementById('form214_master');
+			var name_filter=master_form.elements['name'];
+			var phone_filter=master_form.elements['phone'];
+			var email_filter=master_form.elements['email'];
+			var address_filter=master_form.elements['address'];
+			var details_filter=master_form.elements['details'];
+			var date_filter=master_form.elements['date'];
 			var contact_person_filter=master_form.elements['contact'];
 			
+            $(date_filter).datepicker();
+            
 			master_form.reset();
+			name_filter.value="";
+			phone_filter.value="";
+			email_filter.value="";
+			address_filter.value="";
+			details_filter.value="";
 			contact_person_filter.value=get_account_name();
 		
 			var attribute_label=document.getElementById('form214_attributes');
