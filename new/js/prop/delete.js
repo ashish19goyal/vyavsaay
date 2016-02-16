@@ -602,47 +602,6 @@ function form35_delete_item(button)
 	}
 }
 
-/**
- * @form Store Placement
- * @param button
- */
-function form38_delete_item(button)
-{
-	if(is_delete_access('form38'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var product_name=form.elements[0].value;
-			var batch=form.elements[1].value;
-			var name=form.elements[2].value;
-			var data_id=form.elements[4].value;
-			var last_updated=get_my_time();
-			var data_xml="<area_utilization>" +
-						"<id>"+data_id+"</id>" +
-						"<item_name>"+product_name+"</item_name>" +
-						"<batch>"+batch+"</batch>" +
-						"<name>"+name+"</name>" +
-						"</area_utilization>";	
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>area_utilization</tablename>" +
-						"<link_to>form38</link_to>" +
-						"<title>Removed</title>" +
-						"<notes>Item "+product_name+" from storage area "+name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			delete_row(data_xml,activity_xml);
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Manage Products
@@ -1815,42 +1774,6 @@ function form81_delete_item(button)
 	}
 }
 
-/**
- * @form Store Areas
- * @param button
- */
-function form83_delete_item(button)
-{
-	if(is_delete_access('form83'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var name=form.elements[0].value;
-			var data_id=form.elements[2].value;
-			var last_updated=get_my_time();
-			var data_xml="<store_areas>" +
-						"<id>"+data_id+"</id>" +
-						"</store_areas>";	
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>store_areas</tablename>" +
-						"<link_to>form83</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Store area "+name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			delete_row(data_xml,activity_xml);
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Manage Subscriptions
@@ -2488,33 +2411,6 @@ function form104_delete_item(button)
 	{
 		$("#modal2_link").click();
 	}
-}
-
-/**
- * @form Manage Data Access
- * @formNo 105
- */
-function form105_delete_item(button)
-{
-	if(is_delete_access('form105'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var data_id=form.elements[7].value;
-			var data_xml="<data_access>" +
-						"<id>"+data_id+"</id>" +
-						"</data_access>";	
-			delete_simple(data_xml);
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}		
 }
 
 
@@ -3792,34 +3688,6 @@ function form144_delete_expense(button)
 	}
 }
 
-
-/**
- * @form Store movement
- * @param button
- */
-function form145_delete_item(button)
-{
-	if(is_delete_access('form145'))
-	{	
-		modal115_action(function()
-		{	
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var data_id=form.elements[7].value;
-				
-			var data_xml="<store_movement>" +
-					"<id>"+data_id+"</id>" +
-					"</store_movement>";	
-			delete_simple(data_xml);
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Manufacturing

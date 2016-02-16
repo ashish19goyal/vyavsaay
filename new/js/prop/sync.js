@@ -112,7 +112,10 @@ function sync_local_and_server()
 					{
 						progress_value=100;
 						hide_menu_items();
-						count_sync();
+						if(typeof worker_12!='undefined')
+                        {
+                            worker_12();
+                        }
 						hide_progress();
 						hide_loader();
 					});

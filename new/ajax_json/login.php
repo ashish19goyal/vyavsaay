@@ -158,7 +158,7 @@ use RetailingEssentials\db_connect;
 					$_SESSION['session']='yes';
 					$_SESSION['domain']=$domain;
 					$_SESSION['username']=$user;
-					$_SESSION['roles']=$user_roles;
+					$_SESSION['user_roles']=$user_roles;
 					$_SESSION['acc_name']=$row2['acc_name'];
 					
 					$_SESSION['forms']=$forms;

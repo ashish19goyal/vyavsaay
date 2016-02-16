@@ -13,6 +13,580 @@ function local_read_json_rows(columns,callback,results)
 		var cols=columns.indexes;
 		var count=0;
 		var start_index=0;
+        var access_control=false;
+		if(typeof columns.count!='undefined')
+		{
+			count=parseInt(columns.count);
+		}
+		if(typeof columns.start_index!='undefined')
+		{
+			start_index=parseInt(columns.start_index);
+		}
+		var access_store=table;
+        if(typeof columns.access!='undefined')
+		{
+			access_control=true;
+            if(typeof columns.access.data_store!='undefined')
+            {
+                access_store=columns.access.data_store;
+            }
+		}
+		var account_name=get_session_var('acc_name');
+        var rolename=get_session_var('user_roles');
+        var roles_array=rolename.split("--");    
+        
+		var filter=new Array();
+		var sort_index='last_updated';
+		var sort_order='prev';
+		var lowerbound=['0','0'];
+		var upperbound=['9999999999','9999999999'];
+		
+		var bound_count=0;
+		
+		for(var j=0;j<cols.length;j++)
+		{
+			if(typeof cols[j].lowerbound!='undefined')
+			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
+				fil.value=""+cols[j].lowerbound;
+				fil.type='lowerbound';
+				filter.push(fil);
+				lowerbound=[fil.value,'0'];
+				sort_index=cols[j].index;
+				
+				if(bound_count==0)
+				{
+					var upperbound=['9999999999','9999999999'];
+				}
+				bound_count+=1;
+			}
+			if(typeof cols[j].upperbound!='undefined')
+			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
+				fil.value=""+cols[j].upperbound;
+				fil.type='upperbound';
+				filter.push(fil);
+				upperbound=[fil.value,'999999999999'];
+				sort_index=cols[j].index;
+				
+				if(bound_count==0)
+				{
+					lowerbound=['0','0'];
+				}
+				bound_count+=1;
+			}
+						
+			if(typeof cols[j].array!='undefined')
+			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
+				fil.value=cols[j].array;
+				fil.type='array';
+				filter.push(fil);
+			}
+			
+			if(typeof cols[j].approx_array!='undefined')
+			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
+				fil.value=cols[j].approx_array;
+				fil.type='approx_array';
+				filter.push(fil);
+			}
+			
+			if(typeof cols[j].unequal!='undefined')
+			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
+				fil.value=cols[j].unequal;
+				fil.type='unequal';
+				filter.push(fil);
+			}
+			
+			if(typeof cols[j].isnull!='undefined')
+			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
+				fil.value=cols[j].isnull;
+				fil.type='isnull';
+				filter.push(fil);
+			}
+			
+			if(typeof cols[j].value!='undefined' && cols[j].value!="")
+			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+			
+				fil.value=cols[j].value;
+				fil.type='';
+				filter.push(fil);
+			}
+		
+			if(typeof cols[j].exact!='undefined')
+			{
+				var fil=new Object();
+				fil.name=cols[j].index;
+				fil.value=cols[j].exact;
+				fil.type='exact';
+				filter.push(fil);
+				sort_index=cols[j].index;
+				lowerbound=[fil.value,'0'];
+				upperbound=[fil.value,'99999999'];
+				bound_count=0;
+			}
+		}
+		
+        function local_read_json_rows_filtering(record)
+        {
+            for(var i=0;i<filter.length;i++)
+            {
+                if(typeof record[filter[i].name]!="undefined")
+                {
+                    var string=record[filter[i].name].toString().toLowerCase();
+                    if(filter[i].type!='array')
+                    {					
+                        var search_word=filter[i].value.toString().toLowerCase();
+                        if(filter[i].type=='')
+                        {
+                            if(string.indexOf(search_word)===-1)
+                            {
+                                return false;
+                            }
+                        }
+
+                        if(filter[i].type=='exact')
+                        {
+                            if(search_word!==string)
+                            {
+                                return false;
+                            }
+                        }
+                        if(filter[i].type=='unequal')
+                        {
+                            if(search_word==string)
+                            {
+                                return false;
+                            }
+                        }
+
+                        if(filter[i].type=='isnull')
+                        {
+                            if(filter[i].value=='no' && string=="null")
+                            {
+                                return false;
+                            }
+                            else if(filter[i].value=='yes' && string!="null")
+                            {
+                                return false;
+                            }
+                        }
+
+                        if(filter[i].type=='upperbound') 
+                        {
+                            if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
+                            {
+                                return false;
+                            }
+                        }
+                        else if(filter[i].type=='lowerbound') 
+                        {
+                            if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                    else if(filter[i].type=='array')
+                    {
+                        if(filter[i].value.indexOf(string)==-1)
+                        {
+                            return false;
+                        }
+                    }
+
+                    if(filter[i].type=='approx_array')
+                    {
+                        var approx_array=filter[i].value;
+                        var sub_match=false;
+                        for(var ab in approx_array)
+                        {
+                            if(string.indexOf(approx_array[ab])>-1)
+                            {
+                                sub_match=true;
+                                break;
+                            }
+                        }
+                        if(!sub_match)
+                        {
+                            return false;
+                        }
+                    }						
+                }
+                else
+                {
+                    if(filter[i].type!='unequal')
+                    {
+                        return false;
+                    }
+                    if(filter[i].type=='isnull')
+                    {
+                        if(filter[i].value=='no')
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
+        function local_read_json_rows_data_traversing()
+        {
+            var sort_key=IDBKeyRange.bound(lowerbound,upperbound);
+            var objectstore=static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index);
+
+            if(filter.length>0)
+            {
+                if(filter[0].name=='id')
+                {
+                    objectstore=static_local_db.transaction([table],"readonly").objectStore(table);
+                    sort_key=IDBKeyRange.only(filter[0].value);
+                }
+            }		
+
+            var read_request=objectstore.openCursor(sort_key,sort_order);
+
+            localdb_open_requests+=1;
+
+            read_request.onsuccess=function(e)
+            {
+                var result=e.target.result;
+                if(result)
+                {
+                    var record=result.value;
+                    //console.log(record);
+                    var match_word=local_read_json_rows_filtering(record);
+                    if(match_word===true)
+                    {
+                        if(start_index==0)
+                        {
+                            results.push(record);
+                        }
+                        else
+                        {					
+                            start_index-=1;
+                        }
+
+                        if(results.length===count)
+                        {
+                            localdb_open_requests-=1;
+                            callback(results);
+                        }
+                        else
+                        {
+                            result.continue();
+                        }
+                    }
+                    else
+                    {
+                        result.continue();
+                    }
+                }
+                else
+                {
+                    localdb_open_requests-=1;
+                    callback(results);
+                }
+            };
+        }
+        
+        function local_read_json_rows_object_traversing(access_conditions_array)
+        {
+            var sort_key=IDBKeyRange.bound(lowerbound,upperbound);
+            var ac_transaction=static_local_db.transaction([table,'object_access'],"readonly");
+            var t_objectstore=ac_transaction.objectStore(table).index(sort_index);
+            var o_objectstore=ac_transaction.objectStore('object_access').index('record_id');
+
+            if(filter.length>0)
+            {
+                if(filter[0].name=='id')
+                {
+                    objectstore=static_local_db.transaction([table],"readonly").objectStore(table);
+                    sort_key=IDBKeyRange.only(filter[0].value);
+                }
+            }		
+
+            var read_request=t_objectstore.openCursor(sort_key,sort_order);
+
+            localdb_open_requests+=1;
+
+            read_request.onsuccess=function(e)
+            {
+                var result=e.target.result;
+                //console.log(result);
+                if(result)
+                {
+                    var record=result.value;
+                    console.log(record);
+                    var match_word=local_read_json_rows_filtering(record);
+                    if(match_word===true)
+                    {
+                        var object_key=IDBKeyRange.bound([record.id,'000000000'],[record.id,'99999999999999']);
+                        var object_read_request=o_objectstore.openCursor(object_key,sort_order);
+                        object_read_request.onsuccess=function(oe)
+                        {
+                            var oresult=oe.target.result;
+                            console.log(oresult);
+                            if(oresult)
+                            {
+                                var orecord=oresult.value;
+                                console.log(orecord);
+                                if(orecord.tablename==access_store)
+                                {
+                                    console.log('check1');
+                                    if(orecord.user_type=='user')   
+                                    {
+                                        console.log('check1');
+                                        if(orecord.user.indexOf(account_name)!=-1)
+                                        {
+                                            console.log('check1');
+                                            if(start_index==0)
+                                            {
+                                                console.log('check1');
+                                                results.push(record);
+                                            }
+                                            else
+                                            {
+                                                console.log('check1');
+                                                start_index-=1;
+                                            }
+
+                                            if(results.length===count)
+                                            {
+                                                console.log('check1');
+                                                localdb_open_requests-=1;
+                                                callback(results);
+                                            }
+                                            else
+                                            {
+                                                console.log('check1');
+                                                result.continue();
+                                            }
+                                        }
+                                    }
+                                    else if(orecord.user_type=='role')   
+                                    {
+                                        console.log('check1');
+                                        for(var aa in roles_array)
+                                        {
+                                            console.log('check1');
+                                            if(roles_array[aa]!="" && orecord.user.indexOf(roles_array[aa])!=-1)
+                                            {
+                                                console.log('check1');
+                                                if(start_index==0)
+                                                {
+                                                    console.log('check1');
+                                                    results.push(record);
+                                                }
+                                                else
+                                                {
+                                                    console.log('check1');
+                                                    start_index-=1;
+                                                }
+
+                                                if(results.length===count)
+                                                {
+                                                    console.log('check1');
+                                                    localdb_open_requests-=1;
+                                                    callback(results);
+                                                }
+                                                else
+                                                {
+                                                    console.log('check1');
+                                                    result.continue();
+                                                }
+                                                break;
+                                            }
+                                        }
+                                        result.continue();    
+                                    }
+                                }
+                                else
+                                {
+                                    console.log('check1');
+                                   oresult.continue(); 
+                                }
+                            }
+                            else    
+                            {
+                                console.log('check1');
+                                for(var bb in access_conditions_array)
+                                {
+                                    console.log('check1');
+                                    if(access_conditions_array[bb].user_type=='field')
+                                    {
+                                        console.log('check1');
+                                        if(record[access_conditions_array[bb].user].indexOf(account_name)!=-1)
+                                        {
+                                           console.log('check1'); if(access_conditions_array[bb].criteria_field=="" || access_conditions_array[bb].criteria_field==null || record[access_conditions_array[bb].criteria_field]==access_conditions_array[bb].criteria_value)
+                                           {
+                                                if(start_index==0)
+                                                {
+                                                    results.push(record);
+                                                }
+                                                else
+                                                {					
+                                                    start_index-=1;
+                                                }
+
+                                                if(results.length===count)
+                                                {
+                                                    localdb_open_requests-=1;
+                                                    callback(results);
+                                                }
+                                                else
+                                                {
+                                                    result.continue();
+                                                }
+                                            }
+                                            else
+                                            {
+                                                result.continue();
+                                            }
+                                        }
+                                    }
+                                    else
+                                    { 
+                                       console.log('check1'); 
+                                        if(access_conditions_array[bb].criteria_field=="" || access_conditions_array[bb].criteria_field==null || record[access_conditions_array[bb].criteria_field]==access_conditions_array[bb].criteria_value)
+                                        {
+                                            if(start_index==0)
+                                            {
+                                                console.log('check1');
+                                                results.push(record);
+                                            }
+                                            else
+                                            {
+                                                console.log('check1');
+                                                start_index-=1;
+                                            }
+
+                                            if(results.length===count)
+                                            {
+                                                console.log('check1');
+                                                localdb_open_requests-=1;
+                                                callback(results);
+                                            }
+                                            else
+                                            {
+                                                console.log('check1');
+                                                result.continue();
+                                            }
+                                        }
+                                        else
+                                        {
+                                            console.log('check1');
+                                            result.continue();
+                                        }
+                                    }
+                                }
+                                if(access_conditions_array.length==0)
+                                {    result.continue();}
+                            }
+                        };
+                    }
+                    else
+                    {
+                        console.log('check1');
+                        result.continue();
+                    }
+                }
+                else
+                {
+                    console.log('check1');
+                    localdb_open_requests-=1;
+                    callback(results);
+                }
+            };
+        }
+        
+        if(!access_control)
+        {
+            local_read_json_rows_data_traversing();
+        }
+        else
+        {
+            var access_conditions_array=[];
+            var ac_objectstore=static_local_db.transaction(['access_conditions'],"readonly").objectStore('access_conditions').index('tablename');
+            var ac_lowerbound=[access_store,'0'];
+            var ac_upperbound=[access_store,'9999999999'];
+            var ac_key=IDBKeyRange.bound(ac_lowerbound,ac_upperbound);
+            var ac_read_req=ac_objectstore.openCursor(ac_key,sort_order);
+            ac_read_req.onsuccess=function(e)
+            {
+                var result=e.target.result;
+                if(result)
+                {
+                    var record=result.value;
+                    if(record.user_type=='field')
+                    {
+                        access_conditions_array.push(record);
+                    }
+                    else if(record.user_type=='user')   
+                    {
+                        if(record.user.indexOf(account_name)!=-1)
+                        {
+                            access_conditions_array.push(record);
+                        }
+                    }
+                    else if(record.user_type=='role')   
+                    {
+                        for(var aa in roles_array)
+                        {
+                            if(roles_array[aa]!="" && record.user.indexOf(roles_array[aa])!=-1)
+                            {
+                                access_conditions_array.push(record);
+                                break;
+                            }
+                        }
+                    }
+                    result.continue();
+                }
+                else
+                {
+                   // console.log(access_conditions_array);
+                    local_read_json_rows_object_traversing(access_conditions_array);
+                }
+            }
+        }
+        
+	}
+};
+
+/*
+function local_read_json_rows(columns,callback,results)
+{
+	if(typeof static_local_db=='undefined')
+	{
+		open_local_db(function()
+		{
+			local_read_json_rows(columns,callback,results);
+		});
+	}
+	else
+	{
+		var table=columns.data_store;
+		var cols=columns.indexes;
+		var count=0;
+		var start_index=0;
 		if(typeof columns.count!='undefined')
 		{
 			count=parseInt(columns.count);
@@ -302,7 +876,7 @@ function local_read_json_rows(columns,callback,results)
 	}
 };
 
-
+*/
 function local_read_json_column(columns,callback,results)
 {
 	if(typeof static_local_db=='undefined')

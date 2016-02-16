@@ -1011,41 +1011,6 @@ function form35_header_ini()
 
 
 /**
- * @form Store Placement
- * @formNo 38
- */
-function form38_header_ini()
-{
-	var filter_fields=document.getElementById('form38_header');
-	var name_filter=filter_fields.elements[0];
-	var batch_filter=filter_fields.elements[1];
-	var area_filter=filter_fields.elements[2];
-	
-	var products_data="<product_master>" +
-			"<name></name>" +
-			"</product_master>";
-	var batch_data="<product_instances>" +
-			"<batch></batch>" +
-			"</product_instances>";
-	var area_data="<store_areas>" +
-			"<name></name>" +
-			"</store_areas>";
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form38_ini();
-	});
-
-	set_my_filter(products_data,name_filter);
-	set_my_filter(batch_data,batch_filter);
-	set_my_filter(area_data,area_filter);
-	
-};
-
-
-/**
  * @form Manage Products
  * @formNo 39
  */
@@ -2010,33 +1975,6 @@ function form82_header_ini()
 	$(customers_filter).focus();
 }
 
-/**
- * @form Storage Areas
- * @formNo 83
- */
-function form83_header_ini()
-{
-	var filter_fields=document.getElementById('form83_header');
-	var name_filter=filter_fields.elements[0];
-	var owner_filter=filter_fields.elements[1];
-	
-	var area_data="<store_areas>" +
-			"<name></name>" +
-			"</store_areas>";	
-	set_my_filter(area_data,name_filter);
-	
-	var owner_data="<staff>"+
-					"<acc_name></acc_name>"+
-					"</staff>";
-	set_my_filter(owner_data,owner_filter);
-				
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form83_ini();
-	});
-};
 
 /**
  * @form Manage Subscriptions
@@ -2740,30 +2678,6 @@ function form104_switch_view()
 {
 	$("#form104_body").parent().toggle();
 	$("#form104_calendar").toggle();
-}
-
-/**
- * @form Manage Data access
- * @formNo 105
- */
-function form105_header_ini()
-{
-	var fields=document.getElementById('form105_master');
-	var table=fields.elements[1];
-	var record=fields.elements[2];
-	table.removeAttribute('readonly');
-	record.removeAttribute('readonly');
-	$(fields).off('submit');
-	$(fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form105_ini();
-	});
-	
-	var tables_data="<data_access>" +
-			"<tablename></tablename>" +
-			"</data_access>";
-	set_my_filter(tables_data,table);
 }
 
 
@@ -4782,36 +4696,6 @@ function form144_header_ini()
 	});
 }
 
-
-/**
- * @form Store Movement
- * @formNo 145
- */
-function form145_header_ini()
-{
-	var filter_fields=document.getElementById('form145_header');
-	var product_filter=filter_fields.elements[0];
-	var batch_filter=filter_fields.elements[1];
-	var status_filter=filter_fields.elements[2];
-	
-	var products_data="<product_master>" +
-			"<name></name>" +
-			"</product_master>";
-	var batch_data="<product_instances>" +
-			"<batch></batch>" +
-			"</product_instances>";
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form145_ini();
-	});
-
-	set_my_filter(products_data,product_filter);
-	set_my_filter(batch_data,batch_filter);
-	set_static_filter('store_movement','status',status_filter);
-};
 
 /**
  * @form Manufacturing

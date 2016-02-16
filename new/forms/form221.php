@@ -73,7 +73,7 @@
 					new_columns.count=paginator.page_size();
 					new_columns.start_index=paginator.get_index();
 					new_columns.data_store='timesheet';
-					//new_columns.access={};
+					new_columns.access={};
 					new_columns.indexes=[{index:'id',value:fid},
 									{index:'acc_name',value:fname},
 									{index:'date',value:fdate},

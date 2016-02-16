@@ -43,19 +43,6 @@ function form61_import_validate(data_array)
 	return error_array;					
 }
 
-/**
-* @form Store Areas
-* @formNo 83
-*/
-function form83_import_validate(data_array)
-{
-	var validate_template_array=[{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z_.,()-]+$')},
-							{column:'parent',regex:new RegExp('^[0-9a-zA-Z_.,()-]+$')},
-							{column:'owner',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')}];
-					
-	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
-}
 
 /**
 * @form Manage Products 

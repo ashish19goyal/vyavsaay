@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <re_xml>
+	<object_access>
+		<row>
+			<id>1</id>
+			<last_updated>1</last_updated>
+		</row>
+	</object_access>
 	<accounts>
 		<row>
 			<acc_name>cash bill</acc_name>

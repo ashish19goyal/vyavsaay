@@ -361,6 +361,13 @@ i.link{
 	border-bottom:1px solid #888;
 }
 
+.thumbnail button{
+    margin-top:5px;
+}
+
+.thumbnail button i{
+    margin-top:5px;
+}
 /**************************/
 
 .portlet > .portlet-title > .tools > a.fullscreen, .portlet .fa-print{
@@ -438,3 +445,4 @@ progress::-moz-progress-bar {
 	float: right;
 }
 /***************************/
+

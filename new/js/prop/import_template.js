@@ -161,17 +161,6 @@ function form35_import_template()
 
 
 /**
-* @form Store Placement
-* @formNo 38
-*/
-function form38_import_template()
-{
-	var data_array=['id','item_name','batch','name'];
-	my_array_to_csv(data_array);
-};
-
-
-/**
 * @form Manage Products
 * @formNo 39
 */
@@ -396,16 +385,6 @@ function form82_import_template()
 	my_array_to_csv(data_array);
 };
 
-
-/**
-* @form Store Areas
-* @formNo 83
-*/
-function form83_import_template()
-{
-	var data_array=['id','name','parent','owner'];
-	my_array_to_csv(data_array);
-};
 
 /**
 * @form Manage Subscriptions
@@ -739,18 +718,6 @@ function form140_import_template()
 	my_array_to_csv(data_array);
 };
 
-
-/**
-* @form Store Movement
-* @formNo 145
-* @table ques_fields
-*/
-function form145_import_template()
-{
-	var data_array=['id','item_name','batch','quantity','source','target',
-	                'status','dispatcher','receiver'];
-	my_array_to_csv(data_array);
-};
 
 /**
 * @form Manufacturing

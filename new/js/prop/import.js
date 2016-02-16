@@ -866,49 +866,6 @@ function form35_import(data_array,import_type)
 
 
 /**
-* @form Store Placement
-* @formNo 38
-*/
-function form38_import(data_array,import_type)
-{
-	var data_xml="<area_utilization>";
-	var counter=1;
-	var last_updated=get_my_time();
-	
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</area_utilization><separator></separator><area_utilization>";
-		}
-		counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<item_name>"+row.item_name+"</item_name>" +
-				"<batch>"+row.batch+"</batch>" +
-				"<name>"+row.name+"</name>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	
-	data_xml+="</area_utilization>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-	}
-};
-
-
-/**
 * @form Manage Products
 * @formNo 39
 */
@@ -1933,48 +1890,6 @@ function form82_import(data_array,import_type)
 	}
 };
 
-
-/**
-* @form Store Areas
-* @formNo 83
-*/
-function form83_import(data_array,import_type)
-{
-	var data_xml="<store_areas>";
-	var counter=1;
-	var last_updated=get_my_time();
-
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</store_areas><separator></separator><store_areas>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<name>"+row.name+"</name>" +
-				"<parent>"+row.parent+"</parent>" +
-				"<owner>"+row.owner+"</owner>"+
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	data_xml+="</store_areas>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-	}
-				
-};
 
 /**
 * @form Manage Subscriptions
@@ -3424,54 +3339,6 @@ function form140_import(data_array,import_type)
 	}
 };
 
-
-/**
-* @form Store Movement
-* @formNo 145
-*/
-function form145_import(data_array,import_type)
-{
-	var data_xml="<store_movement>";
-	var counter=1;
-	var last_updated=get_my_time();
-	
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</store_movement><separator></separator><store_movement>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<item_name>"+row.item_name+"</item_name>" +
-				"<batch>"+row.batch+"</batch>"+
-				"<quantity>"+row.quantity+"</quantity>" +
-				"<source>"+row.source+"</source>"+
-				"<target>"+row.target+"</target>"+
-				"<status>"+row.status+"</status>" +
-				"<dispatcher>"+row.dispatcher+"</dispatcher>" +
-				"<receiver>"+row.receiver+"</receiver>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";		
-	});
-	
-	data_xml+="</store_movement>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-	}
-};
 
 /**
 * @form Manufacturing

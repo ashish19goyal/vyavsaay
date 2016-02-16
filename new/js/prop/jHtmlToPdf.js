@@ -96,6 +96,10 @@ var htmlToPdf = function (options)
 	            this.parseContainer(cnt, e, p, styles.concat(["font-style:italic"]));
 	            break;
 	        }
+            case "a": {
+	            this.parseContainer(cnt, e, p, styles);
+	            break;
+	        }
 	        case "span": {
 	            this.parseContainer(cnt, e, p, styles);
 	            break;

@@ -132,13 +132,13 @@
 				var rowsHTML="<tr>";
 						rowsHTML+="<form id='form149_"+id+"'></form>";
 							rowsHTML+="<td data-th='Role'>";
-								rowsHTML+="<input type='text' form='form149_"+id+"'>";
+								rowsHTML+="<input type='text' required form='form149_"+id+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Username'>";
-								rowsHTML+="<input type='text' form='form149_"+id+"'>";
+								rowsHTML+="<input type='text' required form='form149_"+id+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Status'>";
-								rowsHTML+="<select form='form149_"+id+"' data-style='btn-info' class='dblclick_editable'></select>";
+								rowsHTML+="<select form='form149_"+id+"' required data-style='btn-info' class='dblclick_editable'></select>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form149_"+id+"' value='"+id+"'>";

@@ -1,167 +1,145 @@
-<div id='report69' class='tab-pane'>
-	<form id='report69_header' autocomplete="off">
-		<fieldset>
-			<label>Project<br><input type='text' name='project'></label>
-			<label>Staff<br><input type='text' name='staff'></label>
-			<label>Keywords<br><input type='text' name='key'></label>
-			<label>From Date<br><input type='text' name='from' required></label>
-			<label>To Date<br><input type='text' name='to' required></label>
-			<label>
-				<input type='hidden' name='project_id'>
-				<input type='submit' value='Refresh' name='refresh' class='generic_icon'>
-				<input type='button' title='Print' name='print' class='print_icon'>
-			</label>	
-		</fieldset>
-	</form>
-	<table class='rwd-table'>
-		<thead>
-			<tr>
-				<th>Staff</th>
-				<th>Detail</th>
-				<th>Amount</th>
-				<th>Date</th>
-				<th>Status</th>
-			</tr>
-		</thead>
-		<tbody id='report69_body'>
-		</tbody>
-	</table>
-	<div class='form_nav'>
-		<img src='./images/previous.png' id='report69_prev' class='prev_icon' data-index='-25' onclick="$('#report69_index').attr('data-index',$(this).attr('data-index')); report69_ini();">
-		<div style='display:hidden;' id='report69_index' data-index='0'></div>
-		<img src='./images/next.png' id='report69_next' class='next_icon' data-index='25' onclick="$('#report69_index').attr('data-index',$(this).attr('data-index')); report69_ini();">
+<div id='report69' class='tab-pane portlet box red-sunglo'>	   
+	<div class="portlet-title">
+		<div class='caption'>		
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report69_ini();'>Refresh</a>
+		</div>		
+		<div class="actions">
+      	<a class='btn btn-default btn-sm' id='report69_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
+      	<a class='btn btn-default btn-sm' id='report69_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
+      	<a class='btn btn-default btn-sm' id='report69_print'><i class='fa fa-print'></i> Print</a>
+      	<a class='btn btn-default btn-sm' id='report69_email'><i class='fa fa-envelope'></i> Email</a>
+     </div>	
+	</div>
+
+	<div class="portlet-body">
+		<form id='report69_header' autocomplete="off">
+			<fieldset>
+				<label><input type='text' placeholder="Project" class='floatlabel' name='project'></label>
+				<label><input type='text' placeholder="Staff" class='floatlabel' name='staff'></label>
+                <label><input type='text' placeholder="Keywords" class='floatlabel' name='keywords'></label>
+                <label><input type='text' placeholder="From Date" class='floatlabel' required name='from'></label>
+                <label><input type='text' placeholder="To Date" class='floatlabel' required name='to'></label>
+                <input type='hidden' name='project_id'>
+				<input type='submit' class='submit_hidden'>
+            </fieldset>
+		</form>
+	<br>
+		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
+			<thead>
+				<tr>
+					<th>Staff</th>
+					<th>Detail</th>
+					<th>Amount</th>
+					<th>Date</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody id='report69_body'>
+			</tbody>
+		</table>
 	</div>
 	
 	<script>
 
-function report69_header_ini()
-{	
-	var form=document.getElementById('report69_header');
-	var project_filter=form.elements['project'];
-	var staff_filter=form.elements['staff'];
-	var from_filter=form.elements['from'];
-	var to_filter=form.elements['to'];
-	var id_filter=form.elements['project_id'];
-	
-	$(form).off('submit');
-	$(form).on('submit',function(event)
-	{
-		event.preventDefault();
-		report69_ini();
-	});
-	
-	var project_data="<projects>"+
-				"<name></name>"+
-				"</projects>";
-	set_my_value_list(project_data,project_filter);
+        function report69_header_ini()
+        {	
+            var form=document.getElementById('report69_header');
+            var project_filter=form.elements['project'];
+            var staff_filter=form.elements['staff'];
+            var from_filter=form.elements['from'];
+            var to_filter=form.elements['to'];
+            var id_filter=form.elements['project_id'];
+            
+            $(form).off('submit');
+            $(form).on('submit',function(event)
+            {
+                event.preventDefault();
+                report69_ini();
+            });
 
-	my_datalist_change(project_filter,function () 
-	{
-		var id_data="<projects>"+
-					"<id></id>"+
-					"<name exact='yes'>"+project_filter.value+"</name>"+					
-					"</projects>";
-		set_my_value(id_data,id_filter);
-	});
+            my_datalist_change(project_filter,function () 
+            {
+                var id_data={data_store:'projects',return_column:'id',
+                            indexes:[{index:'name',exact:project_filter.value}]};
+                set_my_value_json(id_data,id_filter);
+            });
 
-	var staff_data="<staff>"+
-				"<acc_name></acc_name>"+
-				"</staff>";
-	set_my_filter(staff_data,staff_filter);
+            var project_data={data_store:'projects',return_column:'name'};
+            set_my_filter_json(project_data,project_filter);
 
-	$(from_filter).datepicker();
-	$(to_filter).datepicker();
-}
+            var staff_data={data_store:'staff',return_column:'acc_name'};
+            set_my_filter_json(staff_data,staff_filter);
 
-function report69_ini()
-{
-	var form=document.getElementById('report69_header');
-	var id_filter=form.elements['project_id'].value;
-	var staff_filter=form.elements['staff'].value;
-	var from_filter=form.elements['from'].value;
-	var to_filter=form.elements['to'].value;
-	var key_filter=form.elements['key'].value;
+            $(from_filter).datepicker();
+            $(from_filter).val(get_my_past_date((get_my_time()-7*86400000)));
 
-	show_loader();
-	$('#report69_body').html('');	
-	
-	////indexing///
-	var index_element=document.getElementById('report69_index');
-	var prev_element=document.getElementById('report69_prev');
-	var next_element=document.getElementById('report69_next');
-	var start_index=index_element.getAttribute('data-index');
-	//////////////
+            $(to_filter).datepicker();
+            $(to_filter).val(get_my_date());
+            $('#report69').formcontrol();
+        }
 
-	var expense_data="<expenses count='25' start_index='"+start_index+"'>" +
-		"<id></id>"+
-		"<person>"+staff_filter+"</person>" +
-		"<amount></amount>"+
-		"<status></status>"+
-		"<detail>"+key_filter+"</detail>"+
-		"<source exact='yes'>project</source>"+
-		"<source_id>"+id_filter+"</source_id>"+
-		"<expense_date lowerbound='yes'>"+get_raw_time(from_filter)+"</expense_date>" +
-		"<expense_date upperbound='yes'>"+(get_raw_time(to_filter)+86400000)+"</expense_date>" +			
-		"</expenses>";
-	//console.log(expense_data);
-	fetch_requested_data('report69',expense_data,function(items)
-	{
-		//console.log(items);
-		var rowsHTML="";
-		items.forEach(function(item)
-		{
-			rowsHTML+="<tr>";
-			rowsHTML+="<form id='report69_"+item.id+"'></form>";
-			rowsHTML+="<td data-th='Staff'>";
-				rowsHTML+=item.person;
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Detail'>";
-				rowsHTML+=item.detail;
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+=item.amount;
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Date'>";
-				rowsHTML+=get_my_past_date(item.expense_date);
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Status'>";
-				rowsHTML+=item.status;
-			rowsHTML+="</td>";
-			rowsHTML+="</tr>";
+        function report69_ini()
+        {
+            var form=document.getElementById('report69_header');
+            var staff_filter=form.elements['staff'].value;
+            var from_filter=get_raw_time(form.elements['from'].value);
+            var to_filter=get_raw_time(form.elements['to'].value)+86399999;
+            var key_filter=form.elements['keywords'].value;
+            var id_filter=form.elements['project_id'].value;
+            
+            show_loader();
+            $('#report69_body').html('');	
+
+            var paginator=$('#report69_body').paginator();
+			var columns=new Object();
+			columns.count=paginator.page_size();
+			columns.start_index=paginator.get_index();
+			columns.data_store='expenses';
 					
-		});
-		$('#report69_body').html(rowsHTML);
-		
-		////indexing///
-		var next_index=parseInt(start_index)+25;
-		var prev_index=parseInt(start_index)-25;
-		next_element.setAttribute('data-index',next_index);
-		prev_element.setAttribute('data-index',prev_index);
-		index_element.setAttribute('data-index','0');
-		if(items.length<25)
-		{
-			$(next_element).hide();
-		}
-		else
-		{
-			$(next_element).show();
-		}
-		if(prev_index<0)
-		{
-			$(prev_element).hide();
-		}
-		else
-		{
-			$(prev_element).show();
-		}
-		/////////////
+			columns.indexes=[{index:'id'},
+							{index:'person',value:staff_filter},
+							{index:'amount'},{index:'status'},
+							{index:'detail',value:key_filter},
+                            {index:'source',exact:'project'},
+                            {index:'source_id',value:id_filter},
+                            {index:'expense_date',lowerbound:from_filter,upperbound:to_filter}];
+	            
+            read_json_rows('report69',columns,function(items)
+            {
+                var rowsHTML="";
+                items.forEach(function(item)
+                {
+                    rowsHTML+="<tr>";
+                    rowsHTML+="<form id='report69_"+item.id+"'></form>";
+                    rowsHTML+="<td data-th='Staff'><a onclick=\"show_object('staff','"+item.person+"')\">";
+                        rowsHTML+=item.person;
+                    rowsHTML+="</a></td>";
+                    rowsHTML+="<td data-th='Detail'>";
+                        rowsHTML+=item.detail;
+                    rowsHTML+="</td>";
+                    rowsHTML+="<td data-th='Amount'>";
+                        rowsHTML+=item.amount;
+                    rowsHTML+="</td>";
+                    rowsHTML+="<td data-th='Date'>";
+                        rowsHTML+=get_my_past_date(item.expense_date);
+                    rowsHTML+="</td>";
+                    rowsHTML+="<td data-th='Status'><span class='label label-sm "  +status_label_colors[item.status]+"'>";
+                        rowsHTML+=item.status;
+                    rowsHTML+="</span></td>";
+                    rowsHTML+="</tr>";
+                });
+                $('#report69_body').html(rowsHTML);
 
-		hide_loader();
-	});
-	
-	var print_button=form.elements['print'];
-	print_tabular_report('report69','Project Expenses',print_button);
-};
-	
+                paginator.update_index(items.length);
+				initialize_tabular_report_buttons(columns,'Expenses Report','report69',function (item) 
+                {
+                    item.expense_date=get_my_past_date(item.expense_date);
+                    delete item.source_id;
+                    delete item.source;
+                    delete item.id;
+                });
+                hide_loader();
+            });
+        };
 	</script>
 </div>

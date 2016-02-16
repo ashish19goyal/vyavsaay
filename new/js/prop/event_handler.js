@@ -68,12 +68,15 @@ function declaring_global_variables()
 	total_export_requests=0;	
  	newsletter_element_4_deletion = [];
  	status_label_colors={'pending':'label-warning',
- 								'converted':'label-success',
- 								'completed':'label-success',
- 								'active':'label-success',
- 								'inactive':'label-danger',
- 								'cold':'label-danger',
- 								'warm':'label-success'};
+ 			            'converted':'label-success',
+ 						'completed':'label-success',
+ 						'active':'label-success',
+ 						'inactive':'label-danger',
+ 						'cold':'label-danger',
+ 						'warm':'label-success',
+                        'submitted':'label-info',
+                        'approved':'label-success',
+                        'rejected':'label-warning'};
 }
 
 function float_labels()
@@ -469,24 +472,6 @@ function show_object(object_type,obj_name,obj_id)
 	}
 }	
 
-function access_display(tablename,record_id)
-{
-	var element_link="#form105_link";
-	var function_link=$(element_link).parent().parent().parent().attr('id');
-	show_function(function_link);
-	
-	var fields=document.getElementById('form105_master');
-	var table_filter=fields.elements[1];
-	var record_filter=fields.elements[2];
-	table_filter.value=tablename;
-	record_filter.value=record_id;
-	
-	$(element_link).click();
-	
-	table_filter.setAttribute('readonly','readonly');
-	record_filter.setAttribute('readonly','readonly');
-}
-
 function longPressEditable(element)
 {
 	$(element).each(function()
@@ -567,7 +552,7 @@ function import_data(form_name)
 		break;
 		case 'form35':modal23_action(form35_import_template,form35_import);
 		break;
-		case 'form38':modal23_action(form38_import_template,form38_import);
+		case 'form38':modal23_action(form38_import_template,form38_import,form38_import_validate);
 		break;
 		case 'form39':modal23_action(form39_import_template,form39_import,form39_import_validate);
 		break;
@@ -700,6 +685,8 @@ function import_data(form_name)
 		case 'form139':modal23_action(form139_import_template,form139_import);
 		break;
 		case 'form140':modal23_action(form140_import_template,form140_import);
+		break;
+		case 'form145':modal23_action(form145_import_template,form145_import,form145_import_validate);
 		break;
 		case 'form146':modal23_action(form146_import_template,form146_import);
 		break;

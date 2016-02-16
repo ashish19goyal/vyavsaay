@@ -7,7 +7,7 @@
  				all_indexes:'yes',
  				access:
  				{
- 					data_store:'ds1',
+ 			        data_store:'ds1',
  					match_record_id:'no',
  					match_criteria:'no',
  					match_result:'yes',
@@ -149,14 +149,14 @@
 				
 				$access_conditions=" (";
 				
-				$user_roles=$_SESSION['roles'];
+				$user_roles=$_SESSION['user_roles'];
 				$user_roles_array=explode("--",$user_roles);
 				
 				if($match_record_id)
 				{
-					$access_conditions.="(object_access.tablename=? and (object_access.user like ?";
+					$access_conditions.="((object_access.tablename=? and (object_access.user like ?";
 					$access_values_array[]=$access_store;
-					$access_values_array[]="%".$_SESSION['username']."--%";
+					$access_values_array[]="%".$_SESSION['acc_name']."%";
 					
 					foreach($user_roles_array as $role)
 					{
@@ -166,14 +166,14 @@
 							$access_values_array[]="%".$role."%";
 						}
 					}
-					$access_conditions.=" ) and object_access.record_id=".$access_store.".id or not exists (select * from object_access where tablename=? and record_id=".$access_store.".id))";
+					$access_conditions.=" ) and object_access.record_id=".$access_store.".id) or (not exists (select * from object_access where tablename=? and record_id=".$access_store.".id)";
 					$access_values_array[]=$access_store;
 				}
 				
 				if($match_criteria)
 				{
-					$condition_query="select * from access_conditions where tablename=? and (user like ?";
-					$condition_values=array($access_store,"%".$_SESSION['username']."--%");
+					$condition_query="select * from access_conditions where tablename=? and ((user like ?";
+					$condition_values=array($access_store,"%".$_SESSION['acc_name']."%");
 					foreach($user_roles_array as $role)
 					{
 						if($role!="")
@@ -182,18 +182,20 @@
 							$condition_values[]="%".$role."%";
 						}
 					}
-					$condition_query.=") or user_type=?";
+					$condition_query.=") or user_type=?)";
 					$condition_values[]='field';
-					
-					$condition_stmt=$conn->conn->prepare($condition_query);
+//					echo $condition_query;
+//                    var_dump($condition_values);
+
+                    $condition_stmt=$conn->conn->prepare($condition_query);
 					$condition_stmt->execute($condition_values);
 					$condition_res=$condition_stmt->fetchAll(PDO::FETCH_ASSOC);
-					
+					//var_dump($condition_res);
 					if(count($condition_res)>0)
 					{
 						if($match_record_id)
 						{
-							$access_conditions.=" or (";
+							$access_conditions.=" and (";
 						}
 						else 
 						{
@@ -227,11 +229,13 @@
 							}
 							//echo $sub_access_conditions;
 						}
-						
 						$access_conditions=rtrim($access_conditions,'or ');
-						$access_conditions.=") and ";
-						
+						$access_conditions.=") and ";						
 					}
+                    else
+                    {
+                        $access_conditions.=" and (false) and ";
+                    }
 				}
 
 				if($match_result)
@@ -246,7 +250,7 @@
 					$access_conditions.=$match_condition;
 				}
 				$access_conditions=rtrim($access_conditions,' and ');
-				$access_conditions.=")";
+				$access_conditions.=")))";
 				
 				if($access_conditions==" ()")
 				{
