@@ -1988,62 +1988,37 @@ function modal22_action(func)
 {
 	var form=document.getElementById('modal22_form');
 	
-	var fname=form.elements[1];
-	var fbatch=form.elements[2];
-	var fmanufacture=form.elements[3];
-	var fexpiry=form.elements[4];
-	var fmrp=form.elements[5];
-	var fcost=form.elements[6];
-	var fsale_price=form.elements[7];
+	var fname=form.elements['name'];
+	var fbatch=form.elements['batch'];
+	var fmanufacture=form.elements['manu_date'];
+	var fexpiry=form.elements['ex_date'];
+	var fmrp=form.elements['mrp'];
+	var fcost=form.elements['pprice'];
+	var fsale_price=form.elements['sprice'];
 	
 	$(fexpiry).datepicker();
 	$(fmanufacture).datepicker();
 	
-	var name_data="<product_master>" +
-			"<name></name>" +
-			"</product_master>";
-	set_my_value_list(name_data,fname);
-	
-	$(fname).off('blur');
-	$(fname).on('blur',function(event)
-	{
-		var batch_data="<product_instances>" +
-				"<batch></batch>" +
-				"<product_name exact='yes'>"+fname.value+"</product_name>" +
-				"</product_instances>";
-		get_single_column_data(function(batches)
-		{
-			$(fbatch).off('blur');
-			$(fbatch).on('blur',function(event)
-			{
-				var found = $.inArray($(this).val(), batches) > -1;
-				if(found)
-				{
-		            $(this).val('');
-		            $(this).attr('placeholder','Batch Exists');
-		        }
-			});
-		},batch_data);
-	});		
+	var name_data={data_store:'product_master',return_column:'name'};
+	set_my_value_list_json(name_data,fname);
 	
 	////adding sale price fields for all billing types///////
-	var billing_type_data="<bill_types>" +
-			"<name></name>" +
-			"<status exact='yes'>active</status>" +
-			"</bill_types>";
-	get_single_column_data(function(bill_types)
+	var billing_type_data={data_store:'bill_types',return_column:'name',
+                          indexes:[{index:'status',exact:'active'}]};
+	read_json_single_column(billing_type_data,function(bill_types)
 	{
 		var billing_label=document.getElementById('modal22_billings');
 		billing_label.innerHTML="";
 		bill_types.forEach(function(bill_type)
 		{
-			var bill_label=document.createElement('label');
-			bill_label.innerHTML=bill_type+" sale price (Rs.) <input type='number' id='"+bill_type+"' step='any' required>";
-			billing_label.appendChild(bill_label);
-			var line_break=document.createElement('br');
-			billing_label.appendChild(line_break);
+            var attr_label=document.createElement('div');
+            attr_label.setAttribute('class','row');
+            attr_label.innerHTML="<div class'col-sm-12 col-md-4'>"+bill_type+" sale price"+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><input type='number' step='any' id='"+bill_type+"' required></div>";
+				
+			billing_label.appendChild(attr_label);
 		});
-	},billing_type_data);
+	});
 	////////////////////////////////////////////////
 	
 	////auto setting sale price fields/////////
@@ -2071,7 +2046,6 @@ function modal22_action(func)
 			var name=fname.value;
 			var batch=fbatch.value;
 			
-			batch = batch.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			batch = batch.replace(/â/g,'');
 			batch = batch.replace(/&/g, "and");
 						
@@ -2082,26 +2056,19 @@ function modal22_action(func)
 			var sale_price=fsale_price.value;
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
-			var data_xml="<product_instances>" +
-						"<id>"+data_id+"</id>" +
-						"<product_name>"+name+"</product_name>" +
-						"<batch>"+batch+"</batch>" +
-						"<expiry>"+expiry+"</expiry>" +
-						"<manufacture_date>"+manu_date+"</manufacture_date>" +
-						"<mrp>"+mrp+"</mrp>" +
-						"<cost_price>"+cost+"</cost_price>" +
-						"<sale_price>"+sale_price+"</sale_price>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</product_instances>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>product_instances</tablename>" +
-						"<link_to>form1</link_to>" +
-						"<title>Added</title>" +
-						"<notes>New batch "+batch+" for product "+name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			create_row_func(data_xml,activity_xml,func);
+			var data_json={data_store:'product_instances',
+	 				log:'yes',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'product_name',value:name,uniqueWith:['batch']},
+	 					{index:'batch',value:batch},
+	 					{index:'expiry',value:expiry},
+	 					{index:'manufacture_date',value:manu_date},
+	 					{index:'mrp',value:mrp},
+	 					{index:'cost_price',value:cost},
+	 					{index:'sale_price',value:sale_price},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Added',notes:'New batch '+batch+' for product '+name,link_to:'form1'}};
+			create_json(data_json,func);
 			
 			var id=get_new_key();
 			
@@ -2110,27 +2077,25 @@ function modal22_action(func)
 				id++;
 				var price=$(this).val();
 				var bill_type=$(this).attr('id');
-				var sale_price_xml="<sale_prices>" +
-						"<id>"+id+"</id>" +
-						"<product_name>"+name+"</product_name>" +
-						"<batch>"+batch+"</batch>" +
-						"<sale_price>"+price+"</sale_price>" +
-						"<pi_id>"+data_id+"</pi_id>" +
-						"<billing_type>"+bill_type+"</billing_type>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</sale_prices>";
-				create_simple(sale_price_xml);
-				
+				var sale_price_json={data_store:'sale_prices',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'product_name',value:name},
+	 					{index:'batch',value:batch},
+	 					{index:'sale_price',value:price},
+	 					{index:'pi_id',value:data_id},
+	 					{index:'billing_type',value:bill_type},
+	 					{index:'last_updated',value:last_updated}]};			
+				create_json(sale_price_json);
 			});
 		}
 		else
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal22").dialog("close");
+		$(form).find(".close").click();
 	});
 	
-	$("#modal22").dialog("open");
+	$("#modal22_link").click();
 }
 
 
@@ -3652,50 +3617,48 @@ function modal33_action(id)
 function modal35_action(func)
 {
 	var form=document.getElementById("modal35_form");
-	var owner_filter=form.elements[2];
+	var owner_filter=form.elements['owner'];
 
-	var owner_data="<staff>"+
-				"<acc_name></acc_name>"+
-				"</staff>";
-	set_my_value_list(owner_data,owner_filter);
+	var owner_data={data_store:'staff',return_column:'acc_name'};
+	set_my_value_list_json(owner_data,owner_filter);
 	
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal35_attributes');
 	attribute_label.innerHTML="";
-	var attributes_data="<mandatory_attributes>" +
-			"<attribute></attribute>" +
-			"<status></status>" +
-			"<value></value>"+
-			"<object exact='yes'>storage</object>" +
-			"</mandatory_attributes>";
-	fetch_requested_data('',attributes_data,function(attributes)
+	var attributes_data={data_store:'mandatory_attributes',
+                        indexes:[{index:'attribute'},
+                                {index:'status'},
+                                {index:'value'},
+                                {index:'object',exact:'storage'}]};
+	read_json_rows('',attributes_data,function(attributes)
 	{
-		attributes.forEach(function(attribute)
+        attributes.forEach(function(attribute)
 		{
 			if(attribute.status!='inactive')
 			{
 				var required="";
 				if(attribute.status=='required')
-					required='required'
-				var attr_label=document.createElement('label');
+					required='required';
+				var attr_label=document.createElement('div');
+				attr_label.setAttribute('class','row');
 				if(attribute.value=="")
 				{
-					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
+					attr_label.innerHTML="<div class'col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
 				}				
 				else 
 				{
 					var values_array=attribute.value.split(";");
-					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					var content="<div class'col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
 					values_array.forEach(function(fvalue)
 					{
 						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
 					});
-					content+="</select>";
+					content+="</select></div>";
 					attr_label.innerHTML=content;
 				}				
 				attribute_label.appendChild(attr_label);
-				var line_break=document.createElement('br');
-				attribute_label.appendChild(line_break);
 			}
 		});
 	});
@@ -3708,24 +3671,18 @@ function modal35_action(func)
 		if(is_create_access('form83'))
 		{
 			var data_id=get_new_key();
-			var name=form.elements[1].value;
-			var owner=form.elements[2].value;
+			var name=form.elements['name'].value;
+			var owner=form.elements['owner'].value;
 			var last_updated=get_my_time();
-			var data_xml="<store_areas>" +
-						"<id>"+data_id+"</id>" +
-						"<name unique='yes'>"+name+"</name>" +
-						"<owner>"+owner+"</owner>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</store_areas>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>store_areas</tablename>" +
-						"<link_to>form83</link_to>" +
-						"<title>Added</title>" +
-						"<notes>Store area "+name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			create_row_func(data_xml,activity_xml,func);
+			var data_json={data_store:'store_areas',
+	 				log:'yes',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'name',value:name,unique:'yes'},
+	 					{index:'owner',value:owner},
+	 					{index:'last_updated',value:last_updated}],
+	 		log_data:{title:'Added',notes:'Storage '+name,link_to:'form83'}}; 								
+			
+			create_json(data_json,func);
 			
 			var id=get_new_key();
 			$("#modal35_attributes").find('input, select').each(function()
@@ -3735,15 +3692,15 @@ function modal35_action(func)
 				if(value!="")
 				{
 					var attribute=$(this).attr('name');
-					var attribute_xml="<attributes>" +
-							"<id>"+id+"</id>" +
-							"<name>"+name+"</name>" +
-							"<type>storage</type>" +
-							"<attribute>"+attribute+"</attribute>" +
-							"<value>"+value+"</value>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</attributes>";
-					create_simple(attribute_xml);
+					var attribute_json={data_store:'attributes',
+	 				data:[{index:'id',value:id},
+	 					{index:'name',value:name},
+	 					{index:'type',value:'storage'},
+                        {index:'attribute',value:attribute},
+                        {index:'value',value:value},
+	 					{index:'last_updated',value:last_updated}]};
+			
+					create_json(attribute_json);
 				}
 			});
 		}
@@ -3751,10 +3708,10 @@ function modal35_action(func)
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal35").dialog("close");		
+		$(form).find('.close').click();		
 	});
 	
-	$("#modal35").dialog("open");
+	$("#modal35_link").click();
 }
 
 /**

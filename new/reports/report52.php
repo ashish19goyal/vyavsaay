@@ -17,6 +17,7 @@
 				<label><input type='text' placeholder="Brand" class='floatlabel' name='make'></label>
                 <label><input type='text' placeholder="Supplier" class='floatlabel' name='supplier'></label>
                 <label><input type='text' placeholder="From Date" class='floatlabel' required name='from'></label>
+                <label><input type='text' placeholder="To Date" class='floatlabel' required name='to'></label>
                 <input type='submit' class='submit_hidden'>
             </fieldset>
 		</form>
@@ -26,10 +27,10 @@
 				<tr>
 					<th>Item</th>
 					<th>Brand</th>
+				    <th>Supplier</th>
 					<th>Quantity</th>
 					<th>Amount</th>
-                    <th>Supplier</th>
-				</tr>
+                </tr>
 			</thead>
 			<tbody id='report52_body'>
 			</tbody>
@@ -47,6 +48,7 @@
             var make_filter=form.elements['make'];
             var supplier_filter=form.elements['supplier'];
             var date_filter=form.elements['from'];
+            var upto_date_filter=form.elements['to'];
 
             $(form).off('submit');
             $(form).on('submit',function(event)
@@ -64,7 +66,10 @@
             set_my_filter_json(supplier_data,supplier_filter);
 
             $(date_filter).datepicker();
-            $(date_filter).val(get_my_past_date((get_my_time()-86400000)));
+            $(date_filter).val(get_my_past_date((get_my_time()-7*86400000)));
+            $(upto_date_filter).datepicker();
+            $(upto_date_filter).val(get_my_date());
+            
             $('#report52').formcontrol();
         }
 
@@ -75,6 +80,7 @@
             var make=form.elements['make'].value;
             var supplier=form.elements['supplier'].value;
             var date=get_raw_time(form.elements['from'].value);
+            var upto=get_raw_time(form.elements['to'].value)+86399999;
 
             show_loader();
             $('#report52_body').html('');
@@ -84,12 +90,12 @@
             var bills_data={data_store:'supplier_bills',
                            indexes:[{index:'id'},
                                    {index:'supplier',value:supplier},
-                                   {index:'entry_date',lowerbound:date}]};
+                                   {index:'entry_date',lowerbound:date,upperbound:upto}]};
             
             var returns_data={data_store:'supplier_returns',
                              indexes:[{index:'id'},
                                     {index:'supplier',value:supplier},
-                                    {index:'return_date',lowerbound:date}]};
+                                    {index:'return_date',lowerbound:date,upperbound:upto}]};
             
             read_json_rows('report52',bills_data,function(bills)
             {
@@ -110,12 +116,12 @@
                                         indexes:[{index:'bill_id',array:bills_ids},
                                                 {index:'product_name',value:name},
                                                 {index:'quantity'},{index:'amount'},
-                                                {index:'last_updated',lowerbound:date}]};
+                                                {index:'last_updated',lowerbound:date,upperbound:upto}]};
                     var return_items_data={data_store:'supplier_return_items',
                                         indexes:[{index:'return_id',array:returns_ids},
                                                 {index:'item_name',value:name},
                                                 {index:'quantity'},{index:'refund_amount'},
-                                                {index:'last_updated',lowerbound:date}]};
+                                                {index:'last_updated',lowerbound:date,upperbound:upto}]};
                     read_json_rows('report52',bill_items_data,function(bill_ids)
                     {
                         read_json_rows('report52',return_items_data,function(return_ids)
@@ -195,7 +201,7 @@
                                             total_amount-=parseFloat(return_ids[k].refund_amount);
 
                                             rowsHTML+="<tr>";
-                                                rowsHTML+="<td data-th='Item'><a onclick=\"show_object('product_master','"+bill_ids[k].product_name+"');\">";
+                                                rowsHTML+="<td data-th='Item'><a onclick=\"show_object('product_master','"+return_ids[k].product_name+"');\">";
                                                     rowsHTML+=return_ids[k].item_name;
                                                 rowsHTML+="</a></td>";
                                                 rowsHTML+="<td data-th='Brand'>";

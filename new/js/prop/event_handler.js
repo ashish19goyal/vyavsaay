@@ -220,11 +220,15 @@ function modal_forms_ini()
 	}
 	dynamic_modal_array.push(14);
 	dynamic_modal_array.push(15);
-	for(var i=17;i<=22;i++)
+	for(var i=17;i<=21;i++)
 	{
 		dynamic_modal_array.push(i);
 	}
-	for(var i=24;i<=49;i++)
+	for(var i=24;i<=34;i++)
+	{
+		dynamic_modal_array.push(i);
+	}
+    for(var i=36;i<=49;i++)
 	{
 		dynamic_modal_array.push(i);
 	}

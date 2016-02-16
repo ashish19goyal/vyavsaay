@@ -302,22 +302,57 @@
 		</form>
 	</div>
 	
-	<div id="modal22" title="Add new batch">
-		<form id='modal22_form' autocomplete="off">
-			<fieldset>
-				<label>Product Name: <input type="text" required></label><br>
-				<label>Batch: <input type='text' required></label><br>
-				<label>Manufacturing Date: <input type="text"></label><br>
-				<label>Expiry Date: <input type="text"></label><br>
-				<label>MRP: Rs. <input type="number" step='any'></label><br>
-				<label>Purchase price: Rs. <input type="number" step='any' required></label><br>
-				<label>Default Sale Price: Rs. <input type="number" step='any' required></label><br>
-				<label id='modal22_billings'></label>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
-	
+    <a href='#modal22' data-toggle="modal" id='modal22_link'></a>
+	<div id="modal22" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal22_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add Batch</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Product Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal22_form' required name='name'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Batch</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal22_form' required name='batch'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Manufacturing Date</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal22_form' name='manu_date'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Expiry Date</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal22_form' name='ex_date'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">MRP</div>
+					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal22_form' name='mrp'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Purchase Price</div>
+					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal22_form' name='pprice'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Default Sale Price</div>
+					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal22_form' name='sprice'></div>
+					     		</div>
+		                  <div id='modal22_billings'></div>
+		                  </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal22_form' name='save'>Save</button>
+	               	<button type="button" class="btn red" form='modal22_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
 	<a href='#modal23' data-toggle="modal" id='modal23_link'></a>
 	<div id="modal23" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
@@ -488,17 +523,37 @@
 		</form>
 	</div>
 	
-	<div id="modal35" title="Add Store Area">
-		<form id='modal35_form' autocomplete="off">
-			<fieldset>
-				<label>Name: <input type='text' required></label><br>
-				<label>Owner: <input type='text'></label><br>
-				<label id='modal35_attributes'></label><br>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
-
+	<a href='#modal35' data-toggle="modal" id='modal35_link'></a>
+	<div id="modal35" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal35_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add Storage</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal35_form' required name='name'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Owner</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal35_form' name='owner'></div>
+					     		</div>
+		                  <div id='modal35_attributes'></div>
+		                  </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal35_form' name='save'>Save</button>
+	               	<button type="button" class="btn red" form='modal35_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
 	<div id="modal36" title="Add appointment">
 		<form id='modal36_form' autocomplete="off">
 			<fieldset>

@@ -8222,33 +8222,6 @@ function form242_header_ini()
 	set_static_filter('payments','status',status_filter);
 };
 
-/**
- * @form Receipts (CPS)
- * @formNo 243
- */
-function form243_header_ini()
-{
-	var filter_fields=document.getElementById('form243_header');
-	var id_filter=filter_fields.elements[0];
-	var account_filter=filter_fields.elements[1];
-	
-	var id_data="<receipts>" +
-			"<receipt_id></receipt_id>" +
-			"</receipts>";
-	var account_data="<accounts>" +
-			"<acc_name></acc_name>" +
-			"</accounts>";
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form243_ini();
-	});
-
-	set_my_filter(id_data,id_filter);
-	set_my_filter(account_data,account_filter);
-};
 
 /**
  * @form Add stock
