@@ -5793,7 +5793,7 @@ function form291_print(receipt_id,acc_name,amount,date,narration,address)
 	{
 		$.print(container);
 		container.innerHTML="";	
-	},receipt_id,acc_name,amount,date,narration,address,pan_text);	
+	},receipt_id,acc_name,amount,date,narration,address);	
 }
 
 /**
