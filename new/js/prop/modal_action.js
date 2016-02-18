@@ -3285,10 +3285,10 @@ function modal30_action()
 function modal31_action()
 {
 	var form=document.getElementById("modal31_form");
-	var receipt_filter=form.elements[1];
-	var account_filter=form.elements[2];
-	var balance_filter=form.elements[3];
-	var amount_filter=form.elements[4];
+	var receipt_filter=form.elements['receipt'];
+	var account_filter=form.elements['account'];
+	var balance_filter=form.elements['balance'];
+	var amount_filter=form.elements['amount'];
 
 	receipt_filter.value="";
 	account_filter.value="";
@@ -3298,13 +3298,12 @@ function modal31_action()
 	$(receipt_filter).off('blur');
 	$(receipt_filter).on('blur',function(e)
 	{
-		var receipts_data="<receipts count='1'>" +
-				"<id></id>" +
-				"<receipt_id exact='yes'>"+receipt_filter.value+"</receipt_id>" +
-				"<amount></amount>" +
-				"<acc_name></acc_name>" +
-				"</receipts>";
-		fetch_requested_data('',receipts_data,function(receipts)
+		var receipts_data={data_store:'receipts',count:1,
+                           indexes:[{index:'id'},
+                                   {index:'receipt_id',exact:receipt_filter.value},
+                                   {index:'amount'},
+                                   {index:'acc_name'}]};
+		read_json_rows('',receipts_data,function(receipts)
 		{
 			if(receipts.length>0)
 			{
@@ -3316,15 +3315,14 @@ function modal31_action()
 				}
 				amount_filter.value=receipt_amount;
 				
-				var payments_data="<payments>" +
-					"<id></id>" +
-					"<type></type>" +
-					"<total_amount></total_amount>" +
-					"<paid_amount></paid_amount>" +
-					"<status exact='yes'>pending</status>" +
-					"<acc_name exact='yes'>"+account_filter.value+"</acc_name>" +
-					"</payments>";
-				fetch_requested_data('',payments_data,function(payments)
+				var payments_data={data_store:'payments',
+                                  indexes:[{index:'id'},
+                                          {index:'type'},
+                                          {index:'total_amount'},
+                                          {index:'paid_amount'},
+                                          {index:'status',exact:'pending'},
+                                          {index:'acc_name',exact:account_filter.value}]};
+				read_json_rows('',payments_data,function(payments)
 				{
 					var balance_amount=0;
 					payments.forEach(function(payment)
@@ -3364,59 +3362,49 @@ function modal31_action()
 	{
 		///////////////////////////////////////
 		event.preventDefault();
-		var receipt_id=form.elements[1].value;
+		var receipt_id=form.elements['receipt'].value;
 		
-		console.log(receipt_id);
 		if(is_delete_access('form124') || is_delete_access('form243') || is_delete_access('form291') || is_delete_access('form282'))
 		{
-			var receipts_data="<receipts_payment_mapping>" +
-				"<id></id>" +
-				"<receipt_id exact='yes'>"+receipt_id+"</receipt_id>" +
-				"<payment_id></payment_id>" +
-				"<amount></amount>" +
-				"</receipts_payment_mapping>";
-
-			fetch_requested_data('',receipts_data,function(receipts)
+			var receipts_data={data_store:'receipts_payment_mapping',
+                              indexes:[{index:'id'},
+                                      {index:'receipt_id',exact:receipt_id},
+                                      {index:'payment_id'},
+                                      {index:'amount'}]};
+			read_json_rows('',receipts_data,function(receipts)
 			{
-				console.log(receipts);
 				receipts.forEach(function(receipt)
 				{	
-					var payments_data="<payments>" +
-								"<id>"+receipt.payment_id+"</id>" +
-								"<paid_amount></paid_amount>" +
-								"</payments>";
-					fetch_requested_data('',payments_data,function(payments)
+					var payments_data={data_store:'payments',
+                                      indexes:[{index:'id',value:receipt.payment_id},
+                                              {index:'paid_amount'}]};
+					read_json_rows('',payments_data,function(payments)
 					{	
 						var last_updated=get_my_time();
 						payments.forEach(function(payment)
 						{
 							var paid_amount=parseFloat(payment.paid_amount)-parseFloat(receipt.amount);
-							var payment_xml="<payments>" +
-									"<id>"+payment.id+"</id>" +
-									"<paid_amount>"+paid_amount+"</paid_amount>" +
-									"<status>pending</status>" +
-									"<last_updated>"+last_updated+"</last_updated>" +
-									"</payments>";
-							
-							update_simple(payment_xml);
-							
+							var payment_json={data_store:'payments',
+                                data:[{index:'id',value:payment.id},
+                                    {index:'paid_amount',value:paid_amount},
+                                    {index:'status',value:'pending'},
+                                    {index:'last_updated',value:last_updated}]};
+
+							update_json(payment_json);
 						});
 						
-						var receipt_xml="<receipts>" +
-							"<receipt_id>"+receipt_id+"</receipt_id>" +
-							"</receipts>";
-						var receipt_payment_xml="<receipts_payment_mapping>" +
-							"<receipt_id>"+receipt_id+"</receipt_id>" +
-							"</receipts_payment_mapping>";
-						var payment_xml="<payments>" +
-							"<bill_id>"+receipt_id+"</bill_id>" +
-							"<source_info>receipts</source_info>" +
-							"</payments>";
+                        var receipt_json={data_store:'receipts',
+	 					data:[{index:'receipt_id',value:receipt_id}]};
+
+                        var receipt_payment_json={data_store:'receipts_payment_mapping',
+	 					data:[{index:'receipt_id',value:receipt_id}]};
+
+                        var payment_json={data_store:'payments',
+	 					data:[{index:'bill_id',value:receipt_id}]};
 												
-						delete_simple(receipt_xml);
-						delete_simple(receipt_payment_xml);
-						delete_simple(payment_xml);
-						
+						delete_json(receipt_json);
+						delete_json(receipt_payment_json);
+						delete_json(payment_json);
 					});
 				});
 			});
@@ -3425,10 +3413,10 @@ function modal31_action()
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal31").dialog("close");
+		$(form).find(".close").click();
 		/////////////////////////////////////////
 	});
-	$("#modal31").dialog("open");
+	$("#modal31_link").click();
 }
 
 /**
@@ -11840,12 +11828,11 @@ function modal155_action()
 	$(date_filter).datepicker();
 	date_filter.value=get_my_date();
 	
-	var receipt_id_xml="<user_preferences count='1'>"+
-					"<id></id>"+
-					"<value></value>"+
-					"<name exact='yes'>receipt_id_series</name>"+
-					"</user_preferences>";
-	fetch_requested_data('',receipt_id_xml,function (receipts) 
+	var receipt_id_json={data_store:'user_preferences',count:1,
+                        indexes:[{index:'id'},
+                                {index:'value'},
+                                {index:'name',exact:'receipt_id_series'}]};
+	read_json_rows('',receipt_id_xml,function (receipts) 
 	{
 		if(receipts.length>0)
 		{
@@ -11854,25 +11841,20 @@ function modal155_action()
 		}
 	});
 	
-	var accounts_data="<customers>" +
-			"<acc_name></acc_name>" +
-			"</customers>";
-	set_my_value_list(accounts_data,account_filter);
-	//set_static_value_list('receipts','type',type_filter);
+	var accounts_data={data_store:'customers',return_column:'acc_name'};
+	set_my_value_list_json(accounts_data,account_filter);
 	
 	$(account_filter).off('blur');
 	$(account_filter).on('blur',function(e)
 	{
-		var payments_data="<payments>" +
-				"<id></id>" +
-				"<type></type>" +
-				"<total_amount></total_amount>" +
-				"<paid_amount></paid_amount>" +
-				"<status exact='yes'>pending</status>" +
-				"<acc_name exact='yes'>"+account_filter.value+"</acc_name>" +
-				"</payments>";
-
-		fetch_requested_data('',payments_data,function(payments)
+		var payments_data={data_store:'payments',
+                          indexes:[{index:'id'},
+                                  {index:'type'},
+                                  {index:'total_amount'},
+                                  {index:'paid_amount'},
+                                  {index:'status',exact:'pending'},
+                                  {index:'acc_name',exact:account_filter.value}]};
+		read_json_rows('',payments_data,function(payments)
 		{
 			var balance_amount=0;
 			payments.forEach(function(payment)
@@ -11892,13 +11874,6 @@ function modal155_action()
 			if(balance_amount==0)
 			{
 				balance_filter.value="Rs. 0";
-				/*$(form).off('submit');
-				$(form).on('submit',function(event)
-				{
-					event.preventDefault();
-					$("#modal155").dialog("close");
-				});
-				*/
 			}
 			else if(balance_amount>0)
 			{
@@ -11920,7 +11895,7 @@ function modal155_action()
 		event.preventDefault();
 		var received_amount=amount_filter.value;
 		var receipt_date=get_raw_time(date_filter.value);
-		var receipt_id=form.elements[1].value;
+		var receipt_id=form.elements['receipt_id'].value;
 		var receipt_type=type_filter.value;
 		var account_name=account_filter.value;
 		var counter_payment=parseFloat(amount_filter.value);
@@ -12251,7 +12226,7 @@ function modal155_action()
 		$("#modal155").dialog("close");
 	});
 	
-	$("#modal155").dialog("open");
+	$("#modal155_link").click();
 }
 
 /**

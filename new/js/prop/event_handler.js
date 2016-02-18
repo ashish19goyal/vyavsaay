@@ -224,10 +224,13 @@ function modal_forms_ini()
 	{
 		dynamic_modal_array.push(i);
 	}
-	for(var i=24;i<=34;i++)
+	for(var i=24;i<=30;i++)
 	{
 		dynamic_modal_array.push(i);
 	}
+    dynamic_modal_array.push(32);
+    dynamic_modal_array.push(33);
+    dynamic_modal_array.push(34);
     for(var i=36;i<=49;i++)
 	{
 		dynamic_modal_array.push(i);
@@ -244,7 +247,8 @@ function modal_forms_ini()
 	{
 		dynamic_modal_array.push(i);
 	}
-	for(var i=154;i<=163;i++)
+    dynamic_modal_array.push(154);
+	for(var i=156;i<=163;i++)
 	{
 		dynamic_modal_array.push(i);
 	}

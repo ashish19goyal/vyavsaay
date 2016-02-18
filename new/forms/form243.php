@@ -124,7 +124,7 @@
                     var bt=get_session_var('title');
                     $(share_button).on('click',function () 
                     {
-                        modal101_action('Payment Receipt - '+BT,result.acc_name,'customer',function (func) 
+                        modal101_action('Payment Receipt - '+bt,result.acc_name,'customer',function (func) 
                         {
                             print_form243(func,result.receipt_id,result.acc_name,result.amount,result.date,result.narration);
                         });

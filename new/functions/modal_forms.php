@@ -485,18 +485,44 @@
 			</fieldset>
 		</form>
 	</div>
-	
-	<div id="modal31" title="Delete Receipt">
-		<form id='modal31_form' autocomplete="off">
-			<fieldset>
-				<label>Receipt Id: <input type='text' required></label><br>
-				<label>Account: <input type="text" readonly='readonly' required></label><br>
-				<label>Balance <input type="text" readonly='readonly'></label><br>
-				<label>Receipt Amount: Rs. <input type="number" step='any' readonly='readonly' required></label><br>
-				<input type="submit" value='Delete' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
+
+    <a href='#modal31' data-toggle="modal" id='modal31_link'></a>
+	<div id="modal31" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal31_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Delete Receipt</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Receipt Id</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal31_form' required name='receipt'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Account</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal31_form' required name='account'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Balance</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal31_form' name='balance' readonly='readonly'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Receipt Amount</div>
+					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' readonly='readonly' form='modal31_form' name='amount' required></div>
+					     		</div>
+                        </div> 
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal31_form' name='save'>Delete</button>
+	               	<button type="button" class="btn red" form='modal31_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 	<div id="modal32" title="Add task">
 		<form id='modal32_form' autocomplete="off">
@@ -1292,7 +1318,7 @@
 					     		</div>
 					     		<div class="row">
 									<div class="col-sm-12 col-md-4">Display Name</div>
-					     			<div class="col-sm-12 col-md-8"><input type='text' required form='modal135_form' name='display'></div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' required form='modal135_form' name='display_name'></div>
 					     		</div>
 					     		<div class="row">
 									<div class="col-sm-12 col-md-4">Value</div>
@@ -1607,21 +1633,52 @@
 		</form>	
 	</div>
 
-	<div id="modal155" title="Add Receipt">
-		<form id='modal155_form' autocomplete="off">
-			<fieldset>
-				<label>Receipt Id: <input type='text' name='receipt_id' readonly="readonly" required></label><br>
-				<label>Date: <input type="text" name='date' required></label><br>
-				<label>Account: <input type="text" name='account' required></label><br>
-				<label>Narration: <textarea name='narration'></textarea></label><br>
-				<label>Receipt Amount: Rs. <input type="number" min='0' step='any' name='amount' required></label><br>
-				<label>Balance <input type="text" readonly='readonly' name='balance'></label><br>
-				<input type="hidden" name='type'>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
-	
+    <a href='#modal155' data-toggle="modal" id='modal155_link'></a>
+	<div id="modal155" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal155_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add Receipt</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Receipt Id</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal155_form' required name='receipt_id' readonly='readonly'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Date</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal155_form' name='date'></div>
+					       </div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Account</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal155_form' required name='account'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Narration</div>
+                                    <div class="col-sm-12 col-md-8"><textarea form='modal155_form' name='narration'></textarea></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Receipt Amount</div>
+					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' min='0' form='modal155_form' name='amount' required></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Balance</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal155_form' name='balance' readonly='readonly'></div>
+					     		</div>
+                        </div> 
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal155_form' name='save'>Delete</button>
+	               	<button type="button" class="btn red" form='modal155_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 	<div id="modal156" title="Add new batch">
 		<form id='modal156_form' autocomplete="off">
 			<fieldset>
