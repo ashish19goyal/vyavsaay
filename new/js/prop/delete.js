@@ -960,74 +960,6 @@ function form53_delete_item(button)
 
 
 /**
- * formNo 56
- * form Cash Register
- * @param button
- */
-function form56_delete_item(button)
-{
-	if(is_delete_access('form56'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var account=form.elements[0].value;
-			var type=form.elements[1].value;
-			var amount=form.elements[2].value;
-			var notes=form.elements[3].value;
-			var data_id=form.elements[5].value;
-			var last_updated=get_my_time();
-			var data_xml="<cash_register>" +
-						"<id>"+data_id+"</id>" +
-						"</cash_register>";	
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>cash_register</tablename>" +
-						"<link_to>form56</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Cash record of amount "+amount+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var transaction_xml="<transactions>" +
-						"<id>"+data_id+"</id>" +
-						"</transactions>";
-			var payment_data="<payments>" +
-						"<id></id>" +
-						"<acc_name exact='yes'>"+account+"</acc_name>" +
-						"<type>"+type+"</type>" +
-						"<bill_id exact='yes'>"+data_id+"</bill_id>" +
-						"</payments>";
-			fetch_requested_data('',payment_data,function(payments)
-			{
-				if(payments.length>0)
-				{
-					var transaction2_xml="<transactions>" +
-								"<id>"+payments[0].id+"</id>" +
-								"</transactions>";
-					var payment_xml="<payments>" +
-								"<id>"+payments[0].id+"</id>" +
-								"</payments>";
-					delete_simple(payment_xml);
-					delete_simple(transaction2_xml);					
-				}
-	
-			});
-			
-			delete_row(data_xml,activity_xml);
-			delete_simple(transaction_xml);
-				
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
  * formNo 57
  * form Manage Services
  * @param button
@@ -1569,55 +1501,6 @@ function form70_delete_item(button)
 	}
 }
 
-
-/**
- * @form Manage accounts
- * @param button
- */
-function form71_delete_item(button)
-{
-	var form_id=$(button).attr('form');
-	var form=document.getElementById(form_id);
-	var type=form.elements[1].value;
-	
-	if(is_delete_access('form71') && type=='financial')
-	{
-		modal115_action(function()
-		{		
-			var name=form.elements[0].value;
-			var description=form.elements[2].value;
-			var data_id=form.elements[4].value;
-			var last_updated=get_my_time();
-			var data_xml="<accounts>" +
-						"<id>"+data_id+"</id>" +
-						"<acc_name>"+name+"</acc_name>" +
-						"<description>"+description+"</description>" +
-						"<type>financial</type>" +
-						"</accounts>";	
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>accounts</tablename>" +
-						"<link_to>form71</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Account "+name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-			}	
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form New Bill

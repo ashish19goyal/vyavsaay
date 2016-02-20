@@ -390,7 +390,6 @@ function initialize_tabular_report_buttons(columns,report_title,report_id,func)
 
 function initialize_static_tabular_report_buttons(report_title,report_id)
 {
-	var csv_button=document.getElementById(report_id+'_csv');
 	var pdf_button=document.getElementById(report_id+'_pdf');
 	var print_button=document.getElementById(report_id+'_print');
 	var email_button=document.getElementById(report_id+'_email');

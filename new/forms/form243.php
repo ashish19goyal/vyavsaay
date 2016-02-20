@@ -159,7 +159,11 @@
 
                 $('#form243').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Receipts (Receivable)','form243',function (item){});
+				initialize_tabular_report_buttons(columns,'Receipts (Receivable)','form243',function (item)
+                {
+                    delete item.id;
+                    item.date=get_my_past_date(item.date);
+                });
 				hide_loader();
             });
         };

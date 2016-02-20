@@ -403,8 +403,9 @@
 			<due_date index='yes' type="BIGINT"></due_date>
 			<mode index='yes' type="VARCHAR(15)"></mode><!-- cash/cheque/draft/credit card/debit card/online banking/coupons -->
 			<transaction_id index='yes' type="BIGINT"></transaction_id>
-			<bill_id index='yes' type="BIGINT"></bill_id>
-			<source_info index='no' type="TEXT"></source_info>
+			<source_id index='yes' type="BIGINT"></source_id>
+			<source_info index='yes' type="TEXT"></source_info>
+			<source index='yes' type="TEXT"></source>
 			<notes index='yes' type="TEXT"></notes>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
@@ -1664,6 +1665,7 @@
 			<display_name index='yes' type="TEXT"></display_name>
 			<head_color index='no' type="VARCHAR(10)"></head_color>
 			<back_color index='no' type="VARCHAR(10)"></back_color>
+			<icon index='no' type="VARCHAR(50)"></icon>
 			<status index='yes' type="VARCHAR(30)"></status><!--active/inactive-->
 			<elements index='no' type="TEXT"></elements>
 			<grid_order index='yes' type="INT"></grid_order>

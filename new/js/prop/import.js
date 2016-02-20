@@ -215,8 +215,9 @@ function form11_import(data_array,import_type)
 				"<date>"+get_raw_time(row.date)+"</date>" +
 				"<due_date>"+get_raw_time(row.due_date)+"</due_date>" +
 				"<mode>"+row.mode+"</mode>" +
-				"<source_info>"+row.source_info+"</source_info>" +				
-				"<bill_id>"+row.bill_id+"</bill_id>" +
+				"<source>"+row.source+"</source>" +				
+				"<source_id>"+row.source_id+"</source_id>" +
+				"<source_info>"+row.source_info+"</source_info>" +
 				"<transaction_id>"+row.id+"</transaction_id>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
@@ -1082,107 +1083,6 @@ function form53_import(data_array,import_type)
 	}
 };
 
-/**
-* @form Cash Register
-* @formNo 56
-*/
-function form56_import(data_array,import_type)
-{
-	var data_xml="<cash_register>";
-	var transaction_xml="<transactions>";
-	var payment_xml="<payments>";
-	var transaction2_xml="<transactions>";
-	var counter=1;
-	var last_updated=get_my_time();
-
-	var payment_id=parseFloat(get_my_time());
-	
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</cash_register><separator></separator><cash_register>";
-			transaction_xml+="</transactions><separator></separator><transactions>";
-			payment_xml+="</payments><separator></separator><payments>";
-			transaction_xml+="</transactions><separator></separator><transactions>";
-		}
-		counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		var receiver=row.acc_name;
-		var giver="master";
-		if(row.type=='received')
-		{
-			giver=row.acc_name;
-			receiver="master";
-		}
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<type>"+row.type+"</type>" +
-				"<acc_name>"+row.acc_name+"</acc_name>" +
-				"<amount>"+row.amount+"</amount>" +
-				"<notes>"+row.notes+"</notes>" +
-				"<date>"+get_raw_time(row.date)+"</date>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-		transaction_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<trans_date>"+get_raw_time(row.date)+"</trans_date>" +
-				"<amount>"+row.amount+"</amount>" +
-				"<receiver>"+giver+"</receiver>" +
-				"<giver>"+receiver+"</giver>" +
-				"<tax>0</tax>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-		transaction2_xml+="<row>" +
-				"<id>"+(payment_id+counter)+"</id>" +
-				"<trans_date>"+get_raw_time(row.date)+"</trans_date>" +
-				"<amount>"+row.amount+"</amount>" +
-				"<receiver>"+receiver+"</receiver>" +
-				"<giver>"+giver+"</giver>" +
-				"<tax>0</tax>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-		payment_xml+="<row>" +
-				"<id>"+(payment_id+counter)+"</id>" +
-				"<acc_name>"+row.acc_name+"</acc_name>" +
-				"<type>"+row.type+"</type>" +
-				"<total_amount>"+row.amount+"</total_amount>" +
-				"<paid_amount>"+row.amount+"</paid_amount>" +
-				"<status>closed</status>" +
-				"<date>"+get_raw_time(row.date)+"</date>" +
-				"<due_date>"+get_my_time()+"</due_date>" +
-				"<mode>cash</mode>" +
-				"<transaction_id>"+payment_id+"</transaction_id>" +
-				"<bill_id>"+row.id+"</bill_id>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	
-	data_xml+="</cash_register>";
-	transaction_xml+="</transactions>";
-	payment_xml+="</payments>";
-	transaction2_xml+="</transactions>";
-	
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-		create_batch(transaction_xml);
-		create_batch(transaction2_xml);
-		create_batch(payment_xml);
-		
-	}
-	else
-	{
-		update_batch(data_xml);
-		update_batch(transaction_xml);
-		update_batch(transaction2_xml);
-		update_batch(payment_xml);
-	}
-};
 
 /**
 * @form manage services
@@ -1662,47 +1562,6 @@ function form70_import(data_array,import_type)
 	}
 };
 
-
-/**
-* @form Manage accounts
-* @formNo 71
-*/
-function form71_import(data_array,import_type)
-{
-	var data_xml="<accounts>";
-	var counter=1;
-	var last_updated=get_my_time();
-
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</accounts><separator></separator><accounts>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<acc_name>"+row.acc_name+"</acc_name>" +
-				"<description>"+row.description+"</description>" +
-				"<type>"+row.type+"</type>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	data_xml+="</accounts>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-	}
-};
 
 /**
 * @form create bills

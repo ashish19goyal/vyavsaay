@@ -166,6 +166,10 @@ function print_static_report_table(report_id,report_title,func)
 	$(new_table).append($("#"+report_id+"_body").html());
 	$(new_table).append($("#"+report_id+"_body").parent().find('tfoot').html());
 	
+    $(new_table).find('td').each(function()
+    {
+        $(this).html($(this).text());
+    });
 	/////////////placing the containers //////////////////////////////////////////////////////	
 	
 	container.appendChild(header);

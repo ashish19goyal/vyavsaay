@@ -48,7 +48,7 @@ function form10_import_template()
 */
 function form11_import_template()
 {
-	var data_array=['id','type','acc_name','total_amount','paid_amount','status','date','source_info','due_date','mode','bill_id'];
+	var data_array=['id','type','acc_name','total_amount','paid_amount','status','date','source','source_id','source_info','due_date','mode'];
 	my_array_to_csv(data_array);
 };
 
@@ -207,16 +207,6 @@ function form53_import_template()
 
 
 /**
-* @form Cash Register
-* @formNo 56
-*/
-function form56_import_template()
-{
-	var data_array=['id','type','acc_name','amount','date','notes'];
-	my_array_to_csv(data_array);
-};
-
-/**
 * @form manage services
 * @formNo 57
 */
@@ -330,15 +320,6 @@ function form70_import_template()
 };
 
 
-/**
-* @form Manage accounts
-* @formNo 71
-*/
-function form71_import_template()
-{
-	var data_array=['id','acc_name','description','type'];
-	my_array_to_csv(data_array);
-};
 
 /**
 * @form Create Bills

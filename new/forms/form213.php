@@ -246,8 +246,7 @@
 	 					{index:'status',value:'open'},
 	 					{index:'identified_by',value:identified_by},
 	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Added',notes:'Sale lead for customer '+customer,link_to:'form213'}}; 								
-								
+	 				log_data:{title:'Added',notes:'Sale lead for customer '+customer,link_to:'form213'}};
 				create_json(data_json);
 				
 				$(form).readonly();

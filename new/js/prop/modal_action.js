@@ -507,13 +507,13 @@ function modal11_action(func)
 				attr_label.setAttribute('class','row');
 				if(attribute.value=="")
 				{
-					attr_label.innerHTML="<div class'col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
 					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
 				}				
 				else 
 				{
 					var values_array=attribute.value.split(";");
-					var content="<div class'col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					var content="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
 					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
 					values_array.forEach(function(fvalue)
 					{
@@ -631,13 +631,13 @@ function modal12_action(func)
 				attr_label.setAttribute('class','row');
 				if(attribute.value=="")
 				{
-					attr_label.innerHTML="<div class'col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
 					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
 				}				
 				else 
 				{
 					var values_array=attribute.value.split(";");
-					var content="<div class'col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					var content="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
 					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
 					values_array.forEach(function(fvalue)
 					{
@@ -666,13 +666,13 @@ function modal12_action(func)
 	 					{index:'type',value:type},
 	 					{index:'username',value:''},
 	 					{index:'description',value:description},
-	 					{index:'acc_name',value:acc_name,unique:'yes'},
+	 					{index:'acc_name',value:name,unique:'yes'},
 	 					{index:'status',value:'active'},
 	 					{index:'last_updated',value:last_updated}],
 	 				log:'yes',
 	 				log_data:{title:'Added',notes:'New account '+name,link_to:'form71'}}; 								
-					
-		create_json(data_json,func);
+
+		create_json(account_json,func);
 		
 		var id=get_new_key();
 		$("#modal12_attributes").find('input, select').each(function()
@@ -737,13 +737,13 @@ function modal13_action(func)
 				attr_label.setAttribute('class','row');
 				if(attribute.value=="")
 				{
-					attr_label.innerHTML="<div class'col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
 					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
 				}				
 				else 
 				{
 					var values_array=attribute.value.split(";");
-					var content="<div class'col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					var content="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
 					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
 					values_array.forEach(function(fvalue)
 					{
@@ -1114,13 +1114,13 @@ function modal16_action(func)
 				attr_label.setAttribute('class','row');
 				if(attribute.value=="")
 				{
-					attr_label.innerHTML="<div class'col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
 					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
 				}				
 				else 
 				{
 					var values_array=attribute.value.split(";");
-					var content="<div class'col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					var content="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
 					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
 					values_array.forEach(function(fvalue)
 					{
@@ -2013,7 +2013,7 @@ function modal22_action(func)
 		{
             var attr_label=document.createElement('div');
             attr_label.setAttribute('class','row');
-            attr_label.innerHTML="<div class'col-sm-12 col-md-4'>"+bill_type+" sale price"+"</div>"+
+            attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+bill_type+" sale price"+"</div>"+
 					     			"<div class='col-sm-12 col-md-8'><input type='number' step='any' id='"+bill_type+"' required></div>";
 				
 			billing_label.appendChild(attr_label);
@@ -3247,8 +3247,9 @@ function modal30_action()
 								"<due_date>"+get_credit_period()+"</due_date>" +
 								"<mode>cash</mode>" +
 								"<transaction_id>"+p_id+"</transaction_id>" +
-								"<bill_id>"+receipt_id+"</bill_id>" +
-								"<source_info>receipts</source_info>"+
+								"<source_id>"+p_id+"</source_id>" +
+								"<source>receipt</source>" +
+								"<source_info>"+receipt_id+"</source_info>"+
 								"<notes>Generated for receipt # "+receipt_id+"</notes>" +	
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</payments>";
@@ -3631,13 +3632,13 @@ function modal35_action(func)
 				attr_label.setAttribute('class','row');
 				if(attribute.value=="")
 				{
-					attr_label.innerHTML="<div class'col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
 					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
 				}				
 				else 
 				{
 					var values_array=attribute.value.split(";");
-					var content="<div class'col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					var content="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
 					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
 					values_array.forEach(function(fvalue)
 					{
@@ -4151,7 +4152,9 @@ function modal39_action(schedule_date)
 						"<due_date>"+get_my_time()+"</due_date>" +
 						"<mode></mode>" +
 						"<transaction_id>"+payment_id+"</transaction_id>" +
-						"<bill_id>"+data_id+"</bill_id>" +
+						"<source_id>"+data_id+"</source_id>" +
+                        "<source>loan</source>" +
+                        "<source_info>"+data_id+"</source_info>" +
 						"<last_updated>"+get_my_time()+"</last_updated>" +
 						"</payments>";
 			if(is_online())
@@ -6060,11 +6063,9 @@ function modal106_action()
 	$(date_filter).datepicker();
 	date_filter.value=get_my_date();
 	
-	set_static_value_list('modal106','type',type_filter);
-	var account_data="<accounts>"+
-					"<acc_name></acc_name>"+
-					"</accounts>";	
-	set_my_value_list(account_data,account_filter);
+	set_static_value_list_json('modal106','type',type_filter);
+	var account_data={data_store:'accounts',return_column:'acc_name'};
+	set_my_value_list_json(account_data,account_filter);
 		
 	$(form).off("submit");
 	$(form).on("submit",function(event)
@@ -6086,33 +6087,39 @@ function modal106_action()
 		var amount=form.elements['amount'].value;
 		var data_id=get_new_key();
 		var last_updated=get_my_time();
-		var data_xml="<payments>" +
-					"<id>"+data_id+"</id>" +
-					"<acc_name>"+account+"</acc_name>" +
-					"<type>"+type+"</type>" +
-					"<total_amount>"+amount+"</total_amount>" +
-					"<paid_amount>0</paid_amount>"+
-					"<status>pending</status>"+
-					"<date>"+entry_date+"</date>"+
-					"<transaction_id>"+data_id+"</transaction_id>"+
-					"<source_info>"+particulars+"</source_info>"+
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</payments>";
-		var pt_xml="<transactions>" +
-					"<id>"+data_id+"</id>" +
-					"<trans_date>"+entry_date+"</trans_date>" +
-					"<amount>"+amount+"</amount>" +
-					"<receiver>"+receiver+"</receiver>" +
-					"<giver>"+giver+"</giver>" +
-					"<tax>0</tax>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</transactions>";
-		create_simple(data_xml);
-		
-		$("#modal106").dialog("close");
+        
+        var data_json={data_store:'payments',
+	 				log:'yes',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'acc_name',value:account},
+	 					{index:'type',value:type},
+	 					{index:'total_amount',value:amount},
+	 					{index:'paid_amount',value:'0'},
+                        {index:'status',value:'pending'},
+                        {index:'date',value:entry_date},
+                        {index:'transaction_id',value:data_id},
+                        {index:'source_id',value:''},
+                        {index:'source',value:'ledger entry'},
+                        {index:'source_info',value:particulars},  
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Added',notes:'Ledger entry for '+account,link_to:'report60'}};
+ 		
+        var pt_json={data_store:'transactions',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'receiver',value:receiver},
+	 					{index:'giver',value:giver},
+	 					{index:'amount',value:amount},
+	 					{index:'tax',value:'0'},
+	 					{index:'trans_date',value:entry_date},
+                        {index:'last_updated',value:last_updated}]};
+ 		
+		create_json(data_json);
+		create_json(pt_json);
+        
+		$(form).find(".close").click();
 	});
 	
-	$("#modal106").dialog("open");
+	$("#modal106_link").click();
 }
 
 /**
@@ -10615,10 +10622,17 @@ function modal144_action(doc_type,target_id,func)
 {
 	var form=document.getElementById('modal144_form');
 	
-	var fname=form.elements[1];
+	var fname=form.elements['name'];
 	var docInfo=document.getElementById('modal144_url');
-	var fpicture=form.elements[2];
-		
+	var fpicture=form.elements['fi'];
+    var dummy_button=form.elements['dummy'];
+	
+	$(dummy_button).on('click',function (e) 
+	{
+		e.preventDefault();
+		$(fpicture).trigger('click');
+	});
+	
 	fpicture.addEventListener('change',function(evt)
 	{
 		select_document(evt,function(dataURL)
@@ -10640,15 +10654,15 @@ function modal144_action(doc_type,target_id,func)
 
 			if(url!="")
 			{
-				var pic_xml="<documents>" +
-							"<id>"+data_id+"</id>" +
-							"<url>"+url+"</url>" +
-							"<doc_type>"+doc_type+"</doc_type>" +
-							"<doc_name>"+doc_name+"</doc_name>"+						
-							"<target_id>"+target_id+"</target_id>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</documents>";
-				create_simple(pic_xml);	
+                var data_json={data_store:'documents',
+ 				data:[{index:'id',value:data_id},
+	 					{index:'url',value:url},
+	 					{index:'doc_name',value:doc_name},
+	 					{index:'doc_type',value:doc_type},
+	 					{index:'target_id',value:target_id},
+	 					{index:'last_updated',value:last_updated}]};
+				
+				create_json(data_json);	
 				
 				if(typeof func!='undefined')
 				{
@@ -10660,10 +10674,10 @@ function modal144_action(doc_type,target_id,func)
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal144").dialog("close");
+		$(form).find(".close").click();
 	});
 	
-	$("#modal144").dialog("open");
+	$("#modal144_link").click();
 }
 
 /**
@@ -11832,7 +11846,7 @@ function modal155_action()
                         indexes:[{index:'id'},
                                 {index:'value'},
                                 {index:'name',exact:'receipt_id_series'}]};
-	read_json_rows('',receipt_id_xml,function (receipts) 
+	read_json_rows('',receipt_id_json,function (receipts) 
 	{
 		if(receipts.length>0)
 		{
@@ -11902,19 +11916,15 @@ function modal155_action()
 
 		if(is_create_access('form124') || is_create_access('form243') || is_create_access('form291'))
 		{
-			var accounts_data="<payments>" +
-					"<id></id>" +
-					//"<type exact='yes'>"+receipt_type+"</type>" +
-					"<type></type>"+					
-					"<status exact='yes'>pending</status>" +
-					"<acc_name exact='yes'>"+account_name+"</acc_name>" +
-					"<date></date>" +
-					"<total_amount></total_amount>" +
-					"<paid_amount></paid_amount>" +
-					"<notes></notes>" +
-					"</payments>";
-			
-			fetch_requested_data('',accounts_data,function(accounts)
+			var accounts_data={data_store:'payments',
+                              indexes:[{index:'id'},
+                                      {index:'type'},
+                                      {index:'status',exact:'pending'},
+                                      {index:'acc_name',exact:account_name},
+                                      {index:'date'},
+                                      {index:'total_amount'},
+                                      {index:'paid_amount'}]};
+			read_json_rows('',accounts_data,function(accounts)
 			{
 				accounts.sort(function(a,b)
 				{
@@ -11962,7 +11972,7 @@ function modal155_action()
 						else 
 						{	return -1;}
 					});
-					console.log(accounts);					
+					//console.log(accounts);					
 				}
 
 				console.log(total_amount);
@@ -11974,27 +11984,27 @@ function modal155_action()
 					new_id++;
 					if(total_amount==0)
 					{
-						var notes=account.notes+"\nClosed by receipt # "+receipt_id;
-						var payment_xml="<payments>" +
-								"<id>"+account.id+"</id>" +
-								"<paid_amount>"+account.total_amount+"</paid_amount>" +
-								"<status>closed</status>" +
-								"<notes>"+notes+"</notes>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</payments>";
-						var receipts_xml="<receipts_payment_mapping>" +
-								"<id>"+new_id+"</id>" +
-								"<receipt_id>"+receipt_id+"</receipt_id>" +
-								"<payment_id>"+account.id+"</payment_id>" +
-								"<type>"+account.type+"</type>" +
-								"<amount>"+(parseFloat(account.total_amount)-parseFloat(account.paid_amount))+"</amount>" +
-								"<acc_name>"+account_name+"</acc_name>" +
-								"<date>"+receipt_date+"</date>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</receipts_payment_mapping>";
+                        var notes=account.notes+"\nClosed by receipt # "+receipt_id;
 						
-						update_simple(payment_xml);
-						create_simple(receipts_xml);	
+                        var payment_json={data_store:'payments',
+                        data:[{index:'id',value:account.id},
+                            {index:'status',value:'closed'},
+                            {index:'paid_amount',value:account.total_amount},
+                            {index:'notes',value:notes},
+                            {index:'last_updated',value:last_updated}]};
+
+                        var receipts_json={data_store:'receipts_payment_mapping',
+                        data:[{index:'id',value:new_id},
+                            {index:'receipt_id',value:receipt_id},
+                            {index:'payment_id',value:account.id},
+                            {index:'type',value:account.type},
+                            {index:'amount',value:(parseFloat(account.total_amount)-parseFloat(account.paid_amount))},
+                            {index:'acc_name',value:account_name},
+                            {index:'date',value:receipt_date},
+                            {index:'last_updated',value:last_updated}]};
+
+						update_json(payment_json);
+						create_json(receipts_json);	
 					}
 					else
 					{
@@ -12003,26 +12013,26 @@ function modal155_action()
 							if(total_amount>0)
 							{
 								var notes=account.notes+"\nClosed by receipt # "+receipt_id;
-								var payment_xml="<payments>" +
-									"<id>"+account.id+"</id>" +
-									"<paid_amount>"+account.total_amount+"</paid_amount>" +
-									"<status>closed</status>" +
-									"<notes>"+notes+"</notes>" +
-									"<last_updated>"+last_updated+"</last_updated>" +
-									"</payments>";
-								var receipts_xml="<receipts_payment_mapping>" +
-									"<id>"+new_id+"</id>" +
-									"<receipt_id>"+receipt_id+"</receipt_id>" +
-									"<payment_id>"+account.id+"</payment_id>" +
-									"<type>"+account.type+"</type>" +
-									"<amount>"+(parseFloat(account.total_amount)-parseFloat(account.paid_amount))+"</amount>" +
-									"<acc_name>"+account_name+"</acc_name>" +
-									"<date>"+receipt_date+"</date>" +
-									"<last_updated>"+last_updated+"</last_updated>" +
-									"</receipts_payment_mapping>";
-							
-								update_simple(payment_xml);
-								create_simple(receipts_xml);
+								
+                                var payment_json={data_store:'payments',
+                                data:[{index:'id',value:account.id},
+                                    {index:'status',value:'closed'},
+                                    {index:'paid_amount',value:account.total_amount},
+                                    {index:'notes',value:notes},
+                                    {index:'last_updated',value:last_updated}]};
+
+                                var receipts_json={data_store:'receipts_payment_mapping',
+                                data:[{index:'id',value:new_id},
+                                    {index:'receipt_id',value:receipt_id},
+                                    {index:'payment_id',value:account.id},
+                                    {index:'type',value:account.type},
+                                    {index:'amount',value:(parseFloat(account.total_amount)-parseFloat(account.paid_amount))},
+                                    {index:'acc_name',value:account_name},
+                                    {index:'date',value:receipt_date},
+                                    {index:'last_updated',value:last_updated}]};
+
+                                update_json(payment_json);
+								create_json(receipts_json);
 							}
 							else
 							{
@@ -12030,51 +12040,49 @@ function modal155_action()
 								{
 									var balanced_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount)+total_amount;
 									var notes=account.notes+"\n Rs."+balanced_amount+" balanced against receipt # "+receipt_id;
-									var payment_xml="<payments>" +
-										"<id>"+account.id+"</id>" +
-										"<paid_amount>"+(parseFloat(account.total_amount)+total_amount)+"</paid_amount>" +
-										"<status>pending</status>" +
-										"<notes>"+notes+"</notes>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</payments>";
-									var receipts_xml="<receipts_payment_mapping>" +
-										"<id>"+new_id+"</id>" +
-										"<receipt_id>"+receipt_id+"</receipt_id>" +
-										"<payment_id>"+account.id+"</payment_id>" +
-										"<type>"+account.type+"</type>" +
-										"<amount>"+balanced_amount+"</amount>" +
-										"<acc_name>"+account_name+"</acc_name>" +
-										"<date>"+receipt_date+"</date>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</receipts_payment_mapping>";
-								
-									update_simple(payment_xml);
-									create_simple(receipts_xml);
+                                    var payment_json={data_store:'payments',
+                                    data:[{index:'id',value:account.id},
+                                        {index:'status',value:'pending'},
+                                        {index:'paid_amount',value:parseFloat(account.total_amount)+total_amount},
+                                        {index:'notes',value:notes},
+                                        {index:'last_updated',value:last_updated}]};
+
+                                    var receipts_json={data_store:'receipts_payment_mapping',
+                                    data:[{index:'id',value:new_id},
+                                        {index:'receipt_id',value:receipt_id},
+                                        {index:'payment_id',value:account.id},
+                                        {index:'type',value:account.type},
+                                        {index:'amount',value:balanced_amount},
+                                        {index:'acc_name',value:account_name},
+                                        {index:'date',value:receipt_date},
+                                        {index:'last_updated',value:last_updated}]};
+
+									update_json(payment_json);
+									create_json(receipts_json);
 									total_amount=0;
 								}
 								else
 								{
 									var notes=account.notes+"\n Rs."+account.paid_amount+" balanced against receipt # "+receipt_id;
-									var payment_xml="<payments>" +
-										"<id>"+account.id+"</id>" +
-										"<paid_amount>0</paid_amount>" +
-										"<status>pending</status>" +
-										"<notes>"+notes+"</notes>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</payments>";
-									var receipts_xml="<receipts_payment_mapping>" +
-										"<id>"+new_id+"</id>" +
-										"<receipt_id>"+receipt_id+"</receipt_id>" +
-										"<payment_id>"+account.id+"</payment_id>" +
-										"<type>"+account.type+"</type>" +
-										"<amount>"+account.paid_amount+"</amount>" +
-										"<acc_name>"+account_name+"</acc_name>" +
-										"<date>"+receipt_date+"</date>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</receipts_payment_mapping>";
-								
-									update_simple(payment_xml);
-									create_simple(receipts_xml);
+                                    var payment_json={data_store:'payments',
+                                    data:[{index:'id',value:account.id},
+                                        {index:'status',value:'pending'},
+                                        {index:'paid_amount',value:'0'},
+                                        {index:'notes',value:notes},
+                                        {index:'last_updated',value:last_updated}]};
+
+                                    var receipts_json={data_store:'receipts_payment_mapping',
+                                    data:[{index:'id',value:new_id},
+                                        {index:'receipt_id',value:receipt_id},
+                                        {index:'payment_id',value:account.id},
+                                        {index:'type',value:account.type},
+                                        {index:'amount',value:account.paid_amount},
+                                        {index:'acc_name',value:account_name},
+                                        {index:'date',value:receipt_date},
+                                        {index:'last_updated',value:last_updated}]};
+
+									update_json(payment_json);
+									create_json(receipts_json);
 									total_amount=total_amount+parseFloat(account.total_amount);
 								}								
 							}
@@ -12084,26 +12092,25 @@ function modal155_action()
 							if(total_amount<0)
 							{
 								var notes=account.notes+"\nClosed by receipt # "+receipt_id;
-								var payment_xml="<payments>" +
-									"<id>"+account.id+"</id>" +
-									"<paid_amount>"+account.total_amount+"</paid_amount>" +
-									"<status>closed</status>" +
-									"<notes>"+notes+"</notes>" +
-									"<last_updated>"+last_updated+"</last_updated>" +
-									"</payments>";
-								var receipts_xml="<receipts_payment_mapping>" +
-									"<id>"+new_id+"</id>" +
-									"<receipt_id>"+receipt_id+"</receipt_id>" +
-									"<payment_id>"+account.id+"</payment_id>" +
-									"<type>"+account.type+"</type>" +
-									"<amount>"+(parseFloat(account.total_amount)-parseFloat(account.paid_amount))+"</amount>" +
-									"<acc_name>"+account_name+"</acc_name>" +
-									"<date>"+receipt_date+"</date>" +
-									"<last_updated>"+last_updated+"</last_updated>" +
-									"</receipts_payment_mapping>";
-							
-								update_simple(payment_xml);
-								create_simple(receipts_xml);
+                                var payment_json={data_store:'payments',
+                                    data:[{index:'id',value:account.id},
+                                        {index:'status',value:'closed'},
+                                        {index:'paid_amount',value:account.total_amount},
+                                        {index:'notes',value:notes},
+                                        {index:'last_updated',value:last_updated}]};
+
+                                var receipts_json={data_store:'receipts_payment_mapping',
+                                    data:[{index:'id',value:new_id},
+                                        {index:'receipt_id',value:receipt_id},
+                                        {index:'payment_id',value:account.id},
+                                        {index:'type',value:account.type},
+                                        {index:'amount',value:(parseFloat(account.total_amount)-parseFloat(account.paid_amount))},
+                                        {index:'acc_name',value:account_name},
+                                        {index:'date',value:receipt_date},
+                                        {index:'last_updated',value:last_updated}]};
+
+								update_json(payment_json);
+								create_json(receipts_json);
 							}
 							else
 							{
@@ -12111,51 +12118,50 @@ function modal155_action()
 								{
 									var balanced_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount)-total_amount;
 									var notes=account.notes+"\n Rs."+balanced_amount+" balanced against receipt # "+receipt_id;
-									var payment_xml="<payments>" +
-										"<id>"+account.id+"</id>" +
-										"<paid_amount>"+(parseFloat(account.total_amount)-total_amount)+"</paid_amount>" +
-										"<status>pending</status>" +
-										"<notes>"+notes+"</notes>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</payments>";
-									var receipts_xml="<receipts_payment_mapping>" +
-										"<id>"+new_id+"</id>" +
-										"<receipt_id>"+receipt_id+"</receipt_id>" +
-										"<payment_id>"+account.id+"</payment_id>" +
-										"<type>"+account.type+"</type>" +
-										"<amount>"+balanced_amount+"</amount>" +
-										"<acc_name>"+account_name+"</acc_name>" +
-										"<date>"+receipt_date+"</date>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</receipts_payment_mapping>";
-								
-									update_simple(payment_xml);
-									create_simple(receipts_xml);
+                                    
+                                    var payment_json={data_store:'payments',
+                                    data:[{index:'id',value:account.id},
+                                        {index:'status',value:'pending'},
+                                        {index:'paid_amount',value:(parseFloat(account.total_amount)-total_amount)},
+                                        {index:'notes',value:notes},
+                                        {index:'last_updated',value:last_updated}]};
+
+                                    var receipts_json={data_store:'receipts_payment_mapping',
+                                    data:[{index:'id',value:new_id},
+                                        {index:'receipt_id',value:receipt_id},
+                                        {index:'payment_id',value:account.id},
+                                        {index:'type',value:account.type},
+                                        {index:'amount',value:balanced_amount},
+                                        {index:'acc_name',value:account_name},
+                                        {index:'date',value:receipt_date},
+                                        {index:'last_updated',value:last_updated}]};
+
+									update_json(payment_json);
+									create_json(receipts_json);
 									total_amount=0;
 								}
 								else
 								{
 									var notes=account.notes+"\n Rs."+account.paid_amount+" balanced against receipt # "+receipt_id;
-									var payment_xml="<payments>" +
-										"<id>"+account.id+"</id>" +
-										"<paid_amount>0</paid_amount>" +
-										"<status>pending</status>" +
-										"<notes>"+notes+"</notes>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</payments>";
-									var receipts_xml="<receipts_payment_mapping>" +
-										"<id>"+new_id+"</id>" +
-										"<receipt_id>"+receipt_id+"</receipt_id>" +
-										"<payment_id>"+account.id+"</payment_id>" +
-										"<type>"+account.type+"</type>" +
-										"<amount>"+account.paid_amount+"</amount>" +
-										"<acc_name>"+account_name+"</acc_name>" +
-										"<date>"+receipt_date+"</date>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</receipts_payment_mapping>";
-								
-									update_simple(payment_xml);
-									create_simple(receipts_xml);
+                                    var payment_json={data_store:'payments',
+                                    data:[{index:'id',value:account.id},
+                                        {index:'status',value:'pending'},
+                                        {index:'paid_amount',value:'0'},
+                                        {index:'notes',value:notes},
+                                        {index:'last_updated',value:last_updated}]};
+
+                                    var receipts_json={data_store:'receipts_payment_mapping',
+                                    data:[{index:'id',value:new_id},
+                                        {index:'receipt_id',value:receipt_id},
+                                        {index:'payment_id',value:account.id},
+                                        {index:'type',value:account.type},
+                                        {index:'amount',value:account.paid_amount},
+                                        {index:'acc_name',value:account_name},
+                                        {index:'date',value:receipt_date},
+                                        {index:'last_updated',value:last_updated}]};
+
+									update_json(payment_json);
+									create_json(receipts_json);
 									total_amount=total_amount-parseFloat(account.total_amount);
 								}								
 							}
@@ -12167,55 +12173,54 @@ function modal155_action()
 				var p_id=get_new_key();				
 				if(total_amount<0)
 				{
-					var payment_xml="<payments>" +
-								"<id>"+p_id+"</id>" +
-								"<status>pending</status>" +
-								"<type>paid</type>" +
-								"<date>"+receipt_date+"</date>" +
-								"<total_amount>"+(-total_amount)+"</total_amount>" +
-								"<paid_amount>0</paid_amount>" +
-								"<acc_name>"+account_name+"</acc_name>" +
-								"<due_date>"+get_credit_period()+"</due_date>" +
-								"<mode>cash</mode>" +
-								"<transaction_id>"+p_id+"</transaction_id>" +
-								"<bill_id>"+receipt_id+"</bill_id>" +
-								"<source_info>receipts</source_info>"+
-								"<notes>Generated for receipt # "+receipt_id+"</notes>" +	
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</payments>";
-					var receipts_xml="<receipts_payment_mapping>" +
-								"<id>"+new_id+"</id>" +
-								"<receipt_id>"+receipt_id+"</receipt_id>" +
-								"<payment_id>"+p_id+"</payment_id>" +
-								"<type>paid</type>" +
-								"<amount>"+(-total_amount)+"</amount>" +
-								"<acc_name>"+account_name+"</acc_name>" +
-								"<date>"+receipt_date+"</date>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</receipts_payment_mapping>";
-						
-					create_simple(receipts_xml);
-					create_simple(payment_xml);		
+                    var payment_json={data_store:'payments',
+	 				data:[{index:'id',value:p_id},
+	 					{index:'status',value:'pending'},
+	 					{index:'type',value:'paid'},
+	 					{index:'date',value:receipt_date},
+	 					{index:'total_amount',value:(-total_amount)+""},
+	 					{index:'paid_amount',value:'0'},
+	 					{index:'acc_name',value:account_name},
+	 					{index:'due_date',value:get_credit_period()},
+	 					{index:'mode',value:'cash'},
+	 					{index:'transaction_id',value:p_id},
+	 					{index:'source_id',value:p_id},
+	 					{index:'source',value:'receipt'},
+                        {index:'source_info',value:receipt_id},  
+                        {index:'notes',value:'Generated for receipt #'+receipt_id},
+	 					{index:'last_updated',value:last_updated}]};
+ 					
+                    var receipts_json={data_store:'receipts_payment_mapping',
+	 				data:[{index:'id',value:new_id},
+	 					{index:'receipt_id',value:receipt_id},
+	 					{index:'payment_id',value:p_id},
+	 					{index:'type',value:'paid'},
+	 					{index:'amount',value:(-total_amount)+""},
+	 					{index:'acc_name',value:account_name},
+	 					{index:'date',value:receipt_date},
+	 					{index:'last_updated',value:last_updated}]};
+ 						
+					create_json(receipts_json);
+					create_json(payment_json);		
 				}
 				
-				var receipt_xml="<receipts>" +
-								"<id>"+p_id+"</id>" +
-								"<receipt_id>"+receipt_id+"</receipt_id>" +
-								"<type>"+receipt_type+"</type>" +
-								"<amount>"+amount_filter.value+"</amount>" +
-								"<narration>"+narration_filter.value+"</narration>" +
-								"<acc_name>"+account_name+"</acc_name>" +
-								"<date>"+receipt_date+"</date>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</receipts>";
-				create_simple(receipt_xml);
+                var receipt_json={data_store:'receipts',
+	 				data:[{index:'id',value:p_id},
+	 					{index:'receipt_id',value:receipt_id},
+	 					{index:'type',value:receipt_type},
+	 					{index:'amount',value:amount_filter.value},
+	 					{index:'narration',value:narration_filter.value},
+	 					{index:'acc_name',value:account_name},
+	 					{index:'date',value:receipt_date},
+	 					{index:'last_updated',value:last_updated}]};
+ 				
+				create_json(receipt_json);
 				
 				var receipt_id_array=receipt_id.split('-');
-				var receipt_id_xml="<user_preferences>"+
-						"<id>"+receipt_record_id+"</id>"+				
-						"<value>"+(parseInt(receipt_id_array[1])+1)+"</value>"+
-						"</user_preferences>";
-				update_simple(receipt_id_xml);
+                var receipt_id_json={data_store:'user_preferences',
+	 				data:[{index:'id',value:receipt_record_id},
+	 					{index:'value',value:(parseInt(receipt_id_array[1])+1)+""}]}; 				
+				update_json(receipt_id_json);
 			});
 		}
 		else
@@ -12223,7 +12228,7 @@ function modal155_action()
 			$("#modal2_link").click();
 		}
 		
-		$("#modal155").dialog("close");
+		$(form).find(".close").click();
 	});
 	
 	$("#modal155_link").click();
@@ -13825,15 +13830,11 @@ function modal172_action()
 	$(date_filter).datepicker();
 	date_filter.value=get_my_date();
 
-	var accounts_data="<customers>" +
-			"<acc_name></acc_name>" +
-			"</customers>";
-	set_my_value_list(accounts_data,account_filter);
+	var accounts_data={data_store:'accounts',return_column:'acc_name'};
+	set_my_value_list_json(accounts_data,account_filter);
 	
-	var receipts_data="<receipts>" +
-			"<receipt_id></receipt_id>" +
-			"</receipts>";
-	get_single_column_data(function(receipts)
+	var receipts_data={data_store:'receipts',return_column:'receipt_id'};
+	read_json_single_column(receipts_data,function(receipts)
 	{
 		$(receipt_filter).off('blur');
 		$(receipt_filter).on('blur',function(event)
@@ -13850,16 +13851,15 @@ function modal172_action()
 	$(account_filter).off('blur');
 	$(account_filter).on('blur',function(e)
 	{
-		var payments_data="<payments>" +
-				"<id></id>" +
-				"<type></type>" +
-				"<total_amount></total_amount>" +
-				"<paid_amount></paid_amount>" +
-				"<status exact='yes'>pending</status>" +
-				"<acc_name exact='yes'>"+account_filter.value+"</acc_name>" +
-				"</payments>";
+		var payments_data={data_store:'payments',
+                          indexes:[{index:'id'},
+                                  {index:'type'},
+                                  {index:'total_amount'},
+                                  {index:'paid_amount'},
+                                  {index:'status',exact:'pending'},
+                                  {index:'acc_name',exact:account_filter.value}]};
 
-		fetch_requested_data('',payments_data,function(payments)
+		read_json_rows('',payments_data,function(payments)
 		{
 			var balance_amount=0;
 			payments.forEach(function(payment)
@@ -13908,18 +13908,16 @@ function modal172_action()
 
 		if(is_create_access('form282'))
 		{
-			var accounts_data="<payments>" +
-					"<id></id>" +
-					"<type></type>"+					
-					"<status exact='yes'>pending</status>" +
-					"<acc_name exact='yes'>"+account_name+"</acc_name>" +
-					"<date></date>" +
-					"<total_amount></total_amount>" +
-					"<paid_amount></paid_amount>" +
-					"<notes></notes>" +
-					"</payments>";
-			
-			fetch_requested_data('',accounts_data,function(accounts)
+			var accounts_data={data_store:'payments',
+                              indexes:[{index:'id'},
+                                      {index:'type'},
+                                      {index:'status',exact:'pending'},
+                                      {index:'acc_name',exact:account_name},
+                                      {index:'date'},
+                                      {index:'total_amount'},
+                                      {index:'paid_amount'},
+                                      {index:'notes'}]};
+			read_json_rows('',accounts_data,function(accounts)
 			{
 				accounts.sort(function(a,b)
 				{
@@ -13980,26 +13978,25 @@ function modal172_action()
 					if(total_amount==0)
 					{
 						var notes=account.notes+"\nClosed by receipt # "+receipt_id;
-						var payment_xml="<payments>" +
-								"<id>"+account.id+"</id>" +
-								"<paid_amount>"+account.total_amount+"</paid_amount>" +
-								"<status>closed</status>" +
-								"<notes>"+notes+"</notes>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</payments>";
-						var receipts_xml="<receipts_payment_mapping>" +
-								"<id>"+new_id+"</id>" +
-								"<receipt_id>"+receipt_id+"</receipt_id>" +
-								"<payment_id>"+account.id+"</payment_id>" +
-								"<type>"+account.type+"</type>" +
-								"<amount>"+(parseFloat(account.total_amount)-parseFloat(account.paid_amount))+"</amount>" +
-								"<acc_name>"+account_name+"</acc_name>" +
-								"<date>"+receipt_date+"</date>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</receipts_payment_mapping>";
+						 var payment_json={data_store:'payments',
+                        data:[{index:'id',value:account.id},
+                            {index:'status',value:'closed'},
+                            {index:'paid_amount',value:account.total_amount},
+                            {index:'notes',value:notes},
+                            {index:'last_updated',value:last_updated}]};
+
+                        var receipts_json={data_store:'receipts_payment_mapping',
+                        data:[{index:'id',value:new_id},
+                            {index:'receipt_id',value:receipt_id},
+                            {index:'payment_id',value:account.id},
+                            {index:'type',value:account.type},
+                            {index:'amount',value:(parseFloat(account.total_amount)-parseFloat(account.paid_amount))},
+                            {index:'acc_name',value:account_name},
+                            {index:'date',value:receipt_date},
+                            {index:'last_updated',value:last_updated}]};
 						
-						update_simple(payment_xml);
-						create_simple(receipts_xml);	
+                        update_json(payment_json);
+						create_json(receipts_json);	
 					}
 					else
 					{
@@ -14008,26 +14005,25 @@ function modal172_action()
 							if(total_amount>0)
 							{
 								var notes=account.notes+"\nClosed by receipt # "+receipt_id;
-								var payment_xml="<payments>" +
-									"<id>"+account.id+"</id>" +
-									"<paid_amount>"+account.total_amount+"</paid_amount>" +
-									"<status>closed</status>" +
-									"<notes>"+notes+"</notes>" +
-									"<last_updated>"+last_updated+"</last_updated>" +
-									"</payments>";
-								var receipts_xml="<receipts_payment_mapping>" +
-									"<id>"+new_id+"</id>" +
-									"<receipt_id>"+receipt_id+"</receipt_id>" +
-									"<payment_id>"+account.id+"</payment_id>" +
-									"<type>"+account.type+"</type>" +
-									"<amount>"+(parseFloat(account.total_amount)-parseFloat(account.paid_amount))+"</amount>" +
-									"<acc_name>"+account_name+"</acc_name>" +
-									"<date>"+receipt_date+"</date>" +
-									"<last_updated>"+last_updated+"</last_updated>" +
-									"</receipts_payment_mapping>";
-							
-								update_simple(payment_xml);
-								create_simple(receipts_xml);
+								var payment_json={data_store:'payments',
+                                    data:[{index:'id',value:account.id},
+                                        {index:'status',value:'closed'},
+                                        {index:'paid_amount',value:account.total_amount},
+                                        {index:'notes',value:notes},
+                                        {index:'last_updated',value:last_updated}]};
+
+                                    var receipts_json={data_store:'receipts_payment_mapping',
+                                    data:[{index:'id',value:new_id},
+                                        {index:'receipt_id',value:receipt_id},
+                                        {index:'payment_id',value:account.id},
+                                        {index:'type',value:account.type},
+                                        {index:'amount',value:(parseFloat(account.total_amount)-parseFloat(account.paid_amount))},
+                                        {index:'acc_name',value:account_name},
+                                        {index:'date',value:receipt_date},
+                                        {index:'last_updated',value:last_updated}]};
+
+                                update_json(payment_json);
+								create_json(receipts_json);
 							}
 							else
 							{
@@ -14035,51 +14031,49 @@ function modal172_action()
 								{
 									var balanced_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount)+total_amount;
 									var notes=account.notes+"\n Rs."+balanced_amount+" balanced against receipt # "+receipt_id;
-									var payment_xml="<payments>" +
-										"<id>"+account.id+"</id>" +
-										"<paid_amount>"+(parseFloat(account.total_amount)+total_amount)+"</paid_amount>" +
-										"<status>pending</status>" +
-										"<notes>"+notes+"</notes>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</payments>";
-									var receipts_xml="<receipts_payment_mapping>" +
-										"<id>"+new_id+"</id>" +
-										"<receipt_id>"+receipt_id+"</receipt_id>" +
-										"<payment_id>"+account.id+"</payment_id>" +
-										"<type>"+account.type+"</type>" +
-										"<amount>"+balanced_amount+"</amount>" +
-										"<acc_name>"+account_name+"</acc_name>" +
-										"<date>"+receipt_date+"</date>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</receipts_payment_mapping>";
-								
-									update_simple(payment_xml);
-									create_simple(receipts_xml);
+									var payment_json={data_store:'payments',
+                                    data:[{index:'id',value:account.id},
+                                        {index:'status',value:'pending'},
+                                        {index:'paid_amount',value:parseFloat(account.total_amount)+total_amount},
+                                        {index:'notes',value:notes},
+                                        {index:'last_updated',value:last_updated}]};
+
+                                    var receipts_json={data_store:'receipts_payment_mapping',
+                                    data:[{index:'id',value:new_id},
+                                        {index:'receipt_id',value:receipt_id},
+                                        {index:'payment_id',value:account.id},
+                                        {index:'type',value:account.type},
+                                        {index:'amount',value:balanced_amount},
+                                        {index:'acc_name',value:account_name},
+                                        {index:'date',value:receipt_date},
+                                        {index:'last_updated',value:last_updated}]};
+
+									update_json(payment_json);
+									create_json(receipts_json);
 									total_amount=0;
 								}
 								else
 								{
 									var notes=account.notes+"\n Rs."+account.paid_amount+" balanced against receipt # "+receipt_id;
-									var payment_xml="<payments>" +
-										"<id>"+account.id+"</id>" +
-										"<paid_amount>0</paid_amount>" +
-										"<status>pending</status>" +
-										"<notes>"+notes+"</notes>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</payments>";
-									var receipts_xml="<receipts_payment_mapping>" +
-										"<id>"+new_id+"</id>" +
-										"<receipt_id>"+receipt_id+"</receipt_id>" +
-										"<payment_id>"+account.id+"</payment_id>" +
-										"<type>"+account.type+"</type>" +
-										"<amount>"+account.paid_amount+"</amount>" +
-										"<acc_name>"+account_name+"</acc_name>" +
-										"<date>"+receipt_date+"</date>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</receipts_payment_mapping>";
-								
-									update_simple(payment_xml);
-									create_simple(receipts_xml);
+                                    var payment_json={data_store:'payments',
+                                    data:[{index:'id',value:account.id},
+                                        {index:'status',value:'pending'},
+                                        {index:'paid_amount',value:'0'},
+                                        {index:'notes',value:notes},
+                                        {index:'last_updated',value:last_updated}]};
+
+                                    var receipts_json={data_store:'receipts_payment_mapping',
+                                    data:[{index:'id',value:new_id},
+                                        {index:'receipt_id',value:receipt_id},
+                                        {index:'payment_id',value:account.id},
+                                        {index:'type',value:account.type},
+                                        {index:'amount',value:account.paid_amount},
+                                        {index:'acc_name',value:account_name},
+                                        {index:'date',value:receipt_date},
+                                        {index:'last_updated',value:last_updated}]};
+
+									update_json(payment_json);
+									create_json(receipts_json);
 									total_amount=total_amount+parseFloat(account.total_amount);
 								}								
 							}
@@ -14089,26 +14083,25 @@ function modal172_action()
 							if(total_amount<0)
 							{
 								var notes=account.notes+"\nClosed by receipt # "+receipt_id;
-								var payment_xml="<payments>" +
-									"<id>"+account.id+"</id>" +
-									"<paid_amount>"+account.total_amount+"</paid_amount>" +
-									"<status>closed</status>" +
-									"<notes>"+notes+"</notes>" +
-									"<last_updated>"+last_updated+"</last_updated>" +
-									"</payments>";
-								var receipts_xml="<receipts_payment_mapping>" +
-									"<id>"+new_id+"</id>" +
-									"<receipt_id>"+receipt_id+"</receipt_id>" +
-									"<payment_id>"+account.id+"</payment_id>" +
-									"<type>"+account.type+"</type>" +
-									"<amount>"+(parseFloat(account.total_amount)-parseFloat(account.paid_amount))+"</amount>" +
-									"<acc_name>"+account_name+"</acc_name>" +
-									"<date>"+receipt_date+"</date>" +
-									"<last_updated>"+last_updated+"</last_updated>" +
-									"</receipts_payment_mapping>";
-							
-								update_simple(payment_xml);
-								create_simple(receipts_xml);
+								var payment_json={data_store:'payments',
+                                    data:[{index:'id',value:account.id},
+                                        {index:'status',value:'closed'},
+                                        {index:'paid_amount',value:account.total_amount},
+                                        {index:'notes',value:notes},
+                                        {index:'last_updated',value:last_updated}]};
+
+                                    var receipts_json={data_store:'receipts_payment_mapping',
+                                    data:[{index:'id',value:new_id},
+                                        {index:'receipt_id',value:receipt_id},
+                                        {index:'payment_id',value:account.id},
+                                        {index:'type',value:account.type},
+                                        {index:'amount',value:(parseFloat(account.total_amount)-parseFloat(account.paid_amount))},
+                                        {index:'acc_name',value:account_name},
+                                        {index:'date',value:receipt_date},
+                                        {index:'last_updated',value:last_updated}]};
+
+                                update_json(payment_json);
+								create_json(receipts_json);
 							}
 							else
 							{
@@ -14116,51 +14109,50 @@ function modal172_action()
 								{
 									var balanced_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount)-total_amount;
 									var notes=account.notes+"\n Rs."+balanced_amount+" balanced against receipt # "+receipt_id;
-									var payment_xml="<payments>" +
-										"<id>"+account.id+"</id>" +
-										"<paid_amount>"+(parseFloat(account.total_amount)-total_amount)+"</paid_amount>" +
-										"<status>pending</status>" +
-										"<notes>"+notes+"</notes>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</payments>";
-									var receipts_xml="<receipts_payment_mapping>" +
-										"<id>"+new_id+"</id>" +
-										"<receipt_id>"+receipt_id+"</receipt_id>" +
-										"<payment_id>"+account.id+"</payment_id>" +
-										"<type>"+account.type+"</type>" +
-										"<amount>"+balanced_amount+"</amount>" +
-										"<acc_name>"+account_name+"</acc_name>" +
-										"<date>"+receipt_date+"</date>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</receipts_payment_mapping>";
-								
-									update_simple(payment_xml);
-									create_simple(receipts_xml);
+									var payment_json={data_store:'payments',
+                                    data:[{index:'id',value:account.id},
+                                        {index:'status',value:'pending'},
+                                        {index:'paid_amount',value:(parseFloat(account.total_amount)-total_amount)},
+                                        {index:'notes',value:notes},
+                                        {index:'last_updated',value:last_updated}]};
+
+                                    var receipts_json={data_store:'receipts_payment_mapping',
+                                    data:[{index:'id',value:new_id},
+                                        {index:'receipt_id',value:receipt_id},
+                                        {index:'payment_id',value:account.id},
+                                        {index:'type',value:account.type},
+                                        {index:'amount',value:balanced_amount},
+                                        {index:'acc_name',value:account_name},
+                                        {index:'date',value:receipt_date},
+                                        {index:'last_updated',value:last_updated}]};
+
+                                    update_json(payment_json);
+									create_json(receipts_json);
 									total_amount=0;
 								}
 								else
 								{
 									var notes=account.notes+"\n Rs."+account.paid_amount+" balanced against receipt # "+receipt_id;
-									var payment_xml="<payments>" +
-										"<id>"+account.id+"</id>" +
-										"<paid_amount>0</paid_amount>" +
-										"<status>pending</status>" +
-										"<notes>"+notes+"</notes>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</payments>";
-									var receipts_xml="<receipts_payment_mapping>" +
-										"<id>"+new_id+"</id>" +
-										"<receipt_id>"+receipt_id+"</receipt_id>" +
-										"<payment_id>"+account.id+"</payment_id>" +
-										"<type>"+account.type+"</type>" +
-										"<amount>"+account.paid_amount+"</amount>" +
-										"<acc_name>"+account_name+"</acc_name>" +
-										"<date>"+receipt_date+"</date>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</receipts_payment_mapping>";
-								
-									update_simple(payment_xml);
-									create_simple(receipts_xml);
+                                    
+                                    var payment_json={data_store:'payments',
+                                    data:[{index:'id',value:account.id},
+                                        {index:'status',value:'pending'},
+                                        {index:'paid_amount',value:'0'},
+                                        {index:'notes',value:notes},
+                                        {index:'last_updated',value:last_updated}]};
+
+                                    var receipts_json={data_store:'receipts_payment_mapping',
+                                    data:[{index:'id',value:new_id},
+                                        {index:'receipt_id',value:receipt_id},
+                                        {index:'payment_id',value:account.id},
+                                        {index:'type',value:account.type},
+                                        {index:'amount',value:account.paid_amount},
+                                        {index:'acc_name',value:account_name},
+                                        {index:'date',value:receipt_date},
+                                        {index:'last_updated',value:last_updated}]};
+
+									update_json(payment_json);
+									create_json(receipts_json);
 									total_amount=total_amount-parseFloat(account.total_amount);
 								}								
 							}
@@ -14172,49 +14164,49 @@ function modal172_action()
 				var p_id=get_new_key();				
 				if(total_amount<0)
 				{
-					var payment_xml="<payments>" +
-								"<id>"+p_id+"</id>" +
-								"<status>pending</status>" +
-								"<type>received</type>" +
-								"<date>"+receipt_date+"</date>" +
-								"<total_amount>"+(-total_amount)+"</total_amount>" +
-								"<paid_amount>0</paid_amount>" +
-								"<acc_name>"+account_name+"</acc_name>" +
-								"<due_date>"+get_debit_period()+"</due_date>" +
-								"<mode>cash</mode>" +
-								"<transaction_id>"+p_id+"</transaction_id>" +
-								"<bill_id>"+receipt_id+"</bill_id>" +
-								"<source_info>receipts</source_info>"+
-								"<notes>Generated for receipt # "+receipt_id+"</notes>" +	
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</payments>";
-					var receipts_xml="<receipts_payment_mapping>" +
-								"<id>"+new_id+"</id>" +
-								"<receipt_id>"+receipt_id+"</receipt_id>" +
-								"<payment_id>"+p_id+"</payment_id>" +
-								"<type>received</type>" +
-								"<amount>"+(-total_amount)+"</amount>" +
-								"<acc_name>"+account_name+"</acc_name>" +
-								"<date>"+receipt_date+"</date>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</receipts_payment_mapping>";
-						
-					create_simple(receipts_xml);
-								
-					create_simple(payment_xml);		
+                    var payment_json={data_store:'payments',
+                                    data:[{index:'id',value:p_id},
+                                        {index:'status',value:'pending'},
+                                        {index:'type',value:'received'},
+                                        {index:'date',value:receipt_date},
+                                        {index:'total_amount',value:(-total_amount)+""},
+                                        {index:'paid_amount',value:'0'},
+                                        {index:'acc_name',value:account_name},
+                                        {index:'due_date',value:get_debit_period()},
+                                        {index:'mode',value:'cash'},
+                                        {index:'transaction_id',value:p_id},
+                                        {index:'source_id',value:p_id},
+                                        {index:'source',value:'receipt'},
+                                        {index:'source_info',value:receipt_id},
+                                        {index:'notes',value:'Gernerated for receipt #'+receipt_id},
+                                        {index:'source_info',value:'receipts'},
+                                        {index:'last_updated',value:last_updated}]};
+
+                    var receipts_json={data_store:'receipts_payment_mapping',
+                                    data:[{index:'id',value:new_id},
+                                        {index:'receipt_id',value:receipt_id},
+                                        {index:'payment_id',value:p_id},
+                                        {index:'type',value:'received'},
+                                        {index:'amount',value:(-total_amount)+""},
+                                        {index:'acc_name',value:account_name},
+                                        {index:'date',value:receipt_date},
+                                        {index:'last_updated',value:last_updated}]};
+
+					create_json(receipts_json);
+					create_json(payment_json);		
 				}
 				
-				var receipt_xml="<receipts>" +
-								"<id>"+p_id+"</id>" +
-								"<receipt_id>"+receipt_id+"</receipt_id>" +
-								"<type>"+receipt_type+"</type>" +
-								"<amount>"+paid_amount+"</amount>" +
-								"<narration>"+narration+"</narration>" +
-								"<acc_name>"+account_name+"</acc_name>" +
-								"<date>"+receipt_date+"</date>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</receipts>";
-				create_simple(receipt_xml);
+                 var receipt_json={data_store:'receipts',
+	 				data:[{index:'id',value:p_id},
+	 					{index:'receipt_id',value:receipt_id},
+	 					{index:'type',value:receipt_type},
+	 					{index:'amount',value:paid_amount},
+	 					{index:'narration',value:narration},
+	 					{index:'acc_name',value:account_name},
+	 					{index:'date',value:receipt_date},
+	 					{index:'last_updated',value:last_updated}]};
+ 				
+				create_json(receipt_json);
 			});
 		}	
 		else
@@ -14222,9 +14214,9 @@ function modal172_action()
 			$("#modal2_link").click();
 		}
 		
-		$("#modal172").dialog("close");
+		$(form).find(".close").click();
 	});	
-	$("#modal172").dialog("open");
+	$("#modal172_link").click();
 }
 
 /**

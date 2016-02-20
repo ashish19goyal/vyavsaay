@@ -1195,32 +1195,6 @@ function form54_header_ini()
 
 
 /**
- * @form Cash register
- * @formNo 56
- */
-function form56_header_ini()
-{
-	var filter_fields=document.getElementById('form56_header');
-	var account_filter=filter_fields.elements[0];
-	var type_filter=filter_fields.elements[1];
-	
-	var account_data="<accounts>" +
-			"<acc_name></acc_name>" +
-			"</accounts>";
-	
-	set_my_filter(account_data,account_filter);
-	set_static_filter('cash_register','type',type_filter);	
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form56_ini();
-	});
-
-};
-
-/**
  * @form Manage services
  * @formNo 57
  */
@@ -1612,33 +1586,6 @@ function form70_header_ini()
 	set_my_filter(order_data,order_filter);
 	set_my_filter(cust_data,name_filter);
 	set_static_filter('sale_orders','status',status_filter);
-};
-
-
-/**
- * @form Manage Accounts
- * @formNo 71
- */
-function form71_header_ini()
-{
-	var filter_fields=document.getElementById('form71_header');
-	var name_filter=filter_fields.elements[0];
-	var type_filter=filter_fields.elements[1];
-	
-	var name_data="<accounts>" +
-			"<acc_name></acc_name>" +
-			"</accounts>";
-
-	set_my_filter(name_data,name_filter);
-	set_static_filter('accounts','type',type_filter);
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form71_ini();
-	});
-
 };
 
 
@@ -8172,55 +8119,6 @@ function form240_header_ini()
 	$('#form240_body').html("");
 }
 
-/**
- * @form Manage Receivables
- * @formNo 241
- */
-function form241_header_ini()
-{
-	var filter_fields=document.getElementById('form241_header');
-	var account_filter=filter_fields.elements[0];
-	var status_filter=filter_fields.elements[1];
-	
-	var accounts_data="<accounts>" +
-			"<acc_name></acc_name>" +
-			"</accounts>";
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form241_ini();
-	});
-
-	set_my_filter(accounts_data,account_filter);
-	set_static_filter('payments','status',status_filter);
-};
-
-/**
- * @form Manage Payables
- * @formNo 242
- */
-function form242_header_ini()
-{
-	var filter_fields=document.getElementById('form242_header');
-	var account_filter=filter_fields.elements[0];
-	var status_filter=filter_fields.elements[1];
-	
-	var accounts_data="<accounts>" +
-			"<acc_name></acc_name>" +
-			"</accounts>";
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form242_ini();
-	});
-
-	set_my_filter(accounts_data,account_filter);
-	set_static_filter('payments','status',status_filter);
-};
 
 
 /**
@@ -9761,33 +9659,6 @@ function form280_header_ini()
 	});	
 };
 
-/**
- * @form Receipts (payable)
- * @formNo 282
- */
-function form282_header_ini()
-{
-	var filter_fields=document.getElementById('form282_header');
-	var id_filter=filter_fields.elements[0];
-	var account_filter=filter_fields.elements[1];
-	
-	var id_data="<receipts>" +
-			"<receipt_id></receipt_id>" +
-			"</receipts>";
-	var account_data="<accounts>" +
-			"<acc_name></acc_name>" +
-			"</accounts>";
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form282_ini();
-	});
-
-	set_my_filter(id_data,id_filter);
-	set_my_filter(account_data,account_filter);
-};
 
 /**
  * @form Manage Performa Invoices

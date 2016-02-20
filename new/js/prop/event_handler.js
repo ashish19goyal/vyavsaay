@@ -235,7 +235,11 @@ function modal_forms_ini()
 	{
 		dynamic_modal_array.push(i);
 	}
-	for(var i=101;i<=114;i++)
+	for(var i=101;i<=105;i++)
+	{
+		dynamic_modal_array.push(i);
+	}
+    for(var i=107;i<=114;i++)
 	{
 		dynamic_modal_array.push(i);
 	}
@@ -243,7 +247,11 @@ function modal_forms_ini()
 	{
 		dynamic_modal_array.push(i);
 	}
-	for(var i=137;i<=152;i++)
+	for(var i=137;i<=143;i++)
+	{
+		dynamic_modal_array.push(i);
+	}
+    for(var i=145;i<=152;i++)
 	{
 		dynamic_modal_array.push(i);
 	}
@@ -256,10 +264,10 @@ function modal_forms_ini()
 	{
 		dynamic_modal_array.push(i);
 	}
-	for(var i=170;i<=174;i++)
-	{
-		dynamic_modal_array.push(i);
-	}
+	dynamic_modal_array.push(170);
+	dynamic_modal_array.push(171);
+	dynamic_modal_array.push(173);
+	dynamic_modal_array.push(174);
 	dynamic_modal_array.push(177);
 	
 	dynamic_modal_array.forEach(function(i)
@@ -576,7 +584,7 @@ function import_data(form_name)
 		break;
 		case 'form54':modal23_action(form54_import_template,form54_import);
 		break;
-		case 'form56':modal23_action(form56_import_template,form56_import);
+		case 'form56':modal23_action(form56_import_template,form56_import,form56_import_validate);
 		break;
 		case 'form57':modal23_action(form57_import_template,form57_import);
 		break;
@@ -600,7 +608,7 @@ function import_data(form_name)
 		break;
 		case 'form70':modal23_action(form70_import_template,form70_import);
 		break;
-		case 'form71':modal23_action(form71_import_template,form71_import);
+		case 'form71':modal23_action(form71_import_template,form71_import,form71_import_validate);
 		break;
 		case 'form72':modal23_action(form72_import_template,form72_import);
 		break;
