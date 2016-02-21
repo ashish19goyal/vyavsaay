@@ -893,6 +893,26 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>report61</name>
+			<display_name>expiring_inventory</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report62</name>
+			<display_name>inventory_prediction</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>report63</name>
 			<display_name>item_picklist</display_name>
 			<status>active</status>
@@ -956,6 +976,26 @@
 		<row>
 			<name>report69</name>
 			<display_name>project_expenses</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report70</name>
+			<display_name>inventory_shortage</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report71</name>
+			<display_name>ordered_inventory</display_name>
 			<status>active</status>
 			<value>unchecked</value>
 			<type>report</type>
@@ -1231,28 +1271,6 @@
 			<shortcut></shortcut>
 			<sync>checked</sync>
 			<tables>--sale_leads--customers--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>		
-			<name>report98</name>
-			<display_name>qr_scan_report</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>report</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--qr_scans--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>		
-			<name>report99</name>
-			<display_name>number_rto</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>report</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--rto--logistics_orders--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -2007,7 +2025,7 @@
 			<name>form99</name>
 			<display_name>delete_storage</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2931,7 +2949,7 @@
 			<name>form191</name>
 			<display_name>manage_values_lists</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -3701,7 +3719,7 @@
 			<name>form262</name>
 			<display_name>manage_grids</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -3712,7 +3730,7 @@
 			<name>form263</name>
 			<display_name>arrange_grid_tabs</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -3723,7 +3741,7 @@
 			<name>form264</name>
 			<display_name>grid_metrics</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -3855,7 +3873,7 @@
 			<name>form276</name>
 			<display_name>search_queries</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -3866,7 +3884,7 @@
 			<name>form277</name>
 			<display_name>manage_notifications</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -3877,7 +3895,7 @@
 			<name>form278</name>
 			<display_name>values_list_compact</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -3910,7 +3928,7 @@
 			<name>form281</name>
 			<display_name>manage_pop_boxes</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -3965,7 +3983,7 @@
 			<name>form286</name>
 			<display_name>system_billing</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -3976,7 +3994,7 @@
 			<name>form287</name>
 			<display_name>system_table_structure</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -3987,7 +4005,7 @@
 			<name>form288</name>
 			<display_name>user_form_definition</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -4026,172 +4044,7 @@
 			<sync>checked</sync>
 			<tables>--payments--transactions--receipts--receipts_payment_mapping--</tables>
 			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>form294</name>
-			<display_name>create_bill_sehgal</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--bills--bill_items--payments--transactions--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>form295</name>
-			<display_name>create_purchase_bill_sehgal</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--supplier_bills--supplier_bill_items--payments--transactions--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>form296</name>
-			<display_name>create_purchase_order_sehgal</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--purchase_orders--purchase_order_items--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>form297</name>
-			<display_name>manage_purchase_orders_sehgal</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--purchase_orders--purchase_order_items--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>form298</name>
-			<display_name>newsletter_components</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--newsletter--newsletter_components--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>form299</name>
-			<display_name>newsletter_assembly</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--newsletter_components--newsletter--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>form300</name>
-			<display_name>manage_products_pooja</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--product_master--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>form301</name>
-			<display_name>scan_qr_code</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--qr_scans--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>form302</name>
-			<display_name>convert_qr_data</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--qr_scans--qr_contexts--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>form303</name>
-			<display_name>store_placement_sehgal</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--area_utilization--store_areas--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>form304</name>
-			<display_name>inventory_sehgal</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--product_master--product_instances--inventory_adjust--bill_items--supplier_bill_items--discarded--customer_return_items--supplier_return_items--sale_prices--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>form313</name>
-			<display_name>notes</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--notes--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>form314</name>
-			<display_name>system_objects</display_name>
-			<status>active</status>
-			<value>checked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--system_objects--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>form321</name>
-			<display_name>Create Manifest</display_name>
-			<status>active</status>
-			<value>checked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--manifests--logistics_orders--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>form322</name>
-			<display_name>Manage Manifests</display_name>
-			<status>active</status>
-			<value>checked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--manifests--logistics_orders--</tables>
-			<last_updated>1</last_updated>
-		</row>
+		</row>		
 	</user_preferences>
 	<access_control>
 		<row>
@@ -4702,6 +4555,28 @@
 		</row>
 		<row>
 			<username>master</username>
+			<element_id>report61</element_id>
+			<element_name>expiring_inventory</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report62</element_id>
+			<element_name>inventory_prediction</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
 			<element_id>report63</element_id>
 			<element_name>item_picklist</element_name>
 			<status>active</status>
@@ -4770,6 +4645,28 @@
 			<username>master</username>
 			<element_id>report69</element_id>
 			<element_name>project_expenses</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report70</element_id>
+			<element_name>inventory_shortage</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report71</element_id>
+			<element_name>ordered_inventory</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -5056,28 +4953,6 @@
 			<username>master</username>
 			<element_id>report97</element_id>
 			<element_name>leads_search</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report98</element_id>
-			<element_name>qr_scan_report</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report99</element_id>
-			<element_name>number_rto</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -7857,170 +7732,5 @@
 			<del>checked</del>
 			<last_updated>1</last_updated>
 		</row>												
-		<row>
-			<username>master</username>
-			<element_id>form294</element_id>
-			<element_name>create_bill_sehgal</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>												
-		<row>
-			<username>master</username>
-			<element_id>form295</element_id>
-			<element_name>create_purchase_bill_sehgal</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>												
-		<row>
-			<username>master</username>
-			<element_id>form296</element_id>
-			<element_name>create_purchase_order_sehgal</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>												
-		<row>
-			<username>master</username>
-			<element_id>form297</element_id>
-			<element_name>manage_purchase_order_sehgal</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>												
-		<row>
-			<username>master</username>
-			<element_id>form298</element_id>
-			<element_name>newsletter_components</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>												
-		<row>
-			<username>master</username>
-			<element_id>form299</element_id>
-			<element_name>newsletter_assembly</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form300</element_id>
-			<element_name>manage_products_pooja</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form301</element_id>
-			<element_name>scan_qr_code</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form302</element_id>
-			<element_name>convert_qr_data</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form303</element_id>
-			<element_name>store_placement_sehgal</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form304</element_id>
-			<element_name>inventory_sehgal</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form313</element_id>
-			<element_name>notes</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form314</element_id>
-			<element_name>system_objects</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-        <row>
-			<username>master</username>
-			<element_id>form321</element_id>
-			<element_name>Create Manifest</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-        <row>
-			<username>master</username>
-			<element_id>form322</element_id>
-			<element_name>Manage Manifests</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
 	</access_control>
 </re_xml>

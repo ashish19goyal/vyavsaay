@@ -3956,8 +3956,8 @@ ul#navigation > li:hover:after {
   color: #fff;
 }
 .footer-widgets {
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-top: 64px;
+  padding-bottom: 50px;
 }
 .widget-title {
   padding-bottom: 25px;
@@ -9093,7 +9093,7 @@ a.custom-tooltip:hover {
     box-shadow: 0 0 0 10px rgba(232, 232, 221, 0.2);
   }
   .circle-info__title {
-    font-size: 23px;
+    font-size: 30px;
     line-height: 30px;
   }
   .circle-info__front .circle-info__title {

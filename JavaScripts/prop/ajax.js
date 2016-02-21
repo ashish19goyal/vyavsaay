@@ -40,6 +40,7 @@ function ajax_with_custom_func(url,kvp,func)
 		},
 		success: function(return_data,return_status,e)
 		{
+            //console.log(e.responseText);
 			if(e.responseText=="Invalid session")
 			{
 				number_active_ajax-=1;
