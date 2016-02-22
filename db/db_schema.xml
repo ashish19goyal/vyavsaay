@@ -714,6 +714,7 @@
 			<unit index='no' type="VARCHAR(50)"></unit><!--cm/m/mm/km/in/ft-->
 			<packing index='no' type="TEXT"></packing>
 			<weight index='no' type="DECIMAL(12,4)"></weight><!--in grams-->
+			<indexes index='yes' type="TEXT"></indexes>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</product_master>
@@ -1860,7 +1861,6 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<manifest_num index='yes' type="TEXT"></manifest_num>
 			<date index='yes' type="BIGINT"></date>
-			<status index='yes' type="VARCHAR(20)"></status><!--in-transit/pending/received-->
 			<num_orders index='no' type="INT"></num_orders>
 			<branch index='yes' type="TEXT"></branch>
 			<coloader index='yes' type="TEXT"></coloader>

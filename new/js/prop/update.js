@@ -1852,62 +1852,6 @@ function form35_update_item(form)
 
 
 /**
- * @form Manage Products
- * @param button
- */
-function form39_update_item(form)
-{
-	if(is_update_access('form39'))
-	{
-		var name=form.elements[0].value;
-		var make=form.elements[1].value;
-		var description=form.elements[2].value;
-		var tax=form.elements[6].value;
-		var data_id=form.elements[7].value;
-		var last_updated=get_my_time();
-		var pic_id=$("#img_form39_"+data_id).parent().attr('name');
-		var url=$("#img_form39_"+data_id).attr('src');
-		
-		var data_xml="<product_master>" +
-					"<id>"+data_id+"</id>" +
-					"<make>"+make+"</make>" +
-					"<name>"+name+"</name>" +
-					"<description>"+description+"</description>" +
-					"<tax>"+tax+"</tax>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</product_master>";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>product_master</tablename>" +
-					"<link_to>form39</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Product "+name+" from inventory</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		var pic_xml="<documents>" +
-					"<id>"+pic_id+"</id>" +
-					"<url>"+url+"</url>" +
-					"<doc_type>product_master</doc_type>" +
-					"<target_id>"+data_id+"</target_id>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</documents>";
-		
-		update_row(data_xml,activity_xml);
-		update_simple(pic_xml);
-		create_simple(pic_xml);
-		
-		for(var i=0;i<7;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
  * @form Verify Customer Geo-location
  * @param button
  */
@@ -2386,54 +2330,6 @@ function form59_update_item(form)
 	}
 }
 
-/**
- * formNo 60
- * form Product Attributes
- * @param button
- */
-function form60_update_item(form)
-{
-	if(is_update_access('form60'))
-	{
-		var product=form.elements[0].value;
-		var attribute=form.elements[1].value;
-		var value=form.elements[2].value;
-		var data_id=form.elements[3].value;
-		var last_updated=get_my_time();
-		var data_xml="<attributes>" +
-					"<id>"+data_id+"</id>" +
-					"<name>"+product+"</name>" +
-					"<type>product</type>" +
-					"<attribute>"+attribute+"</attribute>" +
-					"<value>"+value+"</value>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</attributes>";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>attributes</tablename>" +
-					"<link_to>form60</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Attribute "+attribute+" for product "+product+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
-		for(var i=0;i<3;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * formNo 61
@@ -4307,7 +4203,7 @@ function form108_update_item(form)
  */
 function form109_update_item(form)
 {
-	if(is_update_access('form60'))
+	if(is_update_access('form109'))
 	{
 		var asset=form.elements[0].value;
 		var attribute=form.elements[1].value;

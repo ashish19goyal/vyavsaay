@@ -867,51 +867,6 @@ function form35_import(data_array,import_type)
 
 
 /**
-* @form Manage Products
-* @formNo 39
-*/
-function form39_import(data_array,import_type)
-{
-	var data_xml="<product_master>";
-	var counter=1;
-	var last_updated=get_my_time();
-	
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</product_master><separator></separator><product_master>";
-		}
-		counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<name unique='yes'>"+row.name+"</name>" +
-				"<make>"+row.make+"</make>" +
-				"<description>"+row.description+"</description>" +
-				"<tax>"+row.tax+"</tax>" +
-				"<bar_code>"+row.bar_code+"</bar_code>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	
-	data_xml+="</product_master>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-	}
-};
-
-
-/**
 * @form Manage Bills
 * @formNo 42
 */
@@ -1214,48 +1169,6 @@ function form59_import(data_array,import_type)
 	}
 };
 
-
-/**
-* @form Product Attributes
-* @formNo 60
-*/
-function form60_import(data_array,import_type)
-{
-	var data_xml="<attributes>";
-	var counter=1;
-	var last_updated=get_my_time();
-
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</attributes><separator></separator><attributes>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<name>"+row.name+"</name>" +
-				"<type>product</type>" +
-				"<attribute>"+row.attribute+"</attribute>" +
-				"<value>"+row.value+"</value>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	data_xml+="</attributes>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-	}
-};
 
 /**
 * @form Service Attributes
@@ -4459,68 +4372,6 @@ function form181_import(data_array,import_type)
 	}
 };
 
-/**
-* @form Update Inventory (CPS)
-* @formNo 183
-*/
-function form183_import(data_array,import_type)
-{
-	var data_xml="<product_instances>";
-	var counter=1;
-	var new_id=parseFloat(get_new_key());
-	var last_updated=get_my_time();
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</product_instances><separator></separator><product_instances>";
-		}
-		
-		counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<product_name>"+row.product_name+"</product_name>" +
-				"<batch>"+row.batch+"</batch>" +
-				"<mrp>"+row.mrp+"</mrp>" +
-				"<expiry>"+get_raw_time(row.expiry)+"</expiry>" +
-				"<manufacture_date>"+get_raw_time(row.manufacture_date)+"</manufacture_date>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-		if(row.actual_quantity!="")
-		{
-			get_inventory(row.product_name,row.batch,function(quantity)
-			{
-				if(parseFloat(quantity)!==parseFloat(row.actual_quantity))
-				{
-					var new_quantity=parseFloat(row.actual_quantity)-parseFloat(quantity);
-					var adjust_xml="<inventory_adjust>" +
-							"<id>"+(new_id+counter)+"</id>" +
-							"<product_name>"+row.product_name+"</product_name>" +
-							"<batch>"+row.batch+"</batch>" +
-							"<quantity>"+new_quantity+"</quantity>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</inventory_adjust>";
-					create_simple_no_warning(adjust_xml);
-				}
-			});
-		}
-	});
-
-	data_xml+="</product_instances>";
-	
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-	}
-}
 
 /**
 * @form Production Steps

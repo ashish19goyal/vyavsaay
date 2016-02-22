@@ -159,18 +159,6 @@ function form35_import_template()
 	my_array_to_csv(data_array);
 };
 
-
-/**
-* @form Manage Products
-* @formNo 39
-*/
-function form39_import_template()
-{
-	var data_array=['id','name','make','description','tax','bar_code'];
-	my_array_to_csv(data_array);
-};
-
-
 /**
 * @form Manage Bills
 * @formNo 42
@@ -236,16 +224,6 @@ function form59_import_template()
 	my_array_to_csv(data_array);
 };
 
-
-/**
-* @form Product Attributes
-* @formNo 60
-*/
-function form60_import_template()
-{
-	var data_array=['id','name','attribute','value'];
-	my_array_to_csv(data_array);
-};
 
 /**
 * @form Service Attributes
@@ -939,15 +917,6 @@ function form181_import_template()
 	my_array_to_csv(data_array);
 };
 
-/**
-* @form Update Inventory (CPS)
-* @formNo 183
-*/
-function form183_import_template()
-{
-	var data_array=['id','product_name','batch','expiry','manufacture_date','actual_quantity','mrp'];
-	my_array_to_csv(data_array);
-};
 
 /**
 * @form Production Steps

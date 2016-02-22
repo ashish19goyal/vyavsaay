@@ -6,9 +6,9 @@
 					<th>Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form109_header'></th>
 					<th>Attribute <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form109_header'></th>
 					<th>Value</th>
-					<th><input type="button" value='Add new attribute' form='form60_header' class='add_icon' onclick="form109_add_item();">
-						<input type='button' form='form60_header' value='EXPORT' class='export_icon'>
-						<input type='submit' form='form60_header' style='visibility: hidden;'>
+					<th><input type="button" value='Add new attribute' form='form109_header' class='add_icon' onclick="form109_add_item();">
+						<input type='button' form='form109_header' value='EXPORT' class='export_icon'>
+						<input type='submit' form='form109_header' style='visibility: hidden;'>
 					</th>
 			</tr>
 		</thead>

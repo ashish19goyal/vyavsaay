@@ -1,7 +1,7 @@
 <?php
 
-	//$awb_num=$_POST['awb_num'];
-	$awb_num='828867';	
+	$awb_num=$_POST['awb_num'];
+	//$awb_num='828867';	
 	$data_object=[];
 	$data_object['api_key']="shopclues26082015";
 	$data_object['username']="shopclues";
@@ -14,7 +14,7 @@
 	$data_object['indexes'][0]['value']=$awb_num;
 	$data_object['indexes'][0]['array']='yes';
 	$data_string="data=".json_encode($data_object);
-	echo $data_string;
+	//echo $data_string;
 	$url="https://vyavsaay.com/api/get_data.php";
 	//$url="https://vyavsaay.com/api/get_data.php";
 

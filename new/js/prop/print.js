@@ -165,11 +165,17 @@ function print_static_report_table(report_id,report_title,func)
 	$(new_table).html($("#"+report_id+"_body").parent().find('thead').html());
 	$(new_table).append($("#"+report_id+"_body").html());
 	$(new_table).append($("#"+report_id+"_body").parent().find('tfoot').html());
-	
-    $(new_table).find('td').each(function()
+
+    $(new_table).find('span').each(function()
     {
-        $(this).html($(this).text());
+        $(this).parent().html($(this).text());
     });
+
+    $(new_table).find("input[type='hidden'],input[type='button'],button").each(function()
+    {
+        $(this).remove();
+    });
+
 	/////////////placing the containers //////////////////////////////////////////////////////	
 	
 	container.appendChild(header);

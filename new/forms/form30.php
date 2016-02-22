@@ -174,7 +174,10 @@
 				
 				$('#form30').formcontrol();
 				paginator.update_index(results.length);				
-				initialize_tabular_report_buttons(columns,'Customers','form30',function (item){});
+				initialize_tabular_report_buttons(columns,'Customers','form30',function (item)
+                {
+                    delete item.id;
+                });
 								
 				hide_loader();
 			});

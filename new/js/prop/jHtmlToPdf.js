@@ -84,6 +84,16 @@ var htmlToPdf = function (options)
 	            p.text.push(t);
 	            break;
 	        }
+            case "input":case 'textarea':{
+                var t = { text: e.value };
+                if(e.value=='')
+                {
+                    t={text:e.placeholder};
+                }
+	            if (styles) this.computeStyle(t, styles);
+	            p.text.push(t);
+	            break;
+	        }    
 	        case "b":case "strong": {
 	            this.parseContainer(cnt, e, p, styles.concat(["font-weight:bold"]));
 	            break;
@@ -104,9 +114,13 @@ var htmlToPdf = function (options)
 	            this.parseContainer(cnt, e, p, styles);
 	            break;
 	        }
+            case "form": {
+	            this.parseContainer(cnt, e, p, styles);
+	            break;
+	        }    
 	        case "img": 
 	        {
-	        		break;
+	           break;
 	        }
 	        case "br": {
 	            p = this.createParagraph();
@@ -168,7 +182,7 @@ var htmlToPdf = function (options)
 	            break;
 	        }
 	        case "td": {
-	            p = this.createParagraph();
+                p = this.createParagraph();
 	            var st = {stack: []}
 	            st.stack.push(p);
 	            
@@ -181,7 +195,7 @@ var htmlToPdf = function (options)
 	            cnt.push(st);
 	            break;
 	        }
-	        case "th": {
+            case "th": {
 	            p = this.createParagraph();
 	            var st = {stack: []}
 	            st.stack.push(p);

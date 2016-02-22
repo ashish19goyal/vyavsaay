@@ -1,35 +1,4 @@
 /**
-* @form Manage Products 
-* @formNo 39
-*/
-function form39_import_validate(data_array)
-{
-	var validate_template_array=[{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z /_.,()-]+$')},
-							{column:'make',regex:new RegExp('^[0-9a-zA-Z _.,@\'/()-]+$')},
-							{column:'description',regex:new RegExp('^[0-9a-zA-Z _.,/\'+@!$()-]+$')},
-							{column:'tax',required:'yes',regex:new RegExp('^[0-9.]+$')},
-							{column:'bar_code',regex:new RegExp('^[a-zA-Z0-9]+$')}];
-					
-	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
-}
-
-
-/**
-* @form Product Attributes
-* @formNo 60
-*/
-function form60_import_validate(data_array)
-{
-	var validate_template_array=[{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-							{column:'attribute',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-							{column:'value',regex:new RegExp('^[0-9a-zA-Z \'_.,/:@$*#%^!()-]+$')}];
-					
-	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
-}
-
-/**
 * @form Service Attributes
 * @formNo 61
 */

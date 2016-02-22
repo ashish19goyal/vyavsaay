@@ -1011,50 +1011,6 @@ function form35_header_ini()
 
 
 /**
- * @form Manage Products
- * @formNo 39
- */
-function form39_header_ini()
-{
-	var filter_fields=document.getElementById('form39_header');
-	var name_filter=filter_fields.elements[0];
-	var make_filter=filter_fields.elements[1];
-	var add_button=filter_fields.elements[2];
-
-	$(add_button).off('click');
-	$(add_button).on('click',function()
-	{
-		if(is_read_access('form1') || is_read_access('form207'))
-		{
-			modal14_action();
-		}
-		else 
-		{
-			modal112_action();
-		}
-	});
-	
-	var make_data="<product_master>" +
-			"<make></make>" +
-			"</product_master>";
-	var products_data="<product_master>" +
-			"<name></name>" +
-			"</product_master>";
-
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form39_ini();
-	});
-
-	set_my_filter(make_data,make_filter);
-	set_my_filter(products_data,name_filter);
-	
-};
-
-
-/**
  * @form Manage Bills
  * @formNo 42
  */
@@ -1280,35 +1236,6 @@ function form59_header_ini()
 		form59_ini();
 	});
 
-};
-
-/**
- * @form Product Attributes
- * @formNo 60
- */
-function form60_header_ini()
-{
-	var filter_fields=document.getElementById('form60_header');
-	var product_filter=filter_fields.elements[0];
-	var attribute_filter=filter_fields.elements[1];
-	
-	var product_data="<product_master>" +
-			"<name></name>" +
-			"</product_master>";
-	var attribute_data="<attributes>" +
-			"<attribute></attribute>" +
-			"<type exact='yes'>product</type>" +
-			"</attributes>";
-	
-	set_my_filter(product_data,product_filter);
-	set_my_filter(attribute_data,attribute_filter);
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form60_ini();
-	});
 };
 
 /**
@@ -5911,39 +5838,6 @@ function form181_header_ini()
 };
 
 /**
- * @form Update Inventory (CPS)
- * @formNo 183
- */
-function form183_header_ini()
-{
-	var filter_fields=document.getElementById('form183_header');	
-	var names_filter=filter_fields.elements[0];
-	var batches_filter=filter_fields.elements[1];
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form183_ini();
-	});
-	
-	var item_data="<attributes>" +
-		"<name></name>" +
-		"<type exact='yes'>product</type>"+
-		"<value exact='yes'>yes</value>"+
-		"<attribute exact='yes'>manufactured</attribute>"+
-		"</attributes>";
-
-	var batch_data="<product_instances>" +
-			"<batch></batch>" +
-			"</product_instances>";
-
-	set_my_filter(item_data,names_filter);
-	set_my_filter(batch_data,batches_filter);
-};
-
-
-/**
  * @form Production Steps
  * @formNo 184
  */
@@ -8007,118 +7901,6 @@ function form236_header_ini()
 	
 	$(date_filter).datepicker();
 };
-
-
-/**
- * @form Update Inventory (CPS)
- * @formNo 238
- */
-function form238_header_ini()
-{
-	var filter_fields=document.getElementById('form238_header');	
-	var names_filter=filter_fields.elements[0];
-	var batches_filter=filter_fields.elements[1];
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form238_ini();
-	});
-
-	var item_data="<attributes>" +
-		"<name></name>" +
-		"<type exact='yes'>product</type>"+
-		"<value exact='yes'>yes</value>"+
-		"<attribute exact='yes'>raw material</attribute>"+
-		"</attributes>";
-	
-	var batch_data="<product_instances>" +
-			"<batch></batch>" +
-			"</product_instances>";
-
-	set_my_filter(item_data,names_filter);
-	set_my_filter(batch_data,batches_filter);
-};
-
-/**
- * @form Manage Material Requirements
- * @formNo 239
- */
-function form239_header_ini()
-{
-	var filter_fields=document.getElementById('form239_header');
-	var item_filter=filter_fields.elements[0];
-		
-	var item_data="<attributes>" +
-		"<name></name>" +
-		"<type exact='yes'>product</type>"+
-		"<value exact='yes'>yes</value>"+
-		"<attribute exact='yes'>manufactured</attribute>"+
-		"</attributes>";
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form239_ini();
-	});
-
-	set_my_filter(item_data,item_filter);
-};
-
-/**
- * @form Assign Material Requirements
- * @formNo 240
- */
-function form240_header_ini()
-{
-	var fields=document.getElementById('form240_master');
-	
-	var item_filter=fields.elements['item_name'];
-	var save_button=fields.elements['save'];
-	var num_filter=fields.elements['num'];
-	
-	num_filter.value=0;
-	
-	$(save_button).off('click');
-	$(save_button).on("click", function(event)
-	{
-		event.preventDefault();
-		form240_create_form();
-	});
-
-	$(document).off('keydown');
-	$(document).on('keydown', function(event) {
-		if( event.keyCode == 83 && event.ctrlKey) {
-	    	event.preventDefault();
-	    	$(save_button).trigger('click');
-	    }
-	});
-
-	$(fields).off('submit');
-	$(fields).on("submit", function(event)
-	{
-		event.preventDefault();
-		form240_add_item();
-	});
-
-	var item_data="<attributes>" +
-		"<name></name>" +
-		"<type exact='yes'>product</type>"+
-		"<value exact='yes'>yes</value>"+
-		"<attribute exact='yes'>manufactured</attribute>"+
-		"</attributes>";
-	set_my_value_list(item_data,item_filter,function () 
-	{
-		$(item_filter).focus();
-	});
-	item_filter.value='';
-	
-	
-	$('#form240_body').html("");
-}
-
 
 
 /**

@@ -63,7 +63,8 @@
 		$.ajax(
 		{
 			type: "POST",
-			url: "./api.php",
+            url:"http://sevenhorses.in/api.php",
+			//url: "./api.php",
 			data: {awb_num:awb_num},
 			error:function(xhr)
 			{
@@ -73,7 +74,7 @@
 			success: function(return_data,return_status,e)
 			{
 				$("#result").html;
-				//console.log(e.responseText);
+				console.log(e.responseText);
 								
 				$(result_div).html('');
 								
