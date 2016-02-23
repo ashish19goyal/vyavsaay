@@ -196,7 +196,7 @@
                             data_xml+="<row>" +
                                     "<id>"+manifest_item+"</id>" +
                                     "<manifest_num></manifest_num>" +
-                                    "<manifest_id></manifest_id>" +
+                                    "<man_id></man_id>" +
                                     "<status>received</status>"+
                                     "<last_updated>"+last_updated+"</last_updated>" +
                                     "</row>";

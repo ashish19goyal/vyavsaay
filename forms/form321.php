@@ -141,7 +141,7 @@
                                             "<status></status>" +
                                             "<sku></sku>" +
                                             "<manifest_num exact='yes'>"+manifest_results[0].manifest_num+"</manifest_num>" +
-                                            "<manifest_id exact='yes'>"+manifest_id+"</manifest_id>" +
+                                            "<man_id exact='yes'>"+manifest_id+"</man_id>" +
                                             "</logistics_orders>";
 
                         /////////////////////////////////////////////////////////////////////////
@@ -480,7 +480,7 @@
                             "<id>"+data_id+"</id>" +
                             "<status>in-transit</status>" +
                             "<manifest_num>"+manifest_num+"</manifest_num>"+
-                            "<manifest_id>"+manifest_id+"</manifest_id>"+
+                            "<man_id>"+manifest_id+"</man_id>"+
                             "<order_history>"+order_history_string+"</order_history>"+
                             "<last_updated>"+last_updated+"</last_updated>" +
                             "</logistics_orders>";
@@ -686,7 +686,7 @@
                                 "<id>"+data_id+"</id>" +
                                 "<status>received</status>" +
                                 "<manifest_num></manifest_num>"+
-                                "<manifest_id></manifest_id>"+
+                                "<man_id></man_id>"+
                                 "<last_updated>"+last_updated+"</last_updated>" +
                                 "</logistics_orders>";
                     update_simple(data_xml);
