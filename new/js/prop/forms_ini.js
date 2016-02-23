@@ -2229,7 +2229,7 @@ function form42_ini()
 				$(edit_button).on("click", function(event)
 				{
 					event.preventDefault();
-					element_display(result.id,'form12',['form118','form10','form72','form225']);
+					element_display(result.id,'form12',['form118','form10','form72']);
 				});
 			}
 		});
@@ -18682,125 +18682,6 @@ function form224_ini()
 	});
 };
 
-/**
- * @form Create Bill (CPS)
- * @formNo 225
- * @Loading light
- */
-function form225_ini()
-{
-	var bill_id=$("#form225_link").attr('data_id');
-	if(bill_id==null)
-		bill_id="";	
-
-	$('#form225_body').html("");
-	$('#form225_foot').html("");
-	
-	if(bill_id!="")
-	{
-		show_loader();
-		var bill_columns="<bills>" +
-				"<id>"+bill_id+"</id>" +
-				"<bill_num></bill_num>"+				
-				"<customer_name></customer_name>" +
-				"<total></total>" +
-				"<bill_date></bill_date>" +
-				"<amount></amount>" +
-				"<discount></discount>" +
-				"<tax></tax>" +
-				"<billing_type></billing_type>" +
-				"<transaction_id></transaction_id>" +
-				"</bills>";
-		var bill_items_column="<bill_items>" +
-				"<id></id>" +
-				"<item_name></item_name>" +
-				"<item_desc></item_desc>" +
-				"<batch></batch>" +
-				"<staff></staff>" +
-				"<quantity></quantity>" +
-				"<unit_price></unit_price>" +
-				"<amount></amount>" +
-				"<total></total>" +
-				"<discount></discount>" +
-				"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
-				"<tax></tax>" +
-				"</bill_items>";
-	
-		////separate fetch function to get bill details like customer name, total etc.
-		fetch_requested_data('',bill_columns,function(bill_results)
-		{
-			var filter_fields=document.getElementById('form225_master');
-			
-			if (bill_results.length>0)
-			{
-				filter_fields.elements['customer'].value=bill_results[0].customer_name;
-				filter_fields.elements['date'].value=get_my_past_date(bill_results[0].bill_date);
-				filter_fields.elements['bill_num'].value=bill_results[0].bill_num;
-				filter_fields.elements['bill_id'].value=bill_id;
-				filter_fields.elements['t_id'].value=bill_results[0].transaction_id;
-				filter_fields.elements['bill_type'].value=bill_results[0].billing_type;
-				var save_button=filter_fields.elements['save'];
-
-				$(save_button).off('click');
-				$(save_button).on("click", function(event)
-				{
-					event.preventDefault();
-					form225_update_form();
-				});
-			}
-			
-			fetch_requested_data('',bill_items_column,function(results)
-			{
-				results.forEach(function(result)
-				{
-					var id=result.id;
-					var rowsHTML="<tr>";
-					rowsHTML+="<form id='form225_"+id+"'></form>";
-						rowsHTML+="<td data-th='Item'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form225_"+id+"' value='"+result.item_name+"'>";
-							rowsHTML+="<br><textarea readonly='readonly' form='form225_"+id+"'>"+result.item_desc+"</textarea>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Batch'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form225_"+id+"' value='"+result.batch+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Quantity'>";
-							rowsHTML+="<input type='number' readonly='readonly' form='form225_"+id+"' value='"+result.quantity+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Rate'>";
-							rowsHTML+="<input type='number' readonly='readonly' form='form225_"+id+"' value='"+result.unit_price+"' step='any'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Amount'>";
-							rowsHTML+="Amount: <input type='number' readonly='readonly' form='form225_"+id+"' step='any' value='"+result.amount+"'>";
-							rowsHTML+="<br>Discount: <input type='number' readonly='readonly' form='form225_"+id+"' step='any' value='"+result.discount+"'>";
-							rowsHTML+="<br>Tax: <input type='number' readonly='readonly' form='form225_"+id+"' step='any' value='"+result.tax+"'>";
-							rowsHTML+="<br>Total: <input type='number' readonly='readonly' form='form225_"+id+"' step='any' value='"+result.total+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Action'>";
-							rowsHTML+="<input type='hidden' form='form225_"+id+"' value='"+id+"'>";
-							rowsHTML+="<input type='button' class='submit_hidden' form='form225_"+id+"' id='save_form225_"+id+"'>";
-							rowsHTML+="<input type='button' class='delete_icon' form='form225_"+id+"' id='delete_form225_"+id+"' onclick='form225_delete_item($(this));'>";
-						rowsHTML+="</td>";			
-					rowsHTML+="</tr>";
-				
-					$('#form225_body').append(rowsHTML);
-				});
-				
-				var bt=get_session_var('title');
-				$('#form225_share').show();
-				$('#form225_share').click(function()
-				{
-					modal101_action(bt+' - Invoice# '+filter_fields.elements['bill_num'].value,filter_fields.elements['customer'].value,'customer',function (func) 
-					{
-						print_form225(func);
-					});
-				});
-				form225_get_totals();
-				$('textarea').autosize();
-				hide_loader();
-			});
-		});
-	}
-}
 
 /**
  * @form Delivery Run

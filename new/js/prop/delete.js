@@ -5576,36 +5576,6 @@ function form224_delete_item(button)
 	}
 }
 
-/**
- * @form New Bill
- * @param button
- */
-function form225_delete_item(button)
-{
-	if(is_delete_access('form225'))
-	{
-		modal115_action(function()
-		{
-			var bill_id=document.getElementById("form225_master").elements['bill_id'].value;
-			
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			var data_id=form.elements[9].value;
-			
-			var data_xml="<bill_items>" +
-					"<id>"+data_id+"</id>" +
-					"<bill_id>"+bill_id+"</bill_id>" +
-					"</bill_items>";	
-			delete_simple(data_xml);
-			$(button).parent().parent().remove();
-			form225_get_totals();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Delivery Run

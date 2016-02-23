@@ -1814,7 +1814,7 @@
 			<bag_num index='yes' type="VARCHAR(20)"></bag_num>
 			<bag_id index='yes' type="BIGINT"></bag_id>
 			<manifest_num index='yes' type="TEXT"></manifest_num>
-			<manifest_id index='yes' type="BIGINT"></manifest_id>
+			<man_id index='yes' type="BIGINT"></man_id>
 			<delivery_time index='yes' type="BIGINT"></delivery_time>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
