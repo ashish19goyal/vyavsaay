@@ -955,7 +955,7 @@
 	</purchase_followups>
 	<user_preferences>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<name index='yes' type="VARCHAR(30)" unique='yes'></name>
+			<name index='yes' type="TEXT" unique='yes'></name>
 			<display_name index="no" type="TEXT"></display_name>
 			<value index='yes' type="TEXT"></value>
 			<type index='yes' type="VARCHAR(20)"></type><!-- function/report/form/accounting/other/template -->
@@ -968,7 +968,7 @@
 	</user_preferences>
 	<access_control>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<element_id index='yes' type="VARCHAR(10)"></element_id>
+			<element_id index='yes' type="TEXT"></element_id>
 			<element_name index='yes' type="TEXT"></element_name>
 			<username index='yes' type="TEXT"></username>
 			<re index="no" type="VARCHAR(10)"></re><!-- checked/unchecked -->

@@ -9292,7 +9292,7 @@ function modal136_action(type,master)
 	var form=document.getElementById('modal136_form');
 	var type_filter=form.elements['type'];
 	var name_filter=form.elements['name'];
-	var display_name_filter=form.elements['display_name'];
+	var display_name_filter=form.elements['disp'];
 	var tables_filter=form.elements['tables'];
 	
 	if(type!="")
@@ -15675,7 +15675,7 @@ function modal190_action(id,form_id)
 	{
 		event.preventDefault();
 		
-		var docHTML="<span data-display_name='"+form.elements['display'].value+"' data-color='"+form.elements['color'].value+"' data-width='"+form.elements['wid'].value+"' data-height='"+form.elements['hei'].value+"' data-collapse='"+form.elements['collapse'].value+"'>"+form.elements['name'].value+"<i class='fa fa-times link' onclick=$(this).parent().remove();></i></span><br>";							
+        var docHTML="<div class='row'><div class='col-xs-10'><a onclick=modal193_action(this); data-display_name='"+form.elements['disp'].value+"' data-color='"+form.elements['color'].value+"' data-width='"+form.elements['wid'].value+"' data-height='"+form.elements['hei'].value+"' data-collapse='"+form.elements['collapse'].value+"'>"+form.elements['name'].value+"</a></div><div class='col-xs-2'><i class='fa fa-times link' onclick=$(this).parent().parent().remove();></i></div></div>";				
 		$('#'+form_id+'_grids_'+id).append(docHTML);				
 
  		$(form).find('.close').click();
@@ -15780,4 +15780,73 @@ function modal192_action(id)
 	});
 	
 	$("#modal192_link").click();	
+}
+
+/**
+ * @modalNo 193
+ * @modal update grids on object pages
+ */
+function modal193_action(elem)
+{
+	var form=document.getElementById('modal193_form');
+    elem=$(elem);
+    form.elements['disp'].value=elem.data('display_name');
+    form.elements['color'].value=elem.data('color');
+    form.elements['wid'].value=elem.data('width');
+    form.elements['hei'].value=elem.data('height');
+    form.elements['collapse'].value=elem.data('collapse');
+    form.elements['name'].value=$(elem).text();
+
+	$(form).off('submit');
+	$(form).on('submit',function(event) 
+	{
+		event.preventDefault();
+		
+		var docHTML="<div class='row'><div class='col-xs-10'><a onclick=modal193_action(this); data-display_name='"+form.elements['disp'].value+"' data-color='"+form.elements['color'].value+"' data-width='"+form.elements['wid'].value+"' data-height='"+form.elements['hei'].value+"' data-collapse='"+form.elements['collapse'].value+"'>"+form.elements['name'].value+"</a></div><div class='col-xs-2'><i class='fa fa-times link' onclick=$(this).parent().parent().remove();></i></div></div>";							
+		$(elem).replaceWith(docHTML);				
+
+ 		$(form).find('.close').click();
+	});
+	
+	$("#modal193_link").click();	
+}
+
+
+/**
+ * @modalNo 194
+ * @modal Search Items
+ */
+function modal194_action(elem)
+{
+	var form=document.getElementById('modal194_form');
+    var keywords=form.elements['key'];
+    var items=form.elements['items'];
+    
+    keywords.value="";
+    var items_data={data_store:'product_master',return_column:'name'};
+    set_my_select(items_data,items);
+    
+    $(keywords).off('keyup');
+    $(keywords).on('keyup',function(e)
+    {
+        if(e.keyCode==188 || e.keyCode==32)
+        {
+            var key_value=keywords.value;
+            var key_array=key_value.split(/[\s,]+/);
+            
+            var items_data={data_store:'product_master',return_column:'name',
+                           indexes:[{index:'name',array:key_array}]};
+            set_my_select(items_data,items);
+        }
+    });
+    
+	$(form).off('submit');
+	$(form).on('submit',function(event) 
+	{
+		event.preventDefault();
+	   
+ 		$(form).find('.close').click();
+	});
+	
+	$("#modal194_link").click();	
 }

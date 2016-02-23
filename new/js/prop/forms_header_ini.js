@@ -2294,41 +2294,6 @@ function form91_header_ini()
 
 
 /**
- * @form Manage Bills(multiple registers)
- * @formNo 92
- */
-function form92_header_ini()
-{
-	//console.log('92_header');
-	var filter_fields=document.getElementById('form92_header');
-	var bill_filter=filter_fields.elements[0];
-	var type_filter=filter_fields.elements[1];
-	var name_filter=filter_fields.elements[2];
-	
-	var bill_data="<bills>" +
-			"<bill_num></bill_num>" +
-			"</bills>";
-	var type_data="<bill_types>" +
-			"<name></name>" +
-			"</bill_types>";
-	var cust_data="<customers>" +
-			"<acc_name></acc_name>" +
-			"</customers>";
-	
-	set_my_filter(bill_data,bill_filter);
-	set_my_filter(type_data,type_filter);
-	set_my_filter(cust_data,name_filter);
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form92_ini();
-	});
-
-};
-
-/**
  * @form Manage Loans
  * @formNo 93
  */

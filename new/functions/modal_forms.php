@@ -1385,7 +1385,7 @@
 					     		</div>
 					     		<div class="row">
 									<div class="col-sm-12 col-md-4">Display Name</div>
-					     			<div class="col-sm-12 col-md-8"><input type='text' required form='modal136_form' name='display'></div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' required form='modal136_form' name='disp'></div>
 					     		</div>
 					     		<div class="row">
 									<div class="col-sm-12 col-md-4">Tables</div>
@@ -2532,7 +2532,7 @@
 					     		</div>
 		                  <div class="row">
 								   <div class="col-sm-12 col-md-4">Display Name</div>
-					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal190_form' name='display'></div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal190_form' name='disp'></div>
 					     		</div>
 		                  <div class="row">
 								   <div class="col-sm-12 col-md-4">Color</div>
@@ -2618,6 +2618,82 @@
 		             </div>
 	             	<div class="modal-footer">
 	               	<input type="submit" class="btn green" form='modal192_form' name='save' value='Save'>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+	<a href='#modal193' data-toggle="modal" id='modal193_link'></a>
+	<div id="modal193" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal193_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Update Grid</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal193_form' required name='name'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Display Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal193_form' name='disp'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Color</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal193_form' name='color'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Collapse</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal193_form' name='collapse'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Width</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal193_form' name='wid'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Height</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal193_form' name='hei'></div>
+					     		</div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal193_form' name='save'>Add</button>
+	               	<button type="button" class="btn red" form='modal193_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+	<a href='#modal194' data-toggle="modal" id='modal194_link'></a>
+	<div id="modal194" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal194_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Search Item</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								<div class="col-sm-12 col-md-4">Keywords</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal193_form' required name='key' autofocus></div>
+					     		</div>
+		                  <div class="row">
+								<div class="col-sm-12 col-md-4">Items</div>
+                              <div class="col-sm-12 col-md-8"><select size='8' form='modal193_form' name='items'></select></div>
+					       </div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal193_form' name='save'>Select</button>
+	               	<button type="button" class="btn red" form='modal193_form' data-dismiss='modal' name='cancel'>Cancel</button>
 	             	</div>
                 </form>
             </div>

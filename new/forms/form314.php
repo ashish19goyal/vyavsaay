@@ -113,7 +113,7 @@
 					var docHTML="";
 					elements_array.forEach(function(element)
 					{
-						docHTML+="<span data-display_name='"+element.display_name+"' data-color='"+element.color+"' data-width='"+element.width+"' data-height='"+element.height+"' data-collapse='"+element.collapse+"'>"+element.name+"<i class='fa fa-times link' onclick=$(this).parent().remove();></i></span><br>";							
+						docHTML+="<div class='row'><div class='col-xs-10'><a onclick=modal193_action(this); data-display_name='"+element.display_name+"' data-color='"+element.color+"' data-width='"+element.width+"' data-height='"+element.height+"' data-collapse='"+element.collapse+"'>"+element.name+"</a></div><div class='col-xs-2'><i class='fa fa-times link' onclick=$(this).parent().parent().remove();></i></div></div>";							
 					});
 					document.getElementById('form314_grids_'+result.id).innerHTML=docHTML;
 					
@@ -143,25 +143,25 @@
 				var id=get_new_key();
 				var rowsHTML="<tr>";
 						rowsHTML+="<form id='form314_"+id+"'></form>";
-							rowsHTML+="<td data-th='Name'>";
-								rowsHTML+="<input type='text' form='form314_"+id+"'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Display Name'>";
-								rowsHTML+="<textarea class='dblclick_editable' form='form314_"+id+"'></textarea>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Grids'>";
-								rowsHTML+="<button type='button' class='btn default green-stripe' form='form314_"+id+"'>Add Grid</button>";							
-								rowsHTML+="<div id='form314_grids_"+id+"'></div>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Status'>";
-								rowsHTML+="<select class='dblclick_editable' data-style='btn-info' form='form314_"+id+"'></select>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Action'>";
-								rowsHTML+="<input type='hidden' form='form314_"+id+"' value='"+id+"'>";	
-								rowsHTML+="<button type='submit' class='btn green' form='form314_"+id+"' title='Save'><i class='fa fa-save'></i></button>";
-								rowsHTML+="<button class='btn red' form='form314_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
-							rowsHTML+="</td>";			
-					rowsHTML+="</tr>";
+                        rowsHTML+="<td data-th='Name'>";
+                            rowsHTML+="<input type='text' form='form314_"+id+"'>";
+                        rowsHTML+="</td>";
+                        rowsHTML+="<td data-th='Display Name'>";
+                            rowsHTML+="<textarea class='dblclick_editable' form='form314_"+id+"'></textarea>";
+                        rowsHTML+="</td>";
+                        rowsHTML+="<td data-th='Grids'>";
+                            rowsHTML+="<button type='button' class='btn default green-stripe' form='form314_"+id+"'>Add Grid</button>";							
+                            rowsHTML+="<div id='form314_grids_"+id+"'></div>";
+                        rowsHTML+="</td>";
+                        rowsHTML+="<td data-th='Status'>";
+                            rowsHTML+="<select class='dblclick_editable' data-style='btn-info' form='form314_"+id+"'></select>";
+                        rowsHTML+="</td>";
+                        rowsHTML+="<td data-th='Action'>";
+                            rowsHTML+="<input type='hidden' form='form314_"+id+"' value='"+id+"'>";	
+                            rowsHTML+="<button type='submit' class='btn green' form='form314_"+id+"' title='Save'><i class='fa fa-save'></i></button>";
+                            rowsHTML+="<button class='btn red' form='form314_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
+                        rowsHTML+="</td>";			
+				rowsHTML+="</tr>";
 					
 				$('#form314_body').prepend(rowsHTML);
 				var fields=document.getElementById("form314_"+id);
@@ -200,7 +200,7 @@
 				
 				var last_updated=get_my_time();
 				var elements_array=[];
-				$('#form314_grids_'+data_id).find('span').each(function()
+				$('#form314_grids_'+data_id).find('a').each(function()
 				{
 					var element=new Object();
 					var span=$(this);
@@ -225,7 +225,7 @@
 	 				log_data:{title:'Added',notes:display_name+' object page',link_to:'form314'}};
  				
  				var data2_json={data_store:'access_control',
-		 				data:[{index:'id',value:id},
+		 				data:[{index:'id',value:data_id},
 		 					{index:'element_id',value:name,uniqueWith:['username']},
 		 					{index:'element_name',value:display_name},
 		 					{index:'username',value:'master'},
@@ -270,7 +270,7 @@
 				var del_button=form.elements[6];
 				
 				var elements_array=[];
-				$('#form314_grids_'+data_id).find('span').each(function()
+				$('#form314_grids_'+data_id).find('a').each(function()
 				{
 					var element=new Object();
 					var span=$(this);
@@ -315,7 +315,8 @@
 					var form=document.getElementById(form_id);
 					
 					var name=form.elements[0].value;
-					var data_id=form.elements[4].value;
+					var display_name=form.elements[1].value;
+				    var data_id=form.elements[4].value;
 					var data_json={data_store:'system_objects',
  							data:[{index:'id',value:data_id}],
  							log:'yes',

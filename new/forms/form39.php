@@ -109,7 +109,7 @@
 	            										"<button type='button' class='btn' form='form39_"+result.id+"'name='image' title='Change Picture'><i class='fa fa-2x fa-pencil link'></i></button>"+
 	            										"<input type='file' style='display:none;' form='form39_"+result.id+"'name='image_dummy'>"+
 													"</div>"+
-                               			"<a onclick=\"show_object('customers','"+result.acc_name+"');\"><img class='vr_image' data-id='' alt='"+first_char+"' id='form39_image_"+result.id+"'></a>"+
+                               			"<a onclick=\"show_object('product_master','"+result.name+"');\"><img class='vr_image' data-id='' alt='"+first_char+"' id='form39_image_"+result.id+"'></a>"+
                                		"</div>"+
                                  	"<div class='caption'>"+
                                     	"<form id='form39_"+result.id+"'>"+

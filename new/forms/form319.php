@@ -113,7 +113,7 @@
 					var docHTML="";
 					elements_array.forEach(function(element)
 					{
-						docHTML+="<span data-display_name='"+element.display_name+"' data-color='"+element.color+"' data-width='"+element.width+"' data-height='"+element.height+"' data-collapse='"+element.collapse+"'>"+element.name+"<i class='fa fa-times link' onclick=$(this).parent().remove();></i></span><br>";							
+                        docHTML+="<div class='row'><div class='col-xs-10'><a onclick=modal193_action(this); data-display_name='"+element.display_name+"' data-color='"+element.color+"' data-width='"+element.width+"' data-height='"+element.height+"' data-collapse='"+element.collapse+"'>"+element.name+"</a></div><div class='col-xs-2'><i class='fa fa-times link' onclick=$(this).parent().parent().remove();></i></div></div>";
 					});
 					document.getElementById('form319_grids_'+result.id).innerHTML=docHTML;
 					
@@ -200,7 +200,7 @@
 				
 				var last_updated=get_my_time();
 				var elements_array=[];
-				$('#form319_grids_'+data_id).find('span').each(function()
+				$('#form319_grids_'+data_id).find('a').each(function()
 				{
 					var element=new Object();
 					var span=$(this);
@@ -223,7 +223,7 @@
 	 					{index:'last_updated',value:last_updated}]};
 
  				var data2_json={data_store:'access_control',
-		 				data:[{index:'id',value:id},
+		 				data:[{index:'id',value:data_id},
 		 					{index:'element_id',value:name,uniqueWith:['username']},
 		 					{index:'element_name',value:display_name},
 		 					{index:'username',value:'master'},
@@ -269,7 +269,7 @@
 				
 				var last_updated=get_my_time();
 				var elements_array=[];
-				$('#form319_grids_'+data_id).find('span').each(function()
+				$('#form319_grids_'+data_id).find('a').each(function()
 				{
 					var element=new Object();
 					var span=$(this);
@@ -310,7 +310,8 @@
 					var form=document.getElementById(form_id);
 					
 					var name=form.elements[0].value;
-					var data_id=form.elements[4].value;
+					var display_name=form.elements[1].value;
+				    var data_id=form.elements[4].value;
 					var data_json={data_store:'system_objects',
  							data:[{index:'name',value:name}]};
 					

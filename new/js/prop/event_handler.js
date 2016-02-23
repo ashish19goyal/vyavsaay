@@ -479,11 +479,13 @@ function show_object(object_type,obj_name,obj_id)
 			$("#object_"+object_type).click();
 		},function () 
 		{
+            console.log('no data access');
 			$('#modal2_link').click();
 		});
 	}
 	else
 	{
+        console.log('no system access');
 		$('#modal2_link').click();
 	}
 }	
@@ -645,8 +647,6 @@ function import_data(form_name)
 		case 'form89':modal23_action(form89_import_template,form89_import);
 		break;
 		case 'form91':modal23_action(form91_import_template,form91_import);
-		break;
-		case 'form92':modal23_action(form92_import_template,form92_import);
 		break;
 		case 'form93':modal23_action(form93_import_template,form93_import);
 		break;
