@@ -2454,33 +2454,36 @@ function modal26_action(payment_id,func)
 {
 	var form=document.getElementById('modal26_form');
 	
-	var fcustomer=form.elements[1];
-	var ftotal=form.elements[2];
-	var fpaid=form.elements[3];
-	var fdue_date=form.elements[4];
-	var fmode=form.elements[5];
-	var fstatus=form.elements[6];
+	var fcustomer=form.elements['by'];
+	var ftotal=form.elements['total'];
+	var fpaid=form.elements['paid'];
+	var fdue_date=form.elements['date'];
+	var fmode=form.elements['mode'];
+	var fstatus=form.elements['status'];
 	
 	$(fdue_date).datepicker();
 	
-	var customer_data="<accounts>" +
-			"<acc_name></acc_name>" +
-			"</accounts>";
-	set_my_value_list(customer_data,fcustomer);
-	set_static_value_list('payments','status',fstatus);
-	set_static_value_list('payments','mode',fmode);
+	var customer_data={data_store:'accounts',return_column:'acc_name'};
+	set_my_value_list_json(customer_data,fcustomer);
+	set_static_value_list_json('payments','status',fstatus);
+	set_static_value_list_json('payments','mode',fmode);
 
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
 
+        if(ftotal.value==fpaid.value)
+        {
+            fstatus.value='closed';
+        }
+        
 		if(fstatus.value=='closed' && (ftotal.value>(fpaid.value+1) || fpaid.value==""))
 		{
 			alert("Payment can't be closed as the full amount has not been paid.");
 			fstatus.value='pending';
 		}
-		else 
+        else 
 		{
 			var customer=fcustomer.value;
 			var total=ftotal.value;
@@ -2489,66 +2492,52 @@ function modal26_action(payment_id,func)
 			var mode=fmode.value;
 			var status=fstatus.value;
 			var last_updated=get_my_time();
-			var data_xml="<payments>" +
-						"<id>"+payment_id+"</id>" +
-						"<acc_name>"+customer+"</acc_name>" +
-						"<type>received</type>" +
-						"<total_amount>"+total+"</total_amount>" +
-						"<paid_amount>"+paid+"</paid_amount>" +
-						"<status>"+status+"</status>" +
-						"<due_date>"+due_date+"</due_date>" +
-						"<mode>"+mode+"</mode>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</payments>";
-			var activity_xml="<activity>" +
-						"<data_id>"+payment_id+"</data_id>" +
-						"<tablename>payments</tablename>" +
-						"<link_to>form11</link_to>" +
-						"<title>Updated</title>" +
-						"<notes>Payment of "+paid+" from "+customer+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			
-			if(is_online())
-			{
-				server_update_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_update_row(data_xml,activity_xml);
-			}
+            
+            var data_json={data_store:'payments',
+	 				data:[{index:'id',value:payment_id},
+	 					{index:'acc_name',value:customer},
+                        {index:'due_date',value:due_date},
+                        {index:'paid_amount',value:paid},  
+                        {index:'total_amount',value:total},
+                        {index:'type',value:'received'},
+                        {index:'mode',value:mode},
+                        {index:'status',value:status},  
+	 					{index:'last_updated',value:last_updated}],
+                    log:'yes',
+                    log_data:{title:'Updated',notes:'Payment of Rs. '+paid+' from '+customer,link_to:'form11'}};
+
+			update_json(data_json);
+            
 			if(func)
 			{
 				func(mode,paid);
 			}
 			
-			$("#modal26").dialog("close");
+			$(form).find(".close").click();
 		}
 	});
 	
-	var payments_data="<payments>" +
-			"<id>"+payment_id+"</id>" +
-			"<acc_name></acc_name>" +
-			"<type>received</type>" +
-			"<total_amount></total_amount>" +
-			"<paid_amount></paid_amount>" +
-			"<status></status>" +
-			"<due_date></due_date>" +
-			"<mode></mode>" +
-			"</payments>";
-	fetch_requested_data('',payments_data,function(payments)
+	var payments_data={data_store:'payments',
+                      indexes:[{index:'id',value:payment_id},
+                              {index:'acc_name'},
+                              {index:'type',exact:'received'},
+                              {index:'total_amount'},
+                              {index:'paid_amount'},
+                              {index:'status'},
+                              {index:'due_date'},
+                              {index:'mode'}]};
+	read_json_rows('',payments_data,function(payments)
 	{
-		for(var k in payments)
+		if(payments.length>0)
 		{
-			fcustomer.value=payments[k].acc_name;
-			ftotal.value=my_round(payments[k].total_amount,0);
-			fpaid.value=my_round(payments[k].paid_amount,0);
-			fdue_date.value=get_my_past_date(payments[k].due_date);
-			fmode.value=payments[k].mode;
-			fstatus.value=payments[k].status;
-			break;
+			fcustomer.value=payments[0].acc_name;
+			ftotal.value=payments[0].total_amount;
+			fpaid.value=payments[0].paid_amount;
+			fdue_date.value=get_my_past_date(payments[0].due_date);
+			fmode.value=payments[0].mode;
+			fstatus.value=payments[0].status;
 		}
-		$("#modal26").dialog("open");
+		$("#modal26_link").click();
 	});		
 }
 
@@ -5692,64 +5681,47 @@ function modal101_action(doc_type,person,person_type,func,attachment_type,messag
 		var email_message=container.innerHTML;
 		var from=get_session_var('email');
 
-		var person_filter=form.elements[1];
+		var person_filter=form.elements['to'];
 		$(person_filter).off('blur');
-		form.elements[3].value=doc_type;
+		form.elements['subject'].value=doc_type;
 		
-		$("#modal101").dialog("open");
+		$("#modal101_link").click();
 						
 		if(person!="")
 		{
-			var email_id_xml="<suppliers>"+
-					"<email></email>"+
-					"<name></name>"+
-					"<acc_name exact='yes'>"+person+"</acc_name>"+
-					"</suppliers>";
+			var email_id_xml={data_store:'suppliers',
+                             indexes:[{index:'email'},{index:'name'},{index:'acc_name',exact:person}]};
 			if(person_type=='customer')			
 			{
-				email_id_xml="<customers>"+
-						"<email></email>"+
-						"<name></name>"+
-						"<acc_name exact='yes'>"+person+"</acc_name>"+
-						"</customers>";
+    			email_id_xml.data_store='customers';
 			}
 			else if(person_type=='staff')			
 			{
-				email_id_xml="<staff>"+
-						"<email></email>"+
-						"<name></name>"+
-						"<acc_name exact='yes'>"+person+"</acc_name>"+
-						"</staff>";
+    			email_id_xml.data_store='staff';
 			}
 	
-			fetch_requested_data('',email_id_xml,function(emails)
+			read_json_rows('',email_id_xml,function(emails)
 			{
 				if(emails.length>0)
 				{
-					form.elements[1].value=person;
-					form.elements[2].value=emails[0].email;
-					form.elements[4].value=emails[0].name;
+					form.elements['to'].value=person;
+					form.elements['email'].value=emails[0].email;
+					form.elements['acc_name'].value=emails[0].name;
 				}
-				$('textarea').autosize();
+				$('#modal101').formcontrol();
 				hide_loader();			
 			});
 		}		
 		else
 		{
-			var person_xml="<suppliers>"+
-						"<acc_name></acc_name>"+
-						"</suppliers>";
+			var person_xml={data_store:'suppliers',return_column:'acc_name'};
 			if(person_type=='customer')			
 			{
-				person_xml="<customers>"+
-						"<acc_name></acc_name>"+
-						"</customers>";
+                person_xml.data_store='customers';
 			}
 			else if(person_type=='staff')			
 			{
-				person_xml="<staff>"+
-						"<acc_name></acc_name>"+
-						"</staff>";
+                person_xml.data_store='staff';
 			}
 			
 			person_filter.removeAttribute('readonly');
@@ -5761,35 +5733,23 @@ function modal101_action(doc_type,person,person_type,func,attachment_type,messag
 			
 			$(person_filter).on('blur',function () 
 			{
-				var email_id_xml="<suppliers count='1'>"+
-					"<email></email>"+
-					"<name></name>"+
-					"<acc_name exact='yes'>"+person_filter.value+"</acc_name>"+
-					"</suppliers>";
-				
+				var email_id_xml={data_store:'suppliers',count:1,
+                                 indexes:[{index:'email'},{index:'name'},{index:'acc_name',exact:person_filter.value}]};
 				if(person_type=='customer')			
 				{
-					email_id_xml="<customers>"+
-							"<email></email>"+
-							"<name></name>"+
-							"<acc_name exact='yes'>"+person_filter.value+"</acc_name>"+
-							"</customers>";
+                    email_id_xml.data_store='customers';
 				}
 				else if(person_type=='staff')			
 				{
-					email_id_xml="<staff>"+
-							"<email></email>"+
-							"<name></name>"+
-							"<acc_name exact='yes'>"+person_filter.value+"</acc_name>"+
-							"</staff>";
+                    email_id_xml.data_store='staff';
 				}
-				fetch_requested_data('',email_id_xml,function(emails)
+				read_json_rows('',email_id_xml,function(emails)
 				{
-					form.elements[2].value=emails[0].email;
-					form.elements[4].value=emails[0].name;
+					form.elements['email'].value=emails[0].email;
+					form.elements['acc_name'].value=emails[0].name;
 				});
 			});
-			$('textarea').autosize();
+			$('#modal101').formcontrol();
 			hide_loader();
 		}	
 		
@@ -5798,26 +5758,34 @@ function modal101_action(doc_type,person,person_type,func,attachment_type,messag
 		{
 			event.preventDefault();
 			show_loader();
-			var receiver_array=[{"email":form.elements[2].value,"name":form.elements[4].value}];
+            var to_array=form.elements['email'].value.split(';');
+			var receiver_array=[];
+            
+            to_array.forEach(function(to)
+            {
+                var receiver={"email":to,"name":form.elements['acc_name'].value};
+                receiver_array.push(receiver);
+            });
+            
 			var receiver=JSON.stringify(receiver_array);
 			var sub=form.elements[3].value;
 			
 			if(typeof attachment_type!='undefined')
 			{
-				console.log(message_attachment);
+				//console.log(message_attachment);
 				send_email_attachment(receiver,from,business_title,sub,email_message,message_attachment,'csv',function()
 				{
 					hide_loader();
 				});
 			}
 			else 
-			{				
-				send_email(receiver,from,business_title,sub,email_message,function()
+			{
+                send_email(receiver,from,business_title,sub,email_message,function()
 				{
 					hide_loader();
 				});
 			}
-			$("#modal101").dialog("close");
+			$(form).find(".close").click();
 		});
 	});
 }
@@ -15816,15 +15784,22 @@ function modal193_action(elem)
  * @modalNo 194
  * @modal Search Items
  */
-function modal194_action(elem)
+function modal194_action(elem_id)
 {
 	var form=document.getElementById('modal194_form');
-    var keywords=form.elements['key'];
+    var keywords=form.elements['keywords'];
     var items=form.elements['items'];
     
     keywords.value="";
     var items_data={data_store:'product_master',return_column:'name'};
-    set_my_select(items_data,items);
+    set_simple_select(items_data,items,function()
+    {
+        $(items).find('option').on('click',function()
+        {
+            $(elem_id).val($(this).html());
+            $(form).find('.close').click();
+        });
+    });
     
     $(keywords).off('keyup');
     $(keywords).on('keyup',function(e)
@@ -15833,20 +15808,29 @@ function modal194_action(elem)
         {
             var key_value=keywords.value;
             var key_array=key_value.split(/[\s,]+/);
+            key_array.pop();
             
             var items_data={data_store:'product_master',return_column:'name',
-                           indexes:[{index:'name',array:key_array}]};
-            set_my_select(items_data,items);
+                           indexes:[{index:'indexes',all_approx_array:key_array}]};
+            set_simple_select(items_data,items,function()
+            {
+                $(items).find('option').on('click',function()
+                {
+                    $(elem_id).val($(this).html());
+                    $(form).find('.close').click();
+                });
+            });
         }
     });
-    
+        
 	$(form).off('submit');
 	$(form).on('submit',function(event) 
 	{
 		event.preventDefault();
-	   
+        $(elem_id).val(items.options[0].innerHTML);
  		$(form).find('.close').click();
 	});
 	
 	$("#modal194_link").click();	
+    $(keywords).focus();
 }

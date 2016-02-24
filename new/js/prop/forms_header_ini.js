@@ -5772,35 +5772,6 @@ function form179_header_ini()
 	set_static_filter('purchase_orders','status',status_filter);
 };
 
-/**
- * @form Manage Sale Orders (CPS)
- * @formNo 181
- */
-function form181_header_ini()
-{
-	var filter_fields=document.getElementById('form181_header');
-	var order_filter=filter_fields.elements[0];
-	var name_filter=filter_fields.elements[1];
-	var status_filter=filter_fields.elements[2];
-	
-	var order_data="<sale_orders>" +
-			"<order_num></order_num>" +
-			"</sale_orders>";
-
-	var cust_data="<customers>" +
-			"<acc_name></acc_name>" +
-			"</customers>";
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form181_ini();
-	});
-
-	set_my_filter(order_data,order_filter);
-	set_my_filter(cust_data,name_filter);
-	set_static_filter('sale_orders','status',status_filter);
-};
 
 /**
  * @form Production Steps

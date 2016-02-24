@@ -896,18 +896,6 @@ function form179_import_template()
 
 
 /**
-* @form Manage sale order (CPS)
-* @formNo 181
-* @table sale_orders
-*/
-function form181_import_template()
-{
-	var data_array=['id','customer_name','order_num','order_date','type','status'];
-	my_array_to_csv(data_array);
-};
-
-
-/**
 * @form Production Steps
 * @formNo 184
 */

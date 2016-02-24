@@ -8300,67 +8300,6 @@ function form179_update_item(form)
 
 
 /**
- * @form Manage Sale orders (CPS)
- * @param button
- */
-function form181_update_item(form)
-{
-	if(is_update_access('form181'))
-	{
-		var order_num=form.elements[0].value;
-		var customer_name=form.elements[1].value;
-		var order_date=get_raw_time(form.elements[2].value);
-		var status=form.elements[3].value;
-		var data_id=form.elements[4].value;
-		var last_updated=get_my_time();
-		var data_xml="<sale_orders>" +
-					"<id>"+data_id+"</id>" +
-					"<customer_name>"+customer_name+"</customer_name>" +
-					"<order_date>"+order_date+"</order_date>" +
-					"<order_num>"+order_num+"</order_num>" +
-					"<status>"+status+"</status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</sale_orders>";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>sale_orders</tablename>" +
-					"<link_to>form181</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Sale Order # "+order_num+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		update_row(data_xml,activity_xml);
-			
-		for(var i=0;i<4;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-
-		var sale_items_xml="<sale_order_items>"+
-					"<id></id>"+
-					"<order_id>"+data_id+"</order_id>"+
-					"</sale_order_items>";
-		get_single_column_data(function (sale_items) 
-		{
-			for(var i=0;i<sale_items.length;i++)
-			{
-				var row_update_xml="<sale_order_items>"+
-							"<id>"+sale_items[i]+"</id>"+
-							"<bill_status>"+status+"</bill_status>"+
-							"<last_updated>"+last_updated+"</last_updated>"+
-							"</sale_order_items>";
-				update_simple(row_update_xml);
-			}
-		},sale_items_xml);
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-
-/**
  * @form Production Steps
  * @formNo 184
  * @param button

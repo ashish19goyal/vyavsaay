@@ -4251,64 +4251,6 @@ function form179_import(data_array,import_type)
 
 
 /**
-* @form Manage sale order (CPS)
-* @formNo 181
-*/
-function form181_import(data_array,import_type)
-{
-	var data_xml="<sale_orders>";
-	var counter=1;
-	var last_updated=get_my_time();
-
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</sale_orders><separator></separator><sale_orders>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<customer_name>"+row.customer_name+"</customer_name>" +
-				"<order_num>"+row.order_num+"</order_num>" +
-				"<order_date>"+get_raw_time(row.order_date)+"</order_date>" +
-				"<type>"+row.type+"</type>" +
-				"<status>"+row.status+"</status>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	data_xml+="</sale_orders>";
-	if(import_type=='create_new')
-	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
-	}
-	else
-	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
-	}
-};
-
-
-/**
 * @form Production Steps
 * @formNo 184
 */

@@ -446,4 +446,15 @@ progress::-moz-progress-bar {
 	float: right;
 }
 /***************************/
+div.btn-overlap{
+    position: relative;
+}
 
+div.btn-overlap button.right-overlap{
+    position:absolute;
+    right:0px;
+    top:0px;
+    height:100%;
+    margin:0px;
+    margin-right:-2px;
+}

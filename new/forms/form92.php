@@ -201,6 +201,10 @@
                     var items_json={data_store:'bill_items',
                                 data:[{index:'bill_id',value:data_id}]};
                     delete_json(items_json);
+                    
+                    var adjust_json={data_store:'inventory_adjust',
+                                data:[{index:'source_id',value:data_id},{index:'source',value:'sale'}]};
+                    delete_json(adjust_json);
 
                     var adjust_json={data_store:'inventory_adjust',
                                 data:[{index:'source_id',value:data_id},{index:'source',value:'picking'}]};

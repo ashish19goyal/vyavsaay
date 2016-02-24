@@ -30,6 +30,7 @@
  						unequal:'value',
  						isnull:'yes/no',
  						approx_array:array,
+                        all_approx_array:array,
  					},
  					{
  						index:'column2',
@@ -335,6 +336,30 @@
 					}
 					
 					$where_conditions=rtrim($where_conditions,", or ");
+					$where_conditions.=") and ";
+				}
+                
+                if(isset($col['all_approx_array']))
+				{
+					$approx_array=(array)$col['all_approx_array'];
+					$exploded_values=[];
+					foreach ($approx_array as $val) 
+					{
+					    $exploded_values[] = "%".$val."%";
+					}
+					$where_conditions.="(";
+					foreach($exploded_values as $value)
+					{
+						$where_conditions.=$table.".".$col['index']." like ? and ";
+						$values_array[]=$value;
+					}
+					if(count($exploded_values)==0)
+					{
+						$where_conditions.="?,";
+						$values_array[]="--";						
+					}
+					
+					$where_conditions=rtrim($where_conditions,", and ");
 					$where_conditions.=") and ";
 				}
 				

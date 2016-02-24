@@ -419,20 +419,52 @@
 		</form>
 	</div>
 	
-	<div id="modal26" title="Payment Details">
-		<form id='modal26_form' autocomplete="off">
-			<fieldset>
-				<label>Paid by: <input type='text' required readonly='readonly'></label><br>
-				<label>Total Amount: Rs. <input type="number" required readonly='readonly' step='any'></label><br>
-				<label>Amount Paid: Rs. <input type="number" required step='any'></label><br>
-				<label>Due Date: <input type="text"></label><br>
-				<label>Mode of Payment: <input type="text"></label><br>
-				<label>Status: <input type="text"></label><br>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
-	
+    <a href='#modal26' data-toggle="modal" id='modal26_link'></a>
+	<div id="modal26" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal26_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Payment Details</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Paid By</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal26_form' required name='by'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Total Amount</div>
+					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal26_form' required name='total'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Paid Amount</div>
+					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' required form='modal26_form' name='paid'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Due Date</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal26_form' name='date'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Mode</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal26_form' name='mode'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Status</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' required form='modal26_form' name='status'></div>
+					     		</div>
+		                  </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal26_form' name='save'>Save</button>
+	               	<button type="button" class="btn red" form='modal26_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 	<div id="modal27" title="Order product">
 		<form id='modal27_form' autocomplete="off">
 			<fieldset>
@@ -824,17 +856,40 @@
 		<div id='modal84_preview'></div>
 	</div>
 
-	<div id="modal101" title="Email Document">
-		<form id='modal101_form' autocomplete="off">
-			<fieldset>
-				<label>To: <input type='text' readonly="readonly"></label><br>
-				<label>Email: <textarea required title='Separate email IDs with semicolon(;)'></textarea></label><br>
-				<label>Subject: <textarea></textarea></label><br>
-				<input type='hidden'>
-				<input type="submit" value='Send' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
+    <a href='#modal101' data-toggle="modal" id='modal101_link'></a>
+	<div id="modal101" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal101_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Email Document</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		               	  <div class="row">
+									<div class="col-sm-12 col-md-4">To</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal101_form' name='to' readonly='readonly'></div>
+					      </div>
+		                  <div class="row">
+									<div class="col-sm-12 col-md-4">Email</div>
+                              <div class="col-sm-12 col-md-8"><textarea required form='modal101_form' name='email' title='Separate Email Ids with semicolon(;)'></textarea></div>
+					      </div>
+		                  <div class="row">
+									<div class="col-sm-12 col-md-4">Subject</div>
+                              <div class="col-sm-12 col-md-8"><textarea required form='modal101_form' name='subject'></textarea></div>
+					       </div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+                    <input type='hidden' form='modal101_form' name='acc_name'>    
+	               	<button type="submit" class="btn green" form='modal101_form' name='save'>Send</button>
+	               	<button type="button" data-dismiss='modal' class="btn red" form='modal101_form' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 	<div id="modal102" title="Re-assign">
 		<form id='modal102_form' autocomplete="off">
@@ -2683,17 +2738,17 @@
 		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
 		                  <div class="row">
 								<div class="col-sm-12 col-md-4">Keywords</div>
-					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal193_form' required name='key' autofocus></div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal194_form' required name='keywords' autofocus></div>
 					     		</div>
 		                  <div class="row">
 								<div class="col-sm-12 col-md-4">Items</div>
-                              <div class="col-sm-12 col-md-8"><select size='8' form='modal193_form' name='items'></select></div>
+                              <div class="col-sm-12 col-md-8"><select size='8' form='modal194_form' name='items'></select></div>
 					       </div>
 		               </div>
 		             </div>
 	             	<div class="modal-footer">
-	               	<button type="submit" class="btn green" form='modal193_form' name='save'>Select</button>
-	               	<button type="button" class="btn red" form='modal193_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	               	<button type="submit" class="btn green" form='modal194_form' name='save'>Select</button>
+	               	<button type="button" class="btn red" form='modal194_form' data-dismiss='modal' name='cancel'>Cancel</button>
 	             	</div>
                 </form>
             </div>
