@@ -2017,6 +2017,7 @@
 			<challan_id index='yes' type="BIGINT"></challan_id>
 			<item_name index='yes' type="TEXT"></item_name>
 			<item_desc index='no' type="TEXT"></item_desc>
+			<storage index='yes' type="TEXT"></storage>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<unit index='no' type='VARCHAR(30)'></unit>
 			<type index="yes" type="VARCHAR(10)"></type><!-- sale/repair/service -->

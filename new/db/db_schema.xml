@@ -2018,6 +2018,7 @@
 			<item_name index='yes' type="TEXT"></item_name>
 			<item_desc index='no' type="TEXT"></item_desc>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
+			<storage index='yes' type="TEXT"></storage>
 			<unit index='no' type='VARCHAR(30)'></unit>
 			<type index="yes" type="VARCHAR(10)"></type><!-- sale/repair/service -->
 			<batch index='yes' type="TEXT"></batch>

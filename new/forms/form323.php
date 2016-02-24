@@ -29,6 +29,7 @@
 				<tr style='color:#9a9a9a;'>
                     <th>Item</th>
 					<th>Description</th>
+					<th>Storage</th>
 					<th>Batch</th>
 					<th>Quantity</th>
 					<th></th>
@@ -173,6 +174,7 @@
                                               {index:'item_desc'},
                                               {index:'batch'},
                                               {index:'quantity'},
+                                              {index:'storage'}, 
                                               {index:'challan_id',exact:challan_id}]};
                 read_json_rows('form323',challan_items_column,function(results)
                 {
@@ -185,7 +187,10 @@
                                 rowsHTML+="<a onclick=\"show_object('product_master','"+result.item_name+"');\"><input type='text' readonly='readonly' form='form323_"+id+"' value='"+result.item_name+"'></a>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Description'>";
-                                rowsHTML+="<textarea readonly='readonly' class='floatlabel' placeholder='Description' form='form323_"+id+"'>"+result.item_desc+"</textarea>";
+                                rowsHTML+="<textarea readonly='readonly' form='form323_"+id+"'>"+result.item_desc+"</textarea>";
+                            rowsHTML+="</td>";
+                            rowsHTML+="<td data-th='Storage'>";
+                                rowsHTML+="<a onclick=\"show_object('store_areas','"+result.storage+"');\"><input type='text' readonly='readonly' form='form323_"+id+"' value='"+result.storage+"'></a>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Batch'>";
                                 rowsHTML+="<input type='text' readonly='readonly' form='form323_"+id+"' value='"+result.batch+"'>";
@@ -234,6 +239,9 @@
                     rowsHTML+="<td data-th='Description'>";
                         rowsHTML+="<textarea form='form323_"+id+"'></textarea>";
                     rowsHTML+="</td>";
+                    rowsHTML+="<td data-th='Storage'>";
+                        rowsHTML+="<input type='text' form='form323_"+id+"' required>";
+                    rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Batch'>";
                         rowsHTML+="<input type='text' required form='form323_"+id+"'>";
                     rowsHTML+="</td>";
@@ -255,9 +263,10 @@
                 var fields=document.getElementById("form323_"+id);
                 var name_filter=fields.elements[0];
                 var desc_filter=fields.elements[1];
-                var batch_filter=fields.elements[2];
-                var quantity_filter=fields.elements[3];
-                var id_filter=fields.elements[4];
+                var store_filter=fields.elements[2];
+                var batch_filter=fields.elements[3];
+                var quantity_filter=fields.elements[4];
+                var id_filter=fields.elements[5];
                 var save_button=fields.elements['save'];
                 
                 $(save_button).on("click", function(event)
@@ -281,6 +290,9 @@
                     $(name_filter).focus();
                 }); 
 
+                var store_data={data_store:'store_areas',return_column:'name'};
+                set_my_value_list_json(store_data,store_filter);
+
                 $(name_filter).on('blur',function(event)
                 {
                     var batch_data={data_store:'product_instances',return_column:'batch',
@@ -293,9 +305,9 @@
 
                 });
 
-                $(batch_filter).on('blur',function(event)
+                $(batch_filter).add(store_filter).on('blur',function(event)
                 {
-                    get_inventory(name_filter.value,batch_filter.value,function(quantity)
+                    get_store_inventory(store_filter.value,name_filter.value,batch_filter.value,function(quantity)
                     {
                         $(quantity_filter).attr('min',"0");
                         $(quantity_filter).attr('placeholder',quantity);
@@ -320,9 +332,10 @@
                 var challan_id=document.getElementById("form323_master").elements['challan_id'].value;
                 var name=form.elements[0].value;
                 var desc=form.elements[1].value;
-                var batch=form.elements[2].value;
-                var quantity=form.elements[3].value;
-                var data_id=form.elements[4].value;
+                var storage=form.elements[2].value;
+                var batch=form.elements[3].value;
+                var quantity=form.elements[4].value;
+                var data_id=form.elements[5].value;
                 var last_updated=get_my_time();
                 var save_button=form.elements['save'];
                 var del_button=form.elements['delete'];
@@ -331,6 +344,7 @@
 	 				data:[{index:'id',value:data_id},
 	 					{index:'item_name',value:name},
 	 					{index:'item_desc',value:desc},
+	 					{index:'storage',value:storage},
 	 					{index:'batch',value:batch},
                         {index:'quantity',value:quantity},
                         {index:'challan_id',value:challan_id},  
@@ -341,7 +355,8 @@
 	 					{index:'product_name',value:name},
 	 					{index:'item_desc',value:desc},
 	 					{index:'batch',value:batch},
-                        {index:'quantity',value:(-quantity)+""},
+                        {index:'storage',value:storage},
+	 					{index:'quantity',value:(-quantity)+""},
                         {index:'source_id',value:challan_id},  
                         {index:'source',value:'delivery challan'},    
 	 					{index:'last_updated',value:last_updated}]};
@@ -365,11 +380,6 @@
             }
         }
 
-
-        /**
-         * @form Create challan (CPS)
-         * @param button
-         */
         function form323_create_form()
         {
             if(is_create_access('form323'))
@@ -432,7 +442,7 @@
                 
                 create_json(data_json);
                 
-                var total_row="<tr><td colspan='3' data-th='Total Quantity'>Total Quantity</id><td colspan='2'>"+total_quantity+"</td></tr>";
+                var total_row="<tr><td colspan='4' data-th='Total Quantity'>Total Quantity</id><td colspan='2'>"+total_quantity+"</td></tr>";
                 $('#form323_foot').html(total_row);
 
                 $(save_button).off('click');
@@ -494,7 +504,7 @@
 
                 update_json(data_json);
                 
-                var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity</td><td colspan='2'>"+total_quantity+"</td></tr>";
+                var total_row="<tr><td colspan='4' data-th='Total'>Total Quantity</td><td colspan='2'>"+total_quantity+"</td></tr>";
                 $('#form323_foot').html(total_row);
                 
                 $("[id^='save_form323_']").click();
@@ -515,7 +525,7 @@
 
                     var form_id=$(button).attr('form');
                     var form=document.getElementById(form_id);
-                    var data_id=form.elements[4].value;
+                    var data_id=form.elements[5].value;
                         
                     var data_json={data_store:'delivery_challan_items',
 	 				data:[{index:'id',value:data_id}]};
@@ -544,13 +554,13 @@
             {
                 var subform_id=$(this).attr('form');
                 var subform=document.getElementById(subform_id);
-                if(!isNaN(parseFloat(subform.elements[3].value)))
-                    total_quantity+=parseFloat(subform.elements[3].value);							
+                if(!isNaN(parseFloat(subform.elements[4].value)))
+                    total_quantity+=parseFloat(subform.elements[4].value);							
             });
 
             var form=document.getElementById("form323_master");
 
-            var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity</td><td colspan='2'>"+total_quantity+"</td></tr>";
+            var total_row="<tr><td colspan='4' data-th='Total'>Total Quantity</td><td colspan='2'>"+total_quantity+"</td></tr>";
 
             $('#form323_foot').html(total_row);
         }
@@ -601,12 +611,10 @@
             var bt=get_session_var('title');
             var font_size=get_session_var('print_size');
             var logo_image=get_session_var('logo');
-            //var business_intro_text=get_session_var('business_intro');
             var business_address=get_session_var('address');
             var business_phone=get_session_var('phone');
             var business_email=get_session_var('email');
-            //var business_website=get_session_var('website');
-
+            
             var master_form=document.getElementById('form323_master');
             var customer_name=master_form.elements['customer'].value;
             var customer_address=master_form.elements['address'].value;
@@ -618,7 +626,6 @@
             ////////////////filling in the content into the containers//////////////////////////
 
             logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
-            //business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text;
             business_contact.innerHTML="<hr style='border: 1px solid #00f;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email;
 
             invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Delivery Challan</b></div><hr style='border: 1px solid #00f;'>";
@@ -647,8 +654,8 @@
                 var form=$(this)[0];
                 var item_name=form.elements[0].value;
                 var item_desc=form.elements[1].value;
-                var batch=form.elements[2].value;
-                var quantity=""+form.elements[3].value;
+                var batch=form.elements[3].value;
+                var quantity=""+form.elements[4].value;
                 
                 table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
                         "<td style='text-align:left;word-wrap: break-word'>"+item_name+"</td>"+
@@ -690,7 +697,6 @@
 
             func(container);
         }
-
 
     </script>
 </div>

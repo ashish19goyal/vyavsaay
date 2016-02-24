@@ -4214,6 +4214,17 @@
             <tables>--delivery_challans--delivery_challan_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form325</name>
+			<display_name>Manage Sale Orders (Mediman)</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+            <tables>--sale_orders--sale_order_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -8059,6 +8070,17 @@
 			<username>master</username>
 			<element_id>form324</element_id>
 			<element_name>Manage Delivery Challans (CPS)</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+        <row>
+			<username>master</username>
+			<element_id>form325</element_id>
+			<element_name>Manage Sale Orders (Mediman)</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

@@ -1,4 +1,4 @@
-<div id='form321' class='function_detail'>
+<div id='form321' class='tab-pane'>
 	<form id='form321_master' autocomplete="off">
 		<fieldset>
 			<label>Manifest # <br><input type='text' name='manifest_num' required></label>
