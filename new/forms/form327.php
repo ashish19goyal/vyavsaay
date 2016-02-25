@@ -212,7 +212,7 @@
  					loader:'no',
  					log:'yes',
  					data:[],
- 					log_data:{title:'Open letters',link_to:'form327'}};
+ 					log_data:{title:'Closed letters',link_to:'form327'}};
 
 			var counter=1;
 			var last_updated=get_my_time();
@@ -231,7 +231,7 @@
                         {index:'department',value:row.department},             
 	 					{index:'due_date',value:get_raw_time(row.due_date)},
 	 					{index:'assigned_to',value:row.assigned_to},
-                        {index:'status',value:row.'closed'},             
+                        {index:'status',value:'closed'},             
 	 					{index:'last_updated',value:last_updated}];
 
 				data_json.data.push(data_json_array);

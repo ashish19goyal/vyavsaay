@@ -261,7 +261,7 @@
                         {index:'department',value:row.department},             
 	 					{index:'due_date',value:get_raw_time(row.due_date)},
 	 					{index:'assigned_to',value:row.assigned_to},
-                        {index:'status',value:row.'open'},             
+                        {index:'status',value:'open'},             
 	 					{index:'last_updated',value:last_updated}];
 
 				data_json.data.push(data_json_array);
