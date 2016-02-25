@@ -19,7 +19,7 @@ function is_read_access(form_id)
 	var found=re.search(form_id+"-");
 	var found_form=forms.search(form_id+"-");
 	var found_report=reports.search(form_id+"-");
-	if(found==-1 || (found_form==-1 && found_report==-1))
+	if(found==-1 && (found_form==-1 && found_report==-1))
 	{
 		return false;
 	}

@@ -237,7 +237,7 @@ function update_local_db(domain,func,new_version)
 
 function backup_server_db()
 {
-	if(is_create_access('form99') || is_read_access('db_backup'))
+	if(is_create_access('form99') || is_create_access('db_backup'))
 	{
 		var domain=get_domain();
 		var username=get_username();
