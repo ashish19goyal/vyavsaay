@@ -2083,4 +2083,15 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</system_objects>
+	<letters>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<letter_num index='yes' type="TEXT"></letter_num>
+			<department index='yes' type="TEXT"></department>
+			<detail index='yes' type="TEXT"></detail>
+			<due_date index='yes' type="BIGINT"></due_date>
+			<assigned_to index='yes' type="TEXT"></assigned_to>
+			<status index='yes' type="VARCHAR(20)"></status><!--open/closed-->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</letters>
 </re_xml>

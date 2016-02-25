@@ -90,7 +90,7 @@
                                 rowsHTML+="<a><input type='text' readonly='readonly' form='form324_"+result.id+"' value='"+result.challan_num+"'></a>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Customer'>";
-                                rowsHTML+="<a onclick=\"show_object('customers',"+result.customer+"');\"><textarea readonly='readonly' form='form324_"+result.id+"'>"+result.customer+"</textarea>";
+                                rowsHTML+="<a onclick=\"show_object('customers','"+result.customer+"');\"><textarea readonly='readonly' form='form324_"+result.id+"'>"+result.customer+"</textarea>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Date'>";
                                 rowsHTML+="<input type='text' readonly='readonly' form='form324_"+result.id+"' value='"+get_my_past_date(result.challan_date)+"'>";

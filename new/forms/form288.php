@@ -89,7 +89,7 @@
 								rowsHTML+="<select class='dblclick_editable' form='form288_"+result.id+"'></select>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Details'>";
-								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form288_"+result.id+"' onclick=\"modal186_action('"+result.id+"');\">Function</button>";							
+								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form288_"+result.id+"' onclick=\"modal186_action('"+result.id+"');\">Function</button>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form288_"+result.id+"' value='"+result.id+"'>";	

@@ -830,6 +830,10 @@ function import_data(form_name)
 		break;
 		case 'form300':modal23_action(form300_import_template,form300_import,form300_import_validate);
 		break;
+        case 'form326':modal23_action(form326_import_template,form326_import,form326_import_validate);
+		break;
+        case 'form327':modal23_action(form327_import_template,form327_import,form327_import_validate);
+		break;    
 	}
 }
 

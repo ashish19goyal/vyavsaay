@@ -4225,6 +4225,28 @@
             <tables>--sale_orders--sale_order_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form326</name>
+			<display_name>Open Letters</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+            <tables>--letters--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form327</name>
+			<display_name>Closed Letters</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+            <tables>--letters--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -8081,6 +8103,28 @@
 			<username>master</username>
 			<element_id>form325</element_id>
 			<element_name>Manage Sale Orders (Mediman)</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+        <row>
+			<username>master</username>
+			<element_id>form326</element_id>
+			<element_name>Open Letters</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+        <row>
+			<username>master</username>
+			<element_id>form327</element_id>
+			<element_name>Closed Letters</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

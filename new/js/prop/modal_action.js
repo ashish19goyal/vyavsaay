@@ -11771,7 +11771,6 @@ function modal153_action(button,lead_id)
  */
 function modal154_action(bill_ids)
 {
-	
 	var bill_id_array=[];
 	if(bill_ids!="" && bill_ids!="undefined" && bill_ids!=0)
 	{
@@ -15833,4 +15832,187 @@ function modal194_action(elem_id)
 	
 	$("#modal194_link").click();	
     $(keywords).focus();
+}
+
+/**
+ * @modalNo 196
+ * @modal Add new letter
+ */
+function modal196_action()
+{
+	var form=document.getElementById('modal196_form');
+    var letter=form.elements['letter'];
+    var dep=form.elements['dep'];
+    var notes=form.elements['notes'];
+    var staff=form.elements['staff'];
+    var date=form.elements['date'];
+    
+    $(date).datepicker();
+    
+    letter.value="";
+    dep.value="";
+    notes.value="";
+    staff.value="";
+    date.value=get_my_past_date(get_my_time()+7*86400000);
+    
+    var staff_data={data_store:'staff',return_column:'acc_name'};
+    set_my_value_list_json(staff_data,staff);
+
+    var dep_data={data_store:'letters',return_column:'department'};
+    set_my_filter_json(dep_data,dep);
+
+	$(form).off('submit');
+	$(form).on('submit',function(event) 
+	{
+		event.preventDefault();
+        var last_updated=get_my_time();
+		var letter_num=letter.value;
+        var department=dep.value;
+        var details=notes.value;
+        var assigned_to=staff.value;
+        var due_date=get_raw_time(date.value);
+        
+		var data_json={data_store:'letters',
+	 				log:'yes',
+	               data:[{index:'id',value:data_id},
+	 					{index:'letter',value:letter_num,unique:'yes'},
+                        {index:'department',value:department},
+                        {index:'detail',value:details},
+	 					{index:'due_date',value:due_date},
+	 					{index:'assigned_to',value:assigned_to},
+	 					{index:'last_updated',value:last_updated}],
+	 			   log_data:{title:'Added',notes:'Letter # '+letter,link_to:'form326'}};
+ 		create_json(data_json);
+        
+        $(form).find('.close').click();
+	});
+	
+	$("#modal196_link").click();	
+    $(letter).focus();
+}
+
+
+/**
+ * @modalNo 197
+ * @modal Close letter
+ */
+function modal197_action(data_id,letter_num,details)
+{
+	var form=document.getElementById('modal197_form');
+    var letter=form.elements['letter'];
+    var notes=form.elements['notes'];
+    
+    letter.value=letter_num;
+    notes.value='';
+    
+	$(form).off('submit');
+	$(form).on('submit',function(event) 
+	{
+		event.preventDefault();
+        var last_updated=get_my_time();
+		details=details+"\n"+get_my_date()+": "+notes.value;
+        
+		var data_json={data_store:'letters',
+	 				log:'yes',
+	               data:[{index:'id',value:data_id},
+	 					{index:'detail',value:details},
+	 					{index:'status',value:'closed'},
+	 					{index:'last_updated',value:last_updated}],
+	 			   log_data:{title:'Closed',notes:'Letter # '+letter,link_to:'form327'}};
+ 		update_json(data_json);
+        
+        $(form).find('.close').click();
+	});
+	
+	$("#modal197_link").click();	
+    $(notes).focus();
+}
+
+/**
+ * @modalNo 198
+ * @modal Followup on letter
+ */
+function modal198_action(data_id,letter_num,details)
+{
+	var form=document.getElementById('modal198_form');
+    var letter=form.elements['letter'];
+    var response=form.elements['response'];
+    var notes=form.elements['notes'];
+    var date=form.elements['date'];
+    
+    $(date).datepicker();
+    letter.value=letter_num;
+    notes.value='';
+    response.value='';
+    date.value=get_my_past_date(get_my_time()+7*86400000);
+    
+    set_static_value_list_json('followups','response',response);
+    
+	$(form).off('submit');
+	$(form).on('submit',function(event) 
+	{
+		event.preventDefault();
+        details=details+"\n"+get_my_date()+": "+notes.value;
+        var due_date=get_raw_time(date.value);
+        var last_updated=get_my_time();
+        var res=response.value;
+        
+		var data_json={data_store:'letters',
+	 				log:'yes',
+	               data:[{index:'id',value:data_id},
+	 					{index:'detail',value:details},
+                        {index:'due_date',value:due_date}, 
+	 					{index:'last_updated',value:last_updated}],
+	 			   log_data:{title:'followed on',notes:'Letter # '+letter,link_to:'form326'}};
+        
+        var follow_json={data_store:'followups',
+		 				data:[{index:'id',value:get_new_key()},
+		 					{index:'customer',value:letter_num},
+		 					{index:'date',value:get_my_time()},
+		 					{index:'response',value:response},
+		 					{index:'detail',value:notes.value},
+		 					{index:'next_date',value:due_date},
+		 					{index:'source_id',value:data_id},
+		 					{index:'last_updated',value:last_updated}]};
+	 		
+ 		update_json(data_json);
+        create_json(follow_json);
+        
+        $(form).find('.close').click();
+	});
+	
+	$("#modal198_link").click();	
+    $(response).focus();
+}
+
+/**
+ * @modalNo 199
+ * @modal Contact Assignee
+ */
+function modal199_action(data_id,letter_num,assignee)
+{
+	var form=document.getElementById('modal199_form');
+    var letter=form.elements['letter'];
+    var assignee=form.elements['assignee'];
+    var message=form.elements['message'];
+    
+    letter.value=letter_num;
+    assignee.value=assignee;
+    message.value=get_session_var('sms_content');
+    
+	$(form).off('submit');
+	$(form).on('submit',function(event) 
+	{
+		event.preventDefault();
+        var sms_content=message.value.replace(/assignee/g,assignee);
+        sms_content=sms_content.replace(/letter_num/g,letter_num);
+
+        var phone_data={data_store:'staff',return_column:'phone',count:1,indexes:[{index:'acc_name',exact:assignee}]};
+        send_sms(customer_phone,sms_content,'transaction');
+
+        $(form).find('.close').click();
+	});
+	
+	$("#modal199_link").click();	
+    $(message).focus();
 }

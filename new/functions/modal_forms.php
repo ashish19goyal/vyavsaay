@@ -2755,4 +2755,148 @@
         </div>
     </div>
 
+	<a href='#modal196' data-toggle="modal" id='modal196_link'></a>
+	<div id="modal196" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal196_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add New Letter</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								<div class="col-sm-12 col-md-4">Letter #</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal196_form' required name='letter'></div>
+					     		</div>
+		                  <div class="row">
+								<div class="col-sm-12 col-md-4">Department</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal196_form' name='dep'></div>
+					       </div>
+		                  <div class="row">
+								<div class="col-sm-12 col-md-4">Notes</div>
+                              <div class="col-sm-12 col-md-8"><textarea form='modal196_form' name='notes'></textarea></div>
+					       </div>
+                           <div class="row">
+								<div class="col-sm-12 col-md-4">Assign To</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal196_form' name='staff'></div>
+					       </div>
+		                  <div class="row">
+								<div class="col-sm-12 col-md-4">Due Date</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' required form='modal196_form' name='date'></div>
+					       </div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal196_form' name='save'>Add</button>
+	               	<button type="button" class="btn red" form='modal196_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+	<a href='#modal197' data-toggle="modal" id='modal197_link'></a>
+	<div id="modal197" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal197_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Close Letter</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								<div class="col-sm-12 col-md-4">Letter #</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal197_form' required name='letter' readonly='readonly'></div>
+					     		</div>
+		                  <div class="row">
+								<div class="col-sm-12 col-md-4">Closing Notes</div>
+                              <div class="col-sm-12 col-md-8"><textarea form='modal197_form' name='notes'></textarea></div>
+					       </div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal197_form' name='save'>Close</button>
+	               	<button type="button" class="btn red" form='modal197_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+	<a href='#modal198' data-toggle="modal" id='modal198_link'></a>
+	<div id="modal198" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal198_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Follow-up</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								<div class="col-sm-12 col-md-4">Letter #</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal198_form' required name='letter' readonly='readonly'></div>
+					     		</div>
+		                  <div class="row">
+								<div class="col-sm-12 col-md-4">Response</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal198_form' name='response' required></div>
+					       </div>
+		                  <div class="row">
+								<div class="col-sm-12 col-md-4">Notes</div>
+                              <div class="col-sm-12 col-md-8"><textarea form='modal198_form' name='notes'></textarea></div>
+					       </div>
+		                  <div class="row">
+								<div class="col-sm-12 col-md-4">Due Date</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' required form='modal198_form' name='date'></div>
+					       </div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal198_form' name='save'>Update</button>
+	               	<button type="button" class="btn red" form='modal198_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+	<a href='#modal199' data-toggle="modal" id='modal199_link'></a>
+	<div id="modal199" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal199_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Contact Assignee</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+                            <div class="row">
+								<div class="col-sm-12 col-md-4">Letter #</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal196_form' required name='letter' readonly='readonly'></div>
+					     		</div>
+                           <div class="row">
+								<div class="col-sm-12 col-md-4">Assignee</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal196_form' name='staff' readonly='readonly' required></div>
+					       </div>
+		                  <div class="row">
+								<div class="col-sm-12 col-md-4">Message</div>
+                              <div class="col-sm-12 col-md-8"><textarea required form='modal196_form' name='message'></textarea></div>
+					       </div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal199_form' name='save'>Contact</button>
+	               	<button type="button" class="btn red" form='modal199_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>

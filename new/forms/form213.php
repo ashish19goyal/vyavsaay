@@ -39,7 +39,7 @@
 			set_my_filter_json(names_data,names_filter);
 		
 			var identified_data={data_store:'staff',return_column:'acc_name'};
-			set_my_filter_json(names_data,names_filter);
+			set_my_filter_json(identified_data,identified_filter);
 			
 			$(filter_fields).off('submit');
 			$(filter_fields).on('submit',function(event)
