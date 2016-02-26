@@ -15874,12 +15874,13 @@ function modal196_action()
         
 		var data_json={data_store:'letters',
 	 				log:'yes',
-	               data:[{index:'id',value:data_id},
-	 					{index:'letter',value:letter_num,unique:'yes'},
+	               data:[{index:'id',value:get_new_key()},
+	 					{index:'letter_num',value:letter_num,unique:'yes'},
                         {index:'department',value:department},
                         {index:'detail',value:details},
 	 					{index:'due_date',value:due_date},
 	 					{index:'assigned_to',value:assigned_to},
+	 					{index:'status',value:'open'},
 	 					{index:'last_updated',value:last_updated}],
 	 			   log_data:{title:'Added',notes:'Letter # '+letter,link_to:'form326'}};
  		create_json(data_json);
@@ -15969,7 +15970,7 @@ function modal198_action(data_id,letter_num,details)
 		 				data:[{index:'id',value:get_new_key()},
 		 					{index:'customer',value:letter_num},
 		 					{index:'date',value:get_my_time()},
-		 					{index:'response',value:response},
+		 					{index:'response',value:response.value},
 		 					{index:'detail',value:notes.value},
 		 					{index:'next_date',value:due_date},
 		 					{index:'source_id',value:data_id},
@@ -15989,30 +15990,75 @@ function modal198_action(data_id,letter_num,details)
  * @modalNo 199
  * @modal Contact Assignee
  */
-function modal199_action(data_id,letter_num,assignee)
+function modal199_action(data_id,letter_num,assigned_to)
 {
 	var form=document.getElementById('modal199_form');
     var letter=form.elements['letter'];
-    var assignee=form.elements['assignee'];
+    var assignee=form.elements['staff'];
     var message=form.elements['message'];
     
     letter.value=letter_num;
-    assignee.value=assignee;
-    message.value=get_session_var('sms_content');
+    assignee.value=assigned_to;
+    var sms_content=get_session_var('sms_content').replace(/assignee/g,assigned_to);
+    sms_content=sms_content.replace(/letter_num/g,letter_num);
+
+    message.value=sms_content;
     
 	$(form).off('submit');
 	$(form).on('submit',function(event) 
 	{
 		event.preventDefault();
-        var sms_content=message.value.replace(/assignee/g,assignee);
-        sms_content=sms_content.replace(/letter_num/g,letter_num);
-
-        var phone_data={data_store:'staff',return_column:'phone',count:1,indexes:[{index:'acc_name',exact:assignee}]};
-        send_sms(customer_phone,sms_content,'transaction');
+        
+        var phone_data={data_store:'staff',return_column:'phone',count:1,indexes:[{index:'acc_name',exact:assigned_to}]};
+        read_json_single_column(phone_data,function(phones)
+        {
+            if(phones.length>0 && phones[0]!="" && phones[0]!='0' && phones[0]!=null)
+            {
+                send_sms(phones[0],message.value,'transaction');
+            }
+            else
+            {
+                $("#modal87_link").click();
+            }
+        });
 
         $(form).find('.close').click();
 	});
 	
 	$("#modal199_link").click();	
     $(message).focus();
+}
+
+/**
+ * @modalNo 200
+ * @modal Letter Followups
+ */
+function modal200_action(letter_id)
+{
+    var followup_data={data_store:'followups',
+                  indexes:[{index:'date'},{index:'response'},{index:'detail'},{index:'source_id',exact:letter_id}]};
+    read_json_rows('',followup_data,function(followups)
+    {
+        var item_table=document.getElementById("modal200_table");
+        item_table.innerHTML="";
+        if(followups.length>0)
+        {
+            var item_head=document.createElement('tr');
+            item_head.innerHTML="<th>Date</th><th>Response</th><th>Notes</th>";
+            item_table.appendChild(item_head);
+            followups.forEach(function(followup)
+            {
+                var item_row=document.createElement('tr');
+                item_row.innerHTML="<td>"+get_my_past_date(followup.date)+"</td><td>"+followup.response+"</td><td>"+followup.detail+"</td>";
+                item_table.appendChild(item_row);
+            });
+        }
+        else
+        {
+            var item_head=document.createElement('tr');
+            item_head.innerHTML="<th>No Followups to show</th>";
+            item_table.appendChild(item_head);
+        }
+        $("#modal200_link").click();
+    });
 }

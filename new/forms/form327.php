@@ -85,16 +85,16 @@
 					var rowsHTML="<tr>";
 						rowsHTML+="<form id='form327_"+result.id+"'></form>";
 							rowsHTML+="<td data-th='Letter #'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form327_"+result.id+"' value='"+result.letter_num+"' name='letter'>";
+								rowsHTML+="<a onclick=\"modal200_action('"+result.id+"');\"><input type='text' readonly='readonly' form='form327_"+result.id+"' value='"+result.letter_num+"' name='letter'></a>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Department'>";
-								rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form327_"+result.id+"' name='dep' value='"+result.department+"'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form327_"+result.id+"' name='dep' value='"+result.department+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Notes'>";
-								rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form327_"+result.id+"' name='notes'>"+result.department+"</textarea>";
+								rowsHTML+="<textarea readonly='readonly' form='form327_"+result.id+"' name='notes'>"+result.detail+"</textarea>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Assigned To'>";
-								rowsHTML+="<a onclick=\"show_object('staff','"+result.assigned_to+"');\"><input type='text' readonly='readonly' form='form327_"+result.id+"' name='staff' class='dblclick_editable' value='"+result.assigned_to+"'></a>";
+								rowsHTML+="<a onclick=\"show_object('staff','"+result.assigned_to+"');\"><input type='text' readonly='readonly' form='form327_"+result.id+"' name='staff' value='"+result.assigned_to+"'></a>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form327_"+result.id+"' name='id' value='"+result.id+"'>";
@@ -106,15 +106,11 @@
 					$('#form327_body').append(rowsHTML);
 					var fields=document.getElementById("form327_"+result.id);
 					var dep_filter=fields.elements['dep'];
-					var staff_filter=fields.elements['staff'];
 					var followup_button=fields.elements['followup'];
                     
 					var dep_data={data_store:'letters',return_column:'department'};
 					set_my_filter_json(dep_data,dep_filter);
 
-					var staff_data={data_store:'staff',return_column:'acc_name'};
-					set_my_value_list_json(staff_data,staff_filter);
-							
 					$(fields).on("submit", function(event)
 					{
 						event.preventDefault();
@@ -147,7 +143,7 @@
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'department',value:dep},
-                        {index:'detail',value:notes},
+                        {index:'detail',value:detail},
 	 					{index:'assigned_to',value:staff},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Updated',notes:'Letter # '+letter,link_to:'form327'}};

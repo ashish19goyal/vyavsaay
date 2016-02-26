@@ -2878,15 +2878,15 @@
 		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
                             <div class="row">
 								<div class="col-sm-12 col-md-4">Letter #</div>
-					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal196_form' required name='letter' readonly='readonly'></div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal199_form' required name='letter' readonly='readonly'></div>
 					     		</div>
                            <div class="row">
 								<div class="col-sm-12 col-md-4">Assignee</div>
-					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal196_form' name='staff' readonly='readonly' required></div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal199_form' name='staff' readonly='readonly' required></div>
 					       </div>
 		                  <div class="row">
 								<div class="col-sm-12 col-md-4">Message</div>
-                              <div class="col-sm-12 col-md-8"><textarea required form='modal196_form' name='message'></textarea></div>
+                              <div class="col-sm-12 col-md-8"><textarea required form='modal199_form' name='message'></textarea></div>
 					       </div>
 		               </div>
 		             </div>
@@ -2899,4 +2899,26 @@
         </div>
     </div>
 
+    <a href='#modal200' data-toggle="modal" id='modal200_link'></a>
+	<div id="modal200" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-full">
+            <div class="modal-content">
+                <form id='modal200_form' autocomplete='off'>
+                    <div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Follow-up Details</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+                           <table id='modal200_table' class='table table-striped table-bordered table-hover dt-responsive no-more-tables'></table>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="button" class="btn red" form='modal200_form' data-dismiss='modal' name='cancel'>Close</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
 </div>

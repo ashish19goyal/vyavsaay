@@ -90,16 +90,16 @@
 					var rowsHTML="<tr>";
 						rowsHTML+="<form id='form326_"+result.id+"'></form>";
 							rowsHTML+="<td data-th='Letter #'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form326_"+result.id+"' value='"+result.letter_num+"' name='letter'>";
+								rowsHTML+="<a onclick=\"modal200_action('"+result.id+"');\"><input type='text' readonly='readonly' form='form326_"+result.id+"' value='"+result.letter_num+"' name='letter'></a>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Department'>";
 								rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form326_"+result.id+"' name='dep' value='"+result.department+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Notes'>";
-								rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form326_"+result.id+"' name='notes'>"+result.department+"</textarea>";
+								rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form326_"+result.id+"' name='notes'>"+result.detail+"</textarea>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Assigned To'>";
-                                rowsHTML+="<a onclick=\"show_object('staff','"+result.assigned_to+"');\"><input type='text' readonly='readonly' form='form326_"+result.id+"' name='staff' class='dblclick_editable' value='"+result.assigned_to+"'></a>";
+                                rowsHTML+="<input type='text' readonly='readonly' form='form326_"+result.id+"' name='staff' class='dblclick_editable' value='"+result.assigned_to+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Process'>";
 								rowsHTML+="<button type='button' class='btn default yellow-stripe' form='form326_"+result.id+"' name='followup'>Follow up</button>";
@@ -133,7 +133,7 @@
 
                     $(contact_button).on('click',function () 
 					{
-						modal199_action(result.id,result.letter_num,result.assignee);
+						modal199_action(result.id,result.letter_num,result.assigned_to);
 					});
                     
 					var dep_data={data_store:'letters',return_column:'department'};
@@ -168,7 +168,6 @@
 				var letter=form.elements['letter'].value;
 				var dep=form.elements['dep'].value;
                 var detail=form.elements['notes'].value;
-				var due_date=get_raw_time(form.elements['date'].value);
 				var staff=form.elements['staff'].value;
 				var data_id=form.elements['id'].value;
 				var last_updated=get_my_time();
@@ -176,8 +175,7 @@
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'department',value:dep},
-                        {index:'detail',value:notes},
-	 					{index:'due_date',value:due_date},
+                        {index:'detail',value:detail},
 	 					{index:'assigned_to',value:staff},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Updated',notes:'Letter # '+letter,link_to:'form326'}};
