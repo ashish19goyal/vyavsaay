@@ -458,3 +458,10 @@ div.btn-overlap button.right-overlap{
     margin:0px;
     margin-right:-2px;
 }
+
+.horizontal-bar-chart{
+    width:100%;
+    min-height:500px;
+	height:auto;
+	font-size:11px;
+}

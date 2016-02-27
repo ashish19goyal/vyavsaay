@@ -166,24 +166,51 @@
         </div>
     </div>
 
-	<div id="modal14" title="Add new product">
-		<form id='modal14_form' autocomplete="off">
-			<fieldset>
-				<label>Name: <input type="text" required></label><br>
-				<label>Make: <input type="text"></label><br>
-				<label>Description: <textarea></textarea></label><br>
-				<label>Picture: <output></output>
-								<input type='file' style='display:none'>
-								<input type='button' class='generic_red_icon' value='Select Picture'></label><br>
-				<label>Tax (%): <input type="number" step='any'></label><br>
-				<label>Bar Code: <input type="text"></label>
-				<label><input type='checkbox'>Auto generate</label><br>
-				<label id='modal14_attributes'></label><br>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
-	
+    <a href='#modal14' data-toggle="modal" id='modal14_link'></a>
+	<div id="modal14" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal14_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add new Product</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal14_form' required name='name'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Make</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal14_form' name='make'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Description</div>
+                              <div class="col-sm-12 col-md-8"><textarea form='modal14_form' name='desc'></textarea></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Tax Rate (%)</div>
+					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal14_form' name='tax'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Barcode</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal14_form' name='barcode'><br>
+                                        <input type='checkbox' name='generate'> Auto Generate    
+                                    </div>
+					     		</div>
+		                  <div id='modal14_attributes'></div>
+		                  </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal14_form' name='save'>Add</button>
+	               	<button type="button" class="btn red" form='modal14_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 	<div id="modal15" title="Provide feedback">
 		<form id='modal15_form' autocomplete="off">
 			<fieldset>
@@ -1045,23 +1072,52 @@
 		</form>
 	</div>
 
-	<div id="modal112" title="Add new product">
-		<form id='modal112_form' autocomplete="off">
-			<fieldset>
-				<label>Name: <input type="text" required></label><br>
-				<label>Make: <input type="text"></label><br>
-				<label>Description: <textarea></textarea></label><br>
-				<label>Picture: <output></output>
-								<input type='file' style='display:none'>
-								<input type='button' class='generic_red_icon' value='Select Picture'></label><br>
-				<label>Tax (%): <input type="number" step='any'></label><br>
-				<label>Cost Price: <input type="number" step='any'></label><br>
-				<label>Sale Price: <input type="number" step='any'></label><br>
-				<label id='modal112_attributes'></label><br>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
+    <a href='#modal112' data-toggle="modal" id='modal112_link'></a>
+	<div id="modal112" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal112_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add new Product</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal112_form' required name='name'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Make</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal112_form' name='make'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Description</div>
+                              <div class="col-sm-12 col-md-8"><textarea form='modal112_form' name='desc'></textarea></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Tax Rate (%)</div>
+					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal112_form' name='tax'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Cost Price</div>
+					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal112_form' name='cost'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Sale Price</div>
+					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal112_form' name='sale'></div>
+					     		</div>
+		                  <div id='modal112_attributes'></div>
+		                  </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal112_form' name='save'>Add</button>
+	               	<button type="button" class="btn red" form='modal112_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 	<div id="modal113" title="Add Store Area">
 		<form id='modal113_form' autocomplete="off">

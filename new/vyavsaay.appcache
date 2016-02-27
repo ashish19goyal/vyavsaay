@@ -127,6 +127,10 @@ images/remove-icon-small.png
 images/sidebar_toggler_icon_default.png
 images/spacer.gif
 locales/translation-en.json
+js/open/amcharts/amcharts.js
+js/open/amcharts/serial.js
+js/open/amcharts/themes/chalk.js
+js/open/amcharts/themes/light.js
 js/open/images/layers-2x.png
 js/open/images/layers.png
 js/open/images/marker-icon-2x.png

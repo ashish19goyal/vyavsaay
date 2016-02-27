@@ -12,6 +12,9 @@
 <script src='./js/open/pdfmake.js'></script>
 <script src='./js/open/vfs_fonts.js'></script>
 <script src="./js/open/bootstrap-datetimepicker.js"></script>
+<script src="./js/open/amcharts/amcharts.js"></script>
+<script src="./js/open/amcharts/serial.js"></script>
+<script src="./js/open/amcharts/themes/light.js"></script>
 
 <script src='./js/prop/add_items.js'></script>
 <script src='./js/prop/ajax.js'></script>

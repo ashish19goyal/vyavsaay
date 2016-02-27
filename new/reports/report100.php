@@ -7,6 +7,7 @@
             </div>
         </div>
         <div class="actions">
+            <a class='btn btn-default btn-sm' id='report100_remind'><i class='fa fa-'></i> Remind Staff</a>
             <a class='btn btn-default btn-sm' id='report100_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
             <a class='btn btn-default btn-sm' id='report100_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
             <a class='btn btn-default btn-sm' id='report100_print'><i class='fa fa-print'></i> Print</a>
@@ -15,7 +16,6 @@
 	</div>
 	
 	<div class="portlet-body">
-	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr>

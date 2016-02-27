@@ -839,24 +839,15 @@ function modal14_action(func)
 {
 	var form=document.getElementById('modal14_form');
 	
-	var fname=form.elements[1];
-	var fmake=form.elements[2];
-	var fdescription=form.elements[3];
-	var fpictureinfo=form.elements[4];
-	var fpicture=form.elements[5];
-	var dummy_button=form.elements[6];
-	var fbarcode=form.elements[8];
-	var auto_generate=form.elements[9];
+	var fname=form.elements['name'];
+	var fmake=form.elements['make'];
+	var fdescription=form.elements['desc'];
+	var fbarcode=form.elements['barcode'];
+	var auto_generate=form.elements['generate'];
 	
 	fbarcode.value=get_my_time();
 	auto_generate.checked=true;
 	
-	$(dummy_button).on('click',function (e) 
-	{
-		e.preventDefault();
-		$(fpicture).trigger('click');
-	});
-
 	$(auto_generate).off('click');
 	$(auto_generate).on('click',function(event)
 	{
@@ -870,56 +861,43 @@ function modal14_action(func)
 		}
 	});
 	
-	var make_data="<product_master>" +
-		"<make></make>" +
-		"</product_master>";
-	set_my_filter(make_data,fmake);
-	
-	fpicture.addEventListener('change',function(evt)
-	{
-		select_picture(evt,fpictureinfo,function(dataURL)
-		{
-			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";			
-		});
-	},false);
+	var make_data={data_store:'product_master',return_column:'make'};
+	set_my_filter_json(make_data,fmake);
 	
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal14_attributes');
 	attribute_label.innerHTML="";
-	var attributes_data="<mandatory_attributes>" +
-			"<attribute></attribute>" +
-			"<status></status>" +
-			"<value></value>"+
-			"<object exact='yes'>product</object>" +
-			"</mandatory_attributes>";
-	fetch_requested_data('',attributes_data,function(attributes)
+	var attributes_data={data_store:'mandatory_attributes',
+                        indexes:[{index:'attribute'},{index:'status'},{index:'value'},{index:'object',exact:'product'}]};
+	read_json_rows('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
 		{
-			if(attribute.status!='inactive')
+            if(attribute.status!='inactive')
 			{
 				var required="";
 				if(attribute.status=='required')
-					required='required'
-				var attr_label=document.createElement('label');
+					required='required';
+				var attr_label=document.createElement('div');
+				attr_label.setAttribute('class','row');
 				if(attribute.value=="")
 				{
-					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
+					attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
 				}				
 				else 
 				{
 					var values_array=attribute.value.split(";");
-					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					var content="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
 					values_array.forEach(function(fvalue)
 					{
 						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
 					});
-					content+="</select>";
+					content+="</select></div>";
 					attr_label.innerHTML=content;
 				}				
 				attribute_label.appendChild(attr_label);
-				var line_break=document.createElement('br');
-				attribute_label.appendChild(line_break);
 			}
 		});
 	});
@@ -930,85 +908,54 @@ function modal14_action(func)
 		event.preventDefault();
 		if(is_create_access('form39'))
 		{
-			var name=form.elements[1].value;
-			var make=form.elements[2].value;
-			var description=form.elements[3].value;
+			var name=form.elements['name'].value;
+			var make=form.elements['make'].value;
+			var description=form.elements['desc'].value;
 
-			name = name.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
-			name = name.replace(/â/g,'');
-			name = name.replace(/&/g, "and");
-			make = make.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
-			make = make.replace(/â/g,'');
-			make = make.replace(/&/g, "and");
-			description = description.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
-			description = description.replace(/â/g,'');
-			description = description.replace(/&/g, "and");
-
-			var tax=form.elements[7].value;
+			var tax=form.elements['tax'].value;
 			var data_id=get_new_key();
-			var pic_id=get_new_key();
-			var url=$(fpictureinfo).find('div').find('img').attr('src');
-			var barcode=form.elements[8].value;
+			var barcode=form.elements['barcode'].value;
 			var last_updated=get_my_time();
-			var data_xml="<product_master>" +
-						"<id>"+data_id+"</id>" +
-						"<make>"+make+"</make>" +
-						"<name>"+name+"</name>" +
-						"<description>"+description+"</description>" +
-						"<tax>"+tax+"</tax>" +
-						"<bar_code unique='yes'>"+barcode+"</bar_code>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</product_master>";	
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>product_master</tablename>" +
-						"<link_to>form39</link_to>" +
-						"<title>Added</title>" +
-						"<notes>Product "+name+" to inventory</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			create_row_func(data_xml,activity_xml,func);
+            
+            var data_json={data_store:'product_master',
+	 				log:'yes',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'name',value:name},
+	 					{index:'make',value:make},
+	 					{index:'description',value:description},
+	 					{index:'tax',value:tax},
+	 					{index:'bar_code',value:barcode,unique:'yes'},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Added',notes:'Product '+name+' to inventory',link_to:'form39'}}; 								
+			create_json(data_json,func);
 			
 			var id=get_new_key();
-			$("#modal14_attributes").find('input, select').each(function()
+            $("#modal14_attributes").find('input, select').each(function()
 			{
 				id++;
 				var value=$(this).val();
 				var attribute=$(this).attr('name');
 				if(value!="")
 				{
-					var attribute_xml="<attributes>" +
-							"<id>"+id+"</id>" +
-							"<name>"+name+"</name>" +
-							"<type>product</type>" +
-							"<attribute>"+attribute+"</attribute>" +
-							"<value>"+value+"</value>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</attributes>";
-					create_simple(attribute_xml);
+					var attribute_json={data_store:'attributes',
+	 				data:[{index:'id',value:id},
+	 					{index:'name',value:name},
+	 					{index:'type',value:'product'},
+	 					{index:'attribute',value:attribute},
+	 					{index:'value',value:value},
+	 					{index:'last_updated',value:last_updated}]}; 												
+					create_json(attribute_json);
 				}
 			});
-
-			if(url!="")
-			{
-				var pic_xml="<documents>" +
-							"<id>"+pic_id+"</id>" +
-							"<url>"+url+"</url>" +
-							"<doc_type>product_master</doc_type>" +
-							"<target_id>"+data_id+"</target_id>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</documents>";
-				create_simple(pic_xml);	
-			}
 		}
 		else
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal14").dialog("close");
+		$(form).find(".close").click();
 	});
 	
-	$("#modal14").dialog("open");
+	$("#modal14_link").click();
 }
 
 
@@ -1138,7 +1085,7 @@ function modal16_action(func)
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		if(is_create_access('form30'))
+		if(is_create_access('form8'))
 		{
 			var name=fname.value;
 			var phone=fphone.value;
@@ -6573,7 +6520,6 @@ function modal111_action()
 	}
 }
 
-
 /**
  * @modalNo 112
  * @modal Add new product
@@ -6583,69 +6529,65 @@ function modal112_action(func)
 {
 	var form=document.getElementById('modal112_form');
 	
-	var fname=form.elements[1];
-	var fmake=form.elements[2];
-	var fdescription=form.elements[3];
-	var fpictureinfo=form.elements[4];
-	var fpicture=form.elements[5];
-	var dummy_button=form.elements[6];
+	var fname=form.elements['name'];
+	var fmake=form.elements['make'];
+	var fdescription=form.elements['desc'];
+	var fbarcode=form.elements['barcode'];
+	var auto_generate=form.elements['generate'];
 	
-	$(dummy_button).on('click',function (e) 
+	fbarcode.value=get_my_time();
+	auto_generate.checked=true;
+	
+	$(auto_generate).off('click');
+	$(auto_generate).on('click',function(event)
 	{
-		e.preventDefault();
-		$(fpicture).trigger('click');
+		if(auto_generate.checked)
+		{
+			fbarcode.value=get_my_time();
+		}
+		else
+		{
+			fbarcode.value="";
+		}
 	});
 	
-	var make_data="<product_master>" +
-		"<make></make>" +
-		"</product_master>";
-	set_my_filter(make_data,fmake);
-	
-	fpicture.addEventListener('change',function(evt)
-	{
-		select_picture(evt,fpictureinfo,function(dataURL)
-		{
-			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";			
-		});
-	},false);
+	var make_data={data_store:'product_master',return_column:'make'};
+	set_my_filter_json(make_data,fmake);
 	
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal112_attributes');
 	attribute_label.innerHTML="";
-	var attributes_data="<mandatory_attributes>" +
-			"<attribute></attribute>" +
-			"<status></status>" +
-			"<value></value>"+
-			"<object exact='yes'>product</object>" +
-			"</mandatory_attributes>";
-	fetch_requested_data('',attributes_data,function(attributes)
+	var attributes_data={data_store:'mandatory_attributes',
+                        indexes:[{index:'attribute'},{index:'status'},{index:'value'},{index:'object',exact:'product'}]};
+	read_json_rows('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
 		{
-			if(attribute.status!='inactive')
+            if(attribute.status!='inactive')
 			{
 				var required="";
 				if(attribute.status=='required')
-					required='required'
-				var attr_label=document.createElement('label');
+					required='required';
+				var attr_label=document.createElement('div');
+				attr_label.setAttribute('class','row');
 				if(attribute.value=="")
 				{
-					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
+					attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
 				}				
 				else 
 				{
 					var values_array=attribute.value.split(";");
-					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					var content="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
 					values_array.forEach(function(fvalue)
 					{
 						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
 					});
-					content+="</select>";
+					content+="</select></div>";
 					attr_label.innerHTML=content;
 				}				
 				attribute_label.appendChild(attr_label);
-				var line_break=document.createElement('br');
-				attribute_label.appendChild(line_break);
 			}
 		});
 	});
@@ -6656,122 +6598,86 @@ function modal112_action(func)
 		event.preventDefault();
 		if(is_create_access('form39'))
 		{
-			var name=form.elements[1].value;
-			var make=form.elements[2].value;
-			var description=form.elements[3].value;
-			
-			name = name.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
-			name = name.replace(/â/g,'');
-			name = name.replace(/&/g, "and");
-			make = make.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
-			make = make.replace(/â/g,'');
-			make = make.replace(/&/g, "and");
-			description = description.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
-			description = description.replace(/â/g,'');
-			description = description.replace(/&/g, "and");
-			
-			var tax=form.elements[7].value;
+			var name=form.elements['name'].value;
+			var make=form.elements['make'].value;
+			var description=form.elements['desc'].value;
+
+			var tax=form.elements['tax'].value;
 			var data_id=get_new_key();
-			var pic_id=get_new_key();
-			var cost_price=form.elements[8].value;
-			var sale_price=form.elements[9].value;
-			var url=$(fpictureinfo).find('div').find('img').attr('src');
+			var cost_price=form.elements['cost'].value;
+            var sale_price=form.elements['sale'].value;
 			var last_updated=get_my_time();
-			var data_xml="<product_master>" +
-							"<id>"+data_id+"</id>" +
-							"<make>"+make+"</make>" +
-							"<name>"+name+"</name>" +
-							"<description>"+description+"</description>" +
-							"<tax>"+tax+"</tax>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</product_master>";	
-			var instance_xml="<product_instances>"+
-							"<id>"+data_id+"</id>"+
-							"<product_name>"+name+"</product_name>"+
-							"<batch>"+name+"</batch>"+
-							"<cost_price>"+cost_price+"</cost_price>"+
-							"<sale_price>"+sale_price+"</sale_price>"+
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</product_instances>";			
-			var activity_xml="<activity>" +
-							"<data_id>"+data_id+"</data_id>" +
-							"<tablename>product_master</tablename>" +
-							"<link_to>form39</link_to>" +
-							"<title>Added</title>" +
-							"<notes>Product "+name+" to inventory</notes>" +
-							"<updated_by>"+get_name()+"</updated_by>" +
-							"</activity>";
-			create_row_func(data_xml,activity_xml,func);
-			create_simple(instance_xml);
+            
+            var data_json={data_store:'product_master',
+	 				log:'yes',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'name',value:name,unique:'yes'},
+	 					{index:'make',value:make},
+	 					{index:'description',value:description},
+	 					{index:'tax',value:tax},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Added',notes:'Product '+name+' to inventory',link_to:'form39'}}; 					
+            
+            create_json(data_json,func);
 			
-			////adding sale price fields for all billing types///////
-			var billing_type_data="<bill_types>" +
-					"<name></name>" +
-					"<status exact='yes'>active</status>" +
-					"</bill_types>";
-			get_single_column_data(function(bill_types)
+            var instance_json={data_store:'product_instances',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'product_name',value:name,uniqueWith:['batch']},
+	 					{index:'batch',value:batch},
+	 					{index:'cost_price',value:cost_price},
+	 					{index:'sale_price',value:sale_price},
+	 					{index:'last_updated',value:last_updated}]};            
+			create_json(instance_json);
+			
+			var billing_type_data={data_store:'bill_types',return_column:'name',indexes:[{index:'status',exact:'active'}]};
+			read_json_single_column(billing_type_data,function(bill_types)
 			{
+                var id=get_new_key();
 				bill_types.forEach(function(bill_type)
 				{				
-					var id=get_new_key();
-					var sale_price_xml="<sale_prices>" +
-							"<id>"+id+"</id>" +
-							"<product_name>"+name+"</product_name>" +
-							"<batch>"+name+"</batch>" +
-							"<sale_price>"+sale_price+"</sale_price>" +
-							"<pi_id>"+data_id+"</pi_id>" +
-							"<billing_type>"+bill_type+"</billing_type>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</sale_prices>";
-					create_simple(sale_price_xml);
-					
+					id++;
+					var sale_price_json={data_store:'sale_prices',
+	 				data:[{index:'id',value:id},
+	 					{index:'product_name',value:name},
+	 					{index:'batch',value:batch},
+	 					{index:'sale_price',value:sale_price},
+	 					{index:'pi_id',value:data_id},
+                        {index:'billing_type',value:bill_type},  
+	 					{index:'last_updated',value:last_updated}]}; 												
+					create_json(sale_price_json);
 				});
-			},billing_type_data);
-			////////////////////////////////////////////////
-	
+			});
+			
+			
 			var id=get_new_key();
-			$("#modal112_attributes").find('input, select').each(function()
+            $("#modal112_attributes").find('input, select').each(function()
 			{
 				id++;
 				var value=$(this).val();
 				var attribute=$(this).attr('name');
 				if(value!="")
 				{
-					var attribute_xml="<attributes>" +
-							"<id>"+id+"</id>" +
-							"<name>"+name+"</name>" +
-							"<type>product</type>" +
-							"<attribute>"+attribute+"</attribute>" +
-							"<value>"+value+"</value>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</attributes>";
-					create_simple(attribute_xml);
-					
+					var attribute_json={data_store:'attributes',
+	 				data:[{index:'id',value:id},
+	 					{index:'name',value:name},
+	 					{index:'type',value:'product'},
+	 					{index:'attribute',value:attribute},
+	 					{index:'value',value:value},
+	 					{index:'last_updated',value:last_updated}]}; 												
+					create_json(attribute_json);
 				}
 			});
-
-			if(url!="")
-			{
-				var pic_xml="<documents>" +
-							"<id>"+pic_id+"</id>" +
-							"<url>"+url+"</url>" +
-							"<doc_type>product_master</doc_type>" +
-							"<target_id>"+data_id+"</target_id>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</documents>";
-				create_simple(pic_xml);
-					
-			}
 		}
 		else
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal112").dialog("close");
+		$(form).find(".close").click();
 	});
 	
-	$("#modal112").dialog("open");
+	$("#modal112_link").click();
 }
+
 
 /**
  * @modal Add Store Area (Nikki)
