@@ -4567,29 +4567,6 @@ function form146_header_ini()
 	});
 };
 
-/**
- * @form Manage Roles
- * @formNo 147
- */
-function form147_header_ini()
-{
-	var filter_fields=document.getElementById('form147_header');
-	var role_filter=filter_fields.elements[0];
-	var status_filter=filter_fields.elements[1];
-	
-	var role_data="<roles>" +
-			"<role_name></role_name>" +
-			"</roles>";	
-	set_my_filter(role_data,role_filter);	
-	set_static_filter('roles','status',status_filter);
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form147_ini();
-	});
-};
 
 /**
  * @form Project Feeds

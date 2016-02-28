@@ -677,15 +677,6 @@ function form146_import_template()
 	my_array_to_csv(data_array);
 };
 
-/**
-* @form Manage Roles
-* @formNo 147
-*/
-function form147_import_template()
-{
-	var data_array=['id','role_name','description','status'];
-	my_array_to_csv(data_array);
-};
 
 /**
 * @form Create Bill (DLM)

@@ -45,7 +45,9 @@
 
         read_json_rows('report101',letters_data,function(letters)
         {
-            var staff_data={data_store:'staff',indexes:[{index:'name'},{index:'acc_name'},{index:'status',exact:'active'}]};
+            var staff_data={data_store:'staff',
+                            indexes:[{index:'name'},{index:'acc_name'},      
+                                    {index:'status',exact:'active'}]};
             read_json_rows('',staff_data,function(staffs)
             {
                 var due_time=get_my_time();

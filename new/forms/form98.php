@@ -86,7 +86,7 @@
 					var rowsHTML="<tr>";
 						rowsHTML+="<form id='form98_"+result.id+"'></form>";
 							rowsHTML+="<td data-th='Name'>";
-								rowsHTML+="<textarea readonly='readonly' form='form98_"+result.id+"'>"+result.name+"</textarea>";
+								rowsHTML+="<a onclick=\"show_object('staff','"+result.name+"');\"><textarea readonly='readonly' form='form98_"+result.id+"'>"+result.name+"</textarea></a>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Attribute'>";
 								rowsHTML+="<textarea readonly='readonly' form='form98_"+result.id+"'>"+result.attribute+"</textarea>";

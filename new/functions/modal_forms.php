@@ -2773,7 +2773,7 @@
 		               </div>
 		             </div>
 	             	<div class="modal-footer">
-	               	<button type="submit" class="btn green" form='modal193_form' name='save'>Add</button>
+	               	<button type="submit" class="btn green" form='modal193_form' name='save'>Update</button>
 	               	<button type="button" class="btn red" form='modal193_form' data-dismiss='modal' name='cancel'>Cancel</button>
 	             	</div>
                 </form>

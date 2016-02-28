@@ -9918,68 +9918,6 @@ function form146_create_item(form)
 	}
 }
 
-/**
- * @form Manage Roles
- * @formNo 147
- */
-function form147_create_item(form)
-{
-	if(is_create_access('form147'))
-	{
-		var role=form.elements[0].value;
-		var desc=form.elements[1].value;
-		var status=form.elements[2].value;		
-		var data_id=form.elements[3].value;
-		var last_updated=get_my_time();
-		var data_xml="<roles>" +
-					"<id>"+data_id+"</id>" +
-					"<role_name>"+role+"</role_name>" +
-					"<description>"+desc+"</description>" +
-					"<status>"+status+"</status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</roles>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>roles</tablename>" +
-					"<link_to>form147</link_to>" +
-					"<title>Created</title>" +
-					"<notes>Role "+role+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_create_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-		}	
-
-
-		for(var i=0;i<4;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-
-		var del_button=form.elements[5];
-		del_button.removeAttribute("onclick");
-		$(del_button).on('click',function(event)
-		{
-			form147_delete_item(del_button);
-		});
-		
-		$(form).off('submit');
-		$(form).on('submit',function(event)
-		{
-			event.preventDefault();
-			form147_update_item(form);
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 
 function form150_post_feed()

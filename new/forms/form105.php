@@ -16,10 +16,10 @@
 			<thead>
 				<tr>
 					<form id='form105_header'></form>
-                    <th><input type='text' placeholder="Table" class='floatlabel' name='table' form='form105_header'></th>
+                    <th><input type='text' placeholder="Table" class='floatlabel' name='tablename' form='form105_header'></th>
                     <th><input type='text' placeholder="User Type" class='floatlabel' name='type' form='form105_header'></th>
                     <th><input type='text' placeholder="User" class='floatlabel' name='user' form='form105_header'></th>
-                    <th><input type='text' placeholder="Criteria" readonly="readonly" name='criteria' form='form105_header'></th>
+                    <th><input type='text' placeholder="Criteria" readonly="readonly" form='form105_header'></th>
                     <th><input type='submit' form='form105_header' style='visibility: hidden;'></th>
 				</tr>
 			</thead>
@@ -32,7 +32,7 @@
         function form105_header_ini()
         {
             var fields=document.getElementById('form105_header');
-            var table=fields.elements['table'];
+            var table=fields.elements['tablename'];
             var type=fields.elements['type'];
             
             $(fields).off('submit');
@@ -57,7 +57,7 @@
             $('#form105_body').html("");
 
             var fields=document.getElementById('form105_header');
-            var ftablename=fields.elements['table'].value;
+            var ftablename=fields.elements['tablename'].value;
             var ftype=fields.elements['type'].value;
             var fuser=fields.elements['user'].value;
             

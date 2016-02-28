@@ -225,9 +225,6 @@
 		{
 			if(is_update_access('form149'))
 			{
-				var form_id=$(button).attr('form');
-				var form=document.getElementById(form_id);
-		
 				var role=form.elements[0].value;
 				var username=form.elements[1].value;
 				var status=form.elements[2].value;
@@ -239,7 +236,7 @@
 	 				data:[{index:'id',value:data_id},
 	 					{index:'status',value:status},
 	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Updated',notes:'Role '+role+' assigned to user '+user,link_to:'form149'}}; 				
+	 				log_data:{title:'Updated',notes:'Role '+role+' assigned to user '+username,link_to:'form149'}}; 				
 								
 				update_json(data_json);
 									

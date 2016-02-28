@@ -7053,53 +7053,6 @@ function form146_add_item()
 	}		
 }
 
-/**
- * @form Manage Roles
- * @formNo 147
- */
-function form147_add_item()
-{
-	if(is_create_access('form147'))
-	{
-		var rowsHTML="";
-		var id=get_new_key();
-		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form147_"+id+"' autocomplete='off'></form>";
-			rowsHTML+="<td data-th='Role'>";
-				rowsHTML+="<input type='text' form='form147_"+id+"' required value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Description'>";
-				rowsHTML+="<textarea form='form147_"+id+"'></textarea>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Status'>";
-				rowsHTML+="<input type='text' required form='form147_"+id+"' value='active'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Action'>";
-				rowsHTML+="<input type='hidden' form='form147_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form147_"+id+"' title='Save'>";	
-				rowsHTML+="<input type='button' class='delete_icon' form='form147_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
-			rowsHTML+="</td>";			
-		rowsHTML+="</tr>";
-
-		$('#form147_body').prepend(rowsHTML);
-		longPressEditable($('.dblclick_editable'));
-		
-		var fields=document.getElementById("form147_"+id);
-		var status_filter=fields.elements[2];
-		
-		$(fields).on("submit", function(event)
-		{
-			event.preventDefault();
-			form147_create_item(fields);
-		});
-					
-		set_static_value_list('roles','status',status_filter);
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}		
-}
 
 /**
  * @form Service Request billing - item

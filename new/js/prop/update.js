@@ -6394,57 +6394,6 @@ function form146_suspend_item(button)
 	}
 }
 
-/**
- * @form Manage Roles
- * @param button
- */
-function form147_update_item(button)
-{
-	if(is_update_access('form147'))
-	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-
-		var role=form.elements[0].value;
-		var desc=form.elements[1].value;
-		var status=form.elements[2].value;
-		var data_id=form.elements[3].value;
-		var last_updated=get_my_time();
-		var data_xml="<roles>" +
-					"<id>"+data_id+"</id>" +
-					"<role_name>"+role+"</role_name>" +
-					"<description>"+desc+"</description>" +
-					"<status>"+status+"</status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</roles>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>roles</tablename>" +
-					"<link_to>form147</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Role "+role+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
-		for(var i=0;i<3;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-		$(button).hide();
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
 
 /**
  * @form Service Request Billing - Task

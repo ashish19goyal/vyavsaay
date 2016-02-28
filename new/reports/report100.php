@@ -2,8 +2,8 @@
 	<div class="portlet-title">
         <div class='caption'>		
             <div class='btn-group' id='report100_due_date' data-toggle='buttons'>
-                <label class='btn red-pink active today' onclick=report100_ini('today');><input type='radio' class='toggle'>Due Today</label>
-                <label class='btn red-pink week' onclick=report100_ini('week');><input type='radio' class='toggle'>Due In a Week</label>
+                <label class='btn red-pink active today' onclick=report100_ini('today');><input name='due_date' type='radio' class='toggle'>Due Today</label>
+                <label class='btn red-pink week' onclick=report100_ini('week');><input type='radio' name='due_date' class='toggle'>Due In a Week</label>
             </div>
         </div>
         <div class="actions">

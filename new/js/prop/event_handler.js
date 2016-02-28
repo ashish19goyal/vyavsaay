@@ -701,7 +701,7 @@ function import_data(form_name)
 		break;
 		case 'form146':modal23_action(form146_import_template,form146_import);
 		break;
-		case 'form147':modal23_action(form147_import_template,form147_import);
+		case 'form147':modal23_action(form147_import_template,form147_import,form147_import_validate);
 		break;
 		case 'form149':modal23_action(form149_import_template,form149_import,form149_import_validate);
 		break;

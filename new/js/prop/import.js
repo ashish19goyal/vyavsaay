@@ -3104,61 +3104,6 @@ function form146_import(data_array,import_type)
 	}
 };
 
-/**
-* @form Manage Roles
-* @formNo 147
-*/
-function form147_import(data_array,import_type)
-{
-	var data_xml="<roles>";
-	var counter=1;
-	var last_updated=get_my_time();
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</roles><separator></separator><roles>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<role_name>"+row.role_name+"</role_name>" +
-				"<description>"+row.description+"</description>"+
-				"<status>"+row.status+"</status>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	
-	data_xml+="</roles>";
-	if(import_type=='create_new')
-	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
-	}
-	else
-	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
-	}
-};
-
 
 /**
 * @form Create Bill (DLM)

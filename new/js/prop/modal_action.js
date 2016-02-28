@@ -15676,7 +15676,7 @@ function modal193_action(elem)
 		event.preventDefault();
 		
 		var docHTML="<div class='row'><div class='col-xs-10'><a onclick=modal193_action(this); data-display_name='"+form.elements['disp'].value+"' data-color='"+form.elements['color'].value+"' data-width='"+form.elements['wid'].value+"' data-height='"+form.elements['hei'].value+"' data-collapse='"+form.elements['collapse'].value+"'>"+form.elements['name'].value+"</a></div><div class='col-xs-2'><i class='fa fa-times link' onclick=$(this).parent().parent().remove();></i></div></div>";							
-		$(elem).replaceWith(docHTML);				
+		$(elem).parent().parent().replaceWith(docHTML);				
 
  		$(form).find('.close').click();
 	});
