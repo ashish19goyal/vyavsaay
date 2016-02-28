@@ -4,7 +4,7 @@
 function default_load()
 {
 	show_loader();
-	var location=window.location.pathname;
+    var location=window.location.pathname;
 	if(((location.indexOf("index")>-1) || (location.indexOf(".php")==-1)) && is_set_session())
 	{
 		var domain=get_session_var('domain');
@@ -18,25 +18,17 @@ function default_load()
 	declaring_global_variables();
 	
 	modal_forms_ini();
-	
 	if(is_set_session())
 	{
 		//responsive_tabs();
 		hide_unreadable_elements();
-		setup_grid_display_tabs();
-		date_formating();
-		set_footer_message();
-		my_sortable_tables();
-					
-		Chart.defaults.global.responsive = true;
-		Chart.defaults.global.scaleFontSize= 10;
-		Chart.defaults.global.scaleFontColor="#000";
-		Chart.defaults.global.maintainAspectRatio=false;
-		$('textarea').autosize();
-		set_user_name();		
-		home_display();
-
-		if(typeof calculate_grid_metrics!='undefined')
+        setup_grid_display_tabs();
+        date_formating();
+        set_footer_message();
+        my_sortable_tables();
+		set_user_name();
+        home_display();
+        if(typeof calculate_grid_metrics!='undefined')
 		{		
 			calculate_grid_metrics();
 		}

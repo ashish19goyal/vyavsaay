@@ -15788,7 +15788,7 @@ function modal196_action()
 	 					{index:'assigned_to',value:assigned_to},
 	 					{index:'status',value:'open'},
 	 					{index:'last_updated',value:last_updated}],
-	 			   log_data:{title:'Added',notes:'Letter # '+letter,link_to:'form326'}};
+	 			   log_data:{title:'Added',notes:'Letter # '+letter_num,link_to:'form326'}};
  		create_json(data_json);
         
         $(form).find('.close').click();
