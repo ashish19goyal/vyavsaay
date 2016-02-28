@@ -335,6 +335,7 @@ i.link{
 	background-color: #a9a9a9;
 	text-align: center;
 	color:#fff;
+    max-height:180px;
 }
 
 .thumbnail-button-bottom{

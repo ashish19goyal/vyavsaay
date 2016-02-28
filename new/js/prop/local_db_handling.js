@@ -261,7 +261,7 @@ function backup_server_db()
 			link.setAttribute('href',downloadUrl);
 			link.setAttribute('download',domain+".sql");
 			link.textContent="Click to download the file.";			
-			$('#modal55 .scroller').append(link);
+			$('#modal55 .scroller').html(link);
 			$("#modal55_link").click();
 			hide_loader();
 		});
