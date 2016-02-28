@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="actions">
-            <a class='btn btn-default btn-sm' id='report100_remind'><i class='fa fa-'></i> Remind Staff</a>
+            <a class='btn btn-default btn-sm' id='report100_remind'><i class='fa fa-bell-o'></i> Remind Staff</a>
             <a class='btn btn-default btn-sm' id='report100_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
             <a class='btn btn-default btn-sm' id='report100_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
             <a class='btn btn-default btn-sm' id='report100_print'><i class='fa fa-print'></i> Print</a>
@@ -65,7 +65,7 @@
             var rowsHTML="";
             letters.forEach(function (letter) 
             {
-                rowsHTML+="<tr>";
+                rowsHTML+="<tr data-letter='"+letter.letter_num+"' data-assignee='"+letter.assigned_to+"'>";
                 rowsHTML+="<td data-th='Letter #'><a title='Click to see followup details' onclick=modal200_action('"+letter.id+"');>";
                     rowsHTML+=letter.letter_num;
                 rowsHTML+="</a></td>";
@@ -92,6 +92,43 @@
                 delete item.id;
                 delete item.status;
                 delete item.due_date;
+            });
+            
+            var remind_button=document.getElementById('report100_remind');
+            $(remind_button).off('click');
+            $(remind_button).on('click',function()
+            {
+                var sms=get_session_var('sms_content');
+                var sms_count=0;
+                show_loader();
+                $('#report100_body').find('tr').each(function()
+                {
+                    sms_count+=1;
+                    var staff_name=$(this).attr('data-assignee');
+                    var letter_num=$(this).attr('data-letter');
+                    
+                    var phone_data={data_store:'staff',return_column:'phone',count:1,indexes:[{index:'acc_name',exact:staff_name}]};
+                    read_json_single_column(phone_data,function(phones)
+                    {
+                        if(phones.length>0 && phones[0]!="" && phones[0]!='0' && phones[0]!=null)
+                        {
+                            var sms_content=sms.replace(/assignee/g,staff_name);
+                            sms_content=sms_content.replace(/letter_num/g,letter_num);
+                            send_sms(phones[0],sms_content,'transaction');
+                            sms_count-=1;
+                        }
+                    });
+                });
+
+                var sms_timer=setInterval(function()
+                {
+                    if(sms_count===0)
+                    {
+                        hide_loader();
+                        clearInterval(sms_timer);
+                        
+                    }
+                },1000);
             });
         });				
     };

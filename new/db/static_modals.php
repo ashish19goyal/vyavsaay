@@ -729,7 +729,7 @@
 /***function limiter***/
 
 /*box_id*:*modal74
-*@*box_title*:*Netwrok Error
+*@*box_title*:*Network Error
 *@*box_type*:*static
 *@*function_name*:*
 *@*function_def*:*
@@ -744,7 +744,7 @@
 			<form id='modal74_form'>                               
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-					<h4 class="modal-title">Netwrok Error</h4>
+					<h4 class="modal-title">Network Error</h4>
 				</div>
 				<div class="modal-body">
 					<div class="scroller" style="height:100px;" data-always-visible="1" data-rail-visible1="1">
@@ -1100,7 +1100,7 @@
 *@*last_updated*:*1
 *@*box_content*:*
 */
-<a href='#modal87' data-toggle="modal" id='modal58_link'></a>
+<a href='#modal87' data-toggle="modal" id='modal87_link'></a>
 <div id="modal87" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -1112,6 +1112,39 @@
 				<div class="modal-body">
 					<div class="scroller" style="height:100px;" data-always-visible="1" data-rail-visible1="1">
 						System doesn't have the contact information of this staff.
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn green" data-dismiss='modal' name='close' value='Ok'>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+/***function limiter***/
+
+/*box_id*:*modal88
+*@*box_title*:*SMS Sent
+*@*box_type*:*static
+*@*function_name*:*
+*@*function_def*:*
+*@*status*:*active
+*@*last_updated*:*1
+*@*box_content*:*
+*/
+<a href='#modal88' data-toggle="modal" id='modal88_link'></a>
+<div id="modal88" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id='modal88_form'>                               
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+					<h4 class="modal-title">SMS Sent</h4>
+				</div>
+				<div class="modal-body">
+					<div class="scroller" style="height:100px;" data-always-visible="1" data-rail-visible1="1">
+						All assignees have been contacted through SMS.
 					</div>
 				</div>
 				<div class="modal-footer">

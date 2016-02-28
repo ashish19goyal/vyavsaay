@@ -1489,3 +1489,75 @@ function set_grid_item_62()
 		$('#grid_item_62').html(item_count);
 	});	
 };
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_63
+*@*display_name*:*# Staff Profiles
+*@*grid*:*people
+*@*function_name*:*set_grid_item_63();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_63()
+{
+	var new_columns=new Object();
+		new_columns.data_store='staff';		
+			
+		new_columns.indexes=[{index:'id'}];
+	
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_63').html(item_count);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_64
+*@*display_name*:*# Open Letters
+*@*grid*:*people
+*@*function_name*:*set_grid_item_64();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_64()
+{
+	var new_columns=new Object();
+		new_columns.data_store='letters';		
+			
+		new_columns.indexes=[{index:'status',exact:'open'}];
+	
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_64').html(item_count);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_65
+*@*display_name*:*# Due Letters
+*@*grid*:*people
+*@*function_name*:*set_grid_item_65();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_65()
+{
+	var new_columns=new Object();
+		new_columns.data_store='letters';		
+			
+		new_columns.indexes=[{index:'status',exact:'open'},{index:'due_date',upperbound:get_my_time()}];
+	
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_65').html(item_count);
+	});
+};
