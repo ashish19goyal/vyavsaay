@@ -139,7 +139,6 @@
                             total_export_requests-=1;
                         });
                     });
-                    delete item.id;
                 });
                 
                 hide_loader();

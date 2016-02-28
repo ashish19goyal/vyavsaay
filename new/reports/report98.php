@@ -120,7 +120,6 @@
 				initialize_tabular_report_buttons(qr_data,'QR Scan Data','report98',function (item) 
 				{
 					item.time=get_my_datetime(item.time);
-					delete item.id;
 				});				
 				hide_loader();
 			});

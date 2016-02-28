@@ -111,10 +111,7 @@
 
                 $('#form147').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'User Roles','form147',function (item)
-                {
-                    delete item.id;
-                });
+				initialize_tabular_report_buttons(columns,'User Roles','form147');
 				hide_loader();
             });	
         };

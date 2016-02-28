@@ -119,7 +119,6 @@
 				initialize_tabular_report_buttons(columns,'Receivables','form241',function (item)
                 {
                     delete item.type;
-                    delete item.id;
                     item.due_date=get_my_past_date(item.due_date);
                 });
 				hide_loader();

@@ -124,7 +124,6 @@
 				paginator.update_index(results.length);
 				initialize_tabular_report_buttons(columns,'Delivery Challans','form324',function (item)
                 {
-                    delete item.id;
                     delete item.order_id;
                     item.challan_date=get_my_past_date(item.challan_date);
                 });

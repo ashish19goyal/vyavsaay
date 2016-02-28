@@ -159,7 +159,6 @@
 				paginator.update_index(results.length);
 				initialize_tabular_report_buttons(columns,'Sale Orders','form181',function (item)
                 {
-                    delete item.id;
                     delete item.bill_id;
                     delete item.challan_info;
                 });

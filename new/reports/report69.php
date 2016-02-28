@@ -136,7 +136,6 @@
                     item.expense_date=get_my_past_date(item.expense_date);
                     delete item.source_id;
                     delete item.source;
-                    delete item.id;
                 });
                 hide_loader();
             });

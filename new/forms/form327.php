@@ -123,7 +123,6 @@
 				initialize_tabular_report_buttons(new_columns,'Closed Letters','form327',function (item)
                 {
                     delete item.status;
-                    delete item.id;
                 });
 				hide_loader();
 			});

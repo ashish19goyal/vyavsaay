@@ -392,23 +392,23 @@
 	                <div class="modal-body">
 		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
 		                  <div class="row">
-								  <div class='col-md-6 pull-right'><button type="button" name='download' class='btn grey'>Download Import Template</button></div>
+								  <div class='col-md-6 pull-right'><button type="button" name='download' class='btn green-jungle pull-right'>Download Import Template</button></div>
 					     		</div>
-		                  <div class="row">
-					     			<div class='col-md-6'><input type="radio" style='float:left;' name='upload_option' value='new'> Create New Records</div>
-								</div>
-								<div class='row'>
-									<div class='col-md-6'><input type="radio" style='float:left;' name='upload_option' value='existing' checked> Update existing Records</div>
-					     		</div>
+		                  <div class="row" style='margin-bottom:10px;margin-top:10px;'>
+					     			<div class='col-md-6'><input type="radio" style='float:left;' name='upload_option' value='new'>  &nbsp;&nbsp;Create New Records</div>
+						  </div>
+				          <div class='row' style='margin-bottom:10px;'>
+									<div class='col-md-6'><input type="radio" style='float:left;' name='upload_option' value='existing' checked> &nbsp;&nbsp;Update existing Records</div>
+					      </div>
 		                  <div class="row">
 								   <div class='col-md-6'>
 								   	<input type="file" required name='file' value='Select file' accept=".csv" style='display:none'>
 										<button type='button' name='file_dummy' class='btn red'>Select File</button>
 									</div>
-								</div>											
+				          </div>											
 		                  <div class="row">
 									<div class='col-md-6'><output name='selected_file'></output></div>
-					     		</div>
+					      </div>
 		               </div>
 		             </div>
 	             	<div class="modal-footer">

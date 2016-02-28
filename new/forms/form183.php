@@ -138,7 +138,6 @@
                             item.quantity=inventory;
                             total_export_requests-=1;
                         });
-                        delete item.id;
                         item.manufacture_date=get_my_past_date(item.manufacture_date);
                     });
                     hide_loader();

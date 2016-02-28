@@ -4,9 +4,24 @@
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='modal11_action();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
-      	<a class='btn btn-default btn-sm' id='form30_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
-      	<a class='btn btn-default btn-sm' id='form30_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
-      	<a class='btn btn-default btn-sm' id='form30_print'><i class='fa fa-print'></i> Print</a>
+            <div class="btn-group">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
+                <ul class="dropdown-menu pull-right">
+                    <li>
+                        <a id='form30_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
+                    </li>
+                    <li>
+                      	<a id='form30_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
+                    </li>
+                    <li>
+                        <a id='form30_print'><i class='fa fa-print'></i> Print</a>
+                    </li>
+                    <li class="divider"> </li>
+                    <li>
+                        <a id='form30_upload' onclick=modal23_action(form30_import_template,form30_import,form30_import_validate);><i class='fa fa-upload'></i> Import</a>
+                    </li>
+                </ul>
+            </div>
       </div>	
 	</div>
 	
@@ -174,10 +189,7 @@
 				
 				$('#form30').formcontrol();
 				paginator.update_index(results.length);				
-				initialize_tabular_report_buttons(columns,'Customers','form30',function (item)
-                {
-                    delete item.id;
-                });
+				initialize_tabular_report_buttons(columns,'Customers','form30');
 								
 				hide_loader();
 			});
@@ -254,10 +266,7 @@
 			var validate_template_array=[{column:'acc_name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 									{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 									{column:'email',regex:new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z_.-]+$')},
-									{column:'phone',regex:new RegExp('^[0-9 ./,+-]+$')},
-									{column:'city',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-									{column:'state',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-									{column:'pincode',regex:new RegExp('^[0-9]+$')}];
+									{column:'phone',regex:new RegExp('^[0-9 ./,+-]+$')}];
 							
 			var error_array=validate_import_array(data_array,validate_template_array);
 			return error_array;					
@@ -292,9 +301,6 @@
 	 					{index:'email',value:row.email},
 	 					{index:'acc_name',value:row.acc_name,unique:'yes'},
 	 					{index:'address',value:row.address},
-	 					{index:'pincode',value:row.pincode},
-	 					{index:'city',value:row.city},
-	 					{index:'state',value:row.state},
 	 					{index:'last_updated',value:last_updated}];
 
 				data_json.data.push(data_json_array);
@@ -323,7 +329,7 @@
 		
 		function form30_import_template()
 		{
-			var data_array=['id','name','phone','email','acc_name','address','city','pincode','state'];
+			var data_array=['id','name','phone','email','acc_name','address'];
 			my_array_to_csv(data_array);
 		};
 

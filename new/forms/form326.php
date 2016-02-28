@@ -154,7 +154,6 @@
 				initialize_tabular_report_buttons(new_columns,'Open Letters','form326',function (item)
                 {
                     delete item.status;
-                    delete item.id;
                     item.due_date(get_my_past_date(item.due_date));
                 });
 				hide_loader();

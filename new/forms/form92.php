@@ -137,7 +137,6 @@
 				paginator.update_index(results.length);
 				initialize_tabular_report_buttons(columns,'Sale Bills','form92',function (item)
                 {
-                    delete item.id;
                     delete item.order_id;
                     item.bill_date=get_my_past_date(item.bill_date);
                 });

@@ -461,6 +461,13 @@ function get_tabular_report_data(columns,filename,action_type,func)
 				clearInterval(export_complete);
 				hide_loader();
 				var bt=get_session_var('title');
+                if(action_type!='csv')
+                {
+                    results.forEach(function(result)
+                    {
+                        delete result.id;    
+                    });
+                }
 				switch(action_type)
 				{
 					case 'csv': my_obj_array_to_csv(results,filename);
@@ -482,7 +489,7 @@ function get_tabular_report_data(columns,filename,action_type,func)
 										{
 											print_report_table(results,filename,func);
 										});
-										break;													
+										break;												
 				}
 			}
 		},500);

@@ -4,9 +4,24 @@
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='modal16_action();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
-      	<a class='btn btn-default btn-sm' id='form8_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
-      	<a class='btn btn-default btn-sm' id='form8_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
-      	<a class='btn btn-default btn-sm' id='form8_print'><i class='fa fa-print'></i> Print</a>
+            <div class="btn-group">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
+                <ul class="dropdown-menu pull-right">
+                    <li>
+                        <a id='form8_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
+                    </li>
+                    <li>
+                      	<a id='form8_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
+                    </li>
+                    <li>
+                        <a id='form8_print'><i class='fa fa-print'></i> Print</a>
+                    </li>
+                    <li class="divider"> </li>
+                    <li>
+                        <a id='form8_upload' onclick=modal23_action(form8_import_template,form8_import,form8_import_validate);><i class='fa fa-upload'></i> Import</a>
+                    </li>
+                </ul>
+            </div>
       </div>	
 	</div>
 	
@@ -99,9 +114,9 @@
 															"<button type='button' class='btn red' form='form8_"+result.id+"' name='delete' title='Delete' onclick='form8_delete_item($(this));'><i class='fa fa-2x fa-trash'></i></button>"+
 													"</div>"+
                                			"<div class='row thumbnail-button-top'>"+
-	            										"<button type='button' class='btn' form='form8_"+result.id+"'name='image' title='Change Picture'><i class='fa fa-2x fa-pencil link'></i></button>"+
-	            										"<input type='file' style='display:none;' form='form8_"+result.id+"'name='image_dummy'>"+
-													"</div>"+
+	            							"<button type='button' class='btn' form='form8_"+result.id+"'name='image' title='Change Picture'><i class='fa fa-2x fa-pencil link'></i></button>"+
+	            							"<input type='file' style='display:none;' form='form8_"+result.id+"'name='image_dummy'>"+
+								        "</div>"+
                                			"<a onclick=\"show_object('staff','"+result.acc_name+"');\"><img class='vr_image' data-id='' alt='"+first_char+"' id='form8_image_"+result.id+"'></a>"+
                                		"</div>"+
                                  	"<div class='caption'>"+
@@ -204,7 +219,7 @@
 				
 				$('#form8').formcontrol();
 				paginator.update_index(results.length);				
-				initialize_tabular_report_buttons(columns,'Staff','form8',function (item){});
+				initialize_tabular_report_buttons(columns,'Staff','form8');
 								
 				hide_loader();
 			});
@@ -281,7 +296,7 @@
 		function form8_import_template()
 		{
 			var data_array=['id','name','phone','email','status','acc_name','username',
-			                'address','pincode','city','state','country'];
+			                'address',];
 			my_array_to_csv(data_array);
 		};
 
@@ -292,11 +307,7 @@
 									{column:'email',regex:new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z_.-]+$')},
 									{column:'phone',regex:new RegExp('^[0-9 ./,+-]+$')},
 									{column:'username',regex:new RegExp('^[0-9a-zA-Z]+$')},
-									{column:'status',list:['active','suspended','retired']},
-									{column:'city',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-									{column:'state',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-									{column:'country',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-									{column:'pincode',regex:new RegExp('^[0-9]+$')}];
+									{column:'status',list:['active','suspended','retired']}];
 							
 			var error_array=validate_import_array(data_array,validate_template_array);
 			return error_array;					
@@ -331,10 +342,6 @@
 	 					{index:'email',value:row.email},
 	 					{index:'acc_name',value:row.acc_name,unique:'yes'},
 	 					{index:'address',value:row.address},
-	 					{index:'pincode',value:row.pincode},
-	 					{index:'city',value:row.city},
-	 					{index:'state',value:row.state},
-	 					{index:'country',value:row.country},
 	 					{index:'status',value:row.status},
 	 					{index:'last_updated',value:last_updated}];
 

@@ -2,7 +2,17 @@
 	<div class="portlet-title">
 		<div class='caption'>		
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='modal12_action();'>Add <i class='fa fa-plus'></i></a>
-		</div>	
+		</div>
+        <div class='actions'>
+            <div class="btn-group">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
+                <ul class="dropdown-menu pull-right">
+                    <li>
+                        <a id='form71_upload' onclick=modal23_action(form71_import_template,form71_import,form71_import_validate);><i class='fa fa-upload'></i> Import</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
 	</div>
 	
 	<div class="portlet-body">

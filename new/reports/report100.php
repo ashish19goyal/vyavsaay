@@ -89,7 +89,6 @@
             initialize_tabular_report_buttons(letters_data,'Due Letters','report100',function (item) 
             {
                 item.due_date=get_my_past_date(item.due_date);
-                delete item.id;
                 delete item.status;
                 delete item.due_date;
             });

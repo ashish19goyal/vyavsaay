@@ -94,10 +94,7 @@
 
                 $('#form239').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Material Requirements','form239',function (item)
-                {
-                    delete item.id;
-                });
+				initialize_tabular_report_buttons(columns,'Material Requirements','form239');
 				hide_loader();
             });
         }
