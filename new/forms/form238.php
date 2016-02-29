@@ -4,9 +4,24 @@
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick="modal156_action('raw material');">Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
-      	<a class='btn btn-default btn-sm' id='form238_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
-      	<a class='btn btn-default btn-sm' id='form238_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
-      	<a class='btn btn-default btn-sm' id='form238_print'><i class='fa fa-print'></i> Print</a>
+            <div class="btn-group">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
+                <ul class="dropdown-menu pull-right">
+                    <li>
+                        <a id='form238_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
+                    </li>
+                    <li>
+                      	<a id='form238_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
+                    </li>
+                    <li>
+                        <a id='form238_print'><i class='fa fa-print'></i> Print</a>
+                    </li>
+                    <li class="divider"> </li>
+                    <li>
+                        <a id='form238_upload' onclick=modal23_action(form238_import_template,form238_import);><i class='fa fa-upload'></i> Import</a>
+                    </li>
+                </ul>
+            </div>
       </div>	
 	</div>
 	

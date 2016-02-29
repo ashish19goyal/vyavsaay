@@ -1,10 +1,21 @@
 <div id='form92' class='tab-pane portlet box green-meadow'>	   
 	<div class="portlet-title">
 		<div class="actions">
-      	<a class='btn btn-default btn-sm' id='form92_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
-      	<a class='btn btn-default btn-sm' id='form92_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
-      	<a class='btn btn-default btn-sm' id='form92_print'><i class='fa fa-print'></i> Print</a>
-      </div>	
+            <div class="btn-group">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
+                <ul class="dropdown-menu pull-right">
+                    <li>
+                        <a id='form92_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
+                    </li>
+                    <li>
+                      	<a id='form92_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
+                    </li>
+                    <li>
+                        <a id='form92_print'><i class='fa fa-print'></i> Print</a>
+                    </li>
+                </ul>
+            </div>
+        </div>	
 	</div>
 	
 	<div class="portlet-body">

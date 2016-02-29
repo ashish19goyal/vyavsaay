@@ -5,8 +5,8 @@
             <a class='btn btn-circle grey btn-outline btn-sm' id='form323_save'>Save <i class='fa fa-save'></i></a>
 		</div>
 		<div class="actions">
-      	<a class='btn btn-default btn-sm' id='form323_print' onclick=form323_print_form();><i class='fa fa-print'></i> Print</a>
-        <a class='btn btn-default btn-sm' id='form323_share'><i class='fa fa-envelope'></i> Email</a>    
+      	     <a class='btn btn-default btn-sm' id='form323_print' onclick=form323_print_form();><i class='fa fa-print'></i> Print</a>
+            <a class='btn btn-default btn-sm' id='form323_share'><i class='fa fa-envelope'></i> Email</a>    
       </div>
 	</div>
 	

@@ -22,9 +22,6 @@
                     </li>
                 </ul>
             </div>
-      	<a class='btn btn-default btn-sm' id='form40_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
-      	<a class='btn btn-default btn-sm' id='form40_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
-      	<a class='btn btn-default btn-sm' id='form40_print'><i class='fa fa-print'></i> Print</a>
       </div>	
 	</div>
 	

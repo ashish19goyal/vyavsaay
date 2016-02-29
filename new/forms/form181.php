@@ -1,10 +1,21 @@
 <div id='form181' class='tab-pane portlet box green-meadow'>	   
 	<div class="portlet-title">
 		<div class="actions">
-      	<a class='btn btn-default btn-sm' id='form181_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
-      	<a class='btn btn-default btn-sm' id='form181_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
-      	<a class='btn btn-default btn-sm' id='form181_print'><i class='fa fa-print'></i> Print</a>
-      </div>	
+            <div class="btn-group">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
+                <ul class="dropdown-menu pull-right">
+                    <li>
+                        <a id='form181_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
+                    </li>
+                    <li>
+                      	<a id='form181_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
+                    </li>
+                    <li>
+                        <a id='form181_print'><i class='fa fa-print'></i> Print</a>
+                    </li>
+                </ul>
+            </div>
+        </div>	
 	</div>
 	
 	<div class="portlet-body">
@@ -161,6 +172,7 @@
                 {
                     delete item.bill_id;
                     delete item.challan_info;
+                    item.order_date=get_my_past_date(item.order_date);
                 });
                 hide_loader();
             });
@@ -529,12 +541,8 @@
                 show_loader();
                 var bill_amount=0;
                 var bill_total=0;
-                var bill_freight=0;
                 var bill_tax=0;
-                var bill_channel_charges=0;
-                var bill_channel_tax=0;
-                var bill_channel_payable=0;
-
+                
                 var pending_items_count=0;
 
                 var actual_order_items=[];
