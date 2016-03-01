@@ -1154,3 +1154,69 @@
 		</div>
 	</div>
 </div>
+
+/***function limiter***/
+
+/*box_id*:*modal89
+*@*box_title*:*Challan Aborted
+*@*box_type*:*static
+*@*function_name*:*
+*@*function_def*:*
+*@*status*:*active
+*@*last_updated*:*1
+*@*box_content*:*
+*/
+<a href='#modal89' data-toggle="modal" id='modal89_link'></a>
+<div id="modal89" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id='modal89_form'>                               
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+					<h4 class="modal-title">Challan Aborted</h4>
+				</div>
+				<div class="modal-body">
+					<div class="scroller" style="height:100px;" data-always-visible="1" data-rail-visible1="1">
+						Challan could not be generated as none of the items were found deliverable.
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn green" data-dismiss='modal' name='close' value='Ok'>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+/***function limiter***/
+
+/*box_id*:*modal90
+*@*box_title*:*Partial Challan Not Allowed
+*@*box_type*:*static
+*@*function_name*:*
+*@*function_def*:*
+*@*status*:*active
+*@*last_updated*:*1
+*@*box_content*:*
+*/
+<a href='#modal90' data-toggle="modal" id='modal90_link'></a>
+<div id="modal90" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id='modal90_form'>                               
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+					<h4 class="modal-title">Partial Challan Not Allowed</h4>
+				</div>
+				<div class="modal-body">
+					<div class="scroller" style="height:100px;" data-always-visible="1" data-rail-visible1="1">
+						Challan could not be generated as partial delivery of items is disabled.
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn green" data-dismiss='modal' name='close' value='Ok'>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

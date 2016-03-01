@@ -110,17 +110,18 @@
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Process'>";
                                 rowsHTML+="<input type='hidden' form='form181_"+result.id+"' value='"+result.id+"'>";
-                                if(result.bill_id!="" && result.bill_id!=null && result.bill_id!="[]")
-                                {
-                                    rowsHTML+="<button type='button' class='btn default yellow-stripe' form='form181_"+result.id+"' name='view_bill'>View Bill</button>";
-                                }
-                                else
-                                {
-                                    rowsHTML+="<button type='button' class='btn default yellow-stripe' form='form181_"+result.id+"' name='create_bill'>Create Bill</button>";
-                                }
                                 if(result.challan_info!="" && result.challan_info!=null && result.challan_info!="[]")
                                 {
                                     rowsHTML+="<button type='button' class='btn default purple-stripe' form='form181_"+result.id+"' name='view_challan'>View Challan</button>";
+                                    
+                                    if(result.bill_id!="" && result.bill_id!=null && result.bill_id!="[]")
+                                    {
+                                        rowsHTML+="<button type='button' class='btn default yellow-stripe' form='form181_"+result.id+"' name='view_bill'>View Bill</button>";
+                                    }
+                                    else
+                                    {
+                                        rowsHTML+="<button type='button' class='btn default yellow-stripe' form='form181_"+result.id+"' name='create_bill'>Create Bill</button>";
+                                    }
                                 }
                                 else
                                 {
@@ -156,7 +157,7 @@
                     
                     $(create_challan_button).on('click',function(event)
                     {
-                        
+                        modal195_action(result.id,result.order_num,result.customer_name);
                     });
 
                     $(view_challan_button).on('click',function(event)
@@ -238,30 +239,21 @@
                     actual_order_items.push(order_item);
                 });
 
-                if(!(order_items.length!=(actual_order_items.length-1) && get_session_var('allow_partial_billing')=='no'))
+                if(!(order_items.length!=(actual_order_items.length-1) && get_session_var('allow_partial_challan')=='no'))
                 {
                     if(order_items.length>0)
                     {
                         pending_items_count=order_items.length;
                         console.log(order_items);
 
-                        var bill_items_xml_array=[];
-                        var order_items_xml_array=[];
-
+                        var challan_items_json={data_store:'delivery_challan_items',loader:'no',data:[]};
+                        var challan_items_adjust_json={data_store:'inventory_adjust',loader:'no',data:[]};
+                        
                         order_items.forEach(function(order_item)
                         {
-                            var item_amount=order_item.amount;
-                            var item_total=order_item.total;
-                            var item_tax=order_item.tax;
-                            var item_mrp=order_item.mrp;
-                            var item_tax_rate=order_item.tax_rate;
-
-                            var batch_data="<product_instances>" +
-                                    "<batch></batch>" +
-                                    "<product_name exact='yes'>"+order_item.item_name+"</product_name>" +
-                                    "<last_updated></last_updated>" +
-                                    "</product_instances>";
-                            fetch_requested_data('',batch_data,function(batches_array)
+                            var batch_data={data_store:'product_instances',
+                                            indexes:[{index:'batch'},{index:'last_updated'},{index:'product_name',exact:order_item.item_name}]};
+                            read_json_rows('',batch_data,function(batches_array)
                             {
                                 //console.log(batches_array);
                                 batches_array.sort(function(a,b)
@@ -284,8 +276,6 @@
                                 var batches_result_array=[];
                                 get_available_batch(order_item.item_name,batches,order_item.quantity,batches_result_array,function()
                                 {
-                                    var unit_price=item_amount/parseFloat(order_item.quantity);
-
                                     console.log(batches_result_array);
                                     if(batches_result_array.length===0)
                                     {
@@ -300,13 +290,11 @@
 
                                     batches_result_array.forEach(function(batch_result)
                                     {
-                                        var storage_xml="<area_utilization>"+
-                                                        "<name></name>"+
-                                                        "<item_name exact='yes'>"+order_item.item_name+"</item_name>"+
-                                                        "<batch exact='yes'>"+batch_result.batch+"</batch>"+
-                                                        "</area_utilization>";
+                                        var storage_xml={data_store:'area_utilization',return_column:'name',
+                                                        indexes:[{index:'item_name',exact:order_item.item_name},
+                                                                {index:'batch',exact:batch_result.batch}]};
 
-                                        get_single_column_data(function (storages) 
+                                        read_json_single_column(storage_xml,function (storages) 
                                         {
                                             var storage_result_array=[];
                                             get_available_storage(order_item.item_name,batch_result.batch,storages,batch_result.quantity,storage_result_array,function () 
@@ -319,37 +307,34 @@
                                                 }
                                                 /////saving to bill item
 
-                                                var bill_item_amount=my_round((item_amount*batch_result.quantity/order_item.quantity),2);
-                                                var bill_item_total=my_round((item_total*batch_result.quantity/order_item.quantity),2);
-                                                var bill_item_tax=my_round((item_tax*batch_result.quantity/order_item.quantity),2);
-
                                                 var bill_item_id=get_new_key();
-                                                var data_xml="<bill_items>" +
-                                                        "<id>"+bill_item_id+"</id>" +
-                                                        "<item_name>"+order_item.item_name+"</item_name>" +
-                                                        "<batch>"+batch_result.batch+"</batch>" +
-                                                        "<unit_price>"+unit_price+"</unit_price>" +
-                                                        "<mrp>"+item_mrp+"</mrp>" +
-                                                        "<quantity>"+batch_result.quantity+"</quantity>" +
-                                                        "<amount>"+bill_item_amount+"</amount>" +
-                                                        "<total>"+bill_item_total+"</total>" +
-                                                        "<tax>"+bill_item_tax+"</tax>" +
-                                                        "<tax_rate>"+item_tax_rate+"</tax_rate>" +
-                                                        "<bill_id>"+bill_key+"</bill_id>" +
-                                                        "<storage>"+item_storage+"</storage>"+
-                                                        "<last_updated>"+get_my_time()+"</last_updated>" +
-                                                        "</bill_items>";	
+                                                var data_json_array=[{index:'id',value:bill_item_id},
+                                                        {index:'item_name',value:order_item.item_name},
+                                                        {index:'item_desc',value:order_item.item_desc},
+                                                        {index:'batch',value:batch_result.batch},
+                                                        {index:'challan_id',value:bill_key},
+                                                        {index:'storage',value:item_storage},
+                                                        {index:'quantity',value:batch_result.quantity},             
+                                                        {index:'last_updated',value:get_my_time()}];
+                                                
+                                                var adjust_json_array=[{index:'id',value:bill_item_id},
+                                                        {index:'product_name',value:order_item.item_name},
+                                                        {index:'item_desc',value:order_item.item_desc},               
+                                                        {index:'item_desc',value:desc},
+                                                        {index:'batch',value:batch_result.batch},
+                                                        {index:'storage',value:item_storage},
+                                                        {index:'quantity',value:(-batch_result.quantity)+""},
+                                                        {index:'source_id',value:bill_key},  
+                                                        {index:'source',value:'delivery challan'},    
+                                                        {index:'last_updated',value:get_my_time()}];
 
-                                                bill_items_xml_array.push(data_xml);
-
-                                                bill_amount+=bill_item_amount;
-                                                bill_total+=bill_item_total;
-                                                bill_tax+=bill_item_tax;
-
+                                                challan_items_json.data.push(data_json_array);
+                                                challan_items_adjust_json.data.push(adjust_json_array);
+                                                
                                                 pending_items_count-=1;
                                             });
 
-                                        },storage_xml);	
+                                        });	
                                     });					
                                 });
                             });
@@ -362,34 +347,29 @@
                            {
                                 clearInterval(bill_items_complete);
 
-                                var num_data="<user_preferences>"+
-                                            "<id></id>"+						
-                                            "<value></value>"+										
-                                            "<name exact='yes'>"+bill_type+"_bill_num</name>"+												
-                                            "</user_preferences>";
-                                fetch_requested_data('',num_data,function (bill_num_ids)
+                                var num_data={data_store:'user_preferences',
+                                              indexes:[{index:'id'},{index:'value'},{index:'name',exact:'challan_num'}]};
+                                read_json_rows('',num_data,function (bill_num_ids)
                                 {
                                     if(bill_num_ids.length>0)
                                     {
                                         //////////////////////////////////////////////
-                                        var sale_order_xml="<sale_orders>"+
-                                                    "<id>"+order_id+"</id>" +
-                                                    "<bill_id></bill_id>" +
-                                                    "<total_quantity></total_quantity>"+
-                                                    "</sale_orders>";
-                                        fetch_requested_data('',sale_order_xml,function (sorders) 
+                                        var sale_order_xml={data_store:'sale_orders',
+                                                           indexes:[{index:'id',value:order_id},
+                                                                   {index:'challan_info'},{index:'total_quantity'}]};
+                                        read_json_rows('',sale_order_xml,function (sorders) 
                                         {
                                             if(sorders.length>0)
                                             {
                                                 var id_object_array=[];
-                                                if(sorders[0].bill_id!="" && sorders[0].bill_id!=0 && sorders[0].bill_id!="null")
+                                                if(sorders[0].challan_info!="" && sorders[0].challan_info!=0 && sorders[0].challan_info!="null")
                                                 {
-                                                    id_object_array=JSON.parse(sorders[0].bill_id);
+                                                    id_object_array=JSON.parse(sorders[0].challan_info);
                                                 }
 
                                                 var id_object=new Object();
-                                                id_object.bill_num=bill_num_ids[0].value;
-                                                id_object.bill_id=bill_key;
+                                                id_object.challan_num=bill_num_ids[0].value;
+                                                id_object.challan_id=bill_key;
 
                                                 id_object.quantity=0;
                                                 for(var j in order_items)
@@ -404,21 +384,17 @@
                                                     master_total_quantity+=parseFloat(id_object_array[k].quantity);
                                                 }
 
-                                                var status='partially billed';				
-                                                if(master_total_quantity==parseFloat(sorders[0].total_quantity))
-                                                {
-                                                    status='billed';
-                                                }
-
+                                                var status='delivered';				
+                                                
                                                 var new_bill_id=JSON.stringify(id_object_array);
                                                 //console.log(new_bill_id);
-                                                var so_xml="<sale_orders>" +
-                                                        "<id>"+order_id+"</id>" +
-                                                        "<bill_id>"+new_bill_id+"</bill_id>" +
-                                                        "<status>"+status+"</status>" +
-                                                        "<last_updated>"+get_my_time()+"</last_updated>" +
-                                                        "</sale_orders>";
-                                                update_simple_func(so_xml,function () 
+                                                var so_json={data_store:'sale_orders',
+                                                    data:[{index:'id',value:order_id},
+                                                        {index:'challan_info',value:new_bill_id},
+                                                        {index:'status',value:status},
+                                                        {index:'last_updated',value:get_my_time()}]};
+
+                                                update_json(so_json,function () 
                                                 {
                                                     form181_ini();
                                                 });					
@@ -426,88 +402,29 @@
                                         });	
                                         /////////////////////////////////////////////		  						
                                         var bill_key_string=""+bill_key;	
+                                        
+                                        var num_json={data_store:'user_preferences',
+                                            data:[{index:'id',value:bill_num_ids[0].id},
+                                                {index:'value',value:(parseInt(bill_num_ids[0].value)+1)},
+                                                {index:'last_updated',value:last_updated}]};
 
-                                        var num_xml="<user_preferences>"+
-                                                "<id>"+bill_num_ids[0].id+"</id>"+
-                                                "<value>"+(parseInt(bill_num_ids[0].value)+1)+"</value>"+
-                                                "<last_updated>"+get_my_time()+"</last_updated>"+
-                                                "</user_preferences>";
-                                        var bill_xml="<bills>" +
-                                                "<id>"+bill_key+"</id>" +
-                                                "<bill_num>"+bill_num_ids[0].value+"</bill_num>"+										
-                                                "<order_num>"+order_num+"</order_num>"+										
-                                                "<order_id>"+order_id+"</order_id>"+										
-                                                "<customer_name>"+customer+"</customer_name>" +
-                                                "<bill_date>"+get_my_time()+"</bill_date>" +
-                                                "<billing_type>"+bill_type+"</billing_type>" +
-                                                "<amount>"+bill_amount+"</amount>" +
-                                                "<total>"+bill_total+"</total>" +
-                                                "<discount>0</discount>" +
-                                                "<tax>"+bill_tax+"</tax>" +
-                                                "<transaction_id>"+order_id+"</transaction_id>" +
-                                                "<last_updated>"+get_my_time()+"</last_updated>" +
-                                                "</bills>";			
-                                        var activity_xml="<activity>" +
-                                                "<data_id>"+bill_key+"</data_id>" +
-                                                "<tablename>bills</tablename>" +
-                                                "<link_to>form42</link_to>" +
-                                                "<title>Saved</title>" +
-                                                "<notes>Billed order# "+order_num+"</notes>" +
-                                                "<updated_by>"+get_name()+"</updated_by>" +
-                                                "</activity>";
-                                        var transaction_xml="<transactions>" +
-                                                "<id>"+bill_key+"</id>" +
-                                                "<trans_date>"+get_my_time()+"</trans_date>" +
-                                                "<amount>"+bill_total+"</amount>" +
-                                                "<receiver>"+customer+"</receiver>" +
-                                                "<giver>master</giver>" +
-                                                "<tax>"+bill_tax+"</tax>" +
-                                                "<last_updated>"+get_my_time()+"</last_updated>" +
-                                                "</transactions>";
-                                        var pt_tran_id=get_new_key();
-                                        var payment_xml="<payments>" +
-                                                "<id>"+pt_tran_id+"</id>" +
-                                                "<status>pending</status>" +
-                                                "<type>received</type>" +
-                                                "<date>"+get_my_time()+"</date>" +
-                                                "<total_amount>"+bill_total+"</total_amount>" +
-                                                "<paid_amount>0</paid_amount>" +
-                                                "<acc_name>"+customer+"</acc_name>" +
-                                                "<due_date>"+get_credit_period()+"</due_date>" +
-                                                "<mode>"+get_payment_mode()+"</mode>" +
-                                                "<transaction_id>"+pt_tran_id+"</transaction_id>" +
-                                                "<source_id>"+order_id+"</source_id>" +
-                                                "<source>sale bill</source>" +
-                                                "<source_info>"+bill_num_ids[0].value+"</source_info>"+
-                                                "<last_updated>"+get_my_time()+"</last_updated>" +
-                                                "</payments>";
-                                        var pt_xml="<transactions>" +
-                                                "<id>"+pt_tran_id+"</id>" +
-                                                "<trans_date>"+get_my_time()+"</trans_date>" +
-                                                "<amount>"+bill_total+"</amount>" +
-                                                "<receiver>master</receiver>" +
-                                                "<giver>"+customer+"</giver>" +
-                                                "<tax>0</tax>" +
-                                                "<last_updated>"+get_my_time()+"</last_updated>" +
-                                                "</transactions>";
+                                        var data_json={data_store:'delivery_challans',
+                                            data:[{index:'id',value:bill_key},
+                                                {index:'challan_num',value:get_session_var('challan_prefix')+"-"+bill_num_ids[0].value},
+                                                {index:'challan_date',value:get_my_time()},
+                                                {index:'order_num',value:order_num},
+                                                {index:'order_id',value:order_id},  
+                                                {index:'total_quantity',value:total_quantity},
+                                                {index:'customer',value:customer},
+                                                {index:'last_updated',value:last_updated}],
+                                            log:'yes',
+                                            log_data:{title:'Created',notes:'Delivery Challan for order # '+order_num,link_to:'form324'}};
+                                        
+                                        update_json(num_json);
+                                        create_json(challan_json);
 
-                                        create_simple(transaction_xml);
-                                        create_simple(pt_xml);
-                                        create_simple(payment_xml);
-                                        update_simple(num_xml);
-                                        create_row(bill_xml,activity_xml);
-
-                                        //console.log(bill_items_xml_array);
-                                        //console.log(bill_xml);
-
-                                        bill_items_xml_array.forEach(function (bill_item_xml) 
-                                        {
-                                            create_simple(bill_item_xml);
-                                        });
-                                        order_items_xml_array.forEach(function (order_item_xml) 
-                                        {
-                                            update_simple(order_item_xml);
-                                        });
+                                        create_batch(challan_items_json);
+                                        create_batch(challan_items_adjust_json);
                                     }
                                 });
                                 hide_loader();

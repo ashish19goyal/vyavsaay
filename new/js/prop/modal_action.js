@@ -15291,7 +15291,6 @@ function modal184_action(id,box_id,master)
 		event.preventDefault();
 		
 		var content=cm.getValue();
-		console.log(content);
 		var last_updated=get_my_time();
 		
 		if(typeof master!='undefined' && master=='master')
@@ -15739,6 +15738,114 @@ function modal194_action(elem_id)
 	$("#modal194_link").click();	
     $(keywords).focus();
 }
+
+/**
+ * @modal Analyze Order
+ * @modalNo 195
+ */
+function modal195_action(order_id,order_num,customer)
+{
+	show_loader();
+	var form=document.getElementById("modal195_form");
+    form.elements['order'].value=order_num;
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		form181_bill(order_id,order_num,customer);
+		$(form).find(".close").click();
+	});
+
+	var headHTML="<tr>"+
+				"<td>Item</td>"+
+				"<td>Quantity</td>"+
+				"<td>Select</td>"+
+				"</tr>";
+	$('#modal195_item_table').html(headHTML);
+		
+	var order_items_xml={data_store:'sale_order_items',
+                        indexes:[{index:'id'},
+                                {index:'order_id',exact:order_id},
+                                {index:'item_name'},
+                                {index:'item_desc'},
+                                {index:'quantity'}]};
+	var analyze_item_timer=0;
+								
+	read_json_rows('',order_items_xml,function (order_items) 
+	{
+        //console.log(bill_items);
+        for(var j=0;j<order_items.length;j++)
+        {
+            order_items[j].order_quantity=order_items[j].quantity;
+        }
+
+        analyze_item_timer=order_items.length;
+
+        order_items.forEach(function (order_item) 
+        {
+            var tr_elem_title="";
+            var order_item_timer=1;
+
+            get_inventory(order_item.item_name,'',function(quantity)
+            {
+                if(parseFloat(quantity)<parseFloat(order_item.quantity))
+                {
+                    tr_elem_title='Insufficient Inventory';
+                }
+                order_item_timer-=1;
+            });
+
+            var order_item_analysis_complete=setInterval(function()
+            {
+               if(order_item_timer===0)
+               {
+                   clearInterval(order_item_analysis_complete);
+                   var item_checked="checked";
+                   var item_title=tr_elem_title;
+                   var hide_checkbox=false;
+
+                   if(item_title=='Insufficient Inventory')
+                   {
+                       item_checked="";
+                       hide_checkbox=true;
+                   }
+
+                    var order_item_string=JSON.stringify(order_item);
+                    order_item_string=order_item_string.replace(/'/g, "");			  			   	
+                    //console.log(order_item_string);
+                    var rowsHTML="<tr title='"+item_title+"' data-object='"+order_item_string+"' id='modal195_item_row_"+order_item.id+"'>"+
+                        "<td>"+order_item.item_name+"</td>"+
+                        "<td>"+order_item.quantity+"</td>";
+
+                    if(hide_checkbox)
+                    {
+                        rowsHTML+="<td><input "+item_checked+" style='display:none;' type='checkbox' id='modal195_item_check_"+order_item.id+"'></td>";
+                    }
+                    else
+                    {			
+                        rowsHTML+="<td><input "+item_checked+" type='checkbox' id='modal195_item_check_"+order_item.id+"'></td>";
+                    }
+                    rowsHTML+="</tr>";
+                    $('#modal195_item_table').append(rowsHTML);
+                    analyze_item_timer-=1;
+               }
+             },100);	
+        });
+
+        var analysis_complete=setInterval(function()
+        {
+            if(analyze_item_timer===0)
+            {
+                clearInterval(analysis_complete);
+                hide_loader();
+            }
+        },100);	
+	});				
+	
+	$("#modal195_link").click();
+}
+
 
 /**
  * @modalNo 196

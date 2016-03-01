@@ -787,17 +787,6 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<name>form233</name>
-			<display_name>Newsletter Creator</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--newsletter--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
 			<name>form237</name>
 			<display_name>Promotions</display_name>
 			<status>active</status>
@@ -1022,7 +1011,7 @@
 		<row>
 			<username>master</username>
 			<element_id>db_backup</element_id>
-			<element_name>db_backup</element_name>
+			<element_name>DB Backup</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1033,7 +1022,7 @@
 		<row>
 			<username>master</username>
 			<element_id>sync</element_id>
-			<element_name>sync_data</element_name>
+			<element_name>Sync Data</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1044,7 +1033,7 @@
 		<row>
 			<username>master</username>
 			<element_id>sync_mode</element_id>
-			<element_name>mode_of_operation</element_name>
+			<element_name>Mode of Operation</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1055,7 +1044,7 @@
 		<row>
 			<username>master</username>
 			<element_id>notif</element_id>
-			<element_name>notifications</element_name>
+			<element_name>Notifications</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1066,51 +1055,7 @@
 		<row>
 			<username>master</username>
 			<element_id>activities</element_id>
-			<element_name>activities</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report1</element_id>
-			<element_name>signage_changes</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report4</element_id>
-			<element_name>modes_of_payment</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report5</element_id>
-			<element_name>customer_account_balance</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report6</element_id>
-			<element_name>payments_due_from_customers</element_name>
+			<element_name>Activities</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1121,315 +1066,7 @@
 		<row>
 			<username>master</username>
 			<element_id>report9</element_id>
-			<element_name>product_sales_report</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report14</element_id>
-			<element_name>expenses_by_period</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report15</element_id>
-			<element_name>financial_summary</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report17</element_id>
-			<element_name>staff_performance</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report26</element_id>
-			<element_name>sales_by_customers</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report27</element_id>
-			<element_name>expiring_inventory</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report28</element_id>
-			<element_name>short_inventory</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report29</element_id>
-			<element_name>product_pre-requisites</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report30</element_id>
-			<element_name>tasks_performed</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report31</element_id>
-			<element_name>customer_map_by_credit</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report32</element_id>
-			<element_name>staff_map</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report33</element_id>
-			<element_name>supplier_map_by_debit</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report34</element_id>
-			<element_name>effective_margin</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report35</element_id>
-			<element_name>customer_map_by_products</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report36</element_id>
-			<element_name>supplier_map_by_products</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report37</element_id>
-			<element_name>payments_due_to_suppliers</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report38</element_id>
-			<element_name>sales_by_products</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report39</element_id>
-			<element_name>sales_by_services</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report40</element_id>
-			<element_name>surplus_inventory</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report41</element_id>
-			<element_name>service_pre-requisites</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report42</element_id>
-			<element_name>feedback</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report43</element_id>
-			<element_name>customer_behaviour</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report44</element_id>
-			<element_name>compare_products</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report45</element_id>
-			<element_name>virtual_store</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report46</element_id>
-			<element_name>supplier_account_balance</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report47</element_id>
-			<element_name>inventory_value</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report48</element_id>
-			<element_name>resource_analysis</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report50</element_id>
-			<element_name>margin_by_products</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report51</element_id>
-			<element_name>dead_items</element_name>
+			<element_name>Product Sales Report</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1440,62 +1077,7 @@
 		<row>
 			<username>master</username>
 			<element_id>report52</element_id>
-			<element_name>product_purchase_report</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report53</element_id>
-			<element_name>sales_tax</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report54</element_id>
-			<element_name>best_days_by_sales</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report55</element_id>
-			<element_name>worst_days_by_sales</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report56</element_id>
-			<element_name>service_requests_report</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report57</element_id>
-			<element_name>subscription_status</element_name>
+			<element_name>Product Purchase Report</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1506,7 +1088,7 @@
 		<row>
 			<username>master</username>
 			<element_id>report58</element_id>
-			<element_name>ledger</element_name>
+			<element_name>Ledger</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1517,73 +1099,7 @@
 		<row>
 			<username>master</username>
 			<element_id>report60</element_id>
-			<element_name>trial_balance</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report63</element_id>
-			<element_name>item_picklist</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report64</element_id>
-			<element_name>packing_instructions</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report65</element_id>
-			<element_name>pricing_update_report</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report66</element_id>
-			<element_name>inventory_level_store</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report67</element_id>
-			<element_name>channel_collections</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report68</element_id>
-			<element_name>project_prioritization</element_name>
+			<element_name>Trial Balance</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1594,73 +1110,7 @@
 		<row>
 			<username>master</username>
 			<element_id>report69</element_id>
-			<element_name>project_expenses</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report72</element_id>
-			<element_name>pickup_deliveries</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report73</element_id>
-			<element_name>stock_laundry</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report74</element_id>
-			<element_name>feedback</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report75</element_id>
-			<element_name>supplier_score_report</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report76</element_id>
-			<element_name>logistic_order_status</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report77</element_id>
-			<element_name>inventory_storage_by_item</element_name>
+			<element_name>Project Expenses</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1671,40 +1121,7 @@
 		<row>
 			<username>master</username>
 			<element_id>report78</element_id>
-			<element_name>followup_report</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report79</element_id>
-			<element_name>pending_po_items</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report80</element_id>
-			<element_name>total_sales</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report81</element_id>
-			<element_name>sale_leads_by_staff</element_name>
+			<element_name>Followup Report</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1715,117 +1132,7 @@
 		<row>
 			<username>master</username>
 			<element_id>report82</element_id>
-			<element_name>inventory_report</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report83</element_id>
-			<element_name>testing_results</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report84</element_id>
-			<element_name>num_deliveries</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report85</element_id>
-			<element_name>num_drs</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report86</element_id>
-			<element_name>sales_report_modern</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report87</element_id>
-			<element_name>delivery_run_report</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report88</element_id>
-			<element_name>search_inventory</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report89</element_id>
-			<element_name>deliveries_by_person</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report90</element_id>
-			<element_name>order_picklist</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report91</element_id>
-			<element_name>inventory_by_brand</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report92</element_id>
-			<element_name>pending_sale_order_items</element_name>
+			<element_name>Inventory Report</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1836,73 +1143,7 @@
 		<row>
 			<username>master</username>
 			<element_id>report93</element_id>
-			<element_name>stock_report_extended</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report94</element_id>
-			<element_name>combo_inventory</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report95</element_id>
-			<element_name>order_sorting</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report96</element_id>
-			<element_name>collection_report</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report97</element_id>
-			<element_name>leads_search</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report98</element_id>
-			<element_name>qr_scan_report</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report99</element_id>
-			<element_name>number_rto</element_name>
+			<element_name>Stock Report</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1913,29 +1154,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form1</element_id>
-			<element_name>update_inventory</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form2</element_id>
-			<element_name>create_pamphlet</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form5</element_id>
-			<element_name>manage_assets</element_name>
+			<element_name>Inventory</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1946,7 +1165,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form7</element_id>
-			<element_name>attendance</element_name>
+			<element_name>Attendance</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1957,18 +1176,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form8</element_id>
-			<element_name>manage_staff</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form10</element_id>
-			<element_name>create_service_bills</element_name>
+			<element_name>Manage Staff</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1979,95 +1187,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form11</element_id>
-			<element_name>manage_payments</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form12</element_id>
-			<element_name>create_bill</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form14</element_id>
-			<element_name>manage_tasks</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form15</element_id>
-			<element_name>accept_customer_returns</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form16</element_id>
-			<element_name>manage_customer_returns</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form17</element_id>
-			<element_name>manage_supplier_returns</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form19</element_id>
-			<element_name>enter_supplier_returns</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form21</element_id>
-			<element_name>enter_supplier_bills</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form24</element_id>
-			<element_name>create_purchase_order</element_name>
+			<element_name>Manage Payments</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2078,29 +1198,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form30</element_id>
-			<element_name>manage_customers</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form35</element_id>
-			<element_name>manage_offers</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form38</element_id>
-			<element_name>store_placement</element_name>
+			<element_name>Manage Customers</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2111,7 +1209,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form39</element_id>
-			<element_name>manage_products</element_name>
+			<element_name>Manage Products</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2122,18 +1220,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form40</element_id>
-			<element_name>manage_suppliers</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form41</element_id>
-			<element_name>verify_customer_addresses</element_name>
+			<element_name>Manage Suppliers</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2144,18 +1231,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form42</element_id>
-			<element_name>manage_bills</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form43</element_id>
-			<element_name>manage_purchase_orders</element_name>
+			<element_name>Manage Invoices</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2166,7 +1242,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form44</element_id>
-			<element_name>manage_pamphlets</element_name>
+			<element_name>Manage Newsletters</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2177,18 +1253,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form46</element_id>
-			<element_name>set_defaults</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form47</element_id>
-			<element_name>change_password</element_name>
+			<element_name>Set Defaults</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2199,7 +1264,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form48</element_id>
-			<element_name>select_reports</element_name>
+			<element_name>Select Report Tabs</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2210,7 +1275,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form49</element_id>
-			<element_name>select_forms</element_name>
+			<element_name>Select Form Tabs</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2221,7 +1286,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form50</element_id>
-			<element_name>set_accounting_defaults</element_name>
+			<element_name>Set User Variables</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2232,29 +1297,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form51</element_id>
-			<element_name>access_control</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form53</element_id>
-			<element_name>manage_supplier_bills</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form54</element_id>
-			<element_name>select_print_templates</element_name>
+			<element_name>Access Control</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2265,128 +1308,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form56</element_id>
-			<element_name>cash_register</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form57</element_id>
-			<element_name>manage_services</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form58</element_id>
-			<element_name>service_pre-requisites</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form59</element_id>
-			<element_name>product_pre-requisites</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form60</element_id>
-			<element_name>product_attributes</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form61</element_id>
-			<element_name>service_attributes</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form62</element_id>
-			<element_name>product_reviews</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form63</element_id>
-			<element_name>service_reviews</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form64</element_id>
-			<element_name>service_cross_sell</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form66</element_id>
-			<element_name>product_cross_sell</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form69</element_id>
-			<element_name>create_sale_order</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form70</element_id>
-			<element_name>manage_sale_orders</element_name>
+			<element_name>Cash Register</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2397,84 +1319,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form71</element_id>
-			<element_name>manage_accounts</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form72</element_id>
-			<element_name>create_bill</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form77</element_id>
-			<element_name>set_shortcuts</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form78</element_id>
-			<element_name>promotions</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form79</element_id>
-			<element_name>manage_task_types</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form80</element_id>
-			<element_name>de-duplication_mapping</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form81</element_id>
-			<element_name>sale_leads</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form82</element_id>
-			<element_name>scan_items</element_name>
+			<element_name>Manage Accounts</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2485,62 +1330,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form83</element_id>
-			<element_name>storage_areas</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form84</element_id>
-			<element_name>manage_subscriptions</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form85</element_id>
-			<element_name>verify_supplier_addresses</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form86</element_id>
-			<element_name>staff_geo_tracking</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form87</element_id>
-			<element_name>manage_products</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form88</element_id>
-			<element_name>manufacturing_schedule</element_name>
+			<element_name>Store Areas</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2551,7 +1341,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form89</element_id>
-			<element_name>appointments</element_name>
+			<element_name>Appointments</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2562,51 +1352,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form90</element_id>
-			<element_name>billing_types</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form91</element_id>
-			<element_name>create_bills_multi_register</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form92</element_id>
-			<element_name>manage_bills_multi_register</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form93</element_id>
-			<element_name>manage_loans</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form94</element_id>
-			<element_name>discard_items</element_name>
+			<element_name>Invoice Types</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2617,51 +1363,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form95</element_id>
-			<element_name>data_import</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form96</element_id>
-			<element_name>customer_attributes</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form97</element_id>
-			<element_name>supplier_attributes</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form98</element_id>
-			<element_name>staff_attributes</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form99</element_id>
-			<element_name>delete_storage</element_name>
+			<element_name>Data Import</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2672,51 +1374,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form100</element_id>
-			<element_name>selective_sync</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form101</element_id>
-			<element_name>manage_projects</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form102</element_id>
-			<element_name>project_team</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form103</element_id>
-			<element_name>project_phases</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form104</element_id>
-			<element_name>project_tasks</element_name>
+			<element_name>Selective Sync</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2727,29 +1385,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form105</element_id>
-			<element_name>data_access</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form108</element_id>
-			<element_name>manage_sale_orders_multi_register</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form109</element_id>
-			<element_name>asset_attributes</element_name>
+			<element_name>Data Access</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2760,7 +1396,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form110</element_id>
-			<element_name>manage_reports</element_name>
+			<element_name>Manage Reports</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2771,117 +1407,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form111</element_id>
-			<element_name>create_reports</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form112</element_id>
-			<element_name>add_unbilled_sale_items</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form113</element_id>
-			<element_name>manage_unbilled_sale_items</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form114</element_id>
-			<element_name>add_unbilled_purchase_items</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form115</element_id>
-			<element_name>manage_unbilled_purchase_items</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form116</element_id>
-			<element_name>manage_loyalty_programs</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form118</element_id>
-			<element_name>create_bills_loyalty</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form119</element_id>
-			<element_name>create_bills_multi_register_unbilled</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form120</element_id>
-			<element_name>manage_loyalty_customers</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form121</element_id>
-			<element_name>adjust_loyalty_points</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form122</element_id>
-			<element_name>enter_supplier_bill_unbilled_items</element_name>
+			<element_name>Create Reports</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2892,7 +1418,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form123</element_id>
-			<element_name>mandatory_attributes</element_name>
+			<element_name>Mandatory Attributes</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2903,161 +1429,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form124</element_id>
-			<element_name>receipts</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form125</element_id>
-			<element_name>customer_accounts</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form126</element_id>
-			<element_name>issues_list</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form128</element_id>
-			<element_name>manage_service_requests</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form129</element_id>
-			<element_name>engineer_locations</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form130</element_id>
-			<element_name>job_orders</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form131</element_id>
-			<element_name>assign_tasks</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form132</element_id>
-			<element_name>create_service_request</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form133</element_id>
-			<element_name>service_documents</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form134</element_id>
-			<element_name>service_request_detail</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form135</element_id>
-			<element_name>project_dashboard</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form136</element_id>
-			<element_name>enter_supplier_bill_wholesale</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form137</element_id>
-			<element_name>project_expenses</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form138</element_id>
-			<element_name>project_schedule</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form141</element_id>
-			<element_name>manage_orders_app</element_name>
+			<element_name>Receipts</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -3068,7 +1440,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form142</element_id>
-			<element_name>create_questionnaire</element_name>
+			<element_name>Create Questionnaire</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -3079,40 +1451,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form143</element_id>
-			<element_name>manage_questionnaire</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form144</element_id>
-			<element_name>project_budgeting</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form145</element_id>
-			<element_name>store_movement</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form146</element_id>
-			<element_name>manufacturing</element_name>
+			<element_name>Manage Questionnaire</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -3123,7 +1462,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form147</element_id>
-			<element_name>manage_roles</element_name>
+			<element_name>Manage Roles</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -3134,7 +1473,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form148</element_id>
-			<element_name>create_roles</element_name>
+			<element_name>Create Roles</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -3145,7 +1484,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form149</element_id>
-			<element_name>assign_roles</element_name>
+			<element_name>Assign Roles</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -3153,659 +1492,10 @@
 			<del>checked</del>
 			<last_updated>1</last_updated>
 		</row>
-		<row>
-			<username>master</username>
-			<element_id>form150</element_id>
-			<element_name>project_feeds</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form151</element_id>
-			<element_name>service_request_billing</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form152</element_id>
-			<element_name>manage_quotations</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form153</element_id>
-			<element_name>prepare_quotation</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form154</element_id>
-			<element_name>create_bill_dlm</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form155</element_id>
-			<element_name>manage_inventory_dlm</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form156</element_id>
-			<element_name>store_placement_dlm</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form157</element_id>
-			<element_name>store_movement_dlm</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form158</element_id>
-			<element_name>enter_purchases_dlm</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form159</element_id>
-			<element_name>issue_grn</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form160</element_id>
-			<element_name>manage_grn</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form161</element_id>
-			<element_name>checklist_items</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form162</element_id>
-			<element_name>product_checklist</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form163</element_id>
-			<element_name>product_dimensions</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form165</element_id>
-			<element_name>put_away_suggestions</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form166</element_id>
-			<element_name>manage_sale_prices</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form167</element_id>
-			<element_name>storage_structure</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form169</element_id>
-			<element_name>manage_products_nikki</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form170</element_id>
-			<element_name>store_areas_nikki</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>		
-		<row>
-			<username>master</username>
-			<element_id>form171</element_id>
-			<element_name>manage_channels</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>		
-		<row>
-			<username>master</username>
-			<element_id>form172</element_id>
-			<element_name>pricing_sheet</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>		
-		<row>
-			<username>master</username>
-			<element_id>form173</element_id>
-			<element_name>sku_mapping</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form174</element_id>
-			<element_name>pickup_charges</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form175</element_id>
-			<element_name>channel_categories</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form176</element_id>
-			<element_name>category_sku_mapping</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form177</element_id>
-			<element_name>prioritization_parameters</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form178</element_id>
-			<element_name>create_purchase_order_cps</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form179</element_id>
-			<element_name>manage_purchase_order_cps</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form180</element_id>
-			<element_name>create_sale_order_cps</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form181</element_id>
-			<element_name>manage_sale_order_cps</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form182</element_id>
-			<element_name>sale_leads_cps</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form183</element_id>
-			<element_name>inventory_cps</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form184</element_id>
-			<element_name>manufacturing_processes</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form185</element_id>
-			<element_name>track_manufacturing</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form186</element_id>
-			<element_name>production_plan</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form187</element_id>
-			<element_name>testing_processes</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form188</element_id>
-			<element_name>track_testing</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form189</element_id>
-			<element_name>manage_production_plans</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form190</element_id>
-			<element_name>orders_laundry</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
 		<row>
 			<username>master</username>
 			<element_id>form191</element_id>
-			<element_name>manage_values_lists</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form192</element_id>
-			<element_name>enter_purchases_laundry</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form193</element_id>
-			<element_name>adjust_inventory</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form195</element_id>
-			<element_name>letterhead</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form196</element_id>
-			<element_name>promotions_by_list</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form197</element_id>
-			<element_name>supplier_item_mapping</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form198</element_id>
-			<element_name>logistic_order_details</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form199</element_id>
-			<element_name>incoming_items</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form200</element_id>
-			<element_name>create_drs</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form201</element_id>
-			<element_name>manage_drs</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form202</element_id>
-			<element_name>logistic_exchange</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form203</element_id>
-			<element_name>logistic_manage_orders</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form204</element_id>
-			<element_name>logistic_pending_orders</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form205</element_id>
-			<element_name>logistic_delivered_orders</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form206</element_id>
-			<element_name>logistic_undelivered_orders</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form207</element_id>
-			<element_name>manage_inventory_salon</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form208</element_id>
-			<element_name>treatment_plans</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form209</element_id>
-			<element_name>treatment_plan_details</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form210</element_id>
-			<element_name>packing_instructions_invoice</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form211</element_id>
-			<element_name>update_logistics_orders</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form212</element_id>
-			<element_name>update_logistics_orders_branches</element_name>
+			<element_name>Values List</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -3816,7 +1506,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form213</element_id>
-			<element_name>sale_leads_followup</element_name>
+			<element_name>Sale Leads</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -3824,296 +1514,10 @@
 			<del>checked</del>
 			<last_updated>1</last_updated>
 		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form214</element_id>
-			<element_name>sale_leads_self</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form215</element_id>
-			<element_name>items_dispatch_nikki</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form216</element_id>
-			<element_name>order_picklist</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form217</element_id>
-			<element_name>supplier_item_mapping</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form218</element_id>
-			<element_name>sale_leads_external</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form219</element_id>
-			<element_name>create_cod_drs</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form220</element_id>
-			<element_name>manage_projects_cps</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form221</element_id>
-			<element_name>timesheet</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form222</element_id>
-			<element_name>create_purchase_order_aurilion</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form223</element_id>
-			<element_name>manage_purchase_orders_aurilion</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form224</element_id>
-			<element_name>testing</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form225</element_id>
-			<element_name>create_bill_cps</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form226</element_id>
-			<element_name>delivery_run</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form227</element_id>
-			<element_name>inventory_warehouse</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form228</element_id>
-			<element_name>inventory_demo</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form229</element_id>
-			<element_name>inventory_hiring</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form230</element_id>
-			<element_name>inventory_in_out</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form231</element_id>
-			<element_name>create_prescription</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form232</element_id>
-			<element_name>manage_prescriptions</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form233</element_id>
-			<element_name>newsletter_creator</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form234</element_id>
-			<element_name>manage_products_wo_tax</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form235</element_id>
-			<element_name>manage_products_grid</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form236</element_id>
-			<element_name>manage_manifests</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
 		<row>
 			<username>master</username>
 			<element_id>form237</element_id>
-			<element_name>promotions_flex_newsletter</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form238</element_id>
-			<element_name>inventory_raw_cps</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form239</element_id>
-			<element_name>manage_material_requirements</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form240</element_id>
-			<element_name>assign_material_requirements</element_name>
+			<element_name>Promotions</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -4124,7 +1528,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form241</element_id>
-			<element_name>manage_receivables</element_name>
+			<element_name>Manage Receivables</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -4135,7 +1539,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form242</element_id>
-			<element_name>manage_payables</element_name>
+			<element_name>Manage Payables</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -4146,7 +1550,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form243</element_id>
-			<element_name>receipts_receivable</element_name>
+			<element_name>Receipts Receivable</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -4154,197 +1558,10 @@
 			<del>checked</del>
 			<last_updated>1</last_updated>
 		</row>
-		<row>
-			<username>master</username>
-			<element_id>form244</element_id>
-			<element_name>add_stock</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form245</element_id>
-			<element_name>sku_components</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form246</element_id>
-			<element_name>transfer_zones</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form247</element_id>
-			<element_name>manage_pincodes</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form248</element_id>
-			<element_name>create_transit_bag</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form249</element_id>
-			<element_name>manage_transit_bags</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form250</element_id>
-			<element_name>create_mts</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form251</element_id>
-			<element_name>manage_mts</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form252</element_id>
-			<element_name>vendor_leads</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form253</element_id>
-			<element_name>customer_leads</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form254</element_id>
-			<element_name>telecalling_leads</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form255</element_id>
-			<element_name>marketing_leads</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form256</element_id>
-			<element_name>batch_info</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
 		<row>
 			<username>master</username>
 			<element_id>form257</element_id>
-			<element_name>user_accounts</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form258</element_id>
-			<element_name>create_quotation_nvs</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form259</element_id>
-			<element_name>manage_quotations_nvs</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form260</element_id>
-			<element_name>inventory_spares</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form261</element_id>
-			<element_name>bank_accounts</element_name>
+			<element_name>User Accounts</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -4355,7 +1572,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form262</element_id>
-			<element_name>manage_grids</element_name>
+			<element_name>Manage Grids</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -4366,7 +1583,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form263</element_id>
-			<element_name>arrange_grid_tabs</element_name>
+			<element_name>Arrange Grid Tabs</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -4377,128 +1594,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form264</element_id>
-			<element_name>grid_metrics</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form265</element_id>
-			<element_name>create_rto</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form266</element_id>
-			<element_name>manage_rto</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form267</element_id>
-			<element_name>rto_status</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form268</element_id>
-			<element_name>delivery_challan_details</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form269</element_id>
-			<element_name>manage_delivery_challans</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form270</element_id>
-			<element_name>enter_purchases_nvs</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form271</element_id>
-			<element_name>enter_cod_collection</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form272</element_id>
-			<element_name>capture_receiving</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form273</element_id>
-			<element_name>purchase_leads</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form274</element_id>
-			<element_name>inventory_pooja</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form275</element_id>
-			<element_name>in_out_pooja</element_name>
+			<element_name>Dashboard Metrics</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -4509,7 +1605,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form276</element_id>
-			<element_name>search_queries</element_name>
+			<element_name>Search Queries</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -4520,40 +1616,18 @@
 		<row>
 			<username>master</username>
 			<element_id>form277</element_id>
-			<element_name>manage_notifications</element_name>
+			<element_name>Notifications</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
 			<up>checked</up>
 			<del>checked</del>
 			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form278</element_id>
-			<element_name>values_list_compact</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
+		</row>
 		<row>
 			<username>master</username>
 			<element_id>form279</element_id>
-			<element_name>to_do</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form280</element_id>
-			<element_name>dispatch_orders</element_name>
+			<element_name>To Do</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -4564,7 +1638,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form281</element_id>
-			<element_name>manage_pop_boxes</element_name>
+			<element_name>Pop Boxes</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -4575,7 +1649,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form282</element_id>
-			<element_name>receipts_payable</element_name>
+			<element_name>Receipts Payable</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -4583,43 +1657,10 @@
 			<del>checked</del>
 			<last_updated>1</last_updated>
 		</row>						
-		<row>
-			<username>master</username>
-			<element_id>form283</element_id>
-			<element_name>manage_performa_invoice</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>						
-		<row>
-			<username>master</username>
-			<element_id>form284</element_id>
-			<element_name>create_performa_invoice</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form285</element_id>
-			<element_name>inventory_nvs</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>												
 		<row>
 			<username>master</username>
 			<element_id>form286</element_id>
-			<element_name>system_billing</element_name>
+			<element_name>System Billing</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -4630,7 +1671,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form287</element_id>
-			<element_name>system_table_structure</element_name>
+			<element_name>Table Structure</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -4641,95 +1682,18 @@
 		<row>
 			<username>master</username>
 			<element_id>form288</element_id>
-			<element_name>user_form_definition</element_name>
+			<element_name>Overwrite Functions</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
 			<up>checked</up>
 			<del>checked</del>
 			<last_updated>1</last_updated>
-		</row>												
-		<row>
-			<username>master</username>
-			<element_id>form289</element_id>
-			<element_name>buyer_leads</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>												
-		<row>
-			<username>master</username>
-			<element_id>form290</element_id>
-			<element_name>cities</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>												
-		<row>
-			<username>master</username>
-			<element_id>form291</element_id>
-			<element_name>receipts_receivable_nvs</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>												
-		<row>
-			<username>master</username>
-			<element_id>form294</element_id>
-			<element_name>create_bill_sehgal</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>												
-		<row>
-			<username>master</username>
-			<element_id>form295</element_id>
-			<element_name>create_purchase_bill_sehgal</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>												
-		<row>
-			<username>master</username>
-			<element_id>form296</element_id>
-			<element_name>create_purchase_order_sehgal</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>												
-		<row>
-			<username>master</username>
-			<element_id>form297</element_id>
-			<element_name>manage_purchase_order_sehgal</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>												
+		</row>		
 		<row>
 			<username>master</username>
 			<element_id>form298</element_id>
-			<element_name>newsletter_components</element_name>
+			<element_name>Newsletter Components</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -4740,7 +1704,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form299</element_id>
-			<element_name>newsletter_assembly</element_name>
+			<element_name>Newsletter Assembly</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -4750,63 +1714,8 @@
 		</row>
 		<row>
 			<username>master</username>
-			<element_id>form300</element_id>
-			<element_name>manage_products_pooja</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form301</element_id>
-			<element_name>scan_qr_code</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form302</element_id>
-			<element_name>convert_qr_data</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form303</element_id>
-			<element_name>store_placement_sehgal</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
-			<element_id>form304</element_id>
-			<element_name>inventory_sehgal</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>				
-		<row>
-			<username>master</username>
 			<element_id>form313</element_id>
-			<element_name>notes</element_name>
+			<element_name>Notes</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -4817,7 +1726,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form314</element_id>
-			<element_name>system_objects</element_name>
+			<element_name>Object Pages</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -4825,82 +1734,5 @@
 			<del>checked</del>
 			<last_updated>1</last_updated>
 		</row>				
-        <row>
-			<username>master</username>
-			<element_id>form321</element_id>
-			<element_name>Create Manifest</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-        <row>
-			<username>master</username>
-			<element_id>form322</element_id>
-			<element_name>Manage Manifests</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-        <row>
-			<username>master</username>
-			<element_id>form323</element_id>
-			<element_name>Create Delivery Challan (CPS)</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-        <row>
-			<username>master</username>
-			<element_id>form324</element_id>
-			<element_name>Manage Delivery Challans (CPS)</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-        <row>
-			<username>master</username>
-			<element_id>form325</element_id>
-			<element_name>Manage Sale Orders (Mediman)</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-        <row>
-			<username>master</username>
-			<element_id>form326</element_id>
-			<element_name>Open Letters</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-        <row>
-			<username>master</username>
-			<element_id>form327</element_id>
-			<element_name>Closed Letters</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
 	</access_control>
 </re_xml>

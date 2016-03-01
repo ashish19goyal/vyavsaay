@@ -115,7 +115,7 @@
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Details'>";
 								rowsHTML+="<button type='button' class='btn default yellow-stripe' form='form281_"+result.id+"' onclick=\"modal184_action('"+result.id+"');\">Box Content</button>";							
-								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form281_"+result.id+"' onclick=\"modal185_action('"+result.id+"');\">Function</button>";							
+								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form281_"+result.id+"' onclick=\"modal185_action('"+result.id+"');\">Function</button>";	
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form281_"+result.id+"' value='"+result.id+"'>";	
@@ -240,12 +240,12 @@
 				
 				$(box_content).on('click',function () 
 				{
-					modal184_action(data_id,name,'master');
+					modal184_action(data_id);
 				});
 
 				$(box_func).on('click',function () 
 				{
-					modal185_action(data_id,name,'master');
+					modal185_action(data_id);
 				});
 				
 				del_button.removeAttribute("onclick");
