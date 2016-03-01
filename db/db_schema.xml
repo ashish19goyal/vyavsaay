@@ -2091,6 +2091,10 @@
 			<due_date index='yes' type="BIGINT"></due_date>
 			<assigned_to index='yes' type="TEXT"></assigned_to>
 			<status index='yes' type="VARCHAR(20)"></status><!--open/closed-->
+			<office index='yes' type="TEXT"></office>
+			<dpo_section index='yes' type="TEXT"></dpo_section>
+			<file_num index='yes' type="TEXT"></file_num>
+			<remarks index='yes' type="TEXT"></remarks>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</letters>

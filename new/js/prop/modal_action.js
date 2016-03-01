@@ -15846,6 +15846,10 @@ function modal196_action()
     var notes=form.elements['notes'];
     var staff=form.elements['staff'];
     var date=form.elements['date'];
+    var dpo_filter=form.elements['dpo'];
+    var file_num_filter=form.elements['file_num'];
+    var remarks_filter=form.elements['remarks'];
+    var office_filter=form.elements['office'];
     
     $(date).datepicker();
     
@@ -15853,6 +15857,10 @@ function modal196_action()
     dep.value="";
     notes.value="";
     staff.value="";
+    dpo_filter.value="";
+    file_num_filter.value="";
+    remarks_filter.value="";
+    office_filter.value="";
     date.value=get_my_past_date(get_my_time()+7*86400000);
     
     var staff_data={data_store:'staff',return_column:'acc_name'};
@@ -15870,6 +15878,10 @@ function modal196_action()
         var department=dep.value;
         var details=notes.value;
         var assigned_to=staff.value;
+        var dpo=dpo_filter.value;
+        var file_num=file_num_filter.value;
+        var remarks=remarks_filter.value;
+        var office=office_filter.value;
         var due_date=get_raw_time(date.value);
         
 		var data_json={data_store:'letters',
@@ -15880,14 +15892,17 @@ function modal196_action()
                         {index:'detail',value:details},
 	 					{index:'due_date',value:due_date},
 	 					{index:'assigned_to',value:assigned_to},
+                        {index:'dpo_section',value:dpo},
+                        {index:'file_num',value:file_num},
+                        {index:'remarks',value:remarks},
+                        {index:'office',value:office}, 
 	 					{index:'status',value:'open'},
 	 					{index:'last_updated',value:last_updated}],
 	 			   log_data:{title:'Added',notes:'Letter # '+letter_num,link_to:'form326'}};
  		create_json(data_json);
-        
         $(form).find('.close').click();
 	});
-	
+
 	$("#modal196_link").click();	
     $(letter).focus();
 }

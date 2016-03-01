@@ -2858,9 +2858,25 @@
 					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal196_form' name='dep'></div>
 					       </div>
 		                  <div class="row">
-								<div class="col-sm-12 col-md-4">Notes</div>
+								<div class="col-sm-12 col-md-4">Office</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal196_form' name='office'></div>
+					       </div>
+		                  <div class="row">
+								<div class="col-sm-12 col-md-4">Brief Notes</div>
                               <div class="col-sm-12 col-md-8"><textarea form='modal196_form' name='notes'></textarea></div>
 					       </div>
+                           <div class="row">
+								<div class="col-sm-12 col-md-4">DPO Section</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal196_form' name='dpo'></div>
+					       </div>
+                           <div class="row">
+								<div class="col-sm-12 col-md-4">File #</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal196_form' name='file_num'></div>
+                           </div>
+                           <div class="row">
+								<div class="col-sm-12 col-md-4">Remarks</div>
+                               <div class="col-sm-12 col-md-8"><textarea form='modal196_form' name='remarks'></textarea></div>
+                           </div>
                            <div class="row">
 								<div class="col-sm-12 col-md-4">Assign To</div>
 					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal196_form' name='staff'></div>
