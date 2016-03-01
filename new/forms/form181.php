@@ -238,7 +238,7 @@
                     }
                     actual_order_items.push(order_item);
                 });
-
+                
                 if(!(order_items.length!=(actual_order_items.length-1) && get_session_var('allow_partial_challan')=='no'))
                 {
                     if(order_items.length>0)
@@ -320,7 +320,6 @@
                                                 var adjust_json_array=[{index:'id',value:bill_item_id},
                                                         {index:'product_name',value:order_item.item_name},
                                                         {index:'item_desc',value:order_item.item_desc},               
-                                                        {index:'item_desc',value:desc},
                                                         {index:'batch',value:batch_result.batch},
                                                         {index:'storage',value:item_storage},
                                                         {index:'quantity',value:(-batch_result.quantity)+""},
@@ -362,8 +361,9 @@
                                             if(sorders.length>0)
                                             {
                                                 var id_object_array=[];
-                                                if(sorders[0].challan_info!="" && sorders[0].challan_info!=0 && sorders[0].challan_info!="null")
+                                                if(sorders[0].challan_info!="" && sorders[0].challan_info!=0 && sorders[0].challan_info!="null" && sorders[0].challan_info!=null)
                                                 {
+                                                    console.log(sorders[0].challan_info);
                                                     id_object_array=JSON.parse(sorders[0].challan_info);
                                                 }
 
@@ -406,25 +406,25 @@
                                         var num_json={data_store:'user_preferences',
                                             data:[{index:'id',value:bill_num_ids[0].id},
                                                 {index:'value',value:(parseInt(bill_num_ids[0].value)+1)},
-                                                {index:'last_updated',value:last_updated}]};
+                                                {index:'last_updated',value:get_my_time()}]};
 
-                                        var data_json={data_store:'delivery_challans',
+                                        var challan_json={data_store:'delivery_challans',
                                             data:[{index:'id',value:bill_key},
                                                 {index:'challan_num',value:get_session_var('challan_prefix')+"-"+bill_num_ids[0].value},
                                                 {index:'challan_date',value:get_my_time()},
                                                 {index:'order_num',value:order_num},
                                                 {index:'order_id',value:order_id},  
-                                                {index:'total_quantity',value:total_quantity},
+                                                {index:'total_quantity',value:''},
                                                 {index:'customer',value:customer},
-                                                {index:'last_updated',value:last_updated}],
+                                                {index:'last_updated',value:get_my_time()}],
                                             log:'yes',
                                             log_data:{title:'Created',notes:'Delivery Challan for order # '+order_num,link_to:'form324'}};
                                         
                                         update_json(num_json);
                                         create_json(challan_json);
 
-                                        create_batch(challan_items_json);
-                                        create_batch(challan_items_adjust_json);
+                                        create_batch_json(challan_items_json);
+                                        create_batch_json(challan_items_adjust_json);
                                     }
                                 });
                                 hide_loader();
@@ -434,13 +434,13 @@
                     else
                     {
                         hide_loader();
-                        $("#modal63_link").click();
+                        $("#modal89_link").click();
                     }
                 }
                 else
                 {
                     hide_loader();
-                    $("#modal64_link").click();			
+                    $("#modal90_link").click();			
                 }
             }
             else
@@ -448,8 +448,6 @@
                 $("#modal2_link").click();
             }	
         }
-
-
         
         function form181_bill(order_id,bill_type,order_num,customer)
         {
@@ -457,12 +455,9 @@
             {
                 show_loader();
                 var bill_amount=0;
-                var bill_total=0;
                 var bill_tax=0;
+                var bill_total=0;
                 
-                var pending_items_count=0;
-
-                var actual_order_items=[];
                 var order_items=[];
                 var bill_key=get_new_key();								
 

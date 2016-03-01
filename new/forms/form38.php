@@ -255,7 +255,7 @@
                 var data_json={data_store:'area_utilization',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
-	 					{index:'item_name',value:product_name},
+	 					{index:'item_name',value:product_name,uniqueWith:["batch","name"]},
 	 					{index:'batch',value:batch},
 	 					{index:'name',value:name},
 	 					{index:'last_updated',value:last_updated}],

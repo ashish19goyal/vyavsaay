@@ -2146,10 +2146,11 @@ function modal23_action(t_func,i_func,v_func)
 	{
 		event.preventDefault();
 		show_progress();
+        show_loader();
 		var file=select_file.files[0];
-      var fileType = /csv/gi;
+        var fileType = /csv/gi;
 
-      selected_file.value = "Uploading!! Please don't refresh";
+        selected_file.value = "Uploading!! Please don't refresh";
     	var reader = new FileReader();
       reader.onload = function(e)
       {
@@ -2193,20 +2194,21 @@ function modal23_action(t_func,i_func,v_func)
 			        		if(number_active_ajax===0 && localdb_open_requests===0)
 			        		{
 			        			hide_progress();
+                                hide_loader();
 			        			selected_file.value="Upload complete";
 			        			$(select_file).val('');
-			        			$(form).find(".close").click();
 			        			clearInterval(ajax_complete);
 			        		}
 			        	},1000);
+                        $(form).find(".close").click();		
            		}
            		else 
            		{
            			hide_progress();
 	       			selected_file.value="";
-	        			$(select_file).val('');
-	        			$(form).find(".close").click();
-	        			modal164_action(error_array);
+	        		$(select_file).val('');
+	        		$(form).find(".close").click();
+	        		modal164_action(error_array);
            		}
            	}
            	else 
@@ -15753,7 +15755,7 @@ function modal195_action(order_id,order_num,customer)
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		form181_bill(order_id,order_num,customer);
+		form181_challan(order_id,order_num,customer);
 		$(form).find(".close").click();
 	});
 

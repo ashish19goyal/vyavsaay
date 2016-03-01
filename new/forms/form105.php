@@ -157,7 +157,10 @@
                 var field_filter=fields.elements[3];
 
                 var tables_data={data_store:'access_conditions',return_column:'tablename'};
-                set_my_filter_json(tables_data,table_filter);
+                set_my_filter_json(tables_data,table_filter,function()
+                {
+                    $(table_filter).focus();
+                });
                 set_static_value_list_json('access_conditions','user_type',type_filter);
 
                 $(fields).on("submit", function(event)
