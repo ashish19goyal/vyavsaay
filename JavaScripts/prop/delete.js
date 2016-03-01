@@ -6362,54 +6362,6 @@ function form201_delete_item(button)
 	}
 }
 
-/**
- * @form Logistics Orders
- * @param button
- */
-function form203_delete_item(button)
-{
-	if(is_delete_access('form203'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var awb_num=form.elements[0].value;
-			var data_id=form.elements[2].value;
-			var last_updated=get_my_time();
-			var data_xml="<logistics_orders>" +
-						"<id>"+data_id+"</id>" +
-						"</logistics_orders>";	
-			var sku_xml="<logistics_sku_mapping>" +
-						"<awb_num>"+awb_num+"</awb_num>" +
-						"</logistics_sku_mapping>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>logistics_orders</tablename>" +
-						"<link_to>form203</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>AWB # "+awb_num+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-				server_delete_simple(sku_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-				local_delete_simple(sku_xml);
-			}	
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
 
 /**
  * @form Exchanges

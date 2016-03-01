@@ -558,10 +558,10 @@
                             if(manifest_num_ids.length>0)
                             {
                                 var num_xml="<user_preferences>"+
-                                                "<id>"+manifest_num_ids[0]+"</id>"+
-                                                "<value>"+(parseInt(manifest_num)+1)+"</value>"+
-                                                "<last_updated>"+last_updated+"</last_updated>"+
-                                                "</user_preferences>";
+                                            "<id>"+manifest_num_ids[0]+"</id>"+
+                                            "<value>"+(parseInt(manifest_num)+1)+"</value>"+
+                                            "<last_updated>"+last_updated+"</last_updated>"+
+                                            "</user_preferences>";
                                 update_simple(num_xml);
                             }
                         },num_data);

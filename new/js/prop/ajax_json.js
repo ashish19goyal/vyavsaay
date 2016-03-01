@@ -34,7 +34,8 @@ function ajax_json(url,kvp,func)
 		{
 			number_active_ajax-=1;
 			hide_loader();
-			console.log(xhr.responseText);
+			console.log(kvp);
+            console.log(xhr.responseText);
 		},
 		success: function(return_data,return_status,e)
 		{

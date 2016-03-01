@@ -11531,14 +11531,6 @@ function modal149_action()
 	$(template_button).off("click");
 	$(template_button).on("click",function(event)
 	{
-		/*var data_array=['id','AWB No.','Type','Order No.','Manifest ID','Merchant Name','Ship To',
-						'Address1','Address2','City','State','Pincode','Mobile number','Tel. Number',
-						'Prod/SKU code','Product name','Weight','Declared Value','Collectable Value',
-						'Vendor Code','Shipper Name','Return Address1','Return Address2','Return Address3',
-						'Return Pin','Length ( Cms )','Breadth ( Cms )','Height ( Cms )','Pieces',
-						'Carrier Account','Carrier Name','Manifest Type','Dispatch Date','Notes',
-						'Pickup Location','Pickup By'];
-		*/
 		var data_array=['SR no','Date','AWB No.','Type','Order No.','Manifest ID','Customer Name','Consignee',
 						'Consignee Address1','Consignee Address2','Destination City',
 						'State','Pincode','Tel. Number','Mobile number','Product name','Weight(K.G.)',
@@ -11571,7 +11563,7 @@ function modal149_action()
 										{column:'Type',required:'yes',list:['RTM','PP','COD']},
 										{column:'Order No.',required:'yes',regex:new RegExp('^[0-9a-zA-Z]+$')},
 										{column:'Manifest ID',required:'yes',regex:new RegExp('^[0-9a-zA-Z]+$')},
-										{column:'Customer Name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,-]+$')},
+										{column:'Customer Name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'@()_.,-]+$')},
 										{column:'Consignee',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 										{column:'Consignee Address1',required:'yes'},
 										{column:'Consignee Address2'},
@@ -11580,104 +11572,94 @@ function modal149_action()
 										{column:'State',regex:new RegExp('^[0-9a-zA-Z\' ,-]+$')},
 										{column:'Tel. Number',regex:new RegExp('^[0-9\+\(\)\./, -]+$')},
 										{column:'Mobile number',regex:new RegExp('^[0-9\+\(\)\./, -]+$')},
-										{column:'Product name'},
-										{column:'Weight(K.G.)',regex:new RegExp('^[0-9\.]+$')},
-										{column:'Declared Value',regex:new RegExp('^[0-9\.]+$')},
-										{column:'Collectable Value',regex:new RegExp('^[0-9\.]+$')},
-										{column:'Volumetric Weight(g)',regex:new RegExp('^[0-9\.]+$')},
-										{column:'Length(cms)',regex:new RegExp('^[0-9\.]+$')},
-										{column:'Breadth(cms)',regex:new RegExp('^[0-9\.]+$')},
-										{column:'Height(cms)',regex:new RegExp('^[0-9\.]+$')},
+										{column:'Weight(K.G.)',regex:new RegExp('^[0-9\. ]+$')},
+										{column:'Declared Value',regex:new RegExp('^[0-9\. ]+$')},
+										{column:'Collectable Value',regex:new RegExp('^[0-9\. ]+$')},
+										{column:'Volumetric Weight(g)',regex:new RegExp('^[0-9\. ]+$')},
+										{column:'Length(cms)',regex:new RegExp('^[0-9\. ]+$')},
+										{column:'Breadth(cms)',regex:new RegExp('^[0-9\. ]+$')},
+										{column:'Height(cms)',regex:new RegExp('^[0-9\. ]+$')},
 										{column:'vendor name',required:'yes'},
 										{column:'Return Address1',required:'yes'},
 										{column:'Return Address2'},
 										{column:'Return Address3'},
 										{column:'Return Pin',required:'yes',regex:new RegExp('^[0-9]+$')}];
-			
+			data_array.forEach(function(row)
+            {
+                var product_name_array=row['Product name'].split('|');
+                row['Product name']=product_name_array[0];
+            });
+
 			var error_array=validate_import_array(data_array,validate_template_array);
-			//var error_array=new Object();
-			//error_array.status='success';			
 			if(error_array.status=='success')
 			{
 	        	progress_value=10;
-	           
 	           	//////////////////
-	           	
-	       		var data_xml="<logistics_orders>";
-				var counter=1;
-				var last_updated=get_my_time();
-				var order_array=[];
-				
-				//console.log(data_array);					
-				
-				data_array.forEach(function(row)
+                var data_json={data_store:'logistics_orders',
+ 					loader:'yes',
+ 					log:'yes',
+ 					data:[],
+ 					log_data:{title:'Orders manifest',link_to:'form203'}};
+
+			     var counter=1;
+			     var last_updated=get_my_time();
+		
+                data_array.forEach(function(row)
 				{
-					if((counter%500)===0)
-					{
-						data_xml+="</logistics_orders><separator></separator><logistics_orders>";
-					}
 					counter+=1;
-					
 					var channel=channel_filter.value;
-					
 					row.id=last_updated+counter;
 					var order_history=[];
 					var history_object=new Object();
 					history_object.timeStamp=get_my_time();
 					history_object.details="Order dispatched from "+channel;				
-					//history_object.location=row['vendor return address'];
-					//if(type_filter.value=='PREPAID')
-					//{
-						history_object.location=channel;
-					//}
+					history_object.location=channel;
 					history_object.status="dispatched";
 					order_history.push(history_object);
 					var order_history_string=JSON.stringify(order_history);
-					
-					data_xml+="<row>" +
-							"<id>"+row.id+"</id>" +
-							"<import_date>"+get_raw_time(row['Date'])+"</import_date>"+
-							"<awb_num unique='yes'>"+row['AWB No.']+"</awb_num>"+
-							"<channel_name>"+channel+"</channel_name>"+
-			                "<manifest_type>"+row['Type']+"</manifest_type>"+
-			                "<type>"+type_filter.value+"</type>"+
-			                "<order_num>"+row['Order No.']+"</order_num>"+
-			                "<manifest_id>"+row['Manifest ID']+"</manifest_id>"+
-			                "<merchant_name>"+row['Customer Name']+"</merchant_name>"+
-			                "<ship_to>"+row['Consignee']+"</ship_to>"+
-			                "<address1>"+row['Consignee Address1']+"</address1>"+
-			                "<address2>"+row['Consignee Address2']+"</address2>"+
-			                "<city>"+row['Destination City']+"</city>"+
-			                "<state>"+row['State']+"</state>"+
-			                "<pincode>"+row['Pincode']+"</pincode>"+
-			                "<phone>"+row['Mobile number']+"</phone>"+
-			                "<telephone>"+row['Tel. Number']+"</telephone>"+
-			                "<weight>"+row['Weight(K.G.)']+"</weight>"+
-			                "<volumetric_weight>"+row['Volumetric Weight(g)']+"</volumetric_weight>"+
-			                "<declared_value>"+row['Declared Value']+"</declared_value>"+
-			                "<collectable_value>"+row['Collectable Value']+"</collectable_value>"+
-			                "<shipper_name>"+row['vendor name']+"</shipper_name>"+
-			                "<return_address1>"+row['Return Address1']+"</return_address1>"+
-			                "<return_address2>"+row['Return Address2']+"</return_address2>"+
-			                "<return_address3>"+row['Return Address3']+"</return_address3>"+
-			                "<return_pincode>"+row['Return Address1']+"</return_pincode>"+
-			                "<len>"+row['Length(cms)']+"</len>"+
-			                "<breadth>"+row['Breadth(cms)']+"</breadth>"+
-			                "<height>"+row['Height(cms)']+"</height>"+
-			                //"<sku>"+row['Product name']+"</sku>"+
-			                "<order_history>"+order_history_string+"</order_history>"+
-			                "<status>picked</status>"+
-			                "<last_updated>"+last_updated+"</last_updated>" +
-							"</row>";							
-	
+					var product_name_array=row['Product name'].split('|');
+                    
+					var data_json_array=[{index:'id',value:row.id},
+                            {index:'import_date',value:get_raw_time(row['Date'])},
+                            {index:'awb_num',unique:'yes',value:row['AWB No.']},
+							{index:'channel_name',value:channel},
+			                {index:'manifest_type',value:row['Type']},
+			                {index:'type',value:type_filter.value},
+			                {index:'order_num',value:row['Order No.']},
+			                {index:'manifest_id',value:row['Manifest ID']},
+			                {index:'merchant_name',value:row['Customer Name']},
+			                {index:'ship_to',value:row['Consignee']},
+			                {index:'address1',value:row['Consignee Address1']},
+			                {index:'address2',value:row['Consignee Address2']},
+			                {index:'city',value:row['Destination City']},
+			                {index:'state',value:row['State']},
+			                {index:'pincode',value:row['Pincode']},
+			                {index:'phone',value:row['Mobile number']},
+			                {index:'telephone',value:row['Tel. Number']},
+			                {index:'weight',value:row['Weight(K.G.)']},
+			                {index:'volumetric_weight',value:row['Volumetric Weight(g)']},
+                            {index:'declared_value',value:row['Declared Value']},
+			                {index:'collectable_value',value:row['Collectable Value']},
+			                {index:'shipper_name',value:row['vendor name']},
+			                {index:'return_address1',value:row['Return Address1']},
+			                {index:'return_address2',value:row['Return Address2']},
+			                {index:'return_address3',value:row['Return Address3']},
+			                {index:'return_pincode',value:row['Return Address1']},
+			                {index:'len',value:row['Length(cms)']},
+			                {index:'breadth',value:row['Breadth(cms)']},
+			                {index:'height',value:row['Height(cms)']},
+			                {index:'sku',value:row['Product name']},
+			                {index:'order_history',value:order_history_string},
+			                {index:'status',value:'picked'},
+			                {index:'last_updated',value:last_updated}];
+
+                    data_json.data.push(data_json_array);
 				});
-				
-				data_xml+="</logistics_orders>";
-				create_batch(data_xml);
-	
+				create_batch_json(data_json);
+
 	           	////////////////////
 	        	progress_value=15;
-	        	        	
+
 	        	var ajax_complete=setInterval(function()
 	        	{
 	        		//console.log(number_active_ajax);
@@ -11689,7 +11671,7 @@ function modal149_action()
 	        		{
 	        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
 	        		}
-	        		
+
 	        		if(number_active_ajax===0 && localdb_open_requests===0)
 	        		{
 	        			hide_progress();

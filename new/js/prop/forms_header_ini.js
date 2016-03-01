@@ -6444,50 +6444,6 @@ function form202_header_ini()
 	$('#form202_body').html("");
 }
 
-/**
- * @form Logistics Manage Orders
- * @formNo 203
- */
-function form203_header_ini()
-{
-	var filter_fields=document.getElementById('form203_header');
-	var awb_filter=filter_fields.elements[0];
-	var order_filter=filter_fields.elements[1];
-	var date_filter=filter_fields.elements[2];
-	var status_filter=filter_fields.elements[3];
-	var import_button=filter_fields.elements['import'];
-		
-	var awb_data="<logistics_orders>" +
-			"<awb_num></awb_num>" +
-			"</logistics_orders>";
-	var order_data="<logistics_orders>" +
-			"<order_num></order_num>" +
-			"</logistics_orders>";
-
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form203_ini();
-	});
-
-	$(import_button).off("click");
-	$(import_button).on("click",function(event)
-	{
-		modal149_action();
-	});
-
-	$(awb_filter).on('click',function()
-	{
-	///write code to select all text in the field
-		this.select();
-	});
-	
-	//set_my_filter(order_data,order_filter);
-	//set_my_filter(awb_data,awb_filter);
-	set_static_filter('logistics_orders','status',status_filter);
-	$(date_filter).datepicker();
-};
 
 /**
  * @form Pending Logistics Orders
