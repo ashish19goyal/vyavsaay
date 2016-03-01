@@ -29,8 +29,8 @@
 				<tr>
 					<form id='form327_header'></form>
 						<th><input type='text' placeholder="Letter #" class='floatlabel' name='letter' form='form327_header'></th>
-						<th><input type='text' placeholder="Department" class='floatlabel' name='dep' form='form327_header'></th>
-						<th><input type='text' placeholder="Notes" class='floatlabel' name='notes' form='form327_header'></th>
+						<th><input type='text' placeholder="Category" readonly='readonly' name='dep' form='form327_header'></th>
+						<th><input type='text' placeholder="Notes" readonly='readonly' name='notes' form='form327_header'></th>
 						<th><input type='text' placeholder="Assigned To" class='floatlabel' name='staff' form='form327_header'></th>
 						<th><input type='submit' form='form327_header' style='visibility: hidden;'></th>
 				</tr>
@@ -45,16 +45,12 @@
 		{
 			var filter_fields=document.getElementById('form327_header');	
 			var names_filter=filter_fields.elements['letter'];
-            var dep_filter=filter_fields.elements['dep'];
-			var staff_filter=filter_fields.elements['staff'];
+            var staff_filter=filter_fields.elements['staff'];
 		
 			var names_data={data_store:'letters',return_column:'letter_num'};
 			set_my_filter_json(names_data,names_filter);
-
-		      var dep_data={data_store:'letters',return_column:'department'};
-			set_my_filter_json(dep_data,dep_filter);
-
-			var staff_data={data_store:'staff',return_column:'acc_name'};
+            
+            var staff_data={data_store:'staff',return_column:'acc_name'};
 			set_my_filter_json(staff_data,staff_filter);
 			
 			$(filter_fields).off('submit');
@@ -76,9 +72,7 @@
 			
 			var filter_fields=document.getElementById('form327_header');
 			var fname=filter_fields.elements['letter'].value;
-            var fdep=filter_fields.elements['dep'].value;
-			var fnotes=filter_fields.elements['notes'].value;
-			var fstaff=filter_fields.elements['staff'].value;
+            var fstaff=filter_fields.elements['staff'].value;
 			
 			var paginator=$('#form327_body').paginator();
 			
@@ -88,8 +82,12 @@
 					new_columns.data_store='letters';
 					new_columns.indexes=[{index:'id',value:fid},
 									{index:'letter_num',value:fname},
-									{index:'department',value:fdep},
-                                    {index:'detail',value:fnotes},
+									{index:'file_num'},
+                                    {index:'department'},
+                                    {index:'office'},
+                                    {index:'dpo_section'},
+                                    {index:'detail'},
+                                    {index:'remarks'},     
 									{index:'status',exact:'closed'},
 									{index:'assigned_to',value:fstaff}];
 					
@@ -100,13 +98,17 @@
 					var rowsHTML="<tr>";
 						rowsHTML+="<form id='form327_"+result.id+"'></form>";
 							rowsHTML+="<td data-th='Letter #'>";
-								rowsHTML+="<a onclick=\"modal200_action('"+result.id+"');\"><input type='text' readonly='readonly' form='form327_"+result.id+"' value='"+result.letter_num+"' name='letter'></a>";
+								rowsHTML+="<a onclick=\"modal200_action('"+result.id+"');\"><input type='text' readonly='readonly' class='floatlabel' placeholder='Letter #' form='form327_"+result.id+"' value='"+result.letter_num+"' name='letter'></a>";
+                                rowsHTML+="<input type='text' readonly='readonly' form='form327_"+result.id+"' value='"+result.file_num+"' class='floatlabel' placeholder='File #' name='file_num'></a>";
 							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Department'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form327_"+result.id+"' name='dep' value='"+result.department+"'>";
+							rowsHTML+="<td data-th='Category'>";
+								rowsHTML+="<input type='text' class='floatlabel dblclick_editable' placeholder='Department' readonly='readonly' form='form327_"+result.id+"' name='dep' value='"+result.department+"'>";
+								rowsHTML+="<input type='text' class='floatlabel dblclick_editable' placeholder='Office' readonly='readonly' form='form327_"+result.id+"' name='office' value='"+result.office+"'>";
+            				    rowsHTML+="<input type='text' class='floatlabel dblclick_editable' placeholder='DPO Section' readonly='readonly' form='form327_"+result.id+"' name='dpo' value='"+result.dpo_section+"'>";		
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Notes'>";
-								rowsHTML+="<textarea readonly='readonly' form='form327_"+result.id+"' name='notes'>"+result.detail+"</textarea>";
+								rowsHTML+="<textarea readonly='readonly' class='floatlabel dblclick_editable' placeholder='Brief Notes' form='form327_"+result.id+"' name='notes'>"+result.detail+"</textarea>";
+								rowsHTML+="<textarea readonly='readonly' class='floatlabel dblclick_editable' placeholder='Remarks' form='form327_"+result.id+"' name='remarks'>"+result.remarks+"</textarea>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Assigned To'>";
 								rowsHTML+="<a onclick=\"show_object('staff','"+result.assigned_to+"');\"><input type='text' readonly='readonly' form='form327_"+result.id+"' name='staff' value='"+result.assigned_to+"'></a>";
@@ -151,6 +153,9 @@
 				var dep=form.elements['dep'].value;
                 var detail=form.elements['notes'].value;
 				var staff=form.elements['staff'].value;
+				var office=form.elements['office'].value;
+				var remarks=form.elements['remarks'].value;
+				var dpo=form.elements['dpo'].value;
 				var data_id=form.elements['id'].value;
 				var last_updated=get_my_time();
 				var data_json={data_store:'letters',
@@ -158,7 +163,10 @@
 	 				data:[{index:'id',value:data_id},
 	 					{index:'department',value:dep},
                         {index:'detail',value:detail},
-	 					{index:'assigned_to',value:staff},
+                        {index:'office',value:office},
+                        {index:'remarks',value:remarks},
+                        {index:'dpo_section',value:dpo},
+                        {index:'assigned_to',value:staff},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Updated',notes:'Letter # '+letter,link_to:'form327'}};
 				update_json(data_json);
@@ -200,14 +208,18 @@
 		
 		function form327_import_template()
 		{
-			var data_array=['id','letter_num','department','notes','due_date','assigned_to'];
+			var data_array=['id','letter number','file number','DPO section','department','office','brief notes','remarks','due_date','assigned_to'];
 			my_array_to_csv(data_array);
 		};
 		
 		function form327_import_validate(data_array)
 		{
-			var validate_template_array=[{column:'letter_num',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
+			var validate_template_array=[{column:'letter numner',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 									{column:'notes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
+                                    {column:'file number',regex:new RegExp('^[0-9a-zA-Z \'_.,/#@$!()-]+$')},
+                                    {column:'remakrs',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
+                                    {column:'office',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
+                                    {column:'DPO section',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
                                     {column:'department',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
                                     {column:'assigned_to',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},     
 									{column:'due_date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')}];
@@ -236,9 +248,13 @@
 				}
 				
 				var data_json_array=[{index:'id',value:row.id},
-	 					{index:'letter_num',value:row.letter_num},
+	 					{index:'letter_num',value:row['letter number']},
 	 					{index:'detail',value:row.notes},
                         {index:'department',value:row.department},             
+                        {index:'office',value:row.office},             
+                        {index:'dpo_section',value:row['DPO section']},             
+                        {index:'remarks',value:row.remarks},             
+                        {index:'file_num',value:row['file number']},                          
 	 					{index:'due_date',value:get_raw_time(row.due_date)},
 	 					{index:'assigned_to',value:row.assigned_to},
                         {index:'status',value:'closed'},             

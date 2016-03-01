@@ -36,7 +36,10 @@
 			<thead>
 				<tr>
 					<th>Letter #</th>
+                    <th>File #</th>
 					<th>Department</th>
+                    <th>Office</th>
+                    <th>DPO Section</th>
 					<th>Notes</th>
 					<th>Assignee</th>
 				</tr>
@@ -74,8 +77,12 @@
 
                 letters_data.indexes=[{index:'id'},
                                 {index:'letter_num'},
+                                {index:'file_num'},      
                                 {index:'department'},
-                                {index:'detail'},{index:'assigned_to'},{index:'status',exact:'open'},{index:'due_date',upperbound:due_time}];
+                                {index:'office'},
+                                {index:'dpo_section'},
+                                {index:'detail'},{index:'remarks'},
+                                {index:'assigned_to'},{index:'status',exact:'open'},{index:'due_date',upperbound:due_time}];
         read_json_rows('report100',letters_data,function(letters)
         {
             var rowsHTML="";
@@ -85,8 +92,17 @@
                 rowsHTML+="<td data-th='Letter #'><a title='Click to see followup details' onclick=modal200_action('"+letter.id+"');>";
                     rowsHTML+=letter.letter_num;
                 rowsHTML+="</a></td>";
+                rowsHTML+="<td data-th='File #'>";
+                    rowsHTML+=letter.file_num;
+                rowsHTML+="</td>";
                 rowsHTML+="<td data-th='Department'>";
                     rowsHTML+=letter.department;
+                rowsHTML+="</td>";
+                rowsHTML+="<td data-th='Office'>";
+                    rowsHTML+=letter.office;
+                rowsHTML+="</td>";
+                rowsHTML+="<td data-th='DPO Section'>";
+                    rowsHTML+=letter.dpo_section;
                 rowsHTML+="</td>";
                 rowsHTML+="<td data-th='Notes'>";
                     rowsHTML+="<textarea readonly='readonly'>"+letter.detail+"</textarea>"
