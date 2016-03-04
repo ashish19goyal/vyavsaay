@@ -12625,49 +12625,6 @@ function form192_create_form()
 	}
 }
 
-/**
- * formNo 197
- * form Supplier Item mapping
- * @param button
- */
-function form197_create_item(form)
-{
-	if(is_create_access('form197'))
-	{
-		var item=form.elements[0].value;
-		var supplier=form.elements[1].value;
-		var data_id=form.elements[2].value;
-		var del_button=form.elements[4];
-		var last_updated=get_my_time();
-		var data_xml="<supplier_item_mapping>" +
-					"<id>"+data_id+"</id>" +
-					"<item>"+item+"</item>" +
-					"<supplier>"+supplier+"</supplier>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</supplier_item_mapping>";
-		create_simple(data_xml);
-			
-		for(var i=0;i<2;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-		del_button.removeAttribute("onclick");
-		$(del_button).on('click',function(event)
-		{
-			form197_delete_item(del_button);
-		});
-		
-		$(form).off('submit');
-		$(form).on('submit',function(event)
-		{
-			event.preventDefault();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * formNo 200

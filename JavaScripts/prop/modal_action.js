@@ -11708,11 +11708,13 @@ function modal150_action(rack,report_id)
 	var item_head=document.createElement('tr');
 	item_head.innerHTML="<th>Item</th><th>Batch</th><th>Quantity To pick</th>";
 	item_table.appendChild(item_head);
-			
+    
+    console.log(rack);
 	$("[id^='row_"+report_id+"_']").each(function(index)
 	{
 		var subform=$(this)[0];
-		var storage=subform.elements[5].value;
+		var storage=subform.elements[6].value;
+        console.log(storage);
 		if(storage==rack)
 		{
 			var item_name=subform.elements[1].value;

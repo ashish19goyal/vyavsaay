@@ -5719,36 +5719,6 @@ function form178_header_ini()
 	set_static_filter('purchase_orders','status',status_filter);
 }
 
-/**
- * @form Manage Purchase Orders
- * @formNo 179
- */
-function form179_header_ini()
-{
-	var filter_fields=document.getElementById('form179_header');
-	var order_filter=filter_fields.elements[0];
-	var name_filter=filter_fields.elements[1];
-	var status_filter=filter_fields.elements[2];
-	
-	var order_data="<purchase_orders>" +
-			"<order_num></order_num>" +
-			"</purchase_orders>";
-	var name_data="<suppliers>" +
-			"<acc_name></acc_name>" +
-			"</suppliers>";
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form179_ini();
-	});
-
-	set_my_filter(order_data,order_filter);
-	set_my_filter(name_data,name_filter);
-	set_static_filter('purchase_orders','status',status_filter);
-};
-
 
 /**
  * @form Production Steps
@@ -6221,34 +6191,6 @@ function form196_header_ini()
 	$('textarea').autosize();
 }
 
-
-/**
- * @form Supplier Item Mapping
- * @formNo 197
- */
-function form197_header_ini()
-{
-	var filter_fields=document.getElementById('form197_header');
-	var product_filter=filter_fields.elements[0];
-	var supplier_filter=filter_fields.elements[1];
-	
-	var product_data="<product_master>" +
-			"<name></name>" +
-			"</product_master>";
-	var supplier_data="<suppliers>" +
-			"<acc_name></acc_name>" +
-			"</suppliers>";
-	
-	set_my_filter(product_data,product_filter);
-	set_my_filter(supplier_data,supplier_filter);
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form197_ini();
-	});
-};
 
 /**
  * @form Order Details

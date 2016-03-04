@@ -8203,50 +8203,6 @@ function form178_update_form()
 	}
 }
 
-/**
- * @form Manage Purchase orders
- * @param button
- */
-function form179_update_item(form)
-{
-	if(is_update_access('form179'))
-	{
-		var order_num=form.elements[0].value;
-		var order_date=get_raw_time(form.elements[1].value);
-		var priority=form.elements[2].value;
-		var supplier_name=form.elements[3].value;
-		var status=form.elements[4].value;
-		var data_id=form.elements[5].value;
-		var last_updated=get_my_time();
-		var data_xml="<purchase_orders>" +
-					"<id>"+data_id+"</id>" +
-					"<supplier>"+supplier_name+"</supplier>" +
-					"<order_date>"+order_date+"</order_date>" +
-					"<status>"+status+"</status>" +
-					"<order_num>"+order_num+"</order_num>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</purchase_orders>";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>purchase_orders</tablename>" +
-					"<link_to>form179</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Purchase Order # "+order_num+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		update_row(data_xml,activity_xml);
-		
-		for(var i=0;i<5;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
 
 /**
  * @form Production Steps

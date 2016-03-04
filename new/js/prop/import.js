@@ -4133,67 +4133,6 @@ function form178_import(data_array,import_type)
 	}
 };
 
-/**
-* @form Manage Purchase orders
-* @formNo 179
-*/
-function form179_import(data_array,import_type)
-{
-	var data_xml="<purchase_orders>";
-	var counter=1;
-	var last_updated=get_my_time();
-	
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</purchase_orders><separator></separator><purchase_orders>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<supplier>"+row.supplier+"</supplier>" +
-				"<order_date>"+get_raw_time(row.order_date)+"</order_date>" +
-				"<status>"+row.status+"</status>" +
-				"<priority>"+row.priority+"</priority>" +
-				"<amount>"+row.amount+"</amount>" +
-				"<tax>"+row.tax+"</tax>" +
-				"<total>"+row.total+"</total>" +
-				"<order_num>"+row.order_num+"</order_num>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	
-	data_xml+="</purchase_orders>";
-	if(import_type=='create_new')
-	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
-	}
-	else
-	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
-	}
-};
-
 
 /**
 * @form Production Steps
@@ -4493,60 +4432,6 @@ function form195_import(data_array,import_type)
 			local_update_batch(data_xml);
 		}
 	}			
-};
-
-/**
-* @form Supplier Item Mapping
-* @formNo 197
-*/
-function form197_import(data_array,import_type)
-{
-	var data_xml="<supplier_item_mapping>";
-	var counter=1;
-	var last_updated=get_my_time();
-
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</supplier_item_mapping><separator></separator><supplier_item_mapping>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<item>"+row.item+"</item>" +
-				"<supplier>"+row.supplier+"</supplier>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	data_xml+="</supplier_item_mapping>";
-	if(import_type=='create_new')
-	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
-	}
-	else
-	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
-	}
 };
 
 

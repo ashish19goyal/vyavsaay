@@ -874,17 +874,6 @@ function form178_import_template()
 	my_array_to_csv(data_array);
 };
 
-/**
-* @form manage purchase order
-* @formNo 179
-* @table purchase_orders
-*/
-function form179_import_template()
-{
-	var data_array=['id','order_num','order_date','priority','supplier','status','amount','tax','total'];
-	my_array_to_csv(data_array);
-};
-
 
 /**
 * @form Production Steps
@@ -938,15 +927,6 @@ function form195_import_template()
 	my_array_to_csv(data_array);
 };
 
-/**
-* @form Supplier Item Mapping
-* @formNo 197
-*/
-function form197_import_template()
-{
-	var data_array=['id','item','supplier'];
-	my_array_to_csv(data_array);
-};
 
 /**
 * @form Manage DRS

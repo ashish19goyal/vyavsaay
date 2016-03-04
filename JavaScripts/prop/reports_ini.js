@@ -6807,7 +6807,7 @@ function report90_ini()
 	var next_element=document.getElementById('report90_next');
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
-	console.log(start_index);		
+	//console.log(start_index);		
 	///////////////when channel or order number is specified///////////////////////////////////////////
 	if(order_num!="" || invoice_num!="")
 	{
@@ -6825,6 +6825,7 @@ function report90_ini()
 						"</sale_orders>";
 		fetch_requested_data('',bills_data,function(bills)
 		{
+            //console.log(bills);
 			if(bills.length>0)
 			{
 				var bill_id_object=JSON.parse(bills[0].bill_id);
@@ -6847,6 +6848,7 @@ function report90_ini()
 				
 				fetch_requested_data('report90',items_data,function(items)
 				{
+                    //console.log(items);
 					var inventory_xml="<inventory_adjust>" +
 								"<id></id>" +
 								"<batch></batch>" +
@@ -6855,13 +6857,14 @@ function report90_ini()
 								"<quantity></quantity>"+
 								"<picked_quantity></picked_quantity>"+
 								"<storage></storage>"+
-								"<source_id exact='yes'>"+bills[0].id+"</source_id>"+
+								"<source_id array='yes'>"+bill_id_string+"</source_id>"+
 								"<source exact='yes'>picking</source>"+
 								"<picked_status exact='yes'>pending</picked_status>"+
 								"</inventory_adjust>";
 					
 					fetch_requested_data('report90',inventory_xml,function(adjust_results)
 					{
+                        //console.log(adjust_results);
 						items.forEach(function(item)
 						{
 							item.table_type='bill_items';
@@ -7082,6 +7085,7 @@ function report90_ini()
 		
 		fetch_requested_data('report90',items_data,function(items)
 		{
+            //console.log(items);
 			var inventory_xml="<inventory_adjust>" +
 						"<id></id>" +
 						"<batch></batch>" +
@@ -7097,6 +7101,7 @@ function report90_ini()
 			
 			fetch_requested_data('report90',inventory_xml,function(adjust_results)
 			{
+               // console.log(adjust_results);
 				items.forEach(function(item)
 				{
 					item.table_type='bill_items';

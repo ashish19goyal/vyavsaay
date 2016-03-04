@@ -9942,64 +9942,6 @@ function form193_add_item()
 }
 
 /**
- * @form Supplier Item Mapping
- * @formNo 197
- */
-function form197_add_item()
-{
-	if(is_create_access('form197'))
-	{
-		var rowsHTML="";
-		var id=get_new_key();
-		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form197_"+id+"' autocomplete='off'></form>";
-			rowsHTML+="<td data-th='Item'>";
-				rowsHTML+="<input type='text' form='form197_"+id+"' required>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Supplier'>";
-				rowsHTML+="<input type='text' form='form197_"+id+"' required>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Action'>";
-				rowsHTML+="<input type='hidden' form='form197_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form197_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form197_"+id+"' onclick='$(this).parent().parent().remove();'>";	
-			rowsHTML+="</td>";			
-		rowsHTML+="</tr>";
-	
-		$('#form197_body').prepend(rowsHTML);
-		var fields=document.getElementById("form197_"+id);
-		var product_filter=fields.elements[0];
-		var supplier_filter=fields.elements[1];
-		
-		$(fields).on("submit", function(event)
-		{
-			event.preventDefault();
-			form197_create_item(fields);
-		});
-				
-		var product_data="<product_master>" +
-				"<name></name>" +
-				"</product_master>";
-		set_my_value_list_func(product_data,product_filter,function () 
-		{
-			$(product_filter).focus();
-		});
-		
-		
-		var supplier_data="<suppliers>" +
-				"<acc_name></acc_name>" +
-				"</suppliers>";
-		set_my_filter(supplier_data,supplier_filter);
-		
-		$('textarea').autosize();
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
  * @form Incoming Items
  * @formNo 199
  */
