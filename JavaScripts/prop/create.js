@@ -6265,7 +6265,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 															"<source>picking</source>"+
 															"<source_id>"+bill_key+"</source_id>"+
 															"<show_for_packing>yes</show_for_packing>"+
-															"<last_updated>"+get_my_time+"</last_updated>"+
+															"<last_updated>"+get_my_time()+"</last_updated>"+
 															"</inventory_adjust>";
 														inventory_adjust_array.push(adjust_data_xml);																			
 
@@ -6287,7 +6287,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 															"<source>picking</source>"+
 															"<source_id>"+bill_key+"</source_id>"+
 															"<show_for_packing>yes</show_for_packing>"+
-															"<last_updated>"+get_my_time+"</last_updated>"+
+															"<last_updated>"+get_my_time()+"</last_updated>"+
 															"</inventory_adjust>";
 														inventory_adjust_array.push(adjust_data_xml);																			
 													});
@@ -6482,7 +6482,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 																			"<storage>"+storage_result.storage+"</storage>"+
 																			"<source>picking</source>"+
 																			"<source_id>"+bill_key+"</source_id>"+
-																			"<last_updated>"+get_my_time+"</last_updated>"+
+																			"<last_updated>"+get_my_time()+"</last_updated>"+
 																			"</inventory_adjust>";
 																		inventory_adjust_array.push(adjust_data_xml);																			
 																	});
@@ -6995,7 +6995,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 																		"<storage>"+storage_result.storage+"</storage>"+
 																		"<source>picking</source>"+
 																		"<source_id>"+bill_key+"</source_id>"+
-																		"<last_updated>"+get_my_time+"</last_updated>"+
+																		"<last_updated>"+get_my_time()+"</last_updated>"+
 																		"</inventory_adjust>";
 																	inventory_adjust_array.push(adjust_data_xml);																			
 																});
