@@ -6825,46 +6825,45 @@ function report90_ini()
 						"</sale_orders>";
 		fetch_requested_data('',bills_data,function(bills)
 		{
-            //console.log(bills);
+            console.log(bills);
 			if(bills.length>0)
 			{
 				var bill_id_object=JSON.parse(bills[0].bill_id);
-				var bill_id_string="--";
+				var bill_id_string=[];
 				for(var a in bill_id_object)
 				{
-					bill_id_string=bill_id_object[a].bill_id+"--";
+					bill_id_string.push(bill_id_object[a].bill_id+"");
 				}
-				var items_data="<bill_items>" +
-						"<id></id>"+
-						"<item_name></item_name>" +
-						"<item_desc></item_desc>"+
-						"<batch></batch>" +
-						"<quantity></quantity>"+
-						"<picked_quantity></picked_quantity>"+
-						"<storage></storage>"+
-						"<picked_status exact='yes'>pending</picked_status>"+
-						"<bill_id array='yes'>"+bill_id_string+"</bill_id>"+
-						"</bill_items>";
+                
+				var items_data={data_store:'bill_items',
+                               indexes:[{index:'id'},
+                                       {index:'item_name'},
+                                       {index:'item_desc'},
+                                       {index:'batch'},
+                                       {index:'quantity'},
+                                       {index:'picked_quantity'},
+                                       {index:'storage'},
+                                       {index:'picked_status',exact:'pending'},
+                                       {index:'bill_id',array:bill_id_string}]};
 				
-				fetch_requested_data('report90',items_data,function(items)
+				read_json_rows('report90',items_data,function(items)
 				{
-                    //console.log(items);
-					var inventory_xml="<inventory_adjust>" +
-								"<id></id>" +
-								"<batch></batch>" +
-								"<product_name></product_name>" +
-								"<item_desc></item_desc>" +
-								"<quantity></quantity>"+
-								"<picked_quantity></picked_quantity>"+
-								"<storage></storage>"+
-								"<source_id array='yes'>"+bill_id_string+"</source_id>"+
-								"<source exact='yes'>picking</source>"+
-								"<picked_status exact='yes'>pending</picked_status>"+
-								"</inventory_adjust>";
+                    console.log(items);
+				    var inventory_xml={data_store:'inventory_adjust',
+                               indexes:[{index:'id'},
+                                       {index:'product_name'},
+                                       {index:'item_desc'},
+                                       {index:'batch'},
+                                       {index:'quantity'},
+                                       {index:'picked_quantity'},
+                                       {index:'storage'},
+                                       {index:'source',exact:'picking'},
+                                       {index:'picked_status',exact:'pending'},
+                                       {index:'source_id',array:bill_id_string}]};
 					
-					fetch_requested_data('report90',inventory_xml,function(adjust_results)
+					read_json_rows('report90',inventory_xml,function(adjust_results)
 					{
-                        //console.log(adjust_results);
+                        console.log(adjust_results);
 						items.forEach(function(item)
 						{
 							item.table_type='bill_items';
