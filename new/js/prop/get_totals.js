@@ -271,46 +271,6 @@ function form122_get_totals()
 	$('#form122_foot').html(total_row);
 }
 
-function form136_get_totals()
-{
-	var total=0;
-	var tax=0;
-	var amount=0;
-	var total_quantity=0;
-	
-	$("[id^='save_form136']").each(function(index)
-	{
-		var subform_id=$(this).attr('form');
-		var subform=document.getElementById(subform_id);
-				
-		var qc_id=subform.elements[10].value;
-		var qc=document.getElementById('form136_check_image_'+qc_id).getAttribute('data-accepted');
-		
-		if(qc=='accepted')
-		{
-			if(!isNaN(parseFloat(subform.elements[4].value)))
-				amount+=parseFloat(subform.elements[4].value);
-			if(!isNaN(parseFloat(subform.elements[5].value)))
-				tax+=parseFloat(subform.elements[5].value);
-			if(!isNaN(parseFloat(subform.elements[2].value)))
-				total_quantity+=parseFloat(subform.elements[2].value);
-		}
-	});
-
-	amount=my_round(amount,2);
-	tax=my_round(tax,2);
-	total=amount+tax;
-		
-	var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
-				"<td>Amount:</br>Tax: </br>Total: </td>" +
-				"<td>Rs. "+amount+"</br>" +
-				"Rs. "+tax+"</br>" +
-				"Rs. "+total+"</td>" +
-				"<td></td>" +
-				"</tr>";
-						
-	$('#form136_foot').html(total_row);
-}
 
 /**
  * @form Project Expenses
@@ -563,37 +523,6 @@ function form165_get_totals()
 	});
 	
 	master_form.elements['pending_count'].value=total_tbp-total_placed;
-}
-
-
-function form178_get_totals()
-{
-	var amount=0;
-	var tax=0;
-	var total=0;
-	
-	$("[id^='save_form178']").each(function(index)
-	{
-		var subform_id=$(this).attr('form');
-		var subform=document.getElementById(subform_id);
-		
-		if(!isNaN(parseFloat(subform.elements[5].value)))
-		{
-			amount+=parseFloat(subform.elements[5].value);
-			tax+=parseFloat(subform.elements[6].value);
-			total+=parseFloat(subform.elements[7].value);
-		}
-	});
-	
-	var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
-							"<td>Amount:<br>Tax: <br>Total: </td>" +
-							"<td>Rs. "+amount+"<br>" +
-							"Rs. "+tax+"<br> " +
-							"Rs. "+total+"</td>" +
-							"<td></td>" +
-							"</tr>";
-					
-	$('#form178_foot').html(total_row);
 }
 
 

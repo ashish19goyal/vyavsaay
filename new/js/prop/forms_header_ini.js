@@ -1089,33 +1089,6 @@ function form47_header_ini()
 	filter_fields.elements[3].value="";
 }
 
-/**
- * @form Manage Supplier Bills
- * @formNo 53
- */
-function form53_header_ini()
-{
-	var filter_fields=document.getElementById('form53_header');
-	var bill_filter=filter_fields.elements[0];
-	var name_filter=filter_fields.elements[1];
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form53_ini();
-	});
-
-	var bill_data="<supplier_bills>" +
-			"<bill_id></bill_id>" +
-			"</supplier_bills>";
-	var sup_data="<suppliers>" +
-			"<acc_name></acc_name>" +
-			"</suppliers>";
-	
-	set_my_filter(bill_data,bill_filter);
-	set_my_filter(sup_data,name_filter);
-};
 
 /**
  * @form Select Templates
@@ -4217,79 +4190,6 @@ function form135_header_ini()
 	});
 }
 
-/**
- * @form Enter Supplier bills(wholesale)
- * @formNo 136
- */
-function form136_header_ini()
-{
-	var fields=document.getElementById('form136_master');
-	
-	var supplier_filter=fields.elements['supplier'];
-	fields.elements['bill_num'].value="";
-	var bill_date=fields.elements['bill_date'];
-	var entry_date=fields.elements['entry_date'];
-	fields.elements['po_num'].value="";
-	
-	fields.elements['id'].value=get_my_time();
-	fields.elements['order_id'].value="";
-	var save_button=fields.elements['save'];
-	
-	$(save_button).off('click');
-	$(save_button).on("click", function(event)
-	{
-		event.preventDefault();
-		form136_create_form();
-	});
-
-	$(document).off('keydown');
-	$(document).on('keydown', function(event) {
-		if( event.keyCode == 83 && event.ctrlKey) {
-	    	event.preventDefault();
-	    	$(save_button).trigger('click');
-	    }
-	});
-
-	$(fields).off('submit');
-	$(fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form136_add_item();
-	});
-	
-	var suppliers_data="<suppliers>" +
-		"<acc_name></acc_name>" +
-		"</suppliers>";
-	
-	set_my_value_list(suppliers_data,supplier_filter,function () 
-	{
-		$(supplier_filter).focus();
-	});
-	
-	var add_supplier=document.getElementById('form136_add_supplier');
-	$(add_supplier).off('click');
-	$(add_supplier).on('click',function()
-	{
-		modal13_action(function()
-		{	
-			var suppliers_data="<suppliers>" +
-				"<acc_name></acc_name>" +
-				"</suppliers>";			
-			set_my_value_list(suppliers_data,supplier_filter,function () 
-			{
-				$(supplier_filter).focus();
-			});
-		});
-	});
-
-	$(bill_date).datepicker();
-	$(bill_date).val(get_my_date());
-	
-	$(entry_date).datepicker();
-	$(entry_date).val(get_my_date());
-
-	supplier_filter.value='';
-}
 
 /**
  * @form Project Expenses
@@ -5653,71 +5553,6 @@ function form177_header_ini()
 		form177_ini();
 	});
 };
-
-/**
- * @form New Purchase Order
- * @formNo 178
- */
-function form178_header_ini()
-{
-	var fields=document.getElementById('form178_master');
-	
-	var supplier_filter=fields.elements['supplier'];
-	var order_date=fields.elements['date'];
-	var order_num=fields.elements['order_num'];
-	var status_filter=fields.elements['status'];
-	fields.elements['order_id'].value=get_new_key();
-	var save_button=fields.elements['save'];
-	var priority_filter=fields.elements['priority'];
-	var share_button=fields.elements['share'];	
-
-	status_filter.value='draft';
-	supplier_filter.value='';
-	order_date.value=get_my_date();
-	
-	var po_id=$("#form178_link").attr('data_id');
-	if(po_id==null || po_id=='')
-	{
-		var po_num_data="<user_preferences count='1'>"+
-						"<value></value>"+
-						"<name exact='yes'>po_num</name>"+
-						"</user_preferences>";
-		set_my_value(po_num_data,order_num);
-	}
-	
-	$(save_button).off('click');
-	$(save_button).on("click", function(event)
-	{
-		event.preventDefault();
-		form178_create_form();
-	});
-
-	$(document).off('keydown');
-	$(document).on('keydown', function(event) {
-		if( event.keyCode == 83 && event.ctrlKey) {
-	    	event.preventDefault();
-	    	$(save_button).trigger('click');
-	    }
-	});
-
-	$(fields).off('submit');
-	$(fields).on("submit", function(event)
-	{
-		event.preventDefault();
-		form178_add_item();
-	});
-
-	var supplier_data="<suppliers>" +
-		"<acc_name></acc_name>" +
-		"</suppliers>";	
-	set_my_value_list(supplier_data,supplier_filter);
-	
-	$(supplier_filter).parent().hide();
-	$(share_button).hide();
-	$(order_date).datepicker();
-	
-	set_static_filter('purchase_orders','status',status_filter);
-}
 
 
 /**

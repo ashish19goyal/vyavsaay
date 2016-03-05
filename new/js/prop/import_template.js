@@ -182,19 +182,6 @@ function form43_import_template()
 };
 
 /**
-* @form Manage supplier bill
-* @formNo 53
-* @table supplier_bills
-*/
-function form53_import_template()
-{
-	var data_array=['id','bill_id','supplier','bill_date','entry_date','amount',
-	                'discount','tax','total','transaction_id','notes'];
-	my_array_to_csv(data_array);
-};
-
-
-/**
 * @form manage services
 * @formNo 57
 */
@@ -622,18 +609,6 @@ function form125_import_template()
 };
 
 /**
-* @form Enter supplier bill (wholesale)
-* @formNo 136
-* @table supplier_bill_items
-*/
-function form136_import_template()
-{
-	var data_array=['id','p_quantity','f_quantity','quantity','product_name','batch',
-	               'bill_id','unit_price','amount','tax','total','storage'];
-	my_array_to_csv(data_array);
-};
-
-/**
 * @form Project Expenses
 * @formNo 137
 * @table expenses
@@ -863,16 +838,6 @@ function form177_import_template()
 	my_array_to_csv(data_array);
 };
 
-/**
-* @form create Purchase Order
-* @formNo 178
-* @table purchase_order_items
-*/
-function form178_import_template()
-{
-	var data_array=['id','order_id','item_name','quantity','make','mrp','price','amount','tax','total'];
-	my_array_to_csv(data_array);
-};
 
 
 /**

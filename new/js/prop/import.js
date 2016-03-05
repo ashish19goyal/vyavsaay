@@ -977,69 +977,6 @@ function form43_import(data_array,import_type)
 
 
 /**
-* @form Manage supplier bill
-* @formNo 53
-*/
-function form53_import(data_array,import_type)
-{
-	var data_xml="<supplier_bills>";
-	var transaction_xml="<transactions>";
-	var counter=1;
-	var last_updated=get_my_time();
-	
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</supplier_bills><separator></separator><supplier_bills>";
-			transaction_xml+="</transactions><separator></separator><transactions>";
-		}
-		counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<bill_id>"+row.bill_id+"</bill_id>" +
-				"<supplier>"+row.supplier+"</supplier>" +
-				"<bill_date>"+get_raw_time(row.bill_date)+"</bill_date>" +
-				"<entry_date>"+get_raw_time(row.entry_date)+"</entry_date>" +
-				"<amount>"+row.amount+"</amount>" +
-				"<discount>"+row.discount+"</discount>" +
-				"<tax>"+row.tax+"</tax>" +
-				"<total>"+row.total+"</total>" +
-				"<transaction_id>"+row.transaction_id+"</transaction_id>" +
-				"<notes>"+row.notes+"</notes>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-		transaction_xml+="<row>" +
-				"<id>"+row.transaction_id+"</id>" +
-				"<trans_date>"+get_raw_time(row.entry_date)+"</trans_date>" +
-				"<amount>"+row.total+"</amount>" +
-				"<receiver>master</receiver>" +
-				"<giver>"+row.supplier+"</giver>" +
-				"<tax>"+row.tax+"</tax>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	data_xml+="</supplier_bills>";
-	transaction_xml+="</transactions>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-		create_batch(transaction_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-		update_batch(transaction_xml);
-	}
-};
-
-
-/**
 * @form manage services
 * @formNo 57
 */
@@ -2857,55 +2794,6 @@ function form125_import(data_array,import_type)
 	}
 };
 
-/**
-* @form Enter Supplier bill (wholesale)
-* @formNo 136
-*/
-function form136_import(data_array,import_type)
-{
-	var data_xml="<supplier_bill_items>";
-	var counter=1;
-	var last_updated=get_my_time();
-	
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</supplier_bill_items><separator></separator><supplier_bill_items>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<product_name>"+row.product_name+"</product_name>" +
-				"<p_quantity>"+row.p_quantity+"</p_quantity>" +
-				"<f_quantity>"+row.f_quantity+"</f_quantity>" +
-				"<quantity>"+row.quantity+"</quantity>" +
-				"<batch>"+row.batch+"</batch>" +
-				"<bill_id>"+row.bill_id+"</bill_id>" +
-				"<unit_price>"+row.unit_price+"</unit_price>" +
-				"<amount>"+row.amount+"</amount>" +
-				"<tax>"+row.tax+"</tax>" +
-				"<total>"+row.total+"</total>" +
-				"<storage>"+row.storage+"</storage>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	
-	data_xml+="</supplier_bill_items>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-	}
-};
 
 /**
 * @form Project Expenses
@@ -4070,69 +3958,6 @@ function form177_import(data_array,import_type)
 		update_batch(data_xml);
 	}			
 };
-
-/**
-* @form Create purchase orders (CPS)
-* @formNo 178
-*/
-function form178_import(data_array,import_type)
-{
-	var data_xml="<purchase_order_items>";
-	var counter=1;
-	var last_updated=get_my_time();
-	
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</purchase_order_items><separator></separator><purchase_order_items>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<item_name>"+row.item_name+"</item_name>" +
-				"<quantity>"+row.quantity+"</quantity>" +
-				"<make>"+row.make+"</make>" +
-				"<order_id>"+row.order_id+"</order_id>" +
-				"<price>"+row.price+"</price>" +
-				"<amount>"+row.amount+"</amount>" +
-				"<tax>"+row.tax+"</tax>" +
-				"<total>"+row.total+"</total>" +
-				"<mrp>"+row.mrp+"</mrp>"+
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-
-	data_xml+="<purchase_order_items>";
-	if(import_type=='create_new')
-	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
-	}
-	else
-	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
-	}
-};
-
 
 /**
 * @form Production Steps
