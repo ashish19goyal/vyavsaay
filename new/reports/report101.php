@@ -23,7 +23,7 @@
             </div>
         </div>	
 	</div>
-	
+
 	<div class="portlet-body">
         <form id='report101_master'>
             <label><input type='text' name='date' class='floatlabel' placeholder='Due Date'></label>

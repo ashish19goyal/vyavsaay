@@ -217,11 +217,10 @@ function modal_forms_ini()
 	}
     dynamic_modal_array.push(24);
     dynamic_modal_array.push(25);
-	for(var i=27;i<=30;i++)
-	{
-		dynamic_modal_array.push(i);
-	}
-    dynamic_modal_array.push(32);
+	dynamic_modal_array.push(27);
+	dynamic_modal_array.push(29);
+	dynamic_modal_array.push(30);
+	dynamic_modal_array.push(32);
     dynamic_modal_array.push(33);
     dynamic_modal_array.push(34);
     for(var i=36;i<=49;i++)

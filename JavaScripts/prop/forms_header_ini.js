@@ -10777,8 +10777,6 @@ function form280_header_ini()
 	{
 		e.preventDefault();
 		var columns=new Object();
-		columns.count=0;
-		columns.start_index=0;
 		columns.data_store='bills';		
 		
 		columns.indexes=[{index:'id'},
@@ -10787,8 +10785,7 @@ function form280_header_ini()
 						{index:'order_id'},
 						{index:'status'},
 						{index:'awb_num'},
-						{index:'channel',value:channel_filter.value},
-						{index:'bill_date',lowerbound:get_raw_time(start_date.value),upperbound:get_raw_time(end_date.value)}];		
+						{index:'channel',value:channel_filter.value},{index:'bill_date',lowerbound:get_raw_time(start_date.value),upperbound:get_raw_time(end_date.value)}];		
 		//console.log(columns);
 		get_export_data_restructured(columns,'Order Status for Dispatch',function(new_results)
 		{
@@ -10796,8 +10793,8 @@ function form280_header_ini()
 			new_results.forEach(function(new_result)
 			{
 				var sorted_element=new Object();
-				sorted_element['ID']=new_result.id;
-				sorted_element['Order ID']=new_result.order_id;
+				sorted_element['ID']="'"+new_result.id;
+				sorted_element['Order ID']="'"+new_result.order_id;
 				sorted_element['Invoice Number']=new_result.bill_num;
 				sorted_element['Order Number']=new_result.order_num;
 				sorted_element['Channel']=new_result.channel;

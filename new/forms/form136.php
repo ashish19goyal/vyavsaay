@@ -1,19 +1,19 @@
-<div id='form225' class='tab-pane portlet box green-meadow'>	   
+<div id='form136' class='tab-pane portlet box green-meadow'>	   
 	<div class="portlet-title">
 		<div class='caption'>		
-			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form225_add_item();'>Add <i class='fa fa-plus'></i></a>
-            <a class='btn btn-circle grey btn-outline btn-sm' id='form225_save'>Save <i class='fa fa-save'></i></a>
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form136_add_item();'>Add <i class='fa fa-plus'></i></a>
+            <a class='btn btn-circle grey btn-outline btn-sm' id='form136_save'>Save <i class='fa fa-save'></i></a>
 		</div>
 		<div class="actions">
-      	<a class='btn btn-default btn-sm' id='form225_print' onclick=form225_print_form();><i class='fa fa-print'></i> Print</a>
-        <a class='btn btn-default btn-sm' id='form225_share'><i class='fa fa-envelope'></i> Email</a>    
+      	<a class='btn btn-default btn-sm' id='form136_print' onclick=form136_print_form();><i class='fa fa-print'></i> Print</a>
+        <a class='btn btn-default btn-sm' id='form136_share'><i class='fa fa-envelope'></i> Email</a>    
       </div>
 	</div>
 	
 	<div class="portlet-body">
-        <form id='form225_master' autocomplete="off">
+        <form id='form136_master' autocomplete="off">
             <fieldset>
-                <label><div class='btn-overlap'><input type='text' required name='supplier' placeholder='Supplier' class='floatlabel'><button type='button' title='Add new supplier' class='btn btn-icon-only default right-overlap' id='form225_add_supplier'><i class='fa fa-plus'></i></button></div></label>
+                <label><div class='btn-overlap'><input type='text' required name='supplier' placeholder='Supplier' class='floatlabel'><button type='button' title='Add new supplier' class='btn btn-icon-only default right-overlap' id='form136_add_supplier'><i class='fa fa-plus'></i></button></div></label>
                 <label><input type='text' name='bill_num' class='floatlabel' placeholder='Bill #'></label>
                 <label><input type='text' name='po_num' readonly='readonly' class='floatlabel' placeholder='PO #'></label>
                 <label><input type='text' class='floatlabel' requried placeholder='Bill Date' name='bill_date'></label>
@@ -37,9 +37,9 @@
 					<th></th>
 				</tr>
 			</thead>
-			<tbody id='form225_body'>
+			<tbody id='form136_body'>
 			</tbody>
-            <tfoot id='form225_foot'>
+            <tfoot id='form136_foot'>
             </tfoot>
 		</table>
     </div>
@@ -101,12 +101,13 @@
             });
 
             $(bill_date).datepicker();
-            $(bill_date).val(get_my_date());
+            bill_date.value=get_my_date();
 
             $(entry_date).datepicker();
-            $(entry_date).val(get_my_date());
+            entry_date.value=get_my_date();
 
             supplier_filter.value='';
+            $('#from136').formcontrol();
         }
 
         function form136_ini()
@@ -203,9 +204,11 @@
                             rowsHTML+="<td data-th='Action'>";
                                 if(result.qc=='accepted')
                                 {						
-                                    rowsHTML+=" <i id='form136_check_image_"+id+"' class='fa fa-check' title='Accepted' data-accepted='accepted'></i>";
-                                }else {
-                                    rowsHTML+=" <i id='form136_check_image_"+id+"' class='fa fa-cross' title='Rejected' data-accepted='rejected'></i>";
+                                    rowsHTML+=" <i id='form136_check_image_"+id+"' class='fa fa-2x fa-check' title='Accepted' data-accepted='accepted'></i>";
+                                }
+                                else 
+                                {
+                                    rowsHTML+=" <i id='form136_check_image_"+id+"' class='fa fa-2x fa-close' title='Rejected' data-accepted='rejected'></i>";
                                 }
                                 rowsHTML+="<input type='hidden' form='form136_"+id+"' value='"+id+"'>";
                                 rowsHTML+="<input type='submit' class='submit_hidden' form='form136_"+id+"' id='save_form136_"+id+"'>";
@@ -222,6 +225,7 @@
                         });
                     });
                     form136_get_totals();
+                    $('#form136').formcontrol();
                     hide_loader();
                 });
             }
@@ -242,10 +246,10 @@
                     rowsHTML+="<td data-th='Item'>";
                         rowsHTML+="<input type='text' required form='form136_"+id+"'>";
                     rowsHTML+="</td>";
-                    rowsHTML+="<td data-th='Batch'>";
-                        rowsHTML+="<input type='text' readonly='readonly' required form='form136_"+id+"'></br>";
-                        rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+id+"' id='form136_barcode_"+id+"'>";
-                        rowsHTML+="<br><b>Quantity</b>: <input type='number' step='any' required form='form136_"+id+"'>";
+                    rowsHTML+="<td data-th='Batch'><div class='btn-overlap'>";
+                        rowsHTML+="<input type='text' class='floatlabel' placeholder='Batch' readonly='readonly' form='form136_"+id+"'>";
+                        rowsHTML+="<button class='btn btn-icon-only default right-overlap' title='Print Barcode' id='form136_barcode_"+id+"'><i class='fa fa-barcode'></i></button></div>";                    
+                        rowsHTML+="<input type='number' class='floatlabel' placeholder='Quantity' form='form136_"+id+"' step='any'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Bill Price'>";
                         rowsHTML+="<input class='floatlabel' placeholder='Unit Price' type='number' form='form136_"+id+"' step='any'>";
@@ -257,14 +261,14 @@
                         rowsHTML+="<input type='number' class='floatlabel' placeholder='Amount' readonly='readonly' form='form136_"+id+"' value='' step='any'>";
                         rowsHTML+="<input type='number' class='floatlabel' placeholder='Tax' readonly='readonly' required form='form136_"+id+"' step='any'>";
                     rowsHTML+="</td>";
-                    rowsHTML+="<td data-th='Storage Area'>";
+                    rowsHTML+="<td data-th='Storage'>";
                         rowsHTML+="<input type='text' form='form136_"+id+"'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Action'>";
-                        rowsHTML+=" <i id='form136_check_image_"+id+"' class='fa fa-check' title='Accepted' data-accepted='accepted'></i>";
+                        rowsHTML+=" <i id='form136_check_image_"+id+"' class='fa fa-2x fa-check link' title='Accepted' data-accepted='accepted'></i>";
                         rowsHTML+="<input type='hidden' form='form136_"+id+"' value='"+id+"'>";
                         rowsHTML+="<input type='button' class='submit_hidden' form='form136_"+id+"' id='save_form136_"+id+"' >";
-                        rowsHTML+="<button type='button' class='btn red' form='form136_"+id+"' name='delete' title='Delete' id='delete_form136_"+id+"' onclick='$(this).parent().parent().remove(); form136_get_totals();'><i class='fa fa-trash></i></button>";
+                        rowsHTML+="<button type='button' class='btn red' form='form136_"+id+"' name='delete' title='Delete' id='delete_form136_"+id+"' onclick='$(this).parent().parent().remove(); form136_get_totals();'><i class='fa fa-trash'></i></button>";
                         rowsHTML+="<input type='hidden' form='form136_"+id+"' step='any' name='tax_unit'>";
                         rowsHTML+="<input type='hidden' form='form136_"+id+"' step='any' name='po_tax_unit'>";
                         rowsHTML+="<input type='submit' class='submit_hidden' form='form136_"+id+"'>";
@@ -292,23 +296,25 @@
                 var po_tax_rate_filter=fields.elements[14];
 
                 batch_filter.value=String(bill_id).substr(1,8);
-
-                var qc_image=document.getElementById('form136_check_image_'+id);
-                $(qc_image).on('click',function(event)
+                
+                function update_qc_icon(icon_elem)
                 {
-                    if(qc_image.getAttribute('data-accepted')=='rejected')
+                    var new_qc_icon="<i id='form136_check_image_"+id+"' class='fa fa-2x fa-close link' title='Rejected' data-accepted='rejected'></i>";
+                    if(icon_elem.getAttribute('data-accepted')=='rejected')
                     {
-                        qc_image.setAttribute('class','fa fa-check');
-                        qc_image.setAttribute('data-accepted','accepted');							
-                        qc_image.setAttribute('title','Accepted');							
+                        new_qc_icon="<i id='form136_check_image_"+id+"' class='fa fa-2x fa-check link' title='Accepted' data-accepted='accepted'></i>";
                     }
-                    else
+                    $('#form136_check_image_'+id).replaceWith(new_qc_icon);
+                    $('#form136_check_image_'+id).on('click',function()
                     {
-                        qc_image.setAttribute('class','fa fa-cross');			
-                        qc_image.setAttribute('data-accepted','rejected');
-                        qc_image.setAttribute('title','Rejected');							
-                    }
-                });
+                        update_qc_icon($(this)[0]);
+                    })
+                }
+                
+                $('#form136_check_image_'+id).on('click',function()
+                {
+                    update_qc_icon($(this)[0]);
+                })
 
                 var barcode_filter=document.getElementById("form136_barcode_"+id);
                 $(barcode_filter).on('click',function () 
@@ -328,87 +334,29 @@
                     form136_add_item();
                 });
 
-                var product_data="<attributes>" +
-                            "<name></name>" +
-                            "<type exact='yes'>product</type>"+
-                            "<value exact='yes'>yes</value>"+
-                            "<attribute exact='yes'>raw material</attribute>"+
-                            "</attributes>";
-                set_my_value_list_func(product_data,name_filter,function () 
+                var product_data={data_store:'attributes',return_column:'name',
+                                 indexes:[{index:'type',exact:'product'},
+                                         {index:'value',exact:'yes'},
+                                         {index:'attribute',exact:'raw material'}]};
+                set_my_value_list_json(product_data,name_filter,function () 
                 {
                     $(name_filter).focus();
                 });
 
-                var storage_data="<store_areas>" +
-                            "<name></name>" +
-                            "<owner></owner>"+					
-                            "<area_type exact='yes'>storage</area_type>" +
-                            "</store_areas>";
-                fetch_requested_data('',storage_data,function(storages) 
-                {
-                    var form=fields;
-                    var datalist=document.createElement('datalist');
-                    var element_array=[];
-                    storages.forEach(function(d)
-                    {
-                        var option=document.createElement('option');
-                        option.setAttribute('value',d.name);
-                        element_array.push(d.name);
-                        datalist.appendChild(option);
-                        if(d.owner==get_account_name())
-                        {
-                            storage_filter.value=d.name;
-                        }
-                    });
-
-                    var list_id=storage_filter.getAttribute('list');
-                    if(list_id=='' || list_id==null)
-                    {
-                        list_id="list_"+get_new_key();
-                        storage_filter.setAttribute("list",list_id);
-                    }
-                    else
-                    {
-                        var oldlist=document.getElementById(list_id);
-                        form.removeChild(oldlist);
-                    }
-
-                    form.appendChild(datalist);
-                    datalist.setAttribute('id',list_id);
-
-                    $(storage_filter).off("change");
-                    $(storage_filter).on("change",function(event)
-                    {
-                        var found = $.inArray($(this).val(), element_array) > -1;
-                        if(!found)
-                        {
-                            $(this).val('');
-                        }
-                    });
-                });
-
-                set_my_value_list_func(storage_data,storage_filter,function()
-                {
-                    var store_value_data="<store_areas count='1'>" +
-                        "<name></name>" +
-                        "<owner>"+get_account_name()+"</owner>"+
-                        "<area_type exact='yes'>storage</area_type>" +
-                        "</store_areas>";
-                    set_my_value(store_value_data,storage_filter);
-                });
-
+                var storage_data={data_store:'store_areas',return_column:'name'};
+                set_my_value_list_json(storage_data,storage_filter);
+               
                 $(name_filter).on('blur',function(event)
                 {
-                    var po_item_data="<purchase_order_items>"+
-                                    "<item_name exact='yes'>"+name_filter.value+"</item_name>"+
-                                    "<quantity></quantity>"+
-                                    "<price></price>"+
-                                    "<amount></amount>"+
-                                    "<tax></tax>"+
-                                    "<tax_rate></tax_rate>"+
-                                    "<order_id exact='yes'>"+order_id+"</order_id>"+
-                                    "</purchase_order_items>";
-                    fetch_requested_data('',po_item_data,function(po_items)
+                    var po_item_data={data_store:'purchase_order_items',
+                                     indexes:[{index:'item_name',exact:name_filter.value},
+                                             {index:'quantity'},
+                                             {index:'price'},
+                                             {index:'amount'},
+                                             {index:'tax'},
+                                             {index:'tax_rate'},
+                                             {index:'order_id',exact:order_id}]};
+                    read_json_rows('',po_item_data,function(po_items)
                     {
                         if(po_items.length>0)
                         {
@@ -426,11 +374,9 @@
                         }
                     });		
 
-                    var tax_unit_data="<product_master>"+
-                                    "<tax></tax>"+
-                                    "<name exact='yes'>"+name_filter.value+"</name>"+
-                                    "</product_master>";
-                    set_my_value(tax_unit_data,tax_unit_filter);
+                    var tax_unit_data={data_store:'product_master',return_column:'tax',
+                                      indexes:[{index:'name',exact:name_filter.value}]};
+                    set_my_value_json(tax_unit_data,tax_unit_filter);
 
                 });
 
@@ -453,8 +399,7 @@
                 });
 
                 form136_get_totals();
-                $('textarea').autosize();
-
+                $('#form136').formcontrol();
             }
             else
             {
@@ -490,61 +435,56 @@
                 var qc=document.getElementById('form136_check_image_'+data_id).getAttribute('data-accepted');
                 var last_updated=get_my_time();
 
-                var data_xml="<supplier_bill_items>" +
-                        "<id>"+data_id+"</id>" +
-                        "<product_name>"+name+"</product_name>" +
-                        "<batch>"+batch+"</batch>" +
-                        "<quantity>"+quantity+"</quantity>" +
-                        "<total>"+total+"</total>" +
-                        "<tax>"+tax+"</tax>" +
-                        "<amount>"+amount+"</amount>" +
-                        "<unit_price>"+price+"</unit_price>" +
-                        "<po_tax>"+po_tax+"</po_tax>" +
-                        "<po_amount>"+po_amount+"</po_amount>" +
-                        "<po_price>"+po_unit+"</po_price>" +
-                        "<bill_id>"+bill_id+"</bill_id>" +
-                        "<storage>"+storage+"</storage>" +
-                        "<qc>"+qc+"</qc>"+
-                        "<last_updated>"+last_updated+"</last_updated>" +
-                        "</supplier_bill_items>";	
-                var batch_xml="<product_instances>" +
-                        "<id>"+data_id+"</id>" +
-                        "<product_name>"+name+"</product_name>" +
-                        "<batch>"+batch+"</batch>" +
-                        "<manufacture_date></manufacture_date>" +
-                        "<last_updated>"+last_updated+"</last_updated>" +
-                        "</product_instances>";
-                create_simple(batch_xml);
-                create_simple(data_xml);
+                var data_json={data_store:'supplier_bill_items',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'product_name',value:name},
+	 					{index:'batch',value:batch},
+	 					{index:'quantity',value:quantity},
+                        {index:'total',value:total},
+                        {index:'tax',value:tax},
+                        {index:'amount',value:amount},
+                        {index:'unit_price',value:price},
+                        {index:'po_tax',value:po_tax},
+                        {index:'po_amount',value:po_amount},
+                        {index:'po_price',value:po_unit},
+                        {index:'bill_id',value:bill_id},
+                        {index:'storage',value:storage},
+                        {index:'qc',value:qc},  
+	 					{index:'last_updated',value:last_updated}]};
+ 				var batch_json={data_store:'product_instances',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'product_name',value:name},
+	 					{index:'batch',value:batch},
+	 					{index:'manufacture_date',value:''},
+                        {index:'last_updated',value:last_updated}]};
+ 				
+                create_json(batch_json);
+                create_json(data_json);
 
                 if(qc=='rejected')
                 {
-                    var return_xml="<supplier_returns>" +
-                            "<id>"+bill_id+"</id>" +
-                            "<supplier>"+supplier+"</supplier>" +
-                            "<return_date>"+entry_date+"</return_date>" +
-                            "<last_updated>"+last_updated+"</last_updated>" +
-                            "</supplier_returns>";
+                    var return_json={data_store:'supplier_returns',
+	 				warning:'no',  
+                    data:[{index:'id',value:bill_id},
+	 					{index:'supplier',value:supplier},
+	 					{index:'return_date',value:entry_date},
+	 					{index:'last_updated',value:last_updated}]};
+ 				
+                    var return_item_json={data_store:'supplier_return_items',
+	 				data:[{index:'id',value:data_id},
+                        {index:'return_id',value:bill_id},
+	 					{index:'item_name',value:name},
+	 					{index:'batch',value:batch},
+                        {index:'quantity',value:quantity},
+                        {index:'storage',value:storage},
+	 					{index:'last_updated',value:last_updated}]};
 
-                    var return_data_xml="<supplier_return_items>" +
-                                "<id>"+data_id+"</id>" +
-                                "<return_id>"+bill_id+"</return_id>"+					
-                                "<item_name>"+name+"</item_name>" +
-                                "<batch>"+batch+"</batch>" +
-                                "<quantity>"+quantity+"</quantity>" +
-                                "<storage>"+storage+"</storage>"+
-                                "<last_updated>"+last_updated+"</last_updated>" +
-                                "</supplier_return_items>";
-
-                    create_simple(return_data_xml);
-                    create_simple_no_warning(return_xml);
+                    create_json(return_item_json);
+                    create_json(return_json);
                 }
 
-                for(var i=0;i<10;i++)
-                {
-                    $(form.elements[i]).attr('readonly','readonly');
-                }
-
+                $(form).readonly();
+                
                 del_button.removeAttribute("onclick");
                 $(del_button).on('click',function(event)
                 {
@@ -554,24 +494,22 @@
                 $(save_button).off('click');
 
                 ///////////adding store placement////////
-                var storage_data="<area_utilization>" +
-                        "<id></id>" +
-                        "<name exact='yes'>"+storage+"</name>" +
-                        "<item_name exact='yes'>"+name+"</item_name>" +
-                        "<batch exact='yes'>"+batch+"</batch>" +
-                        "</area_utilization>";
-                fetch_requested_data('',storage_data,function(placements)
+                var storage_data={data_store:'area_utilization',
+                                 indexes:[{index:'id'},
+                                         {index:'name',exact:storage},
+                                         {index:'item_name',exact:name},
+                                         {index:'batch',exact:batch}]};
+                read_json_rows('',storage_data,function(placements)
                 {
                     if(placements.length===0)
                     {
-                        var storage_xml="<area_utilization>" +
-                                "<id>"+get_new_key()+"</id>" +
-                                "<name>"+storage+"</name>" +
-                                "<item_name>"+name+"</item_name>" +
-                                "<batch>"+batch+"</batch>" +
-                                "<last_updated>"+get_my_time()+"</last_updated>" +
-                                "</area_utilization>";
-                        create_simple(storage_xml);
+                        var storage_json={data_store:'area_utilization',
+                            data:[{index:'id',value:get_new_key()},
+                                {index:'name',value:storage},
+                                {index:'item_name',value:name},
+                                {index:'batch',value:batch},
+                                {index:'last_updated',value:get_my_time()}]};
+                        create_json(storage_json);
                     }
                 });
             }
@@ -627,7 +565,6 @@
 
                 amount=my_round(amount,2);
                 tax=my_round(tax,2);
-
                 total=amount+tax;
                 total=my_round(total,0);
 
@@ -640,42 +577,33 @@
                         "</tr>";
                 $('#form136_foot').html(total_row);
 
-
-                var data_xml="<supplier_bills>" +
-                            "<id>"+data_id+"</id>" +
-                            "<bill_id>"+bill_id+"</bill_id>" +
-                            "<order_id>"+order_id+"</order_id>" +
-                            "<order_num>"+order_num+"</order_num>" +
-                            "<supplier>"+supplier+"</supplier>" +
-                            "<bill_date>"+bill_date+"</bill_date>" +
-                            "<entry_date>"+entry_date+"</entry_date>" +
-                            "<total>"+total+"</total>" +
-                            "<amount>"+amount+"</amount>" +
-                            "<tax>"+tax+"</tax>" +
-                            "<transaction_id>"+data_id+"</transaction_id>" +
-                            "<last_updated>"+last_updated+"</last_updated>" +
-                            "</supplier_bills>";
-                var activity_xml="<activity>" +
-                            "<data_id>"+data_id+"</data_id>" +
-                            "<tablename>supplier_bills</tablename>" +
-                            "<link_to>form53</link_to>" +
-                            "<title>Saved</title>" +
-                            "<notes>Purchase Bill # "+bill_id+"</notes>" +
-                            "<updated_by>"+get_name()+"</updated_by>" +
-                            "</activity>";
-
-                var po_data="<purchase_orders>"+
-                            "<id>"+order_id+"</id>" +
-                            "<bill_id></bill_id>" +
-                            "<total_quantity></total_quantity>"+
-                            "<quantity_received></quantity_received>"+
-                            "</purchase_orders>";
-                fetch_requested_data('',po_data,function (porders) 
+                var data_json={data_store:'supplier_bills',
+	 				log:'yes',
+	 				data:[{index:'id',value:data_id},
+                        {index:'bill_id',value:bill_id},
+                        {index:'order_id',value:order_id},
+                        {index:'order_num',value:order_num},
+                        {index:'supplier',value:supplier},
+                        {index:'bill_date',value:bill_date},  
+	 					{index:'entry_date',value:entry_date},
+	 					{index:'total',value:total},
+	 					{index:'amount',value:amount},
+                        {index:'tax',value:tax},
+                        {index:'transaction_id',value:data_id},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Saved',notes:'Purchase Bill # '+bill_id,link_to:'form53'}};
+ 				
+                var po_data={data_store:'purchase_orders',
+                            indexes:[{index:'id',value:order_id},
+                                    {index:'bill_id'},
+                                    {index:'total_quantity'},
+                                    {index:'quantity_received'}]};
+                read_json_rows('',po_data,function (porders) 
                 {
                     if(porders.length>0)
                     {
                         var id_object_array=[];
-                        if(porders[0].bill_id!="" && porders[0].bill_id!=0 && porders[0].bill_id!="null")
+                        if(porders[0].bill_id!="" && porders[0].bill_id!=0 && porders[0].bill_id!="null" && porders[0].bill_id!=null)
                         {
                             id_object_array=JSON.parse(porders[0].bill_id);
                         }
@@ -712,62 +640,62 @@
 
                         var new_bill_id=JSON.stringify(id_object_array);
                         //console.log(new_bill_id);
-                        var po_xml="<purchase_orders>" +
-                                "<id>"+order_id+"</id>" +
-                                "<bill_id>"+new_bill_id+"</bill_id>" +
-                                "<quantity_received>"+quantity_received+"</quantity_received>"+
-                                "<status>"+status+"</status>" +
-                                "<last_updated>"+last_updated+"</last_updated>" +
-                                "</purchase_orders>";
-                        update_simple(po_xml);
+                        var po_json={data_store:'purchase_orders',
+                            data:[{index:'id',value:order_id},
+                                {index:'bill_id',value:new_bill_id},
+                                {index:'quantity_received',value:quantity_received},
+                                {index:'status',value:status},
+                                {index:'last_updated',value:last_updated}]};
+ 				
+                        update_json(po_json);
                     }
                 });
 
-
-                var transaction_xml="<transactions>" +
-                            "<id>"+data_id+"</id>" +
-                            "<trans_date>"+get_my_time()+"</trans_date>" +
-                            "<amount>"+total+"</amount>" +
-                            "<receiver>master</receiver>" +
-                            "<giver>"+supplier+"</giver>" +
-                            "<tax>"+(-tax)+"</tax>" +
-                            "<last_updated>"+last_updated+"</last_updated>" +
-                            "</transactions>";
+                var transaction_json={data_store:'transactions',
+                            data:[{index:'id',value:data_id},
+                                {index:'trans_date',value:last_updated},
+                                {index:'amount',value:total},
+                                {index:'receiver',value:'master'},
+                                {index:'giver',value:supplier},
+                                {index:'tax',value:(-tax)},
+                                {index:'last_updated',value:last_updated}]};
+ 				
                 var pt_tran_id=get_new_key();
-                var payment_xml="<payments>" +
-                            "<id>"+pt_tran_id+"</id>" +
-                            "<status>pending</status>" +
-                            "<type>paid</type>" +
-                            "<date>"+get_my_time()+"</date>" +
-                            "<total_amount>"+total+"</total_amount>" +
-                            "<paid_amount>0</paid_amount>" +
-                            "<acc_name>"+supplier+"</acc_name>" +
-                            "<due_date>"+get_debit_period()+"</due_date>" +
-                            "<mode>"+get_payment_mode()+"</mode>" +
-                            "<transaction_id>"+pt_tran_id+"</transaction_id>" +
-                            "<source_id>"+data_id+"</source_id>" +
-                            "<source>purchase bill</source>" +
-                            "<source_info>"+bill_id+"</source_info>"+
-                            "<last_updated>"+last_updated+"</last_updated>" +
-                            "</payments>";
-                var pt_xml="<transactions>" +
-                            "<id>"+pt_tran_id+"</id>" +
-                            "<trans_date>"+get_my_time()+"</trans_date>" +
-                            "<amount>"+total+"</amount>" +
-                            "<receiver>"+supplier+"</receiver>" +
-                            "<giver>master</giver>" +
-                            "<tax>0</tax>" +
-                            "<last_updated>"+last_updated+"</last_updated>" +
-                            "</transactions>";
-                create_row(data_xml,activity_xml);
-                create_simple(transaction_xml);
-                create_simple(pt_xml);
-                create_simple_func(payment_xml,function()
+                
+                var payment_json={data_store:'payments',
+                            data:[{index:'id',value:pt_tran_id},
+                                {index:'status',value:'pending'},
+                                {index:'type',value:'paid'},
+                                {index:'date',value:last_updated},
+                                {index:'total_amount',value:total},
+                                {index:'paid_amount',value:'0'},
+                                {index:'acc_name',value:supplier},
+                                {index:'due_date',value:get_debit_period()},
+                                {index:'mode',value:get_payment_mode()},
+                                {index:'transaction_id',value:pt_tran_id},
+                                {index:'source_id',value:data_id},
+                                {index:'source',value:'purchase bill'},
+                                {index:'source_info',value:bill_id},  
+                                {index:'last_updated',value:last_updated}]};
+ 				
+                var pt_json={data_store:'transactions',
+                            data:[{index:'id',value:pt_tran_id},
+                                {index:'trans_date',value:last_updated},
+                                {index:'amount',value:total},
+                                {index:'giver',value:'master'},
+                                {index:'receiver',value:supplier},
+                                {index:'tax',value:'0'},
+                                {index:'last_updated',value:last_updated}]};
+ 				
+                create_json(data_json);
+                create_json(transaction_json);
+                create_json(pt_json);
+                create_json(payment_json,function()
                 {
                     modal28_action(pt_tran_id);
                 });
 
-                var save_button=form.elements['save'];
+                var save_button=document.getElementById('form136_save');
                 $(save_button).off('click');
                 $(save_button).on('click',function(event)
                 {
@@ -837,39 +765,33 @@
                         "</tr>";
                 $('#form136_foot').html(total_row);
 
-                var data_xml="<supplier_bills>" +
-                            "<id>"+data_id+"</id>" +
-                            "<bill_id>"+bill_id+"</bill_id>" +
-                            "<supplier>"+supplier+"</supplier>" +
-                            "<bill_date>"+bill_date+"</bill_date>" +
-                            "<entry_date>"+entry_date+"</entry_date>" +
-                            "<total>"+total+"</total>" +
-                            "<amount>"+amount+"</amount>" +
-                            "<tax>"+tax+"</tax>" +
-                            "<transaction_id>"+data_id+"</transaction_id>" +
-                            "<last_updated>"+last_updated+"</last_updated>" +
-                            "</supplier_bills>";
-                var activity_xml="<activity>" +
-                            "<data_id>"+data_id+"</data_id>" +
-                            "<tablename>supplier_bills</tablename>" +
-                            "<link_to>form53</link_to>" +
-                            "<title>Updated</title>" +
-                            "<notes>Purchase Bill # "+data_id+"</notes>" +
-                            "<updated_by>"+get_name()+"</updated_by>" +
-                            "</activity>";
-
-                var po_data="<purchase_orders>"+
-                            "<id>"+order_id+"</id>" +
-                            "<bill_id></bill_id>" +
-                            "<total_quantity></total_quantity>"+
-                            "<quantity_received></quantity_received>"+
-                            "</purchase_orders>";
-                fetch_requested_data('',po_data,function (porders) 
+                var data_json={data_store:'supplier_bills',
+	 				log:'yes',
+	 				data:[{index:'id',value:data_id},
+                        {index:'bill_id',value:bill_id},
+                        {index:'order_id',value:order_id},
+                        {index:'order_num',value:order_num},
+                        {index:'supplier',value:supplier},
+                        {index:'bill_date',value:bill_date},  
+	 					{index:'entry_date',value:entry_date},
+	 					{index:'total',value:total},
+	 					{index:'amount',value:amount},
+                        {index:'tax',value:tax},
+                        {index:'transaction_id',value:data_id},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Updated',notes:'Purchase Bill # '+bill_id,link_to:'form53'}};
+ 				
+                var po_data={data_store:'purchase_orders',
+                            indexes:[{index:'id',value:order_id},
+                                    {index:'bill_id'},
+                                    {index:'total_quantity'},
+                                    {index:'quantity_received'}]};
+                read_json_rows('',po_data,function (porders) 
                 {
                     if(porders.length>0)
                     {
                         var id_object_array=[];
-                        if(porders[0].bill_id!="" && porders[0].bill_id!=0 && porders[0].bill_id!="null")
+                        if(porders[0].bill_id!="" && porders[0].bill_id!=0 && porders[0].bill_id!="null" && porders[0].bill_id!=null)
                         {
                             id_object_array=JSON.parse(porders[0].bill_id);
                         }
@@ -909,61 +831,61 @@
 
                         var new_bill_id=JSON.stringify(id_object_array);
 
-                        var po_xml="<purchase_orders>" +
-                                "<id>"+order_id+"</id>" +
-                                "<bill_id>"+new_bill_id+"</bill_id>" +
-                                "<quantity_received>"+quantity_received+"</quantity_received>"+
-                                "<status>"+status+"</status>" +
-                                "<last_updated>"+last_updated+"</last_updated>" +
-                                "</purchase_orders>";
-                        update_simple(po_xml);
+                        var po_json={data_store:'purchase_orders',
+                            data:[{index:'id',value:order_id},
+                                {index:'bill_id',value:new_bill_id},
+                                {index:'quantity_received',value:quantity_received},
+                                {index:'status',value:status},
+                                {index:'last_updated',value:last_updated}]};
+ 				
+                        update_json(po_json);
                     }
                 });
 
-                var transaction_xml="<transactions>" +
-                            "<id>"+data_id+"</id>" +
-                            "<trans_date>"+get_my_time()+"</trans_date>" +
-                            "<amount>"+total+"</amount>" +
-                            "<receiver>master</receiver>" +
-                            "<giver>"+supplier+"</giver>" +
-                            "<tax>"+(-tax)+"</tax>" +
-                            "<last_updated>"+last_updated+"</last_updated>" +
-                            "</transactions>";
-                update_row(data_xml,activity_xml);
-                update_simple(transaction_xml);
+                var transaction_json={data_store:'transactions',
+                            data:[{index:'id',value:data_id},
+                                {index:'trans_date',value:last_updated},
+                                {index:'amount',value:total},
+                                {index:'receiver',value:'master'},
+                                {index:'giver',value:supplier},
+                                {index:'tax',value:(-tax)},
+                                {index:'last_updated',value:last_updated}]};
+ 				
+                update_json(data_json);
+                update_json(transaction_json);
 
-                var payment_data="<payments>" +
-                        "<id></id>" +
-                        "<bill_id exact='yes'>"+data_id+"</bill_id>" +
-                        "</payments>";
-                get_single_column_data(function(payments)
+                var payment_data={data_store:'payments',return_column:'id',
+                                 indexes:[{index:'source_id',exact:data_id}]};
+                read_json_single_column(payment_data,function(payments)
                 {
-                    for(var y in payments)
+                    if(payments.length>0)
                     {
-                        var payment_xml="<payments>" +
-                                    "<id>"+payments[y]+"</id>" +
-                                    "<type>paid</type>" +
-                                    "<total_amount>"+total+"</total_amount>" +
-                                    "<acc_name>"+supplier+"</acc_name>" +
-                                    "<transaction_id>"+payments[y]+"</transaction_id>" +
-                                    "<bill_id>"+data_id+"</bill_id>" +
-                                    "<last_updated>"+last_updated+"</last_updated>" +
-                                    "</payments>";
-                        var pt_xml="<transactions>" +
-                                    "<id>"+payments[y]+"</id>" +
-                                    "<amount>"+total+"</amount>" +
-                                    "<receiver>"+supplier+"</receiver>" +
-                                    "<giver>master</giver>" +
-                                    "<tax>0</tax>" +
-                                    "<last_updated>"+last_updated+"</last_updated>" +
-                                    "</transactions>";
-                        update_simple_func(payment_xml,function()
-                        {
-                            modal28_action(payments[y]);
-                        });
-                        break;
+                        var payment_json={data_store:'payments',
+                            data:[{index:'id',value:payments[0]},
+                                {index:'type',value:'paid'},
+                                {index:'total_amount',value:total},
+                                {index:'acc_name',value:supplier},
+                                {index:'transaction_id',value:payments[0]},
+                                {index:'source_id',value:data_id},
+                                {index:'source',value:'purchase bill'},
+                                {index:'source_info',value:bill_id},  
+                                {index:'last_updated',value:last_updated}]};
+ 				
+                        var pt_json={data_store:'transactions',
+                            data:[{index:'id',value:payments[0]},
+                                {index:'amount',value:total},
+                                {index:'giver',value:'master'},
+                                {index:'receiver',value:supplier},
+                                {index:'tax',value:'0'},
+                                {index:'last_updated',value:last_updated}]};
+ 				       update_json(pt_json);
+                       update_json(payment_json,function()
+                       {
+                           console.log('opening payment');
+                           modal28_action(payments[0]);
+                       });
                     }
-                },payment_data);
+                });
 
                 $("[id^='save_form136_']").click();
             }

@@ -106,7 +106,7 @@
                                 rowsHTML+="<input type='text' readonly='readonly' form='form53_"+result.id+"' value='"+Math.round(result.total)+"'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Notes'>";
-                                rowsHTML+="<textarea readonly='readonly' form='form53_"+result.id+"' class='dblclick_editable'>"+result.notes+"</textarea>";
+                                rowsHTML+="<textarea readonly='readonly' form='form53_"+result.id+"'>"+result.notes+"</textarea>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Action'>";
                                 rowsHTML+="<input type='hidden' form='form53_"+result.id+"' value='"+result.id+"'>";
@@ -253,7 +253,6 @@
                             update_json(po_json);
                         }
                     });
-
                 });
             }
             else

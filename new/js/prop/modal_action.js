@@ -2668,18 +2668,17 @@ function modal28_action(payment_id)
 {
 	var form=document.getElementById('modal28_form');
 	
-	var fsupplier=form.elements[1];
-	var ftotal=form.elements[2];
-	var fpaid=form.elements[3];
-	var fdue_date=form.elements[4];
-	var fmode=form.elements[5];
-	var fstatus=form.elements[6];
+	var fsupplier=form.elements['to'];
+	var ftotal=form.elements['total'];
+	var fpaid=form.elements['paid'];
+	var fdue_date=form.elements['date'];
+	var fmode=form.elements['mode'];
+	var fstatus=form.elements['status'];
 	
 	$(fdue_date).datepicker();
 	
-	set_static_value_list('payments','status',fstatus);
-	set_static_value_list('payments','mode',fmode);
-	
+	set_static_value_list_json('payments','status',fstatus);
+	set_static_value_list_json('payments','mode',fmode);
 
 	$(form).off("submit");
 	$(form).on("submit",function(event)
@@ -2693,7 +2692,6 @@ function modal28_action(payment_id)
 		}
 		else 
 		{
-				
 			var supplier=fsupplier.value;
 			var total=ftotal.value;
 			var paid=fpaid.value;
@@ -2701,64 +2699,48 @@ function modal28_action(payment_id)
 			var mode=fmode.value;
 			var status=fstatus.value;
 			var last_updated=get_my_time();
-			var data_xml="<payments>" +
-						"<id>"+payment_id+"</id>" +
-						"<acc_name>"+supplier+"</acc_name>" +
-						"<type>paid</type>" +
-						"<total_amount>"+total+"</total_amount>" +
-						"<paid_amount>"+paid+"</paid_amount>" +
-						"<status>"+status+"</status>" +
-						"<due_date>"+due_date+"</due_date>" +
-						"<mode>"+mode+"</mode>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</payments>";
-			var activity_xml="<activity>" +
-						"<data_id>"+payment_id+"</data_id>" +
-						"<tablename>payments</tablename>" +
-						"<link_to>form11</link_to>" +
-						"<title>Updated</title>" +
-						"<notes>Payment of "+paid+" to "+supplier+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
+            
+            var data_json={data_store:'payments',
+	 				log:'yes',
+	 				data:[{index:'id',value:payment_id},
+	 					{index:'acc_name',value:supplier},
+	 					{index:'type',value:'paid'},
+	 					{index:'total_amount',value:total},
+                        {index:'paid_amount',value:paid},
+                        {index:'status',value:status},
+                        {index:'due_date',value:due_date},
+                        {index:'mode',value:mode},
+                        {index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Updated',notes:'Payment of '+paid+ " to "+supplier,link_to:'form11'}};
+ 				
+			update_json(data_json);
 			
-			if(is_online())
-			{
-				server_update_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_update_row(data_xml,activity_xml);
-			}	
-		
-			$("#modal28").dialog("close");
+			$(form).find(".close").click();
 		}
 	});
 	
-	var payments_data="<payments>" +
-			"<id>"+payment_id+"</id>" +
-			"<acc_name></acc_name>" +
-			"<type>paid</type>" +
-			"<total_amount></total_amount>" +
-			"<paid_amount></paid_amount>" +
-			"<status></status>" +
-			"<due_date></due_date>" +
-			"<mode></mode>" +
-			"</payments>";
-	fetch_requested_data('',payments_data,function(payments)
+	var payments_data={data_store:'payments',
+                      indexes:[{index:'id',value:payment_id},
+                              {index:'acc_name'},
+                              {index:'type',exact:'paid'},
+                              {index:'total_amount'},
+                              {index:'paid_amount'},
+                              {index:'status'},
+                              {index:'due_date'},
+                              {index:'mode'}]};
+	read_json_rows('',payments_data,function(payments)
 	{
-		for(var k in payments)
+		if(payments.length>0)
 		{
-			fsupplier.value=payments[k].acc_name;
-			ftotal.value=payments[k].total_amount;
-			fpaid.value=payments[k].paid_amount;
-			fdue_date.value=get_my_past_date(payments[k].due_date);
-			fmode.value=payments[k].mode;
-			fstatus.value=payments[k].status;
-			break;
+			fsupplier.value=payments[0].acc_name;
+			ftotal.value=payments[0].total_amount;
+			fpaid.value=payments[0].paid_amount;
+			fdue_date.value=get_my_past_date(payments[0].due_date);
+			fmode.value=payments[0].mode;
+			fstatus.value=payments[0].status;
 		}
-		$("#modal28").dialog("open");
-	});		
-	
+		$("#modal28_link").click();
+	});	
 }
 
 /**
@@ -16076,4 +16058,121 @@ function modal200_action(letter_id)
         }
         $("#modal200_link").click();
     });
+}
+
+/**
+ * @modalNo 201
+ * @modal Add task
+ */
+function modal201_action(list_name)
+{
+	var form=document.getElementById('modal201_form');
+    var list_filter=form.elements['list'];
+    var task_filter=form.elements['task'];
+    var desc_filter=form.elements['desc'];
+    var staff_filter=form.elements['assignee'];
+
+    list_filter.value="";
+    task_filter.value="";
+    desc_filter.value="";
+    staff_filter.value="";
+    $(list_filter).focus();
+    if(typeof list_name!='undefined' && list_name!="")
+    {
+        list_filter.value=list_name;
+        list_filter.setAttribute('readonly','readonly');
+        $(task_filter).focus();
+    }
+    else
+    {
+        list_filter.removeAttribute('readonly');
+    }
+    
+    var assignee_data={data_store:'staff',return_column:'acc_name'};
+    set_my_value_list_json(assignee_data,staff_filter);
+    
+    $(form).off('submit');
+	$(form).on('submit',function(event) 
+	{
+		event.preventDefault();
+        var list=list_filter.value;
+        var task=task_filter.value;
+        var desc=desc_filter.value;
+        var staff=staff_filter.value;
+        var last_updated=get_my_time();
+        
+		var data_json={data_store:'task_instances',
+                       log:'yes',
+	                   data:[{index:'id',value:get_new_key()},
+	 					{index:'name',value:task},
+                        {index:'source_name',value:list},
+                        {index:'source',value:'to_do'},     
+                        {index:'description',value:desc},
+                        {index:'assignee',value:staff},
+                        {index:'status',value:'pending'},     
+	 					{index:'last_updated',value:last_updated}],
+	 			   log_data:{title:'Added',notes:'Task to list '+list_name,link_to:'form279'}};
+        create_json(data_json);
+        
+        $(form).find('.close').click();
+	});
+	
+	$("#modal201_link").click();
+}
+
+/**
+ * @modalNo 202
+ * @modal Update task
+ */
+function modal202_action(data_id)
+{
+	var form=document.getElementById('modal202_form');
+    var task_filter=form.elements['task'];
+    var desc_filter=form.elements['desc'];
+    var staff_filter=form.elements['assignee'];
+
+    task_filter.value="";
+    desc_filter.value="";
+    staff_filter.value="";
+    $(task_filter).focus();
+    
+    var assignee_data={data_store:'staff',return_column:'acc_name'};
+    set_my_value_list_json(assignee_data,staff_filter);
+
+    var task_data={data_store:'task_instances',count:1,
+                  indexes:[{index:'id',value:data_id},
+                          {index:'name'},
+                          {index:'description'},
+                          {index:'assignee'}]};
+    read_json_rows('',task_data,function(tasks)
+    {
+       if(tasks.length>0)
+        {
+            task_filter.value=tasks[0].name;
+            desc_filter.value=tasks[0].description;
+            staff_filter.value=tasks[0].assignee;
+        }
+    });
+    
+    $(form).off('submit');
+	$(form).on('submit',function(event) 
+	{
+		event.preventDefault();
+        var task=list_filter.value;
+        var desc=desc_filter.value;
+        var staff=staff_filter.value;
+        var last_updated=get_my_time();
+        
+		var data_json={data_store:'task_instances',
+                       data:[{index:'id',value:data_id},
+	 					{index:'name',value:task},
+                        {index:'description',value:desc},
+                        {index:'assignee',value:staff},
+                        {index:'last_updated',value:last_updated}]};
+        update_json(data_json);
+        
+        $(form).find('.close').click();
+	});
+	
+	$("#modal202_link").click();
 }

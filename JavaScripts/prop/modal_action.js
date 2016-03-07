@@ -13857,8 +13857,7 @@ function modal170_action()
 	       	var data_array=csv_string_to_obj_array(content);
 
 	       	progress_value=5;
-	    				
-			
+
 			var validate_template_array=[{column:'ID',required:'yes'},
 									{column:'Order ID'},
 									{column:'AWB Number',regex:new RegExp('^[0-9a-zA-Z -]+$')},
@@ -13873,8 +13872,7 @@ function modal170_action()
 	       		var data2_xml="<sale_orders>";
 	       		var counter=1;
 				var last_updated=get_my_time();
-				
-				
+
 				data_array.forEach(function(row)
 				{
 					if((counter%500)===0)
