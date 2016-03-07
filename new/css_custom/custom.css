@@ -468,9 +468,39 @@ div.btn-overlap button.right-overlap{
 }
 
 .red{
-    color:'#D91E18';
+    color:#D91E18;
 }
 
 .green{
-    color:'#26C281';
+    color:#26C281;
 }
+
+/*****vyavsaay to do lists***********/
+ul.v_task_list{
+    list-style: none;
+    padding-left: 0px;
+}
+
+ul.v_task_list li{
+    border: 1px solid #e7ecf1;
+    padding-left: 5%;
+    padding-top: 2%;
+    padding-right: 5%;
+}
+
+ul.v_task_list .task-status{
+    float:right;
+}
+
+ul.v_task_list li>.task-status>a>i{
+    color:#bababa;
+}
+
+ul.v_task_list li>.task-status>a.pending>i:hover{
+    color:red;
+}
+
+ul.v_task_list li>.task-status>a.done>i:hover{
+    color:green;
+}
+/*******************/

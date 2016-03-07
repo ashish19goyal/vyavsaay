@@ -123,7 +123,7 @@
                 lists_array.forEach(function(list_item)
                 {
                     var list_item_clean=list_item.replace(/ /g,"");
-                    var list_html="<div class='col-sm-4'>"+
+                    var list_html="<div class='col-sm-4' style='padding-bottom:10px;'>"+
                                 "<div class='mt-element-list'>"+
                                     "<div class='mt-list-head list-todo yellow-saffron'>"+
                                         "<div class='list-head-title-container'>"+
@@ -131,10 +131,10 @@
                                                 "<h3 class='list-title uppercase'>"+list_item+"</h3>"+
                                             "</a>"+                                                             
                                         "</div>"+
-                                        "<a onclick=\"modal201_action('"+list_item+"');\"><div class='list-count pull-right'><i class='fa fa-plus'></i></div></a>"+
+                                        "<a onclick=\"modal201_action('"+list_item+"');\"><div class='list-count pull-right yellow-crusta' style='padding:16px;'><i class='fa fa-plus'></i></div></a>"+
                                     "</div>"+
                                     "<div class='task-list panel-collapse collapse in' id='form279_lists_heading_"+list_item_clean+"' area-expanded='false'>"+
-                                        "<ul id='form279_lists_"+list_item_clean+"'></ul>"+
+                                        "<ul id='form279_lists_"+list_item_clean+"' class='v_task_list'></ul>"+
                                     "</div>"+
                                 "</div>"+
                             "</div>"+
@@ -146,7 +146,7 @@
 				results.forEach(function(result)
 				{
                     var list_item_clean=result.source_name.replace(/ /g,"");
-					var rowsHTML="<li class='task-list-item'>"+
+					var rowsHTML="<li class='task-list-item done'>"+
                                     "<div class='task-status'>";
                         if(result.status=='pending')
                         {
