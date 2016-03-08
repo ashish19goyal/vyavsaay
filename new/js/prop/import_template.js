@@ -100,30 +100,6 @@ function form16_import_template()
 };
 
 /**
-* @form Manage Supplier Returns
-* @formNo 17
-* @table supplier_returns
-*/
-function form17_import_template()
-{
-	var data_array=['id','supplier','return_date','total','type','tax','transaction_id'];
-	my_array_to_csv(data_array);
-};
-
-/**
-* @form Enter Supplier Returns
-* @formNo 19
-* @table supplier_return_items
-*/
-function form19_import_template()
-{
-	var data_array=['id','return_id','item_name','quantity','refund_amount',
-	                'saleable','batch','notes','tax'];
-	my_array_to_csv(data_array);
-};
-
-
-/**
 * @form Enter supplier bill
 * @formNo 21
 * @table supplier_bill_items

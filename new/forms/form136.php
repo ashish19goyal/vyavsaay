@@ -6,7 +6,6 @@
 		</div>
 		<div class="actions">
       	<a class='btn btn-default btn-sm' id='form136_print' onclick=form136_print_form();><i class='fa fa-print'></i> Print</a>
-        <a class='btn btn-default btn-sm' id='form136_share'><i class='fa fa-envelope'></i> Email</a>    
       </div>
 	</div>
 	
@@ -107,7 +106,7 @@
             entry_date.value=get_my_date();
 
             supplier_filter.value='';
-            $('#from136').formcontrol();
+            $('#form136').formcontrol();
         }
 
         function form136_ini()
@@ -122,6 +121,8 @@
             if(bill_id!="")
             {
                 show_loader();
+                var filter_fields=document.getElementById('form136_master');
+                        
                 var bill_columns={data_store:'supplier_bills',count:1,
                                  indexes:[{index:'id',value:bill_id},
                                          {index:'bill_id'},
@@ -138,7 +139,6 @@
                 {
                     if (bill_results.length>0)
                     {
-                        var filter_fields=document.getElementById('form136_master');
                         filter_fields.elements['supplier'].value=bill_results[0].supplier;
                         filter_fields.elements['bill_num'].value=bill_results[0].bill_id;
                         filter_fields.elements['bill_date'].value=get_my_past_date(bill_results[0].bill_date);
@@ -225,6 +225,7 @@
                         });
                     });
                     form136_get_totals();
+                    
                     $('#form136').formcontrol();
                     hide_loader();
                 });
@@ -468,6 +469,8 @@
                     data:[{index:'id',value:bill_id},
 	 					{index:'supplier',value:supplier},
 	 					{index:'return_date',value:entry_date},
+                        {index:'total',value:'0'},
+                        {index:'tax',value:'0'},    
 	 					{index:'last_updated',value:last_updated}]};
  				
                     var return_item_json={data_store:'supplier_return_items',
@@ -475,6 +478,8 @@
                         {index:'return_id',value:bill_id},
 	 					{index:'item_name',value:name},
 	 					{index:'batch',value:batch},
+                        {index:'tax',value:'0'},
+                        {index:'refund_amount',value:'0'},  
                         {index:'quantity',value:quantity},
                         {index:'storage',value:storage},
 	 					{index:'last_updated',value:last_updated}]};

@@ -16158,7 +16158,7 @@ function modal202_action(data_id)
 	$(form).on('submit',function(event) 
 	{
 		event.preventDefault();
-        var task=list_filter.value;
+        var task=task_filter.value;
         var desc=desc_filter.value;
         var staff=staff_filter.value;
         var last_updated=get_my_time();

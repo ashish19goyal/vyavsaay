@@ -315,6 +315,7 @@
 			<supplier index='yes' type="TEXT"></supplier>
 			<return_date index='yes' type="BIGINT"></return_date>
 			<total index='no' type="DECIMAL(12,2)"></total>
+			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<type index="yes" type="VARCHAR(10)"></type><!-- service/product/both -->
 			<transaction_id index='yes' type="BIGINT"></transaction_id>

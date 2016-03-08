@@ -576,15 +576,6 @@ function form15_print_form()
 }
 
 
-/**
- * @form Enter supplier returns
- * @formNo 19
- */
-function form19_print_form()
-{
-	print_tabular_form('form19','Purchase Returns');
-}
-
 
 /**
  * @form Enter supplier bill
