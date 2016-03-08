@@ -76,17 +76,6 @@ function form14_import_template()
 	my_array_to_csv(data_array);
 };
 
-/**
-* @form Enter Customer Returns
-* @formNo 15
-* @table customer_return_items
-*/
-function form15_import_template()
-{
-	var data_array=['id','return_id','item_name','item_desc','quantity','refund_amount','exchange_batch',
-	                'saleable','type','batch','tax'];
-	my_array_to_csv(data_array);
-};
 
 /**
 * @form Manage Customer Returns

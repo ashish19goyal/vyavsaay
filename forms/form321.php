@@ -21,10 +21,10 @@
 				<form id='form321_header'></form>
 					<th style='width:50px'>S. No.</th>
 					<th>AWB #</th>
-					<th>Order #</th>
+					<th>Consignment #</th>
 					<th>Product</th>
-					<th>Destination</th>
-					<th>Status</th>
+					<th>Details</th>
+                    <th>Destination</th>
 					<th><input type='button' form='form321_header' title='Add item' class='add_icon' onclick='form321_add_item();'></th>
 			</tr>
 		</thead>
@@ -60,11 +60,9 @@
 
             if(manifest_id=="")
             {
-                var manifest_num_data="<user_preferences count='1'>"+
-                                "<value></value>"+
-                                "<name exact='yes'>manifest_num</name>"+
-                                "</user_preferences>";
-                set_my_value(manifest_num_data,manifest_filter);	
+                var manifest_num_data={data_store:'user_preferences',return_column:'value',
+                                      indexes:[{index:'name',exact:'manifest_num'}]};
+                set_my_value_json(manifest_num_data,manifest_filter);	
             }
 
             $(save_button).off('click');
@@ -103,15 +101,14 @@
             if(manifest_id!="")
             {
                 show_loader();
-                var manifest_columns="<manifests>" +
-                        "<id>"+manifest_id+"</id>" +
-                        "<manifest_num></manifest_num>"+
-                        "<coloader></coloader>"+
-                        "<vendor></vendor>"+
-                        "<date></date>"+
-                        "</manifests>";
+                var manifest_columns={data_store:'manifests',count:1,
+                                     indexes:[{index:'id',value:manifest_id},
+                                             {index:'manifest_num'},
+                                             {index:'coloader'},
+                                             {index:'vendor'},
+                                             {index:'date'}]};
 
-                fetch_requested_data('',manifest_columns,function(manifest_results)
+                read_json_rows('form321',manifest_columns,function(manifest_results)
                 {
                     var filter_fields=document.getElementById('form321_master');
                     if(manifest_results.length>0)
@@ -127,54 +124,46 @@
                         var save_button=filter_fields.elements['save'];
                         $(save_button).show();
 
-                        var manifest_items_column="<logistics_orders>" +
-                                            "<id></id>" +
-                                            "<awb_num></awb_num>" +
-                                            "<manifest_type></manifest_type>" +
-                                            "<order_num></order_num>" +
-                                            "<ship_to></ship_to>" +
-                                            "<address1></address1>" +
-                                            "<address2></address2>" +
-                                            "<city></city>" +
-                                            "<pincode></pincode>" +
-                                            "<phone></phone>" +
-                                            "<status></status>" +
-                                            "<sku></sku>" +
-                                            "<manifest_num exact='yes'>"+manifest_results[0].manifest_num+"</manifest_num>" +
-                                            "<man_id exact='yes'>"+manifest_id+"</man_id>" +
-                                            "</logistics_orders>";
+                        var manifest_items_column={data_store:'logistics_orders',
+                                                  indexes:[{index:'id'},
+                                                          {index:'awb_num'},
+                                                          {index:'manifest_type'},
+                                                          {index:'consignment_num'},
+                                                          {index:'ship_to'},
+                                                          {index:'city'},
+                                                          {index:'state'},
+                                                          {index:'sku'},
+                                                          {index:'pieces'},
+                                                          {index:'weight'}, 
+                                                          {index:'manifest_num',exact:manifest_results[0].manifest_num},
+                                                          {index:'man_id',exact:manifest_id}]};
 
-                        /////////////////////////////////////////////////////////////////////////
-
-                        fetch_requested_data('',manifest_items_column,function(results)
+                        read_json_rows('form321',manifest_items_column,function(results)
                         {
                             results.forEach(function(result)
                             {
                                 var id=result.id;
                                 var rowsHTML="<tr>";
 
-                                var address=result.ship_to+"\n"+result.address1+", "+result.address2+", "+result.city+"-"+result.pincode;
-                                if(result.address2=="--" || result.address2==result.address1)
-                                {
-                                    var address=result.ship_to+"\n"+result.address1+", "+result.city+"-"+result.pincode;
-                                }						
+                                var address=result.city+", "+result.state;
                                 rowsHTML+="<form id='form321_"+id+"'></form>";
                                     rowsHTML+="<td data-th='S.No.'>";
                                     rowsHTML+="</td>";
                                     rowsHTML+="<td data-th='AWB #'>";
                                         rowsHTML+="<input type='text' readonly='readonly' form='form321_"+id+"' value='"+result.awb_num+"'>";
                                     rowsHTML+="</td>";
-                                    rowsHTML+="<td data-th='Order #'>";
-                                        rowsHTML+="<input type='text' readonly='readonly' form='form321_"+id+"' value='"+result.order_num+"'>";
+                                    rowsHTML+="<td data-th='Consignment #'>";
+                                        rowsHTML+="<input type='text' readonly='readonly' form='form321_"+id+"' value='"+result.consignment_num+"'>";
                                     rowsHTML+="</td>";
                                     rowsHTML+="<td data-th='Product'>";
                                         rowsHTML+="<input type='text' readonly='readonly' form='form321_"+id+"' value='"+result.sku+"'>";
                                     rowsHTML+="</td>";
+                                    rowsHTML+="<td data-th='Details'>";
+                                        rowsHTML+="Pieces: <input type='number' step='any' readonly='readonly' form='form321_"+id+"' value='"+result.pieces+"'>";
+                                        rowsHTML+="<br>Weight: <input type='number' step='any' readonly='readonly' form='form321_"+id+"' value='"+result.weight+"'>";
+                                    rowsHTML+="</td>";
                                     rowsHTML+="<td data-th='Destination'>";
                                         rowsHTML+="<textarea readonly='readonly' form='form321_"+id+"'>"+address+"</textarea>";
-                                    rowsHTML+="</td>";
-                                    rowsHTML+="<td data-th='Status'>";
-                                        rowsHTML+="<input type='text' readonly='readonly' form='form321_"+id+"' value='"+result.status+"'>";
                                     rowsHTML+="</td>";
                                     rowsHTML+="<td data-th='Action'>";
                                         rowsHTML+="<input type='hidden' form='form321_"+id+"' value='"+id+"'>";
@@ -184,9 +173,8 @@
                                 rowsHTML+="</tr>";
 
                                 $('#form321_body').append(rowsHTML);
-
                                 var item_form=document.getElementById('form321_'+id);
-                                var save_button=item_form.elements[6];
+                                var save_button=item_form.elements[7];
 
                                 $(save_button).on('click',function (e) 
                                 {
@@ -216,17 +204,18 @@
                     rowsHTML+="<td data-th='AWB #'>";
                         rowsHTML+="<input type='text' required form='form321_"+id+"' oninvalid=\"setCustomValidity('This AWB # is invalid')\">";
                     rowsHTML+="</td>";
-                    rowsHTML+="<td data-th='Order #'>";
-                        rowsHTML+="<input type='text' readonly='readonly' form='form321_"+id+"'>";
+                    rowsHTML+="<td data-th='Consignment #'>";
+                        rowsHTML+="<input type='text' form='form321_"+id+"'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Product'>";
                         rowsHTML+="<input type='text' readonly='readonly' form='form321_"+id+"'>";
                     rowsHTML+="</td>";
+                    rowsHTML+="<td data-th='Details'>";
+                        rowsHTML+="Pieces: <input type='text' readonly='readonly' form='form321_"+id+"'>";
+                        rowsHTML+="<br>Weight: <input type='text' readonly='readonly' form='form321_"+id+"'>";
+                    rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Destination'>";
                         rowsHTML+="<textarea readonly='readonly' form='form321_"+id+"'></textarea>";
-                    rowsHTML+="</td>";
-                    rowsHTML+="<td data-th='Status'>";
-                        rowsHTML+="<input type='text' readonly='readonly' form='form321_"+id+"'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Action'>";
                         rowsHTML+="<input type='hidden' form='form321_"+id+"' value='"+id+"'>";
@@ -242,11 +231,12 @@
                 var awb_filter=item_form.elements[0];
                 var order_filter=item_form.elements[1];
                 var product_filter=item_form.elements[2];
-                var address_filter=item_form.elements[3];
-                var status_filter=item_form.elements[4];
-                var id_filter=item_form.elements[5];
-                var save_button=item_form.elements[6];
-                var history_filter=item_form.elements[8];
+                var pieces_filter=item_form.elements[3];
+                var weight_filter=item_form.elements[4];
+                var address_filter=item_form.elements[5];
+                var id_filter=item_form.elements[6];
+                var save_button=item_form.elements[7];
+                var history_filter=item_form.elements[9];
 
                 var new_manifest=true;
                 var saved=document.getElementById('form321_master').elements['saved'].value;
@@ -255,6 +245,16 @@
                     new_manifest=false;
                 }
 
+                $(order_filter).on('keyup',function(e)
+                {
+                    if(e.keyCode==13)
+                    {
+                        e.preventDefault();
+                        form321_create_item(item_form);
+                        form321_add_item();
+                    }
+                });
+                
                 $(item_form).on("submit", function(event)
                 {
                     event.preventDefault();
@@ -329,18 +329,14 @@
                                 {
                                     var orders_data="<logistics_orders count='1'>"+
                                                     "<id></id>"+
-                                                    "<address1></address1>"+
-                                                    "<address2></address2>"+
                                                     "<city></city>"+
-                                                    "<pincode></pincode>"+
+                                                    "<state></state>"+
                                                     "<awb_num exact='yes'>"+awb_filter.value+"</awb_num>" +
                                                     "<manifest_type></manifest_type>" +
-                                                    "<order_num></order_num>" +
+                                                    "<consignment_num></consignment_num>" +
                                                     "<sku></sku>" +
-                                                    "<merchant_name></merchant_name>" +
-                                                    "<ship_to></ship_to>" +
-                                                    "<phone></phone>" +
-                                                    "<drs_num></drs_num>" +
+                                                    "<pieces></pieces>" +
+                                                    "<weight></weight>" +
                                                     "<status array='yes'>--received--undelivered--pending--</status>"+
                                                     "<order_history></order_history>"+
                                                     "</logistics_orders>";
@@ -350,21 +346,22 @@
                                         //console.log(orders);
                                         if(orders.length>0)
                                         {
-                                            address_filter.value=orders[0].ship_to+"\n"+orders[0].address1+", "+orders[0].address2+", "+orders[0].city+"-"+orders[0].pincode;
-                                            order_filter.value=orders[0].order_num;
+                                            address_filter.value=orders[0].city+", "+orders[0].state;
+                                            order_filter.value=orders[0].consignment_num;
                                             product_filter.value=orders[0].sku;
-                                            status_filter.value=orders[0].status;
+                                            weight_filter.value=orders[0].weight;
+                                            pieces_filter.value=orders[0].pieces;
                                             id_filter.value=orders[0].id;
                                             history_filter.value=orders[0].order_history;
-                                            form321_create_item(item_form);
-                                            form321_add_item();
+                                            $(order_filter).focus();
                                         }
                                         else 
                                         {
                                             address_filter.value="";
                                             order_filter.value="";
                                             product_filter.value="";
-                                            status_filter.value="";
+                                            weight_filter.value="";
+                                            pieces_filter.value="";
                                             id_filter.value="";
                                             history_filter.value="";
                                             awb_filter.value="";
@@ -384,43 +381,40 @@
                             if(double_entry<2)
                             {
                                 var orders_data="<logistics_orders count='1'>"+
-                                                "<id></id>"+
-                                                "<address1></address1>"+
-                                                "<address2></address2>"+
-                                                "<city></city>"+
-                                                "<pincode></pincode>"+
-                                                "<awb_num exact='yes'>"+awb_filter.value+"</awb_num>" +
-                                                "<manifest_type></manifest_type>" +
-                                                "<order_num></order_num>" +
-                                                "<sku></sku>" +
-                                                "<merchant_name></merchant_name>" +
-                                                "<ship_to></ship_to>" +
-                                                "<phone></phone>" +
-                                                "<drs_num></drs_num>" +
-                                                "<status array='yes'>--received--undelivered--pending--</status>"+
-                                                "<order_history></order_history>"+
-                                                "</logistics_orders>";
-                                //console.log(orders_data);				
+                                                    "<id></id>"+
+                                                    "<city></city>"+
+                                                    "<state></state>"+
+                                                    "<awb_num exact='yes'>"+awb_filter.value+"</awb_num>" +
+                                                    "<manifest_type></manifest_type>" +
+                                                    "<consignment_num></consignment_num>" +
+                                                    "<sku></sku>" +
+                                                    "<pieces></pieces>" +
+                                                    "<weight></weight>" +
+                                                    "<status array='yes'>--received--undelivered--pending--</status>"+
+                                                    "<order_history></order_history>"+
+                                                    "</logistics_orders>";
+                                    
                                 fetch_requested_data('',orders_data,function (orders) 
                                 {
                                     //console.log(orders);
                                     if(orders.length>0)
                                     {
-                                        address_filter.value=orders[0].ship_to+"\n"+orders[0].address1+", "+orders[0].address2+", "+orders[0].city+"-"+orders[0].pincode;
-                                        order_filter.value=orders[0].order_num;
+                                        address_filter.value=orders[0].city+", "+orders[0].state;
+                                        order_filter.value=orders[0].consignment_num;
                                         product_filter.value=orders[0].sku;
-                                        status_filter.value=orders[0].status;
+                                        weight_filter.value=orders[0].weight;
+                                        pieces_filter.value=orders[0].pieces;
                                         id_filter.value=orders[0].id;
                                         history_filter.value=orders[0].order_history;	
-                                        form321_create_item(item_form);
-                                        form321_add_item();
+                                        $(order_filter).focus();
                                     }
                                     else 
                                     {
                                         address_filter.value="";
                                         order_filter.value="";
                                         product_filter.value="";
-                                        status_filter.value="";
+                                        weight_filter.value="";
+                                        pieces_filter.value="";
                                         id_filter.value="";
                                         awb_filter.value="";
                                         history_filter.value="";
@@ -458,11 +452,12 @@
                 var vendor=master_form.elements['vendor'].value;
                 var num_orders=master_form.elements['num_orders'].value;
 
-                var data_id=form.elements[5].value;
-                var save_button=form.elements[6];
-                var del_button=form.elements[7];
+                var consignment_num=form.elements[1].value;
+                var data_id=form.elements[6].value;
+                var save_button=form.elements[7];
+                var del_button=form.elements[8];
 
-                var old_order_history=form.elements[8].value;
+                var old_order_history=form.elements[9].value;
 
                 var order_history=[];
                 if(old_order_history!="")
@@ -478,6 +473,7 @@
                 var last_updated=get_my_time();
                 var data_xml="<logistics_orders>" +
                             "<id>"+data_id+"</id>" +
+                            "<consignment_num>"+consignment_num+"</consignment_num>" +
                             "<status>in-transit</status>" +
                             "<manifest_num>"+manifest_num+"</manifest_num>"+
                             "<man_id>"+manifest_id+"</man_id>"+
@@ -486,7 +482,7 @@
                             "</logistics_orders>";
                 update_simple(data_xml);
 
-                for(var i=0;i<6;i++)
+                for(var i=0;i<7;i++)
                 {
                     $(form.elements[i]).attr('readonly','readonly');
                 }
@@ -592,7 +588,7 @@
             if(is_update_access('form321'))
             {
                 var manifest_num=document.getElementById('form321_master').elements['manifest_num'].value;
-                var data_id=form.elements[5].value;
+                var data_id=form.elements[6].value;
                 var last_updated=get_my_time();
 
                 var data_xml="<logistics_orders>" +
@@ -680,10 +676,11 @@
                     var form_id=$(button).attr('form');
                     var form=document.getElementById(form_id);
 
-                    var data_id=form.elements[5].value;
+                    var data_id=form.elements[6].value;
                     var last_updated=get_my_time();
                     var data_xml="<logistics_orders>" +
                                 "<id>"+data_id+"</id>" +
+                                "<consignment_num></consignment_num>" +
                                 "<status>received</status>" +
                                 "<manifest_num></manifest_num>"+
                                 "<man_id></man_id>"+
@@ -795,9 +792,11 @@
 
             var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:6%'>S.No.</td>"+
                         "<td style='text-align:left;width:30%'>AWB #</td>"+
-                        "<td style='text-align:left;width:15%'>Order #</td>"+
+                        "<td style='text-align:left;width:12%'>Consigment #</td>"+
+                        "<td style='text-align:left;width:10%'>Pieces</td>"+
+                        "<td style='text-align:left;width:10%'>Weight</td>"+
                         "<td style='text-align:left;width:15%'>Product</td>"+
-                        "<td style='text-align:left;width:30%'>Destination</td></tr>";
+                        "<td style='text-align:left;width:15%'>Destination</td></tr>";
 
             var table_rows=table_header;
             var counter=0;
@@ -825,8 +824,10 @@
                 table_rows+="<tr style='border-top: 1px solid #000000;height:60px;'><td><div>"+counter+"</div></td>"+
                         "<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[1].value+"</div></td>"+
+                        "<td><div style='text-align:left;'>"+form.elements[3].value+"</div></td>"+
+                        "<td><div style='text-align:left;'>"+form.elements[4].value+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[2].value+"</div></td>"+
-                        "<td><div style='text-align:left;'>"+form.elements[3].value+"</div></td></tr>";				
+                        "<td><div style='text-align:left;'>"+form.elements[5].value+"</div></td></tr>";				
             });
             new_table.innerHTML=table_rows;
             /////////////placing the containers //////////////////////////////////////////////////////	
@@ -918,8 +919,8 @@
 
             var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:6%'>S.No.</td>"+
                         "<td style='text-align:left;width:35%'>AWB #</td>"+
-                        "<td style='text-align:left;width:20%'>Order #</td>"+
-                        "<td style='text-align:left;width:35%'>Destination</td></tr>";
+                        "<td style='text-align:left;width:20%'>Pieces</td>"+
+                        "<td style='text-align:left;width:35%'>Product</td></tr>";
 
             var table_rows=table_header;
             var counter=0;
@@ -946,8 +947,8 @@
 
                 table_rows+="<tr style='border-top: 1px solid #000000;height:60px;'><td><div>"+counter+"</div></td>"+
                         "<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
-                        "<td><div style='text-align:left;'>"+form.elements[1].value+"</div></td>"+
-                        "<td><div style='text-align:left;'>"+form.elements[3].value+"</div></td></tr>";				
+                        "<td><div style='text-align:left;'>"+form.elements[3].value+"</div></td>"+
+                        "<td><div style='text-align:left;'>"+form.elements[2].value+"</div></td></tr>";				
             });
             new_table.innerHTML=table_rows;
             /////////////placing the containers //////////////////////////////////////////////////////	

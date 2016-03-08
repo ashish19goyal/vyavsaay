@@ -16116,7 +16116,7 @@ function modal201_action(list_name)
         
         $(form).find('.close').click();
 	});
-	
+	$('#modal201').formcontrol();
 	$("#modal201_link").click();
 }
 
@@ -16152,6 +16152,7 @@ function modal202_action(data_id)
             desc_filter.value=tasks[0].description;
             staff_filter.value=tasks[0].assignee;
         }
+        $('#modal202').formcontrol();
     });
     
     $(form).off('submit');

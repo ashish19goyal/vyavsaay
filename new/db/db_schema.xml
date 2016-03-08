@@ -400,7 +400,7 @@
 			<type index='yes' type="VARCHAR(10)"></type><!-- received/paid -->
 			<total_amount index='no' type="DECIMAL(12,2)"></total_amount>
 			<paid_amount index='no' type="DECIMAL(12,2)"></paid_amount>
-			<status index='yes' type="VARCHAR(10)"></status><!-- pending/closed/cancelled/partial -->
+			<status index='yes' type="VARCHAR(10)"></status><!-- pending/closed/ -->
 			<date index='yes' type="BIGINT"></date>
 			<due_date index='yes' type="BIGINT"></due_date>
 			<mode index='yes' type="VARCHAR(15)"></mode><!-- cash/cheque/draft/credit card/debit card/online banking/coupons -->
@@ -598,6 +598,7 @@
 			<total index='no' type="DECIMAL(12,2)"></total>
 			<type index="yes" type="VARCHAR(10)"></type><!-- service/product/both -->
 			<status index="yes" type="VARCHAR(10)"></status><!-- cancelled -->
+			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<order_id index='yes' type="BIGINT"></order_id>
 			<order_num index='yes' type="TEXT"></order_num>
@@ -617,6 +618,7 @@
 			<type index='yes' type="VARCHAR(25)"></type><!--exchange/refund-->
 			<refund_amount index='no' type="DECIMAL(12,2)"></refund_amount>
 			<exchange_batch index='yes' type="TEXT"></exchange_batch>
+			<exchange_storage index='yes' type="TEXT"></exchange_storage>
 			<saleable index='yes' type="VARCHAR(25)"></saleable><!--checked/unchecked-->
 			<storage index='yes' type="TEXT"></storage>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
@@ -1817,6 +1819,7 @@
 			<bag_num index='yes' type="VARCHAR(20)"></bag_num>
 			<bag_id index='yes' type="BIGINT"></bag_id>
 			<manifest_num index='yes' type="TEXT"></manifest_num>
+			<consignment_num index='yes' type="TEXT"></consignment_num>
 			<man_id index='yes' type="BIGINT"></man_id>
 			<delivery_time index='yes' type="BIGINT"></delivery_time>
 			<last_updated index='yes' type="BIGINT"></last_updated>

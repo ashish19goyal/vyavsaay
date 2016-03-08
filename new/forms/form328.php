@@ -1,19 +1,19 @@
-<div id='form19' class='tab-pane portlet box green-meadow'>	   
+<div id='form328' class='tab-pane portlet box green-meadow'>	   
 	<div class="portlet-title">
 		<div class='caption'>		
-			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form19_add_item();'>Add <i class='fa fa-plus'></i></a>
-            <a class='btn btn-circle grey btn-outline btn-sm' id='form19_save'>Save <i class='fa fa-save'></i></a>
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form328_add_item();'>Add <i class='fa fa-plus'></i></a>
+            <a class='btn btn-circle grey btn-outline btn-sm' id='form328_save'>Save <i class='fa fa-save'></i></a>
 		</div>
 		<div class="actions">
-      	<a class='btn btn-default btn-sm' id='form19_print' onclick=form19_print_form();><i class='fa fa-print'></i> Print</a>
-        <a class='btn btn-default btn-sm' id='form19_share'><i class='fa fa-envelope'></i> Email</a>    
+      	<a class='btn btn-default btn-sm' id='form328_print' onclick=form328_print_form();><i class='fa fa-print'></i> Print</a>
+        <a class='btn btn-default btn-sm' id='form328_share'><i class='fa fa-envelope'></i> Email</a>    
       </div>
 	</div>
 	
 	<div class="portlet-body">
-        <form id='form19_master' autocomplete="off">
+        <form id='form328_master' autocomplete="off">
             <fieldset>
-                <label><div class='btn-overlap'><input type='text' required name='supplier' placeholder='Supplier' class='floatlabel'><button type='button' title='Add new supplier' class='btn btn-icon-only default right-overlap' id='form19_add_supplier'><i class='fa fa-plus'></i></button></div></label>
+                <label><div class='btn-overlap'><input type='text' required name='customer' placeholder='Customer' class='floatlabel'><button type='button' title='Add new customer' class='btn btn-icon-only default right-overlap' id='form328_add_customer'><i class='fa fa-plus'></i></button></div></label>
                 <label><input type='text' name='id' class='floatlabel' placeholder='Return #'></label>
                 <label><input type='text' class='floatlabel' requried placeholder='Return Date' name='date'></label>
                 <input type='submit' class='submit_hidden'>
@@ -27,35 +27,35 @@
 				<tr style='color:#9a9a9a;'>
                     <th>Item</th>
 					<th>Batch</th>
-					<th>Notes</th>
 					<th>Quantity</th>
-					<th>Return Amount</th>
+                    <th>Type</th>
+					<th>Details</th>
 					<th></th>
 				</tr>
 			</thead>
-			<tbody id='form19_body'>
+			<tbody id='form328_body'>
 			</tbody>
-            <tfoot id='form19_foot'>
+            <tfoot id='form328_foot'>
             </tfoot>
 		</table>
     </div>
     
     <script>
-        function form19_header_ini()
+        function form328_header_ini()
         {
-            var fields=document.getElementById('form19_master');
+            var fields=document.getElementById('form328_master');
 
-            var supplier_filter=fields.elements['supplier'];
+            var customer_filter=fields.elements['customer'];
             var return_date=fields.elements['date'];
             var id_filter=fields.elements['id'];
             id_filter.value=get_new_key();
-            var save_button=document.getElementById('form19_save');
+            var save_button=document.getElementById('form328_save');
 
             $(save_button).off('click');
             $(save_button).on("click", function(event)
             {
                 event.preventDefault();
-                form19_create_form();
+                form328_create_form();
             });
 
             $(document).off('keydown');
@@ -70,81 +70,85 @@
             $(fields).on("submit", function(event)
             {
                 event.preventDefault();
-                form19_add_item();
+                form328_add_item();
             });
 
-            var suppliers_data={data_store:'suppliers',return_column:'acc_name'};
-            set_my_value_list_json(suppliers_data,supplier_filter,function()
+            var customers_data={data_store:'customers',return_column:'acc_name'};
+            set_my_value_list_json(customers_data,customer_filter,function()
             {
-                $(supplier_filter).focus();
+                $(customer_filter).focus();
             });
 
-            var add_supplier=document.getElementById('form19_add_supplier');
-            $(add_supplier).off('click');
-            $(add_supplier).on('click',function()
+            var add_customer=document.getElementById('form328_add_customer');
+            $(add_customer).off('click');
+            $(add_customer).on('click',function()
             {
                 modal13_action(function()
                 {
-                    var suppliers_data={data_store:'suppliers',return_column:'acc_name'};
-                    set_my_value_list_json(suppliers_data,supplier_filter,function()
+                    var customers_data={data_store:'customers',return_column:'acc_name'};
+                    set_my_value_list_json(customers_data,customer_filter,function()
                     {
-                        $(supplier_filter).focus();
+                        $(customer_filter).focus();
                     });
                 });
             });
 
             $(return_date).datepicker();
             return_date.value=get_my_date();
-            supplier_filter.value='';
-            $('#form19').formcontrol();
+            customer_filter.value='';
+            $('#form328').formcontrol();
         }
 
-        function form19_ini()
+        function form328_ini()
         {
-            var data_id=$("#form19_link").attr('data_id');
+            var data_id=$("#form328_link").attr('data_id');
             if(data_id==null)
                 data_id="";	
 
-            $('#form19_body').html("");
-            $('#form19_foot').html("");
+            $('#form328_body').html("");
+            $('#form328_foot').html("");
 
             if(data_id!="")
             {
                 show_loader();
-                var return_columns={data_store:'supplier_returns',count:1,
+                var filter_fields=document.getElementById('form328_master');
+                        
+                var return_columns={data_store:'customer_returns',count:1,
                                    indexes:[{index:'id',value:data_id},
-                                           {index:'supplier'},
+                                           {index:'customer'},
                                            {index:'total'},
                                            {index:'tax'},
                                             {index:'amount'},
                                            {index:'return_date'}]};
-                var return_items_column={data_store:'supplier_return_items',
+                var return_items_column={data_store:'customer_return_items',
                                         indexes:[{index:'id'},
                                                 {index:'return_id',exact:data_id},
                                                 {index:'item_name'},
                                                 {index:'batch'},
                                                 {index:'storage'},
+                                                {index:'exchange_storage'}, 
                                                 {index:'notes'},
                                                 {index:'quantity'},
                                                 {index:'refund_amount'},
                                                 {index:'tax'},
-                                                {index:'saleable'}]};
+                                                {index:'saleable'},
+                                                {index:'type'},
+                                                {index:'exchange_batch'}]};
 
-                read_json_rows('form19',return_columns,function(return_results)
+                read_json_rows('form328',return_columns,function(return_results)
                 {
                     if(return_results.length>0)
                     {
-                        var filter_fields=document.getElementById('form19_master');
-                        filter_fields.elements['supplier'].value=return_results[0].supplier;
+                        filter_fields.elements['customer'].value=return_results[0].customer;
                         filter_fields.elements['date'].value=get_my_past_date(return_results[0].return_date);
                         filter_fields.elements['id'].value=data_id;
-                        var save_button=document.getElementById('form19_save');
+                        var save_button=document.getElementById('form328_save');
 
                         $(save_button).off('click');
                         $(save_button).on("click", function(event)
                         {
                             event.preventDefault();
-                            form19_update_form();
+                            form328_update_form();
                         });
 
                         var total_row="<tr><td colspan='3' data-th='Total'>Amount<br>Tax<br>Total</td>" +
@@ -153,55 +157,74 @@
                                     "<br>Rs. "+return_results[0].total+"</td>" +
                                     "<td></td>" +
                                     "</tr>";
-                        $('#form19_foot').html(total_row);
+                        $('#form328_foot').html(total_row);
                     }
                     
                 });
                 
-                read_json_rows('form19',return_items_column,function(results)
+                read_json_rows('form328',return_items_column,function(results)
                 {
                     results.forEach(function(result)
                     {
                         var id=result.id;
                         var rowsHTML="<tr>";
-                        rowsHTML+="<form id='form19_"+id+"'></form>";
+                        rowsHTML+="<form id='form328_"+id+"'></form>";
                             rowsHTML+="<td data-th='Item'>";
-                                rowsHTML+="<a onclick=\"show_object('product_master','"+result.item_name+"');\"><input type='text' readonly='readonly' form='form19_"+id+"' value='"+result.item_name+"'></a>";
+                                rowsHTML+="<a onclick=\"show_object('product_master','"+result.item_name+"');\"><input type='text' readonly='readonly' form='form328_"+id+"' value='"+result.item_name+"'></a>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Batch'>";
-                                rowsHTML+="<input type='text' class='floatlabel' placeholder='Batch' readonly='readonly' form='form19_"+id+"' value='"+result.batch+"'>";
-                                rowsHTML+="<input type='text' class='floatlabel' placeholder='Storage' readonly='readonly' form='form19_"+id+"' value='"+result.storage+"'>";
-                            rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Notes'>";
-                                rowsHTML+="<textarea readonly='readonly' form='form19_"+id+"'>"+result.notes+"</textarea>";
+                                rowsHTML+="<input type='text' class='floatlabel' placeholder='Batch' readonly='readonly' form='form328_"+id+"' value='"+result.batch+"'>";
+                                rowsHTML+="<input type='text' class='floatlabel' placeholder='Storage' readonly='readonly' form='form328_"+id+"' value='"+result.storage+"'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Quantity'>";
-                                rowsHTML+="<input type='number' class='floatlabel' placeholder='Quantity' readonly='readonly' form='form19_"+id+"' value='"+result.quantity+"' step='any'>";
-                                rowsHTML+="Saleable: <input type='checkbox' readonly='readonly' form='form19_"+id+"' "+result.saleable+">";
+                                rowsHTML+="<input type='number' placeholder='Quantity' readonly='readonly' form='form328_"+id+"' value='"+result.quantity+"' step='any'>";
                             rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Return Amount'>";
-                                rowsHTML+="<input type='number' readonly='readonly' class='floatlabel' placeholder='Amount' step='any' form='form19_"+id+"' value='"+result.refund_amount+"'>";
-                                rowsHTML+="<input type='number' step='any' readonly='readonly' class='floatlabel' placeholder='Tax' form='form19_"+id+"' value='"+result.tax+"'>";
+                            rowsHTML+="<td data-th='Type'>";
+                                rowsHTML+="Saleable: <input type='checkbox' readonly='readonly' form='form328_"+id+"' "+result.saleable+">";
+                                rowsHTML+="<input type='text' class='floatlabel' placeholder='Action' readonly='readonly' form='form328_"+id+"' value='"+result.type+"'>";
+                            rowsHTML+="</td>";
+                            rowsHTML+="<td data-th='Details'>";
+                                rowsHTML+="<input type='number' readonly='readonly' class='floatlabel' placeholder='Amount' step='any' form='form328_"+id+"' value='"+result.refund_amount+"'>";
+                                rowsHTML+="<input type='number' step='any' readonly='readonly' class='floatlabel' placeholder='Tax' form='form328_"+id+"' value='"+result.tax+"'>";
+                                rowsHTML+="<input type='text' readonly='readonly' class='floatlabel' placeholder='Exchange Batch' form='form328_"+id+"' value='"+result.exchange_batch+"'>";
+                                rowsHTML+="<input type='text' readonly='readonly' class='floatlabel' placeholder='Storage' form='form328_"+id+"' value='"+result.exchange_storage+"'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Action'>";
-                                rowsHTML+="<input type='hidden' form='form19_"+id+"' value='"+id+"'>";
-                                rowsHTML+="<input type='button' class='submit_hidden' form='form19_"+id+"' id='save_form19_"+id+"'>";
-                                rowsHTML+="<button type='button' class='btn red' form='form19_"+id+"' id='delete_form19_"+id+"' onclick='form19_delete_item($(this));' name='delete'><i class='fa fa-trash'></i></button>";
+                                rowsHTML+="<input type='hidden' form='form328_"+id+"' value='"+id+"'>";
+                                rowsHTML+="<input type='button' class='submit_hidden' form='form328_"+id+"' id='save_form328_"+id+"'>";
+                                rowsHTML+="<button type='button' class='btn red' form='form328_"+id+"' id='delete_form328_"+id+"' onclick='form328_delete_item($(this));' name='delete'><i class='fa fa-trash'></i></button>";
                             rowsHTML+="</td>";			
                         rowsHTML+="</tr>";
 
-                        $('#form19_body').append(rowsHTML);
+                        $('#form328_body').append(rowsHTML);
+                        var form328=document.getElementById('form328_'+id);
+                        var amount_filter=form328.elements[6];
+                        var tax_filter=form328.elements[7];
+                        var new_batch_filter=form328.elements[8];
+                        var new_tax_filter=form328.elements[9];
+
+                        if(result.type=='exchange')
+                        {
+                            $(amount_filter).hide();
+                            $(tax_filter).hide();
+                        }
+                        else
+                        {
+                            $(new_batch_filter).hide();
+                            $(new_tax_filter).hide();
+                        }
+
                     });
 
-                    $('#form19').formcontrol();
-                    
+                    $('#form328').formcontrol();
+                        
                     var bt=get_session_var('title');
-                    $('#form19_share').show();
-                    $('#form19_share').click(function()
+                    $('#form328_share').show();
+                    $('#form328_share').click(function()
                     {
-                        modal101_action(bt+' - Purchase Return # '+filter_fields.elements['id'].value,filter_fields.elements['supplier'].value,'customer',function (func) 
+                        modal101_action(bt+' - Sale Return # '+filter_fields.elements['id'].value,filter_fields.elements['customer'].value,'customer',function (func) 
                         {
-                            print_form19(func);
+                            print_form328(func);
                         });
                     });
                     
@@ -210,142 +233,176 @@
             }
         }
 
-        function form19_add_item()
+        function form328_add_item()
         {
-            if(is_create_access('form19'))
+            if(is_create_access('form328'))
             {
                 var id=get_new_key();
                 var rowsHTML="<tr>";
-                rowsHTML+="<form id='form19_"+id+"' autocomplete='off'></form>";
+                rowsHTML+="<form id='form328_"+id+"' autocomplete='off'></form>";
                     rowsHTML+="<td data-th='Item'>";
-                        rowsHTML+="<input type='text' required form='form19_"+id+"'>";
+                        rowsHTML+="<input type='text' required form='form328_"+id+"'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Batch'>";
-                        rowsHTML+="<input type='text' class='floatlabel' placeholder='Batch' required form='form19_"+id+"'>";
-                        rowsHTML+="<input type='text' class='floatlabel' placeholder='Storage' required form='form19_"+id+"'>";    
-                    rowsHTML+="</td>";
-                    rowsHTML+="<td data-th='Notes'>";
-                        rowsHTML+="<textarea form='form19_"+id+"'></textarea>";
+                        rowsHTML+="<input type='text' class='floatlabel' placeholder='Batch' required form='form328_"+id+"'>";
+                        rowsHTML+="<input type='text' class='floatlabel' placeholder='Storage' required form='form328_"+id+"'>";    
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Quantity'>";
-                        rowsHTML+="<input type='number' class='floatlabel' placeholder='Quantity' required form='form19_"+id+"' step='any'>";
-                        rowsHTML+="Saleable: <input type='checkbox' form='form19_"+id+"'>";
+                        rowsHTML+="<input type='number' class='floatlabel' placeholder='Quantity' required form='form328_"+id+"' step='any'>";
                     rowsHTML+="</td>";
-                    rowsHTML+="<td data-th='Return Amount'>";
-                        rowsHTML+="<input type='number' required class='floatlabel' placeholder='Amount' form='form19_"+id+"' step='any'>";
-                        rowsHTML+="<input type='number' required class='floatlabel' placeholder='Tax' form='form19_"+id+"' step='any'>";
+                    rowsHTML+="<td data-th='Type'>";
+                        rowsHTML+="Saleable: <input type='checkbox' form='form328_"+id+"'>";
+                        rowsHTML+="<input type='text' class='floatlabel' placeholder='Action' required form='form328_"+id+"'>";
+                    rowsHTML+="</td>";
+                    rowsHTML+="<td data-th='Details'>";
+                        rowsHTML+="<input type='number' required class='floatlabel' placeholder='Amount' form='form328_"+id+"' step='any'>";
+                        rowsHTML+="<input type='number' required class='floatlabel' placeholder='Tax' form='form328_"+id+"' step='any'>";
+                        rowsHTML+="<input type='text' required class='floatlabel' placeholder='Exchange Batch' form='form328_"+id+"'>";
+                        rowsHTML+="<input type='text' required class='floatlabel' placeholder='Storage' form='form328_"+id+"'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Action'>";
-                        rowsHTML+="<input type='hidden' form='form19_"+id+"' value='"+id+"'>";
-                        rowsHTML+="<input type='hidden' form='form19_"+id+"'>";
-                        rowsHTML+="<input type='hidden' form='form19_"+id+"'>";
-                        rowsHTML+="<input type='button' class='submit_hidden' form='form19_"+id+"' id='save_form19_"+id+"' >";
-                        rowsHTML+="<button type='button' class='btn red' form='form19_"+id+"' id='delete_form19_"+id+"' onclick='$(this).parent().parent().remove();' title='Delete' name='delete'><i class='fa fa-trash'></i></button>";
-                        rowsHTML+="<input type='submit' class='submit_hidden' form='form19_"+id+"'>";
+                        rowsHTML+="<input type='hidden' form='form328_"+id+"' value='"+id+"'>";
+                        rowsHTML+="<input type='hidden' form='form328_"+id+"'>";
+                        rowsHTML+="<input type='hidden' form='form328_"+id+"'>";
+                        rowsHTML+="<input type='button' class='submit_hidden' form='form328_"+id+"' id='save_form328_"+id+"' >";
+                        rowsHTML+="<button type='button' class='btn red' form='form328_"+id+"' id='delete_form328_"+id+"' onclick='$(this).parent().parent().remove();' title='Delete' name='delete'><i class='fa fa-trash'></i></button>";
+                        rowsHTML+="<input type='submit' class='submit_hidden' form='form328_"+id+"'>";
                     rowsHTML+="</td>";			
                 rowsHTML+="</tr>";
 
-                $('#form19_body').prepend(rowsHTML);
+                $('#form328_body').prepend(rowsHTML);
 
-                var fields=document.getElementById("form19_"+id);
+                var fields=document.getElementById("form328_"+id);
                 var name_filter=fields.elements[0];
                 var batch_filter=fields.elements[1];
                 var storage_filter=fields.elements[2];
-                var notes_filter=fields.elements[3];
-                var quantity_filter=fields.elements[4];
-                var total_filter=fields.elements[6];
+                var quantity_filter=fields.elements[3];
+                var type_filter=fields.elements[5];
+                var amount_filter=fields.elements[6];
                 var tax_filter=fields.elements[7];
-                var id_filter=fields.elements[8];
-                var price_filter=fields.elements[9];
-                var tax_unit_filter=fields.elements[10];
-                var save_button=fields.elements[11];
+                var new_batch_filter=fields.elements[8];
+                var new_storage_filter=fields.elements[9];
+                var id_filter=fields.elements[10];
+                var total_unit_filter=fields.elements[11];
+                var tax_unit_filter=fields.elements[12];
+                var save_button=fields.elements[13];
 
+                $(new_batch_filter).hide();
+                $(new_storage_filter).hide();
+                
                 $(save_button).on("click", function(event)
                 {
                     event.preventDefault();
-                    form19_create_item(fields);
+                    form328_create_item(fields);
                 });
+
                 $(fields).on("submit", function(event)
                 {
                     event.preventDefault();
-                    form19_add_item();
+                    form328_add_item();
                 });
 
                 var product_data={data_store:'product_master',return_column:'name'};
-                set_my_value_list_json(product_data,name_filter,function () 
+                set_my_value_list_json(product_data,name_filter,function()
                 {
                     $(name_filter).focus();
                 });
 
                 var storage_data={data_store:'store_areas',return_column:'name'};
                 set_my_value_list_json(storage_data,storage_filter);
+                set_my_value_list_json(storage_data,new_storage_filter);
 
                 $(name_filter).on('blur',function(event)
                 {
                     var batch_data={data_store:'product_instances',return_column:'batch',
                                    indexes:[{index:'product_name',exact:name_filter.value}]};
                     set_my_value_list_json(batch_data,batch_filter);
+                    set_my_value_list_json(batch_data,new_batch_filter);
+                    
                     batch_filter.value="";
-                    notes_filter.value="";
                     quantity_filter.value=0;
-                    total_filter.value=0;
-                    price_filter.value=0;
+                    type_filter.value="";
+                    amount_filter.value=0;
                     tax_filter.value=0;
+                    total_unit_filter.value=0;
                     tax_unit_filter.value=0;
+                    new_batch_filter.value="";
+                    new_storage_filter.value="";
                 });
 
                 $(batch_filter).on('blur',function(event)
                 {
-                    var supplier_name=document.getElementById("form19_master").elements['supplier'].value;
-                    var bill_data={data_store:'supplier_bills',return_column:'id',
-                                  indexes:[{index:'supplier',exact:supplier_name}]};
+                    var customer_name=document.getElementById("form328_master").elements['customer'].value;
+                    var bill_data={data_store:'bills',return_column:'id',
+                                  indexes:[{index:'customer_name',exact:'customer_name'}]};
                     read_json_single_column(bill_data,function(bills)
                     {
-                        var bill_items_data={data_store:'supplier_bill_items',
-                                            indexes:[{index:'id'},
-                                                    {index:'bill_id',array:bills},
-                                                    {index:'product_name',exact:name_filter.value},
+                        var bill_items_data={data_store:'bill_items',count:1,
+                                            indexes:[{index:'bill_id',array:bills},
+                                                    {index:'item_name',exact:name_filter.value},
                                                     {index:'batch',exact:batch_filter.value},
                                                     {index:'quantity'},
                                                     {index:'amount'},
-                                                    {index:'tax'},
-                                                    {index:'total'},
-                                                    {index:'unit_price'},
-                                                    {index:'last_updated'}]};
+                                                    {index:'tax'}]};
                         read_json_rows('',bill_items_data,function(bill_items)
                         {
-                            var notes_value="";
-                            bill_items.forEach(function(bill_item)
+                            if(bill_items.length>0)
                             {
-                                notes_value+=bill_item.quantity+
-                                            " quantity bought on "+
-                                            get_my_past_date(bill_item.last_updated)+
-                                            " for Rs."+bill_item.total+
-                                            "\n";
-                                price_filter.value=parseFloat(bill_item.amount)/parseFloat(bill_item.quantity);
-                                tax_unit_filter.value=parseFloat(bill_item.tax)/parseFloat(bill_item.quantity);
-                            });
-                            if(notes_value=="")
-                            {
-                                notes_filter.value="No purchase records found";
+                                total_unit_filter.value=parseFloat(bill_items[0].amount)/parseFloat(bill_items[0].quantity);
+                                tax_unit_filter.value=parseFloat(bill_items[0].tax)/parseFloat(bill_items[0].quantity);
                             }
                             else
                             {
-                                notes_filter.value=notes_value;
+                                total_unit_filter.value=0;
+                                tax_unit_filter.value=0;
                             }
                         });
                     });
 
-                    quantity_filter.value=0;
+                    amount_filter.value=0;
                     tax_filter.value=0;
-                    total_filter.value=0;
+                    new_batch_filter.value="";
+                    new_storage_filter.value="";
+                    type_filter.value="";
+                    quantity_filter.value=0;    
+                });
+
+                set_static_value_list_json('customer_return_items','type',type_filter);
+
+                $(type_filter).on('blur',function(event)
+                {
+                    if(type_filter.value=='refund')
+                    {
+                        amount_filter.value=parseFloat(total_unit_filter.value)*parseFloat(quantity_filter.value);
+                        tax_filter.value=parseFloat(tax_unit_filter.value)*parseFloat(quantity_filter.value);
+                        $(new_batch_filter).hide();
+                        $(new_storage_filter).hide();
+                        $(amount_filter).show();
+                        $(tax_filter).show();
+                        new_batch_filter.value="";
+                        new_storage_filter.value="";
+                    }
+                    else
+                    {
+                        $(new_batch_filter).show();
+                        $(new_storage_filter).show();
+                        $(amount_filter).hide();
+                        $(tax_filter).hide();
+                        amount_filter.value=0;
+                        tax_filter.value=0;
+                    }
                 });
 
                 $(quantity_filter).on('blur',function(event)
-                {		
-                    total_filter.value=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
-                    tax_filter.value=parseFloat(quantity_filter.value)*parseFloat(tax_unit_filter.value);
+                {
+                    if(type_filter.value=='refund')
+                    {
+                        amount_filter.value=parseFloat(total_unit_filter.value)*parseFloat(quantity_filter.value);
+                        tax_filter.value=parseFloat(tax_unit_filter.value)*parseFloat(quantity_filter.value);
+                    }
                 });
+                
+                $('#form328').formcontrol();
             }
             else
             {
@@ -353,35 +410,41 @@
             }
         }
 
-        function form19_create_item(form)
+        function form328_create_item(form)
         {
-            if(is_create_access('form19'))
+            if(is_create_access('form328'))
             {
-                var return_id=document.getElementById("form19_master").elements['id'].value;
+                var return_id=document.getElementById("form328_master").elements['id'].value;
                 var name=form.elements[0].value;
                 var batch=form.elements[1].value;
                 var storage=form.elements[2].value;
-                var notes=form.elements[3].value;
-                var quantity=form.elements[4].value;
+                var quantity=form.elements[3].value;
                 var saleable='unchecked';
-                if(form.elements[5].checked)
+                if(form.elements[4].checked)
                     saleable='checked';
-                var total=form.elements[6].value;
+                var type=form.elements[5].value;
+                var amount=form.elements[6].value;
                 var tax=form.elements[7].value;
-                var data_id=form.elements[8].value;
+                var new_batch=form.elements[8].value;
+                var new_storage=form.elements[9].value;
+                var data_id=form.elements[10].value;
+                var save_button=form.elements[13];
+                var del_button=form.elements[14];
                 var last_updated=get_my_time();
                 
-                var data_json={data_store:'supplier_return_items',
+                var data_json={data_store:'customer_return_items',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'return_id',value:return_id},
 	 					{index:'item_name',value:name},
 	 					{index:'batch',value:batch},
-                        {index:'notes',value:notes},
+                        {index:'type',value:type},
                         {index:'quantity',value:quantity},
                         {index:'saleable',value:saleable},
-                        {index:'refund_amount',value:total},
+                        {index:'refund_amount',value:amount},
                         {index:'tax',value:tax},
                         {index:'storage',value:storage},  
+	 					{index:'exchange_storage',value:new_storage},  
+	 					{index:'exchange_batch',value:new_batch},  
 	 					{index:'last_updated',value:last_updated}]};
  				
                 create_json(data_json);
@@ -393,25 +456,43 @@
 	 					{index:'source_id',value:return_id},
 	 					{index:'product_name',value:name},
 	 					{index:'batch',value:batch},
-                        {index:'quantity',value:(-quantity)},
-                        {index:'source',value:'purchase return'},
-                        {index:'source_link',value:'form19'},
+                        {index:'quantity',value:quantity},
+                        {index:'source',value:'sale return'},
+                        {index:'source_link',value:'form328'},
                         {index:'storage',value:storage},
                         {index:'last_updated',value:last_updated}]};
  				
                     create_json(discard_json);
                 }
 
+                var storage_data={data_store:'area_utilization',
+                                 indexes:[{index:'id'},
+                                         {index:'name',exact:storage},
+                                         {index:'item_name',exact:name},
+                                         {index:'batch',exact:batch}]};
+                read_json_rows('',storage_data,function(placements)
+                {
+                    if(placements.length===0)
+                    {
+                        var storage_json={data_store:'area_utilization',
+                            data:[{index:'id',value:get_new_key()},
+                                {index:'name',value:storage},
+                                {index:'batch',value:batch},
+                                {index:'item_name',value:name},
+                                {index:'last_updated',value:last_updated}]};
+
+                        create_json(storage_json);
+                    }
+                });		
+
                 $(form).readonly();
 
-                var del_button=form.elements[12];
                 del_button.removeAttribute("onclick");
                 $(del_button).on('click',function(event)
                 {
-                    form19_delete_item(del_button);
+                    form328_delete_item(del_button);
                 });
 
-                var save_button=form.elements[11];
                 $(save_button).off('click');
             }
             else
@@ -421,13 +502,13 @@
         }
 
 
-        function form19_create_form()
+        function form328_create_form()
         {
-            if(is_create_access('form19'))
+            if(is_create_access('form328'))
             {
-                var form=document.getElementById("form19_master");
+                var form=document.getElementById("form328_master");
 
-                var supplier=form.elements['supplier'].value;
+                var customer=form.elements['customer'].value;
                 var return_date=get_raw_time(form.elements['date'].value);
                 var data_id=form.elements['id'].value;
                 
@@ -435,17 +516,17 @@
                 var tax=0;
 
                 var bt=get_session_var('title');
-                $('#form19_share').show();
-                $('#form19_share').click(function()
+                $('#form328_share').show();
+                $('#form328_share').click(function()
                 {
-                    modal101_action(bt+' - Purchase Return # '+data_id,supplier,'supplier',function (func) 
+                    modal101_action(bt+' - Sale Return # '+data_id,customer,'customer',function (func) 
                     {
-                        print_form19(func);
+                        print_form328(func);
                     });
                 });
 
                     
-                $("[id^='save_form19']").each(function(index)
+                $("[id^='save_form328']").each(function(index)
                 {
                     var subform_id=$(this).attr('form');
                     var subform=document.getElementById(subform_id);
@@ -462,13 +543,13 @@
                         "<br>Rs. "+total+"</td>" +
                         "<td></td>" +
                         "</tr>";
-                $('#form19_foot').html(total_row);
+                $('#form328_foot').html(total_row);
 
                 var last_updated=get_my_time();
                 
-                var data_json={data_store:'supplier_returns',
+                var data_json={data_store:'customer_returns',
 	 				data:[{index:'id',value:data_id},
-	 					{index:'supplier',value:supplier},
+	 					{index:'customer',value:customer},
 	 					{index:'return_date',value:return_date},
                         {index:'amount',value:amount},  
                         {index:'total',value:total},
@@ -476,14 +557,14 @@
                         {index:'transaction_id',value:data_id},  
 	 					{index:'last_updated',value:last_updated}],
                     log:'yes',
-                    log_data:{title:'Created',notes:'Purchase return # '+data_id,link_to:'form17'}};
+                    log_data:{title:'Created',notes:'Sale return # '+data_id,link_to:'form329'}};
 
                 var transaction_json={data_store:'transactions',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'trans_date',value:last_updated},
 	 					{index:'amount',value:total},
-                        {index:'receiver',value:supplier},
-                        {index:'giver',value:'master'},  
+                        {index:'giver',value:customer},
+                        {index:'receiver',value:'master'},  
                         {index:'tax',value:tax},
                         {index:'last_updated',value:last_updated}]};
 
@@ -492,16 +573,16 @@
                 var payment_json={data_store:'payments',
 	 				data:[{index:'id',value:pt_tran_id},
                         {index:'status',value:'pending'},
-                        {index:'type',value:'received'},  
+                        {index:'type',value:'paid'},  
 	 					{index:'date',value:last_updated},
 	 					{index:'total_amount',value:total},
                         {index:'paid_amount',value:'0'},  
-                        {index:'acc_name',value:supplier},  
-                        {index:'due_date',value:get_credit_period()},
+                        {index:'acc_name',value:customer},  
+                        {index:'due_date',value:get_debit_period()},
                         {index:'mode',value:get_payment_mode()},
                         {index:'transaction_id',value:pt_tran_id},
                         {index:'source_id',value:data_id},
-                        {index:'source',value:'purchase return'},  
+                        {index:'source',value:'sale return'},  
                         {index:'source_info',value:data_id},
                         {index:'last_updated',value:last_updated}]};
                 
@@ -509,8 +590,8 @@
 	 				data:[{index:'id',value:pt_tran_id},
 	 					{index:'trans_date',value:last_updated},
 	 					{index:'amount',value:total},
-                        {index:'receiver',value:'master'},
-                        {index:'giver',value:supplier},  
+                        {index:'giver',value:'master'},
+                        {index:'receiver',value:customer},  
                         {index:'tax',value:'0'},
                         {index:'last_updated',value:last_updated}]};
 
@@ -519,17 +600,17 @@
                 create_json(pt_json);
                 create_json(payment_json,function()
                 {
-                    modal26_action(pt_tran_id);
+                    modal28_action(pt_tran_id);
                 });
                 
-                var save_button=document.getElementById('form19_save');
+                var save_button=document.getElementById('form328_save');
                 $(save_button).off('click');
                 $(save_button).on('click',function(event)
                 {
                     event.preventDefault();
-                    form19_update_form();
+                    form328_update_form();
                 });
-                $("[id^='save_form19_']").click();
+                $("[id^='save_form328_']").click();
             }
             else
             {
@@ -537,20 +618,20 @@
             }
         }
 
-        function form19_update_form()
+        function form328_update_form()
         {
-            if(is_create_access('form19'))
+            if(is_create_access('form328'))
             {
-                var form=document.getElementById("form19_master");
+                var form=document.getElementById("form328_master");
 
-                var supplier=form.elements['supplier'].value;
+                var customer=form.elements['customer'].value;
                 var return_date=get_raw_time(form.elements['date'].value);
                 var data_id=form.elements['id'].value;
                 
                 var amount=0;
                 var tax=0;
 
-                $("[id^='save_form19_']").each(function(index)
+                $("[id^='save_form328_']").each(function(index)
                 {
                     var subform_id=$(this).attr('form');
                     var subform=document.getElementById(subform_id);	
@@ -567,13 +648,13 @@
                         "<br>Rs. "+total+"</td>" +
                         "<td></td>" +
                         "</tr>";
-                $('#form19_foot').html(total_row);
+                $('#form328_foot').html(total_row);
 
                 var last_updated=get_my_time();
 
-                var data_json={data_store:'supplier_returns',
+                var data_json={data_store:'customer_returns',
 	 				data:[{index:'id',value:data_id},
-	 					{index:'supplier',value:supplier},
+	 					{index:'customer',value:customer},
 	 					{index:'return_date',value:return_date},
                         {index:'amount',value:amount},  
                         {index:'total',value:total},
@@ -587,8 +668,8 @@
 	 				data:[{index:'id',value:data_id},
 	 					{index:'trans_date',value:last_updated},
 	 					{index:'amount',value:total},
-                        {index:'receiver',value:supplier},
-                        {index:'giver',value:'master'},  
+                        {index:'giver',value:customer},
+                        {index:'receiver',value:'master'},  
                         {index:'tax',value:tax},
                         {index:'last_updated',value:last_updated}]};
 
@@ -605,31 +686,31 @@
                     {
                         var payment_json={data_store:'payments',
                         data:[{index:'id',value:payments[0]},
-                            {index:'type',value:'received'},  
+                            {index:'type',value:'paid'},  
                             {index:'total_amount',value:total},
-                            {index:'acc_name',value:supplier},  
+                            {index:'acc_name',value:customer},  
                             {index:'source_id',value:data_id},
-                            {index:'source',value:'purchase return'},  
+                            {index:'source',value:'sale return'},  
                             {index:'source_info',value:data_id},
                             {index:'last_updated',value:last_updated}]};
                 
                         var pt_json={data_store:'transactions',
                         data:[{index:'id',value:payments[0]},
                             {index:'amount',value:total},
-                            {index:'receiver',value:'master'},
-                            {index:'giver',value:supplier},  
+                            {index:'giver',value:'master'},
+                            {index:'receiver',value:customer},  
                             {index:'tax',value:'0'},
                             {index:'last_updated',value:last_updated}]};
 
                         update_json(payment_json,function()
                         {
-                            modal26_action(payments[0]);
+                            modal28_action(payments[0]);
                         });
                         update_json(pt_json);
                     }
                 });
                 
-                $("[id^='save_form19_']").click();
+                $("[id^='save_form328_']").click();
             }
             else
             {
@@ -637,22 +718,18 @@
             }
         }
 
-        function form19_delete_item(button)
+        function form328_delete_item(button)
         {
-            if(is_delete_access('form19'))
+            if(is_delete_access('form328'))
             {
                 modal115_action(function()
                 {
-                    var return_id=document.getElementById("form19_master").elements['id'].value;
-
                     var form_id=$(button).attr('form');
                     var form=document.getElementById(form_id);
 
-                    var name=form.elements[0].value;
-                    var batch=form.elements[1].value;
-                    var data_id=form.elements[8].value;
+                    var data_id=form.elements[10].value;
 
-                    var data_json={data_store:'supplier_return_items',
+                    var data_json={data_store:'customer_return_items',
 	 				      data:[{index:'id',value:data_id}]};
                     var discard_json={data_store:'discarded',
 	 				      data:[{index:'id',value:data_id}]};
@@ -669,16 +746,16 @@
             }
         }
 
-        function form19_print_form()
+        function form328_print_form()
         {	
-            print_form19(function(container)
+            print_form328(function(container)
             {
                 $.print(container);
                 container.innerHTML="";	
             });	
         }
 
-        function print_form19(func)
+        function print_form328(func)
         {
             var container=document.createElement('div');
             var header=document.createElement('div');
@@ -720,8 +797,8 @@
             var business_email=get_session_var('email');
             //var business_website=get_session_var('website');
 
-            var master_form=document.getElementById('form19_master');
-            var supplier_name=master_form.elements['supplier'].value;
+            var master_form=document.getElementById('form328_master');
+            var customer_name=master_form.elements['customer'].value;
             var date=master_form.elements['date'].value;	
             var return_id=master_form.elements['id'].value;
             var vat_no=get_session_var('vat');
@@ -734,14 +811,14 @@
             //business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text;
             business_contact.innerHTML="<hr style='border: 1px solid #00f;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email;
 
-            invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Purchase Return</b></div><hr style='border: 1px solid #00f;'>";
+            invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Sale Return</b></div><hr style='border: 1px solid #00f;'>";
 
-            customer_info.innerHTML="<b>Seller</b><br>"+supplier_name;
-            business_info.innerHTML="<b>Buyer</b><br>"+bt+"<br>TIN: "+vat_no+"<br>Return Date: "+date+"<br>Return Id: "+return_id;
+            customer_info.innerHTML="<b>Buyer</b><br>"+customer_name;
+            business_info.innerHTML="<b>Seller</b><br>"+bt+"<br>TIN: "+vat_no+"<br>Return Date: "+date+"<br>Return Id: "+return_id;
 
             signature.innerHTML=signature_text;
 
-            var table_element=document.getElementById('form19_body');
+            var table_element=document.getElementById('form328_body');
 
             /////////////adding new table //////////////////////////////////////////////////////	
             var new_table=document.createElement('table');
@@ -761,7 +838,7 @@
                 counter+=1;
                 var form=$(this)[0];
                 var item_name=form.elements[0].value;
-                var quantity=""+form.elements[4].value;
+                var quantity=""+form.elements[3].value;
                 var amount=form.elements[6].value;
                 var tax=form.elements[7].value;
                 var total=parseFloat(amount)+parseFloat(tax);
@@ -781,7 +858,7 @@
                 table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td></tr>";
             }
 
-            var table_foot=document.getElementById('form19_foot');
+            var table_foot=document.getElementById('form328_foot');
             var total_text1=$(table_foot).find('tr>td:first')[0].innerHTML;
             var total_text2=$(table_foot).find('tr>td:nth-child(2)')[0].innerHTML;
             var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+

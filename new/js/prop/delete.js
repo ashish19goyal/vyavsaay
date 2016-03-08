@@ -234,48 +234,6 @@ function form14_delete_item(button)
 	}
 }
 
-/**
- * @form Enter Customer returns
- * @param button
- */
-function form15_delete_item(button)
-{
-	if(is_delete_access('form15'))
-	{
-		modal115_action(function()
-		{
-			var return_id=document.getElementById("form15_master").elements['return_id'].value;
-			
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var name=form.elements[1].value;
-			var batch=form.elements[3].value;
-			var data_id=form.elements[9].value;
-			var last_updated=get_my_time();
-				
-			var data_xml="<customer_return_items>" +
-					"<id>"+data_id+"</id>" +
-					"<return_id>"+return_id+"</return_id>" +
-					"</customer_return_items>";	
-			var discard_xml="<discarded>" +
-					"<product_name>"+name+"</product_name>" +
-					"<source_id>"+return_id+"</source_id>" +
-					"<batch>"+batch+"</batch>" +
-					"<source>sale return</source>" +
-					"</discarded>";
-			delete_simple(data_xml);
-			delete_simple(discard_xml);
-					
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
 
 /**
  * @form Manage customer returns

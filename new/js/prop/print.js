@@ -563,16 +563,7 @@ function print_form10(func)
  */
 function form12_print_form()
 {
-	print_tabular_form('form12','Sale Bill');}
-
-
-/**
- * @form Enter customer returns
- * @formNo 15
- */
-function form15_print_form()
-{
-	print_tabular_form('form15','Sale Returns');
+	print_tabular_form('form12','Sale Bill');
 }
 
 

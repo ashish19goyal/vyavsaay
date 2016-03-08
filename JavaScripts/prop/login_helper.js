@@ -25,7 +25,7 @@ function login_action()
 
 	try_local_db_login(username,domain,function(result)
 	{
-		console.log('trying local login');
+		//console.log('trying local login');
 		var password="p";
 		if(result) { password=result.password;}
 		var salt='$2a$10$'+domain+'1234567891234567891234';
@@ -42,7 +42,6 @@ function login_action()
 			}
 			else
 			{
-				console.log('logging online'+username+"-"+pass+"-"+domain);
 				login_online(username,domain,pass);
 			}			
 		}, function() {});

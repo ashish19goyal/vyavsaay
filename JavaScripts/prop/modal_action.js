@@ -11536,7 +11536,7 @@ function modal149_action()
 						'State','Pincode','Tel. Number','Mobile number','Product name','Weight(K.G.)',
 						'Declared Value','Collectable Value','Volumetric Weight(g)','Length(cms)',
 						'Breadth(cms)','Height(cms)','vendor name','Return Address1','Return Address2','Return Address3',
-						'Return Pin'];
+						'Return Pin','Pieces'];
 		my_array_to_csv(data_array);
 	});
 	
@@ -11649,6 +11649,7 @@ function modal149_action()
 			                {index:'breadth',value:row['Breadth(cms)']},
 			                {index:'height',value:row['Height(cms)']},
 			                {index:'sku',value:row['Product name']},
+                            {index:'pieces',value:row['Pieces']},             
 			                {index:'order_history',value:order_history_string},
 			                {index:'status',value:'picked'},
 			                {index:'last_updated',value:last_updated}];
