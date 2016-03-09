@@ -237,11 +237,15 @@ function modal_forms_ini()
 	}
     dynamic_modal_array.push(113);
     dynamic_modal_array.push(114);
-	for(var i=116;i<=133;i++)
+	for(var i=116;i<=125;i++)
 	{
 		dynamic_modal_array.push(i);
 	}
-	for(var i=137;i<=143;i++)
+	for(var i=127;i<=133;i++)
+	{
+		dynamic_modal_array.push(i);
+	}
+	for(var i=138;i<=143;i++)
 	{
 		dynamic_modal_array.push(i);
 	}
@@ -250,7 +254,7 @@ function modal_forms_ini()
 		dynamic_modal_array.push(i);
 	}
     dynamic_modal_array.push(154);
-	for(var i=156;i<=163;i++)
+	for(var i=157;i<=163;i++)
 	{
 		dynamic_modal_array.push(i);
 	}

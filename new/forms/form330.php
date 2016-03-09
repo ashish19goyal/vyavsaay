@@ -1,24 +1,24 @@
-<div id='form238' class='tab-pane portlet box green-meadow'>	   
+<div id='form330' class='tab-pane portlet box green-meadow'>	   
 	<div class="portlet-title">
 		<div class='caption'>		
-			<a class='btn btn-circle grey btn-outline btn-sm' onclick="modal156_action('raw material');">Add <i class='fa fa-plus'></i></a>
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick="modal156_action('manufactured');">Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
                 <ul class="dropdown-menu pull-right">
                     <li>
-                        <a id='form238_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
+                        <a id='form330_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
                     </li>
                     <li>
-                      	<a id='form238_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
+                      	<a id='form330_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
                     </li>
                     <li>
-                        <a id='form238_print'><i class='fa fa-print'></i> Print</a>
+                        <a id='form330_print'><i class='fa fa-print'></i> Print</a>
                     </li>
                     <li class="divider"> </li>
                     <li>
-                        <a id='form238_upload' onclick=modal23_action(form238_import_template,form238_import);><i class='fa fa-upload'></i> Import</a>
+                        <a id='form330_upload' onclick=modal23_action(form330_import_template,form330_import);><i class='fa fa-upload'></i> Import</a>
                     </li>
                 </ul>
             </div>
@@ -30,24 +30,24 @@
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr>
-					<form id='form238_header'></form>
-						<th><input type='text' placeholder="Item" class='floatlabel' name='name' form='form238_header'></th>
-						<th><input type='text' placeholder="Batch" class='floatlabel' name='batch' form='form238_header'></th>
-						<th><input type='text' placeholder="Manufacturing" readonly='readonly' form='form238_header'></th>
-						<th><input type='text' placeholder="Quantity" readonly="readonly" form='form238_header'></th>
-						<th><input type='submit' form='form238_header' style='visibility: hidden;'></th>
+					<form id='form330_header'></form>
+						<th><input type='text' placeholder="Item" class='floatlabel' name='name' form='form330_header'></th>
+						<th><input type='text' placeholder="Batch" class='floatlabel' name='batch' form='form330_header'></th>
+						<th><input type='text' placeholder="Manufacturing" readonly='readonly' form='form330_header'></th>
+						<th><input type='text' placeholder="Quantity" readonly="readonly" form='form330_header'></th>
+						<th><input type='submit' form='form330_header' style='visibility: hidden;'></th>
 				</tr>
 			</thead>
-			<tbody id='form238_body'>
+			<tbody id='form330_body'>
 			</tbody>
 		</table>
 	</div>
         
     <script>
 
-        function form238_header_ini()
+        function form330_header_ini()
         {
-            var filter_fields=document.getElementById('form238_header');	
+            var filter_fields=document.getElementById('form330_header');	
             var names_filter=filter_fields.elements['name'];
             var batches_filter=filter_fields.elements['batch'];
 
@@ -55,29 +55,29 @@
             $(filter_fields).on('submit',function(event)
             {
                 event.preventDefault();
-                form238_ini();
+                form330_ini();
             });
 
             var item_data={data_store:'attributes',return_column:'name',
                           indexes:[{index:'type',exact:'product'},
                                   {index:'value',exact:'yes'},
-                                  {index:'attribute',exact:'raw material'}]};
+                                  {index:'attribute',exact:'manufactured'}]};
 
             var batch_data={data_store:'product_instances',return_column:'batch'};
             set_my_filter_json(item_data,names_filter);
             set_my_filter_json(batch_data,batches_filter);
         };
 
-        function form238_ini()
+        function form330_ini()
         {
             show_loader();
-            var fid=$("#form238_link").attr('data_id');
+            var fid=$("#form330_link").attr('data_id');
             if(fid==null)
                 fid="";
 
-            $('#form238_body').html('');
+            $('#form330_body').html('');
             
-            var filter_fields=document.getElementById('form238_header');
+            var filter_fields=document.getElementById('form330_header');
             var fname=filter_fields.elements['name'].value;
             var fbatch=filter_fields.elements['batch'].value;
 
@@ -86,11 +86,11 @@
                              indexes:[{index:'name',value:fname},
                                      {index:'type',exact:'product'},
                                      {index:'value',value:'yes'},
-                                     {index:'attribute',value:'raw material'}]};
+                                     {index:'attribute',value:'manufactured'}]};
 
             read_json_single_column(item_columns,function (items) 
             {
-                var paginator=$('#form238_body').paginator();
+                var paginator=$('#form330_body').paginator();
 			
 			
                 var columns={data_store:'product_instances',                 
@@ -100,37 +100,37 @@
                                     {index:'batch',value:fbatch},
                                     {index:'product_name',array:items},
                                     {index:'manufacture_date'}]};
-                read_json_rows('form238',columns,function(results)
+                read_json_rows('form330',columns,function(results)
                 {
                     results.forEach(function(result)
                     {
                         var rowsHTML="<tr>";
-                            rowsHTML+="<form id='form238_"+result.id+"'></form>";
+                            rowsHTML+="<form id='form330_"+result.id+"'></form>";
                                 rowsHTML+="<td data-th='Name'>";
-                                    rowsHTML+="<a onclick=\"show_object('product_master','"+result.product_name+"');\"><textarea readonly='readonly' form='form238_"+result.id+"'>"+result.product_name+"</textarea></a>";
+                                    rowsHTML+="<a onclick=\"show_object('product_master','"+result.product_name+"');\"><textarea readonly='readonly' form='form330_"+result.id+"'>"+result.product_name+"</textarea></a>";
                                 rowsHTML+="</td>";
                                 rowsHTML+="<td data-th='Batch'>";
-                                    rowsHTML+="<input type='text' readonly='readonly' form='form238_"+result.id+"' value='"+result.batch+"'>";
+                                    rowsHTML+="<input type='text' readonly='readonly' form='form330_"+result.id+"' value='"+result.batch+"'>";
                                 rowsHTML+="</td>";
                                 rowsHTML+="<td data-th='Manufacturing'>";
-                                    rowsHTML+="<input type='text' class='dblclick_editable' readonly='readonly' form='form238_"+result.id+"' value='"+get_my_past_date(result.manufacture_date)+"'>";
+                                    rowsHTML+="<input type='text' class='dblclick_editable' readonly='readonly' form='form330_"+result.id+"' value='"+get_my_past_date(result.manufacture_date)+"'>";
                                 rowsHTML+="</td>";
                                 rowsHTML+="<td data-th='Quantity'>";
-                                    rowsHTML+="<input type='number' step='any' readonly='readonly' form='form238_"+result.id+"' value=''>";
+                                    rowsHTML+="<input type='number' step='any' readonly='readonly' form='form330_"+result.id+"' value=''>";
                                 rowsHTML+="</td>";
                                 rowsHTML+="<td data-th='Action'>";
-                                    rowsHTML+="<input type='hidden' form='form238_"+result.id+"' value='"+result.id+"'>";
-                                    rowsHTML+="<input type='submit' class='submit_hidden' form='form183_"+result.id+"'>";
+                                    rowsHTML+="<input type='hidden' form='form330_"+result.id+"' value='"+result.id+"'>";
+                                    rowsHTML+="<input type='submit' class='submit_hidden' form='form330_"+result.id+"'>";
                                     rowsHTML+="<button type='button' class='btn yellow-saffron' title='Print Barcode' onclick=\"print_product_barcode('"+result.id+"','"+result.product_name+"','"+result.batch+"');\"><i class='fa fa-barcode'></i></button>";
-                                    rowsHTML+="<button type='button' class='btn red' title='Delete' name='delete' form='form238_"+result.id+"' onclick='form238_delete_item($(this));'><i class='fa fa-trash'></i></button>";
+                                    rowsHTML+="<button type='button' class='btn red' title='Delete' name='delete' form='form330_"+result.id+"' onclick='form330_delete_item($(this));'><i class='fa fa-trash'></i></button>";
                                 rowsHTML+="</td>";			
                         rowsHTML+="</tr>";
 
-                        $('#form238_body').append(rowsHTML);
-                        var fields=document.getElementById("form238_"+result.id);
+                        $('#form330_body').append(rowsHTML);
+                        var fields=document.getElementById("form330_"+result.id);
                         var manufacturing=fields.elements[2];
                         var sys_inventory=fields.elements[3];
-
+                        
                         get_inventory(result.product_name,result.batch,function(inventory)
                         {
                             sys_inventory.value=inventory;
@@ -139,14 +139,13 @@
                         $(fields).on('submit',function(e)
                         {
                             e.preventDefault();
-                            form183_update_item(fields);
+                            form330_update_item(fields);
                         });
-
                     });
 
-                    $('#form238').formcontrol();
+                    $('#form330').formcontrol();
 				    paginator.update_index(results.length);
-				    initialize_tabular_report_buttons(columns,'Inventory (finished goods)','form238',function (item)
+				    initialize_tabular_report_buttons(columns,'Inventory (finished goods)','form330',function (item)
                     {
                         total_export_requests+=1;
                         get_inventory(item.product_name,item.batch,function(inventory)
@@ -160,10 +159,10 @@
                 });
             });
         };
-
-        function form238_update_item(form)
+        
+        function form330_update_item(form)
         {
-            if(is_update_access('form238'))
+            if(is_update_access('form330'))
             {
                 var name=form.elements[0].value;
                 var batch=form.elements[1].value;
@@ -178,7 +177,7 @@
 
                 update_json(data_json);
 
-                $(form).readonly();
+                $(form).readonly();               
             }
             else
             {
@@ -186,9 +185,9 @@
             }
         }
 
-        function form238_delete_item(button)
+        function form330_delete_item(button)
         {
-            if(is_delete_access('form238'))
+            if(is_delete_access('form330'))
             {
                 modal115_action(function()
                 {
@@ -202,7 +201,7 @@
                     var data_json={data_store:'product_instances',
  							data:[{index:'id',value:data_id}],
  							log:'yes',
- 							log_data:{title:"Deleted",notes:"Batch number "+batch+" of "+name,link_to:"form238"}};
+ 							log_data:{title:"Deleted",notes:"Batch number "+batch+" of "+name,link_to:"form330"}};
 
                     var other_json={data_store:'area_utilization',
  							data:[{index:'item_name',value:name},
@@ -220,19 +219,19 @@
             }
         }
 
-        function form238_import_template()
+        function form330_import_template()
         {
             var data_array=['id','product_name','batch','expiry','manufacture_date','actual_quantity','mrp'];
             my_array_to_csv(data_array);
         };
 
-        function form238_import(data_array,import_type)
+        function form330_import(data_array,import_type)
         {
             var data_json={data_store:'product_instances',
  					loader:'no',
  					log:'yes',
  					data:[],
- 					log_data:{title:'Batches for items',link_to:'form238'}};
+ 					log_data:{title:'Batches for items',link_to:'form330'}};
 
 			var counter=1;
 			var last_updated=get_my_time();

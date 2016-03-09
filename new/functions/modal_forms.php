@@ -1329,17 +1329,33 @@
 		</form>
 	</div>
 
-	<div id="modal126" title="Priority suppliers">
-		Scores of applicable suppliers
-		<br>
-		<form id='modal126_form' autocomplete="off">
-			<fieldset>
-				<label id='modal126_suppliers'></label><br>
-				<input type="button" name='cancel' value='Cancel' class='modal_submit'>
-				<input type="button" name='assign' value='Assign' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
+    <a href='#modal126' data-toggle="modal" id='modal126_link'></a>
+	<div id="modal126" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal126_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Priority Suppliers</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12">Score of Applicable Suppliers</div>
+					       </div>
+                           <br>
+                          <div id='modal126_suppliers'></div>
+		                </div>
+                        <input type='hidden' form='modal126_form' name='type'>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal126_form' name='save'>Assign</button>
+	               	<button type="button" class="btn red" form='modal126_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 	<div id="modal127" title="Print Laundry Tags">
 		Do you want to print tags?
@@ -1545,17 +1561,32 @@
         </div>
     </div>
     
-	<div id="modal137" title="View Bills">
-		<br>		
-		<table id='modal137_item_table'>
-		</table>
-		<br>
-		<br>
-		<form id='modal137_form'>
-			<input type="button" class='modal_submit' id='modal137_cancel' value='Cancel' onclick="$('#modal137').dialog('close');">
-		</form>	
-	</div>
-
+    <a href='#modal137' data-toggle="modal" id='modal137_link'></a>
+	<div id="modal137" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal137_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">View Bills</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		               	  <div class="row">
+							 <div class="col-sm-12">
+                                <table class='table table-striped table-bordered table-hover dt-responsive no-more-tables' id='modal137_item_table'></table>
+                              </div>
+					       </div>
+		                 </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="button" data-dismiss='modal' class="btn red" form='modal137_form' name='cancel'>Close</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
 	<div id="modal138" title="Import Sale Orders">
 		<form id='modal138_form' autocomplete="off">
 			<fieldset>
@@ -1875,17 +1906,41 @@
         </div>
     </div>
 
-	<div id="modal156" title="Add new batch">
-		<form id='modal156_form' autocomplete="off">
-			<fieldset>
-				<label>Item: <input type="text" required></label><br>
-				<label>Batch: <input type='text' required></label><br>
-				<label>Manufacturing: <input type="text"></label><br>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
-
+    <a href='#modal156' data-toggle="modal" id='modal156_link'></a>
+	<div id="modal156" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal156_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add New Batch</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Item</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal156_form' required name='name'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Batch</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal156_form' name='batch' required></div>
+					       </div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Manufacturing Date</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal156_form' name='date'></div>
+					     		</div>
+                        </div>
+                        <input type='hidden' form='modal156_form' name='type'>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal156_form' name='save'>Add</button>
+	               	<button type="button" class="btn red" form='modal156_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+        
 	<div id="modal157" title="Item Rejection">
 		Are you sure, you want to reject this item?
 		<br>

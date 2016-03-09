@@ -172,7 +172,8 @@
 
                 var data_json={data_store:'product_instances',
                         data:[{index:'id',value:data_id},
-                             {index:'manufacture_date',value:date}]};
+                             {index:'manufacture_date',value:date},
+                             {index:'last_updated',value:last_updated}]};
 
                 update_json(data_json);
 

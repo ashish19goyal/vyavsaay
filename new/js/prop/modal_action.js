@@ -6516,24 +6516,7 @@ function modal112_action(func)
 	var fname=form.elements['name'];
 	var fmake=form.elements['make'];
 	var fdescription=form.elements['desc'];
-	var fbarcode=form.elements['barcode'];
-	var auto_generate=form.elements['generate'];
 	
-	fbarcode.value=get_my_time();
-	auto_generate.checked=true;
-	
-	$(auto_generate).off('click');
-	$(auto_generate).on('click',function(event)
-	{
-		if(auto_generate.checked)
-		{
-			fbarcode.value=get_my_time();
-		}
-		else
-		{
-			fbarcode.value="";
-		}
-	});
 	
 	var make_data={data_store:'product_master',return_column:'make'};
 	set_my_filter_json(make_data,fmake);
@@ -8225,62 +8208,46 @@ function modal125_action(item_name)
 function modal126_action(po_id,po_num)
 {
 	var form=document.getElementById('modal126_form');
-	var assign_button=form.elements['assign'];
-	var cancel_button=form.elements['cancel'];
 
-	$(cancel_button).off('click');
-	$(cancel_button).on('click',function () 
-	{
-		$("#modal126").dialog("close");
-	});
-
-	$(assign_button).off('click');
-	$(assign_button).on('click',function (event) 
+	$(form).off('submit');
+	$(form).on('submit',function (event) 
 	{
 		event.preventDefault();
+        var last_updated=get_my_time();
 		var supplier_name=form.elements['supplier'].value;
-		var po_xml="<purchase_orders>" +
-				"<id>"+po_id+"</id>" +
-				"<supplier>"+supplier_name+"</supplier>" +
-				"<status>supplier finalized</status>"+
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</purchase_orders>";
-		var activity_xml="<activity>" +
-				"<data_id>"+po_id+"</data_id>" +
-				"<tablename>purchase_orders</tablename>" +
-				"<link_to>form179</link_to>" +
-				"<title>Assigned</title>" +
-				"<notes>Supplier for PO # "+po_num+"</notes>" +
-				"<updated_by>"+get_name()+"</updated_by>" +
-				"</activity>";
-			
-		update_row(po_xml,activity_xml);
+        var po_json={data_store:'purchase_orders',
+                        data:[{index:'id',value:po_id},
+                             {index:'supplier',value:supplier_name},
+                             {index:'status',value:'supplier finalized'},
+                             {index:'last_updated',value:last_updated}],
+                    log:'yes',
+                    log_data:{title:'Assigned',notes:'Supplier for PO # '+po_num,link_to:'form179'}};
+
+		update_json(po_json);
 		
-		$("#modal126").dialog("close");
+		$(form).find(".close").click();
 	});
 		
 	////adding attribute fields/////
 	var supplier_label=document.getElementById('modal126_suppliers');
 	supplier_label.innerHTML="";
 	
-	var po_items_data="<purchase_order_items>" +
-				"<item_name></item_name>"+
-				"<order_id exact='yes'>"+po_id+"</order_id>" +
-				"</purchase_order_items>";
-	fetch_requested_data('',po_items_data,function(po_items)
+	var po_items_data={data_store:'purchase_order_items',
+                      indexes:[{index:'item_name'},
+                              {index:'order_id',exact:po_id}]};
+	read_json_rows('',po_items_data,function(po_items)
 	{
 		po_items=jQuery.unique(po_items);
-		var item_string="--";
+		var item_string=[];
 		for(var k in po_items)
 		{
-			item_string+=po_items[k].item_name+"--";
+			item_string.push(po_items[k].item_name);
 		}
 
-		var suppliers_xml="<supplier_item_mapping>"+
-						"<supplier></supplier>"+
-						"<item array='yes'>"+item_string+"</item>"+
-						"</supplier_item_mapping>";
-		fetch_requested_data('',suppliers_xml,function(suppliers)
+		var suppliers_xml={data_store:'supplier_item_mapping',
+                          indexes:[{index:'supplier'},
+                                  {index:'item',array:item_string}]};
+		read_json_rows('',suppliers_xml,function(suppliers)
 		{
 			var unique_sup_array=new Object();
 			
@@ -8303,17 +8270,16 @@ function modal126_action(po_id,po_num)
 				}
 			}
 			
-			var suppliers_string="--";
+			var suppliers_string=[];
 			for(var l in final_suppliers)
 			{
-				suppliers_string+=suppliers[l].supplier+"--";
+				suppliers_string.push(suppliers[l].supplier);
 			}
 
-			var score_xml="<suppliers>"+
-						"<score></score>"+
-						"<acc_name array='yes'>"+suppliers_string+"</acc_name>"+
-						"</suppliers>";
-			fetch_requested_data('',score_xml,function (scores) 
+			var score_xml={data_store:'suppliers',
+                          indexes:[{index:'score'},
+                                  {index:'acc_name',array:suppliers_string}]};
+			read_json_rows('',score_xml,function (scores) 
 			{
 				scores.sort(function(a,b)
 				{
@@ -8326,21 +8292,20 @@ function modal126_action(po_id,po_num)
 				var radio_check='checked';
 				scores.forEach(function(score)
 				{
-					var attr_label=document.createElement('label');
-					attr_label.innerHTML=score.score+": <input type='radio' value='"+score.acc_name+"' "+radio_check+" name='supplier'>";
+					var attr_label=document.createElement('div');
+                    attr_label.setAttribute('class','row');
+					attr_label.innerHTML="<div class='col-sm-3'><input type='radio' value='"+score.acc_name+"' "+radio_check+" name='supplier'></div><div class='col-sm-3'>"+score.score+"</div>";
 					if(radio_check=='checked')
 					{
 						radio_check="";
 					}
 					supplier_label.appendChild(attr_label);
-					var line_break=document.createElement('br');
-					supplier_label.appendChild(line_break);
 				});
 			});									
 		});
 	});
 	
-	$("#modal126").dialog("open");
+	$("#modal126_link").click();
 }
 
 /**
@@ -9229,18 +9194,19 @@ function modal137_action(bill_ids)
 {
 	var bill_id_array=JSON.parse(bill_ids);
 
-	var rowsHTML="<tr style='background-color:#2C8A50;'><td>Bill Number</td><td>Link</td></tr>";
+	var rowsHTML="<tr><td>Bill Number</td><td>Link</td></tr>";
 	
 	bill_id_array.forEach(function (bill_id) 
 	{
 		rowsHTML+="<tr>"+
 				"<td>"+bill_id.bill_num+"</td>"+
-				"<td><a onclick=\"element_display('"+bill_id.bill_id+"','form122',['form136','form295']); $('#modal137').dialog('close');\"><u style='cursor:pointer;'>View</u></a></td>"+
+				"<td><a onclick=\"element_display('"+bill_id.bill_id+"','form122',['form136','form295']); $('#modal137').find('.close').click();\"><u style='cursor:pointer;'>View</u></a></td>"+
 				"</tr>";
 	});
 
-	$('#modal137_item_table').html(rowsHTML);		
-	$("#modal137").dialog("open");
+	$('#modal137_item_table').html(rowsHTML);
+    
+	$("#modal137_link").click();
 }
 
 /**
@@ -11103,7 +11069,7 @@ function modal149_action()
 						'State','Pincode','Tel. Number','Mobile number','Product name','Weight(K.G.)',
 						'Declared Value','Collectable Value','Volumetric Weight(g)','Length(cms)',
 						'Breadth(cms)','Height(cms)','vendor name','Return Address1','Return Address2','Return Address3',
-						'Return Pin'];
+						'Return Pin','Pieces'];
 		my_array_to_csv(data_array);
 	});
 	
@@ -11216,6 +11182,7 @@ function modal149_action()
 			                {index:'breadth',value:row['Breadth(cms)']},
 			                {index:'height',value:row['Height(cms)']},
 			                {index:'sku',value:row['Product name']},
+			                {index:'pieces',value:row['Pieces']},
 			                {index:'order_history',value:order_history_string},
 			                {index:'status',value:'picked'},
 			                {index:'last_updated',value:last_updated}];
@@ -12084,108 +12051,50 @@ function modal156_action(product_type,product_name)
 {
 	var form=document.getElementById('modal156_form');
 	
-	var fname=form.elements[1];
-	var fbatch=form.elements[2];
-	var fmanufacture=form.elements[3];
+	var fname=form.elements['name'];
+	var fbatch=form.elements['batch'];
+	var fmanufacture=form.elements['date'];
 	
 	$(fmanufacture).datepicker();
 	
-	var name_data="<attributes>" +
-		"<name></name>" +
-		"<type exact='yes'>product</type>"+
-		"<value exact='yes'>yes</value>"+
-		"<attribute exact='yes'>"+product_type+"</attribute>"+
-		"</attributes>";
-	set_my_value_list(name_data,fname);
+	var name_data={data_store:'attributes',return_column:'name',
+                  indexes:[{index:'type',exact:'product'},
+                          {index:'value',exact:'yes'},
+                          {index:'attribute',exact:product_type}]};
+	set_my_value_list_json(name_data,fname);
 
 	if(typeof product_name!='undefined')
 	{
 		fname.value=product_name;
-		var batch_data="<product_instances>" +
-				"<batch></batch>" +
-				"<product_name exact='yes'>"+fname.value+"</product_name>" +
-				"</product_instances>";
-		get_single_column_data(function(batches)
-		{
-			$(fbatch).off('blur');
-			$(fbatch).on('blur',function(event)
-			{
-				var found = $.inArray($(this).val(), batches) > -1;
-				if(found)
-				{
-		            $(this).val('');
-		            $(this).attr('placeholder','Batch Exists');
-		        }
-			});
-		},batch_data);
 	}
 		
-	$(fname).off('blur');
-	$(fname).on('blur',function(event)
-	{
-		var batch_data="<product_instances>" +
-				"<batch></batch>" +
-				"<product_name exact='yes'>"+fname.value+"</product_name>" +
-				"</product_instances>";
-		get_single_column_data(function(batches)
-		{
-			$(fbatch).off('blur');
-			$(fbatch).on('blur',function(event)
-			{
-				var found = $.inArray($(this).val(), batches) > -1;
-				if(found)
-				{
-		            $(this).val('');
-		            $(this).attr('placeholder','Batch Exists');
-		        }
-			});
-		},batch_data);
-	});		
-
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		if(is_create_access('form1'))
-		{
-			var name=fname.value;
-			var batch=fbatch.value;
+        var name=fname.value;
+        var batch=fbatch.value;
+        var manufactury=get_raw_time(fmanufacture.value);
+        var data_id=get_new_key();
+        var last_updated=get_my_time();
+        var link_to='form183';
+        if(product_type=='raw material')
+        link_to='form238';
+        
+        var data_json={data_store:'product_instances',
+                    data:[{index:'id',value:data_id},
+                        {index:'product_name',value:name,uniqueWith:["batch"]},
+                        {index:'batch',value:batch},
+                        {index:'manufacture_date',value:manufactury},
+                        {index:'last_updated',value:last_updated}],
+                    log:'yes',
+                    log_data:{title:'Added',notes:'New Batch '+batch+' for item '+name,link_to:link_to}};
 
-			batch = batch.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
-			batch = batch.replace(/â/g,'');
-			batch = batch.replace(/&/g, "and");
-						
-			var manufactury=get_raw_time(fmanufacture.value);
-			var data_id=get_new_key();
-			var last_updated=get_my_time();
-			var link_to='form183';
-			if(product_type=='raw material')
-			link_to='form238';
-			var data_xml="<product_instances>" +
-						"<id>"+data_id+"</id>" +
-						"<product_name>"+name+"</product_name>" +
-						"<batch>"+batch+"</batch>" +
-						"<manufacture_date>"+manufactury+"</manufacture_date>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</product_instances>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>product_instances</tablename>" +
-						"<link_to>"+link_to+"</link_to>" +
-						"<title>Added</title>" +
-						"<notes>New batch "+batch+" for item "+name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			create_row(data_xml,activity_xml);
-		}
-		else
-		{
-			$("#modal2_link").click();
-		}
-		$("#modal156").dialog("close");
+        create_json(data_json);
+        $(form).find(".close").click();
 	});
 	
-	$("#modal156").dialog("open");
+	$("#modal156_link").click();
 }
 
 /**

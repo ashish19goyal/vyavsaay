@@ -57,10 +57,7 @@
 			var users_filter=fields.elements['username'];
 			var save_button=fields.elements['save'];
 			
-			var username_data=new Object();
-				username_data.data_store="accounts";
-				username_data.return_column="username";
-				username_data.indexes=[{index:'id'}];
+			var username_data={data_store:'accounts',return_column:'username'};
 			set_my_value_list_json(username_data,users_filter);	
 			
 			$(fields).off('submit');

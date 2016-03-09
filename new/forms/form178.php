@@ -155,7 +155,7 @@
                         filter_fields.elements['order_id'].value=order_id;
                         var save_button=document.getElementById('form178_save');
 
-                        if(order_results[0].status=='order placed' || order_results[0].status=='closed' || order_results[0].status=='supplier finalized')
+                        if(order_results[0].status=='order placed' || order_results[0].status=='closed' || order_results[0].status=='supplier finalized' || order_results[0].status=='partially received' || order_results[0].status=='received')
                         {					
                             $(supplier_filter).parent().parent().show();
                         }
@@ -666,9 +666,9 @@
             header.setAttribute('style','width:100%;min-height:100px;text-align:center');
                 business_intro.setAttribute('style','width:100%;text-align:center');
                 business_contact.setAttribute('style','width:100%;text-align:center');
-            info_section.setAttribute('style','width:100%;min-height:60px');
-                customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:60px;border: 1px solid #00f;border-radius:5px;');
-                business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:60px;border: 1px solid #00f;border-radius:5px;');
+            info_section.setAttribute('style','width:100%;min-height:100px');
+                customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:100px;border: 1px solid #00f;border-radius:5px;');
+                business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:100px;border: 1px solid #00f;border-radius:5px;');
             footer.setAttribute('style','width:100%;min-height:100px');
                 tandc.setAttribute('style','float:left;width:60%;min-height:50px');
                 signature.setAttribute('style','float:right;width:30%;min-height:60px');
@@ -683,9 +683,9 @@
             var business_email=get_session_var('email');
 
             var master_form=document.getElementById(form_id+'_master');
-            var supplier_name=master_form.elements[1].value;
-            var date=master_form.elements[2].value;	
-            var order_no=master_form.elements[3].value;
+            var supplier_name=master_form.elements['supplier'].value;
+            var date=master_form.elements['date'].value;	
+            var order_no=master_form.elements['order_num'].value;
             var vat_no=get_session_var('vat');
 
             var tandc_text=get_session_var('po_message');
@@ -709,7 +709,7 @@
 
             /////////////adding new table //////////////////////////////////////////////////////	
             var new_table=document.createElement('table');
-            new_table.setAttribute('style','width:100%;font-size:11px;border:1px solid black;text-align:left;');
+            new_table.setAttribute('style','width:100%;font-size:13px;border:1px solid black;text-align:left;');
             var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
                         "<td style='text-align:left;width:120px;'>Item</td>"+
                         "<td style='text-align:left;width:50px;'>Quantity</td>"+
