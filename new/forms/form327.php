@@ -140,6 +140,15 @@
 				initialize_tabular_report_buttons(new_columns,'Closed Letters','form327',function (item)
                 {
                     delete item.status;
+
+                    item['Letter #']=item.letter_num;
+                    delete item.letter_num;
+                    
+                    item['File #']=item.file_num;
+                    delete item.file_num;
+                    
+                    item['DPO Section']=item.dpo_section;
+                    delete item.dpo_section;
                 });
 				hide_loader();
 			});

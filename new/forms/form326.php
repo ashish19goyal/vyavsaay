@@ -171,7 +171,18 @@
 				initialize_tabular_report_buttons(new_columns,'Open Letters','form326',function (item)
                 {
                     delete item.status;
-                    item.due_date(get_my_past_date(item.due_date));
+                    
+                    item['Letter #']=item.letter_num;
+                    delete item.letter_num;
+                    
+                    item['File #']=item.file_num;
+                    delete item.file_num;
+
+                    item['DPO Section']=item.dpo_section;
+                    delete item.dpo_section;
+                    
+                    item['Due Date']=get_my_past_date(item.due_date);
+                    delete item.due_date;                    
                 });
 				hide_loader();
 			});
