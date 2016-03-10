@@ -2805,7 +2805,7 @@ function local_get_store_inventory(store,product,batch,callback)
 														{
 															result+=parseFloat(cr_record['quantity']);
 														}
-														if(cr_record['storage']==store && (cr_record['exchange_batch']==batch || batch=='' || batch===null))
+														if(cr_record['exchange_storage']==store && (cr_record['exchange_batch']==batch || batch=='' || batch===null))
 														{
 															result-=parseFloat(cr_record['quantity']);
 														}

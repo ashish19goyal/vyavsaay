@@ -256,7 +256,24 @@ function set_session_variables(domain,username,pass)
 										}
 										else
 										{
-											access_control_count-=1;
+											keyValue=IDBKeyRange.bound([data.acc_name,'0'],[username,'99999999']);
+									       static_local_db.transaction(['attributes'],"readonly").objectStore('attributes').index('name').openCursor(keyValue).onsuccess=function(e)
+									       {
+                                               var result6=e.target.result;
+                                               if(result6)
+                                                {
+                                                    var record=result6.value;
+                                                    if(record.type=='staff')
+                                                    {
+                                                        data['user_setting_'+record.attribute]=record.value;
+                                                    }
+                                                    result6.continue();   
+                                                }
+                                                else
+                                                {
+											         access_control_count-=1;
+                                                }
+                                           };
 										}
 									};
 								}

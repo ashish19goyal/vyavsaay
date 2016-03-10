@@ -24,7 +24,7 @@
 				$query2="select sum(quantity) from supplier_bill_items where product_name=? and batch=? and storage=?";
 				$query3="select sum(quantity) from customer_return_items where item_name=? and batch=? and storage=?";
 				$query4="select sum(quantity) from supplier_return_items where item_name=? and batch=? and storage=?";
-				$query5="select sum(quantity) from customer_return_items where item_name=? and exchange_batch=? and storage=?";
+				$query5="select sum(quantity) from customer_return_items where item_name=? and exchange_batch=? and exchange_storage=?";
 				$query6="select sum(quantity) from store_movement where item_name=? and batch=? and source=? and (status=? or status=?)";
 				$query61="select sum(quantity) from store_movement where item_name=? and batch=? and target=? and status=?";
 				$query7="select sum(quantity) from discarded where product_name=? and batch=? and storage=?";
@@ -42,7 +42,7 @@
 					$query2="select sum(quantity) from supplier_bill_items where product_name=? and storage=?";
 					$query3="select sum(quantity) from customer_return_items where item_name=? and type=? and storage=?";
 					$query4="select sum(quantity) from supplier_return_items where item_name=? and storage=?";
-					//$query5="select sum(quantity) from customer_return_items where item_name=? and type=?";
+					$query5="select sum(quantity) from customer_return_items where item_name=? and type=? and exchange_storage=?";
 					$query6="select sum(quantity) from store_movement where item_name=? and source=? and (status=? or status=?)";
 					$query61="select sum(quantity) from store_movement where item_name=? and target=? and status=?";
 					$query7="select sum(quantity) from discarded where product_name=? and storage=?";
@@ -87,7 +87,14 @@
 				$supplier_return_items=$res4[0];
 
 				$customer_exchange_items=0;
-				if($batch!="")
+				if($batch=="")
+				{
+					$stmt5=$conn->conn->prepare($query5);
+					$stmt5->execute(array($product,$store,'refund'));
+					$res5=$stmt5->fetch(PDO::FETCH_NUM);
+					$customer_exchange_items=$res5[0];
+				}
+				else
 				{
 					$stmt5=$conn->conn->prepare($query5);
 					$stmt5->execute($values);

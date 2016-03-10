@@ -145,6 +145,7 @@ use RetailingEssentials\db_connect;
 					
 					$response_object['data']['user_roles']=$user_roles;				
 					
+                    
 					//////setting username and name
 					$stmt2=$conn->conn->prepare("select staff.name,staff.acc_name from staff,accounts where accounts.username=? and staff.acc_name=accounts.acc_name union select customers.name,customers.acc_name from customers,accounts where accounts.username=? and customers.acc_name=accounts.acc_name union select suppliers.name,suppliers.acc_name from suppliers,accounts where accounts.username=? and suppliers.acc_name=accounts.acc_name");
 					$stmt2->execute(array($user,$user,$user));
@@ -154,6 +155,14 @@ use RetailingEssentials\db_connect;
 					$response_object['data']['name']=$row2['name'];				
 					$response_object['data']['acc_name']=$row2['acc_name'];				
 	
+                    /////////setting up staff attributes///
+                    $stmt1=$conn->conn->prepare("select attribute,value from attributes where type=? and name=?");
+					$stmt1->execute(array('staff',$response_object['data']['acc_name']));
+					while ($row=$stmt1->fetch(PDO::FETCH_ASSOC))
+					{
+    					$response_object['data']['user_setting_'.$row['attribute']]=$row['value'];
+					}
+                    
 					//setting up php session variables
 					$_SESSION['session']='yes';
 					$_SESSION['domain']=$domain;

@@ -96,8 +96,8 @@ use RetailingEssentials\db_connect;
 					
 					/////////setting access control session variables
 					$read_access="";
-					$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.re=? and c.status=? union select b.element_id from user_role_mapping a, access_control b where b.username=a.role_name and a.username=? and b.re=? and b.status=?");
-					$stmt1->execute(array($user,'checked','active',$user,'checked','active'));
+					$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.re=? union select b.element_id from user_role_mapping a, access_control b where b.username=a.role_name and a.username=? and b.re=?");
+					$stmt1->execute(array($user,'checked',$user,'checked'));
 					while ($row=$stmt1->fetch(PDO::FETCH_ASSOC))
 					{
 						$read_access.=$row['element_id']."-";
@@ -106,8 +106,8 @@ use RetailingEssentials\db_connect;
 					$response_object['data']['re']=$read_access;				
 									
 					$create_access="";
-					$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.cr=? and c.status=? union select b.element_id from user_role_mapping a, access_control b where b.username=a.role_name and a.username=? and b.cr=? and b.status=?");
-					$stmt1->execute(array($user,'checked','active',$user,'checked','active'));
+					$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.cr=? union select b.element_id from user_role_mapping a, access_control b where b.username=a.role_name and a.username=? and b.cr=?");
+					$stmt1->execute(array($user,'checked',$user,'checked'));
 					while ($row=$stmt1->fetch(PDO::FETCH_ASSOC))
 					{
 						$create_access.=$row['element_id']."-";
@@ -116,8 +116,8 @@ use RetailingEssentials\db_connect;
 					$response_object['data']['cr']=$create_access;				
 					
 					$update_access="";
-					$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.up=? and c.status=? union select b.element_id from user_role_mapping a, access_control b where b.username=a.role_name and a.username=? and b.up=? and b.status=?");
-					$stmt1->execute(array($user,'checked','active',$user,'checked','active'));
+					$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.up=? union select b.element_id from user_role_mapping a, access_control b where b.username=a.role_name and a.username=? and b.up=?");
+					$stmt1->execute(array($user,'checked',$user,'checked'));
 					while ($row=$stmt1->fetch(PDO::FETCH_ASSOC))
 					{
 						$update_access.=$row['element_id']."-";
@@ -126,8 +126,8 @@ use RetailingEssentials\db_connect;
 					$response_object['data']['up']=$update_access;				
 					
 					$del_access="";
-					$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.del=? and c.status=? union select b.element_id from user_role_mapping a,access_control b where b.username=a.role_name and a.username=? and b.del=? and b.status=?");
-					$stmt1->execute(array($user,'checked','active',$user,'checked','active'));
+					$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.del=? union select b.element_id from user_role_mapping a,access_control b where b.username=a.role_name and a.username=? and b.del=?");
+					$stmt1->execute(array($user,'checked',$user,'checked'));
 					while ($row=$stmt1->fetch(PDO::FETCH_ASSOC))
 					{
 						$del_access.=$row['element_id']."-";
@@ -145,6 +145,7 @@ use RetailingEssentials\db_connect;
 					
 					$response_object['data']['user_roles']=$user_roles;				
 					
+                    
 					//////setting username and name
 					$stmt2=$conn->conn->prepare("select staff.name,staff.acc_name from staff,accounts where accounts.username=? and staff.acc_name=accounts.acc_name union select customers.name,customers.acc_name from customers,accounts where accounts.username=? and customers.acc_name=accounts.acc_name union select suppliers.name,suppliers.acc_name from suppliers,accounts where accounts.username=? and suppliers.acc_name=accounts.acc_name");
 					$stmt2->execute(array($user,$user,$user));
@@ -154,10 +155,20 @@ use RetailingEssentials\db_connect;
 					$response_object['data']['name']=$row2['name'];				
 					$response_object['data']['acc_name']=$row2['acc_name'];				
 	
+                    /////////setting up staff attributes///
+                    $stmt1=$conn->conn->prepare("select attribute,value from attributes where type=? and name=?");
+					$stmt1->execute(array('staff',$response_object['data']['acc_name']));
+					while ($row=$stmt1->fetch(PDO::FETCH_ASSOC))
+					{
+    					$response_object['data']['user_setting_'.$row['attribute']]=$row['value'];
+					}
+                    
 					//setting up php session variables
 					$_SESSION['session']='yes';
 					$_SESSION['domain']=$domain;
 					$_SESSION['username']=$user;
+					$_SESSION['user_roles']=$user_roles;
+					$_SESSION['acc_name']=$row2['acc_name'];
 					
 					$_SESSION['forms']=$forms;
 					$_SESSION['reports']=$reports;
