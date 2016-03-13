@@ -232,15 +232,15 @@ input[type='checkbox'],input[type='radio']{
 /********tab color**********/
 
 .tab_color{
-  background-color:#67809F;
+  background-color:#95A5A6;/*#67809F;*/
   color:#fff;
 }
 
 .tab_color > li:hover{
-  background-color: #fff !important;
+    background-color: #fff !important;
     border-top:1px solid #ed6b75;
-   border-radius: 0;
-   color:#000;
+    border-radius: 0;
+    color:#000;
 }
 
 .tab_color > li {
