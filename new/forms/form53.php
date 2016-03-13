@@ -94,7 +94,7 @@
                     rowsHTML+="<tr>";
                         rowsHTML+="<form id='form53_"+result.id+"'></form>";
                             rowsHTML+="<td data-th='Bill Number'>";
-                                rowsHTML+="<a onclick=\"element_display('"+result.id+"','form21',['form122','form136','form158','form192','form270','form295']);\"><input type='text' readonly='readonly' class='input_link' form='form53_"+result.id+"' value='"+result.bill_id+"'></a>";
+                                rowsHTML+="<a onclick=\"element_display('"+result.id+"','form21',['form122','form136','form158','form192','form270','form295','form333']);\"><input type='text' readonly='readonly' class='input_link' form='form53_"+result.id+"' value='"+result.bill_id+"'></a>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Supplier'>";
                                 rowsHTML+="<a onclick=\"show_object('suppliers','"+result.supplier+"');\"><textarea readonly='readonly' form='form53_"+result.id+"'>"+result.supplier+"</textarea></a>";

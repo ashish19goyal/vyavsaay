@@ -364,16 +364,6 @@ function form93_import_template()
 	my_array_to_csv(data_array);
 };
 
-/**
-* @form Discard Items
-* @formNo 94
-*/
-function form94_import_template()
-{
-	var data_array=['id','product_name','batch','quantity','storage'];
-	my_array_to_csv(data_array);
-};
-
 
 /**
 * @form manage Projects

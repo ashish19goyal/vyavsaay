@@ -692,6 +692,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<batch index='yes' type="TEXT"></batch>
 			<bar_code index='yes' type="TEXT"></bar_code>
+			<date index='yes' type="TEXT"></date>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<product_name index='yes' type="TEXT"></product_name>
 			<source index='yes' type="VARCHAR(25)"></source><!--Sale return/Purchase return-->

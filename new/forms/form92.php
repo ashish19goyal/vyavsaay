@@ -139,7 +139,7 @@
                         var bill_num=fields.elements[0];
                         $(bill_num).parent().on('click',function()
                         {
-                            element_display(result.id,'form119',['form91','form130','form154','form225','form294']);
+                            element_display(result.id,'form119',['form91','form130','form154','form225','form294','form332']);
                         });
                     }
                 });

@@ -1666,48 +1666,6 @@ function form93_import(data_array,import_type)
 
 
 /**
-* @form Discard Items
-* @formNo 94
-*/
-function form94_import(data_array,import_type)
-{
-	var data_xml="<discarded>";
-	var counter=1;
-	var last_updated=get_my_time();
-
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</discarded><separator></separator><discarded>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<product_name>"+row.product_name+"</product_name>" +
-				"<batch>"+row.batch+"</batch>" +
-				"<quantity>"+row.quantity+"</quantity>" +
-				"<storage>"+row.storage+"</storage>"+
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	data_xml+="</discarded>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-	}
-}
-
-/**
 * @form Manage Projects
 * @formNo 101
 */

@@ -2044,57 +2044,6 @@ function modal22_action(func)
 	
 	$("#modal22_link").click();
 }
-
-
-/**
- * @modal Data import
- * @param t_func function to generate import template
- * @param i_func function to import the generated data_array
- */
-function modal191_action(id)
-{
-	var form=document.getElementById('modal191_form');
-	
-	var name_filter=form.elements['name'];
-	var detail_filter=form.elements['detail'];
-	var priority_filter=form.elements['priority'];
-	var status_filter=form.elements['status'];
-	
-	set_static_select('projects','status',status_filter,function () 
-	{
-		$(status_filter).selectpicker('val',result.status);
-	});
-	
-	name_filter.value="";
-	detail_filter.value="";
-	priority_filter.value="";
-			
-	$(form).off('submit');
-	$(form).on('submit',function(event) 
-	{
-		event.preventDefault();
-		var name=name_filter.value;
-		var details=detail_filter.value;
-		var priority=priority_filter.value;
-		var status=$(status_filter).val();
-		
-		var last_updated=get_my_time();
-		
-		var data_json={data_store:'projects',
-	 				log:'yes',
-	 				data:[{index:'id',value:id},
-	 					{index:'name',value:name},
-	 					{index:'details',value:details},
-	 					{index:'priority',value:priority},
-	 					{index:'status',value:status},
-	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Created',notes:'Project '+name,link_to:'form220'}};
- 		create_json(data_json);
- 		$(form).find('.close').click();
-	});
-	
-	$("#modal191_link").click();	
-}
  
 function modal23_action(t_func,i_func,v_func)
 {
@@ -16085,4 +16034,248 @@ function modal202_action(data_id)
 	});
 	
 	$("#modal202_link").click();
+}
+
+/**
+ * @modalNo 203
+ * @modal Add new product
+ * @param button
+ */
+function modal203_action(func)
+{
+	var form=document.getElementById('modal203_form');
+	
+	var fname=form.elements['name'];
+	var fmake=form.elements['make'];
+	var fdescription=form.elements['desc'];
+	
+	
+	var make_data={data_store:'product_master',return_column:'make'};
+	set_my_filter_json(make_data,fmake);
+	
+	////adding attribute fields///////
+	var attribute_label=document.getElementById('modal203_attributes');
+	attribute_label.innerHTML="";
+	var attributes_data={data_store:'mandatory_attributes',
+                        indexes:[{index:'attribute'},{index:'status'},{index:'value'},{index:'object',exact:'product'}]};
+	read_json_rows('',attributes_data,function(attributes)
+	{
+		attributes.forEach(function(attribute)
+		{
+            if(attribute.status!='inactive')
+			{
+				var required="";
+				if(attribute.status=='required')
+					required='required';
+				var attr_label=document.createElement('div');
+				attr_label.setAttribute('class','row');
+				if(attribute.value=="")
+				{
+					attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
+				}				
+				else 
+				{
+					var values_array=attribute.value.split(";");
+					var content="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
+					values_array.forEach(function(fvalue)
+					{
+						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
+					});
+					content+="</select></div>";
+					attr_label.innerHTML=content;
+				}				
+				attribute_label.appendChild(attr_label);
+			}
+		});
+	});
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form39'))
+		{
+			var name=form.elements['name'].value;
+			var make=form.elements['make'].value;
+			var description=form.elements['desc'].value;
+
+			var tax=form.elements['tax'].value;
+			var data_id=get_new_key();
+			var sale_price=form.elements['sale'].value;
+			var last_updated=get_my_time();
+            
+            var data_json={data_store:'product_master',
+	 				log:'yes',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'name',value:name,unique:'yes'},
+	 					{index:'make',value:make},
+	 					{index:'description',value:description},
+	 					{index:'tax',value:tax},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Added',notes:'Product '+name+' to inventory',link_to:'form39'}}; 					
+            
+            create_json(data_json,func);
+			
+            var instance_json={data_store:'product_instances',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'product_name',value:name,uniqueWith:['batch']},
+	 					{index:'batch',value:name},
+	 					{index:'sale_price',value:sale_price},
+	 					{index:'last_updated',value:last_updated}]};            
+			create_json(instance_json);
+			
+			var billing_type_data={data_store:'bill_types',return_column:'name',indexes:[{index:'status',exact:'active'}]};
+			read_json_single_column(billing_type_data,function(bill_types)
+			{
+                var id=get_new_key();
+				bill_types.forEach(function(bill_type)
+				{				
+					id++;
+					var sale_price_json={data_store:'sale_prices',
+	 				data:[{index:'id',value:id},
+	 					{index:'product_name',value:name},
+	 					{index:'batch',value:name},
+	 					{index:'sale_price',value:sale_price},
+	 					{index:'pi_id',value:data_id},
+                        {index:'billing_type',value:bill_type},  
+	 					{index:'last_updated',value:last_updated}]}; 												
+					create_json(sale_price_json);
+				});
+			});
+
+			var id=get_new_key();
+            $("#modal203_attributes").find('input, select').each(function()
+			{
+				id++;
+				var value=$(this).val();
+				var attribute=$(this).attr('name');
+				if(value!="")
+				{
+					var attribute_json={data_store:'attributes',
+	 				data:[{index:'id',value:id},
+	 					{index:'name',value:name},
+	 					{index:'type',value:'product'},
+	 					{index:'attribute',value:attribute},
+	 					{index:'value',value:value},
+	 					{index:'last_updated',value:last_updated}]}; 												
+					create_json(attribute_json);
+				}
+			});
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
+		$(form).find(".close").click();
+	});
+	
+	$("#modal203_link").click();
+}
+
+/**
+ * @modalNo 204
+ * @modal Add new batch
+ */
+function modal204_action(func)
+{
+	var form=document.getElementById('modal204_form');
+	
+	var fname=form.elements['name'];
+	var fbatch=form.elements['batch'];
+	var fmanufacture=form.elements['date'];
+	var fsale_price=form.elements['sale'];
+	
+	$(fmanufacture).datepicker();
+	
+	var name_data={data_store:'attributes',return_column:'name',
+                    indexes:[{index:'attribute',exact:'Batch Applicable'},
+                            {index:'value',exact:'yes'}]};
+	set_my_value_list_json(name_data,fname);
+	
+	////adding sale price fields for all billing types///////
+	var billing_type_data={data_store:'bill_types',return_column:'name',
+                          indexes:[{index:'status',exact:'active'}]};
+	read_json_single_column(billing_type_data,function(bill_types)
+	{
+		var billing_label=document.getElementById('modal204_billings');
+		billing_label.innerHTML="";
+		bill_types.forEach(function(bill_type)
+		{
+            var attr_label=document.createElement('div');
+            attr_label.setAttribute('class','row');
+            attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+bill_type+" sale price"+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><input type='number' step='any' id='"+bill_type+"' required></div>";
+				
+			billing_label.appendChild(attr_label);
+		});
+	});
+	////////////////////////////////////////////////
+	
+	////auto setting sale price fields/////////
+	$(fsale_price).off('blur');
+	$(fsale_price).on('blur',function(event)
+	{
+		var sale_price=fsale_price.value;
+		$("#modal204_billings").find('input').each(function()
+		{
+			if($(this).val()=="")
+			{
+				$(this).val(sale_price);
+			}
+		});
+	});		
+	////////////////////
+	
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form331'))
+		{
+			var name=fname.value;
+			var batch=fbatch.value;
+			var manu_date=get_raw_time(fmanufacture.value);
+			var sale_price=fsale_price.value;
+			var data_id=get_new_key();
+			var last_updated=get_my_time();
+			var data_json={data_store:'product_instances',
+	 				log:'yes',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'product_name',value:name,uniqueWith:['batch']},
+	 					{index:'batch',value:batch},
+	 					{index:'manufacture_date',value:manu_date},
+	 					{index:'sale_price',value:sale_price},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Added',notes:'New batch '+batch+' for product '+name,link_to:'form331'}};
+			create_json(data_json,func);
+			
+			var id=get_new_key();
+			
+			$("#modal204_billings").find('input').each(function()
+			{
+				id++;
+				var price=$(this).val();
+				var bill_type=$(this).attr('id');
+				var sale_price_json={data_store:'sale_prices',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'product_name',value:name},
+	 					{index:'batch',value:batch},
+	 					{index:'sale_price',value:price},
+	 					{index:'pi_id',value:data_id},
+	 					{index:'billing_type',value:bill_type},
+	 					{index:'last_updated',value:last_updated}]};			
+				create_json(sale_price_json);
+			});
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
+		$(form).find(".close").click();
+	});
+	
+	$("#modal204_link").click();
 }

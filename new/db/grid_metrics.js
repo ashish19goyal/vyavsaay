@@ -37,8 +37,7 @@ function set_grid_item_1()
 */
 function set_grid_item_2()
 {
-	var new_columns=new Object();
-		new_columns.data_store='bills';
+	var new_columns={data_store:'bills',return_column:'id'};
 		new_columns.indexes=[{index:'bill_date',lowerbound:(get_raw_time(get_my_date())-1000),upperbound:(get_raw_time(get_my_date())+86399999)}];		
 
 	read_json_count(new_columns,function(bill_count)
@@ -88,8 +87,7 @@ function set_grid_item_3()
 */
 function set_grid_item_4()
 {
-	var new_columns=new Object();
-		new_columns.data_store='supplier_bills';
+	var new_columns={data_store:'supplier_bills',return_column:'id'};
 		new_columns.indexes=[{index:'entry_date',lowerbound:(get_raw_time(get_my_date())-1000),upperbound:(get_raw_time(get_my_date())+86399999)}];		
 
 	read_json_count(new_columns,function(bill_count)
@@ -171,10 +169,7 @@ function set_grid_item_6()
 */
 function set_grid_item_7()
 {
-	var new_columns=new Object();
-		new_columns.data_store='product_master';
-		new_columns.indexes=[{index:'name'}];
-
+	var new_columns={data_store:'product_master',return_column:'name'};
 	read_json_count(new_columns,function(item_count)
 	{
 		$('#grid_item_7').html(item_count);
@@ -498,10 +493,7 @@ function set_grid_item_18()
 */
 function set_grid_item_19()
 {
-	var new_columns=new Object();
-		new_columns.data_store='store_areas';
-		new_columns.indexes=[{index:'area_type',exact:'storage'}];
-	
+	var new_columns={data_store:'store_areas',return_column:'id'};
 	read_json_count(new_columns,function(item_count)
 	{
 		$('#grid_item_19').html(item_count);	
@@ -1503,11 +1495,7 @@ function set_grid_item_62()
 */
 function set_grid_item_63()
 {
-	var new_columns=new Object();
-		new_columns.data_store='staff';		
-			
-		new_columns.indexes=[{index:'id'}];
-	
+	var new_columns={data_store:'staff',return_column:'id'};
 	read_json_count(new_columns,function(item_count)
 	{
 		$('#grid_item_63').html(item_count);
@@ -1559,5 +1547,115 @@ function set_grid_item_65()
 	read_json_count(new_columns,function(item_count)
 	{
 		$('#grid_item_65').html(item_count);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_66
+*@*display_name*:*# Supplier Profiles
+*@*grid*:*people
+*@*function_name*:*set_grid_item_66();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_66()
+{
+	var new_columns={data_store:'suppliers',return_column:'id'};
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_66').html(item_count);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_67
+*@*display_name*:*# Birthdays
+*@*grid*:*people
+*@*function_name*:*set_grid_item_67();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_67()
+{
+	var new_columns={data_store:'attributes',return_column:'value',
+                    indexes:[{index:'type',exact:'customer'},
+                            {index:'attribute',exact:'Birthday'}]};
+	read_json_single_column(new_columns,function(items)
+	{
+        var item_count=0;
+        var d=new Date();
+        var month =d.getMonth()+1;
+        if (month < 10) {
+            month = "0" + month;
+        }
+        var date = d.getDate();
+        if (date < 10) {
+            date = "0" + date;
+        }
+        var time=date+"/"+month;
+
+        for(var i in items)
+        {
+            if(items[i].indexOf(time)!=-1)
+            {
+                item_count+=1;
+            }
+        }
+		$('#grid_item_67').html(item_count);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_68
+*@*display_name*:*Wastage Today
+*@*grid*:*people
+*@*function_name*:*set_grid_item_68();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_68()
+{
+	var new_columns={data_store:'discarded',sum:'yes',return_column:'quantity',
+                    indexes:[{index:'date',lowerbound:get_raw_time(get_my_date()),upperbound:get_raw_time(get_my_date())+86399000}]};
+	read_json_single_column(new_columns,function(item_count)
+	{
+		$('#grid_item_68').html(item_count[0]+" pieces");
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_69
+*@*display_name*:*Pending Receivables
+*@*grid*:*finances
+*@*function_name*:*set_grid_item_69();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_69()
+{
+	var new_columns={data_store:'payments',
+                     indexes:[{index:'paid_amount'},{index:'total_amount'},
+                             {index:'type',exact:'received'},
+                             {index:'status',exact:'pending'}]};
+	read_json_rows('',new_columns,function(results)
+	{
+		var amount=0;
+		for (var i in results)
+		{
+			amount+=parseFloat(results[i].total_amount)-parseFloat(results[i].paid_amount);
+		}
+		$('#grid_item_69').html("Rs. "+amount);
 	});
 };
