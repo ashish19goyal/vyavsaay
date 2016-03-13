@@ -126,6 +126,9 @@ images/refresh.png
 images/remove-icon-small.png
 images/sidebar_toggler_icon_default.png
 images/spacer.gif
+images/previous.png
+images/next.png
+images/barcode.png
 locales/translation-en.json
 js/open/amcharts/amcharts.js
 js/open/amcharts/serial.js
