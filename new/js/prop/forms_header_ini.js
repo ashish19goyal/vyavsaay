@@ -4004,51 +4004,6 @@ function form135_header_ini()
 
 
 /**
- * @form Project Expenses
- * @formNo 137
- */
-function form137_header_ini()
-{
-	var fields=document.getElementById('form137_master');
-
-	var code_filter=fields.elements['name'];
-	var id_filter=fields.elements['id'];
-	var expense_filter=fields.elements['expense'];
-	var approved_filter=fields.elements['approved'];
-	
-	expense_filter.value=0;
-	approved_filter.value=0;
-	
-	var name_data="<projects>" +
-			"<name></name>" +
-			"</projects>";
-	
-	set_my_value_list_func(name_data,code_filter,function () 
-	{
-		$(code_filter).focus();
-	});
-
-	id_filter.value="";
-	code_filter.value="";
-	
-	$(fields).off('submit');
-	$(fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form137_ini();
-	});
-
-	my_datalist_change(code_filter,function () 
-	{
-		var id_data="<projects>"+
-					"<id></id>"+
-					"<name exact='yes'>"+code_filter.value+"</name>"+					
-					"</projects>";
-		set_my_value(id_data,id_filter);
-	});	
-};
-
-/**
  * @form Project Schedule
  * @formNo 138
  */

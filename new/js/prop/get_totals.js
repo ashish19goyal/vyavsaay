@@ -272,38 +272,6 @@ function form122_get_totals()
 }
 
 
-/**
- * @form Project Expenses
- * @formNo 137
- * @param button
- */
-function form137_get_totals()
-{
-	var master_form=document.getElementById('form137_master');
-
-	var total_expense=0;
-	var total_approved=0;
-	
-	$("[id^='form137_rows_']").each(function(index)
-	{
-		if(!isNaN(parseFloat(this.elements[1].value)))
-		{
-			if(this.elements[4].value=='submitted')
-			{
-				total_expense+=parseFloat(this.elements[1].value);
-			}
-			else if(this.elements[4].value=='approved')
-			{
-				total_expense+=parseFloat(this.elements[1].value);
-				total_approved+=parseFloat(this.elements[1].value);
-			}
-		}		
-	});
-	
-	master_form.elements['expense'].value=total_expense;
-	master_form.elements['approved'].value=total_approved;	
-}
-
 function form153_get_totals()
 {
 	var amount=0;

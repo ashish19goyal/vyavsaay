@@ -1,24 +1,24 @@
-<div id='form8' class='tab-pane portlet box yellow-saffron'>	   
+<div id='form335' class='tab-pane portlet box yellow-saffron'>	   
 	<div class="portlet-title">
 		<div class='caption'>		
-			<a class='btn btn-circle grey btn-outline btn-sm' onclick='modal16_action();'>Add <i class='fa fa-plus'></i></a>
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick='modal205_action();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
                 <ul class="dropdown-menu pull-right">
                     <li>
-                        <a id='form8_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
+                        <a id='form335_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
                     </li>
                     <li>
-                      	<a id='form8_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
+                      	<a id='form335_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
                     </li>
                     <li>
-                        <a id='form8_print'><i class='fa fa-print'></i> Print</a>
+                        <a id='form335_print'><i class='fa fa-print'></i> Print</a>
                     </li>
                     <li class="divider"> </li>
                     <li>
-                        <a id='form8_upload' onclick=modal23_action(form8_import_template,form8_import,form8_import_validate);><i class='fa fa-upload'></i> Import</a>
+                        <a id='form335_upload' onclick=modal23_action(form335_import_template,form335_import,form335_import_validate);><i class='fa fa-upload'></i> Import</a>
                     </li>
                 </ul>
             </div>
@@ -26,75 +26,67 @@
 	</div>
 	
 	<div class="portlet-body">
-		<form id='form8_header' autocomplete="off">
+		<form id='form335_header' autocomplete="off">
 			<fieldset>
 				<label><input type='text' placeholder="Name" class='floatlabel' name='name'></label>
 				<label><input type='text' placeholder="Phone" class='floatlabel' name='contact'></label>
-				<label><input type='text' placeholder="Email" class='floatlabel' name='email'></label>
-				<label><input type='text' placeholder="Status" class='floatlabel' name='status'></label>
+				<label><input type='text' placeholder="Unit" class='floatlabel' name='unit'></label>
+				<label><input type='text' placeholder="Designation" class='floatlabel' name='designation'></label>
 				<label><input type='submit' class='submit_hidden'></label>			
 			</fieldset>
 		</form>
 		<br>
-		<div id='form8_body' class='row'>
+		<div id='form335_body' class='row'>
 			
 		</div>
 	</div>
 	
 	<script>
 
-		function form8_header_ini()
+		function form335_header_ini()
 		{
-			var filter_fields=document.getElementById('form8_header');
+			var filter_fields=document.getElementById('form335_header');
 			var name_filter=filter_fields.elements['name'];
-			var status_filter=filter_fields.elements['status'];
 			
 			$(filter_fields).off('submit');
 			$(filter_fields).on('submit',function(event)
 			{
 				event.preventDefault();
-				form8_ini();
+				form335_ini();
 			});
 		
-			var name_data=new Object();
-				name_data.data_store="staff";
-				name_data.return_column="name";
-				name_data.indexes=[{index:'id'}];
-			
+			var name_data={data_store:'staff',return_column:'name'};			
 			set_my_filter_json(name_data,name_filter);
-			set_static_filter_json('staff','status',status_filter);
 		};
 		
-		function form8_ini()
+		function form335_ini()
 		{
 			show_loader();
-			var fid=$("#form8_link").attr('data_id');
+			var fid=$("#form335_link").attr('data_id');
 			if(fid==null)
 				fid="";	
 				
-			$('#form8_body').html("");
-			var filter_fields=document.getElementById('form8_header');
+			$('#form335_body').html("");
+			var filter_fields=document.getElementById('form335_header');
 			var fname=filter_fields.elements['name'].value;
 			var fcontact=filter_fields.elements['contact'].value;
-			var femail=filter_fields.elements['email'].value;
-			var fstatus=filter_fields.elements['status'].value;
+			var funit=filter_fields.elements['unit'].value;
+			var fdesig=filter_fields.elements['designation'].value;
 			
-			var paginator=$('#form8_body').paginator({'page_size':24});
+			var paginator=$('#form335_body').paginator({'page_size':24});
 			
-			var columns=new Object();
-					columns.count=paginator.page_size();
-					columns.start_index=paginator.get_index();
-					columns.data_store='staff';
-
-					columns.indexes=[{index:'id',value:fid},
+			var columns={data_store:'staff',
+					count:paginator.page_size(),
+					start_index:paginator.get_index(),
+					data_store:'staff',
+					indexes:[{index:'id',value:fid},
 									{index:'name',value:fname},
 									{index:'acc_name'},
 									{index:'phone',value:fcontact},
-									{index:'email',value:femail},
-									{index:'status',value:fstatus},
-									{index:'address'}];		
+									{index:'unit',value:funit},
+									{index:'designation',value:fdesig}]};		
 			
-			read_json_rows('form8',columns,function(results)
+			read_json_rows('form335',columns,function(results)
 			{
 				var counter=0;
 				results.forEach(function(result)
@@ -110,47 +102,37 @@
 											"<div class='thumbnail'>"+
 												"<div class='vr_image_container'>"+
 													"<div class='row thumbnail-button-bottom'>"+
-	            										"<button type='submit' class='btn green' form='form8_"+result.id+"' name='save' title='Save'><i class='fa fa-2x fa-save'></i></button>"+
-															"<button type='button' class='btn red' form='form8_"+result.id+"' name='delete' title='Delete' onclick='form8_delete_item($(this));'><i class='fa fa-2x fa-trash'></i></button>"+
+	            										"<button type='submit' class='btn green' form='form335_"+result.id+"' name='save' title='Save'><i class='fa fa-2x fa-save'></i></button>"+
+															"<button type='button' class='btn red' form='form335_"+result.id+"' name='delete' title='Delete' onclick='form335_delete_item($(this));'><i class='fa fa-2x fa-trash'></i></button>"+
 													"</div>"+
                                			"<div class='row thumbnail-button-top'>"+
-	            							"<button type='button' class='btn' form='form8_"+result.id+"'name='image' title='Change Picture'><i class='fa fa-2x fa-pencil link'></i></button>"+
-	            							"<input type='file' style='display:none;' form='form8_"+result.id+"'name='image_dummy'>"+
+	            							"<button type='button' class='btn' form='form335_"+result.id+"'name='image' title='Change Picture'><i class='fa fa-2x fa-pencil link'></i></button>"+
+	            							"<input type='file' style='display:none;' form='form335_"+result.id+"'name='image_dummy'>"+
 								        "</div>"+
-                               			"<a onclick=\"show_object('staff','"+result.acc_name+"');\"><img class='vr_image' data-id='' alt='"+first_char+"' id='form8_image_"+result.id+"'></a>"+
+                               			"<a onclick=\"show_object('staff','"+result.acc_name+"');\"><img class='vr_image' data-id='' alt='"+first_char+"' id='form335_image_"+result.id+"'></a>"+
                                		"</div>"+
                                  	"<div class='caption'>"+
-                                    	"<form id='form8_"+result.id+"'>"+
-														"<a onclick=\"show_object('staff','"+result.acc_name+"');\"><textarea readonly='readonly' name='name' class='floatlabel' placeholder='Name' form='form8_"+result.id+"'>"+result.name+"</textarea></a>"+
-	                                    	"<input type='text' readonly='readonly' class='floatlabel dblclick_editable' placeholder='Phone' name='phone' form='form8_"+result.id+"' value='"+result.phone+"'>"+
-	                                    	"<textarea readonly='readonly' class='floatlabel dblclick_editable' placeholder='Email' name='email' form='form8_"+result.id+"'>"+result.email+"</textarea>"+
-	                                    	"<textarea readonly='readonly' class='floatlabel dblclick_editable' placeholder='Address' name='address' form='form8_"+result.id+"'>"+result.address+"</textarea>"+
-	                        					"<select class='dblclick_editable' name='status' form='form8_"+result.id+"'></select>"+
-	                                    	"<input type='hidden' form='form8_"+result.id+"' name='id' value='"+result.id+"'>"+
-	           	    								"<input type='hidden' form='form8_"+result.id+"' name='acc_name' value='"+result.acc_name+"'>"+
-	            								"</form>"+
+                                    	"<form id='form335_"+result.id+"'>"+
+														"<a onclick=\"show_object('staff','"+result.acc_name+"');\"><textarea readonly='readonly' name='name' class='floatlabel' placeholder='Name' form='form335_"+result.id+"'>"+result.name+"</textarea></a>"+
+	                                    	"<input type='text' readonly='readonly' class='floatlabel dblclick_editable' placeholder='Phone' name='phone' form='form335_"+result.id+"' value='"+result.phone+"'>"+
+	                                    	"<textarea readonly='readonly' class='floatlabel dblclick_editable' placeholder='Unit' name='unit' form='form335_"+result.id+"'>"+result.unit+"</textarea>"+
+	                                    	"<textarea readonly='readonly' class='floatlabel dblclick_editable' placeholder='Designation' name='deignation' form='form335_"+result.id+"'>"+result.designation+"</textarea>"+
+	                        				"<input type='hidden' form='form335_"+result.id+"' name='id' value='"+result.id+"'>"+
+	           	    			            "<input type='hidden' form='form335_"+result.id+"' name='acc_name' value='"+result.acc_name+"'>"+
+	            			            "</form>"+
                                  	"</div>"+
                                	"</div>"+
                              "</div>";
 					
-					$('#form8_body').append(rowsHTML);
-					var fields=document.getElementById("form8_"+result.id);
+					$('#form335_body').append(rowsHTML);
+					var fields=document.getElementById("form335_"+result.id);
 					var image_button=fields.elements['image'];
 					var image_dummy=fields.elements['image_dummy'];
-					var image_elem=document.getElementById('form8_image_'+result.id);
+					var image_elem=document.getElementById('form335_image_'+result.id);
 					var delete_button=fields.elements['delete'];
-					var status_filter=fields.elements['status'];
-
-					set_static_select('staff','status',status_filter,function () 
-					{
-						$(status_filter).selectpicker('val',result.status);
-					});
 					
-					var master_data=new Object();
-						master_data.data_store="accounts";
-						master_data.count=1;
-						master_data.return_column='acc_name';
-						master_data.indexes=[{index:'username',exact:'master'}];
+					var master_data={data_store:'accounts',return_column:'acc_name',count:1,
+                                    indexes:[{index:'username',exact:'master'}]};
 					
 					read_json_single_column(master_data,function(accounts)
 					{
@@ -213,27 +195,26 @@
 					$(fields).on("submit", function(event)
 					{
 						event.preventDefault();
-						form8_update_item(fields);
+						form335_update_item(fields);
 					});					
 				});
 				
-				$('#form8').formcontrol();
+				$('#form335').formcontrol();
 				paginator.update_index(results.length);				
-				initialize_tabular_report_buttons(columns,'Staff','form8');
+				initialize_tabular_report_buttons(columns,'Staff','form335');
 								
 				hide_loader();
 			});
 		};
 		
-		function form8_update_item(form)
+		function form335_update_item(form)
 		{
-			if(is_update_access('form8'))
+			if(is_update_access('form335'))
 			{
 				var name=form.elements['name'].value;
 				var phone=form.elements['phone'].value;
-				var email=form.elements['email'].value;
-				var address=form.elements['address'].value;
-				var status=$(form.elements['status']).val();
+				var unit=form.elements['unit'].value;
+				var designation=form.elements['designation'].value;
 				var data_id=form.elements['id'].value;
 				var acc_name=form.elements['acc_name'].value;
 				var last_updated=get_my_time();
@@ -242,12 +223,11 @@
 	 				data:[{index:'id',value:data_id},
 	 					{index:'name',value:name},
 	 					{index:'phone',value:phone},
-	 					{index:'email',value:email},
-	 					{index:'address',value:address},
-	 					{index:'status',value:status},
+	 					{index:'unit',value:unit},
+	 					{index:'designation',value:designation},
 	 					{index:'last_updated',value:last_updated}],
 	 				log:'yes',
-	 				log_data:{title:'Updated',notes:'Profile of staff '+name,link_to:'form8'}};
+	 				log_data:{title:'Updated',notes:'Profile of staff '+name,link_to:'form335'}};
 
 				update_json(data_json);
 				
@@ -259,9 +239,9 @@
 			}
 		}
 		
-		function form8_delete_item(button)
+		function form335_delete_item(button)
 		{
-			if(is_delete_access('form8'))
+			if(is_delete_access('form335'))
 			{
 				modal115_action(function()
 				{
@@ -275,7 +255,7 @@
 					var data_json={data_store:'staff',
  							data:[{index:'id',value:data_id}],
  							log:'yes',
- 							log_data:{title:"Deleted",notes:"Profile of staff "+name,link_to:"form8"}};
+ 							log_data:{title:"Deleted",notes:"Profile of staff "+name,link_to:"form335"}};
 					var account_json={data_store:'accounts',
  							data:[{index:'id',value:data_id},{index:'type',value:'staff'}]};
 					var attribute_json={data_store:'attributes',
@@ -293,33 +273,30 @@
 			}
 		}
 		
-		function form8_import_template()
+		function form335_import_template()
 		{
-			var data_array=['id','name','phone','email','status','acc_name','username',
-			                'address'];
+			var data_array=['id','name','phone','unit','designation'];
 			my_array_to_csv(data_array);
 		};
 
-		function form8_import_validate(data_array)
+		function form335_import_validate(data_array)
 		{
-			var validate_template_array=[{column:'acc_name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-									{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-									{column:'email',regex:new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z_.-]+$')},
+			var validate_template_array=[{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
+									{column:'unit',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 									{column:'phone',regex:new RegExp('^[0-9 ./,+-]+$')},
-									{column:'username',regex:new RegExp('^[0-9a-zA-Z]+$')},
-									{column:'status',list:['active','suspended','retired']}];
+									{column:'designation',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')}];
 							
 			var error_array=validate_import_array(data_array,validate_template_array);
 			return error_array;					
 		}
 
-		function form8_import(data_array,import_type)
+		function form335_import(data_array,import_type)
 		{
 			var data_json={data_store:'staff',
  					loader:'no',
  					log:'yes',
  					data:[],
- 					log_data:{title:'Staff profiles',link_to:'form8'}};
+ 					log_data:{title:'Staff profiles',link_to:'form335'}};
 
 			var account_json={data_store:'accounts',
  					loader:'no',
@@ -339,18 +316,18 @@
 				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'name',value:row.name},
 	 					{index:'phone',value:row.phone},
-	 					{index:'email',value:row.email},
-	 					{index:'acc_name',value:row.acc_name,unique:'yes'},
-	 					{index:'address',value:row.address},
-	 					{index:'status',value:row.status},
+	 					{index:'unit',value:row.unit},
+	 					{index:'acc_name',value:row.name+" ("+row.phone+")",unique:'yes'},
+	 					{index:'designation',value:row.designation},
+	 					{index:'status',value:'active'},
 	 					{index:'last_updated',value:last_updated}];
 
 				data_json.data.push(data_json_array);
 
 				var account_json_array=[{index:'id',value:row.id},
-	 					{index:'acc_name',value:row.acc_name,unique:'yes'},
+	 					{index:'acc_name',value:row.name+" ("+row.phone+")",unique:'yes'},
 	 					{index:'type',value:'staff'},
-	 					{index:'username',value:row.username},
+	 					{index:'username',value:''},
 	 					{index:'status',value:'active'},
 	 					{index:'last_updated',value:last_updated}];
 

@@ -126,6 +126,8 @@
 			<lat index='no' type="DECIMAL(14,10)"></lat>
 			<lng index='no' type="DECIMAL(14,10)"></lng>
 			<shipping index='yes' type="BOOL"></shipping>
+			<unit index='yes' type="TEXT"></unit>
+			<designation index='yes' type="TEXT"></designation>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</staff>
@@ -196,6 +198,7 @@
 			<expense_date index='yes' type="BIGINT"></expense_date>
 			<source index='yes' type="VARCHAR(50)"></source><!-- service request/project/project phase/task instance -->
 			<source_id index='yes' type="BIGINT"></source_id>
+			<source_name index='yes' type="TEXT"></source_name>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</expenses>
@@ -314,8 +317,8 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<supplier index='yes' type="TEXT"></supplier>
 			<return_date index='yes' type="BIGINT"></return_date>
-			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<total index='no' type="DECIMAL(12,2)"></total>
+			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<type index="yes" type="VARCHAR(10)"></type><!-- service/product/both -->
 			<transaction_id index='yes' type="BIGINT"></transaction_id>
@@ -400,7 +403,7 @@
 			<type index='yes' type="VARCHAR(10)"></type><!-- received/paid -->
 			<total_amount index='no' type="DECIMAL(12,2)"></total_amount>
 			<paid_amount index='no' type="DECIMAL(12,2)"></paid_amount>
-			<status index='yes' type="VARCHAR(10)"></status><!-- pending/closed/ -->
+			<status index='yes' type="VARCHAR(10)"></status><!-- pending/closed-->
 			<date index='yes' type="BIGINT"></date>
 			<due_date index='yes' type="BIGINT"></due_date>
 			<mode index='yes' type="VARCHAR(15)"></mode><!-- cash/cheque/draft/credit card/debit card/online banking/coupons -->

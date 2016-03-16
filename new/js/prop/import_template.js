@@ -563,16 +563,6 @@ function form125_import_template()
 	my_array_to_csv(data_array);
 };
 
-/**
-* @form Project Expenses
-* @formNo 137
-* @table expenses
-*/
-function form137_import_template()
-{
-	var data_array=['id','status','person','amount','detail','expense_date','source','source_id'];
-	my_array_to_csv(data_array);
-};
 
 /**
 * @form Customer Profiling

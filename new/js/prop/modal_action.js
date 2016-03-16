@@ -787,7 +787,7 @@ function modal13_action(func)
 	 					{index:'address',value:address},
 	 					{index:'acc_name',value:acc_name,unique:'yes'},
 	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Added',notes:'New supplier '+name,link_to:'form30'}}; 								
+	 				log_data:{title:'Added',notes:'New supplier '+name,link_to:'form40'}}; 								
 			
 			var account_json={data_store:'accounts',
 	 				data:[{index:'id',value:data_id},
@@ -1112,7 +1112,7 @@ function modal16_action(func)
 	 					{index:'status',value:'active'},
 	 					{index:'acc_name',value:acc_name,unique:'yes'},
 	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Added',notes:'New staff '+name,link_to:'form30'}}; 								
+	 				log_data:{title:'Added',notes:'New staff '+name,link_to:'form8'}}; 								
 			
 			var account_json={data_store:'accounts',
 	 				data:[{index:'id',value:data_id},
@@ -1153,8 +1153,6 @@ function modal16_action(func)
 	
 	$("#modal16_link").click();
 }
-
-
 
 /**
  * @modalNo 17
@@ -15393,7 +15391,6 @@ function modal191_action(id)
 	
 	var name_filter=form.elements['name'];
 	var detail_filter=form.elements['detail'];
-	var priority_filter=form.elements['priority'];
 	var status_filter=form.elements['status'];
 	
 	set_static_select('projects','status',status_filter,function () 
@@ -15403,7 +15400,6 @@ function modal191_action(id)
 	
 	name_filter.value="";
 	detail_filter.value="";
-	priority_filter.value="";
 			
 	$(form).off('submit');
 	$(form).on('submit',function(event) 
@@ -15411,7 +15407,6 @@ function modal191_action(id)
 		event.preventDefault();
 		var name=name_filter.value;
 		var details=detail_filter.value;
-		var priority=priority_filter.value;
 		var status=$(status_filter).val();
 		
 		var last_updated=get_my_time();
@@ -15419,9 +15414,9 @@ function modal191_action(id)
 		var data_json={data_store:'projects',
 	 				log:'yes',
 	 				data:[{index:'id',value:id},
-	 					{index:'name',value:name},
+	 					{index:'name',value:name,unique:'yes'},
 	 					{index:'details',value:details},
-	 					{index:'priority',value:priority},
+	 					{index:'priority',value:0},
 	 					{index:'status',value:status},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Created',notes:'Project '+name,link_to:'form220'}};
@@ -16278,4 +16273,132 @@ function modal204_action(func)
 	});
 	
 	$("#modal204_link").click();
+}
+
+/**
+ * @modalNo 205
+ * @modal Add new staff
+ * @param button
+ */
+function modal205_action(func)
+{
+	var form=document.getElementById('modal205_form');
+	
+	var fname=form.elements['name'];
+	var fphone=form.elements['phone'];
+	var funit=form.elements['unit'];
+	var fdesig=form.elements['desig'];
+	
+	///////////////////////////
+	fname.value="";
+	fphone.value="";
+	funit.value="";
+	fdesig.value="";
+
+	var attribute_label=document.getElementById('modal205_attributes');
+	attribute_label.innerHTML="";
+	var attributes_data={data_store:'mandatory_attributes',
+								indexes:[{index:'attribute'},{index:'status'},{index:'value'},{index:'object',exact:'staff'}]};
+								
+	read_json_rows('',attributes_data,function(attributes)
+	{
+		attributes.forEach(function(attribute)
+		{
+			if(attribute.status!='inactive')
+			{
+				var required="";
+				if(attribute.status=='required')
+					required='required';
+				var attr_label=document.createElement('div');
+				attr_label.setAttribute('class','row');
+				if(attribute.value=="")
+				{
+					attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
+				}				
+				else 
+				{
+					var values_array=attribute.value.split(";");
+					var content="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
+					values_array.forEach(function(fvalue)
+					{
+						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
+					});
+					content+="</select></div>";
+					attr_label.innerHTML=content;
+				}				
+				attribute_label.appendChild(attr_label);
+			}
+		});
+	});
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form8'))
+		{
+			var name=fname.value;
+			var phone=fphone.value;
+			var acc_name=name+" ("+phone+")";
+			var unit=funit.value;
+			var designation=fdesig.value;
+			
+			name = name.replace(/â/g,'');
+			name = name.replace(/&/g, "and");
+			
+			var data_id=get_new_key();
+			var last_updated=get_my_time();
+			
+			var data_json={data_store:'staff',
+	 				log:'yes',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'name',value:name},
+	 					{index:'phone',value:phone},
+	 					{index:'unit',value:unit},
+	 					{index:'designation',value:designation},
+	 					{index:'status',value:'active'},
+	 					{index:'acc_name',value:acc_name,unique:'yes'},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Added',notes:'New staff '+name,link_to:'form335'}}; 								
+			
+			var account_json={data_store:'accounts',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'type',value:'staff'},
+	 					{index:'username',value:''},
+	 					{index:'acc_name',value:acc_name,unique:'yes'},
+	 					{index:'status',value:'active'},
+	 					{index:'last_updated',value:last_updated}]}; 								
+				
+			create_json(data_json,func);
+			create_json(account_json);
+			
+			var id=get_new_key();
+			$("#modal205_attributes").find('input, select').each(function()
+			{
+				id++;
+				var value=$(this).val();
+				var attribute=$(this).attr('name');
+				if(value!="")
+				{
+					var attribute_json={data_store:'attributes',
+	 				data:[{index:'id',value:id},
+	 					{index:'name',value:acc_name},
+	 					{index:'type',value:'staff'},
+	 					{index:'attribute',value:attribute},
+	 					{index:'value',value:value},
+	 					{index:'last_updated',value:last_updated}]}; 												
+					create_json(attribute_json);
+				}
+			});
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
+		$(form).find(".close").click();
+	});
+	
+	$("#modal205_link").click();
 }

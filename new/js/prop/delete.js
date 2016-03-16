@@ -2801,41 +2801,6 @@ function form135_delete_task(button)
 
 
 /**
- * @form Project Expenses
- * @param button
- */
-function form137_delete_item(button)
-{
-	if(is_delete_access('form137'))
-	{	
-		modal115_action(function()
-		{	
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);	
-			var data_id=form.elements[5].value;
-			
-			var data_xml="<expenses>" +
-						"<id>"+data_id+"</id>" +
-						"</expenses>";	
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-			}
-					
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
  * @form Customer Profiling
  * @param button
  */

@@ -2532,51 +2532,6 @@ function form125_import(data_array,import_type)
 
 
 /**
-* @form Project Expenses
-* @formNo 137
-*/
-function form137_import(data_array,import_type)
-{
-	var data_xml="<expenses>";
-	var counter=1;
-	var last_updated=get_my_time();
-
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</expenses><separator></separator><expenses>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<status>"+row.status+"</status>" +
-				"<person>"+row.person+"</person>" +
-				"<amount>"+row.amount+"</amount>" +
-				"<detail>"+row.detail+"</detail>" +
-				"<expense_date>"+get_raw_time(row.expense_date)+"</expense_date>" +
-				"<source>"+row.source+"</source>" +
-				"<source_id>"+row.source_id+"</source_id>"+
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	data_xml+="</expenses>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-	}
-};
-
-/**
 * @form Customer Profiling
 * @formNo 139
 */
