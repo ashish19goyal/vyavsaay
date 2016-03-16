@@ -289,7 +289,7 @@
 				var master_form=document.getElementById('form148_master');
 				var username=master_form.elements['username'].value;
 				var save_button=form.elements['save'];
-				var delete_button=form.elements['delete'];
+				var del_button=form.elements['delete'];
 				
 				var element_name=form.elements[0].value;
 				var re='unchecked';
@@ -328,10 +328,10 @@
 				$(form).readonly();
 
 				del_button.removeAttribute("onclick");
-				$(delete_button).on('click',function(event)
+				$(del_button).on('click',function(event)
 				{
 					event.preventDefault();
-					form148_delete_item(delete_button);
+					form148_delete_item(del_button);
 				});
 
 				$(form).off('submit');
