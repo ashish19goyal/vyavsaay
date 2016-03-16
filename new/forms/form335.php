@@ -116,7 +116,7 @@
 														"<a onclick=\"show_object('staff','"+result.acc_name+"');\"><textarea readonly='readonly' name='name' class='floatlabel' placeholder='Name' form='form335_"+result.id+"'>"+result.name+"</textarea></a>"+
 	                                    	"<input type='text' readonly='readonly' class='floatlabel dblclick_editable' placeholder='Phone' name='phone' form='form335_"+result.id+"' value='"+result.phone+"'>"+
 	                                    	"<textarea readonly='readonly' class='floatlabel dblclick_editable' placeholder='Unit' name='unit' form='form335_"+result.id+"'>"+result.unit+"</textarea>"+
-	                                    	"<textarea readonly='readonly' class='floatlabel dblclick_editable' placeholder='Designation' name='deignation' form='form335_"+result.id+"'>"+result.designation+"</textarea>"+
+	                                    	"<textarea readonly='readonly' class='floatlabel dblclick_editable' placeholder='Designation' name='designation' form='form335_"+result.id+"'>"+result.designation+"</textarea>"+
 	                        				"<input type='hidden' form='form335_"+result.id+"' name='id' value='"+result.id+"'>"+
 	           	    			            "<input type='hidden' form='form335_"+result.id+"' name='acc_name' value='"+result.acc_name+"'>"+
 	            			            "</form>"+
