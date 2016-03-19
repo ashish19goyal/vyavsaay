@@ -60,7 +60,7 @@
 									"<a class='expand'> </a>".
                         "</div>".
 							"</div>".
-							"<div class='portlet-body ".$element['collapse']."' style='height:".$element['height']."'>";
+							"<div class='portlet-body ".$element['collapse']."' style='height:".$element['height'].";'>";
 					
 				include "objects/".$res['name']."/".$element['name'].".php";
 
