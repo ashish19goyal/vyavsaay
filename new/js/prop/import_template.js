@@ -398,15 +398,6 @@ function form103_import_template()
 	my_array_to_csv(data_array);
 };
 
-/**
-* @form Project Tasks
-* @formNo 104
-*/
-function form104_import_template()
-{
-	var data_array=['id','name','project_id','description','assignee','t_due','task_hours','t_initiated','status'];
-	my_array_to_csv(data_array);
-};
 
 
 /**

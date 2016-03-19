@@ -91,105 +91,38 @@
 				var counter=0;
 				results.forEach(function(result)
 				{
-					var update=true;
-					var del=true;
-					
 					var clear_both="";
 					if((counter%4)==0)
 					{
 						clear_both="style='clear:both;'";
 					}
 					counter++;
-					var first_char=result.name.substr(0,1);
-					var rowsHTML="<div class='col-xs-6 col-sm-3 col-md-3' "+clear_both+">"+
+					
+                    var rowsHTML="<div class='col-xs-6 col-sm-3 col-md-3' "+clear_both+">"+
 											"<div class='thumbnail'>"+
-												"<div class='vr_image_container'>"+
-													"<div class='row thumbnail-button-bottom'>";
-											if(update)
-		         							rowsHTML+="<button type='submit' class='btn' form='form220_"+result.id+"' name='save' title='Save'><i class='fa fa-2x fa-save'></i></button>";
-		         						if(del)	
-									 			rowsHTML+="<button type='button' class='btn' form='form220_"+result.id+"' name='delete' title='Delete' onclick='form220_delete_item($(this));'><i class='fa fa-2x fa-trash'></i></button>";
-									 rowsHTML+="</div>"+
-		                         			"<div class='row thumbnail-button-top'>"+
-		         										"<button type='button' class='btn' form='form220_"+result.id+"'name='image' title='Change Picture'><i class='fa fa-2x fa-pencil link'></i></button>"+
-		         										"<input type='file' style='display:none;' form='form220_"+result.id+"'name='image_dummy'>"+
-													"</div>"+
-		                         			"<a onclick=\"show_object('projects','"+result.name+"');\"><img class='vr_image' data-id='' alt='"+first_char+"' id='form220_image_"+result.id+"'></a>"+
-		                         		"</div>"+
-		                           	"<div class='caption'>"+
-		                              	"<form id='form220_"+result.id+"'>"+
-														"<a onclick=\"show_object('projects','"+result.name+"');\"><textarea readonly='readonly' name='name' class='floatlabel' placeholder='Name' form='form220_"+result.id+"'>"+result.name+"</textarea></a>"+
-		                                 	"<textarea readonly='readonly' class='floatlabel dblclick_editable' placeholder='Details' name='details' form='form220_"+result.id+"'>"+result.details+"</textarea>"+
-		                                 	"<input type='text' readonly='readonly' class='floatlabel dblclick_editable' placeholder='Priority' name='priority' form='form220_"+result.id+"' value='"+result.priority+"'>"+
-		                                 	"<select class='dblclick_editable' name='status' form='form220_"+result.id+"'></select>"+
-		                     					"<input type='hidden' form='form220_"+result.id+"' name='id' value='"+result.id+"'>"+
-		        	    								"<input type='hidden' form='form220_"+result.id+"' name='acc_name' value='"+result.acc_name+"'>"+
-		         								"</form>"+
-		                           	"</div>"+
-		                         	"</div>"+
-		                       "</div>";
+                                 	          "<div class='caption'>"+
+                                    	           "<form id='form220_"+result.id+"'>"+
+                                                    "<a onclick=\"show_object('projects','"+result.name+"');\"><textarea readonly='readonly' name='name' class='floatlabel' placeholder='Name' form='form220_"+result.id+"'>"+result.name+"</textarea></a>"+
+                                                    "<textarea readonly='readonly' class='floatlabel dblclick_editable' placeholder='Details' name='details' form='form220_"+result.id+"'>"+result.details+"</textarea>"+
+                                                    "<input type='text' readonly='readonly' class='floatlabel dblclick_editable' placeholder='Priority' name='priority' form='form220_"+result.id+"' value='"+result.priority+"'>"+
+                                                    "<select class='dblclick_editable' name='status' form='form220_"+result.id+"'></select>"+
+                                                    "<input type='hidden' form='form220_"+result.id+"' name='id' value='"+result.id+"'>"+
+                                                    "<input type='hidden' form='form220_"+result.id+"' name='acc_name' value='"+result.acc_name+"'>"+
+                                                    "<button type='submit' class='btn green' form='form220_"+result.id+"' name='save' title='Save'><i class='fa fa-2x fa-save'></i></button>"+
+												    "<button type='button' class='btn red' form='form220_"+result.id+"' name='delete' title='Delete' onclick='form220_delete_item($(this));'><i class='fa fa-2x fa-trash'></i></button>"+
+                                                "</form>"+
+                                              "</div>"+
+                               	            "</div>"+
+                                    "</div>";					
 			
 					$('#form220_body').append(rowsHTML);
 					
 					var fields=document.getElementById("form220_"+result.id);
 					var status_filter=fields.elements['status'];
-					var image_button=fields.elements['image'];
-					var image_dummy=fields.elements['image_dummy'];
-					var image_elem=document.getElementById('form220_image_'+result.id);
 					
 					set_static_select('projects','status',status_filter,function () 
 					{
 						$(status_filter).selectpicker('val',result.status);
-					});
-					
-					var docs=new Object();
-					docs.data_store='documents';
-					docs.indexes=[{index:'id'},{index:'url'},{index:'doc_type',exact:'projects'},{index:'doc_name',exact:'image'},{index:'target_id',exact:result.id}];		
-					read_json_rows('',docs,function(pics)
-					{
-						if(pics.length>0)
-						{
-							image_elem.src=pics[0].url;
-							image_elem.setAttribute('data-id',pics[0].id);
-						}
-					});
-					
-					$(image_button).on('click',function (e) 
-					{
-						e.preventDefault();
-						$(image_dummy).click();
-					});
-					
-					$(image_dummy).on('change',function(evt)
-					{
-					   select_picture(evt,'',function(dataURL)
-						{
-							image_elem.src=dataURL;
-							var last_updated=get_my_time();
-							if(image_elem.getAttribute('data-id')=="")
-							{
-								var data_id=get_new_key();
-								image_elem.setAttribute('data-id',data_id);
-								
-								var data_json={data_store:'documents',
-					 				data:[{index:'id',value:data_id},
-					 					{index:'target_id',value:result.id},
-					 					{index:'url',value:dataURL},
-					 					{index:'doc_name',value:'image'},
-					 					{index:'doc_type',value:'projects'},
-					 					{index:'last_updated',value:last_updated}]};
-								create_json(data_json);
-							}
-							else 
-							{
-								var data_id=image_elem.getAttribute('data-id');
-								var data_json={data_store:'documents',
-					 				data:[{index:'id',value:data_id},
-					 					{index:'url',value:dataURL},
-					 					{index:'last_updated',value:last_updated}]};
-								update_json(data_json);								
-							}
-						});
 					});
 					
 					$(fields).on("submit", function(event)
@@ -264,12 +197,18 @@
  							data:[{index:'source_id',value:data_id},{index:'source',value:'projects'}]};
 					var data5_json={data_store:'object_access',
  							data:[{index:'record_id',value:data_id},{index:'tablename',value:'projects'}]};
+					var data6_json={data_store:'documents',
+ 							data:[{index:'target_name',value:name},{index:'doc_type',value:'project'}]};
+					var data7_json={data_store:'expenses',
+ 							data:[{index:'source_name',value:name},{index:'source',value:'project'}]};
 										
 					delete_json(data_json);
 					delete_json(data2_json);
 					delete_json(data3_json);
 					delete_json(data4_json);
 					delete_json(data5_json);
+                    delete_json(data6_json);
+                    delete_json(data7_json);
 					$(button).parent().parent().parent().parent().remove();
 				});
 			}

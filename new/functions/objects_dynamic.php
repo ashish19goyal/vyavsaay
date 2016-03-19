@@ -31,13 +31,14 @@
 			
 			$obj_function.="function initialize_object_".$res['name']."(obj_name,obj_id){";
 		
-			echo "<div class='portlet box purple-soft' tabindex='-1' id='vyavsaay_object_".$res['name']."'>".
+			echo "<div class='portlet box grey-cascade' tabindex='-1' id='vyavsaay_object_".$res['name']."'>".
 						"<div class='portlet-title'>".
 							"<div class='caption'>".
-								"<i class='fa fa-user'></i>".$res['display_name']. 
+								//"<i class='fa fa-user'></i>".
+                                $res['display_name']. 
 							"</div>".
 							"<div class='tools'>".
-								"<a onclick=print_object('".$res['name']."');><i class='fa fa-print link' title='Print'></i></a>".
+								//"<a onclick=print_object('".$res['name']."');><i class='fa fa-print link' title='Print'></i></a>".
 								"<a class='fullscreen' id='object_".$res['name']."'> </a>".
 							"</div>".
 						"</div>".

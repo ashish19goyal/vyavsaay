@@ -177,6 +177,7 @@
 			<doc_name index='no' type="TEXT"></doc_name>
 			<doc_type index='yes' type="VARCHAR(50)"></doc_type><!-- service/service instance/staff/product/product instance/asset/service request/project -->
 			<target_id index='yes' type="BIGINT"></target_id>
+			<target_name index='yes' type="TEXT"></target_name>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</documents>
@@ -1219,6 +1220,7 @@
 	<project_team>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<project_id index='yes' type="BIGINT"></project_id>
+			<project_name index='yes' type="TEXT"></project_name>
 			<member index='yes' type="TEXT"></member>
 			<notes index='no' type="TEXT"></notes>
 			<role index='no' type="TEXT"></role>

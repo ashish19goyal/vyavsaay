@@ -628,18 +628,46 @@
 		</form>
 	</div>
 
-	<div id="modal33" title="Update task">
-		<form id='modal33_form' autocomplete="off">
-			<fieldset>
-				<label>Task: <input type='text' readonly="readonly" required></label><br>
-				<label>Assignee: <input type="text"></label><br>
-				<label>Due time: <input type="text"></label><br>
-				<label>Status: <input type="text" required value='pending'></label><br>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
-	
+	<a href='#modal33' data-toggle="modal" id='modal33_link'></a>
+	<div id="modal33" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal33_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Update Task</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;min-height:390px;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Task</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal33_form' required readonly='readonly' name='task'></div>
+					       </div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Due Time</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal33_form' required name='due'></div>
+					       </div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Assignee</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal33_form' name='assignee'></div>
+					       </div>
+                           <div class="row">
+								   <div class="col-sm-12 col-md-4">Status</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal33_form' required name='status'></div>
+					       </div>
+		              </div>
+                    </div>    
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal33_form' name='save'>Save</button>
+	               	<button type="button" class="btn red" form='modal33_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    
+    
 	<a href='#modal35' data-toggle="modal" id='modal35_link'></a>
 	<div id="modal35" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
@@ -761,19 +789,48 @@
 		</form>
 	</div>
 	
-	<div id="modal43" title="Add task">
-		<form id='modal43_form' autocomplete="off">
-			<fieldset>
-				<label>Phase: <input type='text' required></label><br>
-				<label>Task: <input type="text"></label><br>
-				<label>Assignee: <input type="text"></label><br>
-				<label>Due time: <input type="text"></label><br>
-				<label>Status: <input type="text" required value='pending'></label><br>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
-	
+    <a href='#modal43' data-toggle="modal" id='modal43_link'></a>
+	<div id="modal43" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal43_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add Task</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;min-height:390px;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Task</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal43_form' required name='task'></div>
+					       </div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Due Time</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal43_form' required name='due'></div>
+					       </div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Description</div>
+                              <div class="col-sm-12 col-md-8"><textarea form='modal43_form' name='desc'></textarea></div>
+					       </div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Project</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal43_form' required name='project'></div>
+					       </div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Assignee</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal43_form'  name='assignee'></div>
+					       </div>
+		              </div>
+                    </div>    
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal43_form' name='save'>Save</button>
+	               	<button type="button" class="btn red" form='modal43_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 	<div id="modal44" title="Share">
 		<form id='modal44_form' autocomplete="off">
 			<fieldset>
@@ -3290,6 +3347,40 @@
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal205_form' name='save'>Save</button>
 	               	<button type="button" class="btn red" form='modal205_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <a href='#modal206' data-toggle="modal" id='modal206_link'></a>
+	<div id="modal206" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal206_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add Document</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:80%;" data-always-visible="1" data-rail-visible1="1">
+		                 <div class="row">
+									<div class="col-sm-12 col-md-4">Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal206_form' required name='name'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Document</div>
+					     			<div class="col-sm-12 col-md-8">
+                                        <a id='modal206_url'>link</a>
+					     				<input type='file' style='display:none;' form='modal206_form' name='file_hidden'/>
+										<button type='button' class='btn yellow' name='dummy'>Select File</button>
+					     			</div>
+					     		</div>
+					      </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal206_form' name='save'>Add</button>
+	               	<button type="submit" class="btn red" form='modal206_form' data-dismiss="modal" name='save'>Cancel</button>
 	             	</div>
                 </form>
             </div>

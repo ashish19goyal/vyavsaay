@@ -3384,17 +3384,16 @@ function modal32_action(date_initiated)
 function modal33_action(id)
 {
 	var form=document.getElementById("modal33_form");
-	var task_filter=form.elements[1];
-	var staff_filter=form.elements[2];
-	var due_filter=form.elements[3];
-	var status_filter=form.elements[4];
+	var task_filter=form.elements['task'];
+	var staff_filter=form.elements['assignee'];
+	var due_filter=form.elements['due'];
+	var status_filter=form.elements['status'];
 	
-	var staff_data="<staff>" +
-			"<acc_name></acc_name>" +
-			"</staff>";
-	set_my_value_list(staff_data,staff_filter);
+	var staff_data={data_store:'staff',return_column:'acc_name'};
+	set_my_value_list_json(staff_data,staff_filter);
+    
 	$(due_filter).datetimepicker();
-	set_static_value_list('task_instances','status',status_filter);
+	set_static_value_list_json('task_instances','status',status_filter);
 	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
@@ -3402,66 +3401,51 @@ function modal33_action(id)
 		event.preventDefault();
 		if(is_create_access('form14') || is_create_access('form104'))
 		{
-			var name=form.elements[1].value;
-			var assignee=form.elements[2].value;
-			var t_due=get_raw_time(form.elements[3].value);
-			var status=form.elements[4].value;
+			var name=form.elements['task'].value;
+			var assignee=form.elements['assignee'].value;
+			var t_due=get_raw_time(form.elements['due'].value);
+			var status=form.elements['status'].value;
 			var data_id=id;
 			var last_updated=get_my_time();
-			var data_xml="<task_instances>" +
-						"<id>"+data_id+"</id>" +
-						"<name>"+name+"</name>" +
-						"<assignee>"+assignee+"</assignee>" +
-						"<t_due>"+t_due+"</t_due>" +
-						"<status>"+status+"</status>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</task_instances>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>task_instances</tablename>" +
-						"<link_to>form14</link_to>" +
-						"<title>Updated</title>" +
-						"<notes>Task "+name+" assigned to "+assignee+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var prod_xml="<production_plan_items>" +
-						"<id>"+data_id+"</id>" +
-						"<status>"+status+"</status>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</production_plan_items>";
-					
-			update_row(data_xml,activity_xml);	
-			update_simple(prod_xml);	
+            
+            var data_json={data_store:'task_instances',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'name',value:name},
+	 					{index:'assignee',value:assignee},
+                        {index:'status',value:status},
+                        {index:'t_due',value:t_due},
+                        {index:'last_updated',value:last_updated}]};
+
+            var prod_json={data_store:'production_plan_items',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'status',value:status},
+                        {index:'last_updated',value:last_updated}]};
+			update_json(data_json);	
+			update_json(prod_json);	
 		}
 		else
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal33").dialog("close");		
+		$(form).find(".close").click();		
 	});
 	
-	var tasks_data="<task_instances>" +
-			"<id>"+id+"</id>" +
-			"<name></name>" +
-			"<description></description>" +
-			"<assignee></assignee>" +
-			"<t_due></t_due>" +
-			"<t_initiated></t_initiated>" +
-			"<task_hours></task_hours>" +
-			"<status></status>" +
-			"</task_instances>";
-	fetch_requested_data('',tasks_data,function(results)
+	var tasks_data={data_store:'task_instances',count:1,
+                   indexes:[{index:'id',value:id},
+                           {index:'name'},
+                           {index:'assignee'},
+                           {index:'t_due'},
+                           {index:'status'}]};
+	read_json_rows('',tasks_data,function(results)
 	{
-		for(var i in results)
+		if(results.length>0)
 		{
-			task_filter.value=results[i].name;
-			staff_filter.value=results[i].assignee;
-			due_filter.value=get_my_datetime(results[i].t_due);
-			status_filter.value=results[i].status;
-			
-			break;
+			task_filter.value=results[0].name;
+			staff_filter.value=results[0].assignee;
+			due_filter.value=get_my_datetime(results[0].t_due);
+			status_filter.value=results[0].status;			
 		}
-		$("#modal33").dialog("open");
+		$("#modal33_link").click();
 	});
 }
 
@@ -4434,30 +4418,22 @@ function modal42_action(order_id)
  * @modal Add Project Task
  * @modalNo 43
  */
-function modal43_action(date_initiated,project_id)
+function modal43_action(date_initiated)
 {
 	var form=document.getElementById("modal43_form");
-	var task_filter=form.elements[1];
-	var desc_filter=form.elements[2];
-	var staff_filter=form.elements[3];
-	var due_filter=form.elements[4];
-	var status_filter=form.elements[5];
+	var project_filter=form.elements['project'];
+	var task_filter=form.elements['task'];
+	var desc_filter=form.elements['desc'];
+    var staff_filter=form.elements['assignee'];
+	var due_filter=form.elements['due'];
 	
-	//start_filter.value=date_initiated;
-
-	var task_data="<project_phases>" +
-			"<phase_name></phase_name>" +
-			"<project_id exact='yes'>"+project_id+"</project_id>"+
-			"</project_phases>";
-	set_my_value_list(task_data,task_filter);
+	var project_data={data_store:'projects',return_column:'name'};
+	set_my_value_list_json(project_data,project_filter);
 	
-	var staff_data="<staff>" +
-			"<acc_name></acc_name>" +
-			"</staff>";
-	set_my_value_list(staff_data,staff_filter);
+	var staff_data={data_store:'staff',return_column:'acc_name'};
+	set_my_value_list_json(staff_data,staff_filter);
 	
 	$(due_filter).datetimepicker();
-	set_static_value_list('task_instances','status',status_filter);
 	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
@@ -4465,61 +4441,44 @@ function modal43_action(date_initiated,project_id)
 		event.preventDefault();
 		if(is_create_access('form104'))
 		{
-			var name=form.elements[1].value;
-			var description=form.elements[2].value;
-			var assignee=form.elements[3].value;
-			var t_due=get_raw_time(form.elements[4].value);
-			var status=form.elements[5].value;
+			var project=project_filter.value;
+			var name=task_filter.value;
+			var description=desc_filter.value;
+			var assignee=staff_filter.value;
+			var t_due=get_raw_time(due_filter.value);
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
-			var data_xml="<task_instances>" +
-						"<id>"+data_id+"</id>" +
-						"<name>"+name+"</name>" +
-						"<description>"+description+"</description>"+
-						"<assignee>"+assignee+"</assignee>" +
-						"<t_initiated>"+get_raw_time(date_initiated)+"</t_initiated>" +
-						"<t_due>"+t_due+"</t_due>" +
-						"<status>"+status+"</status>" +
-						"<task_hours>1</task_hours>" +
-						"<source>project</source>" +
-						"<source_id>"+project_id+"</source_id>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</task_instances>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>task_instances</tablename>" +
-						"<link_to>form104</link_to>" +
-						"<title>Added</title>" +
-						"<notes>Task "+name+" assigned to "+assignee+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var access_xml="<data_access>" +
-						"<id>"+get_new_key()+"</id>" +
-						"<tablename>task_instances</tablename>" +
-						"<record_id>"+data_id+"</record_id>" +
-						"<access_type>all</access_type>" +
-						"<user>"+get_account_name()+"</user>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</data_access>";
-			if(is_online())
-			{
-				server_create_row(data_xml,activity_xml);
-				server_create_simple(access_xml);
-			}
-			else
-			{
-				local_create_row(data_xml,activity_xml);
-				local_create_simple(access_xml);
-			}	
+            var t_initiated=get_my_time();
+            if(typeof date_initiated!='undefined')
+            {
+                t_initiated=get_raw_time(date_initiated);
+            }
+            
+            var data_json={data_store:'task_instances',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'name',value:name},
+	 					{index:'description',value:description},
+                        {index:'source',value:'project'},
+                        {index:'source_name',value:project},  
+                        {index:'assignee',value:assignee},
+                        {index:'status',value:'pending'},
+                        {index:'t_initiated',value:t_initiated},  
+                        {index:'t_due',value:t_due},
+                        {index:'task_hours',value:'1'},  
+	 					{index:'last_updated',value:last_updated}],
+                    log:'yes',
+                    log_data:{title:'Added',notes:'Task '+name+' for '+assignee,link_to:'form104'}};
+			
+				create_json(data_json);	
 		}
 		else
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal43").dialog("close");
+		$(form).find(".close").click();
 	});
 	
-	$("#modal43").dialog("open");
+	$("#modal43_link").click();
 }
 
 /**
@@ -16401,4 +16360,72 @@ function modal205_action(func)
 	});
 	
 	$("#modal205_link").click();
+}
+
+/**
+ * @modalNo 206
+ * @modal Add document
+ * @param button
+ */
+function modal206_action(doc_type,target_id,target_name,func)
+{
+	var form=document.getElementById('modal206_form');
+	
+	var fname=form.elements['name'];
+	var docInfo=document.getElementById('modal206_url');
+	var fpicture=form.elements['file_hidden'];
+    var dummy_button=form.elements['dummy'];
+	
+	$(dummy_button).on('click',function (e) 
+	{
+		e.preventDefault();
+		$(fpicture).trigger('click');
+	});
+	
+	fpicture.addEventListener('change',function(evt)
+	{
+		select_document(evt,function(dataURL)
+		{
+			docInfo.setAttribute('href',dataURL);
+		});
+	},false);
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form39'))
+		{
+			var doc_name=fname.value;
+			var data_id=get_new_key();
+			var url=$(docInfo).attr('href');
+			var last_updated=get_my_time();
+
+			if(url!="")
+			{
+                var data_json={data_store:'documents',
+ 				data:[{index:'id',value:data_id},
+	 					{index:'url',value:url},
+	 					{index:'doc_name',value:doc_name},
+	 					{index:'doc_type',value:doc_type},
+	 					{index:'target_id',value:target_id},
+	 					{index:'target_name',value:target_name},
+	 					{index:'last_updated',value:last_updated}]};
+				
+				create_json(data_json);	
+				
+				if(typeof func!='undefined')
+				{
+					func(url,doc_name);
+				}		
+			}
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
+		$(form).find(".close").click();
+	});
+	
+	$("#modal206_link").click();
 }

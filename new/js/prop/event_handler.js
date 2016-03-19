@@ -66,9 +66,9 @@ function declaring_global_variables()
  						'inactive':'label-danger',
  						'cold':'label-danger',
  						'warm':'label-success',
-                        'submitted':'label-info',
+                        'submitted':'label-warning',
                         'approved':'label-success',
-                        'rejected':'label-warning'};
+                        'rejected':'label-danger'};
 }
 
 function float_labels()
@@ -221,9 +221,12 @@ function modal_forms_ini()
 	dynamic_modal_array.push(29);
 	dynamic_modal_array.push(30);
 	dynamic_modal_array.push(32);
-    dynamic_modal_array.push(33);
     dynamic_modal_array.push(34);
-    for(var i=36;i<=49;i++)
+    for(var i=36;i<=42;i++)
+	{
+		dynamic_modal_array.push(i);
+	}
+	for(var i=44;i<=49;i++)
 	{
 		dynamic_modal_array.push(i);
 	}
@@ -629,8 +632,6 @@ function import_data(form_name)
 		case 'form102':modal23_action(form102_import_template,form102_import);
 		break;
 		case 'form103':modal23_action(form103_import_template,form103_import);
-		break;
-		case 'form104':modal23_action(form104_import_template,form104_import);
 		break;
 		case 'form108':modal23_action(form108_import_template,form108_import);
 		break;

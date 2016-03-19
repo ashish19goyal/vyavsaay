@@ -2257,53 +2257,6 @@ function form103_header_ini()
 	});
 }
 
-/**
- * @form Assign project tasks
- * @formNo 104
- */
-function form104_header_ini()
-{
-	var fields=document.getElementById('form104_master');
-
-	var code_filter=fields.elements[1];
-	var id_filter=fields.elements[2];
-	
-	var name_data="<projects>" +
-			"<name></name>" +
-			"</projects>";
-	
-	set_my_value_list(name_data,code_filter);
-
-	$(fields).off('submit');
-	$(fields).on('submit',function (event) 
-	{
-		event.preventDefault();
-		form104_ini();
-	});
-	
-	id_filter.value="";
-	code_filter.value="";
-	
-	my_datalist_change(code_filter,function () 
-	{
-		var id_data="<projects>"+
-					"<id></id>"+
-					"<name exact='yes'>"+code_filter.value+"</name>"+					
-					"</projects>";
-		set_my_value(id_data,id_filter);
-	});
-	
-	$("#form104_body").parent().hide();
-	$("#form104_calendar").show();
-	$('#form104_calendar').fullCalendar('destroy');
-}
-
-function form104_switch_view()
-{
-	$("#form104_body").parent().toggle();
-	$("#form104_calendar").toggle();
-}
-
 
 /**
  * @form Manage Sale Orders (multi-register)
@@ -3936,72 +3889,6 @@ function form134_header_ini()
 	set_my_value_list(id_data,id_filter);
 }
 
-/**
- * @form Project Dashboard
- * @formNo 135
- */
-function form135_header_ini()
-{
-	var fields=document.getElementById('form135_master');
-	var project_id=$("#form135_link").attr('data_id');
-	
-	var name_filter=fields.elements[1];
-	var description_filter=fields.elements[2];
-	var status_filter=fields.elements[3];
-	var id_filter=fields.elements[4];
-	var save_button=fields.elements[5];
-	var add_button=fields.elements[6];
-	id_filter.value=project_id;
-
-	$(fields).off('submit');
-	$(fields).on('submit',function (event) 
-	{
-		event.preventDefault();
-		form135_ini();
-	});	
-	
-	$(add_button).off('click');
-	$(add_button).on('click',function()
-	{
-		console.log(id_filter.value);
-		modal105_action(id_filter.value);
-	});	
-	
-	$(save_button).off('click');
-	$(save_button).on("click", function(event)
-	{
-		event.preventDefault();
-		form135_update_form();
-	});
-		
-	$(document).off('keydown');
-	$(document).on('keydown', function(event) {
-		if( event.keyCode == 83 && event.ctrlKey) {
-	    	event.preventDefault();
-	    	$(save_button).trigger('click');
-	    }
-	});
-	
-	name_filter.value='';
-	description_filter.value='';
-	status_filter.value='';
-	set_static_value_list('projects','status',status_filter);	
-
-	var project_data="<projects>"+
-					"<name></name>"+
-					"</projects>";
-	set_my_value_list(project_data,name_filter);
-	
-	my_datalist_change(name_filter,function () 
-	{
-		var project_id_data="<projects>"+
-							"<id></id>"+
-							"<name exact='yes'>"+name_filter.value+"</name>"+
-							"</projects>";
-		set_my_value(project_id_data,id_filter);
-	});
-}
-
 
 /**
  * @form Project Schedule
@@ -4126,81 +4013,6 @@ function form141_header_ini()
 	set_static_filter('sale_orders','status',status_filter);
 };
 
-
-/**
- * @form Project Budgeting
- * @formNo 144
- */
-function form144_header_ini()
-{
-	var fields=document.getElementById('form144_master');
-	var project_id=$("#form144_link").attr('data_id');
-	
-	var name_filter=fields.elements['project'];
-	var total_estimate_filter=fields.elements['estimate'];
-	var total_budget_filter=fields.elements['actual'];
-	var hours_filter=fields.elements['hours'];
-	var project_id_filter=fields.elements['project_id'];
-	var save_button=fields.elements['save'];
-
-	project_id_filter.value=project_id;
-	
-	$(fields).off('submit');
-	$(fields).on('submit',function (event) 
-	{
-		event.preventDefault();
-		form144_ini();
-	});	
-
-	$(save_button).off('click');
-	$(save_button).on("click", function(event)
-	{
-		event.preventDefault();
-		form144_update_form();
-	});
-		
-	$(document).off('keydown');
-	$(document).on('keydown', function(event) {
-		if( event.keyCode == 83 && event.ctrlKey) {
-	    	event.preventDefault();
-	    	$(save_button).trigger('click');
-	    }
-	});
-	
-	name_filter.value='';
-	total_estimate_filter.value='';
-	total_budget_filter.value='';
-	
-	var project_data="<projects>"+
-					"<name></name>"+
-					"</projects>";	
-	set_my_value_list(project_data,name_filter);
-	
-	my_datalist_change(name_filter,function () 
-	{
-		console.log('project selected');
-		var project_id_data="<projects>"+
-							"<id></id>"+
-							"<name exact='yes'>"+name_filter.value+"</name>"+
-							"</projects>";
-		set_my_value(project_id_data,project_id_filter);
-		
-		var timesheet_data="<timesheet>"+
-							"<hours_worked></hours_worked>"+
-							"<source exact='yes'>project</source>"+
-							"<source_name exact='yes'>"+name_filter.value+"</source_name>"+
-							"</timesheet>";
-		fetch_requested_data('',timesheet_data,function(times)
-		{
-			var total_hours=0;
-			for(var i in times)
-			{
-				total_hours+=parseFloat(times[i].hours_worked);
-			}
-			hours_filter.value=total_hours;
-		});					
-	});
-}
 
 
 /**

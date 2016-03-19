@@ -504,3 +504,9 @@ ul.v_task_list li>.task-status>a.done>i:hover{
     color:green;
 }
 /*******************/
+
+/********to keep modals on top of object pages***********/
+.portlet.portlet-fullscreen{
+    z-index:10040;
+}
+/********************/

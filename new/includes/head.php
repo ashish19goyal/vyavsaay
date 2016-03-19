@@ -17,6 +17,7 @@
     <link href="./css_open/bootstrap-select.css" rel="stylesheet" type="text/css" />
     <link href="./css_open/codemirror.css" rel="stylesheet" type="text/css" />
     <link href="./css_open/jquery.nestable.css" rel="stylesheet" type="text/css" />
+    <link href="./css_open/fullcalendar.min.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
 	<!-- BEGIN PAGE LEVEL STYLES -->

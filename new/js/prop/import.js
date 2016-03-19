@@ -1799,56 +1799,6 @@ function form103_import(data_array,import_type)
 
 
 /**
-* @form Manage Project Tasks
-* @formNo 104
-*/
-function form104_import(data_array,import_type)
-{
-	var data_xml="<task_instances>";
-	var counter=1;
-	var last_updated=get_my_time();
-	
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</task_instances><separator></separator><task_instances>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<name>"+row.name+"</name>" +
-				"<description>"+row.description+"</description>" +
-				"<assignee>"+row.assignee+"</assignee>" +
-				"<status>"+row.status+"</status>" +
-				"<t_due>"+get_raw_time(row.t_due)+"</t_due>" +
-				"<t_initiated>"+get_raw_time(row.t_initiated)+"</t_initiated>" +
-				"<tasks_hours>"+row.task_hours+"</task_hours>" +
-				"<source>project</source>" +
-				"<source_id>"+row.project_id+"</source_id>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	
-	data_xml+="</task_instances>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-	}
-};
-
-
-/**
 * @form Manage sale order (multi-register)
 * @formNo 108
 */
