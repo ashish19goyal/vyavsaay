@@ -73,14 +73,13 @@
 		}
 
 		$function_data="<script>".
-								$obj_function.
-								"function initialize_object(object_type,obj_name,obj_id)".
-									"{switch(object_type){".
-										$obj_cases.		
-									"}}".
-							"</script>";
+                            $obj_function.
+                            "function initialize_object(object_type,obj_name,obj_id)".
+                                "{switch(object_type){".
+                                    $obj_cases.		
+                                "}}".
+                        "</script>";
 		echo $function_data;
 		echo "</div>";
-		
 	}
 ?>

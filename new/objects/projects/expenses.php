@@ -46,7 +46,7 @@
                     var rowsHTML="<tr>";
                     rowsHTML+="<form id='object_projects_expenses_rows_"+id+"'></form>";
                         rowsHTML+="<td data-th='Person'>";
-                            rowsHTML+="<a onclick=\"show_object('staff','"+result.person+"');\">"+result.person+"</a>";
+                            rowsHTML+=result.person;
                         rowsHTML+="</td>";
                         rowsHTML+="<td data-th='Amount'>";
                             rowsHTML+="Rs. "+result.amount;

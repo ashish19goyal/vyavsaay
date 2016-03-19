@@ -56,13 +56,22 @@
                                                      {index:'field_id',array:fields_id_array}]};
                         read_json_rows('',field_value_data,function (field_values) 
                         {
-                           for(var i=1;i<fields.length;i++)
-                           {
+                            var ques_match=[];
+                            for(var j=0;j<field_values.length;j++)
+                            {
+                                if(fields[0].id==field_values[j].field_id && field_values[j].field_value==obj_name)
+                                {
+                                    ques_match.push(field_values[j].ques_id);
+                                }
+                            }
+
+                            for(var i=1;i<fields.length;i++)
+                            {
                                 var total_value=0;
                                 var total_count=0;
                                 for(var j=0;j<field_values.length;j++)
                                 {
-                                    if(fields[i].id==field_values[j].field_id)
+                                    if(fields[i].id==field_values[j].field_id && ques_match.indexOf(field_values[j].ques_id)>-1)
                                     {
                                         total_value+=parseFloat(field_values[j].field_value);
                                         total_count+=1;

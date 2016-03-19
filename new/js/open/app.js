@@ -147,11 +147,12 @@ var App = function() {
                 $('body').removeClass('page-portlet-fullscreen');
                 portlet.children('.portlet-body').css('height', 'auto');
             } else {
-                var height = App.getViewPort().height -
+                /*var height = App.getViewPort().height -
                     portlet.children('.portlet-title').outerHeight() -
                     parseInt(portlet.children('.portlet-body').css('padding-top')) -
                     parseInt(portlet.children('.portlet-body').css('padding-bottom'));
-
+                */
+                var height='100%';
                 $(this).addClass('on');
                 portlet.addClass('portlet-fullscreen');
                 $('body').addClass('page-portlet-fullscreen');

@@ -42,7 +42,7 @@
                     var rowsHTML="<tr>";
                     rowsHTML+="<form id='object_projects_timesheet_rows_"+id+"'></form>";
                         rowsHTML+="<td data-th='Person'>";
-                            rowsHTML+="<a onclick=\"show_object('staff','"+result.acc_name+"');\">"+result.acc_name+"</a>";
+                            rowsHTML+=result.acc_name;
                         rowsHTML+="</td>";
                         rowsHTML+="<td data-th='Date'>";
                             rowsHTML+=get_my_past_date(result.date);
