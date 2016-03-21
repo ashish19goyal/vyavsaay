@@ -1827,6 +1827,8 @@
 			<manifest_num index='yes' type="TEXT"></manifest_num>
 			<consignment_num index='yes' type="TEXT"></consignment_num>
 			<man_id index='yes' type="BIGINT"></man_id>
+			<pass_num index='yes' type="TEXT"></pass_num>
+			<pass_id index='yes' type="BIGINT"></pass_id>
 			<delivery_time index='yes' type="BIGINT"></delivery_time>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
@@ -1880,6 +1882,17 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</manifests>
+	<gate_pass>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<pass_num index='yes' type="TEXT"></pass_num>
+			<date index='yes' type="BIGINT"></date>
+			<num_orders index='no' type="INT"></num_orders>
+			<branch index='yes' type="TEXT"></branch>
+			<coloader index='yes' type="TEXT"></coloader>
+			<vendor index='yes' type="TEXT"></vendor>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</gate_pass>
 	<mts>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<mts_num index='yes' type="VARCHAR(20)"></mts_num>

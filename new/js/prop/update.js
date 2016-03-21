@@ -7510,51 +7510,6 @@ function form187_update_serial_numbers()
 	});
 }
 
-/**
- * @form Manage Production Plans
- * @formNo 189
- * @param button
- */
-function form189_update_item(form)
-{
-	if(is_update_access('form189'))
-	{
-		var name=form.elements[0].value;
-		var details=form.elements[1].value;
-		var from=get_raw_time(form.elements[2].value);
-		var to=get_raw_time(form.elements[3].value);
-		var status=form.elements[4].value;
-		var data_id=form.elements[5].value;
-		var last_updated=get_my_time();
-		
-		var data_xml="<production_plan>" +
-					"<id>"+data_id+"</id>" +
-					"<name>"+name+"</name>" +
-					"<details>"+details+"</details>" +
-					"<from_time>"+from+"</from_time>" +
-					"<to_time>"+to+"</to_time>" +
-					"<status>"+status+"</status>"+
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</production_plan>";
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}	
-		
-		for(var i=0;i<5;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Order (laundry)
@@ -8573,7 +8528,7 @@ function form207_update_item(form)
  */
 function form208_update_item(form)
 {
-	if(is_update_access('form189'))
+	if(is_update_access('form208'))
 	{
 		var num=form.elements[0].value;
 		var customer=form.elements[1].value;
@@ -9455,46 +9410,6 @@ function form222_update_form()
 					"</activity>";
 		update_row(data_xml,activity_xml);
 		$("[id^='save_form222_']").click();
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
- * @form Testing
- * @param button
- */
-function form224_update_item(form)
-{
-	if(is_update_access('form224'))
-	{
-		var test_id=form.elements[0].value;
-		var item=form.elements[1].value;
-		var details=form.elements[2].value;
-		var next_due=get_raw_time(form.elements[3].value);
-		var status=form.elements[4].value;
-		var data_id=form.elements[5].value;
-		var save_button=form.elements[6];
-		var del_button=form.elements[7];
-		var last_updated=get_my_time();
-		var data_xml="<testing_process>" +
-				"<id>"+data_id+"</id>" +
-				"<item>"+item+"</item>" +
-				"<test_id>"+test_id+"</test_id>" +
-				"<details>"+details+"</details>" +
-				"<next_due>"+next_due+"</next_due>" +
-				"<status>"+status+"</status>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</testing_process>";	
-	
-		update_simple(data_xml);
-		
-		for(var i=0;i<5;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}		
 	}
 	else
 	{

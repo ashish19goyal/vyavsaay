@@ -40,6 +40,7 @@ function default_load()
 		float_labels();
 		
 		document.getElementById('master_title').innerHTML=get_session_var('title');
+        
 		hide_loader();
 	}
 	else
@@ -68,7 +69,9 @@ function declaring_global_variables()
  						'warm':'label-success',
                         'submitted':'label-warning',
                         'approved':'label-success',
-                        'rejected':'label-danger'};
+                        'rejected':'label-danger',
+                        'satisfactory':'label-success',
+                        'unsatisfactory':'label-danger'};
 }
 
 function float_labels()
@@ -252,7 +255,8 @@ function modal_forms_ini()
 	{
 		dynamic_modal_array.push(i);
 	}
-    for(var i=145;i<=152;i++)
+    dynamic_modal_array.push(145);
+    for(var i=147;i<=152;i++)
 	{
 		dynamic_modal_array.push(i);
 	}

@@ -12127,58 +12127,6 @@ function form222_create_form()
 	}
 }
 
-/**
- * @form Testing
- * @param button
- */
-function form224_create_item(form)
-{
-	if(is_create_access('form224'))
-	{
-		var test_id=form.elements[0].value;
-		var item=form.elements[1].value;
-		var details=form.elements[2].value;
-		var next_due=get_raw_time(form.elements[3].value);
-		var status=form.elements[4].value;
-		var data_id=form.elements[5].value;
-		var save_button=form.elements[6];
-		var del_button=form.elements[7];
-		var last_updated=get_my_time();
-		var data_xml="<testing_process>" +
-				"<id>"+data_id+"</id>" +
-				"<item>"+item+"</item>" +
-				"<test_id>"+test_id+"</test_id>" +
-				"<details>"+details+"</details>" +
-				"<next_due>"+next_due+"</next_due>" +
-				"<status>"+status+"</status>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</testing_process>";	
-	
-		create_simple(data_xml);
-		
-		for(var i=0;i<5;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-		
-		del_button.removeAttribute("onclick");
-		$(del_button).on('click',function(event)
-		{
-			form224_delete_item(del_button);
-		});
-		
-		$(save_button).off('click');
-		$(save_button).on('click',function()
-		{
-			form224_update_item(form);
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
 
 /**
  * @form Delivery Run

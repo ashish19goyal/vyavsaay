@@ -1786,19 +1786,51 @@
 		</form>
 	</div>
 
-	<div id="modal146" title="Add Test Results">
-		<form id='modal146_form' autocomplete="off">
-			<fieldset>
-				<label>Date: <input type="text" required readonly='readonly'></label><br>
-				<label>Result: <input type="text" required></label><br>
-				<label>Details: <textarea></textarea></label><br>
-				<label>Document: <a id='modal146_url'>link</a>
-						<input type="file"></label><br>
-				<label>Next Test Date: <input type="text"></label><br>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
+    <a href='#modal146' data-toggle="modal" id='modal146_link'></a>
+	<div id="modal146" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal146_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add Test Results</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:80%;" data-always-visible="1" data-rail-visible1="1">
+		                 <div class="row">
+							<div class="col-sm-12 col-md-4">Date</div>
+					     	<div class="col-sm-12 col-md-8"><input type='text' form='modal146_form' required readonly='readonly' name='date'></div>
+					     </div>
+		                 <div class="row">
+							<div class="col-sm-12 col-md-4">Next Due</div>
+					     	<div class="col-sm-12 col-md-8"><input type='text' form='modal146_form' required name='due'></div>
+					     </div>
+                        <div class="row">
+							<div class="col-sm-12 col-md-4">Result</div>
+					     	<div class="col-sm-12 col-md-8"><input type='text' form='modal146_form' required name='result'></div>
+					     </div>
+		                 <div class="row">
+							<div class="col-sm-12 col-md-4">Notes</div>
+                             <div class="col-sm-12 col-md-8"><textarea form='modal146_form' name='notes'></textarea></div>
+					     </div>
+		                 <div class="row">
+				            <div class="col-sm-12 col-md-4">Document</div>
+					     	<div class="col-sm-12 col-md-8">
+                                <a id='modal146_url'>link</a>
+					     		<input type='file' style='display:none' name='fi'>
+								<button type='button' class='btn yellow' name='dummy'>Select File</button>
+					     	</div>
+					     </div>
+                       </div>
+                    </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal146_form' name='save'>Save</button>
+	               	<button type="submit" class="btn red" form='modal146_form' data-dismiss="modal" name='save'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 	<div id="modal147" title="Return Items">
 		<form id='modal147_form' autocomplete="off">
@@ -3381,6 +3413,28 @@
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal206_form' name='save'>Add</button>
 	               	<button type="submit" class="btn red" form='modal206_form' data-dismiss="modal" name='save'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <a href='#modal207' data-toggle="modal" id='modal207_link'></a>
+	<div id="modal207" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-full">
+            <div class="modal-content">
+                <form id='modal207_form' autocomplete='off'>
+                    <div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Test Results</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+                           <table id='modal207_table' class='table table-striped table-bordered table-hover dt-responsive no-more-tables'></table>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="button" class="btn red" form='modal207_form' data-dismiss='modal' name='cancel'>Close</button>
 	             	</div>
                 </form>
             </div>

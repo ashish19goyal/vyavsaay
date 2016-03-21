@@ -3308,7 +3308,7 @@ function modal32_action(date_initiated)
 			"<acc_name></acc_name>" +
 			"</staff>";
 	set_my_value_list(staff_data,staff_filter);
-	$(due_filter).datetimepicker();
+	$(due_filter).vdatetimepicker();
 	set_static_value_list('task_instances','status',status_filter);
 	
 	$(task_filter).off('blur');
@@ -3392,7 +3392,7 @@ function modal33_action(id)
 	var staff_data={data_store:'staff',return_column:'acc_name'};
 	set_my_value_list_json(staff_data,staff_filter);
     
-	$(due_filter).datetimepicker();
+	$(due_filter).vdatetimepicker();
 	set_static_value_list_json('task_instances','status',status_filter);
 	
 	$(form).off('submit');
@@ -3577,7 +3577,7 @@ function modal36_action(schedule_date)
 			"</staff>";
 	set_my_value_list(staff_data,staff_filter);
 	
-	$(schedule_filter).datetimepicker();
+	$(schedule_filter).vdatetimepicker();
 	schedule_filter.value=schedule_date;
 	set_static_value_list('appointments','status',status_filter);
 		
@@ -4433,7 +4433,7 @@ function modal43_action(date_initiated)
 	var staff_data={data_store:'staff',return_column:'acc_name'};
 	set_my_value_list_json(staff_data,staff_filter);
 	
-	$(due_filter).datetimepicker();
+	$(due_filter).vdatetimepicker();
 	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
@@ -7182,7 +7182,7 @@ function modal117_action(date_initiated)
 			"</staff>";
 	set_my_value_list(staff_data,staff_filter);
 	
-	$(due_filter).datetimepicker();
+	$(due_filter).vdatetimepicker();
 	set_static_value_list('task_instances','status',status_filter);
 	
 	$(form).off('submit');
@@ -10556,16 +10556,23 @@ function modal146_action(test_data_id,test_id,item)
 {
 	var form=document.getElementById('modal146_form');
 	
-	var fdate=form.elements[1];
-	var fresult=form.elements[2];
-	var fdetails=form.elements[3];
+	var fdate=form.elements['date'];
+	var fresult=form.elements['result'];
+	var fdetails=form.elements['notes'];
 	var docInfo=document.getElementById('modal146_url');
-	var fpicture=form.elements[4];
-	var fnext=form.elements[5];
-
+	var fpicture=form.elements['fi'];
+	var fnext=form.elements['due'];
+    var dummy_button=form.elements['dummy'];
+	
+	$(dummy_button).on('click',function (e) 
+	{
+		e.preventDefault();
+		$(fpicture).trigger('click');
+	});
+	
 	$(fnext).datepicker();
 	fdate.value=get_my_date();
-	set_static_filter('testing_results','response',fresult);
+	set_static_filter_json('testing_results','response',fresult);
 	
 	fpicture.addEventListener('change',function(evt)
 	{
@@ -10582,58 +10589,50 @@ function modal146_action(test_data_id,test_id,item)
 		if(is_update_access('form224'))
 		{
 			var files=fpicture.files;
-			var doc_name="";
-    		for(var i = 0; i < files.length; i++)
-        		doc_name+= files[i].name + " ";
-        	var data_id=get_new_key();
+			var doc_name=test_id+item;
+    		var data_id=get_new_key();
 			var url=$(docInfo).attr('href');
 			var last_updated=get_my_time();
 
-			var result_xml="<testing_results>"+
-						"<id>"+data_id+"</id>"+
-						"<test_id>"+test_id+"</test_id>"+
-						"<item>"+item+"</item>"+
-						"<response>"+fresult.value+"</response>"+
-						"<details>"+fdetails.value+"</details>"+
-						"<date>"+get_raw_time(fdate.value)+"</date>"+
-						"<next_date>"+get_raw_time(fnext.value)+"</next_date>"+
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</testing_results>";
-			create_simple(result_xml);	
+            var result_json={data_store:'testing_results',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'test_id',value:test_id},
+                        {index:'item',value:item},
+	 					{index:'details',value:fdetails.value},
+                        {index:'response',value:fresult.value},  
+	 					{index:'next_date',value:get_raw_time(fnext.value)},
+	 					{index:'date',value:get_raw_time(fdate.value)},
+	 					{index:'last_updated',value:last_updated}]};
+ 			
+			create_json(result_json);	
 			
-			var test_xml="<testing_process>" +
-				"<id>"+test_data_id+"</id>" +
-				"<next_due>"+get_raw_time(fnext.value)+"</next_due>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</testing_process>";	
-			update_simple(test_xml);
+            var test_json={data_store:'testing_process',
+	 				data:[{index:'id',value:test_data_id},
+	 					{index:'next_due',value:get_raw_time(fnext.value)},
+	 					{index:'last_updated',value:last_updated}]}; 			
+			update_json(test_json);
 					
-			if(url!="")
+			if(url!="" && url!=null)
 			{
-				var pic_xml="<documents>" +
-							"<id>"+data_id+"</id>" +
-							"<url>"+url+"</url>" +
-							"<doc_type>testing_results</doc_type>" +
-							"<doc_name>"+doc_name+"</doc_name>"+						
-							"<target_id>"+data_id+"</target_id>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</documents>";
-				create_simple(pic_xml);	
-				
-				if(typeof func!='undefined')
-				{
-					func(url,doc_name);
-				}		
+                var pic_json={data_store:'documents',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'url',value:url},
+                        {index:'doc_type',value:'testing_results'},
+	 					{index:'doc_name',value:doc_name},
+                        {index:'target_id',value:test_data_id},  
+	 					{index:'last_updated',value:last_updated}]};
+
+				create_json(pic_json);						
 			}
 		}
 		else
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal146").dialog("close");
+		$(form).find(".close").click();
 	});
 	
-	$("#modal146").dialog("open");
+	$("#modal146_link").click();
 }
 
 
@@ -10685,8 +10684,6 @@ function modal147_action(hiring_type,button)
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		if(is_update_access('form224'))
-		{
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
 			
@@ -10702,12 +10699,8 @@ function modal147_action(hiring_type,button)
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</bill_items>";	
 			create_simple(data_xml);			
-		}
-		else
-		{
-			$("#modal2_link").click();
-		}
-		$("#modal147").dialog("close");
+		
+        $("#modal147").dialog("close");
 	});
 	
 	$("#modal147").dialog("open");
@@ -16428,4 +16421,53 @@ function modal206_action(doc_type,target_id,target_name,func)
 	});
 	
 	$("#modal206_link").click();
+}
+
+/**
+ * @modalNo 207
+ * @modal Test Results
+ */
+function modal207_action(test_id,test_data_id)
+{
+    var result_data={data_store:'testing_results',
+                  indexes:[{index:'id'},{index:'date'},{index:'response'},{index:'details'},{index:'test_id',exact:test_id}]};
+    read_json_rows('',result_data,function(followups)
+    {
+        var item_table=document.getElementById("modal207_table");
+        item_table.innerHTML="";
+        if(followups.length>0)
+        {
+            var item_head=document.createElement('tr');
+            item_head.innerHTML="<th>Date</th><th>Result</th><th>Notes</th><th>Document</th>";
+            item_table.appendChild(item_head);
+            followups.forEach(function(followup)
+            {
+                var item_row=document.createElement('tr');
+                item_row.innerHTML="<td>"+get_my_past_date(followup.date)+"</td><td><span class='label label-sm "+status_label_colors[followup.response]+"'>"+followup.response+"</span></td><td>"+followup.details+"</td><td id='modal207_document_"+followup.id+"'></td>";
+                item_table.appendChild(item_row);
+                
+                var doc_column={data_store:'documents',count:1,
+                               indexes:[{index:'id'},
+                                       {index:'url'},
+                                       {index:'doc_name'},
+                                       {index:'doc_type',exact:'testing_results'},
+                                       {index:'target_id',exact:test_data_id}]};
+                read_json_rows('',doc_column,function(doc_results)
+                {
+                    if (doc_results.length>0)
+                    {
+                        var docHTML="<a href='"+doc_results[0].url+"' download='"+doc_results[0].doc_name+"'><u>"+doc_results[0].doc_name+"</u></a><br>";							
+                        document.getElementById('modal207_document_'+followup.id).innerHTML=docHTML;
+                    }
+                });
+            });
+        }
+        else
+        {
+            var item_head=document.createElement('tr');
+            item_head.innerHTML="<th>No Results to show</th>";
+            item_table.appendChild(item_head);
+        }
+        $("#modal207_link").click();
+    });
 }

@@ -197,7 +197,7 @@
                 var receiver_filter=fields.elements[8];
                 var save_button=fields.elements[9];
                 
-                $(schedule_filter).datetimepicker();
+                $(schedule_filter).vdatetimepicker();
 
                 $(fields).on("submit", function(event)
                 {

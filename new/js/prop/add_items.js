@@ -2437,7 +2437,7 @@ function form88_add_item()
 		});
 		
 		set_static_value_list('manufacturing_schedule','status',status_filter);
-		$(schedule_filter).datetimepicker();
+		$(schedule_filter).vdatetimepicker();
 	}
 	else
 	{
@@ -2537,7 +2537,7 @@ function form89_add_item()
 		});
 		
 		set_static_value_list('appointments','status',status_filter);
-		$(schedule_filter).datetimepicker();
+		$(schedule_filter).vdatetimepicker();
 	}
 	else
 	{
@@ -7840,7 +7840,7 @@ function form172_add_item()
 						"</product_master>";
 		set_my_value_list(item_data,name_filter);
 		
-		$(from_filter).datetimepicker();
+		$(from_filter).vdatetimepicker();
 		
 		$(name_filter).on('blur',function () 
 		{
@@ -10789,70 +10789,6 @@ function form222_add_item()
 
 		form222_get_totals();
 		longPressEditable($('.dblclick_editable'));		
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
- * @form Testing
- * @formNo 224
- */
-function form224_add_item()
-{
-	if(is_create_access('form224'))
-	{
-		var test_id=Math.round(get_new_key()/1000000);
-		var id=get_new_key();
-		var rowsHTML="<tr>";
-		rowsHTML+="<form id='form224_"+id+"' autocomplete='off'></form>";
-			rowsHTML+="<td data-th='Test Id'>";
-				rowsHTML+="<input type='text' form='form224_"+id+"' required readonly='readonly' value='"+test_id+"'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Item'>";
-				rowsHTML+="<input type='text' form='form224_"+id+"' required>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Details'>";
-				rowsHTML+="<textarea form='form224_"+id+"'></textarea>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Next Due Date'>";
-				rowsHTML+="<input type='text' form='form224_"+id+"' required>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Status'>";
-				rowsHTML+="<input type='text' form='form224_"+id+"' required value='pending'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Action'>";
-				rowsHTML+="<input type='hidden' form='form224_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form224_"+id+"' id='save_form224_"+id+"' >";	
-				rowsHTML+="<input type='button' class='delete_icon' form='form224_"+id+"' onclick='$(this).parent().parent().remove();'>";
-			rowsHTML+="</td>";			
-		rowsHTML+="</tr>";
-	
-		$('#form224_body').prepend(rowsHTML);
-		var fields=document.getElementById("form224_"+id);
-		var item_filter=fields.elements[1];
-		var date_filter=fields.elements[3];
-		var status_filter=fields.elements[4];
-		
-		$(date_filter).datepicker();
-		
-		$(fields).on("submit", function(event)
-		{
-			event.preventDefault();
-			form224_create_item(fields);
-		});
-		
-		var item_data="<product_master>"+
-						"<name></name>"+
-						"</product_master>";
-		set_my_value_list(item_data,item_filter,function () 
-		{
-			$(item_filter).focus();
-		});
-						
-		set_static_value_list('testing_process','status',status_filter);
 	}
 	else
 	{

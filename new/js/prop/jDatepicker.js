@@ -15,3 +15,13 @@
       });      
 	};
 }(jQuery));
+
+(function ($) {
+	$.fn.vdatetimepicker=function(options)
+	{
+		return this.each(function() 
+		{
+			$(this).datetimepicker({format:'DD/MM/YYYY HH:mm'});
+      });      
+	};
+}(jQuery));

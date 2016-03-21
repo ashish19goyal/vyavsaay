@@ -8,8 +8,7 @@
 			<label># of Orders<br><input type='number' readonly='readonly' name='num_orders'></label>
 			<label>	<input type='button' title='Save Manifest' name='save' class='save_icon'></label>
             <label>	<input type='button' title='Print Manifest' name='print' class='print_icon' onclick='form321_print_manifest();'></label>
-            <label>	<input type='button' title='Print Gatepass' name='print_g' class='share_icon' onclick='form321_print_gatepass();'></label>
-			<label>	<input type='hidden' name='id'>
+            <label>	<input type='hidden' name='id'>
 					<input type='hidden' name='saved'>
 				<input type='submit' class='submit_hidden'>
 			</label>
@@ -22,8 +21,8 @@
 					<th style='width:50px'>S. No.</th>
 					<th>AWB #</th>
 					<th>Consignment #</th>
+					<th>Weight</th>
 					<th>Product</th>
-					<th>Details</th>
                     <th>Destination</th>
 					<th><input type='button' form='form321_header' title='Add item' class='add_icon' onclick='form321_add_item();'></th>
 			</tr>
@@ -130,6 +129,7 @@
                                                           {index:'manifest_type'},
                                                           {index:'consignment_num'},
                                                           {index:'ship_to'},
+                                                          {index:'address1'},
                                                           {index:'city'},
                                                           {index:'state'},
                                                           {index:'sku'},
@@ -145,7 +145,7 @@
                                 var id=result.id;
                                 var rowsHTML="<tr>";
 
-                                var address=result.city+", "+result.state;
+                                var address=result.ship_to+", "+result.address1+", "+result.city+", "+result.state;
                                 rowsHTML+="<form id='form321_"+id+"'></form>";
                                     rowsHTML+="<td data-th='S.No.'>";
                                     rowsHTML+="</td>";
@@ -155,12 +155,12 @@
                                     rowsHTML+="<td data-th='Consignment #'>";
                                         rowsHTML+="<input type='text' readonly='readonly' form='form321_"+id+"' value='"+result.consignment_num+"'>";
                                     rowsHTML+="</td>";
-                                    rowsHTML+="<td data-th='Product'>";
-                                        rowsHTML+="<input type='text' readonly='readonly' form='form321_"+id+"' value='"+result.sku+"'>";
+                                    rowsHTML+="<td data-th='Weight'>";
+                                        rowsHTML+="<input type='number' step='any' readonly='readonly' form='form321_"+id+"' value='"+result.weight+"'>";
                                     rowsHTML+="</td>";
-                                    rowsHTML+="<td data-th='Details'>";
+                                    rowsHTML+="<td data-th='Product'>";
                                         rowsHTML+="Pieces: <input type='number' step='any' readonly='readonly' form='form321_"+id+"' value='"+result.pieces+"'>";
-                                        rowsHTML+="<br>Weight: <input type='number' step='any' readonly='readonly' form='form321_"+id+"' value='"+result.weight+"'>";
+                                        rowsHTML+="<br>Item: <textarea readonly='readonly' form='form321_"+id+"'>"+result.sku+"</textarea>";
                                     rowsHTML+="</td>";
                                     rowsHTML+="<td data-th='Destination'>";
                                         rowsHTML+="<textarea readonly='readonly' form='form321_"+id+"'>"+address+"</textarea>";
@@ -207,12 +207,12 @@
                     rowsHTML+="<td data-th='Consignment #'>";
                         rowsHTML+="<input type='text' form='form321_"+id+"'>";
                     rowsHTML+="</td>";
-                    rowsHTML+="<td data-th='Product'>";
-                        rowsHTML+="<input type='text' readonly='readonly' form='form321_"+id+"'>";
+                    rowsHTML+="<td data-th='Weight'>";
+                        rowsHTML+="<input type='text' form='form321_"+id+"'>";
                     rowsHTML+="</td>";
-                    rowsHTML+="<td data-th='Details'>";
+                    rowsHTML+="<td data-th='Product'>";
                         rowsHTML+="Pieces: <input type='text' readonly='readonly' form='form321_"+id+"'>";
-                        rowsHTML+="<br>Weight: <input type='text' readonly='readonly' form='form321_"+id+"'>";
+                        rowsHTML+="<br>Item: <textarea readonly='readonly' form='form321_"+id+"'></textarea>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Destination'>";
                         rowsHTML+="<textarea readonly='readonly' form='form321_"+id+"'></textarea>";
@@ -221,7 +221,6 @@
                         rowsHTML+="<input type='hidden' form='form321_"+id+"' value='"+id+"'>";
                         rowsHTML+="<input type='button' class='submit_hidden' form='form321_"+id+"' id='save_form321_"+id+"'>";
                         rowsHTML+="<input type='button' class='delete_icon' form='form321_"+id+"' id='delete_form321_"+id+"' onclick='$(this).parent().parent().remove(); form321_update_serial_numbers();'>";
-                        rowsHTML+="<input type='hidden' form='form321_"+id+"' value='' name='order_history'>";
                     rowsHTML+="</td>";			
                 rowsHTML+="</tr>";
 
@@ -230,14 +229,13 @@
                 var item_form=document.getElementById('form321_'+id);
                 var awb_filter=item_form.elements[0];
                 var order_filter=item_form.elements[1];
-                var product_filter=item_form.elements[2];
+                var weight_filter=item_form.elements[2];
                 var pieces_filter=item_form.elements[3];
-                var weight_filter=item_form.elements[4];
+                var product_filter=item_form.elements[4];
                 var address_filter=item_form.elements[5];
                 var id_filter=item_form.elements[6];
                 var save_button=item_form.elements[7];
-                var history_filter=item_form.elements[9];
-
+                
                 var new_manifest=true;
                 var saved=document.getElementById('form321_master').elements['saved'].value;
                 if(saved=='yes')
@@ -246,6 +244,15 @@
                 }
 
                 $(order_filter).on('keyup',function(e)
+                {
+                    if(e.keyCode==13)
+                    {
+                        e.preventDefault();
+                        $(weight_filter).focus();
+                    }
+                });
+                
+                $(weight_filter).on('keyup',function(e)
                 {
                     if(e.keyCode==13)
                     {
@@ -329,6 +336,8 @@
                                 {
                                     var orders_data="<logistics_orders count='1'>"+
                                                     "<id></id>"+
+                                                    "<ship_to></ship_to>"+
+                                                    "<address1></address1>"+
                                                     "<city></city>"+
                                                     "<state></state>"+
                                                     "<awb_num exact='yes'>"+awb_filter.value+"</awb_num>" +
@@ -338,7 +347,6 @@
                                                     "<pieces></pieces>" +
                                                     "<weight></weight>" +
                                                     "<status array='yes'>--received--undelivered--pending--</status>"+
-                                                    "<order_history></order_history>"+
                                                     "</logistics_orders>";
                                     //console.log(orders_data);				
                                     fetch_requested_data('',orders_data,function (orders) 
@@ -346,13 +354,12 @@
                                         //console.log(orders);
                                         if(orders.length>0)
                                         {
-                                            address_filter.value=orders[0].city+", "+orders[0].state;
+                                            address_filter.value=orders[0].ship_to+", "+orders[0].address1+", "+orders[0].city+", "+orders[0].state;
                                             order_filter.value=orders[0].consignment_num;
                                             product_filter.value=orders[0].sku;
                                             weight_filter.value=orders[0].weight;
                                             pieces_filter.value=orders[0].pieces;
                                             id_filter.value=orders[0].id;
-                                            history_filter.value=orders[0].order_history;
                                             $(order_filter).focus();
                                         }
                                         else 
@@ -363,7 +370,6 @@
                                             weight_filter.value="";
                                             pieces_filter.value="";
                                             id_filter.value="";
-                                            history_filter.value="";
                                             awb_filter.value="";
                                             $("#modal65").dialog("open");
                                         }
@@ -382,6 +388,8 @@
                             {
                                 var orders_data="<logistics_orders count='1'>"+
                                                     "<id></id>"+
+                                                    "<ship_to></ship_to>"+
+                                                    "<address1></address1>"+
                                                     "<city></city>"+
                                                     "<state></state>"+
                                                     "<awb_num exact='yes'>"+awb_filter.value+"</awb_num>" +
@@ -391,7 +399,6 @@
                                                     "<pieces></pieces>" +
                                                     "<weight></weight>" +
                                                     "<status array='yes'>--received--undelivered--pending--</status>"+
-                                                    "<order_history></order_history>"+
                                                     "</logistics_orders>";
                                     
                                 fetch_requested_data('',orders_data,function (orders) 
@@ -399,13 +406,12 @@
                                     //console.log(orders);
                                     if(orders.length>0)
                                     {
-                                        address_filter.value=orders[0].city+", "+orders[0].state;
+                                        address_filter.value=orders[0].ship_to+", "+orders[0].address1+", "+orders[0].city+", "+orders[0].state;
                                         order_filter.value=orders[0].consignment_num;
                                         product_filter.value=orders[0].sku;
                                         weight_filter.value=orders[0].weight;
                                         pieces_filter.value=orders[0].pieces;
                                         id_filter.value=orders[0].id;
-                                        history_filter.value=orders[0].order_history;	
                                         $(order_filter).focus();
                                     }
                                     else 
@@ -417,7 +423,6 @@
                                         pieces_filter.value="";
                                         id_filter.value="";
                                         awb_filter.value="";
-                                        history_filter.value="";
                                         $("#modal65").dialog("open");
                                     }
                                 });
@@ -453,31 +458,19 @@
                 var num_orders=master_form.elements['num_orders'].value;
 
                 var consignment_num=form.elements[1].value;
+                var weight=form.elements[2].value;
                 var data_id=form.elements[6].value;
                 var save_button=form.elements[7];
                 var del_button=form.elements[8];
 
-                var old_order_history=form.elements[9].value;
-
-                var order_history=[];
-                if(old_order_history!="")
-                    order_history=JSON.parse(old_order_history);
-                var history_object=new Object();
-                history_object.timeStamp=get_my_time();
-                history_object.details="Order in-transit";
-                history_object.location='';
-                history_object.status="in-transit";
-                order_history.push(history_object);
-                var order_history_string=JSON.stringify(order_history);		
-
+                
                 var last_updated=get_my_time();
                 var data_xml="<logistics_orders>" +
                             "<id>"+data_id+"</id>" +
                             "<consignment_num>"+consignment_num+"</consignment_num>" +
-                            "<status>in-transit</status>" +
+                            "<weight>"+weight+"</weight>"+
                             "<manifest_num>"+manifest_num+"</manifest_num>"+
                             "<man_id>"+manifest_id+"</man_id>"+
-                            "<order_history>"+order_history_string+"</order_history>"+
                             "<last_updated>"+last_updated+"</last_updated>" +
                             "</logistics_orders>";
                 update_simple(data_xml);
@@ -605,10 +598,6 @@
         }
 
 
-        /**
-         * @form Manage Transit manifests
-         * @param button
-         */
         function form321_update_form()
         {
             if(is_create_access('form321'))
@@ -681,7 +670,6 @@
                     var data_xml="<logistics_orders>" +
                                 "<id>"+data_id+"</id>" +
                                 "<consignment_num></consignment_num>" +
-                                "<status>received</status>" +
                                 "<manifest_num></manifest_num>"+
                                 "<man_id></man_id>"+
                                 "<last_updated>"+last_updated+"</last_updated>" +
@@ -790,13 +778,14 @@
             new_table.setAttribute('style','font-size:10px;border:none;text-align:left;');
             new_table.setAttribute('class','printing_tables');
 
-            var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:6%'>S.No.</td>"+
-                        "<td style='text-align:left;width:30%'>AWB #</td>"+
+            var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:5%'>S.No.</td>"+
+                        "<td style='text-align:left;width:20%'>AWB #</td>"+
                         "<td style='text-align:left;width:12%'>Consigment #</td>"+
-                        "<td style='text-align:left;width:10%'>Pieces</td>"+
-                        "<td style='text-align:left;width:10%'>Weight</td>"+
+                        "<td style='text-align:left;width:8%'>Weight</td>"+
+                        "<td style='text-align:left;width:10%'>Dimension</td>"+
+                        "<td style='text-align:left;width:8%'>Pieces</td>"+
                         "<td style='text-align:left;width:15%'>Product</td>"+
-                        "<td style='text-align:left;width:15%'>Destination</td></tr>";
+                        "<td style='text-align:left;width:20%'>Destination</td></tr>";
 
             var table_rows=table_header;
             var counter=0;
@@ -824,9 +813,10 @@
                 table_rows+="<tr style='border-top: 1px solid #000000;height:60px;'><td><div>"+counter+"</div></td>"+
                         "<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[1].value+"</div></td>"+
+                        "<td><div style='text-align:left;'>"+form.elements[2].value+"</div></td>"+
+                        "<td><div style='text-align:left;'></div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[3].value+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[4].value+"</div></td>"+
-                        "<td><div style='text-align:left;'>"+form.elements[2].value+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[5].value+"</div></td></tr>";				
             });
             new_table.innerHTML=table_rows;
@@ -845,125 +835,5 @@
             func(container);
         }
 
-        function form321_print_gatepass()
-        {
-            print_form321_gatepass(function(container)
-            {
-                $.print(container);
-                container.innerHTML="";	
-            });	
-        }
-
-        function print_form321_gatepass(func)
-        {
-            var form_id='form321';
-
-            ////////////setting up containers///////////////////////	
-            var container=document.createElement('div');
-
-            var header=document.createElement('div');
-                var logo=document.createElement('div');
-                var business_title=document.createElement('div');
-                var mts_barcode=document.createElement('img');
-
-            var mts_title=document.createElement('div');
-
-            var detail_section=document.createElement('div');
-
-            var table_container=document.createElement('div');
-
-            ////////////setting styles for containers/////////////////////////
-
-            container.setAttribute('style','width:98%;height:90%;margin:0px;padding:0px;');
-            header.setAttribute('style','display:block;width:98%;height:70px;margin-top:10px;');
-                logo.setAttribute('style','float:left;width:35%;height:60px;');
-                business_title.setAttribute('style','float:left;width:40%;height:60px;text-align:center;font-weight:bold;');
-                mts_barcode.setAttribute('style','float:right;width:23%;height:60px;padding:left:5px;padding-right:5px;');
-            mts_title.setAttribute('style','display:block;width:98%;height:30px;text-align:center;font-size:40px;');
-            detail_section.setAttribute('style','display:block;width:98%;height:30px;text-align:center;');
-
-            ///////////////getting the content////////////////////////////////////////
-
-            var bt=get_session_var('title');
-            var font_size=get_session_var('print_size');
-            var logo_image=get_session_var('logo');
-
-            var master_form=document.getElementById(form_id+'_master');
-            var mts_date=master_form.elements['date'].value;
-            var mts_num=master_form.elements['manifest_num'].value;
-            var coloader=master_form.elements['loader'].value;
-            var num_orders=master_form.elements['num_orders'].value;
-            var vendor=master_form.elements['vendor'].value;
-
-            ////////////////filling in the content into the containers//////////////////////////
-
-            var table_element=document.getElementById(form_id+'_body');
-            var total_items=$(table_element).find('tr').length;
-
-            logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"' style='height:98%;margin-left:10%'>";
-            business_title.innerHTML=bt;
-
-            $(mts_barcode).JsBarcode(mts_num,{displayValue:false});
-
-            mts_title.innerHTML="Gate-Pass";
-
-            employee_text="<td>Co-loader: "+coloader+"</td><td>Vendor: "+vendor+"</td>";
-            mts_text="<td>Manifest #: "+mts_num+"</td><td>Date: "+mts_date+"</td><td>Total Orders: "+num_orders+"</td>";
-            detail_text="<table style='border:none;width:98%;font-size:11px;'><tr>"+employee_text+"</tr><tr>"+mts_text+"</tr></table>";
-
-            detail_section.innerHTML=detail_text;
-
-            var new_table=document.createElement('table');
-            new_table.setAttribute('style','font-size:10px;border:none;text-align:left;');
-            new_table.setAttribute('class','printing_tables');
-
-            var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:6%'>S.No.</td>"+
-                        "<td style='text-align:left;width:35%'>AWB #</td>"+
-                        "<td style='text-align:left;width:20%'>Pieces</td>"+
-                        "<td style='text-align:left;width:35%'>Product</td></tr>";
-
-            var table_rows=table_header;
-            var counter=0;
-
-            $(table_element).find('form').each(function(index)
-            {
-                counter+=1;
-                var form=$(this)[0];
-        
-                var awb_num=""+form.elements[0].value;
-
-                var cnote_no=document.createElement('div');
-                var barcode_image=document.createElement('img');
-                var barcode_value=document.createElement('div');
-
-                barcode_image.setAttribute('style','width:130px;height:30px;');
-                barcode_value.setAttribute('style','width:130px;font-size:14px;margin:1px;text-align:center;');
-
-                barcode_value.innerHTML=awb_num;
-                $(barcode_image).JsBarcode(awb_num,{displayValue:false});
-
-                cnote_no.appendChild(barcode_image);
-                cnote_no.appendChild(barcode_value);
-
-                table_rows+="<tr style='border-top: 1px solid #000000;height:60px;'><td><div>"+counter+"</div></td>"+
-                        "<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
-                        "<td><div style='text-align:left;'>"+form.elements[3].value+"</div></td>"+
-                        "<td><div style='text-align:left;'>"+form.elements[2].value+"</div></td></tr>";				
-            });
-            new_table.innerHTML=table_rows;
-            /////////////placing the containers //////////////////////////////////////////////////////	
-
-            container.appendChild(header);
-            container.appendChild(mts_title);
-            container.appendChild(detail_section);
-
-            container.appendChild(new_table);
-
-            header.appendChild(logo);
-            header.appendChild(business_title);
-            header.appendChild(mts_barcode);
-
-            func(container);
-        }
     </script>
 </div>

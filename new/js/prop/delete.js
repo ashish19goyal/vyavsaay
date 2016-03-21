@@ -3864,63 +3864,6 @@ function form188_delete_item(button)
 	}
 }
 
-/**
- * @form Manage production plan
- * @param button
- */
-function form189_delete_item(button)
-{
-	if(is_delete_access('form189'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-
-			var data_id=form.elements[5].value;
-			var last_updated=get_my_time();
-			var data_xml="<production_plan>" +
-						"<id>"+data_id+"</id>" +
-						"</production_plan>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>production_plan</tablename>" +
-						"<link_to>form189</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>"+name+" production plan</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			delete_row(data_xml,activity_xml);
-			
-			var items_xml="<production_plan_items>" +
-						"<id></id>"+						
-						"<plan_id exact='yes'>"+data_id+"</plan_id>" +
-						"</production_plan_items>";	
-			get_single_column_data(function (items) 
-			{
-				items.forEach(function (item) 
-				{
-					var item_xml="<production_plan_items>" +
-						"<id>"+item.id+"</id>" +
-						"</production_plan_items>";
-					var task_xml="<task_instances>" +
-						"<source_id exact='yes'>"+item.id+"</source_id>" +
-						"</task_instances>";
-					delete_simple(item_xml);
-					delete_simple(task_xml);
-						
-				});	
-				delete_simple(items_xml);			
-			},items_xml);
-
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Orders (laundry)
@@ -4653,39 +4596,6 @@ function form222_delete_item(button)
 			{
 				local_delete_simple(data_xml);
 			}	
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-
-/**
- * @form Testing
- * @param button
- */
-function form224_delete_item(button)
-{
-	if(is_delete_access('form224'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var data_id=form.elements[5].value;
-			var data_xml="<testing_process>" +
-						"<id>"+data_id+"</id>" +
-						"</testing_process>";	
-			var data2_xml="<testing_results>" +
-						"<test_id>"+data_id+"</test_id>" +
-						"</testing_results>";	
-			delete_simple(data_xml);
-			delete_simple(data2_xml);
-			
 			$(button).parent().parent().remove();
 		});
 	}

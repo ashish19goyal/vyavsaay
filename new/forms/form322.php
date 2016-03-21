@@ -1,4 +1,4 @@
-<div id='form322' class='tab-pane'>
+<div id='form322' class='function_detail'>
 	<table class='rwd-table'>
 		<thead>
 			<tr>
@@ -9,6 +9,7 @@
 					<th>Date <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form322_header'></th>
 					<th>
 						<input type='button' form='form322_header' value='EXPORT' class='export_icon'>
+						<input type='button' form='form322_header' value='IMPORT' class='import_icon' onclick='form322_import();'>
 						<input type='submit' form='form322_header' style='visibility: hidden;'>
 					</th>
 			</tr>

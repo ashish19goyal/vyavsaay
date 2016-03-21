@@ -260,7 +260,7 @@
                     var fields=document.getElementById("form104_"+result.id);
                     var date_filter=fields.elements[3];
                     
-                    $(date_filter).datetimepicker();
+                    $(date_filter).vdatetimepicker();
                     
                     $(fields).on("submit", function(event)
                     {
@@ -277,7 +277,7 @@
                     set_my_value_list_json(staff_data,assignee_filter);
 
                     set_static_value_list_json('task_instances','status',status_filter);
-                    $(due_filter).datetimepicker();
+                    $(due_filter).vdatetimepicker();
                 });
 
 				paginator.update_index(results.length);

@@ -40,6 +40,7 @@ function ajax_json(url,kvp,func)
 		},
 		success: function(return_data,return_status,e)
 		{
+			//console.log(kvp);
 			//console.log(e.responseText);
 			var response_object=JSON.parse(e.responseText);
 				
