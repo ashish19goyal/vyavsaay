@@ -15518,3 +15518,195 @@ function modal181_action(data_id,preview)
 	
 	$("#modal181").dialog("open");
 }
+
+
+function modal208_action()
+{
+	var form=document.getElementById('modal208_form');
+
+	var template_button=form.elements['template'];
+    var select_file=form.elements['fi'];
+	var dummy_button=form.elements['dummy'];
+	var selected_file=form.elements['selected_file'];
+	var import_button=form.elements['import'];
+    var manifest_filter=form.elements['manifest'];
+    var coloader_filter=form.elements['coloader'];
+    var vendor_filter=form.elements['vendor'];
+        
+    var manifest_data={data_store:'user_preferences',return_column:'value',indexes:[{index:'name',exact:'manifest_num'}]};
+    set_my_value_json(manifest_data,manifest_filter);
+    
+	$(dummy_button).off('click'); 
+	$(dummy_button).on('click',function (e) 
+	{
+		e.preventDefault();
+		$(select_file).trigger('click');
+	});
+
+	dummy_button.setAttribute('class','generic_red_icon');
+	select_file.value="";
+	selected_file.value="";
+
+	$(select_file).off('change');
+	$(select_file).on('change',function () 
+	{
+		var file_name=select_file.value;
+		if(file_name!="" && (file_name.indexOf('csv')>-1))
+		{
+			dummy_button.setAttribute('class','generic_green_icon');
+			selected_file.value=file_name;
+		}
+		else 
+		{
+			dummy_button.setAttribute('class','generic_red_icon');
+			select_file.value="";
+			selected_file.value="";
+		}
+	});
+
+	$(template_button).off("click");
+	$(template_button).on("click",function(event)
+	{
+		var data_array=['AWB No','Consignment No','Weight','LBH'];
+		my_array_to_csv(data_array);
+	});
+
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		show_progress();
+		var file=select_file.files[0];
+        var fileType = /csv/gi;
+		var manifest_num=manifest_filter.value;
+        var coloader=coloader_filter.value;
+        var vendor=vendor_filter.value;
+        
+        selected_file.value = "Uploading!! Please don't refresh";
+    	var reader = new FileReader();
+        reader.onload = function(e)
+        {
+        	progress_value=2;
+        	var content=reader.result;
+        	var data_array=csv_string_to_obj_array(content);
+			
+			progress_value=5;
+			
+			var validate_template_array=[{column:'Weight',regex:new RegExp('^[0-9 .]+$')},
+										{column:'AWB No',required:'yes',regex:new RegExp('^[0-9]+$')}];
+			
+			var error_array=validate_import_array(data_array,validate_template_array);
+			if(error_array.status=='success')
+			{
+	        	progress_value=10;
+	           	//////////////////
+                var data_id=get_new_key();
+                var last_updated=get_my_time();
+		
+                var awbs_array=[];
+                data_array.forEach(function(data)
+                {
+                    awbs_array.push(data['AWB No']);
+                });
+                
+                var ids_data={data_store:'logistics_orders',indexes:[{index:'id'},{index:'awb_num',array:awbs_array}]};
+                read_json_rows('',ids_data,function(ids)
+                {
+                    data_array.forEach(function(row)
+                    {
+                        for(var i in ids)
+                        {
+                            if(ids[i].awb_num==row['AWB No'])
+                            {
+                                row.id=ids[i].id;
+                                ids.splice(i,1);
+                                break;
+                            }
+                        }
+                    });
+                    
+                    var data_json={data_store:'manifests',
+                                log:'yes',
+                                data:[{index:'id',value:data_id},
+                                    {index:'manifest_num',value:manifest_num},
+                                    {index:'coloader',value:coloader},
+                                    {index:'date',value:get_raw_time(get_my_date())},
+                                    {index:'vendor',value:vendor},
+                                    {index:'num_orders',value:data_array.length},  
+                                    {index:'last_updated',value:last_updated}],
+                                log_data:{title:'Imported',notes:'Manifest # '+manifest_num,link_to:'form322'}};
+                    create_json(data_json);
+                    
+                    var num_data={data_store:'user_preferences',return_column:'id',indexes:[{index:'name',exact:'manifest_num'}]};
+                    read_json_single_column(num_data,function (manifest_num_ids)
+                    {
+                        if(manifest_num_ids.length>0)
+                        {
+                            var num_json={data_store:'user_preferences',
+                                data:[{index:'id',value:manifest_num_ids[0]},
+                                    {index:'value',value:(parseInt(manifest_num)+1)},
+                                    {index:'last_updated',value:last_updated}]};
+
+                            update_json(num_json);
+                        }
+                    });
+
+
+                    var orders_data_json={data_store:'logistics_orders',loader:'yes',data:[]};
+
+                    var counter=1;
+
+                    data_array.forEach(function(row)
+                    {
+                        counter+=1;
+                        
+                        var data_json_array=[{index:'id',value:row.id},
+                                {index:'weight',value:row['Weight']},
+                                {index:'lbh',value:row['LBH']},
+                                {index:'consignment_num',value:row['Consignment No']},
+                                {index:'man_id',value:data_id},
+                                {index:'manifest_num',value:manifest_num},
+                                {index:'last_updated',value:last_updated}];
+                        orders_data_json.data.push(data_json_array);
+                    });
+                    update_batch_json(orders_data_json);
+
+                    ////////////////////
+                    progress_value=15;
+
+                    var ajax_complete=setInterval(function()
+                    {
+                        //console.log(number_active_ajax);
+                        if(number_active_ajax===0)
+                        {
+                            progress_value=15+(1-(localdb_open_requests/(2*data_array.length)))*85;
+                        }
+                        else if(localdb_open_requests===0)
+                        {
+                            progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
+                        }
+
+                        if(number_active_ajax===0 && localdb_open_requests===0)
+                        {
+                            hide_progress();
+                            selected_file.value="Upload complete";
+                            $(select_file).val('');
+                            $("#modal208").dialog("close");
+                            clearInterval(ajax_complete);
+                        }
+                    },1000); 
+                });
+	        }
+	        else
+	        {
+	        	hide_progress();
+       			$(select_file).val('');
+       			$("#modal208").dialog("close");
+				modal164_action(error_array);       			
+	        }
+        }
+        reader.readAsText(file);    
+    });
+	
+	$("#modal208").dialog("open");
+}

@@ -3441,4 +3441,24 @@
         </div>
     </div>
     
+    <div id="modal208" title="Import Manifest">
+		<form id='modal208_form' autocomplete="off">
+			<fieldset>
+				<input type="button" value='Download import template' name='template' class='modal_submit'>
+				<br>
+				<label>Manifest #: <input type="text" name='manifest' required readonly='readonly'></label><br>
+				<label>Coloader: <input type="text" name='coloader'></label><br>
+				<label>Vendor: <input type="text" name='vendor'></label><br>
+				<br>
+				<br>
+				<b>Import pre-filled template</b><br>
+				<input type="file" required value='Select file' name='fi' accept=".csv" style='display:none'>
+				<input type='button' class='generic_red_icon' name='dummy' value='Select File'>
+				<br>
+				<output name='selected_file'></output><br>
+				<input type="submit" value='Import' name='import' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+        
 </div>

@@ -333,6 +333,19 @@ function modal_forms_ini()
 	   		}
 		});
 	}
+    
+    $("#modal208").dialog({
+	   		autoOpen: false,
+	   		width: width,
+	   		modal: true,
+	   		show: "slide",
+	   		closeOnEscape: true,
+	   		close:function(event,ui)
+	   		{
+	   			var form_id="modal208_form";
+	   			document.getElementById(form_id).reset();
+	   		}
+    });
 }
 
 function home_display()

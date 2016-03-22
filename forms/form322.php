@@ -9,7 +9,7 @@
 					<th>Date <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form322_header'></th>
 					<th>
 						<input type='button' form='form322_header' value='EXPORT' class='export_icon'>
-						<input type='button' form='form322_header' value='IMPORT' class='import_icon' onclick='form322_import();'>
+						<input type='button' form='form322_header' value='IMPORT' class='import_icon' onclick='modal208_action();'>
 						<input type='submit' form='form322_header' style='visibility: hidden;'>
 					</th>
 			</tr>
@@ -203,7 +203,7 @@
                                     "</row>";
                         });
                         data_xml+="</logistics_orders>";
-                        //console.log(data_xml);
+                        
                         update_batch(data_xml);
 
                     },manifest_items_xml);

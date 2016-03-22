@@ -274,6 +274,7 @@ function modal_forms_ini()
 	dynamic_modal_array.push(173);
 	dynamic_modal_array.push(174);
 	dynamic_modal_array.push(177);
+	dynamic_modal_array.push(208);
 	
 	dynamic_modal_array.forEach(function(i)
 	{
