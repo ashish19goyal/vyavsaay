@@ -3697,85 +3697,6 @@ function form184_delete_item(button)
 	}
 }
 
-/**
- * @form Track Production
- * @param button
- */
-function form185_delete_item(button)
-{
-	if(is_delete_access('form185'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-
-			var name=form.elements[0].value;
-			var data_id=form.elements[6].value;
-			var last_updated=get_my_time();
-			var data_xml="<task_instances>" +
-						"<id>"+data_id+"</id>" +
-						"</task_instances>";	
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>task_instances</tablename>" +
-						"<link_to>form185</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>"+name+" task</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			delete_row(data_xml,activity_xml);
-				
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
- * @form Create production plan
- * @param button
- */
-function form186_delete_item(button)
-{
-	if(is_delete_access('form186'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-
-			var data_id=form.elements[7].value;
-			var last_updated=get_my_time();
-			var data_xml="<production_plan_items>" +
-						"<id>"+data_id+"</id>" +
-						"</production_plan_items>";	
-			var task_xml="<task_instances>" +
-						"<source_id exact='yes'>"+data_id+"</source_id>" +
-						"</task_instances>";
-			var batch_raw_xml="<batch_raw_material>"+
-						"<production_id>"+data_id+"</production_id>"+
-						"</batch_raw_material>";
-			var move_xml="<store_movement>"+
-						"<record_source>production_plan_item</record_source>"+
-						"<source_id>"+data_id+"</source_id>"+
-						"</store_movement>";
-										
-			delete_simple(data_xml);
-			delete_simple(task_xml);
-			delete_simple(batch_raw_xml);
-			delete_simple(move_xml);
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Testing Steps
@@ -5535,32 +5456,6 @@ function form255_delete_item(button)
 	}
 }
 
-/**
- * @form Marketing Leads
- * @param button
- */
-function form256_delete_item(button)
-{
-	if(is_delete_access('form256'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			var item=form.elements[0].value;
-			var data_id=form.elements[3].value;
-			var data_xml="<batch_raw_material>" +
-						"<id>"+data_id+"</id>" +
-						"</batch_raw_material>";
-			delete_simple(data_xml);
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 
 /**
