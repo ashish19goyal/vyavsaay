@@ -108,28 +108,27 @@
         if(plan_id!="")
         {
             show_loader();
-            var plan_columns="<production_plan>" +
-                    "<id>"+plan_id+"</id>" +
-                    "<name></name>" +
-                    "<details></details>" +
-                    "<from_time></from_time>" +
-                    "<to_time></to_time>" +
-                    "<status></status>"+
-                    "</production_plan>";
+            var plan_columns={data_store:'production_plan',
+                             indexes:[{index:'id',value:plan_id},
+                                     {index:'name'},
+                                     {index:'details'},
+                                     {index:'from_time'},
+                                     {index:'to_time'},
+                                     {index:'status'}]};
 
             var filter_fields=document.getElementById('form186_master');
 
             ////separate fetch function to get plan details 
-            fetch_requested_data('',plan_columns,function(plan_results)
+            read_json_rows('form186',plan_columns,function(plan_results)
             {
-                for (var i in plan_results)
+                if (plan_results.length>0)
                 {
-                    filter_fields.elements[1].value=plan_results[i].name;
-                    filter_fields.elements[2].value=get_my_past_date(plan_results[i].from_time);
-                    filter_fields.elements[3].value=get_my_past_date(plan_results[i].to_time);
-                    filter_fields.elements[4].value=plan_results[i].status;
-                    filter_fields.elements[5].value=plan_id;
-                    var save_button=filter_fields.elements[6];
+                    filter_fields.elements['plan'].value=plan_results[0].name;
+                    filter_fields.elements['from'].value=get_my_past_date(plan_results[0].from_time);
+                    filter_fields.elements['to'].value=get_my_past_date(plan_results[0].to_time);
+                    filter_fields.elements['status'].value=plan_results[0].status;
+                    filter_fields.elements['plan_id'].value=plan_id;
+                    var save_button=document.getElementById('form186_save');
 
                     $(save_button).off('click');
                     $(save_button).on("click", function(event)
@@ -137,108 +136,102 @@
                         event.preventDefault();
                         form186_update_form();
                     });
-
-                    break;
                 }
+            });
 
+            var plan_items_column={data_store:'production_plan_items',
+                                  indexes:[{index:'id'},
+                                          {index:'item'},
+                                          {index:'batch'},
+                                          {index:'order_no'},
+                                          {index:'quantity'},
+                                          {index:'brand'},
+                                          {index:'status'},
+                                          {index:'from_time'},
+                                          {index:'to_time'},
+                                          {index:'plan_id',exact:plan_id}]};
 
-                var plan_items_column="<production_plan_items>" +
-                        "<id></id>" +
-                        "<item></item>" +
-                        "<batch></batch>"+
-                        "<order_no></order_no>" +
-                        "<quantity></quantity>" +
-                        "<brand></brand>" +
-                        "<status></status>" +
-                        "<from_time></from_time>" +
-                        "<to_time></to_time>" +
-                        "<plan_id exact='yes'>"+plan_id+"</plan_id>" +
-                        "</production_plan_items>";
-
-                fetch_requested_data('',plan_items_column,function(results)
+            read_json_rows('form186',plan_items_column,function(results)
+            {
+                results.forEach(function(result)
                 {
-                    results.forEach(function(result)
-                    {
-                        var plan_status=filter_fields.elements[4].value;
-                        var rowsHTML="";
-                        var id=result.id;
-                        rowsHTML+="<tr>";
-                        rowsHTML+="<form id='form186_"+id+"'></form>";
-                            rowsHTML+="<td data-th='Order'>";
-                                rowsHTML+="<input style='width:50px;' type='number' readonly='readonly' form='form186_"+id+"' value='"+result.order_no+"'>";
-                            rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Item'>";
-                                rowsHTML+="<input type='text' readonly='readonly' form='form186_"+id+"' value='"+result.item+"'>";
-                            rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Brand'>";
-                                rowsHTML+="<input type='text' readonly='readonly' form='form186_"+id+"' value='"+result.brand+"'>";
-                            rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Quantity'>";
-                                rowsHTML+="<input type='number' readonly='readonly' class='dblclick_editable' form='form186_"+id+"' value='"+result.quantity+"' step='any'>";
-                            rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Schedule'>";
-                                rowsHTML+="<b>From</b>: <input type='text' readonly='readonly' class='dblclick_editable' form='form186_"+id+"' value='"+get_my_past_date(result.from_time)+"'>";
-                                rowsHTML+="<br><b>To</b>: <input type='text' readonly='readonly' class='dblclick_editable' form='form186_"+id+"' value='"+get_my_past_date(result.to_time)+"'>";
-                            rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Status'>";
-                                rowsHTML+="<input type='text' readonly='readonly' form='form186_"+id+"' class='dblclick_editable' value='"+result.status+"'>";
-                            rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Action'>";
-                                rowsHTML+="<input type='hidden' form='form186_"+id+"' value='"+id+"'>";
-                                rowsHTML+="<input type='button' class='save_icon' form='form186_"+id+"' id='save_form186_"+id+"'>";
-                            if(result.status!='inventoried')
-                                rowsHTML+="<input type='button' class='delete_icon' form='form186_"+id+"' id='delete_form186_"+id+"' onclick='form186_delete_item($(this));'>";
-                            if(plan_status=='approved' && result.status!='inventoried')
-                            {
-                                rowsHTML+="<input type='button' class='generic_icon' value='Inventory' name='ready' form='form186_"+id+"'>";							
-                            }						
-                            rowsHTML+="</td>";			
-                        rowsHTML+="</tr>";
-
-                        $('#form186_body').prepend(rowsHTML);
-                        var fields=document.getElementById('form186_'+id);
-                        var from_filter=fields.elements[4];
-                        var to_filter=fields.elements[5];
-                        var status_filter=fields.elements[6];
-                        var save_button=fields.elements[8];
-                        var ready_button=fields.elements['ready'];
-
-                        $(ready_button).on('click',function()
+                    var plan_status=filter_fields.elements['status'].value;
+                    var id=result.id;
+                    var rowsHTML="<tr>";
+                    rowsHTML+="<form id='form186_"+id+"'></form>";
+                        rowsHTML+="<td data-th='Order'>";
+                            rowsHTML+="<input style='width:50px;' type='number' readonly='readonly' form='form186_"+id+"' value='"+result.order_no+"'>";
+                        rowsHTML+="</td>";
+                        rowsHTML+="<td data-th='Item'>";
+                            rowsHTML+="<input type='text' readonly='readonly' form='form186_"+id+"' value='"+result.item+"'>";
+                        rowsHTML+="</td>";
+                        rowsHTML+="<td data-th='Brand'>";
+                            rowsHTML+="<input type='text' readonly='readonly' form='form186_"+id+"' value='"+result.brand+"'>";
+                        rowsHTML+="</td>";
+                        rowsHTML+="<td data-th='Quantity'>";
+                            rowsHTML+="<input type='number' readonly='readonly' class='dblclick_editable' form='form186_"+id+"' value='"+result.quantity+"' step='any'>";
+                        rowsHTML+="</td>";
+                        rowsHTML+="<td data-th='Schedule'>";
+                            rowsHTML+="<input type='text' readonly='readonly' class='floatlabel dblclick_editable' placeholder='From' form='form186_"+id+"' value='"+get_my_past_date(result.from_time)+"'>";
+                            rowsHTML+="<input type='text' readonly='readonly' placeholder='From' class='dblclick_editable floatlabel' form='form186_"+id+"' value='"+get_my_past_date(result.to_time)+"'>";
+                        rowsHTML+="</td>";
+                        rowsHTML+="<td data-th='Status'>";
+                            rowsHTML+="<input type='text' readonly='readonly' form='form186_"+id+"' class='dblclick_editable' value='"+result.status+"'>";
+                        rowsHTML+="</td>";
+                        rowsHTML+="<td data-th='Action'>";
+                            rowsHTML+="<input type='hidden' form='form186_"+id+"' value='"+id+"'>";
+                            rowsHTML+="<button type='button' class='btn green' form='form186_"+id+"' id='save_form186_"+id+"' name='save' title='Save'><i class='fa fa-save'></i></button>";
+                        if(result.status!='inventoried')
+                            rowsHTML+="<button type='button' class='btn red' form='form186_"+id+"' id='delete_form186_"+id+"' name='delete' onclick='form186_delete_item($(this));'><i class='fa fa-trash'></i></button>";
+                        if(plan_status=='approved' && result.status!='inventoried')
                         {
-                            //console.log('button');
-                            element_display(result.id,'form256');
+                            rowsHTML+="<button type='button' class='btn default green-stripe' title='Inventory' name='ready' form='form186_"+id+"'>Inventory</button>";							
+                        }						
+                        rowsHTML+="</td>";			
+                    rowsHTML+="</tr>";
 
-                            var save_button=document.getElementById('form256_master').elements['save'];						
-                            $(save_button).off('click');
-                            $(save_button).on("click", function(event)
-                            {
-                                event.preventDefault();
-                                form256_create_form();
-                            });						
-                        });
+                    $('#form186_body').prepend(rowsHTML);
+                    var fields=document.getElementById('form186_'+id);
+                    var from_filter=fields.elements[4];
+                    var to_filter=fields.elements[5];
+                    var status_filter=fields.elements[6];
+                    var save_button=fields.elements['save'];
+                    var ready_button=fields.elements['ready'];
 
-                        $(from_filter).datepicker();
-                        $(to_filter).datepicker();
-                        set_static_value_list('production_plan_items','status',status_filter);
+                    $(ready_button).on('click',function()
+                    {
+                        //console.log('button');
+                        element_display(result.id,'form256');
 
-                        $(save_button).on('click',function (event) 
+                        var save_button=document.getElementById('form256_master').elements['save'];						
+                        $(save_button).off('click');
+                        $(save_button).on("click", function(event)
                         {
                             event.preventDefault();
-                            form186_update_item(fields);
-                        });
+                            form256_create_form();
+                        });						
                     });
 
-                    $('#form186_share').show();
-                    $('#form186_share').click(function()
+                    $(from_filter).datepicker();
+                    $(to_filter).datepicker();
+                    set_static_value_list_json('production_plan_items','status',status_filter);
+
+                    $(save_button).on('click',function (event) 
                     {
-                        modal101_action('Production Plan','','staff',function (func) 
-                        {
-                            print_form186(func);
-                        });
+                        event.preventDefault();
+                        form186_update_item(fields);
                     });
-
-                    hide_loader();
                 });
+
+                $('#form186_share').click(function()
+                {
+                    modal101_action('Production Plan','','staff',function (func) 
+                    {
+                        print_form186(func);
+                    });
+                });
+                $('#form186').formcontrol();
+                hide_loader();
             });
         }
     }
@@ -249,9 +242,8 @@
         {
             var filter_fields=document.getElementById('form186_master');
 
-            var rowsHTML="";
             var id=get_new_key();
-            rowsHTML+="<tr>";
+            var rowsHTML="<tr>";
             rowsHTML+="<form id='form186_"+id+"' autocomplete='off'></form>";
                 rowsHTML+="<td data-th='Order'>";
                     rowsHTML+="<input style='width:50px;' type='number' form='form186_"+id+"'>";
@@ -274,8 +266,8 @@
                 rowsHTML+="</td>";
                 rowsHTML+="<td data-th='Action'>";
                     rowsHTML+="<input type='hidden' form='form186_"+id+"' value='"+id+"'>";
-                    rowsHTML+="<input type='button' class='save_icon' form='form186_"+id+"' id='save_form186_"+id+"' >";
-                    rowsHTML+="<input type='button' class='delete_icon' form='form186_"+id+"' id='delete_form186_"+id+"' onclick='$(this).parent().parent().remove();'>";
+                    rowsHTML+="<button type='button' class='btn green' name='save' form='form186_"+id+"' id='save_form186_"+id+"'><i class='fa fa-save'></i></button>";
+                    rowsHTML+="<button type='button' class='btn red' form='form186_"+id+"' id='delete_form186_"+id+"' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
                     rowsHTML+="<input type='submit' class='submit_hidden' form='form186_"+id+"'>";
                 rowsHTML+="</td>";
             rowsHTML+="</tr>";
@@ -305,20 +297,18 @@
                 form186_add_item();
             });
 
-            var product_data="<attributes>" +
-            "<name></name>" +
-            "<type exact='yes'>product</type>"+
-            "<value exact='yes'>yes</value>"+
-            "<attribute exact='yes'>manufactured</attribute>"+
-            "</attributes>";
-            set_my_value_list_func(product_data,item_filter,function () 
+            var product_data={data_store:'attributes',return_column:'name',
+                             indexes:[{index:'type',exact:'product'},
+                                     {index:'value',exact:'yes'},
+                                     {index:'attribute',exact:'manufactured'}]};
+            set_my_value_list_json(product_data,item_filter,function () 
             {
                 $(item_filter).focus();
             });
 
             $(from_filter).datepicker();
             $(to_filter).datepicker();
-            set_static_value_list('production_plan_items','status',status_filter);
+            set_static_value_list_json('production_plan_items','status',status_filter);
             form186_update_serial_numbers();
         }
         else
@@ -333,7 +323,7 @@
         {
             var master_form=document.getElementById("form186_master");
 
-            var plan_id=master_form.elements[5].value;
+            var plan_id=master_form.elements['plan_id'].value;
 
             var order=form.elements[0].value;
             var item=form.elements[1].value;
@@ -361,8 +351,7 @@
                     "</production_plan_items>";
 
             create_simple(data_xml);
-            console.log(data_xml);
-
+            
             var raw_data="<pre_requisites>" +
                     "<type exact='yes'>product</type>" +
                     "<requisite_type exact='yes'>product</requisite_type>"+
@@ -554,10 +543,6 @@
     }
 
 
-    /**
-     * @form Create production plan
-     * @param button
-     */
     function form186_create_form()
     {
         if(is_create_access('form186'))
@@ -565,31 +550,25 @@
             show_loader();
             var form=document.getElementById("form186_master");
 
-            var name=form.elements[1].value;
-            var from=get_raw_time(form.elements[2].value);
-            var to=get_raw_time(form.elements[3].value);
-            var status=form.elements[4].value;
-            var data_id=form.elements[5].value;
-            var save_button=form.elements[6];
+            var name=form.elements['plan'].value;
+            var from=get_raw_time(form.elements['form'].value);
+            var to=get_raw_time(form.elements['to'].value);
+            var status=form.elements['status'].value;
+            var data_id=form.elements['plan_id'].value;
+            var save_button=document.getElementById('form186_save');
             var last_updated=get_my_time();
 
-            var data_xml="<production_plan>" +
-                        "<id>"+data_id+"</id>" +
-                        "<name>"+name+"</name>" +
-                        "<from_time>"+from+"</from_time>" +
-                        "<to_time>"+to+"</to_time>" +
-                        "<status>"+status+"</status>"+
-                        "<last_updated>"+last_updated+"</last_updated>" +
-                        "</production_plan>";
-            var activity_xml="<activity>" +
-                        "<data_id>"+data_id+"</data_id>" +
-                        "<tablename>production_plan</tablename>" +
-                        "<link_to>form189</link_to>" +
-                        "<title>Saved</title>" +
-                        "<notes>Production plan "+name+"</notes>" +
-                        "<updated_by>"+get_name()+"</updated_by>" +
-                        "</activity>";
-            create_row(data_xml,activity_xml);
+            var data_json={data_store:'production_plan',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'name',value:name},
+	 					{index:'from_time',value:from},
+                        {index:'to_time',value:to},
+                        {index:'status',value:status},  
+	 					{index:'last_updated',value:last_updated}],
+                    log:'yes',
+                    log_data:{title:'Saved',notes:'Production plan '+name,link_to:'form189'}};
+ 				
+            create_json(data_json);
 
             $(save_button).off('click');
             $(save_button).on('click',function(event)
@@ -685,48 +664,31 @@
     }
 
 
-    /**
-     * @form Create Production Plan
-     * @param button
-     */
     function form186_update_form()
     {
         if(is_update_access('form186'))
         {
             var form=document.getElementById("form186_master");
 
-            var name=form.elements[1].value;
-            var from=get_raw_time(form.elements[2].value);
-            var to=get_raw_time(form.elements[3].value);
-            var status=form.elements[4].value;
-            var data_id=form.elements[5].value;
-            var save_button=form.elements[6];
+            var name=form.elements['plan'].value;
+            var from=get_raw_time(form.elements['from'].value);
+            var to=get_raw_time(form.elements['to'].value);
+            var status=form.elements['status'].value;
+            var data_id=form.elements['plan_id'].value;
+            var save_button=document.getElementById('form186_save');
             var last_updated=get_my_time();
 
-            var data_xml="<production_plan>" +
-                        "<id>"+data_id+"</id>" +
-                        "<name>"+name+"</name>" +
-                        "<from_time>"+from+"</from_time>" +
-                        "<to_time>"+to+"</to_time>" +
-                        "<status>"+status+"</status>"+
-                        "<last_updated>"+last_updated+"</last_updated>" +
-                        "</production_plan>";
-            var activity_xml="<activity>" +
-                        "<data_id>"+data_id+"</data_id>" +
-                        "<tablename>production_plan</tablename>" +
-                        "<link_to>form189</link_to>" +
-                        "<title>Updated</title>" +
-                        "<notes>Production Plan "+name+"</notes>" +
-                        "<updated_by>"+get_name()+"</updated_by>" +
-                        "</activity>";
-            if(is_online())
-            {
-                server_update_row(data_xml,activity_xml);
-            }
-            else
-            {
-                local_update_row(data_xml,activity_xml);
-            }
+            var data_json={data_store:'production_plan',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'name',value:name},
+	 					{index:'from_time',value:from},
+                        {index:'to_time',value:to},
+                        {index:'status',value:status},  
+	 					{index:'last_updated',value:last_updated}],
+                    log:'yes',
+                    log_data:{title:'Updated',notes:'Production plan '+name,link_to:'form189'}};
+ 			
+            update_json(data_json);
 
             $("[id^='save_form186_']").click();
         }

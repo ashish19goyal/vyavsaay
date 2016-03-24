@@ -1,486 +1,392 @@
-<div id='form185' class='tab-pane'>
-<input type='button' value='Switch view' class='generic_icon' onclick='form185_switch_view();'>
-	<div id="form185_calendar" style="max-width: 900px;margin:20px auto;"></div>
-	<table class='rwd-table'>
-		<thead>
-			<tr>
-				<form id='form185_header'></form>
-					<th>Task <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form185_header'></th>
-					<th>Details</th>
-					<th>Assignee <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form185_header'></th>
-					<th>Time</th>
-					<th>Status <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form185_header'></th>
-					<th>
-						<input type='button' class='add_icon' form='form185_header' title='Add task' onclick="modal117_action('production');">
-						<input type='submit' form='form185_header' style='visibility: hidden;'>				
-					</th>
-			</tr>
-		</thead>
-		<tbody id='form185_body'>
-		</tbody>
-	</table>
-	<div id='form185_nav' class='form_nav'>
-		<img src='./images/previous.png' id='form185_prev' class='prev_icon' data-index='-25' onclick="$('#form185_index').attr('data-index',$(this).attr('data-index')); form185_ini();">
-		<div style='display:hidden;' id='form185_index' data-index='0'></div>
-		<img src='./images/next.png' id='form185_next' class='next_icon' data-index='25' onclick="$('#form185_index').attr('data-index',$(this).attr('data-index')); form185_ini();">
+<div id='form185' class='tab-pane portlet box green-meadow'>	   
+	<div class="portlet-title">
+		<div class='caption'>
+            <div class='btn-group' id='form185_view' data-toggle='buttons'>
+                <label class='btn green-jungle cc active' onclick=form185_ini('calendar');><input name='cc' type='radio' class='toggle'>Calendar</label>
+                <label class='btn green-jungle tt' onclick=form185_ini('table');><input type='radio' name='tt' class='toggle'>Table</label>
+            </div>
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick='modal43_action();'>Add Task <i class='fa fa-plus'></i></a>
+		</div>
+		<div class="actions">
+            <div class="btn-group">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
+                <ul class="dropdown-menu pull-right">
+                    <li>
+                        <a id='form185_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
+                    </li>
+                    <li>
+                      	<a id='form185_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
+                    </li>
+                    <li>
+                        <a id='form185_print'><i class='fa fa-print'></i> Print</a>
+                    </li>
+                    <li class="divider"> </li>
+                    <li>
+                        <a id='form185_upload' onclick=modal23_action(form185_import_template,form185_import,form185_import_validate);><i class='fa fa-upload'></i> Import</a>
+                    </li>
+                </ul>
+            </div>
+        </div>	
 	</div>
+	
+	<div class="portlet-body">
+	   <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
+			<thead>
+				<tr>
+					<form id='form185_header'></form>
+						<th><input type='text' placeholder="Task" class='floatlabel' name='task' form='form185_header'></th>
+						<th><input type='text' placeholder="Details" readonly="readonly" form='form185_header'></th>
+						<th><input type='text' placeholder="Assignee" class='floatlabel' name='assignee' form='form185_header'></th>
+						<th><input type='text' placeholder="Status" class='floatlabel' name='status' form='form185_header'></th>
+						<th><input type='submit' form='form185_header' style='visibility: hidden;'></th>
+				</tr>
+			</thead>
+			<tbody id='form185_body'>
+			</tbody>
+		</table>
+
+        <div class='row'>
+            <div class="col-md-12 col-sm-12">
+                <div id="form185_calendar" class="has-toolbar"></div>
+            </div>
+        </div>
+
+    </div>
     
     <script>
-function form185_header_ini()
-{
-	var filter_fields=document.getElementById('form185_header');
-	var task_filter=filter_fields.elements[0];
-	var assignee_filter=filter_fields.elements[1];
-	var status_filter=filter_fields.elements[2];
-	
-	var name_data="<business_processes>" +
-			"<name></name>" +
-			"</business_processes>";
-	
-	set_my_filter(name_data,task_filter);
-	
-	var assignee_data="<staff>"+
-					"<acc_name></acc_name>"+
-					"</staff>";
-	set_my_filter(assignee_data,assignee_filter);
-	
-	set_static_filter('task_instances','status',status_filter);
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form185_ini();
-	});
+    function form185_header_ini()
+    {
+        var filter_fields=document.getElementById('form185_header');
+        var task_filter=filter_fields.elements['task'];
+        var assignee_filter=filter_fields.elements['assignee'];
+        var status_filter=filter_fields.elements['status'];
 
-	$("#form185_body").parent().hide();
-	$("#form185_nav").hide();
-	$("#form185_calendar").show();
-}
+        var assignee_data={data_store:'staff',return_column:'acc_name'};
+        set_my_filter_json(assignee_data,assignee_filter);
 
-function form185_switch_view()
-{
-	$("#form185_body").parent().toggle();
-	$("#form185_nav").toggle();
-	$("#form185_calendar").toggle();
-}
-    
-function form185_ini()
-{
-	var task_id=$("#form185_link").attr('data_id');
+        set_static_filter_json('task_instances','status',status_filter);
 
-	$('#form185_body').html("");
-	
-	$('#form185_calendar').fullCalendar('destroy');
-	$('#form185_calendar').fullCalendar({
-		header: {
-			left: 'prev,next today',
-			center: 'title',
-			right: 'month,agendaWeek,agendaDay'
-		},
-		height:400,
-		fixedWeekCount:false,
-		editable: true,
-		eventLimit: true, // allow "more" link when too many events
-		events: function(start, end, timezone, callback) {
-	        var start_time=parseFloat(start.unix())*1000;
-	        var end_time=parseFloat(end.unix())*1000;
-	        var tasks_data="<task_instances>" +
-	        		"<id></id>" +
-	        		"<name></name>" +
-	        		"<description></description>" +
-	        		"<t_initiated lowerbound='yes'>"+start_time+"</t_initiated>" +
-	        		"<t_initiated upperbound='yes'>"+end_time+"</t_initiated>" +
-	        		"<t_due></t_due>" +
-	        		"<status></status>" +
-	        		"<assignee></assignee>" +
-	        		"<task_hours></task_hours>" +
-	        		"<source exact='yes'>business process</source>" +
-	        		"</task_instances>";
+        $(filter_fields).off('submit');
+        $(filter_fields).on('submit',function(event)
+        {
+            event.preventDefault();
+            form185_ini();
+        });
+        
+        $("#form185_calendar").parent().parent().show();        
+    }
 
-	        if_data_read_access('task_instances',function(accessible_data)
-	        {
-		        fetch_requested_data('form185',tasks_data,function(tasks)
-		        {
-		        	var events=[];
-		        	tasks.forEach(function(task)
-		        	{
-						var read=false;
-						var update=false;
-						var del=false;
-						var access=false;
-						for(var x in accessible_data)
-						{
-							if(accessible_data[x].record_id===task.id || accessible_data[x].record_id=='all')
-							{
-								if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || task[accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
-								{
-									if(accessible_data[x].access_type=='all')
-									{
-										read=true;
-										update=true;
-										del=true;
-										access=true;
-										break;
-									}
-									else if(accessible_data[x].access_type=='read')
-									{
-										read=true;
-									}
-									else if(accessible_data[x].access_type=='delete')
-									{
-										del=true;
-									}
-									else if(accessible_data[x].access_type=='update')
-									{
-										update=true;
-									}
-								}
-							}
-						}
-						
-						if(read)
-						{
-							//console.log('task found');
-		        			var color="yellow";
-		        			if(task.status=='cancelled')
-		        			{
-		        				color="aaaaaa";
-		        			}
-		        			else if(task.status=='pending' && parseFloat(task.t_due)<get_my_time())
-		        			{
-		        				color='#ff0000';
-		        			}
-		        			else if(task.status=='completed')
-		        			{
-		        				color='#00ff00';
-		        			}
-			        		events.push({
-			        			title: task.name+"\nAssigned to: "+task.assignee,
-			        			start:get_iso_time(task.t_initiated),
-			        			end:get_iso_time(parseFloat(task.t_initiated)+(3600000)),
-			        			color: color,
-			        			textColor:"#333",
-			        			id: task.id,
-			        			editable:update
-			        		});
-						}
-		        	});
-		        	callback(events);
-		        });
-	        });
-	    },
-	    dayClick: function(date,jsEvent,view){
-	    	modal117_action(get_my_date_from_iso(date.format()));
-	    },
-	    eventClick: function(calEvent,jsEvent,view){
-	    	modal33_action(calEvent.id);
-	    },
-	    eventDrop: function(event,delta,revertFunc)
-	    {
-	    	var t_initiated=(parseFloat(event.start.unix())*1000);
-	    	var data_xml="<task_instances>" +
-						"<id>"+event.id+"</id>" +
-						"<t_initiated>"+t_initiated+"</t_initiated>" +
-						"<last_updated>"+get_my_time()+"</last_updated>" +
-						"</task_instances>";
-			var prod_xml="<production_plan_items>" +
-						"<id>"+event.id+"</id>" +
-						"<from_time>"+t_initiated+"</from_time>" +
-						"<last_updated>"+get_my_time()+"</last_updated>" +
-						"</production_plan_items>";
-						
-			update_simple(data_xml);
-			update_simple(prod_xml);
+    function form185_ini(view)
+    {
+        var fid=$("#form185_link").attr('data_id');
+        if(fid==null)
+            fid="";
+        show_loader();
+        $('#form185_body').html("");
+        $('#form185_calendar').fullCalendar('destroy');
+            
+        var view_filter='calendar';
+        if(typeof view!='undefined' && view=='table')
+        {
+            view_filter='table';
+            $('#form185_view').find('label.tt').addClass('active');
+            $('#form185_view').find('label.cc').removeClass('active');
+        }
+        else
+        {
+            $('#form185_view').find('label.cc').addClass('active');
+            $('#form185_view').find('label.tt').removeClass('active');
+        }
+
+        if(view_filter=='calendar')
+        {
+            $("#form185_body").parent().hide();
+            $("#form185_calendar").parent().parent().show();
+            
+            $('#form185_calendar').fullCalendar({
+                header: {
+                    left: 'prev,next',
+                    center: 'title',
+                    right: 'today'
+                },
+                editable: true,
+                slotEventOverlap:true,
+                events: function(start, end, timezone, callback) 
+                {
+                    var start_time=parseFloat(start.unix())*1000;
+                    var end_time=parseFloat(end.unix())*1000;
+                    var tasks_data={data_store:'task_instances',
+                                   indexes:[{index:'id'},
+                                           {index:'name'},
+                                           {index:'description'},
+                                           {index:'t_due',lowerbound:start_time,upperbound:end_time},
+                                           {index:'status'},
+                                           {index:'assignee'},
+                                           {index:'task_hours'},
+                                           {index:'source',exact:'business process'}]};
+                    read_json_rows('form185',tasks_data,function(tasks)
+                    {
+                        var events=[];
+                        tasks.forEach(function(task)
+                        {
+                            //console.log('task found');
+                            var color="#f8cb00";
+                            if(task.status=='cancelled')
+                            {
+                                color="#95a5a6";
+                            }
+                            else if(task.status=='pending' && parseFloat(task.t_due)<get_my_time())
+                            {
+                                color='#f3565d';
+                            }
+                            else if(task.status=='completed')
+                            {
+                                color='#1bbc9b';
+                            }
+                            events.push({
+                                title: task.name+"\nAssigned to: "+task.assignee,
+                                start:get_iso_time(task.t_due-3600000*(parseFloat(task.task_hours))),
+                                end:get_iso_time(task.t_due),
+                                color: color,
+                                id: task.id,
+                            });
+                        });
+                        callback(events);
+                        
+                        initialize_tabular_report_buttons(tasks_data,'Manufacturing Tasks','form185',function (item)
+                        {
+                            item['Due Time']=get_my_datetime(item.t_due);
+                            delete item.t_due;
+                            delete item.task_hours;
+                            delete item.source_name;
+                            delete item.source;
+                        });
+                        hide_loader();
+                    });
+                },
+                dayClick: function(date,jsEvent,view){
+                    modal117_action(get_my_date_from_iso(date.format()));
+                },
+                eventClick: function(calEvent,jsEvent,view){
+                    modal33_action(calEvent.id);
+                },
+                eventDrop: function(event,delta,revertFunc)
+                {
+                    var t_due=(parseFloat(event.end.unix())*1000);
+                    var t_initiated=(parseFloat(event.start.unix())*1000);
+                    
+                    var data_json={data_store:'task_instances',
+ 							data:[{index:'id',value:event.id},
+                                 {index:'t_due',value:t_due},
+                                 {index:'last_updated',value:get_my_time()}]};
+                    update_json(data_json);
+                    
+                    var prod_json={data_store:'production_plan_items',
+ 							data:[{index:'id',value:event.id},
+                                 {index:'from_time',value:t_initiated},
+                                 {index:'to_time',value:t_due},
+                                 {index:'last_updated',value:get_my_time()}]};
+                    update_json(prod_json);
+                    
+                    var store_movement_xml={data_store:'store_movement',
+                                           indexes:[{index:'id'},
+                                                   {index:'record_source',exact:'production_plan_item'},
+                                                   {index:'source_id',exact:event.id}]};
+                    read_json_rows('',store_movement_xml,function (movs) 
+                    {
+                        movs.forEach(function (mov) 
+                        {
+                            var mov_json={data_store:'store_movement',
+ 							data:[{index:'id',value:mov.id},
+                                 {index:'applicable_from',value:t_initiated},
+                                 {index:'last_updated',value:get_my_time()}]};
+                            update_json(mov_json);                    
+                        });
+                    });		
+                },
+                eventResize: function(event, delta, revertFunc)
+                {
+                    var task_hours=parseFloat((parseFloat(event.end.unix())-parseFloat(event.start.unix()))/3600);
+                    var data_json={data_store:'task_instances',
+ 							data:[{index:'id',value:event.id},
+                                 {index:'task_hours',value:task_hours},
+                                 {index:'last_updated',value:get_my_time()}]};
+                    update_json(data_json);
+                }
+            });
+            setTimeout(function(){$('#form185 .fc-today-button').click()},1000);    
+        }
+        else
+        {   
+            $("#form185_body").parent().show();
+            $("#form185_calendar").parent().parent().hide();
+            
+            var fields=document.getElementById('form185_header');
+            var task_filter=fields.elements['task'].value;
+            var assignee_filter=fields.elements['assignee'].value;
+            var status_filter=fields.elements['status'].value;
+        
+            var paginator=$('#form185_body').paginator();
 			
-			var store_movement_xml="<store_movement>"+
-							"<id></id>"+
-							"<record_source exact='yes'>production_plan_item</record_source>"+
-							"<source_id exact='yes'>"+event.id+"</source_id>"+
-							"</store_movement>";
-			fetch_requested_data('',store_movement_xml,function (movs) 
-			{
-				movs.forEach(function (mov) 
-				{
-					var mov_xml="<store_movement>"+
-						"<id>"+mov.id+"</id>"+
-						"<applicable_from>"+t_initiated+"</applicable_from>"+
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</store_movement>";
-					update_simple(mov_xml);	
-				});
-			});		
-	    },
-	    eventResize: function(event, delta, revertFunc){
-	    	var task_hours=parseFloat((parseFloat(event.end.unix())-parseFloat(event.start.unix()))/3600);
-	    	var data_xml="<task_instances>" +
-						"<id>"+event.id+"</id>" +
-						"<task_hours>"+task_hours+"</task_hours>" +
-						"<last_updated>"+get_my_time()+"</last_updated>" +
-						"</task_instances>";
-			update_simple(data_xml);
-		}
-	});
+            var columns={data_store:'task_instances',
+                         count:paginator.page_size(),
+                         start_index:paginator.get_index(),
+			             access:{},
+                         indexes:[{index:'id',value:fid},
+                                   {index:'name',value:task_filter},
+                                   {index:'description'},
+                                   {index:'t_due'},
+                                   {index:'status',value:status_filter},
+                                   {index:'assignee',value:assignee_filter},
+                                   {index:'task_hours'},
+                                   {index:'source',exact:'business process'},
+                                   {index:'source_name'}]};
+           
+            read_json_rows('form185',columns,function(results)
+            {
+                results.forEach(function(result)
+                {
+                    result.t_due=get_my_datetime(result.t_due);
+                    result.t_initiated=get_my_datetime(result.t_initiated);
+                    var rowsHTML="<tr>";
+                        rowsHTML+="<form id='form185_"+result.id+"'></form>";
+                            rowsHTML+="<td data-th='Task'>";
+                                rowsHTML+="<textarea readonly='readonly' form='form185_"+result.id+"'>"+result.name+"</textarea>";
+                            rowsHTML+="</td>";
+                            rowsHTML+="<td data-th='Details'>";
+                                rowsHTML+="<input type='text' readonly='readonly' class='floatlabel dblclick_editable' placeholder='Due Date' form='form185_"+result.id+"' value='"+result.t_due+"' name='due'>";
+                                rowsHTML+="<textarea type='text' readonly='readonly' class='floatlabel dblclick_editable' placeholder='Description' form='form185_"+result.id+"' name='description'>"+result.description+"</textarea>";
+                            rowsHTML+="</td>";
+                            rowsHTML+="<td data-th='Assignee'>";
+                                rowsHTML+="<input type='text' readonly='readonly' form='form185_"+result.id+"' class='dblclick_editable' value='"+result.assignee+"'>";
+                            rowsHTML+="</td>";
+                            rowsHTML+="<td data-th='Status'>";
+                                rowsHTML+="<input type='text' readonly='readonly' form='form185_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
+                            rowsHTML+="</td>";
+                            rowsHTML+="<td data-th='Action'>";
+                                rowsHTML+="<input type='hidden' readonly='readonly' name='id' form='form185_"+result.id+"' value='"+result.id+"'>";
+                                rowsHTML+="<button type='submit' class='btn green' name='save' form='form185_"+result.id+"' title='Save'><i class='fa fa-save'></i></button>";
+                                rowsHTML+="<button type='button' class='btn red' form='form185_"+result.id+"' title='Delete' name='delete' onclick='form185_delete_item($(this));'><i class='fa fa-trash'></i></button>";
+                            rowsHTML+="</td>";			
+                    rowsHTML+="</tr>";
 
-	var filter_fields=document.getElementById('form185_header');
-	
-	var fname=filter_fields.elements[0].value;
-	var fassignee=filter_fields.elements[1].value;
-	var fstatus=filter_fields.elements[2].value;
-	
-	
-	////indexing///
-	var index_element=document.getElementById('form185_index');
-	var prev_element=document.getElementById('form185_prev');
-	var next_element=document.getElementById('form185_next');
-	var start_index=index_element.getAttribute('data-index');
-	//////////////
+                    $('#form185_body').append(rowsHTML);
+                    var fields=document.getElementById("form185_"+result.id);
+                    $(fields).on("submit", function(event)
+                    {
+                        event.preventDefault();
+                        form185_update_item(fields);
+                    });
 
-	var columns="<task_instances count='25' start_index='"+start_index+"'>" +
-			"<id></id>" +
-			"<name>"+fname+"</name>" +
-			"<description></description>" +
-			"<assignee>"+fassignee+"</assignee>" +
-			"<t_due></t_due>" +
-			"<t_initiated></t_initiated>" +
-			"<task_hours></task_hours>" +
-			"<status>"+fstatus+"</status>" +
-			"<source exact='yes'>business process</source>" +
-			"<last_updated></last_updated>" +
-			"</task_instances>";
-	
-	if_data_read_access('task_instances',function(accessible_data)
-	{
-		fetch_requested_data('form185',columns,function(results)
-		{
-			results.forEach(function(result)
-			{
-				var read=false;
-				var update=false;
-				var del=false;
-				var access=false;
-				for(var x in accessible_data)
-				{
-					if(accessible_data[x].record_id===result.id || accessible_data[x].record_id=='all')
-					{
-						if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || result[accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
-						{
-							if(accessible_data[x].access_type=='all')
-							{
-								read=true;
-								update=true;
-								del=true;
-								access=true;
-								break;
-							}
-							else if(accessible_data[x].access_type=='read')
-							{
-								read=true;
-							}
-							else if(accessible_data[x].access_type=='delete')
-							{
-								del=true;
-							}
-							else if(accessible_data[x].access_type=='update')
-							{
-								update=true;
-							}
-						}
-					}
-				}
+                    var name_filter=fields.elements[0];
+                    var assignee_filter=fields.elements[3];
+                    var due_filter=fields.elements[1];
+                    var status_filter=fields.elements[4];
 
-				if(read)
-				{
-					result.t_due=get_my_datetime(result.t_due);
-					result.t_initiated=get_my_datetime(result.t_initiated);
-					var rowsHTML="";
-					rowsHTML+="<tr>";
-						rowsHTML+="<form id='form185_"+result.id+"'></form>";
-							rowsHTML+="<td data-th='Task'>";
-								rowsHTML+="<textarea readonly='readonly' form='form185_"+result.id+"'>"+result.name+"</textarea>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Details'>";
-								rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form185_"+result.id+"'>"+result.description+"</textarea>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Assignee'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form185_"+result.id+"' class='dblclick_editable' value='"+result.assignee+"'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Time'>";
-								rowsHTML+="Start: <input type='text' readonly='readonly' form='form185_"+result.id+"' class='dblclick_editable' value='"+result.t_initiated+"'>";
-								rowsHTML+="<br>Due by: <input type='text' readonly='readonly' form='form185_"+result.id+"' class='dblclick_editable' value='"+result.t_due+"'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Status'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form185_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Action'>";
-								rowsHTML+="<input type='hidden' readonly='readonly' form='form185_"+result.id+"' value='"+result.id+"'>";
-							if(update)	
-								rowsHTML+="<input type='submit' class='save_icon' form='form185_"+result.id+"' title='Save'>";
-							if(del)
-								rowsHTML+="<input type='button' class='delete_icon' form='form185_"+result.id+"' title='Delete' onclick='form185_delete_item($(this));'>";
-							rowsHTML+="</td>";			
-					rowsHTML+="</tr>";
-					
-					$('#form185_body').append(rowsHTML);
-					var fields=document.getElementById("form185_"+result.id);
-					$(fields).on("submit", function(event)
-					{
-						event.preventDefault();
-						form185_update_item(fields);
-					});
-					
-					var name_filter=fields.elements[0];
-					var assignee_filter=fields.elements[2];
-					var from_filter=fields.elements[3];
-					var due_filter=fields.elements[4];
-					var status_filter=fields.elements[5];
-								
-					var staff_data="<staff>" +
-							"<acc_name></acc_name>" +
-							"</staff>";
-					set_my_value_list(staff_data,assignee_filter);
-					
-					set_static_value_list('task_instances','status',status_filter);
-					$(due_filter).vdatetimepicker();
-					$(from_filter).vdatetimepicker();
-				}
-			});
+                    var staff_data={data_store:'staff',return_column:'acc_name'};
+                    set_my_value_list_json(staff_data,assignee_filter);
+                    set_static_value_list_json('task_instances','status',status_filter);
+                    $(due_filter).vdatetimepicker();
+                });
+
+                paginator.update_index(results.length);
+				initialize_tabular_report_buttons(columns,'Manufacturing Tasks','form185',function (item)
+                {
+                    item['Due Time']=get_my_datetime(item.t_due);
+                    delete item.t_due;
+                    
+                    delete item.task_hours;                    
+                    delete item.source_name;
+                    delete item.source;
+                });
+				$('#form185').formcontrol();
+                
+                hide_loader();
+            });
+            
+        }
+    }
+
+    function form185_delete_item(button)
+    {
+        if(is_delete_access('form185'))
+        {
+            modal115_action(function()
+            {
+                var form_id=$(button).attr('form');
+                var form=document.getElementById(form_id);
+
+                var name=form.elements[0].value;
+                var data_id=form.elements['id'].value;
+                var last_updated=get_my_time();
+                var data_json={data_store:'task_instances',
+ 							data:[{index:'id',value:data_id}],
+ 							log:'yes',
+ 							log_data:{title:"Deleted",notes:"Task "+name,link_to:"form185"}};
 			
-			////indexing///
-			////indexing///
-			var next_index=parseInt(start_index)+25;
-			var prev_index=parseInt(start_index)-25;
-			next_element.setAttribute('data-index',next_index);
-			prev_element.setAttribute('data-index',prev_index);
-			index_element.setAttribute('data-index','0');
-			if(results.length<25)
-			{
-				$(next_element).hide();
-			}
-			else
-			{
-				$(next_element).show();
-			}
-			if(prev_index<0)
-			{
-				$(prev_element).hide();
-			}
-			else
-			{
-				$(prev_element).show();
-			}
-			/////////////
-	
-			longPressEditable($('.dblclick_editable'));
-			$('textarea').autosize();
-			
-			hide_loader();
-		});
-	});	
-}
-    
-function form185_delete_item(button)
-{
-	if(is_delete_access('form185'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
+                delete_json(data_json);
 
-			var name=form.elements[0].value;
-			var data_id=form.elements[6].value;
-			var last_updated=get_my_time();
-			var data_xml="<task_instances>" +
-						"<id>"+data_id+"</id>" +
-						"</task_instances>";	
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>task_instances</tablename>" +
-						"<link_to>form185</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>"+name+" task</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			delete_row(data_xml,activity_xml);
-				
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
+                $(button).parent().parent().remove();
+            });
+        }
+        else
+        {
+            $("#modal2_link").click();
+        }
+    }
 
-function form185_update_item(form)
-{
-	if(is_update_access('form185'))
-	{
-		var name=fields.elements[0].value;
-		var details=fields.elements[1].value;
-		var assignee=fields.elements[2].value;
-		var from=get_raw_time(fields.elements[3].value);
-		var due=get_raw_time(fields.elements[4].value);
-		var status=fields.elements[5].value;
-		var data_id=form.elements[7].value;
-		var last_updated=get_my_time();
-		
-		var data_xml="<task_instances>"+
-					"<id>"+data_id+"</id>"+
-					"<name>"+name+"</name>" +
-					"<description>"+details+"</description>" +
-					"<assignee>"+assignee+"</assignee>" +
-					"<t_due>"+due+"</t_due>" +
-					"<t_initiated>"+from+"</t_initiated>" +
-					"<status>"+status+"</status>" +
-					"<source>business process</source>" +
-					"<source_id>"+data_id+"</source_id>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</task_instances>";
-				
-		var prod_xml="<production_plan_items>" +
-				"<id>"+data_id+"</id>" +
-				"<order_no>"+order+"</order_no>" +
-				"<item>"+item+"</item>" +
-				"<brand>"+brand+"</brand>" +
-				"<quantity>"+quantity+"</quantity>" +
-				"<from_time>"+from+"</from_time>" +
-				"<to_time>"+to+"</to_time>" +
-				"<status>"+status+"</status>" +
-				"<plan_id>"+plan_id+"</plan_id>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</production_plan_items>";
-		update_simple(data_xml);
-		update_simple(prod_xml);
-		
-		var store_movement_xml="<store_movement>"+
-							"<id></id>"+
-							"<record_source exact='yes'>production_plan_item</record_source>"+
-							"<source_id exact='yes'>"+data_id+"</source_id>"+
-							"</store_movement>";
-		fetch_requested_data('',store_movement_xml,function (movs) 
-		{
-			movs.forEach(function (mov) 
-			{
-				var mov_xml="<store_movement>"+
-					"<id>"+mov.id+"</id>"+
-					"<applicable_from>"+from+"</applicable_from>"+
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</store_movement>";
-				update_simple(mov_xml);	
-			});
-		});					
-				
-		for(var i=0;i<6;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}		
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
+    function form185_update_item(form)
+    {
+        if(is_update_access('form185'))
+        {
+            var name=fields.elements[0].value;
+            var due=get_raw_time(fields.elements[1].value);
+            var details=fields.elements[2].value;
+            var assignee=fields.elements[3].value;
+            var status=fields.elements[4].value;
+            var data_id=form.elements['id'].value;
+            var last_updated=get_my_time();
+            
+            var data_json={data_store:'task_instances',
+ 							data:[{index:'id',value:data_id},
+                                 {index:'name',value:name},
+                                 {index:'assignee',value:assignee},
+                                 {index:'description',value:details},
+                                 {index:'t_due',value:due},
+                                 {index:'status',value:status},
+                                 {index:'last_updated',value:last_updated}]};			
+
+            var prod_json={data_store:'production_plan_items',
+ 							data:[{index:'id',value:data_id},
+                                 {index:'to_time',value:due},
+                                 {index:'status',value:status},
+                                 {index:'last_updated',value:last_updated}]};			
+
+            update_json(data_json);
+            update_json(prod_json);
+
+            var store_movement_xml={data_store:'store_movement',
+                                   indexes:[{index:'id'},
+                                           {index:'record_source',exact:'production_plan_items'},
+                                           {index:'source_id',exact:data_id}]};
+            read_json_rows('',store_movement_xml,function (movs) 
+            {
+                movs.forEach(function (mov) 
+                {
+                    var mov_json={data_store:'store_movement',
+ 							data:[{index:'id',value:mov.id},
+                                 {index:'applicable_from',value:due},
+                                 {index:'last_updated',value:get_my_time()}]};
+                    update_json(mov_json);    
+                });
+            });					
+
+            $(form).readonly();
+        }
+        else
+        {
+            $("#modal2_link").click();
+        }
+    }
     </script>
 </div>

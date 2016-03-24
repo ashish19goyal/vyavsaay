@@ -1,8 +1,7 @@
 <div id='report105' class='tab-pane'>
 	<form id='report105_header' autocomplete="off">
 		<fieldset>
-			<label>Start Date<br><input type='text' required name='start'></label>
-			<label>End Date<br><input type='text' required name='end'></label>
+			<label>Upto Date<br><input type='text' required name='end'></label>
 			<label>	
 				<input type='submit' value='Refresh' name='refresh' class='generic_icon'>
 				<input type='button' title='Print' name='print' class='print_icon'>
@@ -33,7 +32,6 @@
 function report105_header_ini()
 {	
 	var form=document.getElementById('report105_header');
-	var start_filter=form.elements['start'];
 	var end_filter=form.elements['end'];
 	
 	$(form).off('submit');
@@ -43,16 +41,13 @@ function report105_header_ini()
 		report105_ini();
 	});
 	
-	$(start_filter).datepicker();
 	$(end_filter).datepicker();
-	start_filter.value=get_my_past_date(get_my_time()-(7*86400000));
 	end_filter.value=get_my_date();
 }
 
 function report105_ini()
 {
 	var form=document.getElementById('report105_header');
-	var start_filter=get_raw_time(form.elements['start'].value);
 	var end_filter=get_raw_time(form.elements['end'].value)+86399999;
 	
 	show_loader();
@@ -88,7 +83,7 @@ function report105_ini()
 		
 		columns.indexes=[{index:'id'},
 						{index:'awb_num'},
-						{index:'import_date',lowerbound:start_filter,upperbound:end_filter},
+						{index:'import_date',upperbound:end_filter},
 						{index:'drs_time'},
 						{index:'order_num'},
 						{index:'weight'},

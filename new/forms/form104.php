@@ -100,7 +100,6 @@
 
         if(view_filter=='calendar')
         {
-            console.log('view4');
             $("#form104_body").parent().hide();
             $("#form104_calendar").parent().parent().show();
             
@@ -132,7 +131,6 @@
 
                     read_json_rows('form104',tasks_data,function(tasks)
                     {
-                        console.log('view6');
                         var events=[];
                         tasks.forEach(function(task)
                         {
@@ -183,11 +181,11 @@
                 },
                 eventDrop: function(event,delta,revertFunc)
                 {
-                    var t_initiated=(parseFloat(event.start.unix())*1000);
+                    var t_due=(parseFloat(event.end.unix())*1000);
                     
                     var data_json={data_store:'task_instances',
  							data:[{index:'id',value:event.id},
-                                 {index:'t_initiated',value:t_initiated},
+                                 {index:'t_due',value:t_due},
                                  {index:'last_updated',value:get_my_time()}]};
                     update_json(data_json);
                 },
@@ -207,7 +205,12 @@
         {
             $("#form104_body").parent().show();
             $("#form104_calendar").parent().parent().hide();
-            
+            var fields=document.getElementById('form104_header');
+            var project_filter=fields.elements['project'].value;
+            var task_filter=fields.elements['task'].value;
+            var assignee_filter=fields.elements['assignee'].value;
+            var status_filter=fields.elements['status'].value;
+        
             var paginator=$('#form104_body').paginator();
 			
             var columns={data_store:'task_instances',
@@ -215,14 +218,14 @@
                          start_index:paginator.get_index(),
 			             access:{},
                          indexes:[{index:'id',value:fid},
-                                   {index:'name'},
+                                   {index:'name',value:task_filter},
                                    {index:'description'},
                                    {index:'t_due'},
-                                   {index:'status'},
-                                   {index:'assignee'},
+                                   {index:'status',value:status_filter},
+                                   {index:'assignee',value:assignee_filter},
                                    {index:'task_hours'},
                                    {index:'source',exact:'project'},
-                                   {index:'source_name'}]};
+                                   {index:'source_name',value:project_filter}]};
 
             read_json_rows('form104',columns,function(results)
             {

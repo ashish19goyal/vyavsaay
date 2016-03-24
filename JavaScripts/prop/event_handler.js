@@ -346,6 +346,19 @@ function modal_forms_ini()
 	   			document.getElementById(form_id).reset();
 	   		}
     });
+    
+    $("#modal209").dialog({
+	   		autoOpen: false,
+	   		width: width,
+	   		modal: true,
+	   		show: "slide",
+	   		closeOnEscape: true,
+	   		close:function(event,ui)
+	   		{
+	   			var form_id="modal209_form";
+	   			document.getElementById(form_id).reset();
+	   		}
+    });
 }
 
 function home_display()

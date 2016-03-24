@@ -6027,7 +6027,7 @@ function modal101_action(doc_type,person,person_type,func,attachment_type,messag
 			
 			if(typeof attachment_type!='undefined')
 			{
-				console.log(message_attachment);
+				//console.log(message_attachment);
 				send_email_attachment(receiver,from,business_title,sub,email_message,message_attachment,'csv',function()
 				{
 					hide_loader();
@@ -6075,14 +6075,7 @@ function modal102_action(request_id)
 					"<assignee>"+assignee+"</assignee>"+						
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</service_requests>";
-		if(is_online())
-		{
-			server_update_simple(request_xml);
-		}
-		else
-		{
-			local_update_simple(request_xml);
-		}	
+		update_simple(request_xml);	
 		
 		$("#modal102").dialog("close");
 	});
@@ -15709,4 +15702,34 @@ function modal208_action()
     });
 	
 	$("#modal208").dialog("open");
+}
+
+
+function modal209_action(subject,body,message_attachment)
+{
+	var form=document.getElementById('modal209_form');
+	var business_title=get_session_var('title');
+	var from=get_session_var('email');
+
+    form.elements['subject'].value=subject;
+    form.elements['body'].value=body;
+
+    $(form).off("submit");
+    $(form).on("submit",function(event)
+    {
+        event.preventDefault();
+        show_loader();
+        var receiver_array=[{"email":form.elements['email'].value,"name":''}];
+        var receiver=JSON.stringify(receiver_array);
+        var sub=form.elements['subject'].value;
+        var bod=form.elements['body'].value;
+        
+        send_email_attachment(receiver,from,business_title,sub,bod,message_attachment,'csv',function()
+        {
+            hide_loader();
+        });
+        $("#modal209").dialog("close");
+    });
+
+    $("#modal209").dialog("open");
 }

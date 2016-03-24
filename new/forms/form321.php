@@ -8,6 +8,8 @@
 			<label># of Orders<br><input type='number' readonly='readonly' name='num_orders'></label>
 			<label>	<input type='button' title='Save Manifest' name='save' class='save_icon'></label>
             <label>	<input type='button' title='Print Manifest' name='print' class='print_icon' onclick='form321_print_manifest();'></label>
+            <label>	<input type='button' title='Download Manifest' name='csv' id='form321_csv' class='csv_icon'></label>
+            <label>	<input type='button' title='Email Manifest' name='share' id='form321_share' class='share_icon'></label>
             <label>	<input type='hidden' name='id'>
 					<input type='hidden' name='saved'>
 				<input type='submit' class='submit_hidden'>
@@ -126,7 +128,6 @@
                         var manifest_items_column={data_store:'logistics_orders',
                                                   indexes:[{index:'id'},
                                                           {index:'awb_num'},
-                                                          {index:'manifest_type'},
                                                           {index:'consignment_num'},
                                                           {index:'ship_to'},
                                                           {index:'address1'},
@@ -185,6 +186,37 @@
 
                             form321_update_serial_numbers();
                             $('textarea').autosize();
+                            
+                            var new_results=[];
+                            $('#form321_body').find('form').each(function(index)
+                            {
+                                var new_obj={};
+                                var form=$(this)[0];
+                                new_obj['AWB No']=form.elements[0].value;
+                                new_obj['Consignement No']=form.elements[1].value;
+                                new_obj['Weight']=form.elements[2].value;
+                                new_obj['Pieces']=form.elements[3].value;
+                                new_obj['Item']=form.elements[4].value;
+                                new_obj['Destination']=form.elements[5].value;   
+                                new_results.push(new_obj);
+                            });
+
+                            $('#form321_share').off('click');
+                            $('#form321_share').click(function()
+                            {
+                                var message_attachment=my_obj_array_to_csv_string(new_results);
+                                var subject='Manifest Sheet # '+filter_fields.elements['manifest_num'].value;
+                                var body='Hi,\nPlease find attached the manifest with this mail.\nCo-loader: '+filter_fields.elements['loader'].value+'\nVendor:'+filter_fields.elements['vendor'].value+'\nDate:'+filter_fields.elements['date'].value+'\n\nRegards,\nBeacon Couriers';
+        
+                                modal209_action(subject,body,message_attachment);
+                            });
+
+                            $('#form321_csv').off('click');
+                            $('#form321_csv').click(function()
+                            {
+                                my_obj_array_to_csv(new_results,'Manifest');
+                            });
+
                             hide_loader();
                         });
                     }
@@ -463,7 +495,6 @@
                 var save_button=form.elements[7];
                 var del_button=form.elements[8];
 
-                
                 var last_updated=get_my_time();
                 var data_xml="<logistics_orders>" +
                             "<id>"+data_id+"</id>" +
@@ -513,6 +544,36 @@
                 
                 var save_button=form.elements['save'];
                 var last_updated=get_my_time();
+
+                var results=[];
+                $('#form321_body').find('form').each(function(index)
+                {
+                    var new_obj={};
+                    var form=$(this)[0];
+                    new_obj['AWB No']=form.elements[0].value;
+                    new_obj['Consignement No']=form.elements[1].value;
+                    new_obj['Weight']=form.elements[2].value;
+                    new_obj['Pieces']=form.elements[3].value;
+                    new_obj['Item']=form.elements[4].value;
+                    new_obj['Destination']=form.elements[5].value;   
+                    results.push(new_obj);
+                });
+
+                $('#form321_share').off('click');
+                $('#form321_share').click(function()
+                {
+                    var message_attachment=my_obj_array_to_csv_string(results);
+                    var subject='Manifest Sheet # '+manifest_num;
+                    var body='Hi,\nPlease find attached the manifest with this mail.\nCo-loader: '+coloader+'\nVendor:'+vendor+'\nDate:'+date+'\n\nRegards,\nBeacon Couriers';
+
+                    modal209_action(subject,body,message_attachment);
+                });
+
+                $('#form321_csv').off('click');
+                $('#form321_csv').click(function()
+                {
+                    my_obj_array_to_csv(results,'Manifest');
+                });
 
                 var manifest_columns="<manifests count='1'>" +
                             "<manifest_num exact='yes'>"+manifest_num+"</manifest_num>"+
@@ -613,6 +674,36 @@
 
                 var save_button=form.elements['save'];
                 var last_updated=get_my_time();
+
+                var results=[];
+                $('#form321_body').find('form').each(function(index)
+                {
+                    var new_obj={};
+                    var form=$(this)[0];
+                    new_obj['AWB No']=form.elements[0].value;
+                    new_obj['Consignement No']=form.elements[1].value;
+                    new_obj['Weight']=form.elements[2].value;
+                    new_obj['Pieces']=form.elements[3].value;
+                    new_obj['Item']=form.elements[4].value;
+                    new_obj['Destination']=form.elements[5].value;   
+                    results.push(new_obj);
+                });
+
+                $('#form321_share').off('click');
+                $('#form321_share').click(function()
+                {
+                    var message_attachment=my_obj_array_to_csv_string(results);
+                    var subject='Manifest Sheet # '+manifest_num;
+                    var body='Hi,\nPlease find attached the manifest with this mail.\nCo-loader: '+coloader+'\nVendor:'+vendor+'\nDate:'+date+'\n\nRegards,\nBeacon Couriers';
+
+                    modal209_action(subject,body,message_attachment);
+                });
+
+                $('#form321_csv').off('click');
+                $('#form321_csv').click(function()
+                {
+                    my_obj_array_to_csv(results,'Manifest');
+                });
 
                 var manifest_columns="<manifests count='2'>" +
                             "<id></id>"+
