@@ -88,7 +88,7 @@ function report105_ini()
 						{index:'order_num'},
 						{index:'weight'},
 						{index:'pieces'},
-						{index:'status',array:['received','pending','undelivered']},
+						{index:'status',array:['received','pending','undelivered','RTO pending']},
 						{index:'manifest_id'},
 						{index:'channel_name'},
 						{index:'manifest_type'},

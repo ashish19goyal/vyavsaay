@@ -6215,46 +6215,6 @@ function form197_delete_item(button)
 	}
 }
 
-/**
- * @form Logistics Incoming Items
- * @param button
- */
-function form199_delete_item(button)
-{
-	if(is_update_access('form199'))
-	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
-		var awb_num=form.elements[0].value;
-		var status='picked';
-		var id=form.elements[3].value;
-		var last_updated=get_my_time();
-		if(id!="")
-		{		
-			var data_xml="<logistics_orders>" +
-						"<id>"+id+"</id>" +
-						//"<awb_num>"+awb_num+"</awb_num>" +
-						"<status>"+status+"</status>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</logistics_orders>";
-			var activity_xml="<activity>" +
-						"<data_id>"+id+"</data_id>" +
-						"<tablename>logistics_orders</tablename>" +
-						"<link_to>form198</link_to>" +
-						"<title>Unmarked</title>" +
-						"<notes>AWB # "+awb_num+" from received</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			update_row(data_xml,activity_xml);
-		}	
-		$(button).parent().parent().remove();
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
 
 /**
  * formNo 200

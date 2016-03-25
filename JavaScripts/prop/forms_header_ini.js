@@ -7325,26 +7325,6 @@ function form198_header_ini()
 	$('#form198_fieldset').html("");
 }
 
-/**
- * @form Incoming Items
- * @formNo 199
- */
-function form199_header_ini()
-{
-	var fields=document.getElementById('form199_master');
-
-	var comments_filter=fields.elements['comments'];
-
-	comments_filter.value="";	
-	$(fields).off('submit');
-	$(fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form199_add_item();
-	});
-
-	$('#form199_body').html("");
-}
 
 /**
  * @form Create Drs
