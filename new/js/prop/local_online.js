@@ -567,7 +567,7 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
 									"<id>"+get_new_key()+"</id>"+
 									"<subject>"+subject+"</subject>"+
 									"<message>"+htmlentities(message)+"</message>"+
-									"<message_attachment>"+message_attachment+"</message_attachment>"+
+									"<message_attachment>"+new_message_attachment+"</message_attachment>"+
 									"<receivers>"+to+"</receivers>"+
 									"<sender>"+from+"</sender>"+
 									"<sender_name>"+from_name+"</sender_name>"+
@@ -581,6 +581,43 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
 		        }
 		    });
 		}
+        else if(attachment_type=='pdf')
+        {
+            var pdfcreator=new htmlToPdf({html:message_attachment});										
+            pdfcreator.getDataUrl(function(new_message_attachment)
+            {
+                var data={"to":to,
+                            "from":from,
+                            "from_name":from_name,
+                            "subject":subject,
+                            "message":message,
+                            "message_attachment":new_message_attachment,
+                            "attachment_type":attachment_type};
+                var data_string=JSON.stringify(data);			
+
+                if(is_online())
+                {
+                    server_send_email(data_string,func);
+                }
+                else
+                {
+                    var email_data="<emails>"+
+                                "<id>"+get_new_key()+"</id>"+
+                                "<subject>"+subject+"</subject>"+
+                                "<message>"+htmlentities(message)+"</message>"+
+                                "<message_attachment>"+new_message_attachment+"</message_attachment>"+
+                                "<receivers>"+to+"</receivers>"+
+                                "<sender>"+from+"</sender>"+
+                                "<sender_name>"+from_name+"</sender_name>"+
+                                "<attachment_type>"+attachment_type+"</attachment_type>"+
+                                "<status>pending</status>"+
+                                "<last_updated>"+get_my_time()+"</last_updated>"+
+                                "</emails>";
+                    local_create_simple(email_data);			
+                    func();
+                }
+            });
+        }
 		else 
 		{
 			var data={"to":to,
@@ -594,7 +631,7 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
 					    	
 			if(is_online())
 			{
-				server_send_email_attachment(data_string,func);
+				server_send_email(data_string,func);
 			}
 			else
 			{

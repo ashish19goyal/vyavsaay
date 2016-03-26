@@ -4685,8 +4685,9 @@ function print_form258(func)
 
 ////////////setting styles for containers/////////////////////////
 
+	container.setAttribute('style','margin:5px;');
 	header.setAttribute('style','width:98%;min-height:100px;text-align:center');
-		logo.setAttribute('style','width:98%;text-align:center;margin:5px;font-weight:600;font-size:32px;line-height:40px;');
+		logo.setAttribute('style','width:90%;text-align:center;margin:5px;max-height:60px;');
 	invoice_line.setAttribute('style','width:98%;margin:2px;');
 	info_section.setAttribute('style','width:98%;min-height:85px;font-size:11px;');
 		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;font-size:11px;');

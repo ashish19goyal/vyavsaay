@@ -471,25 +471,26 @@ function get_tabular_report_data(columns,filename,action_type,func)
 				switch(action_type)
 				{
 					case 'csv': my_obj_array_to_csv(results,filename);
-									break;
+								break;
 					case 'pdf': print_report_table(results,filename,function (container) 
-									{
-										var html_data=container.innerHTML;
-										var pdfcreator=new htmlToPdf({html:html_data});										
-										container.innerHTML="";
-									});
-									break;
+                                {
+                                    var html_data=container.innerHTML;
+                                    var pdfcreator=new htmlToPdf({html:html_data});										
+                                    pdfcreator.download(filename);
+                                    container.innerHTML="";
+                                });
+                                break;
 					case 'print': print_report_table(results,filename,function (container) 
-										{
-											$.print(container);
-											container.innerHTML="";
-										});
-										break;
+                                {
+                                    $.print(container);
+                                    container.innerHTML="";
+                                });
+                                break;
 					case 'email': modal183_action(bt+"-"+filename,function (func) 
-										{
-											print_report_table(results,filename,func);
-										});
-										break;												
+                                {
+                                    print_report_table(results,filename,func);
+                                });
+                                break;												
 				}
 			}
 		},500);

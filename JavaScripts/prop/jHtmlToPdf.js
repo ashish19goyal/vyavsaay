@@ -219,10 +219,11 @@ var htmlToPdf = function (options)
 	            break;
 	        }
 	        default: {
-	            this.parseContainer(cnt, e, p, styles);
+                this.parseContainer(cnt, e, p, styles);
 	            break;
-	           //console.log("Parsing for node " + e.nodeName + " not found");
-	           // break;
+	        
+                //console.log("Parsing for node " + e.nodeName + " not found");
+	            //break;
 	        }
 	    }
 	    return p;

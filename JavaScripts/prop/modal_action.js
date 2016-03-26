@@ -14069,8 +14069,7 @@ function modal171_action(doc_type,person,person_type,func,attachment_type)
 			email_message=email_message.replace(/\n/g,'<br>');
 			if(typeof attachment_type!='undefined')
 			{
-				//console.log(message_attachment);
-				send_email_attachment(receiver,from,business_title,sub,email_message,message_attachment,attachment_type,function()
+                send_email_attachment(receiver,from,business_title,sub,email_message,message_attachment,attachment_type,function()
 				{
 					hide_loader();
 				});

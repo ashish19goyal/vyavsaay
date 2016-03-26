@@ -30,6 +30,8 @@
 <script src='./JavaScripts/open/JsBarcode.all.min.js'></script>
 <!--<script src='./JavaScripts/open/jquery.barcode.js'></script>
 <script src='./JavaScripts/open/EAN_UPC.js'></script>-->
+<script src='./JavaScripts/open/pdfmake.js'></script>
+<script src='./JavaScripts/open/vfs_fonts.js'></script>
 
 <script src='./JavaScripts/prop/add_items.js'></script>
 <script src='./JavaScripts/prop/ajax.js'></script>
@@ -67,3 +69,4 @@
 <script src='./JavaScripts/prop/virtual_store.js'></script>
 <script src='./JavaScripts/prop/worker.js'></script>
 <script src='./JavaScripts/prop/get_totals.js'></script>
+<script src='./JavaScripts/prop/jHtmlToPdf.js'></script>

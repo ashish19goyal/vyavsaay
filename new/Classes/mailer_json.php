@@ -194,6 +194,89 @@ class send_mailer_json
 	    //print_r($result);
 	}
 
+    public function direct_send_pdf($subject,$message,$message_attachment,$receivers,$from,$from_name)
+	{
+		$merge_vars=array();
+	    $to=array();    
+		$receivers_array=json_decode($receivers,true);
+
+		$global_merge_vars=array(
+				0 => array(
+					'name'=> 'business_title',
+					'content'=> $from_name
+			)
+		);
+
+		foreach($receivers_array as $r_item)
+		{
+			$vars_array=array();
+			foreach($r_item as $key => $value)
+			{
+				$var_item=array(
+						'name' => $key,
+						'content' => $value
+				);
+				$vars_array[]=$var_item;
+			}
+			$merge_var=array(
+		       		'rcpt' => $r_item['email'],
+		            'vars' => $vars_array
+		        );
+
+	    	$to_var=array(
+		        	'email' => $r_item['email'],
+		            'name' => $r_item['name'],
+		            'type' => 'to'
+		        );
+	
+			$merge_vars[]= $merge_var;
+			$to[]= $to_var;
+		}
+		
+		$final_message = array(
+	        'html' => $message,
+	        'subject' => $subject,
+	        'from_email' => $from,
+	        'from_name' => $from_name,
+	        'to' => $to,
+	        'headers' => array('Reply-To' => $from),
+	        'preserve_recipients' => false,
+	        'merge' => true,
+	        'merge_language' => 'mailchimp',
+	        'global_merge_vars' => $global_merge_vars,
+	        'merge_vars' => $merge_vars
+	    );
+	    
+	    if($message_attachment!="")
+	    {
+	    	$new_attachment=base64_encode($message_attachment);
+	    	$attachment=array(
+	            array(
+	                'type' => 'application/pdf',
+	                'name' => 'file.pdf',
+	                'content' => $new_attachment
+	            )
+	        );
+	        
+       		$final_message = array(
+		        'html' => $message,
+		        'subject' => $subject,
+		        'from_email' => $from,
+		        'from_name' => $from_name,
+		        'to' => $to,
+		        'headers' => array('Reply-To' => $from),
+		        'preserve_recipients' => false,
+		        'merge' => true,
+		        'merge_language' => 'mailchimp',
+		        'global_merge_vars' => $global_merge_vars,
+	        	'merge_vars' => $merge_vars,
+		        'attachments' => $attachment
+		    );
+	    }
+	    
+	    $result = $this->mandrill->messages->send($final_message);
+	    //print_r($result);
+	}
 
 	///send all pending mailer stored in the db
 	public function send_stored_mailer($domain)
@@ -214,6 +297,10 @@ class send_mailer_json
 			{
 				$this->direct_send_csv($result[$i]['subject'],$result[$i]['message'],$result[$i]['message_attachment'],$result[$i]['receivers'],$result[$i]['sender'],$result[$i]['sender_name']);
 			}
+			else if($result[$i]['attachment_type']=='pdf')
+			{
+				$this->direct_send_pdf($result[$i]['subject'],$result[$i]['message'],$result[$i]['message_attachment'],$result[$i]['receivers'],$result[$i]['sender'],$result[$i]['sender_name']);
+			}
 			else 
 			{
 				$this->direct_send($result[$i]['subject'],$result[$i]['message'],$result[$i]['message_attachment'],$result[$i]['receivers'],$result[$i]['sender'],$result[$i]['sender_name']);
@@ -228,7 +315,7 @@ class send_mailer_json
 		
 		$create_query="insert into emails (subject,message,message_attachment,receivers,sender,sender_name,status,last_updated) values(?,?,?,?,?,?,?)";		
 		$create_stmt=$conn->conn->prepare($create_query);
-		$create_stmt->execute(array($subject,$message,$message_attachment,$to,$from,$from_name,'pending',1000*time()));		
+		$create_stmt->execute(array($subject,$message,$message_attachment,$to,$from,$from_name,'pending',1000*time()));	
 	}
 
 	public function log_mailer($domain,$subject,$message,$message_attachment,$to,$from,$from_name)

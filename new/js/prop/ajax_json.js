@@ -233,18 +233,6 @@ function server_send_email(data,func)
 	});
 }
 
-function server_send_email_attachment(data,func)
-{
-	var domain=get_domain();
-	var username=get_username();
-	var read_access=get_session_var('re');
-	ajax_json("./ajax_json/email.php",{domain:domain,username:username,re:read_access,email_data:data},function(response_object)
-	{
-		console.log(response_object);
-		func();
-	});
-}
-
 /**
  * this function delete a row of data from the server database
  */

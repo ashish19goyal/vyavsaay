@@ -27142,35 +27142,12 @@ function form258_ini()
 				
 				//form258_get_totals();
 				
-				
 				///////////csv preparation///////////
 				var bt=get_session_var('title');
 				var business_intro_text=get_session_var('business_intro');
 				var business_address=get_session_var('address');
 				var business_phone=get_session_var('phone');
 				var business_email=get_session_var('email');
-	/*
-				var customer_name=filter_fields.elements['customer'].value;
-				var date=filter_fields.elements['date'].value;	
-				var valid_date=filter_fields.elements['valid'].value;	
-				var issued_by=filter_fields.elements['issued'].value;	
-				var quot_no=filter_fields.elements['quot_num'].value;
-				var customer_address=filter_fields.elements['address'].value;
-				var quot_type=filter_fields.elements['type'].value;
-					
-				var signature_text="<br>Computer Generated<br><br><br>Signature Not Required<br>";
-	
-				var message_attachment=bt+"\n\nAddress: "+business_address+"\nPhone: "+business_phone+"\nEmail"+business_email+"\n";
-				message_attachment+="Quotation Sheet\n\n";
-				message_attachment+="Client Name:,"+customer_name+",Date:"+date+"\n";
-				message_attachment+="Issued By:,"+issued_by+"\n\n";
-
-				message_attachment+=my_obj_array_to_csv_string(item_array)+"\n\n";
-				message_attachment+=my_obj_array_to_csv_string(spec_array)+"\n\n";
-				message_attachment+=my_obj_array_to_csv_string(spare_array)+"\n\n";
-				message_attachment+=my_obj_array_to_csv_string(bank_array)+"\n\n";
-				message_attachment+=my_obj_array_to_csv_string(tc_array)+"\n\n";
-		*/		
 				///////////////////////////
 					
 				longPressEditable($('.dblclick_editable'));
@@ -27183,7 +27160,7 @@ function form258_ini()
 					modal171_action('Quotation from - '+bt,filter_fields.elements['customer'].value,'customer',function (func) 
 					{
 						print_form258(func);
-					},'image');
+					},'pdf');
 				});
 			}
 					

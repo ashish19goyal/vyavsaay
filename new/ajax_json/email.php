@@ -1,4 +1,4 @@
-	<?php
+<?php
 
 	include_once "../Classes/mailer_json.php";
 	use RetailingEssentials\send_mailer_json;
@@ -28,15 +28,20 @@
 			$email_instance=new send_mailer_json();
 			if($attachment_type=='csv')
 			{
-				$email_instance->direct_send_csv($subject,$message,$message_attachment,$to,$from,$from_name);				
+				$email_instance->direct_send_csv($subject,$message,$message_attachment,$to,$from,$from_name);
+                $response_object['status']='mailed as csv';
+			}
+            else if($attachment_type=='pdf')
+			{
+				$email_instance->direct_send_pdf($subject,$message,$message_attachment,$to,$from,$from_name);
+                $response_object['status']='mailed as pdf';
 			}
 			else 
 			{
 				$email_instance->direct_send($subject,$message,$message_attachment,$to,$from,$from_name);
+                $response_object['status']='mailed';
 			}
 			$email_instance->log_mailer($domain,$subject,$message,$message_attachment,$to,$from,$from_name);
-
-			$response_object['status']='mail accepted';
 		}
 		else
 		{
