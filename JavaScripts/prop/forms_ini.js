@@ -27160,7 +27160,7 @@ function form258_ini()
 					modal171_action('Quotation from - '+bt,filter_fields.elements['customer'].value,'customer',function (func) 
 					{
 						print_form258(func);
-					},'pdf');
+					},'image');
 				});
 			}
 					
