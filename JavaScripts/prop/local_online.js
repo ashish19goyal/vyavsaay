@@ -543,7 +543,7 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
 		        onrendered: function(canvas) 
 		        {   
 		        	new_message_attachment=canvas.toDataURL("image/jpeg");
-					console.log(new_message_attachment);
+					//console.log(new_message_attachment);
                     pdf_elem.innerHTML="";
 					
 					var data={"to":to,
@@ -584,7 +584,7 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
             var pdfcreator=new htmlToPdf({html:message_attachment});										
             pdfcreator.getDataUrl(function(new_message_attachment)
             {
-                console.log(new_message_attachment);
+                //console.log(new_message_attachment);
                 var data={"to":to,
                             "from":from,
                             "from_name":from_name,

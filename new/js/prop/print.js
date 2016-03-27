@@ -4033,7 +4033,7 @@ function print_form258(func)
 		var jurisdiction=document.createElement('div');
 		var business_contact=document.createElement('div');
 
-    ////////////setting styles for containers/////////////////////////
+////////////setting styles for containers/////////////////////////
 
 	container.setAttribute('style','margin:5px;');
 	header.setAttribute('style','width:98%;min-height:100px;text-align:center');
@@ -4042,12 +4042,12 @@ function print_form258(func)
 	info_section.setAttribute('style','width:98%;min-height:85px;font-size:11px;');
 		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;font-size:11px;');
 		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;font-size:11px;');
-	footer.setAttribute('style','width:98%;min-height:50px;font-size:11px;');
+	footer.setAttribute('style','width:98%;min-height:60px;font-size:11px;');
 		signature.setAttribute('style','float:right;width:98%;text-align:right;font-size:11px;');
 		jurisdiction.setAttribute('style','margin:10px;width:98%;text-align:left;font-size:11px;');
-		business_contact.setAttribute('style','margin:0px;padding:0px;width:98%;text-align:center;page-break-inside:avoid;font-size:11px;');
+		business_contact.setAttribute('style','margin:0px;padding:0px;width:98%;text-align:center;page-break-inside:avoid;font-size:11px;min-height:40px;');
 
-    ///////////////getting the content////////////////////////////////////////
+///////////////getting the content////////////////////////////////////////
 
 	var bt=get_session_var('title');
 	var logo_image=get_session_var('logo');
@@ -4077,7 +4077,7 @@ function print_form258(func)
 
 	////////////////filling in the content into the containers//////////////////////////
 
-	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
+	logo.innerHTML="<img style='max-width:90%;' src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	
 	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Quotation Sheet</b></div><hr style='border: 1px solid #00f;'>";
 	
@@ -4086,7 +4086,7 @@ function print_form258(func)
 	
 	signature.innerHTML=signature_text;
 	jurisdiction.innerHTML="Note: All disputes subjected to Delhi Jurisdiction";
-	business_contact.innerHTML="<hr style='border: 1px solid #00f;margin:5px;'>Address: "+business_address+"<br>Phone: "+business_phone+", E-Mail: "+business_email+"<br>CIN: "+cin+", PAN: "+pan+"<hr style='border: 1px solid #00f;margin:5px;'>";
+	business_contact.innerHTML="<hr style='border: 1px solid #00f;margin:5px;'><br>Address: "+business_address+"<br>Phone: "+business_phone+", E-Mail: "+business_email+"<br>CIN: "+cin+", PAN: "+pan+"<hr style='border: 1px solid #00f;margin:5px;'>";
 	
 	/////////////adding item table //////////////////////////////////////////////////////	
 	var item_table_element=document.getElementById(form_id+'_item_body');

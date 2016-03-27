@@ -249,7 +249,8 @@ class send_mailer_json
 	    
 	    if($message_attachment!="")
 	    {
-	    	$new_attachment=base64_encode($message_attachment);
+            $new_attachment=preg_replace('/data:application\/pdf;base64,/',"",$message_attachment,1);
+            //$new_attachment=base64_encode($message_attachment);
 	    	$attachment=array(
 	            array(
 	                'type' => 'application/pdf',
