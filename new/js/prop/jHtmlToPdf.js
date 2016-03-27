@@ -120,11 +120,12 @@ var htmlToPdf = function (options)
 	        }    
 	        case "img": 
 	        {
-	           break;
+	           break;    
 	        }
 	        case "br": {
-	            p = this.createParagraph();
-	            cnt.push(p);
+	            var t = { text: "\n"};
+	            //if (styles) this.computeStyle(t, styles);
+	            p.text.push(t);
 	            break;
 	        }
 	        case "hr": 
@@ -219,10 +220,11 @@ var htmlToPdf = function (options)
 	            break;
 	        }
 	        default: {
-	            this.parseContainer(cnt, e, p, styles);
+                this.parseContainer(cnt, e, p, styles);
 	            break;
-	           //console.log("Parsing for node " + e.nodeName + " not found");
-	           // break;
+	        
+                //console.log("Parsing for node " + e.nodeName + " not found");
+	            //break;
 	        }
 	    }
 	    return p;

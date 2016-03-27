@@ -4674,9 +4674,10 @@ function print_form258(func)
 	
 	var invoice_line=document.createElement('div');
 	
-	var info_section=document.createElement('div');	
-		var customer_info=document.createElement('div');
-		var business_info=document.createElement('div');
+	var info_section=document.createElement('table');
+        var info_row=document.createElement('tr');
+		var customer_info=document.createElement('td');
+		var business_info=document.createElement('td');
 
 	var footer=document.createElement('div');
 		var signature=document.createElement('div');
@@ -4690,8 +4691,8 @@ function print_form258(func)
 		logo.setAttribute('style','width:90%;text-align:center;margin:5px;max-height:60px;');
 	invoice_line.setAttribute('style','width:98%;margin:2px;');
 	info_section.setAttribute('style','width:98%;min-height:85px;font-size:11px;');
-		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;font-size:11px;');
-		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;font-size:11px;');
+		customer_info.setAttribute('style','padding:5px;margin:5px;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;font-size:11px;text-align:left;');
+		business_info.setAttribute('style','padding:5px;margin:5px;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;font-size:11px;text-align:left;');
 	footer.setAttribute('style','width:98%;min-height:60px;font-size:11px;');
 		signature.setAttribute('style','float:right;width:98%;text-align:right;font-size:11px;');
 		jurisdiction.setAttribute('style','margin:10px;width:98%;text-align:left;font-size:11px;');
@@ -4736,7 +4737,7 @@ function print_form258(func)
 	
 	signature.innerHTML=signature_text;
 	jurisdiction.innerHTML="Note: All disputes subjected to Delhi Jurisdiction";
-	business_contact.innerHTML="<hr style='border: 1px solid #00f;margin:5px;'><br>Address: "+business_address+"<br>Phone: "+business_phone+", E-Mail: "+business_email+"<br>CIN: "+cin+", PAN: "+pan+"<hr style='border: 1px solid #00f;margin:5px;'>";
+	business_contact.innerHTML="<p><hr style='border: 1px solid #00f;margin:5px;'></p><p>Address: "+business_address+"<br>Phone: "+business_phone+", E-Mail: "+business_email+"<br>CIN: "+cin+", PAN: "+pan+"</p><p><hr style='border: 1px solid #00f;margin:5px;'></p>";
 	
 	/////////////adding item table //////////////////////////////////////////////////////	
 	var item_table_element=document.getElementById(form_id+'_item_body');
@@ -5014,9 +5015,9 @@ function print_form258(func)
 	header.appendChild(logo);
 	//header.appendChild(business_intro);
 	//header.appendChild(business_contact);
-	
-	info_section.appendChild(customer_info);
-	info_section.appendChild(business_info);
+	info_section.appendChild(info_row);
+	info_row.appendChild(customer_info);
+	info_row.appendChild(business_info);
 	
 	footer.appendChild(signature);
 	footer.appendChild(jurisdiction);
