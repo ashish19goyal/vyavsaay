@@ -174,7 +174,7 @@
                         rowsHTML+="</td>";
                         rowsHTML+="<td data-th='Schedule'>";
                             rowsHTML+="<input type='text' readonly='readonly' class='floatlabel dblclick_editable' placeholder='From' form='form186_"+id+"' value='"+get_my_past_date(result.from_time)+"'>";
-                            rowsHTML+="<input type='text' readonly='readonly' placeholder='From' class='dblclick_editable floatlabel' form='form186_"+id+"' value='"+get_my_past_date(result.to_time)+"'>";
+                            rowsHTML+="<input type='text' readonly='readonly' placeholder='To' class='dblclick_editable floatlabel' form='form186_"+id+"' value='"+get_my_past_date(result.to_time)+"'>";
                         rowsHTML+="</td>";
                         rowsHTML+="<td data-th='Status'>";
                             rowsHTML+="<input type='text' readonly='readonly' form='form186_"+id+"' class='dblclick_editable' value='"+result.status+"'>";
@@ -259,8 +259,8 @@
                     rowsHTML+="<input type='number' required form='form186_"+id+"' step='any'>";
                 rowsHTML+="</td>";
                 rowsHTML+="<td data-th='Schedule'>";
-                    rowsHTML+="<b>From</b>: <input type='text' form='form186_"+id+"'>";
-                    rowsHTML+="<br><b>To</b>: <input type='text' form='form186_"+id+"'>";
+                    rowsHTML+="<input class='floatlabel' placeholder='From' type='text' form='form186_"+id+"'>";
+                    rowsHTML+="<input class='floatlabel' placeholder='To' type='text' form='form186_"+id+"'>";
                 rowsHTML+="</td>";
                 rowsHTML+="<td data-th='Status'>";
                     rowsHTML+="<input type='text' form='form186_"+id+"' required value='pending'>";
@@ -311,6 +311,7 @@
             $(to_filter).datepicker();
             set_static_value_list_json('production_plan_items','status',status_filter);
             form186_update_serial_numbers();
+            $('#form186').formcontrol();
         }
         else
         {
@@ -408,7 +409,7 @@
                                                 "<item_name exact='yes'>"+raw.requisite_name+"</item_name>"+
                                                 "<batch exact='yes'>"+batch_result.batch+"</batch>"+
                                                 "</area_utilization>";
-                                console.log(storage);																	
+                                //console.log(storage);																	
                                 get_single_column_data(function (storages) 
                                 {
                                     get_available_storage(raw.requisite_name,batch_result.batch,storages,batch_result.quantity,storage_result_array,function () 
