@@ -158,7 +158,7 @@
                                         }
                                         else
                                         {
-                                            
+                                            $("#modal91_link").click();
                                         }
                                     });
                                     
