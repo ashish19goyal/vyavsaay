@@ -6495,7 +6495,7 @@ function modal112_action(func)
             var instance_json={data_store:'product_instances',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'product_name',value:name,uniqueWith:['batch']},
-	 					{index:'batch',value:batch},
+	 					{index:'batch',value:name},
 	 					{index:'cost_price',value:cost_price},
 	 					{index:'sale_price',value:sale_price},
 	 					{index:'last_updated',value:last_updated}]};            
@@ -6511,7 +6511,7 @@ function modal112_action(func)
 					var sale_price_json={data_store:'sale_prices',
 	 				data:[{index:'id',value:id},
 	 					{index:'product_name',value:name},
-	 					{index:'batch',value:batch},
+	 					{index:'batch',value:name},
 	 					{index:'sale_price',value:sale_price},
 	 					{index:'pi_id',value:data_id},
                         {index:'billing_type',value:bill_type},  
