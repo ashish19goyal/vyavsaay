@@ -24,7 +24,7 @@ function print_barcode(string)
 	
 	name_element.innerHTML=string;
 	$(image_element).JsBarcode(string,{displayValue:false});
-	$.print(container);	
+	$.print(container);
 }
 
 /**

@@ -27,7 +27,8 @@
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr style='color:#9a9a9a;'>
-                    <th>Item</th>
+                    <th>Order</th>
+					<th>Item</th>
 					<th>Brand</th>
 					<th>Quantity</th>
 					<th>Schedule</th>
@@ -551,7 +552,7 @@
             var form=document.getElementById("form186_master");
 
             var name=form.elements['plan'].value;
-            var from=get_raw_time(form.elements['form'].value);
+            var from=get_raw_time(form.elements['from'].value);
             var to=get_raw_time(form.elements['to'].value);
             var status=form.elements['status'].value;
             var data_id=form.elements['plan_id'].value;
