@@ -214,7 +214,7 @@ input[readonly='readonly'], textarea[readonly='readonly'], select[disabled='disa
 	border:none;
 	background-color: inherit;
 	resize:none;
-	-webkit-appearance: none;
+	/*-webkit-appearance: none;*/
 	-moz-appearance: none;
 	appearance: none;
 }

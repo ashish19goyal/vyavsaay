@@ -124,6 +124,9 @@ function if_data_access_object(obj_type,obj_name,func_success,func_fail)
 		case 'suppliers':
 		case 'staff': index_name='acc_name';
 						break;
+        case 'product_instances':index_name='batch';
+                        obj_name=obj_name.batch;
+                        break;
 	}
 	
 	var obj_data={data_store:obj_type,

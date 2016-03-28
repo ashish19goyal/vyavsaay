@@ -119,7 +119,7 @@
                                     rowsHTML+="<a onclick=\"show_object('product_master','"+result.item_name+"');\"><textarea readonly='readonly' form='form145_"+result.id+"'>"+result.item_name+"</textarea></a>";
                                 rowsHTML+="</td>";
                                 rowsHTML+="<td data-th='Batch'>";
-                                    rowsHTML+="<input type='text' readonly='readonly' form='form145_"+result.id+"' value='"+result.batch+"'>";
+                                    rowsHTML+="<a><input type='text' readonly='readonly' form='form145_"+result.id+"' value='"+result.batch+"'></a>";
                                 rowsHTML+="</td>";
                                 rowsHTML+="<td data-th='Quantity'>";
                                     rowsHTML+="<input type='number' readonly='readonly' form='form145_"+result.id+"' value='"+result.quantity+"'>";
@@ -144,6 +144,12 @@
                     rowsHTML+="</tr>";
 
                     $('#form145_body').append(rowsHTML);
+                    var batch=document.getElementById('form145_'+result.id).elements[1];
+                    var batch_object={product:result.item_name,batch:result.batch};
+                    $(batch).parent().on('click',function()
+                    {
+                        show_object('product_instances',batch_object);
+                    });
                 });
 
                 $('#form145').formcontrol();

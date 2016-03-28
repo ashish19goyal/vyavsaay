@@ -110,7 +110,7 @@
                                     rowsHTML+="<a onclick=\"show_object('product_master','"+result.product_name+"');\"><textarea readonly='readonly' form='form183_"+result.id+"'>"+result.product_name+"</textarea></a>";
                                 rowsHTML+="</td>";
                                 rowsHTML+="<td data-th='Batch'>";
-                                    rowsHTML+="<input type='text' readonly='readonly' form='form183_"+result.id+"' value='"+result.batch+"'>";
+                                    rowsHTML+="<a><input type='text' readonly='readonly' form='form183_"+result.id+"' value='"+result.batch+"'></a>";
                                 rowsHTML+="</td>";
                                 rowsHTML+="<td data-th='Manufacturing'>";
                                     rowsHTML+="<input type='text' class='dblclick_editable' readonly='readonly' form='form183_"+result.id+"' value='"+get_my_past_date(result.manufacture_date)+"'>";
@@ -128,8 +128,15 @@
 
                         $('#form183_body').append(rowsHTML);
                         var fields=document.getElementById("form183_"+result.id);
+                        var batch=fields.elements[1];
                         var manufacturing=fields.elements[2];
                         var sys_inventory=fields.elements[3];
+                        
+                        var batch_object={product:result.product_name,batch:result.batch};
+                        $(batch).parent().on('click',function()
+                        {
+                            show_object('product_instances',batch_object);
+                        });
                         
                         get_inventory(result.product_name,result.batch,function(inventory)
                         {

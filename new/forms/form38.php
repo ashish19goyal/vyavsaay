@@ -107,7 +107,7 @@
                                 rowsHTML+="<a onclick=\"show_object('product_master','"+result.item_name+"');\"><input type='text' readonly='readonly' form='form38_"+result.id+"' value='"+result.item_name+"'></a>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Batch'>";
-                                rowsHTML+="<input type='text' readonly='readonly' form='form38_"+result.id+"' value='"+result.batch+"'>";
+                                rowsHTML+="<a><input type='text' readonly='readonly' form='form38_"+result.id+"' value='"+result.batch+"'></a>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Storage'>";
                                 rowsHTML+="<a onclick=\"show_object('store_areas','"+result.name+"');\"><input type='text' readonly='readonly' form='form38_"+result.id+"' value='"+result.name+"'></a>";
@@ -123,8 +123,15 @@
 
                     $('#form38_body').append(rowsHTML);
                     var fields=document.getElementById("form38_"+result.id);
+                    var batch=fields.elements[1];
                     var quantity=fields.elements[3];
                     var delete_button=fields.elements['delete'];
+                    
+                    var batch_object={product:result.item_name,batch:result.batch};
+                    $(batch).parent().on('click',function()
+                    {
+                        show_object('product_instances',batch_object);
+                    });
 
                     get_store_inventory(result.name,result.item_name,result.batch,function(inventory)
                     {
