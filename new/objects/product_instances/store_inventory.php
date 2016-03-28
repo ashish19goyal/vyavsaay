@@ -39,7 +39,6 @@
                     
                     get_store_inventory(result.name,result.item_name,result.batch,function(inventory)
                     {
-                        console.log(inventory);
                         $('#object_product_instances_store_inventory_'+id).html(inventory);
                     });
                 });
