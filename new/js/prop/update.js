@@ -6698,48 +6698,6 @@ function form165_update_item(form)
 }
 
 
-/**
- * @form Manage sale prices
- * @param button
- */
-function form166_update_item(form)
-{
-	if(is_update_access('form166'))
-	{
-		var name=form.elements[0].value;
-		var mrp=form.elements[1].value;
-		var cost_price=form.elements[2].value;
-		var sale_price=form.elements[3].value;
-		var data_id=form.elements[4].value;
-		var last_updated=get_my_time();
-		var data_xml="<product_instances>" +
-					"<id>"+data_id+"</id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<batch>"+name+"</batch>" +
-					"<mrp>"+mrp+"</mrp>"+
-					"<cost_price>"+cost_price+"</cost_price>" +
-					"<sale_price>"+sale_price+"</sale_price>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</product_instances>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>product_instances</tablename>" +
-					"<link_to>form166</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Costing for item "+name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		update_row(data_xml,activity_xml);
-		for(var i=0;i<4;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Storage Structure

@@ -3062,54 +3062,6 @@ function form162_import(data_array,import_type)
 
 
 /**
-* @form Manage sale prices
-* @formNo 166
-*/
-function form166_import(data_array,import_type)
-{
-	var data_xml="<product_instances>";
-	var counter=1;
-	var new_id=parseFloat(get_new_key());
-	var last_updated=get_my_time();
-	//console.log(data_array);
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</product_instances><separator></separator><product_instances>";
-		}
-		
-		counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<product_name>"+row.product_name+"</product_name>" +
-				"<batch>"+row.batch+"</batch>" +
-				"<sale_price>"+row.sale_price+"</sale_price>" +
-				"<cost_price>"+row.cost_price+"</cost_price>" +
-				"<mrp>"+row.mrp+"</mrp>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-
-	data_xml+="</product_instances>";
-	
-	//console.log(data_xml);
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-	}
-}
-
-/**
 * @form Storage Structure
 * @formNo 167
 */

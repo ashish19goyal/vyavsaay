@@ -662,15 +662,6 @@ function form162_import_template()
 	my_array_to_csv(data_array);
 };
 
-/**
-* @form Manage sale prices
-* @formNo 166
-*/
-function form166_import_template()
-{
-	var data_array=['id','product_name','batch','cost_price','sales_price','mrp'];
-	my_array_to_csv(data_array);
-};
 
 /**
 * @form Storage Structure
