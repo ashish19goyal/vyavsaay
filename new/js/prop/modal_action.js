@@ -3386,14 +3386,12 @@ function modal33_action(id)
 	var form=document.getElementById("modal33_form");
 	var task_filter=form.elements['task'];
 	var staff_filter=form.elements['assignee'];
-	var due_filter=form.elements['due'];
+	var notes_filter=form.elements['notes'];
 	var status_filter=form.elements['status'];
 	
 	var staff_data={data_store:'staff',return_column:'acc_name'};
 	set_my_value_list_json(staff_data,staff_filter);
-    
-	$(due_filter).vdatetimepicker();
-	set_static_value_list_json('task_instances','status',status_filter);
+    set_static_value_list_json('task_instances','status',status_filter);
 	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
@@ -3403,7 +3401,7 @@ function modal33_action(id)
 		{
 			var name=form.elements['task'].value;
 			var assignee=form.elements['assignee'].value;
-			var t_due=get_raw_time(form.elements['due'].value);
+			var notes=form.elements['notes'].value;
 			var status=form.elements['status'].value;
 			var data_id=id;
 			var last_updated=get_my_time();
@@ -3413,7 +3411,7 @@ function modal33_action(id)
 	 					{index:'name',value:name},
 	 					{index:'assignee',value:assignee},
                         {index:'status',value:status},
-                        {index:'t_due',value:t_due},
+                        {index:'description',value:notes},
                         {index:'last_updated',value:last_updated}]};
 
             var prod_json={data_store:'production_plan_items',
@@ -3434,7 +3432,7 @@ function modal33_action(id)
                    indexes:[{index:'id',value:id},
                            {index:'name'},
                            {index:'assignee'},
-                           {index:'t_due'},
+                           {index:'description'},
                            {index:'status'}]};
 	read_json_rows('',tasks_data,function(results)
 	{
@@ -3442,8 +3440,9 @@ function modal33_action(id)
 		{
 			task_filter.value=results[0].name;
 			staff_filter.value=results[0].assignee;
-			due_filter.value=get_my_datetime(results[0].t_due);
-			status_filter.value=results[0].status;			
+			notes_filter.value=results[0].description;
+			status_filter.value=results[0].status;	
+            $('#modal33').formcontrol();
 		}
 		$("#modal33_link").click();
 	});
@@ -7161,29 +7160,21 @@ function modal116_action(barcode,sku)
  * @modal Add Task
  * @modalNo 117
  */
-function modal117_action(date_initiated)
+function modal117_action(date_due)
 {
 	var form=document.getElementById("modal117_form");
-	var task_filter=form.elements[1];
-	var desc_filter=form.elements[2];
-	var staff_filter=form.elements[3];
-	var due_filter=form.elements[4];
-	var status_filter=form.elements[5];
+	var task_filter=form.elements['task'];
+	var desc_filter=form.elements['notes'];
+	var staff_filter=form.elements['assignee'];
+	var status_filter=form.elements['status'];
 	
+    $('#modal117').formcontrol();
 	//start_filter.value=date_initiated;
 
-	var step_data="<business_processes>" +
-			"<name></name>" +
-			"</business_processes>";
-	set_my_value_list(step_data,task_filter);
+	var staff_data={data_store:'staff',return_column:'acc_name'};
+	set_my_value_list_json(staff_data,staff_filter);
 	
-	var staff_data="<staff>" +
-			"<acc_name></acc_name>" +
-			"</staff>";
-	set_my_value_list(staff_data,staff_filter);
-	
-	$(due_filter).vdatetimepicker();
-	set_static_value_list('task_instances','status',status_filter);
+	set_static_value_list_json('task_instances','status',status_filter);
 	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
@@ -7191,51 +7182,37 @@ function modal117_action(date_initiated)
 		event.preventDefault();
 		if(is_create_access('form185') || is_create_access('form188'))
 		{
-			var name=form.elements[1].value;
-			var description=form.elements[2].value;
-			var assignee=form.elements[3].value;
-			var t_due=get_raw_time(form.elements[4].value);
-			var status=form.elements[5].value;
+			var name=form.elements['task'].value;
+			var description=form.elements['notes'].value;
+			var assignee=form.elements['assignee'].value;
+			var status=form.elements['status'].value;
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
-			var data_xml="<task_instances>" +
-						"<id>"+data_id+"</id>" +
-						"<name>"+name+"</name>" +
-						"<description>"+description+"</description>"+
-						"<assignee>"+assignee+"</assignee>" +
-						"<t_initiated>"+get_raw_time(date_initiated)+"</t_initiated>" +
-						"<t_due>"+t_due+"</t_due>" +
-						"<status>"+status+"</status>" +
-						"<task_hours>1</task_hours>" +
-						"<source>business process</source>" +
-						"<source_id></source_id>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</task_instances>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>task_instances</tablename>" +
-						"<link_to>form185</link_to>" +
-						"<title>Added</title>" +
-						"<notes>Task "+name+" assigned to "+assignee+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			if(is_online())
-			{
-				server_create_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_create_row(data_xml,activity_xml);
-			}	
+            
+            var data_json={data_store:'task_instances',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'name',value:name},
+	 					{index:'description',value:description},
+	 					{index:'assignee',value:assignee},
+	 					{index:'status',value:status},
+                        {index:'task_hours',value:1},
+                        {index:'source',value:'business process'},
+                        {index:'t_due',value:get_raw_time(date_due)},
+                        {index:'t_initiated',value:get_raw_time(date_due)-3600000},  
+                        {index:'source_id',value:''},
+                        {index:'last_updated',value:last_updated}],
+                    log:'yes',
+                    log_data:{title:'Added',notes:'Task '+name+' assigned to '+assignee,link_to:'form185'}};
+			create_json(data_json);
 		}
 		else
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal117").dialog("close");
+		$(form).find(".close").click();
 	});
 	
-	$("#modal117").dialog("open");
+	$("#modal117_link").click();
 }
 
 /**

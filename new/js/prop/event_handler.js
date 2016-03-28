@@ -243,7 +243,8 @@ function modal_forms_ini()
 	}
     dynamic_modal_array.push(113);
     dynamic_modal_array.push(114);
-	for(var i=116;i<=125;i++)
+	dynamic_modal_array.push(116);
+	for(var i=118;i<=125;i++)
 	{
 		dynamic_modal_array.push(i);
 	}

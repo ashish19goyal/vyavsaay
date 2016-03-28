@@ -753,10 +753,6 @@
         });	
     }
 
-    /**
-     * @form Create Production Plan
-     * @formNo 186
-     */
     function print_form186(func)
     {
         var form_id='form186';

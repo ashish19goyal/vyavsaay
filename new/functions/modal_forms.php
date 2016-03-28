@@ -644,8 +644,8 @@
 					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal33_form' required readonly='readonly' name='task'></div>
 					       </div>
 		                  <div class="row">
-								   <div class="col-sm-12 col-md-4">Due Time</div>
-					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal33_form' required name='due'></div>
+								   <div class="col-sm-12 col-md-4">Notes</div>
+                              <div class="col-sm-12 col-md-8"><textarea form='modal33_form' name='notes'></textarea></div>
 					       </div>
 		                  <div class="row">
 								   <div class="col-sm-12 col-md-4">Assignee</div>
@@ -1287,18 +1287,43 @@
 		</form>
 	</div>
 
-	<div id="modal117" title="Add task">
-		<form id='modal117_form' autocomplete="off">
-			<fieldset>
-				<label>Task: <input type='text' required></label><br>
-				<label>Details: <textarea></textarea></label><br>
-				<label>Assignee: <input type="text"></label><br>
-				<label>Due time: <input type="text"></label><br>
-				<label>Status: <input type="text" required value='pending'></label><br>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
+	<a href='#modal117' data-toggle="modal" id='modal117_link'></a>
+	<div id="modal117" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal117_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add Task</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;min-height:390px;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Task</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal117_form' required name='task'></div>
+					       </div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Notes</div>
+                              <div class="col-sm-12 col-md-8"><textarea form='modal117_form' name='notes'></textarea></div>
+					       </div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Assignee</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal117_form' name='assignee'></div>
+					       </div>
+                           <div class="row">
+								   <div class="col-sm-12 col-md-4">Status</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal117_form' required name='status'></div>
+					       </div>
+		              </div>
+                    </div>    
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal117_form' name='save'>Add</button>
+	               	<button type="button" class="btn red" form='modal117_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 	<div id="modal118" title="New order">
 		<form id='modal118_form' autocomplete="off">

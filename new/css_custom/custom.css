@@ -223,7 +223,7 @@ input[type='checkbox'],input[type='radio']{
 	width:25px;
 	height:25px;
 	margin:auto;
-	-webkit-appearance: none;
+	/*-webkit-appearance: none;*/
 	-moz-appearance: none;
 	appearance: none;
 }
