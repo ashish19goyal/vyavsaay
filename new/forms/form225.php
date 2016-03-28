@@ -383,7 +383,8 @@
                 $(batch_filter).on('blur',function(event)
                 {
                     var price_data={data_store:'product_instances',return_column:'sale_price',
-                                   indexes:[{index:'product_name',exact:name_filter.value}]};
+                                   indexes:[{index:'product_name',exact:name_filter.value},
+                                           {index:'batch',exact:batch_filter.value}]};
                     set_my_value_json(price_data,price_filter);
 
                     get_inventory(name_filter.value,batch_filter.value,function(quantity)
