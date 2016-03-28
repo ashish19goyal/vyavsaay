@@ -132,7 +132,7 @@
                                     rowsHTML+="<td data-th='S.No.'>";
                                     rowsHTML+="</td>";
                                     rowsHTML+="<td data-th='Raw Material'>";
-                                        rowsHTML+="<a onclick=\"show_object('product_master','"+result.requisite_name+"');\"><input type='text' readonly='readonly' form='form240_"+id+"' value='"+result.requisite_name+"'>";
+                                        rowsHTML+="<a><input type='text' readonly='readonly' form='form240_"+id+"' value='"+result.requisite_name+"'>";
                                     rowsHTML+="</a></td>";
                                     rowsHTML+="<td data-th='Quantity'>";
                                         rowsHTML+="<input type='number' step='any' readonly='readonly' form='form240_"+id+"' value='"+result.quantity+"'>";
@@ -144,8 +144,27 @@
                                 rowsHTML+="</tr>";
 
                                 $('#form240_body').append(rowsHTML);
+                                var drill_down=document.getElementById('form240_'+id).elements[0];
+                                $(drill_down).parent().on('click',function(e)
+                                {
+                                    e.preventDefault();
+                                    var requisite_data={data_store:'manage_pre_requisites',count:1,return_column:'id',
+                                                       indexes:[{index:'name',exact:result.requisite_name}]};
+                                    read_json_single_column(requisite_data,function(requisites)
+                                    {
+                                        if(requisites.length>0)
+                                        {
+                                            element_display(requisites[0],'form240');
+                                        }
+                                        else
+                                        {
+                                            
+                                        }
+                                    });
+                                    
+                                });
                             });
-
+                            
                             form240_update_serial_numbers();
                             $('#form240').formcontrol();
 				            initialize_static_tabular_report_buttons('Material Requirements','form240');
@@ -198,10 +217,7 @@
                     form240_add_item();			
                 });
 
-                var item_data={data_store:'attributes',return_column:'name',
-                              indexes:[{index:'type',exact:'product'},
-                                      {index:'value',exact:'yes'},
-                                      {index:'attribute',exact:'raw material'}]};
+                var item_data={data_store:'product_master',return_column:'name'};
                 set_my_value_list_json(item_data,item_filter,function () 
                 {
                     $(item_filter).focus();
