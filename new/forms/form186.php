@@ -412,7 +412,7 @@
                                 //console.log(storage);																	
                                 get_single_column_data(function (storages) 
                                 {
-                                    get_available_storage(raw.requisite_name,batch_result.batch,storages,batch_result.quantity,storage_result_array,function () 
+                                   var storage_result_array=[]; get_available_storage(raw.requisite_name,batch_result.batch,storages,batch_result.quantity,storage_result_array,function () 
                                     {
                                         console.log(storage_result_array);
 
