@@ -221,26 +221,19 @@
 
         var plan_line=document.createElement('div');
 
-        var info_section=document.createElement('div');	
-            var plan_info=document.createElement('div');
-
         var table_container=document.createElement('div');
 
         var footer=document.createElement('div');
-            var address=document.createElement('div');
 
         ////////////setting styles for containers/////////////////////////
 
         header.setAttribute('style','width:100%;min-height:100px;');
-            business_title.setAttribute('style','float:right;width:50%;text-align:right;');
-        plan_line.setAttribute('style','width:100%;min-height:60px;background-color:#bbbbbb;');
-        info_section.setAttribute('style','width:100%;min-height:60px;text-align:left;');
-            plan_info.setAttribute('style','padding:5px;margin:5px;float:left;width:100%;height:90px;');
-
+        plan_line.setAttribute('style','width:100%;min-height:40px;');
+        footer.setAttribute('style','width:100%;min-height:50px;');
+        
         ///////////////getting the content////////////////////////////////////////
 
         var bt=get_session_var('title');
-        var font_size=get_session_var('print_size');
         var logo_image=get_session_var('logo');
         var business_intro_text=get_session_var('business_intro');
         var business_address=get_session_var('address');
@@ -248,58 +241,64 @@
         var business_email=get_session_var('email');
         var business_website=get_session_var('website');
 
-        var master_form=document.getElementById(form_id+'_master');
-        var plan_name=master_form.elements[1].value;
-        var from_date=master_form.elements[2].value;
-        var to_date=master_form.elements[3].value;
-        var plan_status=master_form.elements[4].value;
-
         ////////////////filling in the content into the containers//////////////////////////
 
         logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
-        business_title.innerHTML=bt;
-        plan_line.innerHTML="<div style='float:left;width:50%'>From: "+from_date+"</div><div style='float:right;text-align:right;width:50%'>To: "+to_date+"</div>";	
-        plan_info.innerHTML="<hr style='border: 1px solid #000;margin:2px'>Plan Name: </b>"+plan_name+"<br>Plan Status: "+plan_status+"<hr style='border: 1px solid #000;margin:2px'>";
-
-        var table_element=document.getElementById(form_id+'_body').parentNode;
-        table_copy=table_element.cloneNode(true);
-
-        table_copy.removeAttribute('class');
-        table_copy.setAttribute('width','1000px');
-        $(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,form,fresh").remove();
-        $(table_copy).find('input,textarea').each(function(index)
+        plan_line.innerHTML="<div>Today's Schedule: "+get_my_date()+"</div>";	
+        footer.innerHTML=business_address+"<br>Phone: "+business_phone+", Email: "+business_email+", Website: "+business_website;
+        
+        var plan_items_column={data_store:'production_plan_items',
+                                  indexes:[{index:'id'},
+                                          {index:'item'},
+                                          {index:'batch'},
+                                          {index:'order_no'},
+                                          {index:'quantity'},
+                                          {index:'brand'},
+                                          {index:'status'},
+                                          {index:'from_time',lowerbound:get_raw_time(get_my_date()),upperbound:get_raw_time(get_my_date())+86400000},
+                                          {index:'to_time'}]};
+        read_json_rows('',plan_items_column,function(plan_items)
         {
-            $(this).replaceWith($(this).val());
+            show_loader();
+            var table_copy=document.createElement('table');
+            table_copy.setAttribute('style','min-height:300px;width:100%');
+            var th_elem="<tr>"+
+                            "<th style='border:2px solid black;text-align:left;'>Order No</th>"+
+                            "<th style='border:2px solid black;text-align:left;'>Item</th>"+
+                            "<th style='border:2px solid black;text-align:left;'>Brand</th>"+
+                            "<th style='border:2px solid black;text-align:left;'>Quantity</th>"+
+                            "<th style='border:2px solid black;text-align:left;'>From</th>"+
+                            "<th style='border:2px solid black;text-align:left;'>To</th>"+
+                            "<th style='border:2px solid black;text-align:left;'>Status</th>"+
+                        "</tr>";
+            $(table_copy).append(th_elem);
+            
+            plan_items.forEach(function(plan_item)
+            {
+                var td_elem="<tr>"+
+                                "<td style='border:2px solid black;text-align:left;'>"+plan_item.order_no+"</td>"+
+                                "<td style='border:2px solid black;text-align:left;'>"+plan_item.item+"</td>"+
+                                "<td style='border:2px solid black;text-align:left;'>"+plan_item.brand+"</td>"+
+                                "<td style='border:2px solid black;text-align:left;'>"+plan_item.quantity+"</td>"+
+                                "<td style='border:2px solid black;text-align:left;'>"+get_my_datetime(plan_item.from_time)+"</td>"+
+                                "<td style='border:2px solid black;text-align:left;'>"+get_my_datetime(plan_item.to_time)+"</td>"+
+                                "<td style='border:2px solid black;text-align:left;'>"+plan_item.status+"</td>"+
+                            "</tr>";
+                
+                $(table_copy).append(td_elem);
+                /////////////placing the containers //////////////////////////////////////////////////////	
+            });
+            
+            container.appendChild(header);
+            container.appendChild(plan_line);
+            container.appendChild(table_copy);
+            container.appendChild(footer);
+
+            header.appendChild(logo);
+            
+            hide_loader();
+            $.print(container);
         });
-
-        $(table_copy).find('label').each(function(index)
-        {
-            $(this).replaceWith($(this).html());
-        });	
-
-        $(table_copy).find('th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
-        $(table_copy).find('td').attr('style',"border-right:2px solid black;border-left:2px solid black;text-align:left;font-size:"+font_size+"em");
-        $(table_copy).find('tfoot').attr('style',"border:2px solid black;text-align:left;");
-        $(table_copy).find("tbody>tr").attr('style','border:2px solid black;flex:1;height:30px');
-        $(table_copy).find("tbody").attr('style','border:2px solid black;');
-
-        $(table_copy).find("th:first, td:first").css('width','60px');
-        $(table_copy).find("th:nth-child(2), td:nth-child(2)").css('width','200px');
-
-        /////////////placing the containers //////////////////////////////////////////////////////	
-
-        container.appendChild(header);
-        container.appendChild(plan_line);
-        container.appendChild(info_section);
-
-        container.appendChild(table_copy);
-
-        header.appendChild(logo);
-        header.appendChild(business_title);
-
-        info_section.appendChild(plan_info);
-
-        func(container);
     }
     </script>
 </div>
