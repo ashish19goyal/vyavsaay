@@ -237,7 +237,7 @@
                             var status='partially received';				
                             if(parseFloat(porders[0].total_quantity)<=quantity_accepted)
                             {
-                                status='completely received';
+                                status='received';
                             }
 
                             var new_bill_id=JSON.stringify(id_object_array);

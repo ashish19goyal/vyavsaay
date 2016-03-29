@@ -8116,6 +8116,7 @@ function modal126_action(po_id,po_num)
 		update_json(po_json);
 		
 		$(form).find(".close").click();
+        form179_ini();
 	});
 		
 	////adding attribute fields/////

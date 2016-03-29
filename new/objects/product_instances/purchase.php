@@ -3,12 +3,11 @@
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr>
-					<th>Storage</th>
+					<th>Supplier</th>
+                	<th>Storage</th>
                     <th>Date</th>
                     <th>Quantity</th>
 					<th>Rate</th>
-                    <th>Amount</th>
-                    <th>Total</th>
                 </tr>
 			</thead>
 			<tbody id='object_product_instances_purchase_body'>
@@ -29,13 +28,13 @@
             var columns={data_store:'supplier_bill_items',
                          count:paginator.page_size(),
                          start_index:paginator.get_index(),
-                         indexes:[{index:'product_name',exact:obj_name.product},
+                         indexes:[{index:'id'},
+                                {index:'product_name',exact:obj_name.product},
                                  {index:'batch',exact:obj_name.batch},
                                  {index:'quantity'},
                                  {index:'unit_price'},
-                                 {index:'amount'},
-                                 {index:'total'},
                                  {index:'storage'},
+                                 {index:'bill_id'},
                                  {index:'last_updated'}]};
 
             read_json_rows('',columns,function(results)
@@ -43,6 +42,8 @@
                 results.forEach(function(result)
                 {
                     var rowsHTML="<tr>";
+                        rowsHTML+="<td data-th='Supplier' id='object_product_instances_purchase_"+result.id+"'>";
+                        rowsHTML+="</td>";
                         rowsHTML+="<td data-th='Storage'>";
                             rowsHTML+=result.storage;
                         rowsHTML+="</td>";
@@ -55,14 +56,17 @@
                         rowsHTML+="<td data-th='Rate'>";
                             rowsHTML+=result.unit_price;
                         rowsHTML+="</td>";
-                        rowsHTML+="<td data-th='Amount'>";
-                            rowsHTML+=result.amount;
-                        rowsHTML+="</td>";
-                        rowsHTML+="<td data-th='Total'>";
-                            rowsHTML+=result.total;
-                        rowsHTML+="</td>";
                     rowsHTML+="</tr>";
                     $('#object_product_instances_purchase_body').append(rowsHTML);
+                    var supplier_data={data_store:'supplier_bills',return_column:'supplier',count:1,
+                                       indexes:[{index:'id',exact:result.bill_id}]};
+                    read_json_single_column(supplier_data,function(suppliers)
+                    {
+                        if(suppliers.length>0)
+                        {
+                            $('#object_product_instances_purchase_'+result.id).html(suppliers[0]);
+                        }
+                    });
                 });
                 paginator.update_index(results.length);                
             });

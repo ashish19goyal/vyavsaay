@@ -525,10 +525,6 @@
         }
 
 
-        /**
-         * @form Enter supplier Bill (wholesale)
-         * @param button
-         */
         function form136_create_form()
         {
             if(is_create_access('form136'))
@@ -637,14 +633,9 @@
                             quantity_received=parseFloat(porders[0].quantity_received);
                         }
 
-                        var status='partially received';				
-                        if(parseFloat(porders[0].total_quantity)<=quantity_received)
-                        {
-                            status='completely received';
-                        }
-
+                        var status='received';				
+                        
                         var new_bill_id=JSON.stringify(id_object_array);
-                        //console.log(new_bill_id);
                         var po_json={data_store:'purchase_orders',
                             data:[{index:'id',value:order_id},
                                 {index:'bill_id',value:new_bill_id},
@@ -697,6 +688,7 @@
                 create_json(pt_json);
                 create_json(payment_json,function()
                 {
+                    //console.log('created payment record');
                     modal28_action(pt_tran_id);
                 });
 
@@ -828,12 +820,8 @@
                             quantity_received=parseFloat(porders[0].quantity_received);
                         }
 
-                        var status='partially received';				
-                        if(parseFloat(porders[0].total_quantity)<=quantity_received)
-                        {
-                            status='completely received';
-                        }
-
+                        var status='received';				
+                        
                         var new_bill_id=JSON.stringify(id_object_array);
 
                         var po_json={data_store:'purchase_orders',

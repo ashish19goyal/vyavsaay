@@ -3,12 +3,11 @@
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr>
-					<th>Storage</th>
+					<th>Customer</th>
+                    <th>Storage</th>
                     <th>Date</th>
                     <th>Quantity</th>
 					<th>Rate</th>
-                    <th>Amount</th>
-                    <th>Total</th>
                 </tr>
 			</thead>
 			<tbody id='object_product_instances_sales_body'>
@@ -34,8 +33,7 @@
                                  {index:'batch',exact:obj_name.batch},
                                  {index:'quantity'},
                                  {index:'unit_price'},
-                                 {index:'amount'},
-                                 {index:'total'},
+                                 {index:'bill_id'},
                                  {index:'storage'},
                                  {index:'last_updated'}]};
 
@@ -44,6 +42,8 @@
                 results.forEach(function(result)
                 {
                     var rowsHTML="<tr>";
+                        rowsHTML+="<td data-th='Customer' id='object_product_instances_sales_"+result.id+"'>";
+                        rowsHTML+="</td>";
                         rowsHTML+="<td data-th='Storage'>";
                             rowsHTML+=result.storage;
                         rowsHTML+="</td>";
@@ -56,14 +56,17 @@
                         rowsHTML+="<td data-th='Rate'>";
                             rowsHTML+=result.unit_price;
                         rowsHTML+="</td>";
-                        rowsHTML+="<td data-th='Amount'>";
-                            rowsHTML+=result.amount;
-                        rowsHTML+="</td>";
-                        rowsHTML+="<td data-th='Total'>";
-                            rowsHTML+=result.total;
-                        rowsHTML+="</td>";
                     rowsHTML+="</tr>";
                     $('#object_product_instances_sales_body').append(rowsHTML);
+                    var customer_data={data_store:'bills',return_column:'customer_name',count:1,
+                                       indexes:[{index:'id',exact:result.bill_id}]};
+                    read_json_single_column(customer_data,function(customers)
+                    {
+                        if(customers.length>0)
+                        {
+                            $('#object_product_instances_sales_'+result.id).html(customers[0]);
+                        }
+                    });
                 });
                 paginator.update_index(results.length);                
             });

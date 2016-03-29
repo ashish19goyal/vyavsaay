@@ -238,33 +238,35 @@
             if(is_create_access('form240'))
             {
                 var item_name=document.getElementById('form240_master').elements['item_name'].value;
-
                 var requisite_name=form.elements[0].value;
-                var quantity=form.elements[1].value;
-
-                var data_id=form.elements[2].value;
-                var save_button=form.elements['save'];
-                var del_button=form.elements['delete'];
-
-                var last_updated=get_my_time();
-                var data_json={data_store:'pre_requisites',
- 							data:[{index:'id',value:data_id},
-                                 {index:'name',value:item_name},
-                                 {index:'type',value:'product'},
-                                 {index:'quantity',value:quantity},
-                                 {index:'requisite_type',value:'product'},
-                                 {index:'requisite_name',value:requisite_name},
-                                 {index:'last_updated',value:last_updated}]};
-                create_json(data_json);
-
-                $(form).readonly();
-                del_button.removeAttribute("onclick");
-                $(del_button).on('click',function(event)
+                if(requisite_name!="")
                 {
-                    form240_delete_item(del_button);
-                });
+                    var quantity=form.elements[1].value;
 
-                $(save_button).off('click');
+                    var data_id=form.elements[2].value;
+                    var save_button=form.elements['save'];
+                    var del_button=form.elements['delete'];
+
+                    var last_updated=get_my_time();
+                    var data_json={data_store:'pre_requisites',
+                                data:[{index:'id',value:data_id},
+                                     {index:'name',value:item_name},
+                                     {index:'type',value:'product'},
+                                     {index:'quantity',value:quantity},
+                                     {index:'requisite_type',value:'product'},
+                                     {index:'requisite_name',value:requisite_name},
+                                     {index:'last_updated',value:last_updated}]};
+                    create_json(data_json);
+
+                    $(form).readonly();
+                    del_button.removeAttribute("onclick");
+                    $(del_button).on('click',function(event)
+                    {
+                        form240_delete_item(del_button);
+                    });
+
+                    $(save_button).off('click');
+                }
             }
             else
             {

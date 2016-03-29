@@ -1,8 +1,5 @@
 <div id='form179' class='tab-pane portlet box green-meadow'>	   
 	<div class="portlet-title">
-		<div class='caption'>		
-			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form179_add_item();'>Add <i class='fa fa-plus'></i></a>
-		</div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
@@ -161,6 +158,7 @@
                         master_form.elements['po_num'].value=result.order_num;
                         master_form.elements['order_id'].value=result.id;
                         $(master_form.elements['bill_num']).focus();
+                        $('#form136').formcontrol();
                     });
 
 

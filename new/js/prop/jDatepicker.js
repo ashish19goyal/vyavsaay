@@ -9,9 +9,11 @@
 
 	$.fn.datepicker=function(options)
 	{
-		return this.each(function() 
+        return this.each(function() 
 		{
-			$(this).datetimepicker({format:'DD/MM/YYYY'});
+            var defaults={format:'DD/MM/YYYY'};
+            var new_options=$.extend(defaults, options || {});
+			$(this).datetimepicker(new_options);
       });      
 	};
 }(jQuery));
