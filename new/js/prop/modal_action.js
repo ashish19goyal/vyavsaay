@@ -6479,6 +6479,12 @@ function modal112_action(func)
 			var cost_price=form.elements['cost'].value;
             var sale_price=form.elements['sale'].value;
 			var last_updated=get_my_time();
+            var indexes=name.split(/[\s,]+/);
+            var description_indexes=description.split(/[\s,]+/);
+            var make_indexes=make.split(/[\s,]+/);
+            var new_indexes=indexes.concat(description_indexes,make_indexes);
+            var anew_indexes=array_unique(new_indexes);
+            var index_string=JSON.stringify(anew_indexes);
             
             var data_json={data_store:'product_master',
 	 				log:'yes',
@@ -6487,6 +6493,7 @@ function modal112_action(func)
 	 					{index:'make',value:make},
 	 					{index:'description',value:description},
 	 					{index:'tax',value:tax},
+                        {index:'indexes',value:index_string},  
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Added',notes:'Product '+name+' to inventory',link_to:'form39'}}; 					
             
@@ -15456,26 +15463,38 @@ function modal194_action(elem_id)
         });
     });
     
+    function search_index()
+    {
+        var key_value=keywords.value;
+        var key_array=key_value.split(/[\s,]+/);
+        //key_array.pop();
+        
+        for(var i in key_array)
+        {
+            if(key_array[i]=="" || key_array[i]==null)
+            {
+                key_array.splice(i,1);
+            }
+        }
+
+        var items_data={data_store:'product_master',return_column:'name',
+                       indexes:[{index:'indexes',all_approx_array:key_array}]};
+        set_simple_select(items_data,items,function()
+        {
+            $(items).find('option').on('click',function()
+            {
+                $(elem_id).val($(this).html());
+                $(form).find('.close').click();
+            });
+        });
+    }
+    var timeout="";
+    
     $(keywords).off('keyup');
     $(keywords).on('keyup',function(e)
     {
-        if(e.keyCode==188 || e.keyCode==32)
-        {
-            var key_value=keywords.value;
-            var key_array=key_value.split(/[\s,]+/);
-            key_array.pop();
-            
-            var items_data={data_store:'product_master',return_column:'name',
-                           indexes:[{index:'indexes',all_approx_array:key_array}]};
-            set_simple_select(items_data,items,function()
-            {
-                $(items).find('option').on('click',function()
-                {
-                    $(elem_id).val($(this).html());
-                    $(form).find('.close').click();
-                });
-            });
-        }
+        clearTimeout(timeout);
+        timeout=setTimeout(search_index,400);
     });
         
 	$(form).off('submit');
@@ -15487,7 +15506,7 @@ function modal194_action(elem_id)
 	});
 	
 	$("#modal194_link").click();	
-    $(keywords).focus();
+    setTimeout(function() {$(keywords).focus();},100);
 }
 
 /**

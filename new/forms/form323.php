@@ -184,19 +184,19 @@
                         var rowsHTML="<tr>";
                         rowsHTML+="<form id='form323_"+id+"'></form>";
                             rowsHTML+="<td data-th='Item'>";
-                                rowsHTML+="<a onclick=\"show_object('product_master','"+result.item_name+"');\"><input type='text' readonly='readonly' form='form323_"+id+"' value='"+result.item_name+"'></a>";
+                                rowsHTML+="<a onclick=\"show_object('product_master','"+result.item_name+"');\"><input type='text' placeholder='Item' readonly='readonly' form='form323_"+id+"' value='"+result.item_name+"'></a>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Description'>";
-                                rowsHTML+="<textarea readonly='readonly' form='form323_"+id+"'>"+result.item_desc+"</textarea>";
+                                rowsHTML+="<textarea placeholder='Description' readonly='readonly' form='form323_"+id+"'>"+result.item_desc+"</textarea>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Storage'>";
-                                rowsHTML+="<a onclick=\"show_object('store_areas','"+result.storage+"');\"><input type='text' readonly='readonly' form='form323_"+id+"' value='"+result.storage+"'></a>";
+                                rowsHTML+="<a onclick=\"show_object('store_areas','"+result.storage+"');\"><input type='text' readonly='readonly' placeholder='Storage' form='form323_"+id+"' value='"+result.storage+"'></a>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Batch'>";
-                                rowsHTML+="<input type='text' readonly='readonly' form='form323_"+id+"' value='"+result.batch+"'>";
+                                rowsHTML+="<a><input type='text' readonly='readonly' placeholder='Batch' form='form323_"+id+"' value='"+result.batch+"'></a>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Quantity'>";
-                                rowsHTML+="<input type='number' readonly='readonly' form='form323_"+id+"' value='"+result.quantity+"'>";
+                                rowsHTML+="<input type='number' readonly='readonly' placeholder='Quantity' form='form323_"+id+"' value='"+result.quantity+"'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Action'>";
                                 rowsHTML+="<input type='hidden' form='form323_"+id+"' value='"+id+"'>";
@@ -206,6 +206,12 @@
                         rowsHTML+="</tr>";
 
                         $('#form323_body').append(rowsHTML);
+                        var batch=document.getElementById('form323_'+id).elements[3];
+                        var batch_object={product:result.item_name,batch:result.batch};
+                        $(batch).parent().on('click',function()
+                        {
+                            show_object('product_instances',batch_object);
+                        });
                     });
 
                     var bt=get_session_var('title');
@@ -233,20 +239,20 @@
                 var rowsHTML="<tr>";
                 rowsHTML+="<form id='form323_"+id+"' autocomplete='off'></form>";
                     rowsHTML+="<td data-th='Item'><div class='btn-overlap'>";
-                        rowsHTML+="<input type='text' required form='form323_"+id+"' id='form323_item_"+id+"'>";
+                        rowsHTML+="<input type='text' placeholder='Item' required form='form323_"+id+"' id='form323_item_"+id+"'>";
                         rowsHTML+="<button class='btn btn-icon-only default right-overlap' onclick=\"modal194_action('#form323_item_"+id+"');\"><i class='fa fa-search'></i></button></div>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Description'>";
-                        rowsHTML+="<textarea form='form323_"+id+"'></textarea>";
+                        rowsHTML+="<textarea form='form323_"+id+"' placeholder='Description'></textarea>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Storage'>";
-                        rowsHTML+="<input type='text' form='form323_"+id+"' required>";
+                        rowsHTML+="<input type='text' form='form323_"+id+"' required placeholder='Storage'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Batch'>";
-                        rowsHTML+="<input type='text' required form='form323_"+id+"'>";
+                        rowsHTML+="<input type='text' required form='form323_"+id+"' placeholder='Batch'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Quantity'>";
-                        rowsHTML+="<input type='number' required form='form323_"+id+"' step='any'>";
+                        rowsHTML+="<input type='number' required form='form323_"+id+"' step='any' placeholder='Quantity'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Action'>";
                         rowsHTML+="<input type='hidden' form='form323_"+id+"' value='"+id+"'>";

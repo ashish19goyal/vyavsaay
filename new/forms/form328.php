@@ -198,10 +198,17 @@
 
                         $('#form328_body').append(rowsHTML);
                         var form328=document.getElementById('form328_'+id);
+                        var batch=form328.elements[1];
                         var amount_filter=form328.elements[6];
                         var tax_filter=form328.elements[7];
                         var new_batch_filter=form328.elements[8];
                         var new_tax_filter=form328.elements[9];
+                        
+                        var batch_object={product:result.item_name,batch:result.batch};
+                        $(batch).parent().on('click',function()
+                        {
+                            show_object('product_instances',batch_object);
+                        });
 
                         if(result.type=='exchange')
                         {
@@ -241,7 +248,7 @@
                 var rowsHTML="<tr>";
                 rowsHTML+="<form id='form328_"+id+"' autocomplete='off'></form>";
                     rowsHTML+="<td data-th='Item'>";
-                        rowsHTML+="<input type='text' required form='form328_"+id+"'>";
+                        rowsHTML+="<input type='text' placeholder='Item' required form='form328_"+id+"'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Batch'>";
                         rowsHTML+="<input type='text' class='floatlabel' placeholder='Batch' required form='form328_"+id+"'>";

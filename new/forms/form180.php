@@ -225,7 +225,7 @@
                         rowsHTML+="<textarea placeholder='Name' class='floatlabel' form='form180_"+id+"'></textarea>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Quantity'>";
-                        rowsHTML+="<input type='number' required form='form180_"+id+"' value='' step='any'>";
+                        rowsHTML+="<input type='number' placeholder='Quantity' required form='form180_"+id+"' value='' step='any'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Rate'>";
                         rowsHTML+="<input type='number' readonly='readonly' class='floatlabel dblclick_editable' form='form180_"+id+"' step='any' placeholder='Price'>";

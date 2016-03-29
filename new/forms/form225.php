@@ -243,7 +243,7 @@
                                 rowsHTML+="<textarea readonly='readonly' class='floatlabel' placeholder='Description' form='form225_"+id+"'>"+result.item_desc+"</textarea>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Batch'>";
-                                rowsHTML+="<input type='text' readonly='readonly' form='form225_"+id+"' value='"+result.batch+"'>";
+                                rowsHTML+="<a><input type='text' readonly='readonly' form='form225_"+id+"' value='"+result.batch+"'></a>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Quantity'>";
                                 rowsHTML+="<input type='number' readonly='readonly' form='form225_"+id+"' value='"+result.quantity+"'>";
@@ -265,6 +265,12 @@
                         rowsHTML+="</tr>";
 
                         $('#form225_body').append(rowsHTML);
+                        var batch=document.getElementById('form225_'+id).elements[2];
+                        var batch_object={product:result.item_name,batch:result.batch};
+                        $(batch).parent().on('click',function()
+                        {
+                            show_object('product_instances',batch_object);
+                        });    
                     });
 
                     var bt=get_session_var('title');
@@ -297,10 +303,10 @@
                         rowsHTML+="<textarea placeholder='Description' class='floatlabel' form='form225_"+id+"'></textarea>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Batch'>";
-                        rowsHTML+="<input type='text' required form='form225_"+id+"'>";
+                        rowsHTML+="<input type='text' placeholder='Batch' required form='form225_"+id+"'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Quantity'>";
-                        rowsHTML+="<input type='number' required form='form225_"+id+"' step='any'>";
+                        rowsHTML+="<input type='number' placeholder='Quantity' required form='form225_"+id+"' step='any'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Rate'>";
                         rowsHTML+="<input type='number' placeholder='Rate' class='floatlabel' required form='form225_"+id+"' step='any'>";
