@@ -423,6 +423,7 @@
                                         var store_item_id=get_new_key();
                                         var adjust_count=1;	
                                         var target=get_session_var('production_floor_store');
+                                        /*
                                         if(storage_result_array.length>0)
                                         {
                                             item_storage=storage_result_array[0].storage;
@@ -444,7 +445,7 @@
                                                 "<last_updated>"+last_updated+"</last_updated>" +
                                                 "</store_movement>";	
                                             create_simple(data_xml);	
-                                        }
+                                        }*/
                                         storage_result_array.forEach(function(storage_result)
                                         {
                                             adjust_count+=1;
