@@ -4687,8 +4687,8 @@ function print_form258(func)
 ////////////setting styles for containers/////////////////////////
 
 	container.setAttribute('style','margin:5px;');
-	header.setAttribute('style','width:98%;min-height:100px;text-align:center');
-		logo.setAttribute('style','width:90%;text-align:center;margin:5px;max-height:60px;');
+	header.setAttribute('style','width:98%;min-height:50px;text-align:center');
+		logo.setAttribute('style','width:100%;text-align:center;margin:10px;max-height:50px;font-size:40px;');
 	invoice_line.setAttribute('style','width:98%;margin:2px;');
 	info_section.setAttribute('style','width:98%;min-height:85px;font-size:11px;');
 		customer_info.setAttribute('style','padding:5px;margin:5px;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;font-size:11px;text-align:left;');
@@ -4701,7 +4701,7 @@ function print_form258(func)
 ///////////////getting the content////////////////////////////////////////
 
 	var bt=get_session_var('title');
-	var logo_image=get_session_var('logo');
+	//var logo_image=get_session_var('logo');
 	var business_address=get_session_var('address');
 	var business_phone=get_session_var('phone');
 	var business_email=get_session_var('email');
@@ -4728,7 +4728,7 @@ function print_form258(func)
 
 	////////////////filling in the content into the containers//////////////////////////
 
-	logo.innerHTML="<img style='max-width:90%;' src='https://vyavsaay.com/client_images/"+logo_image+"'>";
+	logo.innerHTML=bt;
 	
 	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Quotation Sheet</b></div><hr style='border: 1px solid #00f;'>";
 	

@@ -114,7 +114,7 @@
                             rowsHTML+="<td data-th='Supplier'>";
                             if(result.supplier!='')
                             {					
-                                rowsHTML+="<input type='text' readonly='readonly' name='supplier' form='form179_"+result.id+"' value='"+result.supplier+"'>";
+                                rowsHTML+="<a onclick=\"show_object('suppliers','"+result.supplier+"');\"><input type='text' readonly='readonly' name='supplier' form='form179_"+result.id+"' value='"+result.supplier+"'></a>";
                             }
                             else
                             {					

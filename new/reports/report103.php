@@ -114,12 +114,12 @@
                 var color="label-success";
                 if(result.type=='paid')
                 {
-                    details="<a onclick=element_display('"+result.source_id+"','form53');>For "+result.source+" # "+result.source_info+"</a>";
+                    details="<a onclick=\"element_display('"+result.source_id+"','form53');\">For "+result.source+" # "+result.source_info+"</a>";
                     sign="- ";
                     color="label-warning";
                 }
                 rowsHTML+="<tr>";
-                rowsHTML+="<td data-th='Account'><a onclick=\"show_object('customers',"+result.acc_name+"');\">";
+                rowsHTML+="<td data-th='Account'><a onclick=\"show_object('suppliers','"+result.acc_name+"');\">";
                     rowsHTML+=result.acc_name;
                 rowsHTML+="</a></td>";
                 rowsHTML+="<td data-th='Details'>";

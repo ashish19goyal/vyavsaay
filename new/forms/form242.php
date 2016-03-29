@@ -91,7 +91,7 @@
                     var rowsHTML="<tr>";
                         rowsHTML+="<form id='form242_"+result.id+"'></form>";
                             rowsHTML+="<td data-th='Account'>";
-                                rowsHTML+="<textarea readonly='readonly' form='form242_"+result.id+"'>"+result.acc_name+"</textarea>";
+                                rowsHTML+="<a onclick=\"show_object('accounts','"+result.acc_name+"');\"><textarea readonly='readonly' form='form242_"+result.id+"'>"+result.acc_name+"</textarea></a>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Total Amount'>";
                                 rowsHTML+="<input type='number' step='any' readonly='readonly' form='form242_"+result.id+"' value='"+result.total_amount+"'>";

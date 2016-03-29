@@ -125,8 +125,8 @@
                                     rowsHTML+="<input type='number' readonly='readonly' form='form145_"+result.id+"' value='"+result.quantity+"'>";
                                 rowsHTML+="</td>";
                                 rowsHTML+="<td data-th='Store'>";
-                                    rowsHTML+="<input type='text' placeholder='Source' class='floatlabel' readonly='readonly' form='form145_"+result.id+"' value='"+result.source+"'>";
-                                    rowsHTML+="<input type='text' placeholder='Target' class='floatlabel' readonly='readonly' form='form145_"+result.id+"' value='"+result.target+"'>";
+                                    rowsHTML+="<a onclick=\"show_object('store_areas','"+result.source+"');\"><input type='text' placeholder='Source' class='floatlabel' readonly='readonly' form='form145_"+result.id+"' value='"+result.source+"'></a>";
+                                    rowsHTML+="<a onclick=\"show_object('store_areas','"+result.target+"');\"><input type='text' placeholder='Target' class='floatlabel' readonly='readonly' form='form145_"+result.id+"' value='"+result.target+"'></a>";
                                 rowsHTML+="</td>";
                                 rowsHTML+="<td data-th='Status'>";
                                     rowsHTML+="<input type='text' class='floatlabel' placeholder='Status' readonly='readonly' form='form145_"+result.id+"' value='"+result.status+"'>";

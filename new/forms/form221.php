@@ -104,10 +104,10 @@
 						var rowsHTML="<tr>";
 						rowsHTML+="<form id='form221_"+id+"'></form>";
 							rowsHTML+="<td data-th='Name'>";
-								rowsHTML+="<textarea readonly='readonly' form='form221_"+id+"'>"+result.acc_name+"</textarea>";
+								rowsHTML+="<a onclick=\"show_object('staff','"+result.acc_name+"');\"><textarea readonly='readonly' form='form221_"+id+"'>"+result.acc_name+"</textarea></a>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Project'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form221_"+id+"' value='"+result.source_name+"'>";
+								rowsHTML+="<a onclick=\"show_object('projects','"+result.source_name+"');\"><input type='text' readonly='readonly' form='form221_"+id+"' value='"+result.source_name+"'></a>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Date'>";
 								rowsHTML+="<input type='text' readonly='readonly' form='form221_"+id+"' value='"+get_my_past_date(result.date)+"'>";
