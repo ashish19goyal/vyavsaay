@@ -251,7 +251,7 @@
                         var challan_items_adjust_json={data_store:'inventory_adjust',loader:'no',data:[]};
                         
                         var master_bill_item_id=get_new_key();
-                        
+                        var bill_item_id=get_new_key();
                         order_items.forEach(function(order_item)
                         {
                             var batch_data={data_store:'product_instances',
@@ -310,7 +310,7 @@
                                                 }
                                                 /////saving to bill item
 
-                                                var bill_item_id=master_bill_item_id+1;
+                                                bill_item_id++;
                                                 var data_json_array=[{index:'id',value:bill_item_id},
                                                         {index:'item_name',value:order_item.item_name},
                                                         {index:'item_desc',value:order_item.item_desc},
@@ -335,7 +335,6 @@
                                                 
                                                 pending_items_count-=1;
                                             });
-
                                         });	
                                     });					
                                 });
@@ -482,6 +481,7 @@
                         var bill_items_json={data_store:'bill_items',loader:'no',data:[]};
                         var bill_items_adjust_json={data_store:'inventory_adjust',loader:'no',data:[]};
                         var master_bill_item_id=get_new_key();
+                        var bill_item_id=get_new_key();
                         var pending_items_count=challan_items.length;
                         
                         challan_items.forEach(function(order_item)
@@ -509,7 +509,7 @@
                                     var bill_item_tax=my_round(item_tax_rate*parseFloat(bill_item_amount),2);
                                     var bill_item_total=my_round(bill_item_amount+bill_item_tax,0);
 
-                                    var bill_item_id=master_bill_item_id+1;
+                                    bill_item_id++;
                                     var data_json_array=[{index:'id',value:bill_item_id},
                                             {index:'item_name',value:order_item.item_name},
                                             {index:'item_desc',value:order_item.item_desc},

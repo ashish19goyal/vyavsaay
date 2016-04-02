@@ -35,6 +35,7 @@ function local_read_json_rows(columns,callback,results)
         var rolename=get_session_var('user_roles');
         var roles_array=rolename.split("--");    
         
+        //console.log(account_name+"-"+rolename);
 		var filter=new Array();
 		var sort_index='last_updated';
 		var sort_order='prev';

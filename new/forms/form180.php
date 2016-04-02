@@ -228,12 +228,12 @@
                         rowsHTML+="<input type='number' placeholder='Quantity' required form='form180_"+id+"' value='' step='any'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Rate'>";
-                        rowsHTML+="<input type='number' readonly='readonly' class='floatlabel dblclick_editable' form='form180_"+id+"' step='any' placeholder='Price'>";
-                        rowsHTML+="<input type='number' readonly='readonly' class='floatlabel dblclick_editable' form='form180_"+id+"' step='any' placeholder='MRP'>";
+                        rowsHTML+="<input type='number' class='floatlabel dblclick_editable' form='form180_"+id+"' step='any' placeholder='Price'>";
+                        rowsHTML+="<input type='number' class='floatlabel dblclick_editable' form='form180_"+id+"' step='any' placeholder='MRP'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Total'>";
-                        rowsHTML+="<input type='number' class='floatlabel' placeholder='Amount' readonly='readonly' form='form180_"+id+"' step='any'>";
-                        rowsHTML+="<input type='number' class='floatlabel' placeholder='Tax' readonly='readonly' form='form180_"+id+"' step='any'>";
+                        rowsHTML+="<input type='number' class='floatlabel' placeholder='Amount' form='form180_"+id+"' step='any'>";
+                        rowsHTML+="<input type='number' class='floatlabel' placeholder='Tax' form='form180_"+id+"' step='any'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Action'>";
                         rowsHTML+="<input type='hidden' form='form180_"+id+"' name='total'>";
@@ -451,8 +451,7 @@
                     if(num_ids.length>0)
                     {
                         var num_json={data_store:'user_preferences',
-                        data:[{index:'id',value:data_id},
-                            {index:'id',value:num_ids[0]},
+                        data:[{index:'id',value:num_ids[0]},
                             {index:'value',value:(parseInt(order_num)+1)},
                             {index:'last_updated',value:last_updated}]};
 

@@ -116,7 +116,7 @@
         var master_fields=document.getElementById('form256_master');
         var master_name=master_fields.elements['item_name'].value;
         var batch=master_fields.elements['batch'].value;
-
+        
         if(fid!="" || master_name!="")
         {
             show_loader();
@@ -127,10 +127,10 @@
                                      {index:'status'},
                                      {index:'brand'},
                                      {index:'quantity'},
-                                     {index:'item',exact:master_name},
-                                     {index:'batch',exact:batch},
+                                     {index:'item',value:master_name},
+                                     {index:'batch',value:batch},
                                      {index:'plan_id'}]};
-            read_json_rows('',items_column,function(bag_results)
+            read_json_rows('form256',items_column,function(bag_results)
             {
                 if(bag_results.length>0)
                 {

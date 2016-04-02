@@ -2414,7 +2414,7 @@ function modal26_action(payment_id,func)
 	});
 	
 	var payments_data={data_store:'payments',
-                      indexes:[{index:'id',value:payment_id},
+                      indexes:[{index:'id',value:payment_id+""},
                               {index:'acc_name'},
                               {index:'type',exact:'received'},
                               {index:'total_amount'},
@@ -2667,7 +2667,7 @@ function modal28_action(payment_id)
 	});
 	
 	var payments_data={data_store:'payments',
-                      indexes:[{index:'id',value:payment_id},
+                      indexes:[{index:'id',value:payment_id+""},
                               {index:'acc_name'},
                               {index:'type',exact:'paid'},
                               {index:'total_amount'},
@@ -2677,6 +2677,8 @@ function modal28_action(payment_id)
                               {index:'mode'}]};
 	read_json_rows('',payments_data,function(payments)
 	{
+        console.log(payments_data);
+        console.log(payments);
 		if(payments.length>0)
 		{
 			fsupplier.value=payments[0].acc_name;
@@ -3244,7 +3246,7 @@ function modal31_action()
 				receipts.forEach(function(receipt)
 				{	
 					var payments_data={data_store:'payments',
-                                      indexes:[{index:'id',value:receipt.payment_id},
+                                      indexes:[{index:'id',value:receipt.payment_id+""},
                                               {index:'paid_amount'}]};
 					read_json_rows('',payments_data,function(payments)
 					{	
@@ -3429,7 +3431,7 @@ function modal33_action(id)
 	});
 	
 	var tasks_data={data_store:'task_instances',count:1,
-                   indexes:[{index:'id',value:id},
+                   indexes:[{index:'id',value:id+""},
                            {index:'name'},
                            {index:'assignee'},
                            {index:'description'},
@@ -13102,7 +13104,7 @@ function modal169_action(search_id)
 	});		
 	
 	var attributes_data={data_store:'system_search',count:1,
-								indexes:[{index:'id',value:search_id},{index:'return_columns'}]};
+								indexes:[{index:'id',value:search_id+""},{index:'return_columns'}]};
 	read_json_rows('',attributes_data,function(attributes)
 	{
 		if(attributes.length>0)
@@ -15942,7 +15944,7 @@ function modal202_action(data_id)
     set_my_value_list_json(assignee_data,staff_filter);
 
     var task_data={data_store:'task_instances',count:1,
-                  indexes:[{index:'id',value:data_id},
+                  indexes:[{index:'id',value:data_id+""},
                           {index:'name'},
                           {index:'description'},
                           {index:'assignee'}]};

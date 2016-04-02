@@ -688,7 +688,6 @@
                 create_json(pt_json);
                 create_json(payment_json,function()
                 {
-                    //console.log('created payment record');
                     modal28_action(pt_tran_id);
                 });
 

@@ -15,7 +15,8 @@
 		<fieldset>	    
 		   <label><input type='text' class='floatlabel' placeholder='Item' required name='item_name'></label>
 		   <label><input type='number' class='floatlabel' placeholder='# of raw materials' readonly='readonly' name='num'></label>
-            <label>	<input type='submit' class='submit_hidden'>	</label>
+            <input type='hidden' name='id'>
+            <input type='submit' class='submit_hidden'>
 		</fieldset>	
 	</form>
 	    
@@ -44,7 +45,9 @@
             var item_filter=fields.elements['item_name'];
             var save_button=document.getElementById('form240_save');
             var num_filter=fields.elements['num'];
+            var id_filter=fields.elements['id'];
 
+            id_filter.value=get_new_key();
             num_filter.value=0;
 
             $(save_button).off('click');
@@ -104,6 +107,7 @@
                     {
                         filter_fields.elements['item_name'].value=master_results[0].name;
                         filter_fields.elements['num'].value=master_results[0].num_materials;
+                        filter_fields.elements['id'].value=master_results[0].id;
 
                         var save_button=document.getElementById('form240_save');
 
@@ -281,7 +285,7 @@
                 var form=document.getElementById("form240_master");
                 var item_name=form.elements['item_name'].value;
                 var num_materials=form.elements['num'].value;
-                var data_id=get_new_key();
+                var data_id=form.elements['id'].value;
                 var save_button=form.elements['save'];
                 var last_updated=get_my_time();
                 
@@ -317,7 +321,7 @@
                 var form=document.getElementById("form240_master");
                 var item_name=form.elements['item_name'].value;
                 var num_materials=form.elements['num'].value;
-                var data_id=get_new_key();
+                var data_id=form.elements['id'].value;
                 var last_updated=get_my_time();
                 
                 var data_json={data_store:'manage_pre_requisites',
