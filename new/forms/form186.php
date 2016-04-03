@@ -138,107 +138,107 @@
                         form186_update_form();
                     });
                 }
-            });
+                
+                var plan_items_column={data_store:'production_plan_items',
+                                      indexes:[{index:'id'},
+                                              {index:'item'},
+                                              {index:'batch'},
+                                              {index:'order_no'},
+                                              {index:'quantity'},
+                                              {index:'brand'},
+                                              {index:'status'},
+                                              {index:'from_time'},
+                                              {index:'to_time'},
+                                              {index:'plan_id',exact:plan_id}]};
 
-            var plan_items_column={data_store:'production_plan_items',
-                                  indexes:[{index:'id'},
-                                          {index:'item'},
-                                          {index:'batch'},
-                                          {index:'order_no'},
-                                          {index:'quantity'},
-                                          {index:'brand'},
-                                          {index:'status'},
-                                          {index:'from_time'},
-                                          {index:'to_time'},
-                                          {index:'plan_id',exact:plan_id}]};
-
-            read_json_rows('form186',plan_items_column,function(results)
-            {
-                results.sort(function(a,b)
-				{
-					if(parseInt(a.order_no)<parseInt(b.order_no))
-					{	return 1;}
-					else 
-					{	return -1;}
-				});	
-
-                results.forEach(function(result)
+                read_json_rows('form186',plan_items_column,function(results)
                 {
-                    var plan_status=filter_fields.elements['status'].value;
-                    var id=result.id;
-                    var rowsHTML="<tr>";
-                    rowsHTML+="<form id='form186_"+id+"'></form>";
-                        rowsHTML+="<td data-th='Order'>";
-                            rowsHTML+="<input style='width:50px;' type='number' readonly='readonly' form='form186_"+id+"' value='"+result.order_no+"'>";
-                        rowsHTML+="</td>";
-                        rowsHTML+="<td data-th='Item'>";
-                            rowsHTML+="<a onclick=\"show_object('product_master','"+result.item+"');\"><input type='text' readonly='readonly' form='form186_"+id+"' value='"+result.item+"'></a>";
-                        rowsHTML+="</td>";
-                        rowsHTML+="<td data-th='Brand'>";
-                            rowsHTML+="<input type='text' readonly='readonly' form='form186_"+id+"' value='"+result.brand+"'>";
-                        rowsHTML+="</td>";
-                        rowsHTML+="<td data-th='Quantity'>";
-                            rowsHTML+="<input type='number' readonly='readonly' form='form186_"+id+"' value='"+result.quantity+"' step='any'>";
-                        rowsHTML+="</td>";
-                        rowsHTML+="<td data-th='Schedule'>";
-                            rowsHTML+="<input type='text' readonly='readonly' class='floatlabel dblclick_editable' placeholder='From' form='form186_"+id+"' value='"+get_my_past_date(result.from_time)+"'>";
-                            rowsHTML+="<input type='text' readonly='readonly' placeholder='To' class='dblclick_editable floatlabel' form='form186_"+id+"' value='"+get_my_past_date(result.to_time)+"'>";
-                        rowsHTML+="</td>";
-                        rowsHTML+="<td data-th='Status'>";
-                            rowsHTML+="<input type='text' readonly='readonly' form='form186_"+id+"' class='dblclick_editable' value='"+result.status+"'>";
-                        rowsHTML+="</td>";
-                        rowsHTML+="<td data-th='Action'>";
-                            rowsHTML+="<input type='hidden' form='form186_"+id+"' value='"+id+"'>";
-                            rowsHTML+="<button type='button' class='btn green' form='form186_"+id+"' id='save_form186_"+id+"' name='save' title='Save'><i class='fa fa-save'></i></button>";
-                        if(result.status!='inventoried')
-                            rowsHTML+="<button type='button' class='btn red' form='form186_"+id+"' id='delete_form186_"+id+"' name='delete' onclick='form186_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-                        if(plan_status=='approved' && result.status!='inventoried')
-                        {
-                            rowsHTML+="<button type='button' class='btn default green-stripe' title='Inventory' name='ready' form='form186_"+id+"'>Inventory</button>";							
-                        }						
-                        rowsHTML+="</td>";			
-                    rowsHTML+="</tr>";
-
-                    $('#form186_body').prepend(rowsHTML);
-                    var fields=document.getElementById('form186_'+id);
-                    var from_filter=fields.elements[4];
-                    var to_filter=fields.elements[5];
-                    var status_filter=fields.elements[6];
-                    var save_button=fields.elements['save'];
-                    var ready_button=fields.elements['ready'];
-
-                    $(ready_button).on('click',function()
+                    results.sort(function(a,b)
                     {
-                        element_display(result.id,'form256');
-                        var save_button=document.getElementById('form256_save');
-                        $(save_button).off('click');
-                        $(save_button).on("click", function(event)
+                        if(parseInt(a.order_no)<parseInt(b.order_no))
+                        {	return 1;}
+                        else 
+                        {	return -1;}
+                    });	
+
+                    results.forEach(function(result)
+                    {
+                        var plan_status=filter_fields.elements['status'].value;
+                        var id=result.id;
+                        var rowsHTML="<tr>";
+                        rowsHTML+="<form id='form186_"+id+"'></form>";
+                            rowsHTML+="<td data-th='Order'>";
+                                rowsHTML+="<input style='width:50px;' type='number' readonly='readonly' form='form186_"+id+"' value='"+result.order_no+"'>";
+                            rowsHTML+="</td>";
+                            rowsHTML+="<td data-th='Item'>";
+                                rowsHTML+="<a onclick=\"show_object('product_master','"+result.item+"');\"><input type='text' readonly='readonly' form='form186_"+id+"' value='"+result.item+"'></a>";
+                            rowsHTML+="</td>";
+                            rowsHTML+="<td data-th='Brand'>";
+                                rowsHTML+="<input type='text' readonly='readonly' form='form186_"+id+"' value='"+result.brand+"'>";
+                            rowsHTML+="</td>";
+                            rowsHTML+="<td data-th='Quantity'>";
+                                rowsHTML+="<input type='number' readonly='readonly' form='form186_"+id+"' value='"+result.quantity+"' step='any'>";
+                            rowsHTML+="</td>";
+                            rowsHTML+="<td data-th='Schedule'>";
+                                rowsHTML+="<input type='text' readonly='readonly' class='floatlabel dblclick_editable' placeholder='From' form='form186_"+id+"' value='"+get_my_past_date(result.from_time)+"'>";
+                                rowsHTML+="<input type='text' readonly='readonly' placeholder='To' class='dblclick_editable floatlabel' form='form186_"+id+"' value='"+get_my_past_date(result.to_time)+"'>";
+                            rowsHTML+="</td>";
+                            rowsHTML+="<td data-th='Status'>";
+                                rowsHTML+="<input type='text' readonly='readonly' form='form186_"+id+"' class='dblclick_editable' value='"+result.status+"'>";
+                            rowsHTML+="</td>";
+                            rowsHTML+="<td data-th='Action'>";
+                                rowsHTML+="<input type='hidden' form='form186_"+id+"' value='"+id+"'>";
+                                rowsHTML+="<button type='button' class='btn green' form='form186_"+id+"' id='save_form186_"+id+"' name='save' title='Save'><i class='fa fa-save'></i></button>";
+                            if(result.status!='inventoried')
+                                rowsHTML+="<button type='button' class='btn red' form='form186_"+id+"' id='delete_form186_"+id+"' name='delete' onclick='form186_delete_item($(this));'><i class='fa fa-trash'></i></button>";
+                            if(plan_status=='approved' && result.status!='inventoried')
+                            {
+                                rowsHTML+="<button type='button' class='btn default green-stripe' title='Inventory' name='ready' form='form186_"+id+"'>Inventory</button>";							
+                            }						
+                            rowsHTML+="</td>";			
+                        rowsHTML+="</tr>";
+
+                        $('#form186_body').prepend(rowsHTML);
+                        var fields=document.getElementById('form186_'+id);
+                        var from_filter=fields.elements[4];
+                        var to_filter=fields.elements[5];
+                        var status_filter=fields.elements[6];
+                        var save_button=fields.elements['save'];
+                        var ready_button=fields.elements['ready'];
+
+                        $(ready_button).on('click',function()
+                        {
+                            element_display(result.id,'form256');
+                            var save_button=document.getElementById('form256_save');
+                            $(save_button).off('click');
+                            $(save_button).on("click", function(event)
+                            {
+                                event.preventDefault();
+                                form256_create_form();
+                            });						
+                        });
+
+                        $(from_filter).datepicker();
+                        $(to_filter).datepicker();
+                        set_static_value_list_json('production_plan_items','status',status_filter);
+
+                        $(save_button).on('click',function (event) 
                         {
                             event.preventDefault();
-                            form256_create_form();
-                        });						
+                            form186_update_item(fields);
+                        });
                     });
 
-                    $(from_filter).datepicker();
-                    $(to_filter).datepicker();
-                    set_static_value_list_json('production_plan_items','status',status_filter);
-
-                    $(save_button).on('click',function (event) 
+                    $('#form186_share').click(function()
                     {
-                        event.preventDefault();
-                        form186_update_item(fields);
+                        modal101_action('Production Plan','','staff',function (func) 
+                        {
+                            print_form186(func);
+                        });
                     });
+                    $('#form186').formcontrol();
+                    hide_loader();
                 });
-
-                $('#form186_share').click(function()
-                {
-                    modal101_action('Production Plan','','staff',function (func) 
-                    {
-                        print_form186(func);
-                    });
-                });
-                $('#form186').formcontrol();
-                hide_loader();
             });
         }
     }
