@@ -5457,43 +5457,6 @@ function form255_delete_item(button)
 }
 
 
-/**
- * @form Bank Accounts
- * @param button
- */
-function form261_delete_item(button)
-{
-	if(is_delete_access('form261'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			var name=form.elements[0].value;
-			var data_id=form.elements[7].value;
-			var data_xml="<bank_accounts>" +
-						"<id>"+data_id+"</id>" +
-						"</bank_accounts>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>bank_accounts</tablename>" +
-						"<link_to>form261</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Bank account "+name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-							
-			delete_row(data_xml,activity_xml);			
-			
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
 
 /**
  * formNo 265

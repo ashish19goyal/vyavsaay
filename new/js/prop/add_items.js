@@ -12391,59 +12391,6 @@ function form255_add_item()
 }
 
 
-/**
- * @form User Accounts
- * @formNo 261
- */
-function form261_add_item()
-{
-	if(is_create_access('form261'))
-	{
-		var rowsHTML="";
-		var id=get_new_key();
-		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form261_"+id+"' autocomplete='off'></form>";
-			rowsHTML+="<td data-th='Name'>";
-				rowsHTML+="<input type='text' form='form261_"+id+"' required value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Bank'>";
-				rowsHTML+="<b>Bank</b>:<input type='text' class='dblclick_editable' form='form261_"+id+"' required>";
-				rowsHTML+="<br><b>Branch</b>:<textarea class='dblclick_editable' form='form261_"+id+"'></textarea>";
-				rowsHTML+="<br><b>IFSC</b>:<input type='text' class='dblclick_editable' form='form261_"+id+"'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Account'>";
-				rowsHTML+="<b>Name</b>: <input type='text' form='form261_"+id+"' required class='dblclick_editable'>";
-				rowsHTML+="<br><b>Account #</b>: <input type='text' form='form261_"+id+"' required class='dblclick_editable'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Status'>";
-				rowsHTML+="<input type='text' required form='form261_"+id+"'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Action'>";
-				rowsHTML+="<input type='hidden' form='form261_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form261_"+id+"'>";	
-				rowsHTML+="<input type='button' class='delete_icon' form='form261_"+id+"' onclick='$(this).parent().parent().remove();'>";	
-			rowsHTML+="</td>";			
-		rowsHTML+="</tr>";
-	
-		$('#form261_body').prepend(rowsHTML);
-		longPressEditable($('.dblclick_editable'));
-		
-		var fields=document.getElementById("form261_"+id);
-		var status_filter=fields.elements[6];
-		
-		$(fields).on("submit", function(event)
-		{
-			event.preventDefault();
-			form261_create_item(fields);
-		});
-					
-		set_static_value_list('bank_accounts','status',status_filter);
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}		
-}
 
 /**
  * @form Create RTO

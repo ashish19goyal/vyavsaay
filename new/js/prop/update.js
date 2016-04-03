@@ -10154,47 +10154,6 @@ function form255_update_item(form)
 }
 
 
-/**
- * @form User accounts
- * @param button
- */
-function form261_update_item(form)
-{
-	if(is_update_access('form261'))
-	{
-		var name=form.elements[0].value;
-		var bank=form.elements[1].value;
-		var branch=form.elements[2].value;
-		var ifsc=form.elements[3].value;
-		var acc_name=form.elements[4].value;
-		var acc_num=form.elements[5].value;
-		var status=form.elements[6].value;
-		var data_id=form.elements[7].value;
-		var last_updated=get_my_time();
-		var data_xml="<bank_accounts>" +
-					"<id>"+data_id+"</id>" +
-					"<name unique='yes'>"+name+"</name>" +
-					"<bank>"+bank+"</bank>" +
-					"<branch>"+branch+"</branch>" +
-					"<ifsc>"+ifsc+"</ifsc>" +
-					"<account_name>"+acc_name+"</account_name>" +
-					"<account_num>"+acc_num+"</account_num>" +
-					"<status>"+status+"</status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</bank_accounts>";
-		update_simple(data_xml);
-		
-		for(var i=0;i<7;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
 
 /**
  * formNo 265

@@ -7377,38 +7377,6 @@ function form260_header_ini()
 	set_my_filter(item_data,name_filter);
 };
 
-/**
- * @form Bank Accounts
- * @formNo 261
- */
-function form261_header_ini()
-{
-	var filter_fields=document.getElementById('form261_header');	
-	var name_filter=filter_fields.elements[0];
-	var bank_filter=filter_fields.elements[1];
-	var status_filter=filter_fields.elements[2];
-	
-	//setting autocompletes 
-	var name_data="<bank_accounts>" +
-			"<name></name>" +
-			"</bank_accounts>";
-	set_my_filter(name_data,name_filter);
-
-	var bank_data="<bank_accounts>" +
-			"<bank></bank>" +
-			"</bank_accounts>";
-	set_my_filter(bank_data,bank_filter);
-	
-	set_static_filter('bank_accounts','status',status_filter);	
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form261_ini();
-	});	
-}
-
 
 /**
  * @form Create RTO

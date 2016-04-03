@@ -164,24 +164,6 @@ function form260_import_validate(data_array)
 	return error_array;					
 }
 
-/**
-* @form bank Accounts
-* @formNo 261
-*/
-function form261_import_validate(data_array)
-{
-	var validate_template_array=[{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'+!_.,()@/-]+$')},
-							{column:'bank',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,/\'+@!$()-]+$')},
-							{column:'branch',regex:new RegExp('^[0-9a-zA-Z _.,/\'+@!$()-]+$')},
-							{column:'ifsc',regex:new RegExp('^[a-zA-Z0-9]+$')},
-							{column:'account_name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,/\'+@!$()-]+$')},
-							{column:'account_num',required:'yes',regex:new RegExp('^[a-zA-Z0-9]+$')},
-							{column:'status',required:'yes',list:['active','inactive']}];
-					
-	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
-}
-
 
 /**
 * @form Enter COD Collections
