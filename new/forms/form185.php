@@ -129,7 +129,10 @@
                         var events=[];
                         tasks.forEach(function(task)
                         {
-                            //console.log('task found');
+                            if(parseFloat(task.task_hours)==0)
+                            {
+                                task.task_hours=1;
+                            }
                             var color="#f8cb00";
                             if(task.status=='cancelled')
                             {
@@ -172,6 +175,7 @@
                 },
                 eventDrop: function(event,delta,revertFunc)
                 {
+                    //console.log(event);
                     var t_due=(parseFloat(event.end.unix())*1000);
                     var t_initiated=(parseFloat(event.start.unix())*1000);
                     

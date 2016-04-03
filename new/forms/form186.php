@@ -396,11 +396,14 @@
                                         "</notifications>";
                                 create_simple(notif_xml);		
                             }
-
+                            
+                            var batch_id=get_new_key();
                             batches_result_array.forEach(function (batch_result) 
                             {
-                                console.log(batch_result);
+                                batch_id++;
+                               // console.log(batch_result);
                                 var batch_raw_xml="<batch_raw_material>"+
+                                    "<id>"+batch_id+"</id>"+
                                     "<item>"+raw.requisite_name+"</item>"+
                                     "<batch>"+batch_result.batch+"</batch>"+
                                     "<quantity>"+batch_result.quantity+"</quantity>"+
@@ -475,7 +478,7 @@
                 });
             });
 
-            var task_hours=(parseFloat(from)-parseFloat(to))/86400000;
+            var task_hours=(parseFloat(to)-parseFloat(from))/86400000;
             var data_xml="<task_instances>"+
                     "<id>"+data_id+"</id>"+
                     "<name>"+item+"("+quantity+" pieces)"+"</name>" +

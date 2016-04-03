@@ -369,11 +369,11 @@
 	 					{index:'batch',value:batch},
 	 					{index:'status',value:'inventoried'},
                         {index:'last_updated',value:last_updated}]};
-            update_simple(items_json);
+            update_json(items_json);
 
             ///add to inventory
             var item_created_json={data_store:'inventory_adjust',
-	 				data:[{index:'id',value:data_id},
+	 				data:[{index:'id',value:id},
 	 					{index:'product_name',value:item},
 	 					{index:'batch',value:batch},
                         {index:'quantity',value:quantity},
@@ -390,6 +390,18 @@
                         {index:'manufacture_date',value:last_updated},
                         {index:'last_updated',value:last_updated}]}; 			
             create_json(instance_json);				
+
+            var notification_json={data_store:'notifications',
+	 				data:[{index:'id',value:get_new_key()},
+	 					{index:'title',value:'Update pricing details'},
+                        {index:'notes',value:'A new batch for '+item+' has been added. Please update pricing for the same.'},  
+	 					{index:'link_to',value:'form339'},
+                        {index:'data_id',value:id},
+                        {index:'status',value:'pending'},
+                        {index:'target_user',value:''},  
+                        {index:'t_generated',value:last_updated},
+                        {index:'last_updated',value:last_updated}]}; 			
+            create_json(notification_json);				
 
             var storage_json={data_store:'area_utilization',
 	 				data:[{index:'id',value:get_new_key()},
