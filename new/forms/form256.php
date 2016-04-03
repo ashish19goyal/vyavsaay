@@ -103,6 +103,7 @@
         id_filter.value="";
 
         $('#form256_body').html("");
+        $('#form256').formcontrol();
     }
 
     function form256_ini()
