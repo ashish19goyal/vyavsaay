@@ -5457,49 +5457,6 @@ function form255_delete_item(button)
 }
 
 
-
-/**
- * @form Manage Quotations (NVS)
- * @param button
- */
-function form259_delete_item(button)
-{
-	if(is_delete_access('form259'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			var quot_num=form.elements[0].value;
-			var data_id=form.elements[4].value;
-			var data_xml="<quotation>" +
-						"<id>"+data_id+"</id>" +
-						"</quotation>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>quotation</tablename>" +
-						"<link_to>form259</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Quotation # "+quot_num+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var item_xml="<quotation_items>"+
-						"<quotation_id>"+data_id+"</quotation_id>"+
-						"</quotation_items>";
-							
-			delete_row(data_xml,activity_xml);
-			delete_simple(item_xml);
-			
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-
 /**
  * @form Bank Accounts
  * @param button
@@ -5682,54 +5639,6 @@ function form268_delete_item(button)
 
 
 /**
- * @form Manage Delivery Challans
- * @param button
- */
-function form269_delete_item(button)
-{
-	if(is_delete_access('form269'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			var challan_num=form.elements[0].value;
-			var data_id=form.elements[4].value;
-			var data_xml="<delivery_challans>" +
-						"<id>"+data_id+"</id>" +
-						"</delivery_challans>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>delivery_challans</tablename>" +
-						"<link_to>form269</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Challan # "+challan_num+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var item_xml="<delivery_challan_items>"+
-						"<challan_id>"+data_id+"</challan_id>"+
-						"</delivery_challan_items>";
-			var inventory_xml="<inventory_adjust>" +
-						"<source>delivery challan</source>"+						
-						"<source_id>"+data_id+"</source_id>"+
-						"</inventory_adjust>";	
-
-			delete_row(data_xml,activity_xml);
-			delete_simple(item_xml);
-			delete_simple(inventory_xml);
-			
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-
-
-/**
  * @form Enter Purchase Bill (NVS)
  * @formNo form270
  */
@@ -5864,85 +5773,6 @@ function form275_delete_item(button)
 	}
 }
 
-
-/**
- * @form Manage Performa Invoice
- * @param button
- */
-function form283_delete_item(button)
-{
-	if(is_delete_access('form283'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var bill_num=form.elements[0].value;
-			var customer_name=form.elements[1].value;
-			var amount=form.elements[3].value;
-			var data_id=form.elements[4].value;
-			var transaction_id=form.elements[6].value;
-			var last_updated=get_my_time();
-			var bill_xml="<bills>" +
-						"<id>"+data_id+"</id>" +
-						"</bills>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>bills</tablename>" +
-						"<link_to>form283</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Invoice #"+bill_num+" for customer "+customer_name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var transaction_xml="<transactions>" +
-						"<id>"+transaction_id+"</id>" +
-						"</transactions>";
-			var items_data="<bill_items>" +
-					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
-					"</bill_items>";
-			var adjust_data="<inventory_adjust>" +
-					"<source exact='yes'>sale</source>" +
-					"<source_id exact='yes'>"+data_id+"</source_id>" +
-					"</inventory_adjust>";
-			delete_simple(items_data);	
-			delete_simple(adjust_data);	
-
-			delete_row(bill_xml,activity_xml);
-			delete_simple(transaction_xml);
-			
-			var payment_xml="<payments>" +
-					"<id></id>" +
-					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
-					"<status array='yes'>--pending--cancelled--</status>" +
-					"<transaction_id></transaction_id>" +
-					"</payments>";
-			fetch_requested_data('',payment_xml,function(payments)
-			{
-				for(var x in payments)
-				{
-					var pt_xml="<transactions>" +
-							"<id>"+payments[x].transaction_id+"</id>" +
-							"</transactions>";
-					var pay_xml="<payments>" +
-							"<id>"+payments[x].id+"</id>" +
-							"<bill_id></bill_id>" +
-							"<transaction_id></transaction_id>" +
-							"</payments>";
-	
-					delete_simple(pay_xml);
-					delete_simple(pt_xml);
-					break;
-				}
-			});			
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Create Performa Invoice

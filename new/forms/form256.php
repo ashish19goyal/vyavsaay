@@ -327,20 +327,37 @@
     {
         if(is_update_access('form256'))
         {
+            var production_id=document.getElementById('form256_master').elements['id'].value;
+            var item=form.elements[0].value;
+            var batch=form.elements[1].value;
             var quantity=form.elements[2].value;
             var data_id=form.elements[3].value;
             var last_updated=get_my_time();
-            
+            var storage=get_session_var('production_floor_store');
+
             var data_json={data_store:'batch_raw_material',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'quantity',value:quantity},
                         {index:'last_updated',value:last_updated}]};
- 			var item_subtracted_json={data_store:'inventory_adjust',
-	 				data:[{index:'id',value:data_id},
+            
+            var item_subtracted_create={data_store:'inventory_adjust',
+	 				warning:'no',
+                    data:[{index:'id',value:data_id},
+	 					{index:'product_name',value:item},
+	 					{index:'batch',value:batch},
+                        {index:'quantity',value:-(quantity)},
+                        {index:'source',value:'manufacturing'},
+                        {index:'source_id',value:production_id},
+                        {index:'storage',value:storage},  
+                        {index:'last_updated',value:last_updated}]};
+ 			
+ 			var item_subtracted_update={data_store:'inventory_adjust',
+                    data:[{index:'id',value:data_id},
 	 					{index:'quantity',value:-(quantity)},
                         {index:'last_updated',value:last_updated}]};
  				
-            update_json(item_subtracted_json);			
+            create_json(item_subtracted_create);
+            update_json(item_subtracted_update);			
             update_json(data_json);
 
             $(form).readonly();            

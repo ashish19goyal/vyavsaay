@@ -43,9 +43,8 @@
 		</table>
 	</div>
 	
-	<script>
-
-		function form288_header_ini()
+	<script>        
+        function form288_header_ini()
 		{	
 			var form=document.getElementById('form288_header');
 			var name_filter=form.elements['name'];

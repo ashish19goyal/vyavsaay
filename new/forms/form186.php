@@ -154,6 +154,14 @@
 
             read_json_rows('form186',plan_items_column,function(results)
             {
+                results.sort(function(a,b)
+				{
+					if(parseInt(a.order_no)<parseInt(b.order_no))
+					{	return 1;}
+					else 
+					{	return -1;}
+				});	
+
                 results.forEach(function(result)
                 {
                     var plan_status=filter_fields.elements['status'].value;
