@@ -11609,7 +11609,7 @@ function modal155_action()
 		var account_name=account_filter.value;
 		var counter_payment=parseFloat(amount_filter.value);
 
-		if(is_create_access('form124') || is_create_access('form243') || is_create_access('form291'))
+		if(is_create_access('form124') || is_create_access('form243') || is_create_access('form291') || is_create_access('form282'))
 		{
 			var accounts_data={data_store:'payments',
                               indexes:[{index:'id'},
@@ -13816,7 +13816,6 @@ function modal172_action()
                                         {index:'source',value:'receipt'},
                                         {index:'source_info',value:receipt_id},
                                         {index:'notes',value:'Gernerated for receipt #'+receipt_id},
-                                        {index:'source_info',value:'receipts'},
                                         {index:'last_updated',value:last_updated}]};
 
                     var receipts_json={data_store:'receipts_payment_mapping',

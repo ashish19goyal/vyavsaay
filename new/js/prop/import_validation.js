@@ -151,19 +151,6 @@ function form245_import_validate(data_array)
 	return error_array;					
 }
 
-/**
-* @form Inventory (Spares)
-* @formNo 260
-*/
-function form260_import_validate(data_array)
-{
-	var validate_template_array=[{column:'quantity',required:'yes',regex:new RegExp('^[0-9]+$')},
-							{column:'item',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')}];
-					
-	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
-}
-
 
 /**
 * @form Enter COD Collections
@@ -231,18 +218,6 @@ function form275_import_validate(data_array)
 	return error_array;					
 }
 
-/**
-* @form Inventory (Cabinets)
-* @formNo 285
-*/
-function form285_import_validate(data_array)
-{
-	var validate_template_array=[{column:'quantity',required:'yes',regex:new RegExp('^[0-9]+$')},
-							{column:'item',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')}];
-					
-	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
-}
 
 /**
 * @form Buyer Leads

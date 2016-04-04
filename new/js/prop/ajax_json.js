@@ -39,10 +39,17 @@ function ajax_json(url,kvp,func)
 		},
 		success: function(return_data,return_status,e)
 		{
-            //console.log(kvp);
-            //console.log(e.responseText);
-			var response_object=JSON.parse(e.responseText);
-				
+            var response_object={status:'error',rows:[],count:0};
+            try 
+            {
+                response_object=JSON.parse(e.responseText);    
+            } catch (e) 
+            {
+                console.log(kvp);
+                console.log(e.responseText);
+                return;
+            }
+            
 			if(response_object.status=="Invalid session")
 			{
 				number_active_ajax-=1;

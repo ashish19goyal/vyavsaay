@@ -104,15 +104,15 @@
                                 rowsHTML+="<textarea readonly='readonly' form='form282_"+result.id+"'>"+result.acc_name+"</textarea>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Amount'>";
-                                rowsHTML+="<input type='number' readonly='readonly' form='form282_"+result.id+"' value='"+result.amount+"'>";
+                                rowsHTML+="<input type='number' class='floatlabel' placeholder='Rs.' readonly='readonly' form='form282_"+result.id+"' value='"+result.amount+"'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Narration'>";
                                 rowsHTML+="<input type='text' class='floatlabel' placeholder='Issued On' value='"+get_my_past_date(result.date)+"' readonly='readonly'>";
                                 rowsHTML+="<textarea readonly='readonly' class='floatlabel' placeholder='Details' form='form282_"+result.id+"'>"+result.narration+"</textarea>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Document'>";
-                                    rowsHTML+="<div id='form282_documents_"+result.id+"'></div>";
-                            rowsHTML+="<a title='Add document' class='btn btn-circle btn-icon-only grey-cascade' id='form282_add_document_"+result.id+"'><i class='fa fa-plus'></i></a>";
+                                rowsHTML+="<div id='form282_documents_"+result.id+"'></div>";
+                                rowsHTML+="<a title='Add document' class='btn btn-circle btn-icon-only grey-cascade' id='form282_add_document_"+result.id+"'><i class='fa fa-plus'></i></a>";
                             rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 

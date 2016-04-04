@@ -7351,33 +7351,6 @@ function form255_header_ini()
 }
 
 
-
-/**
- * @form Inventory (Spares)
- * @formNo 260
- */
-function form260_header_ini()
-{
-	var filter_fields=document.getElementById('form260_header');	
-	var name_filter=filter_fields.elements[0];
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form260_ini();
-	});
-
-	var item_data="<attributes>" +
-		"<name></name>" +
-		"<type exact='yes'>product</type>"+
-		"<value exact='yes'>yes</value>"+
-		"<attribute exact='yes'>Spare Part</attribute>"+
-		"</attributes>";	
-	set_my_filter(item_data,name_filter);
-};
-
-
 /**
  * @form Create RTO
  * @formNo 265
@@ -8122,30 +8095,6 @@ function form284_header_ini()
 	customers_filter.value='';
 }
 
-/**
- * @form Inventory (NVS)
- * @formNo 285
- */
-function form285_header_ini()
-{
-	var filter_fields=document.getElementById('form285_header');	
-	var name_filter=filter_fields.elements[0];
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form285_ini();
-	});
-
-	var item_data="<attributes>" +
-		"<name></name>" +
-		"<type exact='yes'>product</type>"+
-		"<value exact='yes'>no</value>"+
-		"<attribute exact='yes'>Spare Part</attribute>"+
-		"</attributes>";	
-	set_my_filter(item_data,name_filter);
-};
 
 /**
  * @form Buyer leads
@@ -8228,33 +8177,6 @@ function form290_header_ini()
 	});	
 }
 
-/**
- * @form Receipts (NVS)
- * @formNo 291
- */
-function form291_header_ini()
-{
-	var filter_fields=document.getElementById('form291_header');
-	var id_filter=filter_fields.elements[0];
-	var account_filter=filter_fields.elements[1];
-	
-	var id_data="<receipts>" +
-			"<receipt_id></receipt_id>" +
-			"</receipts>";
-	var account_data="<accounts>" +
-			"<acc_name></acc_name>" +
-			"</accounts>";
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form291_ini();
-	});
-
-	set_my_filter(id_data,id_filter);
-	set_my_filter(account_data,account_filter);
-};
 
 /**
  * @form Vyavsaay Billing

@@ -938,16 +938,6 @@ function form247_import_template()
 	my_array_to_csv(data_array);
 };
 
-/**
-* @form Inventory (Spares)
-* @formNo 260
-*/
-function form260_import_template()
-{
-	var data_array=['id','item','quantity'];
-	my_array_to_csv(data_array);
-};
-
 
 /**
 * @form Enter COD Collections
@@ -989,15 +979,6 @@ function form275_import_template()
 	my_array_to_csv(data_array);
 };
 
-/**
-* @form Inventory (cabinets)
-* @formNo 285
-*/
-function form285_import_template()
-{
-	var data_array=['id','item','quantity'];
-	my_array_to_csv(data_array);
-};
 
 /**
 * @form Buyer leads
