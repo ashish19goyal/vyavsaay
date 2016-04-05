@@ -19,6 +19,10 @@
                     <li>
                         <a id='report78_email'><i class='fa fa-envelope'></i> Email</a>
                     </li>
+                    <li class="divider"> </li>
+                    <li>
+                        <a id='report78_upload' onclick=modal23_action(report78_import_template,report78_import,report78_import_validate);><i class='fa fa-upload'></i> Import</a>
+                    </li>
                 </ul>
             </div>
         </div>	
@@ -92,11 +96,19 @@ function report78_ini()
 								
 	read_json_rows('report78',follow_up_data,function(followups)
 	{
+        followups.sort(function(a,b)
+        {
+            if(parseFloat(a.date)<parseFloat(b.date))
+            {	return 1;}
+            else 
+            {	return -1;}
+        });	
+
 		var rowsHTML="";
 		followups.forEach(function (followup) 
 		{
 			rowsHTML+="<tr>";
-			rowsHTML+="<td data-th='Date'><a title='Click to go to the lead' onclick=element_display('"+followup.source_id+"','form213');>";
+			rowsHTML+="<td data-th='Date'><a title='Click to go to the lead' onclick=element_display('"+followup.source_id+"','report78');>";
 				rowsHTML+=get_my_past_date(followup.date);
 			rowsHTML+="</a></td>";
 			rowsHTML+="<td data-th='Response'><span class='label label-sm "+status_label_colors[followup.response]+"'>";
@@ -123,6 +135,85 @@ function report78_ini()
 		});	
 	});				
 };
-	
+
+        function report78_import_template()
+		{
+			var data_array=['id','customer','date','response','call bites'];
+			my_array_to_csv(data_array);
+		};
+		
+		function report78_import_validate(data_array)
+		{
+			var validate_template_array=[{column:'customer',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
+									{column:'response',list:['cold','warm','hot']},
+									{column:'call bites',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
+									{column:'date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]+')}];
+							
+			var error_array=validate_import_array(data_array,validate_template_array);
+			return error_array;					
+		}
+		
+		function report78_import(data_array,import_type)
+		{
+			var data_json={data_store:'followups',
+ 					log:'yes',
+ 					data:[],
+ 					log_data:{title:'Followups for sale leads',link_to:'report78'}};
+
+			var counter=1;
+			var last_updated=get_my_time();
+		
+            var customers_array=[];
+            data_array.forEach(function(row)
+			{
+                customers_array.push(row.customer);
+            });
+            console.log(customers_array);
+            show_loader();
+            var leads_data={data_store:'sale_leads',
+                            indexes:[{index:'id'},
+                                    {index:'customer',array:customers_array}]};
+            read_json_rows('',leads_data,function(leads)
+            {
+                //console.log(leads);
+                data_array.forEach(function(row)
+                {
+                    for (var i in leads)
+                    {
+                        if(row.customer==leads[i].customer)
+                        {
+                            row.source_id=leads[i].id;
+                            break;
+                        }
+                    }
+                });
+                
+                data_array.forEach(function(row)
+                {
+                    counter+=1;
+                    if(import_type=='create_new')
+                    {
+                        row.id=last_updated+counter;
+                    }
+
+                    var data_json_array=[{index:'id',value:row.id},
+                            {index:'customer',value:row.customer},
+                            {index:'detail',value:row['call bites']},
+                            {index:'date',value:get_raw_time(row.date)},
+                            {index:'response',value:row.response},
+                            {index:'source_id',value:row.source_id},             
+                            {index:'last_updated',value:last_updated}];
+
+                    data_json.data.push(data_json_array);
+                });
+                hide_loader();
+                
+                if(import_type=='create_new')
+                {
+                    create_batch_json(data_json);
+                } 
+            });            
+		}
+        
 	</script>
 </div>

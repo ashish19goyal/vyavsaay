@@ -43,7 +43,7 @@ function ajax_json(url,kvp,func)
             try 
             {
                 response_object=JSON.parse(e.responseText);    
-            } catch (e) 
+            } catch (ee) 
             {
                 console.log(kvp);
                 console.log(e.responseText);

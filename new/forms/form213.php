@@ -356,10 +356,6 @@
 			}
 		}
 		
-		/**
-		 * @form Sale Leads
-		 * @param button
-		 */
 		function form213_delete_item(button)
 		{
 			if(is_delete_access('form213'))

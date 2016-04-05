@@ -357,8 +357,8 @@
 		{
 			var validate_template_array=[{column:'person',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
                                          {column:'identified by',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-									{column:'requirement',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!%\[\]()\"-]+$')},
-									{column:'followup date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')}];
+									{column:'requirement',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!%()\"-]+$')},
+									{column:'followup date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]+')}];
 							
 			var error_array=validate_import_array(data_array,validate_template_array);
 			return error_array;					
@@ -401,7 +401,7 @@
 	 					{index:'detail',value:row.requirement},
 	 					{index:'due_date',value:get_raw_time(row['followup date'])},
 	 					{index:'identified_by',value:row['identified by']},
-                        {index:'status',value:'open'}
+                        {index:'status',value:'open'},
 	 					{index:'last_updated',value:last_updated}];
 
 				leads_json.data.push(leads_json_array);

@@ -29,7 +29,16 @@ function get_raw_time(date)
 		{
 			year=parseInt(date_array[0]);		
 		}		
-
+        
+        if(year<50)
+        {
+            year=2000+year;
+        }
+        else if(year>50 && year<100)
+        {
+            year=1900+year;
+        }
+        
 		var hour=0;
 		var minutes=0;
 		var seconds=0;
@@ -177,7 +186,7 @@ function get_my_date(raw_time)
 
 function get_my_past_date(raw_time)
 {
-	if(raw_time=='' || raw_time=='0' || raw_time=='null' || raw_time=='undefined')
+	if(raw_time=='' || raw_time=='0' || raw_time=='null' || raw_time=='undefined' || raw_time==null)
 	{
 		return "";
 	}
