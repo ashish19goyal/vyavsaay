@@ -18,8 +18,7 @@
             var container=document.getElementById('object_staff_timesheet_body');
             container.innerHTML="";
             
-            var paginator=$('#object_staff_timesheet_body').paginator(
-                        {
+            var paginator=$('#object_staff_timesheet_body').paginator({
                             page_size:5,
                             func:"initialize_object_staff_timesheet('"+obj_name+"','"+obj_id+"');"});
 			

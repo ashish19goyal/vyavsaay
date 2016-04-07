@@ -9,9 +9,16 @@
 		function initialize_object_staff_leads(obj_name,obj_id)
 		{
             var container=document.getElementById('object_staff_leads');
-            container.innerHTML="";        
+            container.innerHTML="";   
+            
+            var paginator=$('#object_staff_leads').paginator({
+                            page_size:5,
+                            func:"initialize_object_staff_leads('"+obj_name+"','"+obj_id+"');"});
+			
 			var attribute_data={data_store:'sale_leads',
-                           indexes:[{index:'id'},{index:'customer'},{index:'detail'},{index:'identified_by',exact:obj_name},{index:'status'},{index:'due_date'}]};
+                         count:paginator.page_size(),
+                         start_index:paginator.get_index(),
+                         indexes:[{index:'id'},{index:'customer'},{index:'detail'},{index:'identified_by',exact:obj_name},{index:'status'},{index:'due_date'}]};
             read_json_rows('',attribute_data,function(results)
             {
                 results.forEach(function(result)
@@ -32,7 +39,8 @@
 					rowsHTML+="</tr>";
 					
 					$(container).append(rowsHTML);
-				});		
+				});
+                paginator.update_index(results.length);                
             });
 		}        
 	</script>
