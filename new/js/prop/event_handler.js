@@ -360,7 +360,13 @@ function hide_lock_screen()
 function set_user_name()
 {
 	var name=get_session_var('name');
+    var acc_name=get_session_var('acc_name');
+    
 	$('.username').html(name);
+    $('#user_profile_nav').on('click',function()
+    {
+        show_object('staff',acc_name);
+    });
 }
 
 

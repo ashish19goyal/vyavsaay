@@ -6,8 +6,7 @@
     </a>
     <ul class="dropdown-menu dropdown-menu-default">
         <li>
-            <a onclick='show_my_profile();'>
-                <i class="icon-user"></i> My Profile </a>
+            <a id='user_profile_nav'><i class="icon-user"></i> My Profile </a>
         </li>
         <li>
             <a onclick="modal182_action();">

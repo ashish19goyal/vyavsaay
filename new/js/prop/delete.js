@@ -5567,73 +5567,6 @@ function form266_delete_item(button)
 }
 
 /**
- * @form Delivery Challan Details
- * @formNo form268
- */
-function form268_delete_item(button)
-{
-	if(is_delete_access('form268'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);			
-			var data_id=form.elements[3].value;
-			
-			var data_xml="<delivery_challan_items>" +
-						"<id>"+data_id+"</id>" +
-						"</delivery_challan_items>";	
-			var inventory_xml="<inventory_adjust>" +
-						"<id>"+data_id+"</id>" +
-						"<source>delivery challan</source>"+						
-						"</inventory_adjust>";	
-			
-			delete_simple(data_xml);
-			delete_simple(inventory_xml);
-					
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-
-/**
- * @form Enter Purchase Bill (NVS)
- * @formNo form270
- */
-function form270_delete_item(button)
-{
-	if(is_delete_access('form270'))
-	{
-		modal115_action(function()
-		{
-			var master_form=document.getElementById("form270_master");
-			var bill_id=master_form.elements['bill_id'].value;
-
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var data_id=form.elements[6].value;
-			
-			var data_xml="<supplier_bill_items>" +
-						"<id>"+data_id+"</id>" +
-						"</supplier_bill_items>";	
-			delete_simple(data_xml);
-					
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
  * @form Enter COD Collections
  * @formNo form271
  */
@@ -5736,40 +5669,6 @@ function form275_delete_item(button)
 	}
 }
 
-
-/**
- * @form Create Performa Invoice
- * @formNo 284
- * @param button
- */
-function form284_delete_item(button)
-{
-	if(is_delete_access('form284'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			var data_id=form.elements[5].value;
-					
-			var data_xml="<bill_items>" +
-						"<id>"+data_id+"</id>" +
-						"</bill_items>";	
-			var adjust_xml="<inventory_adjust>" +
-						"<id>"+data_id+"</id>" +
-						"</inventory_adjust>";	
-			delete_simple(data_xml);
-			delete_simple(adjust_xml);
-					
-			$(button).parent().parent().remove();
-			form284_update_serial_numbers();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Buyer Leads
