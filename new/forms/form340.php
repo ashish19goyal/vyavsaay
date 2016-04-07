@@ -369,18 +369,22 @@
             var leads_json={data_store:'sale_leads',
  					log:'yes',
  					data:[],
+                    warning:'no',        
  					log_data:{title:'Sale leads for customers',link_to:'form340'}};
 
             var data_json={data_store:'customers',
  					loader:'no',
+                    warning:'no',       
  					data:[]};
             
             var attribute_json={data_store:'attributes',
  					loader:'no',
+                    warning:'no',            
  					data:[]};
 
 			var account_json={data_store:'accounts',
  					loader:'no',
+                    warning:'no',          
  					data:[]};
 
 			var counter=1;
