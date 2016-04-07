@@ -1,6 +1,13 @@
 <div>
     <div class='scroller' style='height:250px;' data-rail-visible1="1">
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
+			<thead>
+				<tr>
+					<th>Bill #</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+				</tr>
+			</thead>
 			<tbody id='object_suppliers_purchases'>
 			</tbody>
 		</table>
@@ -23,7 +30,7 @@
                         rowsHTML+="<td data-th='Date'>";
                             rowsHTML+=get_my_past_date(result.bill_date);
                         rowsHTML+="</td>";
-                        rowsHTML+="<td data-th='Total'>";
+                        rowsHTML+="<td data-th='Amount'>";
                             rowsHTML+="Rs. "+result.total;
                         rowsHTML+="</td>";
 					rowsHTML+="</tr>";

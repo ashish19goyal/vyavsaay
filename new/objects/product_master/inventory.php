@@ -5,9 +5,6 @@
 	<script>
 		function initialize_object_product_master_inventory(obj_name,obj_id)
 		{
-            var container=document.getElementById('object_product_master_inventory_body');
-            container.innerHTML="";
-            
             get_inventory(obj_name,'',function(inventory)
             {
                 $('#object_product_master_inventory').html(inventory);

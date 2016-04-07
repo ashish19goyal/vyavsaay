@@ -1,6 +1,13 @@
 <div>
     <div class='scroller' style='height:250px;' data-rail-visible1="1">
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
+			<thead>
+				<tr>
+					<th>Invoice #</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+				</tr>
+			</thead>
 			<tbody id='object_customers_bills'>
 			</tbody>
 		</table>

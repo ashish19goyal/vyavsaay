@@ -1,6 +1,14 @@
 <div>
     <div class='scroller' style='height:250px;' data-rail-visible1="1">
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
+			<thead>
+				<tr>
+					<th>Customer</th>
+                    <th>Details</th>
+                    <th>Status</th>
+                    <th>Followup Date</th>
+				</tr>
+			</thead>
 			<tbody id='object_staff_leads'>
 			</tbody>
 		</table>

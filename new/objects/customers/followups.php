@@ -1,6 +1,13 @@
 <div>
     <div class='scroller' style='height:250px;' data-rail-visible1="1">
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
+			<thead>
+				<tr>
+					<th>Date</th>
+                    <th>Response</th>
+                    <th>Notes</th>
+				</tr>
+			</thead>
 			<tbody id='object_customers_followups'>
 			</tbody>
 		</table>
