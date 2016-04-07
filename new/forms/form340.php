@@ -80,16 +80,15 @@
 			
 			var paginator=$('#form340_body').paginator();
 			
-			var new_columns=new Object();
-					new_columns.count=paginator.page_size();
-					new_columns.start_index=paginator.get_index();
-					new_columns.data_store='sale_leads';
-					new_columns.indexes=[{index:'id',value:fid},
+			var new_columns={count:paginator.page_size(),
+                             start_index:paginator.get_index(),
+                             data_store:'sale_leads',
+                             indexes:[{index:'id',value:fid},
 									{index:'customer',value:fname},
 									{index:'detail',value:fdetail},
 									{index:'status'},
 									{index:'due_date'},
-									{index:'identified_by',value:fidentity}];
+									{index:'identified_by',value:fidentity}]};
 					
 			read_json_rows('form340',new_columns,function(results)
 			{
@@ -119,7 +118,7 @@
 							if(result.identified_by=="")
 								rowsHTML+="<input type='text' readonly='readonly' form='form340_"+result.id+"' name='staff' class='dblclick_editable' value='"+result.identified_by+"'>";
 							else
-								rowsHTML+="<input type='text' readonly='readonly' form='form340_"+result.id+"' name='staff' value='"+result.identified_by+"'>";	
+								rowsHTML+="<a onclick=\"show_object('staff','"+result.identified_by+"');\"><textarea readonly='readonly' form='form340_"+result.id+"' name='staff'>"+result.identified_by+"</textarea></a>";	
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form340_"+result.id+"' name='id' value='"+result.id+"'>";

@@ -135,6 +135,7 @@ function if_data_access_object(obj_type,obj_name,func_success,func_fail)
 					indexes:[{index:index_name,exact:obj_name}]};
 	read_json_rows('',obj_data,function (objects) 
 	{
+        console.log(obj_data);
 		if(objects.length>0)
 		{
 			func_success();
