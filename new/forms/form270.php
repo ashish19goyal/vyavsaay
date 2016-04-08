@@ -1,40 +1,49 @@
-<div id='form270' class='tab-pane'>
-	<form id='form270_master' autocomplete="off">
-		<fieldset>
-			<label>Supplier <img src='./images/add_image.png' class='add_image' id='form270_add_supplier'><br>
-			<input type='text' required name='supplier'></label>
-			<label>Bill Number<br><input type='text' required name='bill_num'></label>
-			<label>Bill Date<br><input type='text' required name='date'></label>
-			<label>
-				<input type='hidden' name='bill_id'>
-			</label>
-			<label>	<input type='button' title='Save Bill' class='save_icon' name='save'></label>
-			<label>	<input type='button' title='Print' class='print_icon' name='print' onclick='form270_print_form();'></label>
-			<label>	<input type='submit' class='submit_hidden'></label>
-		</fieldset>
-	</form>
-	<table class='rwd-table'>
-		<thead>
-			<tr>
-				<form id='form270_header'></form>
-					<th>Item</th>
-					<th>Quantity</th>
-					<th>Price</th>					
-					<th>Amount</th>
-					<th><input type='button' form='form270_header' title='Add item' class='add_icon' onclick='form270_add_item();'></th>
-			</tr>
-		</thead>
-		<tbody id='form270_body'>
-		</tbody>
-		<tfoot id='form270_foot'>
-		</tfoot>
-	</table>
-    
-    <script>
-    function form270_header_ini()
-{
-	var fields=document.getElementById('form270_master');
+<div id='form270' class='tab-pane portlet box green-meadow'>	   
+	<div class="portlet-title">
+		<div class='caption'>		
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form270_add_item();'>Add <i class='fa fa-plus'></i></a>
+            <a class='btn btn-circle grey btn-outline btn-sm' id='form270_save'>Save <i class='fa fa-save'></i></a>
+		</div>
+		<div class="actions">
+      	<a class='btn btn-default btn-sm' id='form270_print' onclick=form270_print_form();><i class='fa fa-print'></i> Print</a>
+        <a class='btn btn-default btn-sm' id='form270_share'><i class='fa fa-envelope'></i> Email</a>    
+      </div>
+	</div>
 	
+	<div class="portlet-body">
+        <form id='form270_master' autocomplete="off">
+            <fieldset>
+                <label><div class='btn-overlap'><input type='text' required name='supplier' placeholder='Supplier' class='floatlabel'><button type='button' title='Add new supplier' class='btn btn-icon-only default right-overlap' id='form270_add_supplier'><i class='fa fa-plus'></i></button></div></label>
+                <label><input type='text' required name='bill_num' class='floatlabel' placeholder='Bill Number'></label>
+                <label><input type='text' name='date' required class='floatlabel' placeholder='Bill Date'></label>
+                <input type='hidden' name='bill_id'>
+                <input type='submit' class='submit_hidden'>
+            </fieldset>
+        </form>
+        
+        <br>
+		
+        <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
+			<thead>
+				<tr style='color:#9a9a9a;'>
+                    <th>Item</th>
+					<th>Quantity</th>
+					<th>Rate</th>
+					<th>Amount</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody id='form270_body'>
+			</tbody>
+            <tfoot id='form270_foot'>
+            </tfoot>
+		</table>
+    </div>
+	
+    <script>
+function form270_header_ini()
+{
+	var fields=document.getElementById('form270_master');	
 	var supplier_filter=fields.elements['supplier'];
 	supplier_filter.value='';
 	
@@ -42,7 +51,7 @@
 	var bill_date=fields.elements['date'];
 	
 	fields.elements['bill_id'].value=get_new_key();
-	var save_button=fields.elements['save'];
+	var save_button=document.getElementById('form270_save');
 	
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
@@ -66,11 +75,8 @@
 		form270_add_item();
 	});
 	
-	var suppliers_data="<suppliers>" +
-		"<acc_name></acc_name>" +
-		"</suppliers>";
-	
-	set_my_value_list(suppliers_data,supplier_filter,function () 
+	var suppliers_data={data_store:'suppliers',return_column:'acc_name'};	
+	set_my_value_list_json(suppliers_data,supplier_filter,function () 
 	{
 		$(supplier_filter).focus();
 	});
@@ -81,15 +87,14 @@
 	{
 		modal13_action(function()
 		{	
-			var suppliers_data="<suppliers>" +
-				"<acc_name></acc_name>" +
-				"</suppliers>";			
-			set_my_value_list(suppliers_data,supplier_filter);
+			set_my_value_list_json(suppliers_data,supplier_filter);
 		});
 	});
 
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
+    
+    $('#form270').formcontrol();
 }
 
 function form270_ini()
@@ -104,26 +109,22 @@ function form270_ini()
 	if(bill_id!="")
 	{
 		show_loader();
-		var bill_columns="<supplier_bills count='1'>" +
-				"<id>"+bill_id+"</id>" +
-				"<bill_id></bill_id>" +
-				"<supplier></supplier>" +
-				"<total></total>" +
-				"<amount></amount>" +
-				"<discount></discount>" +
-				"<tax></tax>" +
-				"<tax_rate></tax_rate>"+
-				"<cartage></cartage>"+
-				"<bill_date></bill_date>" +
-				"<entry_date></entry_date>" +
-				"<notes></notes>" +
-				"<transaction_id></transaction_id>" +
-				"</supplier_bills>";
-		
+		var bill_columns={data_store:'supplier_bills',count:1,
+                         indexes:[{index:'id',exact:bill_id},
+                                 {index:'bill_id'},
+                                 {index:'supplier'},
+                                 {index:'total'},
+                                 {index:'amount'},
+                                 {index:'discount'},
+                                 {index:'tax'},
+                                 {index:'tax_rate'},
+                                 {index:'cartage'},
+                                 {index:'bill_date'},
+                                 {index:'entry_date'},
+                                 {index:'notes'}]};
 		var filter_fields=document.getElementById('form270_master');
 
-		////separate fetch function to get bill details like customer name, total etc.
-		fetch_requested_data('',bill_columns,function(bill_results)
+		read_json_rows('form270',bill_columns,function(bill_results)
 		{
 			if (bill_results.length>0)
 			{
@@ -131,7 +132,7 @@ function form270_ini()
 				filter_fields.elements['bill_num'].value=bill_results[0].bill_id;
 				filter_fields.elements['date'].value=get_my_past_date(bill_results[0].bill_date);
 				filter_fields.elements['bill_id'].value=bill_id;
-				var save_button=filter_fields.elements['save'];
+				var save_button=document.getElementById('form270_save');
 				
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
@@ -144,60 +145,59 @@ function form270_ini()
 							"<td>Amount:<br>Tax:<br>Cartage: <br>Total: </td>" +
 							"<td>Rs. "+bill_results[0].amount+"</br>" +
 							"Rs. "+bill_results[0].tax+" <br>" +
-							"Rs. <input type='number' value='"+bill_results[0].cartage+"' step='any' id='form270_cartage' class='dblclick_editable'><br>" +
+							"Rs. <input type='number' placeholder='Cartage' value='"+bill_results[0].cartage+"' step='any' id='form270_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>" +
 							"Rs. "+bill_results[0].total+"</td>" +
 							"<td></td>" +
 							"</tr>";
 						
 				$('#form270_foot').html(total_row);
-				longPressEditable($('.dblclick_editable'));	
+				$('#from270').formcontrol();	
 			}
 		
-			var bill_items_column="<supplier_bill_items>" +
-					"<id></id>" +
-					"<product_name></product_name>" +
-					"<amount></amount>" +
-					"<tax></tax>" +
-					"<total></total>" +
-					"<unit_price></unit_price>" +
-					"<quantity></quantity>" +
-					"<unit></unit>" +
-					"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
-					"</supplier_bill_items>";
-			
-			fetch_requested_data('',bill_items_column,function(results)
+			var bill_items_column={data_store:'supplier_bill_items',
+                                  indexes:[{index:'id'},
+                                          {index:'bill_id'},
+                                          {index:'product_name'},
+                                          {index:'amount'},
+                                          {index:'tax'},
+                                          {index:'total'},
+                                          {index:'unit_price'},
+                                          {index:'quantity'},
+                                          {index:'unit'},
+                                          {index:'bill_id',exact:bill_id}]};
+			read_json_rows('form270',bill_items_column,function(results)
 			{
 				results.forEach(function(result)
 				{
-					var rowsHTML="";
 					var id=result.id;
-					rowsHTML+="<tr>";
+					var rowsHTML="<tr>";
 					rowsHTML+="<form id='form270_"+id+"'></form>";
 						rowsHTML+="<td data-th='Item'>";
-							rowsHTML+="<textarea readonly='readonly' form='form270_"+id+"'>"+result.product_name+"</textarea>";
+							rowsHTML+="<a onclick=\"show_object('product_master','"+result.product_name+"');\"><textarea readonly='readonly' form='form270_"+id+"'>"+result.product_name+"</textarea></a>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Quantity'>";
-							rowsHTML+="<input type='number' readonly='readonly' form='form270_"+id+"' value='"+result.quantity+"' step='any'><b>"+result.unit+"</b>";
+							rowsHTML+="<input type='number' placeholder='Quantity' readonly='readonly' form='form270_"+id+"' value='"+result.quantity+"' step='any'><b>"+result.unit+"</b>";
 						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Price'>";
-							rowsHTML+="<input type='number' readonly='readonly' class='dblclick_editable' form='form270_"+id+"' value='"+result.unit_price+"' step='any'>";
+						rowsHTML+="<td data-th='Rate'>";
+							rowsHTML+="<input type='number' placeholder='Price' readonly='readonly' form='form270_"+id+"' value='"+result.unit_price+"' step='any'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Amount'>";
-							rowsHTML+="<b>Amount</b><input type='number' readonly='readonly' form='form270_"+id+"' value='"+result.amount+"' step='any'>";
-							rowsHTML+="<br><b>Tax</b>: <input type='number' readonly='readonly' form='form270_"+id+"' value='"+result.tax+"' step='any'>";
-							rowsHTML+="<br><b>Total</b>: <input type='number' readonly='readonly' form='form270_"+id+"' value='"+result.total+"' step='any'>";
+							rowsHTML+="<input type='number' placeholder='Amount' readonly='readonly' form='form270_"+id+"' class='floatlabel' value='"+result.amount+"' step='any'>";
+							rowsHTML+="<input type='number' placeholder='Tax' class='floatlabel' readonly='readonly' form='form270_"+id+"' value='"+result.tax+"' step='any'>";
+							rowsHTML+="<input type='number' placeholder='Tax' class='floatlabel' readonly='readonly' form='form270_"+id+"' value='"+result.total+"' step='any'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form270_"+id+"' value='"+id+"'>";
-							rowsHTML+="<input type='button' class='submit_hidden' form='form270_"+id+"' id='save_form270_"+id+"'>";
-							rowsHTML+="<input type='button' class='delete_icon' form='form270_"+id+"' id='delete_form270_"+id+"' onclick='form270_delete_item($(this)); form270_get_totals();'>";
+							rowsHTML+="<input type='button' class='submit_hidden' form='form270_"+id+"' id='save_form270_"+id+"' name='save'>";
+							rowsHTML+="<button type='button' class='btn red' form='form270_"+id+"' id='delete_form270_"+id+"' name='delete' title='Delete' onclick='form270_delete_item($(this)); form270_get_totals();'><i class='fa fa-trash'></i></button>";
 						rowsHTML+="</td>";			
 					rowsHTML+="</tr>";
 				
 					$('#form270_body').append(rowsHTML);
 					
 				});	
-				form270_get_totals();		
+				form270_get_totals();
+                $('#form270').formcontrol();
 				hide_loader();
 			});
 		});
@@ -210,28 +210,27 @@ function form270_add_item()
 	{
 		var filter_fields=document.getElementById('form270_master');
 		
-		var rowsHTML="";
 		var id=get_new_key();
-		rowsHTML+="<tr>";
+		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form270_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
 				rowsHTML+="<input type='text' class='wideinput' required form='form270_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
-				rowsHTML+="<input type='number' step='any' required form='form270_"+id+"'> <b id='form270_unit_"+id+"'></b>";
+				rowsHTML+="<input type='number' step='any' placeholder='Quantity' required form='form270_"+id+"'> <b id='form270_unit_"+id+"'></b>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Price'>";
-				rowsHTML+="<input type='number' form='form270_"+id+"' step='any'>";
+			rowsHTML+="<td data-th='Rate'>";
+				rowsHTML+="<input type='number' placeholder='Price' form='form270_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+="<b>Amount</b>:<input type='number' step='any' form='form270_"+id+"' readonly='readonly'>";
-				rowsHTML+="<br><b>Tax</b>: <input type='number' form='form270_"+id+"' value='' step='any'>";
-				rowsHTML+="<br><b>Total</b>: <input type='number' form='form270_"+id+"' value='' step='any' readonly='readonly'>";
+				rowsHTML+="<input type='number' placeholder='Amount' class='floatlabel' step='any' form='form270_"+id+"' readonly='readonly'>";
+				rowsHTML+="<input type='number' placeholder='Tax' class='floatlabel' form='form270_"+id+"' step='any'>";
+				rowsHTML+="<input type='number' placeholder='Total' class='floatlabel' form='form270_"+id+"' step='any' readonly='readonly'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form270_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='button' class='submit_hidden' form='form270_"+id+"' id='save_form270_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form270_"+id+"' id='delete_form270_"+id+"' onclick='$(this).parent().parent().remove();form270_get_totals();'>";
+				rowsHTML+="<input type='button' class='submit_hidden' name='save' form='form270_"+id+"' id='save_form270_"+id+"' >";
+				rowsHTML+="<button type='button' class='btn red' form='form270_"+id+"' id='delete_form270_"+id+"' onclick='$(this).parent().parent().remove();form270_get_totals();' name='delete' title='Delete'><i class='fa fa-trash'></i></button>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form270_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form270_"+id+"' name='tax_unit'>";
 			rowsHTML+="</td>";
@@ -262,38 +261,30 @@ function form270_add_item()
 			form270_add_item();
 		});
 		
-		var product_data="<product_master>" +
-				"<name></name>" +
-				"</product_master>";
-		set_my_value_list_func(product_data,name_filter,function () 
+		var product_data={data_store:'product_master',return_column:'name'};
+		set_my_value_list_json(product_data,name_filter,function () 
 		{
 			$(name_filter).focus();
 		});
 
 		$(name_filter).on('blur',function(event)
 		{
-			var unit_data="<attributes count='1'>"+
-							"<value></value>"+
-							"<attribute exact='yes'>unit</attribute>"+
-							"<name exact='yes'>"+name_filter.value+"</name>"+
-							"</attributes>";
-			get_single_column_data(function(units)
+			var unit_data={data_store:'attributes',count:1,return_column:'value',
+                          indexes:[{index:'attribute',exact:'unit'},
+                                  {index:'name',exact:name_filter.value}]};
+			read_json_single_column(unit_data,function(units)
 			{
 				if(units.length>0)
 					$('#form270_unit_'+id).html(units[0]);
-			},unit_data);			
+			});			
 							
-			var price_data="<supplier_bill_items count='1'>" +
-					"<unit_price></unit_price>" +
-					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
-					"</supplier_bill_items>";
-			set_my_value(price_data,price_filter);	
+			var price_data={data_store:'supplier_bill_items',return_column:'unit_price',
+                           indexes:[{index:'product_name',exact:name_filter.value}]};
+			set_my_value_json(price_data,price_filter);	
 			
-			var tax_data="<product_master>"+
-						"<tax></tax>"+
-						"<name exact='yes'>"+name_filter.value+"</name>"+
-						"</product_master>";
-			set_my_value(tax_data,tax_unit_filter);			
+			var tax_data={data_store:'product_master',return_column:'tax',
+                         indexes:[{index:'name',exact:name_filter.value}]};
+			set_my_value_json(tax_data,tax_unit_filter);			
 		});
 		
 		$(quantity_filter).add(price_filter).on('change blur',function(event)
@@ -309,6 +300,7 @@ function form270_add_item()
 		});
 
 		form270_get_totals();
+        $('#form270').formcontrol();
 	}
 	else
 	{
@@ -330,33 +322,27 @@ function form270_create_item(form)
 		var tax=form.elements[4].value;
 		var total=form.elements[5].value;
 		var data_id=form.elements[6].value;
-		var save_button=form.elements[7];
-		var del_button=form.elements[8];
+		var save_button=form.elements['save'];
+		var del_button=form.elements['delete'];
 		var last_updated=get_my_time();
 		var unit=$('#form270_unit_'+data_id).html();
-	
-		var data_xml="<supplier_bill_items>" +
-				"<id>"+data_id+"</id>" +
-				"<product_name>"+name+"</product_name>" +
-				"<batch>"+name+"</batch>" +
-				"<quantity>"+quantity+"</quantity>" +
-				"<unit>"+unit+"</unit>"+				
-				//"<total>"+total+"</total>" +
-				//"<tax>"+tax+"</tax>" +
-				"<amount>"+amount+"</amount>" +
-				"<unit_price>"+price+"</unit_price>" +
-				"<tax>"+tax+"</tax>" +
-				"<total>"+total+"</total>" +
-				"<bill_id>"+bill_id+"</bill_id>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</supplier_bill_items>";	
-	
-		create_simple(data_xml);
+	console.log(unit);
+		
+        var data_json={data_store:'supplier_bill_items',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'product_name',value:name},
+	 					{index:'quantity',value:quantity},
+                        {index:'unit',value:unit},
+                        {index:'unit_price',value:price},
+                        {index:'amount',value:amount},
+                        {index:'total',value:total},
+                        {index:'tax',value:tax},
+                        {index:'bill_id',value:bill_id},  
+	 					{index:'last_updated',value:last_updated}]};
+        console.log(data_json);
+		create_json(data_json);
 				
-		for(var i=0;i<5;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
+		$(form).readonly();
 		
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
@@ -373,10 +359,6 @@ function form270_create_item(form)
 }
 
 
-/**
- * @form Enter Purchase Bill (DLM)
- * @param button
- */
 function form270_create_form()
 {
 	if(is_create_access('form270'))
@@ -422,78 +404,72 @@ function form270_create_form()
 							"<td>Amount:<br>Tax:<br>Cartage: <br>Total: </td>" +
 							"<td>Rs. "+amount+"</br>" +
 							"Rs. "+tax+" <br>" +
-							"Rs. <input type='number' value='"+my_round(cartage,2)+"' step='any' id='form270_cartage' class='dblclick_editable'><br>" +
+							"Rs. <input type='number' placeholder='Cartage' value='"+my_round(cartage,2)+"' step='any' id='form270_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>" +
 							"Rs. "+total+"</td>" +
 							"<td></td>" +
 							"</tr>";
 					
 		$('#form270_foot').html(total_row);
-		longPressEditable($('.dblclick_editable'));
-
+		$('#form270_').formcontrol();
+		
 		var data_id=form.elements['bill_id'].value;
-		var save_button=form.elements['save'];
+		var save_button=document.getElementById('form270_save');
 		var last_updated=get_my_time();
 		
-		var data_xml="<supplier_bills>" +
-					"<id>"+data_id+"</id>" +
-					"<bill_id>"+bill_id+"</bill_id>" +
-					"<supplier>"+supplier+"</supplier>" +
-					"<bill_date>"+bill_date+"</bill_date>" +
-					"<total>"+total+"</total>" +
-					"<amount>"+amount+"</amount>" +
-					"<cartage>"+cartage+"</cartage>"+
-					"<tax>"+tax+"</tax>" +
-					"<transaction_id>"+data_id+"</transaction_id>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</supplier_bills>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>supplier_bills</tablename>" +
-					"<link_to>form53</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Purchase Bill # "+bill_id+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		var transaction_xml="<transactions>" +
-					"<id>"+data_id+"</id>" +
-					"<trans_date>"+get_my_time()+"</trans_date>" +
-					"<amount>"+total+"</amount>" +
-					"<receiver>master</receiver>" +
-					"<giver>"+supplier+"</giver>" +
-					"<tax>"+(-tax)+"</tax>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</transactions>";
-		var pt_tran_id=get_new_key();
-		var payment_xml="<payments>" +
-					"<id>"+pt_tran_id+"</id>" +
-					"<status>pending</status>" +
-					"<type>paid</type>" +
-					"<date>"+get_my_time()+"</date>" +
-					"<total_amount>"+total+"</total_amount>" +
-					"<paid_amount>0</paid_amount>" +
-					"<acc_name>"+supplier+"</acc_name>" +
-					"<due_date>"+get_debit_period()+"</due_date>" +
-					"<mode>"+get_payment_mode()+"</mode>" +
-					"<transaction_id>"+pt_tran_id+"</transaction_id>" +
-					"<source_id>"+data_id+"</source_id>" +
-                    "<source>purchase bill</source>" +
-					"<source_info>"+bill_id+"</source_info>"+
-				    "<last_updated>"+last_updated+"</last_updated>" +
-					"</payments>";
-		var pt_xml="<transactions>" +
-					"<id>"+pt_tran_id+"</id>" +
-					"<trans_date>"+get_my_time()+"</trans_date>" +
-					"<amount>"+total+"</amount>" +
-					"<receiver>"+supplier+"</receiver>" +
-					"<giver>master</giver>" +
-					"<tax>0</tax>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</transactions>";
+        var data_json={data_store:'supplier_bills',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'bill_id',value:bill_id},
+	 					{index:'supplier',value:supplier},
+                        {index:'bill_date',value:bill_date},
+                        {index:'amount',value:amount},
+                        {index:'total',value:total},
+                        {index:'tax',value:tax},
+                        {index:'cartage',value:cartage},
+                        {index:'transaction_id',value:data_id},  
+	 					{index:'last_updated',value:last_updated}],
+                    log:'yes',
+                    log_data:{title:'Saved',notes:'Purchase Bill #'+bill_id,link_to:'form53'}};
+ 		
+        var transaction_json={data_store:'transactions',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'trans_date',value:last_updated},
+	 					{index:'amount',value:total},
+                        {index:'receiver',value:'master'},
+                        {index:'giver',value:supplier},
+                        {index:'tax',value:(-tax)},
+                        {index:'last_updated',value:last_updated}]};
 
-		create_row(data_xml,activity_xml);
-		create_simple(transaction_xml);
-		create_simple(pt_xml);
-		create_simple_func(payment_xml,function()
+        var pt_tran_id=get_new_key();
+
+        var payment_json={data_store:'payments',
+	 				data:[{index:'id',value:pt_tran_id},
+	 					{index:'status',value:'pending'},
+	 					{index:'type',value:'paid'},
+                        {index:'date',value:last_updated},
+                        {index:'total_amount',value:total},
+                        {index:'paid_amount',value:0},
+                        {index:'acc_name',value:supplier},
+                        {index:'due_date',value:get_debit_period()},
+                        {index:'mode',value:get_payment_mode()},
+                        {index:'transaction_id',value:pt_tran_id},
+                        {index:'source_id',value:data_id},
+                        {index:'source',value:'purchase bill'},
+                        {index:'source_info',value:bill_id},
+                        {index:'last_updated',value:last_updated}]};
+
+        var pt_json={data_store:'transactions',
+	 				data:[{index:'id',value:pt_tran_id},
+	 					{index:'trans_date',value:last_updated},
+	 					{index:'amount',value:total},
+                        {index:'giver',value:'master'},
+                        {index:'receiver',value:supplier},
+                        {index:'tax',value:0},
+	 					{index:'last_updated',value:last_updated}]};
+                              
+		create_json(data_json);
+		create_json(transaction_json);
+		create_json(pt_json);
+		create_json(payment_json,function()
 		{
 			modal28_action(pt_tran_id);
 		});
@@ -558,80 +534,74 @@ function form270_update_form()
 							"<td>Amount:<br>Tax:<br>Cartage: <br>Total: </td>" +
 							"<td>Rs. "+amount+"</br>" +
 							"Rs. "+tax+" <br>" +
-							"Rs. <input type='number' value='"+my_round(cartage,2)+"' step='any' id='form270_cartage' class='dblclick_editable'><br>" +
+							"Rs. <input type='number' placeholder='Cartage' value='"+my_round(cartage,2)+"' step='any' id='form270_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>" +
 							"Rs. "+total+"</td>" +
 							"<td></td>" +
 							"</tr>";
 						
 		$('#form270_foot').html(total_row);
-		longPressEditable($('.dblclick_editable'));
-
+		$('#form270').formcontrol();
+        
 		var data_id=form.elements['bill_id'].value;
 		var last_updated=get_my_time();
-								
-		var data_xml="<supplier_bills>" +
-					"<id>"+data_id+"</id>" +
-					"<bill_id>"+bill_id+"</bill_id>" +
-					"<supplier>"+supplier+"</supplier>" +
-					"<bill_date>"+bill_date+"</bill_date>" +
-					"<total>"+total+"</total>" +
-					"<amount>"+amount+"</amount>" +
-					"<tax>"+tax+"</tax>" +
-					"<cartage>"+cartage+"</cartage>"+
-					"<transaction_id>"+data_id+"</transaction_id>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</supplier_bills>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>supplier_bills</tablename>" +
-					"<link_to>form53</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Purchase Bill # "+bill_id+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		var transaction_xml="<transactions>" +
-					"<id>"+data_id+"</id>" +
-					"<trans_date>"+get_my_time()+"</trans_date>" +
-					"<amount>"+total+"</amount>" +
-					"<receiver>master</receiver>" +
-					"<giver>"+supplier+"</giver>" +
-					"<tax>"+(-tax)+"</tax>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</transactions>";
-		update_row(data_xml,activity_xml);
-		update_simple(transaction_xml);
 		
-		var payment_data="<payments>" +
-				"<id></id>" +
-				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
-				"</payments>";
-		get_single_column_data(function(payments)
+        var data_json={data_store:'supplier_bills',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'bill_id',value:bill_id},
+	 					{index:'supplier',value:supplier},
+                        {index:'bill_date',value:bill_date},
+                        {index:'amount',value:amount},
+                        {index:'total',value:total},
+                        {index:'tax',value:tax},
+                        {index:'cartage',value:cartage},
+                        {index:'transaction_id',value:data_id},  
+	 					{index:'last_updated',value:last_updated}],
+                    log:'yes',
+                    log_data:{title:'Updated',notes:'Purchase Bill #'+bill_id,link_to:'form53'}};
+ 		
+        var transaction_json={data_store:'transactions',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'trans_date',value:last_updated},
+	 					{index:'amount',value:total},
+                        {index:'receiver',value:'master'},
+                        {index:'giver',value:supplier},
+                        {index:'tax',value:(-tax)},
+                        {index:'last_updated',value:last_updated}]};
+
+		update_json(data_json);
+		update_json(transaction_json);
+		
+		var payment_data={data_store:'payments',count:1,return_column:'id',indexes:[{index:'bill_id',exact:data_id}]};
+		read_json_single_column(payment_data,function(payments)
 		{
 			if(payments.length>0)
 			{
-				var payment_xml="<payments>" +
-							"<id>"+payments[0]+"</id>" +
-							"<type>paid</type>" +
-							"<total_amount>"+total+"</total_amount>" +
-							"<acc_name>"+supplier+"</acc_name>" +
-							"<transaction_id>"+payments[0]+"</transaction_id>" +
-							"<bill_id>"+data_id+"</bill_id>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</payments>";
-				var pt_xml="<transactions>" +
-							"<id>"+payments[0]+"</id>" +
-							"<amount>"+total+"</amount>" +
-							"<receiver>"+supplier+"</receiver>" +
-							"<giver>master</giver>" +
-							"<tax>0</tax>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</transactions>";
-				update_simple_func(payment_xml,function()
+                var payment_json={data_store:'payments',
+	 				data:[{index:'id',value:payments[0]},
+	 					{index:'type',value:'paid'},
+                        {index:'total_amount',value:total},
+                        {index:'acc_name',value:supplier},
+                        {index:'transaction_id',value:payments[0]},
+                        {index:'source_id',value:data_id},
+                        {index:'source',value:'purchase bill'},
+                        {index:'source_info',value:bill_id},
+                        {index:'last_updated',value:last_updated}]};
+
+                var pt_json={data_store:'transactions',
+	 				data:[{index:'id',value:payments[0]},
+	 					{index:'amount',value:total},
+                        {index:'giver',value:'master'},
+                        {index:'receiver',value:supplier},
+                        {index:'tax',value:0},
+	 					{index:'last_updated',value:last_updated}]};
+        
+                update_json(pt_json);
+                update_json(payment_json,function()
 				{
-					modal28_action(payments[y]);
+					modal28_action(payments[0]);
 				});
 			}
-		},payment_data);
+		});
 			
 		$("[id^='save_form270_']").click();
 	}
@@ -655,10 +625,9 @@ function form270_delete_item(button)
 			
 			var data_id=form.elements[6].value;
 			
-			var data_xml="<supplier_bill_items>" +
-						"<id>"+data_id+"</id>" +
-						"</supplier_bill_items>";	
-			delete_simple(data_xml);
+            var data_json={data_store:'supplier_bill_items',
+	 				data:[{index:'id',value:data_id}]};
+			delete_json(data_json);
 					
 			$(button).parent().parent().remove();
 		});
@@ -706,13 +675,13 @@ function form270_get_totals()
 						"<td>Amount:<br>Tax:<br>Cartage: <br>Total: </td>" +
 						"<td>Rs. "+amount+"</br>" +
 						"Rs. "+tax+" <br>" +
-						"Rs. <input type='number' value='"+my_round(cartage,2)+"' step='any' id='form270_cartage' class='dblclick_editable'><br>" +
+						"Rs. <input type='number' placeholder='Cartage' value='"+my_round(cartage,2)+"' step='any' id='form270_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>" +
 						"Rs. "+total+"</td>" +
 						"<td></td>" +
 						"</tr>";
 					
 	$('#form270_foot').html(total_row);
-	longPressEditable($('.dblclick_editable'));
+	$('#form270').formcontrol();
 }
     
 function form270_print_form()
@@ -724,14 +693,11 @@ function form270_print_form()
 	});	
 }
 
-/**
-* This function prepares the printing template for the documents like bills and purchase orders
-*/
 function print_form270(func)
 {
 	var form_id='form270';
-	////////////setting up containers///////////////////////	
-	var container=document.createElement('div');
+
+    var container=document.createElement('div');
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
 		var business_intro=document.createElement('div');
@@ -751,9 +717,9 @@ function print_form270(func)
 		logo.setAttribute('style','width:100%;text-align:center;font-weight:600;font-size:32px;line-height:40px;');
 		business_intro.setAttribute('style','width:100%;text-align:center');
 		business_contact.setAttribute('style','width:100%;text-align:left');
-	info_section.setAttribute('style','width:100%;min-height:80px');
-		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;');
-		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;');
+	info_section.setAttribute('style','width:100%;min-height:100px');
+		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:48%;height:100px;border: 1px solid #00f;border-radius:5px;');
+		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:48%;height:100px;border: 1px solid #00f;border-radius:5px;');
 	
 ///////////////getting the content////////////////////////////////////////
 
@@ -782,15 +748,15 @@ function print_form270(func)
 	
 	/////////////adding new table //////////////////////////////////////////////////////	
 	var new_table=document.createElement('table');
-	new_table.setAttribute('style','width:100%;font-size:11px;border:1px solid black;text-align:left;');
+	new_table.setAttribute('style','width:100%;font-size:13px;border:1px solid black;text-align:left;');
 	new_table.setAttribute('class','plain_table');
 	var table_header="<tr>"+
-				"<td style='border: 1px solid #000;text-align:left;width:10%;'>S.No.</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:8%;'>S.No.</td>"+
 				"<td style='border: 1px solid #000;text-align:left;width:25%;'>Item Name</td>"+
 				"<td style='border: 1px solid #000;text-align:left;width:15%'>Qty</td>"+
 				"<td style='border: 1px solid #000;text-align:left;width:15%'>Price</td>"+
 				"<td style='border: 1px solid #000;text-align:left;width:15%'>Tax</td>"+
-				"<td style='border: 1px solid #000;text-align:left;width:15%;font-size:1.2em;font-weight:bold'>Total(inc taxes)</td></tr>";
+				"<td style='border: 1px solid #000;text-align:left;width:17%;'>Total(inc taxes)</td></tr>";
 				
 	var table_rows=table_header;
 	var counter=0;
@@ -812,7 +778,7 @@ function print_form270(func)
 				"<td style='border: 1px solid #000;text-align:left;'>"+quantity+"</td>"+
 				"<td style='border: 1px solid #000;text-align:left;'>"+price+"</td>"+
 				"<td style='border: 1px solid #000;text-align:left;'>"+tax+"</td>"+
-				"<td style='border: 1px solid #000;text-align:left;font-size:1.2em;font-weight:bold;'>"+total+"</td></tr>";
+				"<td style='border: 1px solid #000;text-align:left;'>"+total+"</td></tr>";
 	});
 	
 	var row_count=$(table_element).find('tbody>tr').length;
@@ -825,12 +791,19 @@ function print_form270(func)
 	var table_foot=document.getElementById(form_id+'_foot');
 	var total_quantity=$(table_foot).find('tr>td:first')[0].innerHTML;
 	var total_text=$(table_foot).find('tr>td:nth-child(2)')[0].innerHTML;
-	var total_amount=$(table_foot).find('tr>td:nth-child(3)')[0].innerHTML;
+	var total_amount_elem=$(table_foot).find('tr>td:nth-child(3)')[0]
+    
+    $(total_amount_elem).find('input').each(function()
+    {
+        $(this).replaceWith($(this).val());
+    });
+    
+    var total_amount=total_amount_elem.innerHTML;
 	
 	var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
 				"<td colspan='2' style='border: 1px solid #000;text-align:left;'>"+total_quantity+"</td>"+
 				"<td colspan='2' style='border: 1px solid #000;text-align:left;'>"+total_text+"</td>"+
-				"<td colspan='2' style='border: 1px solid #000;text-align:left;font-size:1.2em;font-weight:bold;'>"+total_amount+"</td></tr>";
+				"<td colspan='2' style='border: 1px solid #000;text-align:left;'>"+total_amount+"</td></tr>";
 		
 	table_rows+=table_foot_row;
 	new_table.innerHTML=table_rows;
