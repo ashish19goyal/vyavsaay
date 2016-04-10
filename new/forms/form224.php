@@ -299,7 +299,7 @@
  			    var data2_json={data_store:'testing_results',
 	 				data:[{index:'test_id',value:test_id}]};
  			    var data3_json={data_store:'documents',
-	 				data:[{index:'test_id',value:data_id}]};
+	 				data:[{index:'target_id',value:data_id}]};
  			
                 delete_json(data_json);
                 delete_json(data2_json);

@@ -372,10 +372,6 @@
             }
         }
 
-        /**
-         * @form Store Movement
-         * @param button
-         */
         function form145_receive_item(button)
         {
             if(is_update_access('form145'))
@@ -384,6 +380,7 @@
                 var form=document.getElementById(form_id);
 
                 var product_name=form.elements[0].value;
+                var batch=form.elements[1].value;
                 var target=form.elements[4].value;
                 form.elements[5].value='received';
 
@@ -396,7 +393,15 @@
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Received',notes:'Product '+product_name+' at storage '+target,link_to:'form145'}};
  				
+                var util_json={data_store:'area_utilization',
+                        data:[{index:'id',value:data_id},
+                             {index:'item_name',value:product_name},
+                             {index:'batch',value:batch},
+                             {index:'name',value:target},
+                             {index:'last_updated',value:last_updated}]};
+
                 update_json(data_json);
+                create_json(util_json);
 
                 $(form).readonly();
                 $(button).hide();
@@ -407,10 +412,6 @@
             }
         }
 
-        /**
-         * @form Store Movement
-         * @param button
-         */
         function form145_cancel_item(button)
         {
             if(is_update_access('form145'))
