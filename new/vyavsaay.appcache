@@ -249,10 +249,10 @@ favicon.ico
 
 NETWORK:
 *
-http://otile1.mqcdn.com/tiles/
-http://otile2.mqcdn.com/tiles/
-http://otile3.mqcdn.com/tiles/
-http://otile4.mqcdn.com/tiles/
+#http://otile1.mqcdn.com/tiles/
+#http://otile2.mqcdn.com/tiles/
+#http://otile3.mqcdn.com/tiles/
+#http://otile4.mqcdn.com/tiles/
 
 #
 #optional section specifying fallback pages if a resource is inaccessible. 
