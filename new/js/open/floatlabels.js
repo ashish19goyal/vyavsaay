@@ -19,7 +19,9 @@
                 labelClass                      : '',
                 typeMatches                     : /text|password|email|number|search|url|tel/,
                 focusColor                      : '#838780',
-                blurColor                       : '#2996cc'
+                blurColor                       : '#555',
+                fontsize                        : '11px',
+                left                            : '0'
             };
         function Plugin ( element, options ) {
             this.$element       = $(element);
@@ -53,7 +55,7 @@
                 var floatingText        = thisElement.data('label');
                 var extraClasses        = thisElement.data('class');
                 if( !extraClasses ) { extraClasses = ''; }
-                if( !placeholderText || placeholderText === '' ) { placeholderText = "You forgot to add placeholder attribute!"; }
+                if( !placeholderText || placeholderText === '' ) { placeholderText = "No placeholder"; }
                 if( !floatingText || floatingText === '' ) { floatingText = placeholderText; }
                 this.inputPaddingTop    = parseFloat( thisElement.css('padding-top') ) + parseFloat(settings.paddingOffset);
                 thisElement.wrap('<div class="floatlabel-wrapper" style="position:relative"></div>');
@@ -62,13 +64,13 @@
                 this.$label.css({
                     'position'                      : 'absolute',
                     'top'                           : settings.labelStartTop,
-                    'left'                          : '0', //thisElement.css('padding-left'),
+                    'left'                          : settings.left, //thisElement.css('padding-left'),
                     'display'                       : 'none',
                     '-moz-opacity'                  : '0',
                     '-khtml-opacity'                : '0',
                     '-webkit-opacity'               : '0',
                     'opacity'                       : '0',
-                    'font-size'                     : '11px',
+                    'font-size'                     : settings.fontsize,
                     'font-weight'                   : 'bold',
                     'color'                         : self.settings.blurColor
                 });
@@ -91,16 +93,18 @@
                     var keyCode         = e.keyCode || e.which;
                     if( keyCode === 9 ) { return; }                
                 }
-                var thisElement  = this.$element, 
-                    currentFlout = thisElement.data('flout');
+                var thisElement  = this.$element;
+                var currentFlout = thisElement.data('flout');
                 if( thisElement.val() !== "" ) { thisElement.data('flout', '1'); }
                 if( thisElement.val() === "" ) { thisElement.data('flout', '0'); }
                 if( thisElement.data('flout') === '1' && currentFlout !== '1' ) 
                 {
+                   // console.log(currentFlout+"-"+thisElement.data('flout'));
                     this.showLabel();
                 }
                 if( thisElement.data('flout') === '0' && currentFlout !== '0' ) 
                 {
+                    //console.log(currentFlout+"-"+thisElement.data('flout'));
                     this.hideLabel();
                 }
             },
@@ -134,15 +138,18 @@
                     self.$element.css({ 'padding-top' : parseFloat( self.inputPaddingTop ) - parseFloat(this.settings.paddingOffset) });
                 }
                 self.$element.removeClass('active-floatlabel');
-                window.setTimeout(function() {
+                //window.setTimeout(function() {
                     self.$label.css({ 'display' : 'none' });
-                }, self.settings.transitionDuration * 1000);
+                //}, self.settings.transitionDuration * 1000);
             }
         };
         $.fn[ pluginName ] = function ( options ) {
             return this.each(function() {
                 if ( !$.data( this, "plugin_" + pluginName ) ) {
                     $.data( this, "plugin_" + pluginName, new Plugin( this, options ) );
+                }
+                else{
+                    $.data(this,'plugin_floatlabel').checkValue();
                 }
             });
         };

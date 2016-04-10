@@ -107,7 +107,7 @@
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Action'>";
                                 rowsHTML+="<input type='hidden' form='form269_"+result.id+"' value='"+result.id+"'>";
-                                rowsHTML+="<button type='button' class='delete_icon' form='form269_"+result.id+"' title='Delete Challan' onclick='form269_delete_item($(this));'><i class='fa fa-trash'></i></button>";
+                                rowsHTML+="<button type='button' class='btn red' form='form269_"+result.id+"' title='Delete Challan' onclick='form269_delete_item($(this));'><i class='fa fa-trash'></i></button>";
                             rowsHTML+="</td>";			
                     rowsHTML+="</tr>";
 

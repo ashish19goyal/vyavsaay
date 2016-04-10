@@ -1,45 +1,54 @@
-<div id='form284' class='tab-pane'>
-	<form id='form284_master' autocomplete="off">
-		<fieldset>
-			<label>Customer <img src='./images/add_image.png' class='add_image' id='form284_add_customer'><br>
-				<input type='text' required name='customer'></label>
-			<label>Type<br><input type='text' name='bill_type' required></label>
-			<label>Date<br><input type='text' name='date' required></label>
-			<br>
-			<label>Narration<br><textarea style='width:200px;' name='narration'></textarea></label>
-			<label>Invoice #<br><input type='text' name='bill_num' readonly="readonly"></label>
-			<label>	<input type='button' title='Save Bill' name='save' class='save_icon'></label>
-			<label>	<input type='button' title='Print Bill' class='print_icon' name='print' onclick='form284_print_form();'></label>
-			<label>	<input type='button' title='Share Bill' class='share_icon' name='share'></label>
-			<label>	<input type='submit' class='submit_hidden'>
-					<input type='hidden' name='customer_info'>
-					<input type='hidden' name='bill_id'>
-					<input type='hidden' name='cst'>
-					<input type='hidden' name='tin'>
-					<input type='hidden' name='email'>
-			</label>	
-		</fieldset>
-	</form>
-	<table class='rwd-table'>
-		<thead id='form284_head'>
-			<tr>
-				<form id='form284_header'></form>
-				<th style='width:50px'>S.No</th>
-				<th style='min-width:200px'>Item</th>
-				<th>Details</th>
-				<th>Quantity</th>
-				<th>Amount</th>
-				<th><input type='button' title='Add Item' class='add_icon' onclick='form284_add_item();'></th>
-			</tr>
-		</thead>
-		<tbody id='form284_body'>
-		</tbody>
-		<tfoot id='form284_foot'>
-		</tfoot>
-	</table>
-    
+<div id='form284' class='tab-pane portlet box green-meadow'>	   
+	<div class="portlet-title">
+		<div class='caption'>		
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form284_add_item();'>Add <i class='fa fa-plus'></i></a>
+            <a class='btn btn-circle grey btn-outline btn-sm' id='form284_save'>Save <i class='fa fa-save'></i></a>
+		</div>
+		<div class="actions">
+      	<a class='btn btn-default btn-sm' id='form284_print' onclick=form284_print_form();><i class='fa fa-print'></i> Print</a>
+      	<a class='btn btn-default btn-sm' id='form284_share'><i class='fa fa-envelope'></i> Mail</a>    
+      </div>
+	</div>
+	
+	<div class="portlet-body">
+        <form id='form284_master' autocomplete="off">
+            <fieldset>
+                <label><div class='btn-overlap'><input type='text' required name='customer' placeholder='Customer' class='floatlabel'><button type='button' title='Add new customer' class='btn btn-icon-only default right-overlap' id='form284_add_customer'><i class='fa fa-plus'></i></button></div></label>
+                <label><input type='text' required name='bill_type' class='floatlabel' placeholder='Type'></label>
+                <label><input type='text' name='date' required class='floatlabel' placeholder='Date'></label>
+                <label><textarea name='narration' class='floatlabel' placeholder='Narration'></textarea></label>
+                <label><input type='text' name='bill_num' readonly='readonly' required class='floatlabel' placeholder='Invoice #'></label>
+                <input type='hidden' name='bill_id'>                
+				<input type='hidden' name='customer_info'>
+				<input type='hidden' name='cst'>
+				<input type='hidden' name='tin'>
+				<input type='hidden' name='email'>
+			    <input type='submit' class='submit_hidden'>
+            </fieldset>
+        </form>
+        
+        <br>
+		
+        <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
+			<thead>
+				<tr style='color:#9a9a9a;'>
+                    <th>S.No.</th>
+					<th>Item</th>
+					<th>Details</th>
+                    <th>Quantity</th>
+					<th>Amount</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody id='form284_body'>
+			</tbody>
+            <tfoot id='form284_foot'>
+            </tfoot>
+		</table>
+    </div>
+	
     <script>
-    function form284_header_ini()
+function form284_header_ini()
 {
 	var fields=document.getElementById('form284_master');
 	
@@ -49,12 +58,12 @@
 	var narration=fields.elements['narration'];
 	var bill_num=fields.elements['bill_num'];
 	fields.elements['bill_id'].value=get_new_key();
-	var save_button=fields.elements['save'];
+	var save_button=document.getElementById('form284_save');
 	var cst_filter=fields.elements['cst'];
 	var tin_filter=fields.elements['tin'];
 	var customer_info=fields.elements['customer_info'];
 	var email_filter=fields.elements['email'];
-	var share_button=fields.elements['share'];
+	var share_button=document.getElementById('form284_share');
 
 	$(share_button).off('click');
 	
@@ -85,10 +94,8 @@
 		form284_add_item();
 	});
 	
-	var customers_data="<customers>" +
-		"<acc_name></acc_name>" +
-		"</customers>";
-	set_my_value_list(customers_data,customers_filter,function () 
+	var customers_data={data_store:'customers',return_column:'acc_name'};
+	set_my_value_list_json(customers_data,customers_filter,function () 
 	{
 		$(customers_filter).focus();
 	});
@@ -99,32 +106,24 @@
 	{
 		modal11_action(function()
 		{
-			var customers_data="<customers>" +
-				"<acc_name></acc_name>" +
-				"</customers>";			
-			set_my_value_list(customers_data,customers_filter);
+			set_my_value_list_json(customers_data,customers_filter);
 		});
 	});	
 
-	var type_data="<bill_types>" +
-		"<name></name>" +
-		"<status exact='yes'>active</status>" +
-		"</bill_types>";
-	set_my_value_list(type_data,bill_type);
+	var type_data={data_store:'bill_types',return_column:'name'};
+	set_my_value_list_json(type_data,bill_type);
 	
 	var bill_id=$("#form284_link").attr('data_id');
 	if(bill_id==null || bill_id=='')
 	{	
-		get_single_column_data(function (bill_types) 
+		read_json_single_column(type_data,function (bill_types) 
 		{
 			if(bill_types.length>0)
 			{
 				bill_type.value=bill_types[0];
-				var bill_num_data="<user_preferences count='1'>"+
-							"<value></value>"+
-							"<name exact='yes'>"+bill_type.value+"_bill_num</name>"+
-							"</user_preferences>";
-				get_single_column_data(function(nums)
+				var bill_num_data={data_store:'user_preferences',count:1,return_column:'value',
+                                  indexes:[{index:'name',exact:bill_type.value}]};
+				read_json_single_column(bill_num_data,function(nums)
 				{
 					if(nums.length>0)
 					{
@@ -134,47 +133,42 @@
 			}
 			else 
 			{
-				var bill_num_data="<user_preferences count='1'>"+
-							"<value></value>"+
-							"<name exact='yes'>bill_num</name>"+
-							"</user_preferences>";
-				get_single_column_data(function(nums)
+				var bill_num_data={data_store:'user_preferences',count:1,return_column:'value',
+                                  indexes:[{index:'name',exact:'bill_num'}]};
+				read_json_single_column(bill_num_data,function(nums)
 				{
 					if(nums.length>0)
 					{
 						bill_num.value=get_session_var('invoice_number_prefix')+"-"+nums[0];
 					}
-				},bill_num_data);
+				});
 			}
-		},type_data);
+		});
 	}
 
 	$(bill_type).off('blur');
 	$(bill_type).on('blur',function (e) 
 	{
-		var bill_num_data="<user_preferences count='1'>"+
-						"<value></value>"+
-						"<name exact='yes'>"+bill_type.value+"_bill_num</name>"+
-						"</user_preferences>";
-		get_single_column_data(function(nums)
+		var bill_num_data={data_store:'user_preferences',count:1,return_column:'value',
+                          indexes:[{index:'name',exact:bill_type.value}]};
+		read_json_single_column(bill_num_data,function(nums)
 		{
 			if(nums.length>0)
 			{
 				bill_num.value=get_session_var('invoice_number_prefix')+"-"+nums[0];
 			}
-		},bill_num_data);	
+		});	
 	});	
 	
 	$(customers_filter).off('blur');
 	$(customers_filter).on('blur',function(e)
 	{
-		var address_data="<customers>" +
-				"<address></address>" +
-				"<city></city>" +
-				"<email></email>"+	
-				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
-				"</customers>";
-		fetch_requested_data('',address_data,function(addresses)
+		var address_data={data_store:'customers',
+                         indexes:[{index:'address'},
+                                 {index:'city'},
+                                 {index:'email'},
+                                 {index:'acc_name',exact:customers_filter.value}]};
+		read_json_rows('',address_data,function(addresses)
 		{
 			if(addresses.length>0)
 			{
@@ -188,18 +182,17 @@
 			}
 		});
 		
-		var tin_data="<attributes>"+
-					"<value></value>"+
-					"<type exact='yes'>customer</type>"+
-					"<attribute exact='yes'>TIN</attribute>"+
-					"<name exact='yes'>"+customers_filter.value+"</name>"+
-					"</attributes>";
-		set_my_value(tin_data,tin_filter);
+		var tin_data={data_store:'attributes',return_column:'value',
+                     indexes:[{index:'type',exact:'customer'},
+                             {index:'attribute',exact:'TIN'},
+                             {index:'name',exact:customers_filter.value}]};
+		set_my_value_json(tin_data,tin_filter);
 	});
 
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
 	customers_filter.value='';
+    $('#form284').formcontrol();
 }
 
 function form284_ini()
@@ -214,44 +207,27 @@ function form284_ini()
 	if(bill_id!="")
 	{
 		show_loader();
-		var bill_columns="<bills>" +
-				"<id>"+bill_id+"</id>" +
-				"<bill_num></bill_num>"+
-				"<customer_name></customer_name>" +
-				"<total></total>" +
-				"<bill_date></bill_date>" +
-				"<amount></amount>" +
-				"<discount></discount>" +
-				"<cartage></cartage>"+
-				"<tax></tax>" +
-				"<tax_rate></tax_rate>"+
-				"<billing_type></billing_type>" +
-				"<tax_type></tax_type>"+
-				"<type></type>" +
-				"<storage></storage>"+
-				"<notes></notes>"+
-				"</bills>";
-		var bill_items_column="<bill_items>" +
-				"<id></id>" +
-				"<item_name></item_name>" +
-				"<item_desc></item_desc>"+
-				"<unit_price></unit_price>" +
-				"<quantity></quantity>" +
-				"<unit></unit>"+				
-				"<amount></amount>" +
-				"<total></total>" +
-				"<discount></discount>" +
-				"<type></type>" +
-				"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
-				"<tax></tax>" +
-				"<from_date></from_date>"+
-				"<to_date></to_date>"+
-				"</bill_items>";
-	
-		////separate fetch function to get bill details like customer name, total etc.
-		fetch_requested_data('',bill_columns,function(bill_results)
+        var filter_fields=document.getElementById('form284_master');
+			
+		var bill_columns={data_store:'bills',
+                         indexes:[{index:'id',exact:bill_id},
+                                 {index:'bill_num'},
+                                 {index:'customer_name'},
+                                 {index:'total'},
+                                 {index:'bill_date'},
+                                 {index:'amount'},
+                                 {index:'discount'},
+                                 {index:'cartage'},
+                                 {index:'tax'},
+                                 {index:'tax_rate'},
+                                 {index:'billing_type'},
+                                 {index:'tax_type'},
+                                 {index:'type'},
+                                 {index:'storage'},
+                                 {index:'notes'}]};"<bills>" +
+
+        read_json_rows('form284',bill_columns,function(bill_results)
 		{
-			var filter_fields=document.getElementById('form284_master');
 			if(bill_results.length>0)
 			{
 				filter_fields.elements['customer'].value=bill_results[0].customer_name;
@@ -260,7 +236,7 @@ function form284_ini()
 				filter_fields.elements['narration'].value=bill_results[0].notes;
 				filter_fields.elements['bill_num'].value=bill_results[0].bill_num;
 				filter_fields.elements['bill_id'].value=bill_id;				
-				var save_button=filter_fields.elements['save'];
+				var save_button=document.getElementById('form284_save');
 				var customer_info=filter_fields.elements['customer_info'];
 				filter_fields.elements['bill_type'].setAttribute('readonly','readonly');
 				var cst_filter=filter_fields.elements['cst'];
@@ -268,21 +244,18 @@ function form284_ini()
 
 				if(filter_fields.elements['bill_type'].value=='Retail' || filter_fields.elements['bill_type'].value=='Tax')
 				{
-					var tin_data="<attributes>"+
-								"<value></value>"+
-								"<type exact='yes'>customer</type>"+
-								"<attribute exact='yes'>TIN</attribute>"+
-								"<name exact='yes'>"+bill_results[0].customer_name+"</name>"+
-								"</attributes>";
-					set_my_value(tin_data,tin_filter);
+					var tin_data={data_store:'attributes',return_column:'value',
+                                 indexes:[{index:'type',exact:'customer'},
+                                         {index:'attribute',exact:'TIN'},
+                                         {index:'name',exact:bill_results[0].customer_name}]};
+					set_my_value_json(tin_data,tin_filter);
 				}
 								
-				var address_data="<customers>" +
-						"<address></address>" +
-						"<city></city>" +
-						"<acc_name exact='yes'>"+bill_results[0].customer_name+"</acc_name>" +
-						"</customers>";
-				fetch_requested_data('',address_data,function(addresses)
+				var address_data={data_store:'customers',
+                                 indexes:[{index:'address'},
+                                         {index:'city'},
+                                         {index:'acc_name',exact:bill_results[0].customer_name}]};
+				read_json_rows('',address_data,function(addresses)
 				{
 					var address_string="";
 					if(addresses.length>0)
@@ -300,66 +273,81 @@ function form284_ini()
 				});
 
 				var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
-							"<td>Amount:<br>Tax:@ <input type='number' value='"+bill_results[0].tax_rate+"' step='any' id='form284_tax' class='dblclick_editable'>%<br>Cartage: <br>Total: </td>" +
+							"<td>Amount:<br>Tax(%):@ <input type='number' value='"+bill_results[0].tax_rate+"' step='any' id='form284_tax' class='dblclick_editable' style='width: 60%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>Cartage: <br>Total: </td>" +
 							"<td>Rs. "+bill_results[0].amount+"</br>" +
 							"Rs. "+bill_results[0].tax+" <br>" +
-							"Rs. <input type='number' value='"+bill_results[0].cartage+"' step='any' id='form284_cartage' class='dblclick_editable'><br>" +
+							"Rs. <input type='number' value='"+bill_results[0].cartage+"' step='any' id='form284_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>" +
 							"Rs. <vtotal>"+bill_results[0].total+"</vtotal></td>" +
 							"<td></td>" +
 							"</tr>";
 				
 				$('#form284_foot').html(total_row);
-				longPressEditable($('.dblclick_editable'));
+				$('#form284').formcontrol();
 			}
-		
-			fetch_requested_data('',bill_items_column,function(results)
-			{
-				results.forEach(function(result)
-				{
-					var id=result.id;
-					var rowsHTML="<tr>";
-					rowsHTML+="<form id='form284_"+id+"'></form>";
-						rowsHTML+="<td data-th='S.No.'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Item'>";
-							rowsHTML+="<textarea readonly='readonly' form='form284_"+id+"'>"+result.item_name+"</textarea>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Details'>";
-							rowsHTML+="<textarea readonly='readonly' form='form284_"+id+"'>"+result.item_desc+"</textarea>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Quantity'>";
-							rowsHTML+="<input type='number' readonly='readonly' form='form284_"+id+"' value='"+result.quantity+"' step='any'> <b>"+result.unit+"</b>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Amount'>";
-								rowsHTML+="<b>Rate</b>:<input type='number' readonly='readonly' form='form284_"+id+"' value='"+result.unit_price+"'>";
-								rowsHTML+="<br><b>Amount</b>:<input type='number' readonly='readonly' form='form284_"+id+"' value='"+result.amount+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Action'>";
-							rowsHTML+="<input type='hidden' form='form284_"+id+"' value='"+id+"'>";
-							rowsHTML+="<input type='button' class='submit_hidden' form='form284_"+id+"' id='save_form284_"+id+"'>";
-							rowsHTML+="<input type='button' class='delete_icon' form='form284_"+id+"' id='delete_form284_"+id+"' onclick='form284_delete_item($(this)); form284_get_totals();'>";
-						rowsHTML+="</td>";			
-					rowsHTML+="</tr>";
-				
-					$('#form284_body').prepend(rowsHTML);	
-				});
+        });
+        
+		var bill_items_column={data_store:"bill_items",
+                              indexes:[{index:'id'},
+                                      {index:'item_name'},
+                                      {index:'item_desc'},
+                                      {index:'unit_price'},
+                                      {index:'quantity'},
+                                      {index:'unit'},
+                                      {index:'amount'},
+                                      {index:'total'},
+                                      {index:'discount'},
+                                      {index:'type'},
+                                      {index:'bill_id',exact:bill_id},
+                                      {index:'tax'},
+                                      {index:'from_date'},
+                                      {index:'to_date'}]};
+		read_json_rows('form284',bill_items_column,function(results)
+        {
+            results.forEach(function(result)
+            {
+                var id=result.id;
+                var rowsHTML="<tr>";
+                rowsHTML+="<form id='form284_"+id+"'></form>";
+                    rowsHTML+="<td data-th='S.No.'>";
+                    rowsHTML+="</td>";
+                    rowsHTML+="<td data-th='Item'>";
+                        rowsHTML+="<a onclick=\"show_object('product_master','"+result.item_name+"');\"><textarea readonly='readonly' form='form284_"+id+"'>"+result.item_name+"</textarea></a>";
+                    rowsHTML+="</td>";
+                    rowsHTML+="<td data-th='Details'>";
+                        rowsHTML+="<textarea readonly='readonly' form='form284_"+id+"'>"+result.item_desc+"</textarea>";
+                    rowsHTML+="</td>";
+                    rowsHTML+="<td data-th='Quantity'>";
+                        rowsHTML+="<input type='number' readonly='readonly' form='form284_"+id+"' value='"+result.quantity+"' step='any' placeholder='"+result.unit+"' class='floatlabel_right'>";
+                    rowsHTML+="</td>";
+                    rowsHTML+="<td data-th='Amount'>";
+                        rowsHTML+="<input type='number' placeholder='Rate' class='floatlabel' readonly='readonly' form='form284_"+id+"' value='"+result.unit_price+"'>";
+                        rowsHTML+="<input type='number' placeholder='Amount' class='floatlabel' readonly='readonly' form='form284_"+id+"' value='"+result.amount+"'>";
+                    rowsHTML+="</td>";
+                    rowsHTML+="<td data-th='Action'>";
+                        rowsHTML+="<input type='hidden' form='form284_"+id+"' value='"+id+"'>";
+                        rowsHTML+="<input type='button' class='submit_hidden' form='form284_"+id+"' id='save_form284_"+id+"'>";
+                        rowsHTML+="<button type='button' class='btn red' form='form284_"+id+"' id='delete_form284_"+id+"' onclick='form284_delete_item($(this)); form284_get_totals();' name='delete'><i class='fa fa-trash'></i></button>";
+                    rowsHTML+="</td>";			
+                rowsHTML+="</tr>";
 
-				form284_update_serial_numbers();
-				var bt=get_session_var('title');
-				var share_button=filter_fields.elements['share'];
-				$(share_button).show();
-				$(share_button).click(function()
-				{
-					modal101_action('Invoice from - '+bt,filter_fields.elements['customer'].value,'customer',function (func) 
-					{
-						print_form284(func);
-					});
-				});
-				
-				$('textarea').autosize();
-				hide_loader();
-			});
-		});
+                $('#form284_body').prepend(rowsHTML);	
+            });
+
+            form284_update_serial_numbers();
+            var bt=get_session_var('title');
+            var share_button=document.getElementById('form284_share');
+            $(share_button).show();
+            $(share_button).click(function()
+            {
+                modal101_action('Invoice from - '+bt,filter_fields.elements['customer'].value,'customer',function (func) 
+                {
+                    print_form284(func);
+                });
+            });
+
+            $('#form284').formcontrol();
+            hide_loader();
+        });
 	}
 }
     
@@ -377,43 +365,36 @@ function form284_add_item()
 			rowsHTML+="<td data-th='S.No.'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Item'>";
-				rowsHTML+="<input type='text' class='wideinput' required form='form284_"+id+"'>";
+				rowsHTML+="<input type='text' class='wideinput' placeholder='Item' required form='form284_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Details'>";
-				rowsHTML+="<textarea form='form284_"+id+"'></textarea>";
+				rowsHTML+="<textarea form='form284_"+id+"' placeholder='Details'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
-				rowsHTML+="<input type='number' min='0' required form='form284_"+id+"' step='any'> <b id='form284_unit_"+id+"'></b>";
+				rowsHTML+="<input type='number' min='0' required placeholder='Quantity' form='form284_"+id+"' step='any'> <b id='form284_unit_"+id+"'></b>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+="<b>Rate</b>:<input type='number' required form='form284_"+id+"' step='any'>";
-				rowsHTML+="<br><b>Amount</b>:<input type='number' required readonly='readonly' form='form284_"+id+"' step='any'>";
+				rowsHTML+="<input type='number' placeholder='Rate' class='floatlabel' required form='form284_"+id+"' step='any'>";
+				rowsHTML+="<input type='number' required placeholder='Amount' class='floatlabel' readonly='readonly' form='form284_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form284_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='button' class='submit_hidden' form='form284_"+id+"' id='save_form284_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form284_"+id+"' id='delete_form284_"+id+"' onclick='$(this).parent().parent().remove();form284_update_serial_numbers(); form284_get_totals();'>";
-				rowsHTML+="<input type='submit' class='submit_hidden' form='form284_"+id+"'>";
-				//rowsHTML+="<input type='hidden' form='form284_"+id+"' name='tax_unit'>";
+				rowsHTML+="<button type='button' class='btn red' form='form284_"+id+"' id='delete_form284_"+id+"' onclick='$(this).parent().parent().remove();form284_update_serial_numbers(); form284_get_totals();' name='delete'><i class='fa fa-trash'></i></button>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form284_"+id+"'>";				
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	
 		$('#form284_body').append(rowsHTML);
-		
-		longPressEditable($('.dblclick_editable'));
-		$('textarea').autosize();
-
+		    
 		var fields=document.getElementById("form284_"+id);
 		var name_filter=fields.elements[0];
 		var detail_filter=fields.elements[1];
 		var quantity_filter=fields.elements[2];
 		var price_filter=fields.elements[3];
 		var amount_filter=fields.elements[4];
-		//var tax_filter=fields.elements[5];
-		//var total_filter=fields.elements[6];
 		var id_filter=fields.elements[5];
 		var save_button=fields.elements[6];
-		//var tax_unit_filter=fields.elements[11];
 		
 		$(save_button).on("click", function(event)
 		{
@@ -427,55 +408,39 @@ function form284_add_item()
 			form284_add_item();
 		});
 		
-		var product_data="<product_master>" +
-				"<name></name>" +
-				"</product_master>";		
-		set_my_value_list_func(product_data,name_filter,function () 
+		var product_data={data_store:'product_master',return_column:'name'};
+		set_my_value_list_json(product_data,name_filter,function () 
 		{
 			$(name_filter).focus();
 		});
 
 		$(name_filter).on('blur',function(event)
 		{
-			var desc_data="<product_master>" +
-				"<description></description>"+
-				"<name exact='yes'>"+name_filter.value+"</name>" +
-				"</product_master>";		
-			set_my_value(desc_data,detail_filter);
-/*
-			var tax_data="<product_master>" +
-				"<tax></tax>"+
-				"<name exact='yes'>"+name_filter.value+"</name>" +
-				"</product_master>";		
-			set_my_value(tax_data,tax_unit_filter);
-	*/		
-			var unit_data="<attributes count='1'>"+
-						"<value></value>"+
-						"<attribute exact='yes'>Unit</attribute>"+
-						"<name exact='yes'>"+name_filter.value+"</name>"+
-						"</attributes>";
-			get_single_column_data(function(units)
+			var desc_data={data_store:'product_master',return_column:'description',
+                          indexes:[{index:'name',exact:name_filter.value}]};
+			set_my_value_json(desc_data,detail_filter);
+
+            var unit_data={data_store:'attributes',count:1,return_column:'value',
+                          indexes:[{index:'attribute',exact:'Unit'},
+                                  {index:'name',exact:name_filter.value}]};
+			read_json_single_column(unit_data,function(units)
 			{
 				if(units.length>0)
-					$('#form284_unit_'+id).html(units[0]);
-			},unit_data);			
+                {
+					quantity_filter.placeholder=units[0];
+                    $(quantity_filter).floatlabel_right();
+                }
+			});			
 		});
 
 		$(price_filter).add(quantity_filter).on('blur',function(event)
 		{
 			amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(price_filter.value)),2);
-			//tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
-			//total_filter.value=my_round((amount_filter.value+tax_filter.value),2);				
 		});
 
-/*
-		$(tax_filter).on('blur',function(event)
-		{
-			total_filter.value=my_round((amount_filter.value+tax_filter.value),2);				
-		});
-*/
 		form284_update_serial_numbers();
 		form284_get_totals();
+        $('#form284').formcontrol();
 	}
 	else
 	{
@@ -494,46 +459,39 @@ function form284_create_item(form)
 		var quantity=form.elements[2].value;
 		var price=form.elements[3].value;
 		var amount=form.elements[4].value;
-		//var tax=form.elements[5].value;
-		//var total=form.elements[6].value;
 		var data_id=form.elements[5].value;
 		var save_button=form.elements[6];
 		var del_button=form.elements[7];
 		
-		var unit=$('#form284_unit_'+data_id).html();
+		var unit=form.elements[2].placeholder;
 		var last_updated=get_my_time();
 		
-		var data_xml="<bill_items>" +
-				"<id>"+data_id+"</id>" +
-				"<item_name>"+name+"</item_name>" +
-				"<item_desc>"+details+"</item_desc>" +
-				"<batch>"+name+"</batch>" +
-				"<unit_price>"+price+"</unit_price>" +
-				"<quantity>"+quantity+"</quantity>" +
-				"<unit>"+unit+"</unit>"+				
-				"<amount>"+amount+"</amount>" +
-				//"<total>"+total+"</total>" +
-				//"<tax>"+tax+"</tax>" +
-				"<bill_id>"+bill_id+"</bill_id>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</bill_items>";
-		var adjust_xml="<inventory_adjust>" +
-				"<id>"+data_id+"</id>" +
-				"<product_name>"+name+"</product_name>" +
-				"<batch>"+name+"</batch>" +
-				"<quantity>"+quantity+"</quantity>" +
-				"<source>sale</source>" +
-				"<source_id>"+bill_id+"</source_id>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</inventory_adjust>";	
-	
-		create_simple(data_xml);
-		create_simple(adjust_xml);
+        var data_json={data_store:'bill_items',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'item_name',value:name},
+	 					{index:'item_desc',value:details},
+                        {index:'batch',value:name},
+	 					{index:'quantity',value:quantity},
+                        {index:'unit',value:unit},
+                        {index:'unit_price',value:price},
+                        {index:'amount',value:amount},
+                        {index:'bill_id',value:bill_id},  
+	 					{index:'last_updated',value:last_updated}]};
+        
+        var adjust_json={data_store:'inventory_adjust',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'product_name',value:name},
+	 					{index:'batch',value:name},
+	 					{index:'quantity',value:quantity},
+                        {index:'source',value:'sale'},
+                        {index:'source_id',value:bill_id},  
+	 					{index:'last_updated',value:last_updated}]};
+
+		create_json(data_json);
+		create_json(adjust_json);
 		
-		for(var i=0;i<5;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
+		$(form).readonly();
+		
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
@@ -548,11 +506,6 @@ function form284_create_item(form)
 	}
 }
 
-/**
- * @form Create Performa Invoice
- * @formNo 284
- * @param button
- */
 function form284_create_form()
 {
 	if(is_create_access('form284'))
@@ -564,7 +517,7 @@ function form284_create_form()
 		var bill_date=get_raw_time(form.elements['date'].value);
 		var narration=form.elements['narration'].value;		
 		var bill_num=form.elements['bill_num'].value;
-		var share_button=form.elements['share'].value;
+		var share_button=document.getElementById('form284_share');
 
 		var bt=get_session_var('title');
 		$(share_button).off('click');
@@ -599,106 +552,98 @@ function form284_create_form()
 		var total=my_round(amount+tax+cartage,0);
 	
 		var data_id=form.elements['bill_id'].value;
-		var save_button=form.elements['save'];
-		var last_updated=get_my_time();
+		var save_button=document.getElementById('form284_save');
+        var last_updated=get_my_time();
 		
-		var data_xml="<bills>" +
-					"<id>"+data_id+"</id>" +
-					"<bill_num>"+bill_num+"</bill_num>"+
-					"<customer_name>"+customer+"</customer_name>" +
-					"<bill_date>"+bill_date+"</bill_date>" +
-					"<amount>"+amount+"</amount>" +
-					"<total>"+total+"</total>" +
-					"<billing_type>"+bill_type+"</billing_type>" +
-					"<cartage>"+cartage+"</cartage>" +
-					"<tax>"+tax+"</tax>" +
-					"<tax_rate>"+tax_rate+"</tax_rate>"+
-					"<transaction_id>"+data_id+"</transaction_id>" +
-					"<notes>"+narration+"</notes>"+
-					"<performa>yes</performa>"+
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</bills>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>bills</tablename>" +
-					"<link_to>form283</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Invoice #"+bill_num+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		var transaction_xml="<transactions>" +
-					"<id>"+data_id+"</id>" +
-					"<trans_date>"+get_my_time()+"</trans_date>" +
-					"<amount>"+total+"</amount>" +
-					"<receiver>"+customer+"</receiver>" +
-					"<giver>master</giver>" +
-					"<tax>"+tax+"</tax>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</transactions>";
-		var pt_tran_id=get_new_key();
-		var payment_xml="<payments>" +
-					"<id>"+pt_tran_id+"</id>" +
-					"<status>pending</status>" +
-					"<type>received</type>" +
-					"<date>"+get_my_time()+"</date>" +
-					"<total_amount>"+total+"</total_amount>" +
-					"<paid_amount>"+total+"</paid_amount>" +
-					"<acc_name>"+customer+"</acc_name>" +
-					"<due_date>"+get_credit_period()+"</due_date>" +
-					"<mode>"+get_payment_mode()+"</mode>" +
-					"<transaction_id>"+pt_tran_id+"</transaction_id>" +
-					"<source_id>"+data_id+"</source_id>" +
-                    "<source>sale bill</source>" +
-					"<source_info>"+bill_num+"</source_info>"+
-				    "<last_updated>"+last_updated+"</last_updated>" +
-					"</payments>";
-		var pt_xml="<transactions>" +
-					"<id>"+pt_tran_id+"</id>" +
-					"<trans_date>"+get_my_time()+"</trans_date>" +
-					"<amount>"+total+"</amount>" +
-					"<receiver>master</receiver>" +
-					"<giver>"+customer+"</giver>" +
-					"<tax>0</tax>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</transactions>";
-		var num_data="<user_preferences>"+
-					"<id></id>"+						
-					"<name exact='yes'>"+bill_type+"_bill_num</name>"+												
-					"</user_preferences>";
-		get_single_column_data(function (bill_num_ids)
+        var data_json={data_store:'bills',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'bill_num',value:bill_num},
+	 					{index:'customer_name',value:customer},
+                        {index:'bill_date',value:bill_date},
+                        {index:'amount',value:amount},
+                        {index:'total',value:total},
+                        {index:'tax',value:tax},
+                        {index:'cartage',value:cartage},
+                        {index:'billing_type',value:bill_type},
+                        {index:'tax_rate',value:tax_rate},
+                        {index:'transaction_id',value:data_id},
+                        {index:'notes',value:narration},
+                        {index:'performa',value:'yes'},
+	 					{index:'last_updated',value:last_updated}],
+                    log:'yes',
+                    log_data:{title:'Saved',notes:'Invoice # '+bill_num,link_to:'form283'}};
+ 		
+        var transaction_json={data_store:'transactions',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'trans_date',value:last_updated},
+	 					{index:'amount',value:total},
+                        {index:'giver',value:'master'},
+                        {index:'receiver',value:customer},
+                        {index:'tax',value:tax},
+                        {index:'last_updated',value:last_updated}]};
+
+        var pt_tran_id=get_new_key();
+
+        var payment_json={data_store:'payments',
+	 				data:[{index:'id',value:pt_tran_id},
+	 					{index:'status',value:'pending'},
+	 					{index:'type',value:'received'},
+                        {index:'date',value:last_updated},
+                        {index:'total_amount',value:total},
+                        {index:'paid_amount',value:0},
+                        {index:'acc_name',value:customer},
+                        {index:'due_date',value:get_credit_period()},
+                        {index:'mode',value:get_payment_mode()},
+                        {index:'transaction_id',value:pt_tran_id},
+                        {index:'source_id',value:data_id},
+                        {index:'source',value:'sale bill'},
+                        {index:'source_info',value:bill_num},
+                        {index:'last_updated',value:last_updated}]};
+
+        var pt_json={data_store:'transactions',
+	 				data:[{index:'id',value:pt_tran_id},
+	 					{index:'trans_date',value:last_updated},
+	 					{index:'amount',value:total},
+                        {index:'receiver',value:'master'},
+                        {index:'giver',value:customer},
+                        {index:'tax',value:0},
+	 					{index:'last_updated',value:last_updated}]};
+                
+		var num_data={data_store:'user_preferences',return_column:'id',count:1,
+                     indexes:[{index:'name',exact:bill_type}]};
+		read_json_single_column(num_data,function (bill_num_ids)
 		{
 			if(bill_num_ids.length>0)
 			{
 				var bill_num_array=bill_num.split("-");
-				var num_xml="<user_preferences>"+
-							"<id>"+bill_num_ids[0]+"</id>"+
-							"<value>"+(parseInt(bill_num_array[1])+1)+"</value>"+
-							"<last_updated>"+last_updated+"</last_updated>"+
-							"</user_preferences>";
-				update_simple(num_xml);
+                var num_json={data_store:'user_preferences',
+	 				data:[{index:'id',value:bill_num_ids[0]},
+	 					{index:'value',value:(parseInt(bill_num_array[1])+1)},
+	 					{index:'last_updated',value:last_updated}]};        
+				update_json(num_json);
 			}
-		},num_data);
+		});
 
-		create_row(data_xml,activity_xml);
-		create_simple(transaction_xml);
-		create_simple(pt_xml);
-		create_simple_func(payment_xml,function()
+		create_json(data_json);
+		create_json(transaction_json);
+		create_json(pt_json);
+		create_json(payment_json,function()
 		{
 			//modal26_action(pt_tran_id);
 		});
 		
 		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
-					"<td>Amount:<br>Tax:@ <input type='number' value='"+tax_rate+"' step='any' readonly='readonly' id='form284_tax' class='dblclick_editable'>%<br>Cartage: <br>Total: </td>" +
+					"<td>Amount:<br>Tax(%):@ <input type='number' value='"+tax_rate+"' step='any' readonly='readonly' id='form284_tax' class='dblclick_editable' style='width: 60%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"Rs. "+tax+"<br>" +
-					"Rs. <input type='number' value='"+cartage+"' step='any' id='form284_cartage' readonly='readonly' class='dblclick_editable'></br>" +
+					"Rs. <input type='number' value='"+cartage+"' step='any' id='form284_cartage' readonly='readonly' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'></br>" +
 					"Rs. <vtotal>"+total+"</vtotal></td>" +
 					"<td></td>" +
 					"</tr>";
 		
 		$('#form284_foot').html(total_row);
-		longPressEditable($('.dblclick_editable'));
-
+		$('#form284').formcontrol();
+        
 		$(save_button).off('click');
 		$(save_button).on('click',function(event)
 		{
@@ -750,86 +695,75 @@ function form284_update_form()
 		var data_id=form.elements['bill_id'].value;
 		var last_updated=get_my_time();		
 		
-		var data_xml="<bills>" +
-					"<id>"+data_id+"</id>" +
-					"<customer_name>"+customer+"</customer_name>" +
-					"<bill_date>"+bill_date+"</bill_date>" +
-					"<amount>"+amount+"</amount>" +
-					"<total>"+total+"</total>" +
-					"<billing_type>"+bill_type+"</billing_type>" +
-					"<bill_num>"+bill_num+"</bill_num>" +
-					"<cartage>"+cartage+"</cartage>" +
-					"<tax>"+tax+"</tax>" +
-					"<tax_rate>"+tax_rate+"</tax_rate>"+
-					"<transaction_id>"+data_id+"</transaction_id>" +
-					"<notes>"+narration+"</notes>"+
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</bills>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>bills</tablename>" +
-					"<link_to>form283</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Invoice # "+bill_num+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		var transaction_xml="<transactions>" +
-					"<id>"+data_id+"</id>" +
-					"<trans_date>"+get_my_time()+"</trans_date>" +
-					"<amount>"+total+"</amount>" +
-					"<receiver>"+customer+"</receiver>" +
-					"<giver>master</giver>" +
-					"<tax>"+tax+"</tax>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</transactions>";
-		update_row(data_xml,activity_xml);
-		update_simple(transaction_xml);
+        var data_json={data_store:'bills',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'customer_name',value:customer},
+                        {index:'bill_date',value:bill_date},
+                        {index:'amount',value:amount},
+                        {index:'total',value:total},
+                        {index:'tax',value:tax},
+                        {index:'cartage',value:cartage},
+                        {index:'billing_type',value:bill_type},
+                        {index:'tax_rate',value:tax_rate},
+                        {index:'transaction_id',value:data_id},
+                        {index:'notes',value:narration},
+        				{index:'last_updated',value:last_updated}],
+                    log:'yes',
+                    log_data:{title:'Updated',notes:'Invoice # '+bill_num,link_to:'form283'}};
+ 		
+        var transaction_json={data_store:'transactions',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'trans_date',value:last_updated},
+	 					{index:'amount',value:total},
+                        {index:'giver',value:'master'},
+                        {index:'receiver',value:customer},
+                        {index:'tax',value:tax},
+                        {index:'last_updated',value:last_updated}]};
+
+        update_json(data_json);
+		update_json(transaction_json);
 		
 		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
-					"<td>Amount:<br>Tax:@ <input type='number' readonly='readonly' value='"+tax_rate+"' step='any' id='form284_tax' class='dblclick_editable'>% <br>Cartage: <br>Total: </td>" +
+					"<td>Amount:<br>Tax(%):@ <input type='number' readonly='readonly' value='"+tax_rate+"' step='any' id='form284_tax' class='dblclick_editable' style='width: 60%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"Rs. "+tax+" <br>" +
-					"Rs. <input type='number' value='"+cartage+"' readonly='readonly' step='any' id='form284_cartage' class='dblclick_editable'></br>" +
+					"Rs. <input type='number' value='"+cartage+"' readonly='readonly' step='any' id='form284_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'></br>" +
 					"Rs. <vtotal>"+total+"</vtotal></td>" +
 					"<td></td>" +
 					"</tr>";
 		
 		$('#form284_foot').html(total_row);
-		longPressEditable($('.dblclick_editable'));
-
-		var payment_data="<payments>" +
-				"<id></id>" +
-				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
-				"</payments>";
-		get_single_column_data(function(payments)
+		
+		var payment_data={data_store:'payments',return_column:'id',count:1,indexes:[{index:'bill_id',exact:data_id}]};
+		read_json_single_column(payment_data,function(payments)
 		{
-			for(var y in payments)
+			if(payments.length>0)
 			{
-				var payment_xml="<payments>" +
-							"<id>"+payments[y]+"</id>" +
-							"<type>received</type>" +
-							"<total_amount>"+total+"</total_amount>" +
-							"<acc_name>"+customer+"</acc_name>" +
-							"<transaction_id>"+payments[y]+"</transaction_id>" +
-							"<bill_id>"+data_id+"</bill_id>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</payments>";
-				var pt_xml="<transactions>" +
-							"<id>"+payments[y]+"</id>" +
-							"<amount>"+total+"</amount>" +
-							"<receiver>master</receiver>" +
-							"<giver>"+customer+"</giver>" +
-							"<tax>0</tax>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</transactions>";
-				update_simple_func(payment_xml,function()
+                var payment_json={data_store:'payments',
+	 				data:[{index:'id',value:payments[0]},
+	 					{index:'type',value:'received'},
+	 					{index:'total_amount',value:total},
+                        {index:'acc_name',value:customer},
+                        {index:'last_updated',value:last_updated}]};
+
+                var pt_json={data_store:'transactions',
+	 				data:[{index:'id',value:payments[0]},
+	 					{index:'trans_date',value:last_updated},
+	 					{index:'amount',value:total},
+                        {index:'receiver',value:'master'},
+                        {index:'giver',value:customer},
+                        {index:'tax',value:0},
+                        {index:'last_updated',value:last_updated}]};
+
+				update_json(payment_json,function()
 				{
 					//modal26_action(payments[y]);
-				});
-				break;
+				});				
+                update_json(pt_json);
 			}
-		},payment_data);
+		});
 	
+        $('#form284').formcontrol();
 		$("[id^='save_form284_']").click();
 	}
 	else
@@ -847,15 +781,14 @@ function form284_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			var data_id=form.elements[5].value;
-					
-			var data_xml="<bill_items>" +
-						"<id>"+data_id+"</id>" +
-						"</bill_items>";	
-			var adjust_xml="<inventory_adjust>" +
-						"<id>"+data_id+"</id>" +
-						"</inventory_adjust>";	
-			delete_simple(data_xml);
-			delete_simple(adjust_xml);
+				
+            var data_json={data_store:'bill_items',
+	 				data:[{index:'id',value:data_id}]};
+            var adjust_json={data_store:'inventory_adjust',
+	 				data:[{index:'id',value:data_id}]};
+
+			delete_json(data_json);
+			delete_json(adjust_json);
 					
 			$(button).parent().parent().remove();
 			form284_update_serial_numbers();
@@ -904,15 +837,15 @@ function form284_get_totals()
 	var total=my_round(amount+tax+cartage,0);
 	
 	var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
-				"<td>Amount:<br>Tax:@ <input type='number' value='"+tax_rate+"' step='any' id='form284_tax' class='dblclick_editable'>% <br>Cartage: <br>Total: </td>" +
+				"<td>Amount:<br>Tax(%):@ <input type='number' value='"+tax_rate+"' step='any' id='form284_tax' class='dblclick_editable' style='width: 60%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>Cartage: <br>Total: </td>" +
 				"<td>Rs. "+amount+"</br>" +
 				"Rs. "+tax+" <br>" +
-				"Rs. <input type='number' value='"+cartage+"' step='any' id='form284_cartage' class='dblclick_editable'></br>" +
+				"Rs. <input type='number' value='"+cartage+"' step='any' id='form284_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'></br>" +
 				"Rs. <vtotal>"+total+"</vtotal></td>" +
 				"<td></td>" +
 				"</tr>";
 	$('#form284_foot').html(total_row);
-	longPressEditable($('.dblclick_editable'));
+	$('#form284').formcontrol();
 }
         
 function form284_print_form()
@@ -924,9 +857,6 @@ function form284_print_form()
 	});	
 }
 
-/**
-* This function prepares the printing template for the documents like bills and purchase orders
-*/
 function print_form284(func)
 {
 	var form_id='form284';
@@ -953,9 +883,9 @@ function print_form284(func)
 	header.setAttribute('style','width:100%;text-align:center');
 		logo.setAttribute('style','width:100%;text-align:center;');
 	
-	info_section.setAttribute('style','width:100%;height:85px;font-size:11px;');
-		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;');
-		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;');
+	info_section.setAttribute('style','width:100%;height:100px;font-size:11px;');
+		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:48%;height:100px;border: 1px solid #00f;border-radius:5px;');
+		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:48%;height:100px;border: 1px solid #00f;border-radius:5px;');
 	
 	footer.setAttribute('style','width:98%;min-height:100px;');
 		signature.setAttribute('style','width:98%;min-height:50px;font-size:11px;');
@@ -1004,7 +934,7 @@ function print_form284(func)
 				"<td style='border: 1px solid #000;text-align:left;width:8%;'>S.No.</td>"+
 				"<td style='border: 1px solid #000;text-align:left;width:25%;'>Item Name</td>"+
 				"<td style='border: 1px solid #000;text-align:left;width:25%'>Details</td>"+
-				"<td style='border: 1px solid #000;text-align:left;width:13%'>Quantity</td>"+
+				"<td style='border: 1px solid #000;text-align:left;width:15%'>Quantity</td>"+
 				"<td style='border: 1px solid #000;text-align:left;width:13%'>Rate</td>"+
 				"<td style='border: 1px solid #000;text-align:left;width:13%'>Amount</td></tr>";
 
@@ -1020,12 +950,13 @@ function print_form284(func)
 		var quantity=""+form.elements[2].value;
 		var rate=form.elements[3].value;
 		var amount=form.elements[4].value;
+		var unit=form.elements[2].placeholder;
 		
 		table_rows+="<tr>"+
 				"<td style='border: 1px solid #000;text-align:left;'>"+counter+"</td>"+
 				"<td style='border: 1px solid #000;text-align:left;'>"+item_name+"</td>"+
 				"<td style='border: 1px solid #000;text-align:left;'>"+details+"</td>"+
-				"<td style='border: 1px solid #000;text-align:left;'>"+quantity+"</td>"+
+				"<td style='border: 1px solid #000;text-align:left;'>"+quantity+" "+unit+"</td>"+
 				"<td style='border: 1px solid #000;text-align:left;'>"+rate+"</td>"+
 				"<td style='border: 1px solid #000;text-align:left;'>"+amount+"</td></tr>";
 	});
@@ -1039,7 +970,7 @@ function print_form284(func)
 
 	var table_foot=document.getElementById(form_id+'_foot');
 	var total_quantity=$(table_foot).find('tr>td:first')[0].innerHTML;
-	
+
 	var total_text_element=$(table_foot).find('tr>td:nth-child(2)');
 	var total_amount_element=$(table_foot).find('tr>td:nth-child(3)');
 	

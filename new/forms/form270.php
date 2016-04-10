@@ -6,7 +6,6 @@
 		</div>
 		<div class="actions">
       	<a class='btn btn-default btn-sm' id='form270_print' onclick=form270_print_form();><i class='fa fa-print'></i> Print</a>
-        <a class='btn btn-default btn-sm' id='form270_share'><i class='fa fa-envelope'></i> Email</a>    
       </div>
 	</div>
 	
@@ -176,7 +175,7 @@ function form270_ini()
 							rowsHTML+="<a onclick=\"show_object('product_master','"+result.product_name+"');\"><textarea readonly='readonly' form='form270_"+id+"'>"+result.product_name+"</textarea></a>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Quantity'>";
-							rowsHTML+="<input type='number' placeholder='Quantity' readonly='readonly' form='form270_"+id+"' value='"+result.quantity+"' step='any'><b>"+result.unit+"</b>";
+							rowsHTML+="<input type='number' placeholder='"+result.unit+"' class='floatlabel_right' readonly='readonly' form='form270_"+id+"' value='"+result.quantity+"' step='any'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Rate'>";
 							rowsHTML+="<input type='number' placeholder='Price' readonly='readonly' form='form270_"+id+"' value='"+result.unit_price+"' step='any'>";
@@ -217,7 +216,7 @@ function form270_add_item()
 				rowsHTML+="<input type='text' class='wideinput' required form='form270_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
-				rowsHTML+="<input type='number' step='any' placeholder='Quantity' required form='form270_"+id+"'> <b id='form270_unit_"+id+"'></b>";
+				rowsHTML+="<input type='number' step='any' placeholder='Quantity' required form='form270_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Rate'>";
 				rowsHTML+="<input type='number' placeholder='Price' form='form270_"+id+"' step='any'>";
@@ -275,7 +274,10 @@ function form270_add_item()
 			read_json_single_column(unit_data,function(units)
 			{
 				if(units.length>0)
-					$('#form270_unit_'+id).html(units[0]);
+                {
+                    quantity_filter.placeholder=units[0];
+                    $(quantity_filter).floatlabel_right();
+                }
 			});			
 							
 			var price_data={data_store:'supplier_bill_items',return_column:'unit_price',
@@ -325,8 +327,7 @@ function form270_create_item(form)
 		var save_button=form.elements['save'];
 		var del_button=form.elements['delete'];
 		var last_updated=get_my_time();
-		var unit=$('#form270_unit_'+data_id).html();
-	console.log(unit);
+		var unit=form.elements[1].placeholder;
 		
         var data_json={data_store:'supplier_bill_items',
 	 				data:[{index:'id',value:data_id},
@@ -339,8 +340,7 @@ function form270_create_item(form)
                         {index:'tax',value:tax},
                         {index:'bill_id',value:bill_id},  
 	 					{index:'last_updated',value:last_updated}]};
-        console.log(data_json);
-		create_json(data_json);
+        create_json(data_json);
 				
 		$(form).readonly();
 		
@@ -713,7 +713,7 @@ function print_form270(func)
 
 ////////////setting styles for containers/////////////////////////
 
-	header.setAttribute('style','width:100%;min-height:100px;text-align:center');
+	header.setAttribute('style','width:100%;min-height:60px;text-align:center');
 		logo.setAttribute('style','width:100%;text-align:center;font-weight:600;font-size:32px;line-height:40px;');
 		business_intro.setAttribute('style','width:100%;text-align:center');
 		business_contact.setAttribute('style','width:100%;text-align:left');
@@ -737,7 +737,7 @@ function print_form270(func)
 	////////////////filling in the content into the containers//////////////////////////
 
 	logo.innerHTML=bt;
-	business_contact.innerHTML="<hr style='border: 1px solid #00f;'>Billing Address: "+business_address+"<br>Contact Nos.: "+business_phone+"<br>E-Mail: "+business_email;
+	business_contact.innerHTML="<hr style='border: 1px solid #00f;'>Billing Address: "+business_address+"<br>Contact Nos.: "+business_phone+"<br>E-Mail: "+business_email+"<hr style='border: 1px solid #00f;'>";
 	
 	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Purchase Bill #: "+bill_no+"</b></div><hr style='border: 1px solid #00f;'>";
 	
@@ -771,11 +771,11 @@ function print_form270(func)
 		var amount=form.elements[3].value;
 		var tax=form.elements[4].value;
 		var total=form.elements[5].value;
-		
+		var unit=form.elements[1].placeholder;
 		table_rows+="<tr>"+
 				"<td style='border: 1px solid #000;text-align:left;'>"+counter+"</td>"+
 				"<td style='border: 1px solid #000;text-align:left;'>"+item_name+"</td>"+
-				"<td style='border: 1px solid #000;text-align:left;'>"+quantity+"</td>"+
+				"<td style='border: 1px solid #000;text-align:left;'>"+quantity+" "+unit+"</td>"+
 				"<td style='border: 1px solid #000;text-align:left;'>"+price+"</td>"+
 				"<td style='border: 1px solid #000;text-align:left;'>"+tax+"</td>"+
 				"<td style='border: 1px solid #000;text-align:left;'>"+total+"</td></tr>";
@@ -815,9 +815,9 @@ function print_form270(func)
 	container.appendChild(info_section);
 	
 	container.appendChild(new_table);
-	
+	container.appendChild(business_contact);
+    
 	header.appendChild(logo);
-	header.appendChild(business_contact);
 	
 	info_section.appendChild(customer_info);
 	info_section.appendChild(business_info);

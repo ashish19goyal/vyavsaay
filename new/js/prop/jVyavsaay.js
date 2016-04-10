@@ -10,11 +10,10 @@
 		return this.each(function() 
 		{
 			$(this).find('.floatlabel').floatlabel();
-			$(this).find('.floatlabel').trigger('change');
+			$(this).find('.floatlabel_right').floatlabel_right();
 			$(this).find('textarea').autosize();
 			$(this).find("form").attr('autocomplete', 'off');
 			$(this).find('.dblclick_editable').longpresseditable();
-			//$(this).find('.vobject_image').roundImage();
       });
 	};
 }(jQuery));
@@ -122,5 +121,26 @@
 				}
 			}
       });
+	};
+}(jQuery));
+
+(function ($) {
+	$.fn.floatlabel_right=function(options)
+	{
+		var defaults={labelStartTop:'30%',
+                    labelEndTop:'30%',
+                    fontsize:'inherit',
+                    left: '50%'};
+		var settings = $.extend(defaults, options || {});
+	
+		if (this.data('plugin_floatlabel'))
+		{
+			return;
+		}
+		else 
+		{
+			this.floatlabel(settings);
+			return;
+		}
 	};
 }(jQuery));

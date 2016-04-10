@@ -1,113 +1,116 @@
-<div id='form258' class='function_detail'>
-	<form id='form258_master' autocomplete="off">
-		<fieldset>
-			<label>Customer<br><input type='text' required name='customer'></label>
-			<label>Quotation #<br><input type='text' readonly="readonly" required name='quot_num'></label>
-			<label>Type<br><input type='text' name='type'></label>
-			<br><label>Date<br><input type='text' name='date'></label>
-			<label>Valid Upto<br><input type='text' name='valid'></label>
-			<label>Issued By<br><input type='text' name='issued'></label>
-			<br>
-			<label>Status<br><input type='text' name='status'></label>
-			<label>Computer Generated<br><input type='checkbox' name='computer_generated'></label>
-			<label>
-				<input type='hidden' name='id'>
-				<input type='hidden' name='address'>	
-				<input type='hidden' name='email'>	
-			</label>
-			<label>	<input type='button' title='Save' class='save_icon' name='save'></label>
-			<label>	<input type='button' title='Print' class='print_icon' onclick='form258_print_form();'></label>
-			<label>	<input type='button' title='Email' class='share_icon' name='share'></label>
-			<label>	<input type='submit' class='submit_hidden'></label>
-		</fieldset>
-	</form>
-
-	<br>
-	<b>Items</b>
-	<table class='rwd-table'>
-		<thead>
-			<tr>
-				<form id='form258_item_header'></form>
-					<th style='width:50px;'>S.No.</th>
+<div id='form258' class='tab-pane portlet box green-meadow'>	   
+	<div class="portlet-title">
+		<div class='caption'>		
+		    <a class='btn btn-circle grey btn-outline btn-sm' id='form258_save'>Save <i class='fa fa-save'></i></a>
+		</div>
+		<div class="actions">
+      	<a class='btn btn-default btn-sm' id='form258_print' onclick=form258_print_form();><i class='fa fa-print'></i> Print</a>
+        <a class='btn btn-default btn-sm' id='form258_share'><i class='fa fa-envelope'></i> Email</a>    
+      </div>
+	</div>
+	
+	<div class="portlet-body">
+        <form id='form258_master' autocomplete="off">
+            <fieldset>
+                <label><div class='btn-overlap'><input type='text' required name='customer' placeholder='Customer' class='floatlabel'><button type='button' title='Add new customer' class='btn btn-icon-only default right-overlap' id='form258_add_customer'><i class='fa fa-plus'></i></button></div></label>
+                <label><input type='text' required readonly="readonly" name='quot_num' class='floatlabel' placeholder='Quotation #'></label>
+                <label><input type='text' name='type' class='floatlabel' placeholder='Type' required></label>
+                <label><input type='text' name='date' required class='floatlabel' placeholder='Date'></label>
+                <label><input type='text' name='valid' class='floatlabel' placeholder='Valid Upto'></label>
+                <label><input type='text' name='issued' class='floatlabel' placeholder='Issued By'></label>
+                <label><input type='text' name='status' class='floatlabel' placeholder='Status'></label>
+                <label style='vertical-align:top;'>Computer Generated<br><input type='checkbox' name='computer_generated'></label>
+			     <input type='hidden' name='id'>
+                <input type='hidden' name='address'>
+                <input type='hidden' name='email'>
+                <input type='submit' class='submit_hidden'>
+            </fieldset>
+        </form>
+        
+        <br>
+		
+       <b>Items</b>	
+	   <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
+			<thead>
+				<tr style='color:#9a9a9a;'>
+                    <th>S.No.</th>
 					<th>Item</th>
 					<th>Details</th>
-					<th>Quantity </th>
-					<th>Rate </th>
-					<th>Amount </th>
-					<th><input type='button' class='add_icon' form='form258_item_header' title='Add Item' onclick='form258_add_item();'></th>
-			</tr>
-		</thead>
-		<tbody id='form258_item_body'>
-		</tbody>
-		<tfoot id='form258_item_foot'>
-		</tfoot>
-	</table>
-	
-	<br>
-	<b>Spare Parts</b>	
-	<table class='rwd-table'>
-		<thead>
-			<tr>
-				<form id='form258_spare_header'></form>
-					<th style='width:50px;'>S.No.</th>
+					<th>Quantity</th>
+                    <th>Rate</th>
+                    <th>Amount</th>
+					<th><a class='btn btn-circle grey btn-outline btn-sm' onclick='form258_add_item();'>Add <i class='fa fa-add'></i></a></th>
+				</tr>
+			</thead>
+			<tbody id='form258_item_body'>
+			</tbody>
+            <tfoot id='form258_item_foot'>
+            </tfoot>
+		</table>
+        
+        <br>
+        <b>Spare Parts</b>
+        <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
+			<thead>
+				<tr style='color:#9a9a9a;'>
+                    <th>S.No.</th>
 					<th>Part Name</th>
 					<th>Description</th>
 					<th>Quantity</th>
-					<th><input type='button' class='add_icon' form='form258_spare_header' title='Add' onclick='form258_add_spare();'></th>
-			</tr>
-		</thead>
-		<tbody id='form258_spare_body'>
-		</tbody>
-	</table>
-
-	<br>
-	<b>Detailed Specifications <input type='checkbox' id='checkbox_form258_spec'></b>
-	<table class='rwd-table'>
-		<thead>
-			<tr>
-				<form id='form258_spec_header'></form>
-					<th style='width:50px;'>S.No.</th>
+                    <th><a class='btn btn-circle grey btn-outline btn-sm' onclick='form258_add_spare();'>Add <i class='fa fa-add'></i></a></th>
+				</tr>
+			</thead>
+			<tbody id='form258_spare_body'>
+			</tbody>
+       </table>
+        
+        <br>
+        <b>Detailed Specifications <input style='float:left;' type='checkbox' id='checkbox_form258_spec'></b>
+        <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
+			<thead>
+				<tr style='color:#9a9a9a;'>
+                    <th>S.No.</th>
 					<th>Type</th>
 					<th>Specification</th>
-					<th><input type='button' class='add_icon' form='form258_spec_header' title='Add Specification' onclick='form258_add_spec();'></th>			
-			</tr>
-		</thead>
-		<tbody id='form258_spec_body'>
-		</tbody>
-	</table>
-
-	<br>
-	<b>Bank Accounts</b>	
-	<table class='rwd-table'>
-		<thead>
-			<tr>
-				<form id='form258_bank_header'></form>
-					<th style='width:50px;'>S.No.</th>
+					<th><a class='btn btn-circle grey btn-outline btn-sm' onclick='form258_add_spec();'>Add <i class='fa fa-add'></i></a></th>
+				</tr>
+			</thead>
+			<tbody id='form258_spec_body'>
+			</tbody>
+       </table>
+        
+        <br>
+        <b>Bank Accounts</b>
+        <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
+			<thead>
+				<tr style='color:#9a9a9a;'>
+                    <th>S.No.</th>
 					<th>Name</th>
 					<th>Bank</th>
 					<th>Account</th>
-					<th><input type='button' class='add_icon' form='form258_bank_header' title='Add' onclick='form258_add_bank();'></th>
-			</tr>
-		</thead>
-		<tbody id='form258_bank_body'>
-		</tbody>
-	</table>
-
-	<br>
-	<b>Terms & Conditions</b>	
-	<table class='rwd-table'>
-		<thead>
-			<tr>
-				<form id='form258_tc_header'></form>
-					<th style='width:50px;'>S.No.</th>
+                    <th><a class='btn btn-circle grey btn-outline btn-sm' onclick='form258_add_bank();'>Add <i class='fa fa-add'></i></a></th>
+				</tr>
+			</thead>
+			<tbody id='form258_bank_body'>
+			</tbody>
+       </table>
+        
+        <br>
+        <b>Terms & Conditions</b>
+        <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
+			<thead>
+				<tr style='color:#9a9a9a;'>
+                    <th>S.No.</th>
 					<th>Type</th>
 					<th>T & C</th>
-					<th><input type='button' class='add_icon' form='form258_tc_header' title='Add' onclick='form258_add_tc();'></th>
-			</tr>
-		</thead>
-		<tbody id='form258_tc_body'>
-		</tbody>
-	</table>
+					<th><a class='btn btn-circle grey btn-outline btn-sm' onclick='form258_add_tc();'>Add <i class='fa fa-add'></i></a></th>
+				</tr>
+			</thead>
+			<tbody id='form258_tc_body'>
+			</tbody>
+       </table>
+        
+    </div>
 
     <script>
         function form258_header_ini()
@@ -119,21 +122,19 @@
             var quot_num=fields.elements['quot_num'];
             var date_filter=fields.elements['date'];
             var valid_filter=fields.elements['valid'];
-            //var tax_filter=fields.elements['tax'];
             var status_filter=fields.elements['status'];
             var issued_filter=fields.elements['issued'];
             var address_filter=fields.elements['address'];
             var email_filter=fields.elements['email'];
             var id_filter=fields.elements['id'];
-            var save_button=fields.elements['save'];
-            var share_button=fields.elements['share'];
-
+            var save_button=document.getElementById('form258_save');
+            var share_button=document.getElementById('form258_share');
+            
             $(share_button).off('click');
 
             id_filter.value=get_new_key();
             customer_filter.value='';
             quot_num.value="";
-            //tax_filter.value='';
             status_filter.value='draft';
             type_filter.value='';
             issued_filter.value='';
@@ -144,25 +145,22 @@
             date_filter.value=get_my_date();
             valid_filter.value="";
 
-            set_static_value_list('quotation','type',type_filter);
-            set_static_value_list('quotation','status',status_filter);
+            set_static_value_list_json('quotation','type',type_filter);
+            set_static_value_list_json('quotation','status',status_filter);
 
-            var staff_data="<staff>"+
-                            "<acc_name></acc_name>"+
-                            "</staff>";
-            set_my_value_list(staff_data,issued_filter);
+            var staff_data={data_store:'staff',return_column:'acc_name'};
+            set_my_value_list_json(staff_data,issued_filter);
 
             $(customer_filter).off('blur');
             $(customer_filter).on('blur',function () 
             {
-                var address_data="<customers>"+
-                                "<address></address>"+
-                                "<city></city>"+
-                                "<pincode></pincode>"+
-                                "<email></email>"+
-                                "<acc_name exact='yes'>"+customer_filter.value+"</acc_name>"+
-                                "</customers>";
-                fetch_requested_data('',address_data,function (addresses) 
+                var address_data={data_store:'customers',
+                                 indexes:[{index:'address'},
+                                         {index:'city'},
+                                         {index:'pincode'},
+                                         {index:'email'},
+                                         {index:'acc_name',exact:customer_filter.value}]};
+                read_json_rows('',address_data,function (addresses) 
                 {
                     if(addresses.length>0)
                     {
@@ -180,11 +178,9 @@
             var quot_id=$("#form258_link").attr('data_id');
             if(quot_id==null || quot_id=="")
             {		
-                var quot_num_data="<user_preferences count='1'>"+
-                        "<value></value>"+
-                        "<name exact='yes'>quotation_num</name>"+
-                        "</user_preferences>";
-                set_my_value(quot_num_data,quot_num,function()
+                var quot_num_data={data_store:'user_preferences',count:1,return_column:'value',
+                                  indexes:[{index:'name',exact:'quotation_num'}]};
+                set_my_value_json(quot_num_data,quot_num,function()
                 {
                     quot_num.value=get_session_var('quot_num_prefix')+"-"+quot_num.value;
                 });
@@ -212,11 +208,8 @@
                 form258_add_item();
             });
 
-            var customers_data="<customers>" +
-                "<acc_name></acc_name>" +
-                "</customers>";
-
-            set_my_value_list(customers_data,customer_filter,function () 
+            var customers_data={data_store:'customers',return_column:'acc_name'};
+            set_my_value_list_json(customers_data,customer_filter,function () 
             {
                 $(customer_filter).focus();
             });
@@ -227,10 +220,7 @@
             {
                 modal11_action(function()
                 {	
-                    var customer_data="<customer>" +
-                        "<acc_name></acc_name>" +
-                        "</customer>";			
-                    set_my_value_list(customer_data,customer_filter);
+                    set_my_value_list_json(customers_data,customer_filter);
                 });
             });
 
@@ -289,7 +279,7 @@
                     rowsHTML+="<td data-th='Action'>";
                         rowsHTML+="<input type='hidden' form='form258_tc_"+id+"' value='"+id+"'>";
                         rowsHTML+="<input type='button' class='submit_hidden' form='form258_tc_"+id+"' id='save_form258_tc_"+id+"' >";
-                        rowsHTML+="<input type='button' class='delete_icon' form='form258_tc_"+id+"' id='delete_form258_tc_"+id+"' onclick='$(this).parent().parent().remove(); form258_get_totals();'>";
+                        rowsHTML+="<button type='button' class='btn red' form='form258_tc_"+id+"' id='delete_form258_tc_"+id+"' onclick='$(this).parent().parent().remove(); form258_get_totals();'><i class='fa fa-trash'></i></button>";
                     rowsHTML+="</td>";
                 rowsHTML+="</tr>";
             });
@@ -303,23 +293,22 @@
             {
                 if(spec_checkbox.checked)
                 {
-                    var name_string="--";
+                    var name_string=[];
 
                     $("[id^='save_form258_item_']").each(function(index)
                     {
                         var subform_id=$(this).attr('form');
                         var subform=document.getElementById(subform_id);
 
-                        name_string+=subform.elements[0].value+"--";
+                        name_string.push(subform.elements[0].value);
                     });
 
-                    var attributes_data="<attributes>"+
-                                        "<id></id>"+
-                                        "<value></value>"+
-                                        "<name array='yes'>"+name_string+"</name>"+
-                                        "<attribute exact='yes'>Specification</attribute>"+
-                                        "</attributes>";
-                    fetch_requested_data('',attributes_data,function (attributes) 
+                    var attributes_data={data_store:'attributes',
+                                        indexes:[{index:'id'},
+                                                {index:'value'},
+                                                {index:'name',array:name_string},
+                                                {index:'attribute',exact:'Specification'}]};
+                    read_json_rows('',attributes_data,function (attributes) 
                     {
                         attributes.forEach(function (attribute) 
                         {
@@ -329,9 +318,6 @@
                                 spec_rowsHTML+="<form id='form258_spec_"+id+"' autocomplete='off'></form>";
                                     spec_rowsHTML+="<td data-th='S.No.'>";
                                     spec_rowsHTML+="</td>";
-                                    //spec_rowsHTML+="<td data-th='Item'>";
-                                    //	spec_rowsHTML+="<input type='text' readonly='readonly' form='form258_spec_"+id+"' value='"+attribute.name+"'>";
-                                    //spec_rowsHTML+="</td>";
                                     spec_rowsHTML+="<td data-th='Type'>";
                                         spec_rowsHTML+="<input type='text' readonly='readonly' form='form258_spec_"+id+"' value='"+spec_split[0]+"'>";
                                     spec_rowsHTML+="</td>";
@@ -341,12 +327,13 @@
                                     spec_rowsHTML+="<td data-th='Action'>";
                                         spec_rowsHTML+="<input type='hidden' form='form258_spec_"+id+"' value='"+id+"'>";
                                         spec_rowsHTML+="<input type='button' class='submit_hidden' form='form258_spec_"+id+"' id='save_form258_spec_"+id+"' >";
-                                        spec_rowsHTML+="<input type='button' class='delete_icon' form='form258_spec_"+id+"' id='delete_form258_spec_"+id+"' onclick='$(this).parent().parent().remove();form258_get_totals();'>";
+                                        spec_rowsHTML+="<button type='button' class='btn red' form='form258_spec_"+id+"' id='delete_form258_spec_"+id+"' onclick='$(this).parent().parent().remove();form258_get_totals();' name='delete'><i class='fa fa-trash'></i></button>";
                                     spec_rowsHTML+="</td>";
                                 spec_rowsHTML+="</tr>";
                             $('#form258_spec_body').append(spec_rowsHTML);
                         });
                         form258_get_totals();
+                        $('#form258').formcontrol();
                     });					
                 }
                 else 
@@ -354,6 +341,7 @@
                     $('#form258_spec_body').html('');
                 }
             });
+            $('#form258').formcontrol();
         }
 
         function form258_ini()
@@ -373,33 +361,29 @@
                 $('#form258_tc_body').html("");
 
                 show_loader();
-                var quot_columns="<quotation count='1'>" +
-                        "<id>"+quot_id+"</id>" +
-                        "<quot_num></quot_num>" +
-                        "<customer></customer>" +
-                        "<date></date>" +
-                        "<type></type>" +
-                        "<valid_upto></valid_upto>" +
-                        "<issued_by></issued_by>" +
-                        "<status></status>" +
-                        //"<billing_type></billing_type>" +
-                        "<address></address>" +
-                        "<banks></banks>" +
-                        "<terms></terms>" +
-                        "<specifications></specifications>" +
-                        "<spares></spares>"+
-                        "<items></items>"+
-                        "<amount></amount>"+
-                        "<tax></tax>"+
-                        "<tax_rate></tax_rate>"+
-                        "<cartage></cartage>"+
-                        "<total></total>"+					
-                        "</quotation>";
-
+                var quot_columns={data_store:'quotation',count:1,
+                                 indexes:[{index:'id',exact:quot_id},
+                                         {index:'quot_num'},
+                                         {index:'customer'},
+                                         {index:'date'},
+                                         {index:'type'},
+                                         {index:'valid_upto'},
+                                         {index:'issued_by'},
+                                         {index:'status'},
+                                         {index:'address'},
+                                         {index:'banks'},
+                                         {index:'terms'}, 
+                                         {index:'specifications'},
+                                         {index:'spares'},
+                                         {index:'items'},
+                                         {index:'amount'},
+                                         {index:'tax'},
+                                         {index:'tax_rate'},
+                                         {index:'cartage'},
+                                         {index:'total'}]};
                 var filter_fields=document.getElementById('form258_master');
 
-                ////separate fetch function to get challan details like customer name, total etc.
-                fetch_requested_data('',quot_columns,function(quot_results)
+                read_json_rows('form258',quot_columns,function(quot_results)
                 {
                     if(quot_results.length>0)
                     {
@@ -409,19 +393,16 @@
                         filter_fields.elements['id'].value=quot_id;
                         filter_fields.elements['type'].value=quot_results[0].type;
                         filter_fields.elements['valid'].value=get_my_past_date(quot_results[0].valid_upto);
-                        //filter_fields.elements['tax'].value=quot_results[0].billing_type;
                         filter_fields.elements['status'].value=quot_results[0].status;
                         filter_fields.elements['issued'].value=quot_results[0].issued_by;
                         filter_fields.elements['address'].value=quot_results[0].address;
                         var email_filter=filter_fields['email'];
 
-                        var email_data="<customers>"+
-                                        "<email></email>"+
-                                        "<acc_name exact='yes'>"+quot_results[0].customer+"</acc_name>"+
-                                        "</customers>";
-                        set_my_value(email_data,email_filter);
+                        var email_data={data_store:'customers',return_column:'email',
+                                       indexes:[{index:'acc_name',exact:quot_results[0].customer}]};
+                        set_my_value_json(email_data,email_filter);
 
-                        var save_button=filter_fields.elements['save'];
+                        var save_button=document.getElementById('form258_save');
 
                         $(save_button).off('click');
                         $(save_button).on("click", function(event)
@@ -453,7 +434,7 @@
                                 rowsHTML+="<td data-th='Action'>";
                                     rowsHTML+="<input type='hidden' form='form258_tc_"+id+"' value='"+id+"'>";
                                     rowsHTML+="<input type='button' class='submit_hidden' form='form258_tc_"+id+"' id='save_form258_tc_"+id+"' >";
-                                    rowsHTML+="<input type='button' class='delete_icon' form='form258_tc_"+id+"' id='delete_form258_tc_"+id+"' onclick='$(this).parent().parent().remove();form258_get_totals();'>";
+                                    rowsHTML+="<button type='button' class='btn red' form='form258_tc_"+id+"' id='delete_form258_tc_"+id+"' onclick='$(this).parent().parent().remove();form258_get_totals();'><i class='fa fa-trash' name='delete'></i></button>";
                                 rowsHTML+="</td>";
                             rowsHTML+="</tr>";
                         });
@@ -478,17 +459,17 @@
                                     bank_rowsHTML+="<input type='text' readonly='readonly' form='form258_bank_"+id+"' value='"+bank.name+"'>";
                                 bank_rowsHTML+="</td>";
                                 bank_rowsHTML+="<td data-th='Bank'>";
-                                    bank_rowsHTML+="<b>Bank</b>:<input type='text' readonly='readonly' form='form258_bank_"+id+"' value='"+bank.bank+"'>";
-                                    bank_rowsHTML+="<br><b>IFSC</b>:<input type='text' readonly='readonly' form='form258_bank_"+id+"' value='"+bank.ifsc+"'>";
+                                    bank_rowsHTML+="<input type='text' placeholder='Bank' class='floatlabel' readonly='readonly' form='form258_bank_"+id+"' value='"+bank.bank+"'>";
+                                    bank_rowsHTML+="<input type='text' placeholder='IFSC' class='floatlabel' readonly='readonly' form='form258_bank_"+id+"' value='"+bank.ifsc+"'>";
                                 bank_rowsHTML+="</td>";
                                 bank_rowsHTML+="<td data-th='Account'>";
-                                    bank_rowsHTML+="<b>Account Name</b>:<input type='text' readonly='readonly' form='form258_bank_"+id+"' value='"+bank.account_name+"'>";
-                                    bank_rowsHTML+="<br><b>Account #</b>:<input type='text' readonly='readonly' form='form258_bank_"+id+"' value='"+bank.account_num+"'>";
+                                    bank_rowsHTML+="<input type='text' placeholder='Account Name' class='floatlabel' readonly='readonly' form='form258_bank_"+id+"' value='"+bank.account_name+"'>";
+                                    bank_rowsHTML+="<input type='text' placeholder='Account #' class='floatlabel' readonly='readonly' form='form258_bank_"+id+"' value='"+bank.account_num+"'>";
                                 bank_rowsHTML+="</td>";
                                 bank_rowsHTML+="<td data-th='Action'>";
                                     bank_rowsHTML+="<input type='hidden' form='form258_bank_"+id+"' value='"+id+"'>";
                                     bank_rowsHTML+="<input type='button' class='submit_hidden' form='form258_bank_"+id+"' id='save_form258_bank_"+id+"' >";
-                                    bank_rowsHTML+="<input type='button' class='delete_icon' form='form258_bank_"+id+"' id='delete_form258_bank_"+id+"' onclick='$(this).parent().parent().remove();form258_get_totals();'>";
+                                    bank_rowsHTML+="<button type='button' class='btn red' form='form258_bank_"+id+"' id='delete_form258_bank_"+id+"' onclick='$(this).parent().parent().remove();form258_get_totals();'><i class='fa fa-trash'></i></button>";
                                 bank_rowsHTML+="</td>";
                             bank_rowsHTML+="</tr>";
                         });
@@ -509,9 +490,6 @@
                                 spec_rowsHTML+="<td data-th='S.No.'>";
                                 spec_rowsHTML+=spec_counter;
                                 spec_rowsHTML+="</td>";
-                                //spec_rowsHTML+="<td data-th='Item'>";
-                                //	spec_rowsHTML+="<input type='text' readonly='readonly' form='form258_spec_"+id+"' value='"+spec.item+"'>";
-                                //spec_rowsHTML+="</td>";
                                 spec_rowsHTML+="<td data-th='Type'>";
                                     spec_rowsHTML+="<input type='text' readonly='readonly' form='form258_spec_"+id+"' value='"+spec.spec+"'>";
                                 spec_rowsHTML+="</td>";
@@ -521,7 +499,7 @@
                                 spec_rowsHTML+="<td data-th='Action'>";
                                     spec_rowsHTML+="<input type='hidden' form='form258_spec_"+id+"' value='"+id+"'>";
                                     spec_rowsHTML+="<input type='button' class='submit_hidden' form='form258_spec_"+id+"' id='save_form258_spec_"+id+"' >";
-                                    spec_rowsHTML+="<input type='button' class='delete_icon' form='form258_spec_"+id+"' id='delete_form258_spec_"+id+"' onclick='$(this).parent().parent().remove();form258_get_totals();'>";
+                                    spec_rowsHTML+="<button type='button' class='btn red' form='form258_spec_"+id+"' id='delete_form258_spec_"+id+"' onclick='$(this).parent().parent().remove();form258_get_totals();'><i class='fa fa-trash'></i></button>";
                                 spec_rowsHTML+="</td>";
                             spec_rowsHTML+="</tr>";
                         });
@@ -549,12 +527,12 @@
                                     spare_rowsHTML+="<textarea readonly='readonly' form='form258_spare_"+id+"' >"+spare.description+"</textarea>";
                                 spare_rowsHTML+="</td>";
                                 spare_rowsHTML+="<td data-th='Quantity'>";
-                                    spare_rowsHTML+="<input type='number' readonly='readonly' form='form258_spare_"+id+"' step='any' value='"+spare.quantity+"'><vy id='form258_spare_unit_"+id+"'>"+spare.unit+"</vy>";
+                                    spare_rowsHTML+="<input type='number' class='floatlabel_right' placeholder='"+spare.unit+"' readonly='readonly' form='form258_spare_"+id+"' step='any' value='"+spare.quantity+"'>";
                                 spare_rowsHTML+="</td>";
                                 spare_rowsHTML+="<td data-th='Action'>";
                                     spare_rowsHTML+="<input type='hidden' form='form258_spare_"+id+"' value='"+id+"'>";
                                     spare_rowsHTML+="<input type='button' class='submit_hidden' form='form258_spare_"+id+"' id='save_form258_spare_"+id+"' >";
-                                    spare_rowsHTML+="<input type='button' class='delete_icon' form='form258_spare_"+id+"' id='delete_form258_spare_"+id+"' onclick='$(this).parent().parent().remove();form258_get_totals();'>";
+                                    spare_rowsHTML+="<button type='button' class='btn red' form='form258_spare_"+id+"' id='delete_form258_spare_"+id+"' onclick='$(this).parent().parent().remove();form258_get_totals();'><i class='fa fa-trash'></i></button>";
                                 spare_rowsHTML+="</td>";
                             spare_rowsHTML+="</tr>";
                         });
@@ -589,13 +567,11 @@
                                 item_rowsHTML+="</td>";
                                 item_rowsHTML+="<td data-th='Amount'>";
                                     item_rowsHTML+="<input type='number' readonly='readonly' form='form258_item_"+id+"' step='any' value='"+item.amount+"'>";
-                                    //item_rowsHTML+="<br><b>Tax</b>:<input type='number' readonly='readonly' form='form258_item_"+id+"' step='any' value='"+item.tax+"'>";
-                                    //item_rowsHTML+="<br><b>Total</b>:<input type='number' readonly='readonly' form='form258_item_"+id+"' step='any' value='"+item.total+"'>";
                                 item_rowsHTML+="</td>";
                                 item_rowsHTML+="<td data-th='Action'>";
                                     item_rowsHTML+="<input type='hidden' form='form258_item_"+id+"' value='"+id+"'>";
                                     item_rowsHTML+="<input type='button' class='submit_hidden' form='form258_item_"+id+"' id='save_form258_item_"+id+"' >";
-                                    item_rowsHTML+="<input type='button' class='delete_icon' form='form258_item_"+id+"' id='delete_form258_item_"+id+"' onclick='$(this).parent().parent().remove(); form258_get_totals();'>";
+                                    item_rowsHTML+="<button type='button' class='btn red' form='form258_item_"+id+"' id='delete_form258_item_"+id+"' onclick='$(this).parent().parent().remove(); form258_get_totals();'><i class='fa fa-trash'></i></button>";
                                 item_rowsHTML+="</td>";
                             item_rowsHTML+="</tr>";
                         });
@@ -614,10 +590,10 @@
                         });
 
                         var total_row="<tr><td colspan='4' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
-                                        "<td>Amount:<br>Tax:@ <input type='number' value='"+quot_results[0].tax_rate+"' step='any' id='form258_tax'><br>Transport Charges: <br>Total: </td>" +
+                                        "<td>Amount:<br>Tax(%):@ <input type='number' value='"+quot_results[0].tax_rate+"' step='any' id='form258_tax' style='width: 60%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>Transport Charges: <br>Total: </td>" +
                                         "<td>Rs. "+quot_results[0].amount+"</br>" +
                                         "Rs. "+quot_results[0].tax+" <br>" +
-                                        "Rs. <input type='number' value='"+quot_results[0].cartage+"' step='any' id='form258_cartage' class='dblclick_editable'><br>" +
+                                        "Rs. <input type='number' value='"+quot_results[0].cartage+"' step='any' id='form258_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>" +
                                         "Rs. <vtotal>"+quot_results[0].total+"</vtotal></td>" +
                                         "<td></td>" +
                                         "</tr>";
@@ -635,10 +611,9 @@
                         var business_email=get_session_var('email');
                         ///////////////////////////
 
-                        longPressEditable($('.dblclick_editable'));
-                        $('textarea').autosize();
-
-                        var share_button=filter_fields.elements['share'];
+                        $('#form258').formcontrol();
+                        
+                        var share_button=document.getElementById('form258_share');
                         $(share_button).show();
                         $(share_button).click(function()
                         {
@@ -677,13 +652,11 @@
                         item_rowsHTML+="</td>";
                         item_rowsHTML+="<td data-th='Amount'>";
                             item_rowsHTML+="<input type='number' readonly='readonly' form='form258_item_"+id+"' step='any'>";
-                        //	item_rowsHTML+="<br><b>Tax</b>:<input type='number' form='form258_item_"+id+"' step='any'>";
-                        //	item_rowsHTML+="<br><b>Total</b>:<input type='number' readonly='readonly' form='form258_item_"+id+"' step='any'>";
                         item_rowsHTML+="</td>";
                         item_rowsHTML+="<td data-th='Action'>";
                             item_rowsHTML+="<input type='hidden' form='form258_item_"+id+"' value='"+id+"'>";
                             item_rowsHTML+="<input type='button' class='submit_hidden' form='form258_item_"+id+"' id='save_form258_item_"+id+"' >";
-                            item_rowsHTML+="<input type='button' class='delete_icon' form='form258_item_"+id+"' id='delete_form258_item_"+id+"' onclick='$(this).parent().parent().remove(); form258_get_totals();'>";
+                            item_rowsHTML+="<button type='button' class='btn red' form='form258_item_"+id+"' id='delete_form258_item_"+id+"' onclick='$(this).parent().parent().remove(); form258_get_totals();'><i class='fa fa-trash'></i></button>";
                             item_rowsHTML+="<input type='hidden' form='form258_item_"+id+"' name='tax_unit'>";
                         item_rowsHTML+="</td>";
                     item_rowsHTML+="</tr>";
@@ -695,8 +668,6 @@
                 var quantity_filter=fields.elements[2];
                 var price_filter=fields.elements[3];
                 var amount_filter=fields.elements[4];
-                //var tax_filter=fields.elements[5];
-                //var total_filter=fields.elements[6];
                 var id_filter=fields.elements[5];
                 var tax_unit_filter=fields.elements['tax_unit'];
 
@@ -706,40 +677,21 @@
                     form258_add_item();
                 });
 
-                var product_data="<attributes>" +
-                        "<name></name>" +
-                        "<value exact='yes'>no</value>"+
-                        "<attribute exact='yes'>Spare Part</attribute>"+
-                        "</attributes>";
-                set_my_value_list_func(product_data,name_filter,function () 
+                var product_data={data_store:'attributes',return_column:'name',
+                                 indexes:[{index:'value',exact:'no'},
+                                         {index:'attribute',exact:'Spare Part'}]};
+                set_my_value_list_json(product_data,name_filter,function () 
                 {
                     $(name_filter).focus();
                 });
 
-        /*
-                $(name_filter).on('blur',function(event)
-                {
-                    var tax_data="<product_master>"+
-                                "<tax></tax>"+
-                                "<name exact='yes'>"+name_filter.value+"</name>"+
-                                "</product_master>";
-                    set_my_value(tax_data,tax_unit_filter);			
-                });		
-        */
                 $(quantity_filter).add(price_filter).on('change blur',function(event)
                 {
                     amount_filter.value=my_round((parseFloat(price_filter.value)*parseFloat(quantity_filter.value)),2);
-                    //tax_filter.value=my_round((parseFloat(tax_unit_filter.value)*parseFloat(amount_filter.value)),2);
-                    //$(amount_filter).trigger('change');
                 });
-        /*
-                $(amount_filter).add(tax_filter).on('change blur',function(event)
-                {
-                    total_filter.value=my_round((parseFloat(amount_filter.value)+parseFloat(tax_filter.value)),0);
-                });
-        */
+                
                 form258_get_totals();
-                $('textarea').autosize();
+                $('#form258').formcontrol();
             }
             else
             {
@@ -748,10 +700,6 @@
         }
 
 
-        /**
-         * @form Prepare Quotation
-         * @formNo 258
-         */
         function form258_add_spare()
         {
             if(is_create_access('form258'))
@@ -768,12 +716,12 @@
                             spare_rowsHTML+="<textarea form='form258_spare_"+id+"' ></textarea>";
                         spare_rowsHTML+="</td>";
                         spare_rowsHTML+="<td data-th='Quantity'>";
-                            spare_rowsHTML+="<input type='number' form='form258_spare_"+id+"' step='any'><vy id='form258_spare_unit_"+id+"'></vy>";
+                            spare_rowsHTML+="<input type='number' form='form258_spare_"+id+"' step='any'>";
                         spare_rowsHTML+="</td>";
                         spare_rowsHTML+="<td data-th='Action'>";
                             spare_rowsHTML+="<input type='hidden' form='form258_spare_"+id+"' value='"+id+"'>";
                             spare_rowsHTML+="<input type='button' class='submit_hidden' form='form258_spare_"+id+"' id='save_form258_spare_"+id+"' >";
-                            spare_rowsHTML+="<input type='button' class='delete_icon' form='form258_spare_"+id+"' id='delete_form258_spare_"+id+"' onclick='$(this).parent().parent().remove();form258_get_totals();'>";
+                            spare_rowsHTML+="<button type='button' class='btn red' form='form258_spare_"+id+"' id='delete_form258_spare_"+id+"' onclick='$(this).parent().parent().remove();form258_get_totals();'><i class='fa fa-trash'></i></button>";
                         spare_rowsHTML+="</td>";
                     spare_rowsHTML+="</tr>";
                 $('#form258_spare_body').append(spare_rowsHTML);
@@ -790,40 +738,36 @@
                     form258_add_spare();
                 });
 
-                var product_data="<attributes>" +
-                        "<name></name>" +
-                        "<value exact='yes'>yes</value>"+
-                        "<attribute exact='yes'>Spare Part</attribute>"+
-                        "</attributes>";
-                set_my_value_list_func(product_data,name_filter,function () 
+                var product_data={data_store:'attributes',return_column:'name',
+                                 indexes:[{index:'value',exact:'yes'},
+                                         {index:'attribute',exact:'Spare Part'}]};
+                set_my_value_list_json(product_data,name_filter,function () 
                 {
                     $(name_filter).focus();
                 });
 
                 $(name_filter).on('blur',function(event)
                 {
-                    var desc_data="<product_master>"+
-                                "<description></description>"+
-                                "<name exact='yes'>"+name_filter.value+"</name>"+
-                                "</product_master>";
-                    set_my_value(desc_data,desc_filter);
+                    var desc_data={data_store:'product_master',return_column:'description',
+                                  indexes:[{index:'name',exact:name_filter.value}]};
+                    set_my_value_json(desc_data,desc_filter);
 
-                    var unit_data="<attributes count='1'>"+
-                                "<value></value>"+
-                                "<attribute exact='yes'>Unit</attribute>"+
-                                "<type exact='yes'>product</type>"+
-                                "<name exact='yes'>"+name_filter.value+"</name>"+
-                                "</attributes>";
-                    get_single_column_data(function(units)
+                    var unit_data={data_store:'attributes',count:1,return_column:'value',
+                                  indexes:[{index:'attribute',exact:'Unit'},
+                                          {index:'type',exact:'product'},
+                                          {index:'name',exact:name_filter.value}]};
+                    read_json_single_column(unit_data,function(units)
                     {
                         if(units.length>0)
                         {
-                            document.getElementById('form258_spare_unit_'+id).innerHTML=units[0];
+                            quantity_filter.placeholder=units[0];
+                            $(quantity_filter).floatlabel_right();
                         }
-                    },unit_data);			
+                    });
                 });		
 
                 form258_get_totals();
+                
             }
             else
             {
@@ -831,10 +775,6 @@
             }
         }
 
-        /**
-         * @form Prepare Quotation
-         * @formNo 258
-         */
         function form258_add_spec()
         {
             if(is_create_access('form258'))
@@ -844,9 +784,6 @@
                     spec_rowsHTML+="<form id='form258_spec_"+id+"' autocomplete='off'></form>";
                         spec_rowsHTML+="<td data-th='S.No.'>";
                         spec_rowsHTML+="</td>";
-                        //spec_rowsHTML+="<td data-th='Item'>";
-                        //	spec_rowsHTML+="<input type='text' form='form258_spec_"+id+"'>";
-                        //spec_rowsHTML+="</td>";
                         spec_rowsHTML+="<td data-th='Type'>";
                             spec_rowsHTML+="<input type='text' form='form258_spec_"+id+"'>";
                         spec_rowsHTML+="</td>";
@@ -856,7 +793,7 @@
                         spec_rowsHTML+="<td data-th='Action'>";
                             spec_rowsHTML+="<input type='hidden' form='form258_spec_"+id+"' value='"+id+"'>";
                             spec_rowsHTML+="<input type='button' class='submit_hidden' form='form258_spec_"+id+"' id='save_form258_spec_"+id+"' >";
-                            spec_rowsHTML+="<input type='button' class='delete_icon' form='form258_spec_"+id+"' id='delete_form258_spec_"+id+"' onclick='$(this).parent().parent().remove();form258_get_totals();'>";
+                            spec_rowsHTML+="<button type='button' class='btn red' form='form258_spec_"+id+"' id='delete_form258_spec_"+id+"' onclick='$(this).parent().parent().remove();form258_get_totals();'><i class='fa fa-trash'></i></button>";
                         spec_rowsHTML+="</td>";
                     spec_rowsHTML+="</tr>";
                 $('#form258_spec_body').append(spec_rowsHTML);
@@ -871,17 +808,6 @@
                     form258_add_spec();
                 });
 
-                /*
-                var name_filter=fields.elements[0];
-                var product_data="<product_master>" +
-                        "<name></name>" +
-                        "</product_master>";
-                set_my_value_list_func(product_data,name_filter,function () 
-                {
-                    $(name_filter).focus();
-                });
-                */
-
                 form258_get_totals();
             }
             else
@@ -891,10 +817,6 @@
         }
 
 
-        /**
-         * @form Prepare Quotation
-         * @formNo 258
-         */
         function form258_add_bank()
         {
             if(is_create_access('form258'))
@@ -908,17 +830,17 @@
                             bank_rowsHTML+="<input type='text' form='form258_bank_"+id+"'>";
                         bank_rowsHTML+="</td>";
                         bank_rowsHTML+="<td data-th='Bank'>";
-                            bank_rowsHTML+="<b>Bank</b>:<input type='text' readonly='readonly' form='form258_bank_"+id+"'>";
-                            bank_rowsHTML+="<br><b>IFSC</b>:<input type='text' readonly='readonly' form='form258_bank_"+id+"'>";
+                            bank_rowsHTML+="<input type='text' class='floatlabel' placeholder='Bank' readonly='readonly' form='form258_bank_"+id+"'>";
+                            bank_rowsHTML+="<input type='text' class='floatlabel' placeholder='IFSC' readonly='readonly' form='form258_bank_"+id+"'>";
                         bank_rowsHTML+="</td>";
                         bank_rowsHTML+="<td data-th='Account'>";
-                            bank_rowsHTML+="<b>Account Name</b>:<input type='text' readonly='readonly' form='form258_bank_"+id+"'>";
-                            bank_rowsHTML+="<br><b>Account #</b>:<input type='text' readonly='readonly' form='form258_bank_"+id+"'>";
+                            bank_rowsHTML+="<input type='text' class='floatlabel' placeholder='Account Name' readonly='readonly' form='form258_bank_"+id+"'>";
+                            bank_rowsHTML+="<input type='text' class='floatlabel' placeholder='Account #' readonly='readonly' form='form258_bank_"+id+"'>";
                         bank_rowsHTML+="</td>";
                         bank_rowsHTML+="<td data-th='Action'>";
                             bank_rowsHTML+="<input type='hidden' form='form258_bank_"+id+"' value='"+id+"'>";
                             bank_rowsHTML+="<input type='button' class='submit_hidden' form='form258_bank_"+id+"' id='save_form258_bank_"+id+"' >";
-                            bank_rowsHTML+="<input type='button' class='delete_icon' form='form258_bank_"+id+"' id='delete_form258_bank_"+id+"' onclick='$(this).parent().parent().remove();form258_get_totals();'>";
+                            bank_rowsHTML+="<button type='button' class='btn red' form='form258_bank_"+id+"' id='delete_form258_bank_"+id+"' onclick='$(this).parent().parent().remove();form258_get_totals();'><i class='fa fa-trash'></i></button>";
                         bank_rowsHTML+="</td>";
                     bank_rowsHTML+="</tr>";
                 $('#form258_bank_body').append(bank_rowsHTML);
@@ -936,25 +858,22 @@
                     form258_add_bank();
                 });
 
-                var bank_data="<bank_accounts>" +
-                        "<name></name>" +
-                        "<status exact='yes'>active</status>"+
-                        "</bank_accounts>";
-                set_my_value_list_func(bank_data,name_filter,function () 
+                var bank_data={data_store:'bank_accounts',return_column:'name',
+                              indexes:[{index:'status',exact:'active'}]};
+                set_my_value_list_json(bank_data,name_filter,function () 
                 {
                     $(name_filter).focus();
                 });
 
                 $(name_filter).on('blur',function () 
                 {
-                    var details_xml="<bank_accounts>"+
-                                    "<bank></bank>"+
-                                    "<ifsc></ifsc>"+
-                                    "<account_name></account_name>"+
-                                    "<account_num></account_num>"+
-                                    "<name exact='yes'>"+name_filter.value+"</name>"+
-                                    "</bank_accounts>";
-                    fetch_requested_data('',details_xml,function (accounts) 
+                    var details_xml={data_store:'bank_accounts',
+                                    indexes:[{index:'bank'},
+                                            {index:'ifsc'},
+                                            {index:'account_name'},
+                                            {index:'account_num'},
+                                            {index:'name',exact:name_filter.value}]};
+                    read_json_rows('',details_xml,function (accounts) 
                     {
                         if(accounts.length>0)
                         {
@@ -962,6 +881,8 @@
                             ifsc_filter.value=accounts[0].ifsc;
                             acc_filter.value=accounts[0].account_name;
                             acc_num_filter.value=accounts[0].account_num;
+                            
+                            $('#form258').formcontrol();
                         }
                     });				
                 });
@@ -974,11 +895,6 @@
             }
         }
 
-
-        /**
-         * @form Prepare Quotation
-         * @formNo 258
-         */
         function form258_add_tc()
         {
             if(is_create_access('form258'))
@@ -997,7 +913,7 @@
                         rowsHTML+="<td data-th='Action'>";
                             rowsHTML+="<input type='hidden' form='form258_tc_"+id+"' value='"+id+"'>";
                             rowsHTML+="<input type='button' class='submit_hidden' form='form258_tc_"+id+"' id='save_form258_tc_"+id+"' >";
-                            rowsHTML+="<input type='button' class='delete_icon' form='form258_tc_"+id+"' id='delete_form258_tc_"+id+"' onclick='$(this).parent().parent().remove();form258_get_totals();'>";
+                            rowsHTML+="<button type='button' class='btn red' form='form258_tc_"+id+"' id='delete_form258_tc_"+id+"' onclick='$(this).parent().parent().remove();form258_get_totals();'><i class='fa fa-trash'></i></button>";
                         rowsHTML+="</td>";
                     rowsHTML+="</tr>";
                 $('#form258_tc_body').append(rowsHTML);
@@ -1036,8 +952,8 @@
                 var issued_by=form.elements['issued'].value;
                 var address=form.elements['address'].value;
                 var data_id=form.elements['id'].value;
-                var save_button=form.elements['save'];
-                var share_button=form.elements['share'];
+                var save_button=document.getElementById('form258_save');
+                var share_button=document.getElementById('form258_share');
                 var last_updated=get_my_time();
 
                 var message_attachment="";
@@ -1068,11 +984,6 @@
                         total_quantity+=parseFloat(subform.elements[2].value);
                     if(!isNaN(parseFloat(subform.elements[4].value)))
                         amount+=parseFloat(subform.elements[4].value);
-                /*	if(!isNaN(parseFloat(subform.elements[5].value)))
-                        tax+=parseFloat(subform.elements[5].value);
-                    if(!isNaN(parseFloat(subform.elements[6].value)))
-                        total+=parseFloat(subform.elements[6].value);
-                */
                 });
 
 
@@ -1087,17 +998,17 @@
                 var total=my_round((tax+amount+cartage),0);
 
                 var total_row="<tr><td colspan='4' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
-                                    "<td>Amount:<br>Tax:@ <input type='number' value='"+tax_rate+"' step='any' id='form258_tax'><br>Transport Charges: <br>Total: </td>" +
+                                    "<td>Amount:<br>Tax(%):@ <input type='number' value='"+tax_rate+"' step='any' id='form258_tax' style='width: 60%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>Transport Charges: <br>Total: </td>" +
                                     "<td>Rs. "+amount+"</br>" +
                                     "Rs. "+tax+" <br>" +
-                                    "Rs. <input type='number' value='"+my_round(cartage,2)+"' step='any' id='form258_cartage' class='dblclick_editable'><br>" +
+                                    "Rs. <input type='number' value='"+my_round(cartage,2)+"' step='any' id='form258_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>" +
                                     "Rs. <vtotal>"+total+"</vtotal></td>" +
                                     "<td></td>" +
                                     "</tr>";
 
                 $('#form258_item_foot').html(total_row);
-                longPressEditable($('.dblclick_editable'));
-
+                $('#form258').formcontrol();
+                
                 var spec_array=[];
                 var banks_array=[];
                 var spares_array=[];
@@ -1115,14 +1026,10 @@
                     item_obj.quantity=subform.elements[2].value;
                     item_obj.price=subform.elements[3].value;
                     item_obj.amount=subform.elements[4].value;
-                    //item_obj.tax=subform.elements[5].value;
-                    //item_obj.total=subform.elements[6].value;
                     items_array.push(item_obj);
 
-                    for(var i=0;i<5;i++)
-                    {
-                        $(subform.elements[i]).attr('readonly','readonly');
-                    }				
+                    $(subform).readonly();
+                    				
                 });
 
                 $("[id^='save_form258_spare_']").each(function(index)
@@ -1136,12 +1043,10 @@
                     item_obj.description=subform.elements[1].value;
                     item_obj.quantity=subform.elements[2].value;
                     var id=subform.elements[3].value;
-                    item_obj.unit=document.getElementById('form258_spare_unit_'+id).innerHTML;
+                    item_obj.unit=subform.elements[2].placeholder;
                     spares_array.push(item_obj);
-                    for(var i=0;i<3;i++)
-                    {
-                        $(subform.elements[i]).attr('readonly','readonly');
-                    }
+                    $(subform).readonly();
+                    
                 });
 
                 $("[id^='save_form258_spec_']").each(function(index)
@@ -1150,14 +1055,11 @@
                     var subform=document.getElementById(subform_id);
 
                     var item_obj=new Object();
-                    //item_obj.item=subform.elements[0].value;
                     item_obj.spec=subform.elements[0].value;
                     item_obj.details=subform.elements[1].value;
                     spec_array.push(item_obj);	
-                    for(var i=0;i<2;i++)
-                    {
-                        $(subform.elements[i]).attr('readonly','readonly');
-                    }
+                    $(subform).readonly();
+                    
                 });
 
                 $("[id^='save_form258_bank_']").each(function(index)
@@ -1172,10 +1074,8 @@
                     item_obj.account_name=subform.elements[3].value;
                     item_obj.account_num=subform.elements[4].value;
                     banks_array.push(item_obj);
-                    for(var i=0;i<5;i++)
-                    {
-                        $(subform.elements[i]).attr('readonly','readonly');
-                    }
+                    $(subform).readonly();
+                    
                 });
 
                 $("[id^='save_form258_tc_']").each(function(index)
@@ -1188,10 +1088,8 @@
                     item_obj.tc=subform.elements[1].value;
                     terms_array.push(item_obj);	
 
-                    for(var i=0;i<2;i++)
-                    {
-                        $(subform.elements[i]).attr('readonly','readonly');
-                    }
+                    $(subform).readonly();
+                    
                 });
 
 
@@ -1201,63 +1099,55 @@
                 var items=JSON.stringify(items_array);
                 var terms=JSON.stringify(terms_array);
 
-                var data_xml="<quotation>" +
-                            "<id>"+data_id+"</id>" +
-                            "<quot_num>"+quot_num+"</quot_num>" +
-                            "<customer>"+customer+"</customer>" +
-                            "<date>"+quot_date+"</date>" +
-                            "<valid_upto>"+valid_upto+"</valid_upto>" +
-                            "<type>"+type+"</type>" +
-                            "<status>"+status+"</status>" +
-                            "<issued_by>"+issued_by+"</issued_by>" +
-                            "<address>"+address+"</address>" +
-                            "<amount>"+amount+"</amount>"+
-                            "<tax>"+tax+"</tax>"+
-                            "<tax_rate>"+tax_rate+"</tax_rate>"+
-                            "<cartage>"+cartage+"</cartage>"+
-                            "<total>"+total+"</total>"+
-                            "<specifications>"+specifications+"</specifications>"+
-                            "<spares>"+spares+"</spares>"+
-                            "<banks>"+banks+"</banks>"+
-                            "<terms>"+terms+"</terms>"+
-                            "<items>"+items+"</items>"+
-                            "<last_updated>"+last_updated+"</last_updated>" +
-                            "</quotation>";
-                var activity_xml="<activity>" +
-                            "<data_id>"+data_id+"</data_id>" +
-                            "<tablename>quotation</tablename>" +
-                            "<link_to>form259</link_to>" +
-                            "<title>Saved</title>" +
-                            "<notes>Quotation # "+quot_num+"</notes>" +
-                            "<updated_by>"+get_name()+"</updated_by>" +
-                            "</activity>";
+                var data_json={data_store:'quoptation',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'quot_num',value:quot_num},
+	 					{index:'customer',value:customer},
+	 					{index:'date',value:quot_date},
+                        {index:'valid_upto',value:valid_upto},
+                        {index:'type',value:type},
+                        {index:'status',value:status},
+                        {index:'issued_by',value:issued_by},
+                        {index:'address',value:address},
+                        {index:'amount',value:amount},
+                        {index:'tax',value:tax},
+                        {index:'tax_rate',value:tax_rate},
+                        {index:'cartage',value:cartage},
+                        {index:'total',value:total},
+                        {index:'specifications',value:specifications},
+                        {index:'spares',value:spares},
+                        {index:'banks',value:banks},
+                        {index:'terms',value:terms},
+                        {index:'items',value:items},
+                        {index:'last_updated',value:last_updated}],
+                    log:'yes',
+                    log_data:{title:'Saved',notes:'Quotation # '+quot_num,link_to:'form259'}};
+ 		
+                create_json(data_json);
 
-                create_row(data_xml,activity_xml);
-
-                var num_data="<user_preferences>"+
-                            "<id></id>"+						
-                            "<name exact='yes'>quotation_num</name>"+												
-                            "</user_preferences>";
-                get_single_column_data(function (num_ids)
+                var num_data={data_store:'user_preferences',return_column:'id',
+                             indexes:[{index:'name',exact:'quotation_num'}]};
+                read_json_single_column(num_data,function (num_ids)
                 {
                     if(num_ids.length>0)
                     {
                         var quot_num_array=quot_num.split("-");
-                        var num_xml="<user_preferences>"+
-                                        "<id>"+num_ids[0]+"</id>"+
-                                        "<value>"+(parseInt(quot_num_array[1])+1)+"</value>"+
-                                        "<last_updated>"+last_updated+"</last_updated>"+
-                                        "</user_preferences>";
-                        update_simple(num_xml);
+                        
+                        var num_json={data_store:'quoptation',
+                            data:[{index:'id',value:num_ids[0]},
+                                {index:'value',value:(parseInt(quot_num_array[1])+1)},
+                                {index:'last_updated',value:last_updated}]};
+
+                        update_json(num_json);
                     }
-                },num_data);
+                });
 
                 $(save_button).off('click');
                 $(save_button).on('click',function(event)
                 {
                     event.preventDefault();
                     form258_update_form();
-                });		
+                });	
             }
             else
             {
@@ -1299,11 +1189,6 @@
                         total_quantity+=parseFloat(subform.elements[2].value);
                     if(!isNaN(parseFloat(subform.elements[4].value)))
                         amount+=parseFloat(subform.elements[4].value);
-                /*	if(!isNaN(parseFloat(subform.elements[5].value)))
-                        tax+=parseFloat(subform.elements[5].value);
-                    if(!isNaN(parseFloat(subform.elements[6].value)))
-                        total+=parseFloat(subform.elements[6].value);
-                */
                 });
 
 
@@ -1318,17 +1203,17 @@
                 var total=my_round((amount+tax+cartage),0);
 
                 var total_row="<tr><td colspan='4' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
-                                    "<td>Amount:<br>Tax:@ <input type='number' value='"+tax_rate+"' step='any' id='form258_tax'><br>Transport Charges: <br>Total: </td>" +
+                                    "<td>Amount:<br>Tax(%):@ <input type='number' value='"+tax_rate+"' step='any' id='form258_tax' style='width: 60%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>Transport Charges: <br>Total: </td>" +
                                     "<td>Rs. "+amount+"</br>" +
                                     "Rs. "+tax+" <br>" +
-                                    "Rs. <input type='number' value='"+my_round(cartage,2)+"' step='any' id='form258_cartage' class='dblclick_editable'><br>" +
+                                    "Rs. <input type='number' value='"+my_round(cartage,2)+"' step='any' id='form258_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>" +
                                     "Rs. <vtotal>"+total+"</vtotal></td>" +
                                     "<td></td>" +
                                     "</tr>";
 
                 $('#form258_item_foot').html(total_row);
-                longPressEditable($('.dblclick_editable'));
-
+                $('#form258').formcontrol();
+                
                 var spec_array=[];
                 var banks_array=[];
                 var spares_array=[];
@@ -1346,14 +1231,10 @@
                     item_obj.quantity=subform.elements[2].value;
                     item_obj.price=subform.elements[3].value;
                     item_obj.amount=subform.elements[4].value;
-                    //item_obj.tax=subform.elements[5].value;
-                    //item_obj.total=subform.elements[6].value;
                     items_array.push(item_obj);
 
-                    for(var i=0;i<5;i++)
-                    {
-                        $(subform.elements[i]).attr('readonly','readonly');
-                    }
+                    $(subform).readonly();
+                    
                 });
 
                 $("[id^='save_form258_spare_']").each(function(index)
@@ -1366,13 +1247,11 @@
                     item_obj.description=subform.elements[1].value;
                     item_obj.quantity=subform.elements[2].value;
                     var id=subform.elements[3].value;
-                    item_obj.unit=document.getElementById('form258_spare_unit_'+id).innerHTML;
+                    item_obj.unit=subform.elements[2].placeholder;
 
                     spares_array.push(item_obj);
-                    for(var i=0;i<3;i++)
-                    {
-                        $(subform.elements[i]).attr('readonly','readonly');
-                    }	
+                    $(subform).readonly();
+                    	
                 });
 
                 $("[id^='save_form258_spec_']").each(function(index)
@@ -1385,10 +1264,8 @@
                     item_obj.spec=subform.elements[0].value;
                     item_obj.details=subform.elements[1].value;
                     spec_array.push(item_obj);	
-                    for(var i=0;i<2;i++)
-                    {
-                        $(subform.elements[i]).attr('readonly','readonly');
-                    }
+                    $(subform).readonly();
+                    
                 });
 
                 $("[id^='save_form258_bank_']").each(function(index)
@@ -1403,10 +1280,7 @@
                     item_obj.account_name=subform.elements[3].value;
                     item_obj.account_num=subform.elements[4].value;
                     banks_array.push(item_obj);	
-                    for(var i=0;i<5;i++)
-                    {
-                        $(subform.elements[i]).attr('readonly','readonly');
-                    }	
+                    $(subform).readonly();
                 });
 
                 $("[id^='save_form258_tc_']").each(function(index)
@@ -1418,10 +1292,7 @@
                     item_obj.type=subform.elements[0].value;
                     item_obj.tc=subform.elements[1].value;
                     terms_array.push(item_obj);	
-                    for(var i=0;i<2;i++)
-                    {
-                        $(subform.elements[i]).attr('readonly','readonly');
-                    }
+                    $(subform).readonly();
                 });	
 
                 //console.log(spec_array);
@@ -1431,39 +1302,31 @@
                 var items=JSON.stringify(items_array);
                 var terms=JSON.stringify(terms_array);
 
-                var data_xml="<quotation>" +
-                            "<id>"+data_id+"</id>" +
-                            "<quot_num>"+quot_num+"</quot_num>" +
-                            "<customer>"+customer+"</customer>" +
-                            "<date>"+quot_date+"</date>" +
-                            "<valid_upto>"+valid_upto+"</valid_upto>" +
-                            "<type>"+type+"</type>" +
-                            "<status>"+status+"</status>" +
-                            "<issued_by>"+issued_by+"</issued_by>" +
-                            "<address>"+address+"</address>" +
-                            "<amount>"+amount+"</amount>"+
-                            "<tax>"+tax+"</tax>"+
-                            "<tax_rate>"+tax_rate+"</tax_rate>"+
-                            "<cartage>"+cartage+"</cartage>"+
-                            "<total>"+total+"</total>"+
-                            "<specifications>"+specifications+"</specifications>"+
-                            "<spares>"+spares+"</spares>"+
-                            "<banks>"+banks+"</banks>"+
-                            "<terms>"+terms+"</terms>"+
-                            "<items>"+items+"</items>"+
-                            "<last_updated>"+last_updated+"</last_updated>" +
-                            "</quotation>";
-                var activity_xml="<activity>" +
-                            "<data_id>"+data_id+"</data_id>" +
-                            "<tablename>quotation</tablename>" +
-                            "<link_to>form259</link_to>" +
-                            "<title>Updated</title>" +
-                            "<notes>Quotation # "+quot_num+"</notes>" +
-                            "<updated_by>"+get_name()+"</updated_by>" +
-                            "</activity>";
-
-                update_row(data_xml,activity_xml);
-
+                var data_json={data_store:'quotation',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'quot_num',value:quot_num},
+	 					{index:'customer',value:customer},
+	 					{index:'date',value:quot_date},
+                        {index:'valid_upto',value:valid_upto},
+                        {index:'type',value:type},
+                        {index:'status',value:status},
+                        {index:'issued_by',value:issued_by},
+                        {index:'address',value:address},
+                        {index:'amount',value:amount},
+                        {index:'tax',value:tax},
+                        {index:'tax_rate',value:tax_rate},
+                        {index:'cartage',value:cartage},
+                        {index:'total',value:total},
+                        {index:'specifications',value:specifications},
+                        {index:'spares',value:spares},
+                        {index:'banks',value:banks},
+                        {index:'terms',value:terms},
+                        {index:'items',value:items},
+                        {index:'last_updated',value:last_updated}],
+                    log:'yes',
+                    log_data:{title:'Updated',notes:'Quotation # '+quot_num,link_to:'form259'}};
+ 		
+                update_json(data_json);
             }
             else
             {
@@ -1514,11 +1377,6 @@
                     total_quantity+=parseFloat(subform.elements[2].value);
                 if(!isNaN(parseFloat(subform.elements[4].value)))
                     amount+=parseFloat(subform.elements[4].value);
-            /*	if(!isNaN(parseFloat(subform.elements[4].value)))
-                    tax+=parseFloat(subform.elements[4].value);
-                if(!isNaN(parseFloat(subform.elements[5].value)))
-                    total+=parseFloat(subform.elements[5].value);
-            */
             });
 
 
@@ -1533,16 +1391,16 @@
             var total=my_round((amount+tax+cartage),0);
 
             var total_row="<tr><td colspan='4' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
-                                "<td>Amount:<br>Tax:@ <input type='number' value='"+tax_rate+"' step='any' id='form258_tax'><br>Transport Charges: <br>Total: </td>" +
+                                "<td>Amount:<br>Tax(%):@ <input type='number' value='"+tax_rate+"' step='any' id='form258_tax' style='width: 60%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>Transport Charges: <br>Total: </td>" +
                                 "<td>Rs. "+amount+"</br>" +
                                 "Rs. "+tax+" <br>" +
-                                "Rs. <input type='number' value='"+my_round(cartage,2)+"' step='any' id='form258_cartage' class='dblclick_editable'><br>" +
+                                "Rs. <input type='number' value='"+my_round(cartage,2)+"' step='any' id='form258_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>" +
                                 "Rs. <vtotal>"+total+"</vtotal></td>" +
                                 "<td></td>" +
                                 "</tr>";
 
             $('#form258_item_foot').html(total_row);
-            longPressEditable($('.dblclick_editable'));
+            $('#form258').formcontrol();
         }
 
         function form258_print_form()
@@ -1800,12 +1658,13 @@
                 var item=form.elements[0].value;
                 var desc=form.elements[1].value;
                 var quantity=form.elements[2].value;
+                var unit=form.elements[2].placeholder;
 
                 table_rows+="<tr>"+
                         "<td style='border: 1px solid #000;text-align:left;'>"+counter+"</td>"+
                         "<td style='border: 1px solid #000;text-align:left;'>"+item+"</td>"+
                         "<td style='border: 1px solid #000;text-align:left;'>"+desc+"</td>"+
-                        "<td style='border: 1px solid #000;text-align:left;'>"+quantity+"</td></tr>";
+                        "<td style='border: 1px solid #000;text-align:left;'>"+quantity+" "+unit+"</td></tr>";
             });
 
             spare_table.innerHTML=table_rows;
@@ -1903,8 +1762,6 @@
             container.appendChild(footer);
 
             header.appendChild(logo);
-            //header.appendChild(business_intro);
-            //header.appendChild(business_contact);
             info_section.appendChild(info_row);
             info_row.appendChild(customer_info);
             info_row.appendChild(business_info);
