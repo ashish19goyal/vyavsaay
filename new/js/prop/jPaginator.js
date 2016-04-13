@@ -39,6 +39,34 @@
 			return index;
 		};
 		
+        this.set_index = function(new_index)
+		{
+			$(settings.index_element).attr('data-index',new_index);
+			settings.index_element.value=(new_index/settings.page_size)+1;
+            
+            var next_index=this.get_index()+this.page_size();
+			var prev_index=this.get_index()-(this.page_size());
+			$(settings.next_element).attr('data-index',next_index);
+			$(settings.prev_element).attr('data-index',prev_index);
+			
+			if(new_index<this.page_size())
+			{
+				$(settings.next_element).addClass('disabled');
+			}
+			else
+			{
+				$(settings.next_element).removeClass('disabled');
+			}
+			if(prev_index<0)
+			{
+				$(settings.prev_element).addClass('disabled');
+			}
+			else
+			{
+				$(settings.prev_element).removeClass('disabled');
+			}
+		};
+		
 		this.update_index=function(result_count)
 		{
 			var next_index=this.get_index()+this.page_size();
@@ -62,17 +90,40 @@
 			else
 			{
 				$(settings.prev_element).removeClass('disabled');
-			}
-		}
+			}     
+       };
+        
+        this.log_history=function()
+        {
+            var element_name=$(element).closest('.tab-pane').attr('id');
+            var history_id=$("#"+element_name+"_link").attr('data_id');
+            if(history_id=='undefined' || history_id==null || history_id=="null")
+            {
+                history_id="";
+            }
+            //console.log($(settings.index_element).attr('data-index'));
+            //console.log(this.get_index());
+            var history_page=parseInt(this.get_index()/this.page_size());
+            var history_obj={form:element_name,id:history_id,page:history_page};
+            //console.log('history_obj');
+            //console.log(history_obj);
+            log_navigation_history(history_obj);
+        };
 	};
 	
 	$.fn.paginator=function(options)
 	{
 		var element = $(this);
-		if (element.data('paginator')) return element.data('paginator');
-
+		if (element.data('paginator'))
+        { 
+            var paginator= element.data('paginator');
+            paginator.log_history();
+            return paginator;
+        }
 		var paginator = new Paginator(this,options);
 		element.data('paginator', paginator);
+        $(element).attr('isPaged','yes');
+        paginator.log_history();
 		return paginator;		
 	};
 	

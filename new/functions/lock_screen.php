@@ -1,5 +1,5 @@
 <div class="page-lock" id='lock_screen_page'>
-<link href="./css_custom/lock.min.css" rel="stylesheet" type="text/css" />
+<link href="/new/css_custom/lock.min.css" rel="stylesheet" type="text/css" />
     <div class="page-logo">
 		<a class='brand' href="main.php">
           	<b class='logo-default'><span class="logo-text">Vyavsaay</span> ERP</b>    
@@ -9,7 +9,7 @@
         <div class="lock-head"> Locked </div>
         <div class="lock-body">
             <div class="pull-left lock-avatar-block">
-                <img src="./images/dummy-user.png" class="lock-avatar"> </div>
+                <img src="/new/images/dummy-user.png" class="lock-avatar"> </div>
             <form class="lock-form pull-left" id='lock_form'>
                 <h4 class='username'>User</h4>
                 <div class="form-group">

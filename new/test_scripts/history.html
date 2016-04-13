@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>History</title>
+	
+</head>
+<body>
+    <button onclick=back();>Back</button>
+    <button onclick=log();>Log</button>
+    <button onclick=forward();>Forward</button>
+</body>
+	<script>
+        console.log('page loaded');
+        state_num=1;
+        
+        function log()
+        {
+            console.log(history);
+        }
+        
+        function forward()
+        {
+            state_num++;
+            history.pushState(state_num, "page "+state_num, "/new/history.html/"+state_num);
+            history.go(1);
+            
+        }
+
+        function back()
+        {
+            history.go(-1);
+        }
+        
+        window.addEventListener('popstate', function(event) {
+			console.log(history);
+		});
+    </script>
+</html>

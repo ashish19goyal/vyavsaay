@@ -243,7 +243,7 @@ function backup_server_db()
 		var username=get_username();
 		var cr_access=get_session_var('cr');
 		show_loader();
-		ajax_with_custom_func("./ajax/db_backup.php",{domain:domain,username:username,cr:cr_access},function(e)
+		ajax_with_custom_func(server_root+"/ajax/db_backup.php",{domain:domain,username:username,cr:cr_access},function(e)
 		{
 			var response=e.responseText;
 			

@@ -80,7 +80,7 @@ function login_action(domain,username,pass,func)
 function login_online(username,domain,pass,func)
 {
 	var user_kvp={domain:domain,user:username,pass:pass,os:navigator.platform,browser:navigator.userAgent};
-	ajax_json("./ajax_json/login.php",user_kvp,function(response_object)
+	ajax_json(server_root+"/ajax_json/login.php",user_kvp,function(response_object)
 	{
 		//console.log(response_object);
 		//console.log(response_object.status);
@@ -479,11 +479,11 @@ function register_click()
 						pass:pass,
 						phone:phone};
 
-		ajax_with_custom_func("./ajax/user_db_creation.php",{userid:userid},function(e2)
+		ajax_with_custom_func(server_root+"/ajax/user_db_creation.php",{userid:userid},function(e2)
 		{
 			if(e2.responseText=="")
 			{
-				ajax_with_custom_func("./ajax/register.php",post_data,function(e)
+				ajax_with_custom_func(server_root+"/ajax/register.php",post_data,function(e)
 				{
 					if(e.responseText=="successful")
 					{
@@ -526,7 +526,7 @@ function userid_validation(userid)
 		}
 		else
 		{
-			ajax_with_custom_func("./ajax/verify_id.php",{userid:userid},function(e)
+			ajax_with_custom_func(server_root+"/ajax/verify_id.php",{userid:userid},function(e)
 			{
 				status=e.responseText;
 				//console.log(status);
@@ -553,7 +553,7 @@ function emailid_validation(emailid)
 {
 	if(emailid!="")
 	{
-		ajax_with_custom_func("./ajax/verify_id.php",{email:emailid},function(e)
+		ajax_with_custom_func(server_root+"/ajax/verify_id.php",{email:emailid},function(e)
 		{
 			status=e.responseText;
 			//console.log(status);
@@ -581,7 +581,7 @@ function verify_login(pass,func_success,func_failure)
 	if(is_online())
 	{
 		var user_kvp={domain:domain,user:username,pass:pass,os:navigator.platform,browser:navigator.userAgent};
-		ajax_json("./ajax_json/login.php",user_kvp,function(response_object)
+		ajax_json(server_root+"/ajax_json/login.php",user_kvp,function(response_object)
 		{
 			//console.log(response_object);
 			//console.log(response_object.status);

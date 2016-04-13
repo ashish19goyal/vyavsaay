@@ -34,7 +34,7 @@ function form2_create_item(form)
 			$.ajax(
 			{
 				type: "POST",
-				url: "./ajax/save_image.php",
+				url: server_root+"/ajax/save_image.php",
 				data: 
 				{
 					blob: blob,
@@ -6450,11 +6450,11 @@ function form119_create_item(form)
 							rowsHTML+="<td data-th='Product Name'>";
 								rowsHTML+="<label id='form119_product_make_"+id+"'></label>";
 								rowsHTML+="<br><v2></v2><textarea required form='form119_"+id+"' readonly='readonly'>"+free_product_name+"</textarea>";
-								rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+								rowsHTML+="<img src='"+server_root+"/images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Batch'>";
 								rowsHTML+="<input type='text' required form='form119_"+id+"' value='"+free_batch+"'>";
-								rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
+								rowsHTML+="<img src='"+server_root+"/images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
 								rowsHTML+="<br><v2>Expiry: </v2><label id='form119_exp_"+id+"'></label>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Quantity'>";
@@ -6672,11 +6672,11 @@ function form119_create_form()
 									rowsHTML+="<td data-th='Product Name'>";
 										rowsHTML+="<label id='form119_product_make_"+id+"'></label>";
 										rowsHTML+="<br><v2></v2><textarea required form='form119_"+id+"' readonly='readonly'>"+free_product_name+"</textarea>";
-										rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+										rowsHTML+="<img src='"+server_root+"/images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Batch'>";
 										rowsHTML+="<input type='text' required form='form119_"+id+"' value='"+free_batch+"'>";
-										rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
+										rowsHTML+="<img src='"+server_root+"/images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
 										rowsHTML+="<br><v2>Expiry: </v2><label id='form119_exp_"+id+"'></label>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Quantity'>";
@@ -8773,7 +8773,7 @@ function form150_post_feed()
 						" <a class='small_cross_icon' onclick=\"delete_feed('"+data_id+"',$(this));\" title='Delete post'>&#10006;</a></div>"+
 						"<br><u>"+owner+"</u>: <div class='feed_detail'>"+detail+"</div>"+
 						"<br><div id='form150_likes_"+data_id+"' class='feed_likes'>"+
-						"<img src='../images/thumbs_up_line.png' class='thumbs_icon' onclick=\"like_feed('"+data_id+"',$(this))\" title='Like this post'> <b id='form150_likes_count_"+data_id+"'>0</b> likes"+
+						"<img src='"+server_root+"/images/thumbs_up_line.png' class='thumbs_icon' onclick=\"like_feed('"+data_id+"',$(this))\" title='Like this post'> <b id='form150_likes_count_"+data_id+"'>0</b> likes"+
 						"</div>"+								
 						"<br><div id='form150_comments_"+data_id+"' class='feed_comments'>"+
 						"<label><u>"+owner+"</u>: <textarea class='feed_comments' placeholder='comment..'></textarea></label>"+
@@ -12229,7 +12229,7 @@ function form233_create_item()
 					$.ajax(
 					{
 						type: "POST",
-						url: "./ajax/s3_doc.php",
+						url: server_root+"/ajax/s3_doc.php",
 						data: 
 						{
 							blob: blob,

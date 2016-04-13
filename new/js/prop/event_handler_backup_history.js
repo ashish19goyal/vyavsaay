@@ -3,19 +3,19 @@
  */
 function default_load()
 {
-	declaring_global_variables();
 	show_loader();
     var location=window.location.pathname;
 	if(((location.indexOf("index")>-1) || (location.indexOf(".php")==-1)) && is_set_session())
 	{
 		var domain=get_session_var('domain');
-		window.location.assign(server_root+"/main.php?dn="+domain);
+		window.location.assign("main.php?dn="+domain);
 	}
-    else if(!is_set_session() && (location.indexOf("main")>-1))
+	else if(!is_set_session() && (location.indexOf("main")>-1))
 	{
-		window.location.assign(server_root+"/index.html");
+		window.location.assign("index.html");
 	}
 	
+	declaring_global_variables();
 	
 	modal_forms_ini();
 	if(is_set_session())
@@ -27,6 +27,8 @@ function default_load()
         set_footer_message();
         my_sortable_tables();
 		set_user_name();
+        home_display();
+        
         if(typeof calculate_grid_metrics!='undefined')
 		{		
 			calculate_grid_metrics();
@@ -36,10 +38,10 @@ function default_load()
 			start_workers();
 		}
 		
-		document.getElementById('master_title').innerHTML=get_session_var('title');
-        navigate_history_url(location);
+		float_labels();
 		
-		hide_loader();
+		document.getElementById('master_title').innerHTML=get_session_var('title');
+        hide_loader();
 	}
 	else
 	{
@@ -49,7 +51,6 @@ function default_load()
 
 function declaring_global_variables()
 {
-    server_root="/new";
 	localdb_open_requests=0;
 	number_active_ajax=0;
 	loaderTimer=0;
@@ -71,6 +72,11 @@ function declaring_global_variables()
                         'rejected':'label-danger',
                         'satisfactory':'label-success',
                         'unsatisfactory':'label-danger'};
+}
+
+function float_labels()
+{
+	$('.floatlabel').floatlabel();
 }
 
 function show_progress()
@@ -163,6 +169,12 @@ function setup_grid_display_tabs()
 			$("#nav-"+func).hide();
 		}
 	});
+}
+
+function show_function(function_id)
+{
+	hide_all();
+	$("#"+function_id).show();
 }
 
 function modal_forms_ini()
@@ -283,6 +295,12 @@ function modal_forms_ini()
 	});	
 }
 
+function home_display()
+{
+	$(document).off('keydown');
+	hide_all();
+	$('#home_grid').show();	
+}
 
 function lock_screen(func)
 {
@@ -427,6 +445,65 @@ function hide_loader()
 	$("#transparent_layer").hide();
 }
 
+
+function grid_click(func)
+{
+	show_function(func+"_main");
+
+	$("#"+func+"_main").find('ul').find('li:visible').find('a').first().click();	
+}
+
+
+function element_display(fid,element_name,elements)
+{
+	if(is_read_access(element_name))
+	{
+		var element_link="#"+element_name+"_link";
+		var function_link=$(element_link).parent().parent().parent().attr('id');
+		show_function(function_link);
+		$(element_link).attr('data_id',fid);
+		$(element_link).click();
+		$(element_link).attr('data_id','');		
+	}
+	else if(elements)
+	{
+		for(var i=0;i<elements.length;i++)
+		{
+			if(is_read_access(elements[i]))
+			{
+				var element_link="#"+elements[i]+"_link";
+				var function_link=$(element_link).parent().parent().parent().attr('id');
+				show_function(function_link);
+				$(element_link).attr('data_id',fid);
+				$(element_link).click();
+				$(element_link).attr('data_id','');
+				break;
+			}
+		}
+	}
+}
+
+function show_object(object_type,obj_name,obj_id) 
+{
+	if(is_read_object(object_type))
+	{
+		if_data_access_object(object_type,obj_name,function () 
+		{
+			initialize_object(object_type,obj_name,obj_id);
+			$("#object_"+object_type).click();
+		},function () 
+		{
+            console.log('no data access');
+			$('#modal2_link').click();
+		});
+	}
+	else
+	{
+        console.log('no system access');
+		$('#modal2_link').click();
+	}
+}	
+
 function longPressEditable(element)
 {
 	$(element).each(function()
@@ -452,6 +529,10 @@ function longPressEditable(element)
 	});
 }
 
+/**
+ * show filter as a text-box below the heading
+ * @param element
+ */
 function show_filter(element)
 {
 	$(element).parent().find('.filter').toggle();

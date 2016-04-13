@@ -24,7 +24,7 @@ function set_session(session_data,func)
 	if(typeof func=='undefined')
 	{
 		var domain=get_session_var('domain');
-		window.location.assign("main.php?dn="+domain);
+		window.location.assign(server_root+"/main.php?dn="+domain);
 	}	
 	else 
 	{
@@ -226,11 +226,11 @@ function delete_session()
 	localStorage.clear();
 	if(is_online())
 	{
-		window.location.assign("logout.php");
+		window.location.assign(server_root+"/logout.php");
 	}
 	else
 	{
-		window.location.assign("index.html");
+		window.location.assign(server_root+"/index.html");
 	}
 }
 

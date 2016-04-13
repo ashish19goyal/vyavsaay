@@ -43,7 +43,7 @@ function ajax_json(url,kvp,func)
             try 
             {
                 response_object=JSON.parse(e.responseText);    
-            } catch (ee) 
+            } catch (ee)
             {
                 console.log(kvp);
                 console.log(e.responseText);
@@ -63,7 +63,7 @@ function ajax_json(url,kvp,func)
 					var pass=document.getElementById("lock_form").elements['password'].value;
 					
 					var user_kvp={domain:domain,user:user,pass:pass,os:navigator.platform,browser:navigator.userAgent};
-					ajax_json("./ajax_json/login.php",user_kvp,function(response_object)
+					ajax_json(server_root+"/ajax_json/login.php",user_kvp,function(response_object)
 					{
 						if(response_object.status=="Failed Authentication")
 						{
@@ -125,7 +125,7 @@ function server_read_json_rows(columns,callback,results)
 	}
 
 	var string_columns=JSON.stringify(columns);
-	ajax_json("./ajax_json/get_limited_rows.php",{domain:domain,username:username,re:re_access,data:string_columns},function(response_object)
+	ajax_json(server_root+"/ajax_json/get_limited_rows.php",{domain:domain,username:username,re:re_access,data:string_columns},function(response_object)
 	{
 		//console.log('server_read_json_rows returned');
 		results=results.concat(response_object.rows);
@@ -148,7 +148,7 @@ function server_read_json_column(columns,callback,results)
 	var re_access=get_session_var('re');
 	var string_columns=JSON.stringify(columns);
 	
-	ajax_json("./ajax_json/get_single_column.php",{domain:domain,username:username,re:re_access,data:string_columns},function(response_object)
+	ajax_json(server_root+"/ajax_json/get_single_column.php",{domain:domain,username:username,re:re_access,data:string_columns},function(response_object)
 	{
 		results=response_object.rows;
 		callback(results);
@@ -162,7 +162,7 @@ function server_read_json_count(columns,callback)
 	var re_access=get_session_var('re');
 	
 	var string_columns=JSON.stringify(columns);
-	ajax_json("./ajax_json/get_count.php",{domain:domain,username:username,re:re_access,data:string_columns},function(response_object)
+	ajax_json(server_root+"/ajax_json/get_count.php",{domain:domain,username:username,re:re_access,data:string_columns},function(response_object)
 	{
 		callback(response_object.count);
 	});
@@ -175,7 +175,7 @@ function server_generate_report_json(report_id,callback)
 	var domain=get_domain();
 	var username=get_username();
 	var re_access=get_session_var('re');
-	ajax_json("./ajax_json/generate_report.php",{domain:domain,username:username,re:re_access,report_id:report_id},function(response_object)
+	ajax_json(server_root+"/ajax_json/generate_report.php",{domain:domain,username:username,re:re_access,report_id:report_id},function(response_object)
 	{
 		//console.log(response_object);
 		//console.log(response_object.rows);
@@ -191,7 +191,7 @@ function sync_logistics_apis()
 	var domain=get_domain();
 	var username=get_username();
 	var re_access=get_session_var('re');
-	ajax_json("./ajax_json/logistics_api.php",{domain:domain,username:username,re:re_access},function(response_object)
+	ajax_json(server_root+"/ajax_json/logistics_api.php",{domain:domain,username:username,re:re_access},function(response_object)
 	{
 		console.log(response_object);
 		//console.log(response_object.rows);
@@ -233,7 +233,7 @@ function server_send_email(data,func)
 	var domain=get_domain();
 	var username=get_username();
 	var read_access=get_session_var('re');
-	ajax_json("./ajax_json/email.php",{domain:domain,username:username,re:read_access,email_data:data},function(response_object)
+	ajax_json(server_root+"/ajax_json/email.php",{domain:domain,username:username,re:read_access,email_data:data},function(response_object)
 	{
 		console.log(response_object);
 		func();
@@ -251,7 +251,7 @@ function server_delete_json(data_json,func)
 	var del_access=get_session_var('del');
 	var string_columns=JSON.stringify(data_json);
 	
-	ajax_json("./ajax_json/delete.php",{domain:domain,username:username,del:del_access,data:string_columns},function(response_object)
+	ajax_json(server_root+"/ajax_json/delete.php",{domain:domain,username:username,del:del_access,data:string_columns},function(response_object)
 	{
 		console.log(response_object.status);
 		hide_loader();
@@ -269,7 +269,7 @@ function server_create_json(data_json,func)
 	var username=get_username();
 	var cr_access=get_session_var('cr');
 	var string_columns=JSON.stringify(data_json);
-	ajax_json("./ajax_json/create.php",{domain:domain,username:username,cr:cr_access,data:string_columns},function(response_object)
+	ajax_json(server_root+"/ajax_json/create.php",{domain:domain,username:username,cr:cr_access,data:string_columns},function(response_object)
 	{
 		console.log(response_object.status);
 		hide_loader();
@@ -319,7 +319,7 @@ function server_create_batch_json(data_json,func)
     data_arrays.forEach(function(data_chunk)
 	{
 		var string_columns=JSON.stringify(data_chunk);
-		ajax_json("./ajax_json/create_batch.php",{domain:domain,username:username,cr:cr_access,data:string_columns},function(response_object)
+		ajax_json(server_root+"/ajax_json/create_batch.php",{domain:domain,username:username,cr:cr_access,data:string_columns},function(response_object)
 		{
 			console.log(response_object);
 		});
@@ -348,7 +348,7 @@ function server_update_json(data_json,func)
 	var username=get_username();
 	var up_access=get_session_var('up');
 	var string_columns=JSON.stringify(data_json);
-	ajax_json("./ajax_json/update.php",{domain:domain,username:username,up:up_access,data:string_columns},function(response_object)
+	ajax_json(server_root+"/ajax_json/update.php",{domain:domain,username:username,up:up_access,data:string_columns},function(response_object)
 	{
 		console.log(response_object.status);
 		hide_loader();
@@ -388,7 +388,7 @@ function server_update_batch_json(data_json,func)
 	data_arrays.forEach(function(data_chunk)
 	{
 		var string_columns=JSON.stringify(data_chunk);
-		ajax_json("./ajax_json/update_batch.php",{domain:domain,username:username,up:up_access,data:string_columns},function(response_object)
+		ajax_json(server_root+"/ajax_json/update_batch.php",{domain:domain,username:username,up:up_access,data:string_columns},function(response_object)
 		{
 			console.log(response_object);
 		});
@@ -416,7 +416,7 @@ function get_table_structure(tablename,func)
 	var domain=get_domain();
 	var username=get_username();
 	var re_access=get_session_var('re');
-	ajax_json("./ajax_json/get_table_structure.php",{domain:domain,username:username,re:re_access,table:tablename},function(response_object)
+	ajax_json(server_root+"/ajax_json/get_table_structure.php",{domain:domain,username:username,re:re_access,table:tablename},function(response_object)
 	{
 		//console.log(response_object);
 		hide_loader();
@@ -432,10 +432,10 @@ function delete_server_table(tablename,master)
 	var del_access=get_session_var('del');
 	var up_access=get_session_var('up');
 	var cr_access=get_session_var('cr');
-	var url="./ajax_json/set_table_structure.php";	
+	var url=server_root+"/ajax_json/set_table_structure.php";	
 	if(typeof master!='undefined' && master=='master')
 	{
-		url="./ajax_json/set_table_structure_master.php";
+		url=server_root+"/ajax_json/set_table_structure_master.php";
 	}
 	ajax_json(url,{domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,table:tablename,action:'delete_table'},function(response_object)
 	{
@@ -452,10 +452,10 @@ function delete_server_table_column(tablename,columnname,master)
 	var del_access=get_session_var('del');
 	var up_access=get_session_var('up');
 	var cr_access=get_session_var('cr');
-	var url="./ajax_json/set_table_structure.php";	
+	var url=server_root+"/ajax_json/set_table_structure.php";	
 	if(typeof master!='undefined' && master=='master')
 	{
-		url="./ajax_json/set_table_structure_master.php";
+		url=server_root+"/ajax_json/set_table_structure_master.php";
 	}
 	ajax_json(url,{domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,table:tablename,column:columnname,action:'delete_column'},function(response_object)
 	{
@@ -472,10 +472,10 @@ function create_server_table(tablename,master)
 	var del_access=get_session_var('del');
 	var up_access=get_session_var('up');
 	var cr_access=get_session_var('cr');
-	var url="./ajax_json/set_table_structure.php";	
+	var url=server_root+"/ajax_json/set_table_structure.php";	
 	if(typeof master!='undefined' && master=='master')
 	{
-		url="./ajax_json/set_table_structure_master.php";
+		url=server_root+"/ajax_json/set_table_structure_master.php";
 	}
 	ajax_json(url,{domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,table:tablename,action:'create_table'},function(response_object)
 	{
@@ -492,10 +492,10 @@ function create_server_table_column(tablename,columnname,columntype,master)
 	var del_access=get_session_var('del');
 	var up_access=get_session_var('up');
 	var cr_access=get_session_var('cr');
-	var url="./ajax_json/set_table_structure.php";	
+	var url=server_root+"/ajax_json/set_table_structure.php";	
 	if(typeof master!='undefined' && master=='master')
 	{
-		url="./ajax_json/set_table_structure_master.php";
+		url=server_root+"/ajax_json/set_table_structure_master.php";
 	}
 	ajax_json(url,{domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,table:tablename,column:columnname,type:columntype,action:'create_column'},function(response_object)
 	{
@@ -512,10 +512,10 @@ function update_server_table_column(tablename,columnname,columntype,master)
 	var del_access=get_session_var('del');
 	var up_access=get_session_var('up');
 	var cr_access=get_session_var('cr');
-	var url="./ajax_json/set_table_structure.php";	
+	var url=server_root+"/ajax_json/set_table_structure.php";	
 	if(typeof master!='undefined' && master=='master')
 	{
-		url="./ajax_json/set_table_structure_master.php";
+		url=server_root+"/ajax_json/set_table_structure_master.php";
 	}
 	ajax_json(url,{domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,table:tablename,column:columnname,type:columntype,action:'update_column'},function(response_object)
 	{

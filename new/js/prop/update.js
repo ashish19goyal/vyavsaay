@@ -547,7 +547,7 @@ function form2_update_item(form)
 				$.ajax(
 				{
 					type: "POST",
-					url: "./ajax/save_image.php",
+					url: server_root+"/ajax/save_image.php",
 					data: 
 					{
 						blob: blob,
@@ -4224,11 +4224,11 @@ function form119_update_form()
 									rowsHTML+="<td data-th='Product Name'>";
 										rowsHTML+="<label id='form119_product_make_"+id+"'></label>";
 										rowsHTML+="<br><v2></v2><textarea required form='form119_"+id+"' readonly='readonly'>"+free_product_name+"</textarea>";
-										rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+										rowsHTML+="<img src='"+server_root+"/images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Batch'>";
 										rowsHTML+="<input type='text' required form='form119_"+id+"' value='"+free_batch+"'>";
-										rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
+										rowsHTML+="<img src='"+server_root+"/images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
 										rowsHTML+="<br><v2>Expiry: </v2><label id='form119_exp_"+id+"'></label>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Quantity'>";
@@ -9289,7 +9289,7 @@ function form233_update_item()
 				$.ajax(
 				{
 					type: "POST",
-					url: "./ajax/s3_doc.php",
+					url: server_root+"/ajax/s3_doc.php",
 					data: 
 					{
 						blob: blob,
@@ -9431,7 +9431,7 @@ function form233_update_item()
 				$.ajax(
 				{
 					type: "POST",
-					url: "./ajax/s3_doc.php",
+					url: server_root+"/ajax/s3_doc.php",
 					data: 
 					{
 						blob: blob,

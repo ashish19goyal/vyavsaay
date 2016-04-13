@@ -123,7 +123,7 @@
 					{
 						pending_table_HTML+="<tr><td>"+result.order_id+"</td><td>"+get_my_past_date(result.period_start)+"-"+get_my_past_date(result.period_end)+"</td><td>"+result.narration+"</td><td title='User Accounts:"+result.user_accounts+"\nAmount:"+result.amount+"\nTax:"+result.tax+"'>"+result.currency+" "+result.total+"</td><td>";
 		
-						pending_table_HTML+="<form method='post' action='./ajax_json/payment_request.php' target='_blank'>"+
+						pending_table_HTML+="<form method='post' action='"+server_root+"/ajax_json/payment_request.php' target='_blank'>"+
 											"<input type='hidden' name='order_id' value='"+result.order_id+"'>"+
 											"<input type='hidden' name='currency' value='INR'>"+
 											"<input type='hidden' name='amount' value='"+result.total+"'>"+

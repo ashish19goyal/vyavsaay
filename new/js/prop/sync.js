@@ -13,7 +13,7 @@ function switch_to_online()
 		var del_access=get_session_var('del');
 		var re_access=get_session_var('re');
 		
-		ajax_json("./ajax_json/connection_testing.php",{domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,re:re_access},function(response_object)
+		ajax_json(server_root+"/ajax_json/connection_testing.php",{domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,re:re_access},function(response_object)
 		{
 			if(response_object.status==='connected')
 			{
@@ -98,7 +98,7 @@ function sync_local_and_server()
 		var del_access=get_session_var('del');
 		var re_access=get_session_var('re');
 		
-		ajax_with_custom_func("./ajax/connection_testing.php",{domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,re:re_access},function(e)
+		ajax_with_custom_func(server_root+"/ajax/connection_testing.php",{domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,re:re_access},function(e)
 		{
 			if(e.responseText==='connected')
 			{
@@ -217,7 +217,7 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
 	var re_access=get_session_var('re');
 	var db_name="re_local_" + domain;
 	//console.log(last_sync_time);
-	ajax_json("./ajax_json/sync_download.php",{domain:domain,username:username,re:re_access,start_table:start_table,start_offset:start_offset,last_sync_time:last_sync_time},function(response_object)
+	ajax_json(server_root+"/ajax_json/sync_download.php",{domain:domain,username:username,re:re_access,start_table:start_table,start_offset:start_offset,last_sync_time:last_sync_time},function(response_object)
 	{
 		if(typeof static_local_db=='undefined')
 		{
@@ -353,7 +353,7 @@ function sync_local_to_server(func)
 					run_daemons='yes';
 				}
 				var log_data_chunk=JSON.stringify(log_data_sub_array);				
-				ajax_json("./ajax_json/sync_upload.php",{run_daemons:run_daemons,domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,data:log_data_chunk,last_sync:last_sync_time},function(response_object)
+				ajax_json(server_root+"/ajax_json/sync_upload.php",{run_daemons:run_daemons,domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,data:log_data_chunk,last_sync:last_sync_time},function(response_object)
 				{
 					console.log(response_object);
 					set_activities_to_synced(response_object);

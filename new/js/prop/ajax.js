@@ -53,7 +53,7 @@ function ajax_with_custom_func(url,kvp,func)
 					show_loader();
 					var pass=document.getElementById("lock_form").elements['password'].value;
 					var user_kvp={domain:domain,user:user,pass:pass,os:navigator.platform,browser:navigator.userAgent};
-					ajax_json("./ajax_json/login.php",user_kvp,function(response_object)
+					ajax_json(server_root+"/ajax_json/login.php",user_kvp,function(response_object)
 					{
 						if(response_object.status=="Failed Authentication")
 						{
@@ -115,7 +115,7 @@ function server_read_single_column(column,callback,results)
 	var domain=get_domain();
 	var username=get_username();
 	var re_access=get_session_var('re');
-	ajax_with_custom_func("./ajax/get_single_column.php",{domain:domain,username:username,re:re_access,columns:column},function(e)
+	ajax_with_custom_func(server_root+"/ajax/get_single_column.php",{domain:domain,username:username,re:re_access,columns:column},function(e)
 	{
 		//console.log(column);
 		//console.log(e.responseText);
@@ -143,7 +143,7 @@ function server_read_multiple_column(columns,callback,results)
 	var domain=get_domain();
 	var username=get_username();
 	var re_access=get_session_var('re');
-	ajax_with_custom_func("./ajax/get_rows.php",{domain:domain,username:username,re:re_access,columns:columns},function(e)
+	ajax_with_custom_func(server_root+"/ajax/get_rows.php",{domain:domain,username:username,re:re_access,columns:columns},function(e)
 	{
 		//console.log(columns);
 		//console.log(e.responseText);
@@ -181,7 +181,7 @@ function server_delete_row(data_xml,activity_xml)
 	var domain=get_domain();
 	var username=get_username();
 	var del_access=get_session_var('del');
-	ajax_with_custom_func("./ajax/delete_row.php",{domain:domain,username:username,del:del_access,data_xml:data_xml,activity_xml:activity_xml},function(e)
+	ajax_with_custom_func(server_root+"/ajax/delete_row.php",{domain:domain,username:username,del:del_access,data_xml:data_xml,activity_xml:activity_xml},function(e)
 	{
 		console.log(e.responseText);
 		hide_loader();
@@ -197,7 +197,7 @@ function server_delete_simple(data_xml)
 	var domain=get_domain();
 	var username=get_username();
 	var del_access=get_session_var('del');
-	ajax_with_custom_func("./ajax/delete_simple.php",{domain:domain,username:username,del:del_access,data_xml:data_xml},function(e)
+	ajax_with_custom_func(server_root+"/ajax/delete_simple.php",{domain:domain,username:username,del:del_access,data_xml:data_xml},function(e)
 	{
 		console.log(e.responseText);
 	});
@@ -211,7 +211,7 @@ function server_delete_simple_func(data_xml,func)
 	var domain=get_domain();
 	var username=get_username();
 	var del_access=get_session_var('del');
-	ajax_with_custom_func("./ajax/delete_simple.php",{domain:domain,username:username,del:del_access,data_xml:data_xml},function(e)
+	ajax_with_custom_func(server_root+"/ajax/delete_simple.php",{domain:domain,username:username,del:del_access,data_xml:data_xml},function(e)
 	{
 		console.log(e.responseText);
 		if(typeof func!="undefined")
@@ -228,7 +228,7 @@ function server_create_row(data_xml,activity_xml)
 	var domain=get_domain();
 	var username=get_username();
 	var cr_access=get_session_var('cr');
-	ajax_with_custom_func("./ajax/create_row.php",{domain:domain,username:username,cr:cr_access,data_xml:data_xml,activity_xml:activity_xml},function(e)
+	ajax_with_custom_func(server_root+"/ajax/create_row.php",{domain:domain,username:username,cr:cr_access,data_xml:data_xml,activity_xml:activity_xml},function(e)
 	{
 		console.log(e.responseText);
 		hide_loader();
@@ -245,7 +245,7 @@ function server_create_row_func(data_xml,activity_xml,func)
 	var domain=get_domain();
 	var username=get_username();
 	var cr_access=get_session_var('cr');
-	ajax_with_custom_func("./ajax/create_row.php",{domain:domain,username:username,cr:cr_access,data_xml:data_xml,activity_xml:activity_xml},function(e)
+	ajax_with_custom_func(server_root+"/ajax/create_row.php",{domain:domain,username:username,cr:cr_access,data_xml:data_xml,activity_xml:activity_xml},function(e)
 	{
 		console.log(e.responseText);
 		hide_loader();
@@ -268,7 +268,7 @@ function server_create_simple(data_xml)
 	var domain=get_domain();
 	var username=get_username();
 	var cr_access=get_session_var('cr');
-	ajax_with_custom_func("./ajax/create_simple.php",{domain:domain,username:username,cr:cr_access,data_xml:data_xml},function(e)
+	ajax_with_custom_func(server_root+"/ajax/create_simple.php",{domain:domain,username:username,cr:cr_access,data_xml:data_xml},function(e)
 	{
 		console.log(e.responseText);
 		if(e.responseText=='duplicate record')
@@ -283,7 +283,7 @@ function server_create_simple_func(data_xml,func)
 	var domain=get_domain();
 	var username=get_username();
 	var cr_access=get_session_var('cr');
-	ajax_with_custom_func("./ajax/create_simple.php",{domain:domain,username:username,cr:cr_access,data_xml:data_xml},function(e)
+	ajax_with_custom_func(server_root+"/ajax/create_simple.php",{domain:domain,username:username,cr:cr_access,data_xml:data_xml},function(e)
 	{
 		console.log(e.responseText);
 		if(e.responseText=='duplicate record')
@@ -310,7 +310,7 @@ function server_create_batch(data_xml)
 	var data_xml_array=data_xml.split("<separator></separator>");
 	data_xml_array.forEach(function(data_chunk)
 	{
-		ajax_with_custom_func("./ajax/create_batch.php",{domain:domain,username:username,cr:cr_access,data_xml:data_chunk,user_display:'yes'},function(e)
+		ajax_with_custom_func(server_root+"/ajax/create_batch.php",{domain:domain,username:username,cr:cr_access,data_xml:data_chunk,user_display:'yes'},function(e)
 		{
 			//console.log(e.responseText);
 		});
@@ -336,7 +336,7 @@ function server_create_batch_noloader(data_xml)
 	var data_xml_array=data_xml.split("<separator></separator>");
 	data_xml_array.forEach(function(data_chunk)
 	{
-		ajax_with_custom_func("./ajax/create_batch.php",{domain:domain,username:username,cr:cr_access,data_xml:data_chunk,user_display:'no'},function(e)
+		ajax_with_custom_func(server_root+"/ajax/create_batch.php",{domain:domain,username:username,cr:cr_access,data_xml:data_chunk,user_display:'no'},function(e)
 		{
 			//console.log(e.responseText);
 		});
@@ -349,7 +349,7 @@ function server_create_simple_no_warning(data_xml)
 	var domain=get_domain();
 	var username=get_username();
 	var cr_access=get_session_var('cr');
-	ajax_with_custom_func("./ajax/create_simple.php",{domain:domain,username:username,cr:cr_access,data_xml:data_xml},function(e)
+	ajax_with_custom_func(server_root+"/ajax/create_simple.php",{domain:domain,username:username,cr:cr_access,data_xml:data_xml},function(e)
 	{
 		console.log(e.responseText);
 	});
@@ -363,7 +363,7 @@ function server_update_row(data_xml,activity_xml)
 	var username=get_username();
 	var up_access=get_session_var('up');
 	//data_xml=data_xml.replace(/\+/g,'%2B');
-	ajax_with_custom_func("./ajax/update_row.php",{domain:domain,username:username,up:up_access,data_xml:data_xml,activity_xml:activity_xml},function(e)
+	ajax_with_custom_func(server_root+"/ajax/update_row.php",{domain:domain,username:username,up:up_access,data_xml:data_xml,activity_xml:activity_xml},function(e)
 	{
 		console.log(e.responseText);
 		hide_loader();
@@ -377,7 +377,7 @@ function server_update_simple(data_xml)
 	var username=get_username();
 	var up_access=get_session_var('up');
 	//data_xml=data_xml.replace(/\+/g,'%2B');
-	ajax_with_custom_func("./ajax/update_simple.php",{domain:domain,username:username,up:up_access,data_xml:data_xml},function(e)
+	ajax_with_custom_func(server_root+"/ajax/update_simple.php",{domain:domain,username:username,up:up_access,data_xml:data_xml},function(e)
 	{
 		console.log(e.responseText);
 	});
@@ -390,7 +390,7 @@ function server_update_simple_func(data_xml,func)
 	var up_access=get_session_var('up');
 	//data_xml=data_xml.replace(/\+/g,'%2B');
 	
-	ajax_with_custom_func("./ajax/update_simple.php",{domain:domain,username:username,up:up_access,data_xml:data_xml},function(e)
+	ajax_with_custom_func(server_root+"/ajax/update_simple.php",{domain:domain,username:username,up:up_access,data_xml:data_xml},function(e)
 	{
 		//console.log(e.responseText);
 		if(typeof func!="undefined")
@@ -412,7 +412,7 @@ function server_update_batch(data_xml)
 	var data_xml_array=data_xml.split("<separator></separator>");
 	data_xml_array.forEach(function(data_chunk)
 	{
-		ajax_with_custom_func("./ajax/update_batch.php",{domain:domain,username:username,up:up_access,data_xml:data_chunk},function(e)
+		ajax_with_custom_func(server_root+"/ajax/update_batch.php",{domain:domain,username:username,up:up_access,data_xml:data_chunk},function(e)
 		{
 			console.log(e.responseText);
 		});
@@ -434,7 +434,7 @@ function server_get_inventory(product,batch,callback)
 	var domain=get_domain();
 	var username=get_username();
 	var re_access=get_session_var('re');
-	ajax_with_custom_func("./ajax/get_inventory.php",{domain:domain,username:username,re:re_access,product:product,batch:batch},function(e)
+	ajax_with_custom_func(server_root+"/ajax/get_inventory.php",{domain:domain,username:username,re:re_access,product:product,batch:batch},function(e)
 	{
 		//console.log(e.responseText);
 		if(isNaN(e.responseText))
@@ -453,7 +453,7 @@ function server_get_store_inventory(store,product,batch,callback)
 	var domain=get_domain();
 	var username=get_username();
 	var re_access=get_session_var('re');
-	ajax_with_custom_func("./ajax/get_store_inventory.php",{domain:domain,username:username,re:re_access,store:store,product:product,batch:batch},function(e)
+	ajax_with_custom_func(server_root+"/ajax/get_store_inventory.php",{domain:domain,username:username,re:re_access,store:store,product:product,batch:batch},function(e)
 	{
 		//console.log(e.responseText);
 		if(isNaN(e.responseText))
@@ -473,7 +473,7 @@ function server_get_available_inventory(product,batch,data_array,callback)
 	var domain=get_domain();
 	var username=get_username();
 	var re_access=get_session_var('re');
-	ajax_with_custom_func("./ajax/get_available_inventory.php",{domain:domain,username:username,re:re_access,data_array:data_array,product:product,batch:batch},function(e)
+	ajax_with_custom_func(server_root+"/ajax/get_available_inventory.php",{domain:domain,username:username,re:re_access,data_array:data_array,product:product,batch:batch},function(e)
 	{
 		if(isNaN(e.responseText))
 		{
@@ -491,7 +491,7 @@ function server_generate_report(report_id,results,callback)
 	var domain=get_domain();
 	var username=get_username();
 	var re_access=get_session_var('re');
-	ajax_with_custom_func("./ajax/generate_report.php",{domain:domain,username:username,re:re_access,report_id:report_id},function(e)
+	ajax_with_custom_func(server_root+"/ajax/generate_report.php",{domain:domain,username:username,re:re_access,report_id:report_id},function(e)
 	{
 		//console.log(e.responseText);
 		var row=e.responseXML.childNodes[0].childNodes;
@@ -518,7 +518,7 @@ function server_send_sms(to,message,type)
 	var username=get_username();
 	var read_access=get_session_var('re');
 	var sender_id=get_session_var('sms_sender_id');
-	ajax_with_custom_func("./ajax/sms.php",{sender_id:sender_id,domain:domain,username:username,re:read_access,message:message,type:type,to:to},function(e)
+	ajax_with_custom_func(server_root+"/ajax/sms.php",{sender_id:sender_id,domain:domain,username:username,re:read_access,message:message,type:type,to:to},function(e)
 	{
 		console.log(e.responseText);
 		hide_loader();

@@ -47,7 +47,7 @@ function report44_ini()
 	show_loader();
 	$('#report44_body').html("");
 	
-	ajax_with_custom_func("./ajax/ecommerce_products.php",{keywords:product_name,max_results:10},function(e)
+	ajax_with_custom_func(server_root+"/ajax/ecommerce_products.php",{keywords:product_name,max_results:10},function(e)
 	{
 		var row=e.responseXML.childNodes[0].childNodes;
 		for(var i=0; i<row.length; i++)

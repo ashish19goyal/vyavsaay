@@ -1007,7 +1007,6 @@ function form14_ini()
 						rowsHTML+="<input type='hidden' readonly='readonly' form='form14_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form14_"+result.id+"' title='Save'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form14_"+result.id+"' title='Delete' onclick='form14_delete_item($(this));'>";
-						rowsHTML+="<a id='form14_whatsapp_"+result.id+"' href='whatsapp://send?text="+message_string+"' target='_blank'><img style='width:25px;height:25px;' src='./images/whatsapp.jpeg' form='form14_"+result.id+"' title='Send details through WhatsApp'></a>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -1563,7 +1562,6 @@ function form35_ini()
 						rowsHTML+="<input type='hidden' form='form35_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form35_"+result.id+"' value='saved'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form35_"+result.id+"' value='saved' onclick='form35_delete_item($(this));'>";
-						rowsHTML+="<a id='form35_whatsapp_"+result.id+"' href='whatsapp://send?text="+message_string+"' target='_blank'><img style='width:25px;height:25px;' src='./images/whatsapp.jpeg' form='form35_"+result.id+"' title='Send details through WhatsApp'></a>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -1630,7 +1628,7 @@ function form41_ini()
 		var domain=get_domain();
 		var username=get_username();
 		var re_access=get_session_var('re');
-		ajax_with_custom_func("./ajax/geoCode.php",{domain:domain,username:username,type:'customers',re:re_access},function(e)
+		ajax_with_custom_func(server_root+"/ajax/geoCode.php",{domain:domain,username:username,type:'customers',re:re_access},function(e)
 		{
 			//console.log(e.responseText);
 
@@ -2123,7 +2121,7 @@ function form43_ini()
 								rowsHTML+="<form id='form24_"+id+"' autocomplete='off'></form>";
 									rowsHTML+="<td data-th='Item Name'>";
 										rowsHTML+="<input type='text' required form='form24_"+id+"' value='"+po_item.item_name+"'>";
-										rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form24_add_product_"+id+"'>";
+										rowsHTML+="<img src='"+server_root+"/images/add_image.png' class='add_image' title='Add new product' id='form24_add_product_"+id+"'>";
 										rowsHTML+="<br><textarea readonly='readonly' form='form24_"+id+"'></textarea>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Quantity'>";
@@ -4254,7 +4252,7 @@ function form85_ini()
 		var domain=get_domain();
 		var username=get_username();
 		var re_access=get_session_var('re');
-		ajax_with_custom_func("./ajax/geoCode.php",{domain:domain,username:username,type:'suppliers',re:re_access},function(e)
+		ajax_with_custom_func(server_root+"/ajax/geoCode.php",{domain:domain,username:username,type:'suppliers',re:re_access},function(e)
 		{
 			console.log(e.responseText);
 
@@ -4417,7 +4415,7 @@ function form86_ini()
 		var domain=get_domain();
 		var username=get_username();
 		var re_access=get_session_var('re');
-		ajax_with_custom_func("./ajax/geoCode.php",{domain:domain,username:username,type:'staff',re:re_access},function(e)
+		ajax_with_custom_func(server_root+"/ajax/geoCode.php",{domain:domain,username:username,type:'staff',re:re_access},function(e)
 		{
 			$('#form86_header').html("");
 		
@@ -7258,9 +7256,9 @@ function form122_ini()
 					rowsHTML+="<td data-th='Check'>";
 						rowsHTML+="<input type='text' form='form122_"+id+"' value='"+result.qc+"' readonly='readonly'>";
 						if(result.qc=='accepted')
-							rowsHTML+=" <img src='./images/green_circle.png' class='green_circle'>";
+							rowsHTML+=" <img src='"+server_root+"/images/green_circle.png' class='green_circle'>";
 						else
-							rowsHTML+=" <img src='./images/red_circle.png' class='red_circle'>";
+							rowsHTML+=" <img src='"+server_root+"/images/red_circle.png' class='red_circle'>";
 						rowsHTML+="<br><b>Comments</b>: <textarea form='form122_"+id+"' readonly='readonly'>"+result.qc_comments+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
@@ -7593,7 +7591,7 @@ function form126_ini()
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Solutions'>";
 							rowsHTML+="<textarea readonly='readonly' form='form126_"+result.id+"'>"+solutions+"</textarea>";
-							rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add solution' onclick=\"modal48_action('"+result.id+"');\">";
+							rowsHTML+="<img src='"+server_root+"/images/add_image.png' class='add_image' title='Add solution' onclick=\"modal48_action('"+result.id+"');\">";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form126_"+result.id+"' value='"+result.id+"'>";
@@ -8274,7 +8272,6 @@ function form131_ini()
 									rowsHTML+="<input type='submit' class='save_icon' form='form131_"+result.id+"' title='Save'>";
 								if(del)		
 									rowsHTML+="<input type='button' class='delete_icon' form='form131_"+result.id+"' title='Delete' onclick='form131_delete_item($(this));'>";
-								rowsHTML+="<a id='form131_whatsapp_"+result.id+"' href='whatsapp://send?text="+message_string+"' target='_blank'><img style='width:25px;height:25px;' src='./images/whatsapp.jpeg' form='form131_"+result.id+"' title='Send details through WhatsApp'></a>";
 							rowsHTML+="</td>";			
 					rowsHTML+="</tr>";
 			
@@ -9320,11 +9317,11 @@ function form150_ini()
 					}
 					if(liked)
 					{
-						var likes_content="<img src='../images/thumbs_up.png' class='thumbs_icon' onclick=\"dislike_feed('"+feed_result.id+"',$(this))\"> <b id='form150_likes_count_"+feed_result.id+"'>"+like_results.length+"</b> likes";
+						var likes_content="<img src='"+server_root+"/images/thumbs_up.png' class='thumbs_icon' onclick=\"dislike_feed('"+feed_result.id+"',$(this))\"> <b id='form150_likes_count_"+feed_result.id+"'>"+like_results.length+"</b> likes";
 					}
 					else 
 					{
-						var likes_content="<img src='../images/thumbs_up_line.png' class='thumbs_icon' onclick=\"like_feed('"+feed_result.id+"',$(this))\"> <b id='form150_likes_count_"+feed_result.id+"'>"+like_results.length+"</b> likes";
+						var likes_content="<img src='"+server_root+"/images/thumbs_up_line.png' class='thumbs_icon' onclick=\"like_feed('"+feed_result.id+"',$(this))\"> <b id='form150_likes_count_"+feed_result.id+"'>"+like_results.length+"</b> likes";
 					}
 					$('#form150_likes_'+feed_result.id).html(likes_content);
 				},like_columns);
@@ -10268,7 +10265,7 @@ function form155_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Sale price'>";
 						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form155_"+result.id+"' value='"+result.sale_price+"'>";
-						rowsHTML+="<img src='./images/edit.png' class='edit_icon' onclick=\"modal38_action('"+result.id+"','"+result.sale_price+"');\">";
+						rowsHTML+="<img src='"+server_root+"/images/edit.png' class='edit_icon' onclick=\"modal38_action('"+result.id+"','"+result.sale_price+"');\">";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Quantity'>";
 						rowsHTML+="Fresh: <input type='number' step='any' readonly='readonly' form='form155_"+result.id+"'>";
@@ -11293,7 +11290,7 @@ function form165_ini()
 										rowsHTML+="<input type='text' form='row_form165_"+result.id+"' readonly='readonly' value='"+result.storage+"'>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Action'>";
-										rowsHTML+="<img src='./images/edit.png' class='edit_icon' title='Edit Location' id='form165_edit_location_"+result.id+"'>";
+										rowsHTML+="<img src='"+server_root+"/images/edit.png' class='edit_icon' title='Edit Location' id='form165_edit_location_"+result.id+"'>";
 										rowsHTML+="<input type='hidden' form='row_form165_"+result.id+"' value='Put-away' onclick='modal163_action($(this));'>";
 										rowsHTML+="<input type='hidden' form='row_form165_"+result.id+"' value='"+result.id+"'>";
 										rowsHTML+="<input type='hidden' form='row_form165_"+result.id+"' value='"+result.table_type+"'>";
@@ -11532,16 +11529,16 @@ function form169_ini()
 							{
 								if(smaller_barcodes!=null && smaller_barcodes.indexOf(result.make)>-1)
 								{
-									rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+result.bar_code+"' onclick=\"print_smaller_product_barcode('"+result.bar_code+"','"+result.name+"','"+result.description+"');\">";
+									rowsHTML+="<img src='"+server_root+"/images/barcode.png' class='barcode_icon' title='Print Barcode - "+result.bar_code+"' onclick=\"print_smaller_product_barcode('"+result.bar_code+"','"+result.name+"','"+result.description+"');\">";
 								}
 								else 
 								{
-									rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+result.bar_code+"' onclick=\"print_product_barcode('"+result.bar_code+"','"+result.name+"','"+result.description+"');\">";
+									rowsHTML+="<img src='"+server_root+"/images/barcode.png' class='barcode_icon' title='Print Barcode - "+result.bar_code+"' onclick=\"print_product_barcode('"+result.bar_code+"','"+result.name+"','"+result.description+"');\">";
 								}
 							}
 							else
 							{
-								rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Click to assign barcode' onclick=\"modal139_action('"+result.id+"','"+result.name+"','"+result.description+"',this);\">";
+								rowsHTML+="<img src='"+server_root+"/images/barcode.png' class='barcode_icon' title='Click to assign barcode' onclick=\"modal139_action('"+result.id+"','"+result.name+"','"+result.description+"',this);\">";
 							}
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Name'>";
@@ -11684,7 +11681,7 @@ function form170_ini()
 				rowsHTML+="<form id='form170_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Name'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form170_"+result.id+"' value='"+result.name+"'>";
-						rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode' onclick=\"print_barcode('"+result.name+"');\">";
+						rowsHTML+="<img src='"+server_root+"/images/barcode.png' class='barcode_icon' title='Print Barcode' onclick=\"print_barcode('"+result.name+"');\">";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Type'>";
 						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form170_"+result.id+"' value='"+result.area_type+"'>";

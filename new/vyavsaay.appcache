@@ -234,6 +234,7 @@ js/prop/local_online.js
 js/prop/login_helper.js
 js/prop/modal_action.js
 js/prop/my_chart.js
+js/prop/navigation.js
 js/prop/numeral.js
 js/prop/print.js
 js/prop/questionnaire.js

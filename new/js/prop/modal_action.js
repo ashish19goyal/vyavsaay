@@ -14322,7 +14322,7 @@ function modal176_action(data_id,doc_type,func,master)
 					$.ajax(
 					{
 						type: "POST",
-						url: "./ajax/s3_doc.php",
+						url: server_root+"/ajax/s3_doc.php",
 						data: 
 						{
 							blob: url,

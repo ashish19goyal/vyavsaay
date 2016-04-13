@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	echo "redirecting";
-	
+	$SERVER_ROOT="/new";
 	$_SESSION=array();
 	session_unset();	
 
@@ -10,6 +10,6 @@
 	
 	session_destroy();
 
-	header("Location: index.html");
+	header("Location: ".$SERVER_ROOT."/index.html");
 
 ?>

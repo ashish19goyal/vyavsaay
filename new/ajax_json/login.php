@@ -52,7 +52,6 @@ use RetailingEssentials\db_connect;
 				$user_pass_verify=password_verify($pass,$pass_hash);
 				$master_pass_verify=password_verify($pass,$master_pass_hash);
 				
-				///vy@v5@@y11122015
 				if(!$user_pass_verify && !$master_pass_verify)
 				{
 					$response_object['status']='Failed Authentication';
