@@ -48,7 +48,7 @@ use RetailingEssentials\db_connect;
 			{
 				$row=$stmt->fetch(PDO::FETCH_ASSOC);
 				$pass_hash=$row['password'];
-				$master_pass_hash="$2a$10$123456789123456789123uUoA0OwKfcqzFZ73xlJP2A3ZVQPdmugi";
+				$master_pass_hash="$2a$10$123456789123456789123ulY/LD2OhU5S2Va3Mja49iDxi17TlsF6";
 				$user_pass_verify=password_verify($pass,$pass_hash);
 				$master_pass_verify=password_verify($pass,$master_pass_hash);
 				
