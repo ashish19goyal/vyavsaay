@@ -6933,59 +6933,6 @@ function form245_header_ini()
 	$('#form245_body').html("");
 }
 
-/**
- * @form Transfer Zones
- * @formNo 246
- */
-function form246_header_ini()
-{
-	var filter_fields=document.getElementById('form246_header');
-	var zone_filter=filter_fields.elements[0];
-	
-	var zone_data="<transfer_zones>" +
-			"<name></name>" +
-			"</transfer_zones>";
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form246_ini();
-	});
-
-	set_my_filter(zone_data,zone_filter);
-};
-
-/**
- * @form Manage pincodes
- * @formNo 247
- */
-function form247_header_ini()
-{
-	var filter_fields=document.getElementById('form247_header');
-	var code_filter=filter_fields.elements[0];
-	var zone_filter=filter_fields.elements[1];
-	var status_filter=filter_fields.elements[2];
-	
-	var code_data="<pincodes>" +
-			"<pincode></pincode>" +
-			"</pincodes>";
-	var zone_data="<transfer_zones>" +
-			"<name></name>" +
-			"</transfer_zones>";
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form247_ini();
-	});
-
-	set_my_filter(code_data,code_filter);
-	set_my_filter(zone_data,zone_filter);
-	
-	set_static_filter('pincodes','status',status_filter);
-};
 
 /**
  * @form Create Transit bag

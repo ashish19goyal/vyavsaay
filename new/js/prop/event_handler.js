@@ -663,10 +663,6 @@ function import_data(form_name)
 		break;
 		case 'form245':modal23_action(form245_import_template,form245_import,form245_import_validate);
 		break;
-		case 'form246':modal23_action(form246_import_template,form246_import);
-		break;
-		case 'form247':modal23_action(form247_import_template,form247_import);
-		break;
 		case 'form273':modal23_action(form273_import_template,form273_import,form273_import_validate);
 		break;
 		case 'form274':modal23_action(form274_import_template,form274_import,form274_import_validate);

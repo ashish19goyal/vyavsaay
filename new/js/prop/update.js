@@ -9697,68 +9697,6 @@ function form244_update_form()
 	}
 }
 
-/**
- * @form Transfer Zones
- * @param button
- */
-function form246_update_item(form)
-{
-	if(is_update_access('form246'))
-	{
-		var zone=form.elements[0].value;
-		var description=form.elements[1].value;
-		var data_id=form.elements[2].value;
-		
-		var last_updated=get_my_time();
-		var data_xml="<transfer_zones>" +
-					"<id>"+data_id+"</id>" +
-					"<description>"+description+"</description>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</transfer_zones>";	
-		update_simple(data_xml);
-		
-		for(var i=0;i<2;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
- * @form Manage Pincodes
- * @param button
- */
-function form247_update_item(form)
-{
-	if(is_update_access('form247'))
-	{
-		var zone=form.elements[1].value;
-		var status=form.elements[2].value;
-		var data_id=form.elements[3].value;
-		
-		var last_updated=get_my_time();
-		var data_xml="<pincodes>" +
-					"<id>"+data_id+"</id>" +
-					"<zone>"+zone+"</zone>" +
-					"<status>"+status+"</status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</pincodes>";	
-		update_simple(data_xml);
-		
-		for(var i=0;i<3;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * formNo 248

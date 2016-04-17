@@ -907,26 +907,6 @@ function form245_import_template()
 	my_array_to_csv(data_array);
 };
 
-/**
-* @form Transfer Zones
-* @formNo 246
-*/
-function form246_import_template()
-{
-	var data_array=['id','name','description'];
-	my_array_to_csv(data_array);
-};
-
-/**
-* @form Manage Pincodes
-* @formNo 247
-*/
-function form247_import_template()
-{
-	var data_array=['id','pincode','zone','status'];
-	my_array_to_csv(data_array);
-};
-
 
 /**
 * @form Purchase leads
