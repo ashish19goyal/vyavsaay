@@ -155,6 +155,8 @@
                 item['Merchant Address']=item.return_address1+", "+item.return_address2+", "+item.return_address3;
                 item['Mobile No']=item.phone;
                 item['Product Name']=item.sku;
+                item['DRS #']=item.drs_num;
+                item['DRS Time']=get_my_past_date(item.drs_time);
              
                 delete item.id;
                 delete item.awb_num;
@@ -171,6 +173,8 @@
                 delete item.return_address1;
                 delete item.return_address2;
                 delete item.return_address3;
+                delete item.drs_num;
+                delete item.drs_time;
             });
 
             hide_loader();
