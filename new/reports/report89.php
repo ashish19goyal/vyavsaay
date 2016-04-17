@@ -1,28 +1,48 @@
-<div id='report89' class='tab-pane'>
-	<form id='report89_header' autocomplete="off">
-		<fieldset>
-			<label>Delivery Person<br><input type='text' name='person'></label>
-			<label>Start Date<br><input type='text' name='start' required></label>
-			<label>End Date<br><input type='text' name='end' required></label>
-			<label>
-				<input type='submit' value='Refresh' class='generic_icon'>
-				<input type='button' title='Print' class='print_icon'>
-				<input type='button' title='Download CSV' class='csv_icon' name='csv'>			
-			</label>
-		</fieldset>
-	</form>
-	<table class='rwd-table'>
-		<thead>
-			<tr>
-				<th>Person</th>
-				<th>AWB #</th>
-				<th>Order Date</th>
-				<th>Delivery Date</th>
-			</tr>
-		</thead>
-		<tbody id='report89_body'>
-		</tbody>
-	</table>
+<div id='report89' class='tab-pane portlet box red-sunglo'>	   
+	<div class="portlet-title">
+		<div class='caption'>		
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report89_ini();'>Refresh</a>
+		</div>		
+		<div class="actions">
+            <div class="btn-group">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
+                <ul class="dropdown-menu pull-right">
+                    <li>
+                        <a id='report89_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
+                    </li>
+                    <li>
+                        <a id='report89_print'><i class='fa fa-print'></i> Print</a>
+                    </li>
+                    <li>
+                        <a id='report89_email'><i class='fa fa-envelope'></i> Email</a>
+                    </li>
+                </ul>
+            </div>
+        </div>	
+	</div>
+	
+	<div class="portlet-body">
+		<form id='report89_header' autocomplete="off">
+			<fieldset>
+				<label><input type='text' placeholder="Delivery Person" class='floatlabel' name='person'></label>
+                <label><input type='text' placeholder="Import Start Date" class='floatlabel' name='start'></label>
+                <label><input type='text' placeholder="Import End Date" class='floatlabel' name='end'></label>
+				<label><input type='submit' class='submit_hidden'></label>			
+			</fieldset>
+		</form>
+	<br>
+		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
+			<thead>
+				<tr>
+					<th>Person</th>
+                    <th>AWB #</th>
+                    <th>Import Date</th>
+                    <th>Delivery Date</th>
+                </tr>
+			</thead>
+			<tbody id='report89_body'></tbody>
+		</table>
+	</div>
 	
 	<script>
 
@@ -40,15 +60,15 @@ function report89_header_ini()
 		report89_ini();
 	});
 
-	var person_data="<staff>"+
-				"<acc_name></acc_name>"+
-				"</staff>";
-	set_my_filter(person_data,person_filter);
+	var person_data={data_store:'staff',return_column:'acc_name'};
+	set_my_filter_json(person_data,person_filter);
 	
 	$(start_filter).datepicker();
 	$(end_filter).datepicker();
 	start_filter.value=get_my_past_date(get_my_time()-7*86400000);
 	end_filter.value=get_my_date();
+    
+    $('#report89').formcontrol();
 }
 
 function report89_ini()
@@ -61,29 +81,13 @@ function report89_ini()
 	
 	$('#report89_body').html('');
 	
-	if_data_read_access('store_areas',function(accessible_data)
-	{
-		console.log(accessible_data);
-		var branches_array=[];
-		var branch_object={index:'branch',array:branches_array};
-		
-		for(var x in accessible_data)
-		{
-			branches_array.push(accessible_data[x].name);
-			if(accessible_data[x].record_id=='all')
-			{
-				branch_object={index:'branch'};
-				break;
-			}
-		}
-	
-		var columns=new Object();
-		columns.count=0;
-		columns.start_index=0;
-		columns.data_store='logistics_orders';		
-		
-		columns.indexes=[{index:'id'},
-						{index:'awb_num'},
+	var paginator=$('#report89_body').paginator({'page_size':25});
+        
+    var columns={count:paginator.page_size(),
+                start_index:paginator.get_index(),
+                data_store:'logistics_orders',
+                indexes:[{index:'id'},
+                         {index:'awb_num'},
 						{index:'import_date',lowerbound:start_date,upperbound:end_date},
 						{index:'order_num'},
 						{index:'status',exact:'delivered'},
@@ -95,9 +99,7 @@ function report89_ini()
 						{index:'return_address1'},
 						{index:'return_address2'},
 						{index:'return_address3'},
-						{index:'order_history'},
-						{index:'drs_num'},
-						branch_object];		
+						{index:'order_history'}]};		
 	
 		read_json_rows('report89',columns,function(deliveries)
 		{
@@ -118,12 +120,12 @@ function report89_ini()
 				}
 				
 				var rowsHTML="<tr>";
-					rowsHTML+="<td data-th='Person'>";
+					rowsHTML+="<td data-th='Person'><a onclick=\"show_object('staff','"+result.delivery_person+"');\">";
 						rowsHTML+=result.delivery_person;
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='AWB #'>";
+					rowsHTML+="</a></td>";
+					rowsHTML+="<td data-th='AWB #'><a onclick=\"show_object('awb','"+result.awb_num+"');\">";
 						rowsHTML+=result.awb_num;
-					rowsHTML+="</td>";
+					rowsHTML+="</a></td>";
 					rowsHTML+="<td data-th='Date'>";
 						rowsHTML+=get_my_past_date(result.import_date);
 					rowsHTML+="</td>";
@@ -131,41 +133,43 @@ function report89_ini()
 						rowsHTML+=result.delivery_date;
 					rowsHTML+="</td>";
 				rowsHTML+="</tr>";
-			
-	
+
 				$('#report89_body').append(rowsHTML);			
 			});
 			
-			var print_button=form.elements[5];
-			print_tabular_report('report89','Deliveries by person',print_button);
-			
-			var csv_button=form.elements['csv'];
-			$(csv_button).off("click");
-			$(csv_button).on("click", function(event)
-			{
-				var sorted_array=[];
-				deliveries.forEach(function(new_result)
-				{
-					var sorted_element=new Object();
-					sorted_element['AWB No']=new_result.awb_num;
-					sorted_element['Order Id']=new_result.order_num;
-					sorted_element['status']=new_result.status;
-					sorted_element['Manifest Import Date']=get_my_past_date(new_result.import_date);
-					sorted_element['Delivery Boy']=new_result.delivery_person;
-					sorted_element['AWB Type']=new_result.manifest_type;
-					sorted_element['Merchant']=new_result.merchant_name;
-					sorted_element['Merchant Address']=new_result.return_address1+", "+new_result.return_address2+", "+new_result.return_address3;
-					sorted_element['Mobile No']=new_result.phone;
-					sorted_element['Product Name']=new_result.sku;
-					
-					sorted_array.push(sorted_element);
-				});
-				csv_download_report(sorted_array,'Delivery Report');
-			});
-			
-			hide_loader();
+			initialize_tabular_report_buttons(columns,'Deliveries (by person)','report89',function (item)
+            {
+                item['AWB No']=item.awb_num;
+                item['Order Id']=item.order_num;
+                item['Import Date']=get_my_past_date(item.import_date);
+                item['Status']=item.status;
+                item['AWB Type']=item.manifest_type;
+                item['Delivery Boy']=item.delivery_person;
+                item['AWB Type']=item.manifest_type;
+                item['Merchant']=item.merchant_name;
+                item['Merchant Address']=item.return_address1+", "+item.return_address2+", "+item.return_address3;
+                item['Mobile No']=item.phone;
+                item['Product Name']=item.sku;
+             
+                delete item.id;
+                delete item.awb_num;
+                delete item.import_date;
+                delete item.order_num;
+                delete item.status;
+                delete item.manifest_type;
+                delete item.merchant_name;
+                delete item.phone;
+                delete item.sku;
+                delete item.delivery_person;
+                delete item.return_address1;
+                delete item.return_address2;
+                delete item.return_address3;
+            });
+
+            paginator.update_index(deliveries.length);
+            hide_loader();
 		});
-	});
+
 };
 	
 	</script>

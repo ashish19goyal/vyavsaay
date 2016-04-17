@@ -311,7 +311,7 @@
 					$sms_instance->sender_id($sender_id);
 				$sms_instance->send_stored_sms($domain);
 				
-				$email_instance=new send_mailer_json();
+				$email_instance=new send_mailer_json($domain);
 				$email_instance->send_stored_mailer($domain);
 
 				$s3_instance=new s3_object();

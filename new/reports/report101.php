@@ -46,8 +46,6 @@
     {
         show_loader();
 
-        $('#report101_body').html('');
-
         var letters_data=new Object();
                 letters_data.data_store='letters';
 

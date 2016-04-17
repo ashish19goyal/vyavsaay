@@ -12,11 +12,13 @@ class send_mailer_json
 	public $username=null;
 	public $password=null;
 	public $sender_id=null;
+    public $domain=null;
 	public $url=null;
 
-	public function __construct()
+	public function __construct($domain)
 	{
 		$this->api_key='Ub0h4w5NVLE6GdyXrYFlZw';
+        $this->domain=$domain;
 		$this->mandrill = new Mandrill($this->api_key);
 	}
 
@@ -66,7 +68,7 @@ class send_mailer_json
 		$final_message = array(
 	        'html' => $message,
 	        'subject' => $subject,
-	        'from_email' => $from,
+	        'from_email' => $this->domain."@vyavsaay.com",
 	        'from_name' => $from_name,
 	        'to' => $to,
 	        'headers' => array('Reply-To' => $from),
@@ -91,8 +93,8 @@ class send_mailer_json
        		$final_message = array(
 		        'html' => $message,
 		        'subject' => $subject,
-		        'from_email' => $from,
-		        'from_name' => $from_name,
+		        'from_email' => $this->domain."@vyavsaay.com",
+                'from_name' => $from_name,
 		        'to' => $to,
 		        'headers' => array('Reply-To' => $from),
 		        'preserve_recipients' => false,
@@ -152,8 +154,8 @@ class send_mailer_json
 		$final_message = array(
 	        'html' => $message,
 	        'subject' => $subject,
-	        'from_email' => $from,
-	        'from_name' => $from_name,
+	        'from_email' => $this->domain."@vyavsaay.com",
+            'from_name' => $from_name,
 	        'to' => $to,
 	        'headers' => array('Reply-To' => $from),
 	        'preserve_recipients' => false,
@@ -177,8 +179,8 @@ class send_mailer_json
        		$final_message = array(
 		        'html' => $message,
 		        'subject' => $subject,
-		        'from_email' => $from,
-		        'from_name' => $from_name,
+		        'from_email' => $this->domain."@vyavsaay.com",
+                'from_name' => $from_name,
 		        'to' => $to,
 		        'headers' => array('Reply-To' => $from),
 		        'preserve_recipients' => false,
@@ -236,7 +238,7 @@ class send_mailer_json
 		$final_message = array(
 	        'html' => $message,
 	        'subject' => $subject,
-	        'from_email' => $from,
+	        'from_email' => $this->domain."@vyavsaay.com",
 	        'from_name' => $from_name,
 	        'to' => $to,
 	        'headers' => array('Reply-To' => $from),
@@ -262,7 +264,7 @@ class send_mailer_json
        		$final_message = array(
 		        'html' => $message,
 		        'subject' => $subject,
-		        'from_email' => $from,
+		        'from_email' => $this->domain."@vyavsaay.com",
 		        'from_name' => $from_name,
 		        'to' => $to,
 		        'headers' => array('Reply-To' => $from),

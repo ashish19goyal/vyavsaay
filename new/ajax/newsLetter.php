@@ -17,7 +17,7 @@
 	
 	$subject="New customer for newsletter";
 	$message="This mail was sent to *|name|*<br>Email: $email";
-	$email_instance=new send_mailer_json();
+	$email_instance=new send_mailer_json('vyavsaay');
 	$email_instance->direct_send($subject,$message,'',$to,$from,$from_name);
 	echo "mail success";
 	

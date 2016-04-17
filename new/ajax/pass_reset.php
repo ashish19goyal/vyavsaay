@@ -54,7 +54,7 @@
 			);
 			$to = json_encode($to_array);
 				
-			$email_instance=new send_mailer_json();
+			$email_instance=new send_mailer_json('vyavsaay');
 			$email_instance->direct_send($subject,$message,'',$to,$from,$from_name);
 			$email_instance->log_mailer($domain,$subject,$message,'',$to,$from,$from_name);	
 		}

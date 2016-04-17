@@ -60,7 +60,7 @@
 			);
 	$to = json_encode($to_array);
 				
-	$email_instance=new send_mailer_json();
+	$email_instance=new send_mailer_json('vyavsaay');
 	$email_instance->direct_send('Vyavsaay: Account Setup',$email_message,'',$to,$from,$from_name);
 	
 	function set_user_profiles($conn2,$pass_hash,$name,$email,$phone)
