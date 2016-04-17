@@ -2099,8 +2099,8 @@ function modal23_action(t_func,i_func,v_func)
 
         selected_file.value = "Uploading!! Please don't refresh";
     	var reader = new FileReader();
-      reader.onload = function(e)
-      {
+        reader.onload = function(e)
+        {
         	progress_value=5;
         	var content=reader.result;
         	var data_array=csv_string_to_obj_array(content);

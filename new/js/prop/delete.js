@@ -4528,34 +4528,6 @@ function form222_delete_item(button)
 
 
 /**
- * @form Delivery Run
- * @param button
- */
-function form226_delete_item(button)
-{
-	if(is_delete_access('form226'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var data_id=form.elements[5].value;
-			var data_xml="<delivery_run>" +
-						"<id>"+data_id+"</id>" +
-						"</delivery_run>";	
-			delete_simple(data_xml);
-			
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
  * formNo 228
  * form Demo
  * @param button
@@ -5566,34 +5538,6 @@ function form266_delete_item(button)
 	}
 }
 
-/**
- * @form Enter COD Collections
- * @formNo form271
- */
-function form271_delete_item(button)
-{
-	if(is_delete_access('form271'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);			
-			var data_id=form.elements[3].value;
-			
-			var data_xml="<cod_collections>" +
-						"<id>"+data_id+"</id>" +
-						"</cod_collections>";	
-			
-			delete_simple(data_xml);
-					
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Purchase Leads

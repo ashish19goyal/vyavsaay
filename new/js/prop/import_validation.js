@@ -153,20 +153,6 @@ function form245_import_validate(data_array)
 
 
 /**
-* @form Enter COD Collections
-* @formNo 271
-*/
-function form271_import_validate(data_array)
-{
-	var validate_template_array=[{column:'date',required:'yes',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
-							{column:'acc_name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
-							{column:'amount',required:'yes',regex:new RegExp('^[0-9.]+$')}];
-					
-	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
-}
-
-/**
 * @form Purchase Leads
 * @formNo 273
 */

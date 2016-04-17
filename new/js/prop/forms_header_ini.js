@@ -6371,33 +6371,6 @@ function form223_header_ini()
 };
 
 
-
-/**
- * @form Delivery Run
- * @formNo 226
- */
-function form226_header_ini()
-{
-	var filter_fields=document.getElementById('form226_header');
-	var person_filter=filter_fields.elements[0];
-	var date_filter=filter_fields.elements[1];
-		
-	var person_data="<staff>" +
-			"<acc_name></acc_name>" +
-			"</staff>";
-
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form226_ini();
-	});
-
-	set_my_filter(person_data,person_filter);
-	
-	$(date_filter).datepicker();
-};
-
 /**
  * @form Inventory Warehouse
  * @formNo 227
@@ -7513,31 +7486,6 @@ function form267_header_ini()
 	});
 }
 
-
-/**
- * @form Enter COD Collection
- * @formNo 271
- */
-function form271_header_ini()
-{
-	var filter_fields=document.getElementById('form271_header');
-	var person_filter=filter_fields.elements[0];
-	var date_filter=filter_fields.elements[1];
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form271_ini();
-	});
-
-	var staff_data="<staff>" +
-			"<acc_name></acc_name>" +
-			"</staff>";
-	
-	set_my_filter(staff_data,person_filter);
-	$(date_filter).datepicker();
-};
 
 /**
  * @form Capture Receiving

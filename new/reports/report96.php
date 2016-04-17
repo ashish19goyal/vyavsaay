@@ -1,26 +1,46 @@
-<div id='report96' class='tab-pane'>
-	<form id='report96_header' autocomplete="off">
-		<fieldset>
-			<label>Person<br><input type='text' name='person'></label>
-			<label>Date<br><input type='text' required name='date'></label>
-			<input type='submit' class='generic_icon' value='Refresh'>
-			<input type='button' class='print_icon' name='print'>
-		</fieldset>
-	</form>
-	<table class='rwd-table'>
-		<thead>
-			<tr>
-				<th style='width:auto;'>Person</th>
-				<th style='width:auto;'>Amount</th>
-				<th style='width:auto;'>Balance</th>
-			</tr>
-		</thead>
-		<tbody id='report96_body'>
-		</tbody>
-		<tfoot id='report96_foot'>
-		</tfoot>
-	</table>
+<div id='report96' class='tab-pane portlet box red-sunglo'>	   
+	<div class="portlet-title">
+		<div class='caption'>		
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report96_ini();'>Refresh</a>
+		</div>		
+		<div class="actions">
+            <div class="btn-group">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
+                <ul class="dropdown-menu pull-right">
+                    <li>
+                        <a id='report96_print'><i class='fa fa-print'></i> Print</a>
+                    </li>
+                    <li>
+                        <a id='report96_email'><i class='fa fa-envelope'></i> Email</a>
+                    </li>
+                </ul>
+            </div>
+        </div>	
+	</div>
 	
+	<div class="portlet-body">
+		<form id='report96_header' autocomplete="off">
+			<fieldset>
+				<label><input type='text' placeholder="Person" class='floatlabel' name='person'></label>
+				<label><input type='text' placeholder="Date" class='floatlabel' name='date'></label>
+				<label><input type='submit' class='submit_hidden'></label>			
+			</fieldset>
+		</form>
+	<br>
+		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
+			<thead>
+				<tr>
+					<th>Person</th>
+					<th>Amount Collected</th>
+                    <th>Amount Deposited</th>
+					<th>Balance</th>
+				</tr>
+			</thead>
+			<tbody id='report96_body'></tbody>
+            <tfoot id='report96_foot'></tfoot>
+		</table>
+	</div>
+
 	<script>
 
 function report96_header_ini()
@@ -42,10 +62,8 @@ function report96_header_ini()
 	$(date_filter).datepicker();
 	date_filter.value=get_my_date();
 	
-	var person_data="<staff>"+
-					"<acc_name></acc_name>"+
-					"</staff>";	
-	set_my_value_list(person_data,person_filter,function () 
+	var person_data={data_store:'staff',return_column:'acc_name'};
+	set_my_value_list_json(person_data,person_filter,function () 
 	{
 		$(person_filter).focus();
 	});	
@@ -55,43 +73,35 @@ function report96_ini()
 {
 	show_loader();
 	var form=document.getElementById('report96_header');
-	var person=form.elements[1].value;
-	var date=get_raw_time(form.elements[2].value);
+	var person=form.elements['person'].value;
+	var date=get_raw_time(form.elements['date'].value);
 	var end_time=date+86399000;
 	
 	$('#report96_body').html('');
 	$('#report96_foot').html('');
+    
+    var paginator=$('#report96_body').paginator({page_size:100});
+	
+	var list1_data={data_store:'staff',
+                    count:paginator.page_size(),
+			         start_index:paginator.get_index(),
+                  indexes:[{index:'id'},{index:'acc_name',value:person}]};
 
-	var list1_data=new Object();
-		list1_data.count=0;
-		list1_data.start_index=0;
-		list1_data.data_store='staff';		
-				
-		list1_data.indexes=[{index:'id'},{index:'acc_name',value:person}];
-
-	read_json_rows('',list1_data,function(staff)
+	read_json_rows('report96',list1_data,function(staff)
 	{
-		var list_data=new Object();
-			list_data.count=0;
-			list_data.start_index=0;
-			list_data.data_store='cod_collections';		
-					
-			list_data.indexes=[{index:'acc_name',value:person},
+		var list_data={data_store:'cod_collections',
+			         indexes:[{index:'acc_name',value:person},
 							{index:'date',exact:date},
-							{index:'amount'}];
+							{index:'amount'}]};
 			
 		read_json_rows('',list_data,function(collections)
 		{
-			var list2_data=new Object();
-				list2_data.count=0;
-				list2_data.start_index=0;
-				list2_data.data_store='logistics_orders';		
-	
-				list2_data.indexes=[{index:'delivery_person',value:person},
+			var list2_data={data_store:'logistics_orders',		
+	                       indexes:[{index:'delivery_person',value:person},
 									{index:'status',exact:'delivered'},
 									{index:'type',exact:'COD'},										
 									{index:'delivery_time',lowerbound:date,upperbound:end_time},
-									{index:'collectable_value'}];
+									{index:'collectable_value'}]};
 		
 			read_json_rows('',list2_data,function(orders_collection)
 			{	
@@ -128,54 +138,46 @@ function report96_ini()
 					
 					var rowsHTML="<tr>";
 						rowsHTML+="<td data-th='Person'>";
-							rowsHTML+=result.acc_name;
+							rowsHTML+="<a onclick=\"show_object('staff','"+result.acc_name+"');\">"+result.acc_name+"</a>";
 						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Amount'>";
-							rowsHTML+="<b>Collected</b>: Rs. "+staff_collected;
-							rowsHTML+="<br><b>Deposited</b>: Rs. "+staff_deposited;
+						rowsHTML+="<td data-th='Amount Collected'>";
+							rowsHTML+="Rs. "+staff_collected;
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Amount Deposited'>";
+							rowsHTML+="Rs. "+staff_deposited;
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Balance' id='report96_balance_"+result.id+"'>";
-							rowsHTML+="<a onclick=\"report96_show_balance('"+result.id+"','"+result.acc_name+"',"+date+");\"><u>Show Balance on "+form.elements[2].value+"</u></a>";
+							rowsHTML+="<a onclick=\"report96_show_balance('"+result.id+"','"+result.acc_name+"',"+date+");\">Show Balance on "+form.elements[2].value+"</a>";
 						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
 					
 					$('#report96_body').append(rowsHTML);
 				});
 				
-				var total_row="<tr><td data-th='Total'>Total Collected<br>Total Deposited</td><td colspan='2' data-th='Total'>Rs. "+total_collected+"<br>Rs. "+total_deposited+"</td></tr>";
+				var total_row="<tr><td data-th='Total'>Total Collected<br>Total Deposited</td><td colspan='3' data-th='Total'>Rs. "+total_collected+"<br>Rs. "+total_deposited+"</td></tr>";
 				$('#report96_foot').html(total_row);
 				
-				var print_button=form.elements['print'];
-				print_tabular_report('report96','COD Collection Report',print_button);
+                initialize_static_tabular_report_buttons('COD Collection Report','report96');
 				hide_loader();
 			});
 		});
+        paginator.update_index(staff.length);
 	});
 };
 
 function report96_show_balance(id,person,date)
 {
-	var list_data=new Object();
-		list_data.count=0;
-		list_data.start_index=0;
-		list_data.data_store='cod_collections';		
-		list_data.return_column='amount';		
-				
-		list_data.indexes=[{index:'acc_name',exact:person},
-						{index:'date',upperbound:(date+86399000)}];
-		//console.log(list_data);
+	var list_data={data_store:'cod_collections',return_column:'amount',		
+		          indexes:[{index:'acc_name',exact:person},
+						{index:'date',upperbound:(date+86399000)}]};
+		
 	read_json_single_column(list_data,function(collections)
 	{
-		var list2_data=new Object();
-			list2_data.count=0;
-			list2_data.start_index=0;
-			list2_data.data_store='logistics_orders';		
-			list2_data.return_column='collectable_value';		
-		
-			list2_data.indexes=[{index:'delivery_person',exact:person},
+		var list2_data={data_store:'logistics_orders',return_column:'collectable_value',
+			             indexes:[{index:'delivery_person',exact:person},
 								{index:'status',exact:'delivered'},
 								{index:'type',exact:'COD'},										
-								{index:'delivery_time',upperbound:(date+86399000)}];
+								{index:'delivery_time',upperbound:(date+86399000)}]};
 	
 		read_json_single_column(list2_data,function(orders_collection)
 		{

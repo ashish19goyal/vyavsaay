@@ -11836,57 +11836,6 @@ function form222_create_form()
 }
 
 
-/**
- * @form Delivery Run
- * @param button
- */
-function form226_create_item(form)
-{
-	if(is_create_access('form226'))
-	{
-		var person=form.elements[0].value;
-		var date=get_raw_time(form.elements[1].value);
-		var start=form.elements[2].value;
-		var end=form.elements[3].value;
-		var total=form.elements[4].value;
-		var data_id=form.elements[5].value;
-		var save_button=form.elements[6];
-		var del_button=form.elements[7];
-		var last_updated=get_my_time();
-		var data_xml="<delivery_run>" +
-				"<id>"+data_id+"</id>" +
-				"<person>"+person+"</person>" +
-				"<date>"+date+"</date>" +
-				"<starting_km>"+start+"</starting_km>" +
-				"<ending_km>"+end+"</ending_km>" +
-				"<total_run>"+total+"</total_run>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</delivery_run>";	
-	
-		create_simple(data_xml);
-		
-		for(var i=0;i<5;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-		
-		del_button.removeAttribute("onclick");
-		$(del_button).on('click',function(event)
-		{
-			form226_delete_item(del_button);
-		});
-		
-		$(save_button).off('click');
-		$(save_button).on('click',function()
-		{
-			form226_update_item(form);
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * formNo 228
@@ -13354,55 +13303,6 @@ function form265_create_form(func)
 }
 
 
-/**
- * @form Enter COD Collections
- * @formNo 271
- * @param button
- */
-function form271_create_item(form)
-{
-	if(is_create_access('form271'))
-	{
-		var person=form.elements[0].value;
-		var date=get_raw_time(form.elements[1].value);
-		var amount=form.elements[2].value;
-		var data_id=form.elements[3].value;
-		var save_button=form.elements[4];
-		var del_button=form.elements[5];
-		var last_updated=get_my_time();
-		
-		var data_xml="<cod_collections>" +
-				"<id>"+data_id+"</id>" +
-				"<acc_name>"+person+"</acc_name>" +
-				"<date>"+date+"</date>" +
-				"<amount>"+amount+"</amount>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</cod_collections>";	
-		
-		create_simple(data_xml);
-				
-		for(var i=0;i<3;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-		
-		del_button.removeAttribute("onclick");
-		$(del_button).on('click',function(event)
-		{
-			form271_delete_item(del_button);
-		});
-
-		$(form).off('submit');
-		$(form).on('submit',function (e) 
-		{
-			e.preventDefault();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Purchase leads

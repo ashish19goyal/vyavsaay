@@ -440,10 +440,17 @@
 			
 			if(import_type=='create_new')
 			{
-				create_batch_json(leads_json);
-				create_batch_json(data_json);
-				create_batch_json(attribute_json);
-				create_batch_json(account_json);
+                if(is_create_access('form340'))
+                {
+                    create_batch_json(leads_json);
+                    create_batch_json(data_json);
+                    create_batch_json(attribute_json);
+                    create_batch_json(account_json);
+                }
+                else
+                {
+                    $("#modal2_link").click();
+                }
 			}
 		}
 

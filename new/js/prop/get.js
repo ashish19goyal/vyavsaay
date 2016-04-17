@@ -517,9 +517,10 @@ function get_static_report_data(filename,action_type,report_id)
 	{
 		case 'pdf': print_static_report_table(report_id,filename,function (container) 
 						{
-							var html_data=container.innerHTML;
+                            var html_data=container.innerHTML;
 							var pdfcreator=new htmlToPdf({html:html_data});										
-							container.innerHTML="";
+							pdfcreator.download(filename);
+                            container.innerHTML="";
 						});
 						break;
 		case 'print': print_static_report_table(report_id,filename,function (container) 
@@ -528,7 +529,7 @@ function get_static_report_data(filename,action_type,report_id)
 								container.innerHTML="";
 							});
 							break;
-		case 'email': modal183_action(bt+"-"+filename,function (func) 
+		case 'email': modal183_action(bt+" - "+filename,function (func) 
 							{
 								print_static_report_table(report_id,filename,func);
 							});
