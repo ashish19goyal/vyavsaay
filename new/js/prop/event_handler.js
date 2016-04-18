@@ -245,7 +245,9 @@ function modal_forms_ini()
 		dynamic_modal_array.push(i);
 	}
     dynamic_modal_array.push(145);
-    for(var i=147;i<=152;i++)
+    dynamic_modal_array.push(147);
+    dynamic_modal_array.push(148);
+    for(var i=150;i<=152;i++)
 	{
 		dynamic_modal_array.push(i);
 	}
@@ -652,8 +654,6 @@ function import_data(form_name)
 		case 'form193':modal23_action(form193_import_template,form193_import);
 		break;
 		case 'form195':modal23_action(form195_import_template,form195_import);
-		break;
-		case 'form203':modal23_action(form203_import_template,form203_import);
 		break;
 		case 'form217':modal23_action(form217_import_template,form217_import,form217_import_validate);
 		break;

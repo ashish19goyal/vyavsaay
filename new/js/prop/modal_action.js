@@ -10901,20 +10901,16 @@ function modal148_action()
 	$("#modal148").dialog("open");
 }
 
-/**
- * @modal Import logistics orders
- */
 function modal149_action()
 {
 	var form=document.getElementById('modal149_form');
 	
-	var template_button=form.elements[1];
-	var channel_filter=form.elements[2];
-	var type_filter=form.elements[3];
-	var select_file=form.elements[4];
-	var dummy_button=form.elements[5];
-	var selected_file=form.elements[6];
-	var import_button=form.elements[7];
+	var template_button=form.elements['download'];
+	var channel_filter=form.elements['channel'];
+	var type_filter=form.elements['type'];
+	var select_file=form.elements['file'];
+	var dummy_button=form.elements['file_dummy'];
+	var selected_file=form.elements['selected_file'];
 
 	$(dummy_button).off('click'); 
 	$(dummy_button).on('click',function (e) 
@@ -10944,8 +10940,8 @@ function modal149_action()
 		}
 	});
 
-	set_static_value_list('logistics_orders','type',type_filter);
-	set_static_value_list('logistics_orders','channel',channel_filter);
+	set_static_value_list_json('logistics_orders','type',type_filter);
+	set_static_value_list_json('logistics_orders','channel',channel_filter);
 	
 	$(template_button).off("click");
 	$(template_button).on("click",function(event)
@@ -11074,8 +11070,6 @@ function modal149_action()
 			                {index:'last_updated',value:last_updated}];
 
                     data_json.data.push(data_json_array);
-                
-	
 				});
 				
 				create_batch_json(data_json);
@@ -11100,7 +11094,7 @@ function modal149_action()
 	        			hide_progress();
 	        			selected_file.value="Upload complete";
 	        			$(select_file).val('');
-	        			$("#modal149").dialog("close");
+	        			$(form).find(".close").click();
 	        			clearInterval(ajax_complete);
 	        		}
 	        	},1000); 
@@ -11116,7 +11110,7 @@ function modal149_action()
         reader.readAsText(file);    
     });
 	
-	$("#modal149").dialog("open");
+	$("#modal149_link").click();
 }
 
 /**
