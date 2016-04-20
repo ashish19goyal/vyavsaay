@@ -8130,6 +8130,7 @@ function modal126_action(po_id,po_num)
                               {index:'order_id',exact:po_id}]};
 	read_json_rows('',po_items_data,function(po_items)
 	{
+        //console.log(po_items);
 		po_items=jQuery.unique(po_items);
 		var item_string=[];
 		for(var k in po_items)
@@ -8142,6 +8143,7 @@ function modal126_action(po_id,po_num)
                                   {index:'item',array:item_string}]};
 		read_json_rows('',suppliers_xml,function(suppliers)
 		{
+            //console.log(suppliers);
 			var unique_sup_array=new Object();
 			
 			for(var i in suppliers)
@@ -8163,17 +8165,12 @@ function modal126_action(po_id,po_num)
 				}
 			}
 			
-			var suppliers_string=[];
-			for(var l in final_suppliers)
-			{
-				suppliers_string.push(suppliers[l].supplier);
-			}
-
 			var score_xml={data_store:'suppliers',
                           indexes:[{index:'score'},
-                                  {index:'acc_name',array:suppliers_string}]};
+                                  {index:'acc_name',array:final_suppliers}]};
 			read_json_rows('',score_xml,function (scores) 
 			{
+                //console.log(scores);
 				scores.sort(function(a,b)
 				{
 					if(a.score<b.score)

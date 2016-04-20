@@ -101,13 +101,30 @@
             {
                 history_id="";
             }
-            //console.log($(settings.index_element).attr('data-index'));
-            //console.log(this.get_index());
+            
             var history_page=parseInt(this.get_index()/this.page_size());
             var history_obj={form:element_name,id:history_id,page:history_page};
-            //console.log('history_obj');
-            //console.log(history_obj);
-            log_navigation_history(history_obj);
+            
+            var url=server_root+"/main.php";
+            if(element_name!="home")
+            {
+                url+="/"+element_name;
+
+                if(history_page!=="")
+                {
+                    url+="/"+history_page;
+
+                    if(history_id!=="")
+                    {
+                        url+="/"+history_id;    
+                    }
+                }
+            }
+
+            if(url!==window.location.pathname)
+            {
+                history.pushState(history_obj,element_name,url);
+            }
         };
 	};
 	
