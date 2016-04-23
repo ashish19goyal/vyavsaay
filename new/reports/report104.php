@@ -129,7 +129,7 @@
                     }
                 });
 
-                initialize_static_tabular_report_buttons(item_columns,'Stock Report','report104');
+                initialize_static_tabular_report_buttons('Stock Report','report104');
                 hide_loader();
             });
         };

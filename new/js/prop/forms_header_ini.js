@@ -5451,36 +5451,6 @@ function form196_header_ini()
 }
 
 
-/**
- * @form Order Details
- * @formNo 198
- */
-function form198_header_ini()
-{
-	var fields=document.getElementById('form198_master');
-
-	var awb_filter=fields.elements['awb_num'];
-
-	awb_filter.value="";	
-
-/*	var awb_data="<logistics_orders>"+
-				"<awb_num></awb_num>"+
-				"</logistics_orders>";
-	set_my_value_list(awb_data,awb_filter,function () 
-	{
-*/
-		$(awb_filter).focus();
-//	});
-
-	$(fields).off('submit');
-	$(fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form198_ini();
-	});
-
-	$('#form198_fieldset').html("");
-}
 
 /**
  * @form Incoming Items
@@ -7350,35 +7320,6 @@ function form265_header_ini()
 	$('#form265_share').hide();
 }
 
-/**
- * @form Manage RTO
- * @formNo 266
- */
-function form266_header_ini()
-{
-	var filter_fields=document.getElementById('form266_header');
-	var rto_filter=filter_fields.elements[0];
-	var employee_filter=filter_fields.elements[1];
-	var date_filter=filter_fields.elements[2];
-		
-	var rto_data="<rto>" +
-			"<rto_num></rto_num>" +
-			"</rto>";
-	var employee_data="<staff>" +
-			"<acc_name></acc_name>" +
-			"</staff>";
-
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form266_ini();
-	});
-
-	set_my_filter(rto_data,rto_filter);
-	set_my_filter(employee_data,employee_filter);
-	$(date_filter).datepicker();
-};
 
 /**
  * @form RTO Status
