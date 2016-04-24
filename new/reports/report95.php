@@ -55,6 +55,7 @@
         });
         
         initialize_static_tabular_report_buttons('Order Sorting','report95');
+        var paginator=$('#report95').paginator({visible:false,container:$('#report95')});
         $(awb_filter).focus();
     }
 

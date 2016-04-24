@@ -3522,5 +3522,38 @@
 			</fieldset>
 		</form>
 	</div>
+    
+    <a href='#modal210' data-toggle="modal" id='modal210_link'></a>
+	<div id="modal210" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal210_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add Document</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:80%;" data-always-visible="1" data-rail-visible1="1">
+		                 <div class="row">
+									<div class="col-sm-12 col-md-4">Description</div>
+					     			<div class="col-sm-12 col-md-8"><textarea form='modal210_form' name='desc'></textarea></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Document</div>
+					     			<div class="col-sm-12 col-md-8">
+                                        <input type='file' style='display:none;' form='modal210_form' name='file_hidden'/>
+										<button type='button' class='btn grey' name='dummy'>Select File</button>
+					     			</div>
+					     		</div>
+					      </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal210_form' name='save'>Add</button>
+	               	<button type="submit" class="btn red" form='modal210_form' data-dismiss="modal" name='save'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
         
 </div>

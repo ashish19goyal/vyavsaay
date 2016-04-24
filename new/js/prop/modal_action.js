@@ -16680,3 +16680,79 @@ function modal209_action(subject,body,message_attachment)
 
     $("#modal209").dialog("open");
 }
+
+
+/**
+ * @modalNo 210
+ * @modal Add document (to S3)
+ * @param button
+ */
+function modal210_action(description,func)
+{
+	var form=document.getElementById('modal210_form');
+	
+	var fdesc=form.elements['desc'];
+	var fpicture=form.elements['file_hidden'];
+    var dummy_button=form.elements['dummy'];
+    fdesc.value=description;
+    var contentType='';
+    var filetype='';
+    var url="";
+			
+	$(dummy_button).on('click',function (e) 
+	{
+		e.preventDefault();
+		$(fpicture).trigger('click');
+	});
+
+    
+	fpicture.addEventListener('change',function(evt)
+	{
+        var files = fpicture.files;
+        contentType=files[0].type;
+        var file_attr=files[0].name.split('.');
+        filetype=file_attr[file_attr.length-1];
+        console.log(filetype);
+		select_document(evt,function(dataURL)
+		{
+			url=dataURL;
+		});
+	},false);
+	
+    $('modal210_form').formcontrol();
+    
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form343'))
+		{
+			var data_id=get_new_key();
+			var doc_name=get_session_var('domain')+data_id+"."+filetype;
+			var last_updated=get_my_time();
+
+			if(url!="")
+			{
+                var data_json={type:'create',
+                           bucket:'vyavsaay-documents',
+                           blob: url,
+                           name:doc_name,
+                           description:fdesc.value,   
+                           content_type:contentType};
+				s3_object(data_json);	
+				
+				if(typeof func!='undefined')
+				{
+					func(url);
+				}		
+			}
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
+		$(form).find(".close").click();
+	});
+	
+	$("#modal210_link").click();
+}

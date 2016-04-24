@@ -523,3 +523,31 @@ function update_server_table_column(tablename,columnname,columntype,master)
 		hide_loader();
 	});
 }
+
+function s3_object(data,func)
+{
+	show_loader();
+
+//	data={type:'create/update/delete',
+//        bucket:bucketName,
+//        blob: blob,
+//        name:blob_name,
+//        description:description,
+//		  content_type:'image/jpeg'};
+
+	var domain=get_domain();
+	var username=get_username();
+	var cr_access=get_session_var('cr');
+    var re_access=get_session_var('re');
+    var del_access=get_session_var('del');
+    var data=JSON.stringify(data);
+	ajax_json(server_root+"/ajax_json/s3_object.php",{domain:domain,username:username,cr:cr_access,re:re_access,del:del_access,object_data:data},function(response_object)
+	{
+		//console.log(response_object);
+		hide_loader();
+		if(typeof func!='undefined')
+        {
+            func();
+        }
+	});
+}

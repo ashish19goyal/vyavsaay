@@ -314,10 +314,9 @@
 				$email_instance=new send_mailer_json($domain);
 				$email_instance->send_stored_mailer($domain);
 
-				$s3_instance=new s3_object();
+				$s3_instance=new s3_object($domain);
 				$s3_instance->transfer_stored_objects($domain);
 			}
-			
 		}
 		else
 		{

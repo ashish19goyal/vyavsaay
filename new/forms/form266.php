@@ -26,7 +26,7 @@
 					<form id='form266_header'></form>
 						<th><input type='text' placeholder="RTO #" class='floatlabel' name='rto' form='form266_header'></th>
 						<th><input type='text' placeholder="Employee" class='floatlabel' name='emp' form='form266_header'></th>
-						<th><input type='text' placeholder="Date" readonly='readonly' name='date' form='form266_header'></th>
+						<th><input type='text' placeholder="Date" class='floatlabel' name='date' form='form266_header'></th>
 						<th><input type='submit' form='form266_header' style='visibility: hidden;'></th>
 				</tr>
 			</thead>
@@ -152,6 +152,7 @@
 
                     delete item.order_num;
                     delete item.awb_num;
+                    delete item.rto_num;
                     delete item.weight;
                     delete item.pieces;
                     delete item.status;
@@ -187,54 +188,37 @@
 
                     var rto_num=form.elements[0].value;
                     var data_id=form.elements[3].value;
-                    var data_xml="<rto>" +
-                                "<id>"+data_id+"</id>" +
-                                "</rto>";	
-                    var activity_xml="<activity>" +
-                            "<data_id>"+data_id+"</data_id>" +
-                            "<tablename>rto</tablename>" +
-                            "<link_to>form266</link_to>" +
-                            "<title>Deleted</title>" +
-                            "<notes>RTO # "+rto_num+"</notes>" +
-                            "<updated_by>"+get_name()+"</updated_by>" +
-                            "</activity>";
+                    var data_json={data_store:'rto',
+                                    data:[{index:'id',value:data_id}],
+                                    log:'yes',
+                                    log_data:{title:"Deleted",notes:"RTO # "+rto_num,link_to:"form266"}};
+                    delete_json(data_json);
 
-                    var rto_items_xml="<logistics_orders>"+
-                                    "<id></id>"+
-                                    "<status exact='yes'>RTO out for delivery</status>"+
-                                    "<rto_num exact='yes'>"+rto_num+"</rto_num>"+
-                                    "</logistics_orders>";			
-                    get_single_column_data(function(rto_items)
+                    var rto_items_xml={data_store:'logistics_orders',return_column:'id',
+                                      indexes:[{index:'status',exact:'RTO out for delivery'},
+                                              {index:'rto_num',exact:rto_num}]};
+                    read_json_single_column(rto_items_xml,function(rto_items)
                     {
-                        var data_xml="<logistics_orders>";
+                        var data_json={data_store:'logsistics_orders',
+                                        loader:'yes',
+                                        data:[]};
+
                         var counter=1;
                         var last_updated=get_my_time();
 
-                        rto_items.forEach(function(rto_item)
+                        rto_items.forEach(function(row)
                         {
-                            if((counter%500)===0)
-                            {
-                                data_xml+="</logistics_orders><separator></separator><logistics_orders>";
-                            }
-
-                            counter+=1;
-
-                            data_xml+="<row>" +
-                                    "<id>"+rto_item+"</id>" +
-                                    "<rto_num></rto_num>" +
-                                    "<rto_id></rto_id>"+
-                                    "<return_person></return_person>" +
-                                    "<status>received</status>"+
-                                    "<last_updated>"+last_updated+"</last_updated>" +
-                                    "</row>";
+                            var data_json_array=[{index:'id',value:row},
+                                            {index:'rto_num',value:''},
+                                            {index:'rto_id',value:''},
+                                            {index:'return_person',value:''},
+                                            {index:'status',value:'RTO pending'},
+                                            {index:'last_updated',value:last_updated}];
+                            data_json.data.push(data_json_array);
                         });
-                        data_xml+="</logistics_orders>";
-                        //console.log(data_xml);
-                        update_batch(data_xml);
+                        update_batch_json(data_json);                        
+                    });
 
-                    },rto_items_xml);
-
-                    delete_row(data_xml,activity_xml);
                     $(button).parent().parent().remove();
                 });
             }

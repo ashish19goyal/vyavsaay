@@ -3854,66 +3854,6 @@ function form195_import(data_array,import_type)
 
 
 /**
-* @form manage DRS
-* @formNo 201
-*/
-function form201_import(data_array,import_type)
-{
-	var data_xml="<drs>";
-	var counter=1;
-	var last_updated=get_my_time();
-
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</drs><separator></separator><drs>";
-		}
-		
-		counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<drs_num>"+row.drs_num+"</drs_num>" +
-				"<employee>"+row.employee+"</employee>" +
-				"<drs_time>"+get_raw_time(row.drs_time)+"</drs_time>" +
-				"<status>"+row.status+"</status>"+
-				"<type>"+row.type+"</type>"+
-				"<collectable_amount>"+row.collectable_amount+"</collectable_amount>"+
-				"<collected_amount>"+row.collected_amount+"</collected_amount>"+
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	data_xml+="</drs>";
-	if(import_type=='create_new')
-	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
-	}
-	else
-	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
-	}
-};
-
-/**
 * @form Update Inventory (aurilion)
 * @formNo 207
 */

@@ -48,6 +48,7 @@
         end_date.value=get_my_date();
         
         $('#report84').formcontrol();
+        var paginator=$('#report84').paginator({visible:false,container:$('#report84')});
     }
 
     function report84_ini()
@@ -56,7 +57,7 @@
         var form=document.getElementById('report84_master');
         var start_date=get_raw_time(form.elements['start'].value);
         var end_date=get_raw_time(form.elements['end'].value)+86399999;
-
+			
         var columns={data_store:'logistics_orders',
                     indexes:[{index:'id'},
                         {index:'awb_num'},

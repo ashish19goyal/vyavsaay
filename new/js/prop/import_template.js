@@ -821,17 +821,6 @@ function form195_import_template()
 
 
 /**
-* @form Manage DRS
-* @formNo 201
-*/
-function form201_import_template()
-{
-	var data_array=['id','drs_num','employee','drs_time','status','type','collectable_amount','collected_amount'];
-	my_array_to_csv(data_array);
-};
-
-
-/**
 * @form Update Inventory (aurilion)
 * @formNo 207
 */

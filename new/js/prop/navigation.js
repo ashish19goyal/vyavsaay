@@ -39,14 +39,20 @@ function navigate_history()
             var function_link=$(element_link).parent().parent().parent().attr('id');
             show_function(function_link);
             $(element_link).attr('data_id',obj.id);
-            var paginator=$('#'+obj.form).find("tbody[isPaged='yes']").data('paginator');
             
-            var page_index=parseInt(paginator.page_size())*parseInt(obj.page);
-            if(isNaN(page_index))
+            //var paginator=$('#'+obj.form).find("tbody[isPaged='yes']").data('paginator');
+            var paginator=$('#'+obj.form).find("[isPaged='yes']").data('paginator');
+            //$(element).attr('isPaged','yes');
+        
+            if(paginator)
             {
-                page_index=0;
+                var page_index=parseInt(paginator.page_size())*parseInt(obj.page);
+                if(isNaN(page_index))
+                {
+                    page_index=0;
+                }
+                paginator.set_index(page_index);
             }
-            paginator.set_index(page_index);
             //console.log('page index - '+paginator.get_index());
             $(element_link).click();
             $(element_link).attr('data_id','');

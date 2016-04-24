@@ -5450,29 +5450,6 @@ function form196_header_ini()
 	$('textarea').autosize();
 }
 
-
-
-/**
- * @form Incoming Items
- * @formNo 199
- */
-function form199_header_ini()
-{
-	var fields=document.getElementById('form199_master');
-
-	var comments_filter=fields.elements['comments'];
-
-	comments_filter.value="";	
-	$(fields).off('submit');
-	$(fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form199_add_item();
-	});
-
-	$('#form199_body').html("");
-}
-
 /**
  * @form Create Drs
  * @formNo 200
@@ -5552,38 +5529,6 @@ function form200_header_ini()
 	$('#form200_share').hide();
 }
 
-/**
- * @form Manage Drs
- * @formNo 201
- */
-function form201_header_ini()
-{
-	var filter_fields=document.getElementById('form201_header');
-	var drs_filter=filter_fields.elements[0];
-	var employee_filter=filter_fields.elements[1];
-	var date_filter=filter_fields.elements[2];
-	var type_filter=filter_fields.elements[3];
-		
-	var drs_data="<drs>" +
-			"<drs_num></drs_num>" +
-			"</drs>";
-	var employee_data="<staff>" +
-			"<acc_name></acc_name>" +
-			"</staff>";
-
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form201_ini();
-	});
-
-	set_my_filter(drs_data,drs_filter);
-	set_my_filter(employee_data,employee_filter);	
-	set_static_filter('drs','type',type_filter);
-
-	$(date_filter).datepicker();
-};
 
 /**
  * @form Exhanges
@@ -7238,86 +7183,6 @@ function form255_header_ini()
 		event.preventDefault();
 		form255_ini();
 	});	
-}
-
-
-/**
- * @form Create RTO
- * @formNo 265
- */
-function form265_header_ini()
-{
-	var fields=document.getElementById('form265_master');
-
-	var rto_filter=fields.elements['rto_num'];
-	var employee=fields.elements['employee'];
-	var rto_date=fields.elements['date'];
-	var branch=fields.elements['branch'];
-
-	fields.elements['saved'].value='no';
-	fields.elements['id'].value=get_new_key();
-
-	var save_button=fields.elements['save'];
-	rto_filter.value="";
-	employee.value="";
-
-	var rto_id=$("#form265_link").attr('data_id');
-	if(rto_id==null)
-		rto_id="";	
-
-	if(rto_id=="")
-	{
-		var rto_num_data="<user_preferences count='1'>"+
-						"<value></value>"+
-						"<name exact='yes'>rto_num</name>"+
-						"</user_preferences>";
-		set_my_value(rto_num_data,rto_filter);	
-	}
-	
-	$(save_button).off('click');
-	$(save_button).on("click", function(event)
-	{
-		event.preventDefault();
-		form265_update_form();
-	});
-
-	$(save_button).hide();
-	
-	$(document).off('keydown');
-	$(document).on('keydown', function(event) {
-		if( event.keyCode == 83 && event.ctrlKey) {
-	    	event.preventDefault();
-	    	$(save_button).trigger('click');
-	    }
-	});
-
-	var acc_name=get_account_name();
-	var branch_data="<store_areas count='1'>"+
-					"<name></name>"+
-					"<owner>"+acc_name+"</owner>"+
-					"</store_areas>";
-	
-	set_my_value(branch_data,branch);
-	
-	$(fields).off('submit');
-	$(fields).on("submit", function(event)
-	{
-		event.preventDefault();
-		//modal129_action();
-		form265_add_item();
-	});
-
-	var employee_data="<staff>" +
-		"<acc_name></acc_name>" +
-		"</staff>";
-	set_my_value_list(employee_data,employee,function () 
-	{
-		$(employee).focus();
-	});
-	
-	$(rto_date).datepicker();
-	rto_date.value=get_my_date();
-	$('#form265_share').hide();
 }
 
 

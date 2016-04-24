@@ -5,8 +5,8 @@
             <a class='btn btn-circle grey btn-outline btn-sm' id='form225_save'>Save <i class='fa fa-save'></i></a>
 		</div>
 		<div class="actions">
-      	<a class='btn btn-default btn-sm' id='form225_print' onclick=form225_print_form();><i class='fa fa-print'></i> Print</a>
-        <a class='btn btn-default btn-sm' id='form225_share'><i class='fa fa-envelope'></i> Email</a>    
+      	     <a class='btn btn-default btn-sm' id='form225_print' onclick=form225_print_form();><i class='fa fa-print'></i> Print</a>
+            <a class='btn btn-default btn-sm' id='form225_share'><i class='fa fa-envelope'></i> Email</a>    
       </div>
 	</div>
 	
@@ -485,10 +485,6 @@
         }
 
 
-        /**
-         * @form Create Bill (CPS)
-         * @param button
-         */
         function form225_create_form()
         {
             if(is_create_access('form225'))

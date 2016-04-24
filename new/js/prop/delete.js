@@ -3902,47 +3902,6 @@ function form195_delete_item(button)
 
 
 /**
- * @form Logistics Incoming Items
- * @param button
- */
-function form199_delete_item(button)
-{
-	if(is_update_access('form199'))
-	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
-		var awb_num=form.elements[0].value;
-		var status='picked';
-		var id=form.elements[3].value;
-		var last_updated=get_my_time();
-		if(id!="")
-		{		
-			var data_xml="<logistics_orders>" +
-						"<id>"+id+"</id>" +
-						//"<awb_num>"+awb_num+"</awb_num>" +
-						"<status>"+status+"</status>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</logistics_orders>";
-			var activity_xml="<activity>" +
-						"<data_id>"+id+"</data_id>" +
-						"<tablename>logistics_orders</tablename>" +
-						"<link_to>form198</link_to>" +
-						"<title>Unmarked</title>" +
-						"<notes>AWB # "+awb_num+" from received</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			update_row(data_xml,activity_xml);
-		}	
-		$(button).parent().parent().remove();
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
  * formNo 200
  * form Create DRS
  * @param button
@@ -3970,76 +3929,6 @@ function form200_delete_item(button)
 			update_simple(data_xml);
 			$(button).parent().parent().remove();
 			form200_update_serial_numbers();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
- * @form Manage DRS
- * @param button
- */
-function form201_delete_item(button)
-{
-	if(is_delete_access('form201'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-
-			var drs_num=form.elements[0].value;
-			var data_id=form.elements[4].value;
-			var data_xml="<drs>" +
-						"<id>"+data_id+"</id>" +
-						"</drs>";	
-			var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>drs</tablename>" +
-					"<link_to>form201</link_to>" +
-					"<title>Delete</title>" +
-					"<notes>DRS # "+drs_num+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-			
-			var drs_items_xml="<logistics_orders>"+
-							"<id></id>"+
-							"<status exact='yes'>out for delivery</status>"+
-							"<drs_num exact='yes'>"+drs_num+"</drs_num>"+
-							"</logistics_orders>";			
-			get_single_column_data(function(drs_items)
-			{
-				var data_xml="<logistics_orders>";
-				var counter=1;
-				var last_updated=get_my_time();
-				
-				drs_items.forEach(function(drs_item)
-				{
-					if((counter%500)===0)
-					{
-						data_xml+="</logistics_orders><separator></separator><logistics_orders>";
-					}
-						
-					counter+=1;
-				
-					data_xml+="<row>" +
-							"<id>"+drs_item+"</id>" +
-							"<drs_num></drs_num>" +
-							"<status>received</status>"+
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</row>";
-				});
-				data_xml+="</logistics_orders>";
-				//console.log(data_xml);
-				update_batch(data_xml);
-				
-			},drs_items_xml);
-			
-			delete_row(data_xml,activity_xml);
-			$(button).parent().parent().remove();
 		});
 	}
 	else
@@ -5326,44 +5215,6 @@ function form255_delete_item(button)
 						"</activity>";
 			delete_row(data_xml,activity_xml);
 			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-
-
-/**
- * formNo 265
- * form Create RTO
- * @param button
- */
-function form265_delete_item(button)
-{
-	if(is_delete_access('form265'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-
-			var data_id=form.elements[9].value;
-			var last_updated=get_my_time();
-			var data_xml="<logistics_orders>" +
-						"<id>"+data_id+"</id>" +
-						"<status>received</status>" +
-						"<rto_num></rto_num>"+
-						"<rto_time></rto_time>"+
-						"<rto_id></rto_id>"+
-						"<return_person></return_person>"+
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</logistics_orders>";
-			update_simple(data_xml);
-			$(button).parent().parent().remove();
-			form265_update_serial_numbers();
 		});
 	}
 	else

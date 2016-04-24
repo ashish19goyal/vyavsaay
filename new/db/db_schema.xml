@@ -186,6 +186,7 @@
 			<name index='yes' type="TEXT"></name>
 			<data_blob index='no' type="MEDIUMBLOB"></data_blob>
 			<type index='yes' type="TEXT"></type>
+			<description index='yes' type="TEXT"></description>
 			<status index='yes' type="VARCHAR(20)"></status><!-- pending/synced -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
@@ -1804,6 +1805,7 @@
 			<notes index='no' type="TEXT"></notes>
 			<pickup_location index='no' type="TEXT"></pickup_location>
 			<pickup_by index='no' type="TEXT"></pickup_by>
+			<return_pickup_by index='no' type="TEXT"></return_pickup_by>
 			<sku index='no' type="TEXT"></sku>
 			<product_name index='no' type="TEXT"></product_name>
 			<status index='yes' type="VARCHAR(20)"></status><!--picked/out for delivery/received/delivered/pending/undelivered/in-transit-->
@@ -2122,4 +2124,32 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</letters>
+	<tabs_list>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(30)" unique='yes'></name>
+			<display_name index="no" type="TEXT"></display_name>
+			<description index="no" type="TEXT"></description>
+			<code index="no" type="TEXT"></code>
+			<clients index="no" type="TEXT"></clients>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</tabs_list>
+	<tab_components>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="TEXT"></name>
+			<tab_name index='yes' type="VARCHAR(30)"></tab_name>
+			<display_name index="no" type="TEXT"></display_name>
+			<description index="no" type="TEXT"></description>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</tab_components>
+	<tab_component_attributes>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="TEXT"></name>
+			<component_name index='yes' type="TEXT"></component_name>
+			<display_name index="no" type="TEXT"></display_name>
+			<value index="no" type="TEXT"></value>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</tab_component_attributes>
 </re_xml>
