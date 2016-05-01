@@ -828,7 +828,7 @@
 /***function limiter***/
 
 /*box_id*:*modal77
-*@*box_title*:*Change Bag Number
+*@*box_title*:*Change Manifest Number
 *@*box_type*:*static
 *@*function_name*:*
 *@*function_def*:*
@@ -843,11 +843,11 @@
 			<form id='modal77_form'>                               
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-					<h4 class="modal-title">Change Bag Number</h4>
+					<h4 class="modal-title">Change Manifest Number</h4>
 				</div>
 				<div class="modal-body">
 					<div class="scroller" style="height:100px;" data-always-visible="1" data-rail-visible1="1">
-						This bag number is already taken. Please use another number.
+						This manifest number is already taken. Please use another number.
 					</div>
 				</div>
 				<div class="modal-footer">

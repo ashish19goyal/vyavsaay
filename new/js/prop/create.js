@@ -11069,7 +11069,8 @@ function form200_create_form(func)
 		var ddate=get_raw_time(form.elements['date'].value);
 		var data_id=form.elements['id'].value;
 		var branch=form.elements['branch'].value;
-		
+		form.elements['saved'].value='yes';
+
 		$('#form200_share').show();
 		$('#form200_share').click(function()
 		{
@@ -11565,7 +11566,8 @@ function form219_create_form(func)
 		var collected_amount=form.elements['collected'].value;
 		var data_id=form.elements['id'].value;
 		var branch=form.elements['branch'].value;
-		
+		form.elements['saved'].value='yes';
+
 		$('#form219_share').show();
 		$('#form219_share').click(function()
 		{
@@ -12163,7 +12165,7 @@ function form233_create_item()
 		{
 			counter+=1;
 			var image_elem=$(this)[0];
-			resize_picture(image_elem,image_elem.width);
+			vUtil.resize_picture(image_elem,image_elem.width);
 			
 			var data_src=image_elem.getAttribute('data-src');
 			console.log(data_src);

@@ -246,7 +246,7 @@
                             else 
                             {
                                 awb_filter.value="";
-                                $("#modal65").dialog("open");
+                                $("#modal65_link").click();
                             }
                         });
                     }
@@ -260,7 +260,7 @@
                         else 
                         {
                             awb_filter.value="";
-                            $("#modal65").dialog("open");
+                            $("#modal65_link").click();
                         }
                     }
                 });
@@ -321,14 +321,14 @@
                                             id_filter.value="";
                                             history_filter.value="";
                                             awb_filter.value="";
-                                            $("#modal65").dialog("open");
+                                            $("#modal65_link").click();
                                         }
                                     });
                                 }
                                 else 
                                 {
                                     awb_filter.value="";
-                                    $("#modal65").dialog("open");
+                                    $("#modal65_link").click();
                                 }
                             });
                         }
@@ -364,14 +364,14 @@
                                         id_filter.value="";
                                         awb_filter.value="";
                                         history_filter.value="";
-                                        $("#modal65").dialog("open");
+                                        $("#modal65_link").click();
                                     }
                                 });
                             }
                             else 
                             {
                                 awb_filter.value="";
-                                $("#modal65").dialog("open");
+                                $("#modal65_link").click();
                             }
                         }
                     }
@@ -381,7 +381,7 @@
             }
             else
             {
-                $("#modal2").dialog("open");
+                $("#modal2_link").click();
             }
         }
 
@@ -445,7 +445,7 @@
             }
             else
             {
-                $("#modal2").dialog("open");
+                $("#modal2_link").click();
             }
         }
 
@@ -506,13 +506,13 @@
                     }
                     else 
                     {
-                        $("#modal77").dialog("open");
+                        $("#modal77_link").click();
                     }
                 });
             }
             else
             {
-                $("#modal2").dialog("open");
+                $("#modal2_link").click();
             }
         }
 
@@ -532,7 +532,7 @@
             }
             else
             {
-                $("#modal2").dialog("open");
+                $("#modal2_link").click();
             }
         }
 
@@ -575,13 +575,13 @@
                     }
                     else 
                     {
-                        $("#modal77").dialog("open");
+                        $("#modal77_link").click();
                     }
                 });
             }
             else
             {
-                $("#modal2").dialog("open");
+                $("#modal2_link").click();
             }
         }
 
@@ -610,7 +610,7 @@
             }
             else
             {
-                $("#modal2").dialog("open");
+                $("#modal2_link").click();
             }
         }
 

@@ -51,3 +51,4 @@
 <script src='/new/js/prop/jHtmlToPdf.js'></script>
 <script src='/new/js/prop/jDatepicker.js'></script>
 <script src='/new/js/prop/jVyavsaay.js'></script>
+<script src='/new/js/prop/vUtil.js'></script>

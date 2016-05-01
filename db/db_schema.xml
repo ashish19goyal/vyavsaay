@@ -1876,11 +1876,15 @@
 	<manifests>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<manifest_num index='yes' type="TEXT"></manifest_num>
+			<seal_num index='yes' type="TEXT"></seal_num>
+			<lbh index='yes' type="TEXT"></lbh>
+			<weight index='yes' type="DECIMAL(12,2)"></weight>
 			<date index='yes' type="BIGINT"></date>
 			<num_orders index='no' type="INT"></num_orders>
 			<branch index='yes' type="TEXT"></branch>
 			<coloader index='yes' type="TEXT"></coloader>
 			<vendor index='yes' type="TEXT"></vendor>
+			<type index='yes' type="VARCHAR(20)"></type><!--bag/non-bag-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</manifests>

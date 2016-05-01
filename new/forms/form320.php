@@ -339,7 +339,7 @@
 			}
 			else
 			{
-				$("#modal2").dialog("open");
+				$("#modal2_link").click();
 			}
 		}
 		
@@ -394,7 +394,7 @@
 			}
 			else
 			{
-				$("#modal2").dialog("open");
+				$("#modal2_link").click();
 			}
 		}
 		
@@ -497,7 +497,7 @@
 			}
 			else
 			{
-				$("#modal2").dialog("open");
+				$("#modal2_link").click();
 			}
 		}
 		
@@ -577,7 +577,7 @@
 			}
 			else
 			{
-				$("#modal2").dialog("open");
+				$("#modal2_link").click();
 			}
 		}
 		
@@ -603,7 +603,7 @@
 			}
 			else
 			{
-				$("#modal2").dialog("open");
+				$("#modal2_link").click();
 			}
 		}
 		

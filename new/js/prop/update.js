@@ -8397,77 +8397,6 @@ function form210_accept_item(bar_code)
 	}
 }
 
-/**
- * @form Update Logistics orders
- * @param button
- */
-function form211_update_item(form)
-{
-	if(is_update_access('form211'))
-	{
-		var awb_num=form.elements[0].value;
-		var status=form.elements[2].value;
-		var remarks=form.elements[3].value;
-		var id=form.elements[4].value;
-		var last_updated=get_my_time();
-		var delivery_string="<delivery_time></delivery_time>";
-		
-		if(status!="")
-		{
-			var old_order_history=form.elements[6].value;
-			var order_history=JSON.parse(old_order_history);
-			var history_object=new Object();
-			history_object.timeStamp=get_my_time();
-			history_object.details=remarks;
-			history_object.status=status;
-			
-			if(status=='received')
-			{
-				history_object.location=get_session_var('address');
-			}
-			else if(status=='pending')
-			{
-				history_object.location=get_session_var('address');
-			}
-			else if(status=='delivered')
-			{
-				history_object.location="";
-				delivery_string="<delivery_time>"+history_object.timeStamp+"</delivery_time>";
-			}
-			else if(status=='undelivered')
-			{
-				history_object.location="";
-			}
-			
-			order_history.push(history_object);
-			var order_history_string=JSON.stringify(order_history);		
-			
-			var data_xml="<logistics_orders>" +
-						"<id>"+id+"</id>" +
-						"<status>"+status+"</status>" +
-						"<comments>"+remarks+"</comments>" +
-						"<order_history>"+order_history_string+"</order_history>" +
-						delivery_string+
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</logistics_orders>";
-			update_simple(data_xml);
-			for(var i=0;i<4;i++)
-			{
-				$(form.elements[i]).attr('readonly','readonly');
-			}
-			
-			$(form).off('submit');
-			$(form).on('submit',function (e) 
-			{
-				e.preventDefault();
-			});
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Update Logistics orders (branches)
@@ -9042,7 +8971,7 @@ function form233_update_item()
 		{
 			counter+=1;
 			var image_elem=$(this)[0];
-			resize_picture(image_elem,image_elem.width);
+			vUtil.resize_picture(image_elem,image_elem.width);
 			
 			var data_src=image_elem.getAttribute('data-src');
 			console.log(data_src);
@@ -9136,7 +9065,7 @@ function form233_update_item()
 		$("[id^='vyavsaay_image_box_']").each(function(index)
 		{
 			var image_elem=$(this)[0];
-			resize_picture(image_elem,image_elem.width);
+			vUtil.resize_picture(image_elem,image_elem.width);
 		});
 
 		var data_id=form.elements['id'].value;
@@ -9854,68 +9783,6 @@ function form255_update_item(form)
 		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-
-/**
- * @form RTO orders
- * @param button
- */
-function form267_update_item(form)
-{
-	if(is_update_access('form267'))
-	{
-		var awb_num=form.elements[0].value;
-		var status=form.elements[2].value;
-		var remarks=form.elements[3].value;
-		var id=form.elements[4].value;
-		var last_updated=get_my_time();
-		
-		if(status!="")
-		{
-			var old_order_history=form.elements[6].value;
-			var order_history=JSON.parse(old_order_history);
-			var history_object=new Object();
-			history_object.timeStamp=get_my_time();
-			history_object.details=remarks;
-			history_object.status=status;
-			
-			if(status=='RTO pending')
-			{
-				history_object.location=get_session_var('address');
-			}
-			else if(status=='RTO delivered')
-			{
-				history_object.location="";
-			}
-			
-			order_history.push(history_object);
-			var order_history_string=JSON.stringify(order_history);		
-			
-			var data_xml="<logistics_orders>" +
-						"<id>"+id+"</id>" +
-						"<status>"+status+"</status>" +
-						"<comments>"+remarks+"</comments>" +
-						"<order_history>"+order_history_string+"</order_history>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</logistics_orders>";
-			update_simple(data_xml);
-			for(var i=0;i<4;i++)
-			{
-				$(form.elements[i]).attr('readonly','readonly');
-			}
-			
-			$(form).off('submit');
-			$(form).on('submit',function (e) 
-			{
-				e.preventDefault();
-			});	
 		}
 	}
 	else

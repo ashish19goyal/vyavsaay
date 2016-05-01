@@ -548,52 +548,6 @@ function form200_update_serial_numbers()
 }
 
 
-function form211_get_totals()
-{
-	var out_for_delivery=0;
-	var delivered=0;
-	var pending=0;
-	var undelivered=0;	
-	
-	$("[id^='save_form211']").each(function(index)
-	{
-		var subform_id=$(this).attr('form');
-		var subform=document.getElementById(subform_id);
-		var updated_status=subform.elements[2].value;
-		var current_status=subform.elements[1].value;
-		
-		if(updated_status!="")
-		{
-			if(updated_status=='delivered')
-				delivered+=1;
-			else if(updated_status=='undelivered')	
-				undelivered+=1;
-			else if(updated_status=='out for delivery')	
-				out_for_delivery+=1;
-			else if(updated_status=='pending')	
-				pending+=1;	
-		}
-		else 
-		{
-			if(current_status=='delivered')
-				delivered+=1;
-			else if(current_status=='undelivered')	
-				undelivered+=1;
-			else if(current_status=='out for delivery')	
-				out_for_delivery+=1;
-			else if(current_status=='pending')	
-				pending+=1;	
-		}
-	});
-	
-	var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
-							"<td>Out for Delivery:<br>Delivered:<br>Undelivered:<br>Pending:</td>" +
-							"<td>"+out_for_delivery+"<br>"+delivered+"<br>" +undelivered+"<br> " +pending+"</td>" +
-							"<td></td>" +
-							"</tr>";
-	$('#form211_foot').html(total_row);
-}
-
 function form222_get_totals()
 {
 	var amount=0;
@@ -705,47 +659,6 @@ function form250_update_serial_numbers()
 	form.elements['num_orders'].value=num_orders;
 	form.elements['num_bags'].value=num_bags;
 	form.elements['weight'].value=weight;
-}
-
-function form267_get_totals()
-{
-	var out_for_delivery=0;
-	var delivered=0;
-	var pending=0;
-	
-	$("[id^='save_form267']").each(function(index)
-	{
-		var subform_id=$(this).attr('form');
-		var subform=document.getElementById(subform_id);
-		var updated_status=subform.elements[2].value;
-		var current_status=subform.elements[1].value;
-		
-		if(updated_status!="")
-		{
-			if(updated_status=='RTO delivered')
-				delivered+=1;
-			else if(updated_status=='RTO out for delivery')	
-				out_for_delivery+=1;
-			else if(updated_status=='RTO pending')	
-				pending+=1;	
-		}
-		else 
-		{
-			if(current_status=='RTO delivered')
-				delivered+=1;
-			else if(current_status=='RTO out for delivery')	
-				out_for_delivery+=1;
-			else if(current_status=='RTO pending')	
-				pending+=1;	
-		}
-	});
-	
-	var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
-							"<td>Out for Delivery:<br>Delivered:<br>Pending:</td>" +
-							"<td>"+out_for_delivery+"<br>"+delivered+"<br>" +pending+"</td>" +
-							"<td></td>" +
-							"</tr>";
-	$('#form267_foot').html(total_row);
 }
 
 

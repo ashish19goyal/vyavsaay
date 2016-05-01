@@ -403,7 +403,7 @@
 		                  <div class="row">
 								   <div class='col-md-6'>
 								   	<input type="file" required name='file' value='Select file' accept=".csv" style='display:none'>
-										<button type='button' name='file_dummy' class='btn red'>Select File</button>
+										<button type='button' name='file_dummy' class='btn red-sunglo'>Select File</button>
 									</div>
 				          </div>											
 		                  <div class="row">
@@ -1787,7 +1787,7 @@
 		             </div>
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal144_form' name='save'>Add</button>
-	               	<button type="submit" class="btn red" form='modal144_form' data-dismiss="modal" name='save'>Cancel</button>
+	               	<button type="submit" class="btn red" form='modal144_form' data-dismiss="modal" name='cancel'>Cancel</button>
 	             	</div>
                 </form>
             </div>
@@ -1850,7 +1850,7 @@
                     </div>
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal146_form' name='save'>Save</button>
-	               	<button type="submit" class="btn red" form='modal146_form' data-dismiss="modal" name='save'>Cancel</button>
+	               	<button type="submit" class="btn red" form='modal146_form' data-dismiss="modal" name='cancel'>Cancel</button>
 	             	</div>
                 </form>
             </div>
@@ -1912,7 +1912,7 @@
                         <div class="row">
 								<div class='col-md-6'>
 								   	<input type="file" required name='file' value='Select file' accept=".csv" style='display:none'>
-									<button type='button' name='file_dummy' class='btn red-sunglow'>Select File</button>
+									<button type='button' name='file_dummy' class='btn red-sunglo'>Select File</button>
 								</div>
 				          </div>											
 		                  <div class="row">
@@ -2427,7 +2427,7 @@
 		             </div>
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal175_form' name='save'>Add</button>
-	               	<button type="submit" class="btn red" form='modal175_form' data-dismiss="modal" name='save'>Cancel</button>
+	               	<button type="submit" class="btn red" form='modal175_form' data-dismiss="modal" name='cancel'>Cancel</button>
 	             	</div>
                 </form>
             </div>
@@ -2461,7 +2461,7 @@
 		             </div>
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal176_form' name='save'>Add</button>
-	               	<button type="submit" class="btn red" form='modal176_form' data-dismiss="modal" name='save'>Cancel</button>
+	               	<button type="submit" class="btn red" form='modal176_form' data-dismiss="modal" name='cancel'>Cancel</button>
 	             	</div>
                 </form>
             </div>
@@ -2539,7 +2539,7 @@
 		             </div>
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal179_form' name='save'>Update</button>
-	               	<button type="submit" class="btn red" form='modal179_form' data-dismiss="modal" name='save'>Cancel</button>
+	               	<button type="submit" class="btn red" form='modal179_form' data-dismiss="modal" name='cancel'>Cancel</button>
 	             	</div>
                 </form>
             </div>
@@ -3462,7 +3462,7 @@
 		             </div>
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal206_form' name='save'>Add</button>
-	               	<button type="submit" class="btn red" form='modal206_form' data-dismiss="modal" name='save'>Cancel</button>
+	               	<button type="submit" class="btn red" form='modal206_form' data-dismiss="modal" name='cancel'>Cancel</button>
 	             	</div>
                 </form>
             </div>
@@ -3549,7 +3549,51 @@
 		             </div>
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal210_form' name='save'>Add</button>
-	               	<button type="submit" class="btn red" form='modal210_form' data-dismiss="modal" name='save'>Cancel</button>
+	               	<button type="submit" class="btn red" form='modal210_form' data-dismiss="modal" name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <a href='#modal211' data-toggle="modal" id='modal211_link'></a>
+	<div id="modal211" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal211_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Mark as Bag</h4>
+                	</div>
+	                <div class="modal-body">
+                        <div class="scroller" style="height:80%;" data-always-visible="1" data-rail-visible1="1">
+                            <div class="row">
+				                <div class="col-sm-12 col-md-4">Manifest #</div>
+                                <div class="col-sm-12 col-md-8"><input type='text' readonly='readonly' form='modal211_form' name='manifest_num'></div>
+                            </div>
+                        </div>
+                        <div class="scroller" style="height:80%;" data-always-visible="1" data-rail-visible1="1">
+                            <div class="row">
+				                <div class="col-sm-12 col-md-4">Seal #</div>
+                                <div class="col-sm-12 col-md-8"><input type='text' required form='modal211_form' name='seal'></div>
+                            </div>
+                        </div>
+                        <div class="scroller" style="height:80%;" data-always-visible="1" data-rail-visible1="1">
+                            <div class="row">
+				                <div class="col-sm-12 col-md-4">LBH</div>
+                                <div class="col-sm-12 col-md-8"><input type='text' form='modal211_form' name='lbh'></div>
+                            </div>
+                        </div>
+                        <div class="scroller" style="height:80%;" data-always-visible="1" data-rail-visible1="1">
+                            <div class="row">
+				                <div class="col-sm-12 col-md-4">Weight</div>
+                                <div class="col-sm-12 col-md-8"><input type='number' form='modal211_form' name='weight'></div>
+                            </div>
+                        </div>
+                    </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal211_form' name='save'>Save</button>
+	               	<button type="submit" class="btn red" form='modal211_form' data-dismiss="modal" name='cancel'>Cancel</button>
 	             	</div>
                 </form>
             </div>

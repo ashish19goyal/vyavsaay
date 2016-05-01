@@ -244,6 +244,7 @@ js/prop/set_json.js
 js/prop/sync.js
 js/prop/time.js
 js/prop/update.js
+js/prop/vUtil.js
 favicon.ico
 #
 #Files listed under this header require a connection to the server, and will never be cached 

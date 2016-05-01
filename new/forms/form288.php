@@ -311,7 +311,7 @@
 			if(is_update_access('form288'))
             {
                 var data_json={data_store:'system_overwrite_func',
-                        loader:'no',
+                        loader:'yes',
                         log:'yes',
                         data:[],
                         log_data:{title:'Overwrite function for system configuration',link_to:'form288'}};

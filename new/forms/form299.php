@@ -206,7 +206,7 @@
 				$('#form299_section').find("img").each(function(index)
 				{
 					var image_elem=$(this)[0];
-					resize_picture(image_elem,image_elem.width);			
+					vUtil.resize_picture(image_elem,image_elem.width);			
 				});
 		
 				var components_array=[];	
@@ -261,7 +261,7 @@
 				$('#form299_section').find("img").each(function(index)
 				{
 					var image_elem=$(this)[0];
-					resize_picture(image_elem,image_elem.width);			
+					vUtil.resize_picture(image_elem,image_elem.width);			
 				});
 		
 				var components_array=[];	

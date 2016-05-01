@@ -571,6 +571,7 @@
             var ddate=get_raw_time(form.elements['date'].value);
             var data_id=form.elements['id'].value;
             var branch=form.elements['branch'].value;
+            form.elements['saved'].value='yes';
 
             $('#form265_share').off('click');
             $('#form265_share').click(function()

@@ -2061,7 +2061,8 @@ function modal23_action(t_func,i_func,v_func)
 		$(select_file).trigger('click');
 	});
 
-	dummy_button.setAttribute('class','btn red');
+	dummy_button.setAttribute('class','btn red-sunglo');
+	
 	select_file.value="";
 	selected_file.value="";
 	
@@ -2071,12 +2072,13 @@ function modal23_action(t_func,i_func,v_func)
 		var file_name=select_file.value;
 		if(file_name!="" && (file_name.indexOf('csv')>-1))
 		{
-			dummy_button.setAttribute('class','btn green');
+			dummy_button.setAttribute('class','btn green-jungle');
 			selected_file.value=file_name;
 		}
 		else 
 		{
-			dummy_button.setAttribute('class','btn red');
+			dummy_button.setAttribute('class','btn red-sunglo');
+	
 			select_file.value="";
 			selected_file.value="";
 		}
@@ -2103,7 +2105,7 @@ function modal23_action(t_func,i_func,v_func)
         {
         	progress_value=5;
         	var content=reader.result;
-        	var data_array=csv_string_to_obj_array(content);
+        	var data_array=vUtil.csv2array(content);
 
         	progress_value=10;
            	//console.log(data_array);
@@ -9120,7 +9122,7 @@ function modal138_action()
 		$(select_file).trigger('click');
 	});
 
-	dummy_button.setAttribute('class','generic_red_icon');
+	dummy_button.setAttribute('class','btn red-sunglo');
 	select_file.value="";
 	selected_file.value="";
 	
@@ -9130,13 +9132,13 @@ function modal138_action()
 		var file_name=select_file.value;
 		if(file_name!="" && (file_name.indexOf('csv')>-1))
 		{
-			dummy_button.setAttribute('class','generic_green_icon');
-			selected_file.value=file_name;
+			dummy_button.setAttribute('class','btn green-jungle');
+	        selected_file.value=file_name;
 		}
 		else 
 		{
-			dummy_button.setAttribute('class','generic_red_icon');
-			select_file.value="";
+			dummy_button.setAttribute('class','btn red-sunglo');
+	        select_file.value="";
 			selected_file.value="";
 		}
 	});
@@ -9173,7 +9175,7 @@ function modal138_action()
         {        	
         	progress_value=2;
 	       	var content=reader.result;
-	       	var data_array=csv_string_to_obj_array(content);
+	       	var data_array=vUtil.csv2array(content);
 			
 			data_array.forEach(function (data_row) 
 			{
@@ -9208,9 +9210,9 @@ function modal138_action()
 					read_json_rows('',list_data,function(products)
 					{	
 						hide_loader();
-						var orders_list=array_2d_1d(orders,'order_num');
-						var skus_list=array_2d_1d(skus,'channel_sku');
-						var products_list=array_2d_1d(products,'name');
+						var orders_list=vUtil.array_column(orders,'order_num');
+						var skus_list=vUtil.array_column(skus,'channel_sku');
+						var products_list=vUtil.array_column(products,'name');
 						
 						var validate_template_array=[{column:'order_date',required:'yes',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
 												{column:'order_id',required:'yes',regex:new RegExp('^[0-9a-zA-Z-]+$'),anti_list:orders_list},
@@ -9578,7 +9580,7 @@ function modal140_action(i_func)
 		$(select_file).trigger('click');
 	});
 		
-	dummy_button.setAttribute('class','generic_red_icon');
+	dummy_button.setAttribute('class','btn red-sunglo');
 	select_file.value="";
 	selected_file.value="";
 	
@@ -9588,13 +9590,13 @@ function modal140_action(i_func)
 		var file_name=select_file.value;
 		if(file_name!="" && (file_name.indexOf('csv')>-1))
 		{
-			dummy_button.setAttribute('class','generic_green_icon');
-			selected_file.value=file_name;
+			dummy_button.setAttribute('class','btn green-jungle');
+	        selected_file.value=file_name;
 		}
 		else 
 		{
-			dummy_button.setAttribute('class','generic_red_icon');
-			select_file.value="";
+			dummy_button.setAttribute('class','btn red-sunglo');
+	        select_file.value="";
 			selected_file.value="";
 		}
 	});
@@ -9624,7 +9626,7 @@ function modal140_action(i_func)
         {
         	progress_value=2;
         	var content=reader.result;
-        	var data_array=csv_string_to_obj_array(content);
+        	var data_array=vUtil.csv2array(content);
 			
 			progress_value=5;
 
@@ -10711,7 +10713,7 @@ function modal148_action()
 		$(select_file).trigger('click');
 	});
 	
-	dummy_button.setAttribute('class','generic_red_icon');
+	dummy_button.setAttribute('class','btn red-sunglo');
 	select_file.value="";
 	selected_file.value="";	
 	
@@ -10721,13 +10723,13 @@ function modal148_action()
 		var file_name=select_file.value;
 		if(file_name!="" && (file_name.indexOf('csv')>-1))
 		{
-			dummy_button.setAttribute('class','generic_green_icon');
-			selected_file.value=file_name;
+			dummy_button.setAttribute('class','btn green-jungle');
+	        selected_file.value=file_name;
 		}
 		else 
 		{
-			dummy_button.setAttribute('class','generic_red_icon');
-			select_file.value="";
+			dummy_button.setAttribute('class','btn red-sunglo');
+	        select_file.value="";
 			selected_file.value="";
 		}
 	});
@@ -10754,7 +10756,7 @@ function modal148_action()
         {
         	progress_value=2;
         	var content=reader.result;
-        	var data_array=csv_string_to_obj_array(content);
+        	var data_array=vUtil.csv2array(content);
 			
 			progress_value=5;
 			
@@ -10916,7 +10918,7 @@ function modal149_action()
 		$(select_file).trigger('click');
 	});
 
-	dummy_button.setAttribute('class','generic_red_icon');
+	dummy_button.setAttribute('class','btn red-sunglo');
 	select_file.value="";
 	selected_file.value="";	
 	
@@ -10926,12 +10928,12 @@ function modal149_action()
 		var file_name=select_file.value;
 		if(file_name!="" && (file_name.indexOf('csv')>-1))
 		{
-			dummy_button.setAttribute('class','generic_green_icon');
+			dummy_button.setAttribute('class','btn green-jungle');
 			selected_file.value=file_name;
 		}
 		else 
 		{
-			dummy_button.setAttribute('class','generic_red_icon');
+			dummy_button.setAttribute('class','btn red-sunglo');
 			select_file.value="";
 			selected_file.value="";
 		}
@@ -10966,7 +10968,7 @@ function modal149_action()
         {
         	progress_value=2;
         	var content=reader.result;
-        	var data_array=csv_string_to_obj_array(content);
+        	var data_array=vUtil.csv2array(content);
 			
 			progress_value=5;
 			
@@ -10976,10 +10978,10 @@ function modal149_action()
 										{column:'Order No.',required:'yes',regex:new RegExp('^[0-9a-zA-Z]+$')},
 										{column:'Manifest ID',required:'yes',regex:new RegExp('^[0-9a-zA-Z]+$')},
 										{column:'Customer Name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'@()_.,-]+$')},
-										{column:'Consignee',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
+										{column:'Consignee',required:'yes',regex:new RegExp('^[0-9a-zA-Z &\'_.,/@$!()-]+$')},
 										{column:'Consignee Address1',required:'yes'},
 										{column:'Consignee Address2'},
-										{column:'Destination City',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'()_.,-]+$')},
+										{column:'Destination City',required:'yes',regex:new RegExp('^[0-9a-zA-Z &\'()_.,-]+$')},
 										{column:'Pincode',required:'yes',regex:new RegExp('^[0-9]+$')},
 										{column:'State',regex:new RegExp('^[0-9a-zA-Z\' ,-]+$')},
 										{column:'Tel. Number',regex:new RegExp('^[0-9\+\(\)\./, -]+$')},
@@ -10998,7 +11000,8 @@ function modal149_action()
 										{column:'Return Pin',required:'yes',regex:new RegExp('^[0-9]+$')}];
 			data_array.forEach(function(row)
             {
-                var product_name_array=row['Product name'].split('|');
+                var product=vUtil.fetch_index(row,'Product name');
+                var product_name_array=product.split('|');
                 row['Product name']=product_name_array[0];
             });
 
@@ -11100,7 +11103,7 @@ function modal149_action()
 	        {
 	        	hide_progress();
        			$(select_file).val('');
-       			$("#modal149").dialog("close");
+       			$(form).find(".close").click();
 				modal164_action(error_array);       			
 	        }
         }
@@ -12297,7 +12300,7 @@ function modal160_action()
 		$(select_file).trigger('click');
 	});
 
-	dummy_button.setAttribute('class','generic_red_icon');
+    dummy_button.setAttribute('class','btn red-sunglo');
 	select_file.value="";
 	selected_file.value="";
 	
@@ -12307,12 +12310,12 @@ function modal160_action()
 		var file_name=select_file.value;
 		if(file_name!="" && (file_name.indexOf('csv')>-1))
 		{
-			dummy_button.setAttribute('class','generic_green_icon');
+			dummy_button.setAttribute('class','btn green-jungle');
 			selected_file.value=file_name;
 		}
 		else 
 		{
-			dummy_button.setAttribute('class','generic_red_icon');
+			dummy_button.setAttribute('class','btn red-sunglo');
 			select_file.value="";
 			selected_file.value="";
 		}
@@ -12332,7 +12335,7 @@ function modal160_action()
         {
         	progress_value=2;
         	var content=reader.result;
-        	var data_array=csv_string_to_obj_array(content);
+        	var data_array=vUtil.csv2array(content);
 
         	progress_value=5;
            
@@ -13163,7 +13166,7 @@ function modal170_action()
 		$(select_file).trigger('click');
 	});
 
-	dummy_button.setAttribute('class','generic_red_icon');
+    dummy_button.setAttribute('class','btn red-sunglo');
 	select_file.value="";
 	selected_file.value="";
 	
@@ -13173,12 +13176,12 @@ function modal170_action()
 		var file_name=select_file.value;
 		if(file_name!="" && (file_name.indexOf('csv')>-1))
 		{
-			dummy_button.setAttribute('class','generic_green_icon');
+			dummy_button.setAttribute('class','btn green-jungle');
 			selected_file.value=file_name;
 		}
 		else 
 		{
-			dummy_button.setAttribute('class','generic_red_icon');
+            dummy_button.setAttribute('class','btn red-sunglo');
 			select_file.value="";
 			selected_file.value="";
 		}
@@ -13199,7 +13202,7 @@ function modal170_action()
         {        	
         	progress_value=2;
 	       	var content=reader.result;
-	       	var data_array=csv_string_to_obj_array(content);
+	       	var data_array=vUtil.csv2array(content);
 
 	       	progress_value=5;
 	    				
@@ -16484,7 +16487,7 @@ function modal208_action()
 		$(select_file).trigger('click');
 	});
 
-	dummy_button.setAttribute('class','generic_red_icon');
+	dummy_button.setAttribute('class','btn red-sunglo');
 	select_file.value="";
 	selected_file.value="";
 
@@ -16494,13 +16497,13 @@ function modal208_action()
 		var file_name=select_file.value;
 		if(file_name!="" && (file_name.indexOf('csv')>-1))
 		{
-			dummy_button.setAttribute('class','generic_green_icon');
-			selected_file.value=file_name;
+			dummy_button.setAttribute('class','btn green-jungle');
+	        selected_file.value=file_name;
 		}
 		else 
 		{
-			dummy_button.setAttribute('class','generic_red_icon');
-			select_file.value="";
+			dummy_button.setAttribute('class','btn red-sunglo');
+	       select_file.value="";
 			selected_file.value="";
 		}
 	});
@@ -16529,7 +16532,7 @@ function modal208_action()
         {
         	progress_value=2;
         	var content=reader.result;
-        	var data_array=csv_string_to_obj_array(content);
+        	var data_array=vUtil.csv2array(content);
 			
 			progress_value=5;
 			
@@ -16755,4 +16758,60 @@ function modal210_action(description,func)
 	});
 	
 	$("#modal210_link").click();
+}
+
+/**
+ * @modalNo 211
+ * @modal Mark manifest as bag
+ * @param button
+ */
+function modal211_action(manifest_id,manifest_num,func)
+{
+	var form=document.getElementById('modal211_form');
+	
+	var fmanifest=form.elements['manifest_num'];
+    fmanifest.value=manifest_num;
+    
+	var fseal=form.elements['seal'];
+    var flbh=form.elements['lbh'];
+    var fweight=form.elements['weight'];
+    
+    fseal.value='';
+    flbh.value='';
+    fweight.value='';
+    	
+    $('modal211_form').formcontrol();
+    
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_update_access('form321'))
+		{
+            var master_form=document.getElementById("form321_master");
+            var last_updated=get_my_time();
+            master_form.elements['type'].value='bag';
+            master_form.elements['lbh'].value=flbh.value;
+            master_form.elements['weight'].value=fweight.value;
+            master_form.elements['seal'].value=fseal.value;
+
+			var data_json={data_store:'manifests',
+                        data:[{index:'id',value:manifest_id},
+                            {index:'seal_num',value:fseal.value},
+                            {index:'lbh',value:flbh.value},
+                            {index:'weight',value:fweight.value},
+                            {index:'type',value:'bag'},
+                            {index:'last_updated',value:last_updated}],
+                          log:'yes',
+                          log_data:{title:'Updated',notes:'Marked manifest # '+manifest_num+' as bag',link_to:'form322'}};
+            update_json(data_json);
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
+		$(form).find(".close").click();
+	});
+	
+	$("#modal211_link").click();
 }
