@@ -44,7 +44,7 @@
                 <i class="icon-energy"></i> Backup Data </a>
         </li>
         <li id='system_delete_logs'>
-            <a onclick=server_delete_logs({});>
+            <a onclick=server_delete_logs({},function(){$('#modal93_link').click()});>
                 <i class="icon-clock"></i> Delete Logs </a>
         </li>
         
