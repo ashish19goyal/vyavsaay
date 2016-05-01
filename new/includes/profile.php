@@ -43,6 +43,10 @@
             <a onclick="backup_server_db();">
                 <i class="icon-energy"></i> Backup Data </a>
         </li>
+        <li id='system_delete_logs'>
+            <a onclick=server_delete_logs({});>
+                <i class="icon-clock"></i> Delete Logs </a>
+        </li>
         
         <li class="divider"> </li>
 

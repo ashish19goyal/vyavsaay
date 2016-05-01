@@ -368,7 +368,6 @@
                     {
                         e.preventDefault();
                         $(lbh_filter).focus();
-                        console.log('p3');
                     }
                 });
                 
@@ -489,7 +488,6 @@
                                             weight_filter.value=orders[0].weight;
                                             pieces_filter.value=orders[0].pieces;
                                             id_filter.value=orders[0].id;
-                                            console.log('p1');
                                             $(order_filter).focus();
                                         }
                                         else 
@@ -555,8 +553,6 @@
                                         weight_filter.value=orders[0].weight;
                                         pieces_filter.value=orders[0].pieces;
                                         id_filter.value=orders[0].id;
-                                        console.log('p2');
-                                        console.log(order_filter);
                                         $(order_filter).focus();
                                     }
                                     else 

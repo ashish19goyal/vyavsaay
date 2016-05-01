@@ -1253,3 +1253,69 @@
 		</div>
 	</div>
 </div>
+
+/***function limiter***/
+
+/*box_id*:*modal92
+*@*box_title*:*AWB Updated
+*@*box_type*:*static
+*@*function_name*:*
+*@*function_def*:*
+*@*status*:*active
+*@*last_updated*:*1
+*@*box_content*:*
+*/
+<a href='#modal92' data-toggle="modal" id='modal92_link'></a>
+<div id="modal92" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id='modal92_form'>                               
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+					<h4 class="modal-title">AWB Updated</h4>
+				</div>
+				<div class="modal-body">
+					<div class="scroller" style="height:100px;" data-always-visible="1" data-rail-visible1="1">
+						Order details have been updated.
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn green" data-dismiss='modal' name='close' value='Ok'>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+/***function limiter***/
+
+/*box_id*:*modal93
+*@*box_title*:*Logs cleared
+*@*box_type*:*static
+*@*function_name*:*
+*@*function_def*:*
+*@*status*:*active
+*@*last_updated*:*1
+*@*box_content*:*
+*/
+<a href='#modal93' data-toggle="modal" id='modal93_link'></a>
+<div id="modal93" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id='modal93_form'>                               
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+					<h4 class="modal-title">Logs Cleared</h4>
+				</div>
+				<div class="modal-body">
+					<div class="scroller" style="height:100px;" data-always-visible="1" data-rail-visible1="1">
+						All system logs have been cleared.
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn green" data-dismiss='modal' name='close' value='Ok'>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

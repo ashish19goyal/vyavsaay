@@ -366,7 +366,16 @@ function hide_menu_items()
 	$('#api_sync_icon').hide();
 	if(api_sync=='yes')
 		$('#api_sync_icon').show();
-		
+	
+    if(is_delete_access('activities'))
+    {
+        $('#system_delete_logs').show();
+    }
+    else
+    {
+        $('#system_delete_logs').hide();
+    }
+    
 	var offline=get_session_var('offline');
 	if(offline=="online")
 	{
