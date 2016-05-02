@@ -3,6 +3,8 @@
 namespace RetailingEssentials;
 include_once "../Classes/db.php";
 require_once '../Classes/S3.php';
+include_once '../Classes/file_reader.php';
+
 use RetailingEssentials\db_connect;
 use \PDO;
 use \S3;
@@ -17,9 +19,11 @@ class s3_object
     
     public function __construct($domain='vyavsaay',$bucket='vyavsaay-newsletter')
 	{
-		$this->bucketName=$bucket;
-		$this->awsAccessKey='AKIAIUMY6WOBUJW3JR4A';
-		$this->awsSecretKey='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';
+        $fr=new file_reader($_SERVER['DOCUMENT_ROOT']."/../Config/config.prop");
+        
+        $this->bucketName=$bucket;
+		$this->awsAccessKey=$fr->attributes["awsAccessKey"];
+		$this->awsSecretKey=$fr->attributes["awsSecretKey"];
         $this->domain=$domain;
 		$this->s3=new S3($this->awsAccessKey, $this->awsSecretKey);
 		$this->conn=new db_connect('re_user_'.$domain);

@@ -2,7 +2,9 @@
 
 namespace RetailingEssentials;
 include_once "../Classes/db.php";
-require_once '../Classes/mandrill/src/Mandrill.php';
+require_once "../Classes/mandrill/src/Mandrill.php";
+include_once '../Classes/file_reader.php';
+
 use RetailingEssentials\db_connect;
 use \PDO;
 use \Mandrill;
@@ -17,8 +19,9 @@ class send_mailer_json
 
 	public function __construct($domain)
 	{
-		$this->api_key='Ub0h4w5NVLE6GdyXrYFlZw';
-        $this->domain=$domain;
+        $fr=new file_reader($_SERVER['DOCUMENT_ROOT']."/../Config/config.prop");
+        $this->api_key=$fr->attributes["mandrillApiKey"];
+		$this->domain=$domain;
 		$this->mandrill = new Mandrill($this->api_key);
 	}
 

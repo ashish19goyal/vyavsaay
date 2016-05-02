@@ -4,11 +4,22 @@
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form321_add_item();'>Add <i class='fa fa-plus'></i></a>
             <a class='btn btn-circle grey btn-outline btn-sm' id='form321_save'>Save <i class='fa fa-save'></i></a>
 		</div>
-		<div class="actions">
-      	    <a class='btn btn-default btn-sm' id='form321_print' onclick=form321_print_form();><i class='fa fa-print'></i> Print</a>
-            <a class='btn btn-default btn-sm' id='form321_csv'><i class='fa fa-file-excel-o'></i> Download</a>
-            <a class='btn btn-default btn-sm' id='form321_share'><i class='fa fa-envelope'></i> Email</a>    
-      </div>
+        <div class="actions">
+            <div class="btn-group">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
+                <ul class="dropdown-menu pull-right">
+                    <li>
+                        <a id='form321_print'><i class='fa fa-print'></i> Print</a>
+                    </li>
+                    <li>
+                        <a id='form321_csv'><i class='fa fa-file-excel-o'></i> Download</a>
+                    </li>
+                    <li>
+                        <a id='form321_share'><i class='fa fa-envelope'></i> Email</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
 	</div>
 	
 	<div class="portlet-body">
@@ -288,7 +299,7 @@
                     {
                         var message_attachment=my_obj_array_to_csv_string(new_results);
                         var subject='Manifest Sheet # '+filter_fields.elements['manifest_num'].value;
-                        var body='Hi,\nPlease find attached the manifest with this mail.\nCo-loader: '+filter_fields.elements['loader'].value+'\nVendor:'+filter_fields.elements['vendor'].value+'\nDate:'+filter_fields.elements['date'].value+'\n\nRegards,\nBeacon Couriers';
+                        var body="Hi,\nPlease find attached the manifest with this mail.\nCo-loader: "+filter_fields.elements['loader'].value+"\nVendor:"+filter_fields.elements['vendor'].value+"\nDate:"+filter_fields.elements['date'].value+"\n\nRegards,\nBeacon Couriers";
 
                         modal209_action(subject,body,message_attachment);
                     });
@@ -674,7 +685,7 @@
                 {
                     var message_attachment=my_obj_array_to_csv_string(results);
                     var subject='Manifest Sheet # '+manifest_num;
-                    var body='Hi,\nPlease find attached the manifest with this mail.\nCo-loader: '+coloader+'\nVendor:'+vendor+'\nDate:'+date+'\n\nRegards,\nBeacon Couriers';
+                    var body="Hi,\nPlease find attached the manifest with this mail.\nCo-loader: "+coloader+"\nVendor:"+vendor+"\nDate:"+date+"\n\nRegards,\nBeacon Couriers";
 
                     modal209_action(subject,body,message_attachment);
                 });
@@ -795,7 +806,7 @@
                 {
                     var message_attachment=my_obj_array_to_csv_string(results);
                     var subject='Manifest Sheet # '+manifest_num;
-                    var body='Hi,\nPlease find attached the manifest with this mail.\nCo-loader: '+coloader+'\nVendor:'+vendor+'\nDate:'+date+'\n\nRegards,\nBeacon Couriers';
+                    var body="Hi,\nPlease find attached the manifest with this mail.\nCo-loader: "+coloader+"\nVendor:"+vendor+"\nDate:"+date+"\n\nRegards,\nBeacon Couriers";
 
                     modal209_action(subject,body,message_attachment);
                 });

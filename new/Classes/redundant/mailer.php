@@ -3,6 +3,8 @@
 namespace RetailingEssentials;
 include_once "../Classes/db.php";
 require_once '../Classes/mandrill/src/Mandrill.php';
+include_once '../Classes/file_reader.php';
+
 use RetailingEssentials\db_connect;
 use \PDO;
 use \Mandrill;
@@ -16,7 +18,8 @@ class send_mailer
 
 	public function __construct()
 	{
-		$this->api_key='Ub0h4w5NVLE6GdyXrYFlZw';
+        $fr=new file_reader($_SERVER['DOCUMENT_ROOT']."/../Config/config.prop");
+        $this->api_key=$fr->attributes["mandrillApiKey"];
 		$this->mandrill = new Mandrill($this->api_key);
 	}
 

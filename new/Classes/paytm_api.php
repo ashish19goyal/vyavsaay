@@ -2,6 +2,8 @@
 
 namespace RetailingEssentials;
 include_once "../Classes/db.php";
+include_once '../Classes/file_reader.php';
+
 use RetailingEssentials\db_connect;
 use \PDO;
 use \DateTime;
@@ -18,10 +20,12 @@ class paytm_api
 
 	public function __construct($domain)
 	{
-		$this->client_id='shipper-seven-horses';
-		$this->secret = '3ebc0cf1af9835acd61a43fcfb37ea06e4d34540';
-		$this->username = 'rishi@sevenhorses.in';
-		$this->password = 'sevenhorses123';
+        $fr=new file_reader($_SERVER['DOCUMENT_ROOT']."/../Config/config.prop");
+
+        $this->client_id=$fr->attributes["paytmClientId"];
+		$this->secret = $fr->attributes["paytmSecret"];
+		$this->username = $fr->attributes["paytmUsername"];
+		$this->password = $fr->attributes["paytmPassword"];
 		$this->domain = $domain;
 		$this->conn=new db_connect("re_user_".$this->domain);
 		$this->new_time = time()*1000;

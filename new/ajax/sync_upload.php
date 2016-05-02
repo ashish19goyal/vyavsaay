@@ -3,10 +3,10 @@
 	session_start();
 
 	include_once "../Classes/sms.php";
-	include_once "../Classes/mailer.php";	
+	include_once "../Classes/mailer_json.php";	
 	include_once "../Classes/db.php";
 
-	use RetailingEssentials\send_mailer;
+	use RetailingEssentials\send_mailer_json;
 	use RetailingEssentials\db_connect;
 	use RetailingEssentials\send_sms;
 	
@@ -207,7 +207,7 @@
 					$sms_instance->sender_id($sender_id);
 				$sms_instance->send_stored_sms($domain);
 				
-				$email_instance=new send_mailer();
+				$email_instance=new send_mailer_json();
 				$email_instance->send_stored_mailer($domain);
 			}
 			

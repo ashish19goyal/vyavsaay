@@ -16664,6 +16664,8 @@ function modal209_action(subject,body,message_attachment)
     form.elements['subject'].value=subject;
     form.elements['body'].value=body;
 
+    $('#modal209').formcontrol();
+    
     $(form).off("submit");
     $(form).on("submit",function(event)
     {
@@ -16678,10 +16680,10 @@ function modal209_action(subject,body,message_attachment)
         {
             hide_loader();
         });
-        $("#modal209").dialog("close");
+        $(form).find(".close").click();
     });
 
-    $("#modal209").dialog("open");
+    $("#modal209_link").click();
 }
 
 

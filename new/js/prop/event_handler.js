@@ -266,8 +266,7 @@ function modal_forms_ini()
 	dynamic_modal_array.push(174);
 	dynamic_modal_array.push(177);
 	dynamic_modal_array.push(208);
-	dynamic_modal_array.push(209);
-    
+	
 	dynamic_modal_array.forEach(function(i)
 	{
 		$("#modal"+i).dialog({
@@ -367,13 +366,16 @@ function hide_menu_items()
 	if(api_sync=='yes')
 		$('#api_sync_icon').show();
 	
-    if(is_delete_access('activities'))
+
+    $('#system_delete_logs').hide();
+    var del=get_session_var('del');
+	if(del)
     {
-        $('#system_delete_logs').show();
-    }
-    else
-    {
-        $('#system_delete_logs').hide();
+        var found=del.search('activities-');
+        if(found>-1)
+        {
+            $('#system_delete_logs').show();
+        }
     }
     
 	var offline=get_session_var('offline');

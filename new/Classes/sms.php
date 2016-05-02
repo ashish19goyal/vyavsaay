@@ -2,6 +2,8 @@
 
 namespace RetailingEssentials;
 include_once "../Classes/db.php";
+include_once '../Classes/file_reader.php';
+
 use RetailingEssentials\db_connect;
 use \PDO;
 
@@ -14,11 +16,13 @@ class send_sms
 		
 	public function __construct()
 	{
-		$this->pusername=urlencode('sendervyavsaay');
-		$this->ppassword=urlencode('DveI9O');
-		$this->tusername=urlencode('trvyavsaay');
-		$this->tpassword=urlencode('69sKkr');
-		$this->sender_id=urlencode('VYAVSY');
+        $fr=new file_reader($_SERVER['DOCUMENT_ROOT']."/../Config/config.prop");
+
+        $this->pusername=urlencode($fr->attributes["smsPromotionalUsername"]);
+		$this->ppassword=urlencode($fr->attributes["smsPromotionalPassword"]);
+		$this->tusername=urlencode($fr->attributes["smsTransactionalUsername"]);
+		$this->tpassword=urlencode($fr->attributes["smsTransactionalPassword"]);
+		$this->sender_id=urlencode($fr->attributes["smsDefaultSenderId"]);
 		$this->url='http://sms99.co.in/pushsms.php';
 	}
 

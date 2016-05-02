@@ -1,13 +1,15 @@
 <?php
 
 	namespace RetailingEssentials;
-	include_once "../Classes/db.php";
+	include_once '../Classes/db.php';
+    include_once '../Classes/file_reader.php';
+
 	use RetailingEssentials\db_connect;
 	use \PDO;
 	
 	class geoCoding
-	{
-		private $key='Fmjtd%7Cluur250a2u%2C2x%3Do5-9w7w50';
+	{		
+		private $key='';
 		private $location='';	
 		private $details_url='';
 	 	private $coordinates='';
@@ -17,6 +19,9 @@
 	 	
 		public function __construct($username,$type)
 		{
+            $fr=new file_reader($_SERVER['DOCUMENT_ROOT']."/../Config/config.prop");
+            $this->key=$fr->attributes["geoCodingKey"];
+
 			$this->conn=new db_connect("re_user_".$username);
 			$this->table=$type;
 			$this->read_addresses();

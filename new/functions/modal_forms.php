@@ -3511,17 +3511,39 @@
 		</form>
 	</div>
     
-    <div id="modal209" title="Email Document">
-		<form id='modal209_form' autocomplete="off">
-			<fieldset>
-				<label>Email: <textarea name='email' required title='Separate email IDs with semicolon(;)'></textarea></label><br>
-				<label>Subject: <textarea name='subject'></textarea></label><br>
-				<label>Body: <textarea name='body'></textarea></label><br>
-				<input type='hidden'>
-				<input type="submit" value='Send' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
+    <a href='#modal209' data-toggle="modal" id='modal209_link'></a>
+	<div id="modal209" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal209_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Email Document</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:80%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+				            <div class="col-sm-12 col-md-4">Email</div>
+					     	<div class="col-sm-12 col-md-8"><textarea form='modal209_form' name='email' required title='Separate email Ids with semicolon(;)'></textarea></div>
+                          </div>
+		                  <div class="row">
+				            <div class="col-sm-12 col-md-4">Subject</div>
+					     	<div class="col-sm-12 col-md-8"><textarea form='modal209_form' name='subject' required></textarea></div>
+                          </div>
+		                  <div class="row">
+				            <div class="col-sm-12 col-md-4">Body</div>
+					     	<div class="col-sm-12 col-md-8"><textarea form='modal209_form' name='body' required></textarea></div>
+                          </div>
+		                  </div>
+		              </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal209_form' name='save'>Send</button>
+	               	<button type="submit" class="btn red" form='modal209_form' data-dismiss="modal" name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
     
     <a href='#modal210' data-toggle="modal" id='modal210_link'></a>
 	<div id="modal210" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
