@@ -1319,3 +1319,36 @@
 		</div>
 	</div>
 </div>
+
+/***function limiter***/
+
+/*box_id*:*modal94
+*@*box_title*:*Configuration Updated
+*@*box_type*:*static
+*@*function_name*:*
+*@*function_def*:*
+*@*status*:*active
+*@*last_updated*:*1
+*@*box_content*:*
+*/
+<a href='#modal94' data-toggle="modal" id='modal94_link'></a>
+<div id="modal94" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id='modal94_form'>                               
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+					<h4 class="modal-title">Configuration Updated</h4>
+				</div>
+				<div class="modal-body">
+					<div class="scroller" style="height:100px;" data-always-visible="1" data-rail-visible1="1">
+						System configurations have been updated. Please clear browser cache for changes to reflect.
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn green" data-dismiss='modal' name='close' value='Ok'>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

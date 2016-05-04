@@ -378,6 +378,17 @@ function hide_menu_items()
         }
     }
     
+    $('#system_config_backup').hide();
+    var re=get_session_var('re');
+	if(re)
+    {
+        var found=re.search('db_backup-');
+        if(found>-1)
+        {
+            $('#system_config_backup').show();
+        }
+    }
+    
 	var offline=get_session_var('offline');
 	if(offline=="online")
 	{

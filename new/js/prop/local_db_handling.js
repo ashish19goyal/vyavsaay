@@ -235,43 +235,6 @@ function update_local_db(domain,func,new_version)
 };
 
 
-function backup_server_db()
-{
-	if(is_create_access('form99') || is_create_access('db_backup'))
-	{
-		var domain=get_domain();
-		var username=get_username();
-		var cr_access=get_session_var('cr');
-		show_loader();
-		ajax_with_custom_func(server_root+"/ajax/db_backup.php",{domain:domain,username:username,cr:cr_access},function(e)
-		{
-			var response=e.responseText;
-			
-			var type = e.getResponseHeader('Content-Type');
-			console.log(type);
-			//console.log(response);
-			
-			var blob = new Blob([response], { type: type });			
-			var URL = window.URL || window.webkitURL;
-         	var downloadUrl = URL.createObjectURL(blob);	
-			
-			var modal_element=document.getElementById('modal55');
-			//var updated_response=response.replace(/ /g,"+");
-			var link=document.createElement('a');
-			link.setAttribute('href',downloadUrl);
-			link.setAttribute('download',domain+".sql");
-			link.textContent="Click to download the file.";			
-			$('#modal55 .scroller').html(link);
-			$("#modal55_link").click();
-			hide_loader();
-		});
-	}
-	else 
-	{
-		$("#modal2_link").click();
-	}
-}
-
 /**
  * This function executes a simple read access on local database
  * @param columns xml data for read query

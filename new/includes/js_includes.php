@@ -21,6 +21,7 @@
 <script src='/new/js/prop/ajax_json.js'></script>
 <script src='/new/js/prop/ajax_master.js'></script>
 <script src='/new/js/prop/create.js'></script>
+<script src='/new/js/prop/vDB.js'></script>
 <script src='/new/js/prop/delete.js'></script>
 <script src='/new/js/prop/event_handler.js'></script>
 <script src='/new/js/prop/navigation.js'></script>

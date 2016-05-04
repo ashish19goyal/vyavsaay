@@ -215,6 +215,7 @@ js/prop/ajax.js
 js/prop/ajax_json.js
 js/prop/ajax_master.js
 js/prop/create.js
+js/prop/vDB.js
 js/prop/delete.js
 js/prop/event_handler.js
 js/prop/forms_header_ini.js

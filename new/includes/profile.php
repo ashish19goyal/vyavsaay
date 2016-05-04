@@ -39,12 +39,21 @@
             <a onclick="delete_local_db();">
                 <i class="icon-trash"></i> Delete Offline Data </a>
         </li>
+
+        <li class="divider"> </li>
+
         <li>
-            <a onclick="backup_server_db();">
+            <a onclick="var vdb=new vDB();vdb.full_backup();">
                 <i class="icon-energy"></i> Backup Data </a>
         </li>
+
+        <li id='system_config_backup'>
+            <a onclick="var vdb=new vDB();vdb.config_backup();">
+                <i class="icon-wrench"></i> Backup Config </a>
+        </li>
+
         <li id='system_delete_logs'>
-            <a onclick=server_delete_logs({},function(){$('#modal93_link').click()});>
+            <a onclick="server_delete_logs({},function(){$('#modal93_link').click()});">
                 <i class="icon-clock"></i> Delete Logs </a>
         </li>
         
