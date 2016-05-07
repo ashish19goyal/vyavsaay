@@ -1,35 +1,58 @@
-<div id='form336' class='function_detail'>
-	<form id='form336_master' autocomplete="off">
-		<fieldset>
-			<label>Pass # <br><input type='text' name='pass_num' required></label>
-			<label>Date<br><input type='text' name='date'></label>
-			<label>Co-loader<br><input type='text' name='loader'></label>
-            <label>Vendor<br><input type='text' name='vendor'></label>
-			<label># of Orders<br><input type='number' readonly='readonly' name='num_orders'></label>
-			<label>	<input type='button' title='Save pass' name='save' class='save_icon'></label>
-            <label>	<input type='button' title='Print pass' name='print' class='print_icon' onclick='form336_print_form();'></label>
-            <label>	<input type='hidden' name='id'>
-					<input type='hidden' name='saved'>
-				<input type='submit' class='submit_hidden'>
-			</label>
-		</fieldset>
-	</form>
-	<table class='rwd-table'>
-		<thead>
-			<tr>
-				<form id='form336_header'></form>
-					<th style='width:50px'>S. No.</th>
-					<th>AWB #</th>
+<div id='form336' class='tab-pane portlet box green-meadow'>	   
+	<div class="portlet-title">
+        <div class='caption'>
+            <div class='col-md-6'><input type='text' style='height:30px;' id='form336_manifest_num' placeholder='Scan Manifest #' required></div>
+            <div class='col-md-6'><a class="btn btn-circle grey btn-outline btn-sm" onclick=form336_add_items();> <i class='fa fa-plus'></i> Select Orders</a></div>
+		</div>
+        <div class="actions">
+            <a class='btn grey btn-outline btn-sm' id='form336_save'>Save <i class='fa fa-save'></i></a>
+            <div class="btn-group">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
+                <ul class="dropdown-menu pull-right">
+                    <li>
+                        <a id='form336_print' onclick='form336_print_form();'><i class='fa fa-print'></i> Print</a>
+                    </li>
+                    <li>
+                        <a id='form336_csv'><i class='fa fa-file-excel-o'></i> Download</a>
+                    </li>
+                    <li>
+                        <a id='form336_share'><i class='fa fa-envelope'></i> Email</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+	</div>
+	
+	<div class="portlet-body">
+        <form id='form336_master' autocomplete="off">
+            <fieldset>
+                <label><input type='text' required name='pass_num' class='floatlabel' placeholder='Pass #'></label>
+                <label><input type='text' name='date' required class='floatlabel' placeholder='Date'></label>
+                <label><input type='text' name='loader' class='floatlabel' placeholder='Co-loader'></label>
+                <label><input type='text' name='vendor' class='floatlabel' placeholder='Vendor'></label>
+                <label><input type='text' name='num' readonly='readonly' class='floatlabel' placeholder='No. of Orders'></label>
+                <input type='hidden' name='id'>
+                <input type='submit' class='submit_hidden'>
+            </fieldset>
+        </form>
+        
+        <br>
+		
+        <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
+			<thead>
+				<tr style='color:#9a9a9a;'>
+                    <th>S.No.</th>
+                    <th>AWB #</th>
+                    <th>Manifest #</th>
 					<th>Pieces</th>
 					<th>Product</th>
-					<th><input type='button' form='form336_header' title='Add item' class='add_icon' onclick='form336_add_item();'></th>
-			</tr>
-		</thead>
-		<tbody id='form336_body'>
-		</tbody>
-		<tfoot id='form336_foot'>
-		</tfoot>
-	</table>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody id='form336_body'>
+			</tbody>
+        </table>
+    </div>
     
     <script>
         function form336_header_ini()
@@ -40,11 +63,11 @@
             var coloader=fields.elements['loader'];
             var vendor=fields.elements['vendor'];
             var date=fields.elements['date'];
-            
-            fields.elements['saved'].value='no';
+            var num_orders=fields.elements['num'];
+            num_orders.value=0;
             fields.elements['id'].value=get_new_key();
 
-            var save_button=fields.elements['save'];
+            var save_button=document.getElementById('form336_save');
             pass_filter.value="";
             coloader.value="";
             vendor.value="";
@@ -53,7 +76,7 @@
 
             var pass_id=$("#form336_link").attr('data_id');
             if(pass_id==null)
-                pass_id="";	
+                pass_id="";
 
             if(pass_id=="")
             {
@@ -66,10 +89,8 @@
             $(save_button).on("click", function(event)
             {
                 event.preventDefault();
-                form336_update_form();
+                form336_create_form();
             });
-
-            $(save_button).hide();
 
             $(document).off('keydown');
             $(document).on('keydown', function(event) {
@@ -85,6 +106,21 @@
                 event.preventDefault();
                 form336_add_item();
             });
+            
+            $('#form336_manifest_num').val('');
+            $('#form336_manifest_num').off('keyup');
+            $('#form336_manifest_num').on('keyup',function(e)
+            {
+                if(e.keyCode==13)
+                {
+                    e.preventDefault();
+                    form336_add_items();
+                }
+            });
+            
+            var paginator=$('#form336_body').paginator({visible:false});        
+
+            $('#form336').formcontrol();
         }
 
         function form336_ini()
@@ -93,8 +129,7 @@
             if(pass_id==null)
                 pass_id="";	
             $('#form336_body').html("");
-            $('#form336_foot').html("");
-
+            
             if(pass_id!="")
             {
                 show_loader();
@@ -103,6 +138,7 @@
                                              {index:'pass_num'},
                                              {index:'coloader'},
                                              {index:'vendor'},
+                                            {index:'num_orders'},
                                              {index:'date'}]};
 
                 read_json_rows('form336',pass_columns,function(pass_results)
@@ -115,269 +151,153 @@
                         filter_fields.elements['vendor'].value=pass_results[0].vendor;
                         filter_fields.elements['date'].value=get_my_past_date(pass_results[0].date);
                         filter_fields.elements['id'].value=pass_results[0].id;
-                        filter_fields.elements['num_orders'].value=pass_results[0].num_orders;
-                        filter_fields.elements['saved'].value='yes';
-
-                        var save_button=filter_fields.elements['save'];
-                        $(save_button).show();
-
-                        var pass_items_column={data_store:'logistics_orders',
-                                                  indexes:[{index:'id'},
-                                                          {index:'awb_num'},
-                                                          {index:'sku'},
-                                                          {index:'pieces'},
-                                                          {index:'weight'}, 
-                                                          {index:'pass_num',exact:pass_results[0].pass_num},
-                                                          {index:'pass_id',exact:pass_id}]};
-
-                        read_json_rows('form336',pass_items_column,function(results)
+                        filter_fields.elements['num'].value=pass_results[0].num_orders;
+                        
+                        var save_button=document.getElementById('form336_save');
+                        $(save_button).off('click');
+                        $(save_button).on("click", function(event)
                         {
-                            results.forEach(function(result)
-                            {
-                                var id=result.id;
-                                var rowsHTML="<tr>";
-
-                                var address=result.city+", "+result.state;
-                                rowsHTML+="<form id='form336_"+id+"'></form>";
-                                    rowsHTML+="<td data-th='S.No.'>";
-                                    rowsHTML+="</td>";
-                                    rowsHTML+="<td data-th='AWB #'>";
-                                        rowsHTML+="<input type='text' readonly='readonly' form='form336_"+id+"' value='"+result.awb_num+"'>";
-                                    rowsHTML+="</td>";
-                                    rowsHTML+="<td data-th='Pieces'>";
-                                        rowsHTML+="<input type='number' step='any' readonly='readonly' form='form336_"+id+"' value='"+result.pieces+"'>";
-                                    rowsHTML+="</td>";
-                                    rowsHTML+="<td data-th='Product'>";
-                                        rowsHTML+="<input type='text' readonly='readonly' form='form336_"+id+"' value='"+result.sku+"'>";
-                                    rowsHTML+="</td>";
-                                    rowsHTML+="<td data-th='Action'>";
-                                        rowsHTML+="<input type='hidden' name='id' form='form336_"+id+"' value='"+id+"'>";
-                                        rowsHTML+="<input type='button' name='save' class='submit_hidden' form='form336_"+id+"' id='save_form336_"+id+"'>";
-                                        rowsHTML+="<input type='button' name='delete' class='delete_icon' form='form336_"+id+"' id='delete_form336_"+id+"' onclick='form336_delete_item($(this));'>";
-                                    rowsHTML+="</td>";			
-                                rowsHTML+="</tr>";
-
-                                $('#form336_body').append(rowsHTML);
-                                var item_form=document.getElementById('form336_'+id);
-                                var save_button=item_form.elements['save'];
-
-                                $(save_button).on('click',function (e) 
-                                {
-                                    e.preventDefault();
-                                    form336_update_item(item_form);
-                                });
-                            });
-
-                            form336_update_serial_numbers();
-                            $('textarea').autosize();
-                            hide_loader();
+                            event.preventDefault();
+                            form336_update_form();
                         });
                     }
+                });
+                        
+                var pass_items_column={data_store:'logistics_orders',
+                                          indexes:[{index:'id'},
+                                                  {index:'awb_num'},
+                                                  {index:'sku'},
+                                                  {index:'pieces'},
+                                                  {index:'weight'}, 
+                                                  {index:'pass_num'},
+                                                  {index:'manifest_num'},
+                                                  {index:'pass_id',exact:pass_id}]};
+
+                read_json_rows('form336',pass_items_column,function(results)
+                {
+                    results.forEach(function(result)
+                    {
+                        var id=result.id;
+                        var rowsHTML="<tr>";
+
+                        var address=result.city+", "+result.state;
+                        rowsHTML+="<form id='form336_"+id+"'></form>";
+                            rowsHTML+="<td data-th='S.No.'>";
+                            rowsHTML+="</td>";
+                            rowsHTML+="<td data-th='AWB #'>";
+                                rowsHTML+="<input type='text' readonly='readonly' form='form336_"+id+"' value='"+result.awb_num+"'>";
+                            rowsHTML+="</td>";
+                            rowsHTML+="<td data-th='Manifest #'>";
+                                rowsHTML+="<input type='text' readonly='readonly' form='form336_"+id+"' value='"+result.manifest_num+"'>";
+                            rowsHTML+="</td>";
+                            rowsHTML+="<td data-th='Pieces'>";
+                                rowsHTML+="<input type='number' step='any' readonly='readonly' form='form336_"+id+"' value='"+result.pieces+"'>";
+                            rowsHTML+="</td>";
+                            rowsHTML+="<td data-th='Product'>";
+                                rowsHTML+="<textarea type='text' readonly='readonly' form='form336_"+id+"'>"+result.sku+"</textarea>";
+                            rowsHTML+="</td>";
+                            rowsHTML+="<td data-th='Action'>";
+                                rowsHTML+="<input type='hidden' name='id' form='form336_"+id+"' value='"+id+"'>";
+                                rowsHTML+="<input type='button' name='save' class='submit_hidden' form='form336_"+id+"' id='save_form336_"+id+"'>";
+                                rowsHTML+="<button type='button' name='delete' class='btn red' form='form336_"+id+"' id='delete_form336_"+id+"' onclick='form336_delete_item($(this));'><i class='fa fa-trash'></i></button>";
+                            rowsHTML+="</td>";			
+                        rowsHTML+="</tr>";
+
+                        $('#form336_body').append(rowsHTML);
+                        var item_form=document.getElementById('form336_'+id);
+                        var save_button=item_form.elements['save'];
+
+                        $(save_button).on('click',function (e) 
+                        {
+                            e.preventDefault();
+                            form336_update_item(item_form);
+                        });
+                    });
+
+                    form336_update_serial_numbers();
+                    $('#form336').formcontrol();
+                    hide_loader();
                 });
             }
         }
 
-        function form336_add_item()
+        function form336_add_items()
         {
             if(is_create_access('form336'))
             {
-                var id=get_new_key();
-                var rowsHTML="<tr>";
-                rowsHTML+="<form id='form336_"+id+"'></form>";
-                    rowsHTML+="<td data-th='S.No.'>";
-                    rowsHTML+="</td>";
-                    rowsHTML+="<td data-th='AWB #'>";
-                        rowsHTML+="<input type='text' required form='form336_"+id+"' oninvalid=\"setCustomValidity('This AWB # is invalid')\">";
-                    rowsHTML+="</td>";
-                    rowsHTML+="<td data-th='Pieces'>";
-                        rowsHTML+="<input type='text' readonly='readonly' form='form336_"+id+"'>";
-                    rowsHTML+="</td>";
-                    rowsHTML+="<td data-th='Product'>";
-                        rowsHTML+="<input type='text' readonly='readonly' form='form336_"+id+"'>";
-                    rowsHTML+="</td>";
-                    rowsHTML+="<td data-th='Action'>";
-                        rowsHTML+="<input type='hidden' form='form336_"+id+"' name='id' value='"+id+"'>";
-                        rowsHTML+="<input type='button' class='submit_hidden' name='save' form='form336_"+id+"' id='save_form336_"+id+"'>";
-                        rowsHTML+="<input type='button' class='delete_icon' name='delete' form='form336_"+id+"' id='delete_form336_"+id+"' onclick='$(this).parent().parent().remove(); form336_update_serial_numbers();'>";
-                        rowsHTML+="<input type='hidden' form='form336_"+id+"' name='history' value='' name='order_history'>";
-                    rowsHTML+="</td>";			
-                rowsHTML+="</tr>";
-
-                $('#form336_body').prepend(rowsHTML);
-
-                var item_form=document.getElementById('form336_'+id);
-                var awb_filter=item_form.elements[0];
-                var pieces_filter=item_form.elements[1];
-                var product_filter=item_form.elements[2];
-                var id_filter=item_form.elements[3];
-                var save_button=item_form.elements['save'];
-                var history_filter=item_form.elements['history'];
-
-                var new_pass=true;
-                var saved=document.getElementById('form336_master').elements['saved'].value;
-                if(saved=='yes')
-                {
-                    new_pass=false;
-                }
-
-                $(item_form).on("submit", function(event)
-                {
-                    event.preventDefault();
-                    var total_entries=0;
-                    var double_entry=0;
-                    $("[id^='save_form336']").each(function(index)
+                var manifest_number= $('#form336_manifest_num').val();
+               
+                var pass_items_column={data_store:'logistics_orders',
+                                          indexes:[{index:'id'},
+                                                  {index:'awb_num'},
+                                                  {index:'sku'},
+                                                  {index:'pieces'},
+                                                  {index:'weight'}, 
+                                                  {index:'pass_num'},
+                                                  {index:'manifest_num',exact:manifest_number}]};
+                read_json_rows('form336',pass_items_column,function(results)
+                {     
+                    var orders_found=false;
+                    var existing_orders=[];
+                    $('#form336_body').find('form').each(function(index)
                     {
-                        var subform_id=$(this).attr('form');
-                        var subform=document.getElementById(subform_id);
-                        total_entries+=1;
-                        if(subform.elements[0].value==awb_filter.value)	
-                            double_entry+=1;
+                        var form=$(this)[0];
+                        var awb_num=form.elements[0].value;
+                        existing_orders.push(awb_num);
                     });
 
-                    if(total_entries==1 && new_pass)
+                    results.forEach(function(result)
                     {
-                        form336_create_form(function()
+                        if(vUtil.isBlank(result.pass_num) && existing_orders.indexOf(result.awb_num)==-1)
                         {
-                            if(double_entry<2)
+                            orders_found=true;
+                            var id=result.id;
+                            var rowsHTML="<tr>";
+                            
+                            var address=result.city+", "+result.state;
+                            rowsHTML+="<form id='form336_"+id+"'></form>";
+                                rowsHTML+="<td data-th='S.No.'>";
+                                rowsHTML+="</td>";
+                                rowsHTML+="<td data-th='AWB #'>";
+                                    rowsHTML+="<input type='text' readonly='readonly' form='form336_"+id+"' value='"+result.awb_num+"'>";
+                                rowsHTML+="</td>";
+                                rowsHTML+="<td data-th='Manifest #'>";
+                                    rowsHTML+="<input type='text' readonly='readonly' form='form336_"+id+"' value='"+result.manifest_num+"'>";
+                                rowsHTML+="</td>";
+                                rowsHTML+="<td data-th='Pieces'>";
+                                    rowsHTML+="<input type='number' step='any' readonly='readonly' form='form336_"+id+"' value='"+result.pieces+"'>";
+                                rowsHTML+="</td>";
+                                rowsHTML+="<td data-th='Product'>";
+                                    rowsHTML+="<textarea type='text' readonly='readonly' form='form336_"+id+"'>"+result.sku+"</textarea>";
+                                rowsHTML+="</td>";
+                                rowsHTML+="<td data-th='Action'>";
+                                    rowsHTML+="<input type='hidden' name='id' form='form336_"+id+"' value='"+id+"'>";
+                                    rowsHTML+="<input type='button' name='save' class='submit_hidden' form='form336_"+id+"' id='save_form336_"+id+"'>";
+                                    rowsHTML+="<button type='button' name='delete' class='btn red' form='form336_"+id+"' id='delete_form336_"+id+"' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
+                                rowsHTML+="</td>";			
+                            rowsHTML+="</tr>";
+
+                            $('#form336_body').append(rowsHTML);
+                            var item_form=document.getElementById('form336_'+id);
+                            var save_button=item_form.elements['save'];
+
+                            $(save_button).on('click',function (e) 
                             {
+                                e.preventDefault();
                                 form336_create_item(item_form);
-                                form336_add_item();
-                            }
-                            else 
-                            {
-                                awb_filter.value="";
-                                $("#modal65_link").click();
-                            }
-                        });
-                    }
-                    else 
-                    {
-                        if(double_entry<2)
-                        {
-                            form336_create_item(item_form);
-                            form336_add_item();
-                        }
-                        else 
-                        {
-                            awb_filter.value="";
-                            $("#modal65_link").click();
-                        }
-                    }
-                });
-
-                $(awb_filter).focus();
-
-                $(awb_filter).on('keydown',function (event) 
-                {
-                    if(event.keyCode == 13 ) 
-                    {
-                        event.preventDefault();
-
-                        var total_entries=0;
-                        var double_entry=0;
-                        $("[id^='save_form336']").each(function(index)
-                        {
-                            var subform_id=$(this).attr('form');
-                            var subform=document.getElementById(subform_id);
-
-                            total_entries+=1;
-
-                            if(subform.elements[0].value==awb_filter.value)	
-                                double_entry+=1;
-                        });
-
-                        if(total_entries==1 && new_pass)
-                        {
-                            form336_create_form(function () 
-                            {
-                                if(double_entry<2)
-                                {
-                                    var orders_data={data_store:'logistics_orders',count:1,
-                                                    indexes:[{index:'id'},
-                                                            {index:'awb_num',exact:awb_filter.value},
-                                                            {index:'sku'},
-                                                            {index:'pieces'},
-                                                            {index:'weight'},
-                                                            {index:'man_id',unequal:""},
-                                                            {index:'status',array:['received','undelivered','pending']},
-                                                            {index:'order_history'}]};
-                                    				
-                                    read_json_rows('',orders_data,function (orders) 
-                                    {
-                                        //console.log(orders);
-                                        if(orders.length>0)
-                                        {
-                                            product_filter.value=orders[0].sku;
-                                            pieces_filter.value=orders[0].pieces;
-                                            id_filter.value=orders[0].id;
-                                            history_filter.value=orders[0].order_history;
-                                            form336_create_item(item_form);
-                                            form336_add_item();
-                                        }
-                                        else 
-                                        {
-                                            product_filter.value="";
-                                            pieces_filter.value="";
-                                            id_filter.value="";
-                                            history_filter.value="";
-                                            awb_filter.value="";
-                                            $("#modal65_link").click();
-                                        }
-                                    });
-                                }
-                                else 
-                                {
-                                    awb_filter.value="";
-                                    $("#modal65_link").click();
-                                }
                             });
                         }
-                        else 
-                        {
-                            if(double_entry<2)
-                            {
-                                var orders_data={data_store:'logistics_orders',count:1,
-                                                    indexes:[{index:'id'},
-                                                            {index:'awb_num',exact:awb_filter.value},
-                                                            {index:'sku'},
-                                                            {index:'pieces'},
-                                                            {index:'weight'},
-                                                            {index:'man_id',unequal:""},
-                                                            {index:'status',array:['received','undelivered','pending']},
-                                                            {index:'order_history'}]};
-                                    
-                                read_json_rows('',orders_data,function (orders) 
-                                {
-                                    if(orders.length>0)
-                                    {
-                                        product_filter.value=orders[0].sku;
-                                        pieces_filter.value=orders[0].pieces;
-                                        id_filter.value=orders[0].id;
-                                        history_filter.value=orders[0].order_history;	
-                                        form336_create_item(item_form);
-                                        form336_add_item();
-                                    }
-                                    else 
-                                    {
-                                        product_filter.value="";
-                                        pieces_filter.value="";
-                                        id_filter.value="";
-                                        awb_filter.value="";
-                                        history_filter.value="";
-                                        $("#modal65_link").click();
-                                    }
-                                });
-                            }
-                            else 
-                            {
-                                awb_filter.value="";
-                                $("#modal65_link").click();
-                            }
-                        }
+                    });
+
+                    if(!orders_found)
+                    {
+                        $('#modal95_link').click();
                     }
+
+                    form336_update_serial_numbers();
+                    $('#form336').formcontrol();
+                    hide_loader();
                 });
-                $('textarea').autosize();
-                form336_update_serial_numbers();
             }
             else
             {
@@ -393,43 +313,22 @@
                 var master_form=document.getElementById('form336_master');
                 var pass_num=master_form.elements['pass_num'].value;
                 var pass_id=master_form.elements['id'].value;
-                var pass_date=master_form.elements['date'].value;
-                var coloader=master_form.elements['loader'].value;
-                var vendor=master_form.elements['vendor'].value;
-                var num_orders=master_form.elements['num_orders'].value;
-
+                
                 var data_id=form.elements['id'].value;
                 var save_button=form.elements['save'];
                 var del_button=form.elements['delete'];
-
-                var old_order_history=form.elements['history'].value;
-
-                var order_history=[];
-                if(old_order_history!="")
-                    order_history=JSON.parse(old_order_history);
-                var history_object=new Object();
-                history_object.timeStamp=get_my_time();
-                history_object.details="Order in-transit";
-                history_object.location='';
-                history_object.status="in-transit";
-                order_history.push(history_object);
-                var order_history_string=JSON.stringify(order_history);		
 
                 var last_updated=get_my_time();
                 
                 var data_json={data_store:'logistics_orders',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'pass_num',value:pass_num},
-                        {index:'pass_id',value:pass_id},  
-                        {index:'status',value:'in-transit'},
-	 					{index:'order_history',value:order_history_string},
+                        {index:'pass_id',value:pass_id},
 	 					{index:'last_updated',value:last_updated}]};
  				update_json(data_json);
 				
-                for(var i=0;i<3;i++)
-                {
-                    $(form.elements[i]).attr('readonly','readonly');
-                }
+                $(form).readonly();
+                
                 del_button.removeAttribute("onclick");
                 $(del_button).on('click',function(event)
                 {
@@ -454,15 +353,16 @@
             if(is_create_access('form336'))
             {
                 var form=document.getElementById("form336_master");
-
+                form336_update_serial_numbers();
+                
                 var pass_num=form.elements['pass_num'].value;
                 var coloader=form.elements['loader'].value;
                 var vendor=form.elements['vendor'].value;
                 var date=get_raw_time(form.elements['date'].value);
                 var data_id=form.elements['id'].value;
-                var num_orders=form.elements['num_orders'].value;
+                var num_orders=form.elements['num'].value;
                 
-                var save_button=form.elements['save'];
+                var save_button=document.getElementById('form336_save');
                 var last_updated=get_my_time();
 
                 var pass_columns={data_store:'gate_pass',count:1,return_column:'id',
@@ -477,6 +377,7 @@
                                 {index:'pass_num',value:pass_num,unique:'yes'},
                                 {index:'coloader',value:coloader},  
                                 {index:'date',value:date},
+                                {index:'type',value:'non-bag'},
                                 {index:'vendor',value:vendor},
                                 {index:'num_orders',value:num_orders},  
                                 {index:'last_updated',value:last_updated}],
@@ -497,12 +398,18 @@
                             }
                         });
 
-                        $(save_button).show();
-
+                        $(save_button).off('click');
+                        $(save_button).on('click',function(e)
+                        {
+                            e.preventDefault();
+                            form336_update_form();
+                        });
+                        
                         if(typeof func!='undefined')
                         {
                             func();
                         }
+                        $("[id^='save_form336_']").click();
                     }
                     else 
                     {
@@ -542,15 +449,16 @@
             if(is_create_access('form336'))
             {
                 var form=document.getElementById("form336_master");
-
+                form336_update_serial_numbers();
+                
                 var pass_num=form.elements['pass_num'].value;
                 var coloader=form.elements['loader'].value;
                 var vendor=form.elements['vendor'].value;
-                var num_orders=form.elements['num_orders'].value;
+                var num_orders=form.elements['num'].value;
                 var date=get_raw_time(form.elements['date'].value);
                 var data_id=form.elements['id'].value;
 
-                var save_button=form.elements['save'];
+                var save_button=document.getElementById('form336_save');
                 var last_updated=get_my_time();
 
                 var pass_columns={data_store:'gate_pass',return_column:'id',count:2,
@@ -600,7 +508,6 @@
                             data:[{index:'id',value:data_id},
                                 {index:'pass_num',value:''},
                                 {index:'pass_id',value:''},  
-                                {index:'status',value:'pending'},
                                 {index:'last_updated',value:last_updated}]};
                     update_json(data_json);
 
@@ -622,19 +529,47 @@
             });
 
             var num_orders=0;
-            $("[id^='save_form336']").each(function(index)
-            {
-                var subform_id=$(this).attr('form');
-                var subform=document.getElementById(subform_id);
+            var filter_fields=document.getElementById('form336_master');
 
-                if(subform.elements[0].value!="")
+            var new_results=[];
+            $('#form336_body').find('form').each(function(index)
+            {
+                var new_obj={};
+                var form=$(this)[0];
+                if(form.elements[0].value!="")
                 {
-                    num_orders+=1;			
+                    var num_pieces=form.elements[2].value;
+                    if(!vUtil.isBlank(num_pieces))
+                        num_orders+=parseInt(num_pieces);
+                    else
+                        num_orders+=1;
                 }
+            
+                new_obj['AWB No']=form.elements[0].value;
+                new_obj['Manifest No']=form.elements[1].value;
+                new_obj['Pieces']=form.elements[2].value;
+                new_obj['Product']=form.elements[3].value;
+                new_results.push(new_obj);
             });
 
-            var form=document.getElementById("form336_master");
-            form.elements['num_orders'].value=num_orders;
+            filter_fields.elements['num'].value=num_orders;
+            
+            $('#form336_share').off('click');
+            $('#form336_share').click(function()
+            {
+                var message_attachment=my_obj_array_to_csv_string(new_results);
+                var subject='Gate Pass # '+filter_fields.elements['pass_num'].value;
+                var body="Hi,\nPlease find attached the gate pass with this mail.\nCo-loader: "+filter_fields.elements['loader'].value+"\nVendor:"+filter_fields.elements['vendor'].value+"\nDate:"+filter_fields.elements['date'].value+"\n\nRegards,\nBeacon Couriers";
+
+                modal209_action(subject,body,message_attachment);
+            });
+
+            $('#form336_csv').off('click');
+            $('#form336_csv').click(function()
+            {
+                my_obj_array_to_csv(new_results,'Gate Pass # '+filter_fields.elements['pass_num'].value);
+            });
+
         }
 
         function form336_print_form()
@@ -669,7 +604,7 @@
                 logo.setAttribute('style','float:left;width:35%;height:60px;');
                 business_title.setAttribute('style','float:left;width:40%;height:60px;text-align:center;font-weight:bold;');
                 mts_barcode.setAttribute('style','float:right;width:23%;height:60px;padding:left:5px;padding-right:5px;');
-            mts_title.setAttribute('style','display:block;width:98%;height:30px;text-align:center;font-size:40px;');
+            mts_title.setAttribute('style','display:block;width:98%;height:50px;text-align:center;font-size:40px;');
             detail_section.setAttribute('style','display:block;width:98%;height:30px;text-align:center;');
 
             ///////////////getting the content////////////////////////////////////////
@@ -682,7 +617,7 @@
             var mts_date=master_form.elements['date'].value;
             var mts_num=master_form.elements['pass_num'].value;
             var coloader=master_form.elements['loader'].value;
-            var num_orders=master_form.elements['num_orders'].value;
+            var num_orders=master_form.elements['num'].value;
             var vendor=master_form.elements['vendor'].value;
 
             ////////////////filling in the content into the containers//////////////////////////
@@ -708,9 +643,10 @@
             new_table.setAttribute('class','printing_tables');
 
             var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:6%'>S.No.</td>"+
-                        "<td style='text-align:left;width:35%'>AWB #</td>"+
+                        "<td style='text-align:left;width:25%'>AWB #</td>"+
+                        "<td style='text-align:left;width:20%'>Manifest #</td>"+
                         "<td style='text-align:left;width:20%'>Pieces</td>"+
-                        "<td style='text-align:left;width:35%'>Product</td></tr>";
+                        "<td style='text-align:left;width:25%'>Product</td></tr>";
 
             var table_rows=table_header;
             var counter=0;
@@ -738,7 +674,8 @@
                 table_rows+="<tr style='border-top: 1px solid #000000;height:60px;'><td><div>"+counter+"</div></td>"+
                         "<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[1].value+"</div></td>"+
-                        "<td><div style='text-align:left;'>"+form.elements[2].value+"</div></td></tr>";				
+                        "<td><div style='text-align:left;'>"+form.elements[2].value+"</div></td>"+
+                        "<td><div style='text-align:left;'>"+form.elements[3].value+"</div></td></tr>";				
             });
             new_table.innerHTML=table_rows;
             /////////////placing the containers //////////////////////////////////////////////////////	

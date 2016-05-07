@@ -21,6 +21,15 @@ var vUtil = function (options)
         }
     };
 
+    this.isBlank=function(variable)
+    {
+        if(variable=="" || variable==null || variable=="null")
+           return true;
+        else
+           return false;
+    }
+    
+    
     //extracts a single column from a multidimensional array
     this.array_column=function (array, col_name)
     {

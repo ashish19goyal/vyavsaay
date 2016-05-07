@@ -1885,6 +1885,8 @@
 			<coloader index='yes' type="TEXT"></coloader>
 			<vendor index='yes' type="TEXT"></vendor>
 			<type index='yes' type="VARCHAR(20)"></type><!--bag/non-bag-->
+			<pass_num index='yes' type="TEXT"></pass_num>
+			<pass_id index='yes' type="BIGINT"></pass_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</manifests>
@@ -1896,6 +1898,7 @@
 			<branch index='yes' type="TEXT"></branch>
 			<coloader index='yes' type="TEXT"></coloader>
 			<vendor index='yes' type="TEXT"></vendor>
+			<type index='yes' type="VARCHAR(20)"></type><!--bag/non-bag-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</gate_pass>

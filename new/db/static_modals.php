@@ -1352,3 +1352,36 @@
 		</div>
 	</div>
 </div>
+
+/***function limiter***/
+
+/*box_id*:*modal95
+*@*box_title*:*No Orders Found
+*@*box_type*:*static
+*@*function_name*:*
+*@*function_def*:*
+*@*status*:*active
+*@*last_updated*:*1
+*@*box_content*:*
+*/
+<a href='#modal95' data-toggle="modal" id='modal95_link'></a>
+<div id="modal95" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id='modal95_form'>                               
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+					<h4 class="modal-title">No Orders Found</h4>
+				</div>
+				<div class="modal-body">
+					<div class="scroller" style="height:100px;" data-always-visible="1" data-rail-visible1="1">
+						No pending orders are found corresponding to this manifest. Please try adding another.
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn green" data-dismiss='modal' name='close' value='Ok'>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

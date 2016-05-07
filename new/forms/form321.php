@@ -9,7 +9,7 @@
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
                 <ul class="dropdown-menu pull-right">
                     <li>
-                        <a id='form321_print'><i class='fa fa-print'></i> Print</a>
+                        <a id='form321_print' onclick='form321_print_form();'><i class='fa fa-print'></i> Print</a>
                     </li>
                     <li>
                         <a id='form321_csv'><i class='fa fa-file-excel-o'></i> Download</a>
@@ -29,6 +29,7 @@
                 <label><input type='text' name='date' required class='floatlabel' placeholder='Date'></label>
                 <label><input type='text' name='loader' class='floatlabel' placeholder='Co-loader'></label>
                 <label><input type='text' name='vendor' class='floatlabel' placeholder='Vendor'></label>
+                <label><input type='text' name='num' class='floatlabel' readonly='readonly' placeholder='Number of Pieces'></label>
                 <label style='margin-top:5px;vertical-align:top;'><button type='button' class='btn green' name='marker'>Mark as bag</button></label>
                 <input type='hidden' name='id'>
                 <input type='hidden' name='saved'>
@@ -75,7 +76,7 @@
             var lbh_filter=fields.elements['lbh'];
             var weight_filter=fields.elements['weight'];
             var seal_filter=fields.elements['seal'];
-            
+            fields.elements['num'].value=0;
             marker.setAttribute('data-status','unmarked');
             marker.innerHTML="Mark as bag";
             
@@ -148,6 +149,8 @@
                 form321_add_item();
             });
             
+            var paginator=$('#form321_body').paginator({visible:false});        
+
             $('#form321').formcontrol();
         }
 
@@ -171,7 +174,8 @@
                                              {index:'type'},
                                              {index:'weight'},
                                              {index:'lbh'},
-                                             {index:'seal_num'}, 
+                                             {index:'seal_num'},
+                                             {index:'num_orders'},
                                              {index:'date'}]};
 
                 read_json_rows('form321',manifest_columns,function(manifest_results)
@@ -187,6 +191,7 @@
                         filter_fields.elements['weight'].value=manifest_results[0].weight;
                         filter_fields.elements['lbh'].value=manifest_results[0].lbh;
                         filter_fields.elements['seal'].value=manifest_results[0].seal_num;
+                        filter_fields.elements['num'].value=manifest_results[0].num_orders;
                         filter_fields.elements['saved'].value='yes';
                         var marker=filter_fields['marker'];
                         if(manifest_results[0].type=='bag')
@@ -199,7 +204,6 @@
                             marker.setAttribute('data-status','unmarked');
                             marker.innerHTML="Mark as bag";
                         }
-                        var save_button=document.getElementById('form321_save');
                     }
                     $('#form321').formcontrol();
                 });
@@ -276,40 +280,7 @@
                     });
 
                     form321_update_serial_numbers();
-                    $('textarea').autosize();
-
-                    var new_results=[];
-                    $('#form321_body').find('form').each(function(index)
-                    {
-                        var new_obj={};
-                        var form=$(this)[0];
-                        new_obj['AWB No']=form.elements[0].value;
-                        new_obj['Consignement No']=form.elements[1].value;
-                        new_obj['LBH']=form.elements[2].value;
-                        new_obj['Actual Weight']=form.elements[3].value;
-                        new_obj['Volumetric Weight']=form.elements[4].value;
-                        new_obj['Item']=form.elements[5].value;
-                        new_obj['Pieces']=form.elements[6].value;
-                        new_obj['Destination']=form.elements[7].value;   
-                        new_results.push(new_obj);
-                    });
-
-                    $('#form321_share').off('click');
-                    $('#form321_share').click(function()
-                    {
-                        var message_attachment=my_obj_array_to_csv_string(new_results);
-                        var subject='Manifest Sheet # '+filter_fields.elements['manifest_num'].value;
-                        var body="Hi,\nPlease find attached the manifest with this mail.\nCo-loader: "+filter_fields.elements['loader'].value+"\nVendor:"+filter_fields.elements['vendor'].value+"\nDate:"+filter_fields.elements['date'].value+"\n\nRegards,\nBeacon Couriers";
-
-                        modal209_action(subject,body,message_attachment);
-                    });
-
-                    $('#form321_csv').off('click');
-                    $('#form321_csv').click(function()
-                    {
-                        my_obj_array_to_csv(new_results,'Manifest # '+filter_fields.elements['manifest_num'].value);
-                    });
-
+                    
                     $('#form321').formcontrol();
                     hide_loader();
                 });
@@ -347,6 +318,7 @@
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Action'>";
                         rowsHTML+="<input type='hidden' name='id' form='form321_"+id+"' value='"+id+"'>";
+                        rowsHTML+="<input type='hidden' name='history' form='form321_"+id+"'>";
                         rowsHTML+="<input type='button' class='submit_hidden' form='form321_"+id+"' id='save_form321_"+id+"' name='save'>";
                         rowsHTML+="<button type='button' class='btn red' name='delete' form='form321_"+id+"' id='delete_form321_"+id+"' onclick='$(this).parent().parent().remove(); form321_update_serial_numbers();'><i class='fa fa-trash'></i></button>";
                     rowsHTML+="</td>";			
@@ -363,6 +335,7 @@
                 var product_filter=item_form.elements[5];
                 var pieces_filter=item_form.elements[6];
                 var address_filter=item_form.elements[7];
+                var history_filter=item_form.elements['history'];
                 var id_filter=item_form.elements['id'];
                 var save_button=item_form.elements['save'];
                 
@@ -475,7 +448,8 @@
                                                     {index:'sku'},
                                                     {index:'pieces'},
                                                     {index:'weight'},
-                                                    {index:'lbh'}, 
+                                                    {index:'lbh'},
+                                                    {index:'order_history'},
                                                     {index:'status',array:['received','undelivered','pending']}]};
                                     
                                     read_json_rows('',orders_data,function (orders) 
@@ -499,6 +473,7 @@
                                             weight_filter.value=orders[0].weight;
                                             pieces_filter.value=orders[0].pieces;
                                             id_filter.value=orders[0].id;
+                                            history_filter.value=orders[0].order_history;
                                             $(order_filter).focus();
                                         }
                                         else 
@@ -512,6 +487,7 @@
                                             vol_weight_filter.value="";
                                             id_filter.value="";
                                             awb_filter.value="";
+                                            history_filter.value="";
                                             $("#modal65_link").click();
                                         }
                                         $('#form321').formcontrol();
@@ -541,6 +517,7 @@
                                                     {index:'pieces'},
                                                     {index:'weight'},
                                                     {index:'lbh'}, 
+                                                    {index:'order_history'}, 
                                                     {index:'status',array:['received','undelivered','pending']}]};
                                         
                                 read_json_rows('',orders_data,function (orders) 
@@ -564,6 +541,7 @@
                                         weight_filter.value=orders[0].weight;
                                         pieces_filter.value=orders[0].pieces;
                                         id_filter.value=orders[0].id;
+                                        history_filter.value=orders[0].order_history;
                                         $(order_filter).focus();
                                     }
                                     else 
@@ -577,6 +555,7 @@
                                         vol_weight_filter.value="";
                                         id_filter.value="";
                                         awb_filter.value="";
+                                        history_filter.value="";
                                         $("#modal65_link").click();
                                     }
                                     $('#form321').formcontrol();
@@ -615,6 +594,18 @@
                 var save_button=form.elements['save'];
                 var del_button=form.elements['delete'];
 
+                var old_order_history=form.elements['history'].value;
+                var order_history=[];
+                if(old_order_history!="")
+                    order_history=JSON.parse(old_order_history);
+                var history_object=new Object();
+                history_object.timeStamp=get_my_time();
+                history_object.details="Order in-transit";
+                history_object.location='';
+                history_object.status="in-transit";
+                order_history.push(history_object);
+                var order_history_string=JSON.stringify(order_history);		
+
                 var last_updated=get_my_time();
                 var data_json={data_store:'logistics_orders',
 	 				data:[{index:'id',value:data_id},
@@ -623,6 +614,8 @@
 	 					{index:'weight',value:weight},
 	 					{index:'manifest_num',value:manifest_num},
                         {index:'man_id',value:manifest_id},
+                        {index:'status',value:'in-transit'},
+                        {index:'order_history',value:order_history_string},
 	 					{index:'last_updated',value:last_updated}]};
  				
                 update_json(data_json);
@@ -641,6 +634,7 @@
                     event.preventDefault();
                     form321_update_item(form);
                 });
+                form321_update_serial_numbers();
             }
             else
             {
@@ -658,44 +652,15 @@
                 var coloader=form.elements['loader'].value;
                 var vendor=form.elements['vendor'].value;
                 var date=get_raw_time(form.elements['date'].value);
+                var num_orders=form.elements['num'].value;
                 var data_id=form.elements['id'].value;
                 form.elements['saved'].value='yes';
                 
                 var save_button=document.getElementById('form321_save');
                 var last_updated=get_my_time();
 
-                var results=[];
-                $('#form321_body').find('form').each(function(index)
-                {
-                    var new_obj={};
-                    var form=$(this)[0];
-                    new_obj['AWB No']=form.elements[0].value;
-                    new_obj['Consignement No']=form.elements[1].value;
-                    new_obj['LBH']=form.elements[2].value;
-                    new_obj['Actual Weight']=form.elements[3].value;
-                    new_obj['Volumetric Weight']=form.elements[4].value;
-                    new_obj['Item']=form.elements[5].value;
-                    new_obj['Pieces']=form.elements[6].value;
-                    new_obj['Destination']=form.elements[7].value;   
-                    results.push(new_obj);
-                });
-
-                $('#form321_share').off('click');
-                $('#form321_share').click(function()
-                {
-                    var message_attachment=my_obj_array_to_csv_string(results);
-                    var subject='Manifest Sheet # '+manifest_num;
-                    var body="Hi,\nPlease find attached the manifest with this mail.\nCo-loader: "+coloader+"\nVendor:"+vendor+"\nDate:"+date+"\n\nRegards,\nBeacon Couriers";
-
-                    modal209_action(subject,body,message_attachment);
-                });
-
-                $('#form321_csv').off('click');
-                $('#form321_csv').click(function()
-                {
-                    my_obj_array_to_csv(results,'Manifest # '+manifest_num);
-                });
-
+                form321_update_serial_numbers();
+                
                 var manifest_columns={data_store:"manifests",count:1,return_column:'id',indexes:[{index:'manifest_num',exact:manifest_num}]};
                 read_json_single_column(manifest_columns,function(manifests)
                 {
@@ -707,6 +672,7 @@
                                         {index:'coloader',value:coloader},
                                         {index:'date',value:date},
                                         {index:'vendor',value:vendor},
+                                        {index:'num_orders',value:num_orders},
                                         {index:'type',value:'non-bag'},
                                         {index:'lbh',value:''},
                                         {index:'weight',value:''},
@@ -781,42 +747,13 @@
                 var vendor=form.elements['vendor'].value;
                 var date=get_raw_time(form.elements['date'].value);
                 var data_id=form.elements['id'].value;
-
+                var num_orders=form.elements['num'].value;
+                
                 var save_button=document.getElementById('form321_save');
                 var last_updated=get_my_time();
 
-                var results=[];
-                $('#form321_body').find('form').each(function(index)
-                {
-                    var new_obj={};
-                    var form=$(this)[0];
-                    new_obj['AWB No']=form.elements[0].value;
-                    new_obj['Consignement No']=form.elements[1].value;
-                    new_obj['LBH']=form.elements[2].value;
-                    new_obj['Actual Weight']=form.elements[3].value;
-                    new_obj['Volumetric Weight']=form.elements[4].value;
-                    new_obj['Item']=form.elements[5].value;
-                    new_obj['Pieces']=form.elements[6].value;
-                    new_obj['Destination']=form.elements[7].value;   
-                    results.push(new_obj);
-                });
-
-                $('#form321_share').off('click');
-                $('#form321_share').click(function()
-                {
-                    var message_attachment=my_obj_array_to_csv_string(results);
-                    var subject='Manifest Sheet # '+manifest_num;
-                    var body="Hi,\nPlease find attached the manifest with this mail.\nCo-loader: "+coloader+"\nVendor:"+vendor+"\nDate:"+date+"\n\nRegards,\nBeacon Couriers";
-
-                    modal209_action(subject,body,message_attachment);
-                });
-
-                $('#form321_csv').off('click');
-                $('#form321_csv').click(function()
-                {
-                    my_obj_array_to_csv(results,'Manifest # '+manifest_num);
-                });
-
+                form321_update_serial_numbers();
+                
                 var manifest_columns={data_store:"manifests",count:2,return_column:'id',indexes:[{index:'manifest_num',exact:manifest_num}]};
                 read_json_single_column(manifest_columns,function(manifests)
                 {
@@ -826,6 +763,7 @@
                                     data:[{index:'id',value:data_id},
                                         {index:'manifest_num',value:manifest_num},
                                         {index:'coloader',value:coloader},
+                                        {index:'num_orders',value:num_orders},
                                         {index:'date',value:date},
                                         {index:'vendor',value:vendor},
                                         {index:'last_updated',value:last_updated}],
@@ -895,6 +833,7 @@
 	 					{index:'consignment_num',value:''},
 	 					{index:'manifest_num',value:''},
                         {index:'man_id',value:''},
+                        {index:'status',value:'pending'},
 	 					{index:'last_updated',value:last_updated}]};
 
                     update_json(data_json);
@@ -914,6 +853,52 @@
             {
                 $(this).find('td:nth-child(2)').html(index+1);
             });
+            var filter_fields=document.getElementById('form321_master');
+            var new_results=[];
+            var num_orders=0;
+            $('#form321_body').find('form').each(function(index)
+            {
+                var new_obj={};
+                var form=$(this)[0];
+                
+                if(form.elements[0].value!="")
+                {
+                    var num_pieces=form.elements[6].value;
+                    if(!vUtil.isBlank(num_pieces))
+                        num_orders+=parseInt(num_pieces);			
+                    else
+                        num_orders+=1;
+                }
+            
+                new_obj['AWB No']=form.elements[0].value;
+                new_obj['Consignement No']=form.elements[1].value;
+                new_obj['LBH']=form.elements[2].value;
+                new_obj['Actual Weight']=form.elements[3].value;
+                new_obj['Volumetric Weight']=form.elements[4].value;
+                new_obj['Item']=form.elements[5].value;
+                new_obj['Pieces']=form.elements[6].value;
+                new_obj['Destination']=form.elements[7].value;   
+                new_results.push(new_obj);
+            });
+
+            filter_fields.elements['num'].value=num_orders;
+            
+            $('#form321_share').off('click');
+            $('#form321_share').click(function()
+            {
+                var message_attachment=my_obj_array_to_csv_string(new_results);
+                var subject='Manifest Sheet # '+filter_fields.elements['manifest_num'].value;
+                var body="Hi,\nPlease find attached the manifest with this mail.\nCo-loader: "+filter_fields.elements['loader'].value+"\nVendor:"+filter_fields.elements['vendor'].value+"\nDate:"+filter_fields.elements['date'].value+"\n\nRegards,\nBeacon Couriers";
+
+                modal209_action(subject,body,message_attachment);
+            });
+
+            $('#form321_csv').off('click');
+            $('#form321_csv').click(function()
+            {
+                my_obj_array_to_csv(new_results,'Manifest # '+filter_fields.elements['manifest_num'].value);
+            });
+
         }
 
         function form321_print_form()

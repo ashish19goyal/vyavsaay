@@ -1659,3 +1659,23 @@ function set_grid_item_69()
 		$('#grid_item_69').html("Rs. "+amount);
 	});
 };
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_70
+*@*display_name*:*# Documents
+*@*grid*:*reports
+*@*function_name*:*set_grid_item_70();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_70()
+{
+	var new_columns={data_store:'s3_objects',return_column:'id'};
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_70').html(item_count);
+	});
+};

@@ -85,6 +85,8 @@
         });
 
         $('#form198_fieldset').html("");
+        
+        var paginator=$('#form198_table').paginator({visible:false,container:$('#form198_table')});        
     }
 
     function form198_ini()
@@ -96,8 +98,6 @@
 
         var awb_num=document.getElementById('form198_awb');
         
-        $('#form198_body').html("");
-
         var new_columns={count:1,
                         data_store:'logistics_orders',
                         indexes:[{index:'id',value:fid},
