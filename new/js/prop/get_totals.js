@@ -524,30 +524,6 @@ function form193_get_totals()
 }
 
 
-function form200_update_serial_numbers()
-{
-	$('#form200_body').find('tr').each(function(index)
-	{
-		$(this).find('td:nth-child(2)').html(index+1);
-	});
-	
-	var num_orders=0;
-	$("[id^='save_form200']").each(function(index)
-	{
-		var subform_id=$(this).attr('form');
-		var subform=document.getElementById(subform_id);
-
-		if(subform.elements[0].value!="")
-		{
-			num_orders+=1;			
-		}
-	});
-	
-	var form=document.getElementById("form200_master");
-	form.elements['num_orders'].value=num_orders;
-}
-
-
 function form222_get_totals()
 {
 	var amount=0;

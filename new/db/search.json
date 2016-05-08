@@ -110,7 +110,7 @@
 				"return_columns":"[{\"key\":\"drs_num\",\"column\":\"drs_num\"},{\"key\":\"employee_name\",\"column\":\"employee\"}]",
 				"result_title":"DRS # drs_num",
 				"result_detail": "Assigned to employee_name",
-				"result_form": "form200",
+				"result_form": "form201",
 				"result_count": 5,
 				"status": "active",
 				"last_updated":1

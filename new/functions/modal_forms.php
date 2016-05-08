@@ -1474,17 +1474,6 @@
 		</form>
 	</div>
 
-	<div id="modal129" title="Add DRS Items">
-		<form id='modal129_form' autocomplete="off">
-			<fieldset>
-				<label>Address: <input name='address' type="text"></label><br>
-				<label>City: <input name='city' type="text"></label><br>
-				<label>Pincode: <input name='pincode' type='text'></label><br>
-				<input type="submit" value='Save' name='save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
-
 	<div id="modal130" title="Delete Cache">
 		Do you want to cleared browser cache? (There will be no impact on your saved data.) 
 		<br>

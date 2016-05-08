@@ -3902,43 +3902,6 @@ function form195_delete_item(button)
 
 
 /**
- * formNo 200
- * form Create DRS
- * @param button
- */
-function form200_delete_item(button)
-{
-	if(is_delete_access('form200'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-
-			var data_id=form.elements[9].value;
-			var last_updated=get_my_time();
-			var data_xml="<logistics_orders>" +
-						"<id>"+data_id+"</id>" +
-						"<status>received</status>" +
-						"<drs_num></drs_num>"+
-						"<drs_time></drs_time>"+
-						"<drs_id></drs_id>"+
-						"<delivery_person></delivery_person>"+
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</logistics_orders>";
-			update_simple(data_xml);
-			$(button).parent().parent().remove();
-			form200_update_serial_numbers();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-
-/**
  * @form Exchanges
  * @param button
  */
@@ -4294,42 +4257,6 @@ function form217_delete_item(button)
 				local_delete_simple(data_xml);
 			}	
 			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
- * formNo 219
- * form Create COD DRS
- * @param button
- */
-function form219_delete_item(button)
-{
-	if(is_delete_access('form219'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-
-			var data_id=form.elements[10].value;
-			var last_updated=get_my_time();
-			var data_xml="<logistics_orders>" +
-						"<id>"+data_id+"</id>" +
-						"<status>received</status>" +
-						"<drs_num></drs_num>"+
-						"<drs_time></drs_time>"+
-						"<drs_id></drs_id>"+
-						"<delivery_person></delivery_person>"+
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</logistics_orders>";
-			update_simple(data_xml);
-			$(button).parent().parent().remove();
-			form219_update_serial_numbers();
 		});
 	}
 	else
