@@ -169,7 +169,7 @@
                 form.elements['order_num'].value=result.order_num;
                 form.elements['channel_name'].value=result.channel_name;
                 form.elements['type'].value=result.type;
-                form.elements['manifest_type'].value=result.id;
+                form.elements['manifest_type'].value=result.manifest_type;
                 form.elements['manifest_id'].value=result.manifest_id;
                 form.elements['merchant_name'].value=result.merchant_nam;
                 form.elements['ship_to'].value=result.ship_to;

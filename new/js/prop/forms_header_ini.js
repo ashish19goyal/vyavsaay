@@ -5812,17 +5812,6 @@ function form210_header_ini()
 }
 
 
-
-/**
- * @form Update Logisitcs Orders (branches)
- * @formNo 212
- */
-function form212_header_ini()
-{
-	$('#form212_body').html("");
-}
-
-
 /**
  * @form Create manifest
  * @formNo 215

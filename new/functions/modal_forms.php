@@ -1857,22 +1857,42 @@
 		</form>
 	</div>
 	
-	<div id="modal148" title="Import Outstation Orders">
-		<form id='modal148_form' autocomplete="off">
-			<fieldset>
-				<input type="button" value='Download import template' class='modal_submit'>
-				<br>
-				<br>
-				<br>
-				<b>Import pre-filled template</b><br>
-				<input type="file" required value='Select file' accept=".csv" style='display:none'>
-				<input type='button' class='generic_red_icon' value='Select File'>
-				<br>				
-				<output name='selected_file'></output><br>
-				<input type="submit" value='Import' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
+    <a href='#modal148' data-toggle="modal" id='modal148_link'></a>
+	<div id="modal148" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal148_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Import Outstation Orders</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								<div class='col-md-6 pull-right'><button type="button" name='download' class='btn green-jungle pull-right'>Download Import Template</button></div>
+					       </div>
+                           <br>
+                           <br>
+		                  <div class="row">
+								<div class='col-md-6'>
+								   	<input type="file" required name='file' value='Select file' accept=".csv" style='display:none'>
+									<button type='button' name='file_dummy' class='btn red-sunglo'>Select Import File</button>
+								</div>
+				          </div>											
+		                  <div class="row">
+									<div class='col-md-6'><output name='selected_file'></output></div>
+					      </div>
+		               </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal148_form' name='save'>Import</button>
+	               	<button type="button" class="btn red" form='modal148_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 
     <a href='#modal149' data-toggle="modal" id='modal149_link'></a>
 	<div id="modal149" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">

@@ -10604,11 +10604,11 @@ function modal148_action()
 {
 	var form=document.getElementById('modal148_form');
 	
-	var template_button=form.elements[1];
-	var select_file=form.elements[2];
-	var dummy_button=form.elements[3];
-	var selected_file=form.elements[4];
-	var import_button=form.elements[5];
+	var template_button=form.elements['download'];
+	var select_file=form.elements['file'];
+	var dummy_button=form.elements['file_dummy'];
+	var selected_file=form.elements['selected_file'];
+	var import_button=form.elements['save'];
 
 	$(dummy_button).off('click'); 
 	$(dummy_button).on('click',function (e) 
@@ -10679,23 +10679,17 @@ function modal148_action()
 	        
 	        	//////////////////
 	           	
-	       		var data_xml="<logistics_orders>";
-				var counter=1;
-				var last_updated=get_my_time();
+	       		var last_updated=get_my_time();
 				var order_array=[];
 				
-				var awb_id_array="--";
+				var awb_id_array=[];
 				for(var i in data_array)
 				{
-					awb_id_array+=data_array[i].awb+"--";
+					awb_id_array.push(data_array[i].awb);
 				}
 	
-				var order_id_xml="<logistics_orders>"+
-								"<id></id>"+
-								"<order_history></order_history>"+
-								"<awb_num array='yes'>"+awb_id_array+"</awb_num>"+
-								"</logistics_orders>";
-				fetch_requested_data('',order_id_xml,function (order_ids) 
+				var order_id_xml={data_store:'logistics_orders',indexes:[{index:'id'},{index:'order_history'},{index:'awb_num',array:awb_id_array}]};
+				read_json_rows('',order_id_xml,function (order_ids) 
 				{
 					for (var k=0;k<data_array.length;k++)
 					{
@@ -10714,10 +10708,6 @@ function modal148_action()
 					//console.log(data_array);					
 					data_array.forEach(function (data_row) 
 					{
-						//console.log(data_row);
-						//console.log(data_row.order_status);
-						//console.log(data_row.date);
-						//console.log(data_row['received by']);
 						if(typeof data_row.id!='undefined')
 						{
 							var order_object=new Object();
@@ -10738,31 +10728,35 @@ function modal148_action()
 							order_object.order_history=JSON.stringify(history_object);
 		                	order_array.push(order_object);
 		                	
-		          //      	console.log(order_object);
 		                }
 					});
 		
-					//console.log(order_array);
-					order_array.forEach(function(row)
-					{
-						if((counter%500)===0)
-						{
-							data_xml+="</logistics_orders><separator></separator><logistics_orders>";
-						}
-						counter+=1;
-						
-						data_xml+="<row>" +
-								"<id>"+row.id+"</id>" +
-		                        "<status>"+row.status+"</status>"+
-		                        "<received_by>"+row.received_by+"</received_by>"+
-		                        "<order_history>"+row.order_history+"</order_history>"+
-		                        "<last_updated>"+last_updated+"</last_updated>" +
-								"</row>";		
-					});
-				
-					//console.log(data_xml);
-					data_xml+="</logistics_orders>";
-					update_batch(data_xml);
+                    var data_json={data_store:'logistics_orders',
+                            loader:'yes',
+                            log:'yes',
+                            data:[],
+                            log_data:{title:'Updated orders status',link_to:'form288'}};
+
+                    var counter=1;
+                    
+                    data_array.forEach(function(row)
+                    {
+                        counter+=1;
+                        if(import_type=='create_new')
+                        {
+                            row.id=last_updated+counter;
+                        }
+
+                        var data_json_array=[{index:'id',value:row.id},
+                                {index:'status',value:row.status},
+                                {index:'received_by',value:row.received_by},
+                                {index:'order_history',value:row.order_history},
+                                {index:'last_updated',value:last_updated}];
+
+                        data_json.data.push(data_json_array);
+                    });
+
+                    update_batch_json(data_json);				
 		
 		           	////////////////////
 		        	progress_value=15;
@@ -10784,7 +10778,7 @@ function modal148_action()
 		        			hide_progress();
 		        			selected_file.value="Upload complete";
 		        			$(select_file).val('');
-		        			$("#modal148").dialog("close");
+		        			$(form).finc(".close").click();
 		        			clearInterval(ajax_complete);
 		        		}
 		        	},1000);
@@ -10794,14 +10788,14 @@ function modal148_action()
 		    {
 		    	hide_progress();
        			$(select_file).val('');
-       			$("#modal148").dialog("close");
+       			$(form).find(".close").click();
 				modal164_action(error_array);
 		    }
         }
         reader.readAsText(file);    
     });
 	
-	$("#modal148").dialog("open");
+	$("#modal148_link").click();
 }
 
 function modal149_action()

@@ -107,6 +107,8 @@
         rto_date.value=get_my_date();
         
         $('#form265').formcontrol();
+        var paginator=$('#form265_body').paginator({visible:false});        
+
     }
 
     function form265_ini()
