@@ -108,7 +108,7 @@
                 rowsHTML+="<tr>";
                 rowsHTML+="<form id='report105_"+item.id+"'></form>";
                 rowsHTML+="<td data-th='AWB #'>";
-                    rowsHTML+="<a onclick=\"show_object('awb','"+item.awb+"');\">"+item.awb_num+"</a>";
+                    rowsHTML+=item.awb_num;
                 rowsHTML+="</td>";
                 rowsHTML+="<td data-th='Product'>";
                     rowsHTML+=item.sku;

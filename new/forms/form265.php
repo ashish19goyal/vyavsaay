@@ -178,7 +178,7 @@
                         rowsHTML+="<td data-th='S.No.'>";
                         rowsHTML+="</td>";
                         rowsHTML+="<td data-th='AWB #'>";
-                            rowsHTML+="<a onclick=\"show_object('awb','"+result.awb_num+"');\"><input type='text' readonly='readonly' form='form265_"+id+"' value='"+result.awb_num+"'></a>";
+                            rowsHTML+="<input type='text' readonly='readonly' form='form265_"+id+"' value='"+result.awb_num+"'>";
                         rowsHTML+="</td>";
                         rowsHTML+="<td data-th='Address'>";
                             rowsHTML+="<textarea readonly='readonly' form='form265_"+id+"'>"+address+"</textarea>";

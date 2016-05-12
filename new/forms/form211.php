@@ -123,7 +123,7 @@
                     var rowsHTML="<tr>";
                     rowsHTML+="<form id='form211_"+result.awb_num+"'></form>";
                         rowsHTML+="<td data-th='AWB #'>";
-                            rowsHTML+="<a onclick=\"show_object('awb','"+result.awb_num+"');\"><input type='text' readonly='readonly' form='form211_"+result.awb_num+"' value='"+result.awb_num+"'></a>";
+                            rowsHTML+="<input type='text' readonly='readonly' form='form211_"+result.awb_num+"' value='"+result.awb_num+"'>";
                         rowsHTML+="</td>";
                         rowsHTML+="<td data-th='Current Status'>";
                             rowsHTML+="<input type='text' readonly='readonly' form='form211_"+result.awb_num+"' value='"+result.status+"'>";

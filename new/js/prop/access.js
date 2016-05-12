@@ -127,6 +127,8 @@ function if_data_access_object(obj_type,obj_name,func_success,func_fail)
         case 'product_instances':index_name='batch';
                         obj_name=obj_name.batch;
                         break;
+        case 'logistics_orders':index_name='awb_num';
+                        break;
 	}
 	
 	var obj_data={data_store:obj_type,

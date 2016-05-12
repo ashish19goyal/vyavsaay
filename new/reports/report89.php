@@ -123,9 +123,9 @@ function report89_ini()
 					rowsHTML+="<td data-th='Person'><a onclick=\"show_object('staff','"+result.delivery_person+"');\">";
 						rowsHTML+=result.delivery_person;
 					rowsHTML+="</a></td>";
-					rowsHTML+="<td data-th='AWB #'><a onclick=\"show_object('awb','"+result.awb_num+"');\">";
+					rowsHTML+="<td data-th='AWB #'>";
 						rowsHTML+=result.awb_num;
-					rowsHTML+="</a></td>";
+					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Date'>";
 						rowsHTML+=get_my_past_date(result.import_date);
 					rowsHTML+="</td>";

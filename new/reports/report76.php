@@ -128,9 +128,9 @@
             {
                 rowsHTML+="<tr>";
                 rowsHTML+="<form id='report76_"+item.id+"'></form>";
-                rowsHTML+="<td data-th='AWB #'><a onclick=\"show_object('awb','"+item.awb+"');\">";
+                rowsHTML+="<td data-th='AWB #'>";
                     rowsHTML+=item.awb_num;
-                rowsHTML+="</a></td>";
+                rowsHTML+="</td>";
                 rowsHTML+="<td data-th='Manifest Id'>";
                     rowsHTML+=item.manifest_id;
                 rowsHTML+="</td>";
