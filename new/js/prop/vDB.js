@@ -104,3 +104,4 @@ var vDB = function (options)
         }
     }
 };
+vDB = new vDB();

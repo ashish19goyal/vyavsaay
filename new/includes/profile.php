@@ -43,12 +43,12 @@
         <li class="divider"> </li>
 
         <li>
-            <a onclick="var vdb=new vDB();vdb.full_backup();">
+            <a onclick="vDB.full_backup();">
                 <i class="icon-energy"></i> Backup Data </a>
         </li>
 
         <li id='system_config_backup'>
-            <a onclick="var vdb=new vDB();vdb.config_backup();">
+            <a onclick="vDB.config_backup();">
                 <i class="icon-wrench"></i> Backup Config </a>
         </li>
 
