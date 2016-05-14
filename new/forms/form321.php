@@ -450,7 +450,7 @@
                                                     {index:'weight'},
                                                     {index:'lbh'},
                                                     {index:'order_history'},
-                                                    {index:'status',array:['received','recieved','undelivered','pending']}]};
+                                                    {index:'status',array:['received','undelivered','pending']}]};
                                     
                                     read_json_rows('',orders_data,function (orders) 
                                     {
