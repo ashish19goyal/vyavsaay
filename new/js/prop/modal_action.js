@@ -3561,78 +3561,58 @@ function modal35_action(func)
  * @modal Add Appointment
  * @modalNo 36
  */
-function modal36_action(schedule_date)
+function modal36_action(schedule_time)
 {
 	var form=document.getElementById("modal36_form");
-	var customer_filter=form.elements[1];
-	var staff_filter=form.elements[2];
-	var schedule_filter=form.elements[3];
-	var hours_filter=form.elements[4];
-	var status_filter=form.elements[6];
+	var customer_filter=form.elements['customer'];
+	var staff_filter=form.elements['assignee'];
+	var schedule_filter=form.elements['schedule'];
 	
-	var customer_data="<customers>" +
-			"<acc_name></acc_name>" +
-			"</customers>";
-	set_my_value_list(customer_data,customer_filter);
+	var customer_data={data_store:'customers',return_column:'acc_name'};
+	set_my_value_list_json(customer_data,customer_filter);
 	
-	var staff_data="<staff>" +
-			"<acc_name></acc_name>" +
-			"</staff>";
-	set_my_value_list(staff_data,staff_filter);
+	var staff_data={data_store:'staff',return_column:'acc_name'};
+	set_my_value_list_json(staff_data,staff_filter);
 	
 	$(schedule_filter).vdatetimepicker();
-	schedule_filter.value=schedule_date;
-	set_static_value_list('appointments','status',status_filter);
-		
+	schedule_filter.value=schedule_time;
+	
+	$('#modal36').formcontrol();
+	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
 		if(is_create_access('form89'))
 		{
-			var name=form.elements[1].value;
-			var assignee=form.elements[2].value;
-			var schedule=get_raw_time(form.elements[3].value);
-			var hours=form.elements[4].value;
-			var notes=form.elements[5].value;
-			var status=form.elements[6].value;
+			var name=customer_filter.value;
+			var assignee=staff_filter.value;
+			var notes=form.elements['notes'].value;
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
-			var data_xml="<appointments>" +
-						"<id>"+data_id+"</id>" +
-						"<customer>"+name+"</customer>" +
-						"<assignee>"+assignee+"</assignee>" +
-						"<schedule>"+schedule+"</schedule>" +
-						"<status>"+status+"</status>" +
-						"<hours>"+hours+"</hours>" +
-						"<notes>"+notes+"</notes>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</appointments>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>appointments</tablename>" +
-						"<link_to>form89</link_to>" +
-						"<title>Added</title>" +
-						"<notes>Appointment with "+name+" assigned to "+assignee+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			if(is_online())
-			{
-				server_create_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_create_row(data_xml,activity_xml);
-			}	
+			var schedule=get_raw_time(schedule_filter.value);
+			
+			var data_json={data_store:'appointments',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'customer',value:name},
+	 					{index:'assignee',value:assignee},
+                        {index:'schedule',value:schedule},
+                        {index:'status',value:'pending'},
+						{index:'hours',value:1},
+						{index:'notes',value:notes},  
+	 					{index:'last_updated',value:last_updated}],
+					log:'yes',
+					log_data:{title:'Added',notes:'Appointment with '+name,link_to:'form89'}};
+			create_json(data_json);
 		}
 		else
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal36").dialog("close");
+		$(form).find(".close").click();
 	});
 	
-	$("#modal36").dialog("open");
+	$("#modal36_link").click();
 }
 
 /**
@@ -3642,42 +3622,35 @@ function modal36_action(schedule_date)
 function modal37_action(id)
 {
 	var form=document.getElementById("modal37_form");
-	var customer_filter=form.elements[1];
-	var staff_filter=form.elements[2];
-	var notes_filter=form.elements[3];
-	var status_filter=form.elements[4];
+	var customer_filter=form.elements['customer'];
+	var staff_filter=form.elements['assignee'];
+	var notes_filter=form.elements['notes'];
+	var status_filter=form.elements['status'];
 	
-	var customer_data="<customers>" +
-		"<acc_name></acc_name>" +
-		"</customers>";
-	set_my_value_list(customer_data,customer_filter);
+	var customer_data={data_store:'customers',return_column:'acc_name'};
+	set_my_value_list_json(customer_data,customer_filter);
 
-	var staff_data="<staff>" +
-			"<acc_name></acc_name>" +
-			"</staff>";
-	set_my_value_list(staff_data,staff_filter);
-	set_static_value_list('appointments','status',status_filter);
+	var staff_data={data_store:'staff',return_column:'acc_name'};
+	set_my_value_list_json(staff_data,staff_filter);
+	set_static_value_list_json('appointments','status',status_filter);
 	
-	
-	var apps_data="<appointments>" +
-			"<id>"+id+"</id>" +
-			"<customer></customer>" +
-			"<assignee></assignee>" +
-			"<notes></notes>" +
-			"<status></status>" +
-			"</appointments>";
-	fetch_requested_data('form89',apps_data,function(results)
+	var apps_data={data_store:'appointments',count:1,
+				  indexes:[{index:'id',value:id},
+						  {index:'customer'},
+						  {index:'assignee'},
+						  {index:'notes'},
+						  {index:'status'}]};
+	read_json_rows('form89',apps_data,function(results)
 	{
-		for(var i in results)
+		if(results.length>0)
 		{
-			customer_filter.value=results[i].customer;
-			staff_filter.value=results[i].assignee;
-			notes_filter.value=results[i].notes;
-			status_filter.value=results[i].status;
-			
-			break;
+			customer_filter.value=results[0].customer;
+			staff_filter.value=results[0].assignee;
+			notes_filter.value=results[0].notes;
+			status_filter.value=results[0].status;			
 		}
-		$("#modal37").dialog("open");
+		$('#modal37').formcontrol();
+		$("#modal37_link").click();
 	});
 	
 	$(form).off('submit');
@@ -3686,41 +3659,26 @@ function modal37_action(id)
 		event.preventDefault();
 		if(is_create_access('form89'))
 		{
-			var name=form.elements[1].value;
-			var assignee=form.elements[2].value;
-			var notes=form.elements[3].value;
-			var status=form.elements[4].value;
+			var name=customer_filter.value;
+			var assignee=staff_filter.value;
+			var notes=notes_filter.value;
+			var status=status_filter.value;
 			var last_updated=get_my_time();
-			var data_xml="<appointments>" +
-						"<id>"+id+"</id>" +
-						"<customer>"+name+"</customer>" +
-						"<assignee>"+assignee+"</assignee>" +
-						"<notes>"+notes+"</notes>" +
-						"<status>"+status+"</status>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</appointments>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>appointments</tablename>" +
-						"<link_to>form89</link_to>" +
-						"<title>Updated</title>" +
-						"<notes>Appointment with "+name+" assigned to "+assignee+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			if(is_online())
-			{
-				server_update_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_update_row(data_xml,activity_xml);
-			}	
+			
+			var data_json={data_store:'appointments',
+	 				data:[{index:'id',value:id},
+	 					{index:'customer',value:name},
+	 					{index:'assignee',value:assignee},
+                        {index:'status',value:status},
+						{index:'notes',value:notes},  
+	 					{index:'last_updated',value:last_updated}]};			
+			update_json(data_json);	
 		}
 		else
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal37").dialog("close");		
+		$(form).find(".close").click();		
 	});
 }
 

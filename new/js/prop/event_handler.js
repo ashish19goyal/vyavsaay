@@ -213,7 +213,7 @@ function modal_forms_ini()
 	dynamic_modal_array.push(30);
 	dynamic_modal_array.push(32);
     dynamic_modal_array.push(34);
-    for(var i=36;i<=42;i++)
+    for(var i=38;i<=42;i++)
 	{
 		dynamic_modal_array.push(i);
 	}

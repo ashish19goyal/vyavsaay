@@ -145,7 +145,7 @@
             var data_json={data_store:'inventory_adjust',
  					log:'yes',
  					data:[],
- 					log_data:{title:'Added Inventory',link_to:'form288'}};
+ 					log_data:{title:'Added Inventory',link_to:'form285'}};
 
 			var counter=1;
 			var last_updated=get_my_time();
@@ -170,12 +170,26 @@
 			
 			if(import_type=='create_new')
 			{
-				create_batch_json(data_json);
+				if(is_create_access('form285'))
+            	{
+					create_batch_json(data_json);
+				}
+				else
+				{
+					$("#modal2_link").click();
+				}
 			}
 			else
 			{
-				update_batch_json(data_json);
-			}               
+				if(is_update_access('form285'))
+            	{
+            		update_batch_json(data_json);
+				}
+				else
+				{
+					$("#modal2_link").click();
+				}
+			}
         };
         
     </script>

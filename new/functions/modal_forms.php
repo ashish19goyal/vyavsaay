@@ -665,8 +665,6 @@
             </div>
         </div>
     </div>
-
-    
     
 	<a href='#modal35' data-toggle="modal" id='modal35_link'></a>
 	<div id="modal35" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
@@ -699,32 +697,82 @@
         </div>
     </div>
     
-	<div id="modal36" title="Add appointment">
-		<form id='modal36_form' autocomplete="off">
-			<fieldset>
-				<label>Customer: <input type='text' required></label><br>
-				<label>Assignee: <input type="text"></label><br>
-				<label>Schedule: <input type="text" required></label><br>
-				<label>Hours: <input type="number" required value='1' step='any'></label><br>
-				<label>Notes: <textarea></textarea></label><br>
-				<label>Status: <input type="text" required value='pending'></label><br>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
+	<a href='#modal36' data-toggle="modal" id='modal36_link'></a>
+	<div id="modal36" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal36_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add Appointment</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:400px;" data-always-visible="1" data-rail-visible1="1">
+		                  	<div class="row">
+								<div class="col-sm-12 col-md-4">Customer</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal36_form' required name='customer'></div>
+					     	</div>
+		                  	<div class="row">
+								<div class="col-sm-12 col-md-4">Schedule</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal36_form' required name='schedule'></div>
+					     	</div>
+		                  	<div class="row">
+								<div class="col-sm-12 col-md-4">Notes</div>
+								<div class="col-sm-12 col-md-8"><textarea form='modal36_form' name='notes'></textarea></div>
+					     	</div>
+						   <div class="row">
+								<div class="col-sm-12 col-md-4">Assignee</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal36_form' name='assignee'></div>
+					     	</div>
+						</div>
+					 </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal36_form' name='save'>Save</button>
+	               	<button type="button" class="btn red" form='modal36_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-	<div id="modal37" title="Update appointment">
-		<form id='modal37_form' autocomplete="off">
-			<fieldset>
-				<label>Customer: <input type='text' required></label><br>
-				<label>Assignee: <input type="text"></label><br>
-				<label>Notes: <textarea></textarea></label><br>
-				<label>Status: <input type="text" required value='pending'></label><br>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
-	
+	<a href='#modal37' data-toggle="modal" id='modal37_link'></a>
+	<div id="modal37" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal37_form' autocomplete="off">                               
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add Appointment</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  	<div class="row">
+								<div class="col-sm-12 col-md-4">Customer</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal37_form' name='customer'></div>
+					     	</div>
+		                  	<div class="row">
+								<div class="col-sm-12 col-md-4">Notes</div>
+								<div class="col-sm-12 col-md-8"><textarea form='modal37_form' name='notes'></textarea></div>
+					     	</div>
+						   <div class="row">
+								<div class="col-sm-12 col-md-4">Assignee</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal37_form' name='assignee'></div>
+					     	</div>
+						   	<div class="row">
+								<div class="col-sm-12 col-md-4">Status</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' required form='modal37_form' name='status'></div>
+						   </div>
+		             	</div>
+					</div>	
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal37_form' name='save'>Save</button>
+	               	<button type="button" class="btn red" form='modal37_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+		
 	<div id="modal38" title="Update sale price">
 		<form id='modal38_form' autocomplete="off">
 			<fieldset>

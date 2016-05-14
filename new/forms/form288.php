@@ -308,48 +308,55 @@
 		
 		function form288_import(data_array,import_type)
 		{
-			if(is_update_access('form288'))
-            {
-                var data_json={data_store:'system_overwrite_func',
-                        loader:'yes',
-                        log:'yes',
-                        data:[],
-                        log_data:{title:'Overwrite function for system configuration',link_to:'form288'}};
+			var data_json={data_store:'system_overwrite_func',
+					loader:'yes',
+					log:'yes',
+					data:[],
+					log_data:{title:'Overwrite function for system configuration',link_to:'form288'}};
 
-                var counter=1;
-                var last_updated=get_my_time();
+			var counter=1;
+			var last_updated=get_my_time();
 
-                data_array.forEach(function(row)
-                {
-                    counter+=1;
-                    if(import_type=='create_new')
-                    {
-                        row.id=last_updated+counter;
-                    }
+			data_array.forEach(function(row)
+			{
+				counter+=1;
+				if(import_type=='create_new')
+				{
+					row.id=last_updated+counter;
+				}
 
-                    var data_json_array=[{index:'id',value:row.id},
-                            {index:'name',value:row.name},
-                            {index:'description',value:row.description},
-                            {index:'function_def',value:row.function_def},
-                            {index:'status',value:row.status},
-                            {index:'last_updated',value:last_updated}];
+				var data_json_array=[{index:'id',value:row.id},
+						{index:'name',value:row.name},
+						{index:'description',value:row.description},
+						{index:'function_def',value:row.function_def},
+						{index:'status',value:row.status},
+						{index:'last_updated',value:last_updated}];
 
-                    data_json.data.push(data_json_array);
-                });
+				data_json.data.push(data_json_array);
+			});
 
-                if(import_type=='create_new')
-                {
-                    create_batch_json(data_json);
-                }
-                else
-                {
-                    update_batch_json(data_json);
-                }
-            }
+			if(import_type=='create_new')
+			{
+				if(is_create_access('form288'))
+            	{
+					create_batch_json(data_json);
+				}
+				else
+				{
+					$("#modal2_link").click();
+				}
+			}
 			else
 			{
-				$("#modal2_link").click();
-			}    
+				if(is_update_access('form288'))
+            	{
+            		update_batch_json(data_json);
+				}
+				else
+				{
+					$("#modal2_link").click();
+				}
+			}
 		};
 
 	</script>

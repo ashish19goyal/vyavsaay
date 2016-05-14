@@ -5,7 +5,6 @@
                 <label class='btn green-jungle cc active' onclick=form89_ini('calendar');><input name='cc' type='radio' class='toggle'>Calendar</label>
                 <label class='btn green-jungle tt' onclick=form89_ini('table');><input type='radio' name='tt' class='toggle'>Table</label>
             </div>
-			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form89_add_item();'>Add Appointment <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
             <div class="btn-group">
@@ -47,7 +46,10 @@
 						<th><input type='text' placeholder="Schedule" readonly='readonly' form='form89_header'></th>
 						<th><input type='text' placeholder="Notes" class="floatlabel" name='notes' form='form89_header'></th>
 						<th><input type='text' placeholder="Status" class='floatlabel' name='status' form='form89_header'></th>
-						<th><input type='submit' form='form89_header' style='visibility: hidden;'></th>
+						<th>
+							<input type='submit' form='form89_header' style='display:none;'>
+							<a class='btn btn-circle grey btn-outline btn-sm' onclick='form89_add_item();' style='margin-bottom:10px;'>Add <i class='fa fa-plus'></i></a>
+						</th>
 				</tr>
 			</thead>
 			<tbody id='form89_body'>
@@ -85,7 +87,8 @@
 			form89_ini();
 		});
 
-		$("#form89_calendar").parent().parent().show();        
+		$("#form89_calendar").parent().parent().show();  
+		var paginator=$('#form89').paginator({visible:false,container:$('#form89')});        
 	};
 
 		
@@ -139,7 +142,7 @@
                                            {index:'notes'}]};
                     read_json_rows('form89',tasks_data,function(tasks)
                     {
-                        var events=[];
+						var events=[];
                         tasks.forEach(function(task)
                         {
                             if(parseFloat(task.task_hours)==0)
@@ -160,11 +163,12 @@
                                 color='#1bbc9b';
                             }
                             events.push({
-                                title: "Appointment with "+task.customer+"\n"+task.notes,
-                                start:get_iso_time(task.t_due-3600000*(parseFloat(task.task_hours))),
-                                end:get_iso_time(task.t_due),
+                                title: task.customer,
+                                start:get_iso_time(task.schedule),
+                                end:get_iso_time(parseFloat(task.schedule)+3600*parseFloat(task.hours)),
                                 color: color,
                                 id: task.id,
+								notes: task.notes
                             });
                         });
                         callback(events);
@@ -200,6 +204,14 @@
                                  {index:'hours',value:hours},
                                  {index:'last_updated',value:get_my_time()}]};
                     update_json(data_json);					
+				},
+				eventMouseover: function(event, jsEvent, view) 
+				{
+					$('.fc-title', this).append("<div id='form89_tooltip_"+event.id+"' class='hover-end'>"+event.notes+"</div>");
+  				},
+				eventMouseout: function(event, jsEvent, view)
+				{
+					$('#form89_tooltip_'+event.id).remove();
 				}
             });
             setTimeout(function(){$('#form89 .fc-today-button').click()},1000);    
@@ -227,8 +239,7 @@
                                    {index:'assignee',value:assignee_filter},
                                    {index:'status',value:status_filter},
                                    {index:'hours'},
-                                   {index:'notes',value:notes_filter},
-                                   {index:'source_name'}]};
+                                   {index:'notes',value:notes_filter}]};
            
             read_json_rows('form89',columns,function(results)
             {
@@ -274,6 +285,7 @@
 					var staff_data={data_store:'staff',return_column:'acc_name'};
 					set_my_value_list_json(staff_data,assignee_filter);
 					set_static_value_list_json('appointments','status',status_filter);
+					$(schedule_filter).vdatetimepicker();
                 });
 
                 paginator.update_index(results.length);
@@ -299,9 +311,9 @@
 			var id=get_new_key();
 			var rowsHTML="<tr>";
 			rowsHTML+="<form id='form89_"+id+"' autocomplete='off'></form>";
-				rowsHTML+="<td data-th='Customer'>";
-					rowsHTML+="<input type='text' required form='form89_"+id+"' value=''>";
-					rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' id='form89_add_customer_"+id+"'>";
+				rowsHTML+="<td data-th='Customer'><div class='btn-overlap'>";
+                    rowsHTML+="<input type='text' placeholder='Customer' required form='form89_"+id+"'>";
+                    rowsHTML+="<button class='btn btn-icon-only default right-overlap' title='Add new customer' id='form89_add_customer_"+id+"'><i class='fa fa-plus'></i></button></div>";                    
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Assignee'>";
 					rowsHTML+="<input type='text' form='form89_"+id+"' value=''>";
@@ -358,6 +370,7 @@
 			});
 
 			set_static_value_list_json('appointments','status',status_filter);
+			$(schedule_filter).vdatetimepicker();
 			$('#form89').formcontrol();
 		}
 		else
@@ -386,7 +399,9 @@
 								  {index:'status',value:status},
 								  {index:'notes',value:notes},
                                  {index:'hours',value:1},
-                                 {index:'last_updated',value:last_updated}]};
+                                 {index:'last_updated',value:last_updated}],
+						  log:'yes',
+						  log_data:{title:'Added',notes:'Appointment with '+name,link_to:'form89'}};
             create_json(data_json);
 			
 			$(form).readonly();
@@ -422,41 +437,19 @@
 			var status=form.elements[4].value;
 			var data_id=form.elements[5].value;
 			var last_updated=get_my_time();
-			var data_xml="<appointments>" +
-						"<id>"+data_id+"</id>" +
-						"<customer>"+name+"</customer>" +
-						"<assignee>"+assignee+"</assignee>" +
-						"<schedule>"+schedule+"</schedule>" +
-						"<status>"+status+"</status>" +
-						"<notes>"+notes+"</notes>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</appointments>";	
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>appointments</tablename>" +
-						"<link_to>form89</link_to>" +
-						"<title>Updated</title>" +
-						"<notes>Appointment with "+name+" assigned to "+assignee+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			if(is_online())
-			{
-				server_update_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_update_row(data_xml,activity_xml);
-			}
 
-			var message_string=name+" appointment with "+assignee+" @"+form.elements[2].value+"\nNotes:"+result.notes;
-			message_string=encodeURIComponent(message_string);
-			$("#form89_whatsapp_"+data_id).attr('href',"whatsapp://send?text="+message_string);
-			$("#form89_whatsapp_"+data_id).show();
-
-			for(var i=0;i<5;i++)
-			{
-				$(form.elements[i]).attr('readonly','readonly');
-			}
+			var data_json={data_store:'appointments',
+ 							data:[{index:'id',value:data_id},
+								  {index:'customer',value:name},
+								  {index:'assignee',value:assignee},
+								  {index:'schedule',value:schedule},
+								  {index:'status',value:status},
+								  {index:'notes',value:notes},
+                                 {index:'hours',value:1},
+                                 {index:'last_updated',value:last_updated}]};
+            update_json(data_json);
+			
+			$(form).readonly();
 		}
 		else
 		{
@@ -477,28 +470,11 @@
 				var assignee=form.elements[1].value;
 				var status=form.elements[4].value;
 				var data_id=form.elements[5].value;
-				var data_xml="<appointments>" +
-							"<id>"+data_id+"</id>" +
-							"<customer>"+name+"</customer>" +
-							"<assignee>"+assignee+"</assignee>" +
-							"<status>"+status+"</status>" +
-							"</appointments>";	
-				var activity_xml="<activity>" +
-							"<data_id>"+data_id+"</data_id>" +
-							"<tablename>appointments</tablename>" +
-							"<link_to>form89</link_to>" +
-							"<title>Deleted</title>" +
-							"<notes>Appointment with "+name+" assigned to "+assignee+"</notes>" +
-							"<updated_by>"+get_name()+"</updated_by>" +
-							"</activity>";
-				if(is_online())
-				{
-					server_delete_row(data_xml,activity_xml);
-				}
-				else
-				{
-					local_delete_row(data_xml,activity_xml);
-				}	
+				
+				var data_json={data_store:'appointments',
+ 							data:[{index:'id',value:data_id}]};
+            
+				delete_json(data_json);
 				$(button).parent().parent().remove();
 			});
 		}
@@ -516,42 +492,56 @@
 
 	function form89_import(data_array,import_type)
 	{
-		var data_xml="<appointments>";
+		var data_json={data_store:'appointments',
+				log:'yes',
+				data:[],
+				log_data:{title:'Appointments',link_to:'form89'}};
+
 		var counter=1;
 		var last_updated=get_my_time();
+
 		data_array.forEach(function(row)
 		{
-			if((counter%500)===0)
-			{
-				data_xml+="</appointments><separator></separator><appointments>";
-			}
-					counter+=1;
+			counter+=1;
 			if(import_type=='create_new')
 			{
 				row.id=last_updated+counter;
 			}
 
-			data_xml+="<row>" +
-					"<id>"+row.id+"</id>" +
-					"<customer>"+row.customer+"</customer>" +
-					"<schedule>"+row.schedule+"</schedule>" +
-					"<status>"+row.status+"</status>" +
-					"<assignee>"+row.assignee+"</assignee>" +
-					"<hours>"+row.hours+"</hours>" +
-					"<notes>"+row.notes+"</notes>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</row>";
+			var data_json_array=[{index:'id',value:row.id},
+					{index:'customer',value:row.customer},
+					{index:'schedule',value:row.schedule},
+					{index:'assignee',value:row.assignee},
+					{index:'status',value:row.status},
+					{index:'hours',value:row.hours},
+					{index:'notes',value:row.notes},			 
+					{index:'last_updated',value:last_updated}];
+
+			data_json.data.push(data_json_array);
 		});
 
-		data_xml+="</appointments>";
 		if(import_type=='create_new')
 		{
-			create_batch(data_xml);
+			if(is_create_access('form89'))
+			{
+				create_batch_json(data_json);
+			}
+			else
+			{
+				$("#modal2_link").click();
+			}
 		}
 		else
 		{
-			update_batch(data_xml);
-		}		
+			if(is_update_access('form89'))
+			{
+				update_batch_json(data_json);
+			}
+			else
+			{
+				$("#modal2_link").click();
+			}
+		}
 	};
 	
 	</script>
