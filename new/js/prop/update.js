@@ -3078,62 +3078,6 @@ function form88_update_item(form)
 	}
 }
 
-/**
- * @form Appointments
- * @param button
- */
-function form89_update_item(form)
-{
-	if(is_update_access('form89'))
-	{
-		var name=form.elements[0].value;
-		var assignee=form.elements[1].value;
-		var schedule=get_raw_time(form.elements[2].value);
-		var notes=form.elements[3].value;
-		var status=form.elements[4].value;
-		var data_id=form.elements[5].value;
-		var last_updated=get_my_time();
-		var data_xml="<appointments>" +
-					"<id>"+data_id+"</id>" +
-					"<customer>"+name+"</customer>" +
-					"<assignee>"+assignee+"</assignee>" +
-					"<schedule>"+schedule+"</schedule>" +
-					"<status>"+status+"</status>" +
-					"<notes>"+notes+"</notes>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</appointments>";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>appointments</tablename>" +
-					"<link_to>form89</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Appointment with "+name+" assigned to "+assignee+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
-		
-		var message_string=name+" appointment with "+assignee+" @"+form.elements[2].value+"\nNotes:"+result.notes;
-		message_string=encodeURIComponent(message_string);
-		$("#form89_whatsapp_"+data_id).attr('href',"whatsapp://send?text="+message_string);
-		$("#form89_whatsapp_"+data_id).show();
-
-		for(var i=0;i<5;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Create Bill(multiple registers)

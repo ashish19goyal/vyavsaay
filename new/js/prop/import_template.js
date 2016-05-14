@@ -327,17 +327,6 @@ function form88_import_template()
 	my_array_to_csv(data_array);
 };
 
-/**
-* @form Appointments
-* @formNo 89
-* @table appointments
-*/
-function form89_import_template()
-{
-	var data_array=['id','customer','schedule','status','assignee','hours','notes'];
-	my_array_to_csv(data_array);
-};
-
 
 /**
 * @form Create bills(multiple registers)

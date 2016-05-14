@@ -235,7 +235,7 @@
 
             var awb_num=form.elements[0].value;
             var pieces=form.elements[1].value;
-            var status='recieved';
+            var status='received';
             var id=form.elements[5].value;
             var last_updated=get_my_time();
 

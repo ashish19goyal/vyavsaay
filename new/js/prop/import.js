@@ -1511,50 +1511,6 @@ function form88_import(data_array,import_type)
 	}
 };
 
-/**
-* @form Appointments
-* @formNo 89
-*/
-function form89_import(data_array,import_type)
-{
-	var data_xml="<appointments>";
-	var counter=1;
-	var last_updated=get_my_time();
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</appointments><separator></separator><appointments>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<customer>"+row.customer+"</customer>" +
-				"<schedule>"+row.schedule+"</schedule>" +
-				"<status>"+row.status+"</status>" +
-				"<assignee>"+row.assignee+"</assignee>" +
-				"<hours>"+row.hours+"</hours>" +
-				"<notes>"+row.notes+"</notes>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	
-	data_xml+="</appointments>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-	}		
-};
-
 
 /**
 * @form Create Bills(multiple register)

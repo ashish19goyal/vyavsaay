@@ -1792,60 +1792,6 @@ function form88_header_ini()
 
 };
 
-/**
- * @form Appointments
- * @formNo 89
- */
-function form89_header_ini()
-{
-	$("#form89_body").parent().hide();
-	$("#form89_calendar").show();
-	$('#form89_calendar').fullCalendar('destroy');
-
-	///initializing calendar
-	
-	///calendar set
-	var filter_fields=document.getElementById('form89_header');
-	var customer_filter=filter_fields.elements[0];
-	var assignee_filter=filter_fields.elements[1];
-	var status_filter=filter_fields.elements[2];
-	
-	var staff_data="<staff>" +
-			"<acc_name></acc_name>" +
-			"</staff>";
-	var customer_data="<customers>" +
-			"<name></name>" +
-			"</customers>";
-	
-	set_my_filter(customer_data,customer_filter);	
-	set_my_filter(staff_data,assignee_filter);
-	set_static_filter('appointments','status',status_filter);
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form89_ini();
-	});
-
-	var prev_element=document.getElementById('form89_prev');
-	var next_element=document.getElementById('form89_next');
-	
-	$(next_element).hide();
-	$(prev_element).hide();	
-	
-};
-
-/**
- * @form Appointments
- * @formNo 89
- */
-function form89_switch_view()
-{
-	//form89_ini();
-	$("#form89_body").parent().toggle();
-	$("#form89_calendar").toggle();
-}
 
 /**
  * @form Create Bill(multiple registers)
