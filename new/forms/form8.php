@@ -160,9 +160,8 @@
 						}
 					});
 					
-					var docs=new Object();
-					docs.data_store='documents';
-					docs.indexes=[{index:'id'},{index:'url'},{index:'doc_type',exact:'staff'},{index:'doc_name',exact:'image'},{index:'target_id',exact:result.id}];		
+					var docs={data_store:'documents',
+							indexes:[{index:'id'},{index:'url'},{index:'doc_type',exact:'staff'},{index:'doc_name',exact:'image'},{index:'target_id',exact:result.id}]};		
 					read_json_rows('',docs,function(pics)
 					{
 						if(pics.length>0)

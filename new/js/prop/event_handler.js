@@ -343,12 +343,23 @@ function set_user_name()
 {
 	var name=get_session_var('name');
     var acc_name=get_session_var('acc_name');
+    var user_id=get_session_var('user_id');
     
 	$('.username').html(name);
     $('#user_profile_nav').on('click',function()
     {
         show_object('staff',acc_name);
     });
+	
+	var docs={data_store:'documents',return_column:'url',
+			indexes:[{index:'doc_type',exact:'staff'},{index:'doc_name',exact:'image'},{index:'target_id',exact:user_id}]};		
+	read_json_single_column(docs,function(pics)
+	{
+		if(pics.length>0)
+		{
+			$('.profile-image').attr('src',pics[0]);
+		}
+	});
 }
 
 
@@ -701,7 +712,7 @@ function import_data(form_name)
 
 function set_footer_message()
 {
-	var message=get_session_var('footer_message');
-	if(message!="" && message!=null && message!='undefined')
-		document.getElementById('footer_message').innerHTML=get_session_var('footer_message');
+//	var message=get_session_var('footer_message');
+//	if(message!="" && message!=null && message!='undefined')
+//		document.getElementById('footer_message').innerHTML=get_session_var('footer_message');
 }

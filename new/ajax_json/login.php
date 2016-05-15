@@ -146,11 +146,12 @@ use RetailingEssentials\db_connect;
 					
                     
 					//////setting username and name
-					$stmt2=$conn->conn->prepare("select staff.name,staff.acc_name from staff,accounts where accounts.username=? and staff.acc_name=accounts.acc_name union select customers.name,customers.acc_name from customers,accounts where accounts.username=? and customers.acc_name=accounts.acc_name union select suppliers.name,suppliers.acc_name from suppliers,accounts where accounts.username=? and suppliers.acc_name=accounts.acc_name");
+					$stmt2=$conn->conn->prepare("select staff.id,staff.name,staff.acc_name from staff,accounts where accounts.username=? and staff.acc_name=accounts.acc_name union select customers.id,customers.name,customers.acc_name from customers,accounts where accounts.username=? and customers.acc_name=accounts.acc_name union select suppliers.id,suppliers.name,suppliers.acc_name from suppliers,accounts where accounts.username=? and suppliers.acc_name=accounts.acc_name");
 					$stmt2->execute(array($user,$user,$user));
 					$row2=$stmt2->fetch(PDO::FETCH_ASSOC);
 	
 					$response_object['data']['username']=$user;							
+					$response_object['data']['user_id']=$row2['id'];				
 					$response_object['data']['name']=$row2['name'];				
 					$response_object['data']['acc_name']=$row2['acc_name'];				
 	

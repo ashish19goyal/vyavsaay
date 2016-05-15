@@ -206,6 +206,7 @@ function set_session_variables(domain,username,pass,func)
 							if(result21)
 							{
 								data.name=result21.value.name;
+								data.user_id=result21.value.id;
 							}
 							
 							var re='';

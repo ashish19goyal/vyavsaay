@@ -1,6 +1,6 @@
 <li class="dropdown dropdown-user">
     <a href="" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-        <img alt="Profile Image" class="img-circle" src="/new/images/dummy-user.png">
+        <img alt="Profile Image" class="img-circle profile-image" src="/new/images/dummy-user.png">
         <span class="username username-hide-on-mobile"> User </span>
         <i class="fa fa-angle-down"></i>
     </a>

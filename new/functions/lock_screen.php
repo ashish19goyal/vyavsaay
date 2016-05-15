@@ -9,7 +9,8 @@
         <div class="lock-head"> Locked </div>
         <div class="lock-body">
             <div class="pull-left lock-avatar-block">
-                <img src="/new/images/dummy-user.png" class="lock-avatar"> </div>
+				<img src="/new/images/dummy-user.png" class="lock-avatar profile-image">
+			</div>
             <form class="lock-form pull-left" id='lock_form'>
                 <h4 class='username'>User</h4>
                 <div class="form-group">
