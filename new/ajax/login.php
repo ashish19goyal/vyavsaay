@@ -137,12 +137,15 @@ use RetailingEssentials\db_connect;
 				$session_var.="</user_roles>";
 				
 				//////setting username and name
-				$stmt2=$conn->conn->prepare("select staff.name,staff.acc_name from staff,accounts where accounts.username=? and staff.acc_name=accounts.acc_name union select customers.name,customers.acc_name from customers,accounts where accounts.username=? and customers.acc_name=accounts.acc_name union select suppliers.name,suppliers.acc_name from suppliers,accounts where accounts.username=? and suppliers.acc_name=accounts.acc_name");
+				$stmt2=$conn->conn->prepare("select staff.id,staff.name,staff.acc_name from staff,accounts where accounts.username=? and staff.acc_name=accounts.acc_name union select customers.id,customers.name,customers.acc_name from customers,accounts where accounts.username=? and customers.acc_name=accounts.acc_name union select suppliers.id,suppliers.name,suppliers.acc_name from suppliers,accounts where accounts.username=? and suppliers.acc_name=accounts.acc_name");
 				$stmt2->execute(array($user,$user,$user));
 				$row2=$stmt2->fetch(PDO::FETCH_ASSOC);
 				$session_var.="<username>";
 				$session_var.=$user;
 				$session_var.="</username>";
+				$session_var.="<user_id>";
+				$session_var.=$row2['id'];
+				$session_var.="</user_id>";
 				$session_var.="<name>";
 				$session_var.=$row2['name'];
 				$session_var.="</name>";

@@ -406,6 +406,12 @@ function hide_menu_items()
 		$('#sync_icon').hide();
 		$('#offline_icon').show();
 	}
+	else if(offline=='disabled')
+	{
+		$('#online_icon').hide();
+		$('#sync_icon').hide();
+		$('#offline_icon').hide();
+	}
 	else
 	{
 		$('#offline_icon').hide();
