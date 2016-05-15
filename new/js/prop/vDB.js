@@ -11,7 +11,7 @@ var vDB = function (options)
 	
     this.full_backup = function()
     {
-        if(is_create_access('form99') || is_create_access('db_backup'))
+        if(is_create_access('form99') || is_create_object('db_backup'))
         {
             var domain=get_domain();
             var username=get_username();
@@ -49,7 +49,7 @@ var vDB = function (options)
     
     this.config_backup = function()
     {
-        if(is_read_access('form99') || is_read_access('db_backup'))
+        if(is_read_access('form99') || is_read_object('db_backup'))
         {
             var domain=get_domain();
             var username=get_username();
@@ -85,7 +85,7 @@ var vDB = function (options)
     
     this.config_restore = function()
     {
-        if(is_update_access('form99') || is_update_access('db_backup'))
+        if(is_update_access('form99') || is_update_object('db_backup'))
         {
             var domain=get_domain();
             var username=get_username();
