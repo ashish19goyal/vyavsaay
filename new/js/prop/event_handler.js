@@ -400,17 +400,19 @@ function hide_menu_items()
     }
     
 	var offline=get_session_var('offline');
-	if(offline=="online")
-	{
-		$('#online_icon').hide();
-		$('#sync_icon').hide();
-		$('#offline_icon').show();
-	}
-	else if(offline=='disabled')
+	var offline_disabled=get_session_var('offline_disabled');
+
+	if(offline_disabled=='yes')
 	{
 		$('#online_icon').hide();
 		$('#sync_icon').hide();
 		$('#offline_icon').hide();
+	}
+	else if(offline=="online")
+	{
+		$('#online_icon').hide();
+		$('#sync_icon').hide();
+		$('#offline_icon').show();
 	}
 	else
 	{
