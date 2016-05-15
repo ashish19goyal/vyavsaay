@@ -12,8 +12,7 @@ var vGCal = function (options)
 				 action:'listUpcomingEvents'};
 	
 	var settings = $.extend(defaults, options || {});
-		
-
+	
 	/**
 	* Check if current user has authorized this application.
 	*/
@@ -30,10 +29,11 @@ var vGCal = function (options)
 	*
 	* @param {Event} event Button click event.
 	*/
-	this.checkAuth = function (event) {
+	this.checkAuth = function (event) 
+	{
 		gapi.auth.authorize({
-			client_id: settings.client_id, scope: settings.scopes,immediate:false},this.handleAuthResult);
-		return false;
+			client_id: settings.client_id, scope: settings.scopes.join(' '),immediate:false},this.handleAuthResult);
+		//return false;
 	};
 
 	/**
@@ -41,9 +41,11 @@ var vGCal = function (options)
 	*
 	* @param {Object} authResult Authorization result.
 	*/
-	this.handleAuthResult = function (authResult) {
-		if (authResult && !authResult.error) {
-			gapi.client.load('calendar', 'v3', this[settings.action]);
+	this.handleAuthResult = function (authResult) 
+	{
+		if (authResult && !authResult.error) 
+		{
+			gapi.client.load('calendar', 'v3', operations[settings.action]);
 	  	}
   	};
 
@@ -52,7 +54,8 @@ var vGCal = function (options)
 	* the authorized user's calendar. If no events are found an
 	* appropriate message is printed.
 	*/
-	this.listUpcomingEvents = function() {
+	this.listUpcomingEvents = function() 
+	{
 		var request = gapi.client.calendar.events.list({
 			'calendarId': 'primary',
 			'timeMin': (new Date()).toISOString(),
@@ -66,4 +69,7 @@ var vGCal = function (options)
 	  		settings.act(resp);
 		});
 	};
+	
+	var operations={listUpcomingEvents:this.listUpcomingEvents};
+
 };

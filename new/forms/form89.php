@@ -11,7 +11,7 @@
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Sync <i class="fa fa-angle-down"></i></button>
                 <ul class="dropdown-menu pull-right">
                     <li>
-                        <a id='form89_google_sync'><i class='fa fa-google'></i> Google Calendar</a>
+                        <a id='form89_google_sync' onclick=form89_google_sync();><i class='fa fa-google'></i> Google Calendar</a>
                     </li>
                 </ul>
             </div>
@@ -121,9 +121,9 @@
             
             $('#form89_calendar').fullCalendar({
                 header: {
-                    left: 'prev,next',
+                    left: 'prev,next,today',
                     center: 'title',
-                    right: 'today'
+                    right: 'month,agendaWeek,agendaDay'
                 },
                 editable: true,
                 slotEventOverlap:true,
@@ -158,14 +158,14 @@
                             {
                                 color='#f3565d';
                             }
-                            else if(task.status=='completed')
+                            else if(task.status=='closed')
                             {
                                 color='#1bbc9b';
                             }
                             events.push({
                                 title: task.customer,
                                 start:get_iso_time(task.schedule),
-                                end:get_iso_time(parseFloat(task.schedule)+3600*parseFloat(task.hours)),
+                                end:get_iso_time(parseFloat(task.schedule)+3600000*parseFloat(task.hours)),
                                 color: color,
                                 id: task.id,
 								notes: task.notes
@@ -544,5 +544,12 @@
 		}
 	};
 	
+	function form89_google_sync()
+	{
+		var cal_options = {};
+		var cal_object = new vGCal(cal_options);
+		cal_object.checkAuth();
+	}
+
 	</script>
 </div>
