@@ -224,7 +224,7 @@
                                 id_string+=awb.id+",";
                             });
                             awb_string=awb_string.trim();
-                            item_form.elements[3].value=awb_string;
+                            item_form.elements[5].value=awb_string;
                             item_form.elements['awb_ids'].value=id_string;
                         });
                     });
@@ -390,7 +390,7 @@
                                                     id_string+=awb.id+",";
                                                 });
                                                 awb_string=awb_string.trim();
-                                                item_form.elements[3].value=awb_string;
+                                                item_form.elements[5].value=awb_string;
                                                 item_form.elements['awb_ids'].value=id_string;
                                                 form344_create_item(item_form);
                                                 form344_add_item();
@@ -452,7 +452,7 @@
                                                 id_string+=awb.id+",";
                                             });
                                             awb_string=awb_string.trim();
-                                            item_form.elements[3].value=awb_string;
+                                            item_form.elements[5].value=awb_string;
                                             item_form.elements['awb_ids'].value=id_string;
                                             form344_create_item(item_form);
                                             form344_add_item();
