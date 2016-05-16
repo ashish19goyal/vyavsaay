@@ -43,7 +43,7 @@
 				<tr style='color:#9a9a9a;'>
                     <th>S.No.</th>
                     <th>AWB #</th>
-                    <th>Manifest #</th>
+                    <th>Details</th>
 					<th>Pieces</th>
 					<th>Product</th>
 					<th></th>
@@ -170,7 +170,8 @@
                                                   {index:'pieces'},
                                                   {index:'weight'}, 
                                                   {index:'pass_num'},
-                                                  {index:'manifest_num'},
+                                                  {index:'lbh'},
+												  {index:'weight'}, 
                                                   {index:'pass_id',exact:pass_id}]};
 
                 read_json_rows('form336',pass_items_column,function(results)
@@ -185,10 +186,11 @@
                             rowsHTML+="<td data-th='S.No.'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='AWB #'>";
-                                rowsHTML+="<input type='text' readonly='readonly' form='form336_"+id+"' value='"+result.awb_num+"'>";
+							    rowsHTML+="<a onclick=\"element_display('','form198');form198_ini('"+result.awb_num+"');\"><input type='text' readonly='readonly' form='form336_"+id+"' value='"+result.awb_num+"'></a>";
                             rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Manifest #'>";
-                                rowsHTML+="<input type='text' readonly='readonly' form='form336_"+id+"' value='"+result.manifest_num+"'>";
+                            rowsHTML+="<td data-th='Details'>";
+                                rowsHTML+="<input type='text' class='floatlabel' placeholder='LBH' readonly='readonly' form='form336_"+id+"' value='"+result.lbh+"'>";
+                                rowsHTML+="<input type='text' class='floatlabel' placeholder='Weight' readonly='readonly' form='form336_"+id+"' value='"+result.weight+"'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Pieces'>";
                                 rowsHTML+="<input type='number' step='any' readonly='readonly' form='form336_"+id+"' value='"+result.pieces+"'>";
@@ -232,7 +234,8 @@
                                                   {index:'awb_num'},
                                                   {index:'sku'},
                                                   {index:'pieces'},
-                                                  {index:'weight'}, 
+                                                  {index:'weight'},
+												  {index:'lbh'}, 
                                                   {index:'pass_num'},
                                                   {index:'manifest_num',exact:manifest_number}]};
                 read_json_rows('form336',pass_items_column,function(results)
@@ -261,8 +264,9 @@
                                 rowsHTML+="<td data-th='AWB #'>";
                                     rowsHTML+="<input type='text' readonly='readonly' form='form336_"+id+"' value='"+result.awb_num+"'>";
                                 rowsHTML+="</td>";
-                                rowsHTML+="<td data-th='Manifest #'>";
-                                    rowsHTML+="<input type='text' readonly='readonly' form='form336_"+id+"' value='"+result.manifest_num+"'>";
+                                rowsHTML+="<td data-th='Details'>";
+                                    rowsHTML+="<input type='text' class='floatlabel' placeholder='LBH' readonly='readonly' form='form336_"+id+"' value='"+result.lbh+"'>";
+                                    rowsHTML+="<input type='text' class='floatlabel' placeholder='Weight' readonly='readonly' form='form336_"+id+"' value='"+result.weight+"'>";
                                 rowsHTML+="</td>";
                                 rowsHTML+="<td data-th='Pieces'>";
                                     rowsHTML+="<input type='number' step='any' readonly='readonly' form='form336_"+id+"' value='"+result.pieces+"'>";
@@ -539,16 +543,17 @@
                 if(form.elements[0].value!="")
                 {
                     var num_pieces=form.elements[2].value;
-                    if(!vUtil.isBlank(num_pieces))
+                    if(!vUtil.isBlank(num_pieces) && num_pieces!=0)
                         num_orders+=parseInt(num_pieces);
                     else
                         num_orders+=1;
                 }
             
                 new_obj['AWB No']=form.elements[0].value;
-                new_obj['Manifest No']=form.elements[1].value;
-                new_obj['Pieces']=form.elements[2].value;
-                new_obj['Product']=form.elements[3].value;
+                new_obj['LBH']=form.elements[1].value;
+                new_obj['Weight']=form.elements[2].value;
+                new_obj['Pieces']=form.elements[3].value;
+                new_obj['Product']=form.elements[4].value;
                 new_results.push(new_obj);
             });
 
@@ -644,8 +649,9 @@
 
             var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:6%'>S.No.</td>"+
                         "<td style='text-align:left;width:25%'>AWB #</td>"+
-                        "<td style='text-align:left;width:20%'>Manifest #</td>"+
-                        "<td style='text-align:left;width:20%'>Pieces</td>"+
+                        "<td style='text-align:left;width:14%'>LBH</td>"+
+                        "<td style='text-align:left;width:14%'>Weight</td>"+
+                        "<td style='text-align:left;width:14%'>Pieces</td>"+
                         "<td style='text-align:left;width:25%'>Product</td></tr>";
 
             var table_rows=table_header;
@@ -675,7 +681,8 @@
                         "<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[1].value+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[2].value+"</div></td>"+
-                        "<td><div style='text-align:left;'>"+form.elements[3].value+"</div></td></tr>";				
+                        "<td><div style='text-align:left;'>"+form.elements[3].value+"</div></td>"+
+                        "<td><div style='text-align:left;'>"+form.elements[4].value+"</div></td></tr>";				
             });
             new_table.innerHTML=table_rows;
             /////////////placing the containers //////////////////////////////////////////////////////	

@@ -25,40 +25,41 @@
                 <div class='panel-body'>
                     <form id='form198_master' autocomplete="off">
                         <input type='hidden' name='id'>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Order #</div><div class='col-md-8 col-sm-8'><input type='text' name='order_num'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Channel</div><div class='col-md-8 col-sm-8'><input type='text' name='channel_name'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Type</div><div class='col-md-8 col-sm-8'><input type='text' name='type'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Manifest Type</div><div class='col-md-8 col-sm-8'><input type='text' name='manifest_type'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Manifest Id</div><div class='col-md-8 col-sm-8'><input type='text' name='manifest_id'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Customer Name</div><div class='col-md-8 col-sm-8'><input type='text' name='merchant_name'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Consignee</div><div class='col-md-8 col-sm-8'><input type='text' name='ship_to'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Address 1</div><div class='col-md-8 col-sm-8'><textarea name='address1'></textarea></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Address 2</div><div class='col-md-8 col-sm-8'><textarea name='address2'></textarea></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Destination City</div><div class='col-md-8 col-sm-8'><input type='text' name='city'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>State</div><div class='col-md-8 col-sm-8'><input type='text' name='state'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Pincode</div><div class='col-md-8 col-sm-8'><input type='text' name='pincode'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Phone</div><div class='col-md-8 col-sm-8'><input type='text' name='phone'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Telephone</div><div class='col-md-8 col-sm-8'><input type='text' name='telephone'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Weight</div><div class='col-md-8 col-sm-8'><input type='text' name='weight'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Volumetric Weight</div><div class='col-md-8 col-sm-8'><input type='text' name='vol_weight'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Declared Value</div><div class='col-md-8 col-sm-8'><input type='text' name='d_value'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Collectable Value</div><div class='col-md-8 col-sm-8'><input type='text' name='c_value'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Volumetric Weight</div><div class='col-md-8 col-sm-8'><input type='text' name='vol_weight'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Volumetric Weight</div><div class='col-md-8 col-sm-8'><input type='text' name='vol_weight'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Vendor Name</div><div class='col-md-8 col-sm-8'><textarea name='shipper_name'></textarea></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Return Address 1</div><div class='col-md-8 col-sm-8'><textarea name='r_address1'></textarea></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Return Address 2</div><div class='col-md-8 col-sm-8'><textarea name='r_address2'></textarea></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Return Address 3</div><div class='col-md-8 col-sm-8'><textarea name='r_address3'></textarea></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Return Pincode</div><div class='col-md-8 col-sm-8'><input type='text' name='rpincode'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>LBH</div><div class='col-md-8 col-sm-8'><input type='text' name='lbh'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Import Date</div><div class='col-md-8 col-sm-8'><input type='text' name='ddate'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Product Name</div><div class='col-md-8 col-sm-8'><input type='text' name='product_name'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Status</div><div class='col-md-8 col-sm-8'><input type='text' name='status'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Delivery Person</div><div class='col-md-8 col-sm-8'><input type='text' name='delivery_person'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Branch</div><div class='col-md-8 col-sm-8'><input type='text' name='branch'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Received By</div><div class='col-md-8 col-sm-8'><input type='text' name='received_by'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Received By (Phone)</div><div class='col-md-8 col-sm-8'><input type='text' name='received_by_phone'></div></div>
-                        <div class='row'><div class='col-md-4 col-sm-4'>Signature</div><div class='col-md-8 col-sm-8'><div id='form198_canvas_div'></div></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Order #</span></div><div class='col-md-8 col-sm-8'><input type='text' name='order_num'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Channel</span></div><div class='col-md-8 col-sm-8'><input type='text' name='channel_name'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Type</span></div><div class='col-md-8 col-sm-8'><input type='text' name='type'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Manifest Type</span></div><div class='col-md-8 col-sm-8'><input type='text' name='manifest_type'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Manifest Id</span></div><div class='col-md-8 col-sm-8'><input type='text' name='manifest_id'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Customer Name</span></div><div class='col-md-8 col-sm-8'><input type='text' name='merchant_name'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Consignee</span></div><div class='col-md-8 col-sm-8'><input type='text' name='ship_to'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Address 1</span></div><div class='col-md-8 col-sm-8'><textarea name='address1'></textarea></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Address 2</span></div><div class='col-md-8 col-sm-8'><textarea name='address2'></textarea></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Destination City</span></div><div class='col-md-8 col-sm-8'><input type='text' name='city'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>State</span></div><div class='col-md-8 col-sm-8'><input type='text' name='state'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Pincode</span></div><div class='col-md-8 col-sm-8'><input type='text' name='pincode'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Phone</span></div><div class='col-md-8 col-sm-8'><input type='text' name='phone'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Telephone</span></div><div class='col-md-8 col-sm-8'><input type='text' name='telephone'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Weight</span></div><div class='col-md-8 col-sm-8'><input type='text' name='weight'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Volumetric Weight</span></div><div class='col-md-8 col-sm-8'><input type='text' name='vol_weight'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Declared Value</span></div><div class='col-md-8 col-sm-8'><input type='text' name='d_value'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Collectable Value</span></div><div class='col-md-8 col-sm-8'><input type='text' name='c_value'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Vendor Name</span></div><div class='col-md-8 col-sm-8'><textarea name='shipper_name'></textarea></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Return Address 1</span></div><div class='col-md-8 col-sm-8'><textarea name='r_address1'></textarea></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Return Address 2</span></div><div class='col-md-8 col-sm-8'><textarea name='r_address2'></textarea></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Return Address 3</span></div><div class='col-md-8 col-sm-8'><textarea name='r_address3'></textarea></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Return Pincode</span></div><div class='col-md-8 col-sm-8'><input type='text' name='rpincode'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>LBH</span></div><div class='col-md-8 col-sm-8'><input type='text' name='lbh'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Import Date</span></div><div class='col-md-8 col-sm-8'><input type='text' name='ddate'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Product Name</span></div><div class='col-md-8 col-sm-8'><input type='text' name='product_name'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Status</span></div><div class='col-md-8 col-sm-8'><input type='text' name='status'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>DRS #</span></div><div class='col-md-8 col-sm-8'><input type='text' name='drs'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>RTO #</span></div><div class='col-md-8 col-sm-8'><input type='text' name='rto'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Manifest #</span></div><div class='col-md-8 col-sm-8'><input type='text' name='manifest_num'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Delivery Person</span></div><div class='col-md-8 col-sm-8'><input type='text' name='delivery_person'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Branch</span></div><div class='col-md-8 col-sm-8'><input type='text' name='branch'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Received By</span></div><div class='col-md-8 col-sm-8'><input type='text' name='received_by'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Received By (Phone)</span></div><div class='col-md-8 col-sm-8'><input type='text' name='received_by_phone'></div></div>
+						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Signature</span></div><div class='col-md-8 col-sm-8'><div id='form198_canvas_div'></div></div></div>
                         <div class='row'><div class='col-md-8 col-sm-8 pull-right'><button type='button' class='btn red' name='update' onclick=form198_update_item(); style='width:100%;'>Update</button></div></div>
                     </form>
                 </div>
@@ -89,7 +90,7 @@
         var paginator=$('#form198_table').paginator({visible:false,container:$('#form198_table')});        
     }
 
-    function form198_ini()
+    function form198_ini(awb_num_passed)
     {
         show_loader();
         var fid=$("#form198_link").attr('data_id');
@@ -97,7 +98,11 @@
             fid="";	
 
         var awb_num=document.getElementById('form198_awb');
-        
+		if(typeof awb_num_passed!='undefined')
+		{
+			awb_num.value=awb_num_passed;
+		}
+		
         var new_columns={count:1,
                         data_store:'logistics_orders',
                         indexes:[{index:'id',value:fid},
@@ -123,9 +128,6 @@
                                 {index:'weight'},
                                 {index:'volumetric_weight'},
                                 {index:'lbh'},
-                                {index:'len'},
-                                {index:'breadth'},
-                                {index:'height'},
                                 {index:'shipper_name'},
                                 {index:'return_address1'},
                                 {index:'return_address2'},
@@ -136,12 +138,13 @@
                                 {index:'delivery_person'},
                                 {index:'order_history'},
                                 {index:'drs_num'},
+                                {index:'rto_num'},
+                                {index:'manifest_num'},
                                 {index:'branch'},
                                 {index:'received_by'},
                                 {index:'received_by_phone'},
                                 {index:'received_by_sign'},
                                 {index:'status'}]};		
-
         read_json_rows('form198',new_columns,function(results)
         {
             results.forEach(function(result)
@@ -189,16 +192,13 @@
                 form.elements['r_address2'].value=result.return_address2;
                 form.elements['r_address3'].value=result.return_address3;
                 form.elements['rpincode'].value=result.return_pincode;
-                if(result.lbh=="")
-                {
-                    form.elements['lbh'].value=result.len+"*"+result.breadth+"*"+result.height;
-                }				
-                else {				
-                    form.elements['lbh'].value=result.lbh;
-                }				
+                form.elements['lbh'].value=result.lbh;
                 form.elements['ddate'].value=get_my_past_date(result.import_date);
                 form.elements['product_name'].value=result.sku;
                 form.elements['status'].value=result.status;
+                form.elements['drs'].value=result.drs_num;
+                form.elements['rto'].value=result.rto_num;
+                form.elements['manifest_num'].value=result.manifest_num;
                 form.elements['delivery_person'].value=result.delivery_person;
                 form.elements['branch'].value=result.branch;
                 form.elements['received_by'].value=result.received_by;

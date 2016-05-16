@@ -129,7 +129,7 @@
                 rowsHTML+="<tr>";
                 rowsHTML+="<form id='report76_"+item.id+"'></form>";
                 rowsHTML+="<td data-th='AWB #'>";
-                    rowsHTML+=item.awb_num;
+				    rowsHTML+="<a onclick=\"element_display('','form198');form198_ini('"+item.awb_num+"');\">"+item.awb_num+"</a>";
                 rowsHTML+="</td>";
                 rowsHTML+="<td data-th='Manifest Id'>";
                     rowsHTML+=item.manifest_id;

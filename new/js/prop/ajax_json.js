@@ -39,7 +39,7 @@ function ajax_json(url,kvp,func)
 		},
 		success: function(return_data,return_status,e)
 		{
-            var response_object={status:'error',rows:[],count:0};
+			var response_object={status:'error',rows:[],count:0};
             try 
             {
                 response_object=JSON.parse(e.responseText);    
@@ -123,11 +123,10 @@ function server_read_json_rows(columns,callback,results)
 	{
 		columns.count=columns.batch_size;
 	}
-
+            
 	var string_columns=JSON.stringify(columns);
 	ajax_json(server_root+"/ajax_json/get_limited_rows.php",{domain:domain,username:username,re:re_access,data:string_columns},function(response_object)
 	{
-		//console.log('server_read_json_rows returned');
 		results=results.concat(response_object.rows);
 		if(response_object.count<columns.count || (typeof columns.batch_size=='undefined'))
 		{

@@ -44,6 +44,7 @@
                     <th>S.No.</th>
                     <th>Seal #</th>
 					<th>Manifest #</th>
+					<th>Details</th>
 					<th>Pieces</th>
 					<th>AWBs</th>
 					<th></th>
@@ -164,6 +165,8 @@
                                                   {index:'seal_num'},
                                                   {index:'num_orders'},
                                                   {index:'pass_num'},
+                                                  {index:'lbh'},
+                                                  {index:'weight'},
                                                   {index:'pass_id',exact:pass_id}]};
 
                 read_json_rows('form344',pass_items_column,function(results)
@@ -180,6 +183,10 @@
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Manifest #'>";
                                 rowsHTML+="<a onclick=\"element_display('"+result.id+"','form321');\"><input type='text' readonly='readonly' form='form344_"+id+"' value='"+result.pass_num+"'></a>";
+                            rowsHTML+="</td>";
+                            rowsHTML+="<td data-th='Details'>";
+                                rowsHTML+="<input type='text' class='floatlabel' placeholder='LBH' readonly='readonly' form='form344_"+id+"' value='"+result.lbh+"'>";
+                                rowsHTML+="<input type='text' class='floatlabel' placeholder='Weight' readonly='readonly' form='form344_"+id+"' value='"+result.weight+"'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Pieces'>";
                                 rowsHTML+="<input type='number' step='any' readonly='readonly' form='form344_"+id+"' value='"+result.num_orders+"'>";
@@ -245,6 +252,10 @@
                     rowsHTML+="<td data-th='Manifest #'>";
                         rowsHTML+="<input type='text' readonly='readonly' form='form344_"+id+"'>";
                     rowsHTML+="</td>";
+                    rowsHTML+="<td data-th='Details'>";
+                        rowsHTML+="<input type='text' class='floatlabel' placeholder='LBH' readonly='readonly' form='form344_"+id+"'>";
+                        rowsHTML+="<input type='text' class='floatlabel' placeholder='Weight' readonly='readonly' form='form344_"+id+"'>";
+                    rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Pieces'>";
                         rowsHTML+="<input type='number' readonly='readonly' form='form344_"+id+"'>";
                     rowsHTML+="</td>";
@@ -264,8 +275,10 @@
                 var item_form=document.getElementById('form344_'+id);
                 var seal_filter=item_form.elements[0];
                 var manifest_filter=item_form.elements[1];
-                var pieces_filter=item_form.elements[2];
-                var awbs_filter=item_form.elements[3];
+                var lbh_filter=item_form.elements[2];
+                var weight_filter=item_form.elements[3];
+                var pieces_filter=item_form.elements[4];
+                var awbs_filter=item_form.elements[5];
                 var id_filter=item_form.elements['id'];
                 var save_button=item_form.elements['save'];
                 
@@ -350,6 +363,8 @@
                                     var orders_data={data_store:'manifests',count:1,
                                             indexes:[{index:'id'},
                                                     {index:'manifest_num'},
+                                                    {index:'lbh'},
+                                                    {index:'weight'},
                                                     {index:'seal_num',exact:seal_filter.value},
                                                     {index:'num_orders'},
                                                     {index:'type',exact:'bag'}]};
@@ -360,6 +375,8 @@
                                         {
                                             manifest_filter.value=orders[0].manifest_num;
                                             pieces_filter.value=orders[0].num_orders;
+                                            lbh_filter.value=orders[0].lbh;
+                                            weight_filter.value=orders[0].weight;
                                             id_filter.value=orders[0].id;
                                             var awbs_data={data_store:'logistics_orders',
                                                           indexes:[{index:'id'},{index:'awb_num'},{index:'man_id',exact:id_filter.value}]};
@@ -383,6 +400,8 @@
                                         {
                                             manifest_filter.value="";
                                             pieces_filter.value="";
+                                            lbh_filter.value="";
+                                            weight_filter.value="";
                                             awbs_filter.value="";
                                             id_filter.value="";
                                             seal_filter.value="";
@@ -406,6 +425,8 @@
                                 var orders_data={data_store:'manifests',count:1,
                                             indexes:[{index:'id'},
                                                     {index:'manifest_num'},
+													{index:'lbh'},
+													{index:'weight'}, 
                                                     {index:'seal_num',exact:seal_filter.value},
                                                     {index:'num_orders'},
                                                     {index:'type',exact:'bag'}]};
@@ -416,6 +437,8 @@
                                     {
                                         manifest_filter.value=orders[0].manifest_num;
                                         pieces_filter.value=orders[0].num_orders;
+                                        lbh_filter.value=orders[0].lbh;
+                                        weight_filter.value=orders[0].weight;
                                         id_filter.value=orders[0].id;
                                         var awbs_data={data_store:'logistics_orders',
                                                           indexes:[{index:'id'},{index:'awb_num'},{index:'man_id',exact:id_filter.value}]};
@@ -439,6 +462,8 @@
                                     {
                                         manifest_filter.value="";
                                         pieces_filter.value="";
+                                        lbh_filter.value="";
+                                        weight_filter.value="";
                                         awbs_filter.value="";
                                         id_filter.value="";
                                         seal_filter.value="";
@@ -745,12 +770,14 @@
                 var form=$(this)[0];
                 new_obj['Seal No']=form.elements[0].value;
                 new_obj['Manifest No']=form.elements[1].value;
-                new_obj['Pieces']=form.elements[2].value;
-                new_obj['AWBs']=form.elements[3].value;
+                new_obj['LBH']=form.elements[2].value;
+                new_obj['Weight']=form.elements[3].value;
+                new_obj['Pieces']=form.elements[4].value;
+                new_obj['AWBs']=form.elements[5].value;
                 new_results.push(new_obj);
                 
-                var num_pieces=form.elements[2].value;
-                if(!vUtil.isBlank(num_pieces))
+                var num_pieces=form.elements[4].value;
+                if(!vUtil.isBlank(num_pieces) && num_pieces!=0)
                     num_orders+=parseInt(num_pieces);
                 else
                     num_orders+=1;
@@ -843,8 +870,10 @@
             new_table.setAttribute('class','printing_tables');
 
             var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:5%'>S.No.</td>"+
-                        "<td style='text-align:left;width:30%'>Seal #</td>"+
-                        "<td style='text-align:left;width:20%'>Manifest #</td>"+
+                        "<td style='text-align:left;width:25%'>Seal #</td>"+
+                        "<td style='text-align:left;width:10%'>Manifest #</td>"+
+                        "<td style='text-align:left;width:10%'>LBH</td>"+
+                        "<td style='text-align:left;width:10%'>Weight</td>"+
                         "<td style='text-align:left;width:10%'>Pieces</td>"+
                         "<td style='text-align:left;width:30%'>AWBs</td></tr>";
 
@@ -875,7 +904,9 @@
                         "<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[1].value+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[2].value+"</div></td>"+
-                        "<td><div style='text-align:left;'>"+form.elements[3].value+"</div></td></tr>";				
+                        "<td><div style='text-align:left;'>"+form.elements[3].value+"</div></td>"+
+                        "<td><div style='text-align:left;'>"+form.elements[4].value+"</div></td>"+
+                        "<td><div style='text-align:left;'>"+form.elements[5].value+"</div></td></tr>";				
             });
             new_table.innerHTML=table_rows;
             /////////////placing the containers //////////////////////////////////////////////////////	

@@ -242,7 +242,7 @@
                             rowsHTML+="<td data-th='S.No.'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='AWB #'>";
-                                rowsHTML+="<input type='text' readonly='readonly' form='form321_"+id+"' value='"+result.awb_num+"'>";
+								rowsHTML+="<a onclick=\"element_display('','form198');form198_ini('"+result.awb_num+"');\"><input type='text' readonly='readonly' form='form321_"+id+"' value='"+result.awb_num+"'></a>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Consignment #'>";
                                 rowsHTML+="<input type='text' readonly='readonly' form='form321_"+id+"' value='"+result.consignment_num+"'>";
@@ -864,7 +864,7 @@
                 if(form.elements[0].value!="")
                 {
                     var num_pieces=form.elements[6].value;
-                    if(!vUtil.isBlank(num_pieces))
+                    if(!vUtil.isBlank(num_pieces) && num_pieces!=0)
                         num_orders+=parseInt(num_pieces);			
                     else
                         num_orders+=1;

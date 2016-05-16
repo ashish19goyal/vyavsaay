@@ -10616,7 +10616,7 @@ function modal148_action()
     	var reader = new FileReader();
         reader.onload = function(e)
         {
-        	progress_value=2;
+			progress_value=2;
         	var content=reader.result;
         	var data_array=vUtil.csv2array(content);
 			
@@ -10630,7 +10630,7 @@ function modal148_action()
 			
 			var error_array=validate_import_array(data_array,validate_template_array);
 			//var error_array=new Object();
-			//error_array.status='success';			
+			//error_array.status='success';
 			if(error_array.status=='success')
 			{
 	        	progress_value=10;
@@ -10646,9 +10646,13 @@ function modal148_action()
 					awb_id_array.push(data_array[i].awb);
 				}
 	
-				var order_id_xml={data_store:'logistics_orders',indexes:[{index:'id'},{index:'order_history'},{index:'awb_num',array:awb_id_array}]};
+				var order_id_xml={data_store:'logistics_orders',
+								  indexes:[{index:'id'},
+										   {index:'order_history'},
+										   {index:'awb_num',array:awb_id_array}]};
 				read_json_rows('',order_id_xml,function (order_ids) 
 				{
+					console.log(order_ids);
 					for (var k=0;k<data_array.length;k++)
 					{
 						for(var l=0;l<order_ids.length;l++)
@@ -10695,16 +10699,8 @@ function modal148_action()
                             data:[],
                             log_data:{title:'Updated orders status',link_to:'form288'}};
 
-                    var counter=1;
-                    
-                    data_array.forEach(function(row)
+                    order_array.forEach(function(row)
                     {
-                        counter+=1;
-                        if(import_type=='create_new')
-                        {
-                            row.id=last_updated+counter;
-                        }
-
                         var data_json_array=[{index:'id',value:row.id},
                                 {index:'status',value:row.status},
                                 {index:'received_by',value:row.received_by},
@@ -10712,9 +10708,8 @@ function modal148_action()
                                 {index:'last_updated',value:last_updated}];
 
                         data_json.data.push(data_json_array);
-                    });
-
-                    update_batch_json(data_json);				
+					});
+					update_batch_json(data_json);				
 		
 		           	////////////////////
 		        	progress_value=15;
@@ -10736,7 +10731,7 @@ function modal148_action()
 		        			hide_progress();
 		        			selected_file.value="Upload complete";
 		        			$(select_file).val('');
-		        			$(form).finc(".close").click();
+		        			$(form).find(".close").click();
 		        			clearInterval(ajax_complete);
 		        		}
 		        	},1000);
@@ -10749,7 +10744,8 @@ function modal148_action()
        			$(form).find(".close").click();
 				modal164_action(error_array);
 		    }
-        }
+        };
+		
         reader.readAsText(file);    
     });
 	
@@ -10804,8 +10800,7 @@ function modal149_action()
 		var data_array=['SR no','Date','AWB No.','Type','Order No.','Manifest ID','Customer Name','Consignee',
 						'Consignee Address1','Consignee Address2','Destination City',
 						'State','Pincode','Tel. Number','Mobile number','Product name','Weight(K.G.)',
-						'Declared Value','Collectable Value','Volumetric Weight(g)','Length(cms)',
-						'Breadth(cms)','Height(cms)','vendor name','Return Address1','Return Address2','Return Address3',
+						'Declared Value','Collectable Value','Volumetric Weight(g)','LBH','vendor name','Return Address1','Return Address2','Return Address3',
 						'Return Pin','Pieces'];
 		my_array_to_csv(data_array);
 	});
@@ -10846,9 +10841,7 @@ function modal149_action()
 										{column:'Declared Value',regex:new RegExp('^[0-9\. ]+$')},
 										{column:'Collectable Value',regex:new RegExp('^[0-9\. ]+$')},
 										{column:'Volumetric Weight(g)',regex:new RegExp('^[0-9\. ]+$')},
-										{column:'Length(cms)',regex:new RegExp('^[0-9\. ]+$')},
-										{column:'Breadth(cms)',regex:new RegExp('^[0-9\. ]+$')},
-										{column:'Height(cms)',regex:new RegExp('^[0-9\. ]+$')},
+										{column:'LBH',regex:new RegExp('^[0-9\.* ]+$')},
 										{column:'vendor name',required:'yes'},
 										{column:'Return Address1',required:'yes'},
 										{column:'Return Address2'},
@@ -10916,9 +10909,7 @@ function modal149_action()
 			                {index:'return_address2',value:row['Return Address2']},
 			                {index:'return_address3',value:row['Return Address3']},
 			                {index:'return_pincode',value:row['Return Address1']},
-			                {index:'len',value:row['Length(cms)']},
-			                {index:'breadth',value:row['Breadth(cms)']},
-			                {index:'height',value:row['Height(cms)']},
+			                {index:'lbh',value:row['LBH']},
 			                {index:'sku',value:row['Product name']},
 			                {index:'pieces',value:row['Pieces']},
 			                {index:'order_history',value:order_history_string},

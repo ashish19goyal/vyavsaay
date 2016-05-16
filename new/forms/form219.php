@@ -194,7 +194,7 @@
                         rowsHTML+="<td data-th='S.No.'>";
                         rowsHTML+="</td>";
                         rowsHTML+="<td data-th='AWB #'>";
-                            rowsHTML+="<input type='text' readonly='readonly' form='form219_"+id+"' value='"+result.awb_num+"'>";
+						    rowsHTML+="<a onclick=\"element_display('','form198');form198_ini('"+result.awb_num+"');\"><input type='text' readonly='readonly' form='form219_"+id+"' value='"+result.awb_num+"'></a>";
                         rowsHTML+="</td>";
                         rowsHTML+="<td data-th='Address'>";
                             rowsHTML+="<textarea readonly='readonly' class='floatlabel' placeholder='Address' form='form219_"+id+"'>"+address+"</textarea>";
