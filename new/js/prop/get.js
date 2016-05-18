@@ -464,7 +464,7 @@ function get_tabular_report_data(columns,filename,action_type,func)
                                     container.innerHTML="";
                                 });
                                 break;
-					case 'email': modal183_action(bt+"-"+filename,function (func) 
+					case 'email': modal183_action(bt+" - "+filename,function (func) 
                                 {
                                     print_report_table(results,filename,func);
                                 });
