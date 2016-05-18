@@ -145,7 +145,7 @@
             var data_json={data_store:'inventory_adjust',
  					log:'yes',
  					data:[],
- 					log_data:{title:'Added Inventory',link_to:'form288'}};
+ 					log_data:{title:'Added Inventory',link_to:'form260'}};
 
 			var counter=1;
 			var last_updated=get_my_time();

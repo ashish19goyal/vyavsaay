@@ -15,9 +15,9 @@
 function notifications_ini()
 {
 	show_loader();
-	var columns=new Object();
-	columns.data_store='notifications';
-	columns.indexes=[{index:'id'},
+	var columns={data_store:'notifications',
+				 access:{},
+				indexes:[{index:'id'},
 						{index:'title'},
 						{index:'link_to'},
 						{index:'data_id'},
@@ -25,119 +25,39 @@ function notifications_ini()
 						{index:'t_generated'},
 						{index:'status',exact:'pending'},
 						{index:'target_user'},
-						{index:'last_updated'}];
+						{index:'last_updated'}]};
 	
-	if_data_read_access('notifications',function(accessible_data)
+	read_json_rows('',columns,function(notifs)
 	{	
-		read_json_rows('',columns,function(notifs)
+		var result_html="";
+		notifs.forEach(function(notif)
+		{
+			result_html+="<div class='search-classic'><div class='notification_check'><i class='fa fa-check-square' onclick=notifications_update($(this),'"+notif.id+"','closed');></i></div><div class='notification_detail'><h4><a onclick=element_display('"+notif.data_id+"','"+notif.link_to+"');>"+
+				notif.title+"</a></h4><p>"+notif.notes+"</p></div></div>";
+
+		});
+
+		var columns2={data_store:'notifications',
+					count:20,
+					indexes:[{index:'id'},
+								{index:'title'},
+								{index:'link_to'},
+								{index:'data_id'},
+								{index:'notes'},
+								{index:'t_generated'},
+								{index:'status',exact:'reviewed'},
+								{index:'target_user'},
+								{index:'last_updated'}]};
+
+		read_json_rows('',columns2,function(notifs2)
 		{	
-			var result_html="";
-			
-			notifs.forEach(function(notif)
+			notifs2.forEach(function(notif2)
 			{
-				var read=false;
-				var update=false;
-				for(var x in accessible_data)
-				{
-					if(accessible_data[x].record_id==notif.id || accessible_data[x].record_id=='all')
-					{
-						if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || accessible_data[x].criteria_field=="null" || notif[accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
-						{
-							if(accessible_data[x].access_type=='all')
-							{
-								read=true;
-								update=true;
-								break;
-							}
-							if(accessible_data[x].access_type=='read')
-							{
-								read=true;
-							}
-							if(accessible_data[x].access_type=='update')
-							{
-								update=true;
-							}							
-						}
-					}
-				}
-
-				var found=notif.target_user.indexOf(get_account_name());
-				if(read || found>=0)
-				{
-					if(update || found>=0)
-					{
-						result_html+="<div class='search-classic'><div class='notification_check'><i class='fa fa-check-square' onclick=notifications_update($(this),'"+notif.id+"','closed');></i></div><div class='notification_detail'><h4><a onclick=element_display('"+notif.data_id+"','"+notif.link_to+"');>"+
-							notif.title+"</a></h4><p>"+notif.notes+"</p></div></div>";
-					}
-					else 
-					{
-						result_html+="<div class='search-classic'><div class='notification_check_grey'><i class='fa fa-check-square'></i></div><div class='notification_detail'><h4><a onclick=element_display('"+notif.data_id+"','"+notif.link_to+"');>"+
-							notif.title+"</a></h4><p>"+notif.notes+"</p></div></div>";
-					}
-				}
+				result_html+="<div class='search-classic'><div class='notification_check'><i class='fa fa-check-square' onclick=notifications_update($(this),'"+notif2.id+"','closed');></i></div><div class='notification_detail'><h4><a onclick=element_display('"+notif2.data_id+"','"+notif2.link_to+"');>"+
+				notif2.title+"</a></h4><p>"+notif2.notes+"</p></div></div>";
 			});
-			
-			var columns2=new Object();
-				columns2.data_store='notifications';
-				columns2.count=20;
-				columns2.indexes=[{index:'id'},
-									{index:'title'},
-									{index:'link_to'},
-									{index:'data_id'},
-									{index:'notes'},
-									{index:'t_generated'},
-									{index:'status',exact:'reviewed'},
-									{index:'target_user'},
-									{index:'last_updated'}];
-
-			read_json_rows('',columns2,function(notifs2)
-			{	
-				notifs2.forEach(function(notif2)
-				{
-					var read=false;
-					var update=false;
-					for(var x in accessible_data)
-					{
-						if(accessible_data[x].record_id==notif2.id || accessible_data[x].record_id=='all')
-						{
-							if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || notif2[accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
-							{
-								if(accessible_data[x].access_type=='all')
-								{
-									read=true;
-									update=true;
-									break;
-								}
-								if(accessible_data[x].access_type=='read')
-								{
-									read=true;
-								}
-								if(accessible_data[x].access_type=='update')
-								{
-									update=true;
-								}							
-							}
-						}
-					}
-					
-					var found=notif2.target_user.indexOf(get_account_name());
-					if(read || found>=0)
-					{
-						if(update || found>=0)
-						{
-							result_html+="<div class='search-classic'><div class='notification_check'><i class='fa fa-check-square' onclick=notifications_update($(this),'"+notif2.id+"','closed');></i></div><div class='notification_detail'><h4><a onclick=element_display('"+notif2.data_id+"','"+notif2.link_to+"');>"+
-								notif2.title+"</a></h4><p>"+notif2.notes+"</p></div></div>";
-						}
-						else 
-						{
-							result_html+="<div class='search-classic'><div class='notification_check_grey'><i class='fa fa-check-square'></i></div><div class='notification_detail'><h4><a onclick=element_display('"+notif2.data_id+"','"+notif2.link_to+"');>"+
-								notif2.title+"</a></h4><p>"+notif2.notes+"</p></div></div>";
-						}
-					}
-				});
-				$("#notifications_detail").html(result_html);
-				hide_loader();
-			});
+			$("#notifications_detail").html(result_html);
+			hide_loader();
 		});
 	});
 }

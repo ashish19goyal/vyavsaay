@@ -1497,56 +1497,28 @@ function worker_9()
 */
 function worker_10()
 {
-	var notif_data=new Object();
-		notif_data.data_store='notifications';
-		notif_data.indexes=[{index:'id'},
+	var notif_data={data_store:'notifications',
+					access:{},
+					indexes:[{index:'id'},
 							{index:'target_user'},
-							{index:'status',exact:'pending'}];
+							{index:'status',exact:'pending'}]};
 
-	if_data_read_access('notifications',function(accessible_data)
+	read_json_rows('',notif_data,function(notifs)
 	{
-		read_json_rows('',notif_data,function(notifs)
-		{
-			for(var i=0;i<notifs.length;i++)			
-			{
-				var read=false;
-				for(var x in accessible_data)
-				{
-					if(accessible_data[x].record_id==notifs[i].id || accessible_data[x].record_id=='all')
-					{
-						if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || accessible_data[x].criteria_field=="null" || notifs[i][accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
-						{
-							if(accessible_data[x].access_type=='all' || accessible_data[x].access_type=='read')
-							{
-								read=true;
-								break;
-							}							
-						}
-					}
-				}
-				
-				if(!(read))
-				{
-					notifs.splice(i,1);
-					i--;
-				}
-			}
-			
-			var num_res=notifs.length;
-			if(num_res===0)
-			{	
-				$('#notif_count').html("");
-				$('#notif_count2').html("0");
-				$('#notif_count').hide();
-			}
-			else
-			{	
-				$('#notif_count').html(num_res);
-				$('#notif_count2').html(num_res);
-				$('#notif_count').show(); 
-			}
-		});
-	});	
+		var num_res=notifs.length;
+		if(num_res===0)
+		{	
+			$('#notif_count').html("");
+			$('#notif_count2').html("0");
+			$('#notif_count').hide();
+		}
+		else
+		{	
+			$('#notif_count').html(num_res);
+			$('#notif_count2').html(num_res);
+			$('#notif_count').show(); 
+		}
+	});
 }
 
 /***function limiter***/
@@ -1562,10 +1534,10 @@ function worker_10()
 */
 function worker_11()
 {
-	var columns=new Object();
-	columns.data_store='notifications';
-	columns.count=10;
-	columns.indexes=[{index:'id'},
+	var columns={data_store:'notifications',
+				count:10,
+				 access:{},
+				indexes:[{index:'id'},
 						{index:'title'},
 						{index:'link_to'},
 						{index:'data_id'},
@@ -1573,43 +1545,19 @@ function worker_11()
 						{index:'t_generated'},
 						{index:'status',exact:'pending'},
 						{index:'target_user'},
-						{index:'last_updated'}];
+						{index:'last_updated'}]};
 
-	if_data_read_access('notifications',function(accessible_data)
-	{	
-		read_json_rows('',columns,function(notifs)
+	read_json_rows('',columns,function(notifs)
+	{
+		var result_html="";
+		notifs.forEach(function(notif)
 		{
-			var result_html="";
+			result_html+="<li><a onclick=\"element_display('"+notif.data_id+"','"+notif.link_to+"');\">"+
+						"<span class='time'>"+get_only_time(notif.t_generated)+"</span>"+
+						"<span class='details'><span class='label label-sm label-icon label-info'><i class='fa fa-bullhorn'></i></span>"+notif.title+"</span></a></li>";
 			
-			notifs.forEach(function(notif)
-			{
-				var read=false;
-				var update=false;
-				for(var x in accessible_data)
-				{
-					if(accessible_data[x].record_id==notif.id || accessible_data[x].record_id=='all')
-					{
-						if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || accessible_data[x].criteria_field=="null" || notif[accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
-						{
-							if(accessible_data[x].access_type=='all' || accessible_data[x].access_type=='read')
-							{
-								read=true;
-								break;
-							}
-						}
-					}
-				}
-
-				var found=notif.target_user.indexOf(get_account_name());
-				if(read || found>=0)
-				{
-					result_html+="<li><a onclick=\"element_display('"+notif.data_id+"','"+notif.link_to+"');\">"+
-	                        "<span class='time'>"+get_only_time(notif.t_generated)+"</span>"+
-	                        "<span class='details'><span class='label label-sm label-icon label-info'><i class='fa fa-bullhorn'></i></span>"+notif.title+"</span></a></li>";
-				}
-			});
-			$("#topbar_notifications").html(result_html);
 		});
+		$("#topbar_notifications").html(result_html);
 	});
 }
 
@@ -1626,10 +1574,9 @@ function worker_11()
 */
 function worker_12()
 {
-	var sync_data=new Object();
-		sync_data.data_store='activities';
-		sync_data.return_column='id';
-		sync_data.indexes=[{index:'status',exact:'unsynced'}];
+	var sync_data={data_store:'activities',
+					return_column:'id',
+					indexes:[{index:'status',exact:'unsynced'}]};
 
 	read_json_count(sync_data,function(sync_count)
 	{
@@ -1661,16 +1608,15 @@ function worker_12()
 */
 function worker_13()
 {
-	var columns=new Object();
-	columns.data_store='activities';
-	columns.count=10;
-	columns.indexes=[{index:'id'},
+	var columns={data_store:'activities',
+				count:10,
+				indexes:[{index:'id'},
 						{index:'title'},
 						{index:'notes'},
 						{index:'link_to'},
 						{index:'data_id'},
 						{index:'user_display',exact:'yes'},
-						{index:'last_updated'}];
+						{index:'last_updated'}]};
 
 	read_json_rows('',columns,function(activities)
 	{
@@ -1687,6 +1633,9 @@ function worker_13()
 				case 'Created':icon="fa-plus";
 							btn_color="label-success";
 							break;
+				case 'Generated':icon="fa-plus";
+							btn_color="label-success";
+							break;
 				case 'Deleted':icon="fa-trash-o";
 							btn_color="label-danger";
 							break;
@@ -1699,13 +1648,16 @@ function worker_13()
 				case 'Exported':icon="fa-share";
 							btn_color="label-primary";
 							break;
+				case 'Imported':icon="fa-upload";
+							btn_color="label-danger";
+							break;
 				case 'Data Import':icon="fa-upload";
 							btn_color="label-danger";
 							break;
 			};
 			result_html+="<li><a onclick=element_display('"+activity.data_id+"','"+activity.link_to+"');>"+
                         "<span class='time'>"+get_only_time(activity.last_updated)+"</span>"+
-                        "<span class='details'><span class='label label-sm label-icon "+btn_color+"'><i class='fa "+icon+"'></i></span>"+activity.notes+"</span></a></li>";
+                        "<span class='details'><span class='label label-sm label-icon "+btn_color+"'><i class='fa "+icon+"' title='"+activity.title+"'></i></span>"+activity.notes+"</span></a></li>";
 			
 		});
 		$("#topbar_logs").html(result_html);
