@@ -4,7 +4,6 @@ session_start();
 include_once "../Classes/db.php";
 use RetailingEssentials\db_connect;
 
-
 	$domain=$_POST['domain'];
 	$pass=$_POST['pass'];
 	$user=$_POST['user'];
@@ -172,14 +171,14 @@ use RetailingEssentials\db_connect;
 					
 					$_SESSION['forms']=$forms;
 					$_SESSION['reports']=$reports;
-	
+
 					$_SESSION['re']=$read_access;
 					$_SESSION['cr']=$create_access;
 					$_SESSION['up']=$update_access;
 					$_SESSION['del']=$del_access;
-					$_SESSION['name']=$row2['name'];
+					$_SESSION['name']=$row2['name'];	
 				}
-			}		
+			}
 		}
 		else 
 		{

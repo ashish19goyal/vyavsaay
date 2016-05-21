@@ -153,9 +153,11 @@ use RetailingEssentials\db_connect;
 				$session_var.=$row2['acc_name'];
 				$session_var.="</acc_name>";
 
+				
 				$session_var.="</session>";
 				$status=$session_var;
 				$_SESSION['name']=$row2['name'];
+				
 			}
 		}
 	}

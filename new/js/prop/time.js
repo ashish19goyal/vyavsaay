@@ -307,6 +307,32 @@ function get_iso_time(raw_time)
 	return time;
 }
 
+function get_iso_time_tz(raw_time)
+{
+	var d= new Date(parseInt(raw_time));
+	var year = d.getFullYear();
+	var month =d.getMonth()+1;
+	if (month < 10) {
+	    month = "0" + month;
+	}
+	var date = d.getDate();
+	if (date < 10) {
+	    date = "0" + date;
+	}
+	var hr = d.getHours();
+	if(hr<10)
+		hr="0"+hr;
+	var min = d.getMinutes();
+	if(min<10)
+		min="0"+min;
+	var seconds=d.getSeconds();
+	if(seconds<10)
+		seconds="0"+seconds;
+		
+	var time=year+"-"+month+"-"+date+"T"+hr+":"+min+":"+seconds;
+	return time;
+}
+
 
 function get_my_date_from_iso(iso_date)
 {

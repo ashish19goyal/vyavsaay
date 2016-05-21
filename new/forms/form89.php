@@ -546,9 +546,35 @@
 	
 	function form89_google_sync()
 	{
-		var cal_options = {};
-		var cal_object = new vGCal(cal_options);
-		cal_object.checkAuth();
+		if(is_online())
+		{
+			show_loader();
+			var columns={data_store:'appointments',
+                         access:{},
+                         indexes:[{index:'id'},
+                                   {index:'customer'},
+                                   {index:'schedule',lowerbound:(get_my_time()-30*24*3600*1000)},
+                                   {index:'assignee',value:get_account_name()},
+                                   {index:'status',array:['pending','closed']},
+                                   {index:'hours'},
+                                   {index:'notes'}]};
+           read_json_rows('form89',columns,function(appointments)
+			{
+			   appointments.forEach(function(app)
+				{
+				   app.title = app.customer;
+                   app.start = app.schedule;
+                   app.end = parseFloat(app.schedule)+3600000*parseFloat(app.hours);
+			   });
+				var cal_options = {act:function(){hide_loader();},action:'batchEvents',calendarId:'appointments',calendarName:'Appointments',link:'https://vyavsaay.com/new/form89/',events:appointments};
+				var cal_object = new vGCal(cal_options);
+				cal_object.checkAuth();
+		   });
+		}
+		else
+		{
+			$('#modal96_link').click();
+		}
 	}
 
 	</script>
