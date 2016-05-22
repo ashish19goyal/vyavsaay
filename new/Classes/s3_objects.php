@@ -19,8 +19,13 @@ class s3_object
     
     public function __construct($domain='vyavsaay',$bucket='vyavsaay-newsletter')
 	{
-        $fr=new file_reader($_SERVER['DOCUMENT_ROOT']."/../Config/config.prop");
-        
+		$root_folder="../../";
+		if(isset($_SERVER['DOCUMENT_ROOT']) && $_SERVER['DOCUMENT_ROOT']!="")
+		{
+			$root_folder=$_SERVER['DOCUMENT_ROOT']."/";
+		}
+		$fr=new file_reader($root_folder."../Config/config.prop");		
+
         $this->bucketName=$bucket;
 		$this->awsAccessKey=$fr->attributes["awsAccessKey"];
 		$this->awsSecretKey=$fr->attributes["awsSecretKey"];

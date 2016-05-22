@@ -16,7 +16,12 @@ class send_sms
 		
 	public function __construct()
 	{
-        $fr=new file_reader($_SERVER['DOCUMENT_ROOT']."/../Config/config.prop");
+		$root_folder="../../";
+		if(isset($_SERVER['DOCUMENT_ROOT']) && $_SERVER['DOCUMENT_ROOT']!="")
+		{
+			$root_folder=$_SERVER['DOCUMENT_ROOT']."/";
+		}
+		$fr=new file_reader($root_folder."../Config/config.prop");		
 
         $this->pusername=urlencode($fr->attributes["smsPromotionalUsername"]);
 		$this->ppassword=urlencode($fr->attributes["smsPromotionalPassword"]);

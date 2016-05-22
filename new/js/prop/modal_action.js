@@ -3619,13 +3619,14 @@ function modal36_action(schedule_time)
  * @modal Update Appointment
  * @modalNo 37
  */
-function modal37_action(id)
+function modal37_action(id,schedule)
 {
 	var form=document.getElementById("modal37_form");
 	var customer_filter=form.elements['customer'];
 	var staff_filter=form.elements['assignee'];
 	var notes_filter=form.elements['notes'];
 	var status_filter=form.elements['status'];
+	var notify_button=form.elements['notify'];
 	
 	var customer_data={data_store:'customers',return_column:'acc_name'};
 	set_my_value_list_json(customer_data,customer_filter);
@@ -3653,6 +3654,43 @@ function modal37_action(id)
 		$("#modal37_link").click();
 	});
 	
+	$(notify_button).off('click');
+	$(notify_button).on('click',function()
+	{
+		show_loader();
+		var customer_name=customer_filter.value;
+		var customer_data={data_store:'customers',count:1,
+						  indexes:[{index:'name'},{index:'id'},
+								   {index:'acc_name',exact:customer_filter.value},
+								  {index:'email'},
+								  {index:'phone'}]};
+		read_json_rows('',customer_data,function(customers)
+		{
+			if(customers.length>0)
+			{
+				var bt=get_session_var('title');
+				if(!vUtil.isBlank(customers[0].phone))
+				{
+					var sms_message="Your appointment at "+bt+" is confirmed for "+get_my_datetime(schedule)+". Dont forget to visit.";
+					send_sms(customers[0].phone,sms_message,'transaction');
+				}
+				
+				if(!vUtil.isBlank(customers[0].email))
+				{
+					var from=get_session_var('email');
+					var email_message="Your appointment at "+bt+" is confirmed for "+get_my_datetime(schedule)+". Dont forget to visit.\n\nRegards,\n"+bt+"\n"+get_session_var('address')+"\n"+get_session_var('phone');
+					
+					var to=[{"email":customers[0].email,"name":customers[0].name,"customer_id":customers[0].id}];
+					var email_to=JSON.stringify(to);
+
+					send_email(email_to,from,bt,bt+' - Reminder for Appointment',email_message,function(){});
+				}
+			}
+			hide_loader();
+		});
+		$(form).find(".close").click();
+	});
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{

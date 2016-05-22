@@ -20,7 +20,12 @@ class paytm_api
 
 	public function __construct($domain)
 	{
-        $fr=new file_reader($_SERVER['DOCUMENT_ROOT']."/../Config/config.prop");
+		$root_folder="../../";
+		if(isset($_SERVER['DOCUMENT_ROOT']) && $_SERVER['DOCUMENT_ROOT']!="")
+		{
+			$root_folder=$_SERVER['DOCUMENT_ROOT']."/";
+		}
+		$fr=new file_reader($root_folder."../Config/config.prop");		
 
         $this->client_id=$fr->attributes["paytmClientId"];
 		$this->secret = $fr->attributes["paytmSecret"];

@@ -1,40 +1,32 @@
 /**
- * vGCal
+ * vMSCal
  * Author: Ashish Goyal
  * Copyright: Copyright 2016 | Vyavsaay ERP
  */
 
-var vGCal = function (options) 
-{	
-	var defaults={client_id:get_session_var('googleClientId'),
-				 scopes:["https://www.googleapis.com/auth/calendar"],
-				 act:function(response){console.log(response);},
-				 action:'batchEvents'};
-	
+var vMSCal = function (options) 
+{
+	var defaults={client_id:get_session_var('outlookClientId'),
+				scopes:["https://outlook.office.com/calendars.readwrite"],
+				act:function(response){console.log(response);},
+				action:'batchEvents'};
+
 	var settings = $.extend(defaults, options || {});
 	
-	
-	/**
-	* Initiate auth flow in response to user clicking authorize button.
-	*
-	* @param {Event} event Button click event.
-	*/
 	this.checkAuth = function (event) 
 	{
-		gapi.auth.authorize(
-		{client_id: settings.client_id, scope: settings.scopes.join(' '),immediate:false},
-		function (authResult)
+		var authContext = new O365Auth.Context();
+		authContext.getIdToken("https://outlook.office365.com/").then((function (token) 
 		{
-			if (authResult && !authResult.error) 
-			{
-				gapi.client.load('calendar', 'v3', operations[settings.action]);
-			}
-			else
-			{
-				settings.act();
-			}
+		   var authToken = token;
+			console.log(authToken);
+			var outlookClient = new Microsoft.OutlookServices.Client('https://outlook.office365.com/api/v1.0', authToken.getAccessTokenFn('https://outlook.office365.com'));
+			console.log(outlookClient);
+			
+		}).bind(this), function (reason) 
+		{
+		   console.log('Failed to login. Error = ' + reason.message);
 		});
-		//return false;
 	};
 
 	this.batchEvents = function()

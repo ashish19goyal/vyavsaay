@@ -518,7 +518,7 @@ function send_email(to,from,from_name,subject,message,func)
 								"<status>pending</status>"+
 								"<last_updated>"+get_my_time()+"</last_updated>"+
 								"</emails>";
-					local_create_simple(email_data);			
+					local_create_simple(email_data);		
 					func();
 				}	    
 	        }

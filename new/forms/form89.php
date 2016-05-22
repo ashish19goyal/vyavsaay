@@ -7,18 +7,17 @@
             </div>
 		</div>
 		<div class="actions">
-            <div class="btn-group">
-                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Sync <i class="fa fa-angle-down"></i></button>
-                <ul class="dropdown-menu pull-right">
-                    <li>
-                        <a id='form89_google_sync' onclick=form89_google_sync();><i class='fa fa-google'></i> Google Calendar</a>
-                    </li>
-                </ul>
-            </div>
 			<div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
                 <ul class="dropdown-menu pull-right">
                     <li>
+                        <a onclick="form89_cal_sync('google');"><i class='fa fa-google'></i> Sync with Google </a>
+                    </li>
+                   <!-- <li>
+                        <a onclick="form89_cal_sync('outlook');"><i class='fa fa-windows'></i> Sync with Outlook </a>
+                    </li>-->
+                    <li class="divider"> </li>
+					<li>
                         <a id='form89_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
                     </li>
                     <li>
@@ -183,10 +182,10 @@
                     });
                 },
                 dayClick: function(date,jsEvent,view){
-                    modal36_action(get_my_date_from_iso(date.format()));
+					modal36_action(get_my_date_from_iso(date.format()));
                 },
                 eventClick: function(calEvent,jsEvent,view){
-                    modal37_action(calEvent.id);
+                    modal37_action(calEvent.id,parseFloat(calEvent.start.unix())*1000);
                 },
 				eventDrop: function(event,delta,revertFunc)
 				{
@@ -544,7 +543,7 @@
 		}
 	};
 	
-	function form89_google_sync()
+	function form89_cal_sync(type)
 	{
 		if(is_online())
 		{
@@ -566,8 +565,12 @@
                    app.start = app.schedule;
                    app.end = parseFloat(app.schedule)+3600000*parseFloat(app.hours);
 			   });
-				var cal_options = {act:function(){hide_loader();},action:'batchEvents',calendarId:'appointments',calendarName:'Appointments',link:'https://vyavsaay.com/new/form89/',events:appointments};
+				var cal_options = {act:function(){hide_loader();},calendarId:'appointments',calendarName:'Appointments',link:'https://vyavsaay.com/new/form89/',events:appointments};
 				var cal_object = new vGCal(cal_options);
+			    if(type=='outlook')
+				{
+					cal_object = new vMSCal(cal_options);
+				}
 				cal_object.checkAuth();
 		   });
 		}
@@ -575,7 +578,7 @@
 		{
 			$('#modal96_link').click();
 		}
-	}
-
+	}	
+	
 	</script>
 </div>

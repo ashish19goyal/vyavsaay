@@ -742,7 +742,7 @@
                 <form id='modal37_form' autocomplete="off">                               
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    	<h4 class="modal-title">Add Appointment</h4>
+                    	<h4 class="modal-title">Update Appointment</h4>
                 	</div>
 	                <div class="modal-body">
 		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
@@ -761,6 +761,9 @@
 						   	<div class="row">
 								<div class="col-sm-12 col-md-4">Status</div>
 					     		<div class="col-sm-12 col-md-8"><input type='text' required form='modal37_form' name='status'></div>
+						   </div>
+						   <div class="row">
+							   <div class="col-sm-12 col-md-8 pull-right"><button type='button' class='btn grey' form='modal37_form' name='notify' title='An Email and SMS will be sent to the customer to remind them of the appointment'>Notify Customer</button></div>
 						   </div>
 		             	</div>
 					</div>	

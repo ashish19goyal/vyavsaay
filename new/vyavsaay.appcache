@@ -190,7 +190,7 @@ js/open/codemirror.js
 js/open/demo.js
 js/open/floatlabels.js
 js/open/fullcalendar.min.js
-js/open/googleCalendarClient.js
+js/open/googleAPIClient.js
 js/open/html2canvas.js
 js/open/jquery-1.11.1.min.js
 js/open/jquery-ui.min.js

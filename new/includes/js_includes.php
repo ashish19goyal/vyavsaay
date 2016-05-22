@@ -4,7 +4,7 @@
 <script src='/new/js/open/leaflet.js'></script>
 <script src='/new/js/open/jSignature.min.js'></script>
 <script src='/new/js/open/html2canvas.js'></script>
-<script src='/new/js/open/googleCalendarClient.js'></script>
+<script src='/new/js/open/googleAPIClient.js'></script>
 <script src='/new/js/open/jquery.fn.gantt.min.js'></script>
 <script src='/new/js/open/JsBarcode.all.min.js'></script>
 <script src='/new/js/open/moment.min.js'></script>
