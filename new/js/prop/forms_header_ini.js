@@ -7194,52 +7194,6 @@ function form292_header_ini()
 		form292_ini();
 	});	
 }
-/**
- * @form Vyavsaay Accounts
- * @formNo 293
- */
-function form293_header_ini()
-{
-	var filter_fields=document.getElementById('form293_header');	
-	var user_filter=filter_fields.elements[0];
-	var name_filter=filter_fields.elements[1];
-	var db_filter=filter_fields.elements[2];
-	var status_filter=filter_fields.elements[3];
-	
-	var user_data=new Object();
-		user_data.count=0;
-		user_data.start_index=0;
-		user_data.database='0';
-		user_data.data_store='user_profile';
-		user_data.indexes=[{index:'username'}];		
-		user_data.return_column='username';
-	set_master_filter_json(user_data,user_filter);
-
-	var name_data=new Object();
-		name_data.count=0;
-		name_data.start_index=0;
-		name_data.data_store='user_profile';
-		name_data.database='0';
-		name_data.indexes=[{index:'name'}];		
-		name_data.return_column='name';
-	set_master_filter_json(name_data,name_filter);
-
-	var db_data=new Object();
-		db_data.count=0;
-		db_data.start_index=0;
-		db_data.data_store='user_profile';
-		db_data.database='0';
-		db_data.indexes=[{index:'dbname'}];		
-		db_data.return_column='dbname';
-	set_master_filter_json(db_data,db_filter);
-
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form293_ini();
-	});	
-}
 
 /**
  * @form Create Bill (Sehgal)

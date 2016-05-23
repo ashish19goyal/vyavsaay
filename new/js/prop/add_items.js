@@ -11707,64 +11707,6 @@ function form292_add_item()
 	}		
 }
 
-/**
- * @form Vyavsaay Accounts
- * @formNo 293
- */
-function form293_add_item()
-{
-	if(is_create_access('form293'))
-	{
-		var id=get_new_key();
-		var rowsHTML="<tr>";
-			rowsHTML+="<form id='form293_"+id+"'></form>";
-				rowsHTML+="<td data-th='Username'>";
-					rowsHTML+="<textarea form='form293_"+id+"' required></textarea>";
-				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Contact Person'>";
-					rowsHTML+="<input type='text' form='form293_"+id+"'>";
-				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Contact Details'>";
-					rowsHTML+="<b>Phone</b>:<input type='text' form='form293_"+id+"' class='dblclick_editable'>";
-					rowsHTML+="<br><b>Email</b>:<input type='text' form='form293_"+id+"' class='dblclick_editable'>";
-				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='DB'>";
-					rowsHTML+="<textarea form='form293_"+id+"' required class='dblclick_editable'></textarea>";
-				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Status'>";
-					rowsHTML+="<input type='text' class='dblclick_editable' requried form='form293_"+id+"'>";	
-				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Action'>";
-					rowsHTML+="<input type='hidden' form='form293_"+id+"' value='"+id+"'>";
-					rowsHTML+="<input type='submit' class='save_icon' form='form293_"+id+"'>";
-					rowsHTML+="<input type='button' class='delete_icon' form='form293_"+id+"' onclick='$(this).parent().parent().remove();'>";
-				rowsHTML+="</td>";			
-		rowsHTML+="</tr>";
-		
-		$('#form293_body').prepend(rowsHTML);
-		
-		var fields=document.getElementById("form293_"+id);
-		var user_filter=fields.elements[0];
-		var status_filter=fields.elements[5];
-		
-		$(user_filter).focus();
-		
-		set_static_value_list_json('user_profile','status',status_filter);
-
-		$(fields).on("submit", function(event)
-		{
-			event.preventDefault();
-			form293_create_item(fields);
-		});
-		
-		$('textarea').autosize();
-		longPressEditable($('.dblclick_editable'));
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}		
-}
 
 /**
  * @form Create bill (Sehgal)

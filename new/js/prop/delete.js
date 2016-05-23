@@ -5281,36 +5281,6 @@ function form292_delete_item(button)
 }
 
 /**
- * @form Vyavsaay Accounts
- * @param button
- */
-function form293_delete_item(button)
-{
-	if(is_delete_access('form293'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var new_columns=new Object();
-			new_columns.data_store='user_profile';
-			new_columns.database='0';
-			
-			new_columns.data=[{index:'id',value:form.elements[6].value}];
-					
-			server_delete_master(new_columns);
-			
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
  * @form Create Bills (Sehgal)
  * @formNo 294
  * @param button

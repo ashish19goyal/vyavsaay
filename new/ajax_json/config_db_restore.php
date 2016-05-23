@@ -7,36 +7,56 @@ use RetailingEssentials\file_reader;
 		
 	$domain=$_POST['domain'];
 	$username=$_POST['username'];
-	$cr_access=$_POST['cr'];
-			
+	$up_access=$_POST['up'];
+	$input_data=$_POST['data'];
+
+	$response_object=[];
+	
 	if(isset($_SESSION['session']))
 	{
-		if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['username']==$username && $_SESSION['cr']==$cr_access)
+		if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $domain=='vyavsaay' && $_SESSION['username']==$username && $_SESSION['up']==$up_access)
 		{
+			$input_object=json_decode($input_data,true);
+			$dbname=$input_object['db'];
+			$sql=preg_replace('/data:application\/sql;base64,/',"",$input_object['sql'],1);
+			$decoded_sql=base64_decode($sql,true);
 			$fr=new file_reader($_SERVER['DOCUMENT_ROOT']."/../Config/config.prop");
 			$dbhost=$fr->attributes["host"];
-			$dbname="re_user_".$domain;
 			$dbuser = $fr->attributes["user"];
 			$dbpass = $fr->attributes["password"];
-			
-			$backup_file = $domain;
-			$command = "mysqldump --opt -h $dbhost -u $dbuser -p$dbpass $dbname";
-						
-			$mime = "application/octet-stream";
-			header( "Content-Type: " . $mime );
-			header( 'Content-Disposition: attachment; filename="' . $backup_file . '"' );			
 
-			passthru($command);		
+			try
+			{
+				$filename="dummy/$dbname.sql";
+				$file_open = fopen($filename,"w");
+				fwrite($file_open,$decoded_sql);
+				fclose($file_open);
+				
+				$command = "mysql -h $dbhost -u $dbuser -p$dbpass $dbname < $filename";
+				exec($command);
 
-			exit(0);		
+				$delete_command = "rm dummy/$dbname.sql";
+				exec($delete_command);
+
+				$response_object['status']='config updated';
+			}
+			catch(Exception $e)
+			{
+				$response_object['status']='Error occured';
+			}
 		}
 		else
 		{
-			echo "Invalid session";
+			$response_object['status']='Invalid session';
 		}
 	}
 	else
 	{
-		echo "Invalid session";
+		$response_object['status']='Invalid session';
 	}
+
+	$jsonresponse=json_encode($response_object);		
+	header ("Content-Type:application/json");
+	echo $jsonresponse;
+
 ?>

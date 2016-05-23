@@ -16702,3 +16702,59 @@ function modal211_action(manifest_id,manifest_num,func)
 	
 	$("#modal211_link").click();
 }
+
+/**
+ * @modalNo 213
+ * @modal Import Configurations
+ * @param button
+ */
+function modal213_action(dbname)
+{
+	var form=document.getElementById('modal213_form');
+
+	var fpicture=form.elements['file_hidden'];
+    var dummy_button=form.elements['dummy'];
+    var contentType='';
+    var filetype='';
+    var url="";
+			
+	$(dummy_button).on('click',function (e) 
+	{
+		e.preventDefault();
+		$(fpicture).trigger('click');
+	});
+    
+	fpicture.addEventListener('change',function(evt)
+	{
+        var files = fpicture.files;
+        contentType=files[0].type;
+        var file_attr=files[0].name.split('.');
+        filetype=file_attr[file_attr.length-1];
+		select_document(evt,function(dataURL)
+		{
+			url=dataURL;
+		});
+	},false);
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_update_access('form293'))
+		{
+			var last_updated=get_my_time();
+
+			if(url!="" && filetype=='sql' && contentType=='application/sql')
+			{
+				server_update_config({db:dbname,sql:url});
+            }
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
+		$(form).find(".close").click();
+	});
+	
+	$("#modal213_link").click();
+}

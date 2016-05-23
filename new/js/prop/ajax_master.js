@@ -137,3 +137,17 @@ function server_update_master_all(columns)
 		console.log(response_object.status);
 	});
 }
+
+function server_update_config(columns)
+{
+	var domain=get_domain();
+	var username=get_username();
+	var up_access=get_session_var('up');
+	var string_columns=JSON.stringify(columns);
+	show_loader();
+	ajax_json(server_root+"/ajax_json/config_db_restore.php",{domain:domain,username:username,up:up_access,data:string_columns},function(response_object)
+	{
+		hide_loader();
+		console.log(response_object.status);
+	});
+}
