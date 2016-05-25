@@ -882,11 +882,6 @@ textarea.ultrawidebox{
 	canvas{
 		position:relative;
 	}
-	
-	label{
-		min-width:300px;
-		font-size: 20px;
-	}
 		
 	.submit_hidden{
 		min-width:1px;

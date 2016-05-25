@@ -114,7 +114,7 @@
 							rowsHTML+="<input type='hidden' form='form293_"+result.id+"' value='"+result.id+"'>";
 							rowsHTML+="<button type='submit' class='btn green' title='Save' name='save' form='form293_"+result.id+"'><i class='fa fa-save'></i></button>";
 							rowsHTML+="<button type='button' class='btn red' form='form293_"+result.id+"' onclick='form293_delete_item($(this));' name='delete' title='Delete'><i class='fa fa-trash'></i></button>";
-							rowsHTML+="<button type='button' class='btn yellow' form='form293_"+result.id+"' onclick=\"modal213_action('"+result.dbname+"');\" name='import' title='Update Configurations'>Import Config</button>";
+							rowsHTML+="<button type='button' class='btn default yellow-stripe' form='form293_"+result.id+"' onclick=\"modal213_action('"+result.dbname+"');\" name='import' title='Update Configurations'>Import Config</button>";
 						rowsHTML+="</td>";
 				rowsHTML+="</tr>";
 

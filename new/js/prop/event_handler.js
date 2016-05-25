@@ -38,7 +38,6 @@ function default_load()
 		
 		document.getElementById('master_title').innerHTML=get_session_var('title');
         navigate_history_url(location);
-		vUtil=new vUtil();
 		hide_loader();
 	}
 	else

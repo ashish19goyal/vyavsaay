@@ -1679,3 +1679,43 @@ function set_grid_item_70()
 		$('#grid_item_70').html(item_count);
 	});
 };
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_71
+*@*display_name*:*# Tabs
+*@*grid*:*reports
+*@*function_name*:*set_grid_item_71();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_71()
+{
+	var new_columns={data_store:'tabs_list',return_column:'id'};
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_71').html(item_count);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_72
+*@*display_name*:*# Accounts
+*@*grid*:*reports
+*@*function_name*:*set_grid_item_72();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_72()
+{
+	var new_columns={data_store:'user_profile',database:'0',return_column:'id'};
+	read_json_single_column_master(new_columns,function(items)
+	{
+		$('#grid_item_72').html(items.length);
+	});
+};

@@ -141,6 +141,13 @@
 		height: 150px;
 	}
 }
+
+@media screen and (max-width: 600px) 
+{	
+	.dashboard_grid>.dashboard_grid_icon{
+		display: none;
+	}
+}
 /*****************/
 
 /********no more tables**********/

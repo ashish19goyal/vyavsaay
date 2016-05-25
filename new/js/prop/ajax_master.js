@@ -151,3 +151,15 @@ function server_update_config(columns)
 		console.log(response_object.status);
 	});
 }
+
+function server_read_tab_clients(tab_name,callback)
+{
+	var domain=get_domain();
+	var username=get_username();
+	var re_access=get_session_var('re');
+	
+	ajax_json(server_root+"/ajax_json/get_tab_clients.php",{domain:domain,username:username,re:re_access,data:tab_name},function(response_object)
+	{
+		callback(response_object.clients);
+	});
+}

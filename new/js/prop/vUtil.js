@@ -21,12 +21,20 @@ var vUtil = function (options)
         }
     };
 
+	//check if an element is null or blank
     this.isBlank=function(variable)
     {
         if(variable=="" || variable==null || variable=="null")
            return true;
         else
            return false;
+    }
+	
+	//executes a function if it is set
+	this.execute=function(func)
+    {
+        if(typeof func!='undefined')
+           func();
     }
     
     
@@ -205,6 +213,8 @@ var vUtil = function (options)
         return results;
     };
 };
+vUtil=new vUtil();
+
 
     function htmlentities(str)
     {
