@@ -9,6 +9,7 @@
 	use RetailingEssentials\send_sms;
  	use RetailingEssentials\send_mailer_json;
  
+	date_default_timezone_set('Asia/Kolkata');
 /**
  * Method for displaying the help and default variables.
  **/
@@ -137,7 +138,7 @@ else
     {        
 		$ctime=localtime(time(),true);
 		$chour=$ctime['tm_hour'];
-		if($chour==7)
+		if($chour==8)
 		{
 			remind_appointments();
 		}
