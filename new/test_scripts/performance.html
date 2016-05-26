@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Performance testing</title>
+<script src='../js/open/jquery-1.11.1.min.js'></script>
+</head>
+
+<body>
+	<form id='form' onsubmit='performance(); return false;'>
+		<input type='text' required style='background-color:#caeddd' placeholder='Url to test'>
+		<input type='number' required style='background-color:#caeddd' placeholder='# of requests'>
+		<button type='submit'>Check Performance</button>
+	</form>
+		<table>
+			<tr><td>Url</td><td>Number Requests</td><td>Pass %</td><td>Avg. Response Time</td></tr>
+			<tbody id='tbody'></tbody>
+		</table>
+</body>
+	<script>
+        function performance()
+        {
+					var start_time=Date.now();
+					var form=document.getElementById('form');
+					var url=form.elements[0].value;
+					var num_requests=form.elements[1].value;
+
+					var counter=0;
+					var req_returned=0;
+					var req_passed=0;
+					while(counter<num_requests)
+					{
+						$.ajax(
+						{
+							type: "GET",
+							url: url,
+							error:function(xhr, ajaxOptions, thrownError)
+							{
+								req_returned+=1;
+								console.log(xhr.responseText);
+					    	//console.log(thrownError);
+							},
+							success: function(return_data,return_status,e)
+							{
+								req_passed+=1;
+								req_returned+=1;
+							}});
+							counter++;
+					}
+
+					var result_timer=setInterval(function()
+					{
+						if(req_returned==num_requests)
+						{
+							var end_time=Date.now();
+							var passed=(100*req_passed)/num_requests;
+							var avg_time=(end_time-start_time)/num_requests;
+							clearInterval(result_timer);
+							var tbody=document.getElementById('tbody');
+							tbody.innerHTML="<tr><td>"+url+"</td><td>"+num_requests+"</td><td>"+passed+"</td><td>"+avg_time+"</td></tr>";
+						}
+					},100);
+        }
+    </script>
+</html>

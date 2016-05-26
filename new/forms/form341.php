@@ -328,12 +328,6 @@
 	 								{index:'last_updated',value:last_updated}];
 							data_json.data.push(data_json_array);
 							
-							var clientsHTML="";
-							clients.forEach(function(client)
-							{
-								clientsHTML+="<li>"+client+"</li>";
-							});
-							$('#form341_clients_list_'+tab.id).html(clientsHTML);
 							counter--;
 						});
 					});
