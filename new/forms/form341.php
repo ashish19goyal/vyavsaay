@@ -18,7 +18,7 @@
                     </li>
                     <li class="divider"> </li>
                     <li>
-                        <a id='form341_upload' onclick=form341_update_clients_all();><i class='fa fa-upload'></i> Update Clients</a>
+                        <a id='form341_upload' onclick=form341_update_clients_all();><i class='fa fa-users'></i> Update Clients</a>
                     </li>
 					<li class="divider"> </li>
                     <li>
@@ -333,8 +333,7 @@
 							{
 								clientsHTML+="<li>"+client+"</li>";
 							});
-							$('#form341_clients_list_'+id).html(clientsHTML);
-
+							$('#form341_clients_list_'+tab.id).html(clientsHTML);
 							counter--;
 						});
 					});
