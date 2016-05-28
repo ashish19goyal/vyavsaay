@@ -3,11 +3,11 @@
  * Author: Ashish Goyal
  * Copyright: Copyright 2016 | Vyavsaay ERP
  */
-var vUtil = function (options) 
-{	
-	var defaults={};				
+var vUtil = function (options)
+{
+	var defaults={};
 	var settings = $.extend(defaults, options || {});
-	
+
     //returns an index from an array
     this.fetch_index=function (array,index)
     {
@@ -29,15 +29,31 @@ var vUtil = function (options)
         else
            return false;
     }
-	
+
 	//executes a function if it is set
-	this.execute=function(func)
+		this.execute=function(func)
     {
         if(typeof func!='undefined')
            func();
     }
-    
-    
+
+		//parses a json string to get a js object/array
+		this.jsonParse = function(markers)
+		{
+			var markers_array=[];
+			if(markers!="" && markers!='undefined' && markers!=null)
+			{
+				try
+				{
+						markers_array=JSON.parse(markers);
+				} catch (ee)
+				{
+						return {};
+				}
+			}
+			return markers_array;
+		}
+
     //extracts a single column from a multidimensional array
     this.array_column=function (array, col_name)
     {
@@ -53,14 +69,14 @@ var vUtil = function (options)
     {
         var tempW = picture_tag.width;
         var tempH = picture_tag.height;
-        if (tempW > tempH) 
+        if (tempW > tempH)
         {
-            if (tempW > pic_width) 
+            if (tempW > pic_width)
             {
                tempH *= pic_width / tempW;
                tempW = pic_width;
             }
-        } 
+        }
 
         var canvas = document.createElement('canvas');
         canvas.width = tempW;
@@ -70,8 +86,8 @@ var vUtil = function (options)
         var dataURL = canvas.toDataURL("image/jpeg");
         picture_tag.setAttribute("src", dataURL);
     };
-    
-    this.CSVToArray = function (strData) 
+
+    this.CSVToArray = function (strData)
     {
         strData = strData.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\%\^\&\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
         strData = strData.replace(/â/g,'');
@@ -121,13 +137,13 @@ var vUtil = function (options)
             // Now that we have our value string, let's add
             // it to the data array.
             arrData[arrData.length - 1].push(strMatchedValue);
-        }    
+        }
 
         var objArray = [];
-        for (var i = 1; i < arrData.length; i++) 
+        for (var i = 1; i < arrData.length; i++)
         {
             objArray[i - 1] = {};
-            for (var k = 0; k < arrData[0].length && k < arrData[i].length; k++) 
+            for (var k = 0; k < arrData[0].length && k < arrData[i].length; k++)
             {
                 var key = arrData[0][k];
                 objArray[i - 1][key] = arrData[i][k];
@@ -141,7 +157,7 @@ var vUtil = function (options)
 
     /**
      * This function converts a csv string into array of named objects
-     * @param csvString CSV String to be converted 
+     * @param csvString CSV String to be converted
      * @returns {Array} Array of objects
      */
     this.csv2array = function (csvString)
@@ -149,7 +165,7 @@ var vUtil = function (options)
         csvString = csvString.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\%\^\&\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
         csvString = csvString.replace(/â/g,'');
 
-        var rows=csvString.split("\n");	
+        var rows=csvString.split("\n");
         var results=[];
 
         for(var x=0;x<rows.length;x++)
@@ -197,7 +213,7 @@ var vUtil = function (options)
                             }
                         }
                         columns[j]=columns[j].replace(/^\"/, "");
-                        columns[j]=columns[j].replace(/\"$/, "");	
+                        columns[j]=columns[j].replace(/\"$/, "");
                     }
                     columns[j]=columns[j].replace(/&/g, "and");
                     columns[j]=columns[j].replace(/^\"+|\"+$/gm,'');
@@ -245,7 +261,7 @@ vUtil=new vUtil();
         return result;
     }
 
-    
+
     /**
      * Converts a two dimensional array to csv file
      * @param data_array
@@ -262,9 +278,9 @@ vUtil=new vUtil();
         //a.download = 'import_template.csv';
 
         var type = 'text/csv;';
-        var blob = new Blob([csvString], { type: type });			
+        var blob = new Blob([csvString], { type: type });
         var URL = window.URL || window.webkitURL;
-        var downloadUrl = URL.createObjectURL(blob);	
+        var downloadUrl = URL.createObjectURL(blob);
 
         a.setAttribute('href',downloadUrl);
         a.download = 'import_template.csv';
@@ -287,7 +303,7 @@ vUtil=new vUtil();
         var header_array=[];
         for(var p in data_array[0])
         {
-            header_array.push(p);	
+            header_array.push(p);
             header_string+=p+",";
         }
 
@@ -315,7 +331,7 @@ vUtil=new vUtil();
                         data_string+=data_row[header_array[i]]+",";
                     }
                 }
-                else 
+                else
                 {
                     data_string+=",";
                 }
@@ -327,9 +343,9 @@ vUtil=new vUtil();
         var a = document.createElement('a');
 
         var type = 'text/csv;';
-        var blob = new Blob([csvString], { type: type });			
+        var blob = new Blob([csvString], { type: type });
         var URL = window.URL || window.webkitURL;
-        var downloadUrl = URL.createObjectURL(blob);	
+        var downloadUrl = URL.createObjectURL(blob);
 
         a.setAttribute('href',downloadUrl);
         a.download = file_name+'.csv';
@@ -353,7 +369,7 @@ vUtil=new vUtil();
         var header_array=[];
         for(var p in data_array[0])
         {
-            header_array.push(p);	
+            header_array.push(p);
             header_string+=p+",";
         }
 
@@ -381,7 +397,7 @@ vUtil=new vUtil();
                         data_string+=data_row[header_array[i]]+",";
                     }
                 }
-                else 
+                else
                 {
                     data_string+=",";
                 }
@@ -392,5 +408,3 @@ vUtil=new vUtil();
         var csvString = csvRows.join("\n");
         return csvString;
     }
-
-    

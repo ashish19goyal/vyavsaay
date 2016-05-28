@@ -104,7 +104,7 @@
 }
 
 .dashboard_grid>ul{
-	list-style-type: none;	
+	list-style-type: none;
 	margin: 1%;
 	padding: 1%;
 	float: left;
@@ -113,28 +113,28 @@
 	color:#eee;
 }
 
-@media screen and (max-width: 1000px) 
+@media screen and (max-width: 1000px)
 {
 	.logo-text2{
 		display: none;
-	}	
+	}
 }
 
-@media screen and (max-width: 800px) 
-{	
+@media screen and (max-width: 800px)
+{
 	.dashboard_grid>ul{
 		display: none;
 	}
-	
+
 	.dashboard_grid>div{
 		font-size: 1.8em;
 		text-align: center;
 		border:none;
 		margin:0;
-		padding: 60px 0px;		
+		padding: 60px 0px;
 	}
 	.dashboard_grid {
-		margin: 5% 0; 	
+		margin: 5% 0;
 		padding: 0;
 		float: left;
 		width: 100%;
@@ -142,8 +142,8 @@
 	}
 }
 
-@media screen and (max-width: 600px) 
-{	
+@media screen and (max-width: 600px)
+{
 	.dashboard_grid>.dashboard_grid_icon{
 		display: none;
 	}
@@ -152,50 +152,50 @@
 
 /********no more tables**********/
 @media only screen and (max-width: 800px) {
-	
+
 	/* Force table to not be like tables anymore */
 	.no-more-tables,
-	.no-more-tables table, 
-	.no-more-tables thead, 
-	.no-more-tables tbody, 
-	.no-more-tables th, 
-	.no-more-tables td, 
-	.no-more-tables tr { 
-		display: block; 
+	.no-more-tables table,
+	.no-more-tables thead,
+	.no-more-tables tbody,
+	.no-more-tables th,
+	.no-more-tables td,
+	.no-more-tables tr {
+		display: block;
 	}
- 
+
 	/* Hide table headers (but not display: none;, for accessibility) */
-	.no-more-tables thead tr { 
+	.no-more-tables thead tr {
 		position: absolute;
 		top: -9999px;
 		left: -9999px;
 	}
- 
+
 	.no-more-tables tr { border: 1px solid #ccc; }
- 
-	.no-more-tables > tbody > tr > td { 
+
+	.no-more-tables > tbody > tr > td {
 		/* Behave  like a "row" */
 		border: none;
-		border-bottom: 1px solid #eee; 
+		border-bottom: 1px solid #eee;
 		position: relative;
-		padding-left: 40%; 
+		padding-left: 40%;
 		white-space: normal;
 		text-align:left;
 	}
- 
-	.no-more-tables td:before { 
+
+	.no-more-tables td:before {
 		/* Now like a table header */
 		position: absolute;
 		/* Top/left values mimic padding */
 		top: 6px;
 		left: 6px;
-		width: 35%; 
-		padding-right: 10px; 
+		width: 35%;
+		padding-right: 10px;
 		white-space: nowrap;
 		text-align:left;
 		font-weight: bold;
 	}
- 
+
 	/*	Label the data	*/
 	.no-more-tables td:before { content: attr(data-th); }
 }
@@ -283,7 +283,7 @@ input[type='checkbox'],input[type='radio']{
     border-top: 1px solid #ed6b75;
 }
 
-@media screen and (max-width: 921px) 
+@media screen and (max-width: 921px)
 {
   .tab_color > li {
     border-top: 1px solid #fff;
@@ -309,6 +309,10 @@ input[type='checkbox'],input[type='radio']{
 	margin-top: 0px;
 }
 /***********************/
+
+.link{
+	cursor: pointer;
+}
 
 i.link{
 	cursor: pointer;
@@ -409,8 +413,8 @@ a textarea:hover, a input:hover{
     z-index:10000;
 }
 
-progress{  
-	background-color: #fff;  
+progress{
+	background-color: #fff;
 	border: 0;
 	height: 25px;
 	width: 150px;

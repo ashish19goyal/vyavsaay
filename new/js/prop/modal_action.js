@@ -6,7 +6,7 @@
 function modal8_action()
 {
 	var form=document.getElementById('modal8_form');
-		
+
 	var offer_name=form.elements[1];
 	var end_date=form.elements[2];
 	var offer_type=form.elements[3];
@@ -25,7 +25,7 @@ function modal8_action()
 	var free_product_name=form.elements[16];
 	var free_quantity=form.elements[17];
 	var free_service_name=form.elements[18];
-	
+
 	var product_data="<product_master>" +
 		"<name></name>" +
 		"</product_master>";
@@ -36,7 +36,7 @@ function modal8_action()
 		"</services>";
 	set_my_value_list(service_data,service);
 	set_my_value_list(service_data,free_service_name);
-	
+
 	$(all_batch).off('click');
 	$(all_batch).on('click',function(event)
 	{
@@ -51,7 +51,7 @@ function modal8_action()
 			$(batch).removeAttr('readonly');
 		}
 	});
-	
+
 	$(offer_type).off('blur');
 	$(offer_type).on('blur',function(event)
 	{
@@ -62,7 +62,7 @@ function modal8_action()
 		$(criteria_type).parent().hide();
 		$(criteria_amount).parent().hide();
 		$(criteria_quantity).parent().hide();
-		
+
 		if(offer_type.value=='product')
 		{
 			$(product_name).off('blur');
@@ -74,7 +74,7 @@ function modal8_action()
 						"</product_instances>";
 				set_my_value_list(batch_data,batch);
 			});
-						
+
 			$(product_name).parent().show();
 			$(batch).parent().show();
 			$(all_batch).parent().show();
@@ -82,7 +82,7 @@ function modal8_action()
 			$(product_name).focus();
 		}
 		else if(offer_type.value=='service')
-		{			
+		{
 			$(service).parent().show();
 			$(criteria_type).parent().show();
 			$(service).focus();
@@ -94,7 +94,7 @@ function modal8_action()
 			$(criteria_amount).focus();
 		}
 	});
-	
+
 	$(criteria_type).off('blur');
 	$(criteria_type).on('blur',function(event)
 	{
@@ -111,7 +111,7 @@ function modal8_action()
 			$(criteria_quantity).focus();
 		}
 	});
-	
+
 	$(result_type).off('blur');
 	$(result_type).on('blur',function(event)
 	{
@@ -122,7 +122,7 @@ function modal8_action()
 		$(free_product_name).parent().hide();
 		$(free_quantity).parent().hide();
 		$(free_service_name).parent().hide();
-		
+
 		if(result_type.value=='discount')
 		{
 			$(discount_percent).parent().show();
@@ -147,7 +147,7 @@ function modal8_action()
 			$(free_service_name).focus();
 		}
 	});
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -174,7 +174,7 @@ function modal8_action()
 			var status_value='active';
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
-			
+
 			var offer_detail_value="Get ";
 			if(result_type_value=='discount')
 			{
@@ -189,7 +189,7 @@ function modal8_action()
 					offer_detail_value+="additional "+quantity_amount_value+" free pieces";
 				else
 					offer_detail_value+="additional "+quantity_percent_value+"% free";
-			}	
+			}
 			else if(result_type_value=='free product')
 			{
 				offer_detail_value+=free_quantity_value+" pieces of "+free_product_name_value;
@@ -198,7 +198,7 @@ function modal8_action()
 			{
 				offer_detail_value+="free service "+free_service_name_value;
 			}
-			
+
 			if(type_value=='bill')
 			{
 				offer_detail_value+=" on bill amount of more than Rs: "+criteria_amount_value;
@@ -211,7 +211,7 @@ function modal8_action()
 				else if(criteria_type_value=="min quantity crossed")
 					offer_detail_value+=+criteria_quantity_value+" piece or more";
 				offer_detail_value+=" of "+product_value;
-			}	
+			}
 			else if(type_value=='service')
 			{
 				offer_detail_value+=" on availing "+service_value+ " service ";
@@ -220,7 +220,7 @@ function modal8_action()
 				else if(criteria_type_value=="min quantity crossed")
 					offer_detail_value+=+criteria_quantity_value+" times or more";
 			}
-			
+
 			var data_xml="<offers>" +
 						"<id>"+data_id+"</id>" +
 						"<offer_name unique='yes'>"+offer_name_value+"</offer_name>" +
@@ -243,7 +243,7 @@ function modal8_action()
 						"<offer_detail>"+offer_detail_value+"</offer_detail>" +
 						"<status>"+status_value+"</status>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
-						"</offers>";	
+						"</offers>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>offers</tablename>" +
@@ -259,7 +259,7 @@ function modal8_action()
 			else
 			{
 				local_create_row(data_xml,activity_xml);
-			}	
+			}
 		}
 		else
 		{
@@ -267,12 +267,12 @@ function modal8_action()
 		}
 		$("#modal8").dialog("close");
 	});
-	
+
 	set_static_value_list('offers','criteria_type',criteria_type);
 	set_static_value_list('offers','result_type',result_type);
 	set_static_value_list('offers','offer_type',offer_type);
 	$(end_date).datepicker();
-	
+
 	$(product_name).parent().hide();
 	$(batch).parent().hide();
 	$(all_batch).parent().hide();
@@ -287,9 +287,9 @@ function modal8_action()
 	$(free_product_name).parent().hide();
 	$(free_quantity).parent().hide();
 	$(free_service_name).parent().hide();
-	
+
 	$("#modal8").dialog("open");
-	
+
 }
 
 /**
@@ -300,17 +300,17 @@ function modal8_action()
 function modal9_action()
 {
 	var form=document.getElementById('modal9_form');
-	
+
 	var fid=form.elements[1];
 	var fname=form.elements[2];
 	var docInfo=document.getElementById('modal9_url');
 	var fpicture=form.elements[3];
-		
+
 	var id_data="<service_requests>" +
 		"<id></id>" +
 		"</service_requests>";
 	set_my_value_list(id_data,fid);
-	
+
 	fpicture.addEventListener('change',function(evt)
 	{
 		select_document(evt,function(dataURL)
@@ -318,7 +318,7 @@ function modal9_action()
 			docInfo.setAttribute('href',dataURL);
 		});
 	},false);
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -337,7 +337,7 @@ function modal9_action()
 							"<id>"+data_id+"</id>" +
 							"<url>"+url+"</url>" +
 							"<doc_type>service request</doc_type>" +
-							"<doc_name>"+doc_name+"</doc_name>"+						
+							"<doc_name>"+doc_name+"</doc_name>"+
 							"<target_id>"+target_id+"</target_id>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</documents>";
@@ -348,7 +348,7 @@ function modal9_action()
 				else
 				{
 					local_create_simple(pic_xml);
-				}	
+				}
 			}
 		}
 		else
@@ -357,7 +357,7 @@ function modal9_action()
 		}
 		$("#modal9").dialog("close");
 	});
-	
+
 	$("#modal9").dialog("open");
 }
 
@@ -373,7 +373,7 @@ function modal10_action(func)
 	var fname=form.elements[1];
 	var ftype=form.elements[2];
 	var fdescription=form.elements[3];
-	
+
 	////adding attribute fields/////
 	var attribute_label=document.getElementById('modal10_attributes');
 	attribute_label.innerHTML="";
@@ -396,8 +396,8 @@ function modal10_action(func)
 				if(attribute.value=="")
 				{
 					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
-				}				
-				else 
+				}
+				else
 				{
 					var values_array=attribute.value.split(";");
 					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
@@ -407,16 +407,16 @@ function modal10_action(func)
 					});
 					content+="</select>";
 					attr_label.innerHTML=content;
-				}				
+				}
 				attribute_label.appendChild(attr_label);
 				var line_break=document.createElement('br');
 				attribute_label.appendChild(line_break);
 			}
 		});
 	});
-	
+
 	set_static_value_list('assets','type',ftype);
-		
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -442,7 +442,7 @@ function modal10_action(func)
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		create_row_func(data_xml,activity_xml,func);
-		
+
 		var id=get_new_key();
 		$("#modal10_attributes").find('input, select').each(function()
 		{
@@ -462,10 +462,10 @@ function modal10_action(func)
 				create_simple(attribute_xml);
 			}
 		});
-		
+
 		$("#modal10").dialog("close");
 	});
-	
+
 	$("#modal10").dialog("open");
 }
 
@@ -477,12 +477,12 @@ function modal10_action(func)
 function modal11_action(func)
 {
 	var form=document.getElementById('modal11_form');
-	
+
 	var fname=form.elements['name'];
 	var fphone=form.elements['phone'];
 	var femail=form.elements['email'];
 	var faddress=form.elements['address'];
-	
+
 	///////////////////////////
 	fname.value="";
 	fphone.value="";
@@ -493,7 +493,7 @@ function modal11_action(func)
 	attribute_label.innerHTML="";
 	var attributes_data={data_store:'mandatory_attributes',
 								indexes:[{index:'attribute'},{index:'status'},{index:'value'},{index:'object',exact:'customer'}]};
-								
+
 	read_json_rows('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
@@ -509,24 +509,24 @@ function modal11_action(func)
 				{
 					attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
 					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
-				}				
-				else 
+				}
+				else
 				{
 					var values_array=attribute.value.split(";");
 					var content="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
-					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
+					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";
 					values_array.forEach(function(fvalue)
 					{
 						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
 					});
 					content+="</select></div>";
 					attr_label.innerHTML=content;
-				}				
+				}
 				attribute_label.appendChild(attr_label);
 			}
 		});
 	});
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -538,16 +538,16 @@ function modal11_action(func)
 			var acc_name=name+" ("+phone+")";
 			var email=femail.value;
 			var address=faddress.value;
-			
+
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
-			
+
 			address = address.replace(/â/g,'');
 			address = address.replace(/&/g, "and");
-			
+
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
-			
+
 			var data_json={data_store:'customers',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
@@ -558,19 +558,19 @@ function modal11_action(func)
 	 					{index:'acc_name',value:acc_name,unique:'yes'},
 	 					{index:'status',value:'active'},
 	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Added',notes:'New customer '+name,link_to:'form30'}}; 								
-			
+	 				log_data:{title:'Added',notes:'New customer '+name,link_to:'form30'}};
+
 			var account_json={data_store:'accounts',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'type',value:'customer'},
 	 					{index:'username',value:''},
 	 					{index:'acc_name',value:acc_name,unique:'yes'},
 	 					{index:'status',value:'active'},
-	 					{index:'last_updated',value:last_updated}]}; 								
-				
+	 					{index:'last_updated',value:last_updated}]};
+
 			create_json(data_json,func);
 			create_json(account_json);
-			
+
 			var id=get_new_key();
 			$("#modal11_attributes").find('input, select').each(function()
 			{
@@ -585,7 +585,7 @@ function modal11_action(func)
 	 					{index:'type',value:'customer'},
 	 					{index:'attribute',value:attribute},
 	 					{index:'value',value:value},
-	 					{index:'last_updated',value:last_updated}]}; 												
+	 					{index:'last_updated',value:last_updated}]};
 					create_json(attribute_json);
 				}
 			});
@@ -596,7 +596,7 @@ function modal11_action(func)
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal11_link").click();
 }
 
@@ -608,11 +608,11 @@ function modal11_action(func)
 function modal12_action(func)
 {
 	var form=document.getElementById('modal12_form');
-	
+
 	var fname=form.elements['name'];
 	var fdescription=form.elements['desc'];
 	var fdata_id=get_new_key();
-	
+
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal12_attributes');
 	attribute_label.innerHTML="";
@@ -633,24 +633,24 @@ function modal12_action(func)
 				{
 					attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
 					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
-				}				
-				else 
+				}
+				else
 				{
 					var values_array=attribute.value.split(";");
 					var content="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
-					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
+					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";
 					values_array.forEach(function(fvalue)
 					{
 						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
 					});
 					content+="</select></div>";
 					attr_label.innerHTML=content;
-				}				
+				}
 				attribute_label.appendChild(attr_label);
 			}
 		});
 	});
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -660,7 +660,7 @@ function modal12_action(func)
 		var description=fdescription.value;
 		var data_id=get_new_key();
 		var last_updated=get_my_time();
-		
+
 		var account_json={data_store:'accounts',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'type',value:type},
@@ -670,10 +670,10 @@ function modal12_action(func)
 	 					{index:'status',value:'active'},
 	 					{index:'last_updated',value:last_updated}],
 	 				log:'yes',
-	 				log_data:{title:'Added',notes:'New account '+name,link_to:'form71'}}; 								
+	 				log_data:{title:'Added',notes:'New account '+name,link_to:'form71'}};
 
 		create_json(account_json,func);
-		
+
 		var id=get_new_key();
 		$("#modal12_attributes").find('input, select').each(function()
 		{
@@ -681,21 +681,21 @@ function modal12_action(func)
 			var value=$(this).val();
 			var attribute=$(this).attr('name');
 			if(value!="")
-			{	
+			{
 				var attribute_json={data_store:'attributes',
 	 				data:[{index:'id',value:id},
 	 					{index:'name',value:acc_name},
 	 					{index:'type',value:'account'},
 	 					{index:'attribute',value:attribute},
 	 					{index:'value',value:value},
-	 					{index:'last_updated',value:last_updated}]}; 												
+	 					{index:'last_updated',value:last_updated}]};
 				create_json(attribute_json);
 			}
 		});
 
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal12_link").click();
 }
 
@@ -707,12 +707,12 @@ function modal12_action(func)
 function modal13_action(func)
 {
 	var form=document.getElementById('modal13_form');
-	
+
 	var fname=form.elements['name'];
 	var fphone=form.elements['phone'];
 	var femail=form.elements['email'];
 	var faddress=form.elements['address'];
-	
+
 	///////////////////////////
 	fname.value="";
 	fphone.value="";
@@ -723,7 +723,7 @@ function modal13_action(func)
 	attribute_label.innerHTML="";
 	var attributes_data={data_store:'mandatory_attributes',
 								indexes:[{index:'attribute'},{index:'status'},{index:'value'},{index:'object',exact:'supplier'}]};
-								
+
 	read_json_rows('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
@@ -739,24 +739,24 @@ function modal13_action(func)
 				{
 					attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
 					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
-				}				
-				else 
+				}
+				else
 				{
 					var values_array=attribute.value.split(";");
 					var content="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
-					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
+					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";
 					values_array.forEach(function(fvalue)
 					{
 						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
 					});
 					content+="</select></div>";
 					attr_label.innerHTML=content;
-				}				
+				}
 				attribute_label.appendChild(attr_label);
 			}
 		});
 	});
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -768,16 +768,16 @@ function modal13_action(func)
 			var acc_name=name+" ("+phone+")";
 			var email=femail.value;
 			var address=faddress.value;
-			
+
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
-			
+
 			address = address.replace(/â/g,'');
 			address = address.replace(/&/g, "and");
-			
+
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
-			
+
 			var data_json={data_store:'suppliers',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
@@ -787,19 +787,19 @@ function modal13_action(func)
 	 					{index:'address',value:address},
 	 					{index:'acc_name',value:acc_name,unique:'yes'},
 	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Added',notes:'New supplier '+name,link_to:'form40'}}; 								
-			
+	 				log_data:{title:'Added',notes:'New supplier '+name,link_to:'form40'}};
+
 			var account_json={data_store:'accounts',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'type',value:'supplier'},
 	 					{index:'username',value:''},
 	 					{index:'acc_name',value:acc_name,unique:'yes'},
 	 					{index:'status',value:'active'},
-	 					{index:'last_updated',value:last_updated}]}; 								
-				
+	 					{index:'last_updated',value:last_updated}]};
+
 			create_json(data_json,func);
 			create_json(account_json);
-			
+
 			var id=get_new_key();
 			$("#modal13_attributes").find('input, select').each(function()
 			{
@@ -814,7 +814,7 @@ function modal13_action(func)
 	 					{index:'type',value:'supplier'},
 	 					{index:'attribute',value:attribute},
 	 					{index:'value',value:value},
-	 					{index:'last_updated',value:last_updated}]}; 												
+	 					{index:'last_updated',value:last_updated}]};
 					create_json(attribute_json);
 				}
 			});
@@ -825,7 +825,7 @@ function modal13_action(func)
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal13_link").click();
 }
 
@@ -838,16 +838,16 @@ function modal13_action(func)
 function modal14_action(func)
 {
 	var form=document.getElementById('modal14_form');
-	
+
 	var fname=form.elements['name'];
 	var fmake=form.elements['make'];
 	var fdescription=form.elements['desc'];
 	var fbarcode=form.elements['barcode'];
 	var auto_generate=form.elements['generate'];
-	
+
 	fbarcode.value=get_my_time();
 	auto_generate.checked=true;
-	
+
 	$(auto_generate).off('click');
 	$(auto_generate).on('click',function(event)
 	{
@@ -860,10 +860,10 @@ function modal14_action(func)
 			fbarcode.value="";
 		}
 	});
-	
+
 	var make_data={data_store:'product_master',return_column:'make'};
 	set_my_filter_json(make_data,fmake);
-	
+
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal14_attributes');
 	attribute_label.innerHTML="";
@@ -884,24 +884,24 @@ function modal14_action(func)
 				{
 					attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
 					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
-				}				
-				else 
+				}
+				else
 				{
 					var values_array=attribute.value.split(";");
 					var content="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
-					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
+					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";
 					values_array.forEach(function(fvalue)
 					{
 						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
 					});
 					content+="</select></div>";
 					attr_label.innerHTML=content;
-				}				
+				}
 				attribute_label.appendChild(attr_label);
 			}
 		});
 	});
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -916,7 +916,7 @@ function modal14_action(func)
 			var data_id=get_new_key();
 			var barcode=form.elements['barcode'].value;
 			var last_updated=get_my_time();
-            
+
             var data_json={data_store:'product_master',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
@@ -926,9 +926,9 @@ function modal14_action(func)
 	 					{index:'tax',value:tax},
 	 					{index:'bar_code',value:barcode,unique:'yes'},
 	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Added',notes:'Product '+name+' to inventory',link_to:'form39'}}; 								
+	 				log_data:{title:'Added',notes:'Product '+name+' to inventory',link_to:'form39'}};
 			create_json(data_json,func);
-			
+
 			var id=get_new_key();
             $("#modal14_attributes").find('input, select').each(function()
 			{
@@ -943,7 +943,7 @@ function modal14_action(func)
 	 					{index:'type',value:'product'},
 	 					{index:'attribute',value:attribute},
 	 					{index:'value',value:value},
-	 					{index:'last_updated',value:last_updated}]}; 												
+	 					{index:'last_updated',value:last_updated}]};
 					create_json(attribute_json);
 				}
 			});
@@ -954,7 +954,7 @@ function modal14_action(func)
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal14_link").click();
 }
 
@@ -967,24 +967,24 @@ function modal14_action(func)
 function modal15_action()
 {
 	var form=document.getElementById('modal15_form');
-	
+
 	var fprovider=form.elements[1];
 	var fdetail=form.elements[2];
 	var ftype=form.elements[3];
 	var frating=form.elements[4];
 	var fdate=form.elements[5];
 	var fdata_id=get_new_key();
-	
+
 	var accounts_data="<accounts>" +
 		"<acc_name></acc_name>" +
 		"</accounts>";
-	
+
 	set_my_value_list(accounts_data,fprovider);
 	set_static_value_list('feedback','type',ftype);
 	set_static_value_list('feedback','rating',frating);
 	$(fdate).datepicker();
 	fdate.value=get_my_date();
-		
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -1005,7 +1005,7 @@ function modal15_action()
 					"<rating>"+rating+"</rating>" +
 					"<date>"+date+"</date>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</"+table+">";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>"+table+"</tablename>" +
@@ -1015,10 +1015,10 @@ function modal15_action()
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		create_row(data_xml,activity_xml);
-		
+
 		$("#modal15").dialog("close");
 	});
-	
+
 	$("#modal15").dialog("open");
 }
 
@@ -1031,12 +1031,12 @@ function modal15_action()
 function modal16_action(func)
 {
 	var form=document.getElementById('modal16_form');
-	
+
 	var fname=form.elements['name'];
 	var fphone=form.elements['phone'];
 	var femail=form.elements['email'];
 	var faddress=form.elements['address'];
-	
+
 	///////////////////////////
 	fname.value="";
 	fphone.value="";
@@ -1047,7 +1047,7 @@ function modal16_action(func)
 	attribute_label.innerHTML="";
 	var attributes_data={data_store:'mandatory_attributes',
 								indexes:[{index:'attribute'},{index:'status'},{index:'value'},{index:'object',exact:'staff'}]};
-								
+
 	read_json_rows('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
@@ -1063,24 +1063,24 @@ function modal16_action(func)
 				{
 					attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
 					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
-				}				
-				else 
+				}
+				else
 				{
 					var values_array=attribute.value.split(";");
 					var content="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
-					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
+					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";
 					values_array.forEach(function(fvalue)
 					{
 						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
 					});
 					content+="</select></div>";
 					attr_label.innerHTML=content;
-				}				
+				}
 				attribute_label.appendChild(attr_label);
 			}
 		});
 	});
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -1092,16 +1092,16 @@ function modal16_action(func)
 			var acc_name=name+" ("+phone+")";
 			var email=femail.value;
 			var address=faddress.value;
-			
+
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
-			
+
 			address = address.replace(/â/g,'');
 			address = address.replace(/&/g, "and");
-			
+
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
-			
+
 			var data_json={data_store:'staff',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
@@ -1112,19 +1112,19 @@ function modal16_action(func)
 	 					{index:'status',value:'active'},
 	 					{index:'acc_name',value:acc_name,unique:'yes'},
 	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Added',notes:'New staff '+name,link_to:'form8'}}; 								
-			
+	 				log_data:{title:'Added',notes:'New staff '+name,link_to:'form8'}};
+
 			var account_json={data_store:'accounts',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'type',value:'staff'},
 	 					{index:'username',value:''},
 	 					{index:'acc_name',value:acc_name,unique:'yes'},
 	 					{index:'status',value:'active'},
-	 					{index:'last_updated',value:last_updated}]}; 								
-				
+	 					{index:'last_updated',value:last_updated}]};
+
 			create_json(data_json,func);
 			create_json(account_json);
-			
+
 			var id=get_new_key();
 			$("#modal16_attributes").find('input, select').each(function()
 			{
@@ -1139,7 +1139,7 @@ function modal16_action(func)
 	 					{index:'type',value:'staff'},
 	 					{index:'attribute',value:attribute},
 	 					{index:'value',value:value},
-	 					{index:'last_updated',value:last_updated}]}; 												
+	 					{index:'last_updated',value:last_updated}]};
 					create_json(attribute_json);
 				}
 			});
@@ -1150,7 +1150,7 @@ function modal16_action(func)
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal16_link").click();
 }
 
@@ -1162,26 +1162,26 @@ function modal16_action(func)
 function modal17_action(button)
 {
 	var form=document.getElementById('modal17_form');
-	
+
 	var form_id=$(button).attr('form');
 	var father_form=document.getElementById(form_id);
 	var faddress_detail=father_form.elements[3];
 	var fdata_id=father_form.elements[5];
 	var data_id=father_form.elements[5].value;
-	
+
 	var faddress=father_form.elements[8];
 	var fpincode=father_form.elements[9];
 	var fcity=father_form.elements[10];
 	var fstate=father_form.elements[11];
 	var fcountry=father_form.elements[12];
 	var faddress_status=father_form.elements[13];
-	
+
 	form.elements[1].value=faddress.value;
 	form.elements[2].value=fpincode.value;
 	form.elements[3].value=fcity.value;
 	form.elements[4].value=fstate.value;
 	form.elements[5].value=fcountry.value;
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -1191,7 +1191,7 @@ function modal17_action(button)
 		var city=form.elements[3].value;
 		var state=form.elements[4].value;
 		var country=form.elements[5].value;
-		
+
 		faddress_detail.value=address+", "+pincode+", "+city+", "+state+", "+country;
 		faddress.value=address;
 		fpincode.value=pincode;
@@ -1218,11 +1218,11 @@ function modal17_action(button)
 		else
 		{
 			local_update_simple(data_xml);
-		}				
-		
+		}
+
 		$("#modal17").dialog("close");
 	});
-	
+
 	$("#modal17").dialog("open");
 }
 
@@ -1234,15 +1234,15 @@ function modal17_action(button)
 function modal18_action(func)
 {
 	var form=document.getElementById('modal18_form');
-	
+
 	var fname=form.elements[1];
 	var fdescription=form.elements[2];
 	var fest_hours=form.elements[3];
-	
+
 	fname.value='';
 	fdescription.value='';
 	fest_hours.value='';
-	
+
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal18_attributes');
 	attribute_label.innerHTML="";
@@ -1265,8 +1265,8 @@ function modal18_action(func)
 				if(attribute.value=="")
 				{
 					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
-				}				
-				else 
+				}
+				else
 				{
 					var values_array=attribute.value.split(";");
 					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
@@ -1276,15 +1276,15 @@ function modal18_action(func)
 					});
 					content+="</select>";
 					attr_label.innerHTML=content;
-				}				
+				}
 				attribute_label.appendChild(attr_label);
 				var line_break=document.createElement('br');
 				attribute_label.appendChild(line_break);
 			}
 		});
 	});
-	
-	
+
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -1317,7 +1317,7 @@ function modal18_action(func)
 		{
 			local_create_row_func(data_xml,activity_xml,func);
 		}
-		
+
 		var id=get_new_key();
 		$("#modal18_attributes").find('input, select').each(function()
 		{
@@ -1348,7 +1348,7 @@ function modal18_action(func)
 		$("#modal18").dialog("close");
 		//$("#modal18").dialog("destroy");
 	});
-	
+
 	$("#modal18").dialog("open");
 }
 
@@ -1360,17 +1360,17 @@ function modal18_action(func)
 function modal19_action(button)
 {
 	var form=document.getElementById('modal19_form');
-	
+
 	var fname=form.elements[1];
 	var fmake=form.elements[2];
 	var fdescription=form.elements[3];
 	var fpictureinfo=form.elements[4];
 	var fpicture=form.elements[5];
 	var ftax=form.elements[6];
-	
+
 	var fbarcode=form.elements[7];
 	var auto_generate=form.elements[8];
-	
+
 	$(auto_generate).off('click');
 	$(auto_generate).on('click',function(event)
 	{
@@ -1382,13 +1382,13 @@ function modal19_action(button)
 		{
 			fbarcode.value="";
 		}
-	});		
+	});
 
 	/////---------initializing all the values-------///////////
 	var form_id=$(button).attr('form');
 	var copy_form=document.getElementById(form_id);
 	var copy_name=copy_form.elements[0].value;
-	
+
 	var copy_master_data="<product_master>" +
 			"<id></id>" +
 			"<name exact='yes'>"+copy_name+"</name>" +
@@ -1396,7 +1396,7 @@ function modal19_action(button)
 			"<make></make>" +
 			"<tax></tax>" +
 			"</product_master>";
-	
+
 	fetch_requested_data('form39',copy_master_data,function(results)
 	{
 		results.forEach(function(result)
@@ -1404,7 +1404,7 @@ function modal19_action(button)
 			fmake.value=result.make;
 			ftax.value=result.tax;
 			fdescription.value=result.description;
-			
+
 			var picture_column="<documents>" +
 					"<id></id>" +
 					"<url></url>" +
@@ -1423,27 +1423,27 @@ function modal19_action(button)
 			});
 		});
 	});
-		
+
 	////---------initialization complete------///////////////
-	
-	
+
+
 	////-----setting editable dropdowns etc----------/////////////
 	var make_data="<product_master>" +
 		"<make></make>" +
 		"</product_master>";
 	set_my_filter(make_data,fmake);
-	
+
 	fpicture.addEventListener('change',function(evt)
 	{
 		select_picture(evt,fpictureinfo,function(dataURL)
 		{
-			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";			
+			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";
 		});
 	},false);
-	
+
 	///////-------------set editable finished-------/////////////
 
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -1467,7 +1467,7 @@ function modal19_action(button)
 						"<tax>"+tax+"</tax>" +
 						"<bar_code unique='yes'>"+barcode+"</bar_code>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
-						"</product_master>";	
+						"</product_master>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>product_master</tablename>" +
@@ -1483,7 +1483,7 @@ function modal19_action(button)
 			else
 			{
 				local_create_row(data_xml,activity_xml);
-			}	
+			}
 
 			if(url!="")
 			{
@@ -1501,7 +1501,7 @@ function modal19_action(button)
 				else
 				{
 					local_create_simple(pic_xml,pic_activity_xml);
-				}	
+				}
 			}
 
 			var copy_attributes_data="<attributes>" +
@@ -1535,7 +1535,7 @@ function modal19_action(button)
 					}
 				});
 			});
-			
+
 			var copy_requisite_data="<pre_requisites>" +
 					"<name exact='yes'>"+copy_name+"</name>" +
 					"<type>product</type>" +
@@ -1569,7 +1569,7 @@ function modal19_action(button)
 					}
 				});
 			});
-			
+
 			var copy_cross_data="<cross_sells>" +
 					"<name exact='yes'>"+copy_name+"</name>" +
 					"<type>product</type>" +
@@ -1590,7 +1590,7 @@ function modal19_action(button)
 							"<cross_name>"+cross_sell.cross_type+"</cross_name>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</cross_sells>";
-				
+
 						if(is_online())
 						{
 							server_create_simple(data_xml);
@@ -1601,7 +1601,7 @@ function modal19_action(button)
 						}
 					}
 				});
-			});	
+			});
 		}
 		else
 		{
@@ -1609,7 +1609,7 @@ function modal19_action(button)
 		}
 		$("#modal19").dialog("close");
 	});
-	
+
 	$("#modal19").dialog("open");
 }
 
@@ -1621,10 +1621,10 @@ function modal19_action(button)
 function modal20_action(func)
 {
 	var form=document.getElementById('modal20_form');
-	
+
 	var fname=form.elements[1];
 	var fdescription=form.elements[2];
-	
+
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal20_attributes');
 	attribute_label.innerHTML="";
@@ -1647,8 +1647,8 @@ function modal20_action(func)
 				if(attribute.value=="")
 				{
 					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
-				}				
-				else 
+				}
+				else
 				{
 					var values_array=attribute.value.split(";");
 					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
@@ -1658,21 +1658,21 @@ function modal20_action(func)
 					});
 					content+="</select>";
 					attr_label.innerHTML=content;
-				}				
+				}
 				attribute_label.appendChild(attr_label);
 				var line_break=document.createElement('br');
 				attribute_label.appendChild(line_break);
 			}
 		});
 	});
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
 		if(is_create_access('form57') || is_update_access('form57'))
 		{
-			var name=form.elements[1].value;					
+			var name=form.elements[1].value;
 			var description=form.elements[2].value;
 			var tax=form.elements[3].value;
 			var price=form.elements[4].value;
@@ -1685,7 +1685,7 @@ function modal20_action(func)
 						"<description>"+description+"</description>" +
 						"<tax>"+tax+"</tax>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
-						"</services>";	
+						"</services>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>services</tablename>" +
@@ -1701,8 +1701,8 @@ function modal20_action(func)
 			else
 			{
 				local_create_row_func(data_xml,activity_xml,func);
-			}	
-			
+			}
+
 			var id=get_new_key();
 			$("#modal20_attributes").find('input, select').each(function()
 			{
@@ -1736,7 +1736,7 @@ function modal20_action(func)
 		}
 		$("#modal20").dialog("close");
 	});
-	
+
 	$("#modal20").dialog("open");
 }
 
@@ -1749,16 +1749,16 @@ function modal20_action(func)
 function modal21_action()
 {
 	var form=document.getElementById('modal21_form');
-	
+
 	var fname=form.elements[1];
 	var fdescription=form.elements[2];
-	
+
 	//////////----initializing form----------////////////
-	
+
 	var form_id=$(button).attr('form');
 	var copy_form=document.getElementById(form_id);
 	var copy_name=copy_form.elements[0].value;
-	
+
 	var copy_master_data="<services>" +
 			"<id></id>" +
 			"<name exact='yes'>"+copy_name+"</name>" +
@@ -1776,9 +1776,9 @@ function modal21_action()
 			form.elements[4].value=result.price;
 		});
 	});
-	
+
 	////////------end of initialization-----------///////////
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -1799,7 +1799,7 @@ function modal21_action()
 						"<taxable>"+taxable+"</taxable>" +
 						"<tax>"+tax+"</tax>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
-						"</services>";	
+						"</services>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>services</tablename>" +
@@ -1815,7 +1815,7 @@ function modal21_action()
 			else
 			{
 				local_create_row(data_xml,activity_xml);
-			}	
+			}
 
 			var copy_attributes_data="<attributes>" +
 					"<name exact='yes'>"+copy_name+"</name>" +
@@ -1882,7 +1882,7 @@ function modal21_action()
 					}
 				});
 			});
-			
+
 			var copy_cross_data="<cross_sells>" +
 					"<name exact='yes'>"+copy_name+"</name>" +
 					"<type>service</type>" +
@@ -1903,7 +1903,7 @@ function modal21_action()
 							"<cross_name>"+cross_sell.cross_type+"</cross_name>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</cross_sells>";
-				
+
 						if(is_online())
 						{
 							server_create_simple(data_xml);
@@ -1914,7 +1914,7 @@ function modal21_action()
 						}
 					}
 				});
-			});			
+			});
 		}
 		else
 		{
@@ -1932,7 +1932,7 @@ function modal21_action()
 function modal22_action(func)
 {
 	var form=document.getElementById('modal22_form');
-	
+
 	var fname=form.elements['name'];
 	var fbatch=form.elements['batch'];
 	var fmanufacture=form.elements['manu_date'];
@@ -1940,13 +1940,13 @@ function modal22_action(func)
 	var fmrp=form.elements['mrp'];
 	var fcost=form.elements['pprice'];
 	var fsale_price=form.elements['sprice'];
-	
+
 	$(fexpiry).datepicker();
 	$(fmanufacture).datepicker();
-	
+
 	var name_data={data_store:'product_master',return_column:'name'};
 	set_my_value_list_json(name_data,fname);
-	
+
 	////adding sale price fields for all billing types///////
 	var billing_type_data={data_store:'bill_types',return_column:'name',
                           indexes:[{index:'status',exact:'active'}]};
@@ -1960,12 +1960,12 @@ function modal22_action(func)
             attr_label.setAttribute('class','row');
             attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+bill_type+" sale price"+"</div>"+
 					     			"<div class='col-sm-12 col-md-8'><input type='number' step='any' id='"+bill_type+"' required></div>";
-				
+
 			billing_label.appendChild(attr_label);
 		});
 	});
 	////////////////////////////////////////////////
-	
+
 	////auto setting sale price fields/////////
 	$(fsale_price).off('blur');
 	$(fsale_price).on('blur',function(event)
@@ -1978,10 +1978,10 @@ function modal22_action(func)
 				$(this).val(sale_price);
 			}
 		});
-	});		
+	});
 	////////////////////
-	
-	
+
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -1990,10 +1990,10 @@ function modal22_action(func)
 		{
 			var name=fname.value;
 			var batch=fbatch.value;
-			
+
 			batch = batch.replace(/â/g,'');
 			batch = batch.replace(/&/g, "and");
-						
+
 			var manu_date=get_raw_time(fmanufacture.value);
 			var expiry=get_raw_time(fexpiry.value);
 			var cost=fcost.value;
@@ -2014,9 +2014,9 @@ function modal22_action(func)
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Added',notes:'New batch '+batch+' for product '+name,link_to:'form1'}};
 			create_json(data_json,func);
-			
+
 			var id=get_new_key();
-			
+
 			$("#modal22_billings").find('input').each(function()
 			{
 				id++;
@@ -2029,7 +2029,7 @@ function modal22_action(func)
 	 					{index:'sale_price',value:price},
 	 					{index:'pi_id',value:data_id},
 	 					{index:'billing_type',value:bill_type},
-	 					{index:'last_updated',value:last_updated}]};			
+	 					{index:'last_updated',value:last_updated}]};
 				create_json(sale_price_json);
 			});
 		}
@@ -2039,14 +2039,14 @@ function modal22_action(func)
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal22_link").click();
 }
- 
+
 function modal23_action(t_func,i_func,v_func)
 {
 	var form=document.getElementById('modal23_form');
-	
+
 	var template_button=form.elements['download'];
 	var records_action=form.elements['upload_option'];
 	var select_file=form.elements['file'];
@@ -2054,20 +2054,20 @@ function modal23_action(t_func,i_func,v_func)
 	var selected_file=form.elements['selected_file'];
 	var import_button=form.elements['save'];
 
-	$(dummy_button).off('click'); 
-	$(dummy_button).on('click',function (e) 
+	$(dummy_button).off('click');
+	$(dummy_button).on('click',function (e)
 	{
 		e.preventDefault();
 		$(select_file).trigger('click');
 	});
 
 	dummy_button.setAttribute('class','btn red-sunglo');
-	
+
 	select_file.value="";
 	selected_file.value="";
-	
+
 	$(select_file).off('change');
-	$(select_file).on('change',function () 
+	$(select_file).on('change',function ()
 	{
 		var file_name=select_file.value;
 		if(file_name!="" && (file_name.indexOf('csv')>-1))
@@ -2075,21 +2075,21 @@ function modal23_action(t_func,i_func,v_func)
 			dummy_button.setAttribute('class','btn green-jungle');
 			selected_file.value=file_name;
 		}
-		else 
+		else
 		{
 			dummy_button.setAttribute('class','btn red-sunglo');
-	
+
 			select_file.value="";
 			selected_file.value="";
 		}
 	});
-		
+
 	$(template_button).off("click");
 	$(template_button).on("click",function(event)
 	{
 		t_func();
 	});
-	
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -2109,7 +2109,7 @@ function modal23_action(t_func,i_func,v_func)
 
         	progress_value=10;
            	//console.log(data_array);
-        	
+
            	if(typeof v_func!='undefined')
            	{
            		var error_array=v_func(data_array);
@@ -2123,11 +2123,11 @@ function modal23_action(t_func,i_func,v_func)
 			        	{
 			        		i_func(data_array,'update_records');
 			        	}
-			           
+
 			        	progress_value=15;
-			        	
+
 			        	//console.log(data_array.length);
-			        	
+
 			        	var ajax_complete=setInterval(function()
 			        	{
 			        		//console.log(number_active_ajax);
@@ -2139,7 +2139,7 @@ function modal23_action(t_func,i_func,v_func)
 			        		{
 			        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
 			        		}
-			        		
+
 			        		if(number_active_ajax===0 && localdb_open_requests===0)
 			        		{
 			        			hide_progress();
@@ -2149,9 +2149,9 @@ function modal23_action(t_func,i_func,v_func)
 			        			clearInterval(ajax_complete);
 			        		}
 			        	},1000);
-                        $(form).find(".close").click();		
+                        $(form).find(".close").click();
            		}
-           		else 
+           		else
            		{
            			hide_progress();
 	       			selected_file.value="";
@@ -2160,7 +2160,7 @@ function modal23_action(t_func,i_func,v_func)
 	        		modal164_action(error_array);
            		}
            	}
-           	else 
+           	else
            	{
 	           	if(records_action.value=='new')
 		        	{
@@ -2170,11 +2170,11 @@ function modal23_action(t_func,i_func,v_func)
 		        	{
 		        		i_func(data_array,'update_records');
 		        	}
-		           
+
 		        	progress_value=15;
-		        	
+
 		        	//console.log(data_array.length);
-		        	
+
 		        	var ajax_complete=setInterval(function()
 		        	{
 		        		//console.log(number_active_ajax);
@@ -2186,7 +2186,7 @@ function modal23_action(t_func,i_func,v_func)
 		        		{
 		        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
 		        		}
-		        		
+
 		        		if(number_active_ajax===0 && localdb_open_requests===0)
 		        		{
 		        			hide_progress();
@@ -2198,7 +2198,7 @@ function modal23_action(t_func,i_func,v_func)
 		        	},1000);
 	        }
         }
-        reader.readAsText(file);    
+        reader.readAsText(file);
     });
 	$("#modal23_link").click();
 }
@@ -2210,7 +2210,7 @@ function modal23_action(t_func,i_func,v_func)
 function modal24_action(button)
 {
 	var form=document.getElementById('modal24_form');
-	
+
 	var form_id=$(button).attr('form');
 	var father_form=document.getElementById(form_id);
 	var faddress_detail=father_form.elements[3];
@@ -2221,13 +2221,13 @@ function modal24_action(button)
 	var fstate=father_form.elements[10];
 	var fcountry=father_form.elements[11];
 	var faddress_status=father_form.elements[12];
-		
+
 	form.elements[1].value=faddress.value;
 	form.elements[2].value=fpincode.value;
 	form.elements[3].value=fcity.value;
 	form.elements[4].value=fstate.value;
 	form.elements[5].value=fcountry.value;
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -2237,7 +2237,7 @@ function modal24_action(button)
 		var city=form.elements[3].value;
 		var state=form.elements[4].value;
 		var country=form.elements[5].value;
-		
+
 		var address_detail=address+", "+pincode+", "+city+", "+state+", "+country;
 		faddress_detail.value=address_detail;
 		faddress.value=address;
@@ -2266,10 +2266,10 @@ function modal24_action(button)
 		{
 			local_update_simple(data_xml);
 		}
-					
+
 		$("#modal24").dialog("close");
 	});
-	
+
 	$("#modal24").dialog("open");
 }
 
@@ -2281,7 +2281,7 @@ function modal24_action(button)
 function modal25_action(button)
 {
 	var form=document.getElementById('modal25_form');
-	
+
 	var form_id=$(button).attr('form');
 	var father_form=document.getElementById(form_id);
 	var faddress_detail=father_form.elements[3];
@@ -2292,13 +2292,13 @@ function modal25_action(button)
 	var fstate=father_form.elements[10];
 	var fcountry=father_form.elements[11];
 	var faddress_status=father_form.elements[1];
-	
+
 	form.elements[1].value=faddress.value;
 	form.elements[2].value=fpincode.value;
 	form.elements[3].value=fcity.value;
 	form.elements[4].value=fstate.value;
 	form.elements[5].value=fcountry.value;
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -2308,7 +2308,7 @@ function modal25_action(button)
 		var city=form.elements[3].value;
 		var state=form.elements[4].value;
 		var country=form.elements[5].value;
-		
+
 		var address_detail=address+", "+pincode+", "+city+", "+state+", "+country;
 		faddress_detail.value=address_detail;
 		faddress.value=address;
@@ -2317,7 +2317,7 @@ function modal25_action(button)
 		fstate.value=state;
 		fcountry.value=country;
 		faddress_status.value="pending analysis";
-	
+
 		var data_xml="<suppliers>" +
 				"<id>"+data_id+"</id>" +
 				"<address>"+address+"</address>" +
@@ -2337,10 +2337,10 @@ function modal25_action(button)
 		{
 			local_update_simple(data_xml);
 		}
-		
+
 		$("#modal25").dialog("close");
 	});
-	
+
 	$("#modal25").dialog("open");
 }
 
@@ -2351,16 +2351,16 @@ function modal25_action(button)
 function modal26_action(payment_id,func)
 {
 	var form=document.getElementById('modal26_form');
-	
+
 	var fcustomer=form.elements['by'];
 	var ftotal=form.elements['total'];
 	var fpaid=form.elements['paid'];
 	var fdue_date=form.elements['date'];
 	var fmode=form.elements['mode'];
 	var fstatus=form.elements['status'];
-	
+
 	$(fdue_date).datepicker();
-	
+
 	var customer_data={data_store:'accounts',return_column:'acc_name'};
 	set_my_value_list_json(customer_data,fcustomer);
 	set_static_value_list_json('payments','status',fstatus);
@@ -2375,13 +2375,13 @@ function modal26_action(payment_id,func)
         {
             fstatus.value='closed';
         }
-        
+
 		if(fstatus.value=='closed' && (ftotal.value>(fpaid.value+1) || fpaid.value==""))
 		{
 			alert("Payment can't be closed as the full amount has not been paid.");
 			fstatus.value='pending';
 		}
-        else 
+        else
 		{
 			var customer=fcustomer.value;
 			var total=ftotal.value;
@@ -2390,31 +2390,31 @@ function modal26_action(payment_id,func)
 			var mode=fmode.value;
 			var status=fstatus.value;
 			var last_updated=get_my_time();
-            
+
             var data_json={data_store:'payments',
 	 				data:[{index:'id',value:payment_id},
 	 					{index:'acc_name',value:customer},
                         {index:'due_date',value:due_date},
-                        {index:'paid_amount',value:paid},  
+                        {index:'paid_amount',value:paid},
                         {index:'total_amount',value:total},
                         {index:'type',value:'received'},
                         {index:'mode',value:mode},
-                        {index:'status',value:status},  
+                        {index:'status',value:status},
 	 					{index:'last_updated',value:last_updated}],
                     log:'yes',
                     log_data:{title:'Updated',notes:'Payment of Rs. '+paid+' from '+customer,link_to:'form11'}};
 
 			update_json(data_json);
-            
+
 			if(func)
 			{
 				func(mode,paid);
 			}
-			
+
 			$(form).find(".close").click();
 		}
 	});
-	
+
 	var payments_data={data_store:'payments',
                       indexes:[{index:'id',value:payment_id+""},
                               {index:'acc_name'},
@@ -2436,7 +2436,7 @@ function modal26_action(payment_id,func)
 			fstatus.value=payments[0].status;
 		}
 		$("#modal26_link").click();
-	});		
+	});
 }
 
 
@@ -2448,20 +2448,20 @@ function modal26_action(payment_id,func)
 function modal27_action(product_name)
 {
 	var form=document.getElementById('modal27_form');
-	
+
 	var fname=form.elements[1];
 	var fmake=form.elements[2];
 	var fprice=form.elements[3];
 	var fquantity=form.elements[4];
 	var fsupplier=form.elements[5];
 	var data_id=get_new_key();
-	
+
 	fmake.value="";
 	fprice.value="";
 	fquantity.value="";
 	fsupplier.value="";
 	fname.value=product_name;
-	
+
 	var supplier_data="<suppliers>" +
 		"<acc_name></acc_name>" +
 		"</suppliers>";
@@ -2472,7 +2472,7 @@ function modal27_action(product_name)
 		"<name exact='yes'>"+product_name+"</name>" +
 		"</product_master>";
 	set_my_value(make_data,fmake);
-	
+
 	var price_data="<product_instances>" +
 		"<cost_price></cost_price>" +
 		"<product_name exact='yes'>"+product_name+"</product_name>" +
@@ -2492,7 +2492,7 @@ function modal27_action(product_name)
 		for(var k in last_purchases)
 		{
 			order_id=last_purchases[k].order_id;
-			
+
 			var last_order_data="<purchase_orders>" +
 					"<supplier></supplier>" +
 					"<id exact='yes'>"+order_id+"</id>" +
@@ -2514,8 +2514,8 @@ function modal27_action(product_name)
 			break;
 		}
 	});
-	
-	
+
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -2528,7 +2528,7 @@ function modal27_action(product_name)
 			var quantity=fquantity.value;
 			var supplier=fsupplier.value;
 			var last_updated=get_my_time();
-		
+
 			var purchase_order_data="<purchase_orders>" +
 					"<id></id>" +
 					"<supplier exact='yes'>"+supplier+"</supplier>" +
@@ -2567,7 +2567,7 @@ function modal27_action(product_name)
 					else
 					{
 						local_create_row(data_xml,activity_xml);
-					}	
+					}
 				}
 				var data_xml="<purchase_order_items>" +
 							"<id>"+data_id+"</id>" +
@@ -2595,9 +2595,9 @@ function modal27_action(product_name)
 				{
 					local_create_row(data_xml,activity_xml);
 					local_update_row(data_xml,activity_xml);
-				}	
+				}
 			});
-			
+
 		}
 		else
 		{
@@ -2605,7 +2605,7 @@ function modal27_action(product_name)
 		}
 		$("#modal27").dialog("close");
 	});
-	
+
 	$("#modal27").dialog("open");
 }
 
@@ -2616,16 +2616,16 @@ function modal27_action(product_name)
 function modal28_action(payment_id)
 {
 	var form=document.getElementById('modal28_form');
-	
+
 	var fsupplier=form.elements['to'];
 	var ftotal=form.elements['total'];
 	var fpaid=form.elements['paid'];
 	var fdue_date=form.elements['date'];
 	var fmode=form.elements['mode'];
 	var fstatus=form.elements['status'];
-	
+
 	$(fdue_date).datepicker();
-	
+
 	set_static_value_list_json('payments','status',fstatus);
 	set_static_value_list_json('payments','mode',fmode);
 
@@ -2639,7 +2639,7 @@ function modal28_action(payment_id)
 			alert("Payment can't be closed as the full amount has not been paid.");
 			fstatus.value='pending';
 		}
-		else 
+		else
 		{
 			var supplier=fsupplier.value;
 			var total=ftotal.value;
@@ -2648,7 +2648,7 @@ function modal28_action(payment_id)
 			var mode=fmode.value;
 			var status=fstatus.value;
 			var last_updated=get_my_time();
-            
+
             var data_json={data_store:'payments',
 	 				log:'yes',
 	 				data:[{index:'id',value:payment_id},
@@ -2661,13 +2661,13 @@ function modal28_action(payment_id)
                         {index:'mode',value:mode},
                         {index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Updated',notes:'Payment of '+paid+ " to "+supplier,link_to:'form11'}};
- 				
+
 			update_json(data_json);
-			
+
 			$(form).find(".close").click();
 		}
 	});
-	
+
 	var payments_data={data_store:'payments',
                       indexes:[{index:'id',value:payment_id+""},
                               {index:'acc_name'},
@@ -2691,7 +2691,7 @@ function modal28_action(payment_id)
 			fstatus.value=payments[0].status;
 		}
 		$("#modal28_link").click();
-	});	
+	});
 }
 
 /**
@@ -2701,7 +2701,7 @@ function modal28_action(payment_id)
 function modal29_action(button)
 {
 	var form=document.getElementById('modal29_form');
-	
+
 	var form_id=$(button).attr('form');
 	var father_form=document.getElementById(form_id);
 	var fdetail=father_form.elements[5];
@@ -2710,7 +2710,7 @@ function modal29_action(button)
 	var fdue_date=father_form.elements[9];
 	var fbill_id=father_form.elements[10];
 	var fnotes=father_form.elements[11];
-		
+
 	form.elements[1].value=fbill_id.value;
 	var date=form.elements[2];
 	date.value=get_my_past_date(fdate.value);
@@ -2719,11 +2719,11 @@ function modal29_action(button)
 	var due_date=form.elements[4];
 	due_date.value=get_my_past_date(fdue_date.value);
 	form.elements[5].value=fnotes.value;
-	
+
 	$(date).datepicker();
 	$(due_date).datepicker();
 	set_static_value_list('payments','mode',mode);
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -2739,11 +2739,11 @@ function modal29_action(button)
 		fdue_date.value=get_raw_time(form.elements[4].value);
 		fbill_id.value=form.elements[1].value;
 		fnotes.value=form.elements[5].value;
-	
+
 		$("#modal29").dialog("close");
 		$(father_form).submit();
 	});
-	
+
 	$("#modal29").dialog("open");
 }
 
@@ -2759,13 +2759,13 @@ function modal30_action()
 	var amount_filter=form.elements[3];
 	var balance_filter=form.elements[4];
 	var type_filter=form.elements[5];
-	
+
 	var accounts_data="<customers>" +
 			"<acc_name></acc_name>" +
 			"</customers>";
 	set_my_value_list(accounts_data,account_filter);
 	set_static_value_list('receipts','type',type_filter);
-	
+
 	var receipts_data="<receipts>" +
 			"<receipt_id></receipt_id>" +
 			"</receipts>";
@@ -2811,7 +2811,7 @@ function modal30_action()
 					balance_amount+=parseFloat(payment.paid_amount);
 				}
 			});
-			
+
 			if(balance_amount==0)
 			{
 				balance_filter.value="Rs. 0";
@@ -2826,11 +2826,11 @@ function modal30_action()
 				balance_filter.value="Payable: Rs. "+balance_amount;
 			}
 			type_filter.value='received';
-			
+
 			//amount_filter.setAttribute('max',balance_amount);
 		});
 	});
-	
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -2846,7 +2846,7 @@ function modal30_action()
 			var accounts_data="<payments>" +
 					"<id></id>" +
 					//"<type exact='yes'>"+receipt_type+"</type>" +
-					"<type></type>"+					
+					"<type></type>"+
 					"<status exact='yes'>pending</status>" +
 					"<acc_name exact='yes'>"+account_name+"</acc_name>" +
 					"<date></date>" +
@@ -2854,19 +2854,19 @@ function modal30_action()
 					"<paid_amount></paid_amount>" +
 					"<notes></notes>" +
 					"</payments>";
-			
+
 			fetch_requested_data('',accounts_data,function(accounts)
 			{
 				accounts.sort(function(a,b)
 				{
 					if(a.date>b.date)
 					{	return 1;}
-					else 
+					else
 					{	return -1;}
 				});
-				
+
 				var total_amount=0;
-								
+
 				for(var i=0;i<accounts.length;i++)
 				{
 					if(accounts[i].type=='received')
@@ -2880,19 +2880,19 @@ function modal30_action()
 						total_amount+=parseFloat(accounts[i].paid_amount);
 					}
 				}
-				
+
 				total_amount=total_amount-counter_payment;
-				
+
 				if(total_amount>0)
 				{
 					accounts.sort(function(a,b)
 					{
 						if(a.type>b.type)
 						{	return 1;}
-						else 
+						else
 						{	return -1;}
 					});
-					console.log(accounts);					
+					console.log(accounts);
 				}
 				else
 				{
@@ -2900,14 +2900,14 @@ function modal30_action()
 					{
 						if(a.type<b.type)
 						{	return 1;}
-						else 
+						else
 						{	return -1;}
 					});
-					console.log(accounts);					
+					console.log(accounts);
 				}
 
 				console.log(total_amount);
-				
+
 				var new_id=get_new_key();
 				var last_updated=get_my_time();
 				accounts.forEach(function(account)
@@ -2933,9 +2933,9 @@ function modal30_action()
 								"<date>"+last_updated+"</date>" +
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</receipts_payment_mapping>";
-						
+
 						update_simple(payment_xml);
-						create_simple(receipts_xml);	
+						create_simple(receipts_xml);
 					}
 					else
 					{
@@ -2961,7 +2961,7 @@ function modal30_action()
 									"<date>"+last_updated+"</date>" +
 									"<last_updated>"+last_updated+"</last_updated>" +
 									"</receipts_payment_mapping>";
-							
+
 								update_simple(payment_xml);
 								create_simple(receipts_xml);
 							}
@@ -2988,7 +2988,7 @@ function modal30_action()
 										"<date>"+last_updated+"</date>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</receipts_payment_mapping>";
-								
+
 									update_simple(payment_xml);
 									create_simple(receipts_xml);
 									total_amount=0;
@@ -3013,14 +3013,14 @@ function modal30_action()
 										"<date>"+last_updated+"</date>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</receipts_payment_mapping>";
-								
+
 									update_simple(payment_xml);
 									create_simple(receipts_xml);
 									total_amount=total_amount+parseFloat(account.total_amount);
-								}								
+								}
 							}
 						}
-						else 
+						else
 						{
 							if(total_amount<0)
 							{
@@ -3042,7 +3042,7 @@ function modal30_action()
 									"<date>"+last_updated+"</date>" +
 									"<last_updated>"+last_updated+"</last_updated>" +
 									"</receipts_payment_mapping>";
-							
+
 								update_simple(payment_xml);
 								create_simple(receipts_xml);
 							}
@@ -3069,7 +3069,7 @@ function modal30_action()
 										"<date>"+last_updated+"</date>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</receipts_payment_mapping>";
-								
+
 									update_simple(payment_xml);
 									create_simple(receipts_xml);
 									total_amount=0;
@@ -3094,17 +3094,17 @@ function modal30_action()
 										"<date>"+last_updated+"</date>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</receipts_payment_mapping>";
-								
+
 									update_simple(payment_xml);
 									create_simple(receipts_xml);
 									total_amount=total_amount-parseFloat(account.total_amount);
-								}								
+								}
 							}
 						}
 					}
 				});
-					
-				var p_id=get_new_key();				
+
+				var p_id=get_new_key();
 				if(total_amount<0)
 				{
 					var payment_xml="<payments>" +
@@ -3121,12 +3121,12 @@ function modal30_action()
 								"<source_id>"+p_id+"</source_id>" +
 								"<source>receipt</source>" +
 								"<source_info>"+receipt_id+"</source_info>"+
-								"<notes>Generated for receipt # "+receipt_id+"</notes>" +	
+								"<notes>Generated for receipt # "+receipt_id+"</notes>" +
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</payments>";
-					create_simple(payment_xml);		
+					create_simple(payment_xml);
 				}
-				
+
 				var receipt_xml="<receipts>" +
 								"<id>"+p_id+"</id>" +
 								"<receipt_id>"+receipt_id+"</receipt_id>" +
@@ -3137,7 +3137,7 @@ function modal30_action()
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</receipts>";
 				create_simple(receipt_xml);
-				
+
 			});
 		}
 		else
@@ -3166,7 +3166,7 @@ function modal31_action()
 	account_filter.value="";
 	balance_filter.value="";
 	amount_filter.value="";
-	
+
 	$(receipt_filter).off('blur');
 	$(receipt_filter).on('blur',function(e)
 	{
@@ -3186,7 +3186,7 @@ function modal31_action()
 					receipt_amount+=parseFloat(receipts[j].amount);
 				}
 				amount_filter.value=receipt_amount;
-				
+
 				var payments_data={data_store:'payments',
                                   indexes:[{index:'id'},
                                           {index:'type'},
@@ -3210,7 +3210,7 @@ function modal31_action()
 							balance_amount+=parseFloat(payment.paid_amount);
 						}
 					});
-					
+
 					if(balance_amount==0)
 					{
 						balance_filter.value="Rs. 0";
@@ -3228,14 +3228,14 @@ function modal31_action()
 			}
 		});
 	});
-	
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
 		///////////////////////////////////////
 		event.preventDefault();
 		var receipt_id=form.elements['receipt'].value;
-		
+
 		if(is_delete_access('form124') || is_delete_access('form243') || is_delete_access('form291') || is_delete_access('form282'))
 		{
 			var receipts_data={data_store:'receipts_payment_mapping',
@@ -3246,12 +3246,12 @@ function modal31_action()
 			read_json_rows('',receipts_data,function(receipts)
 			{
 				receipts.forEach(function(receipt)
-				{	
+				{
 					var payments_data={data_store:'payments',
                                       indexes:[{index:'id',value:receipt.payment_id+""},
                                               {index:'paid_amount'}]};
 					read_json_rows('',payments_data,function(payments)
-					{	
+					{
 						var last_updated=get_my_time();
 						payments.forEach(function(payment)
 						{
@@ -3264,7 +3264,7 @@ function modal31_action()
 
 							update_json(payment_json);
 						});
-						
+
                         var receipt_json={data_store:'receipts',
 	 					data:[{index:'receipt_id',value:receipt_id}]};
 
@@ -3273,7 +3273,7 @@ function modal31_action()
 
                         var payment_json={data_store:'payments',
 	 					data:[{index:'bill_id',value:receipt_id}]};
-												
+
 						delete_json(receipt_json);
 						delete_json(receipt_payment_json);
 						delete_json(payment_json);
@@ -3303,7 +3303,7 @@ function modal32_action(date_initiated)
 	var due_filter=form.elements[3];
 	var status_filter=form.elements[4];
 	var hours_filter=form.elements[5];
-	
+
 	var task_data="<task_type>" +
 			"<name></name>" +
 			"</task_type>";
@@ -3314,7 +3314,7 @@ function modal32_action(date_initiated)
 	set_my_value_list(staff_data,staff_filter);
 	$(due_filter).vdatetimepicker();
 	set_static_value_list('task_instances','status',status_filter);
-	
+
 	$(task_filter).off('blur');
 	$(task_filter).on('blur',function(event)
 	{
@@ -3324,12 +3324,12 @@ function modal32_action(date_initiated)
 				"</task_type>";
 		set_my_value(hours_data,hours_filter);
 	});
-	
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		
+
 		var name=form.elements[1].value;
 		var assignee=form.elements[2].value;
 		var t_due=get_raw_time(form.elements[3].value);
@@ -3373,11 +3373,11 @@ function modal32_action(date_initiated)
 		{
 			local_create_row(data_xml,activity_xml);
 			local_create_simple(access_xml);
-		}	
-		
+		}
+
 		$("#modal32").dialog("close");
 	});
-	
+
 	$("#modal32").dialog("open");
 }
 
@@ -3392,11 +3392,11 @@ function modal33_action(id)
 	var staff_filter=form.elements['assignee'];
 	var notes_filter=form.elements['notes'];
 	var status_filter=form.elements['status'];
-	
+
 	var staff_data={data_store:'staff',return_column:'acc_name'};
 	set_my_value_list_json(staff_data,staff_filter);
     set_static_value_list_json('task_instances','status',status_filter);
-	
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -3409,7 +3409,7 @@ function modal33_action(id)
 			var status=form.elements['status'].value;
 			var data_id=id;
 			var last_updated=get_my_time();
-            
+
             var data_json={data_store:'task_instances',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'name',value:name},
@@ -3422,16 +3422,16 @@ function modal33_action(id)
 	 				data:[{index:'id',value:data_id},
 	 					{index:'status',value:status},
                         {index:'last_updated',value:last_updated}]};
-			update_json(data_json);	
-			update_json(prod_json);	
+			update_json(data_json);
+			update_json(prod_json);
 		}
 		else
 		{
 			$("#modal2_link").click();
 		}
-		$(form).find(".close").click();		
+		$(form).find(".close").click();
 	});
-	
+
 	var tasks_data={data_store:'task_instances',count:1,
                    indexes:[{index:'id',value:id+""},
                            {index:'name'},
@@ -3445,7 +3445,7 @@ function modal33_action(id)
 			task_filter.value=results[0].name;
 			staff_filter.value=results[0].assignee;
 			notes_filter.value=results[0].description;
-			status_filter.value=results[0].status;	
+			status_filter.value=results[0].status;
             $('#modal33').formcontrol();
 		}
 		$("#modal33_link").click();
@@ -3464,7 +3464,7 @@ function modal35_action(func)
 
 	var owner_data={data_store:'staff',return_column:'acc_name'};
 	set_my_value_list_json(owner_data,owner_filter);
-	
+
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal35_attributes');
 	attribute_label.innerHTML="";
@@ -3488,25 +3488,25 @@ function modal35_action(func)
 				{
 					attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
 					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
-				}				
-				else 
+				}
+				else
 				{
 					var values_array=attribute.value.split(";");
 					var content="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
-					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
+					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";
 					values_array.forEach(function(fvalue)
 					{
 						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
 					});
 					content+="</select></div>";
 					attr_label.innerHTML=content;
-				}				
+				}
 				attribute_label.appendChild(attr_label);
 			}
 		});
 	});
-	
-	
+
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -3523,10 +3523,10 @@ function modal35_action(func)
 	 					{index:'name',value:name,unique:'yes'},
 	 					{index:'owner',value:owner},
 	 					{index:'last_updated',value:last_updated}],
-	 		log_data:{title:'Added',notes:'Storage '+name,link_to:'form83'}}; 								
-			
+	 		log_data:{title:'Added',notes:'Storage '+name,link_to:'form83'}};
+
 			create_json(data_json,func);
-			
+
 			var id=get_new_key();
 			$("#modal35_attributes").find('input, select').each(function()
 			{
@@ -3542,7 +3542,7 @@ function modal35_action(func)
                         {index:'attribute',value:attribute},
                         {index:'value',value:value},
 	 					{index:'last_updated',value:last_updated}]};
-			
+
 					create_json(attribute_json);
 				}
 			});
@@ -3551,9 +3551,9 @@ function modal35_action(func)
 		{
 			$("#modal2_link").click();
 		}
-		$(form).find('.close').click();		
+		$(form).find('.close').click();
 	});
-	
+
 	$("#modal35_link").click();
 }
 
@@ -3567,18 +3567,18 @@ function modal36_action(schedule_time)
 	var customer_filter=form.elements['customer'];
 	var staff_filter=form.elements['assignee'];
 	var schedule_filter=form.elements['schedule'];
-	
+
 	var customer_data={data_store:'customers',return_column:'acc_name'};
 	set_my_value_list_json(customer_data,customer_filter);
-	
+
 	var staff_data={data_store:'staff',return_column:'acc_name'};
 	set_my_value_list_json(staff_data,staff_filter);
-	
+
 	$(schedule_filter).vdatetimepicker();
 	schedule_filter.value=schedule_time;
-	
+
 	$('#modal36').formcontrol();
-	
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -3591,7 +3591,7 @@ function modal36_action(schedule_time)
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
 			var schedule=get_raw_time(schedule_filter.value);
-			
+
 			var data_json={data_store:'appointments',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'customer',value:name},
@@ -3599,7 +3599,7 @@ function modal36_action(schedule_time)
                         {index:'schedule',value:schedule},
                         {index:'status',value:'pending'},
 						{index:'hours',value:1},
-						{index:'notes',value:notes},  
+						{index:'notes',value:notes},
 	 					{index:'last_updated',value:last_updated}],
 					log:'yes',
 					log_data:{title:'Added',notes:'Appointment with '+name,link_to:'form89'}};
@@ -3611,7 +3611,7 @@ function modal36_action(schedule_time)
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal36_link").click();
 }
 
@@ -3627,14 +3627,14 @@ function modal37_action(id,schedule)
 	var notes_filter=form.elements['notes'];
 	var status_filter=form.elements['status'];
 	var notify_button=form.elements['notify'];
-	
+
 	var customer_data={data_store:'customers',return_column:'acc_name'};
 	set_my_value_list_json(customer_data,customer_filter);
 
 	var staff_data={data_store:'staff',return_column:'acc_name'};
 	set_my_value_list_json(staff_data,staff_filter);
 	set_static_value_list_json('appointments','status',status_filter);
-	
+
 	var apps_data={data_store:'appointments',count:1,
 				  indexes:[{index:'id',value:id},
 						  {index:'customer'},
@@ -3648,12 +3648,12 @@ function modal37_action(id,schedule)
 			customer_filter.value=results[0].customer;
 			staff_filter.value=results[0].assignee;
 			notes_filter.value=results[0].notes;
-			status_filter.value=results[0].status;			
+			status_filter.value=results[0].status;
 		}
 		$('#modal37').formcontrol();
 		$("#modal37_link").click();
 	});
-	
+
 	$(notify_button).off('click');
 	$(notify_button).on('click',function()
 	{
@@ -3674,12 +3674,12 @@ function modal37_action(id,schedule)
 					var sms_message="Your appointment at "+bt+" is confirmed for "+get_my_datetime(schedule)+". Dont forget to visit.";
 					send_sms(customers[0].phone,sms_message,'transaction');
 				}
-				
+
 				if(!vUtil.isBlank(customers[0].email))
 				{
 					var from=get_session_var('email');
 					var email_message="Your appointment at "+bt+" is confirmed for "+get_my_datetime(schedule)+". Dont forget to visit.\n\nRegards,\n"+bt+"\n"+get_session_var('address')+"\n"+get_session_var('phone');
-					
+
 					var to=[{"email":customers[0].email,"name":customers[0].name,"customer_id":customers[0].id}];
 					var email_to=JSON.stringify(to);
 
@@ -3702,21 +3702,21 @@ function modal37_action(id,schedule)
 			var notes=notes_filter.value;
 			var status=status_filter.value;
 			var last_updated=get_my_time();
-			
+
 			var data_json={data_store:'appointments',
 	 				data:[{index:'id',value:id},
 	 					{index:'customer',value:name},
 	 					{index:'assignee',value:assignee},
                         {index:'status',value:status},
-						{index:'notes',value:notes},  
-	 					{index:'last_updated',value:last_updated}]};			
-			update_json(data_json);	
+						{index:'notes',value:notes},
+	 					{index:'last_updated',value:last_updated}]};
+			update_json(data_json);
 		}
 		else
 		{
 			$("#modal2_link").click();
 		}
-		$(form).find(".close").click();		
+		$(form).find(".close").click();
 	});
 }
 
@@ -3726,7 +3726,7 @@ function modal37_action(id,schedule)
  */
 function modal38_action(father_id,sale_price_value)
 {
-	var form=document.getElementById('modal38_form');	
+	var form=document.getElementById('modal38_form');
 	var fsale_price=form.elements[1];
 	var billing_label=document.getElementById('modal38_billings');
 	$(billing_label).html("");
@@ -3751,7 +3751,7 @@ function modal38_action(father_id,sale_price_value)
 		});
 	});
 	////////////////////////////////////////////////
-	
+
 	////auto setting sale price fields/////////
 	$(fsale_price).off('blur');
 	$(fsale_price).on('blur',function(event)
@@ -3764,10 +3764,10 @@ function modal38_action(father_id,sale_price_value)
 				$(this).val(sale_price);
 			}
 		});
-	});		
+	});
 	////////////////////
-	
-	
+
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -3789,7 +3789,7 @@ function modal38_action(father_id,sale_price_value)
 			{
 				local_update_simple(data_xml);
 			}
-			
+
 			$("#modal38_billings").find('input').each(function()
 			{
 				var price=$(this).val();
@@ -3815,7 +3815,7 @@ function modal38_action(father_id,sale_price_value)
 		}
 		$("#modal38").dialog("close");
 	});
-	
+
 	$("#modal38").dialog("open");
 }
 
@@ -3837,7 +3837,7 @@ function modal39_action(schedule_date)
 	var emi_filter=form.elements[9];
 	var emi_period_filter=form.elements[10];
 	var num_emi_filter=form.elements[11];
-	
+
 	var account_data="<accounts>" +
 			"<acc_name></acc_name>" +
 			"</accounts>";
@@ -3875,10 +3875,10 @@ function modal39_action(schedule_date)
 			$(num_emi_filter).parent().hide();
 		}
 	});
-	
+
 	$(date_filter).datepicker();
 	date_filter.value=get_my_date();
-	
+
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal39_attributes');
 	attribute_label.innerHTML="";
@@ -3901,8 +3901,8 @@ function modal39_action(schedule_date)
 				if(attribute.value=="")
 				{
 					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
-				}				
-				else 
+				}
+				else
 				{
 					var values_array=attribute.value.split(";");
 					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
@@ -3912,15 +3912,15 @@ function modal39_action(schedule_date)
 					});
 					content+="</select>";
 					attr_label.innerHTML=content;
-				}				
+				}
 				attribute_label.appendChild(attr_label);
 				var line_break=document.createElement('br');
 				attribute_label.appendChild(line_break);
 			}
 		});
 	});
-	
-	
+
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -4032,7 +4032,7 @@ function modal39_action(schedule_date)
 						modal28_action(payment_id);
 				});
 			}
-			
+
 			var id=get_new_key();
 			$("#modal39_attributes").find('input, select').each(function()
 			{
@@ -4067,7 +4067,7 @@ function modal39_action(schedule_date)
 		}
 		$("#modal39").dialog("close");
 	});
-	
+
 	$("#modal39").dialog("open");
 }
 
@@ -4084,22 +4084,22 @@ function modal40_action(product,batch)
 	var quantity_filter=form.elements[3];
 	var storage_filter=form.elements[4];
 	var reason_filter=form.elements[5];
-	
+
 	item_filter.value=product;
 	batch_filter.value=batch;
-	
+
 	var item_data="<product_master>" +
 			"<name></name>" +
 			"</product_master>";
 	set_my_value_list(item_data,item_filter);
-	
+
 	var storage_data="<store_areas>"+
 					"<name></name>"+
 					//"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
 					"<area_type></area_type>"+
 					"</store_areas>";
-	set_my_value_list(storage_data,storage_filter);	
-		
+	set_my_value_list(storage_data,storage_filter);
+
 	$(item_filter).off('blur');
 	$(item_filter).on('blur',function(event)
 	{
@@ -4109,7 +4109,7 @@ function modal40_action(product,batch)
 			"</product_instances>";
 		set_my_value_list(batch_data,batch_filter);
 	});
-	
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -4149,7 +4149,7 @@ function modal40_action(product,batch)
 		}
 		$("#modal40").dialog("close");
 	});
-	
+
 	$("#modal40").dialog("open");
 }
 
@@ -4161,26 +4161,26 @@ function modal41_action(button)
 {
 	var form_id=$(button).attr('form');
 	var father_form=document.getElementById(form_id);
-	
+
 	var form=document.getElementById("modal41_form");
-	
+
 	var account_name=father_form.elements[0].value;
 	var balance_display=father_form.elements[3].value;
 	var balance=father_form.elements[8].value;
-	
+
 	form.elements[1].value=account_name;
 	form.elements[2].value=balance_display;
 	form.elements[3].setAttribute('max',balance);
-	
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		
+
 		var counter_payment=parseFloat(form.elements[3].value);
 		//console.log(counter_payment);
 		var user_notes=form.elements[4].value;
-		
+
 		if(is_create_access('form11'))
 		{
 			var accounts_data="<payments>" +
@@ -4193,17 +4193,17 @@ function modal41_action(button)
 					"<paid_amount></paid_amount>" +
 					"<notes></notes>" +
 					"</payments>";
-			
+
 			fetch_requested_data('',accounts_data,function(accounts)
 			{
 				accounts.sort(function(a,b)
 				{
 					if(a.date>b.date)
 					{	return 1;}
-					else 
+					else
 					{	return -1;}
 				});
-				
+
 				var total_received=0;
 				var total_paid=0;
 				for(var i=0;i<accounts.length;i++)
@@ -4217,7 +4217,7 @@ function modal41_action(button)
 						total_received=parseFloat(accounts[i].total_amount)-parseFloat(accounts[i].paid_amount);
 					}
 				}
-				
+
 				if(total_received<total_paid)
 				{
 					total_received+=counter_payment;
@@ -4271,7 +4271,7 @@ function modal41_action(button)
 								{
 									local_update_simple(paid_xml);
 								}
-		
+
 								total_received-=pending_amount;
 								total_paid-=pending_amount;
 							}
@@ -4295,7 +4295,7 @@ function modal41_action(button)
 								{
 									local_update_simple(paid_xml);
 								}
-		
+
 								total_received=0;
 								total_paid=0;
 							}
@@ -4325,7 +4325,7 @@ function modal41_action(button)
 						else
 						{
 							var pending_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount);
-							
+
 							if(pending_amount<=total_paid)
 							{
 								var notes=account.notes+"\n"+user_notes;
@@ -4344,7 +4344,7 @@ function modal41_action(button)
 								{
 									local_update_simple(received_xml);
 								}
-								
+
 								total_received-=pending_amount;
 								total_paid-=pending_amount;
 							}
@@ -4381,7 +4381,7 @@ function modal41_action(button)
 		}
 		$("#modal41").dialog("close");
 	});
-	
+
 	$("#modal41").dialog("open");
 }
 
@@ -4393,23 +4393,23 @@ function modal42_action(order_id)
 {
 	var form=document.getElementById("modal42_form");
 	var type_filter=form.elements[1];
-	
+
 	var type_data="<bill_types>" +
 			"<name></name>" +
 			"<status exact='yes'>active</status>" +
 			"</bill_types>";
 	set_my_value_list(type_data,type_filter);
-	set_my_value(type_data,type_filter);	
-	
+	set_my_value(type_data,type_filter);
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
 		form108_bill(order_id,type_filter.value);
-		//form108_bill(order_id,type_filter.value,order_num,sale_channel,customer,order_time);		
+		//form108_bill(order_id,type_filter.value,order_num,sale_channel,customer,order_time);
 		$("#modal42").dialog("close");
 	});
-	
+
 	$("#modal42").dialog("open");
 }
 
@@ -4425,15 +4425,15 @@ function modal43_action(date_initiated)
 	var desc_filter=form.elements['desc'];
     var staff_filter=form.elements['assignee'];
 	var due_filter=form.elements['due'];
-	
+
 	var project_data={data_store:'projects',return_column:'name'};
 	set_my_value_list_json(project_data,project_filter);
-	
+
 	var staff_data={data_store:'staff',return_column:'acc_name'};
 	set_my_value_list_json(staff_data,staff_filter);
-	
+
 	$(due_filter).vdatetimepicker();
-	
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -4452,23 +4452,23 @@ function modal43_action(date_initiated)
             {
                 t_initiated=get_raw_time(date_initiated);
             }
-            
+
             var data_json={data_store:'task_instances',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'name',value:name},
 	 					{index:'description',value:description},
                         {index:'source',value:'project'},
-                        {index:'source_name',value:project},  
+                        {index:'source_name',value:project},
                         {index:'assignee',value:assignee},
                         {index:'status',value:'pending'},
-                        {index:'t_initiated',value:t_initiated},  
+                        {index:'t_initiated',value:t_initiated},
                         {index:'t_due',value:t_due},
-                        {index:'task_hours',value:'1'},  
+                        {index:'task_hours',value:'1'},
 	 					{index:'last_updated',value:last_updated}],
                     log:'yes',
                     log_data:{title:'Added',notes:'Task '+name+' for '+assignee,link_to:'form104'}};
-			
-				create_json(data_json);	
+
+				create_json(data_json);
 		}
 		else
 		{
@@ -4476,7 +4476,7 @@ function modal43_action(date_initiated)
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal43_link").click();
 }
 
@@ -4489,7 +4489,7 @@ function modal44_action(recipient,subject,message)
 	show_loader();
 	var form=document.getElementById("modal44_form");
 	var client=form.elements[1];
-	
+
 	set_static_value_list('share','share_options',client);
 	var sup_email_data="<suppliers>" +
 			"<email></email>" +
@@ -4503,11 +4503,11 @@ function modal44_action(recipient,subject,message)
 			"<email></email>" +
 			"<acc_name exact='yes'>"+recipient+"</acc_name>" +
 			"</staff>";
-	
+
 	var email_data_array=[sup_email_data,cust_email_data,staff_email_data];
 	message=encodeURIComponent(message);
 	subject=encodeURIComponent(subject);
-	
+
 	get_single_column_data_array(email_data_array,function(email_results)
 	{
 		if(email_results.length>0)
@@ -4515,11 +4515,11 @@ function modal44_action(recipient,subject,message)
 			form.elements[2].value=email_results[0];
 		}
 		form.elements[3].value=recipient;
-		
+
 		var whatsapp_link=document.createElement('a');
 		whatsapp_link.setAttribute('href',"whatsapp://send?text="+message);
 		whatsapp_link.setAttribute('target',"_blank");
-		
+
 		$(form).off('submit');
 		$(form).on('submit',function(event)
 		{
@@ -4542,11 +4542,11 @@ function modal44_action(recipient,subject,message)
 			}
 			$("#modal44").dialog("close");
 		});
-		
+
 		$("#modal44").dialog("open");
 		hide_loader();
 	});
-	
+
 }
 
 
@@ -4558,7 +4558,7 @@ function modal44_action(recipient,subject,message)
 function modal45_action()
 {
 	var form=document.getElementById('modal45_form');
-		
+
 	var program_name=form.elements[1];
 	var type=form.elements[2];
 	var tier=form.elements[3];
@@ -4570,7 +4570,7 @@ function modal45_action()
 	var cashback=form.elements[9];
 	var reward_product=form.elements[10];
 	var status=form.elements[11];
-	
+
 	var product_data="<product_master>" +
 		"<name></name>" +
 		"</product_master>";
@@ -4581,7 +4581,7 @@ function modal45_action()
 	$(cashback).parent().hide();
 	$(reward_product).parent().hide();
 	$(redemption_criteria).parent().hide();
-	
+
 	$(type).off('blur');
 	$(type).on('blur',function(event)
 	{
@@ -4589,14 +4589,14 @@ function modal45_action()
 		$(cashback).parent().hide();
 		$(reward_product).parent().hide();
 		$(redemption_criteria).parent().hide();
-		
+
 		if(type.value=='cashback')
 		{
 			$(cashback).parent().show();
 			$(redemption_criteria).parent().show();
 		}
 		else if(type.value=='discount')
-		{			
+		{
 			$(discount).parent().show();
 		}
 		else if(type.value=='reward product')
@@ -4605,7 +4605,7 @@ function modal45_action()
 			$(redemption_criteria).parent().show();
 		}
 	});
-	
+
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal45_attributes');
 	attribute_label.innerHTML="";
@@ -4628,8 +4628,8 @@ function modal45_action()
 				if(attribute.value=="")
 				{
 					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
-				}				
-				else 
+				}
+				else
 				{
 					var values_array=attribute.value.split(";");
 					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
@@ -4639,15 +4639,15 @@ function modal45_action()
 					});
 					content+="</select>";
 					attr_label.innerHTML=content;
-				}				
+				}
 				attribute_label.appendChild(attr_label);
 				var line_break=document.createElement('br');
 				attribute_label.appendChild(line_break);
 			}
 		});
 	});
-	
-	
+
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -4667,7 +4667,7 @@ function modal45_action()
 			var status_value=form.elements[11].value;
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
-						
+
 			var data_xml="<loyalty_programs>" +
 						"<id>"+data_id+"</id>" +
 						"<name>"+name_value+"</name>" +
@@ -4682,7 +4682,7 @@ function modal45_action()
 						"<reward_product>"+reward_product_value+"</reward_product>" +
 						"<status>"+status_value+"</status>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
-						"</loyalty_programs>";	
+						"</loyalty_programs>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>loyalty_programs</tablename>" +
@@ -4699,7 +4699,7 @@ function modal45_action()
 			{
 				local_create_row(data_xml,activity_xml);
 			}
-			
+
 			var id=get_new_key();
 			$("#modal45_attributes").find('input, select').each(function()
 			{
@@ -4770,7 +4770,7 @@ function modal45_action()
 		}
 		$("#modal45").dialog("close");
 	});
-	$("#modal45").dialog("open");	
+	$("#modal45").dialog("open");
 }
 
 
@@ -4782,7 +4782,7 @@ function modal45_action()
 function modal46_action(button)
 {
 	var form=document.getElementById('modal46_form');
-	
+
 	var form_id=$(button).attr('form');
 	var father_form=document.getElementById(form_id);
 	var fname=father_form.elements[0];
@@ -4797,12 +4797,12 @@ function modal46_action(button)
 	var fcashback=father_form.elements[12];
 	var freward_product=father_form.elements[13];
 	var fredemption_criteria=father_form.elements[14];
-	
+
 	form.elements[1].value=ftier_criteria_lower.value;
 	form.elements[2].value=ftier_criteria_upper.value;
 	form.elements[4].value=fpoint_addition.value;
 	form.elements[8].value=fstatus.value;
-	
+
 	var redemption_criteria=form.elements[3];
 	redemption_criteria.value=fredemption_criteria.value;
 	var discount=form.elements[5]
@@ -4811,19 +4811,19 @@ function modal46_action(button)
 	cashback.value=fcashback.value;
 	var reward_product=form.elements[7];
 	reward_product.value=freward_product.value;
-	
+
 	$(discount).parent().hide();
 	$(cashback).parent().hide();
 	$(reward_product).parent().hide();
 	$(redemption_criteria).parent().hide();
-	
+
 	if(ftype.value=='cashback')
 	{
 		$(cashback).parent().show();
 		$(redemption_criteria).parent().show();
 	}
 	else if(ftype.value=='discount')
-	{			
+	{
 		$(discount).parent().show();
 	}
 	else if(ftype.value=='reward product')
@@ -4831,7 +4831,7 @@ function modal46_action(button)
 		$(reward_product).parent().show();
 		$(redemption_criteria).parent().show();
 	}
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -4858,7 +4858,7 @@ function modal46_action(button)
 			{
 				fdetail.value="Tier criteria: "+ftier_criteria_lower.value+"-"+ftier_criteria_upper.value+"\nPoints Addition: "+fpoint_addition.value+"\nReward Product: "+freward_product.value+"\nRedemption Criteria: "+fredemption_criteria.value;
 			}
-			
+
 			var data_xml="<loyalty_programs>" +
 					"<id>"+fdata_id.value+"</id>" +
 					"<tier_criteria_lower>"+ftier_criteria_lower.value+"</tier_criteria_lower>" +
@@ -4870,7 +4870,7 @@ function modal46_action(button)
 					"<reward_product>"+freward_product.value+"</reward_product>" +
 					"<status>"+fstatus.value+"</status>" +
 					"<last_updated>"+get_my_time()+"</last_updated>" +
-					"</loyalty_programs>";	
+					"</loyalty_programs>";
 			var activity_xml="<activity>" +
 					"<data_id>"+fdata_id.value+"</data_id>" +
 					"<tablename>loyalty_programs</tablename>" +
@@ -4894,7 +4894,7 @@ function modal46_action(button)
 		}
 		$("#modal46").dialog("close");
 	});
-	
+
 	$("#modal46").dialog("open");
 }
 
@@ -4912,22 +4912,22 @@ function modal47_action(service_date)
 	var problem_filter=form.elements[5];
 	id_filter.value=get_my_time();
 	by_filter.value=get_account_name();
-	
+
 	var customers_list_data="<customers>"+
-							"<acc_name></acc_name>"+									
-							"</customers>";	
+							"<acc_name></acc_name>"+
+							"</customers>";
 	set_my_value_list(customers_list_data,customer_filter);
-	
+
 	var problem_type_data="<service_requests>"+
-						"<problem_type></problem_type>"+								
-						"</service_requests>";	
+						"<problem_type></problem_type>"+
+						"</service_requests>";
 	set_my_filter(problem_type_data,problem_type_filter);
-		
+
 	var customer_data="<accounts count='1'>"+
 					"<acc_name></acc_name>"+
-					"<type exact='yes'>customer</type>"+							
+					"<type exact='yes'>customer</type>"+
 					"<username>"+get_username()+"</username>"+
-					"</accounts>";	
+					"</accounts>";
 	get_single_column_data(function(customer_names)
 	{
 		if(customer_names.length>0)
@@ -4943,7 +4943,7 @@ function modal47_action(service_date)
 		event.preventDefault();
 		if(is_create_access('form132'))
 		{
-			var data_id=id_filter.value;			
+			var data_id=id_filter.value;
 			var customer=customer_filter.value;
 			var reported_by=by_filter.value;
 			var problem=problem_filter.value;
@@ -4976,7 +4976,7 @@ function modal47_action(service_date)
 			else
 			{
 				local_create_row(data_xml,activity_xml);
-			}	
+			}
 		}
 		else
 		{
@@ -4984,7 +4984,7 @@ function modal47_action(service_date)
 		}
 		$("#modal47").dialog("close");
 	});
-	
+
 	$("#modal47").dialog("open");
 }
 
@@ -4998,8 +4998,8 @@ function modal48_action(issue_id)
 	var form=document.getElementById("modal48_form");
 	var issue_filter=form.elements[1];
 	var solution_filter=form.elements[2];
-	issue_filter.value=issue_id;	
-		
+	issue_filter.value=issue_id;
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -5022,7 +5022,7 @@ function modal48_action(issue_id)
 			else
 			{
 				local_create_simple(data_xml);
-			}	
+			}
 		}
 		else
 		{
@@ -5030,7 +5030,7 @@ function modal48_action(issue_id)
 		}
 		$("#modal48").dialog("close");
 	});
-	
+
 	$("#modal48").dialog("open");
 }
 
@@ -5045,8 +5045,8 @@ function modal49_action(issue_id)
 	var issue_filter=form.elements[1];
 	var short_filter=form.elements[2];
 	var detail_filter=form.elements[3];
-	issue_filter.value=get_my_time();	
-		
+	issue_filter.value=get_my_time();
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -5070,7 +5070,7 @@ function modal49_action(issue_id)
 			else
 			{
 				local_create_simple(data_xml);
-			}	
+			}
 		}
 		else
 		{
@@ -5078,7 +5078,7 @@ function modal49_action(issue_id)
 		}
 		$("#modal49").dialog("close");
 	});
-	
+
 	$("#modal49").dialog("open");
 }
 
@@ -5092,24 +5092,24 @@ function modal50_action()
 	show_loader();
 	var form=document.getElementById("form78_master");
 	var nl_name=form.elements[1].value;
-	var sms_content=form.elements[2].value;			
+	var sms_content=form.elements[2].value;
 	var nl_id=form.elements[3].value;
-	
+
 	print_newsletter(nl_name,nl_id,'mail',function(container)
 	{
 		var business_title=get_session_var('title');
 		var subject=nl_name;
-		
+
 		var email_id_string="";
 		var email_message=container.innerHTML;
 		var from=get_session_var('email');
 		var to_array=[];
-		
+
 		$("[id^='row_form78_']").each(function(index)
 		{
 			var form_id=$(this).attr('id');
 			var form=document.getElementById(form_id);
-			
+
 			if(form.elements[3].checked)
 			{
 				var customer_email=form.elements[1].value;
@@ -5118,23 +5118,23 @@ function modal50_action()
 				var customer_id=form.elements[5].value;
 				var message=sms_content.replace(/customer_name/g,customer_name);
 				message=message.replace(/business_title/g,business_title);
-				
+
 				send_sms(customer_phone,message,'transaction');
 				if(customer_email!="")
 				{
 					var to={"email":customer_email,"name":customer_name,"customer_id":customer_id};
 					to_array.push(to);
-				}				
+				}
 			}
-		});	
+		});
 
 		var email_to=JSON.stringify(to_array);
 		send_email(email_to,from,business_title,subject,email_message,function()
 		{
 			$("#modal58_link").click();
-			hide_loader();			
+			hide_loader();
 		});
-	});		
+	});
 }
 
 
@@ -5147,7 +5147,7 @@ function modal51_action(object)
 	if(is_create_access('form80'))
 	{
 		$("#modal51").dialog("open");
-		
+
 		var de_duplication_data="<de_duplication>" +
 					"<id></id>" +
 					"<object exact='yes'>"+object+"</object>"+
@@ -5161,7 +5161,7 @@ function modal51_action(object)
 				    "<references_id></references_id>"+
 				    "<status exact='yes'>pending</status>"+
 				    "</de_duplication>";
-				
+
 		fetch_requested_data('',de_duplication_data,function(results)
 		{
 			results.forEach(function(result)
@@ -5172,9 +5172,9 @@ function modal51_action(object)
 					var slave_xml="<"+result.tablename+">" +
 							"<id>"+result.slave_id+"</id>" +
 							"</"+result.tablename+">";
-					
+
 					delete_simple(slave_xml);
-					
+
 					//////replacing slave values with master values
 					var refs_array=result.references_value.split(";");
 					refs_array.forEach(function(refs)
@@ -5183,9 +5183,9 @@ function modal51_action(object)
 						var tablename=refs_split[0];
 						var column=refs_split[1];
 						var action_type=refs_split[2];
-						
+
 						if(tablename!=="" && tablename!==null)
-						{	
+						{
 							if(action_type=='delete')
 							{
 								var refs_data="<"+tablename+">" +
@@ -5210,7 +5210,7 @@ function modal51_action(object)
 										{
 											data_xml+="</"+tablename+"><separator></separator><"+tablename+">";
 										}
-										
+
 										counter+=1;
 										data_xml+="<row>" +
 												"<id>"+ref_result.id+"</id>" +
@@ -5220,12 +5220,12 @@ function modal51_action(object)
 									});
 									data_xml+="</"+tablename+">";
 									//console.log(data_xml);
-									update_batch(data_xml);	
-								});								
+									update_batch(data_xml);
+								});
 							}
 						}
 					});
-					
+
 					////replacing slave ids with master ids
 					var ref_ids_array=result.references_id.split(";");
 					ref_ids_array.forEach(function(ref_ids)
@@ -5233,7 +5233,7 @@ function modal51_action(object)
 						var ref_ids_split=ref_ids.split("--");
 						var tablename=ref_ids_split[0];
 						var column=ref_ids_split[1];
-						
+
 						if(tablename!=="" && tablename!==null)
 						{
 							var ref_ids_data="<"+tablename+">" +
@@ -5251,7 +5251,7 @@ function modal51_action(object)
 									{
 										data_xml+="</"+tablename+"><separator></separator><"+tablename+">";
 									}
-									
+
 									counter+=1;
 									data_xml+="<row>" +
 											"<id>"+ref_id_result.id+"</id>" +
@@ -5261,13 +5261,13 @@ function modal51_action(object)
 								});
 								data_xml+="</"+tablename+">";
 								update_batch(data_xml);
-								
+
 							});
 						}
 					});
-					
+
 				}
-				
+
 				/////marking the record as closed in de-duplication table
 				var de_duplication_xml="<de_duplication>" +
 						"<id>"+result.id+"</id>" +
@@ -5301,7 +5301,7 @@ function modal53_action(item_name,customer)
 		{
 			bill_id_string+=bills[i]+"--";
 		}
-		
+
 		var bill_items_data="<bill_items count='5'>" +
 				"<id></id>" +
 				"<item_name exact='yes'>"+item_name+"</item_name>" +
@@ -5323,7 +5323,7 @@ function modal53_action(item_name,customer)
 				item_row.innerHTML="<td>"+bill_item.batch+"</td><td>"+bill_item.p_quantity+"+"+bill_item.f_quantity+"</td>";
 				item_table.appendChild(item_row);
 			});
-			
+
 			$("#modal53").dialog("open");
 		});
 	},bills_data);
@@ -5357,7 +5357,7 @@ function modal54_action(item_name)
 		});
 	});
 	////////////////////////////////////////////////
-		
+
 	$("#modal54").dialog("open");
 }
 
@@ -5378,7 +5378,7 @@ function modal57_action(item_name,customer)
 		{
 			bill_id_string+=bills[i]+"--";
 		}
-		
+
 		var bill_items_data="<bill_items count='5'>" +
 				"<id></id>" +
 				"<item_name exact='yes'>"+item_name+"</item_name>" +
@@ -5401,7 +5401,7 @@ function modal57_action(item_name,customer)
 			});
 		});
 	},bills_data);
-	
+
 	var quot_data="<quotation>" +
 			"<id></id>" +
 			"<customer exact='yes'>"+customer+"</customer>" +
@@ -5413,7 +5413,7 @@ function modal57_action(item_name,customer)
 		{
 			quot_id_string+=quots[i]+"--";
 		}
-		
+
 		var quot_items_data="<quotation_items count='5'>" +
 				"<id></id>" +
 				"<item_name exact='yes'>"+item_name+"</item_name>" +
@@ -5436,7 +5436,7 @@ function modal57_action(item_name,customer)
 			});
 		});
 	},quot_data);
-	
+
 	$("#modal57").dialog("open");
 }
 
@@ -5451,7 +5451,7 @@ function modal83_action(item_name)
 		utilization_json.return_column='name';
 		utilization_json.indexes=[{index:'item_name',exact:item_name}];
 
-	read_json_single_column(utilization_json,function (areas) 
+	read_json_single_column(utilization_json,function (areas)
 	{
 		var item_table=document.getElementById("modal83_inventory_table");
 		item_table.innerHTML="";
@@ -5467,7 +5467,7 @@ function modal83_action(item_name)
 				item_table.appendChild(item_row);
 			});
 		});
-	});	
+	});
 	$("#modal83").dialog("open");
 }
 
@@ -5484,7 +5484,7 @@ function modal84_action(html_code,id)
 							{index:'doc_name'},
 							{index:'doc_type',exact:'newsletter_components'},
 							{index:'target_id',exact:id}];
-	
+
 	read_json_rows('',doc_columns,function(doc_results)
 	{
 		var docHTML="";
@@ -5492,7 +5492,7 @@ function modal84_action(html_code,id)
 		{
 			var updated_url=doc.url.replace(/ /g,"+");
 			var replace_word="{{"+doc.doc_name+"}}";
-			var re=new RegExp(replace_word,"g");	
+			var re=new RegExp(replace_word,"g");
 			html_code=html_code.replace(re,updated_url);
 		});
 		$('#modal84_preview').html(html_code);
@@ -5509,33 +5509,33 @@ function modal101_action(doc_type,person,person_type,func,attachment_type,messag
 {
 	show_loader();
 	var form=document.getElementById('modal101_form');
-	
+
 	func(function(container)
 	{
 		var business_title=get_session_var('title');
-		
+
 		var email_message=container.innerHTML;
 		var from=get_session_var('email');
 
 		var person_filter=form.elements['to'];
 		$(person_filter).off('blur');
 		form.elements['subject'].value=doc_type;
-		
+
 		$("#modal101_link").click();
-						
+
 		if(person!="")
 		{
 			var email_id_xml={data_store:'suppliers',
                              indexes:[{index:'email'},{index:'name'},{index:'acc_name',exact:person}]};
-			if(person_type=='customer')			
+			if(person_type=='customer')
 			{
     			email_id_xml.data_store='customers';
 			}
-			else if(person_type=='staff')			
+			else if(person_type=='staff')
 			{
     			email_id_xml.data_store='staff';
 			}
-	
+
 			read_json_rows('',email_id_xml,function(emails)
 			{
 				if(emails.length>0)
@@ -5545,37 +5545,37 @@ function modal101_action(doc_type,person,person_type,func,attachment_type,messag
 					form.elements['acc_name'].value=emails[0].name;
 				}
 				$('#modal101').formcontrol();
-				hide_loader();			
+				hide_loader();
 			});
-		}		
+		}
 		else
 		{
 			var person_xml={data_store:'suppliers',return_column:'acc_name'};
-			if(person_type=='customer')			
+			if(person_type=='customer')
 			{
                 person_xml.data_store='customers';
 			}
-			else if(person_type=='staff')			
+			else if(person_type=='staff')
 			{
                 person_xml.data_store='staff';
 			}
-			
+
 			person_filter.removeAttribute('readonly');
-			
-			set_my_value_list_func(person_xml,person_filter,function () 
+
+			set_my_value_list_func(person_xml,person_filter,function ()
 			{
 				$(person_filter).focus();
 			});
-			
-			$(person_filter).on('blur',function () 
+
+			$(person_filter).on('blur',function ()
 			{
 				var email_id_xml={data_store:'suppliers',count:1,
                                  indexes:[{index:'email'},{index:'name'},{index:'acc_name',exact:person_filter.value}]};
-				if(person_type=='customer')			
+				if(person_type=='customer')
 				{
                     email_id_xml.data_store='customers';
 				}
-				else if(person_type=='staff')			
+				else if(person_type=='staff')
 				{
                     email_id_xml.data_store='staff';
 				}
@@ -5587,8 +5587,8 @@ function modal101_action(doc_type,person,person_type,func,attachment_type,messag
 			});
 			$('#modal101').formcontrol();
 			hide_loader();
-		}	
-		
+		}
+
 		$(form).off("submit");
 		$(form).on("submit",function(event)
 		{
@@ -5596,16 +5596,16 @@ function modal101_action(doc_type,person,person_type,func,attachment_type,messag
 			show_loader();
             var to_array=form.elements['email'].value.split(';');
 			var receiver_array=[];
-            
+
             to_array.forEach(function(to)
             {
                 var receiver={"email":to,"name":form.elements['acc_name'].value};
                 receiver_array.push(receiver);
             });
-            
+
 			var receiver=JSON.stringify(receiver_array);
 			var sub=form.elements[3].value;
-			
+
 			if(typeof attachment_type!='undefined')
 			{
 				//console.log(message_attachment);
@@ -5614,7 +5614,7 @@ function modal101_action(doc_type,person,person_type,func,attachment_type,messag
 					hide_loader();
 				});
 			}
-			else 
+			else
 			{
                 send_email(receiver,from,business_title,sub,email_message,function()
 				{
@@ -5634,16 +5634,16 @@ function modal101_action(doc_type,person,person_type,func,attachment_type,messag
 function modal102_action(request_id)
 {
 	var form=document.getElementById('modal102_form');
-	
+
 	var request_id=form.elements[1];
 	var assignee_filter=form.elements[2];
 
 	var request_data="<service_requests count='1'>"+
-						"<assignee></assignee>"+						
-						"<id>"+request_id+"</id>"+						
+						"<assignee></assignee>"+
+						"<id>"+request_id+"</id>"+
 						"</service_requests>";
-	set_my_value(request_data,assignee_filter);	
-		
+	set_my_value(request_data,assignee_filter);
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -5653,7 +5653,7 @@ function modal102_action(request_id)
 
 		var request_xml="<service_requests>" +
 					"<id>"+request_id+"</id>" +
-					"<assignee>"+assignee+"</assignee>"+						
+					"<assignee>"+assignee+"</assignee>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</service_requests>";
 		if(is_online())
@@ -5663,11 +5663,11 @@ function modal102_action(request_id)
 		else
 		{
 			local_update_simple(request_xml);
-		}	
-		
+		}
+
 		$("#modal102").dialog("close");
 	});
-	
+
 	$("#modal102").dialog("open");
 }
 
@@ -5690,9 +5690,9 @@ function modal103_action(button)
 
 	set_static_value_list('service_requests','status',status_filter);
 	var request_data="<service_requests count='1'>"+
-						"<id>"+request_id+"</id>"+						
+						"<id>"+request_id+"</id>"+
 						"<closing_notes></closing_notes>"+
-						"<status></status>"+						
+						"<status></status>"+
 						"</service_requests>";
 	fetch_requested_data('',request_data,function(requests)
 	{
@@ -5702,7 +5702,7 @@ function modal103_action(button)
 			status_filter.value=requests[0].status;
 		}
 	});
-		
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -5711,7 +5711,7 @@ function modal103_action(button)
 		var status=status_filter.value;
 		var last_updated=get_my_time();
 		father_form.elements[3].value=status;
-		
+
 		var request_xml="<service_requests>" +
 					"<id>"+request_id+"</id>" +
 					"<closing_notes>"+closing_notes+"</closing_notes>"+
@@ -5725,11 +5725,11 @@ function modal103_action(button)
 		else
 		{
 			local_update_simple(request_xml);
-		}	
-		
+		}
+
 		$("#modal103").dialog("close");
 	});
-	
+
 	$("#modal103").dialog("open");
 }
 
@@ -5765,7 +5765,7 @@ function modal104_action(button)
 			status_filter.value=requests[0].status;
 		}
 	});
-		
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -5775,7 +5775,7 @@ function modal104_action(button)
 		var last_updated=get_my_time();
 		father_form.elements[4].value=status;
 		father_form.elements[3].value=closing_notes;
-		
+
 		var request_xml="<service_request_machines>" +
 					"<id>"+data_id+"</id>" +
 					"<closing_notes>"+closing_notes+"</closing_notes>"+
@@ -5813,12 +5813,12 @@ function modal105_action(project_id)
 	$(start_filter).datepicker();
 	$(due_filter).datepicker();
 	set_static_value_list('project_phases','status',status_filter);
-		
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		
+
 		var phase=form.elements[1].value;
 		var details=form.elements[2].value;
 		var start_date=get_raw_time(form.elements[3].value);
@@ -5843,11 +5843,11 @@ function modal105_action(project_id)
 		else
 		{
 			local_create_simple(data_xml);
-		}	
-		
+		}
+
 		$("#modal105").dialog("close");
 	});
-	
+
 	$("#modal105").dialog("open");
 }
 
@@ -5866,20 +5866,20 @@ function modal106_action()
 
 	$(date_filter).datepicker();
 	date_filter.value=get_my_date();
-	
+
 	set_static_value_list_json('modal106','type',type_filter);
 	var account_data={data_store:'accounts',return_column:'acc_name'};
 	set_my_value_list_json(account_data,account_filter);
-		
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		
+
 		var account=form.elements['account'].value;
 		var particulars=form.elements['particulars'].value;
 		var entry_date=get_raw_time(form.elements['date'].value);
-		var type='received';		
+		var type='received';
 		var receiver='master';
 		var giver=account;
 		if(form.elements['type'].value=='debit')
@@ -5887,11 +5887,11 @@ function modal106_action()
 			type='paid';
 			receiver=account;
 			giver='master';
-		}		
+		}
 		var amount=form.elements['amount'].value;
 		var data_id=get_new_key();
 		var last_updated=get_my_time();
-        
+
         var data_json={data_store:'payments',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
@@ -5904,10 +5904,10 @@ function modal106_action()
                         {index:'transaction_id',value:data_id},
                         {index:'source_id',value:''},
                         {index:'source',value:'ledger entry'},
-                        {index:'source_info',value:particulars},  
+                        {index:'source_info',value:particulars},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Added',notes:'Ledger entry for '+account,link_to:'report60'}};
- 		
+
         var pt_json={data_store:'transactions',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'receiver',value:receiver},
@@ -5916,13 +5916,13 @@ function modal106_action()
 	 					{index:'tax',value:'0'},
 	 					{index:'trans_date',value:entry_date},
                         {index:'last_updated',value:last_updated}]};
- 		
+
 		create_json(data_json);
 		create_json(pt_json);
-        
+
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal106_link").click();
 }
 
@@ -5942,12 +5942,12 @@ function modal107_action(data_id)
 	$(start_filter).datepicker();
 	$(due_filter).datepicker();
 	set_static_value_list('project_phases','status',status_filter);
-		
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		
+
 		var phase=form.elements[1].value;
 		var details=form.elements[2].value;
 		var start_date=get_raw_time(form.elements[3].value);
@@ -5970,7 +5970,7 @@ function modal107_action(data_id)
 		else
 		{
 			local_update_simple(data_xml);
-		}	
+		}
 		$("#modal107").dialog("close");
 	});
 
@@ -6029,31 +6029,31 @@ function modal108_action(tablename,record_id)
 	});
 
 	set_static_value_list('data_access','access_type',type_filter);
-	
+
 	var user_data="<accounts>" +
 			"<acc_name></acc_name>" +
 			"</accounts>";
 	set_my_value_list(user_data,user_filter);
-	
+
 	var field_data="<user_fields_list>"+
 				"<field_name></field_name>"+
 				"<tablename exact='yes'>"+tablename+"</tablename>"+
-				"</user_fields_list>";		
+				"</user_fields_list>";
 	set_my_value_list(field_data,user_filter);
-	
+
 	var field_data="<data_access>" +
 			"<criteria_field></criteria_field>" +
 			"<tablename exact='yes'>"+tablename+"</tablename>" +
 			"</data_access>";
 	set_my_filter(field_data,field_filter);
-	
+
 	$(type_filter).focus();
 
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		
+
 		var access_type=form.elements[1].value;
 		var user_type=form.elements[2].value;
 		var user=form.elements[3].value;
@@ -6081,8 +6081,8 @@ function modal108_action(tablename,record_id)
 		else
 		{
 			local_create_simple(data_xml);
-		}	
-	
+		}
+
 		$("#modal108").dialog("close");
 	});
 	$("#modal108").dialog("open");
@@ -6124,31 +6124,31 @@ function modal109_action(tablename)
 	});
 
 	set_static_value_list('data_access','access_type',type_filter);
-	
+
 	var user_data="<accounts>" +
 			"<acc_name></acc_name>" +
 			"</accounts>";
 	set_my_value_list(user_data,user_filter);
-	
+
 	var field_data="<user_fields_list>"+
 				"<field_name></field_name>"+
 				"<tablename exact='yes'>"+tablename+"</tablename>"+
-				"</user_fields_list>";		
+				"</user_fields_list>";
 	set_my_value_list(field_data,user_filter);
-	
+
 	var field_data="<data_access>" +
 				"<criteria_field></criteria_field>" +
 				"<tablename exact='yes'>"+tablename+"</tablename>" +
 				"</data_access>";
 	set_my_filter(field_data,field_filter);
-	
+
 	$(type_filter).focus();
 
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		
+
 		var access_type=form.elements[1].value;
 		var user_type=form.elements[2].value;
 		var user=form.elements[3].value;
@@ -6176,11 +6176,11 @@ function modal109_action(tablename)
 		else
 		{
 			local_create_simple(data_xml);
-		}	
-	
+		}
+
 		$("#modal109").dialog("close");
 	});
-	
+
 	$("#modal109").dialog("open");
 
 }
@@ -6196,7 +6196,7 @@ function modal110_action(button)
 	var master_form=document.getElementById(form_id);
 	var product_name=master_form.elements[0].value;
 	var batch=master_form.elements[1].value;
-	var quantity=master_form.elements[2].value;	
+	var quantity=master_form.elements[2].value;
 	var data_id=master_form.elements[5].value;
 
 	var form=document.getElementById('modal110_form');
@@ -6204,22 +6204,22 @@ function modal110_action(button)
 	var manu_filter=form.elements[1];
 	var expiry_filter=form.elements[2];
 	var store_filter=form.elements[5];
-	
+
 	var store_data="<store_areas>"+
 					"<name></name>"+
-					"<area_type exact='yes'>storage</area_type>"+					
+					"<area_type exact='yes'>storage</area_type>"+
 					"</store_areas>";
 	set_my_value_list(store_data,store_filter);
-	
+
 	$(manu_filter).datepicker();
-	$(expiry_filter).datepicker();	
+	$(expiry_filter).datepicker();
 	$(manu_filter).focus();
 
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		
+
 		master_form.elements[4].value='completed';
 		var last_updated=get_my_time();
 		var manu_date=get_raw_time(form.elements[1].value);
@@ -6230,23 +6230,23 @@ function modal110_action(button)
 		var id=get_new_key();
 		var data_xml="<manufacturing_schedule>" +
 					"<id>"+data_id+"</id>" +
-					"<status>completed</status>"+					
+					"<status>completed</status>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</manufacturing_schedule>";
 		var inventory_xml="<inventory_adjust>"+
-					"<id>"+id+"</id>"+						
+					"<id>"+id+"</id>"+
 					"<product_name>"+product_name+"</product_name>"+
 					"<batch>"+batch+"</batch>"+
 					"<quantity>"+quantity+"</quantity>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</inventory_adjust>";	
+					"</inventory_adjust>";
 		var area_xml="<area_utilization>"+
 					"<id>"+id+"</id>"+
 					"<item_name>"+product_name+"</item_name>"+
 					"<batch>"+batch+"</batch>"+
 					"<name>"+store+"</name>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</area_utilization>";		
+					"</area_utilization>";
 		var instances_xml="<product_instances>" +
 					"<id>"+id+"</id>" +
 					"<product_name>"+product_name+"</product_name>" +
@@ -6275,7 +6275,7 @@ function modal110_action(button)
 					"<receiver>"+owners[0]+"</receiver>"+
 					"<status>received</status>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</store_movement>";		
+					"</store_movement>";
 				if(is_online())
 				{
 					server_create_simple(store_xml);
@@ -6283,8 +6283,8 @@ function modal110_action(button)
 				else
 				{
 					local_create_simple(store_xml);
-				}				
-			}		
+				}
+			}
 		},store_owner_xml);
 
 		////adding sale price fields for all billing types///////
@@ -6295,7 +6295,7 @@ function modal110_action(button)
 		get_single_column_data(function(bill_types)
 		{
 			var i=1;
-			bill_types.forEach(function (bill_type) 
+			bill_types.forEach(function (bill_type)
 			{
 				i++;
 				var sale_price_xml="<sale_prices>" +
@@ -6317,7 +6317,7 @@ function modal110_action(button)
 				}
 			});
 		},billing_type_data);
-		
+
 		if(is_online())
 		{
 			server_update_simple(data_xml);
@@ -6331,12 +6331,12 @@ function modal110_action(button)
 			local_create_simple(inventory_xml);
 			local_create_simple(instances_xml);
 			local_create_simple(area_xml);
-		}	
-	
+		}
+
 		$("#modal110").dialog("close");
 	});
 
-	$("#modal110").dialog("open");	
+	$("#modal110").dialog("open");
 }
 
 /**
@@ -6357,17 +6357,17 @@ function modal111_action()
 			var ftime=form.elements[3];
 			var flat=form.elements[4];
 			var flng=form.elements[5];
-			
+
 			ftime.value=get_my_datetime();
 			fname.value=get_account_name();
 			flat.value=position.coords.latitude;
 			flng.value=position.coords.longitude;
-							
+
 			$(form).off("submit");
 			$(form).on("submit",function(event)
 			{
 				event.preventDefault();
-				
+
 				var data_id=get_new_key();
 				var last_updated=get_my_time();
 				var data_xml="<location_history>" +
@@ -6378,7 +6378,7 @@ function modal111_action()
 							"<location>"+flocation.value+"</location>" +
 							"<log_time>"+get_raw_time(ftime.value)+"</log_time>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
-							"</location_history>";	
+							"</location_history>";
 				var activity_xml="<activity>" +
 							"<data_id>"+data_id+"</data_id>" +
 							"<tablename>location_history</tablename>" +
@@ -6394,8 +6394,8 @@ function modal111_action()
 				else
 				{
 					local_create_row(data_xml,activity_xml);
-				}	
-				
+				}
+
 				$("#modal111").dialog("close");
 			});
 			hide_loader();
@@ -6417,15 +6417,15 @@ function modal111_action()
 function modal112_action(func)
 {
 	var form=document.getElementById('modal112_form');
-	
+
 	var fname=form.elements['name'];
 	var fmake=form.elements['make'];
 	var fdescription=form.elements['desc'];
-	
-	
+
+
 	var make_data={data_store:'product_master',return_column:'make'};
 	set_my_filter_json(make_data,fmake);
-	
+
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal112_attributes');
 	attribute_label.innerHTML="";
@@ -6446,24 +6446,24 @@ function modal112_action(func)
 				{
 					attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
 					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
-				}				
-				else 
+				}
+				else
 				{
 					var values_array=attribute.value.split(";");
 					var content="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
-					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
+					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";
 					values_array.forEach(function(fvalue)
 					{
 						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
 					});
 					content+="</select></div>";
 					attr_label.innerHTML=content;
-				}				
+				}
 				attribute_label.appendChild(attr_label);
 			}
 		});
 	});
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -6485,7 +6485,7 @@ function modal112_action(func)
             var new_indexes=indexes.concat(description_indexes,make_indexes);
             var anew_indexes=array_unique(new_indexes);
             var index_string=JSON.stringify(anew_indexes);
-            
+
             var data_json={data_store:'product_master',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
@@ -6493,27 +6493,27 @@ function modal112_action(func)
 	 					{index:'make',value:make},
 	 					{index:'description',value:description},
 	 					{index:'tax',value:tax},
-                        {index:'indexes',value:index_string},  
+                        {index:'indexes',value:index_string},
 	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Added',notes:'Product '+name+' to inventory',link_to:'form39'}}; 					
-            
+	 				log_data:{title:'Added',notes:'Product '+name+' to inventory',link_to:'form39'}};
+
             create_json(data_json,func);
-			
+
             var instance_json={data_store:'product_instances',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'product_name',value:name,uniqueWith:['batch']},
 	 					{index:'batch',value:name},
 	 					{index:'cost_price',value:cost_price},
 	 					{index:'sale_price',value:sale_price},
-	 					{index:'last_updated',value:last_updated}]};            
+	 					{index:'last_updated',value:last_updated}]};
 			create_json(instance_json);
-			
+
 			var billing_type_data={data_store:'bill_types',return_column:'name',indexes:[{index:'status',exact:'active'}]};
 			read_json_single_column(billing_type_data,function(bill_types)
 			{
                 var id=get_new_key();
 				bill_types.forEach(function(bill_type)
-				{				
+				{
 					id++;
 					var sale_price_json={data_store:'sale_prices',
 	 				data:[{index:'id',value:id},
@@ -6521,13 +6521,13 @@ function modal112_action(func)
 	 					{index:'batch',value:name},
 	 					{index:'sale_price',value:sale_price},
 	 					{index:'pi_id',value:data_id},
-                        {index:'billing_type',value:bill_type},  
-	 					{index:'last_updated',value:last_updated}]}; 												
+                        {index:'billing_type',value:bill_type},
+	 					{index:'last_updated',value:last_updated}]};
 					create_json(sale_price_json);
 				});
 			});
-			
-			
+
+
 			var id=get_new_key();
             $("#modal112_attributes").find('input, select').each(function()
 			{
@@ -6542,7 +6542,7 @@ function modal112_action(func)
 	 					{index:'type',value:'product'},
 	 					{index:'attribute',value:attribute},
 	 					{index:'value',value:value},
-	 					{index:'last_updated',value:last_updated}]}; 												
+	 					{index:'last_updated',value:last_updated}]};
 					create_json(attribute_json);
 				}
 			});
@@ -6553,7 +6553,7 @@ function modal112_action(func)
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal112_link").click();
 }
 
@@ -6580,13 +6580,13 @@ function modal113_action(func)
 
 	var type_data="<storage_structure>"+
 				"<name></name>"+
-				"</storage_structure>";	
+				"</storage_structure>";
 	set_my_value_list(type_data,area_type_filter);
 
 	set_static_value_list('dimensions','unit',unit_filter);
-	
+
 	$(area_type_filter).off('blur');
-	$(area_type_filter).on('blur',function () 
+	$(area_type_filter).on('blur',function ()
 	{
 		var storage_parent="<storage_structure>"+
 						"<parent></parent>"+
@@ -6605,15 +6605,15 @@ function modal113_action(func)
 						"<area_type exact='yes'>"+parents[0].parent+"</area_type>"+
 						"</store_areas>";
 				set_my_value_list(parent_data,parent_filter);
-				
+
 				length_filter.value=parents[0].len;
 				breadth_filter.value=parents[0].breadth;
 				height_filter.value=parents[0].height;
 				unit_filter.value=parents[0].unit;
 			}
-		},storage_parent);		
+		},storage_parent);
 	});
-	
+
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal113_attributes');
 	attribute_label.innerHTML="";
@@ -6636,8 +6636,8 @@ function modal113_action(func)
 				if(attribute.value=="")
 				{
 					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
-				}				
-				else 
+				}
+				else
 				{
 					var values_array=attribute.value.split(";");
 					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
@@ -6647,15 +6647,15 @@ function modal113_action(func)
 					});
 					content+="</select>";
 					attr_label.innerHTML=content;
-				}				
+				}
 				attribute_label.appendChild(attr_label);
 				var line_break=document.createElement('br');
 				attribute_label.appendChild(line_break);
 			}
 		});
 	});
-	
-	
+
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -6700,7 +6700,7 @@ function modal113_action(func)
 			{
 				local_create_row_func(data_xml,activity_xml,func);
 			}
-			
+
 			var id=get_new_key();
 			$("#modal113_attributes").find('input, select').each(function()
 			{
@@ -6732,9 +6732,9 @@ function modal113_action(func)
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal113").dialog("close");		
+		$("#modal113").dialog("close");
 	});
-	
+
 	$("#modal113").dialog("open");
 }
 
@@ -6746,7 +6746,7 @@ function modal113_action(func)
 function modal114_action(func)
 {
 	var form=document.getElementById('modal114_form');
-	
+
 	var fname=form.elements[1];
 	var fmake=form.elements[2];
 	var fdescription=form.elements[3];
@@ -6762,18 +6762,18 @@ function modal114_action(func)
 	var fpacking=form.elements[14];
 	var fbarcode=form.elements[15];
 	var auto_generate=form.elements[16];
-	
+
 	//fbarcode.value=get_my_time()*10+Math.round(Math.random()*10);
 	//auto_generate.checked=true;
-	$(dummy_button).on('click',function (e) 
+	$(dummy_button).on('click',function (e)
 	{
 		e.preventDefault();
 		$(fpicture).trigger('click');
 	});
-	
+
 	fbarcode.value="";
 	auto_generate.checked=false;
-	
+
 	$(auto_generate).off('click');
 	$(auto_generate).on('click',function(event)
 	{
@@ -6786,22 +6786,22 @@ function modal114_action(func)
 			fbarcode.value="";
 		}
 	});
-	
+
 	set_static_value_list('dimensions','unit',funit);
-	
+
 	var make_data="<product_master>" +
 		"<make></make>" +
 		"</product_master>";
 	set_my_filter(make_data,fmake);
-	
+
 	fpicture.addEventListener('change',function(evt)
 	{
 		select_picture(evt,fpictureinfo,function(dataURL)
 		{
-			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";			
+			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";
 		});
 	},false);
-	
+
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal114_attributes');
 	attribute_label.innerHTML="";
@@ -6824,8 +6824,8 @@ function modal114_action(func)
 				if(attribute.value=="")
 				{
 					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
-				}				
-				else 
+				}
+				else
 				{
 					var values_array=attribute.value.split(";");
 					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
@@ -6835,14 +6835,14 @@ function modal114_action(func)
 					});
 					content+="</select>";
 					attr_label.innerHTML=content;
-				}				
+				}
 				attribute_label.appendChild(attr_label);
 				var line_break=document.createElement('br');
 				attribute_label.appendChild(line_break);
 			}
 		});
 	});
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -6852,7 +6852,7 @@ function modal114_action(func)
 			var name=form.elements[1].value;
 			var description=form.elements[2].value;
 			var make=form.elements[3].value;
-			
+
 			name = name.replace(/[^a-z0-9A-Z<>\t\n \(\)\+\-\;\.\<\,]/g,'');
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
@@ -6895,7 +6895,7 @@ function modal114_action(func)
 						"<packing>"+packing+"</packing>"+
 						"<bar_code>"+barcode+"</bar_code>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
-						"</product_master>";	
+						"</product_master>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>product_master</tablename>" +
@@ -6905,7 +6905,7 @@ function modal114_action(func)
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			create_row_func(data_xml,activity_xml,func);
-			
+
 			var id=get_new_key();
 			$("#modal114_attributes").find('input, select').each(function()
 			{
@@ -6923,7 +6923,7 @@ function modal114_action(func)
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</attributes>";
 					create_simple(attribute_xml);
-					
+
 				}
 			});
 
@@ -6937,9 +6937,9 @@ function modal114_action(func)
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</documents>";
 				create_simple(pic_xml);
-					
+
 			}
-			
+
 			var channel_data="<sale_channels>" +
 					"<id></id>" +
 					"<name></name>" +
@@ -6988,11 +6988,11 @@ function modal114_action(func)
 				sku_mapping_xml+="</sku_mapping>";
 				cat_sku_mapping_xml+="</category_sku_mapping>";
 				channel_price_xml+="</channel_prices>";
-				
+
 				//create_batch(sku_mapping_xml);
 				create_batch(cat_sku_mapping_xml);
 				//create_batch(channel_price_xml);
-				
+
 			});
 
 		}
@@ -7002,7 +7002,7 @@ function modal114_action(func)
 		}
 		$("#modal114").dialog("close");
 	});
-	
+
 	$("#modal114").dialog("open");
 }
 
@@ -7016,7 +7016,7 @@ function modal115_action(func)
 	var form115=document.getElementById('modal115_form');
 	var yes_button=form115.elements['yes'];
 	var no_button=form115.elements['no'];
-	
+
 	$(yes_button).off('click');
 	$(yes_button).on('click',function(e)
 	{
@@ -7026,7 +7026,7 @@ function modal115_action(func)
 	});
 
 	$("#modal115_link").click();
-	$('#modal115').on('keyup',function (e) 
+	$('#modal115').on('keyup',function (e)
 	{
 		if(e.keyCode==13)
 		{
@@ -7048,11 +7048,11 @@ function modal116_action(barcode,sku)
 	var sku_filter=form.elements['sku'];
 	var name_filter=form.elements['name'];
 	var id_filter=form.elements['id'];
-	
+
 	var barcode_img=document.getElementById('modal116_barcode_img');
 	$(barcode_img).hide();
-	
-	barcode_filter.value=barcode;	
+
+	barcode_filter.value=barcode;
 	sku_filter.value="";
 	name_filter.value="";
 	id_filter.value="";
@@ -7065,15 +7065,15 @@ function modal116_action(barcode,sku)
 						"<description></description>"+
 						"<name exact='yes'>"+sku_filter.value+"</name>"+
 						"</product_master>";
-		fetch_requested_data('',product_data,function (products) 
+		fetch_requested_data('',product_data,function (products)
 		{
 			if(products.length>0)
 			{
 				name_filter.value=products[0].description;
-				id_filter.value=products[0].id;	
+				id_filter.value=products[0].id;
 				$(barcode_img).show();
 				$(barcode_img).off('click');
-				$(barcode_img).on('click',function () 
+				$(barcode_img).on('click',function ()
 				{
 					print_product_barcode(barcode_filter.value,sku_filter.value,name_filter.value);
 				});
@@ -7091,7 +7091,7 @@ function modal116_action(barcode,sku)
 	});
 
 	$(sku_filter).off('select');
-	$(sku_filter).on('select',function () 
+	$(sku_filter).on('select',function ()
 	{
 		//console.log('select triggered');
 		var product_data="<product_master count='1'>"+
@@ -7099,23 +7099,23 @@ function modal116_action(barcode,sku)
 						"<description></description>"+
 						"<name exact='yes'>"+sku_filter.value+"</name>"+
 						"</product_master>";
-		fetch_requested_data('',product_data,function (products) 
+		fetch_requested_data('',product_data,function (products)
 		{
 			if(products.length>0)
 			{
 				name_filter.value=products[0].description;
-				id_filter.value=products[0].id;				
+				id_filter.value=products[0].id;
 			}
 			else
 			{
 				name_filter.value="";
-				id_filter.value="";				
+				id_filter.value="";
 			}
-		});				
+		});
 	});
 
 
-	my_datalist_change(sku_filter,function () 
+	my_datalist_change(sku_filter,function ()
 	{
 		//console.log('change triggered');
 		var product_data="<product_master count='1'>"+
@@ -7123,31 +7123,31 @@ function modal116_action(barcode,sku)
 						"<description></description>"+
 						"<name exact='yes'>"+sku_filter.value+"</name>"+
 						"</product_master>";
-		fetch_requested_data('',product_data,function (products) 
+		fetch_requested_data('',product_data,function (products)
 		{
 			if(products.length>0)
 			{
 				name_filter.value=products[0].description;
-				id_filter.value=products[0].id;				
+				id_filter.value=products[0].id;
 			}
 			else
 			{
 				name_filter.value="";
-				id_filter.value="";				
+				id_filter.value="";
 			}
-		});				
+		});
 	});
-		
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		
+
 		var id=id_filter.value;
 		var barcode=barcode_filter.value;
 		//console.log(id);
 		//console.log(barcode);
-		
+
 		var last_updated=get_my_time();
 		var data_xml="<product_master>" +
 					"<id>"+id+"</id>" +
@@ -7155,10 +7155,10 @@ function modal116_action(barcode,sku)
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</product_master>";
 		update_simple(data_xml);
-		
+
 		$("#modal116").dialog("close");
 	});
-	
+
 	$("#modal116").dialog("open");
 }
 
@@ -7174,15 +7174,15 @@ function modal117_action(date_due)
 	var desc_filter=form.elements['notes'];
 	var staff_filter=form.elements['assignee'];
 	var status_filter=form.elements['status'];
-	
+
     $('#modal117').formcontrol();
 	//start_filter.value=date_initiated;
 
 	var staff_data={data_store:'staff',return_column:'acc_name'};
 	set_my_value_list_json(staff_data,staff_filter);
-	
+
 	set_static_value_list_json('task_instances','status',status_filter);
-	
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -7195,7 +7195,7 @@ function modal117_action(date_due)
 			var status=form.elements['status'].value;
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
-            
+
             var data_json={data_store:'task_instances',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'name',value:name},
@@ -7205,7 +7205,7 @@ function modal117_action(date_due)
                         {index:'task_hours',value:1},
                         {index:'source',value:'business process'},
                         {index:'t_due',value:get_raw_time(date_due)},
-                        {index:'t_initiated',value:get_raw_time(date_due)-3600000},  
+                        {index:'t_initiated',value:get_raw_time(date_due)-3600000},
                         {index:'source_id',value:''},
                         {index:'last_updated',value:last_updated}],
                     log:'yes',
@@ -7218,7 +7218,7 @@ function modal117_action(date_due)
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal117_link").click();
 }
 
@@ -7238,7 +7238,7 @@ function modal118_action()
 	var new_filter=form.elements['new_old'];
 	var acc_name_filter=form.elements['acc_name'];
 	var id_filter=form.elements['customer_id'];
-	
+
 	phone_filter.value="";
 	name_filter.value="";
 	credit_filter.value="";
@@ -7253,24 +7253,24 @@ function modal118_action()
 			"<phone></phone>" +
 			"</customers>";
 	set_my_filter(phone_data,phone_filter);
-	
+
 	var address_data="<customers>" +
 			"<address></address>" +
 			"</customers>";
 	set_my_filter(address_data,address_filter);
-	
+
 	var name_data="<customers>" +
 			"<name></name>" +
 			"</customers>";
 	set_my_filter(name_data,name_filter);
-	
+
 	$(address_filter).off('keydown');
 	$(address_filter).on('keydown',function(e)
 	{
 		if(e.keyCode==13)
 		{
 			e.preventDefault();
-		
+
 			if(address_filter.value!="")
 			{
 				var customers_data="<customers>"+
@@ -7310,7 +7310,7 @@ function modal118_action()
 								}
 							});
 							credit_filter.value=balance_amount;
-						});	
+						});
 						name_filter.value=customers[0].name;
 						email_filter.value=customers[0].email;
 						phone_filter.value=customers[0].phone;
@@ -7318,9 +7318,9 @@ function modal118_action()
 						new_filter.value='no';
 						id_filter.value=customers[0].id;
 						name_filter.setAttribute('readonly','readonly');
-						$(notes_filter).focus();				
+						$(notes_filter).focus();
 					}
-					else 
+					else
 					{
 						name_filter.value="";
 						email_filter.value="";
@@ -7335,7 +7335,7 @@ function modal118_action()
 			}
 		}
 	});
-		
+
 	$(phone_filter).off('blur');
 	$(phone_filter).on('blur',function()
 	{
@@ -7378,7 +7378,7 @@ function modal118_action()
 							}
 						});
 						credit_filter.value=balance_amount;
-					});	
+					});
 					name_filter.value=customers[0].name;
 					email_filter.value=customers[0].email;
 					address_filter.value=customers[0].address;
@@ -7386,9 +7386,9 @@ function modal118_action()
 					new_filter.value='no';
 					id_filter.value=customers[0].id;
 					name_filter.setAttribute('readonly','readonly');
-					$(notes_filter).focus();				
+					$(notes_filter).focus();
 				}
-				else 
+				else
 				{
 					name_filter.value="";
 					email_filter.value="";
@@ -7402,13 +7402,13 @@ function modal118_action()
 			});
 		}
 	});
-	
+
 	$(name_filter).off('blur');
 	$(name_filter).on('blur',function()
 	{
 		acc_name_filter.value=name_filter.value+" ("+phone_filter.value+")";
 	});
-		
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -7446,12 +7446,12 @@ function modal118_action()
 								"<username></username>"+
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</accounts>";
-			        		
+
                 create_simple(customer_xml);
 				create_simple(account_xml);
-				 		
+
 			}
-			else 
+			else
 			{
 				var customer_xml="<customers>"+
 								"<id>"+old_id+"</id>"+
@@ -7460,14 +7460,14 @@ function modal118_action()
                         		"</customers>";
                 update_simple(customer_xml);
 			}
-			
+
 			var order_num_xml="<user_preferences>"+
-							"<id></id>"+							
+							"<id></id>"+
 							"<value></value>"+
 							"<type exact='yes'>accounting</type>"+
-							"<name exact='yes'>so_num</name>"+							
+							"<name exact='yes'>so_num</name>"+
 							"</user_preferences>";
-			fetch_requested_data('',order_num_xml,function (order_nums) 
+			fetch_requested_data('',order_num_xml,function (order_nums)
 			{
 				if(order_nums.length>0)
 				{
@@ -7493,11 +7493,11 @@ function modal118_action()
 								"<id>"+order_nums[0].id+"</id>"+
 								"<value>"+(parseFloat(order_nums[0].value)+1)+"</value>"+
 								"<last_updated>"+last_updated+"</last_updated>"+
-							"</user_preferences>";		
+							"</user_preferences>";
 					create_row(data_xml,activity_xml);
-					update_simple(order_num_data);	
+					update_simple(order_num_data);
 				}
-			});				
+			});
 		}
 		else
 		{
@@ -7505,7 +7505,7 @@ function modal118_action()
 		}
 		$("#modal118").dialog("close");
 	});
-	
+
 	$("#modal118").dialog("open");
 }
 
@@ -7517,12 +7517,12 @@ function modal119_action(data_id,type)
 {
 	var form=document.getElementById("modal119_form");
 	var name_filter=form.elements[1];
-		
+
 	var name_data="<staff>" +
 			"<acc_name></acc_name>" +
 			"</staff>";
-	set_my_filter(name_data,name_filter);		
-	
+	set_my_filter(name_data,name_filter);
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -7531,13 +7531,13 @@ function modal119_action(data_id,type)
 		{
 			var name=form.elements[1].value;
 			var last_updated=get_my_time();
-			
+
 			var data_xml="<sale_orders>" +
 						"<id>"+data_id+"</id>"+
 						"<pickup_assignee>"+name+"</pickup_assignee>"+
                         "<last_updated>"+last_updated+"</last_updated>" +
 						"</sale_orders>";
-			
+
 			if(type=='delivery')
 			{
 				var data_xml="<sale_orders>" +
@@ -7545,7 +7545,7 @@ function modal119_action(data_id,type)
 						"<delivery_assignee>"+name+"</delivery_assignee>"+
                         "<last_updated>"+last_updated+"</last_updated>" +
 						"</sale_orders>";
-			}			
+			}
 			if(is_online())
 			{
 				server_update_simple(data_xml);
@@ -7553,7 +7553,7 @@ function modal119_action(data_id,type)
 			else
 			{
 				local_update_simple(data_xml);
-			}	
+			}
 		}
 		else
 		{
@@ -7561,7 +7561,7 @@ function modal119_action(data_id,type)
 		}
 		$("#modal119").dialog("close");
 	});
-	
+
 	$("#modal119").dialog("open");
 }
 
@@ -7573,12 +7573,12 @@ function modal119_action(data_id,type)
 function modal120_action(func,product_name,required)
 {
 	var form=document.getElementById('modal120_form');
-	
+
 	var fname=form.elements[1];
 	var fbatch=form.elements[2];
 	var fexpiry=form.elements[3];
 	var fmrp=form.elements[4];
-	
+
 	if(typeof required!='undefined')
 	{
 		if(required=='required')
@@ -7587,24 +7587,24 @@ function modal120_action(func,product_name,required)
 			fmrp.setAttribute('required','required');
 		}
 	}
-	
+
 	fbatch.value="";
 	fexpiry.value="";
 	fmrp.value="";
-	
+
 	$(fexpiry).datepicker(
 	{
         changeMonth: true,
         changeYear: true,
         showButtonPanel: true,
         dateFormat: 'mm/yy',
-        onClose: function(dateText, inst) { 
+        onClose: function(dateText, inst) {
             var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
             var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
             $(this).datepicker('setDate', new Date(year, month, 1));
         }
     });
-	
+
 	var name_data="<product_master>" +
 			"<name></name>" +
 			"</product_master>";
@@ -7631,7 +7631,7 @@ function modal120_action(func,product_name,required)
 			});
 		},batch_data);
 	}
-		
+
 	$(fname).off('blur');
 	$(fname).on('blur',function(event)
 	{
@@ -7652,20 +7652,20 @@ function modal120_action(func,product_name,required)
 		        }
 			});
 		},batch_data);
-	});		
-		
-	
+	});
+
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
 			var name=fname.value;
 			var batch=fbatch.value;
-			
+
 			batch = batch.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			batch = batch.replace(/â/g,'');
 			batch = batch.replace(/&/g, "and");
-			
+
 			var expiry=get_raw_time(fexpiry.value);
 			var mrp=fmrp.value;
 			var data_id=get_new_key();
@@ -7688,10 +7688,10 @@ function modal120_action(func,product_name,required)
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			create_row_func(data_xml,activity_xml,func);
-						
+
 		$("#modal120").dialog("close");
 	});
-	
+
 	$("#modal120").dialog("open");
 }
 
@@ -7703,12 +7703,12 @@ function modal120_action(func,product_name,required)
 function modal122_action(item_name)
 {
 	var form=document.getElementById('modal122_form');
-	
+
 	var fitem=form.elements[1];
 	var ffresh=form.elements[2];
 	var fhireable=form.elements[3];
 	fitem.value=item_name;
-		
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -7718,9 +7718,9 @@ function modal122_action(item_name)
 			var item=fitem.value;
 			var fresh=parseFloat(ffresh.value);
 			var hireable=parseFloat(fhireable.value);
-			
+
 			var last_updated=get_my_time();
-			
+
 			var hireable_data="<bill_items sum='yes'>"+
 							"<quantity></quantity>"+
 							"<hired exact='yes'>yes</hired>"+
@@ -7734,7 +7734,7 @@ function modal122_action(item_name)
 				{
 					new_hireable-=parseFloat(hireables[0]);
 				}
-				
+
 				var hireable_xml="<bill_items sum='yes'>"+
 							"<id>"+get_new_key()+"</id>"+
 							"<quantity>"+new_hireable+"</quantity>"+
@@ -7746,7 +7746,7 @@ function modal122_action(item_name)
 							"<storage>"+get_session_var('sales_store')+"</storage>"+
 							"<last_updated>"+last_updated+"</last_updated>"+
 							"</bill_items>";
-				
+
 				get_inventory(item,'',function(inventory)
 				{
 					var new_total=fresh+hireable-parseFloat(inventory);
@@ -7768,7 +7768,7 @@ function modal122_action(item_name)
 						local_create_simple_no_warning(adjust_xml);
 						local_create_simple_no_warning(hireable_xml);
 					}
-					
+
 					///////////adding store placement////////
 					///////////adding store placement////////
 					var bill_storage_data="<area_utilization>" +
@@ -7797,8 +7797,8 @@ function modal122_action(item_name)
 								local_create_simple(storage_xml);
 							}
 						}
-					});		
-					
+					});
+
 					var storage_data="<area_utilization>" +
 							"<id></id>" +
 							"<name exact='yes'>"+get_session_var('discard_items_store')+"</name>" +
@@ -7825,7 +7825,7 @@ function modal122_action(item_name)
 								local_create_simple(storage_xml);
 							}
 						}
-					});		
+					});
 
 				});
 			},hireable_data);
@@ -7836,7 +7836,7 @@ function modal122_action(item_name)
 		}
 		$("#modal122").dialog("close");
 	});
-	
+
 	$("#modal122").dialog("open");
 }
 
@@ -7847,11 +7847,11 @@ function modal122_action(item_name)
 function modal123_action(item_name)
 {
 	var form=document.getElementById('modal123_form');
-	
+
 	var date_filter=form.elements[2];
-	
-	$(date_filter).datepicker();	
-		
+
+	$(date_filter).datepicker();
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -7867,7 +7867,7 @@ function modal123_action(item_name)
 			var signature=form.elements[7].value;
 			var footer=form.elements[8].value;
 			var last_updated=get_my_time();
-			
+
 			var letter_xml="<letterheads>"+
 							"<id>"+get_new_key()+"</id>"+
 							"<name unique='yes'>"+name+"</name>"+
@@ -7887,7 +7887,7 @@ function modal123_action(item_name)
 			else
 			{
 				local_create_simple(letter_xml);
-			}	
+			}
 		}
 		else
 		{
@@ -7895,7 +7895,7 @@ function modal123_action(item_name)
 		}
 		$("#modal123").dialog("close");
 	});
-	
+
 	$("#modal123").dialog("open");
 }
 
@@ -7907,14 +7907,14 @@ function modal124_action(person_type,person,sms)
 {
 	show_loader();
 	var form=document.getElementById('modal124_form');
-		
+
 	var person_filter=form.elements[1];
 	var sms_filter=form.elements[3];
-	
+
 	sms_filter.value=sms;
-	
+
 	$(person_filter).off('blur');
-				
+
 	if(person!="")
 	{
 		var phone_xml="<suppliers>"+
@@ -7922,7 +7922,7 @@ function modal124_action(person_type,person,sms)
 				"<name></name>"+
 				"<acc_name exact='yes'>"+person+"</acc_name>"+
 				"</suppliers>";
-		if(person_type=='customer')			
+		if(person_type=='customer')
 		{
 			phone_xml="<customers>"+
 					"<phone></phone>"+
@@ -7930,7 +7930,7 @@ function modal124_action(person_type,person,sms)
 					"<acc_name exact='yes'>"+person+"</acc_name>"+
 					"</customers>";
 		}
-		else if(person_type=='staff')			
+		else if(person_type=='staff')
 		{
 			phone_xml="<staff>"+
 					"<phone></phone>"+
@@ -7945,38 +7945,38 @@ function modal124_action(person_type,person,sms)
 			form.elements[2].value=phones[0].phone;
 			form.elements[4].value=phones[0].name;
 
-			hide_loader();			
+			hide_loader();
 		});
-	}		
+	}
 	else
 	{
 		var person_xml="<suppliers>"+
 					"<acc_name></acc_name>"+
 					"</suppliers>";
-		if(person_type=='customer')			
+		if(person_type=='customer')
 		{
 			person_xml="<customers>"+
 					"<acc_name></acc_name>"+
 					"</customers>";
 		}
-		else if(person_type=='staff')			
+		else if(person_type=='staff')
 		{
 			person_xml="<staff>"+
 					"<acc_name></acc_name>"+
 					"</staff>";
 		}
-		
+
 		set_my_value_list(person_xml,person_filter);
-		
-		$(person_filter).on('blur',function () 
+
+		$(person_filter).on('blur',function ()
 		{
 			var phone_xml="<suppliers count='1'>"+
 				"<phone></phone>"+
 				"<name></name>"+
 				"<acc_name exact='yes'>"+person_filter.value+"</acc_name>"+
 				"</suppliers>";
-			
-			if(person_type=='customer')			
+
+			if(person_type=='customer')
 			{
 				phone_xml="<customers>"+
 						"<phone></phone>"+
@@ -7984,7 +7984,7 @@ function modal124_action(person_type,person,sms)
 						"<acc_name exact='yes'>"+person_filter.value+"</acc_name>"+
 						"</customers>";
 			}
-			else if(person_type=='staff')			
+			else if(person_type=='staff')
 			{
 				phone_xml="<staff>"+
 						"<phone></phone>"+
@@ -7996,13 +7996,13 @@ function modal124_action(person_type,person,sms)
 			{
 				form.elements[2].value=phones[0].phone;
 				form.elements[4].value=phones[0].name;
-	
-				hide_loader();			
+
+				hide_loader();
 			});
 		});
-	}	
+	}
 
-	$("#modal124").dialog("open");			
+	$("#modal124").dialog("open");
 	$('textarea').autosize();
 
 	$(form).off("submit");
@@ -8013,11 +8013,11 @@ function modal124_action(person_type,person,sms)
 		var to=form.elements[2].value;
 		var customer_name=form.elements[4].value;
 
-		var sms_content=sms.replace(/customer_name/g,customer_name);		
+		var sms_content=sms.replace(/customer_name/g,customer_name);
 		send_sms(to,sms_content,'transaction');
-		
+
 		$("#modal124").dialog("close");
-	});	
+	});
 }
 
 /**
@@ -8028,7 +8028,7 @@ function modal124_action(person_type,person,sms)
 function modal125_action(item_name)
 {
 	var form=document.getElementById('modal125_form');
-	
+
 	////adding attribute fields/////
 	var supplier_label=document.getElementById('modal125_suppliers');
 	supplier_label.innerHTML="";
@@ -8041,13 +8041,13 @@ function modal125_action(item_name)
 		{
 			var attr_label=document.createElement('label');
 			attr_label.innerHTML=supplier.acc_name+" <input type='checkbox' name='"+supplier.acc_name+"'>";
-			
+
 			supplier_label.appendChild(attr_label);
 			var line_break=document.createElement('br');
 			supplier_label.appendChild(line_break);
 		});
 	});
-			
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -8055,8 +8055,8 @@ function modal125_action(item_name)
 		var delete_mapping="<supplier_item_mapping>"+
 						"<item_name>"+item_name+"</item_name>"+
 						"</supplier_item_mapping>";
-		delete_simple_func(delete_mapping,function () 
-		{	
+		delete_simple_func(delete_mapping,function ()
+		{
 			var id=get_new_key();
 			$("#modal125_suppliers").find('input').each(function()
 			{
@@ -8083,10 +8083,10 @@ function modal125_action(item_name)
 				}
 			});
 		});
-		
+
 		$("#modal125").dialog("close");
 	});
-	
+
 	$("#modal125").dialog("open");
 }
 
@@ -8100,7 +8100,7 @@ function modal126_action(po_id,po_num)
 	var form=document.getElementById('modal126_form');
 
 	$(form).off('submit');
-	$(form).on('submit',function (event) 
+	$(form).on('submit',function (event)
 	{
 		event.preventDefault();
         var last_updated=get_my_time();
@@ -8114,15 +8114,15 @@ function modal126_action(po_id,po_num)
                     log_data:{title:'Assigned',notes:'Supplier for PO # '+po_num,link_to:'form179'}};
 
 		update_json(po_json);
-		
+
 		$(form).find(".close").click();
         form179_ini();
 	});
-		
+
 	////adding attribute fields/////
 	var supplier_label=document.getElementById('modal126_suppliers');
 	supplier_label.innerHTML="";
-	
+
 	var po_items_data={data_store:'purchase_order_items',
                       indexes:[{index:'item_name'},
                               {index:'order_id',exact:po_id}]};
@@ -8143,17 +8143,17 @@ function modal126_action(po_id,po_num)
 		{
             //console.log(suppliers);
 			var unique_sup_array=new Object();
-			
+
 			for(var i in suppliers)
 			{
 				var supplier_name=suppliers[i].supplier;
 				if(!Array.isArray(unique_sup_array[supplier_name]))
-				{		
-					unique_sup_array[supplier_name]=[];				
-				}				
-				unique_sup_array[supplier_name].push(suppliers[i].item);				
+				{
+					unique_sup_array[supplier_name]=[];
+				}
+				unique_sup_array[supplier_name].push(suppliers[i].item);
 			}
-			
+
 			var final_suppliers=[];
 			for(var x in unique_sup_array)
 			{
@@ -8162,21 +8162,21 @@ function modal126_action(po_id,po_num)
 					final_suppliers.push(x);
 				}
 			}
-			
+
 			var score_xml={data_store:'suppliers',
                           indexes:[{index:'score'},
                                   {index:'acc_name',array:final_suppliers}]};
-			read_json_rows('',score_xml,function (scores) 
+			read_json_rows('',score_xml,function (scores)
 			{
                 //console.log(scores);
 				scores.sort(function(a,b)
 				{
 					if(a.score<b.score)
 					{	return 1;}
-					else 
+					else
 					{	return -1;}
 				});
-				
+
 				var radio_check='checked';
 				scores.forEach(function(score)
 				{
@@ -8189,10 +8189,10 @@ function modal126_action(po_id,po_num)
 					}
 					supplier_label.appendChild(attr_label);
 				});
-			});									
+			});
 		});
 	});
-	
+
 	$("#modal126_link").click();
 }
 
@@ -8206,39 +8206,39 @@ function modal127_action()
 	var form127=document.getElementById('modal127_form');
 	var yes_button=form127.elements[1];
 	var no_button=form127.elements[2];
-	
+
 	$(yes_button).off('click');
 	$(yes_button).on('click',function()
 	{
 		$("#modal127").dialog("close");
 		////add code to print tags
-		
+
 		var master_form=document.getElementById('form10_master');
 		var bill_num=master_form.elements['bill_num'].value;
 		var bill_date=master_form.elements['bill_date'].value;
 		//var bill_due_date=master_form.elements['due_date'].value;
 		//var bus_title='The Washclub';
-		//var customer_address=master_form.elements['customer_address'].value;		
+		//var customer_address=master_form.elements['customer_address'].value;
 		var total_quantity=0;
 		var items=[];
 		$("[id^='save_form10_']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			var quantity=parseInt(subform.elements[2].value);			
+			var quantity=parseInt(subform.elements[2].value);
 			for(var i=0;i<quantity;i++)
-			{	
-				total_quantity+=1;			
+			{
+				total_quantity+=1;
 				var item=new Object();
 				item.number=total_quantity;
 				item.name=subform.elements[0].value;
 				items.push(item);
-			}						
+			}
 		});
 
 		var container=document.createElement('div');
 		container.setAttribute('style','width:95%;font-size:14px;line-height:20px;');
-		
+
 		items.forEach(function(item)
 		{
 			var item_container=document.createElement('div');
@@ -8252,27 +8252,27 @@ function modal127_action()
 			item_container.setAttribute('style','width:100%;height:auto;margin:0px;margin-top:5%;margin-bottom:5%;font-size:14px;page-break-inside:avoid;page-break-after:auto;page-break-before:auto;');
 			bill_num_elem.setAttribute('style','font-size:22px;margin:5px;font-weight:900;');
 			item_name_elem.setAttribute('style','font-size:18px;margin:5px;');
-			
+
 			item_count_elem.innerHTML="<hr style='border: 1px solid #000;margin:0px;'>"+item.number+" of "+total_quantity;
 			//business_title_elem.innerHTML=bus_title;
 			item_name_elem.innerHTML=item.name;
 			bill_num_elem.innerHTML="<b>"+bill_num+"</b>";
 			due_date_elem.innerHTML="<b>"+bill_date+"</b><hr style='border: 1px solid #000;margin:0px;'>";
-			//address_elem.innerHTML="<hr style='border: 1px solid #000;margin:0px;'>"+customer_address+"<hr style='border: 0px solid #000;margin:0px;'>";			
-			
+			//address_elem.innerHTML="<hr style='border: 1px solid #000;margin:0px;'>"+customer_address+"<hr style='border: 0px solid #000;margin:0px;'>";
+
 			item_container.appendChild(item_count_elem);
 			//item_container.appendChild(business_title_elem);
 			item_container.appendChild(item_name_elem);
-			item_container.appendChild(bill_num_elem);	
+			item_container.appendChild(bill_num_elem);
 			item_container.appendChild(due_date_elem);
 			//item_container.appendChild(address_elem);
 			container.appendChild(item_container);
 		});
-		
+
 		$.print(container);
 		////////////////////////
 	});
-		
+
 	$(no_button).on('click',function()
 	{
 		$("#modal127").dialog("close");
@@ -8288,13 +8288,13 @@ function modal127_action()
 function modal128_action()
 {
 	var form=document.getElementById('modal128_form');
-	
-	var channel_filter=form.elements['channel'];	
-	var type_filter=form.elements['type'];	
-	
+
+	var channel_filter=form.elements['channel'];
+	var type_filter=form.elements['type'];
+
 	set_static_value_list('logistics_orders','type',type_filter);
 	set_static_value_list('logistics_orders','channel',channel_filter);
-		
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -8346,19 +8346,19 @@ function modal128_action()
 		}
 		$("#modal128").dialog("close");
 	});
-	
+
 	$("#modal128").dialog("open");
 }
 
 
 /**
  * @modalNo 130
- * @modal Delete Cache 
+ * @modal Delete Cache
  */
 function modal130_action()
 {
 	var form=document.getElementById('modal130_form');
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -8366,7 +8366,7 @@ function modal130_action()
 		$("#modal130").dialog("close");
 		clear_appcache();
 	});
-	console.log('something else 7');	
+	console.log('something else 7');
 	$("#modal130").dialog("open");
 }
 
@@ -8383,7 +8383,7 @@ function modal131_action(order_id,order_num,total_quantity,supplier_name,order_d
 	var print_button=form.elements['print'];
 
 	$(print_button).off('click');
-	$(print_button).on('click',function () 
+	$(print_button).on('click',function ()
 	{
 		var received_quantity=received_filter.value;
 		modal131_print(order_num,received_quantity,total_quantity,supplier_name,order_date);
@@ -8411,7 +8411,7 @@ function modal131_action(order_id,order_num,total_quantity,supplier_name,order_d
 			{
 				status='completely received';
 			}
-			
+
 			var orders_xml="<purchase_orders>"+
 						"<id>"+order_id+"</id>"+
 		                "<status>"+status+"</status>"+
@@ -8419,7 +8419,7 @@ function modal131_action(order_id,order_num,total_quantity,supplier_name,order_d
 		                "<quantity_qc_pending>"+qc_pending+"</quantity_qc_pending>"+
 		                "<last_updated>"+last_updated+"</last_updated>"+
 						"</purchase_orders>";
-			update_simple(orders_xml);	
+			update_simple(orders_xml);
 		}
 		else
 		{
@@ -8427,7 +8427,7 @@ function modal131_action(order_id,order_num,total_quantity,supplier_name,order_d
 		}
 		$("#modal131").dialog("close");
 	});
-	
+
 	$("#modal131").dialog("open");
 }
 
@@ -8442,7 +8442,7 @@ function modal132_action(tab_id,func)
 	var yes_button=form132.elements[0];
 	var no_button=form132.elements[1];
 
-	
+
 	if(vyavsaay_active_tab==tab_id)
 	{
 		$(form132).off('submit');
@@ -8452,16 +8452,16 @@ function modal132_action(tab_id,func)
 			$("#modal132").dialog("close");
 			func();
 		});
-		
+
 		$(no_button).off('click');
 		$(no_button).on('click',function()
 		{
 			$("#modal132").dialog("close");
 		});
-	
+
 		$("#modal132").dialog("open");
 	}
-	else 
+	else
 	{
 		func();
 	}
@@ -8479,7 +8479,7 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 	var cancel_button=form.elements[2];
 
 	document.getElementById('modal133_order_id').innerHTML="Order #: "+order_num;
-	
+
 	type_filter.value=billing_type;
 
 	var type_data="<bill_types>" +
@@ -8487,7 +8487,7 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 			"<status exact='yes'>active</status>" +
 			"</bill_types>";
 	set_my_value_list(type_data,type_filter);
-		
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -8502,14 +8502,14 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 		event.preventDefault();
 		$("#modal133").dialog("close");
 	});
-	
+
 	var headHTML="<tr style='background-color:#2C8A50;'>"+
 				"<td>Item</td>"+
 				"<td>Quantity</td>"+
 				"<td>Select</td>"+
 				"</tr>";
 	$('#modal133_item_table').html(headHTML);
-		
+
 	var order_items_xml="<sale_order_items>"+
 					"<id></id>"+
 					"<order_id exact='yes'>"+order_id+"</order_id>"+
@@ -8528,8 +8528,8 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
                     "<total></total>"+
 					"</sale_order_items>";
 	var analyze_item_timer=0;
-								
-	fetch_requested_data('',order_items_xml,function (order_items) 
+
+	fetch_requested_data('',order_items_xml,function (order_items)
 	{
 		var bill_id_string='--';
 		if(bill_id!='undefined' && bill_id!="" && bill_id!='0')
@@ -8540,21 +8540,21 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 				bill_id_string+=bill_id_array[x].bill_id+"--";
 			}
 		}
-		
+
 		var bill_items_xml="<bill_items>"+
 					"<bill_id array='yes'>"+bill_id_string+"</bill_id>"+
 					"<item_name></item_name>"+
 					"<item_desc></item_desc>"+
 					"<quantity></quantity>"+
 					"</bill_items>";
-		fetch_requested_data('',bill_items_xml,function (bill_items) 
+		fetch_requested_data('',bill_items_xml,function (bill_items)
 		{
 			//console.log(bill_items);
 			for(var j=0;j<order_items.length;j++)
 			{
 				order_items[j].order_quantity=order_items[j].quantity;
 			}
-			
+
 			for(var k=0;k<order_items.length;k++)
 			{
 				for(var l=0;l<bill_items.length;l++)
@@ -8574,7 +8574,7 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 							k--;
 							break;
 						}
-						else 
+						else
 						{
 							bill_items.splice(l,1);
 							order_items.splice(k,1);
@@ -8584,14 +8584,14 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 					}
 				}
 			}
-				
-		
+
+
 			var channel_sku_string="--";
 			for(var i in order_items)
 			{
 				channel_sku_string+=order_items[i].channel_sku+"--";
 			}
-			
+
 			var sku_data="<sku_mapping count='1'>"+
 						"<item_desc></item_desc>"+
 						"<system_sku></system_sku>"+
@@ -8601,8 +8601,8 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 			fetch_requested_data('',sku_data,function(skus)
 			{
 				analyze_item_timer=order_items.length;
-				
-				order_items.forEach(function (order_item) 
+
+				order_items.forEach(function (order_item)
 				{
 					var tr_elem_title=[];
 					var tr_elem_selection=[];
@@ -8617,10 +8617,10 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 							}
 						}
 					}
-					
+
 					var order_item_timer=2;
 
-					/////////////////////////////					
+					/////////////////////////////
 					var sku_components_xml="<pre_requisites>"+
 									"<name exact='yes'>"+order_item.item_name+"</name>"+
 									"<type>product</type>"+
@@ -8665,7 +8665,7 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 						order_item_timer-=1;
 					});
 
-	
+
 					var price_data="<channel_prices count='1'>" +
 							//"<latest exact='yes'>yes</latest>"+
 							"<from_time upperbound='yes'>"+order_time+"</from_time>"+
@@ -8697,14 +8697,14 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 								tr_elem_selection.push(get_session_var('billing_on_price'));
 							}
 						}
-						else 
+						else
 						{
 							tr_elem_title.push('Pricing not defined for this item and channel');
 							tr_elem_selection.push('no');
 						}
 						order_item_timer-=1;
 					});
-					
+
 					var order_item_analysis_complete=setInterval(function()
 					{
 				  	   if(order_item_timer===0)
@@ -8713,12 +8713,12 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 							var item_checked="checked";
 			  			   var item_title="";
 			  			   var hide_checkbox=false;
-			  			   
+
 							for (var y in tr_elem_title)
 							{
 								item_title+=tr_elem_title[y]+"\n";
 							}
-							
+
 							for (var z in tr_elem_selection)
 							{
 								if(tr_elem_selection[z]=='maybe')
@@ -8731,30 +8731,30 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 									hide_checkbox=true;
 									break;
 								}
-							}				
-			  			   
+							}
+
 			  			   	var order_item_string=JSON.stringify(order_item);
-							order_item_string=order_item_string.replace(/'/g, "");			  			   	
+							order_item_string=order_item_string.replace(/'/g, "");
 			  			   	//console.log(order_item_string);
 							var rowsHTML="<tr title='"+item_title+"' data-object='"+order_item_string+"' id='modal133_item_row_"+order_item.id+"'>"+
 								"<td>"+order_item.item_name+"</td>"+
 								"<td>"+order_item.quantity+"</td>";
-					
+
 							if(hide_checkbox)
 							{
 								rowsHTML+="<td><input "+item_checked+" style='display:none;' type='checkbox' id='modal133_item_check_"+order_item.id+"'></td>";
 							}
 							else
-							{			
+							{
 								rowsHTML+="<td><input "+item_checked+" type='checkbox' id='modal133_item_check_"+order_item.id+"'></td>";
 							}
 								rowsHTML+="</tr>";
 							$('#modal133_item_table').append(rowsHTML);
 							analyze_item_timer-=1;
 				  	   }
-				     },100);	
+				     },100);
 				});
-				
+
 				var analysis_complete=setInterval(function()
 				{
 					if(analyze_item_timer===0)
@@ -8762,11 +8762,11 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 						clearInterval(analysis_complete);
 						hide_loader();
 					}
-				},100);	
+				},100);
 			});
-		});	
-	});				
-	
+		});
+	});
+
 	$("#modal133").dialog("open");
 }
 
@@ -8784,9 +8784,9 @@ function modal134_action(lead_id,customer,lead_details)
 
 	$(date_filter).datepicker();
 	$(next_date_filter).datepicker();
-	
+
 	date_filter.value=get_my_date();
-	
+
 	set_static_value_list_json('followups','response',response_filter);
 
 	$(form).off("submit");
@@ -8816,7 +8816,7 @@ function modal134_action(lead_id,customer,lead_details)
 		 				data:[{index:'id',value:lead_id},
 		 					{index:'due_date',value:next_date},
 		 					{index:'detail',value:new_details},
-		 					{index:'last_updated',value:last_updated}]};	 		
+		 					{index:'last_updated',value:last_updated}]};
 			create_json(follow_json);
 			update_json(lead_json);
 		}
@@ -8826,7 +8826,7 @@ function modal134_action(lead_id,customer,lead_details)
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal134_link").click();
 }
 
@@ -8841,20 +8841,20 @@ function modal135_action(type,master)
 	var name_filter=form.elements['name'];
 	var display_name_filter=form.elements['display_name'];
 	var value_filter=form.elements['value'];
-	
+
 	if(type!="")
 	{
 		type_filter.value=type;
 		type_filter.setAttribute('readonly','readonly');
 		$(name_filter).focus();
 	}
-	else 
+	else
 	{
 		type_filter.value="";
 		type_filter.removeAttribute('readonly');
 		$(type_filter).focus();
 	}
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -8867,7 +8867,7 @@ function modal135_action(type,master)
 			var display_name=display_name_filter.value;
 			var value=value_filter.value;
 			var last_updated=get_my_time();
-			
+
 			var data_json={data_store:'user_preferences',
 		 				data:[{index:'id',value:id},
 		 					{index:'name',value:name,unique:'yes'},
@@ -8878,7 +8878,7 @@ function modal135_action(type,master)
 		 					{index:'shortcut',value:''},
 		 					{index:'sync',value:'checked'},
 		 					{index:'last_updated',value:last_updated}]};
-	 			
+
 			if(typeof master!='undefined' && master=='master')
 			{
 				server_create_master_all(data_json);
@@ -8894,7 +8894,7 @@ function modal135_action(type,master)
 		}
 		$(form).find('.close').click();
 	});
-	
+
 	$("#modal135_link").click();
 }
 
@@ -8909,20 +8909,20 @@ function modal136_action(type,master)
 	var name_filter=form.elements['name'];
 	var display_name_filter=form.elements['disp'];
 	var tables_filter=form.elements['tables'];
-	
+
 	if(type!="")
 	{
 		type_filter.value=type;
 		type_filter.setAttribute('readonly','readonly');
 		$(name_filter).focus();
 	}
-	else 
+	else
 	{
 		type_filter.value="";
 		type_filter.removeAttribute('readonly');
 		$(type_filter).focus();
 	}
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -8935,7 +8935,7 @@ function modal136_action(type,master)
 			var display_name=display_name_filter.value;
 			var tables=tables_filter.value;
 			var last_updated=get_my_time();
-			
+
 			var data_json={data_store:'user_preferences',
 		 				data:[{index:'id',value:id},
 		 					{index:'name',value:name,unique:'yes'},
@@ -8957,7 +8957,7 @@ function modal136_action(type,master)
 		 					{index:'up',value:'checked'},
 		 					{index:'del',value:'checked'},
 		 					{index:'last_updated',value:last_updated}]};
-	 			
+
 			if(typeof master!='undefined' && master=='master')
 			{
 				server_create_master_all(data_json);
@@ -8967,7 +8967,7 @@ function modal136_action(type,master)
 			{
 				create_json(data_json);
 				create_json(data2_json);
-	 		}				
+	 		}
 		}
 		else
 		{
@@ -8987,8 +8987,8 @@ function modal137_action(bill_ids)
 	var bill_id_array=JSON.parse(bill_ids);
 
 	var rowsHTML="<tr><td>Bill Number</td><td>Link</td></tr>";
-	
-	bill_id_array.forEach(function (bill_id) 
+
+	bill_id_array.forEach(function (bill_id)
 	{
 		rowsHTML+="<tr>"+
 				"<td>"+bill_id.bill_num+"</td>"+
@@ -8997,7 +8997,7 @@ function modal137_action(bill_ids)
 	});
 
 	$('#modal137_item_table').html(rowsHTML);
-    
+
 	$("#modal137_link").click();
 }
 
@@ -9007,7 +9007,7 @@ function modal137_action(bill_ids)
 function modal138_action()
 {
 	var form=document.getElementById('modal138_form');
-	
+
 	var template_button=form.elements[1];
 	var channel_filter=form.elements[2];
 	var select_file=form.elements[3];
@@ -9015,8 +9015,8 @@ function modal138_action()
 	var selected_file=form.elements[5];
 	var import_button=form.elements[6];
 
-	$(dummy_button).off('click'); 
-	$(dummy_button).on('click',function (e) 
+	$(dummy_button).off('click');
+	$(dummy_button).on('click',function (e)
 	{
 		e.preventDefault();
 		$(select_file).trigger('click');
@@ -9025,9 +9025,9 @@ function modal138_action()
 	dummy_button.setAttribute('class','btn red-sunglo');
 	select_file.value="";
 	selected_file.value="";
-	
+
 	$(select_file).off('change');
-	$(select_file).on('change',function () 
+	$(select_file).on('change',function ()
 	{
 		var file_name=select_file.value;
 		if(file_name!="" && (file_name.indexOf('csv')>-1))
@@ -9035,7 +9035,7 @@ function modal138_action()
 			dummy_button.setAttribute('class','btn green-jungle');
 	        selected_file.value=file_name;
 		}
-		else 
+		else
 		{
 			dummy_button.setAttribute('class','btn red-sunglo');
 	        select_file.value="";
@@ -9046,8 +9046,8 @@ function modal138_action()
 	var channel_data="<sale_channels>"+
 					"<name></name>"+
 					"</sale_channels>";
-	set_my_value_list(channel_data,channel_filter);	
-					
+	set_my_value_list(channel_data,channel_filter);
+
 	$(template_button).off("click");
 	$(template_button).on("click",function(event)
 	{
@@ -9057,63 +9057,63 @@ function modal138_action()
 						'tax_type','last_updated'];
 		my_array_to_csv(data_array);
 	});
-	
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
 		show_progress();
 		show_loader();
-							
+
 		var file=select_file.files[0];
         var fileType = /csv/gi;
-		var channel=channel_filter.value;		
-		
+		var channel=channel_filter.value;
+
         selected_file.value = "Uploading!! Please don't refresh";
     	var reader = new FileReader();
         reader.onload = function(e)
-        {        	
+        {
         	progress_value=2;
 	       	var content=reader.result;
 	       	var data_array=vUtil.csv2array(content);
-			
-			data_array.forEach(function (data_row) 
+
+			data_array.forEach(function (data_row)
 			{
 				data_row.sku=data_row.channel_sku+data_row.system_sku;
 			});
-			
+
 	       	progress_value=5;
-	    	
+
 	    	var list2_data=new Object();
 					list2_data.count=0;
 					list2_data.start_index=0;
-					list2_data.data_store='sale_orders';		
+					list2_data.data_store='sale_orders';
 					list2_data.indexes=[{index:'order_num'}];
-			
+
 			read_json_rows('',list2_data,function(orders)
 			{
-				
+
 		    	var list1_data=new Object();
 					list1_data.count=0;
 					list1_data.start_index=0;
-					list1_data.data_store='sku_mapping';		
+					list1_data.data_store='sku_mapping';
 					list1_data.indexes=[{index:'item_desc'},{index:'system_sku'},{index:'channel_sku'},{index:'channel',exact:channel}];
-			
+
 				read_json_rows('',list1_data,function(skus)
 				{
 					var list_data=new Object();
 					list_data.count=0;
 					list_data.start_index=0;
-					list_data.data_store='product_master';		
+					list_data.data_store='product_master';
 					list_data.indexes=[{index:'name'},{index:'tax'}];
-			
+
 					read_json_rows('',list_data,function(products)
-					{	
+					{
 						hide_loader();
 						var orders_list=vUtil.array_column(orders,'order_num');
 						var skus_list=vUtil.array_column(skus,'channel_sku');
 						var products_list=vUtil.array_column(products,'name');
-						
+
 						var validate_template_array=[{column:'order_date',required:'yes',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
 												{column:'order_id',required:'yes',regex:new RegExp('^[0-9a-zA-Z-]+$'),anti_list:orders_list},
 												{column:'customer_name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
@@ -9131,12 +9131,12 @@ function modal138_action()
 												{column:'shipping_amount',required:'yes',regex:new RegExp('^[0-9.]+$')},
 												{column:'quantity',required:'yes',regex:new RegExp('^[0-9.]+$')},
 												{column:'tax_type',required:'yes',list:['Tax','Retail-VAT','Retail-CST','Retail-CST-C']}];
-					
+
 						var error_array=validate_import_array(data_array,validate_template_array);
 						if(error_array.status=='success')
 						{
 			        		progress_value=10;
-			    	
+
 					    	var data_xml="<sale_orders>";
 				       		var data2_xml="<sale_order_items>";
 							var data3_xml="<customers>";
@@ -9145,8 +9145,8 @@ function modal138_action()
 							var order_array=[];
 							var order_item_array=[];
 							var customer_array=[];
-							
-							data_array.forEach(function (data_row) 
+
+							data_array.forEach(function (data_row)
 							{
 								if(data_row.system_sku=="")
 								{
@@ -9160,7 +9160,7 @@ function modal138_action()
 										}
 									}
 								}
-								
+
 								counter+=1;
 								var customer=data_row.customer_name+" ("+data_row.phone+")";
 								var customer_object=new Object();
@@ -9174,9 +9174,9 @@ function modal138_action()
 				                customer_object.pincode=data_row.pincode;
 				                customer_object.state="";
 				                customer_object.country="India";
-				
+
 				                var add_customer=true;
-				                
+
 				                for(var i=0;i<customer_array.length;i++)
 				                {
 				                	if(customer_array[i].acc_name==customer_object.acc_name)
@@ -9185,12 +9185,12 @@ function modal138_action()
 				                		break;
 				                	}
 				                }
-				
+
 				            	if(add_customer)
 				            	{
 				            		customer_array.push(customer_object);
 				            	}
-								
+
 				                var order_item_object=new Object();
 								order_item_object.id=last_updated+counter;
 				                order_item_object.item_name=data_row.system_sku;
@@ -9199,7 +9199,7 @@ function modal138_action()
 				                order_item_object.vendor_sku="";
 								order_item_object.quantity=data_row.quantity;
 				                order_item_object.mrp=data_row.item_mrp;
-				                
+
 				                order_item_object.tax_rate=0;
 				                for(var i in products)
 				                {
@@ -9215,9 +9215,9 @@ function modal138_action()
 				                order_item_object.tax=parseFloat(order_item_object.amount)*parseFloat(order_item_object.tax_rate)/100;
 				                order_item_object.freight=data_row.shipping_amount;
 				                order_item_object.total=parseFloat(order_item_object.amount)+parseFloat(data_row.shipping_amount)+parseFloat(order_item_object.tax);
-				                
+
 				                var add_order=true;
-								
+
 								var order_object=new Object();
 								order_object.id=last_updated+counter;
 								order_object.order_num=data_row.order_id;
@@ -9231,7 +9231,7 @@ function modal138_action()
 				                order_object.tax=order_item_object.tax;
 				                order_object.total=parseFloat(order_object.freight)+parseFloat(order_object.amount)+parseFloat(order_object.tax);
 								order_object.total_quantity=parseFloat(data_row.quantity);
-				
+
 								data_row.order_system_id=order_object.id;
 								for(var j=0;j<order_array.length;j++)
 				                {
@@ -9247,17 +9247,17 @@ function modal138_action()
 				                		break;
 				                	}
 				                }
-				                
+
 		   						order_item_object.order_id=data_row.order_system_id;
 								order_item_array.push(order_item_object);
-				                
+
 				                if(add_order)
 				                {
 				                	order_array.push(order_object);
 				                }
-		
+
 							});
-				
+
 							order_array.forEach(function(row)
 							{
 								if((counter%500)===0)
@@ -9283,7 +9283,7 @@ function modal138_action()
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</row>";
 							});
-				
+
 							//console.log(order_item_array);
 							order_item_array.forEach(function(row)
 							{
@@ -9292,7 +9292,7 @@ function modal138_action()
 									data2_xml+="</sale_order_items><separator></separator><sale_order_items>";
 								}
 								counter+=1;
-								
+
 								data2_xml+="<row>" +
 										"<id>"+row.id+"</id>" +
 										"<order_id>"+row.order_id+"</order_id>"+
@@ -9311,9 +9311,9 @@ function modal138_action()
 				                        "<freight>"+row.freight+"</freight>"+
 				                        "<total>"+row.total+"</total>"+
 										"<last_updated>"+last_updated+"</last_updated>" +
-										"</row>";		
+										"</row>";
 							});
-						
+
 							customer_array.forEach(function(row)
 							{
 								if((counter%500)===0)
@@ -9321,7 +9321,7 @@ function modal138_action()
 									data3_xml+="</customers><separator></separator><customers>";
 								}
 								counter+=1;
-								
+
 								data3_xml+="<row>" +
 										"<id>"+row.id+"</id>" +
 										"<name>"+row.name+"</name>"+
@@ -9335,23 +9335,23 @@ function modal138_action()
 				                        "<state>"+row.state+"</state>"+
 				                        "<country>"+row.country+"</country>"+
 				                        "<last_updated>"+last_updated+"</last_updated>" +
-										"</row>";		
+										"</row>";
 							});
-						
+
 							data_xml+="</sale_orders>";
 							data2_xml+="</sale_order_items>";
 							data3_xml+="</customers>";
-							
+
 							console.log(data2_xml);
 							create_batch(data_xml);
 							create_batch(data2_xml);
 							create_batch(data3_xml);
-				
+
 				           	////////////////////
 				        	progress_value=15;
-				        	
+
 				        	//console.log(data_array.length);
-				        	
+
 				        	var ajax_complete=setInterval(function()
 				        	{
 				        		//console.log(number_active_ajax);
@@ -9363,7 +9363,7 @@ function modal138_action()
 				        		{
 				        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
 				        		}
-				        		
+
 				        		if(number_active_ajax===0 && localdb_open_requests===0)
 				        		{
 				        			hide_progress();
@@ -9374,7 +9374,7 @@ function modal138_action()
 				        		}
 				        	},1000);
 				        }
-				        else 
+				        else
 				        {
 				        	hide_progress();
 		        			$(select_file).val('');
@@ -9385,9 +9385,9 @@ function modal138_action()
 			    });
 			});
 	     };
-	     reader.readAsText(file);    
+	     reader.readAsText(file);
     });
-	
+
 	$("#modal138").dialog("open");
 }
 
@@ -9403,39 +9403,39 @@ function modal139_action(id,name,description,button)
 	var name_filter=form.elements['name'];
 	var id_filter=form.elements['id'];
 	var check_filter=form.elements['check'];
-	
+
 	var barcode_img=document.getElementById('modal139_barcode_img');
 
-	$(check_filter).off('change'); 
-	$(check_filter).on('change',function () 
+	$(check_filter).off('change');
+	$(check_filter).on('change',function ()
 	{
 		if(check_filter.checked)
 		{
 			barcode_filter.value=get_my_time();
 		}
 	});
-	
-	check_filter.checked=false;	
+
+	check_filter.checked=false;
 	barcode_filter.value="";
-		
+
 	sku_filter.value=name;
 	name_filter.value=description;
 	id_filter.value=id;
 
 	$(barcode_img).off('click');
-	$(barcode_img).on('click',function () 
+	$(barcode_img).on('click',function ()
 	{
 		if(barcode_filter.value!="")
 			print_product_barcode(barcode_filter.value,sku_filter.value,name_filter.value);
 	});
 
-	$(barcode_filter).focus();	
-		
+	$(barcode_filter).focus();
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		
+
 		var id=id_filter.value;
 		var barcode=barcode_filter.value;
 
@@ -9450,7 +9450,7 @@ function modal139_action(id,name,description,button)
 		$("#modal139").dialog("close");
 
 		button.removeAttribute("onclick");
-		$(button).on('click',function () 
+		$(button).on('click',function ()
 		{
 			print_product_barcode(barcode,name,description);
 		});
@@ -9466,26 +9466,26 @@ function modal139_action(id,name,description,button)
 function modal140_action(i_func)
 {
 	var form=document.getElementById('modal140_form');
-	
+
 	var template_button=form.elements[1];
 	var select_file=form.elements[2];
 	var dummy_button=form.elements[3];
 	var selected_file=form.elements[4];
 	var import_button=form.elements[5];
 
-	$(dummy_button).off('click'); 
-	$(dummy_button).on('click',function (e) 
+	$(dummy_button).off('click');
+	$(dummy_button).on('click',function (e)
 	{
 		e.preventDefault();
 		$(select_file).trigger('click');
 	});
-		
+
 	dummy_button.setAttribute('class','btn red-sunglo');
 	select_file.value="";
 	selected_file.value="";
-	
+
 	$(select_file).off('change');
-	$(select_file).on('change',function () 
+	$(select_file).on('change',function ()
 	{
 		var file_name=select_file.value;
 		if(file_name!="" && (file_name.indexOf('csv')>-1))
@@ -9493,14 +9493,14 @@ function modal140_action(i_func)
 			dummy_button.setAttribute('class','btn green-jungle');
 	        selected_file.value=file_name;
 		}
-		else 
+		else
 		{
 			dummy_button.setAttribute('class','btn red-sunglo');
 	        select_file.value="";
 			selected_file.value="";
 		}
 	});
-			
+
 	$(template_button).off("click");
 	$(template_button).on("click",function(event)
 	{
@@ -9509,14 +9509,14 @@ function modal140_action(i_func)
 						'brand','quantity','order_status','tax_rate','cst','last_updated'];
 		my_array_to_csv(data_array);
 	});
-	
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
 		show_progress();
 		show_loader();
-		
+
 		var file=select_file.files[0];
         var fileType = /csv/gi;
 
@@ -9527,27 +9527,27 @@ function modal140_action(i_func)
         	progress_value=2;
         	var content=reader.result;
         	var data_array=vUtil.csv2array(content);
-			
+
 			progress_value=5;
 
 			var list1_data=new Object();
 					list1_data.count=0;
 					list1_data.start_index=0;
-					list1_data.data_store='purchase_orders';		
+					list1_data.data_store='purchase_orders';
 					list1_data.return_column='order_num';
 					list1_data.indexes=[{index:'order_num'}];
-			
+
 			read_json_single_column(list1_data,function(orders)
-			{	
+			{
 				var list_data=new Object();
 					list_data.count=0;
 					list_data.start_index=0;
-					list_data.data_store='product_master';		
+					list_data.data_store='product_master';
 					list_data.return_column='name';
 					list_data.indexes=[{index:'name'}];
-			
+
 				read_json_single_column(list_data,function(products)
-				{	
+				{
 					var validate_template_array=[{column:'order_date',required:'yes',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
 												{column:'order_num',required:'yes',regex:new RegExp('^[0-9a-zA-Z-]+$'),anti_list:orders},
 												{column:'supplier_name',required:'yes',regex:new RegExp('^[0-9a-zA-Z\' _.,/@$!()-]+$')},
@@ -9564,49 +9564,49 @@ function modal140_action(i_func)
 												{column:'order_status',required:'yes',list:['draft','order placed','closed','partially received','completely received','cancelled']},
 												{column:'tax_rate',required:'yes',regex:new RegExp('^[0-9.]+$')},
 												{column:'cst',required:'yes',list:['yes','no']}];
-					
+
 					var error_array=validate_import_array(data_array,validate_template_array);
 					//var error_array=new Object();
-					//error_array.status='success';			
+					//error_array.status='success';
 					if(error_array.status=='success')
 					{
 						hide_loader();
 			        	progress_value=10;
-			        
+
 		           		//////////////////
-		           	
+
 			       		var data_xml="<purchase_orders>";
 			       		var data2_xml="<purchase_order_items>";
 						var data3_xml="<suppliers>";
 						var data4_xml="<accounts>";
-						
+
 						var counter=1;
 						var last_updated=get_my_time();
 						var order_array=[];
 						var order_item_array=[];
 						var supplier_array=[];
-						
+
 						/*
 						var import_items_count=data_array.length;
 						//console.log(data_array.length);
 						var unique_items_in_import=[];
-						
+
 						var import_items_string="--";
-						data_array.forEach(function (data_row) 
+						data_array.forEach(function (data_row)
 						{
 							import_items_string+=data_row.system_sku+"--";
 							unique_items_in_import.push(data_row.system_sku);
 						});
-						
+
 						unique_items_in_import=array_unique(unique_items_in_import);
-					
-					
+
+
 						//console.log(products);
 						//console.log(unique_items_in_import);
 						if(products.length==unique_items_in_import.length)
 						{
 						*/
-							data_array.forEach(function (data_row) 
+							data_array.forEach(function (data_row)
 							{
 								counter+=1;
 								var supplier=data_row.supplier_name+" ("+data_row.phone+")";
@@ -9617,9 +9617,9 @@ function modal140_action(i_func)
 				                supplier_object.email=data_row.supplier_email;
 				                supplier_object.phone=data_row.phone;
 				                supplier_object.address=data_row.address;
-				                
+
 				                var add_supplier=true;
-				                
+
 				                for(var i=0;i<supplier_array.length;i++)
 				                {
 				                	if(supplier_array[i].acc_name==supplier_object.acc_name)
@@ -9628,14 +9628,14 @@ function modal140_action(i_func)
 				                		break;
 				                	}
 				                }
-				
+
 				            	if(add_supplier)
 				            	{
 				            		supplier_array.push(supplier_object);
-				            	}            	
-				
+				            	}
+
 								var add_order=true;
-								
+
 								var order_object=new Object();
 								order_object.id=last_updated+counter;
 								order_object.order_num=data_row.order_num;
@@ -9653,7 +9653,7 @@ function modal140_action(i_func)
 				                order_object.tax=Math.round(parseFloat(order_object.amount)*parseFloat(order_object.tax_rate)/100);
 								order_object.total=parseFloat(order_object.amount)+parseFloat(order_object.tax);
 								data_row.order_system_id=order_object.id;
-		
+
 								for(var j=0;j<order_array.length;j++)
 				                {
 				                	if(order_array[j].order_num==order_object.order_num)
@@ -9663,12 +9663,12 @@ function modal140_action(i_func)
 										order_array[j].tax=parseFloat(order_array[j].tax)+parseFloat(order_object.tax);
 										order_array[j].total=parseFloat(order_array[j].total)+parseFloat(order_object.total);
 				                		order_array[j].total_quantity=parseFloat(order_array[j].total_quantity)+parseFloat(order_object.total_quantity);
-				
+
 										data_row.order_system_id=order_array[j].id;
 				                		break;
 				                	}
 				                }
-				
+
 				                if(add_order)
 				                {
 				                	order_array.push(order_object);
@@ -9696,7 +9696,7 @@ function modal140_action(i_func)
 								console.log(order_item_object.amount);
 								console.log(order_item_object.tax_rate);
 							});
-		
+
 							order_array.forEach(function(row)
 							{
 								if((counter%500)===0)
@@ -9718,7 +9718,7 @@ function modal140_action(i_func)
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</row>";
 							});
-				
+
 							order_item_array.forEach(function(row)
 							{
 								if((counter%500)===0)
@@ -9726,7 +9726,7 @@ function modal140_action(i_func)
 									data2_xml+="</purchase_order_items><separator></separator><purchase_order_items>";
 								}
 								counter+=1;
-				
+
 								data2_xml+="<row>" +
 										"<id>"+row.id+"</id>" +
 										"<order_id>"+row.order_id+"</order_id>"+
@@ -9744,7 +9744,7 @@ function modal140_action(i_func)
 				                        "<last_updated>"+last_updated+"</last_updated>" +
 										"</row>";
 							});
-						
+
 							supplier_array.forEach(function(row)
 							{
 								if((counter%500)===0)
@@ -9753,7 +9753,7 @@ function modal140_action(i_func)
 									data4_xml+="</accounts><separator></separator><accounts>";
 								}
 								counter+=1;
-								
+
 								data3_xml+="<row>" +
 										"<id>"+row.id+"</id>" +
 										"<name>"+row.name+"</name>"+
@@ -9769,25 +9769,25 @@ function modal140_action(i_func)
 										"<description></description>" +
 										"<type>supplier</type>" +
 										"<username></username>" +
-										"<status>active</status>"+				
+										"<status>active</status>"+
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</row>";
-		
+
 							});
-						
+
 							data_xml+="</purchase_orders>";
 							data2_xml+="</purchase_order_items>";
 							data3_xml+="</suppliers>";
 							data3_xml+="</accounts>";
-							
+
 							create_batch(data_xml);
 							create_batch(data2_xml);
 							create_batch(data3_xml);
 							create_batch(data4_xml);
-				
+
 				           	////////////////////
 				        	progress_value=15;
-				
+
 				        	var ajax_complete=setInterval(function()
 				        	{
 				        		//console.log(number_active_ajax);
@@ -9799,7 +9799,7 @@ function modal140_action(i_func)
 				        		{
 				        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
 				        		}
-				        		
+
 				        		if(number_active_ajax===0 && localdb_open_requests===0)
 				        		{
 				        			hide_progress();
@@ -9810,7 +9810,7 @@ function modal140_action(i_func)
 				        		}
 				        	},1000);
 				        //}
-				        /*else 
+				        /*else
 				        {
 			        		hide_progress();
 		        			$(select_file).val('');
@@ -9829,9 +9829,9 @@ function modal140_action(i_func)
 	        });
         }
 
-        reader.readAsText(file);    
+        reader.readAsText(file);
     });
-	
+
 	$("#modal140").dialog("open");
 }
 
@@ -9845,30 +9845,30 @@ function modal141_action(button)
 	var form141=document.getElementById('modal141_form');
 	var save_button=form141.elements['save'];
 	var cancel_button=form141.elements['cancel'];
-	
+
 	var form_id=$(button).attr('form');
 	var form=document.getElementById(form_id);
 	var item=form.elements[1].value;
 	var quantity=form.elements[3].value;
-	var plan_item_id=form.elements[7].value;			
-	
+	var plan_item_id=form.elements[7].value;
+
 	form141.elements['quantity'].value=quantity;
-	
+
 	var batch_filter=form141.elements['batch'];
 	var price_filter=form141.elements['price'];
 	var storage_filter=form141.elements['storage'];
 	var new_batch_filter=form141.elements['new_batch'];
-	
+
 	var storage_data="<store_areas>"+
 					"<name></name>"+
-					"</store_areas>";	
-	set_my_value_list(storage_data,storage_filter,function () 
+					"</store_areas>";
+	set_my_value_list(storage_data,storage_filter,function ()
 	{
 		$(storage_filter).focus();
 	});
-	
+
 	$(batch_filter).off('blur');
-	$(batch_filter).on('blur',function () 
+	$(batch_filter).on('blur',function ()
 	{
 		var price_xml="<product_instances>"+
 					"<sale_price></sale_price>"+
@@ -9882,12 +9882,12 @@ function modal141_action(button)
 				price_filter.value=prices[0];
 				new_batch_filter.value='no';
 			}
-			else 
+			else
 			{
 				price_filter.value="";
 				new_batch_filter.value='yes';
 			}
-		},price_xml);			
+		},price_xml);
 	});
 
 	////adding pre-requiresites data///////
@@ -9907,22 +9907,22 @@ function modal141_action(button)
 		{
 			var attr_label=document.createElement('label');
 			attr_label.setAttribute('data-name',raw.requisite_name);
-			raw.quantity=parseFloat(raw.quantity)*parseFloat(quantity);			
+			raw.quantity=parseFloat(raw.quantity)*parseFloat(quantity);
 			attr_label.innerHTML=raw.requisite_name+": <input type='text' value='' style='width:60px;' required name='batch_"+raw.requisite_name+"'> <input type='number' style='width:40px;' step='any' value='"+raw.quantity+"' required name='quantity_"+raw.requisite_name+"'>";
 
 			raw_label.appendChild(attr_label);
 			var line_break=document.createElement('br');
 			raw_label.appendChild(line_break);
-			
+
 			var batch_data="<product_instances>"+
 							"<batch></batch>"+
 							"<product_name exact='yes'>"+raw.requisite_name+"</product_name>"+
 							"</product_instances>";
 			var batch_filter=form141.elements['batch_'+raw.requisite_name];
-			set_my_value_list(batch_data,batch_filter);				
+			set_my_value_list(batch_data,batch_filter);
 		});
 	});
-	
+
 
 	$(form141).off('submit');
 	$(form141).on('submit',function(e)
@@ -9933,9 +9933,9 @@ function modal141_action(button)
 		var batch=batch_filter.value;
 		var price=price_filter.value;
 		var storage=storage_filter.value;
-		
+
 		//console.log(storage_filter);
-		
+
 		////update production plan item
 		var plan_item_xml="<production_plan_items>"+
 						"<id>"+plan_item_id+"</id>"+
@@ -9944,7 +9944,7 @@ function modal141_action(button)
 						"<last_updated>"+last_updated+"</last_updated>"+
 						"</production_plan_items>";
 		update_simple(plan_item_xml);
-		
+
 		///add to inventory
 		var item_created_xml="<inventory_adjust>"+
 							"<id>"+get_new_key()+"</id>"+
@@ -9957,7 +9957,7 @@ function modal141_action(button)
 							"<last_updated>"+last_updated+"</last_updated>"+
 							"</inventory_adjust>";
 		create_simple(item_created_xml);
-		
+
 		///add product instance if not exist
 		if(new_batch_filter.value=='yes')
 		{
@@ -9969,9 +9969,9 @@ function modal141_action(button)
 							"<manufacture_date>"+get_my_time()+"</manufacture_date>"+
 							"<last_updated>"+last_updated+"</last_updated>"+
 							"</product_instances>";
-			create_simple(instance_xml);				
+			create_simple(instance_xml);
 		}
-		
+
 		///add area utilization if not exist
 		var storage_data="<area_utilization>" +
 				"<id></id>" +
@@ -9992,9 +9992,9 @@ function modal141_action(button)
 						"</area_utilization>";
 				create_simple(storage_xml);
 			}
-		});		
-		
-		///subtract inventory for raw material		
+		});
+
+		///subtract inventory for raw material
 		var id=get_new_key();
 		$("#modal141_raw").find('label').each(function()
 		{
@@ -10020,9 +10020,9 @@ function modal141_action(button)
 		});
 		$(button).hide();
 		$("#modal141").dialog("close");
-		
+
 	});
-		
+
 	$(cancel_button).on('click',function()
 	{
 		$("#modal141").dialog("close");
@@ -10038,16 +10038,16 @@ function modal141_action(button)
 function modal142_action(func)
 {
 	var form=document.getElementById('modal142_form');
-	
+
 	var fname=form.elements[1];
 	var fbatch=form.elements[2];
 	var fexpiry=form.elements[3];
 	var fmrp=form.elements[4];
 	var fcp=form.elements[5];
 	var fsp=form.elements[6];
-	
+
 	$(fexpiry).datepicker();
-	
+
 	var name_data="<product_master>" +
 			"<name></name>" +
 			"</product_master>";
@@ -10074,7 +10074,7 @@ function modal142_action(func)
 			});
 		},batch_data);
 	}
-		
+
 	$(fname).off('blur');
 	$(fname).on('blur',function(event)
 	{
@@ -10095,7 +10095,7 @@ function modal142_action(func)
 		        }
 			});
 		},batch_data);
-	});		
+	});
 
 	$(form).off("submit");
 	$(form).on("submit",function(event)
@@ -10105,11 +10105,11 @@ function modal142_action(func)
 		{
 			var name=fname.value;
 			var batch=fbatch.value;
-			
+
 			batch = batch.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			batch = batch.replace(/â/g,'');
 			batch = batch.replace(/&/g, "and");
-						
+
 			var expiry=get_raw_time(fexpiry.value);
 			var mrp=fmrp.value;
 			var cp=fcp.value;
@@ -10134,7 +10134,7 @@ function modal142_action(func)
 						"<notes>New batch "+batch+" for item "+name+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			create_row_func(data_xml,activity_xml,function () 
+			create_row_func(data_xml,activity_xml,function ()
 			{
 				if(typeof func!='undefined')
 				{
@@ -10148,7 +10148,7 @@ function modal142_action(func)
 		}
 		$("#modal142").dialog("close");
 	});
-	
+
 	$("#modal142").dialog("open");
 }
 
@@ -10159,7 +10159,7 @@ function modal142_action(func)
 function modal143_action(item_name,batch)
 {
 	var form=document.getElementById('modal143_form');
-	
+
 	var fitem=form.elements[1];
 	var fbatch=form.elements[2];
 	var ffresh=form.elements[3];
@@ -10176,7 +10176,7 @@ function modal143_action(item_name,batch)
 			var fresh=parseFloat(ffresh.value);
 			var inuse=parseFloat(finuse.value);
 			var last_updated=get_my_time();
-			
+
 			var inuse_data="<bill_items sum='yes'>"+
 							"<quantity></quantity>"+
 							"<hired exact='yes'>yes</hired>"+
@@ -10191,7 +10191,7 @@ function modal143_action(item_name,batch)
 				{
 					new_inuse-=parseFloat(hireables[0]);
 				}
-				
+
 				var hireable_xml="<bill_items sum='yes'>"+
 							"<id>"+get_new_key()+"</id>"+
 							"<quantity>"+new_inuse+"</quantity>"+
@@ -10203,7 +10203,7 @@ function modal143_action(item_name,batch)
 							"<to_date>"+last_updated+"</to_date>"+
 							"<last_updated>"+last_updated+"</last_updated>"+
 							"</bill_items>";
-				
+
 				get_inventory(item_name,batch,function(inventory)
 				{
 					var new_total=fresh+inuse-parseFloat(inventory);
@@ -10225,7 +10225,7 @@ function modal143_action(item_name,batch)
 		}
 		$("#modal143").dialog("close");
 	});
-	
+
 	$("#modal143").dialog("open");
 }
 
@@ -10237,18 +10237,18 @@ function modal143_action(item_name,batch)
 function modal144_action(doc_type,target_id,func)
 {
 	var form=document.getElementById('modal144_form');
-	
+
 	var fname=form.elements['name'];
 	var docInfo=document.getElementById('modal144_url');
 	var fpicture=form.elements['fi'];
     var dummy_button=form.elements['dummy'];
-	
-	$(dummy_button).on('click',function (e) 
+
+	$(dummy_button).on('click',function (e)
 	{
 		e.preventDefault();
 		$(fpicture).trigger('click');
 	});
-	
+
 	fpicture.addEventListener('change',function(evt)
 	{
 		select_document(evt,function(dataURL)
@@ -10256,7 +10256,7 @@ function modal144_action(doc_type,target_id,func)
 			docInfo.setAttribute('href',dataURL);
 		});
 	},false);
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -10277,13 +10277,13 @@ function modal144_action(doc_type,target_id,func)
 	 					{index:'doc_type',value:doc_type},
 	 					{index:'target_id',value:target_id},
 	 					{index:'last_updated',value:last_updated}]};
-				
-				create_json(data_json);	
-				
+
+				create_json(data_json);
+
 				if(typeof func!='undefined')
 				{
 					func(url,doc_name);
-				}		
+				}
 			}
 		}
 		else
@@ -10292,7 +10292,7 @@ function modal144_action(doc_type,target_id,func)
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal144_link").click();
 }
 
@@ -10304,7 +10304,7 @@ function modal144_action(doc_type,target_id,func)
 function modal145_action(customer_acc_name)
 {
 	var form=document.getElementById('modal145_form');
-	
+
 	var fname=form.elements[1];
 	var fphone=form.elements[2];
 	var femail=form.elements[3];
@@ -10324,7 +10324,7 @@ function modal145_action(customer_acc_name)
 					"<state></state>"+
 					"<pincode></pincode>"+
 					"<acc_name exact='yes'>"+customer_acc_name+"</acc_name>"+
-					"</customers>";	
+					"</customers>";
 	fetch_requested_data('',customer_xml,function(customers)
 	{
 		if(customers.length>0)
@@ -10339,7 +10339,7 @@ function modal145_action(customer_acc_name)
 			fid.value=customers[0].id;
 		}
 	});
-	
+
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal145_attributes');
 	attribute_label.innerHTML="";
@@ -10361,7 +10361,7 @@ function modal145_action(customer_acc_name)
 				attribute_label.appendChild(line_break);
 		});
 	});
-	
+
 
 	$(form).off("submit");
 	$(form).on("submit",function(event)
@@ -10370,19 +10370,19 @@ function modal145_action(customer_acc_name)
 		if(is_update_access('form30'))
 		{
 			var name=fname.value;
-			
+
 			name = name.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
-			
+
 			var phone=fphone.value;
 			var email=femail.value;
 			var address=faddress.value;
-			
+
 			address = address.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			address = address.replace(/â/g,'');
 			address = address.replace(/&/g, "and");
-			
+
 			var pincode=fpincode.value;
 			var city=fcity.value;
 			var state=fstate.value;
@@ -10409,12 +10409,12 @@ function modal145_action(customer_acc_name)
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			update_row(data_xml,activity_xml);
-			
+
 			$("#modal145_attributes").find('input, select').each(function()
 			{
 				var value=$(this).val();
 				var id=$(this).attr('name');
-				
+
 				var attribute_xml="<attributes>" +
 						"<id>"+id+"</id>" +
 						"<value>"+value+"</value>" +
@@ -10429,7 +10429,7 @@ function modal145_action(customer_acc_name)
 		}
 		$("#modal145").dialog("close");
 	});
-	
+
 	$("#modal145").dialog("open");
 }
 
@@ -10441,7 +10441,7 @@ function modal145_action(customer_acc_name)
 function modal146_action(test_data_id,test_id,item)
 {
 	var form=document.getElementById('modal146_form');
-	
+
 	var fdate=form.elements['date'];
 	var fresult=form.elements['result'];
 	var fdetails=form.elements['notes'];
@@ -10449,17 +10449,17 @@ function modal146_action(test_data_id,test_id,item)
 	var fpicture=form.elements['fi'];
 	var fnext=form.elements['due'];
     var dummy_button=form.elements['dummy'];
-	
-	$(dummy_button).on('click',function (e) 
+
+	$(dummy_button).on('click',function (e)
 	{
 		e.preventDefault();
 		$(fpicture).trigger('click');
 	});
-	
+
 	$(fnext).datepicker();
 	fdate.value=get_my_date();
 	set_static_filter_json('testing_results','response',fresult);
-	
+
 	fpicture.addEventListener('change',function(evt)
 	{
 		select_document(evt,function(dataURL)
@@ -10467,7 +10467,7 @@ function modal146_action(test_data_id,test_id,item)
 			docInfo.setAttribute('href',dataURL);
 		});
 	},false);
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -10485,19 +10485,19 @@ function modal146_action(test_data_id,test_id,item)
 	 					{index:'test_id',value:test_id},
                         {index:'item',value:item},
 	 					{index:'details',value:fdetails.value},
-                        {index:'response',value:fresult.value},  
+                        {index:'response',value:fresult.value},
 	 					{index:'next_date',value:get_raw_time(fnext.value)},
 	 					{index:'date',value:get_raw_time(fdate.value)},
 	 					{index:'last_updated',value:last_updated}]};
- 			
-			create_json(result_json);	
-			
+
+			create_json(result_json);
+
             var test_json={data_store:'testing_process',
 	 				data:[{index:'id',value:test_data_id},
 	 					{index:'next_due',value:get_raw_time(fnext.value)},
-	 					{index:'last_updated',value:last_updated}]}; 			
+	 					{index:'last_updated',value:last_updated}]};
 			update_json(test_json);
-					
+
 			if(url!="" && url!=null)
 			{
                 var pic_json={data_store:'documents',
@@ -10505,10 +10505,10 @@ function modal146_action(test_data_id,test_id,item)
 	 					{index:'url',value:url},
                         {index:'doc_type',value:'testing_results'},
 	 					{index:'doc_name',value:doc_name},
-                        {index:'target_id',value:test_data_id},  
+                        {index:'target_id',value:test_data_id},
 	 					{index:'last_updated',value:last_updated}]};
 
-				create_json(pic_json);						
+				create_json(pic_json);
 			}
 		}
 		else
@@ -10517,7 +10517,7 @@ function modal146_action(test_data_id,test_id,item)
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal146_link").click();
 }
 
@@ -10533,10 +10533,10 @@ function modal147_action(hiring_type,button)
 	var fdate=form.elements[1];
 	var fitem=form.elements[2];
 	var fquantity=form.elements[3];
-	
+
 	$(fdate).datepicker();
 	fdate.value=get_my_date();
-		
+
 	var form_id=$(button).attr('form');
 	var master_form=document.getElementById(form_id);
 	var item_name=master_form.elements[0].value;
@@ -10544,7 +10544,7 @@ function modal147_action(hiring_type,button)
 	var issue_id=master_form.elements[6].value;
 
 	fitem.value=item_name;
-	
+
 	var columns="<bill_items>" +
 				"<quantity></quantity>" +
 				"<issue_date></issue_date>" +
@@ -10552,7 +10552,7 @@ function modal147_action(hiring_type,button)
 				"<hiring_type exact='yes'>"+hiring_type+"</hiring_type>" +
 				"<issue_id exact='yes'>"+issue_id+"</issue_id>" +
 				"</bill_items>";
-			
+
 	fetch_requested_data('',columns,function(return_results)
 	{
 		var returned_quantity=0;
@@ -10565,14 +10565,14 @@ function modal147_action(hiring_type,button)
 		fquantity.setAttribute('max',left_quantity);
 		fquantity.value=left_quantity;
 	});
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
-			
+
 			var data_xml="<bill_items>" +
 					"<id>"+data_id+"</id>" +
 					"<item_name>"+item_name+"</item_name>" +
@@ -10583,12 +10583,12 @@ function modal147_action(hiring_type,button)
 					"<quantity>"+fquantity.value+"</quantity>"+
 					"<issue_id>"+issue_id+"</issue_id>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</bill_items>";	
-			create_simple(data_xml);			
-		
+					"</bill_items>";
+			create_simple(data_xml);
+
         $("#modal147").dialog("close");
 	});
-	
+
 	$("#modal147").dialog("open");
 }
 
@@ -10599,26 +10599,26 @@ function modal147_action(hiring_type,button)
 function modal148_action()
 {
 	var form=document.getElementById('modal148_form');
-	
+
 	var template_button=form.elements['download'];
 	var select_file=form.elements['file'];
 	var dummy_button=form.elements['file_dummy'];
 	var selected_file=form.elements['selected_file'];
 	var import_button=form.elements['save'];
 
-	$(dummy_button).off('click'); 
-	$(dummy_button).on('click',function (e) 
+	$(dummy_button).off('click');
+	$(dummy_button).on('click',function (e)
 	{
 		e.preventDefault();
 		$(select_file).trigger('click');
 	});
-	
+
 	dummy_button.setAttribute('class','btn red-sunglo');
 	select_file.value="";
-	selected_file.value="";	
-	
+	selected_file.value="";
+
 	$(select_file).off('change');
-	$(select_file).on('change',function () 
+	$(select_file).on('change',function ()
 	{
 		var file_name=select_file.value;
 		if(file_name!="" && (file_name.indexOf('csv')>-1))
@@ -10626,7 +10626,7 @@ function modal148_action()
 			dummy_button.setAttribute('class','btn green-jungle');
 	        selected_file.value=file_name;
 		}
-		else 
+		else
 		{
 			dummy_button.setAttribute('class','btn red-sunglo');
 	        select_file.value="";
@@ -10641,7 +10641,7 @@ function modal148_action()
 		var data_array=['awb','date','order_status','remark','received by'];
 		my_array_to_csv(data_array);
 	});
-	
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -10649,7 +10649,7 @@ function modal148_action()
 		show_progress();
 		var file=select_file.files[0];
         var fileType = /csv/gi;
-		
+
         selected_file.value = "Uploading!! Please don't refresh";
     	var reader = new FileReader();
         reader.onload = function(e)
@@ -10657,38 +10657,38 @@ function modal148_action()
 			progress_value=2;
         	var content=reader.result;
         	var data_array=vUtil.csv2array(content);
-			
+
 			progress_value=5;
-			
+
 			var validate_template_array=[{column:'date',required:'yes',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
 										{column:'awb',required:'yes',regex:new RegExp('^[0-9a-zA-Z]+$')},
 										{column:'order_status',required:'yes',list:['delivered','undelivered','pending','in-transit','RTO Delivered','RTO in-transit']},
 										{column:'received by',regex:new RegExp('^[0-9a-zA-Z\' _.,/@$!()-]+$')},
 										{column:'remark',regex:new RegExp('^[0-9a-zA-Z\' _.,/@$!()-]+$')}];
-			
+
 			var error_array=validate_import_array(data_array,validate_template_array);
 			//var error_array=new Object();
 			//error_array.status='success';
 			if(error_array.status=='success')
 			{
 	        	progress_value=10;
-	        
+
 	        	//////////////////
-	           	
+
 	       		var last_updated=get_my_time();
 				var order_array=[];
-				
+
 				var awb_id_array=[];
 				for(var i in data_array)
 				{
 					awb_id_array.push(data_array[i].awb);
 				}
-	
+
 				var order_id_xml={data_store:'logistics_orders',
 								  indexes:[{index:'id'},
 										   {index:'order_history'},
 										   {index:'awb_num',array:awb_id_array}]};
-				read_json_rows('',order_id_xml,function (order_ids) 
+				read_json_rows('',order_id_xml,function (order_ids)
 				{
 					console.log(order_ids);
 					for (var k=0;k<data_array.length;k++)
@@ -10700,13 +10700,13 @@ function modal148_action()
 								data_array[k].id=order_ids[l].id;
 								data_array[k].order_history=order_ids[l].order_history;
 								order_ids.splice(l,1);
-								break;							
+								break;
 							}
 						}
 					}
-				
-					//console.log(data_array);					
-					data_array.forEach(function (data_row) 
+
+					//console.log(data_array);
+					data_array.forEach(function (data_row)
 					{
 						if(typeof data_row.id!='undefined')
 						{
@@ -10714,23 +10714,23 @@ function modal148_action()
 							order_object.id=data_row.id;
 							order_object.status=data_row['order_status'];
 							order_object.received_by=data_row['received by'];
-							
+
 							//console.log(order_object);
-							
+
 							var history_object=JSON.parse(data_row.order_history);
 							var new_history_object=new Object();
 							new_history_object.timeStamp=get_raw_time(data_row.date);
 							new_history_object.location=data_row['received by'];
 							new_history_object.status=data_row['order_status'];
 							new_history_object.details=data_row.remark;
-							
+
 							history_object.push(new_history_object);
 							order_object.order_history=JSON.stringify(history_object);
 		                	order_array.push(order_object);
-		                	
+
 		                }
 					});
-		
+
                     var data_json={data_store:'logistics_orders',
                             loader:'yes',
                             log:'yes',
@@ -10747,11 +10747,11 @@ function modal148_action()
 
                         data_json.data.push(data_json_array);
 					});
-					update_batch_json(data_json);				
-		
+					update_batch_json(data_json);
+
 		           	////////////////////
 		        	progress_value=15;
-		        	        	
+
 		        	var ajax_complete=setInterval(function()
 		        	{
 		        		//console.log(number_active_ajax);
@@ -10763,7 +10763,7 @@ function modal148_action()
 		        		{
 		        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
 		        		}
-		        		
+
 		        		if(number_active_ajax===0 && localdb_open_requests===0)
 		        		{
 		        			hide_progress();
@@ -10783,17 +10783,17 @@ function modal148_action()
 				modal164_action(error_array);
 		    }
         };
-		
-        reader.readAsText(file);    
+
+        reader.readAsText(file);
     });
-	
+
 	$("#modal148_link").click();
 }
 
 function modal149_action()
 {
 	var form=document.getElementById('modal149_form');
-	
+
 	var template_button=form.elements['download'];
 	var channel_filter=form.elements['channel'];
 	var type_filter=form.elements['type'];
@@ -10801,8 +10801,8 @@ function modal149_action()
 	var dummy_button=form.elements['file_dummy'];
 	var selected_file=form.elements['selected_file'];
 
-	$(dummy_button).off('click'); 
-	$(dummy_button).on('click',function (e) 
+	$(dummy_button).off('click');
+	$(dummy_button).on('click',function (e)
 	{
 		e.preventDefault();
 		$(select_file).trigger('click');
@@ -10810,10 +10810,10 @@ function modal149_action()
 
 	dummy_button.setAttribute('class','btn red-sunglo');
 	select_file.value="";
-	selected_file.value="";	
-	
+	selected_file.value="";
+
 	$(select_file).off('change');
-	$(select_file).on('change',function () 
+	$(select_file).on('change',function ()
 	{
 		var file_name=select_file.value;
 		if(file_name!="" && (file_name.indexOf('csv')>-1))
@@ -10821,7 +10821,7 @@ function modal149_action()
 			dummy_button.setAttribute('class','btn green-jungle');
 			selected_file.value=file_name;
 		}
-		else 
+		else
 		{
 			dummy_button.setAttribute('class','btn red-sunglo');
 			select_file.value="";
@@ -10831,7 +10831,7 @@ function modal149_action()
 
 	set_static_value_list_json('logistics_orders','type',type_filter);
 	set_static_value_list_json('logistics_orders','channel',channel_filter);
-	
+
 	$(template_button).off("click");
 	$(template_button).on("click",function(event)
 	{
@@ -10842,7 +10842,7 @@ function modal149_action()
 						'Return Pin','Pieces'];
 		my_array_to_csv(data_array);
 	});
-	
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -10850,7 +10850,7 @@ function modal149_action()
 		show_progress();
 		var file=select_file.files[0];
         var fileType = /csv/gi;
-		
+
         selected_file.value = "Uploading!! Please don't refresh";
     	var reader = new FileReader();
         reader.onload = function(e)
@@ -10858,9 +10858,9 @@ function modal149_action()
         	progress_value=2;
         	var content=reader.result;
         	var data_array=vUtil.csv2array(content);
-			
+
 			progress_value=5;
-			
+
 			var validate_template_array=[{column:'Date',required:'yes',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
 										{column:'AWB No.',required:'yes',regex:new RegExp('^[0-9a-zA-Z]+$')},
 										{column:'Type',required:'yes',list:['RTM','PP','COD']},
@@ -10905,7 +10905,7 @@ function modal149_action()
 
 			     var counter=1;
 			     var last_updated=get_my_time();
-		
+
                 data_array.forEach(function(row)
 				{
 					counter+=1;
@@ -10914,13 +10914,13 @@ function modal149_action()
 					var order_history=[];
 					var history_object=new Object();
 					history_object.timeStamp=get_my_time();
-					history_object.details="Order dispatched from "+channel;				
+					history_object.details="Order dispatched from "+channel;
 					history_object.location=channel;
 					history_object.status="dispatched";
 					order_history.push(history_object);
 					var order_history_string=JSON.stringify(order_history);
 					var product_name_array=row['Product name'].split('|');
-                    
+
 					var data_json_array=[{index:'id',value:row.id},
                             {index:'import_date',value:get_raw_time(row['Date'])},
                             {index:'awb_num',unique:'yes',value:row['AWB No.']},
@@ -10956,12 +10956,12 @@ function modal149_action()
 
                     data_json.data.push(data_json_array);
 				});
-				
+
 				create_batch_json(data_json);
-	
+
 	           	////////////////////
 	        	progress_value=15;
-	        	        	
+
 	        	var ajax_complete=setInterval(function()
 	        	{
 	        		//console.log(number_active_ajax);
@@ -10973,7 +10973,7 @@ function modal149_action()
 	        		{
 	        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
 	        		}
-	        		
+
 	        		if(number_active_ajax===0 && localdb_open_requests===0)
 	        		{
 	        			hide_progress();
@@ -10982,19 +10982,19 @@ function modal149_action()
 	        			$(form).find(".close").click();
 	        			clearInterval(ajax_complete);
 	        		}
-	        	},1000); 
+	        	},1000);
 	        }
 	        else
 	        {
 	        	hide_progress();
        			$(select_file).val('');
        			$(form).find(".close").click();
-				modal164_action(error_array);       			
+				modal164_action(error_array);
 	        }
         }
-        reader.readAsText(file);    
+        reader.readAsText(file);
     });
-	
+
 	$("#modal149_link").click();
 }
 
@@ -11010,7 +11010,7 @@ function modal150_action(rack,report_id)
 	var item_head=document.createElement('tr');
 	item_head.innerHTML="<th>Item</th><th>Batch</th><th>Quantity To pick</th>";
 	item_table.appendChild(item_head);
-			
+
 	$("[id^='row_"+report_id+"_']").each(function(index)
 	{
 		var subform=$(this)[0];
@@ -11024,46 +11024,46 @@ function modal150_action(rack,report_id)
 			var picked_quantity=parseFloat(subform.elements[5].value);
 			var row_id=subform.elements[15].value;
 			var item_row=document.createElement('tr');
-			
+
 			item_row.setAttribute('id','modal150_row_'+row_id);
 			item_row.setAttribute('data-id',row_id);
 			item_row.setAttribute('data-sku',item_name);
-			
+
 			if(item_desc=="")
 			{
 				item_desc=item_name;
 			}
-			
+
 			if(report_id=='report90')
-			{			
+			{
 				var order_num=subform.elements[11].value;
 				var bill_id=subform.elements[12].value;
 				item_row.setAttribute('data-order-num',order_num);
 				item_row.setAttribute('data-bill-id',bill_id);
 			}
 			item_row.innerHTML="<td>"+item_desc+"</td><td>"+batch+"</td><td style='text-align:center;'>"+(quantity-picked_quantity)+"</td>";
-			item_table.appendChild(item_row);				
-		}								
-	});	
+			item_table.appendChild(item_row);
+		}
+	});
 	//////////////////////////////
-	
+
 	var form=document.getElementById('modal150_form');
-	
+
 	var barcode_filter=form.elements['barcode'];
 	var save_button=form.elements['save'];
 
 	$(save_button).off('click');
-	$(save_button).on('click',function (event) 
+	$(save_button).on('click',function (event)
 	{
 		event.preventDefault();
-		var master_form_array=[];		
+		var master_form_array=[];
 		$("[id^='modal150_row_']").each(function(index)
 		{
 			//console.log('modal_row_parsed');
 			var record_id=$(this).attr('data-id');
-			
+
 			var unpicked_quantity=parseFloat($(this).find('td:nth-child(3)').html());
-			
+
 			master_form_array.push("row_"+report_id+"_"+record_id);
 			var master_form=document.getElementById("row_"+report_id+"_"+record_id);
 			var to_pick_quantity=parseFloat(master_form.elements[4].value);
@@ -11073,20 +11073,20 @@ function modal150_action(rack,report_id)
 
 			//$(master_form).trigger('submit');
 		});
-		
+
 		master_form_array=array_unique(master_form_array);
-		//console.log(master_form_array);		
-		
+		//console.log(master_form_array);
+
 		master_form_array.forEach(function(master_form_id)
 		{
 			var master_form=document.getElementById(master_form_id);
 			$(master_form).trigger('submit');
 		});
-		
-		$("#modal150").dialog("close");	
-/*		
+
+		$("#modal150").dialog("close");
+/*
 		if(report_id=='report90')
-		{		
+		{
 			report90_get_totals();
 		}
 */		var report_form=document.getElementById(report_id+'_header');
@@ -11094,12 +11094,12 @@ function modal150_action(rack,report_id)
 		rack_filter.value="";
 		$(rack_filter).focus();
 	});
-	
+
 	$(form).off('submit');
-	$(form).on('submit',function (event) 
+	$(form).on('submit',function (event)
 	{
 		event.preventDefault();
-		//console.log('barcode_scanned');		
+		//console.log('barcode_scanned');
 		var product_xml="<product_master>"+
 						"<name></name>"+
 						"<bar_code exact='yes'>"+barcode_filter.value+"</bar_code>"+
@@ -11109,7 +11109,7 @@ function modal150_action(rack,report_id)
 			console.log(products);
 			if(products.length>0)
 			{
-				var product_picked=false;				
+				var product_picked=false;
 				var product_name=products[0];
 
 				$("[id^='modal150_row_']").each(function(index)
@@ -11121,7 +11121,7 @@ function modal150_action(rack,report_id)
 					//console.log('modal_row_parsed');
 					var row_elem=$(this)[0];
 					var item_name=row_elem.getAttribute('data-sku');
-			
+
 					if(item_name.toUpperCase()==product_name.toUpperCase() && !product_picked && parseFloat($(this).find('td:nth-child(3)').html())>0)
 					{
 						//console.log('picked');
@@ -11135,21 +11135,21 @@ function modal150_action(rack,report_id)
 						}
 					}
 				});
-				
+
 				if(!product_picked)
 				{
 					$("#modal67_link").click();
 				}
 			}
-			else 
+			else
 			{
 				$("#modal66_link").click();
 			}
 			barcode_filter.value="";
-		},product_xml);						
-	});	
+		},product_xml);
+	});
 	///////////////////////////
-	$("#modal150").dialog("open");	
+	$("#modal150").dialog("open");
 }
 
 /**
@@ -11159,29 +11159,29 @@ function modal150_action(rack,report_id)
 function modal151_action(bill_id,order_num)
 {
 	var form=document.getElementById('modal151_form');
-	
+
 	var order_filter=form.elements['order_num'];
 	var bag_filter=form.elements['bag_num'];
 
 	order_filter.value=order_num;
-	var bill_id_string=""+bill_id;	
+	var bill_id_string=""+bill_id;
 	var bag_num=bill_id_string.slice(-3);
 
 	bag_filter.value=bag_num;
 	$(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
-		event.preventDefault();	
-		$("#modal151").dialog("close");		
+		event.preventDefault();
+		$("#modal151").dialog("close");
 	});
 
 	setTimeout(function()
     {
 		$("#modal151").dialog("close");
 	},2000);
-	
+
 	///////////////////////////
-	$("#modal151").dialog("open");	
+	$("#modal151").dialog("open");
 }
 
 
@@ -11199,11 +11199,11 @@ function modal152_action(rack)
 	var item_head=document.createElement('tr');
 	item_head.innerHTML="<th>Item</th><th>Batch</th><th>Quantity To place</th>";
 	item_table.appendChild(item_head);
-	
+
 	var item_head2=document.createElement('tr');
 	item_head2.innerHTML="<th>Item</th><th>Batch</th><th>Quantity Placed</th>";
 	item_table2.appendChild(item_head2);
-			
+
 	$("[id^='row_form165_']").each(function(index)
 	{
 		var subform=$(this)[0];
@@ -11216,35 +11216,35 @@ function modal152_action(rack)
 			var placed_quantity=parseFloat(subform.elements[3].value);
 			var row_id=subform.elements[11].value;
 			var item_row=document.createElement('tr');
-			
+
 			item_row.setAttribute('id','modal152_row_'+row_id);
 			item_row.setAttribute('data-id',row_id);
-			
+
 			item_row.innerHTML="<td>"+item_name+"</td><td>"+batch+"</td><td style='text-align:center;'>"+(quantity-placed_quantity)+"</td>";
-			item_table.appendChild(item_row);			
-		//}								
-	});	
+			item_table.appendChild(item_row);
+		//}
+	});
 	//////////////////////////////
-	
+
 	var form=document.getElementById('modal152_form');
-	
+
 	var barcode_filter=form.elements['barcode'];
 	var save_button=form.elements['save'];
 
 	$(save_button).off('click');
-	$(save_button).on('click',function (event) 
+	$(save_button).on('click',function (event)
 	{
 		event.preventDefault();
-		
-		var master_form_array=[];		
+
+		var master_form_array=[];
 		$("[id^='modal152_row_']").each(function(index)
 		{
 			//console.log('modal_row_parsed');
 			var record_id=$(this).attr('data-id');
 			var unplaced_quantity=parseFloat($(this).find('td:nth-child(3)').html());
-			
+
 			master_form_array.push("row_form165_"+record_id);
-			//console.log(record_id);			
+			//console.log(record_id);
 			var master_form=document.getElementById("row_form165_"+record_id);
 			var to_place_quantity=parseFloat(master_form.elements[2].value);
 			var old_placed_quantity=parseFloat(master_form.elements[3].value);
@@ -11261,15 +11261,15 @@ function modal152_action(rack)
 
 			//$(master_form).trigger('submit');
 		});
-		
+
 		master_form_array=array_unique(master_form_array);
-		//console.log(master_form_array);		
-		
+		//console.log(master_form_array);
+
 		master_form_array.forEach(function(master_form_id)
 		{
 			var master_form=document.getElementById(master_form_id);
 			$(master_form).trigger('submit');
-		});		
+		});
 
 		$("#modal152").dialog("close");
 		form165_get_totals();
@@ -11280,10 +11280,10 @@ function modal152_action(rack)
 	});
 
 	$(form).off('submit');
-	$(form).on('submit',function (event) 
+	$(form).on('submit',function (event)
 	{
 		event.preventDefault();
-		//console.log('barcode_scanned');		
+		//console.log('barcode_scanned');
 		var product_xml="<product_master>"+
 						"<name></name>"+
 						"<bar_code exact='yes'>"+barcode_filter.value+"</bar_code>"+
@@ -11292,10 +11292,10 @@ function modal152_action(rack)
 		{
 			if(products.length>0)
 			{
-				var product_placed=false;				
+				var product_placed=false;
 				var product_name=products[0];
 
-				
+
 				$("[id^='modal152_row_']").each(function(index)
 				{
 					var row_elem=$(this);
@@ -11304,7 +11304,7 @@ function modal152_action(rack)
 						//console.log('picked');
 						product_placed=true;
 						$(this).find('td:nth-child(3)').html((parseFloat($(this).find('td:nth-child(3)').html())-1));
-						
+
 						var batch=$(this).find('td:nth-child(2)').html();
 						var item_row=document.createElement('tr');
 						item_row.innerHTML="<td style='margin:2px;word-wrap: break-word;'>"+product_name+"</td><td style='margin:2px;word-wrap: break-word;'>"+batch+"</td><td style='margin:2px;text-align:center;'>1</td>";
@@ -11317,15 +11317,15 @@ function modal152_action(rack)
 					$("#modal72_link").click();
 				}
 			}
-			else 
+			else
 			{
 				$("#modal66_link").click();
 			}
 			barcode_filter.value="";
-		},product_xml);						
-	});	
+		},product_xml);
+	});
 	///////////////////////////
-	$("#modal152").dialog("open");	
+	$("#modal152").dialog("open");
 }
 
 /**
@@ -11343,7 +11343,7 @@ function modal153_action(button,lead_id)
 	{
 		$(form).find(".close").click();
 	});
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -11352,12 +11352,12 @@ function modal153_action(button,lead_id)
 		{
 			var lead_form_id=$(button).attr('form');
 			var last_updated=get_my_time();
-			
+
 			var data_json={data_store:'sale_leads',
 	 				data:[{index:'id',value:lead_id},
 	 					{index:'due_date',value:''},
 	 					{index:'status',value:'closed'},
-	 					{index:'last_updated',value:last_updated}]};				
+	 					{index:'last_updated',value:last_updated}]};
 			update_json(data_json);
 			$(button).parent().parent().attr('class','active');
 			$(button).hide();
@@ -11368,7 +11368,7 @@ function modal153_action(button,lead_id)
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal153_link").click();
 }
 
@@ -11384,8 +11384,8 @@ function modal154_action(bill_ids)
 		bill_id_array=JSON.parse(bill_ids);
 	}
 	var rowsHTML="<tr style='background-color:#2C8A50;'><td>Invoice</td><td>Link</td></tr>";
-	
-	bill_id_array.forEach(function (bill_id) 
+
+	bill_id_array.forEach(function (bill_id)
 	{
 		rowsHTML+="<tr>"+
 				"<td>"+bill_id.bill_num+"</td>"+
@@ -11393,7 +11393,7 @@ function modal154_action(bill_ids)
 				"</tr>";
 	});
 
-	$('#modal154_item_table').html(rowsHTML);		
+	$('#modal154_item_table').html(rowsHTML);
 	$("#modal154").dialog("open");
 }
 
@@ -11412,15 +11412,15 @@ function modal155_action()
 	var balance_filter=form.elements['balance'];
 	var type_filter=form.elements['type'];
 	var receipt_record_id="";
-	
+
 	$(date_filter).datepicker();
 	date_filter.value=get_my_date();
-	
+
 	var receipt_id_json={data_store:'user_preferences',count:1,
                         indexes:[{index:'id'},
                                 {index:'value'},
                                 {index:'name',exact:'receipt_id_series'}]};
-	read_json_rows('',receipt_id_json,function (receipts) 
+	read_json_rows('',receipt_id_json,function (receipts)
 	{
 		if(receipts.length>0)
 		{
@@ -11428,10 +11428,10 @@ function modal155_action()
 			receipt_record_id=receipts[0].id;
 		}
 	});
-	
+
 	var accounts_data={data_store:'customers',return_column:'acc_name'};
 	set_my_value_list_json(accounts_data,account_filter);
-	
+
 	$(account_filter).off('blur');
 	$(account_filter).on('blur',function(e)
 	{
@@ -11458,7 +11458,7 @@ function modal155_action()
 					balance_amount+=parseFloat(payment.paid_amount);
 				}
 			});
-			
+
 			if(balance_amount==0)
 			{
 				balance_filter.value="Rs. 0";
@@ -11472,10 +11472,10 @@ function modal155_action()
 				balance_amount=(-balance_amount);
 				balance_filter.value="Payable: Rs. "+balance_amount;
 			}
-			type_filter.value='received';			
+			type_filter.value='received';
 		});
 	});
-		
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -11504,12 +11504,12 @@ function modal155_action()
 				{
 					if(a.date>b.date)
 					{	return 1;}
-					else 
+					else
 					{	return -1;}
 				});
-				
+
 				var total_amount=0;
-								
+
 				for(var i=0;i<accounts.length;i++)
 				{
 					if(accounts[i].type=='received')
@@ -11523,19 +11523,19 @@ function modal155_action()
 						total_amount+=parseFloat(accounts[i].paid_amount);
 					}
 				}
-				
+
 				total_amount=total_amount-counter_payment;
-				
+
 				if(total_amount>0)
 				{
 					accounts.sort(function(a,b)
 					{
 						if(a.type>b.type)
 						{	return 1;}
-						else 
+						else
 						{	return -1;}
 					});
-					console.log(accounts);					
+					console.log(accounts);
 				}
 				else
 				{
@@ -11543,14 +11543,14 @@ function modal155_action()
 					{
 						if(a.type<b.type)
 						{	return 1;}
-						else 
+						else
 						{	return -1;}
 					});
-					//console.log(accounts);					
+					//console.log(accounts);
 				}
 
 				console.log(total_amount);
-				
+
 				var new_id=get_new_key();
 				var last_updated=get_my_time();
 				accounts.forEach(function(account)
@@ -11559,7 +11559,7 @@ function modal155_action()
 					if(total_amount==0)
 					{
                         var notes=account.notes+"\nClosed by receipt # "+receipt_id;
-						
+
                         var payment_json={data_store:'payments',
                         data:[{index:'id',value:account.id},
                             {index:'status',value:'closed'},
@@ -11578,7 +11578,7 @@ function modal155_action()
                             {index:'last_updated',value:last_updated}]};
 
 						update_json(payment_json);
-						create_json(receipts_json);	
+						create_json(receipts_json);
 					}
 					else
 					{
@@ -11587,7 +11587,7 @@ function modal155_action()
 							if(total_amount>0)
 							{
 								var notes=account.notes+"\nClosed by receipt # "+receipt_id;
-								
+
                                 var payment_json={data_store:'payments',
                                 data:[{index:'id',value:account.id},
                                     {index:'status',value:'closed'},
@@ -11658,10 +11658,10 @@ function modal155_action()
 									update_json(payment_json);
 									create_json(receipts_json);
 									total_amount=total_amount+parseFloat(account.total_amount);
-								}								
+								}
 							}
 						}
-						else 
+						else
 						{
 							if(total_amount<0)
 							{
@@ -11692,7 +11692,7 @@ function modal155_action()
 								{
 									var balanced_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount)-total_amount;
 									var notes=account.notes+"\n Rs."+balanced_amount+" balanced against receipt # "+receipt_id;
-                                    
+
                                     var payment_json={data_store:'payments',
                                     data:[{index:'id',value:account.id},
                                         {index:'status',value:'pending'},
@@ -11737,14 +11737,14 @@ function modal155_action()
 									update_json(payment_json);
 									create_json(receipts_json);
 									total_amount=total_amount-parseFloat(account.total_amount);
-								}								
+								}
 							}
 						}
 					}
 				});
-					
-				new_id++;	
-				var p_id=get_new_key();				
+
+				new_id++;
+				var p_id=get_new_key();
 				if(total_amount<0)
 				{
                     var payment_json={data_store:'payments',
@@ -11760,10 +11760,10 @@ function modal155_action()
 	 					{index:'transaction_id',value:p_id},
 	 					{index:'source_id',value:p_id},
 	 					{index:'source',value:'receipt'},
-                        {index:'source_info',value:receipt_id},  
+                        {index:'source_info',value:receipt_id},
                         {index:'notes',value:'Generated for receipt #'+receipt_id},
 	 					{index:'last_updated',value:last_updated}]};
- 					
+
                     var receipts_json={data_store:'receipts_payment_mapping',
 	 				data:[{index:'id',value:new_id},
 	 					{index:'receipt_id',value:receipt_id},
@@ -11773,11 +11773,11 @@ function modal155_action()
 	 					{index:'acc_name',value:account_name},
 	 					{index:'date',value:receipt_date},
 	 					{index:'last_updated',value:last_updated}]};
- 						
+
 					create_json(receipts_json);
-					create_json(payment_json);		
+					create_json(payment_json);
 				}
-				
+
                 var receipt_json={data_store:'receipts',
 	 				data:[{index:'id',value:p_id},
 	 					{index:'receipt_id',value:receipt_id},
@@ -11787,13 +11787,13 @@ function modal155_action()
 	 					{index:'acc_name',value:account_name},
 	 					{index:'date',value:receipt_date},
 	 					{index:'last_updated',value:last_updated}]};
- 				
+
 				create_json(receipt_json);
-				
+
 				var receipt_id_array=receipt_id.split('-');
                 var receipt_id_json={data_store:'user_preferences',
 	 				data:[{index:'id',value:receipt_record_id},
-	 					{index:'value',value:(parseInt(receipt_id_array[1])+1)+""}]}; 				
+	 					{index:'value',value:(parseInt(receipt_id_array[1])+1)+""}]};
 				update_json(receipt_id_json);
 			});
 		}
@@ -11801,10 +11801,10 @@ function modal155_action()
 		{
 			$("#modal2_link").click();
 		}
-		
+
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal155_link").click();
 }
 
@@ -11815,13 +11815,13 @@ function modal155_action()
 function modal156_action(product_type,product_name)
 {
 	var form=document.getElementById('modal156_form');
-	
+
 	var fname=form.elements['name'];
 	var fbatch=form.elements['batch'];
 	var fmanufacture=form.elements['date'];
-	
+
 	$(fmanufacture).datepicker();
-	
+
 	var name_data={data_store:'attributes',return_column:'name',
                   indexes:[{index:'type',exact:'product'},
                           {index:'value',exact:'yes'},
@@ -11832,7 +11832,7 @@ function modal156_action(product_type,product_name)
 	{
 		fname.value=product_name;
 	}
-		
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -11845,7 +11845,7 @@ function modal156_action(product_type,product_name)
         var link_to='form183';
         if(product_type=='raw material')
         link_to='form238';
-        
+
         var data_json={data_store:'product_instances',
                     data:[{index:'id',value:data_id},
                         {index:'product_name',value:name,uniqueWith:["batch"]},
@@ -11858,7 +11858,7 @@ function modal156_action(product_type,product_name)
         create_json(data_json);
         $(form).find(".close").click();
 	});
-	
+
 	$("#modal156_link").click();
 }
 
@@ -11873,17 +11873,17 @@ function modal157_action(func)
 	var reason_filter=form157.elements['reason'];
 	var yes_button=form157.elements['yes'];
 	var no_button=form157.elements['no'];
-	
+
 	$(form157).off('submit');
 	$(form157).on('submit',function(event)
 	{
 		var reason_value=reason_filter.value;
 		event.preventDefault();
-		
+
 		$("#modal157").dialog("close");
 		func(reason_value);
 	});
-	
+
 	$(no_button).off('click');
 	$(no_button).on('click',function()
 	{
@@ -11903,13 +11903,13 @@ function modal158_action(bill_id)
 	var form158=document.getElementById('modal158_form');
 	var yes_button=form158.elements[1];
 	var no_button=form158.elements[2];
-	
+
 	$(yes_button).off('click');
 	$(yes_button).on('click',function()
 	{
 		$("#modal158").dialog("close");
 		show_loader();
-		
+
 		var bill_items_xml="<bill_items>"+
 					"<id></id>"+
 					"<item_name></item_name>"+
@@ -11922,14 +11922,14 @@ function modal158_action(bill_id)
 					"<picked_status></picked_status>"+
 					"<packing_status></packing_status>"+
 					"<storage></storage>"+
-					"<bill_id exact='yes'>"+bill_id+"</bill_id>"+		
+					"<bill_id exact='yes'>"+bill_id+"</bill_id>"+
 					"</bill_items>";
-		fetch_requested_data('',bill_items_xml,function (bill_items) 
+		fetch_requested_data('',bill_items_xml,function (bill_items)
 		{
 			var master_form=document.getElementById('form210_master');
 			var accepted_filter=master_form.elements['accepted'];
 			var rejected_filter=master_form.elements['rejected'];
-			
+
 			$(accepted_filter).off('keydown');
 			$(rejected_filter).off('keydown');
 
@@ -11944,9 +11944,9 @@ function modal158_action(bill_id)
 					{
 						data_xml+="</bill_items><separator></separator><bill_items>";
 					}
-					
+
 					counter+=1;
-					
+
 					if(parseFloat(row.packed_quantity)>0)
 					{
 						data_xml+="<row>" +
@@ -11959,27 +11959,27 @@ function modal158_action(bill_id)
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</row>";
 					}
-					else 
+					else
 					{
 						var data2_xml="<bill_items>" +
 							"<id>"+row.id+"</id>" +
 							"</bill_items>";
-						delete_simple(data2_xml);	
+						delete_simple(data2_xml);
 					}
 				});
-				
+
 				data_xml+="</bill_items>";
 				update_batch(data_xml);
-				
-				bill_items.forEach(function (bill_item) 
+
+				bill_items.forEach(function (bill_item)
 				{
-					
+
 				});
 			}
 			hide_loader();
-		});	
+		});
 	});
-	
+
 	$(no_button).off('click');
 	$(no_button).on('click',function()
 	{
@@ -12000,7 +12000,7 @@ function modal159_action(order_id,order_num,customer,billing_type,bill_id)
 	var cancel_button=form.elements['cancel'];
 
 	document.getElementById('modal159_order_id').innerHTML="Order #: "+order_num;
-	
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -12015,14 +12015,14 @@ function modal159_action(order_id,order_num,customer,billing_type,bill_id)
 		event.preventDefault();
 		$("#modal159").dialog("close");
 	});
-	
+
 	var headHTML="<tr style='background-color:#2C8A50;'>"+
 				"<td>Item</td>"+
 				"<td>Quantity</td>"+
 				"<td>Select</td>"+
 				"</tr>";
 	$('#modal159_item_table').html(headHTML);
-		
+
 	var order_items_xml="<sale_order_items>"+
 					"<id></id>"+
 					"<order_id exact='yes'>"+order_id+"</order_id>"+
@@ -12036,8 +12036,8 @@ function modal159_action(order_id,order_num,customer,billing_type,bill_id)
                     "<total></total>"+
 					"</sale_order_items>";
 	var analyze_item_timer=0;
-								
-	fetch_requested_data('',order_items_xml,function (order_items) 
+
+	fetch_requested_data('',order_items_xml,function (order_items)
 	{
 		var bill_id_string='--';
 		if(bill_id!='undefined' && bill_id!="" && bill_id!='0')
@@ -12048,20 +12048,20 @@ function modal159_action(order_id,order_num,customer,billing_type,bill_id)
 				bill_id_string+=bill_id_array[x].bill_id+"--";
 			}
 		}
-		
+
 		var bill_items_xml="<bill_items>"+
 					"<bill_id array='yes'>"+bill_id_string+"</bill_id>"+
 					"<item_name></item_name>"+
 					"<quantity></quantity>"+
 					"</bill_items>";
-		fetch_requested_data('',bill_items_xml,function (bill_items) 
+		fetch_requested_data('',bill_items_xml,function (bill_items)
 		{
 			//console.log(bill_items);
 			for(var j=0;j<order_items.length;j++)
 			{
 				order_items[j].order_quantity=order_items[j].quantity;
 			}
-			
+
 			for(var k=0;k<order_items.length;k++)
 			{
 				for(var l=0;l<bill_items.length;l++)
@@ -12081,7 +12081,7 @@ function modal159_action(order_id,order_num,customer,billing_type,bill_id)
 							k--;
 							break;
 						}
-						else 
+						else
 						{
 							bill_items.splice(l,1);
 							order_items.splice(k,1);
@@ -12091,15 +12091,15 @@ function modal159_action(order_id,order_num,customer,billing_type,bill_id)
 					}
 				}
 			}
-				
-		
+
+
 			analyze_item_timer=order_items.length;
-			
-			order_items.forEach(function (order_item) 
+
+			order_items.forEach(function (order_item)
 			{
 				var tr_elem_title=[];
 				var tr_elem_selection=[];
-				
+
 				get_inventory(order_item.item_name,'',function(quantity)
 				{
 					//console.log(quantity);
@@ -12109,16 +12109,16 @@ function modal159_action(order_id,order_num,customer,billing_type,bill_id)
 						tr_elem_title.push('Insufficient Inventory');
 						tr_elem_selection.push(get_session_var('billing_on_inventory'));
 					}
-				
+
 			      	var item_checked="checked";
 	  			   	var item_title="";
 	  			   	var hide_checkbox=false;
-	  			   
+
 					for (var y in tr_elem_title)
 					{
 						item_title+=tr_elem_title[y]+"\n";
 					}
-					
+
 					for (var z in tr_elem_selection)
 					{
 						if(tr_elem_selection[z]=='maybe')
@@ -12131,8 +12131,8 @@ function modal159_action(order_id,order_num,customer,billing_type,bill_id)
 							hide_checkbox=true;
 							break;
 						}
-					}				
-	  			   
+					}
+
 	  			   	var order_item_string=JSON.stringify(order_item);
 	  			   	var rowsHTML="<tr title='"+item_title+"' data-object='"+order_item_string+"' id='modal159_item_row_"+order_item.id+"'>"+
 						"<td>"+order_item.item_name+"</td>"+
@@ -12142,16 +12142,16 @@ function modal159_action(order_id,order_num,customer,billing_type,bill_id)
 						rowsHTML+="<td><input "+item_checked+" style='display:none;' type='checkbox' id='modal159_item_check_"+order_item.id+"'></td>";
 					}
 					else
-					{			
+					{
 						rowsHTML+="<td><input "+item_checked+" type='checkbox' id='modal159_item_check_"+order_item.id+"'></td>";
 					}
 						rowsHTML+="</tr>";
 					$('#modal159_item_table').append(rowsHTML);
 					analyze_item_timer-=1;
-		  	   
-			     });	
+
+			     });
 			});
-			
+
 			var analysis_complete=setInterval(function()
 			{
 				if(analyze_item_timer===0)
@@ -12160,9 +12160,9 @@ function modal159_action(order_id,order_num,customer,billing_type,bill_id)
 					hide_loader();
 				}
 			},100);
-		});	
-	});				
-	
+		});
+	});
+
 	$("#modal159").dialog("open");
 }
 
@@ -12172,14 +12172,14 @@ function modal159_action(order_id,order_num,customer,billing_type,bill_id)
 function modal160_action()
 {
 	var form=document.getElementById('modal160_form');
-	
+
 	var select_file=form.elements[1];
 	var dummy_button=form.elements[2];
 	var selected_file=form.elements[3];
 	var import_button=form.elements[4];
 
-	$(dummy_button).off('click'); 
-	$(dummy_button).on('click',function (e) 
+	$(dummy_button).off('click');
+	$(dummy_button).on('click',function (e)
 	{
 		e.preventDefault();
 		$(select_file).trigger('click');
@@ -12188,9 +12188,9 @@ function modal160_action()
     dummy_button.setAttribute('class','btn red-sunglo');
 	select_file.value="";
 	selected_file.value="";
-	
+
 	$(select_file).off('change');
-	$(select_file).on('change',function () 
+	$(select_file).on('change',function ()
 	{
 		var file_name=select_file.value;
 		if(file_name!="" && (file_name.indexOf('csv')>-1))
@@ -12198,7 +12198,7 @@ function modal160_action()
 			dummy_button.setAttribute('class','btn green-jungle');
 			selected_file.value=file_name;
 		}
-		else 
+		else
 		{
 			dummy_button.setAttribute('class','btn red-sunglo');
 			select_file.value="";
@@ -12213,7 +12213,7 @@ function modal160_action()
 		show_progress();
 		var file=select_file.files[0];
         var fileType = /csv/gi;
-		
+
         selected_file.value = "Uploading!! Please don't refresh";
     	var reader = new FileReader();
         reader.onload = function(e)
@@ -12223,7 +12223,7 @@ function modal160_action()
         	var data_array=vUtil.csv2array(content);
 
         	progress_value=5;
-           
+
            	//////////////////
            	var validate_template_array=[{column:'id',required:'yes',regex:new RegExp('^[0-9]+$')},
 										{column:'type',required:'yes',list:['create','update','delete']},
@@ -12234,7 +12234,7 @@ function modal160_action()
 										{column:'tablename',regex:new RegExp('^[0-9a-zA-Z_]+$')},
 										{column:'link_to',regex:new RegExp('^[0-9a-zA-Z_]+$')},
 										{column:'last_updated',required:'yes',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')}];
-			
+
 			var error_array=validate_import_array(data_array,validate_template_array);
 			if(error_array.status=='success')
 			{
@@ -12244,7 +12244,7 @@ function modal160_action()
 					//console.log(row);
 					row.last_updated=""+get_raw_time(row.last_updated);
 				});
-				
+
 				///////////////////////////////////
 				function local_create_activities(rows)
 				{
@@ -12259,13 +12259,13 @@ function modal160_action()
 					{
 						show_loader();
 						var table="activities";
-						
+
 						var transaction=static_local_db.transaction([table],"readwrite");
 						var os1=transaction.objectStore(table);
-						
+
 						var i=0;
 						var success_count=0;
-						
+
 						function create_records()
 						{
 							if(i<rows.length)
@@ -12277,12 +12277,12 @@ function modal160_action()
 									i+=1;
 									localdb_open_requests-=1;
 									success_count+=1;
-									create_records();						
+									create_records();
 								};
 							}
 						};
 						create_records();
-						
+
 						var local_create_complete=setInterval(function()
 						{
 						   if(localdb_open_requests===0)
@@ -12299,7 +12299,7 @@ function modal160_action()
 										link_to:'',
 										updated_by:""+get_session_var('name'),
 										last_updated:""+get_my_time()};
-								var transaction=static_local_db.transaction([table],"readwrite");		
+								var transaction=static_local_db.transaction([table],"readwrite");
 								var os3=transaction.objectStore('activities');
 								os3.put(act_row).onsuccess=function(e){};
 							   clearInterval(local_create_complete);
@@ -12307,15 +12307,15 @@ function modal160_action()
 						   }
 				        },2000);
 					}
-				};	
-				
+				};
+
 				local_create_activities(data_array);
-				
+
 	           	////////////////////
 	        	progress_value=15;
-	        	
+
 	        	//console.log(data_array.length);
-	        	
+
 	        	var ajax_complete=setInterval(function()
 	        	{
 	        		//console.log(number_active_ajax);
@@ -12327,7 +12327,7 @@ function modal160_action()
 	        		{
 	        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
 	        		}
-	        		
+
 	        		if(number_active_ajax===0 && localdb_open_requests===0)
 	        		{
 	        			hide_progress();
@@ -12343,12 +12343,12 @@ function modal160_action()
 	        	hide_progress();
        			$(select_file).val('');
        			$("#modal160").dialog("close");
-				modal164_action(error_array);       			
+				modal164_action(error_array);
 	        }
         }
-        reader.readAsText(file);    
+        reader.readAsText(file);
     });
-	
+
 	$("#modal160").dialog("open");
 }
 
@@ -12360,7 +12360,7 @@ function modal160_action()
 function modal161_action(support_type,func)
 {
 	var form=document.getElementById('modal161_form');
-	
+
 	var fcat=form.elements[1];
 	var fsubcat=form.elements[2];
 	var fname=form.elements[3];
@@ -12371,7 +12371,7 @@ function modal161_action(support_type,func)
 	var fcity=form.elements[8];
 	var fweb=form.elements[9];
 	var fperson=form.elements[10];
-	
+
 	///////////////////////////
 	fcat.value="";
 	fsubcat.value="";
@@ -12383,7 +12383,7 @@ function modal161_action(support_type,func)
 	fcity.value="";
 	fweb.value="";
 	fperson.value="";
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -12395,15 +12395,15 @@ function modal161_action(support_type,func)
 			var acc_name=name+" ("+phone+")";
 			var email=femail.value;
 			var address=faddress.value;
-			
+
 			name = name.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
-			
+
 			address = address.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			address = address.replace(/â/g,'');
 			address = address.replace(/&/g, "and");
-			
+
 			var pincode=fpincode.value;
 			var city=fcity.value;
 			var data_id=get_new_key();
@@ -12444,13 +12444,13 @@ function modal161_action(support_type,func)
 							"<value>"+support_type+"</value>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</attributes>";
-								
+
 			create_row_func(data_xml,activity_xml,func);
 			create_simple(account_xml);
 			create_simple(attribute_xml);
-			
+
 			var business_title=get_session_var('title');
-			
+
 			var id=get_new_key();
 			$(".modal161_attributes").each(function()
 			{
@@ -12477,7 +12477,7 @@ function modal161_action(support_type,func)
 		}
 		$("#modal161").dialog("close");
 	});
-	
+
 	$("#modal161").dialog("open");
 }
 
@@ -12489,7 +12489,7 @@ function modal161_action(support_type,func)
 function modal162_action(button)
 {
 	var form=document.getElementById('modal162_form');
-	
+
 	var sku_filter=form.elements['sku'];
 	var item_filter=form.elements['item_name'];
 	var batch_filter=form.elements['batch'];
@@ -12504,22 +12504,22 @@ function modal162_action(button)
 	batch_filter.value=master_form.elements[3].value;
 	storage_filter.value=master_form.elements[6].value;
 	topick_filter.value=master_form.elements[4].value;
-	picked_filter.value=master_form.elements[5].value;		
-	
+	picked_filter.value=master_form.elements[5].value;
+
 	if(storage_filter.value=="")
 	{
 		storage_filter.removeAttribute('readonly');
 	}
-	
+
 	var data_id=master_form.elements[8].value;
 	var table_type=master_form.elements[9].value;
-		
+
 	$(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		
-		var plus_minus="";		
+
+		var plus_minus="";
 		if(table_type=='inventory_adjust')
 		{
 			plus_minus="-";
@@ -12527,21 +12527,21 @@ function modal162_action(button)
 
 		var status="picked";
 		if(parseFloat(picked_filter.value)!=parseFloat(topick_filter.value))
-			status='pending';		
+			status='pending';
 		var data_xml="<"+table_type+">";
 			data_xml+="<id>"+data_id+"</id>" +
 				"<picked_status>"+status+"</picked_status>" +
 				"<picked_quantity>"+plus_minus+picked_filter.value+"</picked_quantity>" +
 				"<last_updated>"+get_my_time()+"</last_updated>";
 			data_xml+="</"+table_type+">";
-		
+
 		master_form.elements[5].value=picked_filter.value;
 		update_simple(data_xml);
 		$("#modal162").dialog("close");
 	});
-	
+
 	///////////////////////////
-	$("#modal162").dialog("open");	
+	$("#modal162").dialog("open");
 }
 
 
@@ -12552,7 +12552,7 @@ function modal162_action(button)
 function modal163_action(button)
 {
 	var form=document.getElementById('modal163_form');
-	
+
 	var sku_filter=form.elements['sku'];
 	var batch_filter=form.elements['batch'];
 	var storage_filter=form.elements['storage'];
@@ -12565,33 +12565,33 @@ function modal163_action(button)
 	batch_filter.value=master_form.elements[1].value;
 	storage_filter.value=master_form.elements[4].value;
 	toplace_filter.value=master_form.elements[2].value;
-	placed_filter.value=master_form.elements[3].value;		
+	placed_filter.value=master_form.elements[3].value;
 
 	var storage_data="<store_areas>"+
 					"<name></name>"+
 					"</store_areas>";
 	set_my_value_list(storage_data,storage_filter);
-					
+
 	var data_id=master_form.elements[6].value;
 	var table_type=master_form.elements[7].value;
 	var old_storage=master_form.elements[9].value;
 	var old_placed=master_form.elements[10].value;
-			
+
 	$(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		
+
 		var item=sku_filter.value;
 		var batch=batch_filter.value;
 		var to_place=toplace_filter.value;
 		var placed=placed_filter.value;
 		var storage=storage_filter.value;
 		var last_updated=get_my_time();
-		
+
 		var status="completed";
 		if(parseFloat(placed)!=parseFloat(to_place))
-			status='pending';		
+			status='pending';
 		var data_xml="<"+table_type+">";
 			data_xml+="<id>"+data_id+"</id>" +
 				"<put_away_status>"+status+"</put_away_status>" +
@@ -12599,11 +12599,11 @@ function modal163_action(button)
 				"<storage>"+storage+"</storage>"+
 				"<last_updated>"+last_updated+"</last_updated>";
 			data_xml+="</"+table_type+">";
-		
+
 		update_simple(data_xml);
 		master_form.elements[9].value=storage;
-		master_form.elements[10].value=placed;					
-	
+		master_form.elements[10].value=placed;
+
 		var storage_data="<area_utilization>" +
 				"<id></id>" +
 				"<name exact='yes'>"+storage+"</name>" +
@@ -12623,13 +12623,13 @@ function modal163_action(button)
 						"</area_utilization>";
 				create_simple(storage_xml);
 			}
-		});		
-		
+		});
+
 		$("#modal163").dialog("close");
 	});
-	
+
 	///////////////////////////
-	$("#modal163").dialog("open");	
+	$("#modal163").dialog("open");
 }
 
 
@@ -12641,19 +12641,19 @@ function modal164_action(error_array)
 {
 	var response=my_obj_array_to_csv_string(error_array.logs);
 	var type="text/csv";
-	var blob = new Blob([response], { type: type });			
+	var blob = new Blob([response], { type: type });
 	var URL = window.URL || window.webkitURL;
-   var downloadUrl = URL.createObjectURL(blob);	
-			
+   var downloadUrl = URL.createObjectURL(blob);
+
 	var modal_element=document.getElementById('modal164_div');
 	var link=document.createElement('span');
 	link.setAttribute('href',downloadUrl);
 	link.setAttribute('download',"error.csv");
-	$(link).html("The import was aborted due to file errors. Please <a style='color:#f00' download='error.csv' href=\""+downloadUrl+"\">click here</a> to download the error report.");			
+	$(link).html("The import was aborted due to file errors. Please <a style='color:#f00' download='error.csv' href=\""+downloadUrl+"\">click here</a> to download the error report.");
 	$(modal_element).html(link);
-	
+
 	$("#modal164_link").click();
-	hide_loader();	
+	hide_loader();
 }
 
 /**
@@ -12663,18 +12663,18 @@ function modal164_action(error_array)
 function modal165_action(id,metric_id,master)
 {
 	var form=document.getElementById('modal165_form');
-	
+
 	var name_filter=form.elements['name'];
 	var def_filter=form.elements['def'];
-	
+
 	name_filter.value='';
 	var cm="";
-	
+
 	var def_columns=new Object();
 			def_columns.count=1;
 			def_columns.data_store='system_grid_metrics';
 			def_columns.indexes=[{index:'id',value:id},{index:'function_name'},{index:'function_def'}];
-	read_json_rows('',def_columns,function (contents) 
+	read_json_rows('',def_columns,function (contents)
 	{
 		var content="";
 		if(contents.length>0)
@@ -12687,14 +12687,14 @@ function modal165_action(id,metric_id,master)
 	});
 
 	$(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		
+
 		var name=name_filter.value;
 		var def=cm.getValue();
 		var last_updated=get_my_time();
-		
+
 		if(typeof master!='undefined' && master=='master')
 		{
 			var data_json={data_store:'system_grid_metrics',
@@ -12718,8 +12718,8 @@ function modal165_action(id,metric_id,master)
  		}
  		$(form).find('.close').click();
 	});
-	
-	$("#modal165_link").click();	
+
+	$("#modal165_link").click();
 }
 
 
@@ -12737,7 +12737,7 @@ function modal166_action(lead_id,supplier,lead_details)
 
 	$(date_filter).datepicker();
 	$(next_date_filter).datepicker();
-	
+
 	date_filter.value=get_my_date();
 
 	set_static_value_list('followups','response',response_filter);
@@ -12770,7 +12770,7 @@ function modal166_action(lead_id,supplier,lead_details)
 		}
 		$("#modal166").dialog("close");
 	});
-	
+
 	$("#modal166").dialog("open");
 }
 
@@ -12782,7 +12782,7 @@ function modal166_action(lead_id,supplier,lead_details)
 function modal167_action(supplier_acc_name)
 {
 	var form=document.getElementById('modal167_form');
-	
+
 	var fname=form.elements[1];
 	var fphone=form.elements[2];
 	var femail=form.elements[3];
@@ -12802,7 +12802,7 @@ function modal167_action(supplier_acc_name)
 					"<state></state>"+
 					"<pincode></pincode>"+
 					"<acc_name exact='yes'>"+supplier_acc_name+"</acc_name>"+
-					"</suppliers>";	
+					"</suppliers>";
 	fetch_requested_data('',supplier_xml,function(suppliers)
 	{
 		if(suppliers.length>0)
@@ -12817,7 +12817,7 @@ function modal167_action(supplier_acc_name)
 			fid.value=suppliers[0].id;
 		}
 	});
-	
+
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal167_attributes');
 	attribute_label.innerHTML="";
@@ -12839,7 +12839,7 @@ function modal167_action(supplier_acc_name)
 				attribute_label.appendChild(line_break);
 		});
 	});
-	
+
 
 	$(form).off("submit");
 	$(form).on("submit",function(event)
@@ -12848,19 +12848,19 @@ function modal167_action(supplier_acc_name)
 		if(is_update_access('form30'))
 		{
 			var name=fname.value;
-			
+
 			name = name.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
-			
+
 			var phone=fphone.value;
 			var email=femail.value;
 			var address=faddress.value;
-			
+
 			address = address.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			address = address.replace(/â/g,'');
 			address = address.replace(/&/g, "and");
-			
+
 			var pincode=fpincode.value;
 			var city=fcity.value;
 			var state=fstate.value;
@@ -12891,7 +12891,7 @@ function modal167_action(supplier_acc_name)
 			{
 				var value=$(this).val();
 				var id=$(this).attr('name');
-				
+
 				var attribute_xml="<attributes>" +
 						"<id>"+id+"</id>" +
 						"<value>"+value+"</value>" +
@@ -12906,7 +12906,7 @@ function modal167_action(supplier_acc_name)
 		}
 		$("#modal167").dialog("close");
 	});
-	
+
 	$("#modal167").dialog("open");
 }
 
@@ -12925,7 +12925,7 @@ function modal168_action(button,lead_id)
 	{
 		$("#modal168").dialog("close");
 	});
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -12951,7 +12951,7 @@ function modal168_action(button,lead_id)
 		}
 		$("#modal168").dialog("close");
 	});
-	
+
 	$("#modal168").dialog("open");
 }
 
@@ -12969,19 +12969,19 @@ function modal169_action(search_id)
 	attribute_label.innerHTML="";
 
 	$(add_button).off('click');
-	$(add_button).on('click',function () 
+	$(add_button).on('click',function ()
 	{
 		var content="<div><input placeholder='Key' class='floatlabel' type='text'> <input placeholder='Column' class='floatlabel' type='text'></div>";
 		$(attribute_label).append(content);
 		$(form).formcontrol();
-	});		
+	});
 
 	$(delete_button).off('click');
-	$(delete_button).on('click',function () 
+	$(delete_button).on('click',function ()
 	{
 		$('#modal169_columns>div:last-child').remove();
-	});		
-	
+	});
+
 	var attributes_data={data_store:'system_search',count:1,
 								indexes:[{index:'id',value:search_id+""},{index:'return_columns'}]};
 	read_json_rows('',attributes_data,function(attributes)
@@ -13019,8 +13019,8 @@ function modal169_action(search_id)
 			var search_json={data_store:'system_search',
 	 				data:[{index:'id',value:search_id},
 	 					{index:'return_columns',value:return_columns},
-	 					{index:'last_updated',value:last_updated}]}; 							
-			update_json(search_json);					
+	 					{index:'last_updated',value:last_updated}]};
+			update_json(search_json);
 		}
 		else
 		{
@@ -13028,7 +13028,7 @@ function modal169_action(search_id)
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal169_link").click();
 }
 
@@ -13038,14 +13038,14 @@ function modal169_action(search_id)
 function modal170_action()
 {
 	var form=document.getElementById('modal170_form');
-	
+
 	var select_file=form.elements[1];
 	var dummy_button=form.elements[2];
 	var selected_file=form.elements[3];
 	var import_button=form.elements[4];
 
-	$(dummy_button).off('click'); 
-	$(dummy_button).on('click',function (e) 
+	$(dummy_button).off('click');
+	$(dummy_button).on('click',function (e)
 	{
 		e.preventDefault();
 		$(select_file).trigger('click');
@@ -13054,9 +13054,9 @@ function modal170_action()
     dummy_button.setAttribute('class','btn red-sunglo');
 	select_file.value="";
 	selected_file.value="";
-	
+
 	$(select_file).off('change');
-	$(select_file).on('change',function () 
+	$(select_file).on('change',function ()
 	{
 		var file_name=select_file.value;
 		if(file_name!="" && (file_name.indexOf('csv')>-1))
@@ -13064,7 +13064,7 @@ function modal170_action()
 			dummy_button.setAttribute('class','btn green-jungle');
 			selected_file.value=file_name;
 		}
-		else 
+		else
 		{
             dummy_button.setAttribute('class','btn red-sunglo');
 			select_file.value="";
@@ -13077,37 +13077,37 @@ function modal170_action()
 	{
 		event.preventDefault();
 		show_progress();
-							
+
 		var file=select_file.files[0];
         var fileType = /csv/gi;
-		
+
         selected_file.value = "Uploading!! Please don't refresh";
     	var reader = new FileReader();
         reader.onload = function(e)
-        {        	
+        {
         	progress_value=2;
 	       	var content=reader.result;
 	       	var data_array=vUtil.csv2array(content);
 
 	       	progress_value=5;
-	    				
-			
+
+
 			var validate_template_array=[{column:'ID',required:'yes'},
 									{column:'Order ID'},
 									{column:'AWB Number',regex:new RegExp('^[0-9a-zA-Z -]+$')},
 									{column:'Status',list:['dispatched','','null']}];
-		
+
 			var error_array=validate_import_array(data_array,validate_template_array);
 			if(error_array.status=='success')
 			{
         		progress_value=10;
-    	
+
 		    	var data_xml="<bills>";
 	       		var data2_xml="<sale_orders>";
 	       		var counter=1;
 				var last_updated=get_my_time();
-				
-				
+
+
 				data_array.forEach(function(row)
 				{
 					if((counter%500)===0)
@@ -13131,19 +13131,19 @@ function modal170_action()
 							"</row>";
 					}
 				});
-	
-				
+
+
 				data_xml+="</bills>";
 				data2_xml+="</sale_orders>";
-				
+
 				update_batch(data_xml);
 				update_batch(data2_xml);
-				
+
 	           	////////////////////
 	        	progress_value=15;
-	        	
+
 	        	//console.log(data_array.length);
-	        	
+
 	        	var ajax_complete=setInterval(function()
 	        	{
 	        		//console.log(number_active_ajax);
@@ -13155,7 +13155,7 @@ function modal170_action()
 	        		{
 	        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
 	        		}
-	        		
+
 	        		if(number_active_ajax===0 && localdb_open_requests===0)
 	        		{
 	        			hide_progress();
@@ -13166,7 +13166,7 @@ function modal170_action()
 	        		}
 	        	},1000);
 	        }
-	        else 
+	        else
 	        {
 	        	hide_progress();
     			$(select_file).val('');
@@ -13174,9 +13174,9 @@ function modal170_action()
     			modal164_action(error_array);
 	        }
 	     };
-	     reader.readAsText(file);    
+	     reader.readAsText(file);
     });
-	
+
 	$("#modal170").dialog("open");
 }
 
@@ -13188,20 +13188,20 @@ function modal171_action(doc_type,person,person_type,func,attachment_type)
 {
 	show_loader();
 	var form=document.getElementById('modal171_form');
-	
+
 	func(function(container)
 	{
 		var business_title=get_session_var('title');
-		
+
 		var message_attachment=container.innerHTML;
 		var from=get_session_var('email');
 
 		var person_filter=form.elements[1];
 		$(person_filter).off('blur');
 		form.elements[3].value=doc_type;
-		
+
 		$("#modal171").dialog("open");
-						
+
 		if(person!="")
 		{
 			var email_id_xml="<suppliers>"+
@@ -13209,7 +13209,7 @@ function modal171_action(doc_type,person,person_type,func,attachment_type)
 					"<name></name>"+
 					"<acc_name exact='yes'>"+person+"</acc_name>"+
 					"</suppliers>";
-			if(person_type=='customer')			
+			if(person_type=='customer')
 			{
 				email_id_xml="<customers>"+
 						"<email></email>"+
@@ -13217,7 +13217,7 @@ function modal171_action(doc_type,person,person_type,func,attachment_type)
 						"<acc_name exact='yes'>"+person+"</acc_name>"+
 						"</customers>";
 			}
-			else if(person_type=='staff')			
+			else if(person_type=='staff')
 			{
 				email_id_xml="<staff>"+
 						"<email></email>"+
@@ -13225,7 +13225,7 @@ function modal171_action(doc_type,person,person_type,func,attachment_type)
 						"<acc_name exact='yes'>"+person+"</acc_name>"+
 						"</staff>";
 			}
-	
+
 			fetch_requested_data('',email_id_xml,function(emails)
 			{
 				if(emails.length>0)
@@ -13235,43 +13235,43 @@ function modal171_action(doc_type,person,person_type,func,attachment_type)
 					form.elements[5].value=emails[0].name;
 				}
 				$('textarea').autosize();
-				hide_loader();			
+				hide_loader();
 			});
-		}		
+		}
 		else
 		{
 			var person_xml="<suppliers>"+
 						"<acc_name></acc_name>"+
 						"</suppliers>";
-			if(person_type=='customer')			
+			if(person_type=='customer')
 			{
 				person_xml="<customers>"+
 						"<acc_name></acc_name>"+
 						"</customers>";
 			}
-			else if(person_type=='staff')			
+			else if(person_type=='staff')
 			{
 				person_xml="<staff>"+
 						"<acc_name></acc_name>"+
 						"</staff>";
 			}
-			
+
 			person_filter.removeAttribute('readonly');
-			
-			set_my_value_list_func(person_xml,person_filter,function () 
+
+			set_my_value_list_func(person_xml,person_filter,function ()
 			{
 				$(person_filter).focus();
 			});
-			
-			$(person_filter).on('blur',function () 
+
+			$(person_filter).on('blur',function ()
 			{
 				var email_id_xml="<suppliers count='1'>"+
 					"<email></email>"+
 					"<name></name>"+
 					"<acc_name exact='yes'>"+person_filter.value+"</acc_name>"+
 					"</suppliers>";
-				
-				if(person_type=='customer')			
+
+				if(person_type=='customer')
 				{
 					email_id_xml="<customers>"+
 							"<email></email>"+
@@ -13279,7 +13279,7 @@ function modal171_action(doc_type,person,person_type,func,attachment_type)
 							"<acc_name exact='yes'>"+person_filter.value+"</acc_name>"+
 							"</customers>";
 				}
-				else if(person_type=='staff')			
+				else if(person_type=='staff')
 				{
 					email_id_xml="<staff>"+
 							"<email></email>"+
@@ -13295,8 +13295,8 @@ function modal171_action(doc_type,person,person_type,func,attachment_type)
 			});
 			$('textarea').autosize();
 			hide_loader();
-		}	
-		
+		}
+
 		$(form).off("submit");
 		$(form).on("submit",function(event)
 		{
@@ -13304,7 +13304,7 @@ function modal171_action(doc_type,person,person_type,func,attachment_type)
 			show_loader();
 			var receiver_array=[{"email":form.elements[2].value,"name":form.elements[5].value}];
 			var receiver=JSON.stringify(receiver_array);
-						
+
 			var sub=form.elements[3].value;
 			var email_message=form.elements[4].value;
 			email_message=email_message.replace(/\n/g,'<br>');
@@ -13316,8 +13316,8 @@ function modal171_action(doc_type,person,person_type,func,attachment_type)
 					hide_loader();
 				});
 			}
-			else 
-			{				
+			else
+			{
 				send_email(receiver,from,business_title,sub,email_message,function()
 				{
 					hide_loader();
@@ -13342,13 +13342,13 @@ function modal172_action()
 	var amount_filter=form.elements['amount'];
 	var balance_filter=form.elements['balance'];
 	var type_filter=form.elements['type'];
-	
+
 	$(date_filter).datepicker();
 	date_filter.value=get_my_date();
 
 	var accounts_data={data_store:'accounts',return_column:'acc_name'};
 	set_my_value_list_json(accounts_data,account_filter);
-	
+
 	var receipts_data={data_store:'receipts',return_column:'receipt_id'};
 	read_json_single_column(receipts_data,function(receipts)
 	{
@@ -13391,7 +13391,7 @@ function modal172_action()
 					balance_amount+=parseFloat(payment.paid_amount);
 				}
 			});
-			
+
 			if(balance_amount==0)
 			{
 				balance_filter.value="Rs. 0";
@@ -13405,10 +13405,10 @@ function modal172_action()
 				balance_amount=(-balance_amount);
 				balance_filter.value="Receivable: Rs. "+balance_amount;
 			}
-			type_filter.value='paid';			
+			type_filter.value='paid';
 		});
 	});
-		
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -13439,12 +13439,12 @@ function modal172_action()
 				{
 					if(a.date>b.date)
 					{	return 1;}
-					else 
+					else
 					{	return -1;}
 				});
-				
+
 				var total_amount=0;
-								
+
 				for(var i=0;i<accounts.length;i++)
 				{
 					if(accounts[i].type=='paid')
@@ -13458,19 +13458,19 @@ function modal172_action()
 						total_amount+=parseFloat(accounts[i].paid_amount);
 					}
 				}
-				
+
 				total_amount=total_amount-counter_payment;
-				
+
 				if(total_amount>0)
 				{
 					accounts.sort(function(a,b)
 					{
 						if(a.type>b.type)
 						{	return 1;}
-						else 
+						else
 						{	return -1;}
 					});
-					console.log(accounts);					
+					console.log(accounts);
 				}
 				else
 				{
@@ -13478,14 +13478,14 @@ function modal172_action()
 					{
 						if(a.type<b.type)
 						{	return 1;}
-						else 
+						else
 						{	return -1;}
 					});
-					console.log(accounts);					
+					console.log(accounts);
 				}
 
 				console.log(total_amount);
-				
+
 				var new_id=get_new_key();
 				var last_updated=get_my_time();
 				accounts.forEach(function(account)
@@ -13510,9 +13510,9 @@ function modal172_action()
                             {index:'acc_name',value:account_name},
                             {index:'date',value:receipt_date},
                             {index:'last_updated',value:last_updated}]};
-						
+
                         update_json(payment_json);
-						create_json(receipts_json);	
+						create_json(receipts_json);
 					}
 					else
 					{
@@ -13591,10 +13591,10 @@ function modal172_action()
 									update_json(payment_json);
 									create_json(receipts_json);
 									total_amount=total_amount+parseFloat(account.total_amount);
-								}								
+								}
 							}
 						}
-						else 
+						else
 						{
 							if(total_amount<0)
 							{
@@ -13649,7 +13649,7 @@ function modal172_action()
 								else
 								{
 									var notes=account.notes+"\n Rs."+account.paid_amount+" balanced against receipt # "+receipt_id;
-                                    
+
                                     var payment_json={data_store:'payments',
                                     data:[{index:'id',value:account.id},
                                         {index:'status',value:'pending'},
@@ -13670,14 +13670,14 @@ function modal172_action()
 									update_json(payment_json);
 									create_json(receipts_json);
 									total_amount=total_amount-parseFloat(account.total_amount);
-								}								
+								}
 							}
 						}
 					}
 				});
-				
-				new_id++;	
-				var p_id=get_new_key();				
+
+				new_id++;
+				var p_id=get_new_key();
 				if(total_amount<0)
 				{
                     var payment_json={data_store:'payments',
@@ -13708,9 +13708,9 @@ function modal172_action()
                                         {index:'last_updated',value:last_updated}]};
 
 					create_json(receipts_json);
-					create_json(payment_json);		
+					create_json(payment_json);
 				}
-				
+
                  var receipt_json={data_store:'receipts',
 	 				data:[{index:'id',value:p_id},
 	 					{index:'receipt_id',value:receipt_id},
@@ -13720,17 +13720,17 @@ function modal172_action()
 	 					{index:'acc_name',value:account_name},
 	 					{index:'date',value:receipt_date},
 	 					{index:'last_updated',value:last_updated}]};
- 				
+
 				create_json(receipt_json);
 			});
-		}	
+		}
 		else
 		{
 			$("#modal2_link").click();
 		}
-		
+
 		$(form).find(".close").click();
-	});	
+	});
 	$("#modal172_link").click();
 }
 
@@ -13746,23 +13746,23 @@ function modal173_action(item_name)
 	var buyer_filter=form.elements['buyer'];
 	var seller_filter=form.elements['seller'];
 	var ok_button=form.elements['ok'];
-	
+
 	$(ok_button).off('click');
-	$(ok_button).on('click',function () 
+	$(ok_button).on('click',function ()
 	{
 		$("#modal173").dialog("close");
-	});	
-	
+	});
+
 	item_filter.value=item_name;
 	stock_filter.value="";
 	buyer_filter.value="";
 	seller_filter.value="";
-	
+
 	get_inventory(item_name,'',function(inventory)
 	{
 		stock_filter.value=-parseFloat(inventory);
 	});
-	
+
 	var seller_data=new Object();
 		seller_data.count=0;
 		seller_data.start_index=0;
@@ -13781,7 +13781,7 @@ function modal173_action(item_name)
 		buyer_data.sum='yes';
 		buyer_data.indexes=[{index:'status',exact:'open'},
 							{index:'item_name',exact:item_name}];
-	set_my_value_json(buyer_data,buyer_filter);			
+	set_my_value_json(buyer_data,buyer_filter);
 
 	$("#modal173").dialog("open");
 }
@@ -13794,34 +13794,34 @@ function modal173_action(item_name)
 function modal174_action(func)
 {
 	var form=document.getElementById('modal174_form');
-	
+
 	var fname=form.elements[1];
 	var fmake=form.elements[2];
 	var fdescription=form.elements[3];
 	var fpictureinfo=form.elements[4];
 	var fpicture=form.elements[5];
 	var dummy_button=form.elements[6];
-	
-	$(dummy_button).on('click',function (e) 
+
+	$(dummy_button).on('click',function (e)
 	{
 		e.preventDefault();
 		$(fpicture).trigger('click');
 	});
-	
+
 	var make_data=new Object();
 		make_data.data_store='product_master';
 		make_data.return_column='make';
 		make_data.indexes=[{index:'make'}];
 	set_my_filter_json(make_data,fmake);
-	
+
 	fpicture.addEventListener('change',function(evt)
 	{
 		select_picture(evt,fpictureinfo,function(dataURL)
 		{
-			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";			
+			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";
 		});
 	},false);
-	
+
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal174_attributes');
 	attribute_label.innerHTML="";
@@ -13829,7 +13829,7 @@ function modal174_action(func)
 	var attributes_data=new Object();
 		attributes_data.data_store='mandatory_attributes';
 		attributes_data.indexes=[{index:'attribute'},{index:'status'},{index:'value'},{index:'object',exact:'product'}];
-	
+
 	read_json_rows('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
@@ -13843,8 +13843,8 @@ function modal174_action(func)
 				if(attribute.value=="")
 				{
 					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
-				}				
-				else 
+				}
+				else
 				{
 					var values_array=attribute.value.split(";");
 					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
@@ -13854,14 +13854,14 @@ function modal174_action(func)
 					});
 					content+="</select>";
 					attr_label.innerHTML=content;
-				}				
+				}
 				attribute_label.appendChild(attr_label);
 				var line_break=document.createElement('br');
 				attribute_label.appendChild(line_break);
 			}
 		});
 	});
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -13871,7 +13871,7 @@ function modal174_action(func)
 			var name=form.elements[1].value;
 			var make=form.elements[2].value;
 			var description=form.elements[3].value;
-			
+
 			name = name.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
@@ -13881,7 +13881,7 @@ function modal174_action(func)
 			description = description.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			description = description.replace(/â/g,'');
 			description = description.replace(/&/g, "and");
-			
+
 			var mrp=form.elements[7].value;
 			var data_id=get_new_key();
 			var pic_id=get_new_key();
@@ -13897,7 +13897,7 @@ function modal174_action(func)
 							"<description>"+description+"</description>" +
 							"<tax>0</tax>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
-							"</product_master>";	
+							"</product_master>";
 			var instance_xml="<product_instances>"+
 							"<id>"+data_id+"</id>"+
 							"<product_name>"+name+"</product_name>"+
@@ -13906,7 +13906,7 @@ function modal174_action(func)
 							"<cost_price>"+cost_price+"</cost_price>"+
 							"<sale_price>"+sale_price+"</sale_price>"+
 							"<last_updated>"+last_updated+"</last_updated>" +
-							"</product_instances>";			
+							"</product_instances>";
 			var activity_xml="<activity>" +
 							"<data_id>"+data_id+"</data_id>" +
 							"<tablename>product_master</tablename>" +
@@ -13917,7 +13917,7 @@ function modal174_action(func)
 							"</activity>";
 			create_row_func(data_xml,activity_xml,func);
 			create_simple(instance_xml);
-			
+
 			var id=get_new_key();
 			$("#modal174_attributes").find('input, select').each(function()
 			{
@@ -13935,7 +13935,7 @@ function modal174_action(func)
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</attributes>";
 					create_simple(attribute_xml);
-					
+
 				}
 			});
 
@@ -13949,7 +13949,7 @@ function modal174_action(func)
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</documents>";
 				create_simple(pic_xml);
-					
+
 			}
 		}
 		else
@@ -13958,7 +13958,7 @@ function modal174_action(func)
 		}
 		$("#modal174").dialog("close");
 	});
-	
+
 	$("#modal174").dialog("open");
 }
 
@@ -13970,32 +13970,30 @@ function modal174_action(func)
 function modal175_action(func)
 {
 	var form=document.getElementById('modal175_form');
-	
+
 	var fname=form.elements['nname'];
 	var ftemplate=form.elements['tname'];
 	var fhtml=form.elements['html_code'];
 	var ftid=form.elements['t_id'];
-	
-	var tname_data=new Object();
-		tname_data.data_store='newsletter_components';
-		tname_data.return_column='name';
-		tname_data.indexes=[{index:'name'}];
+
+	var tname_data={data_store:'newsletter_components',return_column:'name',
+									indexes:[{index:'name'}]};
 	set_my_value_list_json(tname_data,ftemplate);
-	
+
 	////adding attribute fields///////
 	var markers_label=document.getElementById('modal175_markers');
 	markers_label.innerHTML="";
 
 	$(ftemplate).off('blur');
 	$(ftemplate).off('change');
-	$(ftemplate).on('blur change',function () 
+	$(ftemplate).on('blur change',function ()
 	{
 		var markers_data=new Object();
 			markers_data.count=1;
 			markers_data.data_store='newsletter_components';
 			markers_data.indexes=[{index:'name',exact:ftemplate.value},
 								{index:'markers'},{index:'html_code'},{index:'id'}];
-		
+
 		read_json_rows('',markers_data,function(newsletter_markers)
 		{
 			markers_label.innerHTML="";
@@ -14012,20 +14010,20 @@ function modal175_action(func)
 					var marker_label=document.createElement('div');
 					marker_label.innerHTML="<div class='col-sm-12 col-md-4'>"+marker+"</div>"+
 					     					"<div class='col-sm-12 col-md-8'><textarea form='modal175_form' name='"+marker+"'></textarea></div>";
-					     						
+
 					markers_label.appendChild(marker_label);
 				});
 				fhtml.value=newsletter_markers[0].html_code;
 				ftid.value=newsletter_markers[0].id;
 			}
-			else 
+			else
 			{
 				fhtml.value="";
-				ftid.value="";				
+				ftid.value="";
 			}
 		});
 	});
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -14034,10 +14032,10 @@ function modal175_action(func)
 		{
 			var name=form.elements['nname'].value;
 			var template=form.elements['tname'].value;
-			
+
 			var id=get_new_key();
-			
-			var markers_array=[];	
+
+			var markers_array=[];
 			$("#modal175_markers").find('textarea').each(function()
 			{
 				var value=$(this).val();
@@ -14053,12 +14051,12 @@ function modal175_action(func)
 									"<a style='float:right;' id='form299_nc_edit_"+id+"' class='btn btn-circle btn-icon-only red'><i class='fa fa-pencil'></i></li>";
 			$('#form299_navigation').append(component_elem);
 			$('#form299_nc_'+id).attr('data-attr',attr);
-			$('#form299_nc_edit_'+id).on('click',function () 
+			$('#form299_nc_edit_'+id).on('click',function ()
 			{
 				modal179_action(name,id,attr,template_id);
 			});
 
-			var images_array=[];	
+			var images_array=[];
 			$("#form299_images").children('li').each(function()
 			{
 				var image=new Object();
@@ -14068,7 +14066,7 @@ function modal175_action(func)
 				images_array.push(image);
 			});
 
-			////////////////////////////////////////////////			
+			////////////////////////////////////////////////
 			var html_code=fhtml.value;
 			var doc_columns=new Object();
 				doc_columns.count=5;
@@ -14078,7 +14076,7 @@ function modal175_action(func)
 									{index:'doc_name'},
 									{index:'doc_type',exact:'newsletter_components'},
 									{index:'target_id',exact:ftid.value}];
-			
+
 			read_json_rows('',doc_columns,function(doc_results)
 			{
 				var docHTML="";
@@ -14087,29 +14085,29 @@ function modal175_action(func)
 					var updated_url=doc.url.replace(/ /g,"+");
 					updated_url=updated_url+"\" data-src=\""+doc.id+".jpeg";
 					var replace_word="{{"+doc.doc_name+"}}";
-					var re=new RegExp(replace_word,"g");	
+					var re=new RegExp(replace_word,"g");
 					html_code=html_code.replace(re,updated_url);
 				});
-				
-				markers_array.forEach(function (marker) 
+
+				markers_array.forEach(function (marker)
 				{
 					var replace_word="{{"+marker.marker+"}}";
-					var re=new RegExp(replace_word,"g");	
-					html_code=html_code.replace(re,marker.value);	
+					var re=new RegExp(replace_word,"g");
+					html_code=html_code.replace(re,marker.value);
 				});
-				
-				images_array.forEach(function (image) 
+
+				images_array.forEach(function (image)
 				{
 					var replace_word="image:"+image.name;
 					var updated_url=image.url+"\" data-src=\""+image.id+".jpeg";
-					var re=new RegExp(replace_word,"g");	
-					html_code=html_code.replace(re,updated_url);	
+					var re=new RegExp(replace_word,"g");
+					html_code=html_code.replace(re,updated_url);
 				});
 				var div_dummy=document.createElement('div');
 				$(div_dummy).html(html_code);
-				
+
 				var html_elem="";
-				$(div_dummy).children('div').each(function (index) 
+				$(div_dummy).children('div').each(function (index)
 				{
 					html_elem=$(this);
 					$(html_elem).attr('id','form299_sc_'+id);
@@ -14117,17 +14115,17 @@ function modal175_action(func)
 				});
 				$(div_dummy).remove();
 				$('#form299_section').append(html_elem);
-				
-			});			
+
+			});
 			/////////////////////////////////////////////////
-		}		
+		}
 		else
 		{
 			$("#modal2_link").click();
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal175_link").click();
 }
 
@@ -14139,37 +14137,37 @@ function modal175_action(func)
 function modal176_action(data_id,doc_type,func,master)
 {
 	var form=document.getElementById('modal176_form');
-	
+
 	var fname=form.elements['name'];
 	var fpictureinfo=form.elements['picture'];
 	var fpicture=form.elements['file'];
 	var dummy_button=form.elements['dummy'];
-	
-	$(dummy_button).on('click',function (e) 
+
+	$(dummy_button).on('click',function (e)
 	{
 		e.preventDefault();
 		$(fpicture).trigger('click');
 	});
-		
+
 	fpicture.addEventListener('change',function(evt)
 	{
 		select_picture_large(evt,function(dataURL)
 		{
-			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";			
+			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";
 		});
 	},false);
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		if(is_create_access('form299') || is_create_access('form298'))
+		if(is_create_access('form299') || is_create_access('form298') || is_create_access('form345'))
 		{
 			var name=form.elements[1].value;
 			var pic_id=get_new_key();
 			var url=$(fpictureinfo).find('div').find('img').attr('src');
 			var last_updated=get_my_time();
-			
+
 			if(url!="")
 			{
 				var data_json={data_store:'documents',
@@ -14183,26 +14181,26 @@ function modal176_action(data_id,doc_type,func,master)
 				{
 					server_create_master_all(data_json);
 				}
-				else 
+				else
 				{
 					create_json(data_json);
 				}
-				
+
 				if(typeof func!='undefined')
 				{
 					func(pic_id,url,name);
 				}
-				
+
 				/////////saving s3 object///////////////
 				var blob_name=pic_id+".jpeg";
-	
+
 				if(is_online())
-				{				
+				{
 					$.ajax(
 					{
 						type: "POST",
 						url: server_root+"/ajax/s3_doc.php",
-						data: 
+						data:
 						{
 							blob: url,
 							name:blob_name,
@@ -14223,9 +14221,9 @@ function modal176_action(data_id,doc_type,func,master)
 		 					{index:'type',value:'image/jpeg'},
 		 					{index:'status',value:'pending'},
 		 					{index:'last_updated',value:get_my_time()}]};
-					create_json(data_json);					
+					create_json(data_json);
 				}
-						
+
 				//////////////////////////////////////////
 			}
 		}
@@ -14235,7 +14233,7 @@ function modal176_action(data_id,doc_type,func,master)
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal176_link").click();
 }
 /**
@@ -14246,7 +14244,7 @@ function modal176_action(data_id,doc_type,func,master)
 function modal177_action(func)
 {
 	var form=document.getElementById('modal177_form');
-	
+
 	var fname=form.elements[1];
 	var fmake=form.elements[2];
 	var fcategory=form.elements[3];
@@ -14254,33 +14252,33 @@ function modal177_action(func)
 	var fpictureinfo=form.elements[5];
 	var fpicture=form.elements[6];
 	var dummy_button=form.elements[7];
-	
-	$(dummy_button).on('click',function (e) 
+
+	$(dummy_button).on('click',function (e)
 	{
 		e.preventDefault();
 		$(fpicture).trigger('click');
 	});
-	
+
 	var make_data=new Object();
 		make_data.data_store='product_master';
 		make_data.return_column='make';
 		make_data.indexes=[{index:'make'}];
 	set_my_filter_json(make_data,fmake);
-	
+
 	var cat_data=new Object();
 		cat_data.data_store='product_master';
 		cat_data.return_column='category';
 		cat_data.indexes=[{index:'category'}];
 	set_my_filter_json(cat_data,fcategory);
-	
+
 	fpicture.addEventListener('change',function(evt)
 	{
 		select_picture(evt,fpictureinfo,function(dataURL)
 		{
-			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";			
+			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";
 		});
 	},false);
-	
+
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal177_attributes');
 	attribute_label.innerHTML="";
@@ -14288,7 +14286,7 @@ function modal177_action(func)
 	var attributes_data=new Object();
 		attributes_data.data_store='mandatory_attributes';
 		attributes_data.indexes=[{index:'attribute'},{index:'status'},{index:'value'},{index:'object',exact:'product'}];
-	
+
 	read_json_rows('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
@@ -14302,8 +14300,8 @@ function modal177_action(func)
 				if(attribute.value=="")
 				{
 					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
-				}				
-				else 
+				}
+				else
 				{
 					var values_array=attribute.value.split(";");
 					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
@@ -14313,14 +14311,14 @@ function modal177_action(func)
 					});
 					content+="</select>";
 					attr_label.innerHTML=content;
-				}				
+				}
 				attribute_label.appendChild(attr_label);
 				var line_break=document.createElement('br');
 				attribute_label.appendChild(line_break);
 			}
 		});
 	});
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -14331,7 +14329,7 @@ function modal177_action(func)
 			var make=form.elements[2].value;
 			var category=form.elements[3].value;
 			var description=form.elements[4].value;
-			
+
 			name = name.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
@@ -14341,7 +14339,7 @@ function modal177_action(func)
 			description = description.replace(/[^a-z0-9A-Z<>\t\n \!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 			description = description.replace(/â/g,'');
 			description = description.replace(/&/g, "and");
-			
+
 			var mrp=form.elements[8].value;
 			var data_id=get_new_key();
 			var pic_id=get_new_key();
@@ -14357,7 +14355,7 @@ function modal177_action(func)
 							"<description>"+description+"</description>" +
 							"<category>"+category+"</category>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
-							"</product_master>";	
+							"</product_master>";
 			var instance_xml="<product_instances>"+
 							"<id>"+data_id+"</id>"+
 							"<product_name>"+name+"</product_name>"+
@@ -14366,7 +14364,7 @@ function modal177_action(func)
 							"<cost_price>"+cost_price+"</cost_price>"+
 							"<sale_price>"+sale_price+"</sale_price>"+
 							"<last_updated>"+last_updated+"</last_updated>" +
-							"</product_instances>";			
+							"</product_instances>";
 			var activity_xml="<activity>" +
 							"<data_id>"+data_id+"</data_id>" +
 							"<tablename>product_master</tablename>" +
@@ -14377,7 +14375,7 @@ function modal177_action(func)
 							"</activity>";
 			create_row_func(data_xml,activity_xml,func);
 			create_simple(instance_xml);
-			
+
 			var id=get_new_key();
 			$("#modal177_attributes").find('input, select').each(function()
 			{
@@ -14395,7 +14393,7 @@ function modal177_action(func)
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</attributes>";
 					create_simple(attribute_xml);
-					
+
 				}
 			});
 
@@ -14408,7 +14406,7 @@ function modal177_action(func)
 							"<target_id>"+data_id+"</target_id>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</documents>";
-				create_simple(pic_xml);				
+				create_simple(pic_xml);
 			}
 		}
 		else
@@ -14417,7 +14415,7 @@ function modal177_action(func)
 		}
 		$("#modal177").dialog("close");
 	});
-	
+
 	$("#modal177").dialog("open");
 }
 
@@ -14428,18 +14426,18 @@ function modal177_action(func)
 function modal178_action(id,not_name,master)
 {
 	var form=document.getElementById('modal178_form');
-	
+
 	var name_filter=form.elements['name'];
 	var def_filter=form.elements['def'];
-	
+
 	name_filter.value='';
 	var cm="";
-	
+
 	var def_columns=new Object();
 			def_columns.count=1;
 			def_columns.data_store='system_notifications';
 			def_columns.indexes=[{index:'id',value:id},{index:'function_name'},{index:'function_def'}];
-	read_json_rows('',def_columns,function (contents) 
+	read_json_rows('',def_columns,function (contents)
 	{
 		var content="";
 		if(contents.length>0)
@@ -14452,14 +14450,14 @@ function modal178_action(id,not_name,master)
 	});
 
 	$(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		
+
 		var name=name_filter.value;
 		var def=cm.getValue();
 		var last_updated=get_my_time();
-		
+
 		if(typeof master!='undefined' && master=='master')
 		{
 			var data_json={data_store:'system_notifications',
@@ -14483,8 +14481,8 @@ function modal178_action(id,not_name,master)
  		}
  		$(form).find('.close').click();
 	});
-	
-	$("#modal178_link").click();	
+
+	$("#modal178_link").click();
 }
 
 /**
@@ -14495,28 +14493,21 @@ function modal178_action(id,not_name,master)
 function modal179_action(cname,id,attr,template_id)
 {
 	var form=document.getElementById('modal179_form');
-	
+
 	var fname=form.elements['nname'];
 	var fhtml=form.elements['html_code'];
 	var ftid=form.elements['t_id'];
 	ftid.value=template_id;
 	fname.value=cname;
-	
-	var attr_array=[];
-	if(attr!="" && attr!='undefined' && attr!=null)
-	{
-		attr=attr.replace(/\'/g,"\"");
-		attr_array=JSON.parse(attr);
-	}
+
+	var attr_array=vUtil.jsonParse(attr);
 
 	var markers_label=document.getElementById('modal179_markers');
 	markers_label.innerHTML="";
 
-	var markers_data=new Object();
-		markers_data.count=1;
-		markers_data.data_store='newsletter_components';
-		markers_data.indexes=[{index:'id',value:template_id},
-							{index:'markers'},{index:'html_code'}];
+	var markers_data={count:1,data_store:'newsletter_components',
+									indexes:[{index:'id',value:template_id},
+							{index:'markers'},{index:'html_code'}]};
 	read_json_rows('',markers_data,function(newsletter_markers)
 	{
 		markers_label.innerHTML="";
@@ -14531,7 +14522,7 @@ function modal179_action(cname,id,attr,template_id)
 			markers.forEach(function(marker)
 			{
 				var marker_value="";
-			
+
 				for(var i in attr_array)
 				{
 					if(attr_array[i].marker==marker)
@@ -14541,10 +14532,10 @@ function modal179_action(cname,id,attr,template_id)
 					}
 				}
 				var marker_label=document.createElement('div');
-				marker_label.setAttribute('class','row');				
+				marker_label.setAttribute('class','row');
 				marker_label.innerHTML="<div class='col-sm-12 col-md-4'>"+marker+"</div>"+
 					     					"<div class='col-sm-12 col-md-8'><textarea form='modal175_form' name='"+marker+"'>"+marker_value+"</textarea></div>";
-					     				
+
 				markers_label.appendChild(marker_label);
 				var line_break=document.createElement('br');
 				markers_label.appendChild(line_break);
@@ -14552,10 +14543,10 @@ function modal179_action(cname,id,attr,template_id)
 			fhtml.value=newsletter_markers[0].html_code;
 			ftid.value=newsletter_markers[0].id;
 		}
-		else 
+		else
 		{
 			fhtml.value="";
-			ftid.value="";				
+			ftid.value="";
 		}
 	});
 
@@ -14566,8 +14557,8 @@ function modal179_action(cname,id,attr,template_id)
 		if(is_update_access('form299'))
 		{
 			var name=form.elements['nname'].value;
-			var markers_array=[];	
-			
+			var markers_array=[];
+
 			$("#modal179_markers").find('textarea').each(function()
 			{
 				var value=$(this).val();
@@ -14575,19 +14566,19 @@ function modal179_action(cname,id,attr,template_id)
 				var marker_obj={'marker':marker,'value':value};
 				markers_array.push(marker_obj);
 			});
-			
+
 			var attr=JSON.stringify(markers_array);
 			attr=attr.replace(/\"/g,"'");
 			var component_elem=$('#form299_nc_'+id);
 			$(component_elem).attr('data-name',name);
 			$(component_elem).attr('data-attr',attr);
 			$(component_elem).html(name+"<a style='float:right;' class='btn btn-circle btn-icon-only yellow-saffron' onclick=form299_delete_item('"+id+"');><i class='fa fa-times'></i></a><a style='float:right;' class='btn btn-circle btn-icon-only red' id='form299_nc_edit_"+id+"'><i class='fa fa-pencil'></i></a>");
-			$('#form299_nc_edit_'+id).on('click',function () 
+			$('#form299_nc_edit_'+id).on('click',function ()
 			{
 				modal179_action(name,id,attr,ftid.value);
 			});
-			
-			var images_array=[];	
+
+			var images_array=[];
 			$("#form299_images").children('li').each(function()
 			{
 				var image=new Object();
@@ -14597,7 +14588,7 @@ function modal179_action(cname,id,attr,template_id)
 				images_array.push(image);
 			});
 
-			////////////////////////////////////////////////			
+			////////////////////////////////////////////////
 			var html_code=fhtml.value;
 			var doc_columns=new Object();
 				doc_columns.count=5;
@@ -14607,7 +14598,7 @@ function modal179_action(cname,id,attr,template_id)
 									{index:'doc_name'},
 									{index:'doc_type',exact:'newsletter_components'},
 									{index:'target_id',exact:ftid.value}];
-			
+
 			read_json_rows('',doc_columns,function(doc_results)
 			{
 				var docHTML="";
@@ -14616,30 +14607,30 @@ function modal179_action(cname,id,attr,template_id)
 					var updated_url=doc.url.replace(/ /g,"+");
 					updated_url=updated_url+"\" data-src=\""+doc.id+".jpeg";
 					var replace_word="{{"+doc.doc_name+"}}";
-					var re=new RegExp(replace_word,"g");	
+					var re=new RegExp(replace_word,"g");
 					html_code=html_code.replace(re,updated_url);
 				});
-				
-				markers_array.forEach(function (marker) 
+
+				markers_array.forEach(function (marker)
 				{
 					var replace_word="{{"+marker.marker+"}}";
-					var re=new RegExp(replace_word,"g");	
-					html_code=html_code.replace(re,marker.value);	
+					var re=new RegExp(replace_word,"g");
+					html_code=html_code.replace(re,marker.value);
 				});
-				
-				images_array.forEach(function (image) 
+
+				images_array.forEach(function (image)
 				{
 					var replace_word="image:"+image.name;
 					var updated_url=image.url+"\" data-src=\""+image.id+".jpeg";
-					var re=new RegExp(replace_word,"g");	
-					html_code=html_code.replace(re,updated_url);	
+					var re=new RegExp(replace_word,"g");
+					html_code=html_code.replace(re,updated_url);
 				});
-				
+
 				var div_dummy=document.createElement('div');
 				$(div_dummy).html(html_code);
-				
+
 				var html_elem="";
-				$(div_dummy).children('div').each(function (index) 
+				$(div_dummy).children('div').each(function (index)
 				{
 					html_elem=$(this);
 					$(html_elem).attr('id','form299_sc_'+id);
@@ -14647,16 +14638,16 @@ function modal179_action(cname,id,attr,template_id)
 				});
 				$(div_dummy).remove();
 				$('#form299_sc_'+id).replaceWith(html_elem);
-			});			
+			});
 			/////////////////////////////////////////////////
-		}		
+		}
 		else
 		{
 			$("#modal2_link").click();
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal179_link").click();
 }
 
@@ -14668,16 +14659,16 @@ function modal179_action(cname,id,attr,template_id)
 function modal180_action(id,new_name,master)
 {
 	var form=document.getElementById('modal180_form');
-	
-	var code_filter=form.elements['code'];	
+
+	var code_filter=form.elements['code'];
 	var cm="";
-	
+
 	var code_columns=new Object();
 			code_columns.count=1;
 			code_columns.data_store='newsletter_components';
 			code_columns.return_column='html_code';
 			code_columns.indexes=[{index:'id',value:id}];
-	read_json_single_column(code_columns,function (contents) 
+	read_json_single_column(code_columns,function (contents)
 	{
 		var content="";
 		if(contents.length>0)
@@ -14689,13 +14680,13 @@ function modal180_action(id,new_name,master)
 	});
 
 	$(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		
+
 		var code=cm.getValue();
 		var last_updated=get_my_time();
-		
+
 		if(typeof master!='undefined' && master=='master')
 		{
 			var data_json={data_store:'newsletter_components',
@@ -14717,8 +14708,8 @@ function modal180_action(id,new_name,master)
  		}
  		$(form).find('.close').click();
 	});
-	
-	$("#modal180_link").click();	
+
+	$("#modal180_link").click();
 }
 
 
@@ -14730,35 +14721,35 @@ function modal180_action(id,new_name,master)
 function modal181_action(id,preview,new_name,master)
 {
 	var form=document.getElementById('modal181_form');
-	
+
 	var fpictureinfo=form.elements['picture'];
 	var fpicture=form.elements['file_hidden'];
 	var dummy_button=form.elements['dummy'];
-	
+
 	fpictureinfo.innerHTML="<div><img src='"+preview+"'/></div>";
-	
-	$(dummy_button).on('click',function (e) 
+
+	$(dummy_button).on('click',function (e)
 	{
 		e.preventDefault();
 		$(fpicture).trigger('click');
 	});
-		
+
 	fpicture.addEventListener('change',function(evt)
 	{
 		select_picture(evt,fpictureinfo,function(dataURL)
 		{
-			fpictureinfo.innerHTML="<div><img src='"+dataURL+"'/></div>";			
+			fpictureinfo.innerHTML="<div><img src='"+dataURL+"'/></div>";
 		});
 	},false);
 
 	$(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		
+
 		var url=$(fpictureinfo).find('div').find('img').attr('src');
 		var last_updated=get_my_time();
-		
+
 		if(typeof master!='undefined' && master=='master')
 		{
 			var data_json={data_store:'newsletter_components',
@@ -14780,8 +14771,8 @@ function modal181_action(id,preview,new_name,master)
  		}
  		$(form).find('.close').click();
 	});
-	
-	$("#modal181_link").click();	
+
+	$("#modal181_link").click();
 }
 
 
@@ -14793,20 +14784,20 @@ function modal181_action(id,preview,new_name,master)
 function modal182_action()
 {
 	var form=document.getElementById('modal182_form');
-	
+
 	var old_pass=form.elements['current_pass'];
 	var new_password=form.elements['new_pass'];
 	var re_pass=form.elements['re_pass'];
-	
+
 	old_pass.value="";
 	new_password.value="";
 	re_pass.value="";
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		
+
 		show_loader();
 		var domain=get_domain();
 		var username=get_username();
@@ -14825,7 +14816,7 @@ function modal182_action()
 			{
 				var salt='$2a$10$'+domain+'1234567891234567891234';
 				var salt_22=salt.substring(0, 29);
-				
+
 				var bcrypt = new bCrypt();
 				bcrypt.hashpw(current_pass, salt_22, function(currenthash)
 				{
@@ -14840,9 +14831,9 @@ function modal182_action()
 						 				data:[{index:'id',value:results[0].id},
 						 					{index:'password',value:newhash},
 						 					{index:'last_updated',value:last_updated}]};
-					 						
+
 							update_json(data_json);
-							
+
 							$(form).find('.verify').html('Password updated.');
 							old_pass.value="";
 							new_password.value="";
@@ -14863,25 +14854,25 @@ function modal182_action()
 			}
 		});
 	});
-	
+
 	$("#modal182_link").click();
 }
 
 function modal183_action(subject,func)
 {
 	var form=document.getElementById('modal183_form');
-	
+
 	func(function(container)
 	{
 		var business_title=get_session_var('title');
-		
+
 		var email_message=container.innerHTML;
 		var from=get_session_var('email');
 
 		form.elements['subject'].value=subject;
-		
+
 		$("#modal183_link").click();
-						
+
 		$(form).off("submit");
 		$(form).on("submit",function(event)
 		{
@@ -14890,7 +14881,7 @@ function modal183_action(subject,func)
 			var receiver_array=[{"email":form.elements['email'].value,"name":''}];
 			var receiver=JSON.stringify(receiver_array);
 			var sub=form.elements['subject'].value;
-			
+
 			send_email(receiver,from,business_title,sub,email_message,function()
 			{
 				hide_loader();
@@ -14898,7 +14889,7 @@ function modal183_action(subject,func)
 			$(form).find('.close').click();
 		});
 	});
-	
+
 	//$("#modal183_link").click();
 }
 
@@ -14909,15 +14900,15 @@ function modal183_action(subject,func)
 function modal184_action(id,box_id,master)
 {
 	var form=document.getElementById('modal184_form');
-	
+
 	var content_filter=form.elements['content'];
 	var cm="";
 	var def_columns=new Object();
 			def_columns.count=1;
-			def_columns.data_store='system_popboxes';		
+			def_columns.data_store='system_popboxes';
 			def_columns.return_column='box_content';
 			def_columns.indexes=[{index:'id',value:id}];
-	read_json_single_column(def_columns,function (contents) 
+	read_json_single_column(def_columns,function (contents)
 	{
 		var content="";
 		if(contents.length>0)
@@ -14925,16 +14916,16 @@ function modal184_action(id,box_id,master)
 			content=contents[0];
 		}
 		cm=$(content_filter).codeeditor({mode:'xml',content:content});
-	});	
+	});
 
 	$(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		
+
 		var content=cm.getValue();
 		var last_updated=get_my_time();
-		
+
 		if(typeof master!='undefined' && master=='master')
 		{
 			var data_json={data_store:'system_popboxes',
@@ -14956,8 +14947,8 @@ function modal184_action(id,box_id,master)
  		}
  		$(form).find('.close').click();
 	});
-	
-	$("#modal184_link").click();	
+
+	$("#modal184_link").click();
 }
 
 /**
@@ -14967,18 +14958,18 @@ function modal184_action(id,box_id,master)
 function modal185_action(id,box_id,master)
 {
 	var form=document.getElementById('modal185_form');
-	
+
 	var name_filter=form.elements['name'];
 	var def_filter=form.elements['def'];
-	
+
 	name_filter.value='';
 	var cm="";
-	
+
 	var def_columns=new Object();
 			def_columns.count=1;
 			def_columns.data_store='system_popboxes';
 			def_columns.indexes=[{index:'id',value:id},{index:'function_name'},{index:'function_def'}];
-	read_json_rows('',def_columns,function (contents) 
+	read_json_rows('',def_columns,function (contents)
 	{
 		var content="";
 		if(contents.length>0)
@@ -14991,14 +14982,14 @@ function modal185_action(id,box_id,master)
 	});
 
 	$(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		
+
 		var name=name_filter.value;
 		var def=cm.getValue();
 		var last_updated=get_my_time();
-		
+
 		if(typeof master!='undefined' && master=='master')
 		{
 			var data_json={data_store:'system_popboxes',
@@ -15022,8 +15013,8 @@ function modal185_action(id,box_id,master)
  		}
  		$(form).find('.close').click();
 	});
-	
-	$("#modal185_link").click();	
+
+	$("#modal185_link").click();
 }
 
 /**
@@ -15033,15 +15024,15 @@ function modal185_action(id,box_id,master)
 function modal186_action(id)
 {
 	var form=document.getElementById('modal186_form');
-	
+
 	var content_filter=form.elements['content'];
 	var cm="";
 	var def_columns=new Object();
 			def_columns.count=1;
-			def_columns.data_store='system_overwrite_func';		
+			def_columns.data_store='system_overwrite_func';
 			def_columns.return_column='function_def';
 			def_columns.indexes=[{index:'id',value:id}];
-	read_json_single_column(def_columns,function (contents) 
+	read_json_single_column(def_columns,function (contents)
 	{
 		var content="";
 		if(contents.length>0)
@@ -15049,16 +15040,16 @@ function modal186_action(id)
 			content=contents[0];
 		}
 		cm=$(content_filter).codeeditor({content:content});
-	});	
+	});
 
 	$(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		
+
 		var content=cm.getValue();
 		var last_updated=get_my_time();
-		
+
 		var data_json={data_store:'system_overwrite_func',
 	 				log:'yes',
 	 				data:[{index:'id',value:id},
@@ -15068,8 +15059,8 @@ function modal186_action(id)
  		update_json(data_json);
  		$(form).find('.close').click();
 	});
-	
-	$("#modal186_link").click();	
+
+	$("#modal186_link").click();
 }
 
 /**
@@ -15079,28 +15070,28 @@ function modal186_action(id)
 function modal187_action(master)
 {
 	var form=document.getElementById('modal187_form');
-	
+
 	var table_filter=form.elements['table'];
 	table_filter.value="";
-	
+
 	$(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		
+
 		var table=table_filter.value;
 		if(typeof master!='undefined')
 		{
 			create_server_table(table,master);
 		}
-		else 
+		else
 		{
 			create_server_table(table);
  		}
  		$(form).find('.close').click();
 	});
-	
-	$("#modal187_link").click();	
+
+	$("#modal187_link").click();
 }
 
 /**
@@ -15110,34 +15101,34 @@ function modal187_action(master)
 function modal188_action(tablename,master)
 {
 	var form=document.getElementById('modal188_form');
-	
+
 	var table_filter=form.elements['table'];
 	var col_filter=form.elements['colname'];
 	var type_filter=form.elements['coltype'];
 	table_filter.value=tablename;
 	col_filter.value="";
 	type_filter.value="";
-	
+
 	$(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		
+
 		var colname=col_filter.value;
 		var coltype=type_filter.value;
 		if(typeof master!='undefined')
 		{
 			create_server_table_column(tablename,colname,coltype,master);
 		}
-		else 
+		else
 		{
 			create_server_table_column(tablename,colname,coltype);
  		}
 
  		$(form).find('.close').click();
 	});
-	
-	$("#modal188_link").click();	
+
+	$("#modal188_link").click();
 }
 
 /**
@@ -15147,7 +15138,7 @@ function modal188_action(tablename,master)
 function modal189_action(tablename,colname,col_type,master)
 {
 	var form=document.getElementById('modal189_form');
-	
+
 	var table_filter=form.elements['table'];
 	var col_filter=form.elements['colname'];
 	var type_filter=form.elements['coltype'];
@@ -15156,24 +15147,24 @@ function modal189_action(tablename,colname,col_type,master)
 	type_filter.value=col_type;
 
 	$(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		
+
 		var coltype=type_filter.value;
 		if(typeof master!='undefined')
 		{
 			update_server_table_column(tablename,colname,coltype,master);
 		}
-		else 
+		else
 		{
 			update_server_table_column(tablename,colname,coltype);
  		}
 
  		$(form).find('.close').click();
 	});
-	
-	$("#modal189_link").click();	
+
+	$("#modal189_link").click();
 }
 
 /**
@@ -15183,19 +15174,19 @@ function modal189_action(tablename,colname,col_type,master)
 function modal190_action(id,form_id)
 {
 	var form=document.getElementById('modal190_form');
-	
+
 	$(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		
-        var docHTML="<div class='row'><div class='col-xs-10'><a onclick=modal193_action(this); data-display_name='"+form.elements['disp'].value+"' data-color='"+form.elements['color'].value+"' data-width='"+form.elements['wid'].value+"' data-height='"+form.elements['hei'].value+"' data-collapse='"+form.elements['collapse'].value+"'>"+form.elements['name'].value+"</a></div><div class='col-xs-2'><i class='fa fa-times link' onclick=$(this).parent().parent().remove();></i></div></div>";				
-		$('#'+form_id+'_grids_'+id).append(docHTML);				
+
+        var docHTML="<div class='row'><div class='col-xs-10'><a onclick=modal193_action(this); data-display_name='"+form.elements['disp'].value+"' data-color='"+form.elements['color'].value+"' data-width='"+form.elements['wid'].value+"' data-height='"+form.elements['hei'].value+"' data-collapse='"+form.elements['collapse'].value+"'>"+form.elements['name'].value+"</a></div><div class='col-xs-2'><i class='fa fa-times link' onclick=$(this).parent().parent().remove();></i></div></div>";
+		$('#'+form_id+'_grids_'+id).append(docHTML);
 
  		$(form).find('.close').click();
 	});
-	
-	$("#modal190_link").click();	
+
+	$("#modal190_link").click();
 }
 
 /**
@@ -15205,29 +15196,29 @@ function modal190_action(id,form_id)
 function modal191_action(id)
 {
 	var form=document.getElementById('modal191_form');
-	
+
 	var name_filter=form.elements['name'];
 	var detail_filter=form.elements['detail'];
 	var status_filter=form.elements['status'];
-	
-	set_static_select('projects','status',status_filter,function () 
+
+	set_static_select('projects','status',status_filter,function ()
 	{
 		$(status_filter).selectpicker('val',result.status);
 	});
-	
+
 	name_filter.value="";
 	detail_filter.value="";
-			
+
 	$(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
 		var name=name_filter.value;
 		var details=detail_filter.value;
 		var status=$(status_filter).val();
-		
+
 		var last_updated=get_my_time();
-		
+
 		var data_json={data_store:'projects',
 	 				log:'yes',
 	 				data:[{index:'id',value:id},
@@ -15240,8 +15231,8 @@ function modal191_action(id)
  		create_json(data_json);
  		$(form).find('.close').click();
 	});
-	
-	$("#modal191_link").click();	
+
+	$("#modal191_link").click();
 }
 
 /**
@@ -15251,16 +15242,16 @@ function modal191_action(id)
 function modal192_action(id)
 {
 	var form=document.getElementById('modal192_form');
-	
+
 	var def_filter=form.elements['def'];
-	
+
 	var cm="";
-	
+
 	var def_columns=new Object();
 			def_columns.count=1;
 			def_columns.data_store='ques_struct';
 			def_columns.indexes=[{index:'id',value:id},{index:'function_def'}];
-	read_json_rows('',def_columns,function (contents) 
+	read_json_rows('',def_columns,function (contents)
 	{
 		var content="";
 		if(contents.length>0)
@@ -15272,13 +15263,13 @@ function modal192_action(id)
 	});
 
 	$(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		
+
 		var def=cm.getValue();
 		var last_updated=get_my_time();
-		
+
 		var data_json={data_store:'ques_struct',
 	 				log:'yes',
 	 				data:[{index:'id',value:id},
@@ -15286,11 +15277,11 @@ function modal192_action(id)
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Updated',notes:'Updated questionnaire settings',link_to:'form143'}};
  		update_json(data_json);
- 		
+
  		$(form).find('.close').click();
 	});
-	
-	$("#modal192_link").click();	
+
+	$("#modal192_link").click();
 }
 
 /**
@@ -15309,17 +15300,17 @@ function modal193_action(elem)
     form.elements['name'].value=$(elem).text();
 
 	$(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		
-		var docHTML="<div class='row'><div class='col-xs-10'><a onclick=modal193_action(this); data-display_name='"+form.elements['disp'].value+"' data-color='"+form.elements['color'].value+"' data-width='"+form.elements['wid'].value+"' data-height='"+form.elements['hei'].value+"' data-collapse='"+form.elements['collapse'].value+"'>"+form.elements['name'].value+"</a></div><div class='col-xs-2'><i class='fa fa-times link' onclick=$(this).parent().parent().remove();></i></div></div>";							
-		$(elem).parent().parent().replaceWith(docHTML);				
+
+		var docHTML="<div class='row'><div class='col-xs-10'><a onclick=modal193_action(this); data-display_name='"+form.elements['disp'].value+"' data-color='"+form.elements['color'].value+"' data-width='"+form.elements['wid'].value+"' data-height='"+form.elements['hei'].value+"' data-collapse='"+form.elements['collapse'].value+"'>"+form.elements['name'].value+"</a></div><div class='col-xs-2'><i class='fa fa-times link' onclick=$(this).parent().parent().remove();></i></div></div>";
+		$(elem).parent().parent().replaceWith(docHTML);
 
  		$(form).find('.close').click();
 	});
-	
-	$("#modal193_link").click();	
+
+	$("#modal193_link").click();
 }
 
 
@@ -15332,7 +15323,7 @@ function modal194_action(elem_id)
 	var form=document.getElementById('modal194_form');
     var keywords=form.elements['keywords'];
     var items=form.elements['items'];
-    
+
     keywords.value="";
     var items_data={data_store:'product_master',return_column:'name'};
     set_simple_select(items_data,items,function()
@@ -15343,13 +15334,13 @@ function modal194_action(elem_id)
             $(form).find('.close').click();
         });
     });
-    
+
     function search_index()
     {
         var key_value=keywords.value;
         var key_array=key_value.split(/[\s,]+/);
         //key_array.pop();
-        
+
         for(var i in key_array)
         {
             if(key_array[i]=="" || key_array[i]==null)
@@ -15370,23 +15361,23 @@ function modal194_action(elem_id)
         });
     }
     var timeout="";
-    
+
     $(keywords).off('keyup');
     $(keywords).on('keyup',function(e)
     {
         clearTimeout(timeout);
         timeout=setTimeout(search_index,400);
     });
-        
+
 	$(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
         $(elem_id).val(items.options[0].innerHTML);
  		$(form).find('.close').click();
 	});
-	
-	$("#modal194_link").click();	
+
+	$("#modal194_link").click();
     setTimeout(function() {$(keywords).focus();},100);
 }
 
@@ -15399,7 +15390,7 @@ function modal195_action(order_id,order_num,customer)
 	show_loader();
 	var form=document.getElementById("modal195_form");
     form.elements['order'].value=order_num;
-	
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -15414,7 +15405,7 @@ function modal195_action(order_id,order_num,customer)
 				"<td>Select</td>"+
 				"</tr>";
 	$('#modal195_item_table').html(headHTML);
-		
+
 	var order_items_xml={data_store:'sale_order_items',
                         indexes:[{index:'id'},
                                 {index:'order_id',exact:order_id},
@@ -15422,8 +15413,8 @@ function modal195_action(order_id,order_num,customer)
                                 {index:'item_desc'},
                                 {index:'quantity'}]};
 	var analyze_item_timer=0;
-								
-	read_json_rows('',order_items_xml,function (order_items) 
+
+	read_json_rows('',order_items_xml,function (order_items)
 	{
         //console.log(bill_items);
         for(var j=0;j<order_items.length;j++)
@@ -15433,7 +15424,7 @@ function modal195_action(order_id,order_num,customer)
 
         analyze_item_timer=order_items.length;
 
-        order_items.forEach(function (order_item) 
+        order_items.forEach(function (order_item)
         {
             var tr_elem_title="";
             var order_item_timer=1;
@@ -15463,7 +15454,7 @@ function modal195_action(order_id,order_num,customer)
                    }
 
                     var order_item_string=JSON.stringify(order_item);
-                    order_item_string=order_item_string.replace(/'/g, "");			  			   	
+                    order_item_string=order_item_string.replace(/'/g, "");
                     //console.log(order_item_string);
                     var rowsHTML="<tr title='"+item_title+"' data-object='"+order_item_string+"' id='modal195_item_row_"+order_item.id+"'>"+
                         "<td>"+order_item.item_name+"</td>"+
@@ -15474,14 +15465,14 @@ function modal195_action(order_id,order_num,customer)
                         rowsHTML+="<td><input "+item_checked+" style='display:none;' type='checkbox' id='modal195_item_check_"+order_item.id+"'></td>";
                     }
                     else
-                    {			
+                    {
                         rowsHTML+="<td><input "+item_checked+" type='checkbox' id='modal195_item_check_"+order_item.id+"'></td>";
                     }
                     rowsHTML+="</tr>";
                     $('#modal195_item_table').append(rowsHTML);
                     analyze_item_timer-=1;
                }
-             },100);	
+             },100);
         });
 
         var analysis_complete=setInterval(function()
@@ -15491,9 +15482,9 @@ function modal195_action(order_id,order_num,customer)
                 clearInterval(analysis_complete);
                 hide_loader();
             }
-        },100);	
-	});				
-	
+        },100);
+	});
+
 	$("#modal195_link").click();
 }
 
@@ -15514,9 +15505,9 @@ function modal196_action()
     var file_num_filter=form.elements['file_num'];
     var remarks_filter=form.elements['remarks'];
     var office_filter=form.elements['office'];
-    
+
     $(date).datepicker();
-    
+
     letter.value="";
     dep.value="";
     notes.value="";
@@ -15526,7 +15517,7 @@ function modal196_action()
     remarks_filter.value="";
     office_filter.value="";
     date.value=get_my_past_date(get_my_time()+7*86400000);
-    
+
     var staff_data={data_store:'staff',return_column:'acc_name'};
     set_my_value_list_json(staff_data,staff);
 
@@ -15534,7 +15525,7 @@ function modal196_action()
     set_my_filter_json(dep_data,dep);
 
 	$(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
         var last_updated=get_my_time();
@@ -15547,7 +15538,7 @@ function modal196_action()
         var remarks=remarks_filter.value;
         var office=office_filter.value;
         var due_date=get_raw_time(date.value);
-        
+
 		var data_json={data_store:'letters',
 	 				log:'yes',
 	               data:[{index:'id',value:get_new_key()},
@@ -15559,7 +15550,7 @@ function modal196_action()
                         {index:'dpo_section',value:dpo},
                         {index:'file_num',value:file_num},
                         {index:'remarks',value:remarks},
-                        {index:'office',value:office}, 
+                        {index:'office',value:office},
 	 					{index:'status',value:'open'},
 	 					{index:'last_updated',value:last_updated}],
 	 			   log_data:{title:'Added',notes:'Letter # '+letter_num,link_to:'form326'}};
@@ -15567,7 +15558,7 @@ function modal196_action()
         $(form).find('.close').click();
 	});
 
-	$("#modal196_link").click();	
+	$("#modal196_link").click();
     $(letter).focus();
 }
 
@@ -15581,17 +15572,17 @@ function modal197_action(data_id,letter_num,details)
 	var form=document.getElementById('modal197_form');
     var letter=form.elements['letter'];
     var notes=form.elements['notes'];
-    
+
     letter.value=letter_num;
     notes.value='';
-    
+
 	$(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
         var last_updated=get_my_time();
 		details=details+"\n"+get_my_date()+": "+notes.value;
-        
+
 		var data_json={data_store:'letters',
 	 				log:'yes',
 	               data:[{index:'id',value:data_id},
@@ -15600,11 +15591,11 @@ function modal197_action(data_id,letter_num,details)
 	 					{index:'last_updated',value:last_updated}],
 	 			   log_data:{title:'Closed',notes:'Letter # '+letter,link_to:'form327'}};
  		update_json(data_json);
-        
+
         $(form).find('.close').click();
 	});
-	
-	$("#modal197_link").click();	
+
+	$("#modal197_link").click();
     $(notes).focus();
 }
 
@@ -15619,32 +15610,32 @@ function modal198_action(data_id,letter_num,details)
     var response=form.elements['response'];
     var notes=form.elements['notes'];
     var date=form.elements['date'];
-    
+
     $(date).datepicker();
     letter.value=letter_num;
     notes.value='';
     response.value='';
     date.value=get_my_past_date(get_my_time()+7*86400000);
-    
+
     set_static_value_list_json('followups','response',response);
-    
+
 	$(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
         details=details+"\n"+get_my_date()+": "+notes.value;
         var due_date=get_raw_time(date.value);
         var last_updated=get_my_time();
         var res=response.value;
-        
+
 		var data_json={data_store:'letters',
 	 				log:'yes',
 	               data:[{index:'id',value:data_id},
 	 					{index:'detail',value:details},
-                        {index:'due_date',value:due_date}, 
+                        {index:'due_date',value:due_date},
 	 					{index:'last_updated',value:last_updated}],
 	 			   log_data:{title:'followed on',notes:'Letter # '+letter,link_to:'form326'}};
-        
+
         var follow_json={data_store:'followups',
 		 				data:[{index:'id',value:get_new_key()},
 		 					{index:'customer',value:letter_num},
@@ -15654,14 +15645,14 @@ function modal198_action(data_id,letter_num,details)
 		 					{index:'next_date',value:due_date},
 		 					{index:'source_id',value:data_id},
 		 					{index:'last_updated',value:last_updated}]};
-	 		
+
  		update_json(data_json);
         create_json(follow_json);
-        
+
         $(form).find('.close').click();
 	});
-	
-	$("#modal198_link").click();	
+
+	$("#modal198_link").click();
     $(response).focus();
 }
 
@@ -15675,19 +15666,19 @@ function modal199_action(data_id,letter_num,assigned_to)
     var letter=form.elements['letter'];
     var assignee=form.elements['staff'];
     var message=form.elements['message'];
-    
+
     letter.value=letter_num;
     assignee.value=assigned_to;
     var sms_content=get_session_var('sms_content').replace(/assignee/g,assigned_to);
     sms_content=sms_content.replace(/letter_num/g,letter_num);
 
     message.value=sms_content;
-    
+
 	$(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-        
+
         var phone_data={data_store:'staff',return_column:'phone',count:1,indexes:[{index:'acc_name',exact:assigned_to}]};
         read_json_single_column(phone_data,function(phones)
         {
@@ -15703,8 +15694,8 @@ function modal199_action(data_id,letter_num,assigned_to)
 
         $(form).find('.close').click();
 	});
-	
-	$("#modal199_link").click();	
+
+	$("#modal199_link").click();
     $(message).focus();
 }
 
@@ -15769,12 +15760,12 @@ function modal201_action(list_name)
     {
         list_filter.removeAttribute('readonly');
     }
-    
+
     var assignee_data={data_store:'staff',return_column:'acc_name'};
     set_my_value_list_json(assignee_data,staff_filter);
-    
+
     $(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
         var list=list_filter.value;
@@ -15782,20 +15773,20 @@ function modal201_action(list_name)
         var desc=desc_filter.value;
         var staff=staff_filter.value;
         var last_updated=get_my_time();
-        
+
 		var data_json={data_store:'task_instances',
                        log:'yes',
 	                   data:[{index:'id',value:get_new_key()},
 	 					{index:'name',value:task},
                         {index:'source_name',value:list},
-                        {index:'source',value:'to_do'},     
+                        {index:'source',value:'to_do'},
                         {index:'description',value:desc},
                         {index:'assignee',value:staff},
-                        {index:'status',value:'pending'},     
+                        {index:'status',value:'pending'},
 	 					{index:'last_updated',value:last_updated}],
 	 			   log_data:{title:'Added',notes:'Task to list '+list_name,link_to:'form279'}};
         create_json(data_json);
-        
+
         $(form).find('.close').click();
 	});
 	$('#modal201').formcontrol();
@@ -15817,7 +15808,7 @@ function modal202_action(data_id)
     desc_filter.value="";
     staff_filter.value="";
     $(task_filter).focus();
-    
+
     var assignee_data={data_store:'staff',return_column:'acc_name'};
     set_my_value_list_json(assignee_data,staff_filter);
 
@@ -15836,16 +15827,16 @@ function modal202_action(data_id)
         }
         $('#modal202').formcontrol();
     });
-    
+
     $(form).off('submit');
-	$(form).on('submit',function(event) 
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
         var task=task_filter.value;
         var desc=desc_filter.value;
         var staff=staff_filter.value;
         var last_updated=get_my_time();
-        
+
 		var data_json={data_store:'task_instances',
                        data:[{index:'id',value:data_id},
 	 					{index:'name',value:task},
@@ -15853,10 +15844,10 @@ function modal202_action(data_id)
                         {index:'assignee',value:staff},
                         {index:'last_updated',value:last_updated}]};
         update_json(data_json);
-        
+
         $(form).find('.close').click();
 	});
-	
+
 	$("#modal202_link").click();
 }
 
@@ -15868,15 +15859,15 @@ function modal202_action(data_id)
 function modal203_action(func)
 {
 	var form=document.getElementById('modal203_form');
-	
+
 	var fname=form.elements['name'];
 	var fmake=form.elements['make'];
 	var fdescription=form.elements['desc'];
-	
-	
+
+
 	var make_data={data_store:'product_master',return_column:'make'};
 	set_my_filter_json(make_data,fmake);
-	
+
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal203_attributes');
 	attribute_label.innerHTML="";
@@ -15897,24 +15888,24 @@ function modal203_action(func)
 				{
 					attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
 					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
-				}				
-				else 
+				}
+				else
 				{
 					var values_array=attribute.value.split(";");
 					var content="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
-					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
+					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";
 					values_array.forEach(function(fvalue)
 					{
 						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
 					});
 					content+="</select></div>";
 					attr_label.innerHTML=content;
-				}				
+				}
 				attribute_label.appendChild(attr_label);
 			}
 		});
 	});
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -15929,7 +15920,7 @@ function modal203_action(func)
 			var data_id=get_new_key();
 			var sale_price=form.elements['sale'].value;
 			var last_updated=get_my_time();
-            
+
             var data_json={data_store:'product_master',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
@@ -15938,24 +15929,24 @@ function modal203_action(func)
 	 					{index:'description',value:description},
 	 					{index:'tax',value:tax},
 	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Added',notes:'Product '+name+' to inventory',link_to:'form39'}}; 					
-            
+	 				log_data:{title:'Added',notes:'Product '+name+' to inventory',link_to:'form39'}};
+
             create_json(data_json,func);
-			
+
             var instance_json={data_store:'product_instances',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'product_name',value:name,uniqueWith:['batch']},
 	 					{index:'batch',value:name},
 	 					{index:'sale_price',value:sale_price},
-	 					{index:'last_updated',value:last_updated}]};            
+	 					{index:'last_updated',value:last_updated}]};
 			create_json(instance_json);
-			
+
 			var billing_type_data={data_store:'bill_types',return_column:'name',indexes:[{index:'status',exact:'active'}]};
 			read_json_single_column(billing_type_data,function(bill_types)
 			{
                 var id=get_new_key();
 				bill_types.forEach(function(bill_type)
-				{				
+				{
 					id++;
 					var sale_price_json={data_store:'sale_prices',
 	 				data:[{index:'id',value:id},
@@ -15963,8 +15954,8 @@ function modal203_action(func)
 	 					{index:'batch',value:name},
 	 					{index:'sale_price',value:sale_price},
 	 					{index:'pi_id',value:data_id},
-                        {index:'billing_type',value:bill_type},  
-	 					{index:'last_updated',value:last_updated}]}; 												
+                        {index:'billing_type',value:bill_type},
+	 					{index:'last_updated',value:last_updated}]};
 					create_json(sale_price_json);
 				});
 			});
@@ -15983,7 +15974,7 @@ function modal203_action(func)
 	 					{index:'type',value:'product'},
 	 					{index:'attribute',value:attribute},
 	 					{index:'value',value:value},
-	 					{index:'last_updated',value:last_updated}]}; 												
+	 					{index:'last_updated',value:last_updated}]};
 					create_json(attribute_json);
 				}
 			});
@@ -15994,7 +15985,7 @@ function modal203_action(func)
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal203_link").click();
 }
 
@@ -16005,19 +15996,19 @@ function modal203_action(func)
 function modal204_action(func)
 {
 	var form=document.getElementById('modal204_form');
-	
+
 	var fname=form.elements['name'];
 	var fbatch=form.elements['batch'];
 	var fmanufacture=form.elements['date'];
 	var fsale_price=form.elements['sale'];
-	
+
 	$(fmanufacture).datepicker();
-	
+
 	var name_data={data_store:'attributes',return_column:'name',
                     indexes:[{index:'attribute',exact:'Batch Applicable'},
                             {index:'value',exact:'yes'}]};
 	set_my_value_list_json(name_data,fname);
-	
+
 	////adding sale price fields for all billing types///////
 	var billing_type_data={data_store:'bill_types',return_column:'name',
                           indexes:[{index:'status',exact:'active'}]};
@@ -16031,12 +16022,12 @@ function modal204_action(func)
             attr_label.setAttribute('class','row');
             attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+bill_type+" sale price"+"</div>"+
 					     			"<div class='col-sm-12 col-md-8'><input type='number' step='any' id='"+bill_type+"' required></div>";
-				
+
 			billing_label.appendChild(attr_label);
 		});
 	});
 	////////////////////////////////////////////////
-	
+
 	////auto setting sale price fields/////////
 	$(fsale_price).off('blur');
 	$(fsale_price).on('blur',function(event)
@@ -16049,10 +16040,10 @@ function modal204_action(func)
 				$(this).val(sale_price);
 			}
 		});
-	});		
+	});
 	////////////////////
-	
-	
+
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -16075,9 +16066,9 @@ function modal204_action(func)
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Added',notes:'New batch '+batch+' for product '+name,link_to:'form331'}};
 			create_json(data_json,func);
-			
+
 			var id=get_new_key();
-			
+
 			$("#modal204_billings").find('input').each(function()
 			{
 				id++;
@@ -16090,7 +16081,7 @@ function modal204_action(func)
 	 					{index:'sale_price',value:price},
 	 					{index:'pi_id',value:data_id},
 	 					{index:'billing_type',value:bill_type},
-	 					{index:'last_updated',value:last_updated}]};			
+	 					{index:'last_updated',value:last_updated}]};
 				create_json(sale_price_json);
 			});
 		}
@@ -16100,7 +16091,7 @@ function modal204_action(func)
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal204_link").click();
 }
 
@@ -16112,12 +16103,12 @@ function modal204_action(func)
 function modal205_action(func)
 {
 	var form=document.getElementById('modal205_form');
-	
+
 	var fname=form.elements['name'];
 	var fphone=form.elements['phone'];
 	var funit=form.elements['unit'];
 	var fdesig=form.elements['desig'];
-	
+
 	///////////////////////////
 	fname.value="";
 	fphone.value="";
@@ -16128,7 +16119,7 @@ function modal205_action(func)
 	attribute_label.innerHTML="";
 	var attributes_data={data_store:'mandatory_attributes',
 								indexes:[{index:'attribute'},{index:'status'},{index:'value'},{index:'object',exact:'staff'}]};
-								
+
 	read_json_rows('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
@@ -16144,24 +16135,24 @@ function modal205_action(func)
 				{
 					attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
 					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
-				}				
-				else 
+				}
+				else
 				{
 					var values_array=attribute.value.split(";");
 					var content="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
-					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";					
+					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";
 					values_array.forEach(function(fvalue)
 					{
 						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
 					});
 					content+="</select></div>";
 					attr_label.innerHTML=content;
-				}				
+				}
 				attribute_label.appendChild(attr_label);
 			}
 		});
 	});
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -16173,13 +16164,13 @@ function modal205_action(func)
 			var acc_name=name+" ("+phone+")";
 			var unit=funit.value;
 			var designation=fdesig.value;
-			
+
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
-			
+
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
-			
+
 			var data_json={data_store:'staff',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
@@ -16190,19 +16181,19 @@ function modal205_action(func)
 	 					{index:'status',value:'active'},
 	 					{index:'acc_name',value:acc_name,unique:'yes'},
 	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Added',notes:'New staff '+name,link_to:'form335'}}; 								
-			
+	 				log_data:{title:'Added',notes:'New staff '+name,link_to:'form335'}};
+
 			var account_json={data_store:'accounts',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'type',value:'staff'},
 	 					{index:'username',value:''},
 	 					{index:'acc_name',value:acc_name,unique:'yes'},
 	 					{index:'status',value:'active'},
-	 					{index:'last_updated',value:last_updated}]}; 								
-				
+	 					{index:'last_updated',value:last_updated}]};
+
 			create_json(data_json,func);
 			create_json(account_json);
-			
+
 			var id=get_new_key();
 			$("#modal205_attributes").find('input, select').each(function()
 			{
@@ -16217,7 +16208,7 @@ function modal205_action(func)
 	 					{index:'type',value:'staff'},
 	 					{index:'attribute',value:attribute},
 	 					{index:'value',value:value},
-	 					{index:'last_updated',value:last_updated}]}; 												
+	 					{index:'last_updated',value:last_updated}]};
 					create_json(attribute_json);
 				}
 			});
@@ -16228,7 +16219,7 @@ function modal205_action(func)
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal205_link").click();
 }
 
@@ -16240,18 +16231,18 @@ function modal205_action(func)
 function modal206_action(doc_type,target_id,target_name,func)
 {
 	var form=document.getElementById('modal206_form');
-	
+
 	var fname=form.elements['name'];
 	var docInfo=document.getElementById('modal206_url');
 	var fpicture=form.elements['file_hidden'];
     var dummy_button=form.elements['dummy'];
-	
-	$(dummy_button).on('click',function (e) 
+
+	$(dummy_button).on('click',function (e)
 	{
 		e.preventDefault();
 		$(fpicture).trigger('click');
 	});
-	
+
 	fpicture.addEventListener('change',function(evt)
 	{
 		select_document(evt,function(dataURL)
@@ -16259,7 +16250,7 @@ function modal206_action(doc_type,target_id,target_name,func)
 			docInfo.setAttribute('href',dataURL);
 		});
 	},false);
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -16281,13 +16272,13 @@ function modal206_action(doc_type,target_id,target_name,func)
 	 					{index:'target_id',value:target_id},
 	 					{index:'target_name',value:target_name},
 	 					{index:'last_updated',value:last_updated}]};
-				
-				create_json(data_json);	
-				
+
+				create_json(data_json);
+
 				if(typeof func!='undefined')
 				{
 					func(url,doc_name);
-				}		
+				}
 			}
 		}
 		else
@@ -16296,7 +16287,7 @@ function modal206_action(doc_type,target_id,target_name,func)
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal206_link").click();
 }
 
@@ -16322,7 +16313,7 @@ function modal207_action(test_id,test_data_id)
                 var item_row=document.createElement('tr');
                 item_row.innerHTML="<td>"+get_my_past_date(followup.date)+"</td><td><span class='label label-sm "+status_label_colors[followup.response]+"'>"+followup.response+"</span></td><td>"+followup.details+"</td><td id='modal207_document_"+followup.id+"'></td>";
                 item_table.appendChild(item_row);
-                
+
                 var doc_column={data_store:'documents',count:1,
                                indexes:[{index:'id'},
                                        {index:'url'},
@@ -16333,7 +16324,7 @@ function modal207_action(test_id,test_data_id)
                 {
                     if (doc_results.length>0)
                     {
-                        var docHTML="<a href='"+doc_results[0].url+"' download='"+doc_results[0].doc_name+"'><u>"+doc_results[0].doc_name+"</u></a><br>";							
+                        var docHTML="<a href='"+doc_results[0].url+"' download='"+doc_results[0].doc_name+"'><u>"+doc_results[0].doc_name+"</u></a><br>";
                         document.getElementById('modal207_document_'+followup.id).innerHTML=docHTML;
                     }
                 });
@@ -16361,12 +16352,12 @@ function modal208_action()
     var manifest_filter=form.elements['manifest'];
     var coloader_filter=form.elements['coloader'];
     var vendor_filter=form.elements['vendor'];
-        
+
     var manifest_data={data_store:'user_preferences',return_column:'value',indexes:[{index:'name',exact:'manifest_num'}]};
     set_my_value_json(manifest_data,manifest_filter);
-    
-	$(dummy_button).off('click'); 
-	$(dummy_button).on('click',function (e) 
+
+	$(dummy_button).off('click');
+	$(dummy_button).on('click',function (e)
 	{
 		e.preventDefault();
 		$(select_file).trigger('click');
@@ -16377,7 +16368,7 @@ function modal208_action()
 	selected_file.value="";
 
 	$(select_file).off('change');
-	$(select_file).on('change',function () 
+	$(select_file).on('change',function ()
 	{
 		var file_name=select_file.value;
 		if(file_name!="" && (file_name.indexOf('csv')>-1))
@@ -16385,7 +16376,7 @@ function modal208_action()
 			dummy_button.setAttribute('class','btn green-jungle');
 	        selected_file.value=file_name;
 		}
-		else 
+		else
 		{
 			dummy_button.setAttribute('class','btn red-sunglo');
 	       select_file.value="";
@@ -16410,7 +16401,7 @@ function modal208_action()
 		var manifest_num=manifest_filter.value;
         var coloader=coloader_filter.value;
         var vendor=vendor_filter.value;
-        
+
         selected_file.value = "Uploading!! Please don't refresh";
     	var reader = new FileReader();
         reader.onload = function(e)
@@ -16418,12 +16409,12 @@ function modal208_action()
         	progress_value=2;
         	var content=reader.result;
         	var data_array=vUtil.csv2array(content);
-			
+
 			progress_value=5;
-			
+
 			var validate_template_array=[{column:'Weight',regex:new RegExp('^[0-9 .]+$')},
 										{column:'AWB No',required:'yes',regex:new RegExp('^[0-9]+$')}];
-			
+
 			var error_array=validate_import_array(data_array,validate_template_array);
 			if(error_array.status=='success')
 			{
@@ -16431,13 +16422,13 @@ function modal208_action()
 	           	//////////////////
                 var data_id=get_new_key();
                 var last_updated=get_my_time();
-		
+
                 var awbs_array=[];
                 data_array.forEach(function(data)
                 {
                     awbs_array.push(data['AWB No']);
                 });
-                
+
                 var ids_data={data_store:'logistics_orders',indexes:[{index:'id'},{index:'awb_num',array:awbs_array}]};
                 read_json_rows('',ids_data,function(ids)
                 {
@@ -16453,7 +16444,7 @@ function modal208_action()
                             }
                         }
                     });
-                    
+
                     var data_json={data_store:'manifests',
                                 log:'yes',
                                 data:[{index:'id',value:data_id},
@@ -16461,11 +16452,11 @@ function modal208_action()
                                     {index:'coloader',value:coloader},
                                     {index:'date',value:get_raw_time(get_my_date())},
                                     {index:'vendor',value:vendor},
-                                    {index:'num_orders',value:data_array.length},  
+                                    {index:'num_orders',value:data_array.length},
                                     {index:'last_updated',value:last_updated}],
                                 log_data:{title:'Imported',notes:'Manifest # '+manifest_num,link_to:'form322'}};
                     create_json(data_json);
-                    
+
                     var num_data={data_store:'user_preferences',return_column:'id',indexes:[{index:'name',exact:'manifest_num'}]};
                     read_json_single_column(num_data,function (manifest_num_ids)
                     {
@@ -16488,7 +16479,7 @@ function modal208_action()
                     data_array.forEach(function(row)
                     {
                         counter+=1;
-                        
+
                         var data_json_array=[{index:'id',value:row.id},
                                 {index:'weight',value:row['Weight']},
                                 {index:'lbh',value:row['LBH']},
@@ -16523,7 +16514,7 @@ function modal208_action()
                             $("#modal208").dialog("close");
                             clearInterval(ajax_complete);
                         }
-                    },1000); 
+                    },1000);
                 });
 	        }
 	        else
@@ -16531,12 +16522,12 @@ function modal208_action()
 	        	hide_progress();
        			$(select_file).val('');
        			$("#modal208").dialog("close");
-				modal164_action(error_array);       			
+				modal164_action(error_array);
 	        }
         }
-        reader.readAsText(file);    
+        reader.readAsText(file);
     });
-	
+
 	$("#modal208").dialog("open");
 }
 
@@ -16550,7 +16541,7 @@ function modal209_action(subject,body,message_attachment)
     form.elements['body'].value=body;
 
     $('#modal209').formcontrol();
-    
+
     $(form).off("submit");
     $(form).on("submit",function(event)
     {
@@ -16560,7 +16551,7 @@ function modal209_action(subject,body,message_attachment)
         var receiver=JSON.stringify(receiver_array);
         var sub=form.elements['subject'].value;
         var bod=form.elements['body'].value;
-        
+
         send_email_attachment(receiver,from,business_title,sub,bod,message_attachment,'csv',function()
         {
             hide_loader();
@@ -16580,7 +16571,7 @@ function modal209_action(subject,body,message_attachment)
 function modal210_action(description,func)
 {
 	var form=document.getElementById('modal210_form');
-	
+
 	var fdesc=form.elements['desc'];
 	var fpicture=form.elements['file_hidden'];
     var dummy_button=form.elements['dummy'];
@@ -16588,14 +16579,14 @@ function modal210_action(description,func)
     var contentType='';
     var filetype='';
     var url="";
-			
-	$(dummy_button).on('click',function (e) 
+
+	$(dummy_button).on('click',function (e)
 	{
 		e.preventDefault();
 		$(fpicture).trigger('click');
 	});
 
-    
+
 	fpicture.addEventListener('change',function(evt)
 	{
         var files = fpicture.files;
@@ -16608,9 +16599,9 @@ function modal210_action(description,func)
 			url=dataURL;
 		});
 	},false);
-	
+
     $('modal210_form').formcontrol();
-    
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -16627,14 +16618,14 @@ function modal210_action(description,func)
                            bucket:'vyavsaay-documents',
                            blob: url,
                            name:doc_name,
-                           description:fdesc.value,   
+                           description:fdesc.value,
                            content_type:contentType};
-				s3_object(data_json);	
-				
+				s3_object(data_json);
+
 				if(typeof func!='undefined')
 				{
 					func(url);
-				}		
+				}
 			}
 		}
 		else
@@ -16643,7 +16634,7 @@ function modal210_action(description,func)
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal210_link").click();
 }
 
@@ -16655,20 +16646,20 @@ function modal210_action(description,func)
 function modal211_action(manifest_id,manifest_num,func)
 {
 	var form=document.getElementById('modal211_form');
-	
+
 	var fmanifest=form.elements['manifest_num'];
     fmanifest.value=manifest_num;
-    
+
 	var fseal=form.elements['seal'];
     var flbh=form.elements['lbh'];
     var fweight=form.elements['weight'];
-    
+
     fseal.value='';
     flbh.value='';
     fweight.value='';
-    	
+
     $('modal211_form').formcontrol();
-    
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -16699,7 +16690,7 @@ function modal211_action(manifest_id,manifest_num,func)
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal211_link").click();
 }
 
@@ -16717,13 +16708,13 @@ function modal213_action(dbname)
     var contentType='';
     var filetype='';
     var url="";
-			
-	$(dummy_button).on('click',function (e) 
+
+	$(dummy_button).on('click',function (e)
 	{
 		e.preventDefault();
 		$(fpicture).trigger('click');
 	});
-    
+
 	fpicture.addEventListener('change',function(evt)
 	{
         var files = fpicture.files;
@@ -16735,7 +16726,7 @@ function modal213_action(dbname)
 			url=dataURL;
 		});
 	},false);
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -16755,6 +16746,6 @@ function modal213_action(dbname)
 		}
 		$(form).find(".close").click();
 	});
-	
+
 	$("#modal213_link").click();
 }

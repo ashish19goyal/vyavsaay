@@ -2138,6 +2138,8 @@
 			<description index="no" type="TEXT"></description>
 			<code index="no" type="TEXT"></code>
 			<clients index="no" type="TEXT"></clients>
+			<components index="no" type="TEXT"></components>
+			<functions index="no" type="TEXT"></functions>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</tabs_list>
@@ -2146,6 +2148,7 @@
 			<name index='yes' type="TEXT"></name>
 			<tab_name index='yes' type="VARCHAR(30)"></tab_name>
 			<description index="no" type="TEXT"></description>
+			<attributes index="no" type="TEXT"></attributes>
 			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
@@ -2156,19 +2159,9 @@
 			<tab_name index='yes' type="VARCHAR(30)"></tab_name>
 			<display_name index="no" type="TEXT"></display_name>
 			<description index="no" type="TEXT"></description>
+			<attributes index="no" type="TEXT"></attributes>
 			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</tab_components>
-	<tab_component_attributes>
-			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<name index='yes' type="TEXT"></name>
-			<component_name index='yes' type="TEXT"></component_name>
-			<component_type index='yes' type="VARCHAR(20)"></component_type><!--element/function-->
-			<display_name index="no" type="TEXT"></display_name>
-			<value index="no" type="TEXT"></value>
-			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
-			<last_updated index='yes' type="BIGINT"></last_updated>
-			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
-	</tab_component_attributes>
 </re_xml>
