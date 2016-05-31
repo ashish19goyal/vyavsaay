@@ -127,6 +127,8 @@
 															{index:'type'}]};
 			read_json_rows('form342',tname_data,function(templates)
 			{
+				$('#form342_components_list').html("");
+				$('#form342_functions_list').html("");
 				templates.forEach(function(template)
 				{
 					if(template.type=='element')
@@ -147,7 +149,14 @@
 						});
 					}
 					else {
-
+						var function_elem="<li class='list-group-item bg-green bg-font-yellow link' id='form342_fn_"+template.id+"' data-name='"+template.name+"' data-id='"+template.id+"' title='"+template.description+"'><input type='checkbox' id='form342_fn_cb_"+template.id+"' style='float:left;margin:0px 5px 0px 0px;'> "+template.name+"</li>";
+						$('#form342_functions_list').append(function_elem);
+						$('#form342_fn_'+template.id).on('click',function()
+						{
+							form342_component_list_attributes(template.markers);
+						});
+						$('#form342_fn_'+template.id).attr('data-markers',template.markers);
+						$('#form342_fn_'+template.id).attr('data-htmlcode',template.code);
 					}
 				});
 			});

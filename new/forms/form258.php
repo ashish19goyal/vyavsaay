@@ -1,14 +1,14 @@
-<div id='form258' class='tab-pane portlet box green-meadow'>	   
+<div id='form258' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 		    <a class='btn btn-circle grey btn-outline btn-sm' id='form258_save'>Save <i class='fa fa-save'></i></a>
 		</div>
 		<div class="actions">
       	<a class='btn btn-default btn-sm' id='form258_print' onclick=form258_print_form();><i class='fa fa-print'></i> Print</a>
-        <a class='btn btn-default btn-sm' id='form258_share'><i class='fa fa-envelope'></i> Email</a>    
+        <a class='btn btn-default btn-sm' id='form258_share'><i class='fa fa-envelope'></i> Email</a>
       </div>
 	</div>
-	
+
 	<div class="portlet-body">
         <form id='form258_master' autocomplete="off">
             <fieldset>
@@ -26,10 +26,10 @@
                 <input type='submit' class='submit_hidden'>
             </fieldset>
         </form>
-        
+
         <br>
-		
-       <b>Items</b>	
+
+       <b>Items</b>
 	   <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr style='color:#9a9a9a;'>
@@ -47,7 +47,7 @@
             <tfoot id='form258_item_foot'>
             </tfoot>
 		</table>
-        
+
         <br>
         <b>Spare Parts</b>
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -63,7 +63,7 @@
 			<tbody id='form258_spare_body'>
 			</tbody>
        </table>
-        
+
         <br>
         <b>Detailed Specifications <input style='float:left;' type='checkbox' id='checkbox_form258_spec'></b>
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -78,7 +78,7 @@
 			<tbody id='form258_spec_body'>
 			</tbody>
        </table>
-        
+
         <br>
         <b>Bank Accounts</b>
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -94,7 +94,7 @@
 			<tbody id='form258_bank_body'>
 			</tbody>
        </table>
-        
+
         <br>
         <b>Terms & Conditions</b>
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -109,7 +109,7 @@
 			<tbody id='form258_tc_body'>
 			</tbody>
        </table>
-        
+
     </div>
 
     <script>
@@ -129,7 +129,7 @@
             var id_filter=fields.elements['id'];
             var save_button=document.getElementById('form258_save');
             var share_button=document.getElementById('form258_share');
-            
+
             $(share_button).off('click');
 
             id_filter.value=get_new_key();
@@ -152,7 +152,7 @@
             set_my_value_list_json(staff_data,issued_filter);
 
             $(customer_filter).off('blur');
-            $(customer_filter).on('blur',function () 
+            $(customer_filter).on('blur',function ()
             {
                 var address_data={data_store:'customers',
                                  indexes:[{index:'address'},
@@ -160,24 +160,24 @@
                                          {index:'pincode'},
                                          {index:'email'},
                                          {index:'acc_name',exact:customer_filter.value}]};
-                read_json_rows('',address_data,function (addresses) 
+                read_json_rows('',address_data,function (addresses)
                 {
                     if(addresses.length>0)
                     {
                         address_filter.value=addresses[0].address+", "+addresses[0].city+", "+addresses[0].pincode;
                         email_filter.value=addresses[0].email;
                     }
-                    else 
+                    else
                     {
                         address_filter.value="";
                         email_filter.value="";
                     }
-                });				
+                });
             });
 
             var quot_id=$("#form258_link").attr('data_id');
             if(quot_id==null || quot_id=="")
-            {		
+            {
                 var quot_num_data={data_store:'user_preferences',count:1,return_column:'value',
                                   indexes:[{index:'name',exact:'quotation_num'}]};
                 set_my_value_json(quot_num_data,quot_num,function()
@@ -209,7 +209,7 @@
             });
 
             var customers_data={data_store:'customers',return_column:'acc_name'};
-            set_my_value_list_json(customers_data,customer_filter,function () 
+            set_my_value_list_json(customers_data,customer_filter,function ()
             {
                 $(customer_filter).focus();
             });
@@ -219,7 +219,7 @@
             $(add_customer).on('click',function()
             {
                 modal11_action(function()
-                {	
+                {
                     set_my_value_list_json(customers_data,customer_filter);
                 });
             });
@@ -234,7 +234,7 @@
             var d_tc_array=delivery_tc.split("\n");
             var w_tc_array=warranty_tc.split("\n");
 
-            p_tc_array.forEach(function (p_tc) 
+            p_tc_array.forEach(function (p_tc)
             {
                 var p_obj=new Object();
                 p_obj.type='Payment';
@@ -242,7 +242,7 @@
                 tc_array.push(p_obj);
             });
 
-            d_tc_array.forEach(function (d_tc) 
+            d_tc_array.forEach(function (d_tc)
             {
                 var p_obj=new Object();
                 p_obj.type='Delivery';
@@ -250,7 +250,7 @@
                 tc_array.push(p_obj);
             });
 
-            w_tc_array.forEach(function (w_tc) 
+            w_tc_array.forEach(function (w_tc)
             {
                 var p_obj=new Object();
                 p_obj.type='Warranty';
@@ -261,7 +261,7 @@
             var tc_counter=0;
             var tc_id=get_new_key();
             var rowsHTML="";
-            tc_array.forEach(function (tc) 
+            tc_array.forEach(function (tc)
             {
                 var id=tc_id+tc_counter;
                 tc_counter+=1;
@@ -289,7 +289,7 @@
             ////////////show hide specifications////////////////////////////////
             var spec_checkbox=document.getElementById('checkbox_form258_spec');
             $(spec_checkbox).off('click');
-            $(spec_checkbox).on('click',function () 
+            $(spec_checkbox).on('click',function ()
             {
                 if(spec_checkbox.checked)
                 {
@@ -308,9 +308,9 @@
                                                 {index:'value'},
                                                 {index:'name',array:name_string},
                                                 {index:'attribute',exact:'Specification'}]};
-                    read_json_rows('',attributes_data,function (attributes) 
+                    read_json_rows('',attributes_data,function (attributes)
                     {
-                        attributes.forEach(function (attribute) 
+                        attributes.forEach(function (attribute)
                         {
                             var spec_split=attribute.value.split(":");
                             var id=attribute.id;
@@ -334,13 +334,14 @@
                         });
                         form258_get_totals();
                         $('#form258').formcontrol();
-                    });					
+                    });
                 }
-                else 
+                else
                 {
                     $('#form258_spec_body').html('');
                 }
             });
+						var paginator=$('#form258').paginator({visible:false,container:$('#form258')});
             $('#form258').formcontrol();
         }
 
@@ -348,7 +349,7 @@
         {
             var quot_id=$("#form258_link").attr('data_id');
             if(quot_id==null)
-                quot_id="";	
+                quot_id="";
 
             $('#form258_item_body').html("");
             $('#form258_item_foot').html("");
@@ -372,7 +373,7 @@
                                          {index:'status'},
                                          {index:'address'},
                                          {index:'banks'},
-                                         {index:'terms'}, 
+                                         {index:'terms'},
                                          {index:'specifications'},
                                          {index:'spares'},
                                          {index:'items'},
@@ -415,8 +416,8 @@
                         var tc_array=JSON.parse(quot_results[0].terms);
                         var tc_id=get_new_key();
                         var tc_counter=0;
-                        var rowsHTML="";			
-                        tc_array.forEach(function (tc) 
+                        var rowsHTML="";
+                        tc_array.forEach(function (tc)
                         {
                             var id=tc_id+tc_counter;
                             tc_counter+=1;
@@ -445,8 +446,8 @@
                         var bank_array=JSON.parse(quot_results[0].banks);
                         var bank_id=get_new_key();
                         var bank_counter=0;
-                        var bank_rowsHTML="";			
-                        bank_array.forEach(function (bank) 
+                        var bank_rowsHTML="";
+                        bank_array.forEach(function (bank)
                         {
                             var id=bank_id+bank_counter;
                             bank_counter+=1;
@@ -480,8 +481,8 @@
                         var spec_array=JSON.parse(quot_results[0].specifications);
                         var spec_id=get_new_key();
                         var spec_counter=0;
-                        var spec_rowsHTML="";			
-                        spec_array.forEach(function (spec) 
+                        var spec_rowsHTML="";
+                        spec_array.forEach(function (spec)
                         {
                             var id=spec_id+spec_counter;
                             spec_counter+=1;
@@ -510,8 +511,8 @@
                         var spare_array=JSON.parse(quot_results[0].spares);
                         var spare_id=get_new_key();
                         var spare_counter=0;
-                        var spare_rowsHTML="";			
-                        spare_array.forEach(function (spare) 
+                        var spare_rowsHTML="";
+                        spare_array.forEach(function (spare)
                         {
                             var id=spare_id+spare_counter;
                             spare_counter+=1;
@@ -542,9 +543,9 @@
                         var item_array=JSON.parse(quot_results[0].items);
                         var item_id=get_new_key();
                         var item_counter=0;
-                        var item_rowsHTML="";			
+                        var item_rowsHTML="";
 
-                        item_array.forEach(function (item) 
+                        item_array.forEach(function (item)
                         {
                             var id=item_id+item_counter;
                             item_counter+=1;
@@ -612,19 +613,19 @@
                         ///////////////////////////
 
                         $('#form258').formcontrol();
-                        
+
                         var share_button=document.getElementById('form258_share');
                         $(share_button).show();
                         $(share_button).click(function()
                         {
-                            modal171_action('Quotation from - '+bt,filter_fields.elements['customer'].value,'customer',function (func) 
+                            modal171_action('Quotation from - '+bt,filter_fields.elements['customer'].value,'customer',function (func)
                             {
                                 print_form258(func);
                             },'pdf');
                         });
                     }
 
-                    hide_loader();			
+                    hide_loader();
                 });
             }
         }
@@ -638,8 +639,9 @@
                     item_rowsHTML+="<form id='form258_item_"+id+"' autocomplete='off'></form>";
                         item_rowsHTML+="<td data-th='S.No.'>";
                         item_rowsHTML+="</td>";
-                        item_rowsHTML+="<td data-th='Item'>";
-                            item_rowsHTML+="<input type='text' form='form258_item_"+id+"'>";
+												item_rowsHTML+="<td data-th='Item'><div class='btn-overlap'>";
+                            item_rowsHTML+="<input type='text' required placeholder='Item' id='form258_item_name_"+id+"' form='form258_item_"+id+"'>";
+														item_rowsHTML+="<button class='btn btn-icon-only default right-overlap' onclick=\"modal194_action('#form258_item_name_"+id+"');\"><i class='fa fa-search'></i></button></div>";
                         item_rowsHTML+="</td>";
                         item_rowsHTML+="<td data-th='Details'>";
                             item_rowsHTML+="<textarea form='form258_item_"+id+"'></textarea>";
@@ -680,7 +682,7 @@
                 var product_data={data_store:'attributes',return_column:'name',
                                  indexes:[{index:'value',exact:'no'},
                                          {index:'attribute',exact:'Spare Part'}]};
-                set_my_value_list_json(product_data,name_filter,function () 
+                set_my_value_list_json(product_data,name_filter,function ()
                 {
                     $(name_filter).focus();
                 });
@@ -689,7 +691,7 @@
                 {
                     amount_filter.value=my_round((parseFloat(price_filter.value)*parseFloat(quantity_filter.value)),2);
                 });
-                
+
                 form258_get_totals();
                 $('#form258').formcontrol();
             }
@@ -709,8 +711,9 @@
                     spare_rowsHTML+="<form id='form258_spare_"+id+"' autocomplete='off'></form>";
                         spare_rowsHTML+="<td data-th='S.No.'>";
                         spare_rowsHTML+="</td>";
-                        spare_rowsHTML+="<td data-th='Part Name'>";
-                            spare_rowsHTML+="<input type='text' form='form258_spare_"+id+"'>";
+												spare_rowsHTML+="<td data-th='Part Name'><div class='btn-overlap'>";
+                            spare_rowsHTML+="<input type='text' required placeholder='Part Name' id='form258_spare_name_"+id+"' form='form258_spare_"+id+"'>";
+														spare_rowsHTML+="<button class='btn btn-icon-only default right-overlap' onclick=\"modal194_action('#form258_spare_name_"+id+"');\"><i class='fa fa-search'></i></button></div>";
                         spare_rowsHTML+="</td>";
                         spare_rowsHTML+="<td data-th='Description'>";
                             spare_rowsHTML+="<textarea form='form258_spare_"+id+"' ></textarea>";
@@ -741,7 +744,7 @@
                 var product_data={data_store:'attributes',return_column:'name',
                                  indexes:[{index:'value',exact:'yes'},
                                          {index:'attribute',exact:'Spare Part'}]};
-                set_my_value_list_json(product_data,name_filter,function () 
+                set_my_value_list_json(product_data,name_filter,function ()
                 {
                     $(name_filter).focus();
                 });
@@ -764,10 +767,10 @@
                             $(quantity_filter).floatlabel_right();
                         }
                     });
-                });		
+                });
 
                 form258_get_totals();
-                
+
             }
             else
             {
@@ -860,12 +863,12 @@
 
                 var bank_data={data_store:'bank_accounts',return_column:'name',
                               indexes:[{index:'status',exact:'active'}]};
-                set_my_value_list_json(bank_data,name_filter,function () 
+                set_my_value_list_json(bank_data,name_filter,function ()
                 {
                     $(name_filter).focus();
                 });
 
-                $(name_filter).on('blur',function () 
+                $(name_filter).on('blur',function ()
                 {
                     var details_xml={data_store:'bank_accounts',
                                     indexes:[{index:'bank'},
@@ -873,7 +876,7 @@
                                             {index:'account_name'},
                                             {index:'account_num'},
                                             {index:'name',exact:name_filter.value}]};
-                    read_json_rows('',details_xml,function (accounts) 
+                    read_json_rows('',details_xml,function (accounts)
                     {
                         if(accounts.length>0)
                         {
@@ -881,10 +884,10 @@
                             ifsc_filter.value=accounts[0].ifsc;
                             acc_filter.value=accounts[0].account_name;
                             acc_num_filter.value=accounts[0].account_num;
-                            
+
                             $('#form258').formcontrol();
                         }
-                    });				
+                    });
                 });
 
                 form258_get_totals();
@@ -962,7 +965,7 @@
                 $(share_button).off('click');
                 $(share_button).on('click',function()
                 {
-                    modal101_action('Quotation from - '+bt,customer,'customer',function (func) 
+                    modal101_action('Quotation from - '+bt,customer,'customer',function (func)
                     {
                         print_form258(func);
                     });
@@ -993,8 +996,8 @@
                     tax_rate=parseFloat(document.getElementById('form258_tax').value);
                 }
 
-                var amount=my_round(amount,2);		
-                var tax=my_round(tax_rate*(amount/100),2);		
+                var amount=my_round(amount,2);
+                var tax=my_round(tax_rate*(amount/100),2);
                 var total=my_round((tax+amount+cartage),0);
 
                 var total_row="<tr><td colspan='4' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
@@ -1008,12 +1011,12 @@
 
                 $('#form258_item_foot').html(total_row);
                 $('#form258').formcontrol();
-                
+
                 var spec_array=[];
                 var banks_array=[];
                 var spares_array=[];
                 var items_array=[];
-                var terms_array=[];						
+                var terms_array=[];
 
                 $("[id^='save_form258_item_']").each(function(index)
                 {
@@ -1029,7 +1032,7 @@
                     items_array.push(item_obj);
 
                     $(subform).readonly();
-                    				
+
                 });
 
                 $("[id^='save_form258_spare_']").each(function(index)
@@ -1046,7 +1049,7 @@
                     item_obj.unit=subform.elements[2].placeholder;
                     spares_array.push(item_obj);
                     $(subform).readonly();
-                    
+
                 });
 
                 $("[id^='save_form258_spec_']").each(function(index)
@@ -1057,9 +1060,9 @@
                     var item_obj=new Object();
                     item_obj.spec=subform.elements[0].value;
                     item_obj.details=subform.elements[1].value;
-                    spec_array.push(item_obj);	
+                    spec_array.push(item_obj);
                     $(subform).readonly();
-                    
+
                 });
 
                 $("[id^='save_form258_bank_']").each(function(index)
@@ -1075,7 +1078,7 @@
                     item_obj.account_num=subform.elements[4].value;
                     banks_array.push(item_obj);
                     $(subform).readonly();
-                    
+
                 });
 
                 $("[id^='save_form258_tc_']").each(function(index)
@@ -1086,10 +1089,10 @@
                     var item_obj=new Object();
                     item_obj.type=subform.elements[0].value;
                     item_obj.tc=subform.elements[1].value;
-                    terms_array.push(item_obj);	
+                    terms_array.push(item_obj);
 
                     $(subform).readonly();
-                    
+
                 });
 
 
@@ -1122,7 +1125,7 @@
                         {index:'last_updated',value:last_updated}],
                     log:'yes',
                     log_data:{title:'Saved',notes:'Quotation # '+quot_num,link_to:'form259'}};
- 		
+
                 create_json(data_json);
 
                 var num_data={data_store:'user_preferences',return_column:'id',
@@ -1132,7 +1135,7 @@
                     if(num_ids.length>0)
                     {
                         var quot_num_array=quot_num.split("-");
-                        
+
                         var num_json={data_store:'quoptation',
                             data:[{index:'id',value:num_ids[0]},
                                 {index:'value',value:(parseInt(quot_num_array[1])+1)},
@@ -1147,7 +1150,7 @@
                 {
                     event.preventDefault();
                     form258_update_form();
-                });	
+                });
             }
             else
             {
@@ -1198,8 +1201,8 @@
                     tax_rate=parseFloat(document.getElementById('form258_tax').value);
                 }
 
-                var amount=my_round(amount,2);		
-                var tax=my_round(tax_rate*(amount/100),2);		
+                var amount=my_round(amount,2);
+                var tax=my_round(tax_rate*(amount/100),2);
                 var total=my_round((amount+tax+cartage),0);
 
                 var total_row="<tr><td colspan='4' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
@@ -1213,12 +1216,12 @@
 
                 $('#form258_item_foot').html(total_row);
                 $('#form258').formcontrol();
-                
+
                 var spec_array=[];
                 var banks_array=[];
                 var spares_array=[];
                 var items_array=[];
-                var terms_array=[];						
+                var terms_array=[];
 
                 $("[id^='save_form258_item_']").each(function(index)
                 {
@@ -1234,7 +1237,7 @@
                     items_array.push(item_obj);
 
                     $(subform).readonly();
-                    
+
                 });
 
                 $("[id^='save_form258_spare_']").each(function(index)
@@ -1251,7 +1254,7 @@
 
                     spares_array.push(item_obj);
                     $(subform).readonly();
-                    	
+
                 });
 
                 $("[id^='save_form258_spec_']").each(function(index)
@@ -1263,9 +1266,9 @@
                     //item_obj.item=subform.elements[0].value;
                     item_obj.spec=subform.elements[0].value;
                     item_obj.details=subform.elements[1].value;
-                    spec_array.push(item_obj);	
+                    spec_array.push(item_obj);
                     $(subform).readonly();
-                    
+
                 });
 
                 $("[id^='save_form258_bank_']").each(function(index)
@@ -1279,7 +1282,7 @@
                     item_obj.ifsc=subform.elements[2].value;
                     item_obj.account_name=subform.elements[3].value;
                     item_obj.account_num=subform.elements[4].value;
-                    banks_array.push(item_obj);	
+                    banks_array.push(item_obj);
                     $(subform).readonly();
                 });
 
@@ -1291,9 +1294,9 @@
                     var item_obj=new Object();
                     item_obj.type=subform.elements[0].value;
                     item_obj.tc=subform.elements[1].value;
-                    terms_array.push(item_obj);	
+                    terms_array.push(item_obj);
                     $(subform).readonly();
-                });	
+                });
 
                 //console.log(spec_array);
                 var specifications=JSON.stringify(spec_array);
@@ -1325,7 +1328,7 @@
                         {index:'last_updated',value:last_updated}],
                     log:'yes',
                     log_data:{title:'Updated',notes:'Quotation # '+quot_num,link_to:'form259'}};
- 		
+
                 update_json(data_json);
             }
             else
@@ -1386,8 +1389,8 @@
                 tax_rate=parseFloat(document.getElementById('form258_tax').value);
             }
 
-            var amount=my_round(amount,2);		
-            var tax=my_round(tax_rate*(amount/100),2);		
+            var amount=my_round(amount,2);
+            var tax=my_round(tax_rate*(amount/100),2);
             var total=my_round((amount+tax+cartage),0);
 
             var total_row="<tr><td colspan='4' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
@@ -1404,18 +1407,18 @@
         }
 
         function form258_print_form()
-        {	
+        {
             print_form258(function(container)
             {
                 $.print(container);
-                container.innerHTML="";	
-            });	
+                container.innerHTML="";
+            });
         }
 
         function print_form258(func)
         {
             var form_id='form258';
-            ////////////setting up containers///////////////////////	
+            ////////////setting up containers///////////////////////
             var container=document.createElement('div');
             var header=document.createElement('div');
                 var logo=document.createElement('div');
@@ -1458,9 +1461,9 @@
 
             var master_form=document.getElementById(form_id+'_master');
             var customer_name=master_form.elements['customer'].value;
-            var date=master_form.elements['date'].value;	
-            var valid_date=master_form.elements['valid'].value;	
-            var issued_by=master_form.elements['issued'].value;	
+            var date=master_form.elements['date'].value;
+            var valid_date=master_form.elements['valid'].value;
+            var issued_by=master_form.elements['issued'].value;
             var quot_no=master_form.elements['quot_num'].value;
             var customer_address=master_form.elements['address'].value;
             var email=master_form.elements['email'].value;
@@ -1487,7 +1490,7 @@
             jurisdiction.innerHTML="Note: All disputes subjected to Delhi Jurisdiction";
             business_contact.innerHTML="<p><hr style='border: 1px solid #00f;margin:5px;'></p><p>Address: "+business_address+"<br>Phone: "+business_phone+", E-Mail: "+business_email+"<br>CIN: "+cin+", PAN: "+pan+"</p><p><hr style='border: 1px solid #00f;margin:5px;'></p>";
 
-            /////////////adding item table //////////////////////////////////////////////////////	
+            /////////////adding item table //////////////////////////////////////////////////////
             var item_table_element=document.getElementById(form_id+'_item_body');
             var item_table_heading=document.createElement('div');
             item_table_heading.innerHTML="<br><b>Items</b><br>";
@@ -1519,7 +1522,7 @@
                 var quantity=""+form.elements[2].value;
                 var price=form.elements[3].value;
                 var amount=form.elements[4].value;
-                //var tax=form.elements[5].value;		
+                //var tax=form.elements[5].value;
                 //var total=form.elements[6].value;
 
                 table_rows+="<tr>"+
@@ -1559,7 +1562,7 @@
             table_rows+=table_foot_row;
             item_table.innerHTML=table_rows;
 
-            /////////////adding cabinet details table //////////////////////////////////////////////////////	
+            /////////////adding cabinet details table //////////////////////////////////////////////////////
 
             var details_table_heading=document.createElement('div');
             details_table_heading.innerHTML="<br><b>Additional Details</b><br>";
@@ -1592,10 +1595,10 @@
                             "<td style='border: 1px solid #000;text-align:left;'>"+type+"</td>"+
                             "<td style='border: 1px solid #000;text-align:left;'>"+details+"</td></tr>";
                 });
-            }	
+            }
             details_table.innerHTML=table_rows;
 
-            /////////////adding spec table //////////////////////////////////////////////////////	
+            /////////////adding spec table //////////////////////////////////////////////////////
 
             var spec_table_element=document.getElementById(form_id+'_spec_body');
             var spec_table_heading=document.createElement('div');
@@ -1632,7 +1635,7 @@
 
             spec_table.innerHTML=table_rows;
 
-            /////////////adding spares table //////////////////////////////////////////////////////	
+            /////////////adding spares table //////////////////////////////////////////////////////
 
             var spare_table_element=document.getElementById(form_id+'_spare_body');
             var spare_table_heading=document.createElement('div');
@@ -1669,7 +1672,7 @@
 
             spare_table.innerHTML=table_rows;
 
-            /////////////adding bank table //////////////////////////////////////////////////////	
+            /////////////adding bank table //////////////////////////////////////////////////////
 
             var bank_table_element=document.getElementById(form_id+'_bank_body');
             var bank_table_heading=document.createElement('div');
@@ -1708,7 +1711,7 @@
 
             bank_table.innerHTML=table_rows;
 
-            /////////////adding terms table //////////////////////////////////////////////////////	
+            /////////////adding terms table //////////////////////////////////////////////////////
 
             var terms_table_element=document.getElementById(form_id+'_tc_body');
             var terms_table_heading=document.createElement('div');
@@ -1738,7 +1741,7 @@
 
             terms_table.innerHTML=table_rows;
 
-            /////////////placing the containers //////////////////////////////////////////////////////	
+            /////////////placing the containers //////////////////////////////////////////////////////
 
             container.appendChild(header);
             container.appendChild(invoice_line);

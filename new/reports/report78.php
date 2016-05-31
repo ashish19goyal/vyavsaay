@@ -1,8 +1,8 @@
-<div id='report78' class='tab-pane portlet box red-sunglo'>	   
+<div id='report78' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report78_ini();'>Refresh</a>
-		</div>		
+		</div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
@@ -25,15 +25,15 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 		<form id='report78_header' autocomplete="off">
 			<fieldset>
 				<label><input type='text' placeholder="Customer" class='floatlabel' name='customer'></label>
 				<label><input type='text' placeholder="Date" class='floatlabel' name='date'></label>
-				<label><input type='submit' class='submit_hidden'></label>			
+				<label><input type='submit' class='submit_hidden'></label>
 			</fieldset>
 		</form>
 	<br>
@@ -50,15 +50,15 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<script>
 
 function report78_header_ini()
-{	
+{
 	var form=document.getElementById('report78_header');
 	var customer_filter=form.elements['customer'];
 	var date_filter=form.elements['date'];
-	
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -77,41 +77,44 @@ function report78_ini()
 	var form=document.getElementById('report78_header');
 	var customer_filter=form.elements['customer'].value;
 	var date_filter=form.elements['date'].value;
-	
+
 	show_loader();
-	
+
 	$('#report78_body').html('');
-	
+
 	var paginator=$('#report78_body').paginator();
-			
+
 	var follow_up_data=new Object();
 			follow_up_data.count=paginator.page_size();
 			follow_up_data.start_index=paginator.get_index();
 			follow_up_data.data_store='followups';
-					
+
 			follow_up_data.indexes=[{index:'id'},
 							{index:'customer',exact:customer_filter},
 							{index:'date',value:date_filter},
 							{index:'response'},{index:'detail'},{index:'next_date'},{index:'source_id'}];
-								
+
 	read_json_rows('report78',follow_up_data,function(followups)
 	{
         followups.sort(function(a,b)
         {
             if(parseFloat(a.date)<parseFloat(b.date))
             {	return 1;}
-            else 
+            else
             {	return -1;}
-        });	
+        });
 
 		var rowsHTML="";
-		followups.forEach(function (followup) 
+		followups.forEach(function (followup)
 		{
 			rowsHTML+="<tr>";
 			rowsHTML+="<td data-th='Date'><a title='Click to go to the lead' onclick=element_display('"+followup.source_id+"','report78');>";
 				rowsHTML+=get_my_past_date(followup.date);
 			rowsHTML+="</a></td>";
-			rowsHTML+="<td data-th='Response'><span class='label label-sm "+status_label_colors[followup.response]+"'>";
+			var color=status_label_colors[followup.response];
+			if(vUtil.isBlank(color))
+				color='label-success';
+			rowsHTML+="<td data-th='Response'><span class='label label-sm "+color+"'>";
 				rowsHTML+=followup.response;
 			rowsHTML+="</span></td>";
 			rowsHTML+="<td data-th='Details'>";
@@ -120,20 +123,20 @@ function report78_ini()
 			rowsHTML+="<td data-th='Next follow-up'>";
 				rowsHTML+=get_my_past_date(followup.next_date);
 			rowsHTML+="</td>";
-			rowsHTML+="</tr>";			
+			rowsHTML+="</tr>";
 		});
 		$('#report78_body').html(rowsHTML);
 		hide_loader();
-	
+
 		paginator.update_index(followups.length);
-				
-		initialize_tabular_report_buttons(follow_up_data,'Sale Lead followups','report78',function (item) 
+
+		initialize_tabular_report_buttons(follow_up_data,'Sale Lead followups','report78',function (item)
 		{
 			item.next_date=get_my_past_date(item.next_date);
 			item.date=get_my_past_date(item.date);
 			delete item.source_id;
-		});	
-	});				
+		});
+	});
 };
 
         function report78_import_template()
@@ -141,18 +144,18 @@ function report78_ini()
 			var data_array=['id','customer','date','response','call bites'];
 			my_array_to_csv(data_array);
 		};
-		
+
 		function report78_import_validate(data_array)
 		{
 			var validate_template_array=[{column:'customer',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 									{column:'response',list:['cold','warm','hot']},
 									{column:'call bites',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 									{column:'date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]+')}];
-							
+
 			var error_array=validate_import_array(data_array,validate_template_array);
-			return error_array;					
+			return error_array;
 		}
-		
+
 		function report78_import(data_array,import_type)
 		{
 			var data_json={data_store:'followups',
@@ -162,7 +165,7 @@ function report78_ini()
 
 			var counter=1;
 			var last_updated=get_my_time();
-		
+
             var customers_array=[];
             data_array.forEach(function(row)
 			{
@@ -187,7 +190,7 @@ function report78_ini()
                         }
                     }
                 });
-                
+
                 data_array.forEach(function(row)
                 {
                     counter+=1;
@@ -201,19 +204,19 @@ function report78_ini()
                             {index:'detail',value:row['call bites']},
                             {index:'date',value:get_raw_time(row.date)},
                             {index:'response',value:row.response},
-                            {index:'source_id',value:row.source_id},             
+                            {index:'source_id',value:row.source_id},
                             {index:'last_updated',value:last_updated}];
 
                     data_json.data.push(data_json_array);
                 });
                 hide_loader();
-                
+
                 if(import_type=='create_new')
                 {
                     create_batch_json(data_json);
-                } 
-            });            
+                }
+            });
 		}
-        
+
 	</script>
 </div>

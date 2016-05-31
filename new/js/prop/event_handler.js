@@ -15,8 +15,8 @@ function default_load()
 	{
 		window.location.assign(server_root+"/index.html");
 	}
-	
-	
+
+
 	modal_forms_ini();
 	if(is_set_session())
 	{
@@ -28,14 +28,14 @@ function default_load()
         my_sortable_tables();
 		set_user_name();
         if(typeof calculate_grid_metrics!='undefined')
-		{		
+		{
 			calculate_grid_metrics();
 		}
 		if(typeof start_workers!='undefined')
 		{
 			start_workers();
 		}
-		
+
 		document.getElementById('master_title').innerHTML=get_session_var('title');
         navigate_history_url(location);
 		hide_loader();
@@ -48,7 +48,7 @@ function default_load()
 
 function declaring_global_variables()
 {
-    server_root="/new";
+  server_root="/new";
 	localdb_open_requests=0;
 	number_active_ajax=0;
 	loaderTimer=0;
@@ -56,15 +56,16 @@ function declaring_global_variables()
 	progress_value=0;
 	vyavsaay_active_tab="";
 	storage_count_tracker=0;
-	total_export_requests=0;	
+	total_export_requests=0;
  	newsletter_element_4_deletion = [];
  	status_label_colors={'pending':'label-warning',
- 			            'converted':'label-success',
- 						'completed':'label-success',
- 						'active':'label-success',
- 						'inactive':'label-danger',
- 						'cold':'label-danger',
- 						'warm':'label-success',
+ 			            			'converted':'label-success',
+						 						'completed':'label-success',
+						 						'active':'label-success',
+						 						'inactive':'label-danger',
+						 						'cold':'label-danger',
+						 						'warm':'label-success',
+												'hot':'label-success',
                         'submitted':'label-warning',
                         'approved':'label-success',
                         'rejected':'label-danger',
@@ -136,14 +137,14 @@ function my_sortable_tables()
 		$('table.sortable>tbody').sortable(
 		{
 			axis: "y",
-			stop: function(event, ui) 
+			stop: function(event, ui)
 			{
 				ui.item.effect('highlight');
 			},
-			update: function(event, ui) 
+			update: function(event, ui)
 			{
 				var tbody_elem=ui.item.parent();
-				var event=new Event('table_sort');				
+				var event=new Event('table_sort');
 				tbody_elem[0].dispatchEvent(event);
 			}
 		});
@@ -165,7 +166,7 @@ function setup_grid_display_tabs()
 }
 
 function modal_forms_ini()
-{    
+{
     $(".draggable-modal").draggable(
     {
     	handle: ".modal-header"
@@ -176,7 +177,7 @@ function modal_forms_ini()
 	{
 		width=400;
 	}
-	
+
 	var static_modal_array=[1,50,51,53,54,57,83,84];
 	static_modal_array.forEach(function(i)
 	{
@@ -194,7 +195,7 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	});
-	
+
 	var dynamic_modal_array=[];
 	for(var i=8;i<=10;i++)
 	{
@@ -264,7 +265,7 @@ function modal_forms_ini()
 	dynamic_modal_array.push(174);
 	dynamic_modal_array.push(177);
 	dynamic_modal_array.push(208);
-	
+
 	dynamic_modal_array.forEach(function(i)
 	{
 		$("#modal"+i).dialog({
@@ -279,7 +280,7 @@ function modal_forms_ini()
 	   			document.getElementById(form_id).reset();
 	   		}
 		});
-	});	
+	});
 }
 
 
@@ -290,21 +291,21 @@ function lock_screen(func)
 	localStorage.removeItem('cr');
 	localStorage.removeItem('up');
 	localStorage.removeItem('del');
-	
+
 	if(typeof func!='undefined')
 	{
-		$('#lock_form').off('submit'); 
-		$('#lock_form').on('submit',function (e) 
+		$('#lock_form').off('submit');
+		$('#lock_form').on('submit',function (e)
 		{
 			e.preventDefault();
 			hide_lock_screen();
 			func();
 		});
 	}
-	else 
+	else
 	{
 		$('#lock_form').off('submit');
-		$('#lock_form').on('submit',function (e) 
+		$('#lock_form').on('submit',function (e)
 		{
 			e.preventDefault();
 			var domain=get_session_var('domain');
@@ -325,7 +326,7 @@ function show_lock_screen()
 	$('.page-footer').hide();
 
 	document.getElementById("lock_form").elements['password'].value="";
-	$('#lock_screen_page').show();	
+	$('#lock_screen_page').show();
 }
 
 function hide_lock_screen()
@@ -333,7 +334,7 @@ function hide_lock_screen()
 	$('.page-container').show();
 	$('.page-header').show();
 	$('.page-footer').show();
-	
+
 	$('#lock_screen_page').hide();
 	hide_loader();
 }
@@ -343,15 +344,15 @@ function set_user_name()
 	var name=get_session_var('name');
     var acc_name=get_session_var('acc_name');
     var user_id=get_session_var('user_id');
-    
+
 	$('.username').html(name);
     $('#user_profile_nav').on('click',function()
     {
         show_object('staff',acc_name);
     });
-	
+
 	var docs={data_store:'documents',return_column:'url',
-			indexes:[{index:'doc_type',exact:'staff'},{index:'doc_name',exact:'image'},{index:'target_id',exact:user_id}]};		
+			indexes:[{index:'doc_type',exact:'staff'},{index:'doc_name',exact:'image'},{index:'target_id',exact:user_id}]};
 	read_json_single_column(docs,function(pics)
 	{
 		if(pics.length>0)
@@ -369,12 +370,12 @@ function hide_menu_items()
 	$('#location_icon').hide();
 	if(loc=='yes')
 		$('#location_icon').show();
-	
+
 	var api_sync=get_session_var('api_sync');
 	$('#api_sync_icon').hide();
 	if(api_sync=='yes')
 		$('#api_sync_icon').show();
-	
+
 
     $('#system_delete_logs').hide();
     var del=get_session_var('del');
@@ -386,7 +387,7 @@ function hide_menu_items()
             $('#system_delete_logs').show();
         }
     }
-    
+
     $('#system_config_backup').hide();
     var re=get_session_var('re');
 	if(re)
@@ -397,7 +398,7 @@ function hide_menu_items()
             $('#system_config_backup').show();
         }
     }
-    
+
 	var offline=get_session_var('offline');
 	var offline_disabled=get_session_var('offline_disabled');
 
@@ -431,16 +432,16 @@ function hide_all()
 	$("#activities_box").hide();
 	$("#notifications_box").hide();
 	$(".vyavsaay_objects").hide();
-	
+
 	hide_all_grids();
 
 	hide_menu_items();
-	
+
 	if(typeof worker_12!='undefined')
 	{
 		worker_12();
 	}
-		
+
 	if(typeof form301_cancel_capture!='undefined')
 	{
 		form301_cancel_capture();
@@ -483,9 +484,9 @@ function longPressEditable(element)
 			{
 				$(input_box).removeAttr('readonly');
 				$(input_box).focus();
-			},500); 
+			},500);
 		});
-		
+
 		$(this).dblclick(function()
 		{
 			$(this).removeAttr('readonly');
