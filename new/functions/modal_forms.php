@@ -1,11 +1,11 @@
-<div class='modal_forms'>	
+<div class='modal_forms'>
 	<div id="modal1" title="Enter password again">
 		<form>
 			<input type="password" id="modal1_pass" required>
 			<input type="submit" class='modal_submit' tabindex="-1" style="position:absolute; top:-1000px">
 		</form>
 	</div>
-	
+
 
 	<div id="modal8" title="Add new Offer">
 		<form id='modal8_form' autocomplete="off">
@@ -26,7 +26,7 @@
 				<label>%: <input type="number"></label>
 				<label>Quantity: <input type="number"></label><br>
 				<label>Free product name: <input type="text"></label><br>
-				<label>Free product quantity: <input type="number"></label><br>			
+				<label>Free product quantity: <input type="number"></label><br>
 				<label>Free service name: <input type="text"></label><br>
 				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>
@@ -44,7 +44,7 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
 	<div id="modal10" title="Add new asset">
 		<form id='modal10_form' autocomplete="off">
 			<fieldset>
@@ -56,12 +56,12 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
 	<a href='#modal11' data-toggle="modal" id='modal11_link'></a>
 	<div id="modal11" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal11_form' autocomplete="off">                               
+                <form id='modal11_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add New Customer</h4>
@@ -100,7 +100,7 @@
 	<div id="modal12" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal12_form' autocomplete="off">                               
+                <form id='modal12_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add new account</h4>
@@ -126,12 +126,12 @@
             </div>
         </div>
     </div>
-	
+
 	<a href='#modal13' data-toggle="modal" id='modal13_link'></a>
 	<div id="modal13" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal13_form' autocomplete="off">                               
+                <form id='modal13_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add new Supplier</h4>
@@ -170,7 +170,7 @@
 	<div id="modal14" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal14_form' autocomplete="off">                               
+                <form id='modal14_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add new Product</h4>
@@ -196,7 +196,7 @@
 		                  <div class="row">
 								   <div class="col-sm-12 col-md-4">Barcode</div>
 					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal14_form' name='barcode'><br>
-                                        <input type='checkbox' name='generate'> Auto Generate    
+                                        <input type='checkbox' name='generate'> Auto Generate
                                     </div>
 					     		</div>
 		                  <div id='modal14_attributes'></div>
@@ -223,12 +223,12 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
 	<a href='#modal16' data-toggle="modal" id='modal16_link'></a>
 	<div id="modal16" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal16_form' autocomplete="off">                               
+                <form id='modal16_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add new Staff</h4>
@@ -262,7 +262,7 @@
             </div>
         </div>
     </div>
-	
+
 	<div id="modal17" title="Add staff details">
 		<form id='modal17_form' autocomplete="off">
 			<fieldset>
@@ -275,7 +275,7 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
 	<div id="modal18" title="Add task type">
 		<form id='modal18_form' autocomplete="off">
 			<fieldset>
@@ -287,7 +287,7 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
 	<div id="modal19" title="Copy product">
 		<form id='modal19_form' autocomplete="off">
 			<fieldset>
@@ -303,7 +303,7 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
 	<div id="modal20" title="Add new service">
 		<form id='modal20_form' autocomplete="off">
 			<fieldset>
@@ -316,7 +316,7 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
 	<div id="modal21" title="Copy service">
 		<form id='modal21_form' autocomplete="off">
 			<fieldset>
@@ -328,12 +328,12 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
     <a href='#modal22' data-toggle="modal" id='modal22_link'></a>
 	<div id="modal22" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal22_form' autocomplete="off">                               
+                <form id='modal22_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add Batch</h4>
@@ -379,12 +379,12 @@
             </div>
         </div>
     </div>
-    
+
 	<a href='#modal23' data-toggle="modal" id='modal23_link'></a>
 	<div id="modal23" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal23_form' autocomplete="off">                               
+                <form id='modal23_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Data Import</h4>
@@ -405,7 +405,7 @@
 								   	<input type="file" required name='file' value='Select file' accept=".csv" style='display:none'>
 										<button type='button' name='file_dummy' class='btn red-sunglo'>Select File</button>
 									</div>
-				          </div>											
+				          </div>
 		                  <div class="row">
 									<div class='col-md-6'><output name='selected_file'></output></div>
 					      </div>
@@ -419,7 +419,7 @@
             </div>
         </div>
     </div>
-	
+
 	<div id="modal24" title="Update Customer Address">
 		<form id='modal24_form' autocomplete="off">
 			<fieldset>
@@ -432,7 +432,7 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
 	<div id="modal25" title="Update Supplier Address">
 		<form id='modal25_form' autocomplete="off">
 			<fieldset>
@@ -445,12 +445,12 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
     <a href='#modal26' data-toggle="modal" id='modal26_link'></a>
 	<div id="modal26" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal26_form' autocomplete="off">                               
+                <form id='modal26_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Payment Details</h4>
@@ -509,7 +509,7 @@
 	<div id="modal28" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal28_form' autocomplete="off">                               
+                <form id='modal28_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Payment Details</h4>
@@ -540,7 +540,7 @@
 								   <div class="col-sm-12 col-md-4">Status</div>
 					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal28_form' name='status' required></div>
 					     		</div>
-                        </div> 
+                        </div>
 		             </div>
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal28_form' name='save'>Save</button>
@@ -563,7 +563,7 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
 	<div id="modal30" title="Add Receipt">
 		<form id='modal30_form' autocomplete="off">
 			<fieldset>
@@ -581,7 +581,7 @@
 	<div id="modal31" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal31_form' autocomplete="off">                               
+                <form id='modal31_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Delete Receipt</h4>
@@ -604,7 +604,7 @@
 								   <div class="col-sm-12 col-md-4">Receipt Amount</div>
 					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' readonly='readonly' form='modal31_form' name='amount' required></div>
 					     		</div>
-                        </div> 
+                        </div>
 		             </div>
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal31_form' name='save'>Delete</button>
@@ -632,7 +632,7 @@
 	<div id="modal33" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal33_form' autocomplete="off">                               
+                <form id='modal33_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Update Task</h4>
@@ -656,7 +656,7 @@
 					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal33_form' required name='status'></div>
 					       </div>
 		              </div>
-                    </div>    
+                    </div>
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal33_form' name='save'>Save</button>
 	               	<button type="button" class="btn red" form='modal33_form' data-dismiss='modal' name='cancel'>Cancel</button>
@@ -665,12 +665,12 @@
             </div>
         </div>
     </div>
-    
+
 	<a href='#modal35' data-toggle="modal" id='modal35_link'></a>
 	<div id="modal35" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal35_form' autocomplete="off">                               
+                <form id='modal35_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add Storage</h4>
@@ -696,12 +696,12 @@
             </div>
         </div>
     </div>
-    
+
 	<a href='#modal36' data-toggle="modal" id='modal36_link'></a>
 	<div id="modal36" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal36_form' autocomplete="off">                               
+                <form id='modal36_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add Appointment</h4>
@@ -739,7 +739,7 @@
 	<div id="modal37" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal37_form' autocomplete="off">                               
+                <form id='modal37_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Update Appointment</h4>
@@ -766,7 +766,7 @@
 							   <div class="col-sm-12 col-md-8 pull-right"><button type='button' class='btn grey' form='modal37_form' name='notify' title='An Email and SMS will be sent to the customer to remind them of the appointment'>Notify Customer</button></div>
 						   </div>
 		             	</div>
-					</div>	
+					</div>
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal37_form' name='save'>Save</button>
 	               	<button type="button" class="btn red" form='modal37_form' data-dismiss='modal' name='cancel'>Cancel</button>
@@ -775,7 +775,7 @@
             </div>
         </div>
     </div>
-		
+
 	<div id="modal38" title="Update sale price">
 		<form id='modal38_form' autocomplete="off">
 			<fieldset>
@@ -839,12 +839,12 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
     <a href='#modal43' data-toggle="modal" id='modal43_link'></a>
 	<div id="modal43" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal43_form' autocomplete="off">                               
+                <form id='modal43_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add Task</h4>
@@ -872,7 +872,7 @@
 					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal43_form'  name='assignee'></div>
 					       </div>
 		              </div>
-                    </div>    
+                    </div>
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal43_form' name='save'>Save</button>
 	               	<button type="button" class="btn red" form='modal43_form' data-dismiss='modal' name='cancel'>Cancel</button>
@@ -912,7 +912,7 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
 	<div id="modal46" title="Update loyalty program">
 		<form id='modal46_form' autocomplete="off">
 			<fieldset>
@@ -941,7 +941,7 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
 	<div id="modal48" title="Add solution">
 		<form id='modal48_form' autocomplete="off">
 			<fieldset>
@@ -962,22 +962,22 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
 	<div id="modal50" title="Sending Mails">
 		<a href='' id='modal50_sendmail'>Send mails through Gmail</a>
 	</div>
-	
+
 	<div id="modal51" title="Merging Records">
 		Merging records.
 		Please don't close this window immediately.
 	</div>
-	
-	
+
+
 	<div id="modal53" title="Scheme to customer">
 		<table id='modal53_table'>
 		</table>
 	</div>
-	
+
 	<div id="modal54" title="Scheme from supplier">
 		<table id='modal54_table'>
 		</table>
@@ -987,7 +987,7 @@
 	<div id="modal55" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal55_form' autocomplete="off">                               
+                <form id='modal55_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Database Backup</h4>
@@ -1011,14 +1011,14 @@
 		<br>
 		Previous Quotations
 		<table id='modal57_quot_table'>
-		</table>	
+		</table>
 	</div>
 
 	<div id="modal83" title="Store Inventory">
 		<table id='modal83_inventory_table' class="plain_table">
 		</table>
 	</div>
-	
+
 	<div id="modal84" title="Design Preview">
 		<div id='modal84_preview'></div>
 	</div>
@@ -1027,7 +1027,7 @@
 	<div id="modal101" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal101_form' autocomplete="off">                               
+                <form id='modal101_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Email Document</h4>
@@ -1049,7 +1049,7 @@
 		               </div>
 		             </div>
 	             	<div class="modal-footer">
-                    <input type='hidden' form='modal101_form' name='acc_name'>    
+                    <input type='hidden' form='modal101_form' name='acc_name'>
 	               	<button type="submit" class="btn green" form='modal101_form' name='save'>Send</button>
 	               	<button type="button" data-dismiss='modal' class="btn red" form='modal101_form' name='cancel'>Cancel</button>
 	             	</div>
@@ -1107,7 +1107,7 @@
 	<div id="modal106" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal106_form' autocomplete="off">                               
+                <form id='modal106_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add Ledger Entry</h4>
@@ -1198,7 +1198,7 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
 	<div id="modal111" title="Log location">
 		<form id='modal111_form' autocomplete="off">
 			<fieldset>
@@ -1216,7 +1216,7 @@
 	<div id="modal112" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal112_form' autocomplete="off">                               
+                <form id='modal112_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add new Product</h4>
@@ -1305,7 +1305,7 @@
 	<div id="modal115" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal115_form' autocomplete="off">                               
+                <form id='modal115_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Delete Confirmation</h4>
@@ -1342,7 +1342,7 @@
 	<div id="modal117" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal117_form' autocomplete="off">                               
+                <form id='modal117_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add Task</h4>
@@ -1366,7 +1366,7 @@
 					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal117_form' required name='status'></div>
 					       </div>
 		              </div>
-                    </div>    
+                    </div>
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal117_form' name='save'>Add</button>
 	               	<button type="button" class="btn red" form='modal117_form' data-dismiss='modal' name='cancel'>Cancel</button>
@@ -1413,7 +1413,7 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
 	<div id="modal122" title="Update Inventory">
 		<form id='modal122_form' autocomplete="off">
 			<fieldset>
@@ -1440,14 +1440,14 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
 	<div id="modal124" title="Send SMS">
 		<form id='modal124_form' autocomplete="off">
 			<fieldset>
 				<label>To: <input type='text' name='to' readonly="readonly"></label><br>
 				<label>Phone: <input type='text' name='phone' required></label><br>
 				<label>SMS: <textarea name='sms'></textarea></label><br>
-				<input type='hidden'>				
+				<input type='hidden'>
 				<input type="submit" value='Send' class='modal_submit'>
 			</fieldset>
 		</form>
@@ -1466,7 +1466,7 @@
 	<div id="modal126" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal126_form' autocomplete="off">                               
+                <form id='modal126_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Priority Suppliers</h4>
@@ -1494,7 +1494,7 @@
 		Do you want to print tags?
 		<br>
 		<br>
-		<br>		
+		<br>
 		<form id='modal127_form' autocomplete="off">
 			<fieldset>
 				<input type="button" value='Yes' class='modal_submit'>
@@ -1526,7 +1526,7 @@
 	</div>
 
 	<div id="modal130" title="Delete Cache">
-		Do you want to cleared browser cache? (There will be no impact on your saved data.) 
+		Do you want to cleared browser cache? (There will be no impact on your saved data.)
 		<br>
 		<b>Please refresh the browser again after the cache is cleared.</b>
 		<br>
@@ -1557,7 +1557,7 @@
 	</div>
 
 	<div id="modal133" title="Analyze Order">
-		<label id='modal133_order_id'>Order #:</label><br>	
+		<label id='modal133_order_id'>Order #:</label><br>
 		<table id='modal133_item_table'>
 		</table>
 		<br>
@@ -1566,14 +1566,14 @@
 			<label>Bill Type: <input type='text' required></label><br>
 			<input type="submit" class='modal_submit' value='Bill'>
 			<input type="button" class='modal_submit' value='Cancel'>
-		</form>				
+		</form>
 	</div>
-	
+
 	<a href='#modal134' data-toggle="modal" id='modal134_link'></a>
 	<div id="modal134" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal134_form' autocomplete="off">                               
+                <form id='modal134_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Follow up</h4>
@@ -1611,7 +1611,7 @@
 	<div id="modal135" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal135_form' autocomplete="off">                               
+                <form id='modal135_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add Setting</h4>
@@ -1649,7 +1649,7 @@
 	<div id="modal136" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal136_form' autocomplete="off">                               
+                <form id='modal136_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add Tab</h4>
@@ -1682,12 +1682,12 @@
             </div>
         </div>
     </div>
-    
+
     <a href='#modal137' data-toggle="modal" id='modal137_link'></a>
 	<div id="modal137" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal137_form' autocomplete="off">                               
+                <form id='modal137_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">View Bills</h4>
@@ -1708,7 +1708,7 @@
             </div>
         </div>
     </div>
-    
+
 	<div id="modal138" title="Import Sale Orders">
 		<form id='modal138_form' autocomplete="off">
 			<fieldset>
@@ -1752,7 +1752,7 @@
 				<b>Import pre-filled template</b><br>
 				<input type="file" required value='Select file' accept=".csv" style='display:none'>
 				<input type='button' class='generic_red_icon' value='Select File'>
-				<br>				
+				<br>
 				<output name='selected_file'></output><br>
 				<input type="submit" value='Import' class='modal_submit'>
 			</fieldset>
@@ -1804,7 +1804,7 @@
 	<div id="modal144" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal144_form' autocomplete="off">                               
+                <form id='modal144_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add Document</h4>
@@ -1855,7 +1855,7 @@
 	<div id="modal146" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal146_form' autocomplete="off">                               
+                <form id='modal146_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add Test Results</h4>
@@ -1907,12 +1907,12 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
     <a href='#modal148' data-toggle="modal" id='modal148_link'></a>
 	<div id="modal148" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal148_form' autocomplete="off">                               
+                <form id='modal148_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Import Outstation Orders</h4>
@@ -1929,7 +1929,7 @@
 								   	<input type="file" required name='file' value='Select file' accept=".csv" style='display:none'>
 									<button type='button' name='file_dummy' class='btn red-sunglo'>Select Import File</button>
 								</div>
-				          </div>											
+				          </div>
 		                  <div class="row">
 									<div class='col-md-6'><output name='selected_file'></output></div>
 					      </div>
@@ -1949,7 +1949,7 @@
 	<div id="modal149" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal149_form' autocomplete="off">                               
+                <form id='modal149_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Data Import</h4>
@@ -1974,7 +1974,7 @@
 								   	<input type="file" required name='file' value='Select file' accept=".csv" style='display:none'>
 									<button type='button' name='file_dummy' class='btn red-sunglo'>Select File</button>
 								</div>
-				          </div>											
+				          </div>
 		                  <div class="row">
 									<div class='col-md-6'><output name='selected_file'></output></div>
 					      </div>
@@ -1998,7 +1998,7 @@
 			</fieldset>
 		</form>
 		<table id='modal150_table' class='plain_table'>
-		</table>		
+		</table>
 	</div>
 
 	<div id="modal151" title="Bag Number">
@@ -2010,7 +2010,7 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
 	<div id="modal152" title="Scan item to place">
 		<form id='modal152_form' autocomplete="off">
 			<fieldset>
@@ -2021,14 +2021,14 @@
 		</form>
 		<table id='modal152_table' style='display:none;'>
 		<table id='modal152_table2' class='plain_table'>
-		</table>		
+		</table>
 	</div>
 
 	<a href='#modal153' data-toggle="modal" id='modal153_link'></a>
 	<div id="modal153" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal153_form' autocomplete="off">                               
+                <form id='modal153_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Close Sale lead</h4>
@@ -2048,21 +2048,21 @@
     </div>
 
 	<div id="modal154" title="View Invoices">
-		<br>		
+		<br>
 		<table id='modal154_item_table'>
 		</table>
 		<br>
 		<br>
 		<form id='modal154_form'>
 			<input type="button" class='modal_submit' id='modal154_cancel' value='Cancel' onclick="$('#modal154').dialog('close');">
-		</form>	
+		</form>
 	</div>
 
     <a href='#modal155' data-toggle="modal" id='modal155_link'></a>
 	<div id="modal155" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal155_form' autocomplete="off">                               
+                <form id='modal155_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add Receipt</h4>
@@ -2109,7 +2109,7 @@
 	<div id="modal156" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal156_form' autocomplete="off">                               
+                <form id='modal156_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add New Batch</h4>
@@ -2139,14 +2139,14 @@
             </div>
         </div>
     </div>
-        
+
 	<div id="modal157" title="Item Rejection">
 		Are you sure, you want to reject this item?
 		<br>
 		<br>
 		<form id='modal157_form' autocomplete="off">
 			<fieldset>
-				<label>Reason for Rejection: <input type="text" name='reason' required></label> 
+				<label>Reason for Rejection: <input type="text" name='reason' required></label>
 				<input type="submit" value='Yes' name='yes' class='modal_submit'>
 				<input type="button" value='No' name='no' class='modal_submit'>
 			</fieldset>
@@ -2157,7 +2157,7 @@
 		Are you sure, you want to update the invoice to proceed with the dispatch of packed items?
 		<br>
 		<br>
-		<br>		
+		<br>
 		<form id='modal158_form' autocomplete="off">
 			<fieldset>
 				<input type="button" value='Yes' class='modal_submit'>
@@ -2167,7 +2167,7 @@
 	</div>
 
 	<div id="modal159" title="Analyze Order">
-		<label id='modal159_order_id'>Order #:</label><br>	
+		<label id='modal159_order_id'>Order #:</label><br>
 		<table id='modal159_item_table'>
 		</table>
 		<br>
@@ -2175,14 +2175,14 @@
 		<form id='modal159_form' autocomplete="off">
 			<input type="submit" class='modal_submit' name='bill' value='Bill'>
 			<input type="button" class='modal_submit' name='cancel' value='Cancel'>
-		</form>				
+		</form>
 	</div>
 
 	<div id="modal160" title="Import Unsynced Data">
 		<form id='modal160_form' autocomplete="off">
 			<fieldset>
 				<br>
-				<br>				
+				<br>
 				<input type="file" required value='Select file' accept=".csv" style='display:none'>
 				<input type='button' class='generic_red_icon' value='Select File'>
 				<br>
@@ -2209,7 +2209,7 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
 	<div id="modal162" title="Close Picking">
 		<form id='modal162_form' autocomplete="off">
 			<fieldset>
@@ -2223,7 +2223,7 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
 	<div id="modal163" title="Mass Put-away">
 		<form id='modal163_form' autocomplete="off">
 			<fieldset>
@@ -2236,19 +2236,19 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
 	<a href='#modal164' data-toggle="modal" id='modal164_link'></a>
 	<div id="modal164" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal164_form' autocomplete="off">                               
+                <form id='modal164_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Import Aborted</h4>
                 	</div>
 	                <div class="modal-body">
 		               <div class="scroller" style="height:80%;" data-always-visible="1" data-rail-visible1="1">
-		               	<div id='modal164_div'></div> 
+		               	<div id='modal164_div'></div>
 		               </div>
 		             </div>
 	             	<div class="modal-footer">
@@ -2263,7 +2263,7 @@
 	<div id="modal165" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-full">
             <div class="modal-content">
-                <form id='modal165_form' autocomplete="off">                               
+                <form id='modal165_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Function</h4>
@@ -2288,7 +2288,7 @@
         </div>
     </div>
 
-	
+
 	<div id="modal166" title="Follow-up Details">
 		<form id='modal166_form' autocomplete="off">
 			<fieldset>
@@ -2334,7 +2334,7 @@
 	<div id="modal169" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal169_form' autocomplete="off">                               
+                <form id='modal169_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Search Return Columns</h4>
@@ -2387,7 +2387,7 @@
 	<div id="modal172" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal172_form' autocomplete="off">                               
+                <form id='modal172_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add Receipt</h4>
@@ -2441,7 +2441,7 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
 	<div id="modal174" title="Add new product">
 		<form id='modal174_form' autocomplete="off">
 			<fieldset>
@@ -2465,7 +2465,7 @@
 	<div id="modal175" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal175_form' autocomplete="off">                               
+                <form id='modal175_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add Newsletter Component</h4>
@@ -2493,12 +2493,12 @@
             </div>
         </div>
     </div>
-	
+
 	<a href='#modal176' data-toggle="modal" id='modal176_link'></a>
 	<div id="modal176" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal176_form' autocomplete="off">                               
+                <form id='modal176_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add Image</h4>
@@ -2552,7 +2552,7 @@
 	<div id="modal178" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-full">
             <div class="modal-content">
-                <form id='modal178_form' autocomplete="off">                               
+                <form id='modal178_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Notification Function</h4>
@@ -2581,7 +2581,7 @@
 	<div id="modal179" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal179_form' autocomplete="off">                               
+                <form id='modal179_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Update Newsletter Component</h4>
@@ -2610,7 +2610,7 @@
 	<div id="modal180" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-full">
             <div class="modal-content">
-                <form id='modal180_form' autocomplete="off">                               
+                <form id='modal180_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">HTML Code</h4>
@@ -2635,7 +2635,7 @@
 	<div id="modal181" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
      <div class="modal-dialog modal-full">
          <div class="modal-content">
-            <form id='modal181_form' autocomplete="off">                               
+            <form id='modal181_form' autocomplete="off">
 	            <div class="modal-header">
                   	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                  	<h4 class="modal-title">Preview</h4>
@@ -2659,7 +2659,7 @@
 	<div id="modal182" class="modal fade draggable-modal bs-modal-lg" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal182_form' autocomplete="off">                               
+                <form id='modal182_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Change Password</h4>
@@ -2703,18 +2703,18 @@
 			}
 			else
 			{
-				$(form).find('.verify').html('Passwords do not match!');				
+				$(form).find('.verify').html('Passwords do not match!');
 			}
 		}
 		</script>
     </div>
-    
+
 
 	<a href='#modal183' data-toggle="modal" id='modal183_link'></a>
 	<div id="modal183" class="modal fade draggable-modal bs-modal-lg" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal183_form' autocomplete="off">                               
+                <form id='modal183_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Email</h4>
@@ -2743,7 +2743,7 @@
 	<div id="modal184" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-full">
             <div class="modal-content">
-                <form id='modal184_form' autocomplete="off">                               
+                <form id='modal184_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Box Content</h4>
@@ -2768,7 +2768,7 @@
 	<div id="modal185" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-full">
             <div class="modal-content">
-                <form id='modal185_form' autocomplete="off">                               
+                <form id='modal185_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Box Function</h4>
@@ -2797,7 +2797,7 @@
 	<div id="modal186" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-full">
             <div class="modal-content">
-                <form id='modal186_form' autocomplete="off">                               
+                <form id='modal186_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Overwrite Function</h4>
@@ -2822,7 +2822,7 @@
 	<div id="modal187" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal187_form' autocomplete="off">                               
+                <form id='modal187_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add table</h4>
@@ -2848,7 +2848,7 @@
 	<div id="modal188" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal188_form' autocomplete="off">                               
+                <form id='modal188_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add Column</h4>
@@ -2882,7 +2882,7 @@
 	<div id="modal189" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal189_form' autocomplete="off">                               
+                <form id='modal189_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Change Column Type</h4>
@@ -2916,7 +2916,7 @@
 	<div id="modal190" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal190_form' autocomplete="off">                               
+                <form id='modal190_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add Grid</h4>
@@ -2962,7 +2962,7 @@
 	<div id="modal191" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal191_form' autocomplete="off">                               
+                <form id='modal191_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Create Project</h4>
@@ -2996,7 +2996,7 @@
 	<div id="modal192" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-full">
             <div class="modal-content">
-                <form id='modal192_form' autocomplete="off">                               
+                <form id='modal192_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Notification Function</h4>
@@ -3021,7 +3021,7 @@
 	<div id="modal193" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal193_form' autocomplete="off">                               
+                <form id='modal193_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Update Grid</h4>
@@ -3067,7 +3067,7 @@
 	<div id="modal194" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal194_form' autocomplete="off">                               
+                <form id='modal194_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Search Item</h4>
@@ -3092,12 +3092,12 @@
             </div>
         </div>
     </div>
-    
+
     <a href='#modal195' data-toggle="modal" id='modal195_link'></a>
 	<div id="modal195" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-full">
             <div class="modal-content">
-                <form id='modal195_form' autocomplete="off">                               
+                <form id='modal195_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Create Delivery Challan</h4>
@@ -3118,13 +3118,13 @@
                 </form>
             </div>
         </div>
-    </div>	    
+    </div>
 
 	<a href='#modal196' data-toggle="modal" id='modal196_link'></a>
 	<div id="modal196" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal196_form' autocomplete="off">                               
+                <form id='modal196_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add New Letter</h4>
@@ -3182,7 +3182,7 @@
 	<div id="modal197" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal197_form' autocomplete="off">                               
+                <form id='modal197_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Close Letter</h4>
@@ -3207,12 +3207,12 @@
             </div>
         </div>
     </div>
-    
+
 	<a href='#modal198' data-toggle="modal" id='modal198_link'></a>
 	<div id="modal198" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal198_form' autocomplete="off">                               
+                <form id='modal198_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Follow-up</h4>
@@ -3250,7 +3250,7 @@
 	<div id="modal199" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal199_form' autocomplete="off">                               
+                <form id='modal199_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Contact Assignee</h4>
@@ -3306,7 +3306,7 @@
 	<div id="modal201" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal201_form' autocomplete="off">                               
+                <form id='modal201_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add Task</h4>
@@ -3344,7 +3344,7 @@
 	<div id="modal202" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal202_form' autocomplete="off">                               
+                <form id='modal202_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Update Task</h4>
@@ -3373,12 +3373,12 @@
             </div>
         </div>
     </div>
-    
+
     <a href='#modal203' data-toggle="modal" id='modal203_link'></a>
 	<div id="modal203" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal203_form' autocomplete="off">                               
+                <form id='modal203_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add new Product</h4>
@@ -3421,7 +3421,7 @@
 	<div id="modal204" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal204_form' autocomplete="off">                               
+                <form id='modal204_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add new Batch</h4>
@@ -3455,12 +3455,12 @@
             </div>
         </div>
     </div>
-        
+
 	<a href='#modal205' data-toggle="modal" id='modal205_link'></a>
 	<div id="modal205" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal205_form' autocomplete="off">                               
+                <form id='modal205_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add new Staff</h4>
@@ -3494,12 +3494,12 @@
             </div>
         </div>
     </div>
-    
+
     <a href='#modal206' data-toggle="modal" id='modal206_link'></a>
 	<div id="modal206" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal206_form' autocomplete="off">                               
+                <form id='modal206_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add Document</h4>
@@ -3528,7 +3528,7 @@
             </div>
         </div>
     </div>
-    
+
     <a href='#modal207' data-toggle="modal" id='modal207_link'></a>
 	<div id="modal207" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-full">
@@ -3550,7 +3550,7 @@
             </div>
         </div>
     </div>
-    
+
     <div id="modal208" title="Import Manifest">
 		<form id='modal208_form' autocomplete="off">
 			<fieldset>
@@ -3570,12 +3570,12 @@
 			</fieldset>
 		</form>
 	</div>
-    
+
     <a href='#modal209' data-toggle="modal" id='modal209_link'></a>
 	<div id="modal209" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal209_form' autocomplete="off">                               
+                <form id='modal209_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Email Document</h4>
@@ -3604,12 +3604,12 @@
             </div>
         </div>
     </div>
-    
+
     <a href='#modal210' data-toggle="modal" id='modal210_link'></a>
 	<div id="modal210" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal210_form' autocomplete="off">                               
+                <form id='modal210_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Add Document</h4>
@@ -3637,12 +3637,12 @@
             </div>
         </div>
     </div>
-    
+
     <a href='#modal211' data-toggle="modal" id='modal211_link'></a>
 	<div id="modal211" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal211_form' autocomplete="off">                               
+                <form id='modal211_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Mark as Bag</h4>
@@ -3686,7 +3686,7 @@
 	<div id="modal212" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal212_form' autocomplete="off">                               
+                <form id='modal212_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Configurations Backup</h4>
@@ -3702,12 +3702,12 @@
             </div>
         </div>
     </div>
-    
+
 	<a href='#modal213' data-toggle="modal" id='modal213_link'></a>
 	<div id="modal213" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id='modal213_form' autocomplete="off">                               
+                <form id='modal213_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     	<h4 class="modal-title">Import Configurations</h4>
@@ -3731,5 +3731,5 @@
             </div>
         </div>
     </div>
-    	
+
 </div>
