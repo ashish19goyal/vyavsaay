@@ -9,9 +9,9 @@ function form1_ini()
 	var fid=$("#form1_link").attr('data_id');
 	if(fid==null)
 		fid="";
-	
+
 	var filter_fields=document.getElementById('form1_header');
-	
+
 	var fname=filter_fields.elements[0].value;
 	var fbatch=filter_fields.elements[1].value;
 
@@ -21,7 +21,7 @@ function form1_ini()
 	var next_element=document.getElementById('form1_next');
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
-	
+
 	var columns="<product_instances count='25' start_index='"+start_index+"'>" +
 		"<id>"+fid+"</id>" +
 		"<batch>"+fbatch+"</batch>" +
@@ -31,7 +31,7 @@ function form1_ini()
 		"</product_instances>";
 
 	$('#form1_body').html("");
-	
+
 	fetch_requested_data('form1',columns,function(results)
 	{
 		results.forEach(function(result)
@@ -57,12 +57,12 @@ function form1_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form1_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' title='Save' form='form1_"+result.id+"'>";					
+						rowsHTML+="<input type='submit' class='save_icon' title='Save' form='form1_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' title='Delete' form='form1_"+result.id+"' onclick='form1_delete_item($(this));'>";
 						//rowsHTML+="<input type='button' class='generic_icon' value='Purchase' form='form1_"+result.id+"' onclick=\"modal27_action('"+result.product_name+"');\">";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form1_body').append(rowsHTML);
 			var fields=document.getElementById("form1_"+result.id);
 			var manufacturing=fields.elements[2];
@@ -74,10 +74,10 @@ function form1_ini()
 				event.preventDefault();
 				form1_update_item(fields);
 			});
-			
+
 			$(manufacturing).datepicker();
 			$(expiry).datepicker();
-			
+
 			get_inventory(result.product_name,result.batch,function(inventory)
 			{
 				sys_inventory.value=inventory;
@@ -108,7 +108,7 @@ function form1_ini()
 			$(prev_element).show();
 		}
 		/////////////
-		
+
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 
@@ -124,7 +124,7 @@ function form1_ini()
 				{
 					new_result.quantity=inventory;
 					total_export_requests-=1;
-				});	
+				});
 			});
 		});
 		hide_loader();
@@ -140,9 +140,9 @@ function form2_ini()
 {
 	var newsletter_id=$("#form2_link").attr('data_id');
 	if(newsletter_id==null)
-		newsletter_id="";	
+		newsletter_id="";
 	$('#form2_body').html("");
-	
+
 	//console.log(newsletter_id);
 	if(newsletter_id!="")
 	{
@@ -163,7 +163,7 @@ function form2_ini()
 				"<column_size></column_size>"+
 				"<url></url>"+
 				"</newsletter_items>";
-	
+
 		fetch_requested_data('',newsletter_columns,function(newsletter_results)
 		{
 			for (var i in newsletter_results)
@@ -183,14 +183,14 @@ function form2_ini()
 			}
 		});
 		/////////////////////////////////////////////////////////////////////////
-		
+
 		fetch_requested_data('',newsletter_item_columns,function(results)
 		{
 			results.forEach(function(result)
 			{
 				var id=result.id;
 				var updated_blob=result.data_blob.replace(/ /g,"+");
-				var rowsHTML="<tr>";				
+				var rowsHTML="<tr>";
 				rowsHTML+="<form id='form2_"+id+"'></form>";
 					rowsHTML+="<td data-th='Item'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form2_"+id+"' value='"+result.item_type+"'>";
@@ -209,33 +209,33 @@ function form2_ini()
 						rowsHTML+="<input type='hidden' form='form2_"+id+"' value='"+id+"'>";
 						rowsHTML+="<input type='submit' class='submit_hidden' form='form2_"+id+"' id='save_form2_"+id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form2_"+id+"' id='delete_form2_"+id+"' onclick='form2_delete_item($(this));'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 				rowsHTML+="</tr>";
-			
+
 				$('#form2_body').prepend(rowsHTML);
-				
+
 				var fields=document.getElementById("form2_"+id);
 				$(fields).on("submit", function(event)
 				{
 					event.preventDefault();
 					form2_update_item(fields);
 				});
-				
+
 				var type_filter=fields.elements[0];
 				var name_filter=fields.elements[1];
 				var detail_filter=fields.elements[2];
 				var link_filter=fields.elements[3];
 				var pictureinfo=fields.elements[4];
 				var picture=fields.elements[5];
-		
+
 				picture.addEventListener('change',function(evt)
 				{
 					select_picture(evt,pictureinfo,function(dataURL)
 					{
-						pictureinfo.innerHTML="<div class='figure'><img id='img_form2_"+id+"' src='"+dataURL+"'></div>";			
+						pictureinfo.innerHTML="<div class='figure'><img id='img_form2_"+id+"' src='"+dataURL+"'></div>";
 					});
 				},false);
-		
+
 			});
 			$('textarea').autosize();
 			longPressEditable($('.dblclick_editable'));
@@ -256,31 +256,31 @@ function form5_ini()
 	show_loader();
 	var fid=$("#form5_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form5_header');
-		
+
 	var fasset=filter_fields.elements[0].value;
 	var ftype=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form5_index');
 	var prev_element=document.getElementById('form5_prev');
 	var next_element=document.getElementById('form5_next');
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
-	
+
 	var columns="<assets count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fasset+"</name>" +
 			"<type>"+ftype+"</type>" +
 			"<description></description>" +
 			"</assets>";
-	
+
 	$('#form5_body').html("");
 
 	fetch_requested_data('form5',columns,function(results)
-	{	
+	{
 		results.forEach(function(result)
 		{
 			var rowsHTML="";
@@ -298,12 +298,12 @@ function form5_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form5_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form5_"+result.id+"' title='Save'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form5_"+result.id+"' title='Delete' onclick='form5_delete_item($(this));'>";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='delete_icon' form='form5_"+result.id+"' title='Delete' onclick='form5_delete_item($(this));'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form5_body').append(rowsHTML);
-			
+
 			var fields=document.getElementById("form5_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -311,7 +311,7 @@ function form5_ini()
 				form5_update_item(fields);
 			});
 		});
-		
+
 		////indexing///
 		var next_index=parseInt(start_index)+25;
 		var prev_index=parseInt(start_index)-25;
@@ -335,7 +335,7 @@ function form5_ini()
 			$(prev_element).show();
 		}
 		/////////////
-		
+
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 
@@ -351,127 +351,6 @@ function form5_ini()
 
 
 /**
- * @form Attendance
- * @formNo 7
- * @Loading light
- */
-function form7_ini()
-{
-	show_loader();
-	var fid=$("#form7_link").attr('data_id');
-	if(fid==null)
-		fid="";	
-	
-	var master_fields=document.getElementById('form7_master');
-	var fdate=master_fields.elements[1].value;
-	
-	var filter_fields=document.getElementById('form7_header');
-	var fstaff=filter_fields.elements[0].value;
-	var fattendance=filter_fields.elements[1].value;
-	
-	var columns="<attendance>" +
-			"<id>"+fid+"</id>" +
-			"<date exact='yes'>"+get_raw_time(fdate)+"</date>" +
-			"<acc_name>"+fstaff+"</acc_name>" +
-			"<presence>"+fattendance+"</presence>" +
-			"<hours_worked></hours_worked>" +
-			"</attendance>";
-
-	$('#form7_body').html("");
-
-	fetch_requested_data('form7',columns,function(results)
-	{
-		if(results.length===0)
-		{
-			var staff_columns="<staff>" +
-					"<acc_name></acc_name>" +
-					"<status exact='yes'>active</status>" +
-					"</staff>";
-			fetch_requested_data('form7',staff_columns,function(staff_names)
-			{
-				staff_names.forEach(function(staff_name)
-				{
-					var rowsHTML="";
-					var data_id=get_new_key();
-					rowsHTML+="<tr>";
-						rowsHTML+="<form id='form7_"+data_id+"'></form>";
-							rowsHTML+="<td data-th='Staff Name'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form7_"+data_id+"' value='"+staff_name.acc_name+"'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Attendance'>";
-								rowsHTML+="<input type='text' form='form7_"+data_id+"' value='present' class='dblclick_editable'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Hours Worked'>";
-								rowsHTML+="<input type='number' form='form7_"+data_id+"' value='8' class='dblclick_editable'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Action'>";
-								rowsHTML+="<input type='hidden' form='form7_"+data_id+"' value='"+data_id+"'>";
-								rowsHTML+="<input type='submit' class='save_icon' id='save_form7_"+data_id+"' form='form7_"+data_id+"' value='saved'>";
-								rowsHTML+="<input type='hidden' form='form7_"+data_id+"' value='"+get_raw_time(fdate)+"'>";
-							rowsHTML+="</td>";			
-					rowsHTML+="</tr>";
-					
-					$('#form7_body').prepend(rowsHTML);
-					
-					var fields=document.getElementById("form7_"+data_id);
-					var attendance_filter=fields.elements[1];
-					set_static_value_list('attendance','presence',attendance_filter);
-
-					$(fields).on("submit", function(event)
-					{
-						event.preventDefault();
-						form7_create_item(fields);
-					});
-				});
-				
-				longPressEditable($('.dblclick_editable'));
-				hide_loader();
-			});
-		}
-		else
-		{
-			results.forEach(function(result)
-			{
-				var rowsHTML="";
-				rowsHTML+="<tr>";
-					rowsHTML+="<form id='form7_"+result.id+"'></form>";
-						rowsHTML+="<td data-th='Name'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form7_"+result.id+"' value='"+result.acc_name+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Name'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form7_"+result.id+"' value='"+result.presence+"' class='dblclick_editable'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Name'>";
-							rowsHTML+="<input type='number' readonly='readonly' form='form7_"+result.id+"' value='"+result.hours_worked+"' class='dblclick_editable'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Name'>";
-							rowsHTML+="<input type='hidden' form='form7_"+result.id+"' value='"+result.id+"'>";
-							rowsHTML+="<input type='submit' class='save_icon' id='save_form7_"+result.id+"' form='form7_"+result.id+"' value='saved'>";
-							rowsHTML+="<input type='hidden' form='form7_"+result.id+"' value='"+result.date+"'>";
-						rowsHTML+="</td>";			
-				rowsHTML+="</tr>";
-				
-				$('#form7_body').prepend(rowsHTML);
-				
-				var fields=document.getElementById("form7_"+result.id);
-				var attendance_filter=fields.elements[1];
-				set_static_value_list('attendance','presence',attendance_filter);
-				
-				$(fields).on("submit", function(event)
-				{
-					event.preventDefault();
-					form7_update_item(fields);
-				});
-			});
-			
-			longPressEditable($('.dblclick_editable'));
-			hide_loader();
-		}
-	});
-};
-
-
-/**
  * @form New Service Bill
  * @formNo 10
  * @Loading light
@@ -480,10 +359,10 @@ function form10_ini()
 {
 	var bill_id=$("#form10_link").attr('data_id');
 	if(bill_id==null)
-		bill_id="";	
+		bill_id="";
 	$('#form10_body').html("");
 	$('#form10_foot').html("");
-	
+
 	if(bill_id!="")
 	{
 		show_loader();
@@ -516,12 +395,12 @@ function form10_ini()
 				"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
 				"<tax></tax>" +
 				"</bill_items>";
-	
+
 		////separate fetch function to get bill details like customer name, total etc.
 		fetch_requested_data('',bill_columns,function(bill_results)
 		{
 			var filter_fields=document.getElementById('form10_master');
-			
+
 			for (var i in bill_results)
 			{
 				filter_fields.elements['customer'].value=bill_results[i].customer_name;
@@ -535,7 +414,7 @@ function form10_ini()
 				var payment_filter=filter_fields.elements['payment'];
 				var save_button=filter_fields.elements['save'];
 				var address_filter=filter_fields.elements['customer_address'];
-				
+
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
@@ -564,7 +443,7 @@ function form10_ini()
 					if(addresses.length>0)
 						address_filter.value=addresses[0].address+', '+addresses[0].city+"-"+addresses[0].pincode;
 				});
-				
+
 				var payment_data="<payments count='1'>" +
 					"<id></id>" +
 					"<paid_amount></paid_amount>"+
@@ -578,8 +457,8 @@ function form10_ini()
 						if(parseFloat(payments[0].paid_amount)==0)
 							payment_filter.value="Unpaid<br>Balance: Rs. "+payments[0].total_amount;
 						else if(parseFloat(payments[0].paid_amount)==parseFloat(payments[0].total_amount))
-							payment_filter.value="Paid<br>Balance: Rs. 0";	
-						else 
+							payment_filter.value="Paid<br>Balance: Rs. 0";
+						else
 							payment_filter.value="Partially paid<br>Balance: Rs. "+(parseFloat(payments[0].total_amount)-parseFloat(payments[0].paid_amount));
 					}
 				});
@@ -616,16 +495,16 @@ function form10_ini()
 							rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='submit_hidden' form='form10_"+id+"' id='save_form10_"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form10_"+id+"' id='delete_form10_"+id+"' onclick='form10_delete_item($(this));'>";
-						rowsHTML+="</td>";			
+						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
 
 					$('#form10_body').append(rowsHTML);
 				});
-				
+
 				$('#form10_share').show();
 				$('#form10_share').click(function()
 				{
-					modal101_action('Sale Bill',filter_fields.elements['customer'].value,'customer',function (func) 
+					modal101_action('Sale Bill',filter_fields.elements['customer'].value,'customer',function (func)
 					{
 						print_form10(func);
 					});
@@ -647,14 +526,14 @@ function form11_ini()
 	show_loader();
 	var fid=$("#form11_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form11_header');
-	
+
 	var ftype=filter_fields.elements[0].value;
 	var faccount=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form11_index');
 	var prev_element=document.getElementById('form11_prev');
@@ -680,7 +559,7 @@ function form11_ini()
 	$('#form11_body').html("");
 
 	fetch_requested_data('form11',columns,function(results)
-	{	
+	{
 		results.forEach(function(result)
 		{
 			var message_string="";
@@ -693,7 +572,7 @@ function form11_ini()
 				message_string="Payment of Rs: "+result.paid_amount+" received on "+get_my_past_date(result.date)+".\n The status of this payment is "+result.status;
 			}
 			var subject="Payment Receipt from "+get_session_var('title');
-			
+
 			var detail_string="Due Date: "+get_my_past_date(result.due_date);
 			var rowsHTML="";
 			rowsHTML+="<tr>";
@@ -729,31 +608,31 @@ function form11_ini()
 						rowsHTML+="<input type='button' form='form11_"+result.id+"' title='Share' class='share_icon'>"; //onclick=\"modal44_action('"+result.acc_name+"','"+subject+"','"+message_string+"');\">";
 					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form11_body').append(rowsHTML);
-			
+
 			var fields=document.getElementById("form11_"+result.id);
 			var status_filter=fields.elements[4];
 			var share_message=fields.elements[13];
 			var share_button=fields.elements[14];
-			
+
 			set_static_value_list('payments','status',status_filter);
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
 				form11_update_item(fields);
 			});
-			
+
 			$(share_button).on("click", function(event)
 			{
 				event.preventDefault();
 				modal44_action(result.acc_name,subject,share_message.value);
 			});
-	
+
 			longPressEditable($('.dblclick_editable'));
 			$('textarea').autosize();
 		});
-		
+
 		////indexing///
 		var next_index=parseInt(start_index)+25;
 		var prev_index=parseInt(start_index)-25;
@@ -777,7 +656,7 @@ function form11_ini()
 			$(prev_element).show();
 		}
 		/////////////
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -798,8 +677,8 @@ function form12_ini()
 {
 	var bill_id=$("#form12_link").attr('data_id');
 	if(bill_id==null)
-		bill_id="";	
-	
+		bill_id="";
+
 	$('#form12_body').html("");
 	$('#form12_foot').html("");
 	if(bill_id!="")
@@ -807,7 +686,7 @@ function form12_ini()
 		show_loader();
 		var bill_columns="<bills>" +
 				"<id>"+bill_id+"</id>" +
-				"<bill_num></bill_num>"+				
+				"<bill_num></bill_num>"+
 				"<customer_name></customer_name>" +
 				"<total></total>" +
 				"<bill_date></bill_date>" +
@@ -833,12 +712,12 @@ function form12_ini()
 				"<tax></tax>" +
 				"<free_with></free_with>" +
 				"</bill_items>";
-	
+
 		////separate fetch function to get bill details like customer name, total etc.
 		fetch_requested_data('',bill_columns,function(bill_results)
 		{
 			var filter_fields=document.getElementById('form12_master');
-			
+
 			for (var i in bill_results)
 			{
 				filter_fields.elements[1].value=bill_results[i].customer_name;
@@ -848,14 +727,14 @@ function form12_ini()
 				filter_fields.elements[5].value=bill_results[i].offer;
 				filter_fields.elements[6].value=bill_results[i].transaction_id;
 				var save_button=filter_fields.elements[7];
-				
+
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
 					event.preventDefault();
 					form12_update_form();
 				});
-				
+
 				var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 							"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 							"<td>Rs. "+bill_results[i].amount+"</br>" +
@@ -865,21 +744,21 @@ function form12_ini()
 							"<td></td>" +
 							"</tr>";
 				$('#form12_foot').html(total_row);
-				
+
 				break;
 			}
-		
-		
+
+
 			fetch_requested_data('',bill_items_column,function(results)
 			{
 				var message_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
-				
+
 				results.forEach(function(result)
 				{
 					message_string+="\nItem: "+result.item_name;
 					message_string+=" Quantity: "+result.quantity;
 					message_string+=" Total: "+result.total;
-					
+
 					var rowsHTML="";
 					var id=result.id;
 					rowsHTML+="<tr>";
@@ -909,30 +788,30 @@ function form12_ini()
 							rowsHTML+="<input type='button' class='delete_icon' form='form12_"+id+"' id='delete_form12_"+id+"' onclick='form12_delete_item($(this));'>";
 							rowsHTML+="<input type='hidden' form='form12_"+id+"'>";
 							rowsHTML+="<input type='hidden' form='form12_"+id+"'>";
-						rowsHTML+="</td>";			
+						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-				
+
 					$('#form12_body').append(rowsHTML);
-					
+
 					var fields=document.getElementById("form12_"+id);
 					$(fields).on("submit", function(event)
 					{
 						event.preventDefault();
 					});
 				});
-				
+
 				message_string+="\nAmount: "+bill_results[0].amount;
 				message_string+="\ndiscount: "+bill_results[0].discount;
 				message_string+="\nTax: "+bill_results[0].tax;
 				message_string+="\nTotal: "+bill_results[0].total;
-				
+
 				var subject="Bill from "+get_session_var('title');
 				$('#form12_share').show();
 				$('#form12_share').click(function()
 				{
 					modal44_action(filter_fields.elements[1].value,subject,message_string);
 				});
-				
+
 				hide_loader();
 			});
 		});
@@ -951,14 +830,14 @@ function form14_ini()
 	var fid=$("#form14_link").attr('data_id');
 	if(fid==null)
 		fid="";
-	
+
 	var filter_fields=document.getElementById('form14_header');
-	
-	//populating form 
+
+	//populating form
 	var ftype=filter_fields.elements[0].value;
 	var fassignee=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form14_index');
 	var prev_element=document.getElementById('form14_prev');
@@ -1007,9 +886,9 @@ function form14_ini()
 						rowsHTML+="<input type='hidden' readonly='readonly' form='form14_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form14_"+result.id+"' title='Save'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form14_"+result.id+"' title='Delete' onclick='form14_delete_item($(this));'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form14_body').append(rowsHTML);
 			var fields=document.getElementById("form14_"+result.id);
 			$(fields).on("submit", function(event)
@@ -1017,21 +896,21 @@ function form14_ini()
 				event.preventDefault();
 				form14_update_item(fields);
 			});
-			
+
 			var name_filter=fields.elements[0];
 			var assignee_filter=fields.elements[1];
 			var due_filter=fields.elements[2];
 			var status_filter=fields.elements[3];
-						
+
 			var staff_data="<staff>" +
 					"<acc_name></acc_name>" +
 					"</staff>";
 			set_my_value_list(staff_data,assignee_filter);
-			
+
 			set_static_value_list('task_instances','status',status_filter);
 			$(due_filter).vdatetimepicker();
 		});
-		
+
 		////indexing///
 		var next_index=parseInt(start_index)+25;
 		var prev_index=parseInt(start_index)-25;
@@ -1055,10 +934,10 @@ function form14_ini()
 			$(prev_element).show();
 		}
 		/////////////
-		
+
 
 		longPressEditable($('.dblclick_editable'));
-		
+
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -1080,14 +959,14 @@ function form16_ini()
 	show_loader();
 	var fid=$("#form16_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form16_header');
-	
-	//populating form 
+
+	//populating form
 	var	forder=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form16_index');
 	var prev_element=document.getElementById('form16_prev');
@@ -1099,7 +978,7 @@ function form16_ini()
 			"<id>"+fid+"</id>" +
 			"<customer>"+fname+"</customer>" +
 			"<order_num>"+forder+"</order_num>" +
-			"<channel></channel>"+			
+			"<channel></channel>"+
 			"<return_date></return_date>" +
 			"<total></total>" +
 			"<tax></tax>" +
@@ -1110,14 +989,14 @@ function form16_ini()
 	$('#form16_body').html("");
 
 	fetch_requested_data('form16',columns,function(results)
-	{	
+	{
 		results.forEach(function(result)
 		{
 			var cancelled_bill="";
 			if(result.status=='cancelled')
 			{
 				cancelled_bill="style='opacity:0.5' title='This bill was cancelled'";
-			}	
+			}
 			var rowsHTML="<tr "+cancelled_bill+">";
 				rowsHTML+="<form id='form16_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Order #'>";
@@ -1136,18 +1015,18 @@ function form16_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form16_"+result.id+"' value='"+result.id+"'>";
 					if(result.status!='cancelled')
-					{						
+					{
 						rowsHTML+="<input type='button' class='edit_icon' form='form16_"+result.id+"' title='Edit Return'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form16_"+result.id+"' title='Delete Return' onclick='form16_delete_item($(this));'>";
 					}
 						rowsHTML+="<input type='hidden' form='form16_"+result.id+"' value='"+result.transaction_id+"'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form16_body').append(rowsHTML);
-			
+
 			var fields=document.getElementById("form16_"+result.id);
-			var edit_button=fields.elements[6];						
+			var edit_button=fields.elements[6];
 			$(edit_button).on("click", function(event)
 			{
 				element_display(result.id,'form15');
@@ -1177,10 +1056,10 @@ function form16_ini()
 			$(prev_element).show();
 		}
 		/////////////
-		
+
 
 		longPressEditable($('.dblclick_editable'));
-		
+
 		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -1201,11 +1080,11 @@ function form21_ini()
 {
 	var bill_id=$("#form21_link").attr('data_id');
 	if(bill_id==null)
-		bill_id="";	
-	
+		bill_id="";
+
 	$('#form21_body').html("");
 	$('#form21_foot').html("");
-	
+
 	if(bill_id!="")
 	{
 		show_loader();
@@ -1222,7 +1101,7 @@ function form21_ini()
 				"<notes></notes>" +
 				"<transaction_id></transaction_id>" +
 				"</supplier_bills>";
-		
+
 		////separate fetch function to get bill details like customer name, total etc.
 		fetch_requested_data('',bill_columns,function(bill_results)
 		{
@@ -1236,14 +1115,14 @@ function form21_ini()
 				filter_fields.elements['bill_id'].value=bill_id;
 				filter_fields.elements['t_id'].value=bill_results[i].transaction_id;
 				var save_button=filter_fields.elements['save'];
-				
+
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
 					event.preventDefault();
 					form21_update_form();
 				});
-				
+
 				var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 							"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 							"<td>Rs. "+bill_results[i].amount+"</br>" +
@@ -1253,11 +1132,11 @@ function form21_ini()
 							"<td></td>" +
 							"</tr>";
 				$('#form21_foot').html(total_row);
-				
+
 				break;
 			}
 		});
-		
+
 		var bill_items_column="<supplier_bill_items>" +
 				"<id></id>" +
 				"<product_name></product_name>" +
@@ -1270,7 +1149,7 @@ function form21_ini()
 				"<quantity></quantity>" +
 				"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
 				"</supplier_bill_items>";
-		
+
 		fetch_requested_data('',bill_items_column,function(results)
 		{
 			results.forEach(function(result)
@@ -1302,9 +1181,9 @@ function form21_ini()
 						rowsHTML+="<input type='hidden' form='form21_"+id+"' value='"+id+"'>";
 						rowsHTML+="<input type='button' class='submit_hidden' form='form21_"+id+"' id='save_form21_"+id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form21_"+id+"' id='delete_form21_"+id+"' onclick='form21_delete_item($(this));'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 				rowsHTML+="</tr>";
-			
+
 				$('#form21_body').append(rowsHTML);
 			});
 			hide_loader();
@@ -1322,11 +1201,11 @@ function form24_ini()
 {
 	var order_id=$("#form24_link").attr('data_id');
 	if(order_id==null)
-		order_id="";	
-	
+		order_id="";
+
 	$('#form24_body').html("");
 	$('#form24_foot').html("");
-	
+
 	if(order_id!="")
 	{
 		show_loader();
@@ -1355,14 +1234,14 @@ function form24_ini()
 				"<amount></amount>"+
 				"<tax></tax>"+
 				"<tax_rate></tax_rate>"+
-				"<total></total>"+				
+				"<total></total>"+
 				"</purchase_order_items>";
-	
+
 		////separate fetch function to get order details like customer name, total etc.
 		fetch_requested_data('',order_columns,function(order_results)
 		{
 			var filter_fields=document.getElementById('form24_master');
-			
+
 			for(var i in order_results)
 			{
 				filter_fields.elements['supplier'].value=order_results[i].supplier;
@@ -1372,25 +1251,25 @@ function form24_ini()
 				filter_fields.elements['order_id'].value=order_id;
 				filter_fields.elements['mode'].value=order_results[i].payment_mode;
 				//order_results[i].order_num;
-				
+
 				if(order_results[i].cst=='yes')
 				{
 					filter_fields.elements['cst'].checked=true;
 				}
-				else 
+				else
 				{
 					filter_fields.elements['cst'].checked=false;
 				}
 
 				var save_button=filter_fields.elements['save'];
-				
+
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
 					event.preventDefault();
 					form24_update_form();
 				});
-				
+
 				var supplier_address="<suppliers>"+
 									"<address></address>"+
 									"<pincode></pincode>"+
@@ -1410,10 +1289,10 @@ function form24_ini()
 									"<name exact='yes'>"+order_results[i].supplier+"</name>"+
 									"</attributes>";
 				set_my_value(supplier_tin_xml,filter_fields.elements['tin']);
-				
+
 				break;
 			}
-		
+
 			fetch_requested_data('',order_items_column,function(results)
 			{
 				var data_array=[];
@@ -1422,7 +1301,7 @@ function form24_ini()
 				{
 					counter+=1;
 					var new_object=new Object();
-					new_object['S.No.']=counter;					
+					new_object['S.No.']=counter;
 					new_object['Item Name']=result.item_desc;
 					new_object['SKU']=result.item_name;
 					new_object['Supplier SKU']=result.supplier_sku;
@@ -1461,7 +1340,7 @@ function form24_ini()
 							rowsHTML+="<input type='button' class='delete_icon' form='form24_"+id+"' id='delete_form24_"+id+"' onclick='form24_delete_item($(this)); form24_get_totals();'>";
 						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-				
+
 					$('#form24_body').append(rowsHTML);
 				});
 
@@ -1470,7 +1349,7 @@ function form24_ini()
 				$('#form24_share').show();
 				$('#form24_share').click(function()
 				{
-					modal101_action(bt+' - PO# '+filter_fields.elements['order_num'].value+' - '+filter_fields.elements['supplier'].value,filter_fields.elements['supplier'].value,'supplier',function (func) 
+					modal101_action(bt+' - PO# '+filter_fields.elements['order_num'].value+' - '+filter_fields.elements['supplier'].value,filter_fields.elements['supplier'].value,'supplier',function (func)
 					{
 						print_form24(func);
 					},'csv',message_attachment);
@@ -1493,14 +1372,14 @@ function form35_ini()
 	show_loader();
 	var fid=$("#form35_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form35_header');
-	
+
 	var fname=filter_fields.elements[0].value;
 	var ftype=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form35_index');
 	var prev_element=document.getElementById('form35_prev');
@@ -1539,7 +1418,7 @@ function form35_ini()
 		{
 			var message_string="Exciting Offer\n"+result.offer_detail+"\nAvail at:"+encodeURIComponent(get_session_var('title'))+"\nVisit us at:"+get_session_var('address');
 			message_string=encodeURIComponent(message_string);
-			
+
 			var rowsHTML="";
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form35_"+result.id+"'></form>";
@@ -1562,14 +1441,14 @@ function form35_ini()
 						rowsHTML+="<input type='hidden' form='form35_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form35_"+result.id+"' value='saved'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form35_"+result.id+"' value='saved' onclick='form35_delete_item($(this));'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form35_body').append(rowsHTML);
 			var fields=document.getElementById("form35_"+result.id);
 			var end_filter=fields.elements[2];
 			var status_filter=fields.elements[4];
-			
+
 			$(end_filter).datepicker();
 			set_static_value_list('offers','status',status_filter);
 			$(fields).on("submit", function(event)
@@ -1605,7 +1484,7 @@ function form35_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -1633,29 +1512,29 @@ function form41_ini()
 			//console.log(e.responseText);
 
 			$('#form41_header').html("");
-		
+
 			var lat=get_session_var('lat');
 			var lng=get_session_var('lng');
 			var title=get_session_var('title');
-			
+
 			if(typeof map41 != 'undefined')
 				map41.remove();
-		
+
 			map41 = L.map('form41_map',{
-				center: [lat,lng], 
+				center: [lat,lng],
 				zoom: 10
 			});
-			
+
 			//var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 			var mqUrl='http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png';
-			L.tileLayer(mqUrl, 
+			L.tileLayer(mqUrl,
 				{
 			        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenstreetMap contributors</a>',
 			        subdomains:'1234'
 		    	}).addTo(map41);
-			
+
 			//////////changeable master coordinates/////////
-			
+
 			var mlatlng=L.latLng(lat,lng);
 			var mmarker=L.marker(mlatlng,{draggable:true}).addTo(map41).bindPopup(title);
 			mmarker.on('dragend',function(event){
@@ -1667,7 +1546,7 @@ function form41_ini()
 				var save_button=form.elements[3];
 				$(save_button).show();
 			});
-			
+
 			var rowsHTML="<div class='customers_content_item'>" +
 					"<form id='form41_master'>" +
 					"Name: <textarea style='height:40px;width:100px' readonly='readonly'>"+title+"</textarea></br>" +
@@ -1676,7 +1555,7 @@ function form41_ini()
 					"<input type='button' class='export_icon' value='Confirm' style='display:none;' form='form41_master'>" +
 					"</form>" +
 					"</div>";
-			
+
 			$('#form41_header').append(rowsHTML);
 			var fields=document.getElementById("form41_master");
 			var save_button=fields.elements[3];
@@ -1690,9 +1569,9 @@ function form41_ini()
 				//console.log('clicked on master');
 				mmarker.openPopup();
 			});
-		
+
 			/////////////////////////////////////////////////
-			
+
 			var customers_data="<customers>" +
 					"<id></id>" +
 					"<name></name>" +
@@ -1729,7 +1608,7 @@ function form41_ini()
 						var save_button=form.elements[4];
 						$(save_button).show();
 					});
-					
+
 					var rowsHTML="<div class='customers_content_item'>" +
 							"<form id='form41_"+customer.id+"'>" +
 							"Name: <textarea style='height:40px;width:100px' readonly='readonly'>"+customer.acc_name+"</textarea></br>" +
@@ -1739,7 +1618,7 @@ function form41_ini()
 							"<input type='button' class='export_icon' value='Confirm' form='form41_"+customer.id+"'>" +
 							"</form>" +
 							"</div>";
-					
+
 					$('#form41_header').append(rowsHTML);
 					var fields=document.getElementById("form41_"+customer.id);
 					var save_button=fields.elements[4];
@@ -1753,7 +1632,7 @@ function form41_ini()
 						marker.openPopup();
 					});
 				});
-				
+
 				var scrollPane=$(".customers_pane");
 				var scrollContent=$(".customers_content");
 				scrollContent.css('width',(Math.round(225*customers.length)+225)+"px");
@@ -1761,15 +1640,15 @@ function form41_ini()
 					slide: function(event,ui) {
 						if (scrollContent.width()>scrollPane.width()){
 							scrollContent.css( "margin-left", Math.round(ui.value/100*(scrollPane.width()-scrollContent.width()))+"px");
-						} 
+						}
 						else{
 							scrollContent.css("margin-left",0);
 						}
 					}
 				});
-		
-				scrollPane.css("overflow","hidden");			
-			
+
+				scrollPane.css("overflow","hidden");
+
 				hide_loader();
 			});
 		});
@@ -1790,11 +1669,11 @@ function form42_ini()
 	show_loader();
 	var fid=$("#form42_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form42_header');
-	
-	//populating form 
+
+	//populating form
 	var fnum=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
 
@@ -1807,7 +1686,7 @@ function form42_ini()
 
 	var columns="<bills count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
-			"<bill_num>"+fnum+"</bill_num>"+			
+			"<bill_num>"+fnum+"</bill_num>"+
 			"<customer_name>"+fname+"</customer_name>" +
 			"<bill_date></bill_date>" +
 			"<total></total>" +
@@ -1820,7 +1699,7 @@ function form42_ini()
 	$('#form42_body').html("");
 
 	fetch_requested_data('form42',columns,function(results)
-	{	
+	{
 		results.forEach(function(result)
 		{
 			var cancelled_bill="";
@@ -1828,7 +1707,7 @@ function form42_ini()
 			{
 				cancelled_bill="style='opacity:0.5' title='This bill was cancelled'";
 			}
-			
+
 			var rowsHTML="<tr "+cancelled_bill+">";
 				rowsHTML+="<form id='form42_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Bill No.'>";
@@ -1851,13 +1730,13 @@ function form42_ini()
 						rowsHTML+="<input type='button' class='delete_icon' form='form42_"+result.id+"' title='Delete Bill' onclick='form42_delete_item($(this));'>";
 					}
 						rowsHTML+="<input type='hidden' form='form42_"+result.id+"' value='"+result.transaction_id+"'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form42_body').append(rowsHTML);
 			var fields=document.getElementById("form42_"+result.id);
 			if(result.status!='cancelled')
-			{			
+			{
 				var edit_button=fields.elements[5];
 				$(edit_button).on("click", function(event)
 				{
@@ -1892,7 +1771,7 @@ function form42_ini()
 		/////////////
 
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -1914,15 +1793,15 @@ function form43_ini()
 	show_loader();
 	var fid=$("#form43_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form43_header');
-	
-	//populating form 
+
+	//populating form
 	var fnum=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form43_index');
 	var prev_element=document.getElementById('form43_prev');
@@ -1948,7 +1827,7 @@ function form43_ini()
 	$('#form43_body').html("");
 
 	fetch_requested_data('form43',columns,function(results)
-	{	
+	{
 		results.forEach(function(result)
 		{
 			var rowsHTML="";
@@ -1985,7 +1864,7 @@ function form43_ini()
 							rowsHTML+="<br><input type='button' name='issue_grn' class='generic_icon' form='form43_"+result.id+"' value='GRN with QC'>";
 						}
 						if(result.qc_pending==0 || result.qc_pending=='0')
-							rowsHTML+="<br><input type='button' name='new_order' class='generic_icon' form='form43_"+result.id+"' value='New Order'>";						
+							rowsHTML+="<br><input type='button' name='new_order' class='generic_icon' form='form43_"+result.id+"' value='New Order'>";
 					}
 					else if(result.status=='completely received')
 					{
@@ -1995,12 +1874,12 @@ function form43_ini()
 							rowsHTML+="<br><input type='button' name='issue_grn' class='generic_icon' form='form43_"+result.id+"' value='GRN with QC'>";
 						}
 					}
-					
+
 					if(result.bill_id!='' && result.bill_id!='null')
 					{
 						rowsHTML+="<br><input type='button' name='view_bill' class='generic_icon' form='form43_"+result.id+"' value='View Bill'>";
 					}
-					
+
 					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 
@@ -2015,7 +1894,7 @@ function form43_ini()
 				event.preventDefault();
 				form43_update_item(fields);
 			});
-			
+
 			if(result.bill_id!='' && result.bill_id!='null')
 			{
 				var view_button=fields.elements['view_bill'];
@@ -2034,7 +1913,7 @@ function form43_ini()
 				{
 					modal131_action(result.id,result.order_num,result.total_quantity,result.supplier,get_my_past_date(result.order_date),result.quantity_accepted);
 				});
-				
+
 				//grn with qc
 				var issue_button=fields.elements['issue_grn'];
 				$(issue_button).on('click',function()
@@ -2044,12 +1923,12 @@ function form43_ini()
 					master_form.elements['supplier'].value=result.supplier;
 					master_form.elements['po_num'].value=result.order_num;
 					master_form.elements['order_id'].value=result.id;
-					
+
 					if(result.cst=='yes')
 						master_form.elements['cst'].checked=true;
 					$(master_form.elements['bill_num']).focus();
 				});
-				
+
 				//new order
 				var new_order_button=fields.elements['new_order'];
 				$(new_order_button).on('click',function()
@@ -2066,7 +1945,7 @@ function form43_ini()
 									"<mrp></mrp>"+
 									"<order_id exact='yes'>"+result.id+"</order_id>"+
 									"</purchase_order_items>";
-					fetch_requested_data('',po_items_xml,function (po_items) 
+					fetch_requested_data('',po_items_xml,function (po_items)
 					{
 						var bill_items_xml="<supplier_bill_items>"+
 										"<product_name></product_name>"+
@@ -2074,7 +1953,7 @@ function form43_ini()
 										"<qc exact='yes'>accepted</qc>"+
 										"<bill_id array='yes'>"+result.bill_id+"</bill_id>"+
 										"</supplier_bill_items>";
-						fetch_requested_data('',bill_items_xml,function (bill_items) 
+						fetch_requested_data('',bill_items_xml,function (bill_items)
 						{
 							for(var k=0;k<po_items.length;k++)
 							{
@@ -2086,12 +1965,12 @@ function form43_ini()
 										{
 											var old_quantity=parseFloat(po_items[k].quantity);
 											var new_quantity=parseFloat(po_items[k].quantity)-parseFloat(bill_items[l].quantity);
-																					
+
 											po_items[k].quantity=new_quantity;
 											po_items[k].amount=parseFloat(po_items[k].amount)*new_quantity/old_quantity;
 											po_items[k].tax=parseFloat(po_items[k].tax)*new_quantity/old_quantity;
 											po_items[k].total=parseFloat(po_items[k].total)*new_quantity/old_quantity;
-										
+
 											bill_items.splice(l,1);
 											l--;
 										}
@@ -2102,7 +1981,7 @@ function form43_ini()
 											k--;
 											break;
 										}
-										else 
+										else
 										{
 											bill_items.splice(l,1);
 											po_items.splice(k,1);
@@ -2113,7 +1992,7 @@ function form43_ini()
 								}
 							}
 
-							element_display('','form24');							
+							element_display('','form24');
 							po_items.forEach(function(po_item)
 							{
 								var id=get_new_key();
@@ -2144,15 +2023,15 @@ function form43_ini()
 										rowsHTML+="<input type='button' class='delete_icon' form='form24_"+id+"' id='delete_form24_"+id+"' onclick='$(this).parent().parent().remove(); form24_get_totals();'>";
 										rowsHTML+="<input type='submit' class='submit_hidden' form='form24_"+id+"'>";
 										rowsHTML+="<input type='hidden' form='form24_"+id+"' name='tax_rate'>";
-									rowsHTML+="</td>";			
+									rowsHTML+="</td>";
 								rowsHTML+="</tr>";
-							
+
 								$('#form24_body').prepend(rowsHTML);
-						
-								var master_form=document.getElementById("form24_master");		
+
+								var master_form=document.getElementById("form24_master");
 								var supplier_name_filter=master_form.elements['supplier'];
 								var supplier_name=supplier_name_filter.value;
-								
+
 								var fields=document.getElementById("form24_"+id);
 								var name_filter=fields.elements[0];
 								var desc_filter=fields.elements[1];
@@ -2167,39 +2046,39 @@ function form43_ini()
 								var total_filter=fields.elements[10];
 								var id_filter=fields.elements[11];
 								var save_button=fields.elements[12];
-										
+
 								$(save_button).on("click", function(event)
 								{
 									event.preventDefault();
 									form24_create_item(fields);
 								});
-								
+
 								$(fields).on("submit", function(event)
 								{
 									event.preventDefault();
 									form24_add_item();
 								});
-								
+
 								var product_data="<product_master>" +
 										"<name></name>" +
 										"</product_master>";
 								set_my_value_list_func(product_data,name_filter);
-								
+
 								var add_product=document.getElementById('form24_add_product_'+id);
 								$(add_product).on('click',function()
 								{
 									modal14_action(function()
-									{	
+									{
 										var product_data="<product_master>" +
 												"<name></name>" +
 												"</product_master>";
-										set_my_value_list_func(product_data,name_filter,function () 
+										set_my_value_list_func(product_data,name_filter,function ()
 										{
 											$(name_filter).focus();
 										});
 									});
-								});		
-										
+								});
+
 								$(name_filter).add(supplier_name_filter).on('blur',function(event)
 								{
 									var make_data="<product_master count='1'>" +
@@ -2208,7 +2087,7 @@ function form43_ini()
 											"<description></description>"+
 											"<name exact='yes'>"+name_filter.value+"</name>" +
 											"</product_master>";
-									fetch_requested_data('',make_data,function (makes) 
+									fetch_requested_data('',make_data,function (makes)
 									{
 										if(makes.length>0)
 										{
@@ -2216,8 +2095,8 @@ function form43_ini()
 											tax_rate_filter.value=makes[0].tax;
 											desc_filter.value=makes[0].description;
 										}
-									});			
-									
+									});
+
 									var mrp_data="<product_instances>"+
 												"<mrp></mrp>"+
 												"<product_name exact='yes'>"+name_filter.value+"</product_name>"+
@@ -2233,7 +2112,7 @@ function form43_ini()
 										}
 										var margin_data="<supplier_item_mapping>" +
 													"<margin></margin>"+
-													"<supplier_sku></supplier_sku>"+							
+													"<supplier_sku></supplier_sku>"+
 													"<supplier exact='yes'>"+supplier_name_filter.value+"</supplier>" +
 													"<item exact='yes'>"+name_filter.value+"</item>"+
 													"</supplier_item_mapping>";
@@ -2255,22 +2134,22 @@ function form43_ini()
 												tax_filter.value="";
 												total_filter.value="";
 											}
-										});					
+										});
 									},mrp_data);
 								});
-								
+
 								$(quantity_filter).add(price_filter).on('blur',function(event)
 								{
 									amount_filter.value=Math.round(parseFloat(quantity_filter.value)*parseFloat(price_filter.value));
 									tax_filter.value=Math.round(parseFloat(amount_filter.value)*(parseFloat(tax_rate_filter.value)/100));
 									total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
 								});
-								
+
 								form24_get_totals();
 								longPressEditable($('.dblclick_editable'));
 							});
-						});				
-					});					
+						});
+					});
 				});
 			}
 		});
@@ -2301,7 +2180,7 @@ function form43_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -2323,11 +2202,11 @@ function form54_ini()
 	show_loader();
 	var fid=$("#form54_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form54_header');
 	var fname=filter_fields.elements[0].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form54_index');
 	var prev_element=document.getElementById('form54_prev');
@@ -2361,22 +2240,22 @@ function form54_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form54_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' id='save_form54_"+result.id+"' form='form54_"+result.id+"' title='Save'>";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='submit' class='save_icon' id='save_form54_"+result.id+"' form='form54_"+result.id+"' title='Save'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form54_body').append(rowsHTML);
 			var fields=document.getElementById("form54_"+result.id);
 			var template_filter=fields.elements[1];
 			set_static_value_list('template',result.name,template_filter);
-			
+
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
 				form54_update_item(fields);
 			});
 		});
-		
+
 		$('#form54_body').find('textarea').i18n();
 
 		////indexing///
@@ -2404,7 +2283,7 @@ function form54_ini()
 		/////////////
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-				
+
 		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -2426,11 +2305,11 @@ function form57_ini()
 	show_loader();
 	var fid=$("#form57_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form57_header');
 	var fservices=filter_fields.elements[0].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form57_index');
 	var prev_element=document.getElementById('form57_prev');
@@ -2472,17 +2351,17 @@ function form57_ini()
 						rowsHTML+="<input type='hidden' form='form57_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form57_"+result.id+"' value='saved'>";
 						rowsHTML+="<input type='button' class='copy_icon' form='form57_"+result.id+"' value='saved' onclick='modal21_action($(this));'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form57_"+result.id+"' value='saved' onclick='form57_delete_item($(this));'>";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='delete_icon' form='form57_"+result.id+"' value='saved' onclick='form57_delete_item($(this));'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form57_body').append(rowsHTML);
 			var fields=document.getElementById("form57_"+result.id);
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
 				form57_update_item(fields);
-			});			
+			});
 		});
 
 
@@ -2512,7 +2391,7 @@ function form57_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -2533,9 +2412,9 @@ function form58_ini()
 	show_loader();
 	var fid=$("#form58_link").attr('data_id');
 	if(fid==null)
-		fid="";	
+		fid="";
 	var filter_fields=document.getElementById('form58_header');
-	
+
 	var fservice=filter_fields.elements[0].value;
 	var ftype=filter_fields.elements[1].value;
 	var frequisite=filter_fields.elements[2].value;
@@ -2580,10 +2459,10 @@ function form58_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form58_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form58_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form58_"+result.id+"' value='saved' onclick='form58_delete_item($(this));'>";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='delete_icon' form='form58_"+result.id+"' value='saved' onclick='form58_delete_item($(this));'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form58_body').append(rowsHTML);
 			var fields=document.getElementById("form58_"+result.id);
 			$(fields).on("submit", function(event)
@@ -2592,7 +2471,7 @@ function form58_ini()
 				form58_update_item(fields);
 			});
 		});
-		
+
 
 		////indexing///
 		var next_index=parseInt(start_index)+25;
@@ -2619,7 +2498,7 @@ function form58_ini()
 		/////////////
 
 		longPressEditable($('.dblclick_editable'));
-		
+
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -2640,14 +2519,14 @@ function form59_ini()
 	show_loader();
 	var fid=$("#form59_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form59_header');
-	
+
 	var fproduct=filter_fields.elements[0].value;
 	var ftype=filter_fields.elements[1].value;
 	var frequisite=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form59_index');
 	var prev_element=document.getElementById('form59_prev');
@@ -2689,10 +2568,10 @@ function form59_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form59_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form59_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form59_"+result.id+"' value='saved' onclick='form59_delete_item($(this));'>";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='delete_icon' form='form59_"+result.id+"' value='saved' onclick='form59_delete_item($(this));'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form59_body').append(rowsHTML);
 			var fields=document.getElementById("form59_"+result.id);
 			$(fields).on("submit", function(event)
@@ -2701,7 +2580,7 @@ function form59_ini()
 				form59_update_item(fields);
 			});
 		});
-		
+
 
 		////indexing///
 		var next_index=parseInt(start_index)+25;
@@ -2728,7 +2607,7 @@ function form59_ini()
 		/////////////
 
 		longPressEditable($('.dblclick_editable'));
-		
+
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -2750,13 +2629,13 @@ function form61_ini()
 	show_loader();
 	var fid=$("#form61_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form61_header');
-	
+
 	var fservice=filter_fields.elements[0].value;
 	var fattribute=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form61_index');
 	var prev_element=document.getElementById('form61_prev');
@@ -2794,10 +2673,10 @@ function form61_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form61_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form61_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form61_"+result.id+"' value='saved' onclick='form61_delete_item($(this));'>";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='delete_icon' form='form61_"+result.id+"' value='saved' onclick='form61_delete_item($(this));'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form61_body').append(rowsHTML);
 			var fields=document.getElementById("form61_"+result.id);
 			$(fields).on("submit", function(event)
@@ -2831,9 +2710,9 @@ function form61_ini()
 		}
 		/////////////
 
-		
+
 		longPressEditable($('.dblclick_editable'));
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -2854,14 +2733,14 @@ function form62_ini()
 	show_loader();
 	var fid=$("#form62_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form62_header');
-	
+
 	var fproduct=filter_fields.elements[0].value;
 	var freviewer=filter_fields.elements[1].value;
 	var frating=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form62_index');
 	var prev_element=document.getElementById('form62_prev');
@@ -2903,10 +2782,10 @@ function form62_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form62_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form62_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form62_"+result.id+"' value='saved' onclick='form62_delete_item($(this));'>";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='delete_icon' form='form62_"+result.id+"' value='saved' onclick='form62_delete_item($(this));'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form62_body').append(rowsHTML);
 			var fields=document.getElementById("form62_"+result.id);
 			$(fields).on("submit", function(event)
@@ -2942,7 +2821,7 @@ function form62_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -2963,14 +2842,14 @@ function form63_ini()
 	show_loader();
 	var fid=$("#form63_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form63_header');
-	
+
 	var fservice=filter_fields.elements[0].value;
 	var freviewer=filter_fields.elements[1].value;
 	var frating=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form63_index');
 	var prev_element=document.getElementById('form63_prev');
@@ -3012,10 +2891,10 @@ function form63_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form63_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form63_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form63_"+result.id+"' value='saved' onclick='form63_delete_item($(this));'>";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='delete_icon' form='form63_"+result.id+"' value='saved' onclick='form63_delete_item($(this));'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form63_body').append(rowsHTML);
 			var fields=document.getElementById("form63_"+result.id);
 			$(fields).on("submit", function(event)
@@ -3051,7 +2930,7 @@ function form63_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -3072,14 +2951,14 @@ function form64_ini()
 	show_loader();
 	var fid=$("#form64_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form64_header');
-	
+
 	var fservice=filter_fields.elements[0].value;
 	var ftype=filter_fields.elements[1].value;
 	var fcross=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form64_index');
 	var prev_element=document.getElementById('form64_prev');
@@ -3117,10 +2996,10 @@ function form64_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form64_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form64_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form64_"+result.id+"' value='saved' onclick='form64_delete_item($(this));'>";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='delete_icon' form='form64_"+result.id+"' value='saved' onclick='form64_delete_item($(this));'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form64_body').append(rowsHTML);
 			var fields=document.getElementById("form64_"+result.id);
 			$(fields).on("submit", function(event)
@@ -3156,7 +3035,7 @@ function form64_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -3178,14 +3057,14 @@ function form66_ini()
 	show_loader();
 	var fid=$("#form66_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form66_header');
-	
+
 	var fproduct=filter_fields.elements[0].value;
 	var ftype=filter_fields.elements[1].value;
 	var fcross=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form66_index');
 	var prev_element=document.getElementById('form66_prev');
@@ -3223,10 +3102,10 @@ function form66_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form66_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form66_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form66_"+result.id+"' value='saved' onclick='form66_delete_item($(this));'>";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='delete_icon' form='form66_"+result.id+"' value='saved' onclick='form66_delete_item($(this));'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form66_body').append(rowsHTML);
 			var fields=document.getElementById("form66_"+result.id);
 			$(fields).on("submit", function(event)
@@ -3262,7 +3141,7 @@ function form66_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -3283,8 +3162,8 @@ function form69_ini()
 	//console.log('form69_ini');
 	var order_id=$("#form69_link").attr('data_id');
 	if(order_id==null)
-		order_id="";	
-	
+		order_id="";
+
 	$('#form69_body').html("");
 	$('#form69_foot').html("");
 
@@ -3321,7 +3200,7 @@ function form69_ini()
                 "<order_id exact='yes'>"+order_id+"</order_id>" +
 				"<notes></notes>" +
 				"</sale_order_items>";
-	
+
 		////separate fetch function to get order details like customer name, total etc.
 		fetch_requested_data('',order_columns,function(order_results)
 		{
@@ -3335,20 +3214,20 @@ function form69_ini()
 				filter_fields.elements['order_num'].value=order_results[i].order_num;
 				filter_fields.elements['channel'].value=order_results[i].channel;
 				filter_fields.elements['bill_type'].value=order_results[i].billing_type;
-				
+
 				var save_button=filter_fields.elements['save'];
-				
+
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
 					event.preventDefault();
 					form69_update_form();
 				});
-				
+
 				break;
 			}
 			/////////////////////////////////////////////////////////////////////////
-		
+
 			fetch_requested_data('',order_items_column,function(results)
 			{
 				results.forEach(function(result)
@@ -3378,16 +3257,16 @@ function form69_ini()
 							rowsHTML+="<input type='hidden' form='form69_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='submit_hidden' form='form69_"+id+"' id='save_form69_"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form69_"+id+"' id='delete_form69_"+id+"' onclick='form69_delete_item($(this));'>";
-						rowsHTML+="</td>";			
+						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-				
+
 					$('#form69_body').append(rowsHTML);
-					
+
 					var fields=document.getElementById("form69_"+id);
 					var name_filter=fields.elements[2];
 					var desc_filter=fields.elements[3];
 					var quantity_filter=fields.elements[4];
-					
+
 					if(result.item_name=="")
 					{
 						var sku_data="<sku_mapping count='1'>"+
@@ -3412,7 +3291,7 @@ function form69_ini()
 				form69_get_totals();
 				hide_loader();
 			});
-		});		
+		});
 	}
 }
 
@@ -3427,16 +3306,16 @@ function form70_ini()
 	show_loader();
 	var fid=$("#form70_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form70_header');
-	
-	//populating form 
+
+	//populating form
 	if(fid==="")
 		fid=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form70_index');
 	var prev_element=document.getElementById('form70_prev');
@@ -3456,7 +3335,7 @@ function form70_ini()
 	$('#form70_body').html("");
 
 	fetch_requested_data('form70',columns,function(results)
-	{	
+	{
 		results.forEach(function(result)
 		{
 			var rowsHTML="";
@@ -3479,16 +3358,16 @@ function form70_ini()
 						rowsHTML+="<input type='submit' class='save_icon' form='form70_"+result.id+"' title='Save order'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form70_"+result.id+"' title='Delete order' onclick='form70_delete_item($(this));'>";
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form70_"+result.id+"'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form70_body').append(rowsHTML);
 			var fields=document.getElementById("form70_"+result.id);
 			var bill_button=fields.elements[7];
 			var status_filter=fields.elements[3];
-			
+
 			set_static_value_list('sale_orders','status',status_filter);
-			
+
 			if(result.status=='pending')
 			{
 				$(bill_button).attr('value','Create Bill');
@@ -3501,13 +3380,13 @@ function form70_ini()
 			{
 				$(bill_button).hide();
 			}
-			
+
 			$(fields).on("submit",function(event)
 			{
 				event.preventDefault();
 				form70_update_item(fields);
 			});
-			
+
 		});
 
 		////indexing///
@@ -3536,7 +3415,7 @@ function form70_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -3557,17 +3436,17 @@ function form72_ini()
 {
 	var bill_id=$("#form72_link").attr('data_id');
 	if(bill_id==null)
-		bill_id="";	
-	
+		bill_id="";
+
 	$('#form72_body').html("");
 	$('#form72_foot').html("");
-	
+
 	if(bill_id!="")
 	{
 		show_loader();
 		var bill_columns="<bills>" +
 				"<id>"+bill_id+"</id>" +
-				"<bill_num></bill_num>"+				
+				"<bill_num></bill_num>"+
 				"<customer_name></customer_name>" +
 				"<total></total>" +
 				"<bill_date></bill_date>" +
@@ -3589,12 +3468,12 @@ function form72_ini()
 				"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
 				"<tax></tax>" +
 				"</bill_items>";
-	
+
 		////separate fetch function to get bill details like customer name, total etc.
 		fetch_requested_data('',bill_columns,function(bill_results)
 		{
 			var filter_fields=document.getElementById('form72_master');
-			
+
 			if(bill_results.length>0)
 			{
 				filter_fields.elements['customer'].value=bill_results[0].customer_name;
@@ -3603,7 +3482,7 @@ function form72_ini()
 				filter_fields.elements['bill_id'].value=bill_id;
 				filter_fields.elements['t_id'].value=bill_results[0].transaction_id;
 				var save_button=filter_fields.elements['save'];
-				
+
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
@@ -3611,7 +3490,7 @@ function form72_ini()
 					form72_update_form();
 				});
 			}
-			
+
 			fetch_requested_data('',bill_items_column,function(results)
 			{
 				results.forEach(function(result)
@@ -3642,17 +3521,17 @@ function form72_ini()
 							rowsHTML+="<input type='hidden' form='form72_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='submit_hidden' form='form72_"+id+"' id='save_form72_"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form72_"+id+"' id='delete_form72_"+id+"' onclick='form72_delete_item($(this));'>";
-						rowsHTML+="</td>";			
+						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-				
+
 					$('#form72_body').append(rowsHTML);
 				});
-				
+
 				var bt=get_session_var('title');
 				$('#form72_share').show();
 				$('#form72_share').click(function()
 				{
-					modal101_action(bt+' - Invoice# '+filter_fields.elements['bill_num'].value,filter_fields.elements['customer'].value,'customer',function (func) 
+					modal101_action(bt+' - Invoice# '+filter_fields.elements['bill_num'].value,filter_fields.elements['customer'].value,'customer',function (func)
 					{
 						print_form72(func);
 					});
@@ -3674,12 +3553,12 @@ function form77_ini()
 	show_loader();
 	var fid=$("#form77_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form77_header');
 	var felement=filter_fields.elements[0].value;
 	var fkey=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form77_index');
 	var prev_element=document.getElementById('form77_prev');
@@ -3696,7 +3575,7 @@ function form77_ini()
 			"<type array='yes'>--form--report--</type>" +
 			"</user_preferences>";
 
-	
+
 	$('#form77_body').html("");
 
 	fetch_requested_data('form77',columns,function(results)
@@ -3715,25 +3594,25 @@ function form77_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form77_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='hidden' form='form77_"+result.id+"' value='"+result.name+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' id='save_form77_"+result.id+"' form='form77_"+result.id+"'>";	
+						rowsHTML+="<input type='submit' class='save_icon' id='save_form77_"+result.id+"' form='form77_"+result.id+"'>";
 					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form77_body').append(rowsHTML);
 			var fields=document.getElementById("form77_"+result.id);
 			var key_filter=fields.elements[1];
-			
+
 			set_static_value_list('shortcuts','key',key_filter);
-			
+
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
 				form77_update_item(fields);
 			});
 		});
-		
+
 		$('#form77_body').find('textarea').i18n();
-		
+
 
 		////indexing///
 		var next_index=parseInt(start_index)+25;
@@ -3761,7 +3640,7 @@ function form77_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-				
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -3781,10 +3660,10 @@ function form78_ini()
 {
 	var newsletter_id=$("#form78_link").attr('data_id');
 	if(newsletter_id==null)
-		newsletter_id="";	
+		newsletter_id="";
 
 	var newsletter_name=document.getElementById('form78_master').elements[1].value;
-	
+
 	$('#form78_body').html("");
 	if(newsletter_id!="" || newsletter_name!="")
 	{
@@ -3793,7 +3672,7 @@ function form78_ini()
 				"<id>"+newsletter_id+"</id>" +
 				"<name>"+newsletter_name+"</name>" +
 				"</newsletter>";
-		
+
 		////separate fetch function to get newsletter details like name
 		fetch_requested_data('',newsletter_columns,function(newsletter_results)
 		{
@@ -3806,8 +3685,8 @@ function form78_ini()
 				break;
 			}
 			/////////////////////////////////////////////////////////////////////////
-			
-						
+
+
 			var customer_columns="<customers>" +
 					"<id></id>" +
 					"<name></name>" +
@@ -3821,7 +3700,7 @@ function form78_ini()
 				results.forEach(function(result)
 				{
 					if(result.promotion_status!="suspended")
-					{					
+					{
 						var id=result.id;
 						var rowsHTML="<tr>";
 						rowsHTML+="<form id='row_form78_"+id+"'></form>";
@@ -3840,9 +3719,9 @@ function form78_ini()
 								rowsHTML+="<input type='hidden' form='row_form78_"+id+"' value='"+result.id+"'>";
 							rowsHTML+="</td>";
 						rowsHTML+="</tr>";
-					
+
 						$('#form78_body').append(rowsHTML);
-					}				
+					}
 				});
 				$('textarea').autosize();
 				hide_loader();
@@ -3861,11 +3740,11 @@ function form79_ini()
 	show_loader();
 	var fid=$("#form79_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form79_header');
 	var fname=filter_fields.elements[0].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form79_index');
 	var prev_element=document.getElementById('form79_prev');
@@ -3880,9 +3759,9 @@ function form79_ini()
 		"<est_hours></est_hours>" +
 		"<last_updated></last_updated>" +
 		"</task_type>";
-	
+
 	$('#form79_body').html("");
-	
+
 	fetch_requested_data('form79',columns,function(results)
 	{
 		results.forEach(function(result)
@@ -3902,9 +3781,9 @@ function form79_ini()
 						rowsHTML+="<input type='hidden' form='form79_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form79_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form79_"+result.id+"' onclick='form79_delete_item($(this));'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form79_body').append(rowsHTML);
 			var fields=document.getElementById("form79_"+result.id);
 			$(fields).on("submit", function(event)
@@ -3913,7 +3792,7 @@ function form79_ini()
 				form79_update_item(fields);
 			});
 		});
-		
+
 
 		////indexing///
 		var next_index=parseInt(start_index)+25;
@@ -3941,7 +3820,7 @@ function form79_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -3963,11 +3842,11 @@ function form80_ini()
 	show_loader();
 	var fid=$("#form80_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form80_master');
 	var fobject=filter_fields.elements[1].value;
-	
+
 	var columns="<de_duplication>" +
 		"<id></id>" +
 		"<object>"+fobject+"</object>" +
@@ -3977,9 +3856,9 @@ function form80_ini()
 		"<master_value></master_value>" +
 		"<status exact='yes'>pending</status>" +
 		"</de_duplication>";
-	
+
 	$('#form80_body').html("");
-	
+
 	fetch_requested_data('form80',columns,function(results)
 	{
 		results.forEach(function(result)
@@ -3998,9 +3877,9 @@ function form80_ini()
 						rowsHTML+="<input type='hidden' form='form80_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form80_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form80_"+result.id+"' onclick='form80_delete_item($(this));'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form80_body').append(rowsHTML);
 			var fields=document.getElementById("form80_"+result.id);
 			$(fields).on("submit", function(event)
@@ -4023,11 +3902,11 @@ function form81_ini()
 	show_loader();
 	var fid=$("#form81_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form81_header');
 	var fname=filter_fields.elements[0].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form81_index');
 	var prev_element=document.getElementById('form81_prev');
@@ -4043,9 +3922,9 @@ function form81_ini()
 		"<identified_by></identified_by>" +
 		"<last_updated></last_updated>" +
 		"</sale_leads>";
-	
+
 	$('#form81_body').html("");
-	
+
 	fetch_requested_data('form81',columns,function(results)
 	{
 		results.forEach(function(result)
@@ -4069,9 +3948,9 @@ function form81_ini()
 						rowsHTML+="<input type='hidden' form='form81_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form81_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form81_"+result.id+"' onclick='form81_delete_item($(this));'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form81_body').append(rowsHTML);
 			var fields=document.getElementById("form81_"+result.id);
 			$(fields).on("submit", function(event)
@@ -4107,7 +3986,7 @@ function form81_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -4129,14 +4008,14 @@ function form84_ini()
 	show_loader();
 	var fid=$("#form84_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form84_header');
-	
+
 	var fcustomer=filter_fields.elements[0].value;
 	var fservice=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form84_index');
 	var prev_element=document.getElementById('form84_prev');
@@ -4159,7 +4038,7 @@ function form84_ini()
 	$('#form84_body').html("");
 
 	fetch_requested_data('form84',columns,function(results)
-	{	
+	{
 		results.forEach(function(result)
 		{
 			var last_bill_string="Last bill Id: "+result.last_bill_id+"\nLast bill date: "+get_my_past_date(result.last_bill_date)+"\nNext due date: "+get_my_past_date(result.next_due_date);
@@ -4184,16 +4063,16 @@ function form84_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form84_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form84_"+result.id+"' title='Save'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form84_"+result.id+"' title='Delete' onclick='form84_delete_item($(this));'>";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='delete_icon' form='form84_"+result.id+"' title='Delete' onclick='form84_delete_item($(this));'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form84_body').append(rowsHTML);
 			var fields=document.getElementById("form84_"+result.id);
 			var status_filter=fields.elements[2];
-			
+
 			set_static_filter('service_subscriptions','status',status_filter);
-			
+
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
@@ -4227,7 +4106,7 @@ function form84_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -4257,26 +4136,26 @@ function form85_ini()
 			console.log(e.responseText);
 
 			$('#form85_header').html("");
-		
+
 			var lat=get_session_var('lat');
 			var lng=get_session_var('lng');
 			var title=get_session_var('title');
-			
+
 			if(typeof map85 != 'undefined')
 				map85.remove();
-		
+
 			map85 = L.map('form85_map',{
-				center: [lat,lng], 
+				center: [lat,lng],
 				zoom: 10
 			});
-		
+
 			L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
 		        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenstreetMap</a>',
 		        subdomains:'1234'
 		    }).addTo(map85);
-			
+
 			//////////changeable master coordinates/////////
-			
+
 			var mlatlng=L.latLng(lat,lng);
 			var mmarker=L.marker(mlatlng,{draggable:true}).addTo(map85).bindPopup(title);
 			mmarker.on('dragend',function(event){
@@ -4288,7 +4167,7 @@ function form85_ini()
 				var save_button=form.elements[3];
 				$(save_button).show();
 			});
-			
+
 			var rowsHTML="<div class='customers_content_item'>" +
 					"<form id='form85_master'>" +
 					"Name: <textarea style='height:40px;width:100px' readonly='readonly'>"+title+"</textarea></br>" +
@@ -4297,7 +4176,7 @@ function form85_ini()
 					"<input type='button' class='export_icon' value='Confirm' style='display:none;' form='form85_master'>" +
 					"</form>" +
 					"</div>";
-			
+
 			$('#form85_header').append(rowsHTML);
 			var fields=document.getElementById("form85_master");
 			var save_button=fields.elements[3];
@@ -4310,9 +4189,9 @@ function form85_ini()
 			{
 				mmarker.openPopup();
 			});
-		
+
 			/////////////////////////////////////////////////
-			
+
 			var suppliers_data="<suppliers>" +
 					"<id></id>" +
 					"<name></name>" +
@@ -4349,7 +4228,7 @@ function form85_ini()
 						var save_button=form.elements[4];
 						$(save_button).show();
 					});
-					
+
 					var rowsHTML="<div class='customers_content_item'>" +
 							"<form id='form85_"+supplier.id+"'>" +
 							"Name: <textarea style='height:40px;width:100px' readonly='readonly'>"+supplier.acc_name+"</textarea><br>" +
@@ -4359,7 +4238,7 @@ function form85_ini()
 							"<input type='button' class='export_icon' value='Confirm' form='form85_"+supplier.id+"'>" +
 							"</form>" +
 							"</div>";
-					
+
 					$('#form85_header').append(rowsHTML);
 					var fields=document.getElementById("form85_"+supplier.id);
 					var save_button=fields.elements[4];
@@ -4374,7 +4253,7 @@ function form85_ini()
 						marker.openPopup();
 					});
 				});
-				
+
 				var scrollPane=$(".customers_pane");
 				var scrollContent=$(".customers_content");
 				scrollContent.css('width',(Math.round(225*suppliers.length)+225)+"px");
@@ -4382,15 +4261,15 @@ function form85_ini()
 					slide: function(event,ui) {
 						if (scrollContent.width()>scrollPane.width()){
 							scrollContent.css( "margin-left", Math.round(ui.value/100*(scrollPane.width()-scrollContent.width()))+"px");
-						} 
+						}
 						else{
 							scrollContent.css("margin-left",0);
 						}
 					}
 				});
-		
-				scrollPane.css("overflow","hidden");			
-			
+
+				scrollPane.css("overflow","hidden");
+
 				hide_loader();
 			});
 		});
@@ -4418,24 +4297,24 @@ function form86_ini()
 		ajax_with_custom_func(server_root+"/ajax/geoCode.php",{domain:domain,username:username,type:'staff',re:re_access},function(e)
 		{
 			$('#form86_header').html("");
-		
+
 			var lat=get_session_var('lat');
 			var lng=get_session_var('lng');
 			var title=get_session_var('title');
-			
+
 			if(typeof map86 != 'undefined')
 				map86.remove();
-		
+
 			map86 = L.map('form86_map',{
-				center: [lat,lng], 
+				center: [lat,lng],
 				zoom: 10
 			});
-		
+
 			L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
 		        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenstreetMap</a>',
 		        subdomains:'1234'
 		    }).addTo(map86);
-					
+
 			/////////////////////////////////////////////////
 			var master_form=document.getElementById("form86_master");
 			var acc_name=master_form.elements[1].value;
@@ -4455,30 +4334,30 @@ function form86_ini()
 				{
 					if(parseFloat(a.log_time)<parseFloat(b.log_time))
 					{	return 1;}
-					else 
+					else
 					{	return -1;}
-				});	
+				});
 
 				staffs.forEach(function(staff)
 				{
 					var latlng=L.latLng(staff.lat,staff.lng);
 					var my_time=get_my_datetime(staff.log_time).split(" ");
 					var marker=L.marker(latlng,{}).addTo(map86).bindPopup("<b>"+staff.location+"</b><br>At "+my_time[1]);
-					
+
 					var rowsHTML="<div class='customers_content_item' id='form86_"+staff.id+"'>" +
 							"Location: "+staff.location+"<br><br>" +
 							"Time: At "+my_time[1]+
 							"</div>";
-					
+
 					$('#form86_header').append(rowsHTML);
 					var fields=document.getElementById("form86_"+staff.id);
-					
+
 					$(fields).on('click',function(event)
 					{
 						marker.openPopup();
 					});
 				});
-				
+
 				var scrollPane=$(".customers_pane");
 				var scrollContent=$(".customers_content");
 				scrollContent.css('width',(Math.round(225*staffs.length)+225)+"px");
@@ -4487,15 +4366,15 @@ function form86_ini()
 					slide: function(event,ui) {
 						if (scrollContent.width()>scrollPane.width()){
 							scrollContent.css( "margin-left", Math.round(ui.value/100*(scrollPane.width()-scrollContent.width()))+"px");
-						} 
+						}
 						else{
 							scrollContent.css("margin-left",0);
 						}
 					}
 				});
-		
-				scrollPane.css("overflow","hidden");			
-			
+
+				scrollPane.css("overflow","hidden");
+
 				hide_loader();
 			});
 		});
@@ -4516,13 +4395,13 @@ function form87_ini()
 	show_loader();
 	var fid=$("#form87_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form87_header');
-	
+
 	var fname=filter_fields.elements[0].value;
 	var fmakes=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form87_index');
 	var prev_element=document.getElementById('form87_prev');
@@ -4567,20 +4446,20 @@ function form87_ini()
 						rowsHTML+="<input type='hidden' form='form87_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form87_"+result.id+"' value='saved'>";
 						rowsHTML+="<input type='button' class='copy_icon' form='form87_"+result.id+"' value='saved' onclick='modal19_action($(this));'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form87_"+result.id+"' value='saved' onclick='form87_delete_item($(this));'>";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='delete_icon' form='form87_"+result.id+"' value='saved' onclick='form87_delete_item($(this));'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-		
+
 			$('#form87_body').append(rowsHTML);
 
 			var fields=document.getElementById("form87_"+result.id);
-			
+
 			$(fields).on("submit",function(event)
 			{
 				event.preventDefault();
 				form87_update_item(fields);
 			});
-			
+
 			var attributes_data="<attributes>"+
 								"<name exact='yes'>"+result.name+"</name>" +
 								"<type exact='yes'>product</type>" +
@@ -4625,7 +4504,7 @@ function form87_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -4633,7 +4512,7 @@ function form87_ini()
 			get_export_data(columns,'Products');
 		});
 		hide_loader();
-	});	
+	});
 };
 
 
@@ -4647,12 +4526,12 @@ function form88_ini()
 	show_loader();
 	var fid=$("#form88_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form88_header');
 	var fname=filter_fields.elements[0].value;
 	var fstatus=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form88_index');
 	var prev_element=document.getElementById('form88_prev');
@@ -4699,18 +4578,18 @@ function form88_ini()
 						rowsHTML+="<input type='submit' class='save_icon' form='form88_"+result.id+"' title='Save'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form88_"+result.id+"' title='Delete' onclick='form88_delete_item($(this));'>";
 						rowsHTML+="<input type='hidden' form='form88_"+result.id+"' value='"+result.status+"'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-		
+
 			$('#form88_body').append(rowsHTML);
 
 			var fields=document.getElementById("form88_"+result.id);
 			var status_filter=fields.elements[2];
 			var schedule_filter=fields.elements[3];
-			
+
 			set_static_value_list('manufacturing_schedule','status',status_filter);
 			$(schedule_filter).vdatetimepicker();
-			
+
 			$(fields).on("submit",function(event)
 			{
 				event.preventDefault();
@@ -4744,7 +4623,7 @@ function form88_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -4752,7 +4631,7 @@ function form88_ini()
 			get_export_data(columns,'Manufacturing Schedule');
 		});
 		hide_loader();
-	});	
+	});
 };
 
 
@@ -4765,12 +4644,12 @@ function form91_ini()
 {
 	var bill_id=$("#form91_link").attr('data_id');
 	if(bill_id==null)
-		bill_id="";	
-	
+		bill_id="";
+
 	$('#form91_body').html("");
 	$('#form91_foot').html("");
 	document.getElementById('form91_customer_info').innerHTML="";
-	
+
 	if(bill_id!="")
 	{
 		show_loader();
@@ -4805,32 +4684,32 @@ function form91_ini()
 				"<freight></freight>"+
 				"<total></total>" +
 				"<storage></storage>" +
-				"<bill_id exact='yes'>"+bill_id+"</bill_id>" +				
+				"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
 				"</bill_items>";
-	
+
 		////separate fetch function to get bill details like customer name, total etc.
 		fetch_requested_data('',bill_columns,function(bill_results)
 		{
 			var filter_fields=document.getElementById('form91_master');
-			
+
 			for (var i in bill_results)
 			{
 				filter_fields.elements['customer'].value=bill_results[i].customer_name;
 				filter_fields.elements['bill_type'].value=bill_results[i].billing_type;
 				filter_fields.elements['date'].value=get_my_past_date(bill_results[i].bill_date);
 				filter_fields.elements['bill_num'].value=bill_results[i].bill_num;
-				filter_fields.elements['bill_id'].value=bill_id;				
+				filter_fields.elements['bill_id'].value=bill_id;
 				filter_fields.elements['channel'].value=bill_results[i].channel;
 				filter_fields.elements['t_id'].value=bill_results[i].transaction_id;
 				filter_fields.elements['order_id'].value=bill_results[i].order_id;
-				filter_fields.elements['order_num'].value=bill_results[i].order_num;				
+				filter_fields.elements['order_num'].value=bill_results[i].order_num;
 				var save_button=filter_fields.elements['save'];
-				
+
 				var po_date_data="<sale_orders>"+
 								"<order_date></order_date>"+
 								"<order_num exact='yes'>"+bill_results[i].order_num+"</order_num>"+
 								"</sale_orders>";
-				set_my_value(po_date_data,filter_fields.elements['po_date']); 
+				set_my_value(po_date_data,filter_fields.elements['po_date']);
 
 				var address_data="<customers>" +
 						"<address></address>" +
@@ -4846,15 +4725,15 @@ function form91_ini()
 					}
 					document.getElementById('form91_customer_info').innerHTML="Address<br>"+address_string;
 				});
-				
+
 				var tin_data="<attributes>" +
 						"<value></value>" +
 						"<type exact='yes'>customer</type>"+
-						"<attribute array='yes'>--VAT#--CST#--</attribute>"+ 
+						"<attribute array='yes'>--VAT#--CST#--</attribute>"+
 						"<name exact='yes'>"+bill_results[i].customer_name+"</name>" +
 						"</attributes>";
 				set_my_value(tin_data,filter_fields.elements['customer_tin']);
-				
+
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
@@ -4864,7 +4743,7 @@ function form91_ini()
 
 				break;
 			}
-		
+
 			fetch_requested_data('',bill_items_column,function(results)
 			{
 				results.forEach(function(result)
@@ -4900,19 +4779,19 @@ function form91_ini()
 							rowsHTML+="<input type='hidden' form='form91_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='submit_hidden' form='form91_"+id+"' id='save_form91_"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form91_"+id+"' id='delete_form91_"+id+"' onclick='form91_delete_item($(this));'>";
-						rowsHTML+="</td>";			
+						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-				
-					$('#form91_body').append(rowsHTML);					
+
+					$('#form91_body').append(rowsHTML);
 				});
-				
+
 				form91_get_totals();
 
 				var bt=get_session_var('title');
 				$('#form91_share').show();
 				$('#form91_share').click(function()
 				{
-					modal101_action(bt+' - Invoice# '+filter_fields.elements['bill_num'].value,filter_fields.elements['customer'].value,'customer',function (func) 
+					modal101_action(bt+' - Invoice# '+filter_fields.elements['bill_num'].value,filter_fields.elements['customer'].value,'customer',function (func)
 					{
 						print_form91(func);
 					});
@@ -4935,13 +4814,13 @@ function form93_ini()
 	show_loader();
 	var fid=$("#form93_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form93_header');
 	var faccount=filter_fields.elements[0].value;
 	var ftype=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form93_index');
 	var prev_element=document.getElementById('form93_prev');
@@ -5018,14 +4897,14 @@ function form93_ini()
 							rowsHTML+="<input type='submit' class='export_icon' title='Close loan' form='form93_"+result.id+"' value='Close'>";
 						}
 						rowsHTML+="<input type='button' class='delete_icon' form='form93_"+result.id+"' title='Delete' onclick='form93_delete_item($(this));'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-		
+
 			$('#form93_body').append(rowsHTML);
 
 			var fields=document.getElementById("form93_"+result.id);
 			var status_filter=fields.elements[4];
-			
+
 			set_static_value_list('loans','status',status_filter);
 			$(fields).on("submit",function(event)
 			{
@@ -5060,7 +4939,7 @@ function form93_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -5068,7 +4947,7 @@ function form93_ini()
 			get_export_data(columns,'Loans');
 		});
 		hide_loader();
-	});	
+	});
 };
 
 
@@ -5083,12 +4962,12 @@ function form100_ini()
 	show_loader();
 	var fid=$("#form100_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form100_header');
 	var fname=filter_fields.elements[0].value;
 	var felement=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form100_index');
 	var prev_element=document.getElementById('form100_prev');
@@ -5104,7 +4983,7 @@ function form100_ini()
 			"<value exact='yes'>checked</value>" +
 			"<type exact='yes'>form</type>" +
 			"</user_preferences>";
-	
+
 	$('#form100_body').html("");
 
 	fetch_requested_data('form100',columns,function(results)
@@ -5123,22 +5002,22 @@ function form100_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form100_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='hidden' form='form100_"+result.id+"' value='"+result.name+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' id='save_form100_"+result.id+"' form='form100_"+result.id+"'>";	
+						rowsHTML+="<input type='submit' class='save_icon' id='save_form100_"+result.id+"' form='form100_"+result.id+"'>";
 					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form100_body').append(rowsHTML);
 			var fields=document.getElementById("form100_"+result.id);
-			
+
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
 				form100_update_item(fields);
 			});
 		});
-		
+
 		$('#form100_body').find('textarea').i18n();
-		
+
 
 		////indexing///
 		var next_index=parseInt(start_index)+25;
@@ -5162,7 +5041,7 @@ function form100_ini()
 		{
 			$(prev_element).show();
 		}
-		
+
 		$('textarea').autosize();
 		hide_loader();
 	});
@@ -5178,14 +5057,14 @@ function form101_ini()
 	show_loader();
 	var fid=$("#form101_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form101_header');
-	
-	//populating form 
+
+	//populating form
 	var fname=filter_fields.elements[0].value;
 	var fstatus=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form101_index');
 	var prev_element=document.getElementById('form101_prev');
@@ -5243,7 +5122,7 @@ function form101_ini()
 						}
 					}
 				}
-				
+
 				if(read)
 				{
 					var rowsHTML="";
@@ -5276,22 +5155,22 @@ function form101_ini()
 									rowsHTML+="<br><input type='button' class='generic_icon' form='form101_"+result.id+"' value='Budget' onclick=\"element_display('"+result.id+"','form144',['form137']);\">";
 									rowsHTML+="<br><input type='button' class='generic_icon' form='form101_"+result.id+"' name='schedule' value='Schedule' onclick=\"element_display('"+result.id+"','form135');\">";
 								}
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-					
+
 					$('#form101_body').append(rowsHTML);
-					
+
 					var fields=document.getElementById("form101_"+result.id);
 					var status_filter=fields.elements[3];
-					var schedule_button=fields.elements['schedule'];					
-					
+					var schedule_button=fields.elements['schedule'];
+
 					if(!is_form_access('form135'))
 					{
 						$(schedule_button).hide();
 					}
-					
+
 					set_static_value_list('projects','status',status_filter);
-					
+
 					$(fields).on("submit", function(event)
 					{
 						event.preventDefault();
@@ -5299,7 +5178,7 @@ function form101_ini()
 					});
 				}
 			});
-	
+
 			////indexing///
 			var next_index=parseInt(start_index)+25;
 			var prev_index=parseInt(start_index)-25;
@@ -5322,10 +5201,10 @@ function form101_ini()
 			{
 				$(prev_element).show();
 			}
-			
+
 			longPressEditable($('.dblclick_editable'));
 			$('textarea').autosize();
-			
+
 			var export_button=filter_fields.elements[3];
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
@@ -5348,10 +5227,10 @@ function form102_ini()
 	if(project_id==null)
 		project_id="";
 	$('#form102_body').html("");
-	
+
 	var fields=document.getElementById('form102_master');
 	if(project_id=="")
-	{	
+	{
 		project_id=fields.elements[2].value;
 	}
 	else
@@ -5374,7 +5253,7 @@ function form102_ini()
 				"<notes></notes>" +
 				"<status></status>" +
 				"</project_team>";
-	
+
 		fetch_requested_data('',project_columns,function(project_results)
 		{
 			for (var i in project_results)
@@ -5382,7 +5261,7 @@ function form102_ini()
 				var filter_fields=document.getElementById('form102_master');
 				filter_fields.elements[1].value=project_results[i].name;
 				filter_fields.elements[2].value=project_results[i].id;
-				
+
 				$(filter_fields).off('submit');
 				$(filter_fields).on("submit", function(event)
 				{
@@ -5393,7 +5272,7 @@ function form102_ini()
 			}
 		});
 		/////////////////////////////////////////////////////////////////////////
-		
+
 		if_data_read_access('project_team',function(accessible_data)
 		{
 			fetch_requested_data('',member_columns,function(results)
@@ -5433,7 +5312,7 @@ function form102_ini()
 							}
 						}
 					}
-					
+
 					if(read)
 					{
 						var rowsHTML="";
@@ -5466,15 +5345,15 @@ function form102_ini()
 							{
 								rowsHTML+="<input type='button' class='generic_icon' form='form102_"+result.id+"' value='Access' onclick=\"access_display('project_team','"+result.id+"');\">";
 							}
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 						rowsHTML+="</tr>";
-					
+
 						$('#form102_body').append(rowsHTML);
-						
+
 						var fields=document.getElementById("form102_"+id);
 						var status_filter=fields.elements[3];
 						set_static_value_list('projects','status',status_filter);
-						
+
 						$(fields).on("submit", function(event)
 						{
 							event.preventDefault();
@@ -5482,10 +5361,10 @@ function form102_ini()
 						});
 					}
 				});
-				
+
 				longPressEditable($('.dblclick_editable'));
 				$('textarea').autosize();
-				
+
 				hide_loader();
 			});
 		});
@@ -5501,20 +5380,20 @@ function form103_ini()
 {
 	var project_id=$("#form103_link").attr('data_id');
 	if(project_id==null)
-		project_id="";	
+		project_id="";
 	$('#form103_body').html("");
-	
+
 	var fields=document.getElementById('form103_master');
 	if(project_id=="")
-	{	
+	{
 		project_id=fields.elements[2].value;
 	}
 	else
 	{
 		fields.elements[2].value=project_id;
 	}
-	
-	
+
+
 	if(project_id!="")
 	{
 		show_loader();
@@ -5531,7 +5410,7 @@ function form103_ini()
 				"<due_date></due_date>" +
 				"<status></status>" +
 				"</project_phases>";
-	
+
 		fetch_requested_data('',project_columns,function(project_results)
 		{
 			for (var i in project_results)
@@ -5539,7 +5418,7 @@ function form103_ini()
 				var filter_fields=document.getElementById('form103_master');
 				filter_fields.elements[1].value=project_results[i].name;
 				filter_fields.elements[2].value=project_results[i].id;
-				
+
 				$(filter_fields).off('submit');
 				$(filter_fields).on("submit", function(event)
 				{
@@ -5589,7 +5468,7 @@ function form103_ini()
 							}
 						}
 					}
-					
+
 					if(read)
 					{
 						var rowsHTML="";
@@ -5619,30 +5498,30 @@ function form103_ini()
 								rowsHTML+="<input type='button' class='delete_icon' form='form103_"+id+"' id='delete_form103_"+id+"' onclick='form103_delete_item($(this));'>";
 							if(access)
 								rowsHTML+="<input type='button' class='generic_icon' form='form103_"+result.id+"' value='Access' onclick=\"access_display('project_phases','"+result.id+"');\">";
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 						rowsHTML+="</tr>";
-					
+
 						$('#form103_body').append(rowsHTML);
-						
+
 						var fields=document.getElementById("form103_"+id);
 						var start_filter=fields.elements[2];
 						var due_filter=fields.elements[3];
 						var status_filter=fields.elements[4];
 						set_static_value_list('project_phases','status',status_filter);
-						
+
 						$(start_filter).datepicker();
 						$(due_filter).datepicker();
-						
+
 						$(fields).on("submit", function(event)
 						{
 							event.preventDefault();
 							form103_update_item(fields);
 						});
-					}	
+					}
 				});
 				longPressEditable($('.dblclick_editable'));
 				$('textarea').autosize();
-				
+
 				hide_loader();
 			});
 		});
@@ -5659,17 +5538,17 @@ function form108_ini()
 	show_loader();
 	var fid=$("#form108_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form108_header');
-	
-	//populating form 
+
+	//populating form
 	var fchannel=filter_fields.elements[0].value;
 	var fnum=filter_fields.elements[1].value;
 	var fname=filter_fields.elements[2].value;
 	var fdate=get_raw_time(filter_fields.elements[3].value);
 	var fstatus=filter_fields.elements[4].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form108_index');
 	var prev_element=document.getElementById('form108_prev');
@@ -5682,14 +5561,14 @@ function form108_ini()
 	{
 		order_date_string="<order_date lowerbound='yes'>"+(fdate-1000)+"</order_date>"+
 						"<order_date upperbound='yes'>"+(fdate+86390000)+"</order_date>";
-			
+
 	}
-	
+
 	var columns="<sale_orders count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<order_num>"+fnum+"</order_num>"+
 			"<customer_name>"+fname+"</customer_name>" +
-			"<channel>"+fchannel+"</channel>"+			
+			"<channel>"+fchannel+"</channel>"+
 			"<order_date></order_date>" +
 			"<status>"+fstatus+"</status>" +
 			"<bill_id></bill_id>"+
@@ -5701,12 +5580,12 @@ function form108_ini()
 	$('#form108_body').html("");
 
 	fetch_requested_data('form108',columns,function(results)
-	{	
+	{
 		results.forEach(function(result)
 		{
 			var row_color="default_row";
-			
-			switch(result.status) 
+
+			switch(result.status)
 			{
 				case 'dispatched':row_color='grey_row';
 									break;
@@ -5724,7 +5603,7 @@ function form108_ini()
 								break;
 				case 'partially billed':row_color='yellow_row';
 								break;
-													
+
 			}
 			var rowsHTML="";
 			rowsHTML+="<tr class='"+row_color+"'>";
@@ -5760,20 +5639,20 @@ function form108_ini()
 					if(result.status=='return initiated')
 					{
 						rowsHTML+="<br><input type='button' class='generic_icon' name='return' form='form108_"+result.id+"' name='issue_grn' value='Issue GRN'>";
-					}					
+					}
 					else if(result.status=='return received' || result.status=='return closed')
 					{
 						rowsHTML+="<br><input type='button' class='generic_icon' name='return' form='form108_"+result.id+"' name='view_return' value='View Return'>";
-					}					
-					rowsHTML+="</td>";			
+					}
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form108_body').append(rowsHTML);
 			var fields=document.getElementById("form108_"+result.id);
 			var create_bill_button=fields.elements['create'];
 			var view_bill_button=fields.elements['view'];
 			var status_filter=fields.elements[4];
-			
+
 			//set_static_value_list('sale_orders','status',status_filter);
 
 			$(create_bill_button).off('click');
@@ -5787,7 +5666,7 @@ function form108_ini()
 			{
 				modal154_action(result.bill_id);
 			});
-	
+
 			if(result.status=='return initiated')
 			{
 				var return_button=fields.elements['return'];
@@ -5807,7 +5686,7 @@ function form108_ini()
 				$(return_button).on('click',function(event)
 				{
 					element_display(result.return_id,'form15');
-				});				
+				});
 			}
 		});
 
@@ -5837,7 +5716,7 @@ function form108_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[5];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -5858,13 +5737,13 @@ function form109_ini()
 	show_loader();
 	var fid=$("#form109_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form109_header');
-	
+
 	var fasset=filter_fields.elements[0].value;
 	var fattribute=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form109_index');
 	var prev_element=document.getElementById('form109_prev');
@@ -5902,10 +5781,10 @@ function form109_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form109_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form109_"+result.id+"' title='Save'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form109_"+result.id+"' title='Delete' onclick='form109_delete_item($(this));'>";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='delete_icon' form='form109_"+result.id+"' title='Delete' onclick='form109_delete_item($(this));'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form109_body').append(rowsHTML);
 			var fields=document.getElementById("form109_"+result.id);
 			$(fields).on("submit", function(event)
@@ -5940,7 +5819,7 @@ function form109_ini()
 		/////////////
 
 		longPressEditable($('.dblclick_editable'));
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -5961,10 +5840,10 @@ function form113_ini()
 	show_loader();
 	var fid=$("#form113_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form113_header');
-	
+
 	var	fcustomer=filter_fields.elements[0].value;
 	var fitem=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
@@ -5992,7 +5871,7 @@ function form113_ini()
 	$('#form113_body').html("");
 
 	fetch_requested_data('form113',columns,function(results)
-	{	
+	{
 		results.forEach(function(result)
 		{
 			var rowsHTML="";
@@ -6015,11 +5894,11 @@ function form113_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form113_"+result.id+"' value='"+result.bill_status+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='form113_"+result.id+"' value='"+result.id+"'>";	
+						rowsHTML+="<input type='hidden' form='form113_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form113_"+result.id+"' title='Delete' onclick='form113_delete_item($(this));'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form113_body').append(rowsHTML);
 		});
 
@@ -6048,7 +5927,7 @@ function form113_ini()
 		/////////////
 
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -6069,15 +5948,15 @@ function form115_ini()
 	show_loader();
 	var fid=$("#form115_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form115_header');
-	
+
 	var	fsupplier=filter_fields.elements[0].value;
 	var fitem=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
 	////indexing///
-	
+
 	var index_element=document.getElementById('form115_index');
 	var prev_element=document.getElementById('form115_prev');
 	var next_element=document.getElementById('form115_next');
@@ -6102,7 +5981,7 @@ function form115_ini()
 	$('#form115_body').html("");
 
 	fetch_requested_data('form115',columns,function(results)
-	{	
+	{
 		results.forEach(function(result)
 		{
 			var rowsHTML="";
@@ -6125,11 +6004,11 @@ function form115_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form115_"+result.id+"' value='"+result.bill_status+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='form115_"+result.id+"' value='"+result.id+"'>";	
+						rowsHTML+="<input type='hidden' form='form115_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form115_"+result.id+"' title='Delete' onclick='form115_delete_item($(this));'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form115_body').append(rowsHTML);
 		});
 
@@ -6158,7 +6037,7 @@ function form115_ini()
 		/////////////
 
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -6180,10 +6059,10 @@ function form116_ini()
 	show_loader();
 	var fid=$("#form116_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form116_header');
-	
+
 	var	fname=filter_fields.elements[0].value;
 	var ftype=filter_fields.elements[1].value;
 	var ftier=filter_fields.elements[2].value;
@@ -6213,7 +6092,7 @@ function form116_ini()
 	$('#form116_body').html("");
 
 	fetch_requested_data('form116',columns,function(results)
-	{	
+	{
 		results.forEach(function(result)
 		{
 			var details="Tier criteria: "+result.tier_criteria_lower+"-"+result.tier_criteria_upper+"\nPoints Addition: "+result.points_addition;
@@ -6260,9 +6139,9 @@ function form116_ini()
 						rowsHTML+="<input type='hidden' form='form116_"+result.id+"' value='"+result.cashback+"'>";
 						rowsHTML+="<input type='hidden' form='form116_"+result.id+"' value='"+result.reward_product+"'>";
 						rowsHTML+="<input type='hidden' form='form116_"+result.id+"' value='"+result.redemption_criteria+"'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form116_body').append(rowsHTML);
 		});
 
@@ -6291,7 +6170,7 @@ function form116_ini()
 		/////////////
 
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[5];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -6311,12 +6190,12 @@ function form118_ini()
 {
 	var bill_id=$("#form118_link").attr('data_id');
 	if(bill_id==null)
-		bill_id="";	
-	
+		bill_id="";
+
 	$('#form118_body').html("");
 	$('#form118_foot').html("");
 	document.getElementById('form118_customer_info').innerHTML="";
-	
+
 	if(bill_id!="")
 	{
 		show_loader();
@@ -6349,12 +6228,12 @@ function form118_ini()
 				"<tax></tax>" +
 				"<free_with></free_with>" +
 				"</bill_items>";
-	
+
 		////separate fetch function to get bill details like customer name, total etc.
 		fetch_requested_data('',bill_columns,function(bill_results)
 		{
 			var filter_fields=document.getElementById('form118_master');
-			
+
 			for (var i in bill_results)
 			{
 				filter_fields.elements[1].value=bill_results[i].customer_name;
@@ -6364,7 +6243,7 @@ function form118_ini()
 				filter_fields.elements[5].value=bill_results[i].offer;
 				filter_fields.elements[6].value=bill_results[i].transaction_id;
 				var save_button=filter_fields.elements[10];
-				
+
 				var address_data="<customers>" +
 						"<address></address>" +
 						"<city></city>" +
@@ -6379,7 +6258,7 @@ function form118_ini()
 					}
 					document.getElementById('form118_customer_info').innerHTML="Address<br>"+address_string;
 				});
-				
+
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
@@ -6396,7 +6275,7 @@ function form118_ini()
 							"<td></td>" +
 							"</tr>";
 				$('#form118_foot').html(total_row);
-				
+
 				var loyalty_data="<loyalty_programs count='1'>"+
 					"<name></name>"+
 					"<status exact='yes'>active</status>"+
@@ -6417,25 +6296,25 @@ function form118_ini()
 							for(var i=0;i<points.length;i++)
 							{
 								points_value+=parseFloat(points[i]);
-							}	
-							filter_fields.elements[8].value=points_value;	
+							}
+							filter_fields.elements[8].value=points_value;
 						},points_data);
 					}
 				},loyalty_data);
-				
+
 				break;
 			}
-		
+
 			fetch_requested_data('',bill_items_column,function(results)
 			{
 				var message_string="Bill from: "+get_session_var('title')+"\nAddress: "+get_session_var('address');
-				
+
 				results.forEach(function(result)
 				{
 					message_string+="\nItem: "+result.item_name;
 					message_string+=" Quantity: "+result.quantity;
 					message_string+=" Total: "+result.total;
-					
+
 					var rowsHTML="";
 					var id=result.id;
 					rowsHTML+="<tr>";
@@ -6465,17 +6344,17 @@ function form118_ini()
 							rowsHTML+="<input type='button' class='delete_icon' form='form118_"+id+"' id='delete_form118_"+id+"' onclick='form118_delete_item($(this));'>";
 							rowsHTML+="<input type='hidden' form='form118_"+id+"'>";
 							rowsHTML+="<input type='hidden' form='form118_"+id+"'>";
-						rowsHTML+="</td>";			
+						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-				
+
 					$('#form118_body').append(rowsHTML);
 				});
-				
+
 				message_string+="\nAmount: "+bill_results[0].amount;
 				message_string+="\ndiscount: "+bill_results[0].discount;
 				message_string+="\nTax: "+bill_results[0].tax;
 				message_string+="\nTotal: "+bill_results[0].total;
-				
+
 				var subject="Bill from "+get_session_var('title');
 				$('#form118_share').show();
 				$('#form118_share').click(function()
@@ -6499,13 +6378,13 @@ function form119_ini()
 {
 	var bill_id=$("#form119_link").attr('data_id');
 	if(bill_id==null)
-		bill_id="";	
-	
+		bill_id="";
+
 	$('#form119_body').html("");
 	$('#form119_foot').html("");
 	document.getElementById('form119_customer_info').innerHTML="";
 	document.getElementById('form119_payment_info').innerHTML="";
-	
+
 	if(bill_id!="")
 	{
 		show_loader();
@@ -6541,13 +6420,13 @@ function form119_ini()
 				"<tax></tax>" +
 				"<free_with></free_with>" +
 				"</bill_items>";
-	
+
 		////separate fetch function to get bill details like customer name, total etc.
 		fetch_requested_data('',bill_columns,function(bill_results)
 		{
 			//console.log(bill_results);
 			var filter_fields=document.getElementById('form119_master');
-			
+
 			for (var i in bill_results)
 			{
 				filter_fields.elements[1].value=bill_results[i].customer_name;
@@ -6559,14 +6438,14 @@ function form119_ini()
 				filter_fields.elements[8].value=bill_results[i].transaction_id;
 				var unbilled_button=filter_fields.elements[9];
 				var save_button=filter_fields.elements[10];
-				
+
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
 					event.preventDefault();
 					form119_update_form();
 				});
-				
+
 				var attributes_data="<attributes>" +
 						"<value></value>" +
 						"<type exact='yes'>customer</type>" +
@@ -6582,7 +6461,7 @@ function form119_ini()
 					}
 					document.getElementById('form119_customer_info').innerHTML=attributes_string;
 				});
-				
+
 				var payment_data="<payments>" +
 						"<id></id>" +
 						"<mode></mode>" +
@@ -6596,7 +6475,7 @@ function form119_ini()
 						document.getElementById('form119_payment_info').innerHTML="Payment: "+payments[0].mode+"<br>Paid: Rs."+payments[0].paid_amount;
 					}
 				});
-				
+
 				var unbilled_data="<unbilled_sale_items>" +
 						"<id></id>" +
 						"<customer exact='yes'>"+bill_results[i].customer_name+"</customer>" +
@@ -6606,9 +6485,9 @@ function form119_ini()
 					filter_fields.elements[5].value=customers.length;
 					if(customers.length>0)
 						$(unbilled_button).show();
-					
+
 				},unbilled_data);
-		
+
 				var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 									"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 									"<td>Rs. "+bill_results[i].amount+"</br>" +
@@ -6621,7 +6500,7 @@ function form119_ini()
 
 				break;
 			}
-		
+
 			fetch_requested_data('',bill_items_column,function(results)
 			{
 				results.forEach(function(result)
@@ -6656,11 +6535,11 @@ function form119_ini()
 							rowsHTML+="<input type='hidden' form='form119_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='submit_hidden' form='form119_"+id+"' id='save_form119_"+id+"' >";
 							rowsHTML+="<input type='button' class='delete_icon' form='form119_"+id+"' id='delete_form119_"+id+"' onclick='form119_delete_item($(this));'>";
-						rowsHTML+="</td>";			
+						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
 
 					$('#form119_body').append(rowsHTML);
-					
+
 					var make_data="<product_master>" +
 							"<make></make>" +
 							"<name exact='yes'>"+result.item_name+"</name>" +
@@ -6672,7 +6551,7 @@ function form119_ini()
 							document.getElementById('form119_product_make_'+id).innerHTML=data[0]+":";
 						}
 					},make_data);
-					
+
 					var exp_data="<product_instances>" +
 							"<expiry></expiry>" +
 							"<product_name exact='yes'>"+result.item_name+"</product_name>" +
@@ -6687,12 +6566,12 @@ function form119_ini()
 					},exp_data);
 
 				});
-				
+
 				var subject="Bill from "+get_session_var('title');
 				$('#form119_share').show();
 				$('#form119_share').click(function()
 				{
-					modal101_action(bt+' - bill # '+filter_fields.elements[4].value,filter_fields.elements[1].value,'customer',function (func) 
+					modal101_action(bt+' - bill # '+filter_fields.elements[4].value,filter_fields.elements[1].value,'customer',function (func)
 					{
 						print_form119(func);
 					});
@@ -6713,10 +6592,10 @@ function form120_ini()
 	show_loader();
 	var fid=$("#form120_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form120_header');
-	
+
 	var	fname=filter_fields.elements[0].value;
 	var fcustomer=filter_fields.elements[1].value;
 	var ftier=filter_fields.elements[2].value;
@@ -6739,7 +6618,7 @@ function form120_ini()
 	$('#form120_body').html("");
 
 	fetch_requested_data('form120',columns,function(results)
-	{	
+	{
 		results.forEach(function(result)
 		{
 			var points_data="<loyalty_points>" +
@@ -6771,9 +6650,9 @@ function form120_ini()
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form116_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="</td>";			
+						rowsHTML+="</td>";
 				rowsHTML+="</tr>";
-				
+
 				$('#form120_body').append(rowsHTML);
 			},points_data);
 		});
@@ -6803,7 +6682,7 @@ function form120_ini()
 		/////////////
 
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -6824,10 +6703,10 @@ function form121_ini()
 	show_loader();
 	var fid=$("#form121_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form121_header');
-	
+
 	var	fname=filter_fields.elements[0].value;
 	var fcustomer=filter_fields.elements[1].value;
 	////indexing///
@@ -6850,7 +6729,7 @@ function form121_ini()
 	$('#form121_body').html("");
 
 	fetch_requested_data('form121',columns,function(results)
-	{	
+	{
 		results.forEach(function(result)
 		{
 			var rowsHTML="";
@@ -6874,9 +6753,9 @@ function form121_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form121_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form121_"+result.id+"' id='delete_form121_"+result.id+"' onclick='form121_delete_item($(this));'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form121_body').append(rowsHTML);
 		});
 
@@ -6905,7 +6784,7 @@ function form121_ini()
 		/////////////
 
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -6926,11 +6805,11 @@ function form122_ini()
 {
 	var bill_id=$("#form122_link").attr('data_id');
 	if(bill_id==null)
-		bill_id="";	
-	
+		bill_id="";
+
 	$('#form122_body').html("");
 	$('#form122_foot').html("");
-	
+
 	if(bill_id!="")
 	{
 		show_loader();
@@ -6949,7 +6828,7 @@ function form122_ini()
 					"<cst></cst>"+
 					"<transaction_id></transaction_id>" +
 					"</supplier_bills>";
-		
+
 		////separate fetch function to get bill details like customer name, total etc.
 		fetch_requested_data('',bill_columns,function(bill_results)
 		{
@@ -6970,11 +6849,11 @@ function form122_ini()
 				//$(unbilled_button).parent().hide();
 				var save_button=filter_fields.elements['save'];
 				var share_button=filter_fields.elements['share'];
-				
+
 				filter_fields.elements['cst'].checked=false;
 				if(bill_results[0].cst=='yes')
 				{
-					filter_fields.elements['cst'].checked=true;				
+					filter_fields.elements['cst'].checked=true;
 				}
 
 				var bt=get_session_var('title');
@@ -6982,12 +6861,12 @@ function form122_ini()
 				$(share_button).show();
 				$(share_button).click(function()
 				{
-					modal101_action(bt+' - Purchase bill # '+filter_fields.elements['bill_num'].value,filter_fields.elements['supplier'].value,'supplier',function (func) 
+					modal101_action(bt+' - Purchase bill # '+filter_fields.elements['bill_num'].value,filter_fields.elements['supplier'].value,'supplier',function (func)
 					{
 						print_form122(func);
 					});
 				});
-								
+
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
@@ -6996,7 +6875,7 @@ function form122_ini()
 				});
 			}
 		});
-		
+
 		var bill_items_column="<supplier_bill_items>" +
 				"<id></id>" +
 				"<product_name></product_name>" +
@@ -7016,7 +6895,7 @@ function form122_ini()
 				"<qc_comments></qc_comments>"+
 				"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
 				"</supplier_bill_items>";
-		
+
 		fetch_requested_data('',bill_items_column,function(results)
 		{
 			results.forEach(function(result)
@@ -7055,14 +6934,14 @@ function form122_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form122_"+id+"' value='"+result.storage+"'>";
 						rowsHTML+="<input type='hidden' form='form122_"+id+"' value='"+id+"'>";
-						rowsHTML+="<input type='button' class='submit_hidden' form='form122_"+id+"' id='save_form122_"+id+"' >";	
+						rowsHTML+="<input type='button' class='submit_hidden' form='form122_"+id+"' id='save_form122_"+id+"' >";
 						rowsHTML+="<input type='button' class='delete_icon' form='form122_"+id+"' id='delete_form122_"+id+"' onclick='form122_delete_item($(this));'>";
 						rowsHTML+="<input type='button' class='submit_hidden' form='form122_"+id+"'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 				rowsHTML+="</tr>";
-			
+
 				$('#form122_body').prepend(rowsHTML);
-				
+
 			});
 			form122_get_totals();
 			$('textarea').autosize();
@@ -7082,15 +6961,15 @@ function form124_ini()
 	show_loader();
 	var fid=$("#form124_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form124_header');
-	
+
 	var rid=filter_fields.elements[0].value;
 	//var ftype=filter_fields.elements[1].value;
 	var faccount=filter_fields.elements[1].value;
 	//var pid=filter_fields.elements[3].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form124_index');
 	var prev_element=document.getElementById('form124_prev');
@@ -7135,23 +7014,23 @@ function form124_ini()
 					rowsHTML+="<td data-th='Document'>";
 						rowsHTML+="<br><div id='form124_documents_"+result.id+"'></div>";
 						rowsHTML+="<input type='button' form='form124_"+result.id+"' value='Add document' class='generic_icon'>";
-					rowsHTML+="</td>";				
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form124_body').append(rowsHTML);
 			var fields=document.getElementById('form124_'+result.id);
 			var doc_filter=fields.elements[4];
-					
-			$(doc_filter).on('click',function () 
+
+			$(doc_filter).on('click',function ()
 			{
-				modal144_action('receipts',result.id,function (url,doc_name) 
+				modal144_action('receipts',result.id,function (url,doc_name)
 				{
 					var docHTML="<a href='"+url+"' download='"+doc_name+"'><u>"+doc_name+"</u></a><br>";
 					var doc_container=document.getElementById('form124_documents_'+result.id);
 					$(doc_container).append(docHTML);
 				});
 			});
-			
+
 			var doc_column="<documents>" +
 							"<id></id>" +
 							"<url></url>" +
@@ -7165,7 +7044,7 @@ function form124_ini()
 				for (var j in doc_results)
 				{
 					var updated_url=doc_results[j].url.replace(/ /g,"+");
-					docHTML+="<a href='"+updated_url+"' download='"+doc_results[j].doc_name+"'><u>"+doc_results[j].doc_name+"</u></a><br>";							
+					docHTML+="<a href='"+updated_url+"' download='"+doc_results[j].doc_name+"'><u>"+doc_results[j].doc_name+"</u></a><br>";
 				}
 				document.getElementById('form124_documents_'+result.id).innerHTML=docHTML;
 			});
@@ -7194,7 +7073,7 @@ function form124_ini()
 			$(prev_element).show();
 		}
 		/////////////
-		
+
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -7215,14 +7094,14 @@ function form125_ini()
 	show_loader();
 	var fid=$("#form125_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form125_header');
-	
+
 	var fcustomer=filter_fields.elements[0].value;
 	var fusername=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form125_index');
 	var prev_element=document.getElementById('form125_prev');
@@ -7235,7 +7114,7 @@ function form125_ini()
 			"<acc_name>"+fcustomer+"</acc_name>" +
 			"<username>"+fusername+"</username>" +
 			"<status>"+fstatus+"</status>" +
-			"<type exact='yes'>customer</type>"+			
+			"<type exact='yes'>customer</type>"+
 			"</accounts>";
 
 	$('#form125_body').html("");
@@ -7262,15 +7141,15 @@ function form125_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form125_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form125_"+result.id+"' title='Save'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form125_"+result.id+"' title='Delete' onclick='form125_delete_item($(this));'>";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='delete_icon' form='form125_"+result.id+"' title='Delete' onclick='form125_delete_item($(this));'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form125_body').append(rowsHTML);
 			var fields=document.getElementById("form125_"+result.id);
 			var status_filter=fields.elements[3];
 			set_static_value_list('accounts','status',status_filter);
-			
+
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
@@ -7301,10 +7180,10 @@ function form125_ini()
 			$(prev_element).show();
 		}
 		/////////////
-		
+
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[5];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -7327,16 +7206,16 @@ function form126_ini()
 	show_loader();
 	var fid=$("#form126_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form126_header');
-	
-	if(fid=='')	
-	{	
+
+	if(fid=='')
+	{
 		fid=filter_fields.elements[0].value;
-	}	
+	}
 	var fdesc=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form126_index');
 	var prev_element=document.getElementById('form126_prev');
@@ -7360,15 +7239,15 @@ function form126_ini()
 			"<detail></detail>" +
 			"<issue_id exact='yes'>"+result.id+"</issue_id>" +
 			"</solutions>";
-			
+
 			fetch_requested_data('form126',sol_columns,function(sol_results)
 			{
 				var solutions="";
 				sol_results.forEach(function(sol)
-				{	
+				{
 					solutions+="* "+sol.detail+"\n";
 				});
-				
+
 				var rowsHTML="<tr>";
 					rowsHTML+="<form id='form126_"+result.id+"'></form>";
 						rowsHTML+="<td data-th='Issue Id'>";
@@ -7387,9 +7266,9 @@ function form126_ini()
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form126_"+result.id+"' value='"+result.id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form126_"+result.id+"' title='Delete' onclick='form126_delete_item($(this));'>";
-						rowsHTML+="</td>";			
+						rowsHTML+="</td>";
 				rowsHTML+="</tr>";
-				
+
 				$('#form126_body').append(rowsHTML);
 				$('textarea').autosize();
 			});
@@ -7418,7 +7297,7 @@ function form126_ini()
 			$(prev_element).show();
 		}
 		/////////////
-		
+
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -7440,17 +7319,17 @@ function form128_ini()
 	show_loader();
 	var fid=$("#form128_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form128_header');
-	
-	if(fid=='')	
-	{	
+
+	if(fid=='')
+	{
 		fid=filter_fields.elements[0].value;
-	}	
+	}
 	var fcustomer=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form128_index');
 	var prev_element=document.getElementById('form128_prev');
@@ -7463,7 +7342,7 @@ function form128_ini()
 			"<customer>"+fcustomer+"</customer>" +
 			"<notes></notes>"+
 			"<problem_type></problem_type>"+
-			"<reported_by></reported_by>"+			
+			"<reported_by></reported_by>"+
 			"<closing_notes></closing_notes>"+
 			"<start_time></start_time>"+
 			"<end_time></end_time>"+
@@ -7511,7 +7390,7 @@ function form128_ini()
 						}
 					}
 				}
-				
+
 				if(read)
 				{
 					var details="Reported By: "+result.reported_by+"\nProblem Type: "+result.problem_type+"\nProblem detail: "+result.notes;
@@ -7533,18 +7412,18 @@ function form128_ini()
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form128_"+result.id+"' value='"+result.id+"'>";
-							if(del)								
+							if(del)
 								rowsHTML+="<input type='button' class='delete_icon' form='form128_"+result.id+"' title='Delete' onclick='form128_delete_item($(this));'>";
 							rowsHTML+="<input type='button' class='generic_icon' value='Details' title='Service Request Details' form='form128_"+result.id+"' onclick=\"element_display('"+result.id+"','form134')\">";
 							rowsHTML+="<input type='button' class='generic_icon' value='Billing' title='Billing Details' form='form128_"+result.id+"' onclick=\"element_display('"+result.id+"','form151')\">";
 						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-				
+
 					$('#form128_body').append(rowsHTML);
 					$('textarea').autosize();
 				}
 			});
-			
+
 			////indexing///
 			var next_index=parseInt(start_index)+25;
 			var prev_index=parseInt(start_index)-25;
@@ -7567,8 +7446,8 @@ function form128_ini()
 			{
 				$(prev_element).show();
 			}
-			
-			/////////////			
+
+			/////////////
 			var export_button=filter_fields.elements[4];
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
@@ -7594,32 +7473,32 @@ function form129_ini()
 		var domain=get_domain();
 		var username=get_username();
 		var re_access=get_session_var('re');
-		
+
 		$('#form129_header').html("");
-	
+
 		var lat=get_session_var('lat');
 		var lng=get_session_var('lng');
 		var title=get_session_var('title');
-		
+
 		if(typeof map129 != 'undefined')
 			map129.remove();
-	
+
 		map129 = L.map('form129_map',{
-			center: [lat,lng], 
+			center: [lat,lng],
 			zoom: 10
 		});
-		
+
 /*		var googleLayer=new L.Google('ROADMAP');
-		console.log(googleLayer);		
+		console.log(googleLayer);
 		map129.addLayer(googleLayer);
-*/		
+*/
 		L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
 	        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenstreetMap</a>',
 	        subdomains:'1234'
 	    }).addTo(map129);
-		
+
 		//////////changeable master coordinates/////////
-		
+
 		var mlatlng=L.latLng(lat,lng);
 		var mmarker=L.marker(mlatlng,{draggable:true}).addTo(map129).bindPopup(title);
 		mmarker.on('dragend',function(event){
@@ -7631,7 +7510,7 @@ function form129_ini()
 			var save_button=form.elements[3];
 			$(save_button).show();
 		});
-		
+
 		var rowsHTML="<div class='customers_content_item'>" +
 				"<form id='form129_master'>" +
 				"Name: <textarea style='height:40px;width:100px' readonly='readonly'>"+title+"</textarea></br>" +
@@ -7640,7 +7519,7 @@ function form129_ini()
 				"<input type='button' class='export_icon' value='Confirm' style='display:none;' form='form129_master'>" +
 				"</form>" +
 				"</div>";
-		
+
 		$('#form129_header').append(rowsHTML);
 		var fields=document.getElementById("form129_master");
 		var save_button=fields.elements[3];
@@ -7654,9 +7533,9 @@ function form129_ini()
 			//console.log('clicked on master');
 			mmarker.openPopup();
 		});
-	
+
 		/////////////////////////////////////////////////
-		
+
 		var staff_data="<staff>" +
 				"<id></id>" +
 				"<name></name>" +
@@ -7728,12 +7607,12 @@ function form129_ini()
 							form.elements[1].value=latlng.lat;
 							form.elements[2].value=latlng.lng;
 							if(update)
-							{							
+							{
 								var save_button=form.elements[4];
 								$(save_button).show();
 							}
 						});
-						
+
 						var rowsHTML="<div class='customers_content_item'>" +
 								"<form id='form129_"+staff.id+"'>" +
 								"Name: <textarea style='height:40px;width:100px' readonly='readonly'>"+staff.acc_name+"</textarea></br>" +
@@ -7743,7 +7622,7 @@ function form129_ini()
 								"<input type='button' class='export_icon' value='Confirm' form='form129_"+staff.id+"'>" +
 								"</form>" +
 								"</div>";
-						
+
 						$('#form129_header').append(rowsHTML);
 						var fields=document.getElementById("form129_"+staff.id);
 						if(update)
@@ -7761,7 +7640,7 @@ function form129_ini()
 						});
 					}
 				});
-				
+
 				var scrollPane=$(".customers_pane");
 				var scrollContent=$(".customers_content");
 				scrollContent.css('width',(Math.round(225*staffs.length)+225)+"px");
@@ -7778,11 +7657,11 @@ function form129_ini()
 						}
 					}
 				});
-		
-				scrollPane.css("overflow","hidden");			
+
+				scrollPane.css("overflow","hidden");
 			hide_loader();
-			});						
-		});			
+			});
+		});
 	}
 	else
 	{
@@ -7799,11 +7678,11 @@ function form130_ini()
 {
 	var bill_id=$("#form130_link").attr('data_id');
 	if(bill_id==null)
-		bill_id="";	
-	
+		bill_id="";
+
 	$('#form130_body').html("");
 	$('#form130_foot').html("");
-	
+
 	if(bill_id!="")
 	{
 		show_loader();
@@ -7836,12 +7715,12 @@ function form130_ini()
 				"<tax></tax>" +
 				"<free_with></free_with>" +
 				"</bill_items>";
-	
+
 		////separate fetch function to get bill details like customer name, total etc.
 		fetch_requested_data('',bill_columns,function(bill_results)
 		{
 			var filter_fields=document.getElementById('form130_master');
-			
+
 			for (var i in bill_results)
 			{
 				filter_fields.elements[1].value=bill_results[i].customer_name;
@@ -7849,9 +7728,9 @@ function form130_ini()
 				filter_fields.elements[3].value=bill_id;
 				filter_fields.elements[4].value=bill_results[i].offer;
 				filter_fields.elements[5].value=bill_results[i].transaction_id;
-				
+
 				var save_button=filter_fields.elements[6];
-				
+
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
@@ -7871,17 +7750,17 @@ function form130_ini()
 
 				break;
 			}
-			
+
 			fetch_requested_data('',bill_items_column,function(results)
 			{
 				var message_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
-				
+
 				results.forEach(function(result)
 				{
 					message_string+="\nItem: "+result.item_name;
 					message_string+=" Price: "+result.unit_price;
 					message_string+=" Total: "+result.total;
-					
+
 					var rowsHTML="";
 					var id=result.id;
 					rowsHTML+="<tr>";
@@ -7924,19 +7803,19 @@ function form130_ini()
 							rowsHTML+="<input type='hidden' form='form130_"+id+"'>";
 							rowsHTML+="<input type='hidden' form='form130_"+id+"'>";
 							rowsHTML+="<input type='hidden' form='form130_"+id+"'>";
-						rowsHTML+="</td>";			
+						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-				
+
 					$('#form130_body').append(rowsHTML);
-					
+
 					var fields=document.getElementById("form130_"+id);
 					$(fields).on("submit", function(event)
 					{
 						event.preventDefault();
 					});
 				});
-				
-				
+
+
 				message_string+="\nAmount: "+filter_fields.elements[3].value;
 				message_string+="\ndiscount: "+filter_fields.elements[4].value;
 				message_string+="\nTax: "+filter_fields.elements[5].value;
@@ -7948,7 +7827,7 @@ function form130_ini()
 				{
 					modal44_action(filter_fields.elements[1].value,subject,message_string);
 				});
-				
+
 				hide_loader();
 			});
 		});
@@ -7966,14 +7845,14 @@ function form131_ini()
 	var fid=$("#form131_link").attr('data_id');
 	if(fid==null)
 		fid="";
-	
+
 	var filter_fields=document.getElementById('form131_header');
-	
-	//populating form 
+
+	//populating form
 	var ftype=filter_fields.elements[0].value;
 	var fassignee=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form131_index');
 	var prev_element=document.getElementById('form131_prev');
@@ -8059,29 +7938,29 @@ function form131_ini()
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' readonly='readonly' form='form131_"+result.id+"' value='"+result.id+"'>";
-								if(update)								
+								if(update)
 									rowsHTML+="<input type='submit' class='save_icon' form='form131_"+result.id+"' title='Save'>";
-								if(del)		
+								if(del)
 									rowsHTML+="<input type='button' class='delete_icon' form='form131_"+result.id+"' title='Delete' onclick='form131_delete_item($(this));'>";
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-			
+
 					$('#form131_body').append(rowsHTML);
 					var fields=document.getElementById("form131_"+result.id);
 					if(update)
-					{					
+					{
 						$(fields).on("submit", function(event)
 						{
 							event.preventDefault();
 							form131_update_item(fields);
 						});
 					}
-					
+
 					var name_filter=fields.elements[0];
 					var assignee_filter=fields.elements[1];
 					var due_filter=fields.elements[2];
 					var status_filter=fields.elements[3];
-								
+
 					var staff_data="<staff>" +
 							"<acc_name></acc_name>" +
 							"</staff>";
@@ -8090,7 +7969,7 @@ function form131_ini()
 					$(due_filter).vdatetimepicker();
 				}
 			});
-		
+
 			////indexing///
 			var next_index=parseInt(start_index)+25;
 			var prev_index=parseInt(start_index)-25;
@@ -8114,9 +7993,9 @@ function form131_ini()
 				$(prev_element).show();
 			}
 			/////////////
-	
+
 			longPressEditable($('.dblclick_editable'));
-			
+
 			var export_button=filter_fields.elements[4];
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
@@ -8138,14 +8017,14 @@ function form133_ini()
 	show_loader();
 	var fid=$("#form133_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form133_header');
-	
+
 	if(fid=='')
 		fid=filter_fields.elements[0].value;
 	var fcustomer=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form133_index');
 	var prev_element=document.getElementById('form133_prev');
@@ -8168,7 +8047,7 @@ function form133_ini()
 		doc_results.forEach(function(doc_result)
 		{
 			var columns="<service_requests>" +
-					"<customer></customer>"+					
+					"<customer></customer>"+
 					"<id>"+doc_result.target_id+"</id>" +
 					"</service_requests>";
 			get_single_column_data(function(results)
@@ -8188,19 +8067,19 @@ function form133_ini()
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form133_"+doc_result.id+"' value='"+doc_result.id+"'>";
 							rowsHTML+="<input type='submit' class='save_icon' form='form133_"+doc_result.id+"' title='Save'>";
-							rowsHTML+="<input type='button' class='delete_icon' form='form133_"+doc_result.id+"' title='Delete' onclick='form133_delete_item($(this));'>";	
-						rowsHTML+="</td>";			
+							rowsHTML+="<input type='button' class='delete_icon' form='form133_"+doc_result.id+"' title='Delete' onclick='form133_delete_item($(this));'>";
+						rowsHTML+="</td>";
 				rowsHTML+="</tr>";
-			
+
 				$('#form133_body').append(rowsHTML);
-	
+
 				var fields=document.getElementById("form133_"+doc_result.id);
 
 				$(fields).on("submit",function(event)
 				{
 					event.preventDefault();
 					form133_update_item(fields);
-				});				
+				});
 			},columns);
 		});
 
@@ -8228,9 +8107,9 @@ function form133_ini()
 		}
 		/////////////
 
-		$('textarea').autosize();		
+		$('textarea').autosize();
 		hide_loader();
-	});	
+	});
 };
 
 
@@ -8243,13 +8122,13 @@ function form134_ini()
 {
 	var filter_fields=document.getElementById('form134_master');
 	var request_id=filter_fields.elements[1].value;
-	
+
 	$('#form134_detail_body').html("");
 	$('#form134_machine_body').html("");
 	$('#form134_team_body').html("");
 	$('#form134_document_body').html("");
 	$('#form134_task_body').html("");
-	
+
 	if(request_id!="" && request_id!="undefined")
 	{
 		show_loader();
@@ -8263,11 +8142,11 @@ function form134_ini()
 				"<reported_time></reported_time>" +
 				"<status></status>" +
 				"</service_requests>";
-	
+
 		fetch_requested_data('form134',request_columns,function(request_results)
 		{
 			var filter_fields=document.getElementById('form134_master');
-			
+
 			if(request_results.length>0)
 			{
 				filter_fields.elements[1].value=request_results[0].id;
@@ -8290,12 +8169,12 @@ function form134_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='button' value='Add to Repo' class='generic_icon' onclick=\"form134_add_issue($(this),'"+request_results[0].problem_type+"','"+request_results[0].notes+"','"+request_results[0].closing_notes+"')\">";
-					rowsHTML+="</td>";								
+					rowsHTML+="</td>";
 				rowsHTML+="</tr>";
-			
-				$('#form134_detail_body').append(rowsHTML);				
+
+				$('#form134_detail_body').append(rowsHTML);
 			}
-		
+
 			/////////////service request machines////////////////////////
 			var machines_data="<service_request_machines>"+
 									"<id></id>"+
@@ -8308,7 +8187,7 @@ function form134_ini()
 									"<status></status>"+
 									"</service_request_machines>";
 			fetch_requested_data('',machines_data,function(machine_results)
-			{				
+			{
 				machine_results.forEach(function(result)
 				{
 					var id=result.id;
@@ -8334,10 +8213,10 @@ function form134_ini()
 							rowsHTML+="<input type='button' class='generic_icon' value='Close' form='form134_machine_"+id+"' onclick='modal104_action($(this))'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form134_machine_"+id+"' id='delete_form134_machine_"+id+"' onclick='form134_delete_machine($(this));'>";
 							rowsHTML+="<input type='submit' class='save_icon' form='form134_machine_"+id+"' >";
-						rowsHTML+="</td>";			
-					rowsHTML+="</tr>";				
+						rowsHTML+="</td>";
+					rowsHTML+="</tr>";
 					$('#form134_machine_body').append(rowsHTML);
-					
+
 					var fields=document.getElementById("form134_machine_"+id);
 					$(fields).on("submit", function(event)
 					{
@@ -8345,8 +8224,8 @@ function form134_ini()
 						form134_update_machine(fields);
 					});
 
-				});	
-				longPressEditable($('.dblclick_editable'));		
+				});
+				longPressEditable($('.dblclick_editable'));
 			});
 
 			/////////////service request team////////////////////////
@@ -8358,7 +8237,7 @@ function form134_ini()
 									"<email></email>"+
 									"</service_request_team>";
 			fetch_requested_data('',team_data,function(team_results)
-			{				
+			{
 				team_results.forEach(function(result)
 				{
 					var id=result.id;
@@ -8376,13 +8255,13 @@ function form134_ini()
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form134_team_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form134_team_"+id+"' id='delete_form134_team_"+id+"' onclick='form134_delete_team($(this));'>";
-						rowsHTML+="</td>";			
-					rowsHTML+="</tr>";				
+						rowsHTML+="</td>";
+					rowsHTML+="</tr>";
 					$('#form134_team_body').append(rowsHTML);
-				});		
-				longPressEditable($('.dblclick_editable'));		
+				});
+				longPressEditable($('.dblclick_editable'));
 			});
-			
+
 			/////////////service request document////////////////////
 			var document_data="<documents>"+
 								"<id></id>"+
@@ -8392,7 +8271,7 @@ function form134_ini()
 								"<url></url>"+
 								"</documents>";
 			fetch_requested_data('',document_data,function(document_results)
-			{				
+			{
 				document_results.forEach(function(result)
 				{
 					var id=result.id;
@@ -8409,10 +8288,10 @@ function form134_ini()
 							rowsHTML+="<input type='hidden' form='form134_document_"+id+"'>";
 							rowsHTML+="<input type='hidden' form='form134_document_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form134_document_"+id+"' id='delete_form134_document_"+id+"' onclick='form134_delete_document($(this));'>";
-						rowsHTML+="</td>";			
-					rowsHTML+="</tr>";				
+						rowsHTML+="</td>";
+					rowsHTML+="</tr>";
 					$('#form134_document_body').append(rowsHTML);
-				});				
+				});
 			});
 
 			/////////////service request tasks////////////////////
@@ -8427,7 +8306,7 @@ function form134_ini()
 								"<description></description>"+
 								"</task_instances>";
 			fetch_requested_data('',task_data,function(task_results)
-			{				
+			{
 				task_results.forEach(function(result)
 				{
 					var id=result.id;
@@ -8449,8 +8328,8 @@ function form134_ini()
 							rowsHTML+="<input type='hidden' form='form134_task_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form134_task_"+id+"' id='delete_form134_task_"+id+"' onclick='form134_delete_task($(this));'>";
 							rowsHTML+="<input type='submit' class='save_icon' form='form134_task_"+id+"' >";
-						rowsHTML+="</td>";			
-					rowsHTML+="</tr>";				
+						rowsHTML+="</td>";
+					rowsHTML+="</tr>";
 					$('#form134_task_body').append(rowsHTML);
 					var fields=document.getElementById("form134_task_"+id);
 					$(fields).on("submit", function(event)
@@ -8458,10 +8337,10 @@ function form134_ini()
 						event.preventDefault();
 						form134_update_task(fields);
 					});
-				});	
-				longPressEditable($('.dblclick_editable'));			
+				});
+				longPressEditable($('.dblclick_editable'));
 			});
-					
+
 			hide_loader();
 		});
 	}
@@ -8484,24 +8363,24 @@ function form138_ini()
 	//console.log(project_id);
 	var fields=document.getElementById('form138_master');
 	if(project_id=="")
-	{	
+	{
 		project_id=fields.elements[2].value;
 	}
 	else
 	{
 		fields.elements[2].value=project_id;
 	}
-	
+
 	if(project_id!="")
 	{
 		show_loader();
-		
+
 		var project_name=fields.elements[1].value;
 		var project_columns="<projects>" +
 				"<id>"+project_id+"</id>" +
 				"<name></name>" +
 				"</projects>";
-	
+
 		var phase_columns="<project_phases>" +
 				"<id></id>" +
 				"<project_id exact='yes'>"+project_id+"</project_id>" +
@@ -8512,33 +8391,33 @@ function form138_ini()
 				"<percent_complete></percent_complete>"+
 				"<status></status>" +
 				"</project_phases>";
-	
+
 		fetch_requested_data('',project_columns,function(project_results)
 		{
 			for (var i in project_results)
 			{
 				var filter_fields=document.getElementById('form138_master');
 				filter_fields.elements[1].value=project_results[i].name;
-				filter_fields.elements[2].value=project_results[i].id;				
+				filter_fields.elements[2].value=project_results[i].id;
 				break;
 			}
 		});
 		/////////////////////////////////////////////////////////////////////////
-		
+
 		if_data_read_access('projects',function(accessible_data)
 		{
 			fetch_requested_data('',phase_columns,function(results)
 			{
 				var source_array=[];
-				
+
 				results.sort(function(a,b)
 				{
 					if(parseFloat(a.start_date)>parseFloat(b.start_date))
 					{	return 1;}
-					else 
+					else
 					{	return -1;}
-				});	
-					
+				});
+
 				results.forEach(function(result)
 				{
 					var read=false;
@@ -8579,41 +8458,41 @@ function form138_ini()
 					{
 						var from_time = "/Date(" + result.start_date + ")/";
 						var to_time = "/Date(" + result.due_date + ")/";
-												
+
 						var source_item=new Object();
 						source_item.name=result.phase_name;
-						source_item.desc="";						
+						source_item.desc="";
 						var value_item=new Object();
 						value_item.from=from_time;
 						value_item.to=to_time;
 						value_item.label=result.details;
 						value_item.desc=result.details;
-						value_item.dataObj=result.id;						
+						value_item.dataObj=result.id;
 						value_item.customClass="ganttRed";
 						if(result.status=='completed')
 							value_item.customClass="ganttGreen";
 						else if(result.status=='active')
 							value_item.customClass="ganttYellow";
-												
+
 						var values_array=[];
 						values_array.push(value_item);
 						source_item.values=values_array;
 						source_array.push(source_item);
 					}
 				});
-								
+
 				$("#form138_gantt").gantt({
 					source: source_array,
 					scale: "days",
 					minScale: "hours",
 					maxScale:"months",
 					navigate: "scroll",
-					onItemClick: function(data) 
+					onItemClick: function(data)
 					{
 						modal107_action(data);
 					},
 				});
-								
+
 				hide_loader();
 			});
 		});
@@ -8638,7 +8517,7 @@ function form139_ini()
 	var filter_fields=document.getElementById('form139_header');
 	var fcustomer=filter_fields.elements[0].value;
 	var flocation=filter_fields.elements[1].value;
-	
+
 	var member_columns="<assets>" +
 			"<id>"+data_id+"</id>" +
 			"<name></name>" +
@@ -8654,11 +8533,11 @@ function form139_ini()
 			"</assets>";
 
 	/////////////////////////////////////////////////////////////////////////
-	
+
 	fetch_requested_data('form139',member_columns,function(results)
 	{
 		results.forEach(function(result)
-		{		
+		{
 			var id=result.id;
 			var rowsHTML="<tr>";
 			rowsHTML+="<form id='form139_"+id+"'></form>";
@@ -8681,25 +8560,25 @@ function form139_ini()
 					rowsHTML+="<input type='hidden' form='form139_"+id+"' value='"+id+"'>";
 					rowsHTML+="<input type='submit' class='submit_hidden' form='form139_"+id+"' id='save_form139_"+id+"'>";
 					rowsHTML+="<input type='button' class='delete_icon' form='form139_"+id+"' id='delete_form139_"+id+"' onclick='form139_delete_item($(this));'>";
-				rowsHTML+="</td>";			
+				rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-		
+
 			$('#form139_body').append(rowsHTML);
-			
+
 			var fields=document.getElementById("form139_"+id);
-			
+
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
 				form139_update_item(fields);
 			});
 		});
-		
+
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-	
+
 		hide_loader();
-	});	
+	});
 }
 
 
@@ -8716,10 +8595,10 @@ function form140_ini()
 	$('#form140_body').html("");
 
 	show_loader();
-	
+
 	var filter_fields=document.getElementById('form140_header');
 	var fsupplier=filter_fields.elements[0].value;
-	var ftype=filter_fields.elements[1].value;	
+	var ftype=filter_fields.elements[1].value;
 	var flocation=filter_fields.elements[2].value;
 
 	var member_columns="<assets>" +
@@ -8737,11 +8616,11 @@ function form140_ini()
 			"</assets>";
 
 	/////////////////////////////////////////////////////////////////////////
-	
+
 	fetch_requested_data('form140',member_columns,function(results)
 	{
 		results.forEach(function(result)
-		{		
+		{
 			var rowsHTML="";
 			var id=result.id;
 			rowsHTML+="<tr>";
@@ -8765,13 +8644,13 @@ function form140_ini()
 					rowsHTML+="<input type='hidden' form='form140_"+id+"' value='"+id+"'>";
 					rowsHTML+="<input type='submit' class='submit_hidden' form='form140_"+id+"' id='save_form140_"+id+"'>";
 					rowsHTML+="<input type='button' class='delete_icon' form='form140_"+id+"' id='delete_form140_"+id+"' onclick='form140_delete_item($(this));'>";
-				rowsHTML+="</td>";			
+				rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-		
+
 			$('#form140_body').append(rowsHTML);
-			
+
 			var fields=document.getElementById("form140_"+id);
-			
+
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
@@ -8780,9 +8659,9 @@ function form140_ini()
 		});
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-	
+
 		hide_loader();
-	});	
+	});
 }
 
 /**
@@ -8795,16 +8674,16 @@ function form141_ini()
 	show_loader();
 	var fid=$("#form141_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form141_header');
-	
-	//populating form 
+
+	//populating form
 	if(fid==="")
 		fid=filter_fields.elements[0].value;
 	var fcustomer=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form141_index');
 	var prev_element=document.getElementById('form141_prev');
@@ -8818,7 +8697,7 @@ function form141_ini()
 	$('#form141_body').html("");
 
 	ajax_for_app(parameter_url,kvp,function(results)
-	{	
+	{
 		console.log(results);
 		results.forEach(function(result)
 		{
@@ -8847,16 +8726,16 @@ function form141_ini()
 						rowsHTML+="<input type='submit' class='save_icon' form='form141_"+result.id+"' title='Save order'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form141_"+result.id+"' title='Delete order' onclick='form141_delete_item($(this));'>";
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form141_"+result.id+"'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form141_body').append(rowsHTML);
 			var fields=document.getElementById("form141_"+result.id);
 			var bill_button=fields.elements[7];
 			var status_filter=fields.elements[3];
-			
+
 			set_static_value_list('sale_orders','status',status_filter);
-			
+
 			if(result.status=='pending')
 			{
 				$(bill_button).attr('value','Create Bill');
@@ -8869,13 +8748,13 @@ function form141_ini()
 			{
 				$(bill_button).hide();
 			}
-			
+
 			$(fields).on("submit",function(event)
 			{
 				event.preventDefault();
 				form141_update_item(fields);
 			});
-			
+
 		});
 
 		////indexing///
@@ -8904,7 +8783,7 @@ function form141_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -8926,13 +8805,13 @@ function form146_ini()
 	show_loader();
 	var fid=$("#form146_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form146_header');
 	var fname=filter_fields.elements[0].value;
 	var fbatch=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form146_index');
 	var prev_element=document.getElementById('form146_prev');
@@ -8979,21 +8858,21 @@ function form146_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form146_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='submit_hidden' form='form146_"+result.id+"'>";
-					if(result.status!='completed')					
+					if(result.status!='completed')
 						rowsHTML+="<input type='button' class='delete_icon' form='form146_"+result.id+"' title='Delete' onclick='form146_delete_item($(this));'>";
 					if(result.status=='scheduled')
 						rowsHTML+="<input type='button' class='generic_icon' form='form146_"+result.id+"' value='Completed' onclick='modal110_action($(this));'>";
 					if(result.status!='completed' && result.status!='suspended')
 						rowsHTML+="<input type='button' class='generic_icon' form='form146_"+result.id+"' value='Suspend' onclick='form146_suspend_item($(this));'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-		
+
 			$('#form146_body').append(rowsHTML);
 
 			var fields=document.getElementById("form146_"+result.id);
-			var schedule_filter=fields.elements[3];			
+			var schedule_filter=fields.elements[3];
 			$(schedule_filter).vdatetimepicker();
-			
+
 			$(fields).on("submit",function(event)
 			{
 				event.preventDefault();
@@ -9027,7 +8906,7 @@ function form146_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -9035,7 +8914,7 @@ function form146_ini()
 			get_export_data(columns,'manufacturing_schedule');
 		});
 		hide_loader();
-	});	
+	});
 };
 
 
@@ -9047,9 +8926,9 @@ function form146_ini()
 function form150_ini()
 {
 	$('#form150_body').html("");
-	
+
 	show_loader();
-	var account_name=get_account_name();	
+	var account_name=get_account_name();
 	var member_columns="<project_team>" +
 				"<project_id></project_id>"+
 				"<status exact='yes'>active</status>" +
@@ -9058,11 +8937,11 @@ function form150_ini()
 	get_single_column_data(function(member_results)
 	{
 		var project_id_string="--";
-		for (var i in member_results) 
+		for (var i in member_results)
 		{
 			project_id_string+=member_results[i]+"--";
 		}
-		
+
 		var feed_columns="<feeds>"+
 						"<id></id>"+
 						"<content_type></content_type>"+
@@ -9070,38 +8949,38 @@ function form150_ini()
                         "<content_detail></content_detail>"+
                         "<content_blob></content_blob>"+
                         "<content_url></content_url>"+
-						"<status exact='yes'>visible</status>"+                        
+						"<status exact='yes'>visible</status>"+
                         "<source exact='yes'>project</source>"+
                         "<source_id array='yes'>"+project_id_string+"</source_id>"+
                         "<target_user></target_user>"+
                         "<owner></owner>"+
 						"</feeds>";
-		
+
 		fetch_requested_data('form150',feed_columns,function(feed_results)
 		{
-			feed_results.forEach(function (feed_result) 
+			feed_results.forEach(function (feed_result)
 			{
 				var feed_content="<div class='feed_item'>"+
 								"<br><div class='feed_title'>"+feed_result.content_title+
 								" <a class='small_cross_icon' onclick=\"delete_feed('"+feed_result.id+"',$(this));\" title='Delete post'>&#10006;</a></div>"+
 								"<br><u>"+feed_result.owner+"</u>: <div class='feed_detail'>"+feed_result.content_detail+"</div>"+
-								"<br><div id='form150_likes_"+feed_result.id+"' class='feed_likes'></div>"+								
+								"<br><div id='form150_likes_"+feed_result.id+"' class='feed_likes'></div>"+
 								"<br><div id='form150_comments_"+feed_result.id+"' class='feed_comments'></div>"+
 								"</div>";
-												
+
 				$('#form150_body').append(feed_content);
-								
+
 				var like_columns="<feed_likes>"+
 								"<person></person>"+
 								"<feed_id exact='yes'>"+feed_result.id+"</feed_id>"+
 								"</feed_likes>";
-				get_single_column_data(function (like_results) 
+				get_single_column_data(function (like_results)
 				{
 					var liked=false;
 					for(var i in like_results)
 					{
 						if(like_results[i]==account_name)
-						{	
+						{
 							liked=true;
 							break;
 						}
@@ -9110,7 +8989,7 @@ function form150_ini()
 					{
 						var likes_content="<img src='"+server_root+"/images/thumbs_up.png' class='thumbs_icon' onclick=\"dislike_feed('"+feed_result.id+"',$(this))\"> <b id='form150_likes_count_"+feed_result.id+"'>"+like_results.length+"</b> likes";
 					}
-					else 
+					else
 					{
 						var likes_content="<img src='"+server_root+"/images/thumbs_up_line.png' class='thumbs_icon' onclick=\"like_feed('"+feed_result.id+"',$(this))\"> <b id='form150_likes_count_"+feed_result.id+"'>"+like_results.length+"</b> likes";
 					}
@@ -9125,7 +9004,7 @@ function form150_ini()
 									"</feed_comments>";
 
 				fetch_requested_data('form150',comment_columns,function(comment_results)
-				{					
+				{
 					var comments_content="";
 					for(var i in comment_results)
 					{
@@ -9142,7 +9021,7 @@ function form150_ini()
 					$('#form150_comments_'+feed_result.id).html(comments_content);
 					$('#form150_comments_'+feed_result.id).find('label').find('textarea').on('keyup',function(e)
 					{
-						if (e.keyCode==13) 
+						if (e.keyCode==13)
 						{
 							create_feed_comment(feed_result.id,this);
 						}
@@ -9152,8 +9031,8 @@ function form150_ini()
 
 			hide_loader();
 		});
-		
-	},member_columns);	
+
+	},member_columns);
 }
 
 
@@ -9166,11 +9045,11 @@ function form151_ini()
 {
 	var filter_fields=document.getElementById('form151_master');
 	var request_id=filter_fields.elements[1].value;
-	
+
 	$('#form151_task_body').html("");
 	$('#form151_item_body').html("");
-	$('#form151_expense_body').html("");	
-	
+	$('#form151_expense_body').html("");
+
 	if(request_id!="")
 	{
 		show_loader();
@@ -9184,7 +9063,7 @@ function form151_ini()
 				"<reported_time></reported_time>" +
 				"<status></status>" +
 				"</service_requests>";
-	
+
 		fetch_requested_data('form151',request_columns,function(request_results)
 		{
 			var filter_fields=document.getElementById('form151_master');
@@ -9196,7 +9075,7 @@ function form151_ini()
 				filter_fields.elements[1].value=request_results[0].id;
 				filter_fields.elements[2].value=request_results[0].customer;
 			}
-			
+
 			/////////////service request tasks////////////////////
 			var task_data="<task_instances>"+
 								"<id></id>"+
@@ -9236,7 +9115,7 @@ function form151_ini()
 							rowsHTML+="<input type='hidden' form='form151_task_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form151_task_"+id+"' id='delete_form151_task_"+id+"' onclick='form151_delete_task($(this));'>";
 							rowsHTML+="<input type='submit' class='save_icon' form='form151_task_"+id+"' >";
-						rowsHTML+="</td>";			
+						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
 					$('#form151_task_body').append(rowsHTML);
 					est_amount+=parseFloat(result.est_expense);
@@ -9290,11 +9169,11 @@ function form151_ini()
 							rowsHTML+="<input type='hidden' form='form151_item_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='submit' class='save_icon' form='form151_item_"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form151_item_"+id+"' id='delete_form151_item_"+id+"' onclick='form151_delete_item($(this));'>";
-						if(result.status=='requested')							
+						if(result.status=='requested')
 							rowsHTML+="<br><input type='button' class='generic_icon' value='Approve' form='form151_item_"+id+"' id='approve_form151_item_"+id+"' onclick=\"form151_approve_item($(this));\">";
 						if(result.status=='approved')
 							rowsHTML+="<br><input type='button' class='generic_icon' value='Use' form='form151_item_"+id+"' id='approve_form151_item_"+id+"' onclick=\"form151_approve_item($(this));\">";
-						rowsHTML+="</td>";			
+						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
 
 					$('#form151_item_body').append(rowsHTML);
@@ -9306,12 +9185,12 @@ function form151_ini()
 						event.preventDefault();
 						form151_update_item(fields);
 					});
-				});				
+				});
 				longPressEditable($('.dblclick_editable'));
 				filter_fields.elements[3].value=parseFloat(filter_fields.elements[3].value)+est_amount;
 				filter_fields.elements[4].value=parseFloat(filter_fields.elements[4].value)+amount;
 			});
-			
+
 
 			/////////////service request expenses////////////////////
 			var expense_data="<expenses>"+
@@ -9324,8 +9203,8 @@ function form151_ini()
 								"<detail></detail>"+
 								"</expenses>";
 			fetch_requested_data('',expense_data,function(expense_results)
-			{	
-				var amount=0;			
+			{
+				var amount=0;
 				expense_results.forEach(function(result)
 				{
 					var id=result.id;
@@ -9347,8 +9226,8 @@ function form151_ini()
 							rowsHTML+="<input type='hidden' form='form151_expense_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form151_expense_"+id+"' id='delete_form151_expense_"+id+"' onclick='form151_delete_expense($(this));'>";
 							rowsHTML+="<input type='submit' class='save_icon' form='form151_expense_"+id+"'>";
-						rowsHTML+="</td>";			
-					rowsHTML+="</tr>";				
+						rowsHTML+="</td>";
+					rowsHTML+="</tr>";
 					$('#form151_expense_body').append(rowsHTML);
 					amount+=parseFloat(result.amount);
 					var fields=document.getElementById("form151_expense_"+id);
@@ -9360,7 +9239,7 @@ function form151_ini()
 				});
 				longPressEditable($('.dblclick_editable'));
 				filter_fields.elements[4].value=parseFloat(filter_fields.elements[4].value)+amount;
-			});			
+			});
 			hide_loader();
 		});
 	}
@@ -9375,16 +9254,16 @@ function form152_ini()
 {
 	show_loader();
 	var fid=$("#form152_link").attr('data_id');
-	
+
 	var filter_fields=document.getElementById('form152_header');
-	
+
 	//populating form
 	if(fid==null)
 		fid="";
 	var	fnum=filter_fields.elements[0].value;
 	var ftype=filter_fields.elements[1].value;
 	var fname=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form152_index');
 	var prev_element=document.getElementById('form152_prev');
@@ -9409,7 +9288,7 @@ function form152_ini()
 	if_data_read_access('quotation',function(accessible_data)
 	{
 		fetch_requested_data('form152',columns,function(results)
-		{	
+		{
 			results.forEach(function(result)
 			{
 				var read=false;
@@ -9473,18 +9352,18 @@ function form152_ini()
 							{
 								rowsHTML+="<br><input type='button' class='generic_icon' form='form152_"+result.id+"' value='Approve' onclick='form152_approve_item($(this));'>";
 								rowsHTML+="<br><input type='button' class='generic_icon' form='form152_"+result.id+"' value='Reject' onclick='form152_reject_item($(this));'>";
-							}					
+							}
 							else if(result.status=='approved')
 								rowsHTML+="<input type='button' class='generic_icon' form='form152_"+result.id+"' value='Approved'>";
 							else if(result.status=='rejected')
 								rowsHTML+="<input type='button' class='generic_icon' form='form152_"+result.id+"' value='Rejected'>";
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-					
+
 					$('#form152_body').append(rowsHTML);
 				}
 			});
-			
+
 			////indexing///
 			var next_index=parseInt(start_index)+25;
 			var prev_index=parseInt(start_index)-25;
@@ -9508,9 +9387,9 @@ function form152_ini()
 				$(prev_element).show();
 			}
 			/////////////
-	
+
 			$('textarea').autosize();
-			
+
 			var export_button=filter_fields.elements['export'];
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
@@ -9532,12 +9411,12 @@ function form153_ini()
 {
 	var quot_id=$("#form153_link").attr('data_id');
 	if(quot_id==null)
-		quot_id="";	
-	
+		quot_id="";
+
 	$('#form153_body').html("");
 	$('#form153_foot').html("");
 	document.getElementById('form153_customer_info').innerHTML="";
-	
+
 	if(quot_id!="")
 	{
 		show_loader();
@@ -9569,22 +9448,22 @@ function form153_ini()
 				"<quotation_id exact='yes'>"+quot_id+"</quotation_id>" +
 				"<tax></tax>" +
 				"</quotation_items>";
-	
+
 		////separate fetch function to get quotation details like customer name, total etc.
 		fetch_requested_data('',quot_columns,function(quot_results)
 		{
 			var filter_fields=document.getElementById('form153_master');
-			
+
 			for (var i in quot_results)
 			{
 				filter_fields.elements['customer'].value=quot_results[i].customer;
 				filter_fields.elements['type'].value=quot_results[i].billing_type;
 				filter_fields.elements['date'].value=get_my_past_date(quot_results[i].date);
-				filter_fields.elements['notes'].value=quot_results[i].intro_notes;								
-				filter_fields.elements['quot_num'].value=quot_results[i].quot_num;								
-				filter_fields.elements['quot_id'].value=quot_id;				
+				filter_fields.elements['notes'].value=quot_results[i].intro_notes;
+				filter_fields.elements['quot_num'].value=quot_results[i].quot_num;
+				filter_fields.elements['quot_id'].value=quot_id;
 				var save_button=filter_fields.elements['save'];
-				
+
 				var address_data="<customers>" +
 						"<address></address>" +
 						"<city></city>" +
@@ -9599,7 +9478,7 @@ function form153_ini()
 					}
 					document.getElementById('form153_customer_info').innerHTML="Address<br>"+address_string;
 				});
-				
+
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
@@ -9619,13 +9498,13 @@ function form153_ini()
 				longPressEditable($('.dblclick_editable'));
 				break;
 			}
-		
+
 			fetch_requested_data('',quot_items_column,function(results)
 			{
 				var hiring=false;
 				if(filter_fields.elements[2].value=='Hiring')
 				{	hiring=true;  }
-				
+
 				results.forEach(function(result)
 				{
 					var id=result.id;
@@ -9642,12 +9521,12 @@ function form153_ini()
 						rowsHTML+="<td data-th='Unit Price'>";
 							rowsHTML+="<input type='number' readonly='readonly' form='form153_"+id+"' value='"+result.unit_price+"' step='any'>";
 						if(hiring)
-						{	rowsHTML+="/day";  }	
+						{	rowsHTML+="/day";  }
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Amount'>";
 								rowsHTML+="<input type='number' readonly='readonly' form='form153_"+id+"' value='"+Math.round(result.amount).toFixed(2)+"'>";
 						if(hiring)
-						{	rowsHTML+="/day";  }	
+						{	rowsHTML+="/day";  }
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form153_"+id+"' value='"+id+"'>";
@@ -9655,22 +9534,22 @@ function form153_ini()
 							rowsHTML+="<input type='button' class='delete_icon' form='form153_"+id+"' id='delete_form153_"+id+"' onclick='form153_delete_item($(this)); form153_get_totals();'>";
 							rowsHTML+="<input type='hidden' form='form153_"+id+"'>";
 							rowsHTML+="<input type='hidden' form='form153_"+id+"'>";
-						rowsHTML+="</td>";			
+						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-				
-					$('#form153_body').append(rowsHTML);					
+
+					$('#form153_body').append(rowsHTML);
 				});
-				
+
 				var bt=get_session_var('title');
 				$('#form153_share').show();
 				$('#form153_share').click(function()
 				{
-					modal101_action("Quotation from "+bt+' - '+filter_fields.elements['quot_num'].value,filter_fields.elements['customer'].value,'customer',function (func) 
+					modal101_action("Quotation from "+bt+' - '+filter_fields.elements['quot_num'].value,filter_fields.elements['customer'].value,'customer',function (func)
 					{
 						print_form153(func);
 					});
 				});
-				
+
 				hide_loader();
 			});
 		});
@@ -9686,12 +9565,12 @@ function form154_ini()
 {
 	var bill_id=$("#form154_link").attr('data_id');
 	if(bill_id==null)
-		bill_id="";	
-	
+		bill_id="";
+
 	$('#form154_body').html("");
 	$('#form154_foot').html("");
 	document.getElementById('form154_customer_info').innerHTML="";
-	
+
 	if(bill_id!="")
 	{
 		show_loader();
@@ -9720,7 +9599,7 @@ function form154_ini()
 				"<item_desc></item_desc>"+
 				"<unit_price></unit_price>" +
 				"<quantity></quantity>" +
-				"<unit></unit>"+				
+				"<unit></unit>"+
 				"<amount></amount>" +
 				"<total></total>" +
 				"<discount></discount>" +
@@ -9731,7 +9610,7 @@ function form154_ini()
 				"<to_date></to_date>"+
 				"<fresh></fresh>"+
 				"</bill_items>";
-	
+
 		////separate fetch function to get bill details like customer name, total etc.
 		fetch_requested_data('',bill_columns,function(bill_results)
 		{
@@ -9750,20 +9629,20 @@ function form154_ini()
 				var tax_type_filter=filter_fields.elements['tax_type'];
 				tax_type_filter.value=bill_results[i].tax_type;
 				var cform_filter=filter_fields.elements['cform'];
-				
+
 				var tax_text="VAT";
 				if(filter_fields.elements['tax_type'].value=="Retail Central" || filter_fields.elements['tax_type'].value=="CST")
 				{
 					tax_text="CST";
 				}
-				
+
 				$(tax_type_filter).parent().hide();
-				
+
 				if(bill_results[i].print_1_job=='yes')
 				{
 					filter_fields.elements['job'].checked=true;
-				}			
-				else 
+				}
+				else
 				{
 					filter_fields.elements['job'].checked=false;
 				}
@@ -9780,14 +9659,14 @@ function form154_ini()
 				if(bill_results[i].cform=='yes')
 				{
 					cform_filter.checked=true;
-				}			
-				else 
+				}
+				else
 				{
 					cform_filter.checked=false;
 				}
-				
+
 				filter_fields.elements['bill_num'].value=bill_results[i].bill_num;
-				filter_fields.elements['bill_id'].value=bill_id;				
+				filter_fields.elements['bill_id'].value=bill_id;
 				filter_fields.elements['t_id'].value=bill_results[i].transaction_id;
 				var save_button=filter_fields.elements['save'];
 				filter_fields.elements['bill_type'].setAttribute('readonly','readonly');
@@ -9818,7 +9697,7 @@ function form154_ini()
 								"</attributes>";
 					set_my_value(tin_data,tin_filter);
 				}
-								
+
 				var address_data="<customers>" +
 						"<address></address>" +
 						"<city></city>" +
@@ -9833,8 +9712,8 @@ function form154_ini()
 					}
 					document.getElementById('form154_customer_info').innerHTML="Address<br>"+address_string;
 				});
-				
-				
+
+
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
@@ -9851,7 +9730,7 @@ function form154_ini()
 							"Rs. "+Math.round(bill_results[i].total).toFixed(2)+"</td>" +
 							"<td></td>" +
 							"</tr>";
-				
+
 				var headHTML="<tr><form id='form154_header'></form>"+
 							"<th style='width:50px'>S.No.</th>"+
 							"<th style='min-width:200px'>Item</th>"+
@@ -9860,9 +9739,9 @@ function form154_ini()
 							"<th>Amount</th>"+
 							"<th><input type='button' title='Add Service' class='add_icon' onclick='form154_add_service();'></th>"+
 							"</tr>";
-					
+
 				if(hiring)
-				{				
+				{
 					total_row="<tr><td colspan='4' data-th='Total'>Total</td>" +
 							"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ <input type='number' value='"+bill_results[i].tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'><br>Cartage: <br>Total: </td>" +
 							"<td>Rs. "+Math.round(bill_results[i].amount).toFixed(2)+"</br>" +
@@ -9872,7 +9751,7 @@ function form154_ini()
 							"Rs. "+Math.round(bill_results[i].total).toFixed(2)+"</td>" +
 							"<td></td>" +
 							"</tr>";
-							
+
 					headHTML="<tr><form id='form154_header'></form>"+
 							"<th style='width:50px'>S.No.</th>"+
 							"<th style='min-width:200px'>Item</th>"+
@@ -9882,7 +9761,7 @@ function form154_ini()
 							"<th>Amount</th>"+
 							"<th><input type='button' title='Add Product' class='add_icon' onclick='form154_add_product();'></th>"+
 							"</tr>";
-					$(a1_job).show();				
+					$(a1_job).show();
 				}
 				else if(filter_fields.elements['bill_type'].value=='Retail' || filter_fields.elements['bill_type'].value=='Tax')
 				{
@@ -9894,7 +9773,7 @@ function form154_ini()
 							"<th>Amount</th>"+
 							"<th><input type='button' title='Add Product' class='add_icon' onclick='form154_add_product();'></th>"+
 							"</tr>";
-					$(tax_type_filter).parent().show();		
+					$(tax_type_filter).parent().show();
 				}
 				else
 				{
@@ -9907,7 +9786,7 @@ function form154_ini()
 							"Rs. "+Math.round(bill_results[i].total).toFixed(2)+"</td>" +
 							"<td></td>" +
 							"</tr>";
-				
+
 					$(filter_fields).off('submit');
 					$(filter_fields).on("submit", function(event)
 					{
@@ -9915,14 +9794,14 @@ function form154_ini()
 						form154_add_service();
 					});
 				}
-				
-				$('#form154_head').html(headHTML);				
+
+				$('#form154_head').html(headHTML);
 				$('#form154_foot').html(total_row);
 				longPressEditable($('.dblclick_editable'));
 
 				break;
 			}
-		
+
 			fetch_requested_data('',bill_items_column,function(results)
 			{
 				if(hiring)
@@ -9937,9 +9816,9 @@ function form154_ini()
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Item'>";
 								rowsHTML+="<textarea readonly='readonly' form='form154_"+id+"'>"+result.item_name+"</textarea>";
-							if(result.fresh=='yes')							
+							if(result.fresh=='yes')
 							{	rowsHTML+="<fresh><br>Fresh: <input type='checkbox' checked form='form154_"+id+"'></fresh>";}
-							else	
+							else
 							{	rowsHTML+="<fresh><br>Fresh: <input type='checkbox' form='form154_"+id+"'></fresh>";}
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Quantity'>";
@@ -9960,9 +9839,9 @@ function form154_ini()
 								rowsHTML+="<input type='hidden' form='form154_"+id+"' value='"+id+"'>";
 								rowsHTML+="<input type='button' class='submit_hidden' form='form154_"+id+"' id='save_form154_"+id+"'>";
 								rowsHTML+="<input type='button' class='delete_icon' form='form154_"+id+"' id='delete_form154_"+id+"' onclick='form154_delete_hiring_item($(this)); form154_get_totals();'>";
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 						rowsHTML+="</tr>";
-					
+
 						$('#form154_body').prepend(rowsHTML);
 					});
 				}
@@ -9978,9 +9857,9 @@ function form154_ini()
 							rowsHTML+="<td data-th='Item'>";
 								rowsHTML+="<textarea readonly='readonly' form='form154_"+id+"'>"+result.item_name+"</textarea>";
 								if(result.item_desc!='undefined' || result.item_desc!="")
-								{							
+								{
 									rowsHTML+="<br>"+result.item_desc;
-								}							
+								}
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Quantity'>";
 								rowsHTML+="<input type='number' readonly='readonly' form='form154_"+id+"' value='"+result.quantity+"' step='any'> <b>"+result.unit+"</b>";
@@ -9995,12 +9874,12 @@ function form154_ini()
 								rowsHTML+="<input type='hidden' form='form154_"+id+"' value='"+id+"'>";
 								rowsHTML+="<input type='button' class='submit_hidden' form='form154_"+id+"' id='save_form154_"+id+"'>";
 								rowsHTML+="<input type='button' class='delete_icon' form='form154_"+id+"' id='delete_form154_"+id+"' onclick='form154_delete_item($(this)); form154_get_totals();'>";
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 						rowsHTML+="</tr>";
-					
-						$('#form154_body').prepend(rowsHTML);	
+
+						$('#form154_body').prepend(rowsHTML);
 					});
-				}	
+				}
 				form154_update_serial_numbers();
 				$('textarea').autosize();
 				hide_loader();
@@ -10019,19 +9898,19 @@ function form155_ini()
 	show_loader();
 	var fid=$("#form155_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form155_header');
-	
+
 	var fname=filter_fields.elements[0].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form155_index');
 	var prev_element=document.getElementById('form155_prev');
 	var next_element=document.getElementById('form155_next');
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
-	
+
 	var columns="<product_instances count='25' start_index='"+start_index+"'>" +
 		"<id>"+fid+"</id>" +
 		"<product_name>"+fname+"</product_name>" +
@@ -10040,7 +9919,7 @@ function form155_ini()
 		"</product_instances>";
 
 	$('#form155_body').html("");
-	
+
 	fetch_requested_data('form155',columns,function(results)
 	{
 		results.forEach(function(result)
@@ -10067,9 +9946,9 @@ function form155_ini()
 						rowsHTML+="<input type='hidden' form='form155_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' title='Save' form='form155_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='generic_icon' value='Inventory' title='Update Inventory' form='form155_"+result.id+"' onclick=\"modal122_action('"+result.product_name+"')\">";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form155_body').append(rowsHTML);
 			var fields=document.getElementById("form155_"+result.id);
 			var fresh_inventory=fields.elements[3];
@@ -10129,7 +10008,7 @@ function form155_ini()
 			$(prev_element).show();
 		}
 		/////////////
-		
+
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 
@@ -10139,7 +10018,7 @@ function form155_ini()
 		{
 			get_export_data(columns,'inventory');
 		});
-		
+
 		hide_loader();
 	});
 };
@@ -10155,13 +10034,13 @@ function form156_ini()
 	show_loader();
 	var fid=$("#form156_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form156_header');
-	
+
 	var fname=filter_fields.elements[0].value;
 	var farea=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form156_index');
 	var prev_element=document.getElementById('form156_prev');
@@ -10180,7 +10059,7 @@ function form156_ini()
 	if_data_read_access('area_utilization',function(accessible_data)
 	{
 		fetch_requested_data('form156',columns,function(results)
-		{	
+		{
 			results.forEach(function(result)
 			{
 				var read=false;
@@ -10235,20 +10114,20 @@ function form156_ini()
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form156_"+result.id+"' value='"+result.id+"'>";
-							if(del)							
-								rowsHTML+="<input type='button' class='delete_icon' form='form156_"+result.id+"' title='Delete' onclick='form156_delete_item($(this));'>";	
-							rowsHTML+="</td>";			
+							if(del)
+								rowsHTML+="<input type='button' class='delete_icon' form='form156_"+result.id+"' title='Delete' onclick='form156_delete_item($(this));'>";
+							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-					
+
 					$('#form156_body').append(rowsHTML);
 					var fields=document.getElementById("form156_"+result.id);
 					var fresh_inventory=fields.elements[2];
 					var hireable_inventory=fields.elements[3];
 					var hired_inventory=fields.elements[4];
 					var delete_button="";
-					if(del)					
+					if(del)
 						delete_button=fields.elements[6];
-					
+
 					var hired_data="<bill_items sum='yes'>"+
 									"<quantity></quantity>"+
 									"<hired exact='yes'>yes</hired>"+
@@ -10258,7 +10137,7 @@ function form156_ini()
 									"<storage exact='yes'>"+result.name+"</storage>"+
 									"</bill_items>";
 					set_my_value(hired_data,hired_inventory);
-		
+
 					var hireable_data="<bill_items sum='yes'>"+
 									"<quantity></quantity>"+
 									"<hired exact='yes'>yes</hired>"+
@@ -10275,7 +10154,7 @@ function form156_ini()
 					});
 				}
 			});
-		
+
 			////indexing///
 			var next_index=parseInt(start_index)+25;
 			var prev_index=parseInt(start_index)-25;
@@ -10299,9 +10178,9 @@ function form156_ini()
 				$(prev_element).show();
 			}
 			/////////////
-	
+
 			longPressEditable($('.dblclick_editable'));
-			
+
 			var export_button=filter_fields.elements[3];
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
@@ -10324,11 +10203,11 @@ function form157_ini()
 	var fid=$("#form157_link").attr('data_id');
 	if(fid==null)
 		fid="";
-	
+
 	var filter_fields=document.getElementById('form157_header');
 	var fproduct=filter_fields.elements[0].value;
 	var fstatus=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form157_index');
 	var prev_element=document.getElementById('form157_prev');
@@ -10353,7 +10232,7 @@ function form157_ini()
 	if_data_read_access('store_movement',function(accessible_data)
 	{
 		fetch_requested_data('form157',columns,function(results)
-		{	
+		{
 			results.forEach(function(result)
 			{
 				var read=false;
@@ -10411,16 +10290,16 @@ function form157_ini()
 									rowsHTML+="<input type='hidden' form='form157_"+result.id+"' value='"+result.id+"'>";
 							if(update)
 							{
-									if(result.status!='received' && result.status!='cancelled')									
+									if(result.status!='received' && result.status!='cancelled')
 										rowsHTML+="<input type='button' class='generic_icon' form='form157_"+result.id+"' value='Cancel' onclick='form157_cancel_item($(this));'>";
-									if(result.status=='pending')									
+									if(result.status=='pending')
 										rowsHTML+="<input type='button' class='generic_icon' form='form157_"+result.id+"' value='Dispatch' onclick='form157_dispatch_item($(this));'>";
 									if(result.status=='dispatched')
 										rowsHTML+="<input type='button' class='generic_icon' form='form157_"+result.id+"' value='Receive' onclick='form157_receive_item($(this));'>";
 							}
-								rowsHTML+="</td>";											
+								rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-						
+
 					$('#form157_body').append(rowsHTML);
 					var fields=document.getElementById("form157_"+result.id);
 					$(fields).on("submit", function(event)
@@ -10429,7 +10308,7 @@ function form157_ini()
 					});
 				}
 			});
-	
+
 			////indexing///
 			var next_index=parseInt(start_index)+25;
 			var prev_index=parseInt(start_index)-25;
@@ -10453,9 +10332,9 @@ function form157_ini()
 				$(prev_element).show();
 			}
 			/////////////
-	
+
 			longPressEditable($('.dblclick_editable'));
-			
+
 			var export_button=filter_fields.elements[3];
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
@@ -10476,11 +10355,11 @@ function form158_ini()
 {
 	var bill_id=$("#form158_link").attr('data_id');
 	if(bill_id==null)
-		bill_id="";	
-	
+		bill_id="";
+
 	$('#form158_body').html("");
 	$('#form158_foot').html("");
-	
+
 	if(bill_id!="")
 	{
 		show_loader();
@@ -10500,7 +10379,7 @@ function form158_ini()
 				"<transaction_id></transaction_id>" +
 				"<imported></imported>"+
 				"</supplier_bills>";
-		
+
 		var filter_fields=document.getElementById('form158_master');
 
 		////separate fetch function to get bill details like customer name, total etc.
@@ -10518,14 +10397,14 @@ function form158_ini()
 				filter_fields.elements['bill_id'].value=bill_id;
 				filter_fields.elements['t_id'].value=bill_results[i].transaction_id;
 				var save_button=filter_fields.elements['save'];
-				
+
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
 					event.preventDefault();
 					form158_update_form();
 				});
-				
+
 				var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 							"<td>Amount:<br>Discount: <br>Tax:@ <input type='number' value='"+bill_results[i].tax_rate+"' step='any' id='form158_tax' class='dblclick_editable'>%<br>Cartage: <br>Total: </td>" +
 							"<td>Rs. "+Math.round(bill_results[i].amount)+"</br>" +
@@ -10536,10 +10415,10 @@ function form158_ini()
 							"<td></td>" +
 							"</tr>";
 				$('#form158_foot').html(total_row);
-				
+
 				break;
 			}
-		
+
 			var bill_items_column="<supplier_bill_items>" +
 					"<id></id>" +
 					"<product_name></product_name>" +
@@ -10553,7 +10432,7 @@ function form158_ini()
 					"<storage></storage>" +
 					"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
 					"</supplier_bill_items>";
-			
+
 			fetch_requested_data('',bill_items_column,function(results)
 			{
 				results.forEach(function(result)
@@ -10579,12 +10458,12 @@ function form158_ini()
 							rowsHTML+="<input type='hidden' form='form158_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='submit_hidden' form='form158_"+id+"' id='save_form158_"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form158_"+id+"' id='delete_form158_"+id+"' onclick='form158_delete_item($(this)); form158_get_totals();'>";
-						rowsHTML+="</td>";			
+						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-				
+
 					$('#form158_body').append(rowsHTML);
-					
-				});			
+
+				});
 				hide_loader();
 			});
 		});
@@ -10601,13 +10480,13 @@ function form161_ini()
 	show_loader();
 	var fid=$("#form161_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form161_header');
-	
+
 	var fcp=filter_fields.elements[0].value;
 	var fstatus=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form161_index');
 	var prev_element=document.getElementById('form161_prev');
@@ -10621,9 +10500,9 @@ function form161_ini()
 		"<desired_result></desired_result>" +
 		"<status></status>" +
 		"</checklist_items>";
-	
+
 	$('#form161_body').html("");
-	
+
 	fetch_requested_data('form161',columns,function(results)
 	{
 		results.forEach(function(result)
@@ -10644,16 +10523,16 @@ function form161_ini()
 						rowsHTML+="<input type='hidden' form='form161_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' title='Save' form='form161_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' title='Delete' form='form161_"+result.id+"'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form161_body').append(rowsHTML);
 			var fields=document.getElementById("form161_"+result.id);
 			var cp_filter=fields.elements[0];
 			var status_filter=fields.elements[2];
-			
-			set_static_value_list('checklist_items','status',status_filter);			
-			
+
+			set_static_value_list('checklist_items','status',status_filter);
+
 			$(fields).on('submit',function(event)
 			{
 				event.preventDefault();
@@ -10687,7 +10566,7 @@ function form161_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -10708,13 +10587,13 @@ function form162_ini()
 	show_loader();
 	var fid=$("#form162_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form162_header');
-	
+
 	var fitem=filter_fields.elements[0].value;
 	var fcp=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form162_index');
 	var prev_element=document.getElementById('form162_prev');
@@ -10728,9 +10607,9 @@ function form162_ini()
 		"<desired_result></desired_result>" +
 		"<item>"+fitem+"</item>" +
 		"</checklist_mapping>";
-	
+
 	$('#form162_body').html("");
-	
+
 	fetch_requested_data('form162',columns,function(results)
 	{
 		results.forEach(function(result)
@@ -10751,12 +10630,12 @@ function form162_ini()
 						rowsHTML+="<input type='hidden' form='form162_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' title='Save' form='form162_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' title='Delete' form='form162_"+result.id+"'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form162_body').append(rowsHTML);
 			var fields=document.getElementById("form162_"+result.id);
-			
+
 			$(fields).on('submit',function(event)
 			{
 				event.preventDefault();
@@ -10790,7 +10669,7 @@ function form162_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -10811,12 +10690,12 @@ function form163_ini()
 	show_loader();
 	var fid=$("#form163_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form163_header');
-	
+
 	var fname=filter_fields.elements[0].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form163_index');
 	var prev_element=document.getElementById('form163_prev');
@@ -10835,9 +10714,9 @@ function form163_ini()
 		"<weight></weight>"+
 		"<packing></packing>"+
 		"</product_master>";
-	
+
 	$('#form163_body').html("");
-	
+
 	fetch_requested_data('form163',columns,function(results)
 	{
 		results.forEach(function(result)
@@ -10866,9 +10745,9 @@ function form163_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form163_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' title='Save' form='form163_"+result.id+"'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form163_body').append(rowsHTML);
 			var fields=document.getElementById("form163_"+result.id);
 			var length_filter=fields.elements[1];
@@ -10877,7 +10756,7 @@ function form163_ini()
 			var volume_filter=fields.elements[4];
 			var weight_filter=fields.elements[5];
 			var dead_weight_container=document.getElementById('form163_dw_'+result.id);
-			
+
 			$(length_filter).add(breadth_filter).add(height_filter).add(weight_filter).on('blur',function()
 			{
 				volume_filter.value=my_round((parseFloat(length_filter.value)*parseFloat(breadth_filter.value)*parseFloat(height_filter.value)),2);
@@ -10894,7 +10773,7 @@ function form163_ini()
 						dead_weight_value+=channel.name+": "+channel_weight+" gms<br>";
 					});
 					dead_weight_container.innerHTML=dead_weight_value;
-				});			
+				});
 			});
 
 			var channel_data="<sale_channels>"+
@@ -10910,8 +10789,8 @@ function form163_ini()
 					dead_weight_value+=channel.name+": "+channel_weight+" gms<br>";
 				});
 				dead_weight_container.innerHTML=dead_weight_value;
-			});				
-			
+			});
+
 			$(fields).on('submit',function(event)
 			{
 				event.preventDefault();
@@ -10945,7 +10824,7 @@ function form163_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[1];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -10967,17 +10846,17 @@ function form165_ini()
 	show_loader();
 	var fid=$("#form165_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form165_master');
 	var fproduct=filter_fields.elements['sku'].value;
 	var fbatch=filter_fields.elements['batch'].value;
 	var frack=filter_fields.elements['rack'].value;
-	
+
 	$('#form165_body').html("");
 
 	if_data_read_access('store_areas',function(accessible_data)
-	{		
+	{
 		//console.log(accessible_data);
 		var columns="<supplier_bill_items>" +
 			"<id>"+fid+"</id>" +
@@ -10988,7 +10867,7 @@ function form165_ini()
 			"<storage></storage>"+
 			"<put_away_status exact='yes'>pending</put_away_status>"+
 			"</supplier_bill_items>";
-		
+
 		fetch_requested_data('form165',columns,function(results)
 		{
 			///discarded items
@@ -11001,14 +10880,14 @@ function form165_ini()
 					"<storage></storage>"+
 					"<put_away_status exact='yes'>pending</put_away_status>"+
 					"</inventory_adjust>";
-			
+
 			fetch_requested_data('form165',inventory_xml,function(adjust_results)
 			{
 				results.forEach(function(result)
 				{
 					result.table_type='supplier_bill_items';
 				});
-				
+
 				for(var z in adjust_results)
 				{
 					var adjust_item=new Object();
@@ -11033,7 +10912,7 @@ function form165_ini()
 					{
 						//console.log(result.storage);
 						//console.log(accessible_data[x].name);
-						
+
 						if(result.storage==accessible_data[x].name || accessible_data[x].record_id=='all')
 						{
 							if(accessible_data[x].access_type=='all')
@@ -11058,12 +10937,12 @@ function form165_ini()
 							}
 						}
 					}
-	
+
 					if(read)
 					{
 						if(result.placed_quantity=='null' || result.placed_quantity=='' || isNaN(result.placed_quantity))
 							result.placed_quantity=0;
-			
+
 						var rowsHTML="";
 							rowsHTML+="<tr>";
 								rowsHTML+="<form id='row_form165_"+result.id+"'></form>";
@@ -11087,11 +10966,11 @@ function form165_ini()
 										rowsHTML+="<input type='hidden' form='row_form165_"+result.id+"' value='"+result.table_type+"'>";
 										rowsHTML+="<input type='submit' class='submit_hidden' form='row_form165_"+result.id+"' value='Place'>";
 										rowsHTML+="<input type='hidden' form='row_form165_"+result.id+"' value='"+result.storage+"'>";
-										rowsHTML+="<input type='hidden' form='row_form165_"+result.id+"' value='"+result.placed_quantity+"'>";									
+										rowsHTML+="<input type='hidden' form='row_form165_"+result.id+"' value='"+result.placed_quantity+"'>";
 										rowsHTML+="<input type='hidden' form='row_form165_"+result.id+"' value='"+result.id+"'>";
-									rowsHTML+="</td>";																					
+									rowsHTML+="</td>";
 						rowsHTML+="</tr>";
-							
+
 						$('#form165_body').append(rowsHTML);
 						var fields=document.getElementById("row_form165_"+result.id);
 						var storage_filter=fields.elements[4];
@@ -11101,22 +10980,22 @@ function form165_ini()
 										"<area_type></area_type>"+
 										"</store_areas>";
 						set_my_value_list(storage_data,storage_filter);
-						
+
 						$(storage_filter).on('click',function()
 						{
 							///write code to select all text in the field
 							this.select();
 						});
-						
-						
+
+
 						var edit_button=document.getElementById("form165_edit_location_"+result.id);
 						$(edit_button).on('click',function ()
 						{
 							storage_filter.removeAttribute('readonly');
 						});
-						
-						
-						
+
+
+
 						$(fields).on('submit',function(event)
 						{
 							event.preventDefault();
@@ -11126,7 +11005,7 @@ function form165_ini()
 				});
 				form165_get_totals();
 				longPressEditable($('.dblclick_editable'));
-				
+
 				hide_loader();
 			});
 		});
@@ -11145,10 +11024,10 @@ function form167_ini()
 	show_loader();
 	var fid=$("#form167_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form167_header');
-	
+
 	var fname=filter_fields.elements[0].value;
 	var fparent=filter_fields.elements[1].value;
 
@@ -11158,7 +11037,7 @@ function form167_ini()
 	var next_element=document.getElementById('form167_next');
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
-	
+
 	var columns="<storage_structure count='25' start_index='"+start_index+"'>" +
 		"<id>"+fid+"</id>" +
 		"<name>"+fname+"</name>" +
@@ -11170,7 +11049,7 @@ function form167_ini()
 		"</storage_structure>";
 
 	$('#form167_body').html("");
-	
+
 	fetch_requested_data('form167',columns,function(results)
 	{
 		results.forEach(function(result)
@@ -11196,9 +11075,9 @@ function form167_ini()
 						rowsHTML+="<input type='hidden' form='form167_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' title='Save' form='form167_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' title='Delete' form='form167_"+result.id+"' onclick='form167_delete_item($(this))'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form167_body').append(rowsHTML);
 			var fields=document.getElementById("form167_"+result.id);
 			$(fields).on("submit", function(event)
@@ -11231,7 +11110,7 @@ function form167_ini()
 			$(prev_element).show();
 		}
 		/////////////
-		
+
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 
@@ -11241,7 +11120,7 @@ function form167_ini()
 		{
 			get_export_data(columns,'storage_structure');
 		});
-		
+
 		hide_loader();
 	});
 };
@@ -11256,14 +11135,14 @@ function form169_ini()
 	show_loader();
 	var fid=$("#form169_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form169_header');
-	
+
 	var fsku=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
 	var fbrand=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form169_index');
 	var prev_element=document.getElementById('form169_prev');
@@ -11275,17 +11154,17 @@ function form169_ini()
 	var new_columns=new Object();
 		new_columns.count=25;
 		new_columns.start_index=start_index;
-		new_columns.data_store='product_master';		
-		
+		new_columns.data_store='product_master';
+
 		new_columns.indexes=[{index:'id',value:fid},
 							{index:'name',value:fsku},
 							{index:'make',value:fbrand},
 							{index:'description',value:fname},
 							{index:'bar_code'},
-							{index:'tax'}];		
+							{index:'tax'}];
 
 	read_json_rows('form169',new_columns,function(results)
-	{	
+	{
 		var smaller_barcodes=get_session_var('brands_small_barcode');
 		results.forEach(function(result)
 		{
@@ -11309,7 +11188,7 @@ function form169_ini()
 					pic_results_id=get_new_key();
 					pic_results_url="";
 				}
-				
+
 				updated_url=pic_results_url.replace(/ /g,"+");
 				var rowsHTML="";
 				rowsHTML+="<tr>";
@@ -11322,7 +11201,7 @@ function form169_ini()
 								{
 									rowsHTML+="<img src='"+server_root+"/images/barcode.png' class='barcode_icon' title='Print Barcode - "+result.bar_code+"' onclick=\"print_smaller_product_barcode('"+result.bar_code+"','"+result.name+"','"+result.description+"');\">";
 								}
-								else 
+								else
 								{
 									rowsHTML+="<img src='"+server_root+"/images/barcode.png' class='barcode_icon' title='Print Barcode - "+result.bar_code+"' onclick=\"print_product_barcode('"+result.bar_code+"','"+result.name+"','"+result.description+"');\">";
 								}
@@ -11350,17 +11229,17 @@ function form169_ini()
 							rowsHTML+="<input type='hidden' form='form169_"+result.id+"' value='"+result.id+"'>";
 							rowsHTML+="<input type='submit' class='save_icon' form='form169_"+result.id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form169_"+result.id+"' onclick='form169_delete_item($(this));'>";
-						rowsHTML+="</td>";			
+						rowsHTML+="</td>";
 				rowsHTML+="</tr>";
-			
+
 				$('#form169_body').append(rowsHTML);
-	
+
 				var fields=document.getElementById("form169_"+result.id);
 				var pictureinfo=fields.elements[3];
 				var picture=fields.elements[4];
 				var dummy_button=fields.elements[5];
-	
-				$(dummy_button).on('click',function (e) 
+
+				$(dummy_button).on('click',function (e)
 				{
 					e.preventDefault();
 					$(picture).trigger('click');
@@ -11371,15 +11250,15 @@ function form169_ini()
 					event.preventDefault();
 					form169_update_item(fields);
 				});
-				
+
 				picture.addEventListener('change',function(evt)
 				{
 					select_picture(evt,pictureinfo,function(dataURL)
 					{
-						pictureinfo.innerHTML="<div class='figure' name='"+pic_results_id+"'><img id='img_form169_"+result.id+"' src='"+dataURL+"'></div>";			
+						pictureinfo.innerHTML="<div class='figure' name='"+pic_results_id+"'><img id='img_form169_"+result.id+"' src='"+dataURL+"'></div>";
 					});
 				},false);
-				
+
 				longPressEditable($('.dblclick_editable'));
 				$('textarea').autosize();
 
@@ -11419,7 +11298,7 @@ function form169_ini()
 			});
 		});
 		hide_loader();
-	});	
+	});
 };
 
 
@@ -11434,13 +11313,13 @@ function form170_ini()
 	show_loader();
 	var fid=$("#form170_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form170_header');
 	var fname=filter_fields.elements[0].value;
 	var ftype=filter_fields.elements[1].value;
 	var fparent=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form170_index');
 	var prev_element=document.getElementById('form170_prev');
@@ -11490,9 +11369,9 @@ function form170_ini()
 						rowsHTML+="<input type='hidden' form='form170_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form170_"+result.id+"' title='Save'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form170_"+result.id+"' title='Delete' onclick='form170_delete_item($(this));'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form170_body').append(rowsHTML);
 			var fields=document.getElementById("form170_"+result.id);
 			var type_filter=fields.elements[2];
@@ -11500,20 +11379,20 @@ function form170_ini()
 			var owner_filter=fields.elements[3];
 
 			var type_data="<storage_structure>"+
-						"<name></name>"+							
+						"<name></name>"+
 						"</storage_structure>";
 			set_my_value_list(type_data,type_filter);
 
 			var parent_data="<store_areas>"+
-						"<name></name>"+							
+						"<name></name>"+
 						"</store_areas>";
 			set_my_value_list(parent_data,parent_filter);
-			
+
 			var owner_data="<staff>"+
-						"<acc_name></acc_name>"+							
+						"<acc_name></acc_name>"+
 						"</staff>";
 			set_my_value_list(owner_data,owner_filter);
-			
+
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
@@ -11546,7 +11425,7 @@ function form170_ini()
 		/////////////
 		$('textarea').autosize();
 		longPressEditable($('.dblclick_editable'));
-				
+
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -11568,12 +11447,12 @@ function form171_ini()
 	show_loader();
 	var fid=$("#form171_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form171_header');
-	
+
 	var fname=filter_fields.elements[0].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form171_index');
 	var prev_element=document.getElementById('form171_prev');
@@ -11611,13 +11490,13 @@ function form171_ini()
 						rowsHTML+="<input type='hidden' form='form171_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form171_"+result.id+"' title='Save'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form171_"+result.id+"' title='Delete' onclick='form171_delete_item($(this));'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-		
+
 			$('#form171_body').append(rowsHTML);
 
 			var fields=document.getElementById("form171_"+result.id);
-			
+
 			$(fields).on("submit",function(event)
 			{
 				event.preventDefault();
@@ -11651,7 +11530,7 @@ function form171_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -11659,7 +11538,7 @@ function form171_ini()
 			get_export_data(columns,'sale_channels');
 		});
 		hide_loader();
-	});	
+	});
 };
 
 /**
@@ -11672,13 +11551,13 @@ function form172_ini()
 	show_loader();
 	var fid=$("#form172_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form172_header');
-	
+
 	var fname=filter_fields.elements[0].value;
 	var fsku=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form172_index');
 	var prev_element=document.getElementById('form172_prev');
@@ -11753,7 +11632,7 @@ function form172_ini()
 						rowsHTML+="<input type='button' class='delete_icon' form='form172_"+result.id+"' title='Delete' onclick='form172_delete_item($(this))'>";
 					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-		
+
 			$('#form172_body').append(rowsHTML);
 		});
 
@@ -11783,7 +11662,7 @@ function form172_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -11791,7 +11670,7 @@ function form172_ini()
 			get_export_data(columns,'pricing_sheet');
 		});
 		hide_loader();
-	});	
+	});
 };
 
 /**
@@ -11804,15 +11683,15 @@ function form173_ini()
 	show_loader();
 	var fid=$("#form173_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form173_header');
-	
+
 	var fname=filter_fields.elements[0].value;
 	var fcsku=filter_fields.elements[1].value;
 	var fbsku=filter_fields.elements[2].value;
 	var fssku=filter_fields.elements[3].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form173_index');
 	var prev_element=document.getElementById('form173_prev');
@@ -11854,14 +11733,14 @@ function form173_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form173_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form173_"+result.id+"' title='Save'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form173_"+result.id+"' title='Delete' onclick='form173_delete_item($(this))'>";			
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='delete_icon' form='form173_"+result.id+"' title='Delete' onclick='form173_delete_item($(this))'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-		
+
 			$('#form173_body').append(rowsHTML);
 
 			var fields=document.getElementById("form173_"+result.id);
-			
+
 			$(fields).on("submit",function(event)
 			{
 				event.preventDefault();
@@ -11895,7 +11774,7 @@ function form173_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[5];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -11903,7 +11782,7 @@ function form173_ini()
 			get_export_data(columns,'sku_mapping');
 		});
 		hide_loader();
-	});	
+	});
 };
 
 /**
@@ -11916,13 +11795,13 @@ function form174_ini()
 	show_loader();
 	var fid=$("#form174_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form174_header');
-	
+
 	var fchannel=filter_fields.elements[0].value;
 	var fpincode=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form174_index');
 	var prev_element=document.getElementById('form174_prev');
@@ -11967,7 +11846,7 @@ function form174_ini()
 						rowsHTML+="<input type='hidden' form='form174_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form174_"+result.id+"' title='Save'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form174_"+result.id+"' title='Delete'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 
 			$('#form174_body').append(rowsHTML);
@@ -12007,7 +11886,7 @@ function form174_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -12015,7 +11894,7 @@ function form174_ini()
 			get_export_data(columns,'pickup_charges');
 		});
 		hide_loader();
-	});	
+	});
 };
 
 /**
@@ -12028,15 +11907,15 @@ function form175_ini()
 	show_loader();
 	var fid=$("#form175_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form175_header');
-	
+
 	var fchannel=filter_fields.elements[0].value;
 	var ftype=filter_fields.elements[1].value;
 	var fname=filter_fields.elements[2].value;
 	var fparent=filter_fields.elements[3].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form175_index');
 	var prev_element=document.getElementById('form175_prev');
@@ -12081,7 +11960,7 @@ function form175_ini()
 						rowsHTML+="<input type='hidden' form='form175_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form175_"+result.id+"' title='Save'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form175_"+result.id+"' title='Delete'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 
 			$('#form175_body').append(rowsHTML);
@@ -12121,7 +12000,7 @@ function form175_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[5];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -12129,7 +12008,7 @@ function form175_ini()
 			get_export_data(columns,'channel_categories');
 		});
 		hide_loader();
-	});	
+	});
 };
 
 /**
@@ -12142,15 +12021,15 @@ function form176_ini()
 	show_loader();
 	var fid=$("#form176_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form176_header');
-	
+
 	var fchannel=filter_fields.elements[0].value;
 	var ftype=filter_fields.elements[1].value;
 	var fcategory=filter_fields.elements[2].value;
 	var fitem=filter_fields.elements[3].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form176_index');
 	var prev_element=document.getElementById('form176_prev');
@@ -12191,7 +12070,7 @@ function form176_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form176_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form176_"+result.id+"' title='Save'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 
 			$('#form176_body').append(rowsHTML);
@@ -12202,7 +12081,7 @@ function form176_ini()
 			var desc_filter=fields.elements[4];
 
 			set_static_value_list('category_sku_mapping','cat_type',type_filter);
-			
+
 			$(type_filter).on('blur',function()
 			{
 				var category_data="<channel_category>"+
@@ -12212,13 +12091,13 @@ function form176_ini()
 								"</channel_category>";
 				set_my_value_list(category_data,category_filter);
 			});
-			
+
 			var desc_data="<product_master>"+
 						"<description></description>"+
 						"<name exact='yes'>"+result.sku+"</name>"+
 						"</product_master>";
 			set_my_value(desc_data,desc_filter);
-			
+
 			$(fields).on("submit",function(event)
 			{
 				event.preventDefault();
@@ -12252,7 +12131,7 @@ function form176_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[5];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -12260,7 +12139,7 @@ function form176_ini()
 			get_export_data(columns,'category_sku_mapping');
 		});
 		hide_loader();
-	});	
+	});
 };
 
 /**
@@ -12274,12 +12153,12 @@ function form177_ini()
 	var fid=$("#form177_link").attr('data_id');
 	if(fid==null)
 		fid="";
-	
+
 	var filter_fields=document.getElementById('form177_header');
-	
+
 	var fname=filter_fields.elements[0].value;
 	var ftype=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form177_index');
 	var prev_element=document.getElementById('form177_prev');
@@ -12320,13 +12199,13 @@ function form177_ini()
 						rowsHTML+="<input type='hidden' form='form177_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form177_"+result.id+"' title='Save'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form177_"+result.id+"' title='Delete' onclick='form177_delete_item($(this))'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 
 			$('#form177_body').append(rowsHTML);
 
 			var fields=document.getElementById("form177_"+result.id);
-			
+
 			$(fields).on("submit",function(event)
 			{
 				event.preventDefault();
@@ -12360,7 +12239,7 @@ function form177_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -12368,7 +12247,7 @@ function form177_ini()
 			get_export_data(columns,'prioritization_parameters');
 		});
 		hide_loader();
-	});	
+	});
 };
 
 
@@ -12383,13 +12262,13 @@ function form184_ini()
 	var fid=$("#form184_link").attr('data_id');
 	if(fid==null)
 		fid="";
-	
+
 	var filter_fields=document.getElementById('form184_header');
-	
+
 	var fname=filter_fields.elements[0].value;
 	var ftype=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form184_index');
 	var prev_element=document.getElementById('form184_prev');
@@ -12416,7 +12295,7 @@ function form184_ini()
 		{
 			if(parseInt(a.order_no)>parseInt(b.order_no))
 			{	return 1;}
-			else 
+			else
 			{	return -1;}
 		});
 
@@ -12446,7 +12325,7 @@ function form184_ini()
 						rowsHTML+="<input type='hidden' form='form184_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form184_"+result.id+"' title='Save' id='save_form184_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form184_"+result.id+"' title='Delete' onclick='form184_delete_item($(this))'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 
 			$('#form184_body').append(rowsHTML);
@@ -12454,13 +12333,13 @@ function form184_ini()
 			var fields=document.getElementById("form184_"+result.id);
 			var assignee_filter=fields.elements[3];
 			var status_filter=fields.elements[6];
-			
+
 			var assignee_data="<staff>"+
 							"<acc_name></acc_name>"+
 							"<status exact='yes'>active</status>"+
 							"</staff>";
 			set_my_value_list(assignee_data,assignee_filter);
-							
+
 			set_static_value_list('business_processes','status',status_filter);
 			$(fields).on("submit",function(event)
 			{
@@ -12495,7 +12374,7 @@ function form184_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -12503,7 +12382,7 @@ function form184_ini()
 			get_export_data(columns,'production_steps');
 		});
 		hide_loader();
-	});	
+	});
 };
 
 
@@ -12518,12 +12397,12 @@ function form187_ini()
 	var fid=$("#form187_link").attr('data_id');
 	if(fid==null)
 		fid="";
-	
+
 	var filter_fields=document.getElementById('form187_header');
-	
+
 	var fname=filter_fields.elements[0].value;
 	var fstatus=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form187_index');
 	var prev_element=document.getElementById('form187_prev');
@@ -12550,10 +12429,10 @@ function form187_ini()
 		{
 			if(parseInt(a.order_no)>parseInt(b.order_no))
 			{	return 1;}
-			else 
+			else
 			{	return -1;}
 		});
-			
+
 		results.forEach(function(result)
 		{
 			var rowsHTML="";
@@ -12577,7 +12456,7 @@ function form187_ini()
 						rowsHTML+="<input type='hidden' form='form187_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form187_"+result.id+"' title='Save' id='save_form187_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form187_"+result.id+"' title='Delete' onclick='form187_delete_item($(this))'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 
 			$('#form187_body').append(rowsHTML);
@@ -12585,13 +12464,13 @@ function form187_ini()
 			var fields=document.getElementById("form187_"+result.id);
 			var assignee_filter=fields.elements[3];
 			var status_filter=fields.elements[5];
-			
+
 			var assignee_data="<staff>"+
 							"<acc_name></acc_name>"+
 							"<status exact='yes'>active</status>"+
 							"</staff>";
 			set_my_value_list(assignee_data,assignee_filter);
-							
+
 			set_static_value_list('business_processes','status',status_filter);
 			$(fields).on("submit",function(event)
 			{
@@ -12626,7 +12505,7 @@ function form187_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -12634,7 +12513,7 @@ function form187_ini()
 			get_export_data(columns,'testing_steps');
 		});
 		hide_loader();
-	});	
+	});
 };
 
 /**
@@ -12647,7 +12526,7 @@ function form188_ini()
 	var task_id=$("#form188_link").attr('data_id');
 
 	$('#form188_body').html("");
-	
+
 	$('#form188_calendar').fullCalendar('destroy');
 	$('#form188_calendar').fullCalendar({
 		header: {
@@ -12715,7 +12594,7 @@ function form188_ini()
 								}
 							}
 						}
-						
+
 						if(read)
 						{
 							//console.log('task found');
@@ -12786,7 +12665,7 @@ function form188_ini()
 			}
 		}
 	});
-	
+
 	////indexing///
 	var index_element=document.getElementById('form188_index');
 	var prev_element=document.getElementById('form188_prev');
@@ -12806,7 +12685,7 @@ function form188_ini()
 			"<source exact='yes'>testing</source>" +
 			"<last_updated></last_updated>" +
 			"</task_instances>";
-	
+
 	if_data_read_access('task_instances',function(accessible_data)
 	{
 		fetch_requested_data('form188',columns,function(results)
@@ -12871,13 +12750,13 @@ function form188_ini()
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' readonly='readonly' form='form188_"+result.id+"' value='"+result.id+"'>";
-							if(update)	
+							if(update)
 								rowsHTML+="<input type='submit' class='save_icon' form='form188_"+result.id+"' title='Save'>";
 							if(del)
 								rowsHTML+="<input type='button' class='delete_icon' form='form188_"+result.id+"' title='Delete' onclick='form188_delete_item($(this));'>";
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-					
+
 					$('#form188_body').append(rowsHTML);
 					var fields=document.getElementById("form188_"+result.id);
 					$(fields).on("submit", function(event)
@@ -12885,22 +12764,22 @@ function form188_ini()
 						event.preventDefault();
 						form188_update_item(fields);
 					});
-					
+
 					var name_filter=fields.elements[0];
 					var assignee_filter=fields.elements[2];
 					var due_filter=fields.elements[3];
 					var status_filter=fields.elements[4];
-								
+
 					var staff_data="<staff>" +
 							"<acc_name></acc_name>" +
 							"</staff>";
 					set_my_value_list(staff_data,assignee_filter);
-					
+
 					set_static_value_list('task_instances','status',status_filter);
 					$(due_filter).datepicker();
 				}
 			});
-			
+
 			////indexing///
 			////indexing///
 			var next_index=parseInt(start_index)+25;
@@ -12925,13 +12804,13 @@ function form188_ini()
 				$(prev_element).show();
 			}
 			/////////////
-	
+
 			longPressEditable($('.dblclick_editable'));
 			$('textarea').autosize();
-			
+
 			hide_loader();
 		});
-	});	
+	});
 }
 
 
@@ -12947,12 +12826,12 @@ function form190_ini()
 	var fid=$("#form190_link").attr('data_id');
 	if(fid==null)
 		fid="";
-	
+
 	var filter_fields=document.getElementById('form190_header');
-	
+
 	var fname=filter_fields.elements[0].value;
 	var fstatus=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form190_index');
 	var prev_element=document.getElementById('form190_prev');
@@ -13004,7 +12883,7 @@ function form190_ini()
 						//rowsHTML+="<input type='button' class='share_icon' form='form190_"+result.id+"' title='Send SMS'>";
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form190_"+result.id+"' value='View Bill'>";
 						rowsHTML+="<input type='hidden' form='form190_"+result.id+"' value='"+result.order_num+"'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 
 			$('#form190_body').append(rowsHTML);
@@ -13013,17 +12892,17 @@ function form190_ini()
 			var status_filter=fields.elements[4];
 			//var share_button=fields.elements[8];
 			var edit_button=fields.elements[8];
-			
+
 			set_static_value_list('sale_orders','status',status_filter);
 			$(fields).on("submit",function(event)
 			{
 				event.preventDefault();
 				form190_update_item(fields);
 			});
-			
+
 			if(result.bill_id=='undefined' || result.bill_id=='')
 			{
-				edit_button.value="Create Bill";			
+				edit_button.value="Create Bill";
 			}
 			else
 			{
@@ -13039,7 +12918,7 @@ function form190_ini()
 					var form10_master=document.getElementById('form10_master');
 					form10_master.elements['customer'].value=result.customer_name;
 					form10_master.elements['order_num'].value=result.order_num;
-					form10_master.elements['order_id'].value=result.id;	
+					form10_master.elements['order_id'].value=result.id;
 				}
 				else
 				{
@@ -13075,7 +12954,7 @@ function form190_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -13083,7 +12962,7 @@ function form190_ini()
 			get_export_data(columns,'orders');
 		});
 		hide_loader();
-	});	
+	});
 };
 
 
@@ -13097,11 +12976,11 @@ function form192_ini()
 {
 	var bill_id=$("#form192_link").attr('data_id');
 	if(bill_id==null)
-		bill_id="";	
-	
+		bill_id="";
+
 	$('#form192_body').html("");
 	$('#form192_foot').html("");
-	
+
 	if(bill_id!="")
 	{
 		show_loader();
@@ -13119,7 +12998,7 @@ function form192_ini()
 				"<transaction_id></transaction_id>" +
 				"<imported></imported>"+
 				"</supplier_bills>";
-		
+
 		var filter_fields=document.getElementById('form192_master');
 
 		////separate fetch function to get bill details like customer name, total etc.
@@ -13134,14 +13013,14 @@ function form192_ini()
 				filter_fields.elements[5].value=bill_id;
 				filter_fields.elements[6].value=bill_results[i].transaction_id;
 				var save_button=filter_fields.elements[7];
-				
+
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
 					event.preventDefault();
 					form192_update_form();
 				});
-				
+
 				var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 							"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 							"<td>Rs. "+bill_results[i].amount+"</br>" +
@@ -13151,11 +13030,11 @@ function form192_ini()
 							"<td></td>" +
 							"</tr>";
 				$('#form192_foot').html(total_row);
-				
+
 				break;
 			}
-		
-		
+
+
 			var bill_items_column="<supplier_bill_items>" +
 					"<id></id>" +
 					"<product_name></product_name>" +
@@ -13169,7 +13048,7 @@ function form192_ini()
 					"<storage></storage>" +
 					"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
 					"</supplier_bill_items>";
-			
+
 			fetch_requested_data('',bill_items_column,function(results)
 			{
 				results.forEach(function(result)
@@ -13196,12 +13075,12 @@ function form192_ini()
 							rowsHTML+="<input type='hidden' form='form192_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='submit_hidden' form='form192_"+id+"' id='save_form192_"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form192_"+id+"' id='delete_form192_"+id+"' onclick='form192_delete_item($(this));'>";
-						rowsHTML+="</td>";			
+						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-				
+
 					$('#form192_body').append(rowsHTML);
-					
-				});			
+
+				});
 				hide_loader();
 			});
 		});
@@ -13217,22 +13096,22 @@ function form196_ini()
 {
 	var master_form=document.getElementById('form196_master');
 	var nl_name=master_form.elements['newsletter'].value;
-	var nl_id=master_form.elements['nl_id'].value;	
-	var sms_content=master_form.elements['sms'].value;	
-	var list=master_form.elements['list'].value;	
-	var list_value=master_form.elements['value'].value;	
-	
+	var nl_id=master_form.elements['nl_id'].value;
+	var sms_content=master_form.elements['sms'].value;
+	var list=master_form.elements['list'].value;
+	var list_value=master_form.elements['value'].value;
+
 	if(nl_id!="" || nl_name!="" || sms_content!="")
 	{
 		show_loader();
-		
+
 		var attributes_columns=new Object();
 				attributes_columns.data_store='attributes';
 				attributes_columns.return_column='name';
 				attributes_columns.indexes=[{index:'attribute',exact:list},
 								{index:'type',exact:'customer'},
 								{index:'value',exact:list_value}];
-		
+
 		read_json_single_column(attributes_columns,function(attributes)
 		{
 			var customer_columns=new Object();
@@ -13243,48 +13122,48 @@ function form196_ini()
 								{index:'phone'},
 								{index:'acc_name',array:attributes},
 								{index:'email_subscription',unequal:'no'}];
-				
+
 			read_json_rows('',customer_columns,function(results)
 			{
 				form196_print_form(nl_name,nl_id,'mail',function(container)
 				{
 					var business_title=get_session_var('title');
 					var subject=nl_name;
-					
+
 					var email_id_string="";
 					var email_message=container.innerHTML;
 					var from=get_session_var('email');
-					
+
 					var sms_type=get_session_var('sms_type');
 					if(sms_type=='undefined')
 					{
 						sms_type='transaction';
 					}
 					var to_array=[];
-					results.forEach(function (result) 
+					results.forEach(function (result)
 					{
 						var customer_phone=result.phone;
 						var customer_name=result.name;
 						var message=sms_content.replace(/customer_name/g,customer_name);
 						message=message.replace(/business_title/g,business_title);
-						
+
 						send_sms(customer_phone,message,sms_type);
 						if(result.email!="")
 						{
 							var to={"email":result.email,"name":result.name,"customer_id":result.id};
 							to_array.push(to);
-						}						
+						}
 					});
-					
+
 					var email_to=JSON.stringify(to_array);
 					console.log(email_to);
-										
+
 					send_email(email_to,from,business_title,subject,email_message,function()
 					{
 						$("#modal58_link").click();
-						hide_loader();			
+						hide_loader();
 					});
-				});		
+				});
 			});
 		});
 	}
@@ -13299,15 +13178,15 @@ function form196_ini_all()
 {
 	var master_form=document.getElementById('form196_master');
 	var nl_name=master_form.elements['newsletter'].value;
-	var nl_id=master_form.elements['nl_id'].value;	
-	var sms_content=master_form.elements['sms'].value;	
-	var list=master_form.elements['list'].value;	
-	var list_value=master_form.elements['value'].value;	
-	
+	var nl_id=master_form.elements['nl_id'].value;
+	var sms_content=master_form.elements['sms'].value;
+	var list=master_form.elements['list'].value;
+	var list_value=master_form.elements['value'].value;
+
 	if(nl_id!="" && nl_name!="" || sms_content!="")
 	{
 		show_loader();
-		
+
 		var customer_columns=new Object();
 			customer_columns.data_store='customers';
 			customer_columns.indexes=[{index:'id'},
@@ -13316,49 +13195,49 @@ function form196_ini_all()
 								{index:'phone'},
 								{index:'acc_name'},
 								{index:'email_subscription',unequal:'no'}];
-		
+
 		read_json_rows('',customer_columns,function(results)
 		{
 			form196_print_form(nl_name,nl_id,'mail',function(container)
 			{
 				var business_title=get_session_var('title');
 				var subject=nl_name;
-				
+
 				var email_id_string="";
 				var email_message=container.innerHTML;
 				var from=get_session_var('email');
-				
+
 				var sms_type=get_session_var('sms_type');
 				if(sms_type=='undefined')
 				{
 					sms_type='transaction';
 				}
 				var to_array=[];
-				
-				results.forEach(function (result) 
+
+				results.forEach(function (result)
 				{
 					var customer_phone=result.phone;
 					var customer_name=result.name;
 					var message=sms_content.replace(/customer_name/g,customer_name);
 					message=message.replace(/business_title/g,business_title);
-						
+
 					send_sms(customer_phone,message,sms_type);
-				
+
 					if(result.email!="")
 					{
 						var to={"email":result.email,"name":result.name,"customer_id":result.id};
 						to_array.push(to);
-					}				
+					}
 				});
-					
+
 				var email_to=JSON.stringify(to_array);
 				console.log(email_to);
 				send_email(email_to,from,business_title,subject,email_message,function()
 				{
 					$("#modal58_link").click();
-					hide_loader();			
+					hide_loader();
 				});
-			});		
+			});
 		});
 	}
 }
@@ -13374,11 +13253,11 @@ function form195_ini()
 	var fid=$("#form195_link").attr('data_id');
 	if(fid==null)
 		fid="";
-	
+
 	var filter_fields=document.getElementById('form195_header');
-	
+
 	var fname=filter_fields.elements[0].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form195_index');
 	var prev_element=document.getElementById('form195_prev');
@@ -13427,7 +13306,7 @@ function form195_ini()
 						rowsHTML+="<input type='button' class='delete_icon' form='form195_"+result.id+"' title='Delete' onclick='form195_delete_item($(this))'>";
 						rowsHTML+="<input type='button' class='print_icon' form='form195_"+result.id+"' title='Print' onclick=\"form195_print_form('"+result.id+"')\">";
 						rowsHTML+="<input type='button' class='share_icon' form='form195_"+result.id+"' title='Send as mail'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 
 			$('#form195_body').append(rowsHTML);
@@ -13437,7 +13316,7 @@ function form195_ini()
 
 			$(share_button).click(function()
 			{
-				modal101_action(result.name,'','customer',function (func) 
+				modal101_action(result.name,'','customer',function (func)
 				{
 					print_form195(result.id,func);
 				});
@@ -13476,7 +13355,7 @@ function form195_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -13484,7 +13363,7 @@ function form195_ini()
 			get_export_data(columns,'letterheads');
 		});
 		hide_loader();
-	});	
+	});
 };
 
 
@@ -13499,9 +13378,9 @@ function form207_ini()
 	var fid=$("#form207_link").attr('data_id');
 	if(fid==null)
 		fid="";
-	
+
 	var filter_fields=document.getElementById('form207_header');
-	
+
 	var fname=filter_fields.elements[0].value;
 	var fbatch=filter_fields.elements[1].value;
 
@@ -13511,7 +13390,7 @@ function form207_ini()
 	var next_element=document.getElementById('form207_next');
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
-	
+
 	var columns="<product_instances count='25' start_index='"+start_index+"'>" +
 		"<id>"+fid+"</id>" +
 		"<batch>"+fbatch+"</batch>" +
@@ -13520,11 +13399,11 @@ function form207_ini()
 		"<expiry></expiry>" +
 		"<cost_price></cost_price>"+
 		"<sale_price></sale_price>"+
-		"<mrp></mrp>"+		
+		"<mrp></mrp>"+
 		"</product_instances>";
 
 	$('#form207_body').html("");
-	
+
 	fetch_requested_data('form207',columns,function(results)
 	{
 		results.forEach(function(result)
@@ -13552,12 +13431,12 @@ function form207_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form207_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' title='Save' form='form207_"+result.id+"'>";					
+						rowsHTML+="<input type='submit' class='save_icon' title='Save' form='form207_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' title='Delete' form='form207_"+result.id+"' onclick='form207_delete_item($(this));'>";
 						rowsHTML+="<input type='button' class='generic_icon' value='Inventory' title='Update Inventory' form='form207_"+result.id+"' onclick=\"modal143_action('"+result.product_name+"','"+result.batch+"')\">";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form207_body').append(rowsHTML);
 			var fields=document.getElementById("form207_"+result.id);
 			var expiry=fields.elements[2];
@@ -13568,9 +13447,9 @@ function form207_ini()
 				event.preventDefault();
 				form207_update_item(fields);
 			});
-			
+
 			$(expiry).datepicker();
-			
+
 			var hireable_data="<bill_items sum='yes'>"+
 							"<quantity></quantity>"+
 							"<hired exact='yes'>yes</hired>"+
@@ -13610,7 +13489,7 @@ function form207_ini()
 			$(prev_element).show();
 		}
 		/////////////
-		
+
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 
@@ -13637,13 +13516,13 @@ function form208_ini()
 	var fid=$("#form208_link").attr('data_id');
 	if(fid==null)
 		fid="";
-	
+
 	var filter_fields=document.getElementById('form208_header');
-	
+
 	var fnum=filter_fields.elements[0].value;
 	var fcust=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form208_index');
 	var prev_element=document.getElementById('form208_prev');
@@ -13689,7 +13568,7 @@ function form208_ini()
 						rowsHTML+="<input type='button' class='edit_icon' form='form208_"+result.id+"' title='Edit/View Plan'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form208_"+result.id+"' title='Save'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form208_"+result.id+"' title='Delete' onclick='form208_delete_item($(this))'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 
 			$('#form208_body').append(rowsHTML);
@@ -13698,9 +13577,9 @@ function form208_ini()
 			var date_filter=fields.elements[3];
 			var status_filter=fields.elements[4];
 			var edit_button=fields.elements[6];
-			
+
 			$(date_filter).datepicker();
-			
+
 			$(edit_button).on("click", function(event)
 			{
 				event.preventDefault();
@@ -13741,7 +13620,7 @@ function form208_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -13749,7 +13628,7 @@ function form208_ini()
 			get_export_data(columns,'treatment_plans');
 		});
 		hide_loader();
-	});	
+	});
 };
 
 /**
@@ -13761,11 +13640,11 @@ function form209_ini()
 {
 	var plan_id=$("#form209_link").attr('data_id');
 	if(plan_id==null)
-		plan_id="";	
-	
+		plan_id="";
+
 	$('#form209_body').html("");
 	$('#form209_foot').html("");
-	
+
 	if(plan_id!="")
 	{
 		show_loader();
@@ -13777,10 +13656,10 @@ function form209_ini()
 				"<start_date></start_date>" +
 				"<status></status>"+
 				"</treatment_plans>";
-		
+
 		var filter_fields=document.getElementById('form209_master');
 
-		////separate fetch function to get plan details 
+		////separate fetch function to get plan details
 		fetch_requested_data('',plan_columns,function(plan_results)
 		{
 			if (plan_results.length>0)
@@ -13791,7 +13670,7 @@ function form209_ini()
 				filter_fields.elements['status'].value=plan_results[0].status;
 				filter_fields.elements['plan_id'].value=plan_id;
 				var save_button=filter_fields.elements['save'];
-				
+
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
@@ -13799,8 +13678,8 @@ function form209_ini()
 					form209_update_form();
 				});
 			}
-		
-		
+
+
 			var plan_items_column="<treatment_plan_items>" +
 					"<id></id>" +
 					"<item></item>" +
@@ -13811,7 +13690,7 @@ function form209_ini()
 					"<to_time></to_time>" +
 					"<plan_id exact='yes'>"+plan_id+"</plan_id>" +
 					"</treatment_plan_items>";
-			
+
 			fetch_requested_data('',plan_items_column,function(results)
 			{
 				results.forEach(function(result)
@@ -13844,7 +13723,7 @@ function form209_ini()
 							rowsHTML+="<input type='button' class='delete_icon' form='form209_"+id+"' id='delete_form209_"+id+"' onclick='form209_delete_item($(this));'>";
 						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-				
+
 					$('#form209_body').prepend(rowsHTML);
 					var fields=document.getElementById('form209_'+id);
 					var doc_filter=fields.elements[3];
@@ -13852,29 +13731,29 @@ function form209_ini()
 					var to_filter=fields.elements[5];
 					var status_filter=fields.elements[6];
 					var save_button=fields.elements[8];
-					
-					$(doc_filter).on('click',function () 
+
+					$(doc_filter).on('click',function ()
 					{
-						modal144_action('treatment_plan_items',id,function (url,doc_name) 
+						modal144_action('treatment_plan_items',id,function (url,doc_name)
 						{
 							var docHTML="<a href='"+url+"' download='"+doc_name+"'><u>"+doc_name+"</u></a><br>";
 							var doc_container=document.getElementById('form209_documents_'+id);
 							$(doc_container).append(docHTML);
 						});
 					});
-					
+
 					$(from_filter).datepicker();
 					$(to_filter).datepicker();
 					set_static_value_list('treatment_plan_items','status',status_filter);
-					
-					$(save_button).on('click',function (event) 
+
+					$(save_button).on('click',function (event)
 					{
 						event.preventDefault();
 						form209_update_item(fields);
 					});
-					
-					///fetching documents for this item					
-					
+
+					///fetching documents for this item
+
 					var doc_column="<documents>" +
 							"<id></id>" +
 							"<url></url>" +
@@ -13888,7 +13767,7 @@ function form209_ini()
 						for (var j in doc_results)
 						{
 							var updated_url=doc_results[j].url.replace(/ /g,"+");
-							docHTML+="<a href='"+updated_url+"' download='"+doc_results[j].doc_name+"'><u>"+doc_results[j].doc_name+"</u></a><br>";							
+							docHTML+="<a href='"+updated_url+"' download='"+doc_results[j].doc_name+"'><u>"+doc_results[j].doc_name+"</u></a><br>";
 						}
 						document.getElementById('form209_documents_'+id).innerHTML=docHTML;
 					});
@@ -13897,7 +13776,7 @@ function form209_ini()
 				$('#form209_share').show();
 				$('#form209_share').click(function()
 				{
-					modal101_action('Treatment Plan',filter_fields.elements['customer'].value,'customer',function (func) 
+					modal101_action('Treatment Plan',filter_fields.elements['customer'].value,'customer',function (func)
 					{
 						print_form209(func);
 					});
@@ -13921,7 +13800,7 @@ function form210_ini()
 	var print_button=master_form.elements['print'];
 	var print_invoice_button=master_form.elements['print_invoice'];
 	var edit_invoice_button=master_form.elements['edit_invoice'];
-	
+
 	$('#form210_invoice_line').html('');
 	$('#form210_invoice').html('');
 	$('#form210_image').html('');
@@ -13936,28 +13815,28 @@ function form210_ini()
 	  		"<order_id></order_id>"+
 	       	"<bill_date></bill_date>"+
 	      	"</bills>";
-	fetch_requested_data('',bills_xml,function (bills) 
+	fetch_requested_data('',bills_xml,function (bills)
 	{
 	     if(bills.length>0)
 	     {
-	     	$(print_button).off('click'); 
-			$(print_button).on('click',function () 
+	     	$(print_button).off('click');
+			$(print_button).on('click',function ()
 			{
 				print_product_barcode(bills[0].id,"Order # "+bills[0].order_num,"Invoice # "+bills[0].bill_num);
 			});
 
-	     	$(print_invoice_button).off('click'); 
-			$(print_invoice_button).on('click',function () 
+	     	$(print_invoice_button).off('click');
+			$(print_invoice_button).on('click',function ()
 			{
 				print_form210(bills[0].id);
 			});
-			
-			$(edit_invoice_button).off('click'); 
-			$(edit_invoice_button).on('click',function () 
+
+			$(edit_invoice_button).off('click');
+			$(edit_invoice_button).on('click',function ()
 			{
 				modal158_action(bills[0].id);
 			});
-			 	
+
 	      	//////////provide a preview of the invoice//////////////////////
 			var bill_items_xml="<bill_items>"+
 					"<id></id>"+
@@ -13972,9 +13851,9 @@ function form210_ini()
 					"<packing_status></packing_status>"+
 					"<show_for_packing></show_for_packing>"+
 					"<storage></storage>"+
-					"<bill_id exact='yes'>"+bills[0].id+"</bill_id>"+		
+					"<bill_id exact='yes'>"+bills[0].id+"</bill_id>"+
 					"</bill_items>";
-			fetch_requested_data('',bill_items_xml,function (bill_items) 
+			fetch_requested_data('',bill_items_xml,function (bill_items)
 			{
 				var inventory_adjust_xml="<inventory_adjust>"+
 										"<id></id>"+
@@ -13988,9 +13867,9 @@ function form210_ini()
 										"<show_for_packing exact='yes'>yes</show_for_packing>"+
 										"<storage></storage>"+
 										"<source>picking</source>"+
-										"<source_id exact='yes'>"+bills[0].id+"</source_id>"+		
+										"<source_id exact='yes'>"+bills[0].id+"</source_id>"+
 										"</inventory_adjust>";
-				fetch_requested_data('',inventory_adjust_xml,function (adjust_items) 
+				fetch_requested_data('',inventory_adjust_xml,function (adjust_items)
 				{
 					//console.log(bill_items);
 					for(var c=0;c<bill_items.length;c++)
@@ -14003,7 +13882,7 @@ function form210_ini()
 							c--;
 						}
 					}
-						
+
 					for(var b=0;b<adjust_items.length;b++)
 					{
 						var adjust_item=new Object();
@@ -14023,31 +13902,31 @@ function form210_ini()
 						adjust_item.table_type='inventory_adjust';
 						bill_items.push(adjust_item);
 					}
-											
+
 					if(bill_items.length>0)
 					{
-						////////////setting up containers///////////////////////	
+						////////////setting up containers///////////////////////
 						var container=document.getElementById('form210_invoice');
-												
+
 						var invoice_line=document.getElementById('form210_invoice_line');
 						var table_container=document.createElement('div');
-						
+
 						////////////setting styles for containers/////////////////////////
-										
+
 						///////////////getting the content////////////////////////////////////////
-						var date=get_my_past_date(bills[0].bill_date);				
+						var date=get_my_past_date(bills[0].bill_date);
 						var invoice_no=bills[0].bill_num;
 						var order_no=bills[0].order_num;
-						
+
 						invoice_line.innerHTML="<div style='float:left;width:50%;text-align:left'>Invoice #: "+invoice_no+"<br>Order #: "+order_no+"</div><div style='float:right;text-align:right;width:50%'>Invoice Date: "+date+"</div>";
-												
+
 						var table_copy=document.createElement('table');
-						
+
 						table_copy.setAttribute('width','100%');
 						table_copy.setAttribute('class','plain_table');
 						$(table_copy).append("<tr><th>SKU</th><th>Item</th><th>Batch</th><th>MRP</th><th>Total</th><th>Quantity</th></tr>");
-	
-						bill_items.forEach(function (item) 
+
+						bill_items.forEach(function (item)
 						{
 							if(isNaN(item.packed_quantity) || item.packed_quantity=='null' || item.packed_quantity=='')
 							{
@@ -14059,14 +13938,14 @@ function form210_ini()
 								row_class=" class='green_row'";
 							}
 							var item_object_string=JSON.stringify(item);
-							$(table_copy).append("<tr "+row_class+" id='form210_row_"+item.id+"' data-object='"+item_object_string+"'><td>"+item.item_name+"</td><td>"+item.item_desc+"</td><td>"+item.batch+"</td></td><td>"+item.mrp+"</td><td>"+item.total+"</td><td>To Pack: <vyavsaay_p id='form210_topack_"+item.id+"'>"+item.quantity+"</vyavsaay_p><br>Packed: <vyavsaay_p id='form210_packed_"+item.id+"'>"+item.packed_quantity+"</vyavsaay_p><br>Rejected: <vyavsaay_p id='form210_rejected_"+item.id+"'>0</vyavsaay_p></td></tr>");	
+							$(table_copy).append("<tr "+row_class+" id='form210_row_"+item.id+"' data-object='"+item_object_string+"'><td>"+item.item_name+"</td><td>"+item.item_desc+"</td><td>"+item.batch+"</td></td><td>"+item.mrp+"</td><td>"+item.total+"</td><td>To Pack: <vyavsaay_p id='form210_topack_"+item.id+"'>"+item.quantity+"</vyavsaay_p><br>Packed: <vyavsaay_p id='form210_packed_"+item.id+"'>"+item.packed_quantity+"</vyavsaay_p><br>Rejected: <vyavsaay_p id='form210_rejected_"+item.id+"'>0</vyavsaay_p></td></tr>");
 						});
-	
+
 						container.appendChild(table_copy);
-						
+
 						hide_loader();
-						/////////get images and packing instructions//////////					
-						var bill_item_name_string="--";						
+						/////////get images and packing instructions//////////
+						var bill_item_name_string="--";
 						bill_items.forEach(function(bill_item)
 						{
 							bill_item_name_string+=bill_item.item_name+"--";
@@ -14074,10 +13953,10 @@ function form210_ini()
 						var product_columns="<product_master>" +
 								"<id></id>" +
 								"<name array='yes'>"+bill_item_name_string+"</name>"+
-								"<description></description>"+								
+								"<description></description>"+
 								"<packing></packing>"+
 								"</product_master>";
-						fetch_requested_data('',product_columns,function (products) 
+						fetch_requested_data('',product_columns,function (products)
 						{
 							products.forEach(function (product)
 							{
@@ -14099,31 +13978,31 @@ function form210_ini()
 									}
 									updated_url=pic_results_url.replace(/ /g,"+");
 									var imgHTML="<div style='display:block;width:45%;margin:5px;float:left;'><b>"+product.name+"</b>: "+product.description+"<br>Packing Instructions: "+product.packing+"<br><img style='width:98%;height:auto;' src='"+updated_url+"'></div>";
-									
-									$('#form210_image').append(imgHTML);	
-									$('#form210_form').show();			
+
+									$('#form210_image').append(imgHTML);
+									$('#form210_form').show();
 									//hide_loader();
 								});
 							});
-						});											
+						});
 					}
-					else 
+					else
 					{
 						var container=document.getElementById('form210_invoice');
-						container.innerHTML='<b>No items are pending for packing for this Order.<b>';	
+						container.innerHTML='<b>No items are pending for packing for this Order.<b>';
 						hide_loader();
 					}
 				});
 			});
 			////////////////////////////////////////////////////////////////
 		}
-		else 
+		else
 		{
 			var container=document.getElementById('form210_invoice');
-			container.innerHTML='<b>Incorrect Order #<b>';	
+			container.innerHTML='<b>Incorrect Order #<b>';
 			hide_loader();
-		}		
-	});		
+		}
+	});
 };
 
 
@@ -14137,10 +14016,10 @@ function form215_ini()
 {
 	var drs_id=$("#form215_link").attr('data_id');
 	if(drs_id==null)
-		drs_id="";	
+		drs_id="";
 	$('#form215_body').html("");
 	$('#form215_foot').html("");
-	
+
 	if(drs_id!="")
 	{
 		show_loader();
@@ -14150,7 +14029,7 @@ function form215_ini()
 				"<drs_time></drs_time>"+
 				"<num_orders></num_orders>"+
 				"</drs>";
-	
+
 		////separate fetch function to get bill details like customer name, total etc.
 		fetch_requested_data('',drs_columns,function(drs_results)
 		{
@@ -14161,10 +14040,10 @@ function form215_ini()
 				filter_fields.elements['num_orders'].value=drs_results[0].num_orders;
 				filter_fields.elements['date'].value=get_my_past_date(drs_results[0].drs_time);
 				filter_fields.elements['id'].value=drs_results[0].id;
-				
+
 				var save_button=filter_fields.elements['save'];
 				$(save_button).show();
-				
+
 				var drs_items_column="<bills>" +
 									"<id></id>" +
 									"<order_num></order_num>" +
@@ -14175,7 +14054,7 @@ function form215_ini()
 									"</bills>";
 
 				/////////////////////////////////////////////////////////////////////////
-	
+
 				fetch_requested_data('',drs_items_column,function(results)
 				{
 					results.forEach(function(result)
@@ -14202,30 +14081,30 @@ function form215_ini()
 								rowsHTML+="<input type='hidden' form='form215_"+id+"' value='"+id+"'>";
 								rowsHTML+="<input type='button' class='submit_hidden' form='form215_"+id+"' id='save_form215_"+id+"'>";
 								rowsHTML+="<input type='button' class='delete_icon' form='form215_"+id+"' id='delete_form215_"+id+"' onclick='form215_delete_item($(this));'>";
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 						rowsHTML+="</tr>";
-	
+
 						$('#form215_body').append(rowsHTML);
-						
+
 						var item_form=document.getElementById('form215_'+id);
 						var save_button=item_form.elements[5];
-						
-						$(save_button).on('click',function (e) 
+
+						$(save_button).on('click',function (e)
 						{
 							e.preventDefault();
 							form215_update_item(item_form);
 						});
 					});
-					
+
 					$('#form215_share').show();
 					$('#form215_share').click(function()
 					{
-						modal101_action('Order Manifest - #'+filter_fields.elements['man_num'].value,'','staff',function (func) 
+						modal101_action('Order Manifest - #'+filter_fields.elements['man_num'].value,'','staff',function (func)
 						{
 							print_form215(func);
 						});
 					});
-					
+
 					form215_update_serial_numbers();
 					$('textarea').autosize();
 					hide_loader();
@@ -14246,14 +14125,14 @@ function form217_ini()
 	show_loader();
 	var fid=$("#form217_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form217_header');
-	
+
 	var fsupplier=filter_fields.elements[0].value;
 	var fproduct=filter_fields.elements[1].value;
 	var fsku=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form217_index');
 	var prev_element=document.getElementById('form217_prev');
@@ -14295,10 +14174,10 @@ function form217_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form217_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form217_"+result.id+"' value='Save'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form217_"+result.id+"' value='Delete' onclick='form217_delete_item($(this));'>";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='delete_icon' form='form217_"+result.id+"' value='Delete' onclick='form217_delete_item($(this));'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form217_body').append(rowsHTML);
 			var fields=document.getElementById("form217_"+result.id);
 			$(fields).on("submit", function(event)
@@ -14331,7 +14210,7 @@ function form217_ini()
 			$(prev_element).show();
 		}
 		/////////////
-		
+
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 
@@ -14355,11 +14234,11 @@ function form222_ini()
 {
 	var order_id=$("#form222_link").attr('data_id');
 	if(order_id==null)
-		order_id="";	
-	
+		order_id="";
+
 	$('#form222_body').html("");
 	$('#form222_foot').html("");
-	
+
 	if(order_id!="")
 	{
 		show_loader();
@@ -14384,14 +14263,14 @@ function form222_ini()
 				"<price></price>" +
 				"<amount></amount>"+
 				"<tax></tax>"+
-				"<total></total>"+				
+				"<total></total>"+
 				"</purchase_order_items>";
-	
+
 		////separate fetch function to get order details like customer name, total etc.
 		fetch_requested_data('',order_columns,function(order_results)
 		{
 			var filter_fields=document.getElementById('form222_master');
-			
+
 			if(order_results.length>0)
 			{
 				filter_fields.elements['supplier'].value=order_results[0].supplier;
@@ -14400,14 +14279,14 @@ function form222_ini()
 				filter_fields.elements['status'].value=order_results[0].status;
 				filter_fields.elements['order_id'].value=order_id;
 				var save_button=filter_fields.elements['save'];
-				
+
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
 					event.preventDefault();
 					form222_update_form();
 				});
-				
+
 				var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 							"<td>Amount:<br>Tax: <br>Total: </td>" +
 							"<td>Rs. "+order_results[0].amount+"<br>" +
@@ -14415,10 +14294,10 @@ function form222_ini()
 							"Rs. "+order_results[0].total+"</td>" +
 							"<td></td>" +
 							"</tr>";
-					
+
 				$('#form222_foot').html(total_row);
 			}
-		
+
 			fetch_requested_data('',order_items_column,function(results)
 			{
 				results.forEach(function(result)
@@ -14449,19 +14328,19 @@ function form222_ini()
 							rowsHTML+="<input type='button' class='delete_icon' form='form222_"+id+"' id='delete_form222_"+id+"' onclick='form222_delete_item($(this)); form222_get_totals();'>";
 						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-				
+
 					$('#form222_body').append(rowsHTML);
 				});
 				var bt=get_session_var('title');
 				$('#form222_share').show();
 				$('#form222_share').click(function()
 				{
-					modal101_action(bt+' - PO# '+filter_fields.elements['order_num'].value,filter_fields.elements['supplier'].value,'supplier',function (func) 
+					modal101_action(bt+' - PO# '+filter_fields.elements['order_num'].value,filter_fields.elements['supplier'].value,'supplier',function (func)
 					{
 						print_form222(func);
 					});
 				});
-				
+
 				hide_loader();
 			});
 		});
@@ -14478,15 +14357,15 @@ function form223_ini()
 	show_loader();
 	var fid=$("#form223_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form223_header');
-	
-	//populating form 
+
+	//populating form
 	var fnum=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form223_index');
 	var prev_element=document.getElementById('form223_prev');
@@ -14507,7 +14386,7 @@ function form223_ini()
 	$('#form223_body').html("");
 
 	fetch_requested_data('form223',columns,function(results)
-	{	
+	{
 		results.forEach(function(result)
 		{
 			var rowsHTML="";
@@ -14530,7 +14409,7 @@ function form223_ini()
 						rowsHTML+="<input type='button' class='edit_icon' form='form223_"+result.id+"' title='Edit order' onclick=\"element_display('"+result.id+"','form222');\">";
 						rowsHTML+="<input type='submit' class='save_icon' form='form223_"+result.id+"' title='Save order'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form223_"+result.id+"' title='Delete order' onclick='form223_delete_item($(this));'>";
-					
+
 					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 
@@ -14544,7 +14423,7 @@ function form223_ini()
 			{
 				event.preventDefault();
 				form223_update_item(fields);
-			});			
+			});
 		});
 
 		////indexing///
@@ -14573,7 +14452,7 @@ function form223_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -14596,25 +14475,25 @@ function form227_ini()
 	var fid=$("#form227_link").attr('data_id');
 	if(fid==null)
 		fid="";
-	
+
 	var filter_fields=document.getElementById('form227_header');
-	
+
 	var fname=filter_fields.elements[0].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form227_index');
 	var prev_element=document.getElementById('form227_prev');
 	var next_element=document.getElementById('form227_next');
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
-	
+
 	var columns="<product_instances count='25' start_index='"+start_index+"'>" +
 		"<id>"+fid+"</id>" +
 		"<product_name>"+fname+"</product_name>" +
 		"</product_instances>";
 
 	$('#form227_body').html("");
-	
+
 	fetch_requested_data('form227',columns,function(results)
 	{
 		results.forEach(function(result)
@@ -14636,15 +14515,15 @@ function form227_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form227_"+result.id+"' value='"+result.id+"'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form227_body').append(rowsHTML);
 			var fields=document.getElementById("form227_"+result.id);
 			var w_in=fields.elements[1];
 			var d_in=fields.elements[2];
 			var h_in=fields.elements[3];
-			
+
 			get_inventory(result.product_name,'',function(inventory)
 			{
 				w_in.value=-parseFloat(inventory);
@@ -14654,7 +14533,7 @@ function form227_ini()
 					"<issue_date lowerbound='yes'>"+get_my_time()+"</issue_date>"+
 					"<item_name exact='yes'>"+result.product_name+"</item_name>" +
 					"</bill_items>";
-	
+
 				get_single_column_data(function(demos)
 				{
 					if(demos.length>0)
@@ -14662,14 +14541,14 @@ function form227_ini()
 						w_in.value=parseFloat(w_in.value)-parseFloat(demos[0]);
 					}
 				},demo_quantity_xml);
-	
+
 				var hire_quantity_xml="<bill_items sum='yes'>" +
 					"<quantity></quantity>"+
 					"<hiring_type exact='yes'>hire</hiring_type>"+
 					"<issue_date lowerbound='yes'>"+get_my_time()+"</issue_date>"+
 					"<item_name exact='yes'>"+result.product_name+"</item_name>" +
 					"</bill_items>";
-	
+
 				get_single_column_data(function(hires)
 				{
 					if(hires.length>0)
@@ -14678,7 +14557,7 @@ function form227_ini()
 					}
 				},hire_quantity_xml);
 			});
-			
+
 			var demo_quantity_xml="<bill_items sum='yes'>" +
 				"<quantity></quantity>"+
 				"<hiring_type exact='yes'>demo</hiring_type>"+
@@ -14727,7 +14606,7 @@ function form227_ini()
 			$(prev_element).show();
 		}
 		/////////////
-		
+
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 
@@ -14744,21 +14623,21 @@ function form227_ini()
 					new_result.warehouse_quantity=""+(-parseFloat(inventory));
 					total_export_requests-=1;
 				});
-				
+
 				var demo_quantity_xml="<bill_items sum='yes'>" +
 					"<quantity></quantity>"+
 					"<hiring_type exact='yes'>demo</hiring_type>"+
 					"<issue_date upperbound='yes'>"+get_my_time()+"</issue_date>"+
 					"<item_name exact='yes'>"+new_result.product_name+"</item_name>" +
 					"</bill_items>";
-	
+
 				get_single_column_data(function(inventories)
 				{
 					if(inventories.length>0)
 					{
 						new_result.demo_quantity=""+(-parseFloat(inventories[0]));
 					}
-					else 
+					else
 					{
 						new_result.demo_quantity=""+0;
 					}
@@ -14771,14 +14650,14 @@ function form227_ini()
 					"<issue_date upperbound='yes'>"+get_my_time()+"</issue_date>"+
 					"<item_name exact='yes'>"+new_result.product_name+"</item_name>" +
 					"</bill_items>";
-	
+
 				get_single_column_data(function(inventories)
 				{
 					if(inventories.length>0)
 					{
 						new_result.hire_quantity=""+(-parseFloat(inventories[0]));
 					}
-					else 
+					else
 					{
 						new_result.hire_quantity=""+0;
 					}
@@ -14800,13 +14679,13 @@ function form228_ini()
 	show_loader();
 	var fid=$("#form228_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form228_header');
-	
+
 	var fitem=filter_fields.elements[0].value;
 	var fcustomer=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form228_index');
 	var prev_element=document.getElementById('form228_prev');
@@ -14853,10 +14732,10 @@ function form228_ini()
 						rowsHTML+="<input type='hidden' form='form228_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='hidden' form='form228_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form228_"+result.id+"' onclick='form228_delete_item($(this));'>";
-						rowsHTML+="<input type='button' class='generic_icon' form='form228_"+result.id+"' value='Return' onclick=\"modal147_action('demo',$(this));\">";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='generic_icon' form='form228_"+result.id+"' value='Return' onclick=\"modal147_action('demo',$(this));\">";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form228_body').append(rowsHTML);
 			var fields=document.getElementById("form228_"+result.id);
 			var issue_quantity_filter=fields.elements[1];
@@ -14871,7 +14750,7 @@ function form228_ini()
 					"<hiring_type exact='yes'>demo</hiring_type>" +
 					"<issue_id exact='yes'>"+result.id+"</issue_id>" +
 					"</bill_items>";
-			
+
 			fetch_requested_data('form228',columns,function(return_results)
 			{
 				var returned_quantity=0;
@@ -14879,12 +14758,12 @@ function form228_ini()
 				return_results.forEach(function(r_result)
 				{
 					returned_quantity+=parseFloat(r_result.quantity);
-					if(return_date=="")					
+					if(return_date=="")
 						return_date=r_result.issue_date;
 				});
 				return_quantity_filter.value=returned_quantity;
 				return_date_filter.value=get_my_past_date(return_date);
-				
+
 				if(parseFloat(return_quantity_filter.value)>=parseFloat(issue_quantity_filter.value))
 				{
 					$(return_button).hide();
@@ -14939,13 +14818,13 @@ function form229_ini()
 	show_loader();
 	var fid=$("#form229_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form229_header');
-	
+
 	var fitem=filter_fields.elements[0].value;
 	var fcustomer=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form229_index');
 	var prev_element=document.getElementById('form229_prev');
@@ -14990,17 +14869,17 @@ function form229_ini()
 						rowsHTML+="<input type='hidden' form='form229_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='hidden' form='form229_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form229_"+result.id+"' onclick='form229_delete_item($(this));'>";
-						rowsHTML+="<input type='button' class='generic_icon' form='form229_"+result.id+"' value='Return' onclick=\"modal147_action('hire',$(this));\">";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='generic_icon' form='form229_"+result.id+"' value='Return' onclick=\"modal147_action('hire',$(this));\">";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form229_body').append(rowsHTML);
 			var fields=document.getElementById("form229_"+result.id);
 			var issue_quantity_filter=fields.elements[1];
 			var return_quantity_filter=fields.elements[2];
 			var return_date_filter=fields.elements[5];
 			var return_button=fields.elements[9];
-			
+
 			var columns="<bill_items>" +
 					"<quantity></quantity>" +
 					"<issue_date></issue_date>" +
@@ -15015,12 +14894,12 @@ function form229_ini()
 				return_results.forEach(function(r_result)
 				{
 					returned_quantity+=parseFloat(r_result.quantity);
-					if(return_date=="")					
+					if(return_date=="")
 						return_date=r_result.issue_date;
 				});
 				return_quantity_filter.value=returned_quantity;
 				return_date_filter.value=get_my_past_date(return_date);
-				
+
 				if(parseFloat(return_quantity_filter.value)==parseFloat(issue_quantity_filter.value))
 				{
 					$(return_button).hide();
@@ -15054,7 +14933,7 @@ function form229_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -15075,15 +14954,15 @@ function form230_ini()
 	show_loader();
 	var fid=$("#form230_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form230_header');
-	
+
 	var fitem=filter_fields.elements[0].value;
 	var fissue=filter_fields.elements[1].value;
 	var fhire=filter_fields.elements[2].value;
 	var fcustomer=filter_fields.elements[3].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form230_index');
 	var prev_element=document.getElementById('form230_prev');
@@ -15133,19 +15012,19 @@ function form230_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form230_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='button' class='save_icon' form='form230_"+result.id+"'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form230_"+result.id+"' onclick='form230_delete_item($(this));'>";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='delete_icon' form='form230_"+result.id+"' onclick='form230_delete_item($(this));'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form230_body').append(rowsHTML);
 			var fields=document.getElementById('form230_'+result.id);
-			
-			$(fields).on('submit',function (ev) 
+
+			$(fields).on('submit',function (ev)
 			{
 				ev.preventDefault();
 				form230_update_item(fields);
 			});
-			
+
 		});
 
 		////indexing///
@@ -15174,7 +15053,7 @@ function form230_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[5];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -15194,11 +15073,11 @@ function form231_ini()
 {
 	var pres_id=$("#form231_link").attr('data_id');
 	if(pres_id==null)
-		pres_id="";	
+		pres_id="";
 
 	$('#form231_body').html("");
 	$('#form231_foot').html("");
-	
+
 	if(pres_id!="")
 	{
 		show_loader();
@@ -15210,10 +15089,10 @@ function form231_ini()
 				"<date></date>" +
 				"<next_date></next_date>" +
 				"</prescriptions>";
-		
+
 		var filter_fields=document.getElementById('form231_master');
 
-		////separate fetch function to get plan details 
+		////separate fetch function to get plan details
 		fetch_requested_data('',pres_columns,function(pres_results)
 		{
 			if (pres_results.length>0)
@@ -15242,7 +15121,7 @@ function form231_ini()
 					"<dosage></dosage>" +
 					"<num_days></num_days>" +
 					"</prescription_items>";
-			
+
 			fetch_requested_data('',plan_items_column,function(results)
 			{
 				results.forEach(function(result)
@@ -15269,17 +15148,17 @@ function form231_ini()
 							rowsHTML+="<input type='hidden' form='form231_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='save_icon' form='form231_"+id+"' id='save_form231_"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form231_"+id+"' id='delete_form231_"+id+"' onclick='form231_delete_item($(this));'>";
-						rowsHTML+="</td>";			
+						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-				
+
 					$('#form231_body').prepend(rowsHTML);
 				});
-				
+
 				var bt=get_session_var('title');
 				$('#form231_share').show();
 				$('#form231_share').click(function()
 				{
-					modal101_action('Prescription from '+bt,filter_fields.elements['patient'].value,'customer',function (func) 
+					modal101_action('Prescription from '+bt,filter_fields.elements['patient'].value,'customer',function (func)
 					{
 						print_form231(func);
 					});
@@ -15302,13 +15181,13 @@ function form232_ini()
 	var fid=$("#form232_link").attr('data_id');
 	if(fid==null)
 		fid="";
-	
+
 	var filter_fields=document.getElementById('form232_header');
-	
+
 	var fnum=filter_fields.elements[0].value;
 	var fdoctor=filter_fields.elements[1].value;
 	var fpatient=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form232_index');
 	var prev_element=document.getElementById('form232_prev');
@@ -15354,14 +15233,14 @@ function form232_ini()
 						rowsHTML+="<input type='button' class='edit_icon' form='form232_"+result.id+"' title='Edit/View'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form232_"+result.id+"' title='Save'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form232_"+result.id+"' title='Delete' onclick='form232_delete_item($(this))'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 
 			$('#form232_body').append(rowsHTML);
 
 			var fields=document.getElementById("form232_"+result.id);
 			var edit_button=fields.elements[6];
-			
+
 			$(edit_button).on("click", function(event)
 			{
 				event.preventDefault();
@@ -15395,7 +15274,7 @@ function form232_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -15403,7 +15282,7 @@ function form232_ini()
 			get_export_data(columns,'prescriptions');
 		});
 		hide_loader();
-	});	
+	});
 };
 
 
@@ -15417,7 +15296,7 @@ function form233_ini()
 	var fid=$("#form233_link").attr('data_id');
 	if(fid==null)
 		fid="";
-	
+
 	if(fid!="")
 	{
 		console.log('loading');
@@ -15441,16 +15320,16 @@ function form233_ini()
 				master_form.elements['pic_url'].value=newsletters[0].pic_url;
 
 				$(master_form).off('submit');
-				$(master_form).on('submit',function (e) 
+				$(master_form).on('submit',function (e)
 				{
 					e.preventDefault();
 					form233_update_item();
 				});
-				
+
 				//console.log(revert_htmlentities(newsletters[0].html_content));
 				var updated_content=revert_htmlentities(newsletters[0].html_content);
 				$('#form233_section').html(updated_content);
-				
+
 				//$(".resizable").resizable();
 			    //$(".draggable").draggable();
 
@@ -15458,7 +15337,7 @@ function form233_ini()
     	        //$('.draggable-containment').draggable({ containment: "window" });
 			}
 			hide_loader();
-		});	
+		});
 	}
 };
 
@@ -15473,13 +15352,13 @@ function form234_ini()
 	show_loader();
 	var fid=$("#form234_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form234_header');
-	
+
 	var fname=filter_fields.elements[0].value;
 	var fmakes=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form234_index');
 	var prev_element=document.getElementById('form234_prev');
@@ -15519,20 +15398,20 @@ function form234_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form234_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form234_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form234_"+result.id+"' value='saved' onclick='form234_delete_item($(this));'>";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='delete_icon' form='form234_"+result.id+"' value='saved' onclick='form234_delete_item($(this));'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-		
+
 			$('#form234_body').append(rowsHTML);
 
 			var fields=document.getElementById("form234_"+result.id);
-			
+
 			$(fields).on("submit",function(event)
 			{
 				event.preventDefault();
 				form234_update_item(fields);
 			});
-			
+
 			var attributes_data="<attributes>"+
 								"<name exact='yes'>"+result.name+"</name>" +
 								"<type exact='yes'>product</type>" +
@@ -15577,7 +15456,7 @@ function form234_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -15585,7 +15464,7 @@ function form234_ini()
 			get_export_data(columns,'products');
 		});
 		hide_loader();
-	});	
+	});
 };
 
 
@@ -15599,13 +15478,13 @@ function form235_ini()
 	show_loader();
 	var fid=$("#form235_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form235_header');
-	
+
 	var fname=filter_fields.elements[1].value;
 	var fmakes=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form235_index');
 	var prev_element=document.getElementById('form235_prev');
@@ -15649,9 +15528,9 @@ function form235_ini()
 					pic_results_id=get_new_key();
 					pic_results_url="";
 				}
-				
+
 				updated_url=pic_results_url.replace(/ /g,"+");
-				
+
 				var rowsHTML="<li><ul class='form_grid_item'>";
 					rowsHTML+="<form id='form235_"+result.id+"'></form>";
 						rowsHTML+="<li>";
@@ -15674,10 +15553,10 @@ function form235_ini()
 						rowsHTML+="<li data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form235_"+result.id+"' value='"+result.id+"'>";
 							rowsHTML+="<input type='submit' class='save_icon' form='form235_"+result.id+"'>";
-							rowsHTML+="<input type='button' class='delete_icon' form='form235_"+result.id+"' onclick='form235_delete_item($(this));'>";	
-						rowsHTML+="</li>";			
+							rowsHTML+="<input type='button' class='delete_icon' form='form235_"+result.id+"' onclick='form235_delete_item($(this));'>";
+						rowsHTML+="</li>";
 				rowsHTML+="</ul></li>";
-			
+
 				$('#form235_grid').append(rowsHTML);
 
 				var fields=document.getElementById("form235_"+result.id);
@@ -15690,23 +15569,23 @@ function form235_ini()
 					event.preventDefault();
 					form235_update_item(fields);
 				});
-				
-				$(dummy_button).on('click',function (e) 
+
+				$(dummy_button).on('click',function (e)
 				{
 					e.preventDefault();
 					$(picture).trigger('click');
 				});
-				
+
 				picture.addEventListener('change',function(evt)
 				{
 					select_picture(evt,pictureinfo,function(dataURL)
 					{
-						pictureinfo.innerHTML="<div class='form_grid_item' name='"+pic_results_id+"'><img id='img_form235_"+result.id+"' src='"+dataURL+"'></div>";			
+						pictureinfo.innerHTML="<div class='form_grid_item' name='"+pic_results_id+"'><img id='img_form235_"+result.id+"' src='"+dataURL+"'></div>";
 					});
 				},false);
-				
+
 				longPressEditable($('.dblclick_editable'));
-				
+
 			});
 		});
 
@@ -15743,7 +15622,7 @@ function form235_ini()
 			get_export_data(columns,'products');
 		});
 		hide_loader();
-	});	
+	});
 };
 
 /**
@@ -15756,14 +15635,14 @@ function form236_ini()
 	show_loader();
 	var fid=$("#form236_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form236_header');
 
-	//populating form 
+	//populating form
 	var fdrs=filter_fields.elements[0].value;
 	var fdate=get_raw_time(filter_fields.elements[1].value);
-	
+
 	////indexing///
 	var index_element=document.getElementById('form236_index');
 	var prev_element=document.getElementById('form236_prev');
@@ -15781,7 +15660,7 @@ function form236_ini()
 	$('#form236_body').html("");
 
 	fetch_requested_data('form236',columns,function(results)
-	{	
+	{
 		var drs_num_array="--";
 		results.forEach(function(result)
 		{
@@ -15802,9 +15681,9 @@ function form236_ini()
 						rowsHTML+="<input type='hidden' form='form236_"+result.id+"' value='"+result.id+"' name='id'>";
 						rowsHTML+="<input type='button' form='form236_"+result.id+"' class='edit_icon' title='View Manifest' name='edit' onclick=\"element_display('"+result.id+"','form215');\">";
 						rowsHTML+="<input type='button' class='delete_icon' form='form236_"+result.id+"' title='Delete order' onclick='form236_delete_item($(this));'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form236_body').append(rowsHTML);
 		});
 
@@ -15834,7 +15713,7 @@ function form236_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -15857,8 +15736,8 @@ function form245_ini()
 
 	var master_fields=document.getElementById('form245_master');
 	var master_name=master_fields.elements['item_name'].value;
-	
-		
+
+
 	var items_column="<pre_requisites>" +
 						"<id></id>" +
 						"<type exact='yes'>product</type>" +
@@ -15868,7 +15747,7 @@ function form245_ini()
 						"<quantity></quantity>" +
 						"<name exact='yes'>"+master_name+"</name>" +
 						"</pre_requisites>";
-	
+
 	fetch_requested_data('form245',items_column,function(results)
 	{
 		console.log(results);
@@ -15892,12 +15771,12 @@ function form245_ini()
 					rowsHTML+="<input type='hidden' form='form245_"+id+"' value='"+id+"'>";
 					rowsHTML+="<input type='button' class='submit_hidden' form='form245_"+id+"' id='save_form245_"+id+"'>";
 					rowsHTML+="<input type='button' class='delete_icon' form='form245_"+id+"' id='delete_form245_"+id+"' onclick='form245_delete_item($(this));'>";
-				rowsHTML+="</td>";			
+				rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 
 			$('#form245_body').append(rowsHTML);
 		});
-		
+
 		form245_update_serial_numbers();
 		$('textarea').autosize();
 		hide_loader();
@@ -15915,10 +15794,10 @@ function form248_ini()
 {
 	var bag_id=$("#form248_link").attr('data_id');
 	if(bag_id==null)
-		bag_id="";	
+		bag_id="";
 	$('#form248_body').html("");
 	$('#form248_foot').html("");
-	
+
 	if(bag_id!="")
 	{
 		show_loader();
@@ -15931,7 +15810,7 @@ function form248_ini()
 				"<num_orders></num_orders>"+
 				"<branch></branch>"+
 				"</transit_bags>";
-	
+
 		////separate fetch function to get bill details like customer name, total etc.
 		fetch_requested_data('',bag_columns,function(bag_results)
 		{
@@ -15948,10 +15827,10 @@ function form248_ini()
 				filter_fields.elements['saved'].value='yes';
 
 				filter_fields.elements['branch'].setAttribute('readonly','readonly');
-				
+
 				var save_button=filter_fields.elements['save'];
 				$(save_button).show();
-				
+
 				var bag_items_column="<logistics_orders>" +
 									"<id></id>" +
 									"<awb_num></awb_num>" +
@@ -15971,7 +15850,7 @@ function form248_ini()
 									"</logistics_orders>";
 
 				/////////////////////////////////////////////////////////////////////////
-	
+
 				fetch_requested_data('',bag_items_column,function(results)
 				{
 					results.forEach(function(result)
@@ -15983,7 +15862,7 @@ function form248_ini()
 						if(result.address2=="--" || result.address2==result.address1)
 						{
 							var address=result.ship_to+"\n"+result.address1+", "+result.city+"-"+result.pincode;
-						}						
+						}
 						rowsHTML+="<form id='form248_"+id+"'></form>";
 							rowsHTML+="<td data-th='S.No.'>";
 							rowsHTML+="</td>";
@@ -16005,21 +15884,21 @@ function form248_ini()
 								rowsHTML+="<input type='hidden' form='form248_"+id+"' value='"+id+"'>";
 								rowsHTML+="<input type='button' class='submit_hidden' form='form248_"+id+"' id='save_form248_"+id+"'>";
 								rowsHTML+="<input type='button' class='delete_icon' form='form248_"+id+"' id='delete_form248_"+id+"' onclick='form248_delete_item($(this));'>";
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 						rowsHTML+="</tr>";
-	
+
 						$('#form248_body').append(rowsHTML);
-						
+
 						var item_form=document.getElementById('form248_'+id);
 						var save_button=item_form.elements[7];
-						
-						$(save_button).on('click',function (e) 
+
+						$(save_button).on('click',function (e)
 						{
 							e.preventDefault();
 							form248_update_item(item_form);
 						});
 					});
-					
+
 					form248_update_serial_numbers();
 					$('textarea').autosize();
 					hide_loader();
@@ -16039,15 +15918,15 @@ function form249_ini()
 	show_loader();
 	var fid=$("#form249_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form249_header');
 
-	//populating form 
+	//populating form
 	var fbag=filter_fields.elements[0].value;
 	var fdate=get_raw_time(filter_fields.elements[1].value);
 	var fstatus=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form249_index');
 	var prev_element=document.getElementById('form249_prev');
@@ -16056,13 +15935,13 @@ function form249_ini()
 	//////////////
 
 	$('#form249_body').html("");
-	
+
 	if_data_read_access('store_areas',function(accessible_data)
 	{
 		console.log(accessible_data);
 		var branches_array=[];
 		var branch_object={index:'branch',array:branches_array};
-		
+
 		for(var x in accessible_data)
 		{
 			branches_array.push(accessible_data[x].name);
@@ -16074,12 +15953,12 @@ function form249_ini()
 		}
 
 		console.log(branch_object);
-		
+
 		var new_columns=new Object();
 			new_columns.count=25;
 			new_columns.start_index=start_index;
-			new_columns.data_store='transit_bags';		
-			
+			new_columns.data_store='transit_bags';
+
 			new_columns.indexes=[{index:'id',value:fid},
 								{index:'bag_num',value:fbag},
 								{index:'lbh'},
@@ -16089,9 +15968,9 @@ function form249_ini()
 								{index:'status',value:fstatus},
 								{index:'mts'},
 								branch_object];
-		
+
 		read_json_rows('form249',new_columns,function(results)
-		{			
+		{
 			results.forEach(function(result)
 			{
 				var rowsHTML="";
@@ -16112,12 +15991,12 @@ function form249_ini()
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form249_"+result.id+"' value='"+result.id+"' name='id'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form249_"+result.id+"' title='Delete' onclick='form249_delete_item($(this));'>";
-						rowsHTML+="</td>";			
+						rowsHTML+="</td>";
 				rowsHTML+="</tr>";
-				
+
 				$('#form249_body').append(rowsHTML);
 			});
-	
+
 			////indexing///
 			var next_index=parseInt(start_index)+25;
 			var prev_index=parseInt(start_index)-25;
@@ -16141,12 +16020,12 @@ function form249_ini()
 				$(prev_element).show();
 			}
 			/////////////
-	
+
 			longPressEditable($('.dblclick_editable'));
 			$('textarea').autosize();
-			
+
 			var export_button=filter_fields.elements[3];
-			
+
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
@@ -16166,10 +16045,10 @@ function form250_ini()
 {
 	var mts_id=$("#form250_link").attr('data_id');
 	if(mts_id==null)
-		mts_id="";	
+		mts_id="";
 	$('#form250_body').html("");
 	$('#form250_foot').html("");
-	
+
 	if(mts_id!="")
 	{
 		show_loader();
@@ -16182,7 +16061,7 @@ function form250_ini()
 				"<num_orders></num_orders>"+
 				"<num_bags></num_bags>"+
 				"</mts>";
-	
+
 		////separate fetch function to get bill details like customer name, total etc.
 		fetch_requested_data('',mts_columns,function(mts_results)
 		{
@@ -16200,7 +16079,7 @@ function form250_ini()
 
 				var save_button=filter_fields.elements['save'];
 				$(save_button).show();
-				
+
 				var bag_columns="<transit_bags>" +
 						"<id></id>" +
 						"<bag_num></bag_num>"+
@@ -16210,9 +16089,9 @@ function form250_ini()
 						"<num_orders></num_orders>"+
 						"<mts_id exact='yes'>"+mts_id+"</mts_id>"+
 						"</transit_bags>";
-			
+
 				/////////////////////////////////////////////////////////////////////////
-	
+
 				fetch_requested_data('',bag_columns,function(results)
 				{
 					results.forEach(function(result)
@@ -16238,32 +16117,32 @@ function form250_ini()
 								rowsHTML+="<input type='hidden' form='form250_"+id+"' value='"+id+"'>";
 								rowsHTML+="<input type='button' class='submit_hidden' form='form250_"+id+"' id='save_form250_"+id+"'>";
 								rowsHTML+="<input type='button' class='delete_icon' form='form250_"+id+"' id='delete_form250_"+id+"' onclick='form250_delete_item($(this));'>";
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 						rowsHTML+="</tr>";
-	
+
 						$('#form250_body').append(rowsHTML);
-						
+
 						var item_form=document.getElementById('form250_'+id);
 						var save_button=item_form.elements[5];
-						
-						$(save_button).on('click',function (e) 
+
+						$(save_button).on('click',function (e)
 						{
 							e.preventDefault();
 							form250_update_item(item_form);
 						});
 					});
-					
+
 					form250_update_serial_numbers();
-					
+
 					$('#form250_share').show();
 					$('#form250_share').click(function()
 					{
-						modal101_action('Material Transfer Sheet','','staff',function (func) 
+						modal101_action('Material Transfer Sheet','','staff',function (func)
 						{
 							print_form250(func);
 						});
 					});
-					
+
 					$('textarea').autosize();
 					hide_loader();
 				});
@@ -16282,15 +16161,15 @@ function form251_ini()
 	show_loader();
 	var fid=$("#form251_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form251_header');
 
-	//populating form 
+	//populating form
 	var fmts=filter_fields.elements[0].value;
 	var fdate=get_raw_time(filter_fields.elements[1].value);
 	var fbranch=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form251_index');
 	var prev_element=document.getElementById('form251_prev');
@@ -16298,13 +16177,13 @@ function form251_ini()
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
 	$('#form251_body').html("");
-	
+
 	if_data_read_access('store_areas',function(accessible_data)
 	{
 		console.log(accessible_data);
 		var branches_array=[];
 		var branch_object={index:'branch',array:branches_array};
-		
+
 		for(var x in accessible_data)
 		{
 			branches_array.push(accessible_data[x].name);
@@ -16314,15 +16193,15 @@ function form251_ini()
 				break;
 			}
 		}
-		
+
 		branch_object.value=fbranch;
 		console.log(branch_object);
-		
+
 		var new_columns=new Object();
 			new_columns.count=25;
 			new_columns.start_index=start_index;
-			new_columns.data_store='mts';		
-			
+			new_columns.data_store='mts';
+
 			new_columns.indexes=[{index:'id',value:fid},
 								{index:'mts_num',value:fmts},
 								{index:'weight'},
@@ -16330,7 +16209,7 @@ function form251_ini()
 								{index:'num_orders'},
 								{index:'num_bags'},
 								branch_object];
-		
+
 		read_json_rows('form251',new_columns,function(results)
 		{
 			results.forEach(function(result)
@@ -16355,12 +16234,12 @@ function form251_ini()
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form251_"+result.id+"' value='"+result.id+"' name='id'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form251_"+result.id+"' title='Delete' onclick='form251_delete_item($(this));'>";
-						rowsHTML+="</td>";			
+						rowsHTML+="</td>";
 				rowsHTML+="</tr>";
-				
+
 				$('#form251_body').append(rowsHTML);
 			});
-	
+
 			////indexing///
 			var next_index=parseInt(start_index)+25;
 			var prev_index=parseInt(start_index)-25;
@@ -16384,12 +16263,12 @@ function form251_ini()
 				$(prev_element).show();
 			}
 			/////////////
-	
+
 			longPressEditable($('.dblclick_editable'));
 			$('textarea').autosize();
-			
+
 			var export_button=filter_fields.elements[3];
-			
+
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
@@ -16411,12 +16290,12 @@ function form252_ini()
 	show_loader();
 	var fid=$("#form252_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form252_header');
 	var fname=filter_fields.elements[0].value;
 	var fidentify=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form252_index');
 	var prev_element=document.getElementById('form252_prev');
@@ -16433,9 +16312,9 @@ function form252_ini()
 		"<identified_by>"+fidentify+"</identified_by>" +
 		"<type exact='yes'>vendor</type>" +
 		"</sale_leads>";
-	
+
 	$('#form252_body').html("");
-	
+
 	fetch_requested_data('form252',columns,function(results)
 	{
 		results.forEach(function(result)
@@ -16461,30 +16340,30 @@ function form252_ini()
 					if(result.identified_by=="")
 						rowsHTML+="<input type='text' readonly='readonly' form='form252_"+result.id+"' class='dblclick_editable' value='"+result.identified_by+"'>";
 					else
-						rowsHTML+="<input type='text' readonly='readonly' form='form252_"+result.id+"' value='"+result.identified_by+"'>";	
+						rowsHTML+="<input type='text' readonly='readonly' form='form252_"+result.id+"' value='"+result.identified_by+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form252_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form252_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form252_"+result.id+"' onclick='form252_delete_item($(this));'>";
-					if(result.status!='closed')					
-					{					
+					if(result.status!='closed')
+					{
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form252_"+result.id+"' value='Follow-up' onclick=\"modal134_action('"+result.id+"','"+result.customer+"','"+result.detail+"');\">";
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form252_"+result.id+"' value='Update Contact' onclick=\"modal145_action('"+result.customer+"');\">";
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form252_"+result.id+"' value='Close Lead' onclick=\"modal153_action(this,'"+result.id+"');\">";
-					}					
-					rowsHTML+="</td>";			
+					}
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form252_body').append(rowsHTML);
 			var fields=document.getElementById("form252_"+result.id);
 			var identified_filter=fields.elements[3];
-			
+
 			var identified_data="<staff>"+
 								"<acc_name></acc_name>"+
 								"</staff>";
 			set_my_value_list(identified_data,identified_filter);
-					
+
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
@@ -16518,7 +16397,7 @@ function form252_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -16539,12 +16418,12 @@ function form253_ini()
 	show_loader();
 	var fid=$("#form253_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form253_header');
 	var fname=filter_fields.elements[0].value;
 	var fidentify=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form253_index');
 	var prev_element=document.getElementById('form253_prev');
@@ -16561,9 +16440,9 @@ function form253_ini()
 		"<identified_by>"+fidentify+"</identified_by>" +
 		"<type exact='yes'>customer</type>" +
 		"</sale_leads>";
-	
+
 	$('#form253_body').html("");
-	
+
 	fetch_requested_data('form253',columns,function(results)
 	{
 		results.forEach(function(result)
@@ -16589,30 +16468,30 @@ function form253_ini()
 					if(result.identified_by=="")
 						rowsHTML+="<input type='text' readonly='readonly' form='form253_"+result.id+"' class='dblclick_editable' value='"+result.identified_by+"'>";
 					else
-						rowsHTML+="<input type='text' readonly='readonly' form='form253_"+result.id+"' value='"+result.identified_by+"'>";	
+						rowsHTML+="<input type='text' readonly='readonly' form='form253_"+result.id+"' value='"+result.identified_by+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form253_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form253_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form253_"+result.id+"' onclick='form253_delete_item($(this));'>";
-					if(result.status!='closed')					
-					{					
+					if(result.status!='closed')
+					{
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form253_"+result.id+"' value='Follow-up' onclick=\"modal134_action('"+result.id+"','"+result.customer+"','"+result.detail+"');\">";
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form253_"+result.id+"' value='Update Contact' onclick=\"modal145_action('"+result.customer+"');\">";
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form253_"+result.id+"' value='Close Lead' onclick=\"modal153_action(this,'"+result.id+"');\">";
-					}					
-					rowsHTML+="</td>";			
+					}
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form253_body').append(rowsHTML);
 			var fields=document.getElementById("form253_"+result.id);
 			var identified_filter=fields.elements[3];
-			
+
 			var identified_data="<staff>"+
 								"<acc_name></acc_name>"+
 								"</staff>";
 			set_my_value_list(identified_data,identified_filter);
-					
+
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
@@ -16646,7 +16525,7 @@ function form253_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -16667,12 +16546,12 @@ function form254_ini()
 	show_loader();
 	var fid=$("#form254_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form254_header');
 	var fname=filter_fields.elements[0].value;
 	var fidentify=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form254_index');
 	var prev_element=document.getElementById('form254_prev');
@@ -16689,9 +16568,9 @@ function form254_ini()
 		"<identified_by>"+fidentify+"</identified_by>" +
 		"<type exact='yes'>telecalling</type>" +
 		"</sale_leads>";
-	
+
 	$('#form254_body').html("");
-	
+
 	fetch_requested_data('form254',columns,function(results)
 	{
 		results.forEach(function(result)
@@ -16717,30 +16596,30 @@ function form254_ini()
 					if(result.identified_by=="")
 						rowsHTML+="<input type='text' readonly='readonly' form='form254_"+result.id+"' class='dblclick_editable' value='"+result.identified_by+"'>";
 					else
-						rowsHTML+="<input type='text' readonly='readonly' form='form254_"+result.id+"' value='"+result.identified_by+"'>";	
+						rowsHTML+="<input type='text' readonly='readonly' form='form254_"+result.id+"' value='"+result.identified_by+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form254_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form254_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form254_"+result.id+"' onclick='form254_delete_item($(this));'>";
-					if(result.status!='closed')					
-					{					
+					if(result.status!='closed')
+					{
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form254_"+result.id+"' value='Follow-up' onclick=\"modal134_action('"+result.id+"','"+result.customer+"','"+result.detail+"');\">";
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form254_"+result.id+"' value='Update Contact' onclick=\"modal145_action('"+result.customer+"');\">";
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form254_"+result.id+"' value='Close Lead' onclick=\"modal153_action(this,'"+result.id+"');\">";
-					}					
-					rowsHTML+="</td>";			
+					}
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form254_body').append(rowsHTML);
 			var fields=document.getElementById("form254_"+result.id);
 			var identified_filter=fields.elements[3];
-			
+
 			var identified_data="<staff>"+
 								"<acc_name></acc_name>"+
 								"</staff>";
 			set_my_value_list(identified_data,identified_filter);
-					
+
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
@@ -16774,7 +16653,7 @@ function form254_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -16795,12 +16674,12 @@ function form255_ini()
 	show_loader();
 	var fid=$("#form255_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form255_header');
 	var fname=filter_fields.elements[0].value;
 	var fidentify=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form255_index');
 	var prev_element=document.getElementById('form255_prev');
@@ -16817,9 +16696,9 @@ function form255_ini()
 		"<identified_by>"+fidentify+"</identified_by>" +
 		"<type exact='yes'>marketing</type>" +
 		"</sale_leads>";
-	
+
 	$('#form255_body').html("");
-	
+
 	fetch_requested_data('form255',columns,function(results)
 	{
 		results.forEach(function(result)
@@ -16845,30 +16724,30 @@ function form255_ini()
 					if(result.identified_by=="")
 						rowsHTML+="<input type='text' readonly='readonly' form='form255_"+result.id+"' class='dblclick_editable' value='"+result.identified_by+"'>";
 					else
-						rowsHTML+="<input type='text' readonly='readonly' form='form255_"+result.id+"' value='"+result.identified_by+"'>";	
+						rowsHTML+="<input type='text' readonly='readonly' form='form255_"+result.id+"' value='"+result.identified_by+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form255_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form255_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form255_"+result.id+"' onclick='form255_delete_item($(this));'>";
-					if(result.status!='closed')					
-					{					
+					if(result.status!='closed')
+					{
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form255_"+result.id+"' value='Follow-up' onclick=\"modal134_action('"+result.id+"','"+result.customer+"','"+result.detail+"');\">";
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form255_"+result.id+"' value='Update Contact' onclick=\"modal145_action('"+result.customer+"');\">";
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form255_"+result.id+"' value='Close Lead' onclick=\"modal153_action(this,'"+result.id+"');\">";
-					}					
-					rowsHTML+="</td>";			
+					}
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form255_body').append(rowsHTML);
 			var fields=document.getElementById("form255_"+result.id);
 			var identified_filter=fields.elements[3];
-			
+
 			var identified_data="<staff>"+
 								"<acc_name></acc_name>"+
 								"</staff>";
 			set_my_value_list(identified_data,identified_filter);
-					
+
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
@@ -16902,7 +16781,7 @@ function form255_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -16925,17 +16804,17 @@ function form272_ini()
 	show_loader();
 
 	var form272_form=document.getElementById('form272_form');
-	form272_form.reset();	
-	$(form272_form).hide();	
-	
-	var filter_fields=document.getElementById('form272_master');	
+	form272_form.reset();
+	$(form272_form).hide();
+
+	var filter_fields=document.getElementById('form272_master');
 	var fawb=filter_fields.elements['awb'].value;
 	//console.log(fawb);
 	var new_columns=new Object();
 		new_columns.count=1;
 		new_columns.start_index=0;
 		new_columns.data_store='logistics_orders';
-		
+
 		new_columns.indexes=[{index:'id'},
 							{index:'order_num'},
 							{index:'address1'},
@@ -16949,7 +16828,7 @@ function form272_ini()
 							{index:'awb_num',exact:fawb}];
 	//console.log(new_columns);
 	read_json_rows('form272',new_columns,function(results)
-	{	
+	{
 		//console.log(results);
 		results.forEach(function(result)
 		{
@@ -16959,16 +16838,16 @@ function form272_ini()
 			form272_form.elements[4].value=result.phone;
 			form272_form.elements['id'].value=result.id;
 			form272_form.elements['history'].value=result.order_history;
-			
-			$(form272_form).show();	
-			$('textarea').autosize();		
+
+			$(form272_form).show();
+			$('textarea').autosize();
 		});
-		
+
 		if(results.length==0)
 		{
 			$("#modal82_link").click();
 		}
-		
+
 		hide_loader();
 	});
 }
@@ -16983,14 +16862,14 @@ function form273_ini()
 	show_loader();
 	var fid=$("#form273_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form273_header');
 	var fname=filter_fields.elements[0].value;
 	var fitem=filter_fields.elements[1].value;
 	var fcomment=filter_fields.elements[2].value;
 	var fdate=get_raw_time(filter_fields.elements[3].value);
-	
+
 	////indexing///
 	var index_element=document.getElementById('form273_index');
 	var prev_element=document.getElementById('form273_prev');
@@ -17003,7 +16882,7 @@ function form273_ini()
 		new_columns.count=25;
 		new_columns.start_index=start_index;
 		new_columns.data_store='purchase_leads';
-		
+
 		new_columns.indexes=[{index:'id',value:fid},
 							{index:'supplier',value:fname},
 							{index:'detail',value:fcomment},
@@ -17014,7 +16893,7 @@ function form273_ini()
 							{index:'status'},
 							{index:'identified_date',value:fdate}];
 	read_json_rows('form273',new_columns,function(results)
-	{	
+	{
 		results.forEach(function(result)
 		{
 			var row_class="";
@@ -17040,26 +16919,26 @@ function form273_ini()
 						rowsHTML+="<textarea readonly='readonly' form='form273_"+result.id+"' class='dblclick_editable'>"+result.detail+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Date'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form273_"+result.id+"' value='"+get_my_past_date(result.identified_date)+"'>";	
+						rowsHTML+="<input type='text' readonly='readonly' form='form273_"+result.id+"' value='"+get_my_past_date(result.identified_date)+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form273_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form273_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form273_"+result.id+"' onclick='form273_delete_item($(this));'>";
-					if(result.status!='closed')					
-					{					
+					if(result.status!='closed')
+					{
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form273_"+result.id+"' value='Follow-up' name='followup'>";
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form273_"+result.id+"' value='Update Contact' onclick=\"modal167_action('"+result.supplier+"');\">";
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form273_"+result.id+"' value='Close Lead' onclick=\"modal168_action(this,'"+result.id+"');\">";
-					}					
-					rowsHTML+="</td>";			
+					}
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form273_body').append(rowsHTML);
 			var fields=document.getElementById("form273_"+result.id);
 			var followup_button=fields.elements['followup'];
-			
-			$(followup_button).on('click',function () 
+
+			$(followup_button).on('click',function ()
 			{
 				modal166_action(result.id,result.supplier,result.detail);
 			});
@@ -17097,7 +16976,7 @@ function form273_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements['export'];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -17119,24 +16998,24 @@ function form274_ini()
 	var fid=$("#form274_link").attr('data_id');
 	if(fid==null)
 		fid="";
-	
+
 	var filter_fields=document.getElementById('form274_header');
 	var fname=filter_fields.elements[0].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form274_index');
 	var prev_element=document.getElementById('form274_prev');
 	var next_element=document.getElementById('form274_next');
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
-	
+
 	var columns="<product_instances count='25' start_index='"+start_index+"'>" +
 		"<id>"+fid+"</id>" +
 		"<product_name>"+fname+"</product_name>" +
 		"</product_instances>";
 
 	$('#form274_body').html("");
-	
+
 	fetch_requested_data('form274',columns,function(results)
 	{
 		results.forEach(function(result)
@@ -17160,18 +17039,18 @@ function form274_ini()
 						rowsHTML+="<input type='hidden' form='form274_"+result.id+"' value='"+result.id+"'>";
 					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form274_body').append(rowsHTML);
 			var fields=document.getElementById("form274_"+result.id);
 			var w_in=fields.elements[1];
 			var s_in=fields.elements[2];
 			var b_in=fields.elements[3];
-			
+
 			get_inventory(result.product_name,'',function(inventory)
 			{
 				w_in.value=-parseFloat(inventory);
 			});
-			
+
 			var seller_data=new Object();
 				seller_data.count=0;
 				seller_data.start_index=0;
@@ -17216,7 +17095,7 @@ function form274_ini()
 			$(prev_element).show();
 		}
 		/////////////
-		
+
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 
@@ -17248,14 +17127,14 @@ function form275_ini()
 	show_loader();
 	var fid=$("#form275_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form275_header');
-	
+
 	var fitem=filter_fields.elements[0].value;
 	var fissue=filter_fields.elements[1].value;
 	var fcustomer=filter_fields.elements[3].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form275_index');
 	var prev_element=document.getElementById('form275_prev');
@@ -17301,19 +17180,19 @@ function form275_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form275_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form275_"+result.id+"'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form275_"+result.id+"' onclick='form275_delete_item($(this));'>";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='delete_icon' form='form275_"+result.id+"' onclick='form275_delete_item($(this));'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form275_body').append(rowsHTML);
 			var fields=document.getElementById('form275_'+result.id);
-			
-			$(fields).on('submit',function (ev) 
+
+			$(fields).on('submit',function (ev)
 			{
 				ev.preventDefault();
 				form275_update_item(fields);
 			});
-			
+
 		});
 
 		////indexing///
@@ -17342,7 +17221,7 @@ function form275_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements['export'];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -17364,15 +17243,15 @@ function form289_ini()
 	show_loader();
 	var fid=$("#form289_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form289_header');
 	var fname=filter_fields.elements[0].value;
 	var fitem=filter_fields.elements[1].value;
 	var fpoc=filter_fields.elements[2].value;
 	var fcomment=filter_fields.elements[3].value;
 	var fdate=get_raw_time(filter_fields.elements[4].value);
-	
+
 	////indexing///
 	var index_element=document.getElementById('form289_index');
 	var prev_element=document.getElementById('form289_prev');
@@ -17385,7 +17264,7 @@ function form289_ini()
 		new_columns.count=25;
 		new_columns.start_index=start_index;
 		new_columns.data_store='sale_leads';
-		
+
 		new_columns.indexes=[{index:'id',value:fid},
 							{index:'customer',value:fname},
 							{index:'detail',value:fcomment},
@@ -17397,7 +17276,7 @@ function form289_ini()
 							{index:'status'},
 							{index:'due_date',value:fdate}];
 	read_json_rows('form289',new_columns,function(results)
-	{	
+	{
 		results.forEach(function(result)
 		{
 			var row_class="";
@@ -17424,27 +17303,27 @@ function form289_ini()
 						rowsHTML+="<textarea readonly='readonly' form='form289_"+result.id+"' class='dblclick_editable'>"+result.detail+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Followup Date'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form289_"+result.id+"' value='"+get_my_past_date(result.due_date)+"'>";	
+						rowsHTML+="<input type='text' readonly='readonly' form='form289_"+result.id+"' value='"+get_my_past_date(result.due_date)+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form289_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form289_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form289_"+result.id+"' onclick='form289_delete_item($(this));'>";
-					if(result.status!='closed')					
-					{					
+					if(result.status!='closed')
+					{
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form289_"+result.id+"' value='Follow-up' name='followup'>";
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form289_"+result.id+"' value='Update Contact' onclick=\"modal145_action('"+result.customer+"');\">";
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form289_"+result.id+"' value='Close Lead' onclick=\"modal153_action(this,'"+result.id+"');\">";
-					}					
-										
-					rowsHTML+="</td>";			
+					}
+
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form289_body').append(rowsHTML);
 			var fields=document.getElementById("form289_"+result.id);
 			var followup_button=fields.elements['followup'];
-			
-			$(followup_button).on('click',function () 
+
+			$(followup_button).on('click',function ()
 			{
 				modal134_action(result.id,result.customer,result.detail);
 			});
@@ -17482,7 +17361,7 @@ function form289_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements['export'];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -17503,13 +17382,13 @@ function form290_ini()
 	show_loader();
 	var fid=$("#form290_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form290_header');
 	var fcity=filter_fields.elements[0].value;
 	var fstate=filter_fields.elements[1].value;
 	var fcountry=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form290_index');
 	var prev_element=document.getElementById('form290_prev');
@@ -17522,13 +17401,13 @@ function form290_ini()
 		new_columns.count=25;
 		new_columns.start_index=start_index;
 		new_columns.data_store='cities_data';
-		
+
 		new_columns.indexes=[{index:'id',value:fid},
 							{index:'city',value:fcity},
 							{index:'state',value:fstate},
 							{index:'country',value:fcountry}];
 	read_json_rows('form290',new_columns,function(results)
-	{	
+	{
 		results.forEach(function(result)
 		{
 			var rowsHTML="<tr>";
@@ -17545,9 +17424,9 @@ function form290_ini()
 						rowsHTML+="<input type='hidden' form='form290_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='button' class='save_icon' form='form290_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form290_"+result.id+"' onclick='form290_delete_item($(this));'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form290_body').append(rowsHTML);
 		});
 
@@ -17577,7 +17456,7 @@ function form290_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements['export'];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -17600,12 +17479,12 @@ function form292_ini()
 	var fid=$("#form292_link").attr('data_id');
 	if(fid==null)
 		fid="";
-	
+
 	var filter_fields=document.getElementById('form292_header');
 	var fname=filter_fields.elements[0].value;
 	var finvoice=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form292_index');
 	var prev_element=document.getElementById('form292_prev');
@@ -17618,7 +17497,7 @@ function form292_ini()
 		new_columns.count=25;
 		new_columns.start_index=start_index;
 		new_columns.data_store='bills';
-		
+
 		new_columns.indexes=[{index:'id',value:fid},
 							{index:'customer_name',value:fname},
 							{index:'bill_num',value:finvoice},
@@ -17633,9 +17512,9 @@ function form292_ini()
 							{index:'period_end'},
 							{index:'notes'},
 							{index:'bill_date'}];
-							
+
 	read_json_rows('form292',new_columns,function(results)
-	{	
+	{
 		var bt=get_session_var('title');
 		results.forEach(function(result)
 		{
@@ -17661,7 +17540,7 @@ function form292_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
 						rowsHTML+="<b>Payment</b>:<input type='text' readonly='readonly' required class='dblclick_editable' form='form292_"+result.id+"' value='"+result.status+"'>";
-						rowsHTML+="<b>Display</b>:<input type='text' readonly='readonly' required class='dblclick_editable' form='form292_"+result.id+"' value='"+result.display+"'>";	
+						rowsHTML+="<b>Display</b>:<input type='text' readonly='readonly' required class='dblclick_editable' form='form292_"+result.id+"' value='"+result.display+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form292_"+result.id+"' value='"+result.id+"'>";
@@ -17669,9 +17548,9 @@ function form292_ini()
 						rowsHTML+="<input type='button' class='delete_icon' form='form292_"+result.id+"' onclick='form292_delete_item($(this));'>";
 						rowsHTML+="<input type='button' class='share_icon' form='form292_"+result.id+"' name='share'>";
 						rowsHTML+="<input type='button' class='print_icon' form='form292_"+result.id+"' name='print'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form292_body').append(rowsHTML);
 			var fields=document.getElementById("form292_"+result.id);
 			var invoice_filter=fields.elements[4];
@@ -17682,36 +17561,36 @@ function form292_ini()
 			var display_filter=fields.elements[11];
 			var share_button=fields.elements['share'];
 			var print_button=fields.elements['print'];
-			
-			$(share_button).on('click',function () 
+
+			$(share_button).on('click',function ()
 			{
-				modal101_action('Invoice # '+invoice_filter.value+' from - '+bt,result.customer_name,'customer',function (func) 
+				modal101_action('Invoice # '+invoice_filter.value+' from - '+bt,result.customer_name,'customer',function (func)
 				{
 					print_form292(result.id,func);
 				});
 			});
 
-			$(print_button).on('click',function () 
+			$(print_button).on('click',function ()
 			{
 				form292_print_form(result.id);
 			});
 
 			var tax_rate=get_session_var('service_tax_rate');
-		
-			$(amount_filter).on('blur change',function () 
+
+			$(amount_filter).on('blur change',function ()
 			{
 				tax_filter.value=parseFloat(amount_filter.value)*parseFloat(tax_rate)/100;
 				total_filter.value=my_round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value),0);
 			});
-			
-			$(tax_filter).on('blur change',function () 
+
+			$(tax_filter).on('blur change',function ()
 			{
 				total_filter.value=my_round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value),0);
 			});
 
 			set_static_value_list_json('system_billing','payment_status',status_filter);
 			set_static_value_list_json('system_billing','display',display_filter);
-			
+
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
@@ -17745,7 +17624,7 @@ function form292_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements['export'];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -17766,12 +17645,12 @@ function form294_ini()
 {
 	var bill_id=$("#form294_link").attr('data_id');
 	if(bill_id==null)
-		bill_id="";	
-	
+		bill_id="";
+
 	$('#form294_body').html("");
 	$('#form294_foot').html("");
 	document.getElementById('form294_customer_info').innerHTML="";
-	
+
 	if(bill_id!="")
 	{
 		show_loader();
@@ -17795,8 +17674,8 @@ function form294_ini()
 				"<item_desc></item_desc>"+
 				"<unit_price></unit_price>" +
 				"<quantity></quantity>" +
-				"<storage></storage>"+				
-				"<unit></unit>"+				
+				"<storage></storage>"+
+				"<unit></unit>"+
 				"<amount></amount>" +
 				"<total></total>" +
 				"<discount></discount>" +
@@ -17804,7 +17683,7 @@ function form294_ini()
 				"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
 				"<tax></tax>" +
 				"</bill_items>";
-	
+
 		////separate fetch function to get bill details like customer name, total etc.
 		fetch_requested_data('',bill_columns,function(bill_results)
 		{
@@ -17815,7 +17694,7 @@ function form294_ini()
 				filter_fields.elements['tax_type'].value=bill_results[0].billing_type;
 				filter_fields.elements['date'].value=get_my_past_date(bill_results[0].bill_date);
 				filter_fields.elements['bill_num'].value=bill_results[0].bill_num;
-				filter_fields.elements['bill_id'].value=bill_id;				
+				filter_fields.elements['bill_id'].value=bill_id;
 
 				var save_button=filter_fields.elements['save'];
 				var cst_filter=filter_fields.elements['cst'];
@@ -17836,7 +17715,7 @@ function form294_ini()
 							"<name exact='yes'>"+bill_results[0].customer_name+"</name>"+
 							"</attributes>";
 				set_my_value(tin_data,tin_filter);
-								
+
 				var address_data="<customers>" +
 						"<address></address>" +
 						"<city></city>" +
@@ -17868,11 +17747,11 @@ function form294_ini()
 							"Rs. "+bill_results[0].total+"</td>" +
 							"<td></td>" +
 							"</tr>";
-				
+
 				$('#form294_foot').html(total_row);
-				longPressEditable($('.dblclick_editable'));				
+				longPressEditable($('.dblclick_editable'));
 			}
-		
+
 			fetch_requested_data('',bill_items_column,function(results)
 			{
 				results.forEach(function(result)
@@ -17885,9 +17764,9 @@ function form294_ini()
 						rowsHTML+="<td data-th='Item'>";
 							rowsHTML+="<textarea readonly='readonly' form='form294_"+id+"'>"+result.item_name+"</textarea>";
 							if(result.item_desc!='undefined' || result.item_desc!="")
-							{							
+							{
 								rowsHTML+="<br>"+result.item_desc;
-							}							
+							}
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Quantity'>";
 							rowsHTML+="<input type='number' readonly='readonly' form='form294_"+id+"' value='"+result.quantity+"' step='any'> <b>"+result.unit+"</b>";
@@ -17903,25 +17782,25 @@ function form294_ini()
 							rowsHTML+="<input type='hidden' form='form294_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='submit_hidden' form='form294_"+id+"' id='save_form294_"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form294_"+id+"' id='delete_form294_"+id+"' onclick='form294_delete_item($(this)); form294_get_totals();'>";
-						rowsHTML+="</td>";			
+						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-				
-					$('#form294_body').prepend(rowsHTML);	
+
+					$('#form294_body').prepend(rowsHTML);
 				});
-				
+
 				form294_update_serial_numbers();
 				$('textarea').autosize();
-				
+
 				var bt=get_session_var('title');
 				$('#form294_share').show();
 				$('#form294_share').click(function()
 				{
-					modal101_action("Invoice from "+bt+' - '+filter_fields.elements['bill_num'].value,filter_fields.elements['customer'].value,'customer',function (func) 
+					modal101_action("Invoice from "+bt+' - '+filter_fields.elements['bill_num'].value,filter_fields.elements['customer'].value,'customer',function (func)
 					{
 						print_form294(func);
 					});
 				});
-								
+
 				hide_loader();
 			});
 		});
@@ -17937,11 +17816,11 @@ function form295_ini()
 {
 	var bill_id=$("#form295_link").attr('data_id');
 	if(bill_id==null)
-		bill_id="";	
-	
+		bill_id="";
+
 	$('#form295_body').html("");
 	$('#form295_foot').html("");
-	
+
 	if(bill_id!="")
 	{
 		show_loader();
@@ -17968,15 +17847,15 @@ function form295_ini()
 				"<item_desc></item_desc>"+
 				"<unit_price></unit_price>" +
 				"<quantity></quantity>" +
-				"<storage></storage>"+				
-				"<unit></unit>"+				
+				"<storage></storage>"+
+				"<unit></unit>"+
 				"<amount></amount>" +
 				"<total></total>" +
 				"<discount></discount>" +
 				"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
 				"<tax></tax>" +
 				"</supplier_bill_items>";
-	
+
 		////separate fetch function to get bill details like customer name, total etc.
 		fetch_requested_data('',bill_columns,function(bill_results)
 		{
@@ -17989,9 +17868,9 @@ function form295_ini()
 				filter_fields.elements['bill_num'].value=bill_results[0].bill_id;
 				filter_fields.elements['po_num'].value=bill_results[0].order_num;
 				filter_fields.elements['order_id'].value=bill_results[0].order_id;
-				filter_fields.elements['bill_id'].value=bill_id;	
+				filter_fields.elements['bill_id'].value=bill_id;
 				filter_fields.elements['notes'].value=bill_results[0].notes;
-				
+
 				var save_button=filter_fields.elements['save'];
 
 				$(save_button).off('click');
@@ -18010,11 +17889,11 @@ function form295_ini()
 							"Rs. "+bill_results[0].total+"</td>" +
 							"<td></td>" +
 							"</tr>";
-				
+
 				$('#form295_foot').html(total_row);
-				longPressEditable($('.dblclick_editable'));				
+				longPressEditable($('.dblclick_editable'));
 			}
-		
+
 			fetch_requested_data('',bill_items_column,function(results)
 			{
 				results.forEach(function(result)
@@ -18027,9 +17906,9 @@ function form295_ini()
 						rowsHTML+="<td data-th='Item'>";
 							rowsHTML+="<textarea readonly='readonly' form='form295_"+id+"'>"+result.product_name+"</textarea>";
 							if(result.item_desc!='undefined' || result.item_desc!="")
-							{							
+							{
 								rowsHTML+="<br>"+result.item_desc;
-							}							
+							}
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Quantity'>";
 							rowsHTML+="<input type='number' readonly='readonly' form='form295_"+id+"' value='"+result.quantity+"' step='any'> <b>"+result.unit+"</b>";
@@ -18045,12 +17924,12 @@ function form295_ini()
 							rowsHTML+="<input type='hidden' form='form295_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='submit_hidden' form='form295_"+id+"' id='save_form295_"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form295_"+id+"' id='delete_form295_"+id+"' onclick='form295_delete_item($(this)); form295_get_totals();'>";
-						rowsHTML+="</td>";			
+						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-				
-					$('#form295_body').prepend(rowsHTML);	
+
+					$('#form295_body').prepend(rowsHTML);
 				});
-			
+
 				form295_update_serial_numbers();
 				$('textarea').autosize();
 				hide_loader();
@@ -18069,11 +17948,11 @@ function form296_ini()
 {
 	var order_id=$("#form296_link").attr('data_id');
 	if(order_id==null)
-		order_id="";	
-	
+		order_id="";
+
 	$('#form296_body').html("");
 	$('#form296_foot').html("");
-	
+
 	if(order_id!="")
 	{
 		show_loader();
@@ -18099,14 +17978,14 @@ function form296_ini()
 				"<amount></amount>"+
 				"<tax></tax>"+
 				"<tax_rate></tax_rate>"+
-				"<total></total>"+				
+				"<total></total>"+
 				"</purchase_order_items>";
-	
+
 		////separate fetch function to get order details like customer name, total etc.
 		fetch_requested_data('',order_columns,function(order_results)
 		{
 			var filter_fields=document.getElementById('form296_master');
-			
+
 			if(order_results.length>0)
 			{
 				filter_fields.elements['supplier'].value=order_results[0].supplier;
@@ -18114,16 +17993,16 @@ function form296_ini()
 				filter_fields.elements['order_num'].value=order_results[0].order_num;
 				filter_fields.elements['status'].value=order_results[0].status;
 				filter_fields.elements['order_id'].value=order_id;
-				
+
 				var save_button=filter_fields.elements['save'];
-				
+
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
 					event.preventDefault();
 					form296_update_form();
 				});
-				
+
 				var supplier_address="<suppliers>"+
 									"<address></address>"+
 									"<pincode></pincode>"+
@@ -18135,9 +18014,9 @@ function form296_ini()
 					{
 						filter_fields.elements['address'].value=addresses[0].address+"-"+addresses[0].pincode;
 					}
-				});				
+				});
 			}
-		
+
 			fetch_requested_data('',order_items_column,function(results)
 			{
 				var data_array=[];
@@ -18146,7 +18025,7 @@ function form296_ini()
 				{
 					counter+=1;
 					var new_object=new Object();
-					new_object['S.No.']=counter;					
+					new_object['S.No.']=counter;
 					new_object['Item Name']=result.item_name;
 					new_object['Description']=result.item_desc;
 					new_object['Quantity']=result.quantity;
@@ -18183,7 +18062,7 @@ function form296_ini()
 							rowsHTML+="<input type='button' class='delete_icon' form='form296_"+id+"' id='delete_form296_"+id+"' onclick='form296_delete_item($(this)); form296_get_totals();'>";
 						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-				
+
 					$('#form296_body').append(rowsHTML);
 				});
 
@@ -18192,7 +18071,7 @@ function form296_ini()
 				$('#form296_share').show();
 				$('#form296_share').click(function()
 				{
-					modal101_action(bt+' - PO# '+filter_fields.elements['order_num'].value+' - '+filter_fields.elements['supplier'].value,filter_fields.elements['supplier'].value,'supplier',function (func) 
+					modal101_action(bt+' - PO# '+filter_fields.elements['order_num'].value+' - '+filter_fields.elements['supplier'].value,filter_fields.elements['supplier'].value,'supplier',function (func)
 					{
 						print_form296(func);
 					},'csv',message_attachment);
@@ -18215,15 +18094,15 @@ function form297_ini()
 	show_loader();
 	var fid=$("#form297_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form297_header');
-	
-	//populating form 
+
+	//populating form
 	var fnum=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form297_index');
 	var prev_element=document.getElementById('form297_prev');
@@ -18274,7 +18153,7 @@ function form297_ini()
 					{
 						rowsHTML+="<br><input type='button' name='view_bill' class='generic_icon' form='form297_"+result.id+"' value='View Bill'>";
 					}
-					
+
 					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 
@@ -18289,7 +18168,7 @@ function form297_ini()
 				event.preventDefault();
 				form297_update_item(fields);
 			});
-			
+
 			if(result.bill_id!='' && result.bill_id!='null')
 			{
 				var view_button=fields.elements['view_bill'];
@@ -18309,9 +18188,9 @@ function form297_ini()
 					master_form.elements['supplier'].value=result.supplier;
 					master_form.elements['po_num'].value=result.order_num;
 					master_form.elements['order_id'].value=result.id;
-					
+
 					$(master_form.elements['bill_num']).focus();
-				});				
+				});
 			}
 		});
 
@@ -18341,7 +18220,7 @@ function form297_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements['export'];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -18363,14 +18242,14 @@ function form300_ini()
 	show_loader();
 	var fid=$("#form300_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form300_header');
-	
+
 	var fname=filter_fields.elements[0].value;
 	var fmakes=filter_fields.elements[1].value;
 	var fcategory=filter_fields.elements[2].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form300_index');
 	var prev_element=document.getElementById('form300_prev');
@@ -18383,13 +18262,13 @@ function form300_ini()
 		new_columns.count=25;
 		new_columns.start_index=start_index;
 		new_columns.data_store='product_master';
-		
+
 		new_columns.indexes=[{index:'id',value:fid},
 							{index:'name',value:fname},
 							{index:'make',value:fmakes},
 							{index:'category',value:fcategory},
 							{index:'description'}];
-	
+
 	read_json_rows('form300',new_columns,function(results)
 	{
 		results.forEach(function(result)
@@ -18417,10 +18296,10 @@ function form300_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form300_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form300_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form300_"+result.id+"' value='saved' onclick='form300_delete_item($(this));'>";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='delete_icon' form='form300_"+result.id+"' value='saved' onclick='form300_delete_item($(this));'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-		
+
 			$('#form300_body').append(rowsHTML);
 			var fields=document.getElementById("form300_"+result.id);
 			var pictureinfo=fields.elements[4];
@@ -18432,41 +18311,41 @@ function form300_ini()
 				event.preventDefault();
 				form300_update_item(fields);
 			});
-			
+
 			var pic_columns=new Object();
 				pic_columns.count=1;
 				pic_columns.data_store='documents';
-				
+
 				pic_columns.indexes=[{index:'id'},
 									{index:'url'},
 									{index:'doc_type',exact:'product_master'},
 									{index:'target_id',exact:result.id}];
-			
+
 			read_json_rows('',pic_columns,function(pic_results)
 			{
 				if(pic_results.length>0)
 				{
 					var updated_url=pic_results[0].url.replace(/ /g,"+");
 					$('#img_form300_'+result.id).attr('src',updated_url);
-					$('#figure_form300_'+result.id).attr('name',pic_results[0].id);				
+					$('#figure_form300_'+result.id).attr('name',pic_results[0].id);
 				}
 			});
-			
-	
-			$(dummy_button).on('click',function (e) 
+
+
+			$(dummy_button).on('click',function (e)
 			{
 				e.preventDefault();
 				$(picture).trigger('click');
 			});
-			
+
 			picture.addEventListener('change',function(evt)
 			{
 				select_picture(evt,pictureinfo,function(dataURL)
 				{
 					var pic_result_id=$('#figure_form300_'+result.id).attr('name');
-					pictureinfo.innerHTML="<div class='figure' name='"+pic_result_id+"'><img id='img_form300_"+result.id+"' src='"+dataURL+"'></div>";			
+					pictureinfo.innerHTML="<div class='figure' name='"+pic_result_id+"'><img id='img_form300_"+result.id+"' src='"+dataURL+"'></div>";
 				});
-			},false);		
+			},false);
 		});
 
 		////indexing///
@@ -18495,7 +18374,7 @@ function form300_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements['export'];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -18503,7 +18382,7 @@ function form300_ini()
 			get_limited_export_data(new_columns,'Products');
 		});
 		hide_loader();
-	});	
+	});
 };
 
 /**
@@ -18516,12 +18395,12 @@ function form302_ini()
 	show_loader();
 	var fid=$("#form302_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form302_header');
-	
+
 	var fsource=filter_fields.elements[0].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form302_index');
 	var prev_element=document.getElementById('form302_prev');
@@ -18534,12 +18413,12 @@ function form302_ini()
 		new_columns.count=25;
 		new_columns.start_index=start_index;
 		new_columns.data_store='qr_contexts';
-		
+
 		new_columns.indexes=[{index:'id',value:fid},
 							{index:'source',value:fsource},
 							{index:'format'},
 							{index:'conversion_func'}];
-	
+
 	read_json_rows('form302',new_columns,function(results)
 	{
 		results.forEach(function(result)
@@ -18561,11 +18440,11 @@ function form302_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form302_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form302_"+result.id+"'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form302_"+result.id+"' onclick='form302_delete_item($(this));'>";	
-						rowsHTML+="<input type='button' class='generic_icon' value='Convert' form='form302_"+result.id+"'>";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='delete_icon' form='form302_"+result.id+"' onclick='form302_delete_item($(this));'>";
+						rowsHTML+="<input type='button' class='generic_icon' value='Convert' form='form302_"+result.id+"'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-		
+
 			$('#form302_body').append(rowsHTML);
 			var fields=document.getElementById("form302_"+result.id);
 			var pending_count=fields.elements[3];
@@ -18576,18 +18455,18 @@ function form302_ini()
 				event.preventDefault();
 				form302_update_item(fields);
 			});
-			
+
 			var count_columns=new Object();
 				count_columns.data_store='qr_scans';
 				count_columns.indexes=[{index:'source',exact:result.source},
 									{index:'status',exact:'pending'}];
-		
+
 			read_json_count(count_columns,function(item_count)
 			{
 				pending_count.value=item_count;
 			});
-	
-			$(convert_button).on('click',function (e) 
+
+			$(convert_button).on('click',function (e)
 			{
 				e.preventDefault();
 				var qr_columns=new Object();
@@ -18595,7 +18474,7 @@ function form302_ini()
 					qr_columns.return_column='data';
 					qr_columns.indexes=[{index:'source',exact:result.source},
 										{index:'status',exact:'pending'}];
-			
+
 				read_json_single_column(qr_columns,function(items)
 				{
 					var my_func="function form302_dummy_function(results){"+result.conversion_func+"};";
@@ -18603,8 +18482,8 @@ function form302_ini()
 					form302_dummy_function(items);
 					$("#modal85_link").click();
 					$('#form302_script_tag').html();
-				});					
-			});		
+				});
+			});
 		});
 
 		////indexing///
@@ -18633,7 +18512,7 @@ function form302_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements['export'];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -18641,5 +18520,5 @@ function form302_ini()
 			get_limited_export_data(new_columns,'QR Sources');
 		});
 		hide_loader();
-	});	
+	});
 };

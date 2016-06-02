@@ -1,4 +1,4 @@
-<div id='form89' class='tab-pane portlet box green-meadow'>	   
+<div id='form89' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class='caption'>
             <div class='btn-group' id='form89_view' data-toggle='buttons'>
@@ -13,11 +13,11 @@
                     <li>
                         <a onclick="form89_cal_sync('google');"><i class='fa fa-google'></i> Sync with Google </a>
                     </li>
-                   <!-- <li>
+                   	<!-- <li>
                         <a onclick="form89_cal_sync('outlook');"><i class='fa fa-windows'></i> Sync with Outlook </a>
                     </li>-->
                     <li class="divider"> </li>
-					<li>
+										<li>
                         <a id='form89_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
                     </li>
                     <li>
@@ -32,9 +32,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	   <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
@@ -62,20 +62,20 @@
         </div>
 
     </div>
-	
+
 	<script>
 	function form89_header_ini()
 	{
 		///calendar set
 		var filter_fields=document.getElementById('form89_header');
-		var customer_filter=filter_fields.elements[0];
-		var assignee_filter=filter_fields.elements[1];
-		var status_filter=filter_fields.elements[2];
+		var customer_filter=filter_fields.elements['customer'];
+		var assignee_filter=filter_fields.elements['assignee'];
+		var status_filter=filter_fields.elements['status'];
 
 		var staff_data={data_store:'staff',return_column:'acc_name'};
 		var customer_data={data_store:'customers',return_column:'acc_name'};
 
-		set_my_filter_json(customer_data,customer_filter);	
+		set_my_filter_json(customer_data,customer_filter);
 		set_my_filter_json(staff_data,assignee_filter);
 		set_static_filter_json('appointments','status',status_filter);
 
@@ -86,222 +86,222 @@
 			form89_ini();
 		});
 
-		$("#form89_calendar").parent().parent().show();  
-		var paginator=$('#form89').paginator({visible:false,container:$('#form89')});        
+		//$("#form89_calendar").parent().parent().show();
+		var paginator=$('#form89').paginator({visible:false,container:$('#form89')});
 	};
 
-		
+
 	function form89_ini(view)
-    {
-        var fid=$("#form89_link").attr('data_id');
-        if(fid==null)
-            fid="";
-        show_loader();
-        $('#form89_body').html("");
-        $('#form89_calendar').fullCalendar('destroy');
-            
-        var view_filter='calendar';
-        if(typeof view!='undefined' && view=='table')
-        {
-            view_filter='table';
-            $('#form89_view').find('label.tt').addClass('active');
-            $('#form89_view').find('label.cc').removeClass('active');
-        }
-        else
-        {
-            $('#form89_view').find('label.cc').addClass('active');
-            $('#form89_view').find('label.tt').removeClass('active');
-        }
+  {
+      var fid=$("#form89_link").attr('data_id');
+      if(fid==null)
+          fid="";
+      show_loader();
+      $('#form89_body').html("");
+      $('#form89_calendar').fullCalendar('destroy');
 
-        if(view_filter=='calendar')
-        {
-            $("#form89_body").parent().hide();
-            $("#form89_calendar").parent().parent().show();
-            
-            $('#form89_calendar').fullCalendar({
-                header: {
-                    left: 'prev,next,today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
-                },
-                editable: true,
-                slotEventOverlap:true,
-                events: function(start, end, timezone, callback) 
-                {
-					var start_time=parseFloat(start.unix())*1000;
-                    var end_time=parseFloat(end.unix())*1000;
-                    var tasks_data={data_store:'appointments',
-									access:{},
-                                   indexes:[{index:'id'},
-                                           {index:'customer'},
-                                           {index:'schedule',lowerbound:start_time,upperbound:end_time},
-                                           {index:'status'},
-                                           {index:'assignee'},
-                                           {index:'hours'},
-                                           {index:'notes'}]};
-                    read_json_rows('form89',tasks_data,function(tasks)
-                    {
-						var events=[];
-                        tasks.forEach(function(task)
-                        {
-                            if(parseFloat(task.task_hours)==0)
-                            {
-                                task.task_hours=1;
-                            }
-                            var color="#f8cb00";
-                            if(task.status=='cancelled')
-                            {
-                                color="#95a5a6";
-                            }
-                            else if(task.status=='pending' && parseFloat(task.t_due)<get_my_time())
-                            {
-                                color='#f3565d';
-                            }
-                            else if(task.status=='closed')
-                            {
-                                color='#1bbc9b';
-                            }
-                            events.push({
-                                title: task.customer,
-                                start:get_iso_time(task.schedule),
-                                end:get_iso_time(parseFloat(task.schedule)+3600000*parseFloat(task.hours)),
-                                color: color,
-                                id: task.id,
-								notes: task.notes
-                            });
-                        });
-                        callback(events);
-                        
-                        initialize_tabular_report_buttons(tasks_data,'Appointments','form89',function (item)
-                        {
-                            item['Schedule']=get_my_datetime(item.schedule);
-                            delete item.schedule;
-                            delete item.hours;
-                        });
-                        hide_loader();
-                    });
-                },
-                dayClick: function(date,jsEvent,view){
-					modal36_action(get_my_date_from_iso(date.format()));
-                },
-                eventClick: function(calEvent,jsEvent,view){
-                    modal37_action(calEvent.id,parseFloat(calEvent.start.unix())*1000);
-                },
-				eventDrop: function(event,delta,revertFunc)
+      var view_filter='calendar';
+      if(typeof view!='undefined' && view=='table')
+      {
+          view_filter='table';
+          $('#form89_view').find('label.tt').addClass('active');
+          $('#form89_view').find('label.cc').removeClass('active');
+      }
+      else
+      {
+          $('#form89_view').find('label.cc').addClass('active');
+          $('#form89_view').find('label.tt').removeClass('active');
+      }
+
+      if(view_filter=='calendar')
+      {
+          $("#form89_body").parent().hide();
+          $("#form89_calendar").parent().parent().show();
+
+          $('#form89_calendar').fullCalendar({
+              header: {
+                  left: 'prev,next,today',
+                  center: 'title',
+                  right: 'month,agendaWeek,agendaDay'
+              },
+              editable: true,
+              slotEventOverlap:true,
+              events: function(start, end, timezone, callback)
+              {
+									var start_time=parseFloat(start.unix())*1000;
+                  var end_time=parseFloat(end.unix())*1000;
+                  var tasks_data={data_store:'appointments',
+																	access:{},
+                                 indexes:[{index:'id'},
+                                         {index:'customer'},
+                                         {index:'schedule',lowerbound:start_time,upperbound:end_time},
+                                         {index:'status'},
+                                         {index:'assignee'},
+                                         {index:'hours'},
+                                         {index:'notes'}]};
+                  read_json_rows('form89',tasks_data,function(tasks)
+                  {
+											var events=[];
+                      tasks.forEach(function(task)
+                      {
+                          if(parseFloat(task.task_hours)==0)
+                          {
+                              task.task_hours=1;
+                          }
+                          var color="#f8cb00";
+                          if(task.status=='cancelled')
+                          {
+                              color="#95a5a6";
+                          }
+                          else if(task.status=='pending' && parseFloat(task.t_due)<get_my_time())
+                          {
+                              color='#f3565d';
+                          }
+                          else if(task.status=='closed')
+                          {
+                              color='#1bbc9b';
+                          }
+                          events.push({
+                              title: task.customer,
+                              start:get_iso_time(task.schedule),
+                              end:get_iso_time(parseFloat(task.schedule)+3600000*parseFloat(task.hours)),
+                              color: color,
+                              id: task.id,
+															notes: task.notes
+                          });
+                      });
+                      callback(events);
+
+                      initialize_tabular_report_buttons(tasks_data,'Appointments','form89',function (item)
+                      {
+                          item['Schedule']=get_my_datetime(item.schedule);
+                          delete item.schedule;
+                          delete item.hours;
+                      });
+                      hide_loader();
+                  });
+              },
+              dayClick: function(date,jsEvent,view){
+								modal36_action(get_my_date_from_iso(date.format()));
+              },
+              eventClick: function(calEvent,jsEvent,view){
+                  modal37_action(calEvent.id,parseFloat(calEvent.start.unix())*1000);
+              },
+							eventDrop: function(event,delta,revertFunc)
+							{
+								var schedule=(parseFloat(event.start.unix())*1000);
+								var data_json={data_store:'appointments',
+											data:[{index:'id',value:event.id},
+				                 {index:'schedule',value:schedule},
+				                 {index:'last_updated',value:get_my_time()}]};
+				            update_json(data_json);
+							},
+							eventResize: function(event, delta, revertFunc){
+								var hours=parseFloat((parseFloat(event.end.unix())-parseFloat(event.start.unix()))/3600);
+								var data_json={data_store:'appointments',
+											data:[{index:'id',value:event.id},
+				                 {index:'hours',value:hours},
+				                 {index:'last_updated',value:get_my_time()}]};
+				          	update_json(data_json);
+							},
+							eventMouseover: function(event, jsEvent, view)
+							{
+								$('.fc-title', this).append("<div id='form89_tooltip_"+event.id+"' class='hover-end'>"+event.notes+"</div>");
+								},
+							eventMouseout: function(event, jsEvent, view)
+							{
+								$('#form89_tooltip_'+event.id).remove();
+							}
+          });
+          setTimeout(function(){$('#form89 .fc-today-button').click()},1000);
+      }
+      else
+      {
+          $("#form89_body").parent().show();
+          $("#form89_calendar").parent().parent().hide();
+
+          var fields=document.getElementById('form89_header');
+          var customer_filter=fields.elements['customer'].value;
+          var assignee_filter=fields.elements['assignee'].value;
+          var notes_filter=fields.elements['notes'].value;
+          var status_filter=fields.elements['status'].value;
+
+          var paginator=$('#form89_body').paginator();
+
+					var columns={data_store:'appointments',
+                       count:paginator.page_size(),
+                       start_index:paginator.get_index(),
+		             			access:{},
+                       indexes:[{index:'id',value:fid},
+                                 {index:'customer',value:customer_filter},
+                                 {index:'schedule'},
+                                 {index:'assignee',value:assignee_filter},
+                                 {index:'status',value:status_filter},
+                                 {index:'hours'},
+                                 {index:'notes',value:notes_filter}]};
+
+          read_json_rows('form89',columns,function(results)
+          {
+              results.forEach(function(result)
+              {
+                  var rowsHTML="<tr>";
+					rowsHTML+="<form id='form89_"+result.id+"'></form>";
+						rowsHTML+="<td data-th='Customer'>";
+							rowsHTML+="<a onclick=\"show_object('customers','"+result.customer+"');\"><textarea readonly='readonly' form='form89_"+result.id+"'>"+result.customer+"</textarea></a>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Assignee'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form89_"+result.id+"' class='dblclick_editable' value='"+result.assignee+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Schedule'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form89_"+result.id+"' class='dblclick_editable'>"+get_my_datetime(result.schedule)+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Notes'>";
+							rowsHTML+="<textarea readonly='readonly' form='form89_"+result.id+"' class='dblclick_editable'>"+result.notes+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Status'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form89_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' readonly='readonly' form='form89_"+result.id+"' value='"+result.id+"'>";
+							rowsHTML+="<button type='submit' class='btn green' form='form89_"+result.id+"' title='Save' name='save'><i class='fa fa-save'></i></button>";
+							rowsHTML+="<button type='button' class='btn red' form='form89_"+result.id+"' title='Delete' onclick='form89_delete_item($(this));' name='delete'><i class='fa fa-trash'></i></button>";
+						rowsHTML+="</td>";
+				rowsHTML+="</tr>";
+
+				$('#form89_body').append(rowsHTML);
+				var fields=document.getElementById("form89_"+result.id);
+				$(fields).on("submit", function(event)
 				{
-					var schedule=(parseFloat(event.start.unix())*1000);
-					var data_json={data_store:'appointments',
- 							data:[{index:'id',value:event.id},
-                                 {index:'schedule',value:schedule},
-                                 {index:'last_updated',value:get_my_time()}]};
-                    update_json(data_json);
-				},
-				eventResize: function(event, delta, revertFunc){
-					var hours=parseFloat((parseFloat(event.end.unix())-parseFloat(event.start.unix()))/3600);
-					var data_json={data_store:'appointments',
- 							data:[{index:'id',value:event.id},
-                                 {index:'hours',value:hours},
-                                 {index:'last_updated',value:get_my_time()}]};
-                    update_json(data_json);					
-				},
-				eventMouseover: function(event, jsEvent, view) 
-				{
-					$('.fc-title', this).append("<div id='form89_tooltip_"+event.id+"' class='hover-end'>"+event.notes+"</div>");
-  				},
-				eventMouseout: function(event, jsEvent, view)
-				{
-					$('#form89_tooltip_'+event.id).remove();
-				}
-            });
-            setTimeout(function(){$('#form89 .fc-today-button').click()},1000);    
-        }
-        else
-        {   
-            $("#form89_body").parent().show();
-            $("#form89_calendar").parent().parent().hide();
-            
-            var fields=document.getElementById('form89_header');
-            var customer_filter=fields.elements['customer'].value;
-            var assignee_filter=fields.elements['assignee'].value;
-            var notes_filter=fields.elements['notes'].value;
-            var status_filter=fields.elements['status'].value;
-        
-            var paginator=$('#form89_body').paginator();
-			
-			var columns={data_store:'appointments',
-                         count:paginator.page_size(),
-                         start_index:paginator.get_index(),
-			             access:{},
-                         indexes:[{index:'id',value:fid},
-                                   {index:'customer',value:customer_filter},
-                                   {index:'schedule'},
-                                   {index:'assignee',value:assignee_filter},
-                                   {index:'status',value:status_filter},
-                                   {index:'hours'},
-                                   {index:'notes',value:notes_filter}]};
-           
-            read_json_rows('form89',columns,function(results)
-            {
-                results.forEach(function(result)
-                {
-                    var rowsHTML="<tr>";
-						rowsHTML+="<form id='form89_"+result.id+"'></form>";
-							rowsHTML+="<td data-th='Customer'>";
-								rowsHTML+="<a onclick=\"show_object('customers','"+result.customer+"');\"><textarea readonly='readonly' form='form89_"+result.id+"'>"+result.customer+"</textarea></a>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Assignee'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form89_"+result.id+"' class='dblclick_editable' value='"+result.assignee+"'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Schedule'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form89_"+result.id+"' class='dblclick_editable'>"+get_my_datetime(result.schedule)+"</textarea>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Notes'>";
-								rowsHTML+="<textarea readonly='readonly' form='form89_"+result.id+"' class='dblclick_editable'>"+result.notes+"</textarea>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Status'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form89_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Action'>";
-								rowsHTML+="<input type='hidden' readonly='readonly' form='form89_"+result.id+"' value='"+result.id+"'>";
-								rowsHTML+="<button type='submit' class='btn green' form='form89_"+result.id+"' title='Save' name='save'><i class='fa fa-save'></i></button>";
-								rowsHTML+="<button type='button' class='btn red' form='form89_"+result.id+"' title='Delete' onclick='form89_delete_item($(this));' name='delete'><i class='fa fa-trash'></i></button>";
-							rowsHTML+="</td>";			
-					rowsHTML+="</tr>";
-
-					$('#form89_body').append(rowsHTML);
-					var fields=document.getElementById("form89_"+result.id);
-					$(fields).on("submit", function(event)
-					{
-						event.preventDefault();
-						form89_update_item(fields);
-					});
-
-					var name_filter=fields.elements[0];
-					var assignee_filter=fields.elements[1];
-					var schedule_filter=fields.elements[2];
-					var status_filter=fields.elements[4];
-
-					var staff_data={data_store:'staff',return_column:'acc_name'};
-					set_my_value_list_json(staff_data,assignee_filter);
-					set_static_value_list_json('appointments','status',status_filter);
-					$(schedule_filter).vdatetimepicker();
-                });
-
-                paginator.update_index(results.length);
-				
-				initialize_tabular_report_buttons(columns,'Appointments','form89',function (item)
-				{
-					item['Schedule']=get_my_datetime(item.schedule);
-					delete item.schedule;
-					delete item.hours;
+					event.preventDefault();
+					form89_update_item(fields);
 				});
 
-				$('#form89').formcontrol();                
-                hide_loader();
-            });
-            
-        }
-    }
+				var name_filter=fields.elements[0];
+				var assignee_filter=fields.elements[1];
+				var schedule_filter=fields.elements[2];
+				var status_filter=fields.elements[4];
+
+				var staff_data={data_store:'staff',return_column:'acc_name'};
+				set_my_value_list_json(staff_data,assignee_filter);
+				set_static_value_list_json('appointments','status',status_filter);
+				$(schedule_filter).vdatetimepicker();
+              });
+
+              paginator.update_index(results.length);
+
+			initialize_tabular_report_buttons(columns,'Appointments','form89',function (item)
+			{
+				item['Schedule']=get_my_datetime(item.schedule);
+				delete item.schedule;
+				delete item.hours;
+			});
+
+			$('#form89').formcontrol();
+              hide_loader();
+          });
+
+      }
+  }
 
 	function form89_add_item()
 	{
@@ -312,7 +312,7 @@
 			rowsHTML+="<form id='form89_"+id+"' autocomplete='off'></form>";
 				rowsHTML+="<td data-th='Customer'><div class='btn-overlap'>";
                     rowsHTML+="<input type='text' placeholder='Customer' required form='form89_"+id+"'>";
-                    rowsHTML+="<button class='btn btn-icon-only default right-overlap' title='Add new customer' id='form89_add_customer_"+id+"'><i class='fa fa-plus'></i></button></div>";                    
+                    rowsHTML+="<button class='btn btn-icon-only default right-overlap' title='Add new customer' id='form89_add_customer_"+id+"'><i class='fa fa-plus'></i></button></div>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Assignee'>";
 					rowsHTML+="<input type='text' form='form89_"+id+"' value=''>";
@@ -329,8 +329,8 @@
 				rowsHTML+="<td data-th='Action'>";
 					rowsHTML+="<input type='hidden' form='form89_"+id+"' value='"+id+"'>";
 					rowsHTML+="<button type='submit' class='btn green' form='form89_"+id+"' name='save'><i class='fa fa-save'></i></button>";
-					rowsHTML+="<button type='button' class='btn red' form='form89_"+id+"' onclick='$(this).parent().parent().remove();' name='delete'><i class='fa fa-trash'></i></button>";	
-				rowsHTML+="</td>";			
+					rowsHTML+="<button type='button' class='btn red' form='form89_"+id+"' onclick='$(this).parent().parent().remove();' name='delete'><i class='fa fa-trash'></i></button>";
+				rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 
 			$('#form89_body').prepend(rowsHTML);
@@ -348,7 +348,7 @@
 			});
 
 			var customer_data={data_store:'customers',return_column:'acc_name'};
-			set_my_value_list_json(customer_data,name_filter,function () 
+			set_my_value_list_json(customer_data,name_filter,function ()
 			{
 				$(name_filter).focus();
 			});
@@ -360,8 +360,8 @@
 			$(add_customer).on('click',function()
 			{
 				modal11_action(function()
-				{	
-					set_my_value_list_json(customer_data,name_filter,function () 
+				{
+					set_my_value_list_json(customer_data,name_filter,function ()
 					{
 						$(name_filter).focus();
 					});
@@ -389,7 +389,7 @@
 			var status=form.elements[4].value;
 			var data_id=form.elements[5].value;
 			var last_updated=get_my_time();
-			
+
 			var data_json={data_store:'appointments',
  							data:[{index:'id',value:data_id},
 								  {index:'customer',value:name},
@@ -402,9 +402,9 @@
 						  log:'yes',
 						  log_data:{title:'Added',notes:'Appointment with '+name,link_to:'form89'}};
             create_json(data_json);
-			
+
 			$(form).readonly();
-			
+
 			var del_button=form.elements['delete'];
 			del_button.removeAttribute("onclick");
 			$(del_button).on('click',function(event)
@@ -447,7 +447,7 @@
                                  {index:'hours',value:1},
                                  {index:'last_updated',value:last_updated}]};
             update_json(data_json);
-			
+
 			$(form).readonly();
 		}
 		else
@@ -469,10 +469,10 @@
 				var assignee=form.elements[1].value;
 				var status=form.elements[4].value;
 				var data_id=form.elements[5].value;
-				
+
 				var data_json={data_store:'appointments',
  							data:[{index:'id',value:data_id}]};
-            
+
 				delete_json(data_json);
 				$(button).parent().parent().remove();
 			});
@@ -513,7 +513,7 @@
 					{index:'assignee',value:row.assignee},
 					{index:'status',value:row.status},
 					{index:'hours',value:row.hours},
-					{index:'notes',value:row.notes},			 
+					{index:'notes',value:row.notes},
 					{index:'last_updated',value:last_updated}];
 
 			data_json.data.push(data_json_array);
@@ -542,7 +542,7 @@
 			}
 		}
 	};
-	
+
 	function form89_cal_sync(type)
 	{
 		if(is_online())
@@ -578,7 +578,7 @@
 		{
 			$('#modal96_link').click();
 		}
-	}	
-	
+	}
+
 	</script>
 </div>
