@@ -446,10 +446,9 @@ function set_grid_item_16()
 */
 function set_grid_item_17()
 {
-	var new_columns=new Object();
-		new_columns.data_store='attendance';
-		new_columns.indexes=[{index:'presence',exact:'present'},
-							{index:'date',lowerbound:(get_raw_time(get_my_date())-1000),upperbound:(get_raw_time(get_my_date())+86399000)}];
+	var new_columns={data_store:'attendance',
+									indexes:[{index:'presence',exact:'present'},
+													{index:'date',lowerbound:(get_raw_time(get_my_date())-1000),upperbound:(get_raw_time(get_my_date())+86399000)}]};
 
 	read_json_count(new_columns,function(item_count)
 	{
@@ -561,9 +560,8 @@ function set_grid_item_22()
 */
 function set_grid_item_23()
 {
-	var new_columns=new Object();
-		new_columns.data_store='sale_leads';
-		new_columns.indexes=[{index:'status',exact:'open'}];
+	var new_columns={data_store:'sale_leads',
+									indexes:[{index:'status',exact:'open'}]};
 
 	read_json_count(new_columns,function(item_count)
 	{
@@ -1075,11 +1073,7 @@ function set_grid_item_47()
 */
 function set_grid_item_48()
 {
-	var new_columns=new Object();
-		new_columns.data_store='customers';
-
-		new_columns.indexes=[{index:'id'}];
-
+	var new_columns={data_store:'customers',indexes:[{index:'id'}]};
 	read_json_count(new_columns,function(item_count)
 	{
 		$('#grid_item_48').html(item_count);
@@ -1760,5 +1754,68 @@ function set_grid_item_74()
 	read_json_single_column(new_columns,function(items)
 	{
 		$('#grid_item_74').html(items.length);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_75
+*@*display_name*:*Active Policies
+*@*grid*:*policies
+*@*function_name*:*set_grid_item_75();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_75()
+{
+	var new_columns={data_store:'policies',return_column:'id',
+									indexes:[{index:'status',exact:'active'}]};
+	read_json_single_column(new_columns,function(items)
+	{
+		$('#grid_item_75').html(items.length);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_76
+*@*display_name*:*Pending Commissions
+*@*grid*:*commissions
+*@*function_name*:*set_grid_item_76();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_76()
+{
+	var new_columns={data_store:'policy_commissions',return_column:'id',
+									indexes:[{index:'status',exact:'pending'}]};
+	read_json_single_column(new_columns,function(items)
+	{
+		$('#grid_item_76').html(items.length);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_77
+*@*display_name*:*Pending Claims
+*@*grid*:*commissions
+*@*function_name*:*set_grid_item_77();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_77()
+{
+	var new_columns={data_store:'policy_claims',return_column:'id',
+									indexes:[{index:'status',exact:'pending'}]};
+	read_json_single_column(new_columns,function(items)
+	{
+		$('#grid_item_77').html(items.length);
 	});
 };
