@@ -16823,7 +16823,7 @@ function modal214_action(func)
 	{
 		attributes.forEach(function(attribute)
 		{
-      if(attribute.status!='inactive')
+			if(attribute.status!='inactive')
 			{
 				var required="";
 				if(attribute.status=='required')
@@ -16856,7 +16856,7 @@ function modal214_action(func)
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		if(is_create_access('form39'))
+		if(is_create_access('form234'))
 		{
 			var name=form.elements['name'].value;
 			var make=form.elements['make'].value;
@@ -16948,7 +16948,7 @@ function modal215_action(item_name)
 			var last_updated=get_my_time();
 
 			var adjust_json={data_store:'inventory_adjust',
-			data:[{index:'id',value:id},
+			data:[{index:'id',value:get_new_key()},
 				{index:'product_name',value:item_name},
 				{index:'batch',value:item_name},
 				{index:'quantity',value:change},

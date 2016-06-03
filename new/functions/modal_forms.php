@@ -80,12 +80,12 @@
 								   <div class="col-sm-12 col-md-4">Email</div>
 					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal11_form' name='email'></div>
 					     		</div>
-		                  <div class="row">
+		              <div class="row">
 								   <div class="col-sm-12 col-md-4">Address</div>
 					     			<div class="col-sm-12 col-md-8"><textarea form='modal11_form' name='address'></textarea></div>
 					     		</div>
-		                  <div id='modal11_attributes'></div>
-		                  </div>
+		              <div id='modal11_attributes'></div>
+		              </div>
 		             </div>
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal11_form' name='save'>Save</button>
@@ -3755,10 +3755,8 @@
 											   	<div class="col-sm-12 col-md-4">Description</div>
 			                  	<div class="col-sm-12 col-md-8"><textarea form='modal214_form' name='desc'></textarea></div>
 								     		</div>
-					              <div class="row">
-											    <div id='modal214_attributes'></div>
-					              </div>
-			             		</div>
+					              <div id='modal214_attributes'></div>
+					            </div>
 										</div>
 		             	<div class="modal-footer">
 		               	<button type="submit" class="btn green" form='modal214_form' name='save'>Add</button>

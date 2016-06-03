@@ -320,7 +320,7 @@
 														loader:'no',
 														data:[]};
 
-						var attributes_json={data_store:'attributes',
+						var attr_json={data_store:'attributes',
 														loader:'no',
 														data:[]};
 
@@ -394,7 +394,7 @@
 
 							attr_json.data.push(attr2_json_array);
 
-							var specs_array=row.specifications.split("\n");
+							var specs_array=row.specifications.split(";");
 							specs_array.forEach(function(spec)
 							{
 								counter++;
@@ -412,7 +412,7 @@
 						{
 							create_batch_json(data_json);
 							create_batch_json(batch_json);
-							create_batch_json(attributes_json);
+							create_batch_json(attr_json);
 							create_batch_json(adjust_json);
 						}
         };
