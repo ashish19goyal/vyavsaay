@@ -16,7 +16,7 @@ function form1_delete_item(button)
 			var last_updated=get_my_time();
 			var data_xml="<product_instances>" +
 						"<id>"+data_id+"</id>" +
-						"</product_instances>";	
+						"</product_instances>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>product_instances</tablename>" +
@@ -32,8 +32,8 @@ function form1_delete_item(button)
 			var other_delete2="<inventory_adjust>" +
 						"<product_name>"+name+"</product_name>" +
 						"<batch>"+batch+"</batch>" +
-						"</inventory_adjust>";	
-			
+						"</inventory_adjust>";
+
 			delete_row(data_xml,activity_xml);
 			//delete_simple(other_delete);
 			//delete_simple(other_delete2);
@@ -58,11 +58,11 @@ function form2_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-				
+
 			var data_id=form.elements[7].value;
 			var data_xml="<newsletter_items>" +
 						"<id>"+data_id+"</id>" +
-						"</newsletter_items>";	
+						"</newsletter_items>";
 			if(is_online())
 			{
 				server_delete_simple(data_xml);
@@ -70,7 +70,7 @@ function form2_delete_item(button)
 			else
 			{
 				local_delete_simple(data_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -92,7 +92,7 @@ function form5_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var name=form.elements[0].value;
 			var type=form.elements[1].value;
 			var description=form.elements[2].value;
@@ -102,7 +102,7 @@ function form5_delete_item(button)
 						"<id>"+data_id+"</id>" +
 						"<name>"+name+"</name>" +
 						"<type>"+type+"</type>" +
-						"</assets>";	
+						"</assets>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>assets</tablename>" +
@@ -118,8 +118,8 @@ function form5_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
-			$(button).parent().parent().remove();	
+			}
+			$(button).parent().parent().remove();
 		});
 	}
 	else
@@ -140,17 +140,17 @@ function form10_delete_item(button)
 		{
 			//console.log('deleting form10_item');
 			var bill_id=document.getElementById("form10_master").elements['bill_id'].value;
-			
+
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			var data_id=form.elements[8].value;
-			
+
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
-						"</bill_items>";	
+						"</bill_items>";
 			delete_simple(data_xml);
-						
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -172,17 +172,17 @@ function form12_delete_item(button)
 		modal115_action(function()
 		{
 			var bill_id=document.getElementById("form12_master").elements[4].value;
-			
+
 			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);		
+			var form=document.getElementById(form_id);
 			var data_id=form.elements[9].value;
-					
+
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
-						"</bill_items>";	
+						"</bill_items>";
 			delete_simple(data_xml);
-					
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -204,7 +204,7 @@ function form14_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var name=form.elements[0].value;
 			var assignee=form.elements[1].value;
 			var status=form.elements[3].value;
@@ -214,7 +214,7 @@ function form14_delete_item(button)
 						"<name>"+name+"</name>" +
 						"<assignee>"+assignee+"</assignee>" +
 						"<status>"+status+"</status>" +
-						"</task_instances>";	
+						"</task_instances>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>task_instances</tablename>" +
@@ -224,7 +224,7 @@ function form14_delete_item(button)
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			delete_row(data_xml,activity_xml);
-				
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -247,7 +247,7 @@ function form16_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var order_num=form.elements[0].value;
 			var customer=form.elements[2].value;
 			var data_id=form.elements[5].value;
@@ -270,15 +270,15 @@ function form16_delete_item(button)
 			var transaction_xml="<transactions>" +
 					"<id>"+transaction_id+"</id>" +
 					"</transactions>";
-	
+
 			update_row(return_xml,activity_xml);
 			delete_simple(transaction_xml);
-			
+
 			$(button).parent().parent().attr('style','opacity:0.5');
 			$(button).parent().parent().attr('title','This bill was cancelled');
 			$(button).hide();
-			$(edit_button).hide();			
-	
+			$(edit_button).hide();
+
 			var payment_xml="<payments>" +
 					"<id></id>" +
 					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
@@ -297,13 +297,13 @@ function form16_delete_item(button)
 							"<bill_id></bill_id>" +
 							"<transaction_id></transaction_id>" +
 							"</payments>";
-	
+
 					delete_simple(pay_xml);
 					delete_simple(pt_xml);
 					break;
 				}
 			});
-			
+
 			var items_data="<customer_return_items>" +
 					"<return_id>"+data_id+"</return_id>" +
 					"</customer_return_items>";
@@ -311,10 +311,10 @@ function form16_delete_item(button)
 					"<source_id>"+data_id+"</source_id>" +
 					"<source>sale return</source>" +
 					"</discarded>";
-	
+
 			delete_simple(items_data);
 			delete_simple(discard_xml);
-			
+
 		});
 	}
 	else
@@ -335,19 +335,19 @@ function form21_delete_item(button)
 		modal115_action(function()
 		{
 			var bill_id=document.getElementById("form21_master").elements['bill_id'].value;
-			
+
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var data_id=form.elements[9].value;
 			var last_updated=get_my_time();
-			
+
 			var data_xml="<supplier_bill_items>" +
 						"<id>"+data_id+"</id>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
-						"</supplier_bill_items>";	
+						"</supplier_bill_items>";
 			delete_simple(data_xml);
-					
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -370,13 +370,13 @@ function form24_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var data_id=form.elements[11].value;
 			var data_xml="<purchase_order_items>" +
 						"<id>"+data_id+"</id>" +
-						"</purchase_order_items>";	
+						"</purchase_order_items>";
 			delete_simple(data_xml);
-				
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -399,7 +399,7 @@ function form35_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var offer_name=form.elements[0].value;
 			var offer_type=form.elements[1].value;
 			var end_date=get_raw_time(form.elements[2].value);
@@ -414,7 +414,7 @@ function form35_delete_item(button)
 						"<end_date>"+end_date+"</end_date>" +
 						"<offer_detail>"+offer_detail+"</offer_detail>" +
 						"<status>"+status+"</status>" +
-						"</offers>";	
+						"</offers>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>offers</tablename>" +
@@ -447,7 +447,7 @@ function form42_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var bill_num=form.elements[0].value;
 			var customer_name=form.elements[1].value;
 			var amount=form.elements[3].value;
@@ -457,7 +457,7 @@ function form42_delete_item(button)
 			var last_updated=get_my_time();
 			var bill_xml="<bills>" +
 						"<id>"+data_id+"</id>" +
-						"<status>cancelled</status>"+						
+						"<status>cancelled</status>"+
 						"</bills>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
@@ -473,8 +473,8 @@ function form42_delete_item(button)
 			var points_xml="<loyalty_points>" +
 						"<source>sale</source>"+
 						"<source_id>"+data_id+"</source_id>" +
-						"</loyalty_points>";	
-			
+						"</loyalty_points>";
+
 			$(button).parent().parent().attr('style','opacity:0.5');
 			$(button).parent().parent().attr('title','This bill was cancelled');
 			$(button).hide();
@@ -483,7 +483,7 @@ function form42_delete_item(button)
 			update_row(bill_xml,activity_xml);
 			delete_simple(transaction_xml);
 			delete_simple(points_xml);
-			
+
 			var payment_xml="<payments>" +
 					"<id></id>" +
 					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
@@ -502,20 +502,20 @@ function form42_delete_item(button)
 							"<bill_id></bill_id>" +
 							"<transaction_id></transaction_id>" +
 							"</payments>";
-	
+
 					delete_simple(pay_xml);
 					delete_simple(pt_xml);
 					break;
 				}
 			});
-	
+
 			var items_data="<bill_items>" +
 					"<id></id>" +
 					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
 					"</bill_items>";
-			
+
 			delete_simple(items_data);
-				
+
 		});
 	}
 	else
@@ -536,14 +536,14 @@ function form43_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var order_num=form.elements[0].value;
 			var supplier_name=form.elements[1].value;
 			var data_id=form.elements[8].value;
 			var last_updated=get_my_time();
 			var data_xml="<purchase_orders>" +
 						"<id>"+data_id+"</id>" +
-						"</purchase_orders>";	
+						"</purchase_orders>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>purchase_orders</tablename>" +
@@ -581,14 +581,14 @@ function form57_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var service=form.elements[0].value;
 			var description=form.elements[1].value;
 			var data_id=form.elements[4].value;
 			var last_updated=get_my_time();
 			var data_xml="<services>" +
 						"<id>"+data_id+"</id>" +
-						"</services>";	
+						"</services>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>services</tablename>" +
@@ -628,7 +628,7 @@ function form57_delete_item(button)
 				local_delete_simple(other_delete4);
 				local_delete_simple(other_delete5);
 				local_delete_simple(other_delete6);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -678,7 +678,7 @@ function form59_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var product=form.elements[0].value;
 			var type=form.elements[1].value;
 			var requisite=form.elements[2].value;
@@ -693,7 +693,7 @@ function form59_delete_item(button)
 						"<requisite_type>"+type+"</requisite_type>" +
 						"<requisite_name>"+requisite+"</requisite_name>" +
 						"<quantity>"+quantity+"</quantity>" +
-						"</"+table+">";	
+						"</"+table+">";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>"+table+"</tablename>" +
@@ -709,7 +709,7 @@ function form59_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -733,7 +733,7 @@ function form61_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var service=form.elements[0].value;
 			var attribute=form.elements[1].value;
 			var value=form.elements[2].value;
@@ -761,7 +761,7 @@ function form61_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -785,7 +785,7 @@ function form62_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var product=form.elements[0].value;
 			var reviewer=form.elements[1].value;
 			var detail=form.elements[2].value;
@@ -800,7 +800,7 @@ function form62_delete_item(button)
 						"<reviewer>"+reviewer+"</reviewer>" +
 						"<detail>"+detail+"</detail>" +
 						"<rating>"+rating+"</rating>" +
-						"</"+table+">";	
+						"</"+table+">";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>"+table+"</tablename>" +
@@ -816,7 +816,7 @@ function form62_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -839,7 +839,7 @@ function form63_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var service=form.elements[0].value;
 			var reviewer=form.elements[1].value;
 			var detail=form.elements[2].value;
@@ -853,7 +853,7 @@ function form63_delete_item(button)
 						"<reviewer>"+reviewer+"</reviewer>" +
 						"<detail>"+detail+"</detail>" +
 						"<rating>"+rating+"</rating>" +
-						"</reviews>";	
+						"</reviews>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>reviews</tablename>" +
@@ -869,7 +869,7 @@ function form63_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -892,7 +892,7 @@ function form64_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var service=form.elements[0].value;
 			var cross_type=form.elements[1].value;
 			var cross_name=form.elements[2].value;
@@ -904,7 +904,7 @@ function form64_delete_item(button)
 						"<type>service</type>" +
 						"<cross_type>"+cross_type+"</cross_type>" +
 						"<cross_name>"+cross_name+"</cross_name>" +
-						"</cross_sells>";	
+						"</cross_sells>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>cross_sells</tablename>" +
@@ -920,7 +920,7 @@ function form64_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -944,7 +944,7 @@ function form66_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var product=form.elements[0].value;
 			var cross_type=form.elements[1].value;
 			var cross_name=form.elements[2].value;
@@ -957,7 +957,7 @@ function form66_delete_item(button)
 						"<type>product</type>" +
 						"<cross_type>"+cross_type+"</cross_type>" +
 						"<cross_name>"+cross_name+"</cross_name>" +
-						"</"+table+">";	
+						"</"+table+">";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>"+table+"</tablename>" +
@@ -973,7 +973,7 @@ function form66_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -993,15 +993,15 @@ function form69_delete_item(button)
 	if(is_delete_access('form69'))
 	{
 		modal115_action(function()
-		{			
+		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var data_id=form.elements[11].value;
 			var last_updated=get_my_time();
 			var data_xml="<sale_order_items>" +
 						"<id>"+data_id+"</id>" +
-						"</sale_order_items>";	
+						"</sale_order_items>";
 			delete_simple(data_xml);
 			$(button).parent().parent().remove();
 		});
@@ -1025,7 +1025,7 @@ function form70_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var data_id=form.elements[0].value;
 			var customer_name=form.elements[1].value;
 			var order_date=get_raw_time(form.elements[2].value);
@@ -1036,7 +1036,7 @@ function form70_delete_item(button)
 						"<customer_name>"+customer_name+"</customer_name>" +
 						"<order_date>"+order_date+"</order_date>" +
 						"<status>"+status+"</status>" +
-						"</sale_orders>";	
+						"</sale_orders>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>sale_orders</tablename>" +
@@ -1071,15 +1071,15 @@ function form72_delete_item(button)
 		modal115_action(function()
 		{
 			var bill_id=document.getElementById("form72_master").elements['bill_id'].value;
-			
+
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			var data_id=form.elements[9].value;
-			
+
 			var data_xml="<bill_items>" +
 					"<id>"+data_id+"</id>" +
 					"<bill_id>"+bill_id+"</bill_id>" +
-					"</bill_items>";	
+					"</bill_items>";
 			delete_simple(data_xml);
 			$(button).parent().parent().remove();
 			form72_get_totals();
@@ -1108,7 +1108,7 @@ function form79_delete_item(button)
 			var data_xml="<task_type>" +
 						"<id>"+data_id+"</id>" +
 						"<name>"+task+"</name>" +
-						"</task_type>";	
+						"</task_type>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>task_type</tablename>" +
@@ -1117,7 +1117,7 @@ function form79_delete_item(button)
 						"<notes>Task type "+task+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			
+
 			if(is_online())
 			{
 				server_delete_row(data_xml,activity_xml);
@@ -1125,7 +1125,7 @@ function form79_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -1154,7 +1154,7 @@ function form80_delete_item(button)
 			var data_xml="<de_duplication>" +
 						"<id>"+data_id+"</id>" +
 						"<slave_id>"+slave_id+"</slave_id>" +
-						"</de_duplication>";	
+						"</de_duplication>";
 			if(is_online())
 			{
 				server_delete_simple(data_xml);
@@ -1162,7 +1162,7 @@ function form80_delete_item(button)
 			else
 			{
 				local_delete_simple(data_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -1205,7 +1205,7 @@ function form81_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -1228,7 +1228,7 @@ function form84_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var customer=form.elements[0].value;
 			var service=form.elements[1].value;
 			var data_id=form.elements[5].value;
@@ -1237,7 +1237,7 @@ function form84_delete_item(button)
 						"<id>"+data_id+"</id>" +
 						"<customer>"+customer+"</customer>" +
 						"<service>"+service+"</service>" +
-						"</service_subscriptions>";	
+						"</service_subscriptions>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>service_subscriptions</tablename>" +
@@ -1253,7 +1253,7 @@ function form84_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -1275,7 +1275,7 @@ function form87_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var name=form.elements[0].value;
 			var make=form.elements[1].value;
 			var description=form.elements[2].value;
@@ -1288,7 +1288,7 @@ function form87_delete_item(button)
 						"<name>"+name+"</name>" +
 						"<description>"+description+"</description>" +
 						"<tax>"+tax+"</tax>" +
-						"</product_master>";	
+						"</product_master>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>product_master</tablename>" +
@@ -1320,7 +1320,7 @@ function form87_delete_item(button)
 					"<name>"+name+"</name>" +
 					"<type>product</type>" +
 					"</reviews>";
-	
+
 			if(is_online())
 			{
 				server_delete_row(data_xml,activity_xml);
@@ -1340,7 +1340,7 @@ function form87_delete_item(button)
 				local_delete_simple(other_delete4);
 				local_delete_simple(other_delete5);
 				local_delete_simple(other_delete6);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -1363,7 +1363,7 @@ function form88_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var product=form.elements[0].value;
 			var status=form.elements[2].value;
 			var data_id=form.elements[5].value;
@@ -1387,7 +1387,7 @@ function form88_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -1409,17 +1409,17 @@ function form91_delete_item(button)
 		modal115_action(function()
 		{
 			var bill_id=document.getElementById("form91_master").elements['bill_id'].value;
-			
+
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			var data_id=form.elements[12].value;
-					
+
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
-						"</bill_items>";	
+						"</bill_items>";
 			delete_simple(data_xml);
-					
+
 			$(button).parent().parent().remove();
 			form91_get_totals();
 		});
@@ -1445,7 +1445,7 @@ function form93_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var account=form.elements[0].value;
 			var type=form.elements[1].value;
 			var amount=form.elements[2].value;
@@ -1457,7 +1457,7 @@ function form93_delete_item(button)
 			}
 			var loan_xml="<loans>" +
 						"<id>"+data_id+"</id>" +
-						"</loans>";	
+						"</loans>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>loans</tablename>" +
@@ -1468,7 +1468,7 @@ function form93_delete_item(button)
 						"</activity>";
 			delete_row(loan_xml,activity_xml);
 			$(button).parent().parent().remove();
-	
+
 			var payment_type="paid";
 			if(type=='taken')
 			{
@@ -1495,7 +1495,7 @@ function form93_delete_item(button)
 								"</payments>";
 					delete_simple(payment_xml);
 					delete_simple(transaction2_xml);
-					
+
 					break;
 				}
 			});
@@ -1519,14 +1519,14 @@ function form101_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var name=form.elements[0].value;
 			var data_id=form.elements[4].value;
 			var last_updated=get_my_time();
 			var data_xml="<projects>" +
 						"<id>"+data_id+"</id>" +
 						"<name>"+name+"</name>" +
-						"</projects>";	
+						"</projects>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>projects</tablename>" +
@@ -1575,7 +1575,7 @@ function form102_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var name=form.elements[0].value;
 			var data_id=form.elements[4].value;
 			var last_updated=get_my_time();
@@ -1609,7 +1609,7 @@ function form103_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var name=form.elements[0].value;
 			var data_id=form.elements[5].value;
 			var last_updated=get_my_time();
@@ -1645,13 +1645,13 @@ function form108_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var data_id=form.elements['id'].value;
 			var customer_name=form.elements[2].value;
 			var last_updated=get_my_time();
 			var data_xml="<sale_orders>" +
 						"<id>"+data_id+"</id>" +
-						"</sale_orders>";	
+						"</sale_orders>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>sale_orders</tablename>" +
@@ -1665,7 +1665,7 @@ function form108_delete_item(button)
 					"</sale_order_items>";
 			delete_row(data_xml,activity_xml);
 			delete_simple(other_delete);
-				
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -1688,7 +1688,7 @@ function form109_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var asset=form.elements[0].value;
 			var attribute=form.elements[1].value;
 			var value=form.elements[2].value;
@@ -1700,7 +1700,7 @@ function form109_delete_item(button)
 						"<type>asset</type>" +
 						"<attribute>"+attribute+"</attribute>" +
 						"<value>"+value+"</value>" +
-						"</attributes>";	
+						"</attributes>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>attributes</tablename>" +
@@ -1731,7 +1731,7 @@ function form112_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var data_id=form.elements[10].value;
 			var data_xml="<unbilled_sale_items>" +
 						"<id>"+data_id+"</id>" +
@@ -1743,7 +1743,7 @@ function form112_delete_item(button)
 			else
 			{
 				local_delete_simple(data_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -1765,7 +1765,7 @@ function form113_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var data_id=form.elements[6].value;
 			var data_xml="<unbilled_sale_items>" +
 						"<id>"+data_id+"</id>" +
@@ -1777,7 +1777,7 @@ function form113_delete_item(button)
 			else
 			{
 				local_delete_simple(data_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -1799,7 +1799,7 @@ function form114_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var data_id=form.elements[9].value;
 			var data_xml="<unbilled_purchase_items>" +
 						"<id>"+data_id+"</id>" +
@@ -1811,7 +1811,7 @@ function form114_delete_item(button)
 			else
 			{
 				local_delete_simple(data_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -1833,7 +1833,7 @@ function form115_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var data_id=form.elements[6].value;
 			var data_xml="<unbilled_purchase_items>" +
 						"<id>"+data_id+"</id>" +
@@ -1845,7 +1845,7 @@ function form115_delete_item(button)
 			else
 			{
 				local_delete_simple(data_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -1877,7 +1877,7 @@ function form116_delete_item(button)
 					"<program_name>"+program_name+"</program_name>" +
 					"<tier>"+tier+"</tier>" +
 					"</loyalty_customers>";
-			
+
 			if(is_online())
 			{
 				server_delete_simple(data_xml);
@@ -1887,7 +1887,7 @@ function form116_delete_item(button)
 			{
 				local_delete_simple(data_xml);
 				local_delete_simple(delete2_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -1915,7 +1915,7 @@ function form118_delete_item(button)
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
-						"</bill_items>";	
+						"</bill_items>";
 			if(is_online())
 			{
 				server_delete_simple(data_xml);
@@ -1945,15 +1945,15 @@ function form119_delete_item(button)
 	{
 		modal115_action(function()
 		{
-			var bill_id=document.getElementById("form119_master").elements[6].value;		
+			var bill_id=document.getElementById("form119_master").elements[6].value;
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			var data_id=form.elements[11].value;
-					
+
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
-						"</bill_items>";	
+						"</bill_items>";
 			if(is_online())
 			{
 				server_delete_simple(data_xml);
@@ -1962,7 +1962,7 @@ function form119_delete_item(button)
 			{
 				local_delete_simple(data_xml);
 			}
-					
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -1985,7 +1985,7 @@ function form121_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var program=form.elements[0].value;
 			var customer=form.elements[1].value;
 			var points=form.elements[2].value;
@@ -1994,7 +1994,7 @@ function form121_delete_item(button)
 			var data_id=form.elements[5].value;
 			var data_xml="<loyalty_points>" +
 					"<id>"+data_id+"</id>" +
-					"</loyalty_points>";	
+					"</loyalty_points>";
 			var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>loyalty_points</tablename>" +
@@ -2010,7 +2010,7 @@ function form121_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -2033,7 +2033,7 @@ function form122_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var data_id=form.elements[15].value;
 			var data_xml="<supplier_bill_items>" +
 						"<id>"+data_id+"</id>" +
@@ -2043,7 +2043,7 @@ function form122_delete_item(button)
 						"</supplier_return_items>";
 			delete_simple(data_xml);
 			delete_simple(return_xml);
-				
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -2067,13 +2067,13 @@ function form125_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var customer=form.elements[0].value;
 			var username=form.elements[1].value;
 			var data_id=form.elements[4].value;
 			var data_xml="<accounts>" +
 						"<id>"+data_id+"</id>" +
-						"</accounts>";	
+						"</accounts>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>accounts</tablename>" +
@@ -2089,7 +2089,7 @@ function form125_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -2114,7 +2114,7 @@ function form126_delete_item(button)
 			var data_id=form.elements[0].value;
 			var data_xml="<issues>" +
 						"<id>"+data_id+"</id>" +
-						"</issues>";	
+						"</issues>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>issues</tablename>" +
@@ -2126,7 +2126,7 @@ function form126_delete_item(button)
 			var other_delete="<solutions>" +
 						"<issue_id>"+data_id+"</issue_id>" +
 						"</solutions>";
-			
+
 			if(is_online())
 			{
 				server_delete_row(data_xml,activity_xml);
@@ -2136,7 +2136,7 @@ function form126_delete_item(button)
 			{
 				local_delete_row(data_xml,activity_xml);
 				local_delete_simple(other_delete);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -2162,7 +2162,7 @@ function form128_delete_item(button)
 			var data_id=form.elements[0].value;
 			var data_xml="<service_requests>" +
 						"<id>"+data_id+"</id>" +
-						"</service_requests>";	
+						"</service_requests>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>service_requests</tablename>" +
@@ -2196,7 +2196,7 @@ function form128_delete_item(button)
 					"<source_id>"+data_id+"</source_id>" +
 					"<source>service request</source>"+
 					"</expenses>";
-				
+
 			if(is_online())
 			{
 				server_delete_row(data_xml,activity_xml);
@@ -2206,7 +2206,7 @@ function form128_delete_item(button)
 				server_delete_simple(document_xml);
 				server_delete_simple(task_xml);
 				server_delete_simple(item_xml);
-				server_delete_simple(expense_xml);									
+				server_delete_simple(expense_xml);
 			}
 			else
 			{
@@ -2218,7 +2218,7 @@ function form128_delete_item(button)
 				local_delete_simple(task_xml);
 				local_delete_simple(item_xml);
 				local_delete_simple(expense_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -2239,18 +2239,18 @@ function form130_delete_item(button)
 		modal115_action(function()
 		{
 			var bill_id=document.getElementById("form130_master").elements[3].value;
-			
+
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			var name=form.elements[0].value;
 			var data_id=form.elements[9].value;
-			
+
 			if(isNaN(form.elements[2].value))
 			{
 				var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
-						"</bill_items>";	
+						"</bill_items>";
 				var task_xml="<task_instances>" +
 						"<source></source>" +
 						"<source_id>"+data_id+"</source_id>" +
@@ -2258,7 +2258,7 @@ function form130_delete_item(button)
 				if(is_online())
 				{
 					server_delete_simple(data_xml);
-					server_delete_simple(task_xml);				
+					server_delete_simple(task_xml);
 				}
 				else
 				{
@@ -2271,7 +2271,7 @@ function form130_delete_item(button)
 				var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
-						"</bill_items>";	
+						"</bill_items>";
 				if(is_online())
 				{
 					server_delete_simple(data_xml);
@@ -2280,8 +2280,8 @@ function form130_delete_item(button)
 				{
 					local_delete_simple(data_xml);
 				}
-				
-			}					
+
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -2304,7 +2304,7 @@ function form131_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var name=form.elements[0].value;
 			var assignee=form.elements[1].value;
 			var status=form.elements[3].value;
@@ -2314,7 +2314,7 @@ function form131_delete_item(button)
 						"<name>"+name+"</name>" +
 						"<assignee>"+assignee+"</assignee>" +
 						"<status>"+status+"</status>" +
-						"</task_instances>";	
+						"</task_instances>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>task_instances</tablename>" +
@@ -2330,7 +2330,7 @@ function form131_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -2352,14 +2352,14 @@ function form133_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var data_id=form.elements[4].value;
 			var last_updated=get_my_time();
 			var data_xml="<documents>" +
-					"<id>"+data_id+"</id>"+				
+					"<id>"+data_id+"</id>"+
 					"<doc_type>service request</doc_type>" +
 					"</documents>";
-	
+
 			if(is_online())
 			{
 				server_delete_simple(data_xml);
@@ -2367,7 +2367,7 @@ function form133_delete_item(button)
 			else
 			{
 				local_delete_simple(data_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -2390,9 +2390,9 @@ function form134_delete_machine(button)
 		{
 			var master_fields=document.getElementById('form134_master');
 			var request_id=master_fields.elements[1].value;
-	
+
 			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);		
+			var form=document.getElementById(form_id);
 			var data_id=form.elements[5].value;
 			var data_xml="<service_request_machines>" +
 						"<id>"+data_id+"</id>" +
@@ -2412,7 +2412,7 @@ function form134_delete_machine(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -2435,9 +2435,9 @@ function form134_delete_team(button)
 		{
 			var master_fields=document.getElementById('form134_master');
 			var request_id=master_fields.elements[1].value;
-	
+
 			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);		
+			var form=document.getElementById(form_id);
 			var assignee=form.elements[0].value;
 			var data_id=form.elements[3].value;
 			var data_xml="<service_request_team>" +
@@ -2457,7 +2457,7 @@ function form134_delete_team(button)
 						"<tablename>service_requests</tablename>" +
 						"<user>"+assignee+"</user>" +
 						"</data_access>";
-	
+
 			if(is_online())
 			{
 				server_delete_row(data_xml,activity_xml);
@@ -2467,7 +2467,7 @@ function form134_delete_team(button)
 			{
 				local_delete_row(data_xml,activity_xml);
 				local_delete_simple(access_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -2490,9 +2490,9 @@ function form134_delete_document(button)
 		{
 			var master_fields=document.getElementById('form134_master');
 			var request_id=master_fields.elements[1].value;
-	
+
 			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);		
+			var form=document.getElementById(form_id);
 			var data_id=form.elements[2].value;
 			var data_xml="<documents>" +
 						"<id>"+data_id+"</id>" +
@@ -2513,7 +2513,7 @@ function form134_delete_document(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -2536,9 +2536,9 @@ function form134_delete_task(button)
 		{
 			var master_fields=document.getElementById('form134_master');
 			var request_id=master_fields.elements[1].value;
-	
+
 			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);		
+			var form=document.getElementById(form_id);
 			var data_id=form.elements[4].value;
 			var data_xml="<task_instances>" +
 						"<id>"+data_id+"</id>" +
@@ -2558,7 +2558,7 @@ function form134_delete_task(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -2580,12 +2580,12 @@ function form139_delete_item(button)
 		modal115_action(function()
 		{
 			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);	
+			var form=document.getElementById(form_id);
 			var data_id=form.elements[5].value;
-			
+
 			var data_xml="<assets>" +
 						"<id>"+data_id+"</id>" +
-						"</assets>";	
+						"</assets>";
 			if(is_online())
 			{
 				server_delete_simple(data_xml);
@@ -2594,7 +2594,7 @@ function form139_delete_item(button)
 			{
 				local_delete_simple(data_xml);
 			}
-					
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -2613,14 +2613,14 @@ function form140_delete_item(button)
 	if(is_delete_access('form140'))
 	{
 		modal115_action(function()
-		{		
+		{
 			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);	
+			var form=document.getElementById(form_id);
 			var data_id=form.elements[5].value;
-			
+
 			var data_xml="<assets>" +
 						"<id>"+data_id+"</id>" +
-						"</assets>";	
+						"</assets>";
 			if(is_online())
 			{
 				server_delete_simple(data_xml);
@@ -2629,7 +2629,7 @@ function form140_delete_item(button)
 			{
 				local_delete_simple(data_xml);
 			}
-					
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -2653,7 +2653,7 @@ function form146_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var product=form.elements[0].value;
 			var data_id=form.elements[5].value;
 			var data_xml="<manufacturing_schedule>" +
@@ -2674,7 +2674,7 @@ function form146_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -2699,9 +2699,9 @@ function form151_delete_item(button)
 		{
 			var master_fields=document.getElementById('form151_master');
 			var request_id=master_fields.elements[1].value;
-	
+
 			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);		
+			var form=document.getElementById(form_id);
 			var data_id=form.elements[5].value;
 			var data_xml="<service_request_items>" +
 						"<id>"+data_id+"</id>" +
@@ -2721,7 +2721,7 @@ function form151_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -2744,9 +2744,9 @@ function form151_delete_expense(button)
 		{
 			var master_fields=document.getElementById('form151_master');
 			var request_id=master_fields.elements[1].value;
-	
+
 			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);		
+			var form=document.getElementById(form_id);
 			var data_id=form.elements[4].value;
 			var data_xml="<expenses>" +
 						"<id>"+data_id+"</id>" +
@@ -2760,7 +2760,7 @@ function form151_delete_expense(button)
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			delete_row(data_xml,activity_xml);
-				
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -2783,13 +2783,13 @@ function form152_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var quot_num=form.elements[0].value;
 			var data_id=form.elements[5].value;
 			var customer=form.elements[2].value;
 			var bill_xml="<quotation>" +
 						"<id>"+data_id+"</id>" +
-						"</quotation>";	
+						"</quotation>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>quotation</tablename>" +
@@ -2798,18 +2798,18 @@ function form152_delete_item(button)
 						"<notes>Quotation # "+quot_num+" for customer "+customer+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-	
+
 			delete_row(bill_xml,activity_xml);
 			$(button).parent().parent().remove();
-	
-			
+
+
 			var items_data="<quotation_items>" +
 					"<id></id>" +
 					"<quotation_id exact='yes'>"+data_id+"</quotation_id>" +
 					"</quotation_items>";
-						
+
 			delete_simple(items_data);
-			
+
 		});
 	}
 	else
@@ -2830,15 +2830,15 @@ function form153_delete_item(button)
 		modal115_action(function()
 		{
 			var quot_id=document.getElementById("form153_master").elements[5].value;
-			
+
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			var data_id=form.elements[6].value;
-					
+
 			var data_xml="<quotation_items>" +
 						"<id>"+data_id+"</id>" +
 						"<quotation_id>"+quot_id+"</quotation_id>" +
-						"</quotation_items>";	
+						"</quotation_items>";
 			if(is_online())
 			{
 				server_delete_simple(data_xml);
@@ -2847,7 +2847,7 @@ function form153_delete_item(button)
 			{
 				local_delete_simple(data_xml);
 			}
-					
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -2869,17 +2869,17 @@ function form154_delete_item(button)
 		modal115_action(function()
 		{
 			var bill_id=document.getElementById("form154_master").elements['bill_id'].value;
-			
+
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			var data_id=form.elements[4].value;
-					
+
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
-						"</bill_items>";	
+						"</bill_items>";
 			delete_simple(data_xml);
-					
+
 			$(button).parent().parent().remove();
 			form154_update_serial_numbers();
 		});
@@ -2902,15 +2902,15 @@ function form154_delete_service_item(button)
 		modal115_action(function()
 		{
 			var bill_id=document.getElementById("form154_master").elements['bill_id'].value;
-			
+
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			var data_id=form.elements[4].value;
-					
+
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
-						"</bill_items>";	
+						"</bill_items>";
 			if(is_online())
 			{
 				server_delete_simple(data_xml);
@@ -2919,7 +2919,7 @@ function form154_delete_service_item(button)
 			{
 				local_delete_simple(data_xml);
 			}
-					
+
 			$(button).parent().parent().remove();
 			form154_update_serial_numbers();
 		});
@@ -2942,15 +2942,15 @@ function form154_delete_hiring_item(button)
 		modal115_action(function()
 		{
 			var bill_id=document.getElementById("form154_master").elements['bill_id'].value;
-			
+
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			var data_id=form.elements[8].value;
-					
+
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
-						"</bill_items>";	
+						"</bill_items>";
 			if(is_online())
 			{
 				server_delete_simple(data_xml);
@@ -2959,7 +2959,7 @@ function form154_delete_hiring_item(button)
 			{
 				local_delete_simple(data_xml);
 			}
-					
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -2981,7 +2981,7 @@ function form156_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var product_name=form.elements[0].value;
 			var name=form.elements[1].value;
 			var data_id=form.elements[3].value;
@@ -2990,7 +2990,7 @@ function form156_delete_item(button)
 						"<id>"+data_id+"</id>" +
 						"<item_name>"+product_name+"</item_name>" +
 						"<name>"+name+"</name>" +
-						"</area_utilization>";	
+						"</area_utilization>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>area_utilization</tablename>" +
@@ -3016,17 +3016,17 @@ function form156_delete_item(button)
 function form157_delete_item(button)
 {
 	if(is_delete_access('form157'))
-	{	
+	{
 		modal115_action(function()
-		{	
+		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var data_id=form.elements[5].value;
-				
+
 			var data_xml="<store_movement>" +
 					"<id>"+data_id+"</id>" +
-					"</store_movement>";	
+					"</store_movement>";
 			delete_simple(data_xml);
 			$(button).parent().parent().remove();
 		});
@@ -3053,15 +3053,15 @@ function form158_delete_item(button)
 
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var data_id=form.elements[5].value;
-			
+
 			var data_xml="<supplier_bill_items>" +
 						"<id>"+data_id+"</id>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
-						"</supplier_bill_items>";	
+						"</supplier_bill_items>";
 			delete_simple(data_xml);
-					
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -3083,10 +3083,10 @@ function form161_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var cp=form.elements[0].value;
 			var data_id=form.elements[3].value;
-			
+
 			var data_xml="<checklist_items>" +
 						"<id>"+data_id+"</id>" +
 						"</checklist_items>";
@@ -3108,8 +3108,8 @@ function form161_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}				
-			
+			}
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -3131,11 +3131,11 @@ function form162_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var item=form.elements[0].value;
 			var cp=form.elements[1].value;
 			var data_id=form.elements[3].value;
-			
+
 			var data_xml="<checklist_mapping>" +
 						"<id>"+data_id+"</id>" +
 						"</checklist_mapping>";
@@ -3154,8 +3154,8 @@ function form162_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}				
-			
+			}
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -3177,10 +3177,10 @@ function form167_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var name=form.elements[0].value;
 			var data_id=form.elements[6].value;
-			
+
 			var data_xml="<storage_structure>" +
 						"<id>"+data_id+"</id>" +
 						"</storage_structure>";
@@ -3199,8 +3199,8 @@ function form167_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}				
-			
+			}
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -3222,7 +3222,7 @@ function form169_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var name=form.elements[0].value;
 			var description=form.elements[1].value;
 			var make=form.elements[2].value;
@@ -3230,7 +3230,7 @@ function form169_delete_item(button)
 			var last_updated=get_my_time();
 			var data_xml="<product_master>" +
 						"<id>"+data_id+"</id>" +
-						"</product_master>";	
+						"</product_master>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>product_master</tablename>" +
@@ -3262,7 +3262,7 @@ function form169_delete_item(button)
 					"<name>"+name+"</name>" +
 					"<type>product</type>" +
 					"</reviews>";
-	
+
 			delete_row(data_xml,activity_xml);
 			delete_simple(other_delete);
 			delete_simple(other_delete2);
@@ -3292,14 +3292,14 @@ function form170_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var name=form.elements[0].value;
 			var data_id=form.elements[7].value;
 			var last_updated=get_my_time();
 			var data_xml="<store_areas>" +
 						"<id>"+data_id+"</id>" +
 						"<name>"+name+"</name>" +
-						"</store_areas>";	
+						"</store_areas>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>store_areas</tablename>" +
@@ -3315,7 +3315,7 @@ function form170_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -3338,7 +3338,7 @@ function form171_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var name=form.elements[0].value;
 			var data_id=form.elements[3].value;
 			var data_xml="<sale_channels>" +
@@ -3373,7 +3373,7 @@ function form171_delete_item(button)
 						"<name unique='yes'>"+name+"_order_time_limit</name>" +
 						"<type>accounting</type>"+
 						"</user_preferences>";
-			
+
 			delete_row(data_xml,activity_xml);
 			delete_simple(pickup_xml);
 			delete_simple(sku_xml);
@@ -3447,7 +3447,7 @@ function form173_delete_item(button)
 			var last_updated=get_my_time();
 			var data_xml="<sku_mapping>" +
 						"<id>"+data_id+"</id>" +
-						"</sku_mapping>";	
+						"</sku_mapping>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>sku_mapping</tablename>" +
@@ -3486,7 +3486,7 @@ function form174_delete_item(button)
 			var last_updated=get_my_time();
 			var data_xml="<pickup_charges>" +
 						"<id>"+data_id+"</id>" +
-						"</pickup_charges>";	
+						"</pickup_charges>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>pickup_charges</tablename>" +
@@ -3502,7 +3502,7 @@ function form174_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -3531,7 +3531,7 @@ function form175_delete_item(button)
 			var last_updated=get_my_time();
 			var data_xml="<channel_category>" +
 						"<id>"+data_id+"</id>" +
-						"</channel_category>";	
+						"</channel_category>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>channel_category</tablename>" +
@@ -3547,7 +3547,7 @@ function form175_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -3576,7 +3576,7 @@ function form177_delete_item(button)
 			var last_updated=get_my_time();
 			var data_xml="<prioritization_parameters>" +
 						"<id>"+data_id+"</id>" +
-						"</prioritization_parameters>";	
+						"</prioritization_parameters>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>prioritization_parameters</tablename>" +
@@ -3592,7 +3592,7 @@ function form177_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -3621,7 +3621,7 @@ function form184_delete_item(button)
 			var last_updated=get_my_time();
 			var data_xml="<business_processes>" +
 						"<id>"+data_id+"</id>" +
-						"</business_processes>";	
+						"</business_processes>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>business_processes</tablename>" +
@@ -3637,7 +3637,7 @@ function form184_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -3666,7 +3666,7 @@ function form187_delete_item(button)
 			var last_updated=get_my_time();
 			var data_xml="<business_processes>" +
 						"<id>"+data_id+"</id>" +
-						"</business_processes>";	
+						"</business_processes>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>business_processes</tablename>" +
@@ -3682,7 +3682,7 @@ function form187_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -3709,7 +3709,7 @@ function form188_delete_item(button)
 			var data_id=form.elements[5].value;
 			var data_xml="<task_instances>" +
 						"<id>"+data_id+"</id>" +
-						"</task_instances>";	
+						"</task_instances>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>task_instances</tablename>" +
@@ -3725,7 +3725,7 @@ function form188_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -3753,7 +3753,7 @@ function form190_delete_item(button)
 			var data_id=form.elements[5].value;
 			var data_xml="<sale_orders>" +
 						"<id>"+data_id+"</id>" +
-						"</sale_orders>";		
+						"</sale_orders>";
 			var task_xml="<task_instances>" +
 						"<id>"+data_id+"</id>" +
 						"</task_instances>";
@@ -3766,7 +3766,7 @@ function form190_delete_item(button)
 			{
 				local_delete_simple(data_xml);
 				local_delete_simple(task_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -3788,16 +3788,16 @@ function form192_delete_item(button)
 		{
 			var master_form=document.getElementById("form192_master");
 			var bill_id=master_form.elements[5].value;
-					
+
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var data_id=form.elements[6].value;
-			
+
 			var data_xml="<supplier_bill_items>" +
 						"<id>"+data_id+"</id>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
-						"</supplier_bill_items>";	
+						"</supplier_bill_items>";
 			if(is_online())
 			{
 				server_delete_simple(data_xml);
@@ -3806,7 +3806,7 @@ function form192_delete_item(button)
 			{
 				local_delete_simple(data_xml);
 			}
-					
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -3832,7 +3832,7 @@ function form195_delete_item(button)
 			var data_id=form.elements[3].value;
 			var data_xml="<letterheads>" +
 						"<id>"+data_id+"</id>" +
-						"</letterheads>";		
+						"</letterheads>";
 			if(is_online())
 			{
 				server_delete_simple(data_xml);
@@ -3840,7 +3840,7 @@ function form195_delete_item(button)
 			else
 			{
 				local_delete_simple(data_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -3859,12 +3859,12 @@ function form202_delete_item(button)
 {
 	if(is_update_access('form202'))
 	{
-		var master_form=document.getElementById("form202_master");		
+		var master_form=document.getElementById("form202_master");
 		var target=master_form.elements['target'].value;
-		
+
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
-		
+
 		var awb_num=form.elements[0].value;
 		var status='received';
 		var id=form.elements[3].value;
@@ -3887,7 +3887,7 @@ function form202_delete_item(button)
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			update_row(data_xml,activity_xml);
-		}	
+		}
 		$(button).parent().parent().remove();
 	}
 	else
@@ -3906,13 +3906,13 @@ function form204_delete_item(button)
 	{
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
-		
+
 		var awb_num=form.elements[0].value;
 		var status='out for delivery';
 		var id=form.elements[2].value;
 		var last_updated=get_my_time();
 		if(id!="")
-		{		
+		{
 			var data_xml="<logistics_orders>" +
 						"<id>"+id+"</id>" +
 						//"<awb_num>"+awb_num+"</awb_num>" +
@@ -3928,7 +3928,7 @@ function form204_delete_item(button)
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			update_row(data_xml,activity_xml);
-		}		
+		}
 		$(button).parent().parent().remove();
 	}
 	else
@@ -3947,7 +3947,7 @@ function form205_delete_item(button)
 	{
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
-		
+
 		var awb_num=form.elements[0].value;
 		var status='out for delivery';
 		var id=form.elements[2].value;
@@ -3988,13 +3988,13 @@ function form206_delete_item(button)
 	{
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
-		
+
 		var awb_num=form.elements[0].value;
 		var status='out for delivery';
 		var id=form.elements[2].value;
 		var last_updated=get_my_time();
 		if(id!="")
-		{		
+		{
 			var data_xml="<logistics_orders>" +
 						"<id>"+id+"</id>" +
 						//"<awb_num>"+awb_num+"</awb_num>" +
@@ -4010,7 +4010,7 @@ function form206_delete_item(button)
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			update_row(data_xml,activity_xml);
-		}	
+		}
 		$(button).parent().parent().remove();
 	}
 	else
@@ -4037,7 +4037,7 @@ function form207_delete_item(button)
 			var last_updated=get_my_time();
 			var data_xml="<product_instances>" +
 						"<id>"+data_id+"</id>" +
-						"</product_instances>";	
+						"</product_instances>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>product_instances</tablename>" +
@@ -4050,7 +4050,7 @@ function form207_delete_item(button)
 						"<item_name>"+name+"</item_name>" +
 						"<batch>"+batch+"</batch>" +
 						"</area_utilization>";
-			
+
 			if(is_online())
 			{
 				server_delete_row(data_xml,activity_xml);
@@ -4060,7 +4060,7 @@ function form207_delete_item(button)
 			{
 				local_delete_row(data_xml,activity_xml);
 				local_delete_simple(other_delete);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -4097,15 +4097,15 @@ function form208_delete_item(button)
 						"<notes>Treatment plan # "+plan_num+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			
+
 			var items_xml="<treatment_plan_items>" +
-						"<id></id>"+						
+						"<id></id>"+
 						"<plan_id exact='yes'>"+data_id+"</plan_id>" +
-						"</treatment_plan_items>";	
-			
+						"</treatment_plan_items>";
+
 			delete_row(data_xml,activity_xml);
 			delete_simple(items_xml);
-			
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -4132,9 +4132,9 @@ function form209_delete_item(button)
 			var last_updated=get_my_time();
 			var data_xml="<treatment_plan_items>" +
 						"<id>"+data_id+"</id>" +
-						"</treatment_plan_items>";	
+						"</treatment_plan_items>";
 			delete_simple(data_xml);
-			
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -4158,7 +4158,7 @@ function form215_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var data_id=form.elements[4].value;
 			var last_updated=get_my_time();
 			var data_xml="<bills>" +
@@ -4192,7 +4192,7 @@ function form217_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var data_id=form.elements[5].value;
 			var last_updated=get_my_time();
 			var data_xml="<supplier_item_mapping>" +
@@ -4205,7 +4205,7 @@ function form217_delete_item(button)
 			else
 			{
 				local_delete_simple(data_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -4228,14 +4228,14 @@ function form223_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var order_num=form.elements[0].value;
 			var supplier_name=form.elements[1].value;
 			var data_id=form.elements[4].value;
 			var last_updated=get_my_time();
 			var data_xml="<purchase_orders>" +
 						"<id>"+data_id+"</id>" +
-						"</purchase_orders>";	
+						"</purchase_orders>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>purchase_orders</tablename>" +
@@ -4270,11 +4270,11 @@ function form222_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var data_id=form.elements[8].value;
 			var data_xml="<purchase_order_items>" +
 						"<id>"+data_id+"</id>" +
-						"</purchase_order_items>";	
+						"</purchase_order_items>";
 			if(is_online())
 			{
 				server_delete_simple(data_xml);
@@ -4282,7 +4282,7 @@ function form222_delete_item(button)
 			else
 			{
 				local_delete_simple(data_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -4306,13 +4306,13 @@ function form228_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var item=form.elements[0].value;
 			var data_id=form.elements[6].value;
 			var last_updated=get_my_time();
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
-						"</bill_items>";	
+						"</bill_items>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>bill_items</tablename>" +
@@ -4323,8 +4323,8 @@ function form228_delete_item(button)
 						"</activity>";
 			var data2_xml="<bill_items>" +
 						"<issue_id>"+data_id+"</issue_id>" +
-						"</bill_items>";	
-						
+						"</bill_items>";
+
 			delete_row(data_xml,activity_xml);
 			delete_simple(data2_xml);
 			$(button).parent().parent().remove();
@@ -4349,13 +4349,13 @@ function form229_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var item=form.elements[0].value;
 			var data_id=form.elements[6].value;
 			var last_updated=get_my_time();
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
-						"</bill_items>";	
+						"</bill_items>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>bill_items</tablename>" +
@@ -4366,8 +4366,8 @@ function form229_delete_item(button)
 						"</activity>";
 			var data2_xml="<bill_items>" +
 						"<issue_id>"+data_id+"</issue_id>" +
-						"</bill_items>";	
-						
+						"</bill_items>";
+
 			delete_row(data_xml,activity_xml);
 			delete_simple(data2_xml);
 			$(button).parent().parent().remove();
@@ -4392,14 +4392,14 @@ function form230_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var item=form.elements[0].value;
 			var issue_type=form.elements[2].value;
 			var data_id=form.elements[7].value;
 			var last_updated=get_my_time();
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
-						"</bill_items>";	
+						"</bill_items>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>bill_items</tablename>" +
@@ -4435,7 +4435,7 @@ function form231_delete_item(button)
 			var last_updated=get_my_time();
 			var data_xml="<prescription_items>" +
 						"<id>"+data_id+"</id>" +
-						"</prescription_items>";	
+						"</prescription_items>";
 			delete_simple(data_xml);
 			$(button).parent().parent().remove();
 		});
@@ -4475,95 +4475,13 @@ function form232_delete_item(button)
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			delete_row(data_xml,activity_xml);
-			
-			var items_xml="<prescription_items>" +
-						"<id></id>"+						
-						"<p_id exact='yes'>"+data_id+"</p_id>" +
-						"</prescription_items>";	
-			delete_simple(items_xml);
-			
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
-/**
- * @form Manage Products (without tax)
- * @param button
- */
-function form234_delete_item(button)
-{
-	if(is_delete_access('form234'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			
-			var name=form.elements[0].value;
-			var make=form.elements[1].value;
-			var description=form.elements[2].value;
-			var data_id=form.elements[3].value;
-			var last_updated=get_my_time();
-			var data_xml="<product_master>" +
-						"<id>"+data_id+"</id>" +
-						"</product_master>";	
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>product_master</tablename>" +
-						"<link_to>form234</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Product "+name+" from inventory</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var other_delete="<product_instances>" +
-					"<product_name>"+name+"</product_name>" +
-					"</product_instances>";
-			var other_delete2="<documents>" +
-					"<doc_type>product</doc_type>" +
-					"<target_id>"+data_id+"</target_id>" +
-					"</documents>";
-			var other_delete3="<pre_requisites>" +
-					"<name>"+name+"</name>" +
-					"<type>product</type>" +
-					"</pre_requisites>";
-			var other_delete4="<attributes>" +
-					"<name>"+name+"</name>" +
-					"<type>product</type>" +
-					"</attributes>";
-			var other_delete5="<cross_sells>" +
-					"<name>"+name+"</name>" +
-					"<type>product</type>" +
-					"</cross_sells>";
-			var other_delete6="<reviews>" +
-					"<name>"+name+"</name>" +
-					"<type>product</type>" +
-					"</reviews>";
-	
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-				server_delete_simple(other_delete);
-				server_delete_simple(other_delete2);
-				server_delete_simple(other_delete3);
-				server_delete_simple(other_delete4);
-				server_delete_simple(other_delete5);
-				server_delete_simple(other_delete6);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-				local_delete_simple(other_delete);
-				local_delete_simple(other_delete2);
-				local_delete_simple(other_delete3);
-				local_delete_simple(other_delete4);
-				local_delete_simple(other_delete5);
-				local_delete_simple(other_delete6);
-			}	
+			var items_xml="<prescription_items>" +
+						"<id></id>"+
+						"<p_id exact='yes'>"+data_id+"</p_id>" +
+						"</prescription_items>";
+			delete_simple(items_xml);
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -4585,7 +4503,7 @@ function form235_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var name=form.elements[3].value;
 			var make=form.elements[4].value;
 			var description=form.elements[2].value;
@@ -4594,7 +4512,7 @@ function form235_delete_item(button)
 			var last_updated=get_my_time();
 			var data_xml="<product_master>" +
 						"<id>"+data_id+"</id>" +
-						"</product_master>";	
+						"</product_master>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>product_master</tablename>" +
@@ -4626,7 +4544,7 @@ function form235_delete_item(button)
 					"<name>"+name+"</name>" +
 					"<type>product</type>" +
 					"</reviews>";
-	
+
 			delete_row(data_xml,activity_xml);
 			delete_simple(other_delete);
 			delete_simple(other_delete2);
@@ -4634,7 +4552,7 @@ function form235_delete_item(button)
 			delete_simple(other_delete4);
 			delete_simple(other_delete5);
 			delete_simple(other_delete6);
-			
+
 			$(button).parent().parent().parent().remove();
 		});
 	}
@@ -4661,7 +4579,7 @@ function form236_delete_item(button)
 			var data_id=form.elements[3].value;
 			var data_xml="<drs>" +
 						"<id>"+data_id+"</id>" +
-						"</drs>";	
+						"</drs>";
 			var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>drs</tablename>" +
@@ -4670,26 +4588,26 @@ function form236_delete_item(button)
 					"<notes>Manifest # "+drs_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-			
+
 			var drs_items_xml="<bills>"+
 							"<id></id>"+
 							"<manifest_num exact='yes'>"+drs_num+"</manifest_num>"+
-							"</bills>";			
+							"</bills>";
 			get_single_column_data(function(drs_items)
 			{
 				var data_xml="<bills>";
 				var counter=1;
 				var last_updated=get_my_time();
-				
+
 				drs_items.forEach(function(drs_item)
 				{
 					if((counter%500)===0)
 					{
 						data_xml+="</bills><separator></separator><bills>";
 					}
-						
+
 					counter+=1;
-				
+
 					data_xml+="<row>" +
 							"<id>"+drs_item+"</id>" +
 							"<manifest_num></manifest_num>" +
@@ -4700,9 +4618,9 @@ function form236_delete_item(button)
 				data_xml+="</bills>";
 				//console.log(data_xml);
 				update_batch(data_xml);
-				
+
 			},drs_items_xml);
-			
+
 			delete_row(data_xml,activity_xml);
 			$(button).parent().parent().remove();
 		});
@@ -4727,12 +4645,12 @@ function form245_delete_item(button)
 			var form=document.getElementById(form_id);
 
 			var data_id=form.elements[3].value;
-			
+
 			var pre_requisites_xml="<pre_requisites>"+
 							"<id>"+data_id+"</id>"+
 							"</pre_requisites>";
 			delete_simple(pre_requisites_xml);
-			
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -4795,7 +4713,7 @@ function form249_delete_item(button)
 			var data_id=form.elements[4].value;
 			var data_xml="<transit_bags>" +
 						"<id>"+data_id+"</id>" +
-						"</transit_bags>";	
+						"</transit_bags>";
 			var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>transit_bags</tablename>" +
@@ -4804,27 +4722,27 @@ function form249_delete_item(button)
 					"<notes>Bag # "+bag_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-			
+
 			var bag_items_xml="<logistics_orders>"+
 							"<id></id>"+
 							"<status exact='yes'>in-transit</status>"+
 							"<bag_num exact='yes'>"+bag_num+"</bag_num>"+
-							"</logistics_orders>";			
+							"</logistics_orders>";
 			get_single_column_data(function(bag_items)
 			{
 				var data_xml="<logistics_orders>";
 				var counter=1;
 				var last_updated=get_my_time();
-				
+
 				bag_items.forEach(function(bag_item)
 				{
 					if((counter%500)===0)
 					{
 						data_xml+="</logistics_orders><separator></separator><logistics_orders>";
 					}
-						
+
 					counter+=1;
-				
+
 					data_xml+="<row>" +
 							"<id>"+bag_item+"</id>" +
 							"<bag_num></bag_num>" +
@@ -4836,9 +4754,9 @@ function form249_delete_item(button)
 				data_xml+="</logistics_orders>";
 				//console.log(data_xml);
 				update_batch(data_xml);
-				
+
 			},bag_items_xml);
-			
+
 			delete_row(data_xml,activity_xml);
 			$(button).parent().parent().remove();
 		});
@@ -4901,7 +4819,7 @@ function form251_delete_item(button)
 			var data_id=form.elements[4].value;
 			var data_xml="<mts>" +
 						"<id>"+data_id+"</id>" +
-						"</mts>";	
+						"</mts>";
 			var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>mts</tablename>" +
@@ -4910,28 +4828,28 @@ function form251_delete_item(button)
 					"<notes>MTS # "+mts+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-			
+
 			var bag_items_xml="<transit_bags>"+
 							"<id></id>"+
 							"<status exact='yes'>in-transit</status>"+
 							"<mts exact='yes'>"+mts+"</mts>"+
 							"</transit_bags>";
-										
+
 			get_single_column_data(function(bag_items)
 			{
 				var data_xml="<transit_bags>";
 				var counter=1;
 				var last_updated=get_my_time();
-				
+
 				bag_items.forEach(function(bag_item)
 				{
 					if((counter%500)===0)
 					{
 						data_xml+="</transit_bags><separator></separator><transit_bags>";
 					}
-						
+
 					counter+=1;
-				
+
 					data_xml+="<row>" +
 							"<id>"+bag_item+"</id>" +
 							"<mts></mts>" +
@@ -4943,9 +4861,9 @@ function form251_delete_item(button)
 				data_xml+="</transit_bags>";
 				//console.log(data_xml);
 				update_batch(data_xml);
-				
+
 			},bag_items_xml);
-			
+
 			delete_row(data_xml,activity_xml);
 			$(button).parent().parent().remove();
 		});
@@ -5149,14 +5067,14 @@ function form275_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var item=form.elements[0].value;
 			var issue_type=form.elements[2].value;
 			var data_id=form.elements[6].value;
 			var last_updated=get_my_time();
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
-						"</bill_items>";	
+						"</bill_items>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>bill_items</tablename>" +
@@ -5202,12 +5120,12 @@ function form289_delete_item(button)
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			var follow_xml="<followups>"+
-			            "<source_id>"+data_id+"</source_id>"+		                
+			            "<source_id>"+data_id+"</source_id>"+
 		    			"</followups>";
-						
+
 			delete_row(data_xml,activity_xml);
 			delete_simple(follow_xml);
-			
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -5233,7 +5151,7 @@ function form290_delete_item(button)
 			var data_xml="<cities_data>" +
 						"<id>"+data_id+"</id>" +
 						"</cities_data>";
-						
+
 			delete_simple(data_xml);
 			$(button).parent().parent().remove();
 		});
@@ -5261,17 +5179,17 @@ function form292_delete_item(button)
 
 			var new_columns=new Object();
 			new_columns.data_store='system_billing';
-			new_columns.database='re_user_'+domain;			
+			new_columns.database='re_user_'+domain;
 			new_columns.data=[{index:'id',value:form.elements[12].value}];
 			server_delete_master(new_columns);
 
 			var two_columns=new Object();
 			two_columns.data_store='bills';
-			two_columns.database='re_user_vyavsaay';			
+			two_columns.database='re_user_vyavsaay';
 			two_columns.data=[{index:'id',value:form.elements[12].value},
 								{index:'status',value:'cancelled'},
 								{index:'last_updated',value:get_my_time()}];
-			server_update_master(two_columns);			
+			server_update_master(two_columns);
 		});
 	}
 	else
@@ -5294,12 +5212,12 @@ function form294_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			var data_id=form.elements[5].value;
-					
+
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
-						"</bill_items>";	
+						"</bill_items>";
 			delete_simple(data_xml);
-					
+
 			$(button).parent().parent().remove();
 			form294_update_serial_numbers();
 		});
@@ -5324,12 +5242,12 @@ function form295_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			var data_id=form.elements[5].value;
-					
+
 			var data_xml="<supplier_bill_items>" +
 						"<id>"+data_id+"</id>" +
-						"</supplier_bill_items>";	
+						"</supplier_bill_items>";
 			delete_simple(data_xml);
-					
+
 			$(button).parent().parent().remove();
 			form295_update_serial_numbers();
 		});
@@ -5352,14 +5270,14 @@ function form297_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var order_num=form.elements[0].value;
 			var supplier_name=form.elements[1].value;
 			var data_id=form.elements[4].value;
 			var last_updated=get_my_time();
 			var data_xml="<purchase_orders>" +
 						"<id>"+data_id+"</id>" +
-						"</purchase_orders>";	
+						"</purchase_orders>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>purchase_orders</tablename>" +
@@ -5394,13 +5312,13 @@ function form296_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var data_id=form.elements[10].value;
 			var data_xml="<purchase_order_items>" +
 						"<id>"+data_id+"</id>" +
-						"</purchase_order_items>";	
+						"</purchase_order_items>";
 			delete_simple(data_xml);
-				
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -5423,12 +5341,12 @@ function form300_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var name=form.elements[0].value;
 			var data_id=form.elements[7].value;
 			var data_xml="<product_master>" +
 						"<id>"+data_id+"</id>" +
-						"</product_master>";	
+						"</product_master>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>product_master</tablename>" +
@@ -5448,7 +5366,7 @@ function form300_delete_item(button)
 					"<name exact='yes'>"+name+"</name>" +
 					"<type>product</type>" +
 					"</attributes>";
-			
+
 			delete_row(data_xml,activity_xml);
 			delete_simple(other_delete);
 			delete_simple(other_delete2);
@@ -5474,13 +5392,13 @@ function form302_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var data_id=form.elements[4].value;
 			var data_xml="<qr_contexts>" +
 						"<id>"+data_id+"</id>" +
-						"</qr_contexts>";	
+						"</qr_contexts>";
 			delete_simple(data_xml);
-			
+
 			$(button).parent().parent().remove();
 		});
 	}

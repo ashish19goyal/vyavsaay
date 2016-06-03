@@ -115,7 +115,7 @@
 			<name>footer_message</name>
 			<display_name>Footer Message</display_name>
 			<status>active</status>
-			<value>2015 Vyavsaay.com</value>
+			<value>2016 Vyavsaay.com</value>
 			<type>hidden</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -412,7 +412,7 @@
 			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
-		<row>		
+		<row>
 			<name>report93</name>
 			<display_name>Stock Report</display_name>
 			<status>active</status>
@@ -939,7 +939,7 @@
 			<sync>checked</sync>
 			<tables>--system_billing--</tables>
 			<last_updated>1</last_updated>
-		</row>		
+		</row>
 		<row>
 			<name>form287</name>
 			<display_name>Table Structure</display_name>
@@ -950,7 +950,7 @@
 			<sync>checked</sync>
 			<tables></tables>
 			<last_updated>1</last_updated>
-		</row>		
+		</row>
 		<row>
 			<name>form288</name>
 			<display_name>Overwrite Functions</display_name>
@@ -961,7 +961,7 @@
 			<sync>checked</sync>
 			<tables></tables>
 			<last_updated>1</last_updated>
-		</row>		
+		</row>
 		<row>
 			<name>form298</name>
 			<display_name>Newsletter Components</display_name>
@@ -1513,7 +1513,7 @@
 			<up>checked</up>
 			<del>checked</del>
 			<last_updated>1</last_updated>
-		</row>				
+		</row>
 		<row>
 			<username>master</username>
 			<element_id>form237</element_id>
@@ -1568,7 +1568,7 @@
 			<up>checked</up>
 			<del>checked</del>
 			<last_updated>1</last_updated>
-		</row>				
+		</row>
 		<row>
 			<username>master</username>
 			<element_id>form262</element_id>
@@ -1579,7 +1579,7 @@
 			<up>checked</up>
 			<del>checked</del>
 			<last_updated>1</last_updated>
-		</row>				
+		</row>
 		<row>
 			<username>master</username>
 			<element_id>form263</element_id>
@@ -1590,7 +1590,7 @@
 			<up>checked</up>
 			<del>checked</del>
 			<last_updated>1</last_updated>
-		</row>				
+		</row>
 		<row>
 			<username>master</username>
 			<element_id>form264</element_id>
@@ -1601,7 +1601,7 @@
 			<up>checked</up>
 			<del>checked</del>
 			<last_updated>1</last_updated>
-		</row>				
+		</row>
 		<row>
 			<username>master</username>
 			<element_id>form276</element_id>
@@ -1612,7 +1612,7 @@
 			<up>checked</up>
 			<del>checked</del>
 			<last_updated>1</last_updated>
-		</row>				
+		</row>
 		<row>
 			<username>master</username>
 			<element_id>form277</element_id>
@@ -1634,7 +1634,7 @@
 			<up>checked</up>
 			<del>checked</del>
 			<last_updated>1</last_updated>
-		</row>				
+		</row>
 		<row>
 			<username>master</username>
 			<element_id>form281</element_id>
@@ -1656,7 +1656,7 @@
 			<up>checked</up>
 			<del>checked</del>
 			<last_updated>1</last_updated>
-		</row>						
+		</row>
 		<row>
 			<username>master</username>
 			<element_id>form286</element_id>
@@ -1667,7 +1667,7 @@
 			<up>checked</up>
 			<del>checked</del>
 			<last_updated>1</last_updated>
-		</row>												
+		</row>
 		<row>
 			<username>master</username>
 			<element_id>form287</element_id>
@@ -1678,7 +1678,7 @@
 			<up>checked</up>
 			<del>checked</del>
 			<last_updated>1</last_updated>
-		</row>												
+		</row>
 		<row>
 			<username>master</username>
 			<element_id>form288</element_id>
@@ -1689,7 +1689,7 @@
 			<up>checked</up>
 			<del>checked</del>
 			<last_updated>1</last_updated>
-		</row>		
+		</row>
 		<row>
 			<username>master</username>
 			<element_id>form298</element_id>
@@ -1700,7 +1700,7 @@
 			<up>checked</up>
 			<del>checked</del>
 			<last_updated>1</last_updated>
-		</row>												
+		</row>
 		<row>
 			<username>master</username>
 			<element_id>form299</element_id>
@@ -1722,7 +1722,7 @@
 			<up>checked</up>
 			<del>checked</del>
 			<last_updated>1</last_updated>
-		</row>				
+		</row>
 		<row>
 			<username>master</username>
 			<element_id>form314</element_id>
@@ -1733,6 +1733,6 @@
 			<up>checked</up>
 			<del>checked</del>
 			<last_updated>1</last_updated>
-		</row>				
+		</row>
 	</access_control>
 </re_xml>

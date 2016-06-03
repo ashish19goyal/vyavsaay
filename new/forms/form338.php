@@ -1,13 +1,13 @@
-<div id='form338' class='tab-pane portlet box green-meadow'>	   
+<div id='form338' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick=form338_add_item();>Start Scanning <i class='fa fa-plus'></i></a>
 		</div>
-		<div class='actions'>		
+		<div class='actions'>
 			<a class='btn grey btn-outline btn-sm' id='form338_add_evidence' title='Upload documents after scanning orders'>Add Evidence <i class='fa fa-file-o'></i></a>
 		</div>
 	</div>
-	
+
 	<div class="portlet-body">
 	   <form id='form338_master' autocomplete="off">
             <fieldset>
@@ -16,7 +16,7 @@
                 <input type='submit' class='submit_hidden'>
             </fieldset>
         </form>
-        
+
         <br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
@@ -34,7 +34,7 @@
 			</tbody>
 		</table>
 	</div>
-    
+
     <script>
     function form338_header_ini()
     {
@@ -45,10 +45,10 @@
 
         var staff_data={data_store:'staff',return_column:'acc_name'};
         set_my_value_list_json(staff_data,picked_filter);
-        
-        comments_filter.value="";	
-        picked_filter.value="";	
-        
+
+        comments_filter.value="";
+        picked_filter.value="";
+
         $(fields).off('submit');
         $(fields).on('submit',function(event)
         {
@@ -71,10 +71,10 @@
             });
             modal210_action(description);
         });
-        
+
         $('#form338_body').html("");
         $('#form338').formcontrol();
-        
+
         var paginator=$('#form338_body').paginator({visible:false});
     }
 
@@ -119,9 +119,9 @@
             var id_filter=fields.elements[5];
             var order_history=fields.elements['order_history'];
 
-            $(awb_filter).on('keydown',function (event) 
+            $(awb_filter).on('keydown',function (event)
             {
-                if(event.keyCode == 13 ) 
+                if(event.keyCode == 13 )
                 {
                     event.preventDefault();
 
@@ -131,7 +131,7 @@
                         var subform_id=$(this).attr('form');
                         var subform=document.getElementById(subform_id);
 
-                        if(subform.elements[0].value==awb_filter.value)	
+                        if(subform.elements[0].value==awb_filter.value)
                             double_entry+=1;
                     });
 
@@ -159,7 +159,7 @@
                                 form338_update_item(fields);
                                 form338_add_item();
                             }
-                            else 
+                            else
                             {
                                 pieces_filter.value="";
                                 product_filter.value="";
@@ -172,11 +172,11 @@
                             }
                         });
                     }
-                    else 
+                    else
                     {
                         awb_filter.value="";
                         $("#modal65_link").click();
-                    }		
+                    }
                 }
             });
 
@@ -190,7 +190,7 @@
                     var subform_id=$(this).attr('form');
                     var subform=document.getElementById(subform_id);
 
-                    if(subform.elements[0].value==awb_filter.value)	
+                    if(subform.elements[0].value==awb_filter.value)
                         double_entry+=1;
                 });
 
@@ -198,7 +198,7 @@
                 {
                     form338_add_item();
                 }
-                else 
+                else
                 {
                     awb_filter.value="";
                     $("#modal65_link").click();
@@ -219,7 +219,7 @@
         if(is_update_access('form338'))
         {
             //console.log('338 update');
-            var master_form=document.getElementById("form338_master");		
+            var master_form=document.getElementById("form338_master");
             var comments=master_form.elements['comment'].value;
             var picked_by=master_form.elements['picked'].value;
 
@@ -230,14 +230,14 @@
 
             var old_order_history=form.elements['order_history'].value;
 
-            var order_history=JSON.parse(old_order_history);
+            var order_history=vUtil.jsonParse(old_order_history);
             var history_object=new Object();
             history_object.timeStamp=get_my_time();
             history_object.details=comments;
             history_object.location=get_session_var('address');
             history_object.status=status;
             order_history.push(history_object);
-            var order_history_string=JSON.stringify(order_history);		
+            var order_history_string=JSON.stringify(order_history);
 
             var data_json={data_store:'logistics_orders',
 	 				data:[{index:'id',value:id},
@@ -255,7 +255,7 @@
             $("#modal2_link").click();
         }
     }
-        
+
     function form338_delete_item(button)
     {
         if(is_update_access('form338'))
@@ -268,19 +268,19 @@
             var id=form.elements[5].value;
             var last_updated=get_my_time();
             if(id!="")
-            {		
+            {
                 var data_json={data_store:'logistics_orders',
 	 				data:[{index:'id',value:id},
                          {index:'status',value:status},
                          {index:'last_updated',value:last_updated}]};
                 update_json(data_json);
-            }	
+            }
             $(button).parent().parent().remove();
         }
         else
         {
             $("#modal2_link").click();
         }
-    }    
+    }
     </script>
 </div>

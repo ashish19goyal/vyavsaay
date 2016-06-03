@@ -6,12 +6,12 @@
 
 	<style>
 /*	<!-- body {background-color:#CBE32D} -->
-	
+
 	body {
 		background-color:#FFC04D;
 	}
-*/	
-		
+*/
+
 	.righties {
 		float:left;
 		padding:5px;
@@ -36,11 +36,11 @@
 		}
 	img{
 		width:90%;
-		margin-bottom:40px ; 
-		margin-top:10px; 
+		margin-bottom:40px ;
+		margin-top:10px;
 		margin-left:4%;
 	}
-	
+
 	input[type=button]{
 		width: 90%;
 		margin: 1% 4%;
@@ -104,7 +104,7 @@
 	    background: url(../client_images/sound_background2.jpeg) black;
 	    background-size: 100% 100%;
 	    background-repeat: no-repeat;
-	} 
+	}
 */	</style>
 
 	<script>
@@ -112,7 +112,7 @@
 	    function initialize_contact_form()
 	    {
 		    var vars = {};
-			var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) 
+			var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value)
 			{
 					vars[key] = value;
 			});
@@ -131,13 +131,13 @@
 			{
 				myFunction();
 			});
-*/			form.elements['domain'].value=vars['d'];	
+*/			form.elements['domain'].value=vars['d'];
 			document.getElementById("logo").src="../client_images/"+vars['d']+".png";
 			if(vars['r']=='y')
 				document.getElementById("footer_message").innerHTML="Powered by Rise Consulting";
-				
+
 	    }
-	
+
 		function myFunction()
 		{
 			var xmlhttp = new XMLHttpRequest();
@@ -183,13 +183,13 @@
 			<input type="hidden" name="domain" placeholder="City">
 			<input type="button" onclick='myFunction();' value='Save'>
 		</form>
-		
+
 		<br><br>
 		<h1 id="thankYou"></h1>
-		
+
 	</div>
 	<div class='footer'>
-			<a id='footer_message'>&copy; 2015 Vyavsaay.com</a> 
+			<a id='footer_message'>&copy; 2016 Vyavsaay.com</a> 
 	</div>
 </body>
 </html>

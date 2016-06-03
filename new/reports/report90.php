@@ -7,9 +7,9 @@
 			<label>Invoice #<br><input type='text' name='bill'></label>
 			<label><input type='submit' name='refresh' value='Refresh' class='generic_icon'></label>
 			<label><input type='button' name='print' title='Print visible data' class='print_icon'></label>
-			<label><input type='button' title='Download Visible Data' class='csv_icon' name='csv'></label>			
-			<label><input type='button' title='Download All Data' class='csv_red_icon' name='all_csv'></label>			
-			</label>	
+			<label><input type='button' title='Download Visible Data' class='csv_icon' name='csv'></label>
+			<label><input type='button' title='Download All Data' class='csv_red_icon' name='all_csv'></label>
+			</label>
 			<br>
 			<label style='background-color:#B93C42;color:#fff;padding:3px;'>Scan Rack<br><input type='text' style='color:#000;' name='rack'></label>
 		</fieldset>
@@ -26,7 +26,7 @@
 				<th>Quantity</th>
 				<th style='width:160px;'>Storage</th>
 				<th><div class='report_result_count_selected'>20</div><div class='report_result_count'>50</div><div class='report_result_count'>100</div>
-					<input type='button' class='generic_icon' title='Close Selected Pickings' value='Close All' id='report90_close_all_picks'>				
+					<input type='button' class='generic_icon' title='Close Selected Pickings' value='Close All' id='report90_close_all_picks'>
 				</th>
 			</tr>
 		</thead>
@@ -39,30 +39,30 @@
 		<div style='display:hidden;' id='report90_index' data-index='0'></div>
 		<img src='./images/next.png' id='report90_next' class='next_icon' data-index='25' onclick="$('#report90_index').attr('data-index',$(this).attr('data-index')); report90_ini();">
 	</div>
-	
+
 	<script>
 
 function report90_header_ini()
-{	
+{
 	var form=document.getElementById('report90_header');
 	//var channel_filter=form.elements['channel'];
 	var order_filter=form.elements['order'];
 	var bill_filter=form.elements['bill'];
-	
+
 	var rack_filter=form.elements['rack'];
 
 	$('.report_result_count_selected').off('click');
 	$('.report_result_count').off('click');
-	$('.report_result_count').add('.report_result_count_selected').on('click',function () 
+	$('.report_result_count').add('.report_result_count_selected').on('click',function ()
 	{
 		//console.log('something');
 		$('.report_result_count_selected').attr('class','report_result_count');
 		$(this).attr('class','report_result_count_selected');
 	});
 
-	var close_all_picks=document.getElementById('report90_close_all_picks');	
+	var close_all_picks=document.getElementById('report90_close_all_picks');
 	$(close_all_picks).off('click');
-	$(close_all_picks).on('click',function () 
+	$(close_all_picks).on('click',function ()
 	{
 		$("[id^='row_report90_']").each(function(index)
 		{
@@ -73,11 +73,11 @@ function report90_header_ini()
 				//$(subform.elements[7]).trigger('click');
 			}
 		});
-	});	
+	});
 
 	var select_all_check=document.getElementById('report90_select_all');
 	$(select_all_check).off('change');
-	$(select_all_check).on('change',function () 
+	$(select_all_check).on('change',function ()
 	{
 		//console.log('changed');
 		if(select_all_check.checked)
@@ -87,22 +87,22 @@ function report90_header_ini()
 				$(this)[0].checked=true;
 			});
 		}
-		else 
+		else
 		{
 			$('.report90_select_box').each(function()
 			{
 				$(this)[0].checked=false;
 			});
 		}
-	});	
-	
+	});
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
 		report90_ini();
 	});
-	
+
 	$(rack_filter).off('click');
 	$(rack_filter).on('click',function()
 	{
@@ -112,21 +112,21 @@ function report90_header_ini()
 	var channel_data="<sale_channels>"+
 		"<name></name>"+
 		"</sale_channels>";
-	//set_my_filter(channel_data,channel_filter);					
-	
+	//set_my_filter(channel_data,channel_filter);
+
 	var order_data="<sale_orders>"+
 		"<order_num></order_num>"+
 		"</sale_orders>";
-	set_my_filter(order_data,order_filter);					
+	set_my_filter(order_data,order_filter);
 
 	var bill_data="<bills>"+
 		"<bill_num></bill_num>"+
 		"<status></status>"+
 		"</bills>";
-	set_my_filter(bill_data,bill_filter);					
-	
+	set_my_filter(bill_data,bill_filter);
+
 	$(rack_filter).off('keydown');
-	$(rack_filter).on('keydown',function (event) 
+	$(rack_filter).on('keydown',function (event)
 	{
 		if(event.keyCode==13)
 		{
@@ -143,20 +143,20 @@ function report90_ini()
 	var order_num=form.elements['order'].value;
 	var invoice_num=form.elements['bill'].value;
 	$('#report90_body').html('');
-	
+
 	var report_result_count=parseFloat($('.report_result_count_selected').html());
 	//console.log(report_result_count);
 	show_loader();
-	
+
 	var report90_count=0;
-	
+
 	////indexing///
 	var index_element=document.getElementById('report90_index');
 	var prev_element=document.getElementById('report90_prev');
 	var next_element=document.getElementById('report90_next');
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
-	console.log(start_index);		
+	console.log(start_index);
 	///////////////when channel or order number is specified///////////////////////////////////////////
 	if(order_num!="" || invoice_num!="")
 	{
@@ -168,7 +168,7 @@ function report90_ini()
 						"<bill_id>"+invoice_num+"</bill_id>"+
 						"<order_num>"+order_num+"</order_num>"+
 						"<order_date></order_date>"+
-						"<import_date></import_date>"+						
+						"<import_date></import_date>"+
 						"<billing_type></billing_type>"+
 						"<channel></channel>"+
 						"</sale_orders>";
@@ -176,7 +176,7 @@ function report90_ini()
 		{
 			if(bills.length>0)
 			{
-				var bill_id_object=JSON.parse(bills[0].bill_id);
+				var bill_id_object=vUtil.jsonParse(bills[0].bill_id);
 				var bill_id_string="--";
 				for(var a in bill_id_object)
 				{
@@ -193,7 +193,7 @@ function report90_ini()
 						"<picked_status exact='yes'>pending</picked_status>"+
 						"<bill_id array='yes'>"+bill_id_string+"</bill_id>"+
 						"</bill_items>";
-				
+
 				fetch_requested_data('report90',items_data,function(items)
 				{
 					var inventory_xml="<inventory_adjust>" +
@@ -208,14 +208,14 @@ function report90_ini()
 								"<source exact='yes'>picking</source>"+
 								"<picked_status exact='yes'>pending</picked_status>"+
 								"</inventory_adjust>";
-					
+
 					fetch_requested_data('report90',inventory_xml,function(adjust_results)
 					{
 						items.forEach(function(item)
 						{
 							item.table_type='bill_items';
 						});
-					
+
 						for(var z in adjust_results)
 						{
 							var adjust_item=new Object();
@@ -230,7 +230,7 @@ function report90_ini()
 							adjust_item.bill_id=adjust_results[z].source_id;
 							items.push(adjust_item);
 						}
-		
+
 						items.forEach(function(item)
 						{
 							var picked_quantity=item.picked_quantity;
@@ -239,11 +239,11 @@ function report90_ini()
 								picked_quantity=0;
 							}
 							item.picked_quantity=picked_quantity;
-							
+
 							report_result_count-=1;
 							item.order_num=bills[0].order_num;
 							item.bill_num=bills[0].bill_num;
-							
+
 							var rowsHTML="<tr>";
 								rowsHTML+="<form id='row_report90_"+item.id+"'></form>";
 								rowsHTML+="<td data-th='Select'>";
@@ -277,23 +277,23 @@ function report90_ini()
 									rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' name='order_num' value='"+bills[0].order_num+"'>";
 									rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' name='bill_id' value='"+item.bill_id+"'>";
 									rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' name='old_storage' value='"+item.storage+"'>";
-									rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' name='old_picked' value='"+picked_quantity+"'>";									
+									rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' name='old_picked' value='"+picked_quantity+"'>";
 									rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' name='old_id' value='"+item.id+"'>";
 								rowsHTML+="</td>";
 							rowsHTML+="</tr>";
 
 							$('#report90_body').append(rowsHTML);
-						
-							
+
+
 							var report90_form=document.getElementById('row_report90_'+item.id);
 							var storage_filter=report90_form.elements[6];
-			
+
 							var edit_button=document.getElementById("report90_edit_location_"+item.id);
 							$(edit_button).on('click',function ()
 							{
 								storage_filter.removeAttribute('readonly');
 							});
-			
+
 							var refresh_button=document.getElementById("report90_refresh_location_"+item.id);
 							$(refresh_button).on('click',function ()
 							{
@@ -302,36 +302,36 @@ function report90_ini()
 												"<name></name>"+
 												"<item_name exact='yes'>"+item.item_name+"</item_name>"+
 												"<batch exact='yes'>"+item.batch+"</batch>"+
-												"</area_utilization>";											
-								get_single_column_data(function (storages) 
+												"</area_utilization>";
+								get_single_column_data(function (storages)
 								{
 									//console.log(storages);
 									var dup_storages=[];
 									for(var i in storages)
 									{
-										var dup_storage=new Object();										
+										var dup_storage=new Object();
 										dup_storage.storage=storages[i];
 										dup_storages.push(dup_storage);
 									}
 									//console.log(dup_storages);
-																			
+
 									var storage_result_array=[];
-									get_available_storage(item.item_name,item.batch,storages,item.quantity,storage_result_array,function () 
-									{	
-										//console.log(storage_result_array);								
+									get_available_storage(item.item_name,item.batch,storages,item.quantity,storage_result_array,function ()
+									{
+										//console.log(storage_result_array);
 										if(storage_result_array.length>0)
 										{
 											storage_result_array.sort(function(a,b)
 											{
 												if(parseInt(a.quantity)<parseInt(b.quantity))
 												{	return 1;}
-												else 
+												else
 												{	return -1;}
 											});
 
 											storage_filter.value=storage_result_array[0].storage;
 											report90_update(report90_form);
-											
+
 											var storage_string="";
 											storage_result_array.forEach(function(storage_result)
 											{
@@ -339,7 +339,7 @@ function report90_ini()
 											});
 											refresh_button.setAttribute('title',storage_string);
 										}
-										else 
+										else
 										{
 											//console.log(dup_storages);
 											var storage_string="";
@@ -354,25 +354,25 @@ function report90_ini()
 								},storage_xml);
 							});
 
-							$(report90_form).on('submit',function (event) 
+							$(report90_form).on('submit',function (event)
 							{
 								event.preventDefault();
 								report90_update(report90_form);
 							});
-			
+
 							var storage_data="<store_areas>"+
 										"<name></name>"+
 										"<area_type></area_type>"+
 										"</store_areas>";
 							set_my_value_list(storage_data,storage_filter);
-								
+
 							$(storage_filter).on('click',function()
 							{
 								this.select();
 							});
-							
+
 						});
-						
+
 						var report90_complete=setInterval(function()
 						{
 					  	   if(report90_count===0)
@@ -380,7 +380,7 @@ function report90_ini()
 								clearInterval(report90_complete);
 								$('textarea').autosize();
 								//report90_get_totals();
-			
+
 								var csv_button=form.elements['csv'];
 								$(csv_button).off("click");
 								$(csv_button).on("click", function(event)
@@ -400,23 +400,23 @@ function report90_ini()
 										sorted_element['Storage']=new_result.storage;
 										sorted_element['To Pick']=new_result.quantity;
 										sorted_element['Picked']=new_result.picked_quantity;
-										
+
 										sorted_array.push(sorted_element);
 									});
 									csv_download_report(sorted_array,'Order Picklist - '+bills[0].order_num);
 								});
-												
-								hide_loader();   
+
+								hide_loader();
 					  	   }
 						},500);
-						
+
 					});
-				});	
-			}		    
+				});
+			}
 		});
 	}
 	else
-	{	
+	{
 		var items_data="<bill_items>" +
 				"<id></id>"+
 				"<item_name></item_name>" +
@@ -428,7 +428,7 @@ function report90_ini()
 				"<picked_status exact='yes'>pending</picked_status>"+
 				"<bill_id></bill_id>"+
 				"</bill_items>";
-		
+
 		fetch_requested_data('report90',items_data,function(items)
 		{
 			var inventory_xml="<inventory_adjust>" +
@@ -443,14 +443,14 @@ function report90_ini()
 						"<source exact='yes'>picking</source>"+
 						"<picked_status exact='yes'>pending</picked_status>"+
 						"</inventory_adjust>";
-			
+
 			fetch_requested_data('report90',inventory_xml,function(adjust_results)
 			{
 				items.forEach(function(item)
 				{
 					item.table_type='bill_items';
 				});
-			
+
 				for(var z in adjust_results)
 				{
 					var adjust_item=new Object();
@@ -465,30 +465,30 @@ function report90_ini()
 					adjust_item.bill_id=adjust_results[z].source_id;
 					items.push(adjust_item);
 				}
-		
+
 				var report90_count=0;
-				
+
 				items.splice(0,start_index);
 				items.splice(report_result_count,items.length-report_result_count);
-				
+
 				items.forEach(function(item)
 				{
 					//report_result_count-=1;
-					
+
 					var picked_quantity=item.picked_quantity;
 					if(item.picked_quantity=='null' || item.picked_quantity=='' || isNaN(item.picked_quantity))
 					{
 						picked_quantity=0;
 					}
 					item.picked_quantity=picked_quantity;
-					
+
 					var rowsHTML="<tr>";
 						rowsHTML+="<form id='row_report90_"+item.id+"'></form>";
 						rowsHTML+="<td data-th='Select'>";
 							rowsHTML+="<input type='checkbox' class='report90_select_box' form='row_report90_"+item.id+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Order' id='report90_order_"+item.id+"'>";
-							
+
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Item'>";
 							rowsHTML+="<input type='text' readonly='readonly' form='row_report90_"+item.id+"' value='"+item.item_name+"'>";
@@ -515,7 +515,7 @@ function report90_ini()
 							rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' name='order_num'>";
 							rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' name='bill_id' value='"+item.bill_id+"'>";
 							rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' name='old_storage' value='"+item.storage+"'>";
-							rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' name='old_picked' value='"+picked_quantity+"'>";									
+							rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' name='old_picked' value='"+picked_quantity+"'>";
 							rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' name='old_id' value='"+item.id+"'>";
 						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
@@ -524,13 +524,13 @@ function report90_ini()
 
 					var report90_form=document.getElementById('row_report90_'+item.id);
 					var storage_filter=report90_form.elements[6];
-			
+
 					var edit_button=document.getElementById("report90_edit_location_"+item.id);
 					$(edit_button).on('click',function ()
 					{
 						storage_filter.removeAttribute('readonly');
 					});
-			
+
 					var refresh_button=document.getElementById("report90_refresh_location_"+item.id);
 					$(refresh_button).on('click',function ()
 					{
@@ -539,36 +539,36 @@ function report90_ini()
 										"<name></name>"+
 										"<item_name exact='yes'>"+item.item_name+"</item_name>"+
 										"<batch exact='yes'>"+item.batch+"</batch>"+
-										"</area_utilization>";											
-						get_single_column_data(function (storages) 
+										"</area_utilization>";
+						get_single_column_data(function (storages)
 						{
 							//console.log(storages);
 							var dup_storages=[];
 							for(var i in storages)
 							{
-								var dup_storage=new Object();										
+								var dup_storage=new Object();
 								dup_storage.storage=storages[i];
 								dup_storages.push(dup_storage);
 							}
 							//console.log(dup_storages);
-																	
+
 							var storage_result_array=[];
-							get_available_storage(item.item_name,item.batch,storages,item.quantity,storage_result_array,function () 
-							{	
-								//console.log(storage_result_array);								
+							get_available_storage(item.item_name,item.batch,storages,item.quantity,storage_result_array,function ()
+							{
+								//console.log(storage_result_array);
 								if(storage_result_array.length>0)
 								{
 									storage_result_array.sort(function(a,b)
 									{
 										if(parseInt(a.quantity)<parseInt(b.quantity))
 										{	return 1;}
-										else 
+										else
 										{	return -1;}
 									});
 
 									storage_filter.value=storage_result_array[0].storage;
 									report90_update(report90_form);
-									
+
 									var storage_string="";
 									storage_result_array.forEach(function(storage_result)
 									{
@@ -576,7 +576,7 @@ function report90_ini()
 									});
 									refresh_button.setAttribute('title',storage_string);
 								}
-								else 
+								else
 								{
 									//console.log(dup_storages);
 									var storage_string="";
@@ -591,23 +591,23 @@ function report90_ini()
 						},storage_xml);
 					});
 
-					$(report90_form).on('submit',function (event) 
+					$(report90_form).on('submit',function (event)
 					{
 						event.preventDefault();
 						report90_update(report90_form);
 					});
-	
+
 					var storage_data="<store_areas>"+
 								"<name></name>"+
 								"<area_type></area_type>"+
 								"</store_areas>";
 					set_my_value_list(storage_data,storage_filter);
-						
+
 					$(storage_filter).on('click',function()
 					{
 						this.select();
 					});
-					
+
 					var bills_data="<sale_orders count='1'>"+
 						"<bill_id>"+item.bill_id+"</bill_id>"+
 						"<order_num></order_num>"+
@@ -615,7 +615,7 @@ function report90_ini()
 						"<import_date></import_date>"+
 						"<channel></channel>"+
 						"</sale_orders>";
-					
+
 					fetch_requested_data('',bills_data,function(bills)
 					{
 						if(bills.length>0)
@@ -625,14 +625,14 @@ function report90_ini()
 							item.order_date=get_my_past_date(bills[0].order_date);
 							item.import_date=get_my_datetime(bills[0].import_date);
 							item.channel=bills[0].channel;
-							
-							//item.bill_num=bills[0].bill_num;						
+
+							//item.bill_num=bills[0].bill_num;
 							var order_num_td=document.getElementById("report90_order_"+item.id);
 							$(order_num_td).html(bills[0].channel+" Order #: "+bills[0].order_num+"<br>Order Date: "+item.order_date);
 						}
 					});
 				});
-	
+
 				var report90_complete=setInterval(function()
 				{
 			  	   if(report90_count===0)
@@ -640,7 +640,7 @@ function report90_ini()
 						clearInterval(report90_complete);
 						$('textarea').autosize();
 						//report90_get_totals();
-	
+
 						var csv_button=form.elements['csv'];
 						$(csv_button).off("click");
 						$(csv_button).on("click", function(event)
@@ -660,13 +660,13 @@ function report90_ini()
 								sorted_element['Storage']=new_result.storage;
 								sorted_element['To Pick']=new_result.quantity;
 								sorted_element['Picked']=new_result.picked_quantity;
-								
+
 								sorted_array.push(sorted_element);
 							});
 							csv_download_report(sorted_array,'Order Picklist');
 						});
-						
-						
+
+
 						////indexing///
 						var next_index=parseInt(start_index)+parseFloat($('.report_result_count_selected').html());
 						var prev_index=parseInt(start_index)-parseFloat($('.report_result_count_selected').html());
@@ -688,15 +688,15 @@ function report90_ini()
 						else
 						{
 							$(prev_element).show();
-						}	
-							
-						hide_loader();   
+						}
+
+						hide_loader();
 			  	   }
 				},500);
-			});		    
+			});
 		});
 	}
-	
+
 	var all_csv_button=form.elements['all_csv'];
 	$(all_csv_button).off("click");
 	$(all_csv_button).on("click", function(event)
@@ -713,7 +713,7 @@ function report90_ini()
 				"<picked_status exact='yes'>pending</picked_status>"+
 				"<bill_id></bill_id>"+
 				"</bill_items>";
-		
+
 		fetch_requested_data('report90',items_data,function(items)
 		{
 			var inventory_xml="<inventory_adjust>" +
@@ -728,11 +728,11 @@ function report90_ini()
 						"<source exact='yes'>picking</source>"+
 						"<picked_status exact='yes'>pending</picked_status>"+
 						"</inventory_adjust>";
-			
+
 			fetch_requested_data('report90',inventory_xml,function(adjust_results)
 			{
 				var sorted_array=[];
-				
+
 				items.forEach(function(new_result)
 				{
 					var sorted_element=new Object();
@@ -759,8 +759,8 @@ function report90_ini()
 					sorted_array.push(sorted_element);
 				});
 				var report90_csv_count=sorted_array.length;
-				
-				sorted_array.forEach(function (item) 
+
+				sorted_array.forEach(function (item)
 				{
 					//console.log(item['Bill Id']);
 					var orders_data="<sale_orders count='1'>"+
@@ -778,21 +778,21 @@ function report90_ini()
 							item['Channel']=bills[0].channel;
 							item['Order #']=bills[0].order_num;
 							item['Order Date']=get_my_datetime(bills[0].order_date);
-							item['Import Date']=get_my_datetime(bills[0].import_date);							
+							item['Import Date']=get_my_datetime(bills[0].import_date);
 						}
 						report90_csv_count-=1;
 					});
 				});
-				
+
 				var report90_complete=setInterval(function()
 				{
 					if(report90_csv_count===0)
-					{		
+					{
 						clearInterval(report90_complete);
-						hide_loader();	
+						hide_loader();
 						csv_download_report(sorted_array,'Order Picklist');
 					}
-				},500);	
+				},500);
 			});
 		});
 	});
@@ -813,8 +813,8 @@ function print_report90(report_title,print_button)
 	   business_title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.5em'><b>"+bt+"</b></div>";
 	   title.innerHTML="<div style='display: block;width:100%;font-size:1.2em'><b>"+report_title+"</b></div>";
 	   var table_element=document.getElementById("report90_body");
-	   
-	   
+
+
 	   var font_size=get_session_var('print_size');
 
 		var new_table=document.createElement('table');
@@ -835,17 +835,17 @@ function print_report90(report_title,print_button)
 		$(table_element).find('form').each(function(index)
 		{
 			counter+=1;
-			var form=$(this)[0];	
+			var form=$(this)[0];
 			table_rows+="<tr>"+
 				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[1].value+"</div></td>"+
 				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[2].value+"</div></td>"+
 				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[3].value+"</div></td>"+
 				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[6].value+"</div></td>"+
 				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[4].value+"</div></td>"+
-				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[5].value+"</div></td></tr>";		
+				"<td style='border: 1px solid #000;text-align:left;'><div>"+form.elements[5].value+"</div></td></tr>";
 		});
 		new_table.innerHTML=table_rows;
-		/////////////placing the containers //////////////////////////////////////////////////////	
+		/////////////placing the containers //////////////////////////////////////////////////////
 
 
 	   //$(table_copy).find('td,th').attr('style',"word-wrap: break-word;border:1px solid black;text-align:left;font-size:"+font_size+"em");
@@ -855,7 +855,7 @@ function print_report90(report_title,print_button)
 	   $.print(container);
 	});
 }
-	
+
 	</script>
 
 </div>

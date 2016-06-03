@@ -1,4 +1,4 @@
-<div id='form260' class='tab-pane portlet box green-meadow'>	   
+<div id='form260' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class="actions">
             <div class="btn-group">
@@ -19,9 +19,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -31,18 +31,18 @@
 						<th><input type='text' placeholder="Item" class='floatlabel' name='name' form='form260_header'></th>
 						<th><input type='text' placeholder="Quantity" readonly='readonly' form='form260_header'>
 						      <input type='submit' form='form260_header' class='submit_hidden'>
-                        </th>
+            </th>
 				</tr>
 			</thead>
 			<tbody id='form260_body'>
 			</tbody>
 		</table>
 	</div>
-    
+
     <script>
         function form260_header_ini()
         {
-            var filter_fields=document.getElementById('form260_header');	
+            var filter_fields=document.getElementById('form260_header');
             var name_filter=filter_fields.elements['name'];
 
             $(filter_fields).off('submit');
@@ -71,8 +71,8 @@
             var fname=filter_fields.elements['name'].value;
 
             var paginator=$('#form260_body').paginator();
-			
-            var new_columns={data_store:'attributes',                 
+
+            var new_columns={data_store:'attributes',
 					       count:paginator.page_size(),
 					       start_index:paginator.get_index(),
                            indexes:[{index:'id',value:fid},
@@ -93,7 +93,7 @@
                             rowsHTML+="<td data-th='Quantity'>";
                                 rowsHTML+="<input type='number' step='any' readonly='readonly' form='form260_"+result.id+"'>";
                                 rowsHTML+="<input type='hidden' form='form260_"+result.id+"' value='"+result.id+"'>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form260_body').append(rowsHTML);
@@ -121,7 +121,7 @@
                         total_export_requests-=1;
                     });
                 });
-			    hide_loader();	
+			    hide_loader();
             });
         };
 
@@ -137,7 +137,7 @@
                                     {column:'item',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')}];
 
             var error_array=validate_import_array(data_array,validate_template_array);
-            return error_array;					
+            return error_array;
         }
 
         function form260_import(data_array,import_type)
@@ -149,7 +149,7 @@
 
 			var counter=1;
 			var last_updated=get_my_time();
-		
+
 			data_array.forEach(function(row)
 			{
 				counter+=1;
@@ -157,7 +157,7 @@
 				{
 					row.id=last_updated+counter;
 				}
-				
+
 				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'product_name',value:row.item},
 	 					{index:'batch',value:row.item},
@@ -167,7 +167,7 @@
 
 				data_json.data.push(data_json_array);
 			});
-			
+
 			if(import_type=='create_new')
 			{
 				create_batch_json(data_json);
@@ -175,8 +175,8 @@
 			else
 			{
 				update_batch_json(data_json);
-			}               
+			}
         };
-        
+
     </script>
 </div>

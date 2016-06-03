@@ -7,14 +7,14 @@ function form61_import_validate(data_array)
 	var validate_template_array=[{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 							{column:'attribute',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 							{column:'value',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')}];
-					
+
 	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
+	return error_array;
 }
 
 
 /**
-* @form Manage Products 
+* @form Manage Products
 * @formNo 87
 */
 function form87_import_validate(data_array)
@@ -24,9 +24,9 @@ function form87_import_validate(data_array)
 							{column:'description',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
 							{column:'tax',required:'yes',regex:new RegExp('^[0-9.]+$')},
 							{column:'bar_code',regex:new RegExp('^[a-zA-Z0-9]+$')}];
-					
+
 	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
+	return error_array;
 }
 
 
@@ -39,13 +39,13 @@ function form109_import_validate(data_array)
 	var validate_template_array=[{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 							{column:'attribute',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 							{column:'value',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')}];
-					
+
 	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
+	return error_array;
 }
 
 /**
-* @form Manage Products (nikki) 
+* @form Manage Products (nikki)
 * @formNo 169
 */
 function form169_import_validate(data_array)
@@ -62,9 +62,9 @@ function form169_import_validate(data_array)
 							{column:'unit',regex:new RegExp('^[a-zA-Z0-9.()]+$')},
 							{column:'packing',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
 							{column:'bar_code',regex:new RegExp('^[a-zA-Z0-9]+$')}];
-					
+
 	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
+	return error_array;
 }
 
 
@@ -82,9 +82,9 @@ function form170_import_validate(data_array)
 							{column:'width',regex:new RegExp('^[0-9.]+$')},
 							{column:'height',regex:new RegExp('^[0-9.]+$')},
 							{column:'unit',regex:new RegExp('^[a-zA-Z.()-]+$')}];
-					
+
 	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
+	return error_array;
 }
 
 /**
@@ -97,9 +97,9 @@ function form173_import_validate(data_array)
 							{column:'item_desc',regex:new RegExp('^[0-9a-zA-Z _.,/\'+@!$()-]+$')},
 							{column:'system_sku',required:'yes',regex:new RegExp('^[0-9a-zA-Z_.,()-]+$')},
 							{column:'channel',required:'yes',regex:new RegExp('^[0-9a-zA-Z_.,()-]+$')}];
-					
+
 	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
+	return error_array;
 }
 
 /**
@@ -113,27 +113,9 @@ function form217_import_validate(data_array)
 							{column:'supplier',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
 							{column:'supplier_sku',regex:new RegExp('^[0-9a-zA-Z_.,()-]+$')},
 							{column:'margin',required:'yes',regex:new RegExp('^[0-9.]+$')}];
-					
-	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
-}
 
-/**
-* @form Manage Products (without tax) 
-* @formNo 234
-*/
-function form234_import_validate(data_array)
-{
-	var validate_template_array=[{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z_.,()-]+$')},
-							{column:'make',regex:new RegExp('^[0-9a-zA-Z_ .,@\'()-]+$')},
-							{column:'description',regex:new RegExp('^[0-9a-zA-Z _.,/\'+@!$()-]+$')},
-							{column:'mrp',required:'yes',regex:new RegExp('^[0-9.]+$')},
-							{column:'cost_price',regex:new RegExp('^[0-9.]+$')},
-							{column:'sale_price',regex:new RegExp('^[0-9.]+$')},
-							{column:'bar_code',regex:new RegExp('^[a-zA-Z0-9]+$')}];
-					
 	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
+	return error_array;
 }
 
 /**
@@ -146,9 +128,9 @@ function form245_import_validate(data_array)
 							{column:'component_name',regex:new RegExp('^[0-9a-zA-Z _.,/\'+@!$()-]+$')},
 							{column:'component_sku',required:'yes',regex:new RegExp('^[0-9a-zA-Z_.,()-]+$')},
 							{column:'quantity',required:'yes',regex:new RegExp('^[0-9.]+$')}];
-					
+
 	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
+	return error_array;
 }
 
 
@@ -169,9 +151,9 @@ function form273_import_validate(data_array)
 							{column:'comments',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()/-]+$')},
 							{column:'company',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()/-]+$')},
 							{column:'item',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()/ -]+$')}];
-					
+
 	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
+	return error_array;
 }
 
 /**
@@ -184,7 +166,7 @@ function form274_import_validate(data_array)
 							{column:'quantity',required:'yes',regex:new RegExp('^[0-9.-]+$')}];
 
 	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
+	return error_array;
 }
 
 /**
@@ -199,9 +181,9 @@ function form275_import_validate(data_array)
 							{column:'type',required:'yes',regex:new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z_.-]+$')},
 							{column:'to/from',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
 							{column:'notes',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')}];
-					
+
 	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
+	return error_array;
 }
 
 
@@ -223,9 +205,9 @@ function form289_import_validate(data_array)
 							{column:'comments',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()/-]+$')},
 							{column:'company',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()/-]+$')},
 							{column:'item',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*() /-]+$')}];
-					
+
 	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
+	return error_array;
 }
 
 /**
@@ -237,13 +219,13 @@ function form290_import_validate(data_array)
 	var validate_template_array=[{column:'city',regex:new RegExp('^[0-9a-zA-Z _.,\'()-]+$')},
 							{column:'state',regex:new RegExp('^[0-9a-zA-Z _.,\'()-]+$')},
 							{column:'country',regex:new RegExp('^[0-9a-zA-Z _.,\'()-]+$')}];
-					
+
 	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
+	return error_array;
 }
 
 /**
-* @form Manage Products (without tax) 
+* @form Manage Products (without tax)
 * @formNo 300
 */
 function form300_import_validate(data_array)
@@ -255,7 +237,7 @@ function form300_import_validate(data_array)
 							{column:'MRP',required:'yes',regex:new RegExp('^[0-9.]+$')},
 							{column:'Cost Price',regex:new RegExp('^[0-9.]+$')},
 							{column:'Sale Price',regex:new RegExp('^[0-9.]+$')}];
-					
+
 	var error_array=validate_import_array(data_array,validate_template_array);
-	return error_array;					
+	return error_array;
 }

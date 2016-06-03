@@ -1,6 +1,6 @@
-<div id='form321' class='tab-pane portlet box green-meadow'>	   
+<div id='form321' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form321_add_item();'>Add <i class='fa fa-plus'></i></a>
             <a class='btn btn-circle grey btn-outline btn-sm' id='form321_save'>Save <i class='fa fa-save'></i></a>
 		</div>
@@ -21,7 +21,7 @@
             </div>
         </div>
 	</div>
-	
+
 	<div class="portlet-body">
         <form id='form321_master' autocomplete="off">
             <fieldset>
@@ -40,9 +40,9 @@
                 <input type='submit' class='submit_hidden'>
             </fieldset>
         </form>
-        
+
         <br>
-		
+
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr style='color:#9a9a9a;'>
@@ -79,10 +79,10 @@
             fields.elements['num'].value=0;
             marker.setAttribute('data-status','unmarked');
             marker.innerHTML="Mark as bag";
-            
+
             fields.elements['saved'].value='no';
             fields.elements['id'].value=get_new_key();
-            
+
             $(marker).off('click');
             $(marker).on('click',function()
             {
@@ -111,20 +111,20 @@
             lbh_filter.value='';
             weight_filter.value='';
             seal_filter.value='';
-            
+
             $(date).datepicker();
             date.value=get_my_date();
 
             var manifest_id=$("#form321_link").attr('data_id');
             if(manifest_id==null)
-                manifest_id="";	
+                manifest_id="";
 
             if(manifest_id=="")
             {
                 id_filter.value=get_new_key();
                 var manifest_num_data={data_store:'user_preferences',return_column:'value',
                                       indexes:[{index:'name',exact:'manifest_num'}]};
-                set_my_value_json(manifest_num_data,manifest_filter);	
+                set_my_value_json(manifest_num_data,manifest_filter);
             }
 
             $(save_button).off('click');
@@ -148,8 +148,8 @@
                 event.preventDefault();
                 form321_add_item();
             });
-            
-            var paginator=$('#form321_body').paginator({visible:false});        
+
+            var paginator=$('#form321_body').paginator({visible:false});
 
             $('#form321').formcontrol();
         }
@@ -158,11 +158,11 @@
         {
             var manifest_id=$("#form321_link").attr('data_id');
             if(manifest_id==null)
-                manifest_id="";	
+                manifest_id="";
             $('#form321_body').html("");
-            
+
             var filter_fields=document.getElementById('form321_master');
-                    
+
             if(manifest_id!="")
             {
                 show_loader();
@@ -207,7 +207,7 @@
                     }
                     $('#form321').formcontrol();
                 });
-                
+
                 var manifest_items_column={data_store:'logistics_orders',
                                           indexes:[{index:'id'},
                                                   {index:'awb_num'},
@@ -229,12 +229,12 @@
                     {
                         var id=result.id;
                         var rowsHTML="<tr>";
-                        
+
                         var lbh_calculated=1;
                         var lbh_array=result.lbh.split('*');
                         lbh_array.forEach(function(l)
                         {
-                           lbh_calculated*=parseFloat(l); 
+                           lbh_calculated*=parseFloat(l);
                         });
                         var vol_weight=my_round(lbh_calculated/6000,2);
                         var address=result.ship_to+", "+result.address1+", "+result.city+", "+result.state;
@@ -265,14 +265,14 @@
                                 rowsHTML+="<input type='hidden' form='form321_"+id+"' name='id' value='"+id+"'>";
                                 rowsHTML+="<input type='button' class='submit_hidden' form='form321_"+id+"' id='save_form321_"+id+"' name='save'>";
                                 rowsHTML+="<button type='button' class='btn red' form='form321_"+id+"' id='delete_form321_"+id+"' onclick='form321_delete_item($(this));' name='delete'><i class='fa fa-trash'></i></button>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                         rowsHTML+="</tr>";
 
                         $('#form321_body').append(rowsHTML);
                         var item_form=document.getElementById('form321_'+id);
                         var save_button=item_form.elements['save'];
 
-                        $(save_button).on('click',function (e) 
+                        $(save_button).on('click',function (e)
                         {
                             e.preventDefault();
                             form321_update_item(item_form);
@@ -280,7 +280,7 @@
                     });
 
                     form321_update_serial_numbers();
-                    
+
                     $('#form321').formcontrol();
                     hide_loader();
                 });
@@ -321,7 +321,7 @@
                         rowsHTML+="<input type='hidden' name='history' form='form321_"+id+"'>";
                         rowsHTML+="<input type='button' class='submit_hidden' form='form321_"+id+"' id='save_form321_"+id+"' name='save'>";
                         rowsHTML+="<button type='button' class='btn red' name='delete' form='form321_"+id+"' id='delete_form321_"+id+"' onclick='$(this).parent().parent().remove(); form321_update_serial_numbers();'><i class='fa fa-trash'></i></button>";
-                    rowsHTML+="</td>";			
+                    rowsHTML+="</td>";
                 rowsHTML+="</tr>";
 
                 $('#form321_body').prepend(rowsHTML);
@@ -338,7 +338,7 @@
                 var history_filter=item_form.elements['history'];
                 var id_filter=item_form.elements['id'];
                 var save_button=item_form.elements['save'];
-                
+
                 var new_manifest=true;
                 var saved=document.getElementById('form321_master').elements['saved'].value;
                 if(saved=='yes')
@@ -354,7 +354,7 @@
                         $(lbh_filter).focus();
                     }
                 });
-                
+
                 $(lbh_filter).on('keydown',function(e)
                 {
                     if(e.keyCode==13)
@@ -364,7 +364,7 @@
                         form321_add_item();
                     }
                 });
-                
+
                 $(item_form).on("submit", function(event)
                 {
                     event.preventDefault();
@@ -375,7 +375,7 @@
                         var subform_id=$(this).attr('form');
                         var subform=document.getElementById(subform_id);
                         total_entries+=1;
-                        if(subform.elements[0].value==awb_filter.value)	
+                        if(subform.elements[0].value==awb_filter.value)
                             double_entry+=1;
                     });
 
@@ -388,21 +388,21 @@
                                 form321_create_item(item_form);
                                 form321_add_item();
                             }
-                            else 
+                            else
                             {
                                 awb_filter.value="";
                                 $("#modal65_link").click();
                             }
                         });
                     }
-                    else 
+                    else
                     {
                         if(double_entry<2)
                         {
                             form321_create_item(item_form);
                             form321_add_item();
                         }
-                        else 
+                        else
                         {
                             awb_filter.value="";
                             $("#modal65_link").click();
@@ -411,9 +411,9 @@
                 });
 
                 $(awb_filter).focus();
-                $(awb_filter).on('keydown',function (event) 
+                $(awb_filter).on('keydown',function (event)
                 {
-                    if(event.keyCode == 13 ) 
+                    if(event.keyCode == 13 )
                     {
                         event.preventDefault();
 
@@ -426,13 +426,13 @@
 
                             total_entries+=1;
 
-                            if(subform.elements[0].value==awb_filter.value)	
+                            if(subform.elements[0].value==awb_filter.value)
                                 double_entry+=1;
                         });
 
                         if(total_entries==1 && new_manifest)
                         {
-                            form321_create_form(function () 
+                            form321_create_form(function ()
                             {
                                 if(double_entry<2)
                                 {
@@ -451,8 +451,8 @@
                                                     {index:'lbh'},
                                                     {index:'order_history'},
                                                     {index:'status',array:['received','undelivered','pending']}]};
-                                    
-                                    read_json_rows('',orders_data,function (orders) 
+
+                                    read_json_rows('',orders_data,function (orders)
                                     {
                                         //console.log(orders);
                                         if(orders.length>0)
@@ -466,7 +466,7 @@
                                             var lbh_array=orders[0].lbh.split('*');
                                             lbh_array.forEach(function(l)
                                             {
-                                               lbh_calculated*=parseFloat(l); 
+                                               lbh_calculated*=parseFloat(l);
                                             });
                                             vol_weight_filter.value=my_round(lbh_calculated/6000,2);
 
@@ -476,7 +476,7 @@
                                             history_filter.value=orders[0].order_history;
                                             $(order_filter).focus();
                                         }
-                                        else 
+                                        else
                                         {
                                             address_filter.value="";
                                             order_filter.value="";
@@ -493,14 +493,14 @@
                                         $('#form321').formcontrol();
                                     });
                                 }
-                                else 
+                                else
                                 {
                                     awb_filter.value="";
                                     $("#modal65_link").click();
                                 }
                             });
                         }
-                        else 
+                        else
                         {
                             if(double_entry<2)
                             {
@@ -516,11 +516,11 @@
                                                     {index:'sku'},
                                                     {index:'pieces'},
                                                     {index:'weight'},
-                                                    {index:'lbh'}, 
-                                                    {index:'order_history'}, 
+                                                    {index:'lbh'},
+                                                    {index:'order_history'},
                                                     {index:'status',array:['received','undelivered','pending']}]};
-                                        
-                                read_json_rows('',orders_data,function (orders) 
+
+                                read_json_rows('',orders_data,function (orders)
                                 {
                                     //console.log(orders);
                                     if(orders.length>0)
@@ -529,22 +529,22 @@
                                         order_filter.value=orders[0].consignment_num;
                                         product_filter.value=orders[0].sku;
                                         lbh_filter.value=orders[0].lbh;
-                                        
+
                                         var lbh_calculated=1;
                                         var lbh_array=orders[0].lbh.split('*');
                                         lbh_array.forEach(function(l)
                                         {
-                                           lbh_calculated*=parseFloat(l); 
+                                           lbh_calculated*=parseFloat(l);
                                         });
                                         vol_weight_filter.value=my_round(lbh_calculated/6000,2);
-                                        
+
                                         weight_filter.value=orders[0].weight;
                                         pieces_filter.value=orders[0].pieces;
                                         id_filter.value=orders[0].id;
                                         history_filter.value=orders[0].order_history;
                                         $(order_filter).focus();
                                     }
-                                    else 
+                                    else
                                     {
                                         address_filter.value="";
                                         order_filter.value="";
@@ -561,7 +561,7 @@
                                     $('#form321').formcontrol();
                                 });
                             }
-                            else 
+                            else
                             {
                                 awb_filter.value="";
                                 $("#modal65_link").click();
@@ -586,7 +586,7 @@
                 var manifest_num=master_form.elements['manifest_num'].value;
                 var manifest_id=master_form.elements['id'].value;
                 var manifest_date=master_form.elements['date'].value;
-                
+
                 var consignment_num=form.elements[1].value;
                 var lbh=form.elements[2].value;
                 var weight=form.elements[3].value;
@@ -595,16 +595,14 @@
                 var del_button=form.elements['delete'];
 
                 var old_order_history=form.elements['history'].value;
-                var order_history=[];
-                if(old_order_history!="")
-                    order_history=JSON.parse(old_order_history);
+                var order_history=vUtil.jsonParse(old_order_history);
                 var history_object=new Object();
                 history_object.timeStamp=get_my_time();
                 history_object.details="Order in-transit";
                 history_object.location='';
                 history_object.status="in-transit";
                 order_history.push(history_object);
-                var order_history_string=JSON.stringify(order_history);		
+                var order_history_string=JSON.stringify(order_history);
 
                 var last_updated=get_my_time();
                 var data_json={data_store:'logistics_orders',
@@ -617,7 +615,7 @@
                         {index:'status',value:'in-transit'},
                         {index:'order_history',value:order_history_string},
 	 					{index:'last_updated',value:last_updated}]};
- 				
+
                 update_json(data_json);
 
                 $(form).readonly();
@@ -655,17 +653,17 @@
                 var num_orders=form.elements['num'].value;
                 var data_id=form.elements['id'].value;
                 form.elements['saved'].value='yes';
-                
+
                 var save_button=document.getElementById('form321_save');
                 var last_updated=get_my_time();
 
                 form321_update_serial_numbers();
-                
+
                 var manifest_columns={data_store:"manifests",count:1,return_column:'id',indexes:[{index:'manifest_num',exact:manifest_num}]};
                 read_json_single_column(manifest_columns,function(manifests)
                 {
                     if(manifests.length==0)
-                    {	
+                    {
                         var data_json={data_store:'manifests',
                                     data:[{index:'id',value:data_id},
                                         {index:'manifest_num',value:manifest_num},
@@ -702,7 +700,7 @@
                             func();
                         }
                     }
-                    else 
+                    else
                     {
                         $("#modal77_link").click();
                     }
@@ -726,7 +724,7 @@
 	 				data:[{index:'id',value:data_id},
 	 					{index:'manifest_num',value:manifest_num},
                         {index:'last_updated',value:last_updated}]};
- 				
+
                 update_json(data_json);
             }
             else
@@ -748,12 +746,12 @@
                 var date=get_raw_time(form.elements['date'].value);
                 var data_id=form.elements['id'].value;
                 var num_orders=form.elements['num'].value;
-                
+
                 var save_button=document.getElementById('form321_save');
                 var last_updated=get_my_time();
 
                 form321_update_serial_numbers();
-                
+
                 var manifest_columns={data_store:"manifests",count:2,return_column:'id',indexes:[{index:'manifest_num',exact:manifest_num}]};
                 read_json_single_column(manifest_columns,function(manifests)
                 {
@@ -773,7 +771,7 @@
                         update_json(data_json);
                         $("[id^='save_form321_']").click();
                     }
-                    else 
+                    else
                     {
                         $("#modal77_link").click();
                     }
@@ -795,7 +793,7 @@
                 form.elements['lbh'].value='';
                 form.elements['weight'].value='';
                 form.elements['seal'].value='';
-                
+
                 var last_updated=get_my_time();
                 var data_json={data_store:'manifests',
                             data:[{index:'id',value:manifest_id},
@@ -815,7 +813,7 @@
                 $("#modal2_link").click();
             }
         }
-        
+
         function form321_delete_item(button)
         {
             if(is_delete_access('form321'))
@@ -827,7 +825,7 @@
 
                     var data_id=form.elements['id'].value;
                     var last_updated=get_my_time();
-                    
+
                     var data_json={data_store:'logistics_orders',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'consignment_num',value:''},
@@ -860,16 +858,16 @@
             {
                 var new_obj={};
                 var form=$(this)[0];
-                
+
                 if(form.elements[0].value!="")
                 {
                     var num_pieces=form.elements[6].value;
                     if(!vUtil.isBlank(num_pieces) && num_pieces!=0)
-                        num_orders+=parseInt(num_pieces);			
+                        num_orders+=parseInt(num_pieces);
                     else
                         num_orders+=1;
                 }
-            
+
                 new_obj['AWB No']=form.elements[0].value;
                 new_obj['Consignement No']=form.elements[1].value;
                 new_obj['LBH']=form.elements[2].value;
@@ -877,12 +875,12 @@
                 new_obj['Volumetric Weight']=form.elements[4].value;
                 new_obj['Item']=form.elements[5].value;
                 new_obj['Pieces']=form.elements[6].value;
-                new_obj['Destination']=form.elements[7].value;   
+                new_obj['Destination']=form.elements[7].value;
                 new_results.push(new_obj);
             });
 
             filter_fields.elements['num'].value=num_orders;
-            
+
             $('#form321_share').off('click');
             $('#form321_share').click(function()
             {
@@ -906,15 +904,15 @@
             print_form321_form(function(container)
             {
                 $.print(container);
-                container.innerHTML="";	
-            });	
+                container.innerHTML="";
+            });
         }
 
         function print_form321_form(func)
         {
             var form_id='form321';
 
-            ////////////setting up containers///////////////////////	
+            ////////////setting up containers///////////////////////
             var container=document.createElement('div');
 
             var header=document.createElement('div');
@@ -933,7 +931,7 @@
                 logo.setAttribute('style','float:left;width:35%;height:60px;');
                 business_title.setAttribute('style','float:left;width:40%;height:60px;text-align:center;font-weight:bold;');
                 mts_barcode.setAttribute('style','float:right;width:23%;height:60px;padding:left:5px;padding-right:5px;');
-            mts_title.setAttribute('style','display:block;width:98%;height:60px;text-align:center;font-size:40px;');	
+            mts_title.setAttribute('style','display:block;width:98%;height:60px;text-align:center;font-size:40px;');
             detail_section.setAttribute('style','display:block;width:98%;height:30px;text-align:center;');
 
             ///////////////getting the content////////////////////////////////////////
@@ -991,7 +989,7 @@
             {
                 counter+=1;
                 var form=$(this)[0];
-        
+
                 var awb_num=""+form.elements[0].value;
 
                 var cnote_no=document.createElement('div');
@@ -1014,10 +1012,10 @@
                         "<td><div style='text-align:left;'>Actual: "+form.elements[3].value+"<br>Volumetric: "+form.elements[4].value+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[6].value+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[5].value+"</div></td>"+
-                        "<td><div style='text-align:left;'>"+form.elements[7].value+"</div></td></tr>";				
+                        "<td><div style='text-align:left;'>"+form.elements[7].value+"</div></td></tr>";
             });
             new_table.innerHTML=table_rows;
-            /////////////placing the containers //////////////////////////////////////////////////////	
+            /////////////placing the containers //////////////////////////////////////////////////////
 
             container.appendChild(header);
             container.appendChild(mts_title);

@@ -1,4 +1,4 @@
-<div id='form53' class='tab-pane portlet box green-meadow'>	   
+<div id='form53' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class="actions">
             <div class="btn-group">
@@ -15,9 +15,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -36,7 +36,7 @@
 			</tbody>
 		</table>
 	</div>
-    
+
     <script>
         function form53_header_ini()
         {
@@ -63,16 +63,16 @@
             show_loader();
             var fid=$("#form53_link").attr('data_id');
             if(fid==null)
-                fid="";	
+                fid="";
 
             $('#form53_body').html("");
-            
+
             var filter_fields=document.getElementById('form53_header');
             var fbill_id=filter_fields.elements['bill'].value;
             var fname=filter_fields.elements['supplier'].value;
-            
+
             var paginator=$('#form53_body').paginator();
-			
+
 			var columns=new Object();
 					columns.count=paginator.page_size();
 					columns.start_index=paginator.get_index();
@@ -85,9 +85,9 @@
 									{index:'total'},
                                     {index:'notes'},
                                     {index:'order_id'}];
-			
+
             read_json_rows('form53',columns,function(results)
-            {	
+            {
                 results.forEach(function(result)
                 {
                     var rowsHTML="";
@@ -114,7 +114,7 @@
                                 rowsHTML+="<input type='hidden' form='form53_"+result.id+"' value='"+result.order_id+"'>";
                                 if(result.notes=='pending approval')
                                     rowsHTML+="<button type='button' class='btn default yellow-stripe' form='form53_"+result.id+"' title='Approve Bill' onclick='form53_approve_item($(this))'>Approve</button>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form53_body').append(rowsHTML);
@@ -173,7 +173,7 @@
                                                 data:[{index:'id',value:payments[0].transaction_id}]};
                             var pay_json={data_store:'payments',
                                                 data:[{index:'id',value:payments[0].id}]};
-                    
+
                             delete_json(pay_json);
                             delete_json(pt_json);
                         }
@@ -194,15 +194,11 @@
                                         {index:'total_quantity'},
                                         {index:'quantity_received'},
                                         {index:'quantity_accepted'}]};
-                    read_json_rows('',po_data,function (porders) 
+                    read_json_rows('',po_data,function (porders)
                     {
                         if(porders.length>0)
                         {
-                            var id_object_array=[];
-                            if(porders[0].bill_id!="" && porders[0].bill_id!=0 && porders[0].bill_id!="null")
-                            {
-                                id_object_array=JSON.parse(porders[0].bill_id);
-                            }
+                            var id_object_array=vUtil.jsonParse(porders[0].bill_id);
 
                             for(var k in id_object_array)
                             {
@@ -234,7 +230,7 @@
                                 quantity_received=parseFloat(porders[0].quantity_received);
                             }
 
-                            var status='partially received';				
+                            var status='partially received';
                             if(parseFloat(porders[0].total_quantity)<=quantity_accepted)
                             {
                                 status='received';
@@ -249,7 +245,7 @@
                                                  {index:'quantity_accepted',value:quantity_accepted},
                                                  {index:'quantity_qc_pending',value:quantity_qc_pending},
                                                  {index:'status',value:status},
-                                                 {index:'last_updated',value:last_updated}]};                    
+                                                 {index:'last_updated',value:last_updated}]};
                             update_json(po_json);
                         }
                     });
@@ -272,14 +268,14 @@
                 var bill_id=form.elements[5].value;
                 form.elements[4].value='approved';
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'supplier_bills',
 	 				log:'yes',
 	 				data:[{index:'id',value:bill_id},
 	 					{index:'notes',value:'approved'},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Approved',notes:'Purchase bill # '+bill_num,link_to:'form53'}};
- 				update_json(data_json);				
+ 				update_json(data_json);
             }
             else
             {

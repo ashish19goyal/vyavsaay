@@ -1212,7 +1212,7 @@
 		</form>
 	</div>
 
-    <a href='#modal112' data-toggle="modal" id='modal112_link'></a>
+  <a href='#modal112' data-toggle="modal" id='modal112_link'></a>
 	<div id="modal112" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -3731,5 +3731,42 @@
             </div>
         </div>
     </div>
+
+		<a href='#modal214' data-toggle="modal" id='modal214_link'></a>
+		<div id="modal214" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+	        <div class="modal-dialog">
+	            <div class="modal-content">
+	                <form id='modal214_form' autocomplete="off">
+		            		<div class="modal-header">
+	                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+	                    	<h4 class="modal-title">Add new Product</h4>
+	                	</div>
+		                <div class="modal-body">
+			               	<div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+			                  <div class="row">
+									   			<div class="col-sm-12 col-md-4">Name</div>
+						     					<div class="col-sm-12 col-md-8"><input type='text' form='modal214_form' required name='name'></div>
+						     				</div>
+					              <div class="row">
+											   	<div class="col-sm-12 col-md-4">Make</div>
+								     			<div class="col-sm-12 col-md-8"><input type='text' form='modal214_form' name='make'></div>
+								     		</div>
+					              <div class="row">
+											   	<div class="col-sm-12 col-md-4">Description</div>
+			                  	<div class="col-sm-12 col-md-8"><textarea form='modal214_form' name='desc'></textarea></div>
+								     		</div>
+					              <div class="row">
+											    <div id='modal214_attributes'></div>
+					              </div>
+			             		</div>
+										</div>
+		             	<div class="modal-footer">
+		               	<button type="submit" class="btn green" form='modal214_form' name='save'>Add</button>
+		               	<button type="button" class="btn red" form='modal214_form' data-dismiss='modal' name='cancel'>Cancel</button>
+		             	</div>
+	                </form>
+	            </div>
+	        </div>
+	    </div>
 
 </div>

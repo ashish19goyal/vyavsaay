@@ -8,12 +8,12 @@ function get_raw_time(date)
 	{
 		var date_time_array=String(date).split(/ /);
 		var date_elem=date_time_array[0];
-		
+
 		var date_array=date_elem.split(/[\-\/]+/);
-		
+
 		var day=1;
 		var month=0;
-		var year=2015;
+		var year=2016;
 		if(date_array.length==3)
 		{
 			day=parseInt(date_array[0]);
@@ -27,9 +27,9 @@ function get_raw_time(date)
 		}
 		else if(date_array.length==1)
 		{
-			year=parseInt(date_array[0]);		
-		}		
-        
+			year=parseInt(date_array[0]);
+		}
+
         if(year<50)
         {
             year=2000+year;
@@ -38,13 +38,13 @@ function get_raw_time(date)
         {
             year=1900+year;
         }
-        
+
 		var hour=0;
 		var minutes=0;
 		var seconds=0;
-		
+
 		if(date_time_array.length==2)
-		{		
+		{
 			var time_elem=date_time_array[1];
 	 		var time_array=time_elem.split(/:/);
 			if(time_array.length==1)
@@ -62,7 +62,7 @@ function get_raw_time(date)
 				minutes=parseInt(time_array[1]);
 				seconds=parseInt(time_array[2]);
 			}
-		}	
+		}
 		var d=new Date(year,month,day,hour,minutes,seconds,0);
 		return d.getTime();
 	}
@@ -89,13 +89,13 @@ function get_time_from_formatted_date(formatted_date)
 		var year=current_date.getFullYear();
 		var d=new Date(year,month,day,0,0,0,0);
 		return d.getTime();
-	} 
+	}
 }
 
 function get_formatted_time(my_time)
 {
 	var d=new Date(parseFloat(my_time));
-	
+
 	var month = new Array();
 		month[0] = "Jan";
 		month[1] = "Feb";
@@ -109,10 +109,10 @@ function get_formatted_time(my_time)
 		month[9] = "Oct";
 		month[10] = "Nov";
 		month[11] = "Dec";
-	
-	var mon = month[d.getMonth()]; 
+
+	var mon = month[d.getMonth()];
 	//var year = d.getFullYear();
-	var date = d.getDate();	
+	var date = d.getDate();
 	var hr = d.getHours();
 	if(hr<10)
 		hr="0"+hr;
@@ -126,7 +126,7 @@ function get_formatted_time(my_time)
 function get_only_time(my_time)
 {
 	var d=new Date(parseFloat(my_time));
-	
+
 	var hr = d.getHours();
 	if(hr<10)
 		hr="0"+hr;
@@ -158,7 +158,7 @@ function get_my_date(raw_time)
 		if (date < 10) {
 		    date = "0" + date;
 		}
-	
+
 		var time=date+"/"+month+"/"+year;
 		return time;
 	}
@@ -178,7 +178,7 @@ function get_my_date(raw_time)
 		if (date < 10) {
 		    date = "0" + date;
 		}
-	
+
 		var time=date+"/"+month+"/"+year;
 		return time;
 	}
@@ -202,7 +202,7 @@ function get_my_past_date(raw_time)
 		if (date < 10) {
 		    date = "0" + date;
 		}
-	
+
 		var time=date+"/"+month+"/"+year;
 		return time;
 	}
@@ -229,11 +229,11 @@ function get_my_datetime(raw_time)
 		var minutes=d.getMinutes();
 		if (minutes < 10) {
 		    minutes = "0" + minutes;
-		}	
+		}
 		var time=date+"/"+month+"/"+year+" "+hour+":"+minutes;
 		return time;
 	}
-	else if(raw_time=="" || raw_time=="null" || raw_time=="undefined" || raw_time=="NULL")	
+	else if(raw_time=="" || raw_time=="null" || raw_time=="undefined" || raw_time=="NULL")
 	{
 		//console.log('blank');
 		return "";
@@ -257,7 +257,7 @@ function get_my_datetime(raw_time)
 		var minutes=d.getMinutes();
 		if (minutes < 10) {
 		    minutes = "0" + minutes;
-		}	
+		}
 		var time=date+"/"+month+"/"+year+" "+hour+":"+minutes;
 		return time;
 	}
@@ -302,7 +302,7 @@ function get_iso_time(raw_time)
 	var seconds=d.getSeconds();
 	if(seconds<10)
 		seconds="0"+seconds;
-		
+
 	var time=year+"-"+month+"-"+date+"T"+hr+":"+min+":"+seconds+"Z";
 	return time;
 }
@@ -328,7 +328,7 @@ function get_iso_time_tz(raw_time)
 	var seconds=d.getSeconds();
 	if(seconds<10)
 		seconds="0"+seconds;
-		
+
 	var time=year+"-"+month+"-"+date+"T"+hr+":"+min+":"+seconds;
 	return time;
 }

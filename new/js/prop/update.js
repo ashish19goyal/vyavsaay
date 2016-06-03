@@ -8795,48 +8795,6 @@ function form230_update_item(form)
 	}
 }
 
-
-/**
- * @form Manage Products (without tax)
- * @param button
- */
-function form234_update_item(form)
-{
-	if(is_update_access('form234'))
-	{
-		var name=form.elements[0].value;
-		var make=form.elements[1].value;
-		var description=form.elements[2].value;
-		var data_id=form.elements[3].value;
-		var last_updated=get_my_time();
-
-		var data_xml="<product_master>" +
-					"<id>"+data_id+"</id>" +
-					"<make>"+make+"</make>" +
-					"<name>"+name+"</name>" +
-					"<description>"+description+"</description>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</product_master>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>product_master</tablename>" +
-					"<link_to>form234</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Product "+name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		update_row(data_xml,activity_xml);
-		for(var i=0;i<4;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
 /**
  * @form Manage Products (Grid)
  * @param button

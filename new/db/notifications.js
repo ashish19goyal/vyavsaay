@@ -10,7 +10,7 @@
 function notifications_1()
 {
 	var last_updated=get_my_time();
-	
+
 	var payments_data=new Object();
 		payments_data.data_store='payments';
 		payments_data.indexes=[{index:'id'},
@@ -48,10 +48,10 @@ function notifications_1()
 						{index:'target_user',value:payment.acc_name},
 						{index:'last_updated',value:last_updated}];
 			data_json.data.push(data_json_array);
-			
+
 		});
-		
-		create_batch_json(data_json);		
+
+		create_batch_json(data_json);
 	});
 }
 
@@ -70,7 +70,7 @@ function notifications_2()
 {
 	var last_updated=get_my_time();
 	var task_due_time=parseFloat(get_my_time())+86400000;
-	
+
 	var tasks_data=new Object();
 		tasks_data.data_store='task_instances';
 		tasks_data.indexes=[{index:'id'},
@@ -89,7 +89,7 @@ function notifications_2()
 		tasks.forEach(function(task)
 		{
 			counter+=1;
-			
+
 			var due_time=parseFloat(get_my_time())+(3600000*task.task_hours);
 			if(task.t_due<due_time)
 			{
@@ -107,8 +107,8 @@ function notifications_2()
 				data_json.data.push(data_json_array);
 			}
 		});
-		
-		create_batch_json(data_json);		
+
+		create_batch_json(data_json);
 	});
 }
 
@@ -126,10 +126,10 @@ function notifications_2()
 function notifications_3()
 {
 	var last_updated=get_my_time();
-	
+
 	var lead_due_time=parseFloat(get_my_time())+86400000;
 	var lead_past_time=parseFloat(get_my_time())-86400000;
-	
+
 	var leads_data=new Object();
 		leads_data.data_store='sale_leads';
 		leads_data.indexes=[{index:'id'},
@@ -160,7 +160,7 @@ function notifications_3()
 						{index:'status',value:'pending'},
 						{index:'target_user',value:lead.customer+"--"+lead.identified_by},
 						{index:'last_updated',value:last_updated}];
-			data_json.data.push(data_json_array);		
+			data_json.data.push(data_json_array);
 		});
 		create_batch_json(data_json);
 	});
@@ -180,7 +180,7 @@ function notifications_3()
 function notifications_4()
 {
 	var last_updated=get_my_time();
-	
+
 	var sale_order_data=new Object();
 		sale_order_data.data_store='sale_orders';
 		sale_order_data.indexes=[{index:'id'},
@@ -196,7 +196,7 @@ function notifications_4()
 							{index:'item_name'},{index:'quantity'}];
 
 			read_json_rows('',sale_order_items_data,function(sale_order_items)
-			{	
+			{
 				for(var j=0;j<sale_order_items.length;j++)
 				{
 					for(var k=j+1;k<sale_order_items.length;k++)
@@ -209,7 +209,7 @@ function notifications_4()
 						}
 					}
 				}
-				
+
 				sale_order_items.forEach(function(sale_order_item)
 				{
 					get_inventory(sale_order_item.item_name,'',function(item_quantity)
@@ -217,9 +217,9 @@ function notifications_4()
 						if(parseFloat(item_quantity)<parseFloat(sale_order_item.quantity))
 						{
 							var id=get_new_key();
-						
+
 							var notes="Product "+sale_order_item.item_name+" has insufficient inventory to meet all sale orders.";
-							
+
 							var data_json={data_store:'notifications',
 						 				log:'no',
 						 				warning:'no',
@@ -231,7 +231,7 @@ function notifications_4()
 						 					{index:'link_to',value:'form1'},
 						 					{index:'status',value:'pending'},
 						 					{index:'last_updated',value:last_updated}]};
-					 						
+
 							create_json(data_json);
 						}
 					});
@@ -255,13 +255,13 @@ function notifications_4()
 function notifications_5()
 {
 	var last_updated=get_my_time();
-		
+
 	var manu_data=new Object();
 		manu_data.data_store='manufacturing_schedule';
 		manu_data.return_column='id';
 		manu_data.indexes=[{index:'id'},{index:'product'},
 							{index:'status',exact:'out of stock'}];
-	
+
 	read_json_count(manu_data,function(count_manu)
 	{
 		if(count_manu>0)
@@ -278,9 +278,9 @@ function notifications_5()
 						{index:'status',value:'pending'},
 						{index:'target_user',value:''},
 						{index:'last_updated',value:last_updated}]};
-			
-			create_json(data_json);			
-		}		
+
+			create_json(data_json);
+		}
 	});
 }
 
@@ -298,12 +298,12 @@ function notifications_5()
 function notifications_6()
 {
 	var last_updated=get_my_time();
-	
+
 	var schedule_data=new Object();
 		schedule_data.data_store='manufacturing_schedule';
 		schedule_data.indexes=[{index:'id'},{index:'product'},{index:'schedule',upperbound:last_updated},
 							{index:'status',exact:'scheduled'},{index:'last_updated'}];
-	
+
 	read_json_rows('',schedule_data,function(schedules)
 	{
 		var data_json={data_store:'notifications',loader:'no',log:'no',data:[]};
@@ -314,7 +314,7 @@ function notifications_6()
 		{
 			counter+=1;
 			var notes="Manufacturing for product "+schedule.product+" is due. Please start the process.";
-			
+
 			var data_json_array=[{index:'id',value:(id+counter)},
 						{index:'t_generated',value:last_updated},
 						{index:'data_id',value:schedule.last_updated.id,unique:'yes'},
@@ -345,12 +345,12 @@ function notifications_7()
 {
 	var last_updated=get_my_time();
 	var app_time=parseFloat(get_my_time())+3600000;
-	
+
 	var apps_data=new Object();
 		apps_data.data_store='appointments';
 		apps_data.indexes=[{index:'id'},{index:'customer'},{index:'schedule',upperbound:app_time},
 							{index:'status',exact:'pending'},{index:'assignee'}];
-	
+
 	read_json_rows('',apps_data,function(apps)
 	{
 		var data_json={data_store:'notifications',loader:'no',log:'no',data:[]};
@@ -359,7 +359,7 @@ function notifications_7()
 		apps.forEach(function(app)
 		{
 			counter+=1;
-		
+
 			var notes="Appointment with "+app.customer+" is due at "+get_my_datetime(app.schedule);
 			var data_json_array=[{index:'id',value:(id+counter)},
 						{index:'t_generated',value:last_updated},
@@ -372,7 +372,7 @@ function notifications_7()
 						{index:'last_updated',value:last_updated}];
 			data_json.data.push(data_json_array);
 		});
-		create_batch_json(data_json);		
+		create_batch_json(data_json);
 	});
 }
 
@@ -390,12 +390,12 @@ function notifications_7()
 function notifications_8()
 {
 	var last_updated=get_my_time();
-	
+
 	var dispatch_data=new Object();
 		dispatch_data.data_store='store_movement';
 		dispatch_data.indexes=[{index:'id'},{index:'item_name'},{index:'batch'},{index:'quantity'},{index:'target'},
 							{index:'source'},{index:'receiver'},{index:'status',exact:'dispatched'}];
-		
+
 	read_json_rows('',dispatch_data,function(dispatches)
 	{
 		var counter=1;
@@ -409,7 +409,7 @@ function notifications_8()
 			{
 				link_to='form157';
 			}
-		
+
 			var notes=dispatch.quantity+" units of "+dispatch.item_name+" have been dispatched from store "+dispatch.source+" for store "+dispatch.target;
 			var data_json_array=[{index:'id',value:(id+counter)},
 						{index:'t_generated',value:last_updated},
@@ -452,13 +452,13 @@ function notifications_9()
 		var data_json={data_store:'notifications',loader:'no',log:'no',data:[]};
 		var counter=1;
 		var id=parseFloat(get_new_key());
-		
+
 		expenses.forEach(function(expense)
 		{
 			counter+=1;
 			var notes="Expense of Rs. "+expense.amount+" from "+
 					expense.person+" was "+expense.status;
-			
+
 			var data_json_array=[{index:'id',value:(id+counter)},
 						{index:'t_generated',value:last_updated},
 						{index:'data_id',value:expense.id,unique:'yes'},
@@ -501,7 +501,7 @@ function notifications_10()
 				return_item_data.indexes=[{index:'id'},{index:'item_name'},{index:'quantity'},{index:'customer'},
 									{index:'hiring_type'},{index:'issue_type',exact:'in'},
 									{index:'issue_date'},{index:'issue_id',exact:item.id}];
-				
+
 			read_json_rows('',return_item_data,function(return_items)
 			{
 				var returned_quantity=0;
@@ -518,9 +518,9 @@ function notifications_10()
 								item.hiring_type+" on "+get_my_past_date(item.issue_date)+". Please follow up.";
 					if(item.hiring_type=='hire')
 					{
-						form_id='form229';				
+						form_id='form229';
 					}
-					
+
 					var data_json={data_store:'notifications',
 	 					log:'no',
 	 					warning:'no',
@@ -533,7 +533,7 @@ function notifications_10()
 	 					{index:'status',value:'pending'},
 	 					{index:'target_user',value:''},
 	 					{index:'last_updated',value:get_my_time}]};
- 						
+
 					create_json(data_json);
 				}
 			});
@@ -555,13 +555,13 @@ function notifications_10()
 function notifications_11()
 {
 	var last_updated=get_my_time();
-	
+
 	var sale_order_data=new Object();
 		sale_order_data.data_store='sale_orders';
 		sale_order_data.indexes=[{index:'id'},{index:'channel'},{index:'order_num'},
 							{index:'order_date',lowerbound:(get_my_time()-7*86400000)},
 							{index:'status',array:['pending','billed','picked','packed','dispatched']}];
-	
+
 	read_json_rows('',sale_order_data,function(sale_orders)
 	{
 		sale_orders.forEach(function(sale_order)
@@ -577,7 +577,7 @@ function notifications_11()
 				var	title="Sale Order time breached for "+sale_order.channel;
 				var	form_id='form108';
 				var	notes="Sale order # "+sale_order.order_num+" has not been closed. It has breached the time limits of "+sale_order.channel+". Please follow up.";
-				
+
 				var data_json={data_store:'notifications',
 	 					log:'no',
 	 					warning:'no',
@@ -590,9 +590,9 @@ function notifications_11()
 	 					{index:'status',value:'pending'},
 	 					{index:'target_user',value:''},
 	 					{index:'last_updated',value:get_my_time}]};
- 						
-				create_json(data_json);				
-			}			
+
+				create_json(data_json);
+			}
 		});
 	});
 }
@@ -611,13 +611,13 @@ function notifications_11()
 function worker_1()
 {
 	var lead_past_time=parseFloat(get_my_time())-86400000;
-	
+
 	var attributes_data=new Object();
 		attributes_data.data_store='attributes';
 		attributes_data.indexes=[{index:'id'},{index:'name'},{index:'value'},
 							{index:'attribute',exact:'recurrent sale'},
 							{index:'type',array:['product','service']}];
-	
+
 	read_json_rows('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
@@ -628,7 +628,7 @@ function worker_1()
 								{index:'last_updated',lowerbound:lead_past_time},
 								{index:'type',exact:'bought'},
 								{index:'item_name',exact:attribute.item_name}];
-		
+
 			read_json_rows('',bill_items_data,function(bill_items)
 			{
 				var bills_string=[];
@@ -636,13 +636,13 @@ function worker_1()
 				{
 					bills_string.push(bill_items[j].bill_id);
 				}
-				
+
 				var bills_data=new Object();
 				bills_data.data_store='bills';
 				bills_data.indexes=[{index:'id',array:bills_string},{index:'customer_name'},
 								{index:'last_updated',lowerbound:lead_past_time},
 								{index:'bill_date'}];
-		
+
 				read_json_rows('',bills_data,function(bills)
 				{
 					bills.forEach(function(bill)
@@ -656,7 +656,7 @@ function worker_1()
 								var detail="Bought "+attribute.item_name+" that is expected to be bought again in " +
 										attribute.value+" days.\n";
 								var due_date=parseFloat(start_date)+(86400000*parseFloat(attributes[l].value));
-								
+
 								var data_json={data_store:'sale_leads',
 					 					log:'no',
 					 					warning:'no',
@@ -667,7 +667,7 @@ function worker_1()
 					 					{index:'due_date',value:due_date},
 					 					{index:'identified_by',value:'auto'},
 					 					{index:'last_updated',value:get_my_time}]};
-				 						
+
 								create_json(data_json);
 								break;
 							}
@@ -697,7 +697,7 @@ function worker_2()
 		schedule_data.indexes=[{index:'id'},{index:'product'},
 								{index:'status',exact:'in stock'},
 								{index:'schedule',upperbound:get_my_time()}];
-		
+
 	read_json_rows('',schedule_data,function(schedules)
 	{
 		schedules.forEach(function(schedule)
@@ -714,7 +714,7 @@ function worker_2()
 			 					{index:'status',value:'out of stock'},
 			 					{index:'schedule',value:''},
 			 					{index:'last_updated',value:get_my_time()}]};
-				 						
+
 					update_json(data_json);
 				}
 			});
@@ -736,7 +736,7 @@ function worker_2()
 function worker_3()
 {
 	var interest_due_time=parseFloat(get_my_time())+86400000;
-	
+
 	var loans_data=new Object();
 		loans_data.data_store='loans';
 		loans_data.indexes=[{index:'id'},{index:'type'},{index:'account'},{index:'loan_amount'},
@@ -763,7 +763,7 @@ function worker_3()
 					payment_type='paid';
 				}
 				var pt_tran_id=get_new_key();
-				
+
 				var loan_json={data_store:'loans',
 			 					log:'no',
 			 					warning:'no',
@@ -771,7 +771,7 @@ function worker_3()
 			 					{index:'next_interest_date',value:next_interest_date},
 			 					{index:'interest_paid',value:interest_paid},
 			 					{index:'last_updated',value:get_my_time()}]};
-				
+
 				var payment_json={data_store:'payments',
 			 					log:'no',
 			 					warning:'no',
@@ -787,7 +787,7 @@ function worker_3()
 			 					{index:'transaction_id',value:pt_tran_id},
 			 					{index:'bill_id',value:loan.id},
 			 					{index:'last_updated',value:get_my_time()}]};
-				
+
 				var pt_json={data_store:'transactions',
 			 					log:'no',
 			 					warning:'no',
@@ -800,7 +800,7 @@ function worker_3()
 			 					{index:'last_updated',value:get_my_time()}]};
 				update_json(loan_json);
 				create_json(payment_json);
-				create_json(pt_json);				
+				create_json(pt_json);
 			}
 			else
 			{
@@ -832,7 +832,7 @@ function worker_3()
 function worker_4()
 {
 	var instalment_due_time=parseFloat(get_my_time())+86400000;
-	
+
 	var loans_data=new Object();
 		loans_data.data_store='loans';
 		loans_data.indexes=[{index:'id'},{index:'type'},{index:'account'},{index:'loan_amount'},
@@ -856,7 +856,7 @@ function worker_4()
 				payment_type='paid';
 			}
 			var pt_tran_id=get_new_key();
-			
+
 			var loan_json={data_store:'loans',
 		 					log:'no',
 		 					warning:'no',
@@ -864,7 +864,7 @@ function worker_4()
 		 					{index:'next_emi_date',value:next_emi_date},
 		 					{index:'pending_emi',value:pending_emi},
 		 					{index:'last_updated',value:get_my_time()}]};
-			
+
 			var payment_json={data_store:'payments',
 		 					log:'no',
 		 					warning:'no',
@@ -880,7 +880,7 @@ function worker_4()
 		 					{index:'transaction_id',value:pt_tran_id},
 		 					{index:'bill_id',value:loan.id},
 		 					{index:'last_updated',value:get_my_time()}]};
-			
+
 			var pt_json={data_store:'transactions',
 		 					log:'no',
 		 					warning:'no',
@@ -918,7 +918,7 @@ function worker_5()
 		columns.data_store='attendance';
 		columns.indexes=[{index:'id'},{index:'acc_name'},{index:'presence'},{index:'hours_worked'},
 						{index:'date',exact:today}];
-	
+
 	read_json_rows('',columns,function(results)
 	{
 		if(results.length===0)
@@ -926,7 +926,7 @@ function worker_5()
 			var staff_columns=new Object();
 			staff_columns.data_store='staff';
 			staff_columns.indexes=[{index:'id'},{index:'acc_name'},{index:'status',exact:'active'}];
-		
+
 			read_json_rows('',staff_columns,function(staff_names)
 			{
 				staff_names.forEach(function(staff_name)
@@ -974,7 +974,7 @@ function worker_6()
 			{
 				payments[i].total_received=0;
 				payments[i].total_paid=0;
-				
+
 				if(payments[i].type=='paid')
 				{
 					payments[i].total_paid=parseFloat(payments[i].total_amount)-parseFloat(payments[i].paid_amount);
@@ -983,7 +983,7 @@ function worker_6()
 				{
 					payments[i].total_received=parseFloat(payments[i].total_amount)-parseFloat(payments[i].paid_amount);
 				}
-				
+
 				for(var j=i+1;j<payments.length;j++)
 				{
 					if(payments[i].acc_name==payments[j].acc_name)
@@ -1006,7 +1006,7 @@ function worker_6()
 					i-=1;
 				}
 			}
-			
+
 			payments.forEach(function(payment)
 			{
 				var accounts_data=new Object();
@@ -1021,10 +1021,10 @@ function worker_6()
 					{
 						if(a.date>b.date)
 						{	return 1;}
-						else 
+						else
 						{	return -1;}
 					});
-					
+
 					accounts.forEach(function(account)
 					{
 						if(payment.total_received<payment.total_paid)
@@ -1056,8 +1056,8 @@ function worker_6()
 					 					{index:'status',value:'closed'},
 					 					{index:'notes',value:notes},
 					 					{index:'last_updated',value:get_my_time()}]};
-									update_json(paid_json);									
-									
+									update_json(paid_json);
+
 									payment.total_received-=pending_amount;
 									payment.total_paid-=pending_amount;
 								}
@@ -1065,7 +1065,7 @@ function worker_6()
 								{
 									var paid_amount=parseFloat(account.paid_amount)+payment.total_received;
 									var notes=account.notes+"\n Rs."+payment.total_received+" balanced against other receivables";
-									
+
 									var paid_json={data_store:'payments',
 					 					log:'no',
 					 					warning:'no',
@@ -1074,8 +1074,8 @@ function worker_6()
 					 					{index:'status',value:'pending'},
 					 					{index:'notes',value:notes},
 					 					{index:'last_updated',value:get_my_time()}]};
-									update_json(paid_json);									
-									
+									update_json(paid_json);
+
 									payment.total_received=0;
 									payment.total_paid=0;
 								}
@@ -1094,12 +1094,12 @@ function worker_6()
 					 					{index:'status',value:'closed'},
 					 					{index:'notes',value:notes},
 					 					{index:'last_updated',value:get_my_time()}]};
-								update_json(paid_json);									
+								update_json(paid_json);
 							}
 							else
 							{
 								var pending_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount);
-								
+
 								if(pending_amount<=payment.total_paid)
 								{
 									var notes=account.notes+"\n Closed by balancing other payables";
@@ -1112,7 +1112,7 @@ function worker_6()
 					 					{index:'notes',value:notes},
 					 					{index:'last_updated',value:get_my_time()}]};
 									update_json(received_json);
-									
+
 									payment.total_received-=pending_amount;
 									payment.total_paid-=pending_amount;
 								}
@@ -1120,7 +1120,7 @@ function worker_6()
 								{
 									var paid_amount=parseFloat(account.paid_amount)+payment.total_paid;
 									var notes=account.notes+"\n Rs."+payment.total_paid+" balanced against other payables";
-									
+
 									var received_json={data_store:'payments',
 					 					log:'no',
 					 					warning:'no',
@@ -1130,7 +1130,7 @@ function worker_6()
 					 					{index:'notes',value:notes},
 					 					{index:'last_updated',value:get_my_time()}]};
 									update_json(received_json);
-									
+
 									payment.total_received=0;
 									payment.total_paid=0;
 								}
@@ -1161,12 +1161,12 @@ function worker_7()
 		tier_data.indexes=[{index:'id'},{index:'name'},{index:'tier'},
 			{index:'tier_criteria_lower'},{index:'tier_criteria_upper'},
 			{index:'status',exact:'active'}];
-				
+
 	read_json_rows('',tier_data,function(tiers)
 	{
 		var customers_data=new Object();
 			customers_data.data_store='loyalty_customers';
-			customers_data.return_column='customer';			
+			customers_data.return_column='customer';
 			customers_data.indexes=[{index:'id'}];
 
 		read_json_single_column(customers_data,function(customers)
@@ -1191,7 +1191,7 @@ function worker_7()
 							}
 						}
 					}
-					
+
 					var loyalty_data=new Object();
 						loyalty_data.data_store='loyalty_customers';
 						loyalty_data.indexes=[{index:'id'},{index:'program_name'},{index:'tier'},{index:'customer',exact:customer}];
@@ -1209,7 +1209,7 @@ function worker_7()
 										if(loyalty.program_name==points[y].program_name)
 										{
 											if(parseFloat(tiers[x].tier_criteria_lower)>parseFloat(points[y].points) || parseFloat(tiers[x].tier_criteria_upper)<parseFloat(points[y].points))
-											{	
+											{
 												break;
 											}
 											else
@@ -1255,15 +1255,15 @@ function worker_8()
 			orders_data.data_store='sale_orders';
 			orders_data.indexes=[{index:'id'},{index:'bill_id'},
 			{index:'status',array:['billed','picked','packed','partially billed','partially picked','partially packed']}];
-	
-		read_json_rows('',orders_data,function (orders) 
+
+		read_json_rows('',orders_data,function (orders)
 		{
 			var bill_id_string=[];
 			for(var i in orders)
 			{
 				bill_id_string.push(orders[i].bill_id);
 
-				var bill_id_array=JSON.parse(orders[i].bill_id);
+				var bill_id_array=vUtil.jsonParse(orders[i].bill_id);
 				for(var x in bill_id_array)
 				{
 					bill_id_string.push(bill_id_array[x].bill_id);
@@ -1275,8 +1275,8 @@ function worker_8()
 				picked_pending_data.return_column='bill_id';
 				picked_pending_data.indexes=[{index:'id'},{index:'bill_id',array:bill_id_string},
 											{index:'picked_status',exact:'pending'}];
-		
-			read_json_single_column(picked_pending_data,function (pick_items) 
+
+			read_json_single_column(picked_pending_data,function (pick_items)
 			{
 				var picked_pending_adjust_data=new Object();
 					picked_pending_adjust_data.data_store='inventory_adjust';
@@ -1284,13 +1284,13 @@ function worker_8()
 					picked_pending_adjust_data.indexes=[{index:'id'},{index:'source_id',array:bill_id_string},
 											{index:'picked_status',exact:'pending'}];
 
-				read_json_single_column(picked_pending_adjust_data,function (pick_adjust_items) 
+				read_json_single_column(picked_pending_adjust_data,function (pick_adjust_items)
 				{
 					pick_adjust_items.forEach(function(pick_adjust)
 					{
 						pick_items.push(pick_adjust);
 					});
-					
+
 					var packed_pending_data=new Object();
 						packed_pending_data.data_store='bill_items';
 						packed_pending_data.return_column='bill_id';
@@ -1305,26 +1305,26 @@ function worker_8()
 						packed_pending_adjust_data.indexes=[{index:'id'},{index:'source_id',array:bill_id_string},
 												{index:'packing_status',exact:'pending'}];
 
-						read_json_single_column(packed_pending_adjust_data,function (pack_adjust_items) 
+						read_json_single_column(packed_pending_adjust_data,function (pack_adjust_items)
 						{
 							pack_adjust_items.forEach(function(pack_adjust)
 							{
 								pack_items.push(pack_adjust);
 							});
-						
+
 							var data_json={data_store:'sale_orders',loader:'no',log:'no',data:[]};
 
 							var counter=1;
 							var last_updated=get_my_time();
-						
+
 							orders.forEach(function(row)
 							{
-								var bill_id_array=JSON.parse(row.bill_id);
+								var bill_id_array=vUtil.jsonParse(row.bill_id);
 								var picked=true;
 								var packed=true;
-								
+
 								var partially="";
-								
+
 								if(row.status.indexOf('partially')>-1)
 								{
 									partially="partially ";
@@ -1340,7 +1340,7 @@ function worker_8()
 										}
 									}
 								}
-								
+
 								for(var y in bill_id_array)
 								{
 									for(var x in pack_items)
@@ -1352,7 +1352,7 @@ function worker_8()
 										}
 									}
 								}
-		
+
 								if(picked && packed)
 								{
 									row.status='packed';
@@ -1361,26 +1361,26 @@ function worker_8()
 								{
 									row.status='picked';
 								}
-		
+
 								if(row.status!='billed' && row.status!='partially billed')
 								{
 									if((counter%500)===0)
 									{
 										data_xml+="</sale_orders><separator></separator><sale_orders>";
 									}
-		
-									counter+=1;						
+
+									counter+=1;
 									var data_json_array=[{index:'id',value:row.id},
 										{index:'status',value:partially+row.status},
 										{index:'last_updated',value:last_updated}];
-									data_json.data.push(data_json_array);	
+									data_json.data.push(data_json_array);
 								}
 							});
 							update_batch_json(data_json);
-						});						
+						});
 					});
-				});			
-			});	
+				});
+			});
 		});
 	}
 }
@@ -1399,13 +1399,13 @@ function worker_8()
 function worker_9()
 {
 	var lead_past_time=parseFloat(get_my_time())-86400000;
-	
+
 	var seasonal_attributes_data=new Object();
 			seasonal_attributes_data.data_store='attributes';
 			seasonal_attributes_data.indexes=[{index:'id'},{index:'name'},{index:'value'},
 			{index:'attribute',value:'season'},
 			{index:'type',array:['product','service']}];
-	
+
 	read_json_rows('',seasonal_attributes_data,function(seasonal_attributes)
 	{
 		var items_string=[];
@@ -1413,12 +1413,12 @@ function worker_9()
 		{
 			items_string.push(seasonal_attributes[i].item_name);
 		}
-		
+
 		var bill_items_data=new Object();
 			bill_items_data.data_store='bill_items';
 			bill_items_data.indexes=[{index:'id'},{index:'bill_id'},{index:'item_name',array:items_string},
 									{index:'last_updated',lowerbound:lead_past_time}];
-	
+
 		read_json_rows('',bill_items_data,function(bill_items)
 		{
 			var bills_string=[];
@@ -1426,13 +1426,13 @@ function worker_9()
 			{
 				bills_string.push(bill_items[j].bill_id);
 			}
-			
+
 			var bills_data=new Object();
 			bills_data.data_store='bills';
 			bills_data.indexes=[{index:'id',array:bills_string},{index:'customer_name'},
 								{index:'bill_date'},
 								{index:'last_updated',lowerbound:lead_past_time}];
-	
+
 			read_json_rows('',bills_data,function(bills)
 			{
 				bills.forEach(function(bill)
@@ -1449,10 +1449,10 @@ function worker_9()
 									{
 										var season_start_date=attributes[l].value;
 										var id=get_new_key();
-										
+
 										var detail="Bought "+seasonal_attributes[l].item_name+" that is expected to be bought again in season starting from" +
 												season_start_date+"\n";
-										
+
 										season_start_date=get_time_from_formatted_date(season_start_date);
 										var due_date=season_start_date;
 										var current_time=get_my_time();
@@ -1460,7 +1460,7 @@ function worker_9()
 										{
 											due_date=parseFlaot(season_start_date)+(365*86400000);
 										}
-										
+
 										var sale_lead_json={data_store:'sale_leads',
 								 					log:'no',
 								 					warning:'no',
@@ -1477,7 +1477,7 @@ function worker_9()
 							}
 						}
 					}
-					
+
 				});
 			});
 		});
@@ -1507,16 +1507,16 @@ function worker_10()
 	{
 		var num_res=notifs.length;
 		if(num_res===0)
-		{	
+		{
 			$('#notif_count').html("");
 			$('#notif_count2').html("0");
 			$('#notif_count').hide();
 		}
 		else
-		{	
+		{
 			$('#notif_count').html(num_res);
 			$('#notif_count2').html(num_res);
-			$('#notif_count').show(); 
+			$('#notif_count').show();
 		}
 	});
 }
@@ -1555,7 +1555,7 @@ function worker_11()
 			result_html+="<li><a onclick=\"element_display('"+notif.data_id+"','"+notif.link_to+"');\">"+
 						"<span class='time'>"+get_only_time(notif.t_generated)+"</span>"+
 						"<span class='details'><span class='label label-sm label-icon label-info'><i class='fa fa-bullhorn'></i></span>"+notif.title+"</span></a></li>";
-			
+
 		});
 		$("#topbar_notifications").html(result_html);
 	});
@@ -1581,16 +1581,16 @@ function worker_12()
 	read_json_count(sync_data,function(sync_count)
 	{
 		if(sync_count==0)
-		{	
+		{
 			$('#log_count').html("");
 			$('#log_count2').html("0");
 			$('#log_count').hide();
 		}
 		else
-		{	
+		{
 			$('#log_count').html(sync_count);
 			$('#log_count2').html(sync_count);
-			$('#log_count').show(); 
+			$('#log_count').show();
 		}
 	});
 }
@@ -1625,7 +1625,7 @@ function worker_13()
 		{
 			var icon="fa-bullhorn";
 			var btn_color='label-info';
-			switch(activity.title) 
+			switch(activity.title)
 			{
 				case 'Added':icon="fa-plus";
 							btn_color="label-success";
@@ -1658,8 +1658,8 @@ function worker_13()
 			result_html+="<li><a onclick=element_display('"+activity.data_id+"','"+activity.link_to+"');>"+
                         "<span class='time'>"+get_only_time(activity.last_updated)+"</span>"+
                         "<span class='details'><span class='label label-sm label-icon "+btn_color+"'><i class='fa "+icon+"' title='"+activity.title+"'></i></span>"+activity.notes+"</span></a></li>";
-			
+
 		});
 		$("#topbar_logs").html(result_html);
-	});	
+	});
 }

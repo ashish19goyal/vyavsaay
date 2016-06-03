@@ -866,16 +866,6 @@ function form230_import_template()
 };
 
 /**
-* @form Manage Products (without tax)
-* @formNo 87
-*/
-function form234_import_template()
-{
-	var data_array=['id','name','make','description','bar_code','mrp','cost_price','sale_price'];
-	my_array_to_csv(data_array);
-};
-
-/**
 * @form SKU components
 * @formNo 245
 */

@@ -2,10 +2,10 @@ CACHE MANIFEST
 #An application's cache is only updated when its manifest file changes.
 #Updating the date and version in a comment line is one way to make the browser re-cache files.
 #Modify the manifest file itself to inform the browser to refresh cached files.
-#Avoid using a continually-updating timestamp or random string to force updates every time. 
+#Avoid using a continually-updating timestamp or random string to force updates every time.
 #The manifest is checked twice during an update,
 #once at the start and once after all cached files have been updated.
-#last updated on 4th Jan 2015 13:08pm
+#last updated on 4th Jan 2016 13:08pm
 #these files will be cached
 CACHE:
 /
@@ -250,7 +250,7 @@ js/prop/vGoogleCalendar.js
 js/prop/vUtil.js
 favicon.ico
 #
-#Files listed under this header require a connection to the server, and will never be cached 
+#Files listed under this header require a connection to the server, and will never be cached
 
 NETWORK:
 *
@@ -260,5 +260,5 @@ NETWORK:
 #http://otile4.mqcdn.com/tiles/
 
 #
-#optional section specifying fallback pages if a resource is inaccessible. 
+#optional section specifying fallback pages if a resource is inaccessible.
 #FALLBACK:

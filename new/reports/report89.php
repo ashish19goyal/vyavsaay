@@ -1,8 +1,8 @@
-<div id='report89' class='tab-pane portlet box red-sunglo'>	   
+<div id='report89' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report89_ini();'>Refresh</a>
-		</div>		
+		</div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
@@ -18,16 +18,16 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 		<form id='report89_header' autocomplete="off">
 			<fieldset>
 				<label><input type='text' placeholder="Delivery Person" class='floatlabel' name='person'></label>
                 <label><input type='text' placeholder="Import Start Date" class='floatlabel' name='start'></label>
                 <label><input type='text' placeholder="Import End Date" class='floatlabel' name='end'></label>
-				<label><input type='submit' class='submit_hidden'></label>			
+				<label><input type='submit' class='submit_hidden'></label>
 			</fieldset>
 		</form>
 	<br>
@@ -43,11 +43,11 @@
 			<tbody id='report89_body'></tbody>
 		</table>
 	</div>
-	
+
 	<script>
 
 function report89_header_ini()
-{	
+{
 	var form=document.getElementById('report89_header');
 	var person_filter=form.elements['person'];
 	var start_filter=form.elements['start'];
@@ -62,12 +62,12 @@ function report89_header_ini()
 
 	var person_data={data_store:'staff',return_column:'acc_name'};
 	set_my_filter_json(person_data,person_filter);
-	
+
 	$(start_filter).datepicker();
 	$(end_filter).datepicker();
 	start_filter.value=get_my_past_date(get_my_time()-7*86400000);
 	end_filter.value=get_my_date();
-    
+
     $('#report89').formcontrol();
 }
 
@@ -78,11 +78,11 @@ function report89_ini()
 	var person=form.elements['person'].value;
 	var start_date=get_raw_time(form.elements['start'].value);
 	var end_date=get_raw_time(form.elements['end'].value)+86399999;
-	
+
 	$('#report89_body').html('');
-	
+
 	var paginator=$('#report89_body').paginator({'page_size':25});
-        
+
     var columns={count:paginator.page_size(),
                 start_index:paginator.get_index(),
                 data_store:'logistics_orders',
@@ -99,26 +99,23 @@ function report89_ini()
 						{index:'return_address1'},
 						{index:'return_address2'},
 						{index:'return_address3'},
-						{index:'order_history'}]};		
-	
+						{index:'order_history'}]};
+
 		read_json_rows('report89',columns,function(deliveries)
 		{
 			deliveries.forEach(function(result)
 			{
 				result.delivery_date="NA";
-				if(result.order_history!=0 && result.order_history!="" && result.order_history!="null" && result.order_history!=null)
+				var order_history_object=vUtil.jsonParse(result.order_history);
+				for(var i in order_history_object)
 				{
-					var order_history_object=JSON.parse(result.order_history);
-					for(var i in order_history_object)
+					if(order_history_object[i].status=='delivered')
 					{
-						if(order_history_object[i].status=='delivered')
-						{
-							result.delivery_date=get_my_past_date(order_history_object[i].timeStamp);
-							break;
-						}
+						result.delivery_date=get_my_past_date(order_history_object[i].timeStamp);
+						break;
 					}
 				}
-				
+
 				var rowsHTML="<tr>";
 					rowsHTML+="<td data-th='Person'><a onclick=\"show_object('staff','"+result.delivery_person+"');\">";
 						rowsHTML+=result.delivery_person;
@@ -134,9 +131,9 @@ function report89_ini()
 					rowsHTML+="</td>";
 				rowsHTML+="</tr>";
 
-				$('#report89_body').append(rowsHTML);			
+				$('#report89_body').append(rowsHTML);
 			});
-			
+
 			initialize_tabular_report_buttons(columns,'Deliveries (by person)','report89',function (item)
             {
                 item['AWB No']=item.awb_num;
@@ -150,7 +147,7 @@ function report89_ini()
                 item['Merchant Address']=item.return_address1+", "+item.return_address2+", "+item.return_address3;
                 item['Mobile No']=item.phone;
                 item['Product Name']=item.sku;
-             
+
                 delete item.id;
                 delete item.awb_num;
                 delete item.import_date;
@@ -171,6 +168,6 @@ function report89_ini()
 		});
 
 };
-	
+
 	</script>
 </div>

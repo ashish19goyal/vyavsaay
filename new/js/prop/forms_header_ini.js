@@ -6170,41 +6170,6 @@ function form233_header_ini()
     });
 };
 
-/**
- * @form Manage Products (without tax)
- * @formNo 234
- */
-function form234_header_ini()
-{
-	var filter_fields=document.getElementById('form234_header');
-	var name_filter=filter_fields.elements[0];
-	var make_filter=filter_fields.elements[1];
-	var add_filter=filter_fields.elements[2];
-
-	$(add_filter).off('click');
-	$(add_filter).on('click',function ()
-	{
-		modal174_action();
-	});
-
-	var make_data="<product_master>" +
-			"<make></make>" +
-			"</product_master>";
-	var products_data="<product_master>" +
-			"<name></name>" +
-			"</product_master>";
-
-	set_my_filter(make_data,make_filter);
-	set_my_filter(products_data,name_filter);
-
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form234_ini();
-	});
-};
-
 
 /**
  * @form Manage Products (Grid)

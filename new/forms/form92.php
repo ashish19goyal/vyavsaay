@@ -1,4 +1,4 @@
-<div id='form92' class='tab-pane portlet box green-meadow'>	   
+<div id='form92' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class="actions">
             <div class="btn-group">
@@ -15,9 +15,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -38,7 +38,7 @@
 	</div>
 
     <script>
-    
+
     function form92_header_ini()
         {
             //console.log('92_header');
@@ -69,7 +69,7 @@
             show_loader();
             var fid=$("#form92_link").attr('data_id');
             if(fid==null)
-                fid="";	
+                fid="";
 
             $('#form92_body').html("");
 
@@ -79,7 +79,7 @@
             var fname=filter_fields.elements['customer'].value;
 
             var paginator=$('#form92_body').paginator();
-			
+
 			var columns=new Object();
 					columns.count=paginator.page_size();
 					columns.start_index=paginator.get_index();
@@ -95,16 +95,16 @@
                                     {index:'total'},
                                     {index:'order_id'},
                                     {index:'status'}];
-			
+
             read_json_rows('form92',columns,function(results)
-            {	
+            {
                 results.forEach(function(result)
                 {
                     var cancelled_bill="";
                     if(result.status=='cancelled')
                     {
                         cancelled_bill="style='opacity:0.5' title='This bill was cancelled'";
-                    }	
+                    }
                     var rowsHTML="<tr "+cancelled_bill+">";
                         rowsHTML+="<form id='form92_"+result.id+"'></form>";
                             rowsHTML+="<td data-th='Bill #'>";
@@ -125,11 +125,11 @@
                             rowsHTML+="<td data-th='Action'>";
                                 rowsHTML+="<input type='hidden' form='form92_"+result.id+"' value='"+result.id+"'>";
                             if(result.status!='cancelled')
-                            {					
+                            {
                                 rowsHTML+="<button type='button' class='btn red' form='form92_"+result.id+"' title='Cancel Bill' onclick='form92_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-                            }					
+                            }
                                 rowsHTML+="<input type='hidden' form='form92_"+result.id+"' value='"+result.order_id+"' name='order_id'>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form92_body').append(rowsHTML);
@@ -170,14 +170,14 @@
                     var data_id=form.elements[5].value;
                     var order_id=form.elements['order_id'].value;
                     var last_updated=get_my_time();
-                    
+
                     var bill_json={data_store:'bills',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'status',value:'cancelled'},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Cancelled',notes:'Bill # '+bill_num,link_to:'form92'}};
- 				
+
                     var transaction_json={data_store:'transactions',
 	 				data:[{index:'id',value:data_id}]};
 
@@ -211,7 +211,7 @@
                     var items_json={data_store:'bill_items',
                                 data:[{index:'bill_id',value:data_id}]};
                     delete_json(items_json);
-                    
+
                     var adjust_json={data_store:'inventory_adjust',
                                 data:[{index:'source_id',value:data_id},{index:'source',value:'sale'}]};
                     delete_json(adjust_json);
@@ -226,15 +226,11 @@
                                                {index:'bill_id'},
                                                {index:'status'},
                                                {index:'total_quantity'}]};
-                    read_json_rows('',sale_order_xml,function (sorders) 
+                    read_json_rows('',sale_order_xml,function (sorders)
                     {
                         if(sorders.length>0)
                         {
-                            var id_object_array=[];
-                            if(sorders[0].bill_id!="" && sorders[0].bill_id!=0 && sorders[0].bill_id!="null")
-                            {
-                                id_object_array=JSON.parse(sorders[0].bill_id);
-                            }
+                            var id_object_array=vUtil.jsonParse(sorders[0].bill_id);
 
                             for(var k in id_object_array)
                             {
@@ -251,7 +247,7 @@
                                 master_total_quantity+=parseFloat(id_object_array[k].quantity);
                             }
 
-                            var status='partially billed';				
+                            var status='partially billed';
                             if(parseFloat(master_total_quantity)==parseFloat(sorders[0].total_quantity))
                             {
                                 status='billed';
@@ -266,7 +262,7 @@
 
                             update_json(so_json);
                         }
-                    });	
+                    });
                 });
             }
             else

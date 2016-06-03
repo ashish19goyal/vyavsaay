@@ -14,7 +14,7 @@ function form1_import(data_array,import_type)
 		{
 			data_xml+="</product_instances><separator></separator><product_instances>";
 		}
-		
+
 		counter+=1;
 		if(import_type=='create_new')
 		{
@@ -50,7 +50,7 @@ function form1_import(data_array,import_type)
 	});
 
 	data_xml+="</product_instances>";
-	
+
 	if(import_type=='create_new')
 	{
 		create_batch(data_xml);
@@ -77,7 +77,7 @@ function form5_import(data_array,import_type)
 		{
 			data_xml+="</assets><separator></separator><assets>";
 		}
-		
+
 		counter+=1;
 		if(import_type=='create_new')
 		{
@@ -112,7 +112,7 @@ function form10_import(data_array,import_type)
 	var data_xml="<bill_items>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -161,7 +161,7 @@ function form10_import(data_array,import_type)
 	else
 	{
 		if(is_online())
-		{	
+		{
 			server_update_batch(data_xml);
 		}
 		else
@@ -183,7 +183,7 @@ function form11_import(data_array,import_type)
 	var transaction_xml="<transactions>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -197,7 +197,7 @@ function form11_import(data_array,import_type)
 			row.id=last_updated+counter;
 		}
 
-	
+
 		var receiver=row.acc_name;
 		var giver="master";
 		if(row.type=='received')
@@ -215,7 +215,7 @@ function form11_import(data_array,import_type)
 				"<date>"+get_raw_time(row.date)+"</date>" +
 				"<due_date>"+get_raw_time(row.due_date)+"</due_date>" +
 				"<mode>"+row.mode+"</mode>" +
-				"<source>"+row.source+"</source>" +				
+				"<source>"+row.source+"</source>" +
 				"<source_id>"+row.source_id+"</source_id>" +
 				"<source_info>"+row.source_info+"</source_info>" +
 				"<transaction_id>"+row.id+"</transaction_id>" +
@@ -231,7 +231,7 @@ function form11_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</payments>";
 	transaction_xml+="</transactions>";
 	if(import_type=='create_new')
@@ -250,7 +250,7 @@ function form11_import(data_array,import_type)
 	else
 	{
 		if(is_online())
-		{	
+		{
 			server_update_batch(data_xml);
 			server_update_batch(transaction_xml);
 		}
@@ -271,7 +271,7 @@ function form12_import(data_array,import_type)
 	var data_xml="<bill_items>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -304,7 +304,7 @@ function form12_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</bill_items>";
 	if(import_type=='create_new')
 	{
@@ -320,7 +320,7 @@ function form12_import(data_array,import_type)
 	else
 	{
 		if(is_online())
-		{	
+		{
 			server_update_batch(data_xml);
 		}
 		else
@@ -340,7 +340,7 @@ function form14_import(data_array,import_type)
 	var data_xml="<task_instances>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -366,7 +366,7 @@ function form14_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</task_instances>";
 	if(import_type=='create_new')
 	{
@@ -382,7 +382,7 @@ function form14_import(data_array,import_type)
 	else
 	{
 		if(is_online())
-		{	
+		{
 			server_update_batch(data_xml);
 		}
 		else
@@ -403,7 +403,7 @@ function form16_import(data_array,import_type)
 	var transaction_xml="<transactions>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -440,9 +440,9 @@ function form16_import(data_array,import_type)
 				"<tax>-"+row.tax+"</tax>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
-		
+
 	});
-	
+
 	data_xml+="</customer_returns>";
 	transaction_xml+="</transactions>";
 	if(import_type=='create_new')
@@ -461,7 +461,7 @@ function form16_import(data_array,import_type)
 	else
 	{
 		if(is_online())
-		{	
+		{
 			server_update_batch(data_xml);
 			server_update_batch(transaction_xml);
 		}
@@ -483,7 +483,7 @@ function form21_import(data_array,import_type)
 	var data_xml="<supplier_bill_items>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -510,7 +510,7 @@ function form21_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</supplier_bill_items>";
 	if(import_type=='create_new')
 	{
@@ -526,7 +526,7 @@ function form21_import(data_array,import_type)
 	else
 	{
 		if(is_online())
-		{	
+		{
 			server_update_batch(data_xml);
 		}
 		else
@@ -545,7 +545,7 @@ function form24_import(data_array,import_type)
 	var data_xml="<purchase_order_items>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -596,7 +596,7 @@ function form35_import(data_array,import_type)
 	var data_xml="<offers>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -654,7 +654,7 @@ function form42_import(data_array,import_type)
 	var transaction_xml="<transactions>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -716,7 +716,7 @@ function form43_import(data_array,import_type)
 	var data_xml="<purchase_orders>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -741,7 +741,7 @@ function form43_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</purchase_orders>";
 	if(import_type=='create_new')
 	{
@@ -785,7 +785,7 @@ function form57_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</services>";
 	if(import_type=='create_new')
 	{
@@ -819,7 +819,7 @@ function form58_import(data_array,import_type)
 		{
 			row.id=last_updated+counter;
 		}
-		
+
 		var data_json_array=[{index:'id',value:row.id},
 						{index:'name',value:row.name,uniqueWith:['type']},
 						{index:'type',value:row.type},
@@ -829,7 +829,7 @@ function form58_import(data_array,import_type)
 						{index:'last_updated',value:last_updated}];
 		data_json.data.push(data_json_array);
 	});
-	
+
 	if(import_type=='create_new')
 	{
 		create_batch_json(data_json);
@@ -871,7 +871,7 @@ function form59_import(data_array,import_type)
 				"<quantity>"+row.quantity+"</quantity>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
-		
+
 	});
 	data_xml+="</pre_requisites>";
 	if(import_type=='create_new')
@@ -1200,7 +1200,7 @@ function form72_import(data_array,import_type)
 	var data_xml="<bill_items>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -1227,7 +1227,7 @@ function form72_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</bill_items>";
 	if(import_type=='create_new')
 	{
@@ -1332,7 +1332,7 @@ function form82_import(data_array,import_type)
 	var data_xml="<bill_items>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -1365,7 +1365,7 @@ function form82_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</bill_items>";
 	if(import_type=='create_new')
 	{
@@ -1455,7 +1455,7 @@ function form87_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</product_master>";
 	if(import_type=='create_new')
 	{
@@ -1499,7 +1499,7 @@ function form88_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</manufacturing_schedule>";
 	if(import_type=='create_new')
 	{
@@ -1521,7 +1521,7 @@ function form91_import(data_array,import_type)
 	var data_xml="<bill_items>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -1554,7 +1554,7 @@ function form91_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</bill_items>";
 	if(import_type=='create_new')
 	{
@@ -1630,7 +1630,7 @@ function form101_import(data_array,import_type)
 	var data_xml="<projects>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -1652,7 +1652,7 @@ function form101_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</projects>";
 	if(import_type=='create_new')
 	{
@@ -1673,7 +1673,7 @@ function form102_import(data_array,import_type)
 	var data_xml="<project_team>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -1696,7 +1696,7 @@ function form102_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</project_team>";
 	if(import_type=='create_new')
 	{
@@ -1717,7 +1717,7 @@ function form103_import(data_array,import_type)
 	var data_xml="<project_phases>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -1741,7 +1741,7 @@ function form103_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</project_phases>";
 	if(import_type=='create_new')
 	{
@@ -2105,7 +2105,7 @@ function form118_import(data_array,import_type)
 	var data_xml="<bill_items>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -2140,7 +2140,7 @@ function form118_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</bill_items>";
 	if(import_type=='create_new')
 	{
@@ -2162,7 +2162,7 @@ function form119_import(data_array,import_type)
 	var data_xml="<bill_items>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -2197,7 +2197,7 @@ function form119_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</bill_items>";
 	if(import_type=='create_new')
 	{
@@ -2303,7 +2303,7 @@ function form122_import(data_array,import_type)
 	var data_xml="<supplier_bill_items>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -2336,7 +2336,7 @@ function form122_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</supplier_bill_items>";
 	if(import_type=='create_new')
 	{
@@ -2563,7 +2563,7 @@ function form146_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</manufacturing_schedule>";
 	if(import_type=='create_new')
 	{
@@ -2579,7 +2579,7 @@ function form146_import(data_array,import_type)
 	else
 	{
 		if(is_online())
-		{	
+		{
 			server_update_batch(data_xml);
 		}
 		else
@@ -2627,11 +2627,11 @@ function form154_import(data_array,import_type)
 				"<from_date>"+get_raw_time(row.from_date)+"</from_date>" +
 				"<to_date>"+get_raw_time(row.to_date)+"</to_date>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";		
+				"</row>";
 	});
 
 	data_xml+="</bill_items>";
-	
+
 	if(import_type=='create_new')
 	{
 		if(is_online())
@@ -2646,7 +2646,7 @@ function form154_import(data_array,import_type)
 	else
 	{
 		if(is_online())
-		{	
+		{
 			server_update_batch(data_xml);
 		}
 		else
@@ -2702,16 +2702,16 @@ function form155_import(data_array,import_type)
 							"<quantity>"+new_quantity+"</quantity>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</inventory_adjust>";
-					
+
 					create_simple_no_warning(adjust_xml);
-					
+
 				}
 			});
 		}
 	});
 
 	data_xml+="</product_instances>";
-	
+
 	if(import_type=='create_new')
 	{
 		create_batch(data_xml);
@@ -2731,7 +2731,7 @@ function form156_import(data_array,import_type)
 	var data_xml="<area_utilization>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -2752,7 +2752,7 @@ function form156_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</area_utilization>";
 	if(import_type=='create_new')
 	{
@@ -2768,7 +2768,7 @@ function form156_import(data_array,import_type)
 	else
 	{
 		if(is_online())
-		{	
+		{
 			server_update_batch(data_xml);
 		}
 		else
@@ -2787,7 +2787,7 @@ function form157_import(data_array,import_type)
 	var data_xml="<store_movement>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -2812,9 +2812,9 @@ function form157_import(data_array,import_type)
 				"<dispatcher>"+row.dispatcher+"</dispatcher>" +
 				"<receiver>"+row.receiver+"</receiver>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";		
+				"</row>";
 	});
-	
+
 	data_xml+="</store_movement>";
 	if(import_type=='create_new')
 	{
@@ -2830,7 +2830,7 @@ function form157_import(data_array,import_type)
 	else
 	{
 		if(is_online())
-		{	
+		{
 			server_update_batch(data_xml);
 		}
 		else
@@ -2849,7 +2849,7 @@ function form158_import(data_array,import_type)
 	var data_xml="<supplier_bill_items>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -2876,7 +2876,7 @@ function form158_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</supplier_bill_items>";
 	if(import_type=='create_new')
 	{
@@ -2892,7 +2892,7 @@ function form158_import(data_array,import_type)
 	else
 	{
 		if(is_online())
-		{	
+		{
 			server_update_batch(data_xml);
 		}
 		else
@@ -2934,7 +2934,7 @@ function form161_import(data_array,import_type)
 	});
 
 	data_xml+="</checklist_items>";
-	
+
 	if(import_type=='create_new')
 	{
 		if(is_online())
@@ -2949,7 +2949,7 @@ function form161_import(data_array,import_type)
 	else
 	{
 		if(is_online())
-		{	
+		{
 			server_update_batch(data_xml);
 		}
 		else
@@ -2991,7 +2991,7 @@ function form162_import(data_array,import_type)
 	});
 
 	data_xml+="</checklist_mapping>";
-	
+
 	if(import_type=='create_new')
 	{
 		if(is_online())
@@ -3006,7 +3006,7 @@ function form162_import(data_array,import_type)
 	else
 	{
 		if(is_online())
-		{	
+		{
 			server_update_batch(data_xml);
 		}
 		else
@@ -3026,7 +3026,7 @@ function form167_import(data_array,import_type)
 	var data_xml="<storage_structure>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -3051,7 +3051,7 @@ function form167_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</storage_structure>";
 	if(import_type=='create_new')
 	{
@@ -3067,7 +3067,7 @@ function form167_import(data_array,import_type)
 	else
 	{
 		if(is_online())
-		{	
+		{
 			server_update_batch(data_xml);
 		}
 		else
@@ -3086,7 +3086,7 @@ function form169_import(data_array,import_type)
 	var data_xml="<product_master>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -3116,7 +3116,7 @@ function form169_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</product_master>";
 	if(import_type=='create_new')
 	{
@@ -3173,7 +3173,7 @@ function form170_import(data_array,import_type)
 	{
 		update_batch(data_xml);
 	}
-				
+
 };
 
 /**
@@ -3221,7 +3221,7 @@ function form171_import(data_array,import_type)
 	else
 	{
 		if(is_online())
-		{	
+		{
 			server_update_batch(data_xml);
 		}
 		else
@@ -3229,7 +3229,7 @@ function form171_import(data_array,import_type)
 			local_update_batch(data_xml);
 		}
 	}
-				
+
 };
 
 
@@ -3254,7 +3254,7 @@ function form172_import(data_array,import_type)
 		{
 			row.id=last_updated+counter;
 		}
-		
+
 		var profit=my_round((parseFloat(row.sale_price)+parseFloat(row.freight)-parseFloat(row.total_charges)-parseFloat(row.cost_price)),2);
 		var profit_mrp=my_round((profit/parseFloat(row.mrp)*100),2);
 		var profit_sp=my_round((profit/parseFloat(row.sale_price)*100),2);
@@ -3292,7 +3292,7 @@ function form172_import(data_array,import_type)
 	{
 		update_batch(data_xml);
 	}
-				
+
 };
 
 /**
@@ -3335,7 +3335,7 @@ function form173_import(data_array,import_type)
 	{
 		update_batch(data_xml);
 	}
-				
+
 };
 
 /**
@@ -3378,7 +3378,7 @@ function form174_import(data_array,import_type)
 	else
 	{
 		update_batch(data_xml);
-	}			
+	}
 };
 
 /**
@@ -3421,7 +3421,7 @@ function form175_import(data_array,import_type)
 	else
 	{
 		update_batch(data_xml);
-	}			
+	}
 };
 
 /**
@@ -3463,7 +3463,7 @@ function form176_import(data_array,import_type)
 	else
 	{
 		update_batch(data_xml);
-	}			
+	}
 };
 
 /**
@@ -3505,7 +3505,7 @@ function form177_import(data_array,import_type)
 	else
 	{
 		update_batch(data_xml);
-	}			
+	}
 };
 
 /**
@@ -3557,14 +3557,14 @@ function form184_import(data_array,import_type)
 	else
 	{
 		if(is_online())
-		{	
+		{
 			server_update_batch(data_xml);
 		}
 		else
 		{
 			local_update_batch(data_xml);
 		}
-	}			
+	}
 };
 
 /**
@@ -3616,14 +3616,14 @@ function form187_import(data_array,import_type)
 	else
 	{
 		if(is_online())
-		{	
+		{
 			server_update_batch(data_xml);
 		}
 		else
 		{
 			local_update_batch(data_xml);
 		}
-	}			
+	}
 };
 
 /**
@@ -3673,7 +3673,7 @@ function form190_import(data_array,import_type)
 	});
 	data_xml+="</sale_orders>";
 	task_xml+="</task_instances>";
-	
+
 	if(import_type=='create_new')
 	{
 		if(is_online())
@@ -3690,7 +3690,7 @@ function form190_import(data_array,import_type)
 	else
 	{
 		if(is_online())
-		{	
+		{
 			server_update_batch(data_xml);
 			server_update_batch(task_xml);
 		}
@@ -3699,7 +3699,7 @@ function form190_import(data_array,import_type)
 			local_update_batch(data_xml);
 			local_update_batch(task_xml);
 		}
-	}			
+	}
 };
 
 
@@ -3736,7 +3736,7 @@ function form193_import(data_array,import_type)
 				"</row>";
 	});
 	data_xml+="</inventory_adjust>";
-	
+
 	if(import_type=='create_new')
 	{
 		create_batch(data_xml);
@@ -3744,7 +3744,7 @@ function form193_import(data_array,import_type)
 	else
 	{
 		update_batch(data_xml);
-	}			
+	}
 };
 
 /**
@@ -3783,7 +3783,7 @@ function form195_import(data_array,import_type)
 				"</row>";
 	});
 	data_xml+="</letterheads>";
-	
+
 	if(import_type=='create_new')
 	{
 		if(is_online())
@@ -3798,14 +3798,14 @@ function form195_import(data_array,import_type)
 	else
 	{
 		if(is_online())
-		{	
+		{
 			server_update_batch(data_xml);
 		}
 		else
 		{
 			local_update_batch(data_xml);
 		}
-	}			
+	}
 };
 
 
@@ -3825,7 +3825,7 @@ function form207_import(data_array,import_type)
 		{
 			data_xml+="</product_instances><separator></separator><product_instances>";
 		}
-		
+
 		counter+=1;
 		if(import_type=='create_new')
 		{
@@ -3863,7 +3863,7 @@ function form207_import(data_array,import_type)
 	});
 
 	data_xml+="</product_instances>";
-	
+
 	if(import_type=='create_new')
 	{
 		create_batch(data_xml);
@@ -3928,7 +3928,7 @@ function form222_import(data_array,import_type)
 	var data_xml="<purchase_order_items>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -3971,7 +3971,7 @@ function form222_import(data_array,import_type)
 	else
 	{
 		if(is_online())
-		{	
+		{
 			server_update_batch(data_xml);
 		}
 		else
@@ -3990,7 +3990,7 @@ function form223_import(data_array,import_type)
 	var data_xml="<purchase_orders>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -4015,7 +4015,7 @@ function form223_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</purchase_orders>";
 	if(import_type=='create_new')
 	{
@@ -4031,7 +4031,7 @@ function form223_import(data_array,import_type)
 	else
 	{
 		if(is_online())
-		{	
+		{
 			server_update_batch(data_xml);
 		}
 		else
@@ -4051,7 +4051,7 @@ function form230_import(data_array,import_type)
 	var data_xml="<bill_items>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -4076,7 +4076,7 @@ function form230_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</bill_items>";
 	if(import_type=='create_new')
 	{
@@ -4085,63 +4085,6 @@ function form230_import(data_array,import_type)
 	else
 	{
 		update_batch(data_xml);
-	}
-};
-
-/**
-* @form Manage Products (without tax)
-* @formNo 234
-*/
-function form234_import(data_array,import_type)
-{
-	var data_xml="<product_master>";
-	var data2_xml="<product_instances>";
-	var counter=1;
-	var last_updated=get_my_time();
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</product_master><separator></separator><product_master>";
-			data2_xml+="</product_instances><separator></separator><product_instances>";
-		}
-		
-		counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<name unique='yes'>"+row.name+"</name>" +
-				"<make>"+row.make+"</make>" +
-				"<description>"+row.description+"</description>" +
-				"<bar_code>"+row.bar_code+"</bar_code>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-		data2_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<product_name>"+row.name+"</product_name>" +
-				"<batch>"+row.name+"</batch>" +
-				"<cost_price>"+row.cost_price+"</cost_price>" +
-				"<sale_price>"+row.sale_price+"</sale_price>" +
-				"<mrp>"+row.mrp+"</mrp>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-	
-	data_xml+="</product_master>";
-	data2_xml+="</product_instances>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-		create_batch(data2_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-		update_batch(data2_xml);
 	}
 };
 
@@ -4178,7 +4121,7 @@ function form245_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</pre_requisites>";
 	if(import_type=='create_new')
 	{
@@ -4203,7 +4146,7 @@ function form273_import(data_array,import_type)
 	var counter=1;
 	var last_updated=get_my_time();
 	var supplier_array=[];
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -4238,9 +4181,9 @@ function form273_import(data_array,import_type)
         supplier_object.phone=row.phone;
         supplier_object.address=row.address;
         supplier_object.city=row.city;
-        
+
         var add_supplier=true;
-        
+
         for(var i=0;i<supplier_array.length;i++)
         {
         	if(supplier_array[i].acc_name==supplier_object.acc_name)
@@ -4253,9 +4196,9 @@ function form273_import(data_array,import_type)
     	if(add_supplier)
     	{
     		supplier_array.push(supplier_object);
-    	}            	
+    	}
 	});
-	
+
 	counter=1;
 	supplier_array.forEach(function(row)
 	{
@@ -4265,7 +4208,7 @@ function form273_import(data_array,import_type)
 			data3_xml+="</accounts><separator></separator><accounts>";
 		}
 		counter+=1;
-		
+
 		data2_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>"+
@@ -4275,7 +4218,7 @@ function form273_import(data_array,import_type)
                 "<address>"+row.address+"</address>"+
                 "<city>"+row.city+"</city>"+
                 "<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";		
+				"</row>";
 
 		data3_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
@@ -4283,7 +4226,7 @@ function form273_import(data_array,import_type)
 				"<description></description>" +
 				"<type>supplier</type>" +
 				"<username></username>" +
-				"<status>active</status>"+				
+				"<status>active</status>"+
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
@@ -4317,7 +4260,7 @@ function form274_import(data_array,import_type)
 	var data2_xml="<inventory_adjust>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -4351,11 +4294,11 @@ function form274_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</product_master>";
 	data1_xml+="</product_instances>";
 	data2_xml+="</inventory_adjust>";
-	
+
 	if(import_type=='create_new')
 	{
 		create_batch(data_xml);
@@ -4378,7 +4321,7 @@ function form275_import(data_array,import_type)
 	var data_xml="<bill_items>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -4402,7 +4345,7 @@ function form275_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</bill_items>";
 	if(import_type=='create_new')
 	{
@@ -4427,7 +4370,7 @@ function form289_import(data_array,import_type)
 	var counter=1;
 	var last_updated=get_my_time();
 	var supplier_array=[];
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -4450,7 +4393,7 @@ function form289_import(data_array,import_type)
 				"<identified_by>"+row['point-of-contact']+"</identified_by>" +
 				"<quantity>"+row['quantity']+"</quantity>" +
 				"<due_date>"+get_raw_time(row['followup date'])+"</due_date>" +
-				"<status>open</status>"+				
+				"<status>open</status>"+
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 
@@ -4463,9 +4406,9 @@ function form289_import(data_array,import_type)
         supplier_object.phone=row.phone;
         supplier_object.address=row.address;
         supplier_object.city=row.city;
-        
+
         var add_supplier=true;
-        
+
         for(var i=0;i<supplier_array.length;i++)
         {
         	if(supplier_array[i].acc_name==supplier_object.acc_name)
@@ -4478,9 +4421,9 @@ function form289_import(data_array,import_type)
     	if(add_supplier)
     	{
     		supplier_array.push(supplier_object);
-    	}            	
+    	}
 	});
-	
+
 	counter=1;
 	supplier_array.forEach(function(row)
 	{
@@ -4490,7 +4433,7 @@ function form289_import(data_array,import_type)
 			data3_xml+="</accounts><separator></separator><accounts>";
 		}
 		counter+=1;
-		
+
 		data2_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>"+
@@ -4500,7 +4443,7 @@ function form289_import(data_array,import_type)
                 "<address>"+row.address+"</address>"+
                 "<city>"+row.city+"</city>"+
                 "<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";		
+				"</row>";
 
 		data3_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
@@ -4508,7 +4451,7 @@ function form289_import(data_array,import_type)
 				"<description></description>" +
 				"<type>customer</type>" +
 				"<username></username>" +
-				"<status>active</status>"+				
+				"<status>active</status>"+
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 
@@ -4542,7 +4485,7 @@ function form290_import(data_array,import_type)
 	var data_xml="<cities_data>";
 	var counter=1;
 	var last_updated=get_my_time();
-	
+
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -4561,9 +4504,9 @@ function form290_import(data_array,import_type)
 				"<state>"+row['state']+"</state>" +
 				"<country>"+row['country']+"</country>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";		            	
+				"</row>";
 	});
-	
+
 	data_xml+="</cities_data>";
 
 	if(import_type=='create_new')
@@ -4594,7 +4537,7 @@ function form300_import(data_array,import_type)
 			data_xml+="</product_master><separator></separator><product_master>";
 			data2_xml+="</product_instances><separator></separator><product_instances>";
 		}
-		
+
 		counter+=1;
 		if(import_type=='create_new')
 		{
@@ -4619,7 +4562,7 @@ function form300_import(data_array,import_type)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
-	
+
 	data_xml+="</product_master>";
 	data2_xml+="</product_instances>";
 	if(import_type=='create_new')

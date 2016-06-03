@@ -2,11 +2,11 @@
 	<form id='report79_header' autocomplete="off">
 		<fieldset>
 			<label>Order #<br><input type='text' name='awb'></label>
-			<label>	
+			<label>
 				<input type='submit' value='Refresh' name='refresh' class='generic_icon'>
 				<input type='button' title='Print' name='print' class='print_icon'>
-				<input type='button' title='Download CSV' class='csv_icon' name='csv'>			
-			</label>	
+				<input type='button' title='Download CSV' class='csv_icon' name='csv'>
+			</label>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>
@@ -22,21 +22,21 @@
 		<tbody id='report79_body'>
 		</tbody>
 	</table>
-	
+
 	<script>
 
 function report79_header_ini()
-{	
+{
 	var form=document.getElementById('report79_header');
 	var order_filter=form.elements[1];
-	
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
 		report79_ini();
 	});
-	
+
 	var order_data="<purchase_orders>"+
 				"<order_num></order_num>"+
 				"<status array='yes'>--order placed--partially received--</status>"+
@@ -48,33 +48,31 @@ function report79_ini()
 {
 	var form=document.getElementById('report79_header');
 	var order_filter=form.elements[1].value;
-	
+
 	show_loader();
-	$('#report79_body').html('');	
-	
+	$('#report79_body').html('');
+
 	var order_data="<purchase_orders>"+
 				"<id></id>"+
 				"<order_num>"+order_filter+"</order_num>"+
 				"<status array='yes'>--order placed--partially received--</status>"+
 				"<bill_id></bill_id>"+
 				"</purchase_orders>";
-	
+
 	fetch_requested_data('report79',order_data,function(pos)
 	{
 		var bill_id_string='--';
 		var po_id_string='--';
 		for(var i in pos)
 		{
-			if(pos[i].bill_id!="" && pos[i].bill_id!=null)
+			var bill_id_array=vUtil.jsonParse(pos[i].bill_id);
+			for(var x in bill_id_array)
 			{
-				var bill_id_array=JSON.parse(pos[i].bill_id);
-				for(var x in bill_id_array)
-				{
-					bill_id_string+=bill_id_array[x].bill_id+"--";
-				}
+				bill_id_string+=bill_id_array[x].bill_id+"--";
 			}
+
 			po_id_string+=pos[i].id+"--";
-		}		
+		}
 
 		var bill_items_xml="<supplier_bill_items>"+
 					"<bill_id array='yes'>"+bill_id_string+"</bill_id>"+
@@ -83,24 +81,24 @@ function report79_ini()
 					"<quantity></quantity>"+
 					"<qc exact='yes'>accepted</qc>"+
 					"</supplier_bill_items>";
-					
+
 		var po_items_xml="<purchase_order_items>"+
 					"<order_id array='yes'>"+po_id_string+"</order_id>"+
 					"<item_name></item_name>"+
 					"<item_desc></item_desc>"+
 					"<quantity></quantity>"+
 					"</purchase_order_items>";
-		fetch_requested_data('',po_items_xml,function (po_items) 
+		fetch_requested_data('',po_items_xml,function (po_items)
 		{
 			//console.log(po_items);
-			fetch_requested_data('',bill_items_xml,function (bill_items) 
+			fetch_requested_data('',bill_items_xml,function (bill_items)
 			{
 				//console.log(bill_items);
 				for(var j=0;j<po_items.length;j++)
 				{
 					po_items[j].order_quantity=po_items[j].quantity;
 				}
-				
+
 				for(var k=0;k<po_items.length;k++)
 				{
 					for(var l=0;l<bill_items.length;l++)
@@ -120,7 +118,7 @@ function report79_ini()
 								k--;
 								break;
 							}
-							else 
+							else
 							{
 								bill_items.splice(l,1);
 								po_items.splice(k,1);
@@ -130,7 +128,7 @@ function report79_ini()
 						}
 					}
 				}
-				
+
 				var rowsHTML="";
 				po_items.forEach(function(item)
 				{
@@ -161,7 +159,7 @@ function report79_ini()
 					rowsHTML+="</tr>";
 				});
 				$('#report79_body').html(rowsHTML);
-				
+
 				var csv_button=form.elements['csv'];
 				$(csv_button).off("click");
 				$(csv_button).on("click", function(event)
@@ -179,15 +177,15 @@ function report79_ini()
 					});
 					csv_download_report(new_items,'Pending purchase order items');
 				});
-				
+
 				hide_loader();
 			});
 		});
 	});
-	
+
 	var print_button=form.elements[3];
 	print_tabular_report('report79','Pending Purchase Order Items',print_button);
 };
-	
+
 	</script>
 </div>

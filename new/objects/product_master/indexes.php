@@ -7,7 +7,7 @@
 		function initialize_object_product_master_indexes(obj_name,obj_id)
 		{
             var container=document.getElementById('object_product_master_indexes');
-            container.innerHTML="";        
+            container.innerHTML="";
 			var index_data={data_store:'product_master',count:1,
                            indexes:[{index:'id'},{index:'indexes'},{index:'name',value:obj_name}]};
             read_json_rows('',index_data,function(indexes)
@@ -15,7 +15,7 @@
                 document.getElementById('object_product_master_indexes_product_id').value=indexes[0].id;
                 if(indexes[0].indexes!="" && indexes[0].indexes!=null)
                 {
-                    var index_array=JSON.parse(indexes[0].indexes);
+                    var index_array=vUtil.jsonParse(indexes[0].indexes);
                     index_array.forEach(function(index)
                     {
                         var index_element="<div class='row'><div class='col-xs-10'><input type='text' value='"+index+"' readonly='readonly'></div><div class='col-xs-2'><a class='btn btn-icon-only default' style='margin-right:10px;' onclick=$(this).parent().parent().remove();><i class='fa fa-2x fa-trash'></i></a></div></div>";
@@ -24,7 +24,7 @@
                 }
             });
 		}
-        
+
         function object_product_master_indexes_update()
         {
             var product_id=document.getElementById('object_product_master_indexes_product_id').value;
@@ -44,9 +44,9 @@
 	 				data:[{index:'id',value:product_id},
 	 					{index:'indexes',value:index_string},
 	 					{index:'last_updated',value:get_my_time()}]};
- 			update_json(data_json);	
+ 			update_json(data_json);
         }
-        
+
         function object_product_master_indexes_add()
         {
             var container=document.getElementById('object_product_master_indexes');

@@ -1,4 +1,4 @@
-<div id='form324' class='tab-pane portlet box green-meadow'>	   
+<div id='form324' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class="actions">
             <div class="btn-group">
@@ -15,9 +15,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -37,7 +37,7 @@
 	</div>
 
     <script>
-    
+
     function form324_header_ini()
         {
             //console.log('324_header');
@@ -64,7 +64,7 @@
             show_loader();
             var fid=$("#form324_link").attr('data_id');
             if(fid==null)
-                fid="";	
+                fid="";
 
             $('#form324_body').html("");
 
@@ -73,7 +73,7 @@
             var fname=filter_fields.elements['customer'].value;
 
             var paginator=$('#form324_body').paginator();
-			
+
 			var columns=new Object();
 					columns.count=paginator.page_size();
 					columns.start_index=paginator.get_index();
@@ -85,16 +85,16 @@
 									{index:'challan_date'},
                                     {index:'total_quantity'},
                                     {index:'order_id'}];
-			
+
             read_json_rows('form324',columns,function(results)
-            {	
+            {
                 results.forEach(function(result)
                 {
                     var cancelled_challan="";
                     if(result.status=='cancelled')
                     {
                         cancelled_challan="style='opacity:0.5' title='This challan was cancelled'";
-                    }	
+                    }
                     var rowsHTML="<tr "+cancelled_challan+">";
                         rowsHTML+="<form id='form324_"+result.id+"'></form>";
                             rowsHTML+="<td data-th='Challan #'>";
@@ -112,11 +112,11 @@
                             rowsHTML+="<td data-th='Action'>";
                                 rowsHTML+="<input type='hidden' form='form324_"+result.id+"' value='"+result.id+"'>";
                             if(result.status!='cancelled')
-                            {					
+                            {
                                 rowsHTML+="<button type='button' class='btn red' form='form324_"+result.id+"' title='Cancel challan' onclick='form324_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-                            }					
+                            }
                                 rowsHTML+="<input type='hidden' form='form324_"+result.id+"' value='"+result.order_id+"' name='order_id'>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form324_body').append(rowsHTML);
@@ -157,20 +157,20 @@
                     var data_id=form.elements[4].value;
                     var order_id=form.elements['order_id'].value;
                     var last_updated=get_my_time();
-                    
+
                     var challan_json={data_store:'delivery_challans',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id}],
 	 				log_data:{title:'Deleted',notes:'challan # '+challan_num,link_to:'form324'}};
- 				
+
                     delete_json(challan_json);
-                    
+
                     $(button).parent().parent().remove();
 
                     var items_json={data_store:'delivery_challan_items',
                                 data:[{index:'challan_id',value:data_id}]};
                     delete_json(items_json);
-                    
+
                     var adjust_json={data_store:'inventory_adjust',
                                 data:[{index:'source_id',value:data_id},{index:'source',value:'delivery challan'}]};
                     delete_json(adjust_json);
@@ -179,15 +179,11 @@
                     var sale_order_xml={data_store:'sale_orders',
                                        indexes:[{index:'id',value:order_id},
                                                {index:'challan_info'}]};
-                    read_json_rows('',sale_order_xml,function (sorders) 
+                    read_json_rows('',sale_order_xml,function (sorders)
                     {
                         if(sorders.length>0)
                         {
-                            var id_object_array=[];
-                            if(sorders[0].challan_info!="" && sorders[0].challan_info!=0 && sorders[0].challan_info!="null")
-                            {
-                                id_object_array=JSON.parse(sorders[0].challan_info);
-                            }
+                            var id_object_array=vUtil.jsonParse(sorders[0].challan_info);
 
                             for(var k in id_object_array)
                             {
@@ -212,7 +208,7 @@
 
                             update_json(so_json);
                         }
-                    });	
+                    });
                 });
             }
             else

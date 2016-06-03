@@ -429,10 +429,10 @@ function form284_add_item()
 			read_json_single_column(unit_data,function(units)
 			{
 				if(units.length>0)
-                {
-					quantity_filter.placeholder=units[0];
-                    $(quantity_filter).floatlabel_right();
-                }
+        {
+						quantity_filter.placeholder=units[0];
+            $(quantity_filter).floatlabel_right();
+        }
 			});
 		});
 

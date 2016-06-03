@@ -912,12 +912,19 @@ function modal14_action(func)
 			var make=form.elements['make'].value;
 			var description=form.elements['desc'].value;
 
+			var indexes=name.split(/[\s,]+/);
+			var description_indexes=description.split(/[\s,]+/);
+			var make_indexes=make.split(/[\s,]+/);
+			var new_indexes=indexes.concat(description_indexes,make_indexes);
+			var anew_indexes=array_unique(new_indexes);
+			var index_string=JSON.stringify(anew_indexes);
+
 			var tax=form.elements['tax'].value;
 			var data_id=get_new_key();
 			var barcode=form.elements['barcode'].value;
 			var last_updated=get_my_time();
 
-            var data_json={data_store:'product_master',
+      var data_json={data_store:'product_master',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'name',value:name},
@@ -925,12 +932,13 @@ function modal14_action(func)
 	 					{index:'description',value:description},
 	 					{index:'tax',value:tax},
 	 					{index:'bar_code',value:barcode,unique:'yes'},
+						{index:'indexes',value:index_string},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Added',notes:'Product '+name+' to inventory',link_to:'form39'}};
 			create_json(data_json,func);
 
 			var id=get_new_key();
-            $("#modal14_attributes").find('input, select').each(function()
+      $("#modal14_attributes").find('input, select').each(function()
 			{
 				id++;
 				var value=$(this).val();
@@ -1453,6 +1461,14 @@ function modal19_action(button)
 			var name=form.elements[1].value;
 			var make=form.elements[2].value;
 			var description=form.elements[3].value;
+
+			var indexes=name.split(/[\s,]+/);
+      var description_indexes=description.split(/[\s,]+/);
+      var make_indexes=make.split(/[\s,]+/);
+      var new_indexes=indexes.concat(description_indexes,make_indexes);
+      var anew_indexes=array_unique(new_indexes);
+      var index_string=JSON.stringify(anew_indexes);
+
 			var tax=form.elements[6].value;
 			var data_id=get_new_key();
 			var pic_id=get_new_key();
@@ -1466,6 +1482,7 @@ function modal19_action(button)
 						"<description>"+description+"</description>" +
 						"<tax>"+tax+"</tax>" +
 						"<bar_code unique='yes'>"+barcode+"</bar_code>" +
+						"<indexes>"+index_string+"</indexes>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</product_master>";
 			var activity_xml="<activity>" +
@@ -6477,29 +6494,29 @@ function modal112_action(func)
 			var tax=form.elements['tax'].value;
 			var data_id=get_new_key();
 			var cost_price=form.elements['cost'].value;
-            var sale_price=form.elements['sale'].value;
+      var sale_price=form.elements['sale'].value;
 			var last_updated=get_my_time();
-            var indexes=name.split(/[\s,]+/);
-            var description_indexes=description.split(/[\s,]+/);
-            var make_indexes=make.split(/[\s,]+/);
-            var new_indexes=indexes.concat(description_indexes,make_indexes);
-            var anew_indexes=array_unique(new_indexes);
-            var index_string=JSON.stringify(anew_indexes);
+      var indexes=name.split(/[\s,]+/);
+      var description_indexes=description.split(/[\s,]+/);
+      var make_indexes=make.split(/[\s,]+/);
+      var new_indexes=indexes.concat(description_indexes,make_indexes);
+      var anew_indexes=array_unique(new_indexes);
+      var index_string=JSON.stringify(anew_indexes);
 
-            var data_json={data_store:'product_master',
+      var data_json={data_store:'product_master',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'name',value:name,unique:'yes'},
 	 					{index:'make',value:make},
 	 					{index:'description',value:description},
 	 					{index:'tax',value:tax},
-                        {index:'indexes',value:index_string},
+            {index:'indexes',value:index_string},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Added',notes:'Product '+name+' to inventory',link_to:'form39'}};
 
             create_json(data_json,func);
 
-            var instance_json={data_store:'product_instances',
+        var instance_json={data_store:'product_instances',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'product_name',value:name,uniqueWith:['batch']},
 	 					{index:'batch',value:name},
@@ -6789,10 +6806,8 @@ function modal114_action(func)
 
 	set_static_value_list('dimensions','unit',funit);
 
-	var make_data="<product_master>" +
-		"<make></make>" +
-		"</product_master>";
-	set_my_filter(make_data,fmake);
+	var make_data={data_store:'product_master',return_column:'make'};
+	set_my_filter_json(make_data,fmake);
 
 	fpicture.addEventListener('change',function(evt)
 	{
@@ -6863,6 +6878,13 @@ function modal114_action(func)
 			description = description.replace(/â/g,'');
 			description = description.replace(/&/g, "and");
 
+			var indexes=name.split(/[\s,]+/);
+			var description_indexes=description.split(/[\s,]+/);
+			var make_indexes=make.split(/[\s,]+/);
+			var new_indexes=indexes.concat(description_indexes,make_indexes);
+			var anew_indexes=array_unique(new_indexes);
+			var index_string=JSON.stringify(anew_indexes);
+
 			var tax=form.elements[7].value;
 			var data_id=get_new_key();
 			var pic_id=get_new_key();
@@ -6894,6 +6916,7 @@ function modal114_action(func)
 						"<weight>"+weight+"</weight>"+
 						"<packing>"+packing+"</packing>"+
 						"<bar_code>"+barcode+"</bar_code>" +
+						"<indexes>"+index_string+"</indexes>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</product_master>";
 			var activity_xml="<activity>" +
@@ -13889,12 +13912,21 @@ function modal174_action(func)
 			var sale_price=form.elements[9].value;
 			var cost_price=form.elements[10].value;
 			var url=$(fpictureinfo).find('div').find('img').attr('src');
+
+			var indexes=name.split(/[\s,]+/);
+      var description_indexes=description.split(/[\s,]+/);
+      var make_indexes=make.split(/[\s,]+/);
+      var new_indexes=indexes.concat(description_indexes,make_indexes);
+      var anew_indexes=array_unique(new_indexes);
+      var index_string=JSON.stringify(anew_indexes);
+
 			var last_updated=get_my_time();
 			var data_xml="<product_master>" +
 							"<id>"+data_id+"</id>" +
 							"<make>"+make+"</make>" +
 							"<name>"+name+"</name>" +
 							"<description>"+description+"</description>" +
+							"<indexes>"+index_string+"</indexes>"+
 							"<tax>0</tax>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</product_master>";
@@ -14340,6 +14372,13 @@ function modal177_action(func)
 			description = description.replace(/â/g,'');
 			description = description.replace(/&/g, "and");
 
+			var indexes=name.split(/[\s,]+/);
+      var description_indexes=description.split(/[\s,]+/);
+      var make_indexes=make.split(/[\s,]+/);
+      var new_indexes=indexes.concat(description_indexes,make_indexes);
+      var anew_indexes=array_unique(new_indexes);
+      var index_string=JSON.stringify(anew_indexes);
+
 			var mrp=form.elements[8].value;
 			var data_id=get_new_key();
 			var pic_id=get_new_key();
@@ -14354,6 +14393,7 @@ function modal177_action(func)
 							"<name>"+name+"</name>" +
 							"<description>"+description+"</description>" +
 							"<category>"+category+"</category>" +
+							"<indexes>"+index_string+"</indexes>"+
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</product_master>";
 			var instance_xml="<product_instances>"+
@@ -15916,24 +15956,32 @@ function modal203_action(func)
 			var make=form.elements['make'].value;
 			var description=form.elements['desc'].value;
 
+			var indexes=name.split(/[\s,]+/);
+      var description_indexes=description.split(/[\s,]+/);
+      var make_indexes=make.split(/[\s,]+/);
+      var new_indexes=indexes.concat(description_indexes,make_indexes);
+      var anew_indexes=array_unique(new_indexes);
+      var index_string=JSON.stringify(anew_indexes);
+
 			var tax=form.elements['tax'].value;
 			var data_id=get_new_key();
 			var sale_price=form.elements['sale'].value;
 			var last_updated=get_my_time();
 
-            var data_json={data_store:'product_master',
+      var data_json={data_store:'product_master',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'name',value:name,unique:'yes'},
 	 					{index:'make',value:make},
 	 					{index:'description',value:description},
 	 					{index:'tax',value:tax},
+						{index:'indexes',value:index_string},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Added',notes:'Product '+name+' to inventory',link_to:'form39'}};
 
-            create_json(data_json,func);
+      create_json(data_json,func);
 
-            var instance_json={data_store:'product_instances',
+      var instance_json={data_store:'product_instances',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'product_name',value:name,uniqueWith:['batch']},
 	 					{index:'batch',value:name},
@@ -16748,4 +16796,124 @@ function modal213_action(dbname)
 	});
 
 	$("#modal213_link").click();
+}
+
+/**
+ * @modalNo 214
+ * @modal Add new product (nvs)
+ * @param button
+ */
+function modal214_action(func)
+{
+	var form=document.getElementById('modal214_form');
+
+	var fname=form.elements['name'];
+	var fmake=form.elements['make'];
+	var fdescription=form.elements['desc'];
+
+	var make_data={data_store:'product_master',return_column:'make'};
+	set_my_filter_json(make_data,fmake);
+
+	////adding attribute fields///////
+	var attribute_label=document.getElementById('modal214_attributes');
+	attribute_label.innerHTML="";
+	var attributes_data={data_store:'mandatory_attributes',
+                        indexes:[{index:'attribute'},{index:'status'},{index:'value'},{index:'object',exact:'product'}]};
+	read_json_rows('',attributes_data,function(attributes)
+	{
+		attributes.forEach(function(attribute)
+		{
+      if(attribute.status!='inactive')
+			{
+				var required="";
+				if(attribute.status=='required')
+					required='required';
+				var attr_label=document.createElement('div');
+				attr_label.setAttribute('class','row');
+				if(attribute.value=="")
+				{
+					attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
+				}
+				else
+				{
+					var values_array=attribute.value.split(";");
+					var content="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";
+					values_array.forEach(function(fvalue)
+					{
+						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
+					});
+					content+="</select></div>";
+					attr_label.innerHTML=content;
+				}
+				attribute_label.appendChild(attr_label);
+			}
+		});
+	});
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form39'))
+		{
+			var name=form.elements['name'].value;
+			var make=form.elements['make'].value;
+			var description=form.elements['desc'].value;
+			var data_id=get_new_key();
+			var last_updated=get_my_time();
+      var indexes=name.split(/[\s,]+/);
+      var description_indexes=description.split(/[\s,]+/);
+      var make_indexes=make.split(/[\s,]+/);
+      var new_indexes=indexes.concat(description_indexes,make_indexes);
+      var anew_indexes=array_unique(new_indexes);
+      var index_string=JSON.stringify(anew_indexes);
+
+      var data_json={data_store:'product_master',
+	 				log:'yes',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'name',value:name,unique:'yes'},
+	 					{index:'make',value:make},
+	 					{index:'description',value:description},
+	 					{index:'indexes',value:index_string},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Added',notes:'Product '+name+' to inventory',link_to:'form39'}};
+
+            create_json(data_json,func);
+
+        var instance_json={data_store:'product_instances',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'product_name',value:name,uniqueWith:['batch']},
+	 					{index:'batch',value:name},
+	 					{index:'last_updated',value:last_updated}]};
+			create_json(instance_json);
+
+			var id=get_new_key();
+      $("#modal214_attributes").find('input, select').each(function()
+			{
+				id++;
+				var value=$(this).val();
+				var attribute=$(this).attr('name');
+				if(value!="")
+				{
+					var attribute_json={data_store:'attributes',
+	 				data:[{index:'id',value:id},
+	 					{index:'name',value:name},
+	 					{index:'type',value:'product'},
+	 					{index:'attribute',value:attribute},
+	 					{index:'value',value:value},
+	 					{index:'last_updated',value:last_updated}]};
+					create_json(attribute_json);
+				}
+			});
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
+		$(form).find(".close").click();
+	});
+
+	$("#modal214_link").click();
 }

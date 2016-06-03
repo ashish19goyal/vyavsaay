@@ -695,8 +695,6 @@ function import_data(form_name)
 		break;
 		case 'form230':modal23_action(form230_import_template,form230_import);
 		break;
-		case 'form234':modal23_action(form234_import_template,form234_import,form234_import_validate);
-		break;
 		case 'form245':modal23_action(form245_import_template,form245_import,form245_import_validate);
 		break;
 		case 'form273':modal23_action(form273_import_template,form273_import,form273_import_validate);
