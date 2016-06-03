@@ -229,7 +229,7 @@
                                  {index:'make',value:make},
                                  {index:'name',value:name},
                                  {index:'description',value:description},
-																 {indexes:'indexes',value:index_string},
+																 {index:'indexes',value:index_string},
                                  {index:'last_updated',value:last_updated}],
 								 							log:'yes',
 								 							log_data:{title:"Updated",notes:"Product "+name,link_to:"form234"}};

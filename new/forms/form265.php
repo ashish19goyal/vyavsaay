@@ -1,15 +1,15 @@
-<div id='form265' class='tab-pane portlet box green-meadow'>	   
+<div id='form265' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form265_add_item();'>Add <i class='fa fa-plus'></i></a>
             <a class='btn btn-circle grey btn-outline btn-sm' id='form265_save'>Save <i class='fa fa-save'></i></a>
 		</div>
 		<div class="actions">
       	<a class='btn btn-default btn-sm' id='form265_print' onclick=form265_print_form();><i class='fa fa-print'></i> Print</a>
-        <a class='btn btn-default btn-sm' id='form265_share'><i class='fa fa-envelope'></i> Email</a>    
+        <a class='btn btn-default btn-sm' id='form265_share'><i class='fa fa-envelope'></i> Email</a>
       </div>
 	</div>
-	
+
 	<div class="portlet-body">
         <form id='form265_master' autocomplete="off">
             <fieldset>
@@ -23,15 +23,15 @@
                 <input type='submit' class='submit_hidden'>
             </fieldset>
         </form>
-        
+
         <br>
-		
+
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr style='color:#9a9a9a;'>
                     <th>S. No.</th>
 					<th>AWB #</th>
-					<th>Address</th>					
+					<th>Address</th>
 					<th>Details</th>
 					<th>Status</th>
 					<th></th>
@@ -41,7 +41,7 @@
 			</tbody>
         </table>
     </div>
-    
+
     <script>
     function form265_header_ini()
     {
@@ -61,13 +61,13 @@
 
         var rto_id=$("#form265_link").attr('data_id');
         if(rto_id==null)
-            rto_id="";	
+            rto_id="";
 
         if(rto_id=="")
         {
             var rto_num_data={data_store:'user_preferences',count:1,return_column:'value',
                              indexes:[{index:'name',exact:'rto_num'}]};
-            set_my_value_json(rto_num_data,rto_filter);	
+            set_my_value_json(rto_num_data,rto_filter);
         }
 
         $(save_button).off('click');
@@ -98,16 +98,16 @@
         });
 
         var employee_data={data_store:'staff',return_column:'acc_name'};
-        set_my_value_list_json(employee_data,employee,function () 
+        set_my_value_list_json(employee_data,employee,function ()
         {
             $(employee).focus();
         });
 
         $(rto_date).datepicker();
         rto_date.value=get_my_date();
-        
+
         $('#form265').formcontrol();
-        var paginator=$('#form265_body').paginator({visible:false});        
+        var paginator=$('#form265_body').paginator({visible:false});
 
     }
 
@@ -115,17 +115,17 @@
     {
         var rto_id=$("#form265_link").attr('data_id');
         if(rto_id==null)
-            rto_id="";	
+            rto_id="";
         $('#form265_body').html("");
-        
+
         if(rto_id!="")
         {
             show_loader();
-            
+
             var filter_fields=document.getElementById('form265_master');
-            
+
             var paginator=$('#form265_body').paginator({visible:false});
-			
+
             var rto_columns={data_store:'rto',
                             indexes:[{index:'id',value:rto_id},
                                     {index:'rto_num'},
@@ -147,7 +147,7 @@
                     var save_button=document.getElementById('form265_save');
                 }
             });
-            
+
             var rto_items_column={data_store:'logistics_orders',
                                  indexes:[{index:'id'},
                                          {index:'awb_num'},
@@ -199,7 +199,7 @@
                             rowsHTML+="<input type='button' name='save' class='submit_hidden' form='form265_"+id+"' id='save_form265_"+id+"'>";
                             rowsHTML+="<button type='button' class='btn red' form='form265_"+id+"' id='delete_form265_"+id+"' name='delete' onclick='form265_delete_item($(this));'><i class='fa fa-trash'></i></button>";
                             rowsHTML+="<input type='hidden' form='form265_"+id+"' value='"+result.merchant_name+"'>";
-                        rowsHTML+="</td>";			
+                        rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form265_body').append(rowsHTML);
@@ -207,7 +207,7 @@
                     var item_form=document.getElementById('form265_'+id);
                     var save_button=item_form.elements['save'];
 
-                    $(save_button).on('click',function (e) 
+                    $(save_button).on('click',function (e)
                     {
                         e.preventDefault();
                         form265_update_item(item_form);
@@ -217,7 +217,7 @@
                 $('#form265_share').off('click');
                 $('#form265_share').click(function()
                 {
-                    modal101_action('RTO Sheet',filter_fields.elements['employee'].value,'staff',function (func) 
+                    modal101_action('RTO Sheet',filter_fields.elements['employee'].value,'staff',function (func)
                     {
                         print_form265(func);
                     });
@@ -263,7 +263,7 @@
                     rowsHTML+="<input type='hidden' form='form265_"+id+"' name='merchant_name'>";
                     rowsHTML+="<input type='submit' class='submit_hidden' form='form265_"+id+"'>";
                     rowsHTML+="<input type='hidden' form='form265_"+id+"' name='order_history'>";
-                rowsHTML+="</td>";			
+                rowsHTML+="</td>";
             rowsHTML+="</tr>";
 
             $('#form265_body').prepend(rowsHTML);
@@ -300,7 +300,7 @@
                     var subform_id=$(this).attr('form');
                     var subform=document.getElementById(subform_id);
                     total_entries+=1;
-                    if(subform.elements[0].value==awb_filter.value)	
+                    if(subform.elements[0].value==awb_filter.value)
                         double_entry+=1;
                 });
 
@@ -313,21 +313,21 @@
                             form265_create_item(item_form);
                             form265_add_item();
                         }
-                        else 
+                        else
                         {
                             awb_filter.value="";
                             $("#modal65_link").click();
                         }
                     });
                 }
-                else 
+                else
                 {
                     if(double_entry<2)
                     {
                         form265_create_item(item_form);
                         form265_add_item();
                     }
-                    else 
+                    else
                     {
                         awb_filter.value="";
                         $("#modal65_link").click();
@@ -337,9 +337,9 @@
 
             $(awb_filter).focus();
 
-            $(awb_filter).on('keydown',function (event) 
+            $(awb_filter).on('keydown',function (event)
             {
-                if(event.keyCode == 13 ) 
+                if(event.keyCode == 13 )
                 {
                     event.preventDefault();
 
@@ -352,13 +352,13 @@
 
                         total_entries+=1;
 
-                        if(subform.elements[0].value==awb_filter.value)	
+                        if(subform.elements[0].value==awb_filter.value)
                             double_entry+=1;
                     });
 
                     if(total_entries==1 && new_rto)
                     {
-                        form265_create_form(function () 
+                        form265_create_form(function ()
                         {
                             if(double_entry<2)
                             {
@@ -380,7 +380,7 @@
                                                         {index:'rto_num'},
                                                         {index:'status'},
                                                         {index:'order_history'}]};
-                                read_json_rows('',orders_data,function (orders) 
+                                read_json_rows('',orders_data,function (orders)
                                 {
                                     //console.log(orders);
                                     if(orders.length>0)
@@ -399,7 +399,7 @@
                                         form265_create_item(item_form);
                                         form265_add_item();
                                     }
-                                    else 
+                                    else
                                     {
                                         address_filter.value="";
                                         phone_filter.value="";
@@ -418,14 +418,14 @@
                                     $('#form265').formcontrol();
                                 });
                             }
-                            else 
+                            else
                             {
                                 awb_filter.value="";
                                 $("#modal65_link").click();
                             }
                         });
                     }
-                    else 
+                    else
                     {
                         if(double_entry<2)
                         {
@@ -447,8 +447,8 @@
                                                         {index:'rto_num'},
                                                         {index:'status'},
                                                         {index:'order_history'}]};
-                                
-                            read_json_rows('',orders_data,function (orders) 
+
+                            read_json_rows('',orders_data,function (orders)
                             {
                                // console.log(orders);
                                 if(orders.length>0)
@@ -467,7 +467,7 @@
                                     form265_create_item(item_form);
                                     form265_add_item();
                                 }
-                                else 
+                                else
                                 {
                                     address_filter.value="";
                                     phone_filter.value="";
@@ -486,7 +486,7 @@
                                 $('#form265').formcontrol();
                             });
                         }
-                        else 
+                        else
                         {
                             awb_filter.value="";
                             $("#modal65_link").click();
@@ -517,16 +517,14 @@
             var del_button=form.elements['delete'];
             var old_order_history=form.elements[14].value;
 
-            var order_history=[];
-            if(old_order_history!="")
-                order_history=JSON.parse(old_order_history);
+            var order_history=vUtil.jsonParse(old_order_history);
             var history_object=new Object();
             history_object.timeStamp=get_my_time();
             history_object.details="Order Out for Return";
             history_object.location=get_session_var('address');
             history_object.status="RTO out for delivery";
             order_history.push(history_object);
-            var order_history_string=JSON.stringify(order_history);		
+            var order_history_string=JSON.stringify(order_history);
 
             var last_updated=get_my_time();
             var data_json={data_store:'logistics_orders',
@@ -538,11 +536,11 @@
                         {index:'order_history',value:order_history_string},
                         {index:'rto_time',value:get_raw_time(rto_date)},
                         {index:'last_updated',value:last_updated}]};
- 				
+
             update_json(data_json);
 
             $(form).readonly();
-            
+
             del_button.removeAttribute("onclick");
             $(del_button).on('click',function(event)
             {
@@ -578,7 +576,7 @@
             $('#form265_share').off('click');
             $('#form265_share').click(function()
             {
-                modal101_action('RTO Sheet',employee,'staff',function (func) 
+                modal101_action('RTO Sheet',employee,'staff',function (func)
                 {
                     print_form265(func);
                 });
@@ -591,7 +589,7 @@
             read_json_single_column(rto_columns,function(rtoes)
             {
                 if(rtoes.length==0)
-                {	
+                {
                     var data_json={data_store:'rto',
                         data:[{index:'id',value:data_id},
                             {index:'rto_num',value:rto_num},
@@ -601,7 +599,7 @@
                             {index:'last_updated',value:last_updated}],
                         log:'yes',
                         log_data:{title:'Generated',notes:'RTO # '+rto_num,link_to:'form266'}};
- 				
+
                     var num_data={data_store:'user_preferences',return_column:'id',indexes:[{index:'name',exact:'rto_num'}]};
                     read_json_single_column(num_data,function (rto_num_ids)
                     {
@@ -622,7 +620,7 @@
                         func();
                     }
                 }
-                else 
+                else
                 {
                     $("#modal68_link").click();
                 }
@@ -647,7 +645,7 @@
                         data:[{index:'id',value:data_id},
                             {index:'rto_num',value:rto_num},
                             {index:'return_person',value:delivery_person},
-                            {index:'last_updated',value:last_updated}]}; 				
+                            {index:'last_updated',value:last_updated}]};
             update_json(data_json);
         }
         else
@@ -670,7 +668,7 @@
             $('#form265_share').off('click');
             $('#form265_share').click(function()
             {
-                modal101_action('RTO Sheet',employee,'staff',function (func) 
+                modal101_action('RTO Sheet',employee,'staff',function (func)
                 {
                     print_form265(func);
                 });
@@ -692,12 +690,12 @@
                             {index:'last_updated',value:last_updated}],
                         log:'yes',
                         log_data:{title:'Updated',notes:'RTO # '+rto_num,link_to:'form266'}};
- 				
+
                     update_json(data_json);
 
                     $("[id^='save_form265_']").click();
                 }
-                else 
+                else
                 {
                     $("#modal68_link").click();
                 }
@@ -720,7 +718,7 @@
 
                 var data_id=form.elements[9].value;
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'logistics_orders',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'status',value:'RTO pending'},
@@ -728,7 +726,7 @@
 	 					{index:'rto_id',value:''},
                         {index:'return_person',value:''},
                         {index:'last_updated',value:last_updated}]};
- 			
+
                 update_json(data_json);
                 $(button).parent().parent().remove();
                 form265_update_serial_numbers();
@@ -755,7 +753,7 @@
 
             if(subform.elements[0].value!="")
             {
-                num_orders+=1;			
+                num_orders+=1;
             }
         });
 
@@ -768,15 +766,15 @@
         print_form265(function(container)
         {
             $.print(container);
-            container.innerHTML="";	
-        });	
+            container.innerHTML="";
+        });
     }
 
     function print_form265(func)
     {
         var form_id='form265';
 
-        ////////////setting up containers///////////////////////	
+        ////////////setting up containers///////////////////////
         var container=document.createElement('div');
 
         var header=document.createElement('div');
@@ -797,7 +795,7 @@
             logo.setAttribute('style','float:left;width:35%;height:60px;');
             business_title.setAttribute('style','float:left;width:40%;height:60px;text-align:center;font-weight:bold;');
             rto_barcode.setAttribute('style','float:right;width:23%;height:60px;padding:left:5px;padding-right:5px;');
-        rto_title.setAttribute('style','display:block;width:98%;height:20px;text-align:center');	
+        rto_title.setAttribute('style','display:block;width:98%;height:20px;text-align:center');
         detail_section.setAttribute('style','display:block;width:98%;height:30px;text-align:center;');
 
         ///////////////getting the content////////////////////////////////////////
@@ -873,7 +871,7 @@
 
             barcode_image.setAttribute('style','width:130px;height:30px;');
             barcode_value.setAttribute('style','width:130px;font-size:14px;margin:1px;text-align:center;');
-            type_value.setAttribute('style','width:130px;font-size:9px;margin:1px;text-align:left;');	
+            type_value.setAttribute('style','width:130px;font-size:9px;margin:1px;text-align:left;');
             merchant_value.setAttribute('style','width:130px;font-size:14px;margin:1px;text-align:left;');
 
             barcode_value.innerHTML=awb_num;
@@ -894,10 +892,10 @@
                     "<td></td>"+
                     "<td><div style='text-align:left;'>"+mob_seal+"</div></td>"+
                     "<td><div>"+rc+"</div></td>"+
-                    "<td></td></tr>";				
+                    "<td></td></tr>";
         });
         new_table.innerHTML=table_rows;
-        /////////////placing the containers //////////////////////////////////////////////////////	
+        /////////////placing the containers //////////////////////////////////////////////////////
 
         container.appendChild(header);
         container.appendChild(rto_title);

@@ -11,7 +11,7 @@
                 <div class='panel-heading'>
                     <h3 class='panel-title'>Order History</h3>
                 </div>
-                <div class='panel-body'>            
+                <div class='panel-body'>
                     <table id='form198_table' class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
                         <tr><th>Time</th><th>Details</th><th>Location</th><th>Status</th><th></th></tr>
                     </table>
@@ -63,10 +63,10 @@
                         <div class='row'><div class='col-md-8 col-sm-8 pull-right'><button type='button' class='btn red' name='update' onclick=form198_update_item(); style='width:100%;'>Update</button></div></div>
                     </form>
                 </div>
-            </div>        
-        </div>    
+            </div>
+        </div>
     </div>
-    
+
     <script>
     function form198_header_ini()
     {
@@ -75,7 +75,7 @@
         $(awb_filter).focus();
 
         $(awb_filter).off('onkeyup');
-        
+
         $(awb_filter).on('onkeyup',function(event)
         {
             if(event.keycode=='13')
@@ -86,8 +86,8 @@
         });
 
         $('#form198_fieldset').html("");
-        
-        var paginator=$('#form198_table').paginator({visible:false,container:$('#form198_table')});        
+
+        var paginator=$('#form198_table').paginator({visible:false,container:$('#form198_table')});
     }
 
     function form198_ini(awb_num_passed)
@@ -95,21 +95,21 @@
         show_loader();
         var fid=$("#form198_link").attr('data_id');
         if(fid==null)
-            fid="";	
+            fid="";
 
         var awb_num=document.getElementById('form198_awb');
 		if(typeof awb_num_passed!='undefined')
 		{
 			awb_num.value=awb_num_passed;
 		}
-		
+
         var new_columns={count:1,
                         data_store:'logistics_orders',
                         indexes:[{index:'id',value:fid},
                                 {index:'order_num'},
                                 {index:'awb_num',value:awb_num.value},
                                 {index:'type'},
-                                {index:'manifest_type'},							
+                                {index:'manifest_type'},
                                 {index:'channel_name'},
                                 {index:'merchant_name'},
                                 {index:'ship_to'},
@@ -144,7 +144,7 @@
                                 {index:'received_by'},
                                 {index:'received_by_phone'},
                                 {index:'received_by_sign'},
-                                {index:'status'}]};		
+                                {index:'status'}]};
         read_json_rows('form198',new_columns,function(results)
         {
             results.forEach(function(result)
@@ -154,7 +154,7 @@
                     awb_num.value=result.awb_num;
                 }
 
-                var order_history=JSON.parse(result.order_history);
+                var order_history=vUtil.jsonParse(result.order_history);
 
                 var tableHTML="";
                 for(var k in order_history)
@@ -207,7 +207,7 @@
                 if(result.received_by_sign!="" && result.received_by_sign!=null && result.received_by_sign!="null")
                 {
                     dataURL="data:image/jsignature;base30,"+result.received_by_sign;
-                    $("#form198_canvas_div").jSignature({width:300,height:200,color:"#00F","background-color":"#F5F4A8"}); // inits the jSignature widget.			
+                    $("#form198_canvas_div").jSignature({width:300,height:200,color:"#00F","background-color":"#F5F4A8"}); // inits the jSignature widget.
                     $("#form198_canvas_div").jSignature("setData",dataURL);
                 }
             });
@@ -257,7 +257,7 @@
             var last_updated=get_my_time();
 
             var order_history_object=[];
-            
+
             $('#form198_table').find('tr').each(function()
             {
                 var row=$(this);
@@ -269,7 +269,7 @@
             });
             console.log(order_history_object);
             var order_history=JSON.stringify(order_history_object);
-            
+
             var data_json={data_store:'logistics_orders',
 	 				log:'yes',
 	 				data:[{index:'id',value:id},
@@ -296,7 +296,7 @@
                         {index:'return_address2',value:r_address2},
                         {index:'return_address3',value:r_address3},
                         {index:'lbh',value:lbh},
-                        {index:'import_date',value:import_date},  
+                        {index:'import_date',value:import_date},
 	 					{index:'product_name',value:product_name},
                         {index:'status',value:status},
                         {index:'delivery_person',value:delivery_person},

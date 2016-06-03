@@ -21,7 +21,7 @@
 		<div style='display:hidden;' id='form325_index' data-index='0'></div>
 		<img src='./images/next.png' id='form325_next' class='next_icon' data-index='25' onclick="$('#form325_index').attr('data-index',$(this).attr('data-index')); form325_ini();">
 	</div>
-    
+
     <script>
         function form325_header_ini()
         {
@@ -54,11 +54,11 @@
             show_loader();
             var fid=$("#form325_link").attr('data_id');
             if(fid==null)
-                fid="";	
+                fid="";
 
             var filter_fields=document.getElementById('form325_header');
 
-            //populating form 
+            //populating form
             var	forder=filter_fields.elements[0].value;
             var fname=filter_fields.elements[1].value;
             var fstatus=filter_fields.elements[2].value;
@@ -83,7 +83,7 @@
             $('#form325_body').html("");
 
             fetch_requested_data('form325',columns,function(results)
-            {	
+            {
                 results.forEach(function(result)
                 {
                     var rowsHTML="";
@@ -113,7 +113,7 @@
                             {
                                 rowsHTML+="<br><input type='button' class='generic_icon' form='form325_"+result.id+"' name='view' value='View Bill'>";
                             }
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form325_body').append(rowsHTML);
@@ -196,7 +196,7 @@
                     var last_updated=get_my_time();
                     var data_xml="<sale_orders>" +
                                 "<id>"+data_id+"</id>" +
-                                "</sale_orders>";	
+                                "</sale_orders>";
                     var activity_xml="<activity>" +
                                 "<data_id>"+data_id+"</data_id>" +
                                 "<tablename>sale_orders</tablename>" +
@@ -242,7 +242,7 @@
 
                 var actual_order_items=[];
                 var order_items=[];
-                var bill_key=get_new_key();								
+                var bill_key=get_new_key();
 
                 $("#modal159_item_table tr").each(function(index)
                 {
@@ -253,7 +253,7 @@
 
                     if(checked)
                     {
-                        order_item=JSON.parse($(this).attr('data-object'));
+                        order_item=vUtil.jsonParse($(this).attr('data-object'));
                         order_items.push(order_item);
                     }
                     actual_order_items.push(order_item);
@@ -292,11 +292,11 @@
                                 {
                                     if(parseFloat(a.last_updated)>parseFloat(b.last_updated))
                                     {	return 1;}
-                                    else 
+                                    else
                                     {	return -1;}
                                 });
                                 var batches=[];
-                                batches_array.forEach(function (batches_array_elem) 
+                                batches_array.forEach(function (batches_array_elem)
                                 {
                                     //console.log(batches_array_elem);
                                     batches.push(batches_array_elem.batch);
@@ -330,10 +330,10 @@
                                                         "<batch exact='yes'>"+batch_result.batch+"</batch>"+
                                                         "</area_utilization>";
 
-                                        get_single_column_data(function (storages) 
+                                        get_single_column_data(function (storages)
                                         {
                                             var storage_result_array=[];
-                                            get_available_storage(order_item.item_name,batch_result.batch,storages,batch_result.quantity,storage_result_array,function () 
+                                            get_available_storage(order_item.item_name,batch_result.batch,storages,batch_result.quantity,storage_result_array,function ()
                                             {
                                                 console.log(storage_result_array);
                                                 var item_storage="";
@@ -362,7 +362,7 @@
                                                         "<bill_id>"+bill_key+"</bill_id>" +
                                                         "<storage>"+item_storage+"</storage>"+
                                                         "<last_updated>"+get_my_time()+"</last_updated>" +
-                                                        "</bill_items>";	
+                                                        "</bill_items>";
 
                                                 bill_items_xml_array.push(data_xml);
 
@@ -373,8 +373,8 @@
                                                 pending_items_count-=1;
                                             });
 
-                                        },storage_xml);	
-                                    });					
+                                        },storage_xml);
+                                    });
                                 });
                             });
                         });
@@ -387,9 +387,9 @@
                                 clearInterval(bill_items_complete);
 
                                 var num_data="<user_preferences>"+
-                                            "<id></id>"+						
-                                            "<value></value>"+										
-                                            "<name exact='yes'>"+bill_type+"_bill_num</name>"+												
+                                            "<id></id>"+
+                                            "<value></value>"+
+                                            "<name exact='yes'>"+bill_type+"_bill_num</name>"+
                                             "</user_preferences>";
                                 fetch_requested_data('',num_data,function (bill_num_ids)
                                 {
@@ -401,15 +401,11 @@
                                                     "<bill_id></bill_id>" +
                                                     "<total_quantity></total_quantity>"+
                                                     "</sale_orders>";
-                                        fetch_requested_data('',sale_order_xml,function (sorders) 
+                                        fetch_requested_data('',sale_order_xml,function (sorders)
                                         {
                                             if(sorders.length>0)
                                             {
-                                                var id_object_array=[];
-                                                if(sorders[0].bill_id!="" && sorders[0].bill_id!=0 && sorders[0].bill_id!="null")
-                                                {
-                                                    id_object_array=JSON.parse(sorders[0].bill_id);
-                                                }
+                                                var id_object_array=vUtil.jsonParse(sorders[0].bill_id);
 
                                                 var id_object=new Object();
                                                 id_object.bill_num=bill_num_ids[0].value;
@@ -418,17 +414,17 @@
                                                 id_object.quantity=0;
                                                 for(var j in order_items)
                                                 {
-                                                    id_object.quantity+=parseFloat(order_items[j].quantity);											
+                                                    id_object.quantity+=parseFloat(order_items[j].quantity);
                                                 }
                                                 id_object_array.push(id_object);
 
-                                                var master_total_quantity=0;				
+                                                var master_total_quantity=0;
                                                 for(var k in id_object_array)
                                                 {
                                                     master_total_quantity+=parseFloat(id_object_array[k].quantity);
                                                 }
 
-                                                var status='partially billed';				
+                                                var status='partially billed';
                                                 if(master_total_quantity==parseFloat(sorders[0].total_quantity))
                                                 {
                                                     status='billed';
@@ -442,14 +438,14 @@
                                                         "<status>"+status+"</status>" +
                                                         "<last_updated>"+get_my_time()+"</last_updated>" +
                                                         "</sale_orders>";
-                                                update_simple_func(so_xml,function () 
+                                                update_simple_func(so_xml,function ()
                                                 {
                                                     form325_ini();
-                                                });					
+                                                });
                                             }
-                                        });	
-                                        /////////////////////////////////////////////		  						
-                                        var bill_key_string=""+bill_key;	
+                                        });
+                                        /////////////////////////////////////////////
+                                        var bill_key_string=""+bill_key;
 
                                         var num_xml="<user_preferences>"+
                                                 "<id>"+bill_num_ids[0].id+"</id>"+
@@ -458,9 +454,9 @@
                                                 "</user_preferences>";
                                         var bill_xml="<bills>" +
                                                 "<id>"+bill_key+"</id>" +
-                                                "<bill_num>"+bill_num_ids[0].value+"</bill_num>"+										
-                                                "<order_num>"+order_num+"</order_num>"+										
-                                                "<order_id>"+order_id+"</order_id>"+										
+                                                "<bill_num>"+bill_num_ids[0].value+"</bill_num>"+
+                                                "<order_num>"+order_num+"</order_num>"+
+                                                "<order_id>"+order_id+"</order_id>"+
                                                 "<customer_name>"+customer+"</customer_name>" +
                                                 "<bill_date>"+get_my_time()+"</bill_date>" +
                                                 "<billing_type>"+bill_type+"</billing_type>" +
@@ -470,7 +466,7 @@
                                                 "<tax>"+bill_tax+"</tax>" +
                                                 "<transaction_id>"+order_id+"</transaction_id>" +
                                                 "<last_updated>"+get_my_time()+"</last_updated>" +
-                                                "</bills>";			
+                                                "</bills>";
                                         var activity_xml="<activity>" +
                                                 "<data_id>"+bill_key+"</data_id>" +
                                                 "<tablename>bills</tablename>" +
@@ -524,11 +520,11 @@
                                         //console.log(bill_items_xml_array);
                                         //console.log(bill_xml);
 
-                                        bill_items_xml_array.forEach(function (bill_item_xml) 
+                                        bill_items_xml_array.forEach(function (bill_item_xml)
                                         {
                                             create_simple(bill_item_xml);
                                         });
-                                        order_items_xml_array.forEach(function (order_item_xml) 
+                                        order_items_xml_array.forEach(function (order_item_xml)
                                         {
                                             update_simple(order_item_xml);
                                         });
@@ -536,7 +532,7 @@
                                 });
                                 hide_loader();
                             }
-                        },200);		
+                        },200);
                     }
                     else
                     {
@@ -547,13 +543,13 @@
                 else
                 {
                     hide_loader();
-                    $("#modal64_link").click();			
+                    $("#modal64_link").click();
                 }
             }
             else
             {
                 $("#modal2_link").click();
-            }	
+            }
         }
 
         function form325_update_item(form)
@@ -573,7 +569,7 @@
                             "<order_num>"+order_num+"</order_num>" +
                             "<status>"+status+"</status>" +
                             "<last_updated>"+last_updated+"</last_updated>" +
-                            "</sale_orders>";	
+                            "</sale_orders>";
                 var activity_xml="<activity>" +
                             "<data_id>"+data_id+"</data_id>" +
                             "<tablename>sale_orders</tablename>" +
@@ -593,7 +589,7 @@
                             "<id></id>"+
                             "<order_id>"+data_id+"</order_id>"+
                             "</sale_order_items>";
-                get_single_column_data(function (sale_items) 
+                get_single_column_data(function (sale_items)
                 {
                     for(var i=0;i<sale_items.length;i++)
                     {

@@ -33,30 +33,30 @@ function local_read_json_rows(columns,callback,results)
 		}
 		var account_name=get_session_var('acc_name');
         var rolename=get_session_var('user_roles');
-        var roles_array=rolename.split("--");    
-        
+        var roles_array=rolename.split("--");
+
         //console.log(account_name+"-"+rolename);
 		var filter=new Array();
 		var sort_index='last_updated';
 		var sort_order='prev';
 		var lowerbound=['0','0'];
 		var upperbound=['9999999999','9999999999'];
-		
+
 		var bound_count=0;
-		
+
 		for(var j=0;j<cols.length;j++)
 		{
 			if(typeof cols[j].lowerbound!='undefined')
 			{
 				var fil=new Object();
 				fil.name=cols[j].index;
-			
+
 				fil.value=""+cols[j].lowerbound;
 				fil.type='lowerbound';
 				filter.push(fil);
 				lowerbound=[fil.value,'0'];
 				sort_index=cols[j].index;
-				
+
 				if(bound_count==0)
 				{
 					var upperbound=['9999999999','9999999999'];
@@ -67,81 +67,81 @@ function local_read_json_rows(columns,callback,results)
 			{
 				var fil=new Object();
 				fil.name=cols[j].index;
-			
+
 				fil.value=""+cols[j].upperbound;
 				fil.type='upperbound';
 				filter.push(fil);
 				upperbound=[fil.value,'999999999999'];
 				sort_index=cols[j].index;
-				
+
 				if(bound_count==0)
 				{
 					lowerbound=['0','0'];
 				}
 				bound_count+=1;
 			}
-						
+
 			if(typeof cols[j].array!='undefined')
 			{
 				var fil=new Object();
 				fil.name=cols[j].index;
-			
+
 				fil.value=cols[j].array;
 				fil.type='array';
 				filter.push(fil);
 			}
-			
+
 			if(typeof cols[j].approx_array!='undefined')
 			{
 				var fil=new Object();
 				fil.name=cols[j].index;
-			
+
 				fil.value=cols[j].approx_array;
 				fil.type='approx_array';
 				filter.push(fil);
 			}
-			
+
             if(typeof cols[j].all_approx_array!='undefined')
 			{
 				var fil=new Object();
 				fil.name=cols[j].index;
-			
+
 				fil.value=cols[j].all_approx_array;
 				fil.type='all_approx_array';
 				filter.push(fil);
 			}
-			
-            
+
+
 			if(typeof cols[j].unequal!='undefined')
 			{
 				var fil=new Object();
 				fil.name=cols[j].index;
-			
+
 				fil.value=cols[j].unequal;
 				fil.type='unequal';
 				filter.push(fil);
 			}
-			
+
 			if(typeof cols[j].isnull!='undefined')
 			{
 				var fil=new Object();
 				fil.name=cols[j].index;
-			
+
 				fil.value=cols[j].isnull;
 				fil.type='isnull';
 				filter.push(fil);
 			}
-			
+
 			if(typeof cols[j].value!='undefined' && cols[j].value!="")
 			{
 				var fil=new Object();
 				fil.name=cols[j].index;
-			
+
 				fil.value=cols[j].value;
 				fil.type='';
 				filter.push(fil);
 			}
-		
+
 			if(typeof cols[j].exact!='undefined')
 			{
 				var fil=new Object();
@@ -155,7 +155,7 @@ function local_read_json_rows(columns,callback,results)
 				bound_count=0;
 			}
 		}
-		
+
         function local_read_json_rows_filtering(record)
         {
             for(var i=0;i<filter.length;i++)
@@ -164,7 +164,7 @@ function local_read_json_rows(columns,callback,results)
                 {
                     var string=record[filter[i].name].toString().toLowerCase();
                     if(filter[i].type!='array')
-                    {					
+                    {
                         var search_word=filter[i].value.toString().toLowerCase();
                         if(filter[i].type=='')
                         {
@@ -201,14 +201,14 @@ function local_read_json_rows(columns,callback,results)
                             }
                         }
 
-                        if(filter[i].type=='upperbound') 
+                        if(filter[i].type=='upperbound')
                         {
                             if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
                             {
                                 return false;
                             }
                         }
-                        else if(filter[i].type=='lowerbound') 
+                        else if(filter[i].type=='lowerbound')
                         {
                             if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
                             {
@@ -241,7 +241,7 @@ function local_read_json_rows(columns,callback,results)
                             return false;
                         }
                     }
-                    
+
                     if(filter[i].type=='all_approx_array')
                     {
                         var all_approx_array=filter[i].value;
@@ -284,7 +284,7 @@ function local_read_json_rows(columns,callback,results)
                     objectstore=static_local_db.transaction([table],"readonly").objectStore(table);
                     sort_key=IDBKeyRange.only(filter[0].value);
                 }
-            }		
+            }
 
             var read_request=objectstore.openCursor(sort_key,sort_order);
 
@@ -305,7 +305,7 @@ function local_read_json_rows(columns,callback,results)
                             results.push(record);
                         }
                         else
-                        {					
+                        {
                             start_index-=1;
                         }
 
@@ -331,7 +331,7 @@ function local_read_json_rows(columns,callback,results)
                 }
             };
         }
-        
+
         function local_read_json_rows_object_traversing(access_conditions_array)
         {
             var sort_key=IDBKeyRange.bound(lowerbound,upperbound);
@@ -346,7 +346,7 @@ function local_read_json_rows(columns,callback,results)
                     objectstore=static_local_db.transaction([table],"readonly").objectStore(table);
                     sort_key=IDBKeyRange.only(filter[0].value);
                 }
-            }		
+            }
 
             var read_request=t_objectstore.openCursor(sort_key,sort_order);
 
@@ -359,7 +359,7 @@ function local_read_json_rows(columns,callback,results)
                 if(result)
                 {
                     var record=result.value;
-                    console.log(record);
+                    //console.log(record);
                     var match_word=local_read_json_rows_filtering(record);
                     if(match_word===true)
                     {
@@ -368,106 +368,107 @@ function local_read_json_rows(columns,callback,results)
                         object_read_request.onsuccess=function(oe)
                         {
                             var oresult=oe.target.result;
-                            console.log(oresult);
+                            //console.log(oresult);
                             if(oresult)
                             {
                                 var orecord=oresult.value;
-                                console.log(orecord);
+                                //console.log(orecord);
                                 if(orecord.tablename==access_store)
                                 {
-                                    console.log('check1');
-                                    if(orecord.user_type=='user')   
+                                    //console.log('check1');
+                                    if(orecord.user_type=='user')
                                     {
-                                        console.log('check1');
+                                        //console.log('check1');
                                         if(orecord.user.indexOf(account_name)!=-1)
                                         {
-                                            console.log('check1');
+                                            //console.log('check1');
                                             if(start_index==0)
                                             {
-                                                console.log('check1');
+                                                //console.log('check1');
                                                 results.push(record);
                                             }
                                             else
                                             {
-                                                console.log('check1');
+                                                //console.log('check1');
                                                 start_index-=1;
                                             }
 
                                             if(results.length===count)
                                             {
-                                                console.log('check1');
+                                                //console.log('check1');
                                                 localdb_open_requests-=1;
                                                 callback(results);
                                             }
                                             else
                                             {
-                                                console.log('check1');
+                                                //console.log('check1');
                                                 result.continue();
                                             }
                                         }
                                     }
-                                    else if(orecord.user_type=='role')   
+                                    else if(orecord.user_type=='role')
                                     {
-                                        console.log('check1');
+                                        //console.log('check1');
                                         for(var aa in roles_array)
                                         {
-                                            console.log('check1');
+                                            //console.log('check1');
                                             if(roles_array[aa]!="" && orecord.user.indexOf(roles_array[aa])!=-1)
                                             {
-                                                console.log('check1');
+                                                //console.log('check1');
                                                 if(start_index==0)
                                                 {
-                                                    console.log('check1');
+                                                    //console.log('check1');
                                                     results.push(record);
                                                 }
                                                 else
                                                 {
-                                                    console.log('check1');
+                                                    //console.log('check1');
                                                     start_index-=1;
                                                 }
 
                                                 if(results.length===count)
                                                 {
-                                                    console.log('check1');
+                                                    //console.log('check1');
                                                     localdb_open_requests-=1;
                                                     callback(results);
                                                 }
                                                 else
                                                 {
-                                                    console.log('check1');
+                                                    //console.log('check1');
                                                     result.continue();
                                                 }
                                                 break;
                                             }
                                         }
-                                        result.continue();    
+                                        result.continue();
                                     }
                                 }
                                 else
                                 {
-                                    console.log('check1');
-                                   oresult.continue(); 
+                                    //console.log('check1');
+                                   oresult.continue();
                                 }
                             }
-                            else    
+                            else
                             {
-                                console.log('check1');
+                                //console.log('check1');
                                 for(var bb in access_conditions_array)
                                 {
-                                    console.log('check1');
+                                    //console.log('check1');
                                     if(access_conditions_array[bb].user_type=='field')
                                     {
-                                        console.log('check1');
+                                        //console.log('check1');
                                         if(record[access_conditions_array[bb].user].indexOf(account_name)!=-1)
                                         {
-                                           console.log('check1'); if(access_conditions_array[bb].criteria_field=="" || access_conditions_array[bb].criteria_field==null || record[access_conditions_array[bb].criteria_field]==access_conditions_array[bb].criteria_value)
+                                           //console.log('check1');
+																					 if(access_conditions_array[bb].criteria_field=="" || access_conditions_array[bb].criteria_field==null || record[access_conditions_array[bb].criteria_field]==access_conditions_array[bb].criteria_value)
                                            {
                                                 if(start_index==0)
                                                 {
                                                     results.push(record);
                                                 }
                                                 else
-                                                {					
+                                                {
                                                     start_index-=1;
                                                 }
 
@@ -488,60 +489,62 @@ function local_read_json_rows(columns,callback,results)
                                         }
                                     }
                                     else
-                                    { 
-                                       console.log('check1'); 
+                                    {
+                                       //console.log('check1');
                                         if(access_conditions_array[bb].criteria_field=="" || access_conditions_array[bb].criteria_field==null || record[access_conditions_array[bb].criteria_field]==access_conditions_array[bb].criteria_value)
                                         {
                                             if(start_index==0)
                                             {
-                                                console.log('check1');
+                                                //console.log('check1');
                                                 results.push(record);
                                             }
                                             else
                                             {
-                                                console.log('check1');
+                                                //console.log('check1');
                                                 start_index-=1;
                                             }
 
                                             if(results.length===count)
                                             {
-                                                console.log('check1');
+                                                //console.log('check1');
                                                 localdb_open_requests-=1;
                                                 callback(results);
                                             }
                                             else
                                             {
-                                                console.log('check1');
+                                                //console.log('check1');
                                                 result.continue();
                                             }
                                         }
                                         else
                                         {
-                                            console.log('check1');
+                                            //console.log('check1');
                                             result.continue();
                                         }
                                     }
                                 }
                                 if(access_conditions_array.length==0)
-                                {    result.continue();}
+                                {
+																	result.continue();
+																}
                             }
                         };
                     }
                     else
                     {
-                        console.log('check1');
+                        //console.log('check1');
                         result.continue();
                     }
                 }
                 else
                 {
-                    console.log('check1');
+                    //console.log('check1');
                     localdb_open_requests-=1;
                     callback(results);
                 }
             };
         }
-        
+
         if(!access_control)
         {
             local_read_json_rows_data_traversing();
@@ -564,14 +567,14 @@ function local_read_json_rows(columns,callback,results)
                     {
                         access_conditions_array.push(record);
                     }
-                    else if(record.user_type=='user')   
+                    else if(record.user_type=='user')
                     {
                         if(record.user.indexOf(account_name)!=-1)
                         {
                             access_conditions_array.push(record);
                         }
                     }
-                    else if(record.user_type=='role')   
+                    else if(record.user_type=='role')
                     {
                         for(var aa in roles_array)
                         {
@@ -591,7 +594,7 @@ function local_read_json_rows(columns,callback,results)
                 }
             }
         }
-        
+
 	}
 };
 
@@ -611,15 +614,15 @@ function local_read_json_column(columns,callback,results)
 		var count=0;
 		var start_index=0;
 		var result_column_name=columns.return_column;
-			
+
 		var sum=false;
 		if(typeof columns.sum!='undefined')
 		{
 			sum=true;
 		}
-		
+
 		var sum_result=0;
-		
+
 		if(typeof columns.count!='undefined')
 		{
 			count=parseInt(columns.count);
@@ -628,15 +631,15 @@ function local_read_json_column(columns,callback,results)
 		{
 			start_index=parseInt(columns.start_index);
 		}
-		
+
 		var filter=new Array();
 		var sort_index='last_updated';
 		var sort_order='prev';
 		var lowerbound=['0','0'];
 		var upperbound=['9999999999','9999999999'];
-		
+
 		var bound_count=0;
-		
+
 		if(typeof columns.indexes!='undefined')
 		{
 			var cols=columns.indexes;
@@ -646,13 +649,13 @@ function local_read_json_column(columns,callback,results)
 				{
 					var fil=new Object();
 					fil.name=cols[j].index;
-				
+
 					fil.value=""+cols[j].lowerbound;
 					fil.type='lowerbound';
 					filter.push(fil);
 					lowerbound=[fil.value,'0'];
 					sort_index=cols[j].index;
-					
+
 					if(bound_count==0)
 					{
 						var upperbound=['9999999999','9999999999'];
@@ -668,74 +671,74 @@ function local_read_json_column(columns,callback,results)
 					filter.push(fil);
 					upperbound=[fil.value,'999999999999'];
 					sort_index=cols[j].index;
-					
+
 					if(bound_count==0)
 					{
 						lowerbound=['0','0'];
 					}
 					bound_count+=1;
 				}
-							
+
 				if(typeof cols[j].array!='undefined')
 				{
 					var fil=new Object();
 					fil.name=cols[j].index;
-				
+
 					fil.value=cols[j].array;
 					fil.type='array';
 					filter.push(fil);
 				}
-				
+
 				if(typeof cols[j].approx_array!='undefined')
 				{
 					var fil=new Object();
 					fil.name=cols[j].index;
-				
+
 					fil.value=cols[j].approx_array;
 					fil.type='approx_array';
 					filter.push(fil);
 				}
-                
+
                 if(typeof cols[j].all_approx_array!='undefined')
 				{
 					var fil=new Object();
 					fil.name=cols[j].index;
-				
+
 					fil.value=cols[j].all_approx_array;
 					fil.type='all_approx_array';
 					filter.push(fil);
 				}
-				
+
 				if(typeof cols[j].unequal!='undefined')
 				{
 					var fil=new Object();
 					fil.name=cols[j].index;
-				
+
 					fil.value=cols[j].unequal;
 					fil.type='unequal';
 					filter.push(fil);
 				}
-	
+
 				if(typeof cols[j].isnull!='undefined')
 				{
 					var fil=new Object();
 					fil.name=cols[j].index;
-				
+
 					fil.value=cols[j].isnull;
 					fil.type='isnull';
 					filter.push(fil);
 				}
-				
+
 				if(typeof cols[j].value!='undefined' && cols[j].value!="")
 				{
 					var fil=new Object();
 					fil.name=cols[j].index;
-				
+
 					fil.value=cols[j].value;
 					fil.type='';
 					filter.push(fil);
 				}
-			
+
 				if(typeof cols[j].exact!='undefined')
 				{
 					var fil=new Object();
@@ -750,10 +753,10 @@ function local_read_json_column(columns,callback,results)
 				}
 			}
 		}
-	
+
 		var sort_key=IDBKeyRange.bound(lowerbound,upperbound);
 		var objectstore=static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index);
-		
+
 		if(filter.length>0)
 		{
 			if(filter[0].name=='id')
@@ -761,7 +764,7 @@ function local_read_json_column(columns,callback,results)
 				objectstore=static_local_db.transaction([table],"readonly").objectStore(table);
 				sort_key=IDBKeyRange.only(filter[0].value);
 			}
-		}		
+		}
 
 		var read_request=objectstore.openCursor(sort_key,sort_order);
 
@@ -781,9 +784,9 @@ function local_read_json_column(columns,callback,results)
 						var string=record[filter[i].name].toString().toLowerCase();
 						if(filter[i].type!='array')
 						{
-												
+
 							var search_word=filter[i].value.toString().toLowerCase();
-							
+
 							if(filter[i].type=='')
 							{
 								if(string.indexOf(search_word)===-1)
@@ -822,7 +825,7 @@ function local_read_json_column(columns,callback,results)
 								}
 							}
 
-							if(filter[i].type=='upperbound') 
+							if(filter[i].type=='upperbound')
 							{
 								if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
 								{
@@ -830,7 +833,7 @@ function local_read_json_column(columns,callback,results)
 									break;
 								}
 							}
-							else if(filter[i].type=='lowerbound') 
+							else if(filter[i].type=='lowerbound')
 							{
 								if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
 								{
@@ -847,7 +850,7 @@ function local_read_json_column(columns,callback,results)
 								break;
 							}
 						}
-						
+
 						if(filter[i].type=='approx_array')
 						{
 							var approx_array=filter[i].value;
@@ -866,7 +869,7 @@ function local_read_json_column(columns,callback,results)
 								break;
 							}
 						}
-                        
+
                         if(filter[i].type=='all_approx_array')
 						{
                             var all_approx_array=filter[i].value;
@@ -903,7 +906,7 @@ function local_read_json_column(columns,callback,results)
 						}
 					}
 				}
-				
+
 				if(match_word===true)
 				{
 					//console.log(columns);
@@ -915,11 +918,11 @@ function local_read_json_column(columns,callback,results)
 					else
 					{
 						results.push(record[result_column_name]);
-					
+
 						if(results.length===count)
 						{
 							localdb_open_requests-=1;
-							results=array_unique(results);								
+							results=array_unique(results);
 							callback(results);
 						}
 						else
@@ -940,13 +943,13 @@ function local_read_json_column(columns,callback,results)
 				{
 					callback([sum_result]);
 				}
-				else 
+				else
 				{
 					results=array_unique(results);
 					callback(results);
 				}
 			}
-		};		
+		};
 	}
 };
 
@@ -974,15 +977,15 @@ function local_read_json_count(columns,callback)
 		{
 			start_index=parseInt(columns.start_index);
 		}
-		
+
 		var filter=new Array();
 		var sort_index='last_updated';
 		var sort_order='prev';
 		var lowerbound=['0','0'];
 		var upperbound=['9999999999','9999999999'];
-		
+
 		var bound_count=0;
-		
+
 		if(typeof columns.indexes!='undefined')
 		{
 			var cols=columns.indexes;
@@ -992,13 +995,13 @@ function local_read_json_count(columns,callback)
 				{
 					var fil=new Object();
 					fil.name=cols[j].index;
-	
+
 					fil.value=""+cols[j].lowerbound;
 					fil.type='lowerbound';
 					filter.push(fil);
 					lowerbound=[fil.value,'0'];
 					sort_index=cols[j].index;
-					
+
 					if(bound_count==0)
 					{
 						var upperbound=['9999999999','9999999999'];
@@ -1009,80 +1012,80 @@ function local_read_json_count(columns,callback)
 				{
 					var fil=new Object();
 					fil.name=cols[j].index;
-				
+
 					fil.value=""+cols[j].upperbound;
 					fil.type='upperbound';
 					filter.push(fil);
 					upperbound=[fil.value,'999999999999'];
 					sort_index=cols[j].index;
-					
+
 					if(bound_count==0)
 					{
 						lowerbound=['0','0'];
 					}
 					bound_count+=1;
 				}
-							
+
 				if(typeof cols[j].array!='undefined')
 				{
 					var fil=new Object();
-					fil.name=cols[j].index;		
-				
+					fil.name=cols[j].index;
+
 					fil.value=cols[j].array;
 					fil.type='array';
 					filter.push(fil);
 				}
-				
+
 				if(typeof cols[j].approx_array!='undefined')
 				{
 					var fil=new Object();
 					fil.name=cols[j].index;
-				
+
 					fil.value=cols[j].approx_array;
 					fil.type='approx_array';
 					filter.push(fil);
 				}
-                
+
                 if(typeof cols[j].all_approx_array!='undefined')
 				{
 					var fil=new Object();
 					fil.name=cols[j].index;
-				
+
 					fil.value=cols[j].all_approx_array;
 					fil.type='all_approx_array';
 					filter.push(fil);
 				}
-				
+
 				if(typeof cols[j].unequal!='undefined')
 				{
 					var fil=new Object();
 					fil.name=cols[j].index;
-				
+
 					fil.value=cols[j].unequal;
 					fil.type='unequal';
 					filter.push(fil);
 				}
-				
+
 				if(typeof cols[j].isnull!='undefined')
 				{
 					var fil=new Object();
 					fil.name=cols[j].index;
-				
+
 					fil.value=cols[j].isnull;
 					fil.type='isnull';
 					filter.push(fil);
 				}
-				
+
 				if(typeof cols[j].value!='undefined' && cols[j].value!="")
 				{
 					var fil=new Object();
 					fil.name=cols[j].index;
-			
+
 					fil.value=cols[j].value;
 					fil.type='';
 					filter.push(fil);
 				}
-			
+
 				if(typeof cols[j].exact!='undefined')
 				{
 					var fil=new Object();
@@ -1097,10 +1100,10 @@ function local_read_json_count(columns,callback)
 				}
 			}
 		}
-	
+
 		var sort_key=IDBKeyRange.bound(lowerbound,upperbound);
 		var objectstore=static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index);
-		
+
 		if(filter.length>0)
 		{
 			if(filter[0].name=='id')
@@ -1108,7 +1111,7 @@ function local_read_json_count(columns,callback)
 				objectstore=static_local_db.transaction([table],"readonly").objectStore(table);
 				sort_key=IDBKeyRange.only(filter[0].value);
 			}
-		}		
+		}
 
 		var read_request=objectstore.openCursor(sort_key,sort_order);
 
@@ -1127,9 +1130,9 @@ function local_read_json_count(columns,callback)
 					{
 						var string=record[filter[i].name].toString().toLowerCase();
 						if(filter[i].type!='array')
-						{					
+						{
 							var search_word=filter[i].value.toString().toLowerCase();
-							
+
 							if(filter[i].type=='')
 							{
 								if(string.indexOf(search_word)===-1)
@@ -1138,7 +1141,7 @@ function local_read_json_count(columns,callback)
 									break;
 								}
 							}
-							
+
 							if(filter[i].type=='exact')
 							{
 								if(search_word!==string)
@@ -1169,7 +1172,7 @@ function local_read_json_count(columns,callback)
 								}
 							}
 
-							if(filter[i].type=='upperbound') 
+							if(filter[i].type=='upperbound')
 							{
 								if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
 								{
@@ -1177,7 +1180,7 @@ function local_read_json_count(columns,callback)
 									break;
 								}
 							}
-							else if(filter[i].type=='lowerbound') 
+							else if(filter[i].type=='lowerbound')
 							{
 								if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
 								{
@@ -1194,7 +1197,7 @@ function local_read_json_count(columns,callback)
 								break;
 							}
 						}
-						
+
 						if(filter[i].type=='approx_array')
 						{
 							var approx_array=filter[i].value;
@@ -1213,7 +1216,7 @@ function local_read_json_count(columns,callback)
 								break;
 							}
 						}
-                        
+
                         if(filter[i].type=='all_approx_array')
 						{
 							var all_approx_array=filter[i].value;
@@ -1250,7 +1253,7 @@ function local_read_json_count(columns,callback)
 						}
 					}
 				}
-				
+
 				if(match_word===true)
 				{
 					if(start_index==0)
@@ -1258,10 +1261,10 @@ function local_read_json_count(columns,callback)
 						result_count+=1;
 					}
 					else
-					{					
+					{
 						start_index-=1;
 					}
-					
+
 					if(result_count===count)
 					{
 						localdb_open_requests-=1;
@@ -1282,7 +1285,7 @@ function local_read_json_count(columns,callback)
 				localdb_open_requests-=1;
 				callback(result_count);
 			}
-		};		
+		};
 	}
 };
 
@@ -1311,7 +1314,7 @@ function local_generate_report_json(report_id,callback)
 		var field_conditions=[];
 		var value_conditions=[];
 		var results=[];
-		
+
 		var keyValue=IDBKeyRange.bound([report_id,'0'],[report_id,'99999999']);
 		static_local_db.transaction(['report_items'],"readonly").objectStore('report_items').index('report_id').openCursor(keyValue).onsuccess=function(e)
 		{
@@ -1319,10 +1322,10 @@ function local_generate_report_json(report_id,callback)
 			if(result)
 			{
 				var record=result.value;
-				
+
 				report_tables.push(record['table1']);
 				report_fields.push([record['table1'],record['field1']]);
-				
+
 				if(record['condition1']!='none')
 				{
 					if(record['condition1'].indexOf('field')!=-1)
@@ -1344,7 +1347,7 @@ function local_generate_report_json(report_id,callback)
 				report_fields=array_unique(report_fields);
 				field_conditions=array_unique(field_conditions);
 				value_conditions=array_unique(value_conditions);
-				
+
 				var trans=static_local_db.transaction(report_tables,"readonly");
 				var cursors=[];
 
@@ -1373,7 +1376,7 @@ function local_generate_report_json(report_id,callback)
 										{
 											match_word=false;
 											break;
-										}	
+										}
 										if(field_conditions[y][2]=='greater than field' && cursors[field_conditions[y][0]].value[field_conditions[y][1]]<=cursors[field_conditions[y][3]].value[field_conditions[y][4]])
 										{
 											match_word=false;
@@ -1385,7 +1388,7 @@ function local_generate_report_json(report_id,callback)
 											break;
 										}
 									}
-									
+
 									for(var z in value_conditions)
 									{
 										if(value_conditions[z][2]=='equals value' && cursors[value_conditions[z][0]].value[value_conditions[z][1]]!=value_conditions[z][3])
@@ -1397,7 +1400,7 @@ function local_generate_report_json(report_id,callback)
 										{
 											match_word=false;
 											break;
-										}	
+										}
 										if(value_conditions[z][2]=='greater than value' && cursors[value_conditions[z][0]].value[value_conditions[z][1]]<=value_conditions[z][3])
 										{
 											match_word=false;
@@ -1409,7 +1412,7 @@ function local_generate_report_json(report_id,callback)
 											break;
 										}
 									}
-									
+
 									if(match_word===true)
 									{
 										var data_array=new Object();
@@ -1419,7 +1422,7 @@ function local_generate_report_json(report_id,callback)
 										}
 								    	results.push(data_array);
 							    	}
-							    	
+
 							    	cursors[report_tables[i]].continue();
 							    }
 							    else
@@ -1439,16 +1442,16 @@ function local_generate_report_json(report_id,callback)
 						}
 					}
 				};
-				
+
 				open_cursor(0);
-				
+
 			}
 		};
 	}
 }
 
 /**
- * 
+ *
  * @param data_xml
  * @param activity_xml
  * @returns
@@ -1479,20 +1482,20 @@ function local_delete_json(columns,func)
 		{
 			activity_data=columns.log_data;
 		}
-		
+
 		var filter=new Array();
 		var sort_index='last_updated';
 		var sort_order='prev';
 		var lowerbound=['0','0'];
 		var upperbound=['9999999999','9999999999'];
-		
+
 		var bound_count=0;
-		
+
 		for(var j=0;j<cols.length;j++)
 		{
 			var fil=new Object();
 			fil.name=cols[j].index;
-			
+
 			if(typeof cols[j].lowerbound!='undefined')
 			{
 				fil.value=""+cols[j].lowerbound;
@@ -1500,7 +1503,7 @@ function local_delete_json(columns,func)
 				filter.push(fil);
 				lowerbound=[fil.value,'0'];
 				sort_index=cols[j].index;
-				
+
 				if(bound_count==0)
 				{
 					var upperbound=['9999999999','9999999999'];
@@ -1514,28 +1517,28 @@ function local_delete_json(columns,func)
 				filter.push(fil);
 				upperbound=[fil.value,'999999999999'];
 				sort_index=cols[j].index;
-				
+
 				if(bound_count==0)
 				{
 					lowerbound=['0','0'];
 				}
 				bound_count+=1;
 			}
-						
+
 			if(typeof cols[j].array!='undefined')
 			{
 				fil.value=cols[j].array;
 				fil.type='array';
 				filter.push(fil);
 			}
-			
+
 			if(typeof cols[j].approx_array!='undefined')
 			{
 				fil.value=cols[j].approx_array;
 				fil.type='approx_array';
 				filter.push(fil);
 			}
-			
+
 			if(typeof cols[j].unequal!='undefined')
 			{
 				fil.value=cols[j].unequal;
@@ -1549,7 +1552,7 @@ function local_delete_json(columns,func)
 				fil.type='';
 				filter.push(fil);
 			}
-		
+
 			if(typeof cols[j].exact!='undefined')
 			{
 				var fil=new Object();
@@ -1563,9 +1566,9 @@ function local_delete_json(columns,func)
 				bound_count=0;
 			}
 		}
-	
+
 		var objectStore=static_local_db.transaction([table],"readwrite").objectStore(table);
-		
+
 		if(filter[0].name=='id')
 		{
 			var get_req=objectStore.get(filter[0].value);
@@ -1576,16 +1579,16 @@ function local_delete_json(columns,func)
 				if(data)
 				{
 					var match_word=true;
-					
+
 					for(var i=1;i<filter.length;i++)
 					{
 						if(typeof record[filter[i].name]!="undefined")
 						{
 							var string=record[filter[i].name].toString().toLowerCase();
 							if(filter[i].type!='array')
-							{					
+							{
 								var search_word=filter[i].value.toString().toLowerCase();
-								
+
 								if(filter[i].type=='')
 								{
 									if(string.indexOf(search_word)===-1)
@@ -1594,7 +1597,7 @@ function local_delete_json(columns,func)
 										break;
 									}
 								}
-								
+
 								if(filter[i].type=='exact')
 								{
 									if(search_word!==string)
@@ -1611,7 +1614,7 @@ function local_delete_json(columns,func)
 										break;
 									}
 								}
-								if(filter[i].type=='upperbound') 
+								if(filter[i].type=='upperbound')
 								{
 									if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
 									{
@@ -1619,7 +1622,7 @@ function local_delete_json(columns,func)
 										break;
 									}
 								}
-								else if(filter[i].type=='lowerbound') 
+								else if(filter[i].type=='lowerbound')
 								{
 									if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
 									{
@@ -1636,7 +1639,7 @@ function local_delete_json(columns,func)
 									break;
 								}
 							}
-							
+
 							if(filter[i].type=='approx_array')
 							{
 								var approx_array=filter[i].value;
@@ -1654,7 +1657,7 @@ function local_delete_json(columns,func)
 									match_word=false;
 									break;
 								}
-							}						
+							}
 						}
 						else
 						{
@@ -1665,7 +1668,7 @@ function local_delete_json(columns,func)
 							}
 						}
 					}
-					
+
 					if(match_word===true)
 					{
 						localdb_open_requests+=1;
@@ -1688,14 +1691,14 @@ function local_delete_json(columns,func)
 								act_row['notes']=activity_data['notes'];
 								act_row['link_to']=activity_data['link_to'];
 							}
-							
+
 							static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 							{
 								localdb_open_requests-=1;
-								
+
 								hide_loader();
 								if(typeof func!="undefined")
-								{					
+								{
 									func();
 								}
 							};
@@ -1721,9 +1724,9 @@ function local_delete_json(columns,func)
 						{
 							var string=record[filter[i].name].toString().toLowerCase();
 							if(filter[i].type!='array')
-							{					
+							{
 								var search_word=filter[i].value.toString().toLowerCase();
-								
+
 								if(filter[i].type=='')
 								{
 									if(string.indexOf(search_word)===-1)
@@ -1732,7 +1735,7 @@ function local_delete_json(columns,func)
 										break;
 									}
 								}
-								
+
 								if(filter[i].type=='exact')
 								{
 									if(search_word!==string)
@@ -1749,7 +1752,7 @@ function local_delete_json(columns,func)
 										break;
 									}
 								}
-								if(filter[i].type=='upperbound') 
+								if(filter[i].type=='upperbound')
 								{
 									if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
 									{
@@ -1757,7 +1760,7 @@ function local_delete_json(columns,func)
 										break;
 									}
 								}
-								else if(filter[i].type=='lowerbound') 
+								else if(filter[i].type=='lowerbound')
 								{
 									if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
 									{
@@ -1774,7 +1777,7 @@ function local_delete_json(columns,func)
 									break;
 								}
 							}
-							
+
 							if(filter[i].type=='approx_array')
 							{
 								var approx_array=filter[i].value;
@@ -1792,7 +1795,7 @@ function local_delete_json(columns,func)
 									match_word=false;
 									break;
 								}
-							}						
+							}
 						}
 						else
 						{
@@ -1803,7 +1806,7 @@ function local_delete_json(columns,func)
 							}
 						}
 					}
-					
+
 					if(match_word===true)
 					{
 						delete_ids_array.push(record.id);
@@ -1816,8 +1819,8 @@ function local_delete_json(columns,func)
 					var j=0;
 					var os1=static_local_db.transaction([table],"readwrite").objectStore(table);
 					var os2=static_local_db.transaction(['activities'],"readwrite").objectStore('activities');
-					
-					
+
+
 					function delete_records()
 					{
 						if(i<delete_ids_array.length)
@@ -1854,7 +1857,7 @@ function local_delete_json(columns,func)
 								act_row['notes']=activity_data['notes'];
 								act_row['link_to']=activity_data['link_to'];
 							}
-							
+
 							os2.put(act_row).onsuccess=function(e)
 							{
 								localdb_open_requests-=1;
@@ -1863,15 +1866,15 @@ function local_delete_json(columns,func)
 							j++;
 						}
 					};
-					
+
 					delete_records();
 					insert_activities();
-					
+
 					localdb_open_requests-=1;
 				}
 			};
 		}
-		
+
 		var local_delete_complete=setInterval(function()
 		{
 			if(localdb_open_requests===0)
@@ -1879,7 +1882,7 @@ function local_delete_json(columns,func)
 				clearInterval(local_delete_complete);
 				hide_loader();
 				if(typeof func!="undefined")
-				{					
+				{
 					func();
 				}
 			}
@@ -1900,7 +1903,7 @@ function local_create_json(data_json,func)
 	{
 		localdb_open_requests+=1;
 		show_loader();
-		
+
 		var table=data_json.data_store;
 		var cols=data_json.data;
 		var log='no';
@@ -1913,10 +1916,10 @@ function local_create_json(data_json,func)
 		{
 			activity_data=data_json.log_data;
 		}
-				
+
 		var unique=new Array();
 		var indexed_col=new Array();
-		
+
 		for(var j=0;j<cols.length;j++)
 		{
 			if(typeof cols[j]['unique']!='undefined' && cols[j]['unique']=='yes')
@@ -1931,16 +1934,16 @@ function local_create_json(data_json,func)
 				var fil=new Object();
 				fil.name=cols[j].index;
 				fil.value=cols[j].value;
-				fil.uniqueWith=cols[j]['uniqueWith'];				
+				fil.uniqueWith=cols[j]['uniqueWith'];
 				unique.push(fil);
 			}
 			indexed_col[cols[j].index]=cols[j].value;
 		}
 
 		var data_id=indexed_col['id'];
-				
+
 		var objectStore=static_local_db.transaction([table],"readwrite").objectStore(table);
-		
+
 		function local_create_json_put()
 		{
 			var data_row=new Object();
@@ -1966,21 +1969,21 @@ function local_create_json(data_json,func)
 				{
 					act_row['title']=activity_data['title'];
 					act_row['notes']=activity_data['notes'];
-					act_row['link_to']=activity_data['link_to'];		
+					act_row['link_to']=activity_data['link_to'];
 				}
-				
+
 				static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 				{
 					localdb_open_requests-=1;
 					hide_loader();
 					if(typeof func!="undefined")
-					{					
+					{
 						func();
-					}					
+					}
 				};
 			};
 		};
-		
+
 		function local_create_json_unique(index)
 		{
 			if(index<unique.length)
@@ -2005,18 +2008,18 @@ function local_create_json(data_json,func)
 								}
 							}
 						}
-						if(match_word) 
+						if(match_word)
 						{
 							localdb_open_requests-=1;
 							hide_loader();
 							if(typeof data_json['warning']!='undefined' && data_json['warning']=='no')
 							{}
-							else 
+							else
 							{
 								$("#modal5_link").click();
 							}
 						}
-						else 
+						else
 						{
 							result.continue();
 						}
@@ -2027,12 +2030,12 @@ function local_create_json(data_json,func)
 					}
 				};
 			}
-			else 
+			else
 			{
 				local_create_json_put();
 			}
 		};
-		local_create_json_unique(0);		
+		local_create_json_unique(0);
 	}
 }
 
@@ -2049,13 +2052,13 @@ function local_create_batch_json(data_json,func)
 	{
 		if(typeof data_json.loader!='undefined' && data_json.loader=='no')
 		{}else{show_loader();}
-	
+
 		var table=data_json.data_store;
 		var rows=data_json.data;
 		var log='no';
 		var activity_data=[];
 		var result_count=0;
-		
+
 		if(typeof data_json.log!='undefined')
 		{
 			log=data_json.log;
@@ -2064,9 +2067,9 @@ function local_create_batch_json(data_json,func)
 		{
 			activity_data=data_json.log_data;
 		}
-				
+
 		var unique=new Array();
-		
+
 		if(rows.length>0)
 		{
 			var cols=rows[0];
@@ -2082,35 +2085,35 @@ function local_create_batch_json(data_json,func)
 				{
 					var fil=new Object();
 					fil.name=cols[j].index;
-					fil.uniqueWith=cols[j]['uniqueWith'];				
+					fil.uniqueWith=cols[j]['uniqueWith'];
 					unique.push(fil);
 				}
 			}
-			
+
 			var transaction=static_local_db.transaction([table,'activities'],"readwrite");
 			var os1=transaction.objectStore(table);
 			var os2=transaction.objectStore('activities');
 			var activity_id=get_new_key();
-			
+
 			var i=0;
 			var success_count=0;
-			
+
 			function create_records()
 			{
 				if(i<rows.length)
 				{
 					var cols=rows[i];
-					localdb_open_requests+=1;				
+					localdb_open_requests+=1;
 					local_create_json_unique(cols,0);
 				}
 			};
-	
+
 			function local_create_json_put(data_row,cols)
 			{
 				os1.put(data_row).onsuccess=function(e)
 				{
 					success_count+=1;
-					
+
 					var id=get_new_key();
 					var act_row={id:""+(activity_id+i),
 							type:'create',
@@ -2122,26 +2125,26 @@ function local_create_batch_json(data_json,func)
 							data_id:data_row['id'],
 							updated_by:get_name(),
 							last_updated:""+get_my_time()};
-					
+
 					os2.put(act_row).onsuccess=function(e)
 					{
 						i+=1;
 						localdb_open_requests-=1;
-						create_records();					
+						create_records();
 					};
 				};
 			};
-			
+
 			function local_create_json_unique(cols,index)
 			{
 				var data_row=new Object();
 				for(var j=0;j<cols.length;j++)
 				{
 					data_row[cols[j].index]=""+cols[j].value;
-				}				
-	
+				}
+
 				if(index<unique.length)
-				{				
+				{
 					var kv=IDBKeyRange.bound([data_row[unique[index].name],'0'],[data_row[unique[index].name],'99999999']);
 					os1.index(unique[index].name).openCursor(kv).onsuccess=function(e)
 					{
@@ -2161,13 +2164,13 @@ function local_create_batch_json(data_json,func)
 									}
 								}
 							}
-							if(match_word) 
+							if(match_word)
 							{
 								i+=1;
 								localdb_open_requests-=1;
 								create_records();
 							}
-							else 
+							else
 							{
 								result.continue();
 							}
@@ -2178,12 +2181,12 @@ function local_create_batch_json(data_json,func)
 						}
 					};
 				}
-				else 
+				else
 				{
 					local_create_json_put(data_row,cols);
 				}
-			};		
-			
+			};
+
 			create_records();
 			var local_create_complete=setInterval(function()
 			{
@@ -2202,14 +2205,14 @@ function local_create_batch_json(data_json,func)
 							link_to:activity_data['link_to'],
 							updated_by:""+get_name(),
 							last_updated:""+get_my_time()};
-					var transaction=static_local_db.transaction([table,'activities'],"readwrite");		
-					var os3=transaction.objectStore('activities');		
+					var transaction=static_local_db.transaction([table,'activities'],"readwrite");
+					var os3=transaction.objectStore('activities');
 					os3.put(act_row).onsuccess=function(e){};
 					clearInterval(local_create_complete);
-	
+
 					if(typeof data_json.loader!='undefined' && data_json.loader=='no')
 					{}else{hide_loader();}
-					
+
 					if(typeof func!='undefined')
 					{
 						func();
@@ -2217,11 +2220,11 @@ function local_create_batch_json(data_json,func)
 				}
 			},2000);
 		}
-		else 
+		else
 		{
 			if(typeof data_json.loader!='undefined' && data_json.loader=='no')
 			{}else{hide_loader();}
-			
+
 			if(typeof func!='undefined')
 			{
 				func();
@@ -2242,7 +2245,7 @@ function local_update_json(data_json,func)
 	else
 	{
 		localdb_open_requests+=1;
-		
+
 		var table=data_json.data_store;
 		var cols=data_json.data;
 		var log='no';
@@ -2255,11 +2258,11 @@ function local_update_json(data_json,func)
 		{
 			activity_data=data_json.log_data;
 		}
-				
+
 		var data_id=cols[0]['value'];
-		
+
 		//console.log(table+"-"+data_id);
-		
+
 		var os1=static_local_db.transaction([table],"readwrite").objectStore(table);
 		var req=os1.get(data_id);
 		req.onsuccess=function(e)
@@ -2272,7 +2275,7 @@ function local_update_json(data_json,func)
 				{
 					data_record[cols[j]['index']]=""+cols[j]['value'];
 				}
-				
+
 				var put_req=os1.put(data_record);
 				put_req.onsuccess=function(e)
 				{
@@ -2291,14 +2294,14 @@ function local_update_json(data_json,func)
 					{
 						act_row['title']=activity_data['title'];
 						act_row['notes']=activity_data['notes'];
-						act_row['link_to']=activity_data['link_to'];		
+						act_row['link_to']=activity_data['link_to'];
 					}
-					
+
 					static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 					{
 						localdb_open_requests-=1;
 						if(typeof func!="undefined")
-						{					
+						{
 							func();
 						}
 					};
@@ -2321,13 +2324,13 @@ function local_update_batch_json(data_json,func)
 	{
 		if(typeof data_json.loader!='undefined' && data_json.loader=='no')
 		{}else{show_loader();}
-	
+
 		var table=data_json.data_store;
 		var rows=data_json.data;
 		var log='no';
 		var activity_data=[];
 		var result_count=0;
-		
+
 		if(typeof data_json.log!='undefined')
 		{
 			log=data_json.log;
@@ -2336,13 +2339,13 @@ function local_update_batch_json(data_json,func)
 		{
 			activity_data=data_json.log_data;
 		}
-				
+
 		//console.log(rows.length);
-		
+
 		var transaction=static_local_db.transaction([table,'activities'],"readwrite");
 		var os1=transaction.objectStore(table);
 		var os2=transaction.objectStore('activities');
-		
+
 		var i=0;
 		var success_count=0;
 		var activity_id=get_new_key();
@@ -2354,7 +2357,7 @@ function local_update_batch_json(data_json,func)
 				var cols=rows[i];
 				var data_id=cols[0]['value'];
 				localdb_open_requests+=1;
-								
+
 				var req=os1.get(data_id);
 				req.onsuccess=function(e)
 				{
@@ -2365,7 +2368,7 @@ function local_update_batch_json(data_json,func)
 						{
 							data_record[cols[j]['index']]=""+cols[j]['value'];
 						}
-						
+
 						var put_req=os1.put(data_record);
 						put_req.onsuccess=function(e)
 						{
@@ -2380,13 +2383,13 @@ function local_update_batch_json(data_json,func)
 									data_id:data_record['id'],
 									updated_by:get_name(),
 									last_updated:""+get_my_time()};
-							
+
 							os2.put(act_row).onsuccess=function(e)
 							{
 								i++;
 								success_count+=1;
 								localdb_open_requests-=1;
-								update_records();					
+								update_records();
 							};
 						};
 					}
@@ -2405,12 +2408,12 @@ function local_update_batch_json(data_json,func)
 				};
 			}
 		};
-		
+
 		update_records();
-		
+
 		var local_update_complete=setInterval(function()
 		{
-			console.log(localdb_open_requests);
+			//console.log(localdb_open_requests);
 			if(localdb_open_requests===0)
 			{
 				var act_row={id:""+(activity_id+i+5),
@@ -2426,15 +2429,15 @@ function local_update_batch_json(data_json,func)
 						link_to:activity_data['link_to'],
 						updated_by:""+get_name(),
 						last_updated:""+get_my_time()};
-				
-				var transaction=static_local_db.transaction(['activities'],"readwrite");		
-				var os3=transaction.objectStore('activities');		
+
+				var transaction=static_local_db.transaction(['activities'],"readwrite");
+				var os3=transaction.objectStore('activities');
 				os3.put(act_row).onsuccess=function(e){};
 				clearInterval(local_update_complete);
 
 				if(typeof data_json.loader!='undefined' && data_json.loader=='no')
 				{}else{hide_loader();}
-				
+
 				if(typeof func!='undefined')
 				{
 					func();

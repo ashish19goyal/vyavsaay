@@ -8555,13 +8555,10 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 	fetch_requested_data('',order_items_xml,function (order_items)
 	{
 		var bill_id_string='--';
-		if(bill_id!='undefined' && bill_id!="" && bill_id!='0')
+		var bill_id_array=vUtil.jsonParse(bill_id);
+		for(var x in bill_id_array)
 		{
-			var bill_id_array=JSON.parse(bill_id);
-			for(var x in bill_id_array)
-			{
-				bill_id_string+=bill_id_array[x].bill_id+"--";
-			}
+			bill_id_string+=bill_id_array[x].bill_id+"--";
 		}
 
 		var bill_items_xml="<bill_items>"+
@@ -9007,7 +9004,7 @@ function modal136_action(type,master)
  */
 function modal137_action(bill_ids)
 {
-	var bill_id_array=JSON.parse(bill_ids);
+	var bill_id_array=vUtil.jsonParse(bill_ids);
 
 	var rowsHTML="<tr><td>Bill Number</td><td>Link</td></tr>";
 
@@ -10740,7 +10737,7 @@ function modal148_action()
 
 							//console.log(order_object);
 
-							var history_object=JSON.parse(data_row.order_history);
+							var history_object=vUtil.jsonParse(data_row.order_history);
 							var new_history_object=new Object();
 							new_history_object.timeStamp=get_raw_time(data_row.date);
 							new_history_object.location=data_row['received by'];
@@ -11401,11 +11398,7 @@ function modal153_action(button,lead_id)
  */
 function modal154_action(bill_ids)
 {
-	var bill_id_array=[];
-	if(bill_ids!="" && bill_ids!="undefined" && bill_ids!=0)
-	{
-		bill_id_array=JSON.parse(bill_ids);
-	}
+	var bill_id_array=vUtil.jsonParse(bill_ids);
 	var rowsHTML="<tr style='background-color:#2C8A50;'><td>Invoice</td><td>Link</td></tr>";
 
 	bill_id_array.forEach(function (bill_id)
@@ -12063,13 +12056,10 @@ function modal159_action(order_id,order_num,customer,billing_type,bill_id)
 	fetch_requested_data('',order_items_xml,function (order_items)
 	{
 		var bill_id_string='--';
-		if(bill_id!='undefined' && bill_id!="" && bill_id!='0')
+		var bill_id_array=vUtil.jsonParse(bill_id);
+		for(var x in bill_id_array)
 		{
-			var bill_id_array=JSON.parse(bill_id);
-			for(var x in bill_id_array)
-			{
-				bill_id_string+=bill_id_array[x].bill_id+"--";
-			}
+			bill_id_string+=bill_id_array[x].bill_id+"--";
 		}
 
 		var bill_items_xml="<bill_items>"+
@@ -13011,7 +13001,7 @@ function modal169_action(search_id)
 	{
 		if(attributes.length>0)
 		{
-			var values_array=JSON.parse(attributes[0].return_columns);
+			var values_array=vUtil.jsonParse(attributes[0].return_columns);
 			var content="";
 			values_array.forEach(function(fvalue)
 			{
@@ -14031,11 +14021,7 @@ function modal175_action(func)
 			markers_label.innerHTML="";
 			if(newsletter_markers.length>0)
 			{
-				var markers=[];
-				if(newsletter_markers[0].markers!="")
-				{
-					markers=JSON.parse(newsletter_markers[0].markers);
-				}
+				var markers=vUtil.jsonParse(newsletter_markers[0].markers);
 
 				markers.forEach(function(marker)
 				{
@@ -14553,11 +14539,7 @@ function modal179_action(cname,id,attr,template_id)
 		markers_label.innerHTML="";
 		if(newsletter_markers.length>0)
 		{
-			var markers=[];
-			if(newsletter_markers[0].markers!="")
-			{
-				markers=JSON.parse(newsletter_markers[0].markers);
-			}
+			var markers=vUtil.jsonParse(newsletter_markers[0].markers);
 
 			markers.forEach(function(marker)
 			{

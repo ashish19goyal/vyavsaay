@@ -1,4 +1,4 @@
-<div id='form181' class='tab-pane portlet box green-meadow'>	   
+<div id='form181' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class="actions">
             <div class="btn-group">
@@ -15,9 +15,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -65,17 +65,17 @@
             show_loader();
             var fid=$("#form181_link").attr('data_id');
             if(fid==null)
-                fid="";	
+                fid="";
 
             $('#form181_body').html("");
-            
+
             var filter_fields=document.getElementById('form181_header');
             var	forder=filter_fields.elements['order'].value;
             var fname=filter_fields.elements['customer'].value;
             var fstatus=filter_fields.elements['status'].value;
 
             var paginator=$('#form181_body').paginator();
-			
+
 			var columns=new Object();
 					columns.count=paginator.page_size();
 					columns.start_index=paginator.get_index();
@@ -87,11 +87,11 @@
 									{index:'order_date'},
                                     {index:'bill_id'},
                                     {index:'billing_type'},
-                                    {index:'challan_info'}, 
+                                    {index:'challan_info'},
 									{index:'status',value:fstatus}];
-			
+
             read_json_rows('form181',columns,function(results)
-            {	
+            {
                 results.forEach(function(result)
                 {
                     var rowsHTML="";
@@ -114,7 +114,7 @@
                                 if(result.challan_info!="" && result.challan_info!=null && result.challan_info!="[]")
                                 {
                                     rowsHTML+="<button type='button' class='btn default purple-stripe' form='form181_"+result.id+"' name='view_challan'>View Challan</button>";
-                                    
+
                                     if(result.bill_id!="" && result.bill_id!=null && result.bill_id!="[]")
                                     {
                                         rowsHTML+="<button type='button' class='btn default yellow-stripe' form='form181_"+result.id+"' name='view_bill'>View Bill</button>";
@@ -131,7 +131,7 @@
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Action'>";
                                 rowsHTML+="<button type='button' class='btn red' form='form181_"+result.id+"' title='Delete order' name='delete' onclick='form181_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form181_body').append(rowsHTML);
@@ -152,10 +152,10 @@
 
                     $(view_bill_button).on('click',function(event)
                     {
-                        var bill_id_array=JSON.parse(result.bill_id);
+                        var bill_id_array=vUtil.jsonParse(result.bill_id);
                         element_display(bill_id_array[0].bill_id,'form225');
                     });
-                    
+
                     $(create_challan_button).on('click',function(event)
                     {
                         modal195_action(result.id,result.order_num,result.customer_name);
@@ -163,8 +163,8 @@
 
                     $(view_challan_button).on('click',function(event)
                     {
-                        var bill_id_array=JSON.parse(result.challan_info);
-                        element_display(bill_id_array[0].challan_id,'form323');                        
+                        var bill_id_array=vUtil.jsonParse(result.challan_info);
+                        element_display(bill_id_array[0].challan_id,'form323');
                     });
                 });
 
@@ -195,7 +195,7 @@
                     var status=form.elements[3].value;
                     var data_id=form.elements[4].value;
                     var last_updated=get_my_time();
-                    
+
                     var data_json={data_store:'sale_orders',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id}],
@@ -234,12 +234,12 @@
 
                     if(checked)
                     {
-                        order_item=JSON.parse($(this).attr('data-object'));
+                        order_item=vUtil.jsonParse($(this).attr('data-object'));
                         order_items.push(order_item);
                     }
                     actual_order_items.push(order_item);
                 });
-                
+
                 if(!(order_items.length!=(actual_order_items.length-1) && get_session_var('allow_partial_challan')=='no'))
                 {
                     if(order_items.length>0)
@@ -249,7 +249,7 @@
 
                         var challan_items_json={data_store:'delivery_challan_items',loader:'no',data:[]};
                         var challan_items_adjust_json={data_store:'inventory_adjust',loader:'no',data:[]};
-                        
+
                         var master_bill_item_id=get_new_key();
                         var bill_item_id=get_new_key();
                         order_items.forEach(function(order_item)
@@ -263,11 +263,11 @@
                                 {
                                     if(parseFloat(a.last_updated)>parseFloat(b.last_updated))
                                     {	return 1;}
-                                    else 
+                                    else
                                     {	return -1;}
                                 });
                                 var batches=[];
-                                batches_array.forEach(function (batches_array_elem) 
+                                batches_array.forEach(function (batches_array_elem)
                                 {
                                     //console.log(batches_array_elem);
                                     batches.push(batches_array_elem.batch);
@@ -297,10 +297,10 @@
                                                         indexes:[{index:'item_name',exact:order_item.item_name},
                                                                 {index:'batch',exact:batch_result.batch}]};
 
-                                        read_json_single_column(storage_xml,function (storages) 
+                                        read_json_single_column(storage_xml,function (storages)
                                         {
                                             var storage_result_array=[];
-                                            get_available_storage(order_item.item_name,batch_result.batch,storages,batch_result.quantity,storage_result_array,function () 
+                                            get_available_storage(order_item.item_name,batch_result.batch,storages,batch_result.quantity,storage_result_array,function ()
                                             {
                                                 console.log(storage_result_array);
                                                 var item_storage="";
@@ -317,26 +317,26 @@
                                                         {index:'batch',value:batch_result.batch},
                                                         {index:'challan_id',value:bill_key},
                                                         {index:'storage',value:item_storage},
-                                                        {index:'quantity',value:batch_result.quantity},             
+                                                        {index:'quantity',value:batch_result.quantity},
                                                         {index:'last_updated',value:get_my_time()}];
-                                                
+
                                                 var adjust_json_array=[{index:'id',value:bill_item_id},
                                                         {index:'product_name',value:order_item.item_name},
-                                                        {index:'item_desc',value:order_item.item_desc},               
+                                                        {index:'item_desc',value:order_item.item_desc},
                                                         {index:'batch',value:batch_result.batch},
                                                         {index:'storage',value:item_storage},
                                                         {index:'quantity',value:(-batch_result.quantity)+""},
-                                                        {index:'source_id',value:bill_key},  
-                                                        {index:'source',value:'delivery challan'},    
+                                                        {index:'source_id',value:bill_key},
+                                                        {index:'source',value:'delivery challan'},
                                                         {index:'last_updated',value:get_my_time()}];
 
                                                 challan_items_json.data.push(data_json_array);
                                                 challan_items_adjust_json.data.push(adjust_json_array);
-                                                
+
                                                 pending_items_count-=1;
                                             });
-                                        });	
-                                    });					
+                                        });
+                                    });
                                 });
                             });
                         });
@@ -358,16 +358,11 @@
                                         var sale_order_xml={data_store:'sale_orders',
                                                            indexes:[{index:'id',value:order_id},
                                                                    {index:'challan_info'},{index:'total_quantity'}]};
-                                        read_json_rows('',sale_order_xml,function (sorders) 
+                                        read_json_rows('',sale_order_xml,function (sorders)
                                         {
                                             if(sorders.length>0)
                                             {
-                                                var id_object_array=[];
-                                                if(sorders[0].challan_info!="" && sorders[0].challan_info!=0 && sorders[0].challan_info!="null" && sorders[0].challan_info!=null)
-                                                {
-                                                    console.log(sorders[0].challan_info);
-                                                    id_object_array=JSON.parse(sorders[0].challan_info);
-                                                }
+                                                var id_object_array=vUtil.jsonParse(sorders[0].challan_info);
 
                                                 var id_object=new Object();
                                                 id_object.challan_num=bill_num_ids[0].value;
@@ -376,18 +371,18 @@
                                                 id_object.quantity=0;
                                                 for(var j in order_items)
                                                 {
-                                                    id_object.quantity+=parseFloat(order_items[j].quantity);											
+                                                    id_object.quantity+=parseFloat(order_items[j].quantity);
                                                 }
                                                 id_object_array.push(id_object);
 
-                                                var master_total_quantity=0;				
+                                                var master_total_quantity=0;
                                                 for(var k in id_object_array)
                                                 {
                                                     master_total_quantity+=parseFloat(id_object_array[k].quantity);
                                                 }
 
-                                                var status='delivered';				
-                                                
+                                                var status='delivered';
+
                                                 var new_bill_id=JSON.stringify(id_object_array);
                                                 //console.log(new_bill_id);
                                                 var so_json={data_store:'sale_orders',
@@ -396,15 +391,15 @@
                                                         {index:'status',value:status},
                                                         {index:'last_updated',value:get_my_time()}]};
 
-                                                update_json(so_json,function () 
+                                                update_json(so_json,function ()
                                                 {
                                                     form181_ini();
-                                                });					
+                                                });
                                             }
-                                        });	
-                                        /////////////////////////////////////////////		  						
-                                        var bill_key_string=""+bill_key;	
-                                        
+                                        });
+                                        /////////////////////////////////////////////
+                                        var bill_key_string=""+bill_key;
+
                                         var num_json={data_store:'user_preferences',
                                             data:[{index:'id',value:bill_num_ids[0].id},
                                                 {index:'value',value:(parseInt(bill_num_ids[0].value)+1)},
@@ -415,13 +410,13 @@
                                                 {index:'challan_num',value:get_session_var('challan_prefix')+"-"+bill_num_ids[0].value},
                                                 {index:'challan_date',value:get_my_time()},
                                                 {index:'order_num',value:order_num},
-                                                {index:'order_id',value:order_id},  
+                                                {index:'order_id',value:order_id},
                                                 {index:'total_quantity',value:''},
                                                 {index:'customer',value:customer},
                                                 {index:'last_updated',value:get_my_time()}],
                                             log:'yes',
                                             log_data:{title:'Created',notes:'Delivery Challan for order # '+order_num,link_to:'form324'}};
-                                        
+
                                         update_json(num_json);
                                         create_json(challan_json);
 
@@ -431,7 +426,7 @@
                                 });
                                 hide_loader();
                             }
-                        },200);		
+                        },200);
                     }
                     else
                     {
@@ -442,15 +437,15 @@
                 else
                 {
                     hide_loader();
-                    $("#modal90_link").click();			
+                    $("#modal90_link").click();
                 }
             }
             else
             {
                 $("#modal2_link").click();
-            }	
+            }
         }
-        
+
         function form181_bill(order_id,order_type,order_num,customer)
         {
             if(is_create_access('form181'))
@@ -459,13 +454,13 @@
                 var bill_amount=0;
                 var bill_tax=0;
                 var bill_total=0;
-                
+
                 var order_items=[];
-                var bill_key=get_new_key();								
+                var bill_key=get_new_key();
 
                 var challan_data={data_store:'delivery_challans',return_column:'id',count:1,
                                   indexes:[{index:'order_id',exact:order_id}]};
-                
+
                 read_json_single_column(challan_data,function(challans)
                 {
                     var challan_items_data={data_store:'delivery_challan_items',
@@ -483,7 +478,7 @@
                         var master_bill_item_id=get_new_key();
                         var bill_item_id=get_new_key();
                         var pending_items_count=challan_items.length;
-                        
+
                         challan_items.forEach(function(order_item)
                         {
                             var batch_data={data_store:'product_instances',count:1,
@@ -502,7 +497,7 @@
                                     {
                                         item_tax_rate=0;
                                     }
-                                    
+
                                     var unit_price=batches[0].sale_price;
                                     var mrp=batches[0].mrp;
                                     var bill_item_amount=my_round(parseFloat(unit_price)*parseFloat(order_item.quantity),2);
@@ -520,18 +515,18 @@
                                             {index:'unit_price',value:unit_price},
                                             {index:'mrp',value:mrp},
                                             {index:'amount',value:bill_item_amount},
-                                            {index:'tax',value:bill_item_tax},             
-                                            {index:'total',value:bill_item_total},             
+                                            {index:'tax',value:bill_item_tax},
+                                            {index:'total',value:bill_item_total},
                                             {index:'last_updated',value:get_my_time()}];
 
                                     var adjust_json_array=[{index:'id',value:bill_item_id},
                                             {index:'product_name',value:order_item.item_name},
-                                            {index:'item_desc',value:order_item.item_desc},               
+                                            {index:'item_desc',value:order_item.item_desc},
                                             {index:'batch',value:order_item.batch},
                                             {index:'storage',value:order_item.storage},
                                             {index:'quantity',value:order_item.quantity},
                                             {index:'source_id',value:bill_key},
-                                            {index:'source',value:'sale'},    
+                                            {index:'source',value:'sale'},
                                             {index:'last_updated',value:get_my_time()}];
 
                                     bill_items_json.data.push(data_json_array);
@@ -566,15 +561,11 @@
                                                            indexes:[{index:'id',value:order_id},
                                                                    {index:'bill_id'},
                                                                    {index:'total_quantity'}]};
-                                        read_json_rows('',sale_order_xml,function (sorders) 
+                                        read_json_rows('',sale_order_xml,function (sorders)
                                         {
                                             if(sorders.length>0)
                                             {
-                                                var id_object_array=[];
-                                                if(sorders[0].bill_id!="" && sorders[0].bill_id!=0 && sorders[0].bill_id!="null" && sorders[0].bill_id!=null)
-                                                {
-                                                    id_object_array=JSON.parse(sorders[0].bill_id);
-                                                }
+                                                var id_object_array=vUtil.jsonParse(sorders[0].bill_id);
 
                                                 var id_object=new Object();
                                                 id_object.bill_num=bill_num_ids[0].value;
@@ -583,33 +574,33 @@
                                                 id_object.quantity=0;
                                                 for(var j in order_items)
                                                 {
-                                                    id_object.quantity+=parseFloat(order_items[j].quantity);											
+                                                    id_object.quantity+=parseFloat(order_items[j].quantity);
                                                 }
                                                 id_object_array.push(id_object);
 
-                                                var master_total_quantity=0;				
+                                                var master_total_quantity=0;
                                                 for(var k in id_object_array)
                                                 {
                                                     master_total_quantity+=parseFloat(id_object_array[k].quantity);
                                                 }
 
-                                                var status='billed';				
+                                                var status='billed';
                                                 var new_bill_id=JSON.stringify(id_object_array);
-                                                
+
                                                 var so_json={data_store:'sale_orders',
                                                     data:[{index:'id',value:order_id},
                                                         {index:'bill_id',value:new_bill_id},
                                                         {index:'status',value:status},
                                                         {index:'last_updated',value:get_my_time()}]};
-                                                update_json(so_json,function () 
+                                                update_json(so_json,function ()
                                                 {
                                                     form181_ini();
-                                                });					
+                                                });
                                             }
-                                        });	
-                                        /////////////////////////////////////////////		  						
-                                        var bill_key_string=""+bill_key;	
-                                        
+                                        });
+                                        /////////////////////////////////////////////
+                                        var bill_key_string=""+bill_key;
+
                                         var bill_json={data_store:'bills',
                                             data:[{index:'id',value:bill_key},
                                                 {index:'customer_name',value:customer},
@@ -622,35 +613,35 @@
                                                 {index:'tax',value:bill_tax},
                                                 {index:'transaction_id',value:bill_key},
                                                 {index:'order_id',value:order_id},
-                                                {index:'order_num',value:order_num},  
+                                                {index:'order_num',value:order_num},
                                                 {index:'last_updated',value:get_my_time()}],
                                             log:'yes',
                                             log_data:{title:'Created',notes:'Billed order #'+order_num,link_to:'form92'}};
-                                        
+
                                         var transaction_json={data_store:'transactions',
                                             data:[{index:'id',value:bill_key},
                                                 {index:'trans_date',value:get_my_time()},
                                                 {index:'amount',value:bill_total},
                                                 {index:'receiver',value:customer},
-                                                {index:'giver',value:'master'},  
+                                                {index:'giver',value:'master'},
                                                 {index:'tax',value:bill_tax},
                                                 {index:'last_updated',value:get_my_time()}]};
-                                        
+
                                         var pt_tran_id=get_new_key();
-                                        
+
                                         var payment_json={data_store:'payments',
                                             data:[{index:'id',value:pt_tran_id},
                                                 {index:'status',value:'pending'},
-                                                {index:'type',value:'received'},  
+                                                {index:'type',value:'received'},
                                                 {index:'date',value:get_my_time()},
                                                 {index:'total_amount',value:bill_total},
-                                                {index:'paid_amount',value:'0'},  
-                                                {index:'acc_name',value:customer},  
+                                                {index:'paid_amount',value:'0'},
+                                                {index:'acc_name',value:customer},
                                                 {index:'due_date',value:get_credit_period()},
                                                 {index:'mode',value:get_payment_mode()},
                                                 {index:'transaction_id',value:pt_tran_id},
                                                 {index:'source_id',value:bill_key},
-                                                {index:'source',value:'sale bill'},  
+                                                {index:'source',value:'sale bill'},
                                                 {index:'source_info',value:bill_num_ids[0].value},
                                                 {index:'last_updated',value:get_my_time()}]};
 
@@ -659,10 +650,10 @@
                                                 {index:'trans_date',value:get_my_time()},
                                                 {index:'amount',value:bill_total},
                                                 {index:'receiver',value:'master'},
-                                                {index:'giver',value:customer},  
+                                                {index:'giver',value:customer},
                                                 {index:'tax',value:'0'},
                                                 {index:'last_updated',value:get_my_time()}]};
-                                        
+
                                         var num_json={data_store:'user_preferences',
                                                 data:[{index:'id',value:bill_num_ids[0].id},
                                                     {index:'value',value:(parseFloat(bill_num_ids[0].value)+1)},
@@ -680,14 +671,14 @@
                                 });
                                 hide_loader();
                             }
-                        },200);		
+                        },200);
                     });
                 });
             }
             else
             {
                 $("#modal2_link").click();
-            }	
+            }
         }
 
 

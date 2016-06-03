@@ -1,6 +1,6 @@
-<div id='form219' class='tab-pane portlet box green-meadow'>	   
+<div id='form219' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form219_add_item();'>Add <i class='fa fa-plus'></i></a>
             <a class='btn btn-circle grey btn-outline btn-sm' id='form219_save'>Save <i class='fa fa-save'></i></a>
 		</div>
@@ -18,7 +18,7 @@
             </div>
         </div>
 	</div>
-	
+
 	<div class="portlet-body">
         <form id='form219_master' autocomplete="off">
             <fieldset>
@@ -34,9 +34,9 @@
                 <input type='submit' class='submit_hidden'>
             </fieldset>
         </form>
-        
+
         <br>
-		
+
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr style='color:#9a9a9a;'>
@@ -52,7 +52,7 @@
 			</tbody>
         </table>
     </div>
-        	
+
     <script>
     function form219_header_ini()
     {
@@ -74,13 +74,13 @@
 
         var drs_id=$("#form219_link").attr('data_id');
         if(drs_id==null)
-            drs_id="";	
+            drs_id="";
 
         if(drs_id=="")
-        {	
+        {
             var drs_num_data={data_store:'user_preferences',count:1,return_column:'value',
                              indexes:[{index:'name',exact:'drs_num'}]};
-            set_my_value_json(drs_num_data,drs_filter);	
+            set_my_value_json(drs_num_data,drs_filter);
         }
 
         var acc_name=get_account_name();
@@ -111,16 +111,16 @@
         });
 
         var employee_data={data_store:'staff',return_column:'acc_name'};
-        set_my_value_list_json(employee_data,employee,function () 
+        set_my_value_list_json(employee_data,employee,function ()
         {
             $(employee).focus();
         });
 
         $(drs_date).datepicker();
         drs_date.value=get_my_date();
-        
+
         $('#form219').formcontrol();
-        var paginator=$('#form219_body').paginator({visible:false});        
+        var paginator=$('#form219_body').paginator({visible:false});
 
     }
 
@@ -128,13 +128,13 @@
     {
         var drs_id=$("#form219_link").attr('data_id');
         if(drs_id==null)
-            drs_id="";	
+            drs_id="";
         $('#form219_body').html("");
-        
+
         if(drs_id!="")
         {
             show_loader();
-        
+
             var drs_columns={data_store:'drs',
                             indexes:[{index:'id',value:drs_id},
                                     {index:'drs_num'},
@@ -158,7 +158,7 @@
                     filter_fields.elements['saved'].value='yes';
                 }
             });
-            
+
             var drs_items_column={data_store:'logistics_orders',
                                  indexes:[{index:'id'},
                                          {index:'awb_num'},
@@ -189,7 +189,7 @@
                     if(result.address2=="--" || result.address2==result.address1)
                     {
                         var address=result.ship_to+"\n"+result.address1+", "+result.city+"-"+result.pincode;
-                    }						
+                    }
                     rowsHTML+="<form id='form219_"+id+"'></form>";
                         rowsHTML+="<td data-th='S.No.'>";
                         rowsHTML+="</td>";
@@ -216,7 +216,7 @@
                             rowsHTML+="<input type='button' name='save' class='submit_hidden' form='form219_"+id+"' id='save_form219_"+id+"'>";
                             rowsHTML+="<button type='button' name='delete' class='btn red' form='form219_"+id+"' id='delete_form219_"+id+"' onclick='form219_delete_item($(this));form219_update_serial_numbers();'><i class='fa fa-trash'></i></button>";
                             rowsHTML+="<input type='hidden' form='form219_"+id+"' value='"+result.ship_to+"'>";
-                        rowsHTML+="</td>";			
+                        rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form219_body').append(rowsHTML);
@@ -224,7 +224,7 @@
                     var item_form=document.getElementById('form219_'+id);
                     var save_button=item_form.elements['save'];
 
-                    $(save_button).on('click',function (e) 
+                    $(save_button).on('click',function (e)
                     {
                         e.preventDefault();
                         form219_update_item(item_form);
@@ -234,7 +234,7 @@
                 $('#form219_share').off('click');
                 $('#form219_share').on('click',function()
                 {
-                    modal101_action('Delivery Run Sheet',filter_fields.elements['employee'].value,'staff',function (func) 
+                    modal101_action('Delivery Run Sheet',filter_fields.elements['employee'].value,'staff',function (func)
                     {
                         print_form219(func);
                     });
@@ -281,7 +281,7 @@
                     rowsHTML+="<input type='hidden' form='form219_"+id+"' name='ship_to'>";
                     rowsHTML+="<input type='submit' class='submit_hidden' form='form219_"+id+"'>";
                     rowsHTML+="<input type='hidden' form='form219_"+id+"' name='order_history'>";
-                rowsHTML+="</td>";			
+                rowsHTML+="</td>";
             rowsHTML+="</tr>";
 
             $('#form219_body').prepend(rowsHTML);
@@ -320,20 +320,20 @@
                     var subform_id=$(this).attr('form');
                     var subform=document.getElementById(subform_id);
                     total_entries+=1;
-                    if(subform.elements[0].value==awb_filter.value)	
+                    if(subform.elements[0].value==awb_filter.value)
                         double_entry+=1;
                 });
 
                 if(total_entries==1 && new_drs)
                 {
-                    form219_create_form(function () 
+                    form219_create_form(function ()
                     {
                         if(double_entry<2)
                         {
                             form219_create_item(item_form);
                             form219_add_item();
                         }
-                        else 
+                        else
                         {
                             awb_filter.value="";
                             $("#modal65_link").click();
@@ -347,7 +347,7 @@
                         form219_create_item(item_form);
                         form219_add_item();
                     }
-                    else 
+                    else
                     {
                         awb_filter.value="";
                         $("#modal65_link").click();
@@ -357,9 +357,9 @@
 
             $(awb_filter).focus();
 
-            $(awb_filter).on('keydown',function (event) 
+            $(awb_filter).on('keydown',function (event)
             {
-                if(event.keyCode == 13 ) 
+                if(event.keyCode == 13 )
                 {
                     event.preventDefault();
 
@@ -371,13 +371,13 @@
                         var subform=document.getElementById(subform_id);
 
                         total_entries+=1;
-                        if(subform.elements[0].value==awb_filter.value)	
+                        if(subform.elements[0].value==awb_filter.value)
                             double_entry+=1;
                     });
 
                     if(total_entries==1 && new_drs)
                     {
-                        form219_create_form(function () 
+                        form219_create_form(function ()
                         {
                             if(double_entry<2)
                             {
@@ -385,7 +385,7 @@
                                 if(get_session_var('drs_restriction')=='no')
                                 {
                                     status_object={index:'status'};
-                                }				
+                                }
                                 var orders_data={data_store:'logistics_orders',count:1,
                                                 indexes:[{index:'id'},
                                                         {index:'address1'},
@@ -399,14 +399,14 @@
                                                         {index:'merchant_name'},
                                                         {index:'ship_to'},
                                                         {index:'phone'},
-                                                        {index:'collectable_value'}, 
+                                                        {index:'collectable_value'},
                                                         {index:'weight'},
                                                         {index:'pieces'},
                                                         {index:'drs_num'},
                                                         {index:'order_history'},
                                                         status_object]};
-                                
-                                read_json_rows('',orders_data,function (orders) 
+
+                                read_json_rows('',orders_data,function (orders)
                                 {
                                     //console.log(orders);
                                     if(orders.length>0)
@@ -426,7 +426,7 @@
                                         form219_create_item(item_form);
                                         form219_add_item();
                                     }
-                                    else 
+                                    else
                                     {
                                         address_filter.value="";
                                         phone_filter.value="";
@@ -445,14 +445,14 @@
                                     }
                                 });
                             }
-                            else 
+                            else
                             {
                                 awb_filter.value="";
                                 $("#modal65_link").click();
                             }
                         });
                     }
-                    else 
+                    else
                     {
                         if(double_entry<2)
                         {
@@ -460,7 +460,7 @@
                                 if(get_session_var('drs_restriction')=='no')
                                 {
                                     status_object={index:'status'};
-                                }				
+                                }
                                 var orders_data={data_store:'logistics_orders',count:1,
                                                 indexes:[{index:'id'},
                                                         {index:'address1'},
@@ -474,14 +474,14 @@
                                                         {index:'merchant_name'},
                                                         {index:'ship_to'},
                                                         {index:'phone'},
-                                                        {index:'collectable_value'}, 
+                                                        {index:'collectable_value'},
                                                         {index:'weight'},
                                                         {index:'pieces'},
                                                         {index:'drs_num'},
                                                         {index:'order_history'},
                                                         status_object]};
-                                //console.log(orders_data);				
-                            read_json_rows('',orders_data,function (orders) 
+                                //console.log(orders_data);
+                            read_json_rows('',orders_data,function (orders)
                             {
                                 //console.log(orders);
                                 if(orders.length>0)
@@ -501,7 +501,7 @@
                                     form219_create_item(item_form);
                                     form219_add_item();
                                 }
-                                else 
+                                else
                                 {
                                     address_filter.value="";
                                     phone_filter.value="";
@@ -520,7 +520,7 @@
                                 }
                             });
                         }
-                        else 
+                        else
                         {
                             awb_filter.value="";
                             $("#modal65_link").click();
@@ -552,9 +552,7 @@
 
             var old_order_history=form.elements[15].value;
 
-            var order_history=[];
-            if(old_order_history!="")
-                order_history=JSON.parse(old_order_history);
+            var order_history=vUtil.jsonParse(old_order_history);
 
             var history_object=new Object();
             history_object.timeStamp=get_my_time();
@@ -562,7 +560,7 @@
             history_object.location=get_session_var('address');
             history_object.status="Out for delivery";
             order_history.push(history_object);
-            var order_history_string=JSON.stringify(order_history);		
+            var order_history_string=JSON.stringify(order_history);
 
             var data_json={data_store:'logistics_orders',
 	 				data:[{index:'id',value:data_id},
@@ -573,11 +571,11 @@
                         {index:'order_history',value:order_history_string},
                         {index:'drs_time',value:get_raw_time(drs_date)},
                         {index:'last_updated',value:last_updated}]};
- 			
+
             update_json(data_json);
 
             $(form).readonly();
-            
+
             del_button.removeAttribute("onclick");
             $(del_button).on('click',function(event)
             {
@@ -616,7 +614,7 @@
             $('#form219_share').off('click');
             $('#form219_share').on('click',function()
             {
-                modal101_action('Delivery Run Sheet',employee,'staff',function (func) 
+                modal101_action('Delivery Run Sheet',employee,'staff',function (func)
                 {
                     print_form219(func);
                 });
@@ -642,7 +640,7 @@
                         {index:'last_updated',value:last_updated}],
                     log:'yes',
                     log_data:{title:'Generated',notes:'DRS #'+drs_num,link_to:'form201'}};
- 				   
+
                     create_json(data_json);
 
                     var num_data={data_store:'user_preferences',return_column:'id',indexes:[{index:'name',exact:'drs_num'}]};
@@ -658,17 +656,17 @@
                             update_json(num_json);
                         }
                     });
-                    
+
                     if(typeof func!='undefined')
                     {
                         func();
                     }
                 }
-                else 
+                else
                 {
                     $("#modal68_link").click();
                 }
-            });	
+            });
         }
         else
         {
@@ -690,7 +688,7 @@
 	 					{index:'drs_num',value:drs_num},
 	 					{index:'delivery_person',value:delivery_person},
                         {index:'last_updated',value:last_updated}]};
- 			
+
             update_json(data_json);
         }
         else
@@ -718,7 +716,7 @@
 
             if(subform.elements[0].value!="")
             {
-                num_orders+=1;			
+                num_orders+=1;
             }
             if(!isNaN(parseFloat(subform.elements[3].value)))
             {
@@ -732,7 +730,7 @@
         var form=document.getElementById("form219_master");
         form.elements['total'].value=total_amount;
         form.elements['collected'].value=collected_amount;
-        form.elements['num_orders'].value=num_orders;		
+        form.elements['num_orders'].value=num_orders;
     }
 
     function form219_update_form()
@@ -752,7 +750,7 @@
             $('#form219_share').off('click');
             $('#form219_share').on('click',function()
             {
-                modal101_action('Delivery Run Sheet',employee,'staff',function (func) 
+                modal101_action('Delivery Run Sheet',employee,'staff',function (func)
                 {
                     print_form219(func);
                 });
@@ -775,16 +773,16 @@
 	 					{index:'last_updated',value:last_updated}],
                     log:'yes',
                     log_data:{title:'Updated',notes:'DRS #'+drs_num,link_to:'form201'}};
- 				   
+
                     update_json(data_json);
 
                     $("[id^='save_form219_']").click();
                 }
-                else 
+                else
                 {
                     $("#modal68_link").click();
                 }
-            });				
+            });
         }
         else
         {
@@ -803,16 +801,16 @@
 
                 var data_id=form.elements[10].value;
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'logistics_orders',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'status',value:'pending'},
 	 					{index:'drs_num',value:''},
 	 					{index:'drs_time',value:''},
                         {index:'drs_id',value:''},
-                        {index:'delivery_person',value:''},  
+                        {index:'delivery_person',value:''},
 	 					{index:'last_updated',value:last_updated}]};
-                
+
                 update_json(data_json);
                 $(button).parent().parent().remove();
                 form219_update_serial_numbers();
@@ -829,15 +827,15 @@
         print_form219(function(container)
         {
             $.print(container);
-            container.innerHTML="";	
-        });	
+            container.innerHTML="";
+        });
     }
 
     function print_form219(func)
     {
         var form_id='form219';
 
-        ////////////setting up containers///////////////////////	
+        ////////////setting up containers///////////////////////
         var container=document.createElement('div');
 
         var header=document.createElement('div');
@@ -859,7 +857,7 @@
             business_title.setAttribute('style','float:left;width:40%;height:60px;text-align:center;font-weight:bold;');
             drs_barcode.setAttribute('style','float:right;width:20%;height:60px;padding:left:5px;padding-right:5px;');
 
-        drs_title.setAttribute('style','display:block;width:100%;min-height:20px;text-align:center');	
+        drs_title.setAttribute('style','display:block;width:100%;min-height:20px;text-align:center');
         detail_section.setAttribute('style','display:block;width:100%;min-height:30px;text-align:center;');
 
         ///////////////getting the content////////////////////////////////////////
@@ -935,7 +933,7 @@
 
             barcode_image.setAttribute('style','width:130px;height:30px;');
             barcode_value.setAttribute('style','width:130px;font-size:14px;margin:1px;text-align:center;');
-            type_value.setAttribute('style','width:130px;font-size:9px;margin:1px;text-align:left;');	
+            type_value.setAttribute('style','width:130px;font-size:9px;margin:1px;text-align:left;');
             merchant_value.setAttribute('style','width:130px;font-size:14px;margin:1px;text-align:left;');
 
             barcode_value.innerHTML=awb_num;
@@ -959,7 +957,7 @@
                     "<td></td></tr>";
         });
         new_table.innerHTML=table_rows;
-        /////////////placing the containers //////////////////////////////////////////////////////	
+        /////////////placing the containers //////////////////////////////////////////////////////
 
         container.appendChild(header);
         container.appendChild(drs_title);
@@ -973,6 +971,6 @@
 
         func(container);
     }
-    
+
     </script>
 </div>

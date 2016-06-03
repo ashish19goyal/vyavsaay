@@ -1,10 +1,10 @@
-<div id='form211' class='tab-pane portlet box green-meadow'>	   
+<div id='form211' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
             <a class='btn btn-circle grey btn-outline btn-sm' id='form211_save'>Save All <i class='fa fa-save'></i></a>
 		</div>
 	</div>
-	
+
 	<div class="portlet-body">
         <form id='form211_master' autocomplete="off">
             <fieldset>
@@ -15,9 +15,9 @@
                 <input type='submit' class='submit_hidden'>
             </fieldset>
         </form>
-        
+
         <br>
-		
+
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr style='color:#9a9a9a;'>
@@ -34,7 +34,7 @@
 			</tbody>
         </table>
     </div>
-    
+
     <script>
     function form211_header_ini()
     {
@@ -54,9 +54,9 @@
         set_static_value_list_json('logistics_orders','status',status_filter);
 
         $(awb_filter).off('keydown');
-        $(awb_filter).on('keydown',function (event) 
+        $(awb_filter).on('keydown',function (event)
         {
-            if(event.keyCode == 13) 
+            if(event.keyCode == 13)
             {
                 event.preventDefault();
                 var subform=document.getElementById('form211_'+awb_filter.value);
@@ -68,9 +68,9 @@
         });
 
         $(drs_filter).off('keydown');
-        $(drs_filter).on('keydown',function (event) 
+        $(drs_filter).on('keydown',function (event)
         {
-            if(event.keyCode == 13) 
+            if(event.keyCode == 13)
             {
                 event.preventDefault();
                 form211_ini();
@@ -104,7 +104,7 @@
 
             var new_columns=new Object();
                 new_columns.data_store='logistics_orders';
-                new_columns.return_column='awb_num';		
+                new_columns.return_column='awb_num';
 
                 new_columns.indexes=[{index:'awb_num'},
                                     {index:'id'},
@@ -116,7 +116,7 @@
             set_my_value_list_json(new_columns,awb_filter);
 
             read_json_rows('form211',new_columns,function(results)
-            {	
+            {
                 results.forEach(function(result)
                 {
                     var id=result.id;
@@ -138,7 +138,7 @@
                             rowsHTML+="<input type='hidden' form='form211_"+result.awb_num+"' value='"+id+"'>";
                             rowsHTML+="<button type='submit' class='btn green' form='form211_"+result.awb_num+"' id='save_form211_"+id+"' name='save'><i class='fa fa-save'></i></button>";
                             rowsHTML+="<input type='hidden' form='form211_"+result.awb_num+"' value='"+result.order_history+"'>";
-                        rowsHTML+="</td>";			
+                        rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form211_body').prepend(rowsHTML);
@@ -164,7 +164,7 @@
         var out_for_delivery=0;
         var delivered=0;
         var pending=0;
-        var undelivered=0;	
+        var undelivered=0;
 
         $("[id^='save_form211']").each(function(index)
         {
@@ -177,23 +177,23 @@
             {
                 if(updated_status=='delivered')
                     delivered+=1;
-                else if(updated_status=='undelivered')	
+                else if(updated_status=='undelivered')
                     undelivered+=1;
-                else if(updated_status=='out for delivery')	
+                else if(updated_status=='out for delivery')
                     out_for_delivery+=1;
-                else if(updated_status=='pending')	
-                    pending+=1;	
+                else if(updated_status=='pending')
+                    pending+=1;
             }
-            else 
+            else
             {
                 if(current_status=='delivered')
                     delivered+=1;
-                else if(current_status=='undelivered')	
+                else if(current_status=='undelivered')
                     undelivered+=1;
-                else if(current_status=='out for delivery')	
+                else if(current_status=='out for delivery')
                     out_for_delivery+=1;
-                else if(current_status=='pending')	
-                    pending+=1;	
+                else if(current_status=='pending')
+                    pending+=1;
             }
         });
 
@@ -219,7 +219,7 @@
             if(status!="")
             {
                 var old_order_history=form.elements[6].value;
-                var order_history=JSON.parse(old_order_history);
+                var order_history=vUtil.jsonParse(old_order_history);
                 var history_object=new Object();
                 history_object.timeStamp=get_my_time();
                 history_object.details=remarks;
@@ -244,22 +244,22 @@
                 }
 
                 order_history.push(history_object);
-                var order_history_string=JSON.stringify(order_history);		
+                var order_history_string=JSON.stringify(order_history);
 
                 var data_json={data_store:'logistics_orders',
 	 				data:[{index:'id',value:id},
 	 					{index:'status',value:status},
 	 					{index:'comments',value:remarks},
 	 					{index:'order_history',value:order_history_string},
-                        delivery_object,  
+                        delivery_object,
 	 					{index:'last_updated',value:last_updated}]};
- 				
+
                 update_json(data_json);
-                
+
                 $(form).readonly();
-                
+
                 $(form).off('submit');
-                $(form).on('submit',function (e) 
+                $(form).on('submit',function (e)
                 {
                     e.preventDefault();
                 });
@@ -270,6 +270,6 @@
             $("#modal2_link").click();
         }
     }
-    
+
     </script>
 </div>

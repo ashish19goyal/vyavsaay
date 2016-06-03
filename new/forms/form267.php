@@ -1,10 +1,10 @@
-<div id='form267' class='tab-pane portlet box green-meadow'>	   
+<div id='form267' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
             <a class='btn btn-circle grey btn-outline btn-sm' id='form267_save'>Save All <i class='fa fa-save'></i></a>
 		</div>
 	</div>
-	
+
 	<div class="portlet-body">
         <form id='form267_master' autocomplete="off">
             <fieldset>
@@ -15,9 +15,9 @@
                 <input type='submit' class='submit_hidden'>
             </fieldset>
         </form>
-        
+
         <br>
-		
+
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr style='color:#9a9a9a;'>
@@ -34,7 +34,7 @@
 			</tbody>
         </table>
     </div>
-    
+
     <script>
 
     function form267_header_ini()
@@ -55,9 +55,9 @@
         set_static_value_list_json('logistics_orders','status',status_filter);
 
         $(awb_filter).off('keydown');
-        $(awb_filter).on('keydown',function (event) 
+        $(awb_filter).on('keydown',function (event)
         {
-            if(event.keyCode == 13) 
+            if(event.keyCode == 13)
             {
                 event.preventDefault();
                 var subform=document.getElementById('form267_'+awb_filter.value);
@@ -69,9 +69,9 @@
         });
 
         $(rto_filter).off('keydown');
-        $(rto_filter).on('keydown',function (event) 
+        $(rto_filter).on('keydown',function (event)
         {
-            if(event.keyCode == 13) 
+            if(event.keyCode == 13)
             {
                 event.preventDefault();
                 form267_ini();
@@ -84,9 +84,9 @@
             event.preventDefault();
             $("[id^='save_form267_']").click();
         });
-        
+
         $('#form267').formcontrol();
-        var paginator=$('#form267_body').paginator({visible:false});        
+        var paginator=$('#form267_body').paginator({visible:false});
     }
 
     function form267_ini()
@@ -108,7 +108,7 @@
 
             var new_columns=new Object();
                 new_columns.data_store='logistics_orders';
-                new_columns.return_column='awb_num';		
+                new_columns.return_column='awb_num';
 
                 new_columns.indexes=[{index:'awb_num'},
                                     {index:'id'},
@@ -120,7 +120,7 @@
             set_my_value_list_json(new_columns,awb_filter);
 
             read_json_rows('',new_columns,function(results)
-            {	
+            {
                 results.forEach(function(result)
                 {
                     var id=result.id;
@@ -142,7 +142,7 @@
                             rowsHTML+="<input type='hidden' form='form267_"+result.awb_num+"' value='"+id+"'>";
                             rowsHTML+="<button type='submit' class='btn green' form='form267_"+result.awb_num+"' id='save_form267_"+id+"' name='save'><i class='fa fa-save'></i></button>";
                             rowsHTML+="<input type='hidden' form='form267_"+result.awb_num+"' value='"+result.order_history+"'>";
-                        rowsHTML+="</td>";			
+                        rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form267_body').prepend(rowsHTML);
@@ -180,19 +180,19 @@
             {
                 if(updated_status=='RTO delivered')
                     delivered+=1;
-                else if(updated_status=='RTO out for delivery')	
+                else if(updated_status=='RTO out for delivery')
                     out_for_delivery+=1;
-                else if(updated_status=='RTO pending')	
-                    pending+=1;	
+                else if(updated_status=='RTO pending')
+                    pending+=1;
             }
-            else 
+            else
             {
                 if(current_status=='RTO delivered')
                     delivered+=1;
-                else if(current_status=='RTO out for delivery')	
+                else if(current_status=='RTO out for delivery')
                     out_for_delivery+=1;
-                else if(current_status=='RTO pending')	
-                    pending+=1;	
+                else if(current_status=='RTO pending')
+                    pending+=1;
             }
         });
 
@@ -217,7 +217,7 @@
             if(status!="")
             {
                 var old_order_history=form.elements[6].value;
-                var order_history=JSON.parse(old_order_history);
+                var order_history=vUtil.jsonParse(old_order_history);
                 var history_object=new Object();
                 history_object.timeStamp=get_my_time();
                 history_object.details=remarks;
@@ -233,7 +233,7 @@
                 }
 
                 order_history.push(history_object);
-                var order_history_string=JSON.stringify(order_history);		
+                var order_history_string=JSON.stringify(order_history);
 
                 var data_json={data_store:'logistics_orders',
 	 				data:[{index:'id',value:id},
@@ -242,14 +242,14 @@
 	 					{index:'order_history',value:order_history_string},
 	 					{index:'last_updated',value:last_updated}]};
                 update_json(data_json);
-                
+
                 $(form).readonly();
-                
+
                 $(form).off('submit');
-                $(form).on('submit',function (e) 
+                $(form).on('submit',function (e)
                 {
                     e.preventDefault();
-                });	
+                });
             }
         }
         else

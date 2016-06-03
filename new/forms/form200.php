@@ -1,6 +1,6 @@
-<div id='form200' class='tab-pane portlet box green-meadow'>	   
+<div id='form200' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form200_add_item();'>Add <i class='fa fa-plus'></i></a>
             <a class='btn btn-circle grey btn-outline btn-sm' id='form200_save'>Save <i class='fa fa-save'></i></a>
 		</div>
@@ -18,7 +18,7 @@
             </div>
         </div>
 	</div>
-	
+
 	<div class="portlet-body">
         <form id='form200_master' autocomplete="off">
             <fieldset>
@@ -32,9 +32,9 @@
                 <input type='submit' class='submit_hidden'>
             </fieldset>
         </form>
-        
+
         <br>
-		
+
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr style='color:#9a9a9a;'>
@@ -50,9 +50,9 @@
 			</tbody>
         </table>
     </div>
-        
+
     <script>
-    
+
     function form200_header_ini()
     {
         var fields=document.getElementById('form200_master');
@@ -71,13 +71,13 @@
 
         var drs_id=$("#form200_link").attr('data_id');
         if(drs_id==null)
-            drs_id="";	
+            drs_id="";
 
         if(drs_id=="")
         {
             var drs_num_data={data_store:'user_preferences',count:1,return_column:'value',
                              indexes:[{index:'name',exact:'drs_num'}]};
-            set_my_value_json(drs_num_data,drs_filter);	
+            set_my_value_json(drs_num_data,drs_filter);
         }
 
         $(save_button).off('click');
@@ -108,16 +108,16 @@
         });
 
         var employee_data={data_store:'staff',return_column:'acc_name'};
-        set_my_value_list_json(employee_data,employee,function () 
+        set_my_value_list_json(employee_data,employee,function ()
         {
             $(employee).focus();
         });
 
         $(drs_date).datepicker();
         drs_date.value=get_my_date();
-        
+
         $('#form200').formcontrol();
-        var paginator=$('#form200_body').paginator({visible:false});        
+        var paginator=$('#form200_body').paginator({visible:false});
 
     }
 
@@ -125,7 +125,7 @@
     {
         var drs_id=$("#form200_link").attr('data_id');
         if(drs_id==null)
-            drs_id="";	
+            drs_id="";
         $('#form200_body').html("");
 
         if(drs_id!="")
@@ -179,7 +179,7 @@
                     if(result.address2=="--" || result.address2==result.address1)
                     {
                         var address=result.ship_to+"\n"+result.address1+", "+result.city+"-"+result.pincode;
-                    }						
+                    }
                     rowsHTML+="<form id='form200_"+id+"'></form>";
                         rowsHTML+="<td data-th='S.No.'>";
                         rowsHTML+="</td>";
@@ -205,7 +205,7 @@
                             rowsHTML+="<input type='button' name='save' class='submit_hidden' form='form200_"+id+"' id='save_form200_"+id+"'>";
                             rowsHTML+="<button type='button' class='btn red' form='form200_"+id+"' id='delete_form200_"+id+"' name='delete' onclick='form200_delete_item($(this));'><i class='fa fa-trash'></i></button>";
                             rowsHTML+="<input type='hidden' form='form200_"+id+"' value='"+result.ship_to+"'>";
-                        rowsHTML+="</td>";			
+                        rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form200_body').append(rowsHTML);
@@ -213,7 +213,7 @@
                     var item_form=document.getElementById('form200_'+id);
                     var save_button=item_form.elements['save'];
 
-                    $(save_button).on('click',function (e) 
+                    $(save_button).on('click',function (e)
                     {
                         e.preventDefault();
                         form200_update_item(item_form);
@@ -223,7 +223,7 @@
                 $('#form200_share').off('click');
                 $('#form200_share').on('click',function()
                 {
-                    modal101_action('Delivery Run Sheet',filter_fields.elements['employee'].value,'staff',function (func) 
+                    modal101_action('Delivery Run Sheet',filter_fields.elements['employee'].value,'staff',function (func)
                     {
                         print_form200(func);
                     });
@@ -269,7 +269,7 @@
                     rowsHTML+="<input type='hidden' form='form200_"+id+"' name='ship_to'>";
                     rowsHTML+="<input type='submit' class='submit_hidden' form='form200_"+id+"'>";
                     rowsHTML+="<input type='hidden' form='form200_"+id+"' name='order_history'>";
-                rowsHTML+="</td>";			
+                rowsHTML+="</td>";
             rowsHTML+="</tr>";
 
             $('#form200_body').prepend(rowsHTML);
@@ -306,7 +306,7 @@
                     var subform_id=$(this).attr('form');
                     var subform=document.getElementById(subform_id);
                     total_entries+=1;
-                    if(subform.elements[0].value==awb_filter.value)	
+                    if(subform.elements[0].value==awb_filter.value)
                         double_entry+=1;
                 });
 
@@ -319,21 +319,21 @@
                             form200_create_item(item_form);
                             form200_add_item();
                         }
-                        else 
+                        else
                         {
                             awb_filter.value="";
                             $("#modal65_link").click();
                         }
                     });
                 }
-                else 
+                else
                 {
                     if(double_entry<2)
                     {
                         form200_create_item(item_form);
                         form200_add_item();
                     }
-                    else 
+                    else
                     {
                         awb_filter.value="";
                         $("#modal65_link").click();
@@ -343,9 +343,9 @@
 
             $(awb_filter).focus();
 
-            $(awb_filter).on('keydown',function (event) 
+            $(awb_filter).on('keydown',function (event)
             {
-                if(event.keyCode == 13 ) 
+                if(event.keyCode == 13 )
                 {
                     event.preventDefault();
 
@@ -358,13 +358,13 @@
 
                         total_entries+=1;
 
-                        if(subform.elements[0].value==awb_filter.value)	
+                        if(subform.elements[0].value==awb_filter.value)
                             double_entry+=1;
                     });
 
                     if(total_entries==1 && new_drs)
                     {
-                        form200_create_form(function () 
+                        form200_create_form(function ()
                         {
                             if(double_entry<2)
                             {
@@ -372,7 +372,7 @@
                                 if(get_session_var('drs_restriction')=='no')
                                 {
                                     status_object={index:'status'};
-                                }				
+                                }
                                 var orders_data={data_store:'logistics_orders',count:1,
                                                 indexes:[{index:'id'},
                                                         {index:'address1'},
@@ -391,7 +391,7 @@
                                                         {index:'drs_num'},
                                                         {index:'order_history'},
                                                         status_object]};
-                                read_json_rows('',orders_data,function (orders) 
+                                read_json_rows('',orders_data,function (orders)
                                 {
                                     //console.log(orders);
                                     if(orders.length>0)
@@ -410,7 +410,7 @@
                                         form200_create_item(item_form);
                                         form200_add_item();
                                     }
-                                    else 
+                                    else
                                     {
                                         address_filter.value="";
                                         phone_filter.value="";
@@ -428,14 +428,14 @@
                                     }
                                 });
                             }
-                            else 
+                            else
                             {
                                 awb_filter.value="";
                                 $("#modal65_link").click();
                             }
                         });
                     }
-                    else 
+                    else
                     {
                         if(double_entry<2)
                         {
@@ -443,7 +443,7 @@
                             if(get_session_var('drs_restriction')=='no')
                             {
                                 status_object={index:'status'};
-                            }				
+                            }
                             var orders_data={data_store:'logistics_orders',count:1,
                                             indexes:[{index:'id'},
                                                     {index:'address1'},
@@ -462,7 +462,7 @@
                                                     {index:'drs_num'},
                                                     {index:'order_history'},
                                                     status_object]};
-                            read_json_rows('',orders_data,function (orders) 
+                            read_json_rows('',orders_data,function (orders)
                             {
                                 //console.log(orders);
                                 if(orders.length>0)
@@ -481,7 +481,7 @@
                                     form200_create_item(item_form);
                                     form200_add_item();
                                 }
-                                else 
+                                else
                                 {
                                     address_filter.value="";
                                     phone_filter.value="";
@@ -499,7 +499,7 @@
                                 }
                             });
                         }
-                        else 
+                        else
                         {
                             awb_filter.value="";
                             $("#modal65_link").click();
@@ -531,19 +531,17 @@
             var del_button=form.elements['delete'];
             var old_order_history=form.elements['order_history'].value;
 
-            var order_history=[];
-            if(old_order_history!="")
-                order_history=JSON.parse(old_order_history);
+            var order_history=vUtil.jsonParse(old_order_history);
             var history_object=new Object();
             history_object.timeStamp=get_my_time();
             history_object.details="Order Out for delivery";
             history_object.location=get_session_var('address');
             history_object.status="Out for delivery";
             order_history.push(history_object);
-            var order_history_string=JSON.stringify(order_history);		
+            var order_history_string=JSON.stringify(order_history);
 
             var last_updated=get_my_time();
-            
+
             var data_json={data_store:'logistics_orders',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'status',value:'out for delivery'},
@@ -553,11 +551,11 @@
                         {index:'order_history',value:order_history_string},
                         {index:'drs_time',value:get_raw_time(drs_date)},
                         {index:'last_updated',value:last_updated}]};
- 				
+
             update_json(data_json);
 
             $(form).readonly();
-            
+
             del_button.removeAttribute("onclick");
             $(del_button).on('click',function(event)
             {
@@ -593,7 +591,7 @@
             $('#form200_share').off('click');
             $('#form200_share').on('click',function()
             {
-                modal101_action('Delivery Run Sheet',employee,'staff',function (func) 
+                modal101_action('Delivery Run Sheet',employee,'staff',function (func)
                 {
                     print_form200(func);
                 });
@@ -606,7 +604,7 @@
             read_json_single_column(drs_columns,function(drses)
             {
                 if(drses.length==0)
-                {	
+                {
                     var data_json={data_store:'drs',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'drs_num',value:drs_num},
@@ -617,9 +615,9 @@
                         {index:'last_updated',value:last_updated}],
                     log:'yes',
                     log_data:{title:'Generated',notes:'DRS #'+drs_num,link_to:'form201'}};
- 				   
+
                     create_json(data_json);
-                
+
                     var num_data={data_store:'user_preferences',return_column:'id',
                                  indexes:[{index:'name',exact:'drs_num'}]};
                     read_json_single_column(num_data,function (drs_num_ids)
@@ -640,7 +638,7 @@
                         func();
                     }
                 }
-                else 
+                else
                 {
                     $("#modal68_link").click();
                 }
@@ -666,7 +664,7 @@
 	 					{index:'drs_num',value:drs_num},
 	 					{index:'delivery_person',value:delivery_person},
                         {index:'last_updated',value:last_updated}]};
- 			
+
             update_json(data_json);
         }
         else
@@ -690,7 +688,7 @@
             $('#form200_share').off('click');
             $('#form200_share').on('click',function()
             {
-                modal101_action('Delivery Run Sheet',employee,'staff',function (func) 
+                modal101_action('Delivery Run Sheet',employee,'staff',function (func)
                 {
                     print_form200(func);
                 });
@@ -698,7 +696,7 @@
 
             var last_updated=get_my_time();
 
-            var drs_columns={data_store:'drs',count:2,indexes:[{index:'id'},{index:'drs_num',exact:drs_num}]};	
+            var drs_columns={data_store:'drs',count:2,indexes:[{index:'id'},{index:'drs_num',exact:drs_num}]};
             read_json_rows('',drs_columns,function(drses)
             {
                 if(drses.length==0 || (drses.length==1 && drses[0].id==data_id))
@@ -711,12 +709,12 @@
 	 					{index:'last_updated',value:last_updated}],
                     log:'yes',
                     log_data:{title:'Updated',notes:'DRS #'+drs_num,link_to:'form201'}};
- 				   
+
                     update_json(data_json);
 
                     $("[id^='save_form200_']").click();
                 }
-                else 
+                else
                 {
                     $("#modal68_link").click();
                 }
@@ -745,9 +743,9 @@
 	 					{index:'drs_num',value:''},
 	 					{index:'drs_time',value:''},
                         {index:'drs_id',value:''},
-                        {index:'delivery_person',value:''},  
+                        {index:'delivery_person',value:''},
 	 					{index:'last_updated',value:last_updated}]};
-                    
+
                 update_json(data_json);
                 $(button).parent().parent().remove();
                 form200_update_serial_numbers();
@@ -774,7 +772,7 @@
 
             if(subform.elements[0].value!="")
             {
-                num_orders+=1;			
+                num_orders+=1;
             }
         });
 
@@ -787,15 +785,15 @@
         print_form200(function(container)
         {
             $.print(container);
-            container.innerHTML="";	
-        });	
+            container.innerHTML="";
+        });
     }
 
     function print_form200(func)
     {
         var form_id='form200';
 
-        ////////////setting up containers///////////////////////	
+        ////////////setting up containers///////////////////////
         var container=document.createElement('div');
 
         var header=document.createElement('div');
@@ -816,7 +814,7 @@
             logo.setAttribute('style','float:left;width:35%;height:60px;');
             business_title.setAttribute('style','float:left;width:40%;height:60px;text-align:center;font-weight:bold;');
             drs_barcode.setAttribute('style','float:right;width:23%;height:60px;padding:left:5px;padding-right:5px;');
-        drs_title.setAttribute('style','display:block;width:98%;height:50px;text-align:center');	
+        drs_title.setAttribute('style','display:block;width:98%;height:50px;text-align:center');
         detail_section.setAttribute('style','display:block;width:98%;height:30px;text-align:center;');
 
         ///////////////getting the content////////////////////////////////////////
@@ -892,7 +890,7 @@
 
             barcode_image.setAttribute('style','width:130px;height:30px;');
             barcode_value.setAttribute('style','width:130px;font-size:14px;margin:1px;text-align:center;');
-            type_value.setAttribute('style','width:130px;font-size:9px;margin:1px;text-align:left;');	
+            type_value.setAttribute('style','width:130px;font-size:9px;margin:1px;text-align:left;');
             merchant_value.setAttribute('style','width:130px;font-size:14px;margin:1px;text-align:left;');
 
             barcode_value.innerHTML=awb_num;
@@ -900,9 +898,9 @@
             if(manifest_type=='PREPAID')
             {
                 merchant_value.innerHTML=ship_to;
-            }		
+            }
             else
-            {	
+            {
                 merchant_value.innerHTML=merchant_name;
             }
             $(barcode_image).JsBarcode(awb_num,{displayValue:false});
@@ -920,10 +918,10 @@
                     "<td></td>"+
                     "<td><div style='text-align:left;'>"+mob_seal+"</div></td>"+
                     "<td><div>"+rc+"</div></td>"+
-                    "<td></td></tr>";				
+                    "<td></td></tr>";
         });
         new_table.innerHTML=table_rows;
-        /////////////placing the containers //////////////////////////////////////////////////////	
+        /////////////placing the containers //////////////////////////////////////////////////////
 
         container.appendChild(header);
         container.appendChild(drs_title);
@@ -937,7 +935,7 @@
 
         func(container);
     }
-    
+
     </script>
 
 </div>

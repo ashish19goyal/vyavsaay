@@ -23,14 +23,14 @@ function ajax_json(url,kvp,func)
 	else
 	{
 		number_active_ajax+=1;
-	}	
-	
+	}
+
 	$.ajax(
 	{
 		type: "POST",
 		url: url,
 		data: kvp,
-		error:function(xhr, ajaxOptions, thrownError) 
+		error:function(xhr, ajaxOptions, thrownError)
 		{
 			number_active_ajax-=1;
 			hide_loader();
@@ -40,28 +40,28 @@ function ajax_json(url,kvp,func)
 		success: function(return_data,return_status,e)
 		{
 			var response_object={status:'error',rows:[],count:0};
-            try 
-            {
-                response_object=JSON.parse(e.responseText);    
-            } catch (ee)
-            {
-                console.log(kvp);
-                console.log(e.responseText);
-                return;
-            }
-            
+      try
+      {
+          response_object=JSON.parse(e.responseText);
+      } catch (ee)
+      {
+          console.log(kvp);
+          console.log(e.responseText);
+          return;
+      }
+
 			if(response_object.status=="Invalid session")
 			{
 				number_active_ajax-=1;
 				hide_loader();
 				var user=get_username();
 				var domain=get_domain();
-				
+
 				lock_screen(function()
 				{
 					show_loader();
 					var pass=document.getElementById("lock_form").elements['password'].value;
-					
+
 					var user_kvp={domain:domain,user:user,pass:pass,os:navigator.platform,browser:navigator.userAgent};
 					ajax_json(server_root+"/ajax_json/login.php",user_kvp,function(response_object)
 					{
@@ -80,7 +80,7 @@ function ajax_json(url,kvp,func)
 						else
 						{
 							var session_vars=response_object.data;
-							
+
 							var offline=get_session_var('offline');
 							for(var field in session_vars)
 							{
@@ -97,11 +97,11 @@ function ajax_json(url,kvp,func)
 							kvp.del=session_vars['del'];
 							kvp.re=session_vars['re'];
 
-							hide_loader();									
+							hide_loader();
 							ajax_json(url,kvp,func);
 						}
 					});
-				});					
+				});
 			}
 			else
 			{
@@ -110,7 +110,7 @@ function ajax_json(url,kvp,func)
 				func(response_object);
 			}
 		}
-	});		
+	});
 };
 
 function server_read_json_rows(columns,callback,results)
@@ -118,12 +118,12 @@ function server_read_json_rows(columns,callback,results)
 	var domain=get_domain();
 	var username=get_username();
 	var re_access=get_session_var('re');
-	
+
 	if(typeof columns.batch_size!='undefined')
 	{
 		columns.count=columns.batch_size;
 	}
-            
+
 	var string_columns=JSON.stringify(columns);
 	ajax_json(server_root+"/ajax_json/get_limited_rows.php",{domain:domain,username:username,re:re_access,data:string_columns},function(response_object)
 	{
@@ -132,7 +132,7 @@ function server_read_json_rows(columns,callback,results)
 		{
 			callback(results);
 		}
-		else 
+		else
 		{
 			columns.start_index=columns.start_index+columns.count;
 			server_read_json_rows(columns,callback,results);
@@ -146,7 +146,7 @@ function server_read_json_column(columns,callback,results)
 	var username=get_username();
 	var re_access=get_session_var('re');
 	var string_columns=JSON.stringify(columns);
-	
+
 	ajax_json(server_root+"/ajax_json/get_single_column.php",{domain:domain,username:username,re:re_access,data:string_columns},function(response_object)
 	{
 		results=response_object.rows;
@@ -159,7 +159,7 @@ function server_read_json_count(columns,callback)
 	var domain=get_domain();
 	var username=get_username();
 	var re_access=get_session_var('re');
-	
+
 	var string_columns=JSON.stringify(columns);
 	ajax_json(server_root+"/ajax_json/get_count.php",{domain:domain,username:username,re:re_access,data:string_columns},function(response_object)
 	{
@@ -178,7 +178,7 @@ function server_generate_report_json(report_id,callback)
 	{
 		//console.log(response_object);
 		//console.log(response_object.rows);
-		var results=response_object.rows;		
+		var results=response_object.rows;
 		callback(results);
 		hide_loader();
 	});
@@ -197,7 +197,7 @@ function sync_logistics_apis()
 		hide_loader();
 		if(response_object.status=='success')
 		{
-			if(response_object.data['delivered']=='success' && response_object.data['rto delivered']=='success' && response_object.data['rto picked']=='success')	
+			if(response_object.data['delivered']=='success' && response_object.data['rto delivered']=='success' && response_object.data['rto picked']=='success')
 			{
 				$("#modal80").html('All order status have been successfully updated on partner sites.');
 			}
@@ -219,7 +219,7 @@ function sync_logistics_apis()
 			}
 			$("#modal80_link").click();
 		}
-		else 
+		else
 		{
 			$("#modal81_link").click();
 		}
@@ -249,7 +249,7 @@ function server_delete_json(data_json,func)
 	var username=get_username();
 	var del_access=get_session_var('del');
 	var string_columns=JSON.stringify(data_json);
-	
+
 	ajax_json(server_root+"/ajax_json/delete.php",{domain:domain,username:username,del:del_access,data:string_columns},function(response_object)
 	{
 		console.log(response_object.status);
@@ -268,7 +268,7 @@ function server_delete_logs(data_json,func)
 	var username=get_username();
 	var del_access=get_session_var('del');
 	var string_columns=JSON.stringify(data_json);
-	
+
 	ajax_json(server_root+"/ajax_json/delete_logs.php",{domain:domain,username:username,del:del_access,data:string_columns},function(response_object)
 	{
 		console.log(response_object.status);
@@ -311,20 +311,20 @@ function server_create_json(data_json,func)
 function server_create_batch_json(data_json,func)
 {
 	if(typeof data_json.loader!='undefined' && data_json.loader=='no')
-	{}else 
+	{}else
 	{show_loader();}
 
 	var domain=get_domain();
 	var username=get_username();
 	var cr_access=get_session_var('cr');
-	
+
 	var data_arrays = [];
 	var array_size = 500;
-	
+
 	while (data_json.data.length > 0)
 	{
 		var new_size=Math.max(array_size,data_json.data.length);
-		
+
 		var new_data_object=new Object();
 		for(var i in data_json)
 		{
@@ -333,7 +333,7 @@ function server_create_batch_json(data_json,func)
 		new_data_object.data=data_json.data.splice(0, new_size);
     	data_arrays.push(new_data_object);
     };
-    
+
     data_arrays.forEach(function(data_chunk)
 	{
 		var string_columns=JSON.stringify(data_chunk);
@@ -342,7 +342,7 @@ function server_create_batch_json(data_json,func)
 			console.log(response_object);
 		});
 	});
-	
+
 	var server_create_complete=setInterval(function()
 	{
 		if(number_active_ajax===0)
@@ -350,13 +350,13 @@ function server_create_batch_json(data_json,func)
 			clearInterval(server_create_complete);
 			if(typeof data_json.loader!='undefined' && data_json.loader=='no')
 			{}else{hide_loader();}
-			
+
 			if(typeof func!="undefined")
 			{
 				func();
 			}
 		}
-	},1000);		
+	},1000);
 }
 
 function server_update_json(data_json,func)
@@ -380,20 +380,20 @@ function server_update_json(data_json,func)
 function server_update_batch_json(data_json,func)
 {
 	if(typeof data_json.loader!='undefined' && data_json.loader=='no')
-	{}else 
+	{}else
 	{show_loader();}
 
 	var domain=get_domain();
 	var username=get_username();
 	var up_access=get_session_var('cr');
-	
+
 	var data_arrays = [];
 	var array_size = 500;
-	
+
 	while (data_json.data.length > 0)
 	{
 		var new_size=Math.max(array_size,data_json.data.length);
-		
+
 		var new_data_object=new Object();
 		for(var i in data_json)
 		{
@@ -411,7 +411,7 @@ function server_update_batch_json(data_json,func)
 			console.log(response_object);
 		});
 	});
-	
+
 	var server_update_complete=setInterval(function()
 	{
 		if(number_active_ajax===0)
@@ -419,13 +419,13 @@ function server_update_batch_json(data_json,func)
 			clearInterval(server_update_complete);
 			if(typeof data_json.loader!='undefined' && data_json.loader=='no')
 			{}else{hide_loader();}
-			
+
 			if(typeof func!="undefined")
 			{
 				func();
 			}
 		}
-	},1000);		
+	},1000);
 }
 
 function get_table_structure(tablename,func)
@@ -450,7 +450,7 @@ function delete_server_table(tablename,master)
 	var del_access=get_session_var('del');
 	var up_access=get_session_var('up');
 	var cr_access=get_session_var('cr');
-	var url=server_root+"/ajax_json/set_table_structure.php";	
+	var url=server_root+"/ajax_json/set_table_structure.php";
 	if(typeof master!='undefined' && master=='master')
 	{
 		url=server_root+"/ajax_json/set_table_structure_master.php";
@@ -470,7 +470,7 @@ function delete_server_table_column(tablename,columnname,master)
 	var del_access=get_session_var('del');
 	var up_access=get_session_var('up');
 	var cr_access=get_session_var('cr');
-	var url=server_root+"/ajax_json/set_table_structure.php";	
+	var url=server_root+"/ajax_json/set_table_structure.php";
 	if(typeof master!='undefined' && master=='master')
 	{
 		url=server_root+"/ajax_json/set_table_structure_master.php";
@@ -490,7 +490,7 @@ function create_server_table(tablename,master)
 	var del_access=get_session_var('del');
 	var up_access=get_session_var('up');
 	var cr_access=get_session_var('cr');
-	var url=server_root+"/ajax_json/set_table_structure.php";	
+	var url=server_root+"/ajax_json/set_table_structure.php";
 	if(typeof master!='undefined' && master=='master')
 	{
 		url=server_root+"/ajax_json/set_table_structure_master.php";
@@ -510,7 +510,7 @@ function create_server_table_column(tablename,columnname,columntype,master)
 	var del_access=get_session_var('del');
 	var up_access=get_session_var('up');
 	var cr_access=get_session_var('cr');
-	var url=server_root+"/ajax_json/set_table_structure.php";	
+	var url=server_root+"/ajax_json/set_table_structure.php";
 	if(typeof master!='undefined' && master=='master')
 	{
 		url=server_root+"/ajax_json/set_table_structure_master.php";
@@ -530,7 +530,7 @@ function update_server_table_column(tablename,columnname,columntype,master)
 	var del_access=get_session_var('del');
 	var up_access=get_session_var('up');
 	var cr_access=get_session_var('cr');
-	var url=server_root+"/ajax_json/set_table_structure.php";	
+	var url=server_root+"/ajax_json/set_table_structure.php";
 	if(typeof master!='undefined' && master=='master')
 	{
 		url=server_root+"/ajax_json/set_table_structure_master.php";

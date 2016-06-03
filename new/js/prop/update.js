@@ -15,7 +15,7 @@ function report63_update(form)
 		var data_ids=form.elements[6].value;
 		var table_type=form.elements[7].value;
 		var last_updated=get_my_time();
-		var ids_object=JSON.parse(data_ids);
+		var ids_object=vUtil.jsonParse(data_ids);
 
 		var data_xml="<"+table_type+">";
 		var counter=1;
@@ -3161,7 +3161,7 @@ function form91_update_form()
 				var id_object_array=[];
 				if(sorders[0].bill_id!="" && sorders[0].bill_id!=0 && sorders[0].bill_id!="null")
 				{
-					id_object_array=JSON.parse(sorders[0].bill_id);
+					id_object_array=vUtil.jsonParse(sorders[0].bill_id);
 				}
 				else
 				{
@@ -4452,11 +4452,7 @@ function form122_update_form()
 		{
 			if(porders.length>0)
 			{
-				var id_object_array=[];
-				if(porders[0].bill_id!="" && porders[0].bill_id!=0 && porders[0].bill_id!="null")
-				{
-					id_object_array=JSON.parse(porders[0].bill_id);
-				}
+				var id_object_array=vUtil.jsonParse(porders[0].bill_id);
 
 				for(var k in id_object_array)
 				{
@@ -7611,7 +7607,7 @@ function form202_update_item(form)
 
 		var old_order_history=form.elements[6].value;
 
-		var order_history=JSON.parse(old_order_history);
+		var order_history=vUtil.jsonParse(old_order_history);
 		var history_object=new Object();
 		history_object.timeStamp=get_my_time();
 		history_object.details="In transit";
@@ -7667,7 +7663,7 @@ function form204_update_item(form)
 
 		var old_order_history=form.elements[5].value;
 
-		var order_history=JSON.parse(old_order_history);
+		var order_history=vUtil.jsonParse(old_order_history);
 		var history_object=new Object();
 		history_object.timeStamp=get_my_time();
 		history_object.details=comments;
@@ -7724,7 +7720,7 @@ function form205_update_item(form)
 
 		var old_order_history=form.elements[5].value;
 
-		var order_history=JSON.parse(old_order_history);
+		var order_history=vUtil.jsonParse(old_order_history);
 		var history_object=new Object();
 		history_object.timeStamp=get_my_time();
 		history_object.details=comments;
@@ -7780,7 +7776,7 @@ function form206_update_item(form)
 
 		var old_order_history=form.elements[5].value;
 
-		var order_history=JSON.parse(old_order_history);
+		var order_history=vUtil.jsonParse(old_order_history);
 		var history_object=new Object();
 		history_object.timeStamp=get_my_time();
 		history_object.details=comments;
@@ -8026,7 +8022,7 @@ function form210_reject_item(bar_code)
 				{
 					if(!first_match)
 					{
-						var item_object=JSON.parse($(this).attr('data-object'));
+						var item_object=vUtil.jsonParse($(this).attr('data-object'));
 						var data_id=item_object.id;
 						var item_storage=item_object.storage;
 						var item_name=item_object.item_name;
@@ -8117,7 +8113,7 @@ function form210_accept_item(bar_code)
 			{
 				if(!first_match)
 				{
-					var item_object=JSON.parse($(this).attr('data-object'));
+					var item_object=vUtil.jsonParse($(this).attr('data-object'));
 					var data_id=item_object.id;
 					var item_storage=item_object.storage;
 					var item_name=item_object.item_name;
@@ -9339,7 +9335,7 @@ function form272_update_item()
 		var last_updated=get_my_time();
 
 		var old_order_history=form.elements['history'].value;
-		var order_history=JSON.parse(old_order_history);
+		var order_history=vUtil.jsonParse(old_order_history);
 		var history_object=new Object();
 		history_object.timeStamp=get_my_time();
 		history_object.details="Received By "+received_by;

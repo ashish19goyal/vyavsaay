@@ -101,11 +101,8 @@
 			{
 				results.forEach(function(result)
 				{
-					var clients_array=[];
-					if(!vUtil.isBlank(result.clients))
-					{
-						clients_array=JSON.parse(result.clients);
-					}
+					var clients_array=vUtil.jsonParse(result.clients);
+
 					var rowsHTML="<tr>";
 						rowsHTML+="<form id='form341_"+result.id+"'></form>";
 							rowsHTML+="<td data-th='Name'>";

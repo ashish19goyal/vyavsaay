@@ -1,13 +1,13 @@
-<div id='form212' class='tab-pane portlet box green-meadow'>	   
+<div id='form212' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form212_add_item();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
             <button class="btn btn-default grey" onclick='modal148_action();'>Import <i class="fa fa-upload"></i></button>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -79,27 +79,27 @@
                 form212_add_item();
             });
 
-            $(remark_filter).on('keydown',function (event) 
+            $(remark_filter).on('keydown',function (event)
             {
-                if(event.keyCode == 13 ) 
+                if(event.keyCode == 13 )
                 {
                     event.preventDefault();
                     $(save_button).trigger('click');
                 }
             });
 
-            $(awb_filter).focus();		
+            $(awb_filter).focus();
 
-            $(awb_filter).on('keydown',function (event) 
+            $(awb_filter).on('keydown',function (event)
             {
-                if(event.keyCode == 13 ) 
+                if(event.keyCode == 13 )
                 {
                     event.preventDefault();
                     $(status_filter).focus();
                 }
             });
 
-            $(awb_filter).on('blur',function () 
+            $(awb_filter).on('blur',function ()
             {
                 var order_data={data_store:'logistics_orders',count:1,
                                indexes:[{index:'order_num'},
@@ -113,9 +113,9 @@
                         order_filter.innerHTML=orders[0].order_num;
                         status_filter.value=orders[0].status;
                         id_filter.value=orders[0].id;
-                        order_history.value=orders[0].order_history;				
+                        order_history.value=orders[0].order_history;
                     }
-                });					
+                });
             });
         }
         else
@@ -136,7 +136,7 @@
             var delivery_object={index:'delivery_time'};
 
             var old_order_history=form.elements[5].value;
-            var order_history=JSON.parse(old_order_history);
+            var order_history=vUtil.jsonParse(old_order_history);
             var history_object=new Object();
             history_object.timeStamp=get_my_time();
             history_object.details=remarks;
@@ -161,7 +161,7 @@
             }
 
             order_history.push(history_object);
-            var order_history_string=JSON.stringify(order_history);		
+            var order_history_string=JSON.stringify(order_history);
 
             var data_json={data_store:'logistics_orders',
 	 				data:[{index:'id',value:id},

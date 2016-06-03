@@ -264,7 +264,7 @@
 						var updated_content=revert_htmlentities(newsletters[0].html_content);
 						$('#form345_section').html(updated_content);
 
-						var components_array=JSON.parse(newsletters[0].components);
+						var components_array=vUtil.jsonParse(newsletters[0].components);
 						components_array.forEach(function (component)
 						{
 							var component_elem="<li class='list-group-item bg-green bg-font-green link' id='form345_nc_"+component.id+"' data-name='"+component.name+"' data-id='"+component.id+"' data-tid='"+component.tid+"'>"+component.name+

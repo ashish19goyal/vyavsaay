@@ -413,7 +413,7 @@
                         });
 
                         /////////////////terms and conditions////////////////
-                        var tc_array=JSON.parse(quot_results[0].terms);
+                        var tc_array=vUtil.jsonParse(quot_results[0].terms);
                         var tc_id=get_new_key();
                         var tc_counter=0;
                         var rowsHTML="";
@@ -443,7 +443,7 @@
 
 
                         /////////////////banks////////////////
-                        var bank_array=JSON.parse(quot_results[0].banks);
+                        var bank_array=vUtil.jsonParse(quot_results[0].banks);
                         var bank_id=get_new_key();
                         var bank_counter=0;
                         var bank_rowsHTML="";
@@ -478,7 +478,7 @@
 
                         /////////////////specifications////////////////
                         //console.log(quot_results[0].specifications);
-                        var spec_array=JSON.parse(quot_results[0].specifications);
+                        var spec_array=vUtil.jsonParse(quot_results[0].specifications);
                         var spec_id=get_new_key();
                         var spec_counter=0;
                         var spec_rowsHTML="";
@@ -508,7 +508,7 @@
 
 
                         /////////////////spares////////////////
-                        var spare_array=JSON.parse(quot_results[0].spares);
+                        var spare_array=vUtil.jsonParse(quot_results[0].spares);
                         var spare_id=get_new_key();
                         var spare_counter=0;
                         var spare_rowsHTML="";
@@ -540,7 +540,7 @@
                         $('#form258_spare_body').html(spare_rowsHTML);
 
 
-                        var item_array=JSON.parse(quot_results[0].items);
+                        var item_array=vUtil.jsonParse(quot_results[0].items);
                         var item_id=get_new_key();
                         var item_counter=0;
                         var item_rowsHTML="";

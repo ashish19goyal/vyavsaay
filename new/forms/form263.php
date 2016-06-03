@@ -122,7 +122,7 @@
 
 						if(results[0].elements!="" && results[0].elements!=null)
 						{
-							var elements_array=JSON.parse(results[0].elements);
+							var elements_array=vUtil.jsonParse(results[0].elements);
 
 							var new_id=get_new_key();
 							var counter=0;

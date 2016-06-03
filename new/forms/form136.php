@@ -1,6 +1,6 @@
-<div id='form136' class='tab-pane portlet box green-meadow'>	   
+<div id='form136' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form136_add_item();'>Add <i class='fa fa-plus'></i></a>
             <a class='btn btn-circle grey btn-outline btn-sm' id='form136_save'>Save <i class='fa fa-save'></i></a>
 		</div>
@@ -8,7 +8,7 @@
       	<a class='btn btn-default btn-sm' id='form136_print' onclick=form136_print_form();><i class='fa fa-print'></i> Print</a>
       </div>
 	</div>
-	
+
 	<div class="portlet-body">
         <form id='form136_master' autocomplete="off">
             <fieldset>
@@ -22,9 +22,9 @@
                 <input type='submit' class='submit_hidden'>
             </fieldset>
         </form>
-        
+
         <br>
-		
+
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr style='color:#9a9a9a;'>
@@ -42,7 +42,7 @@
             </tfoot>
 		</table>
     </div>
-	
+
     <script>
         function form136_header_ini()
         {
@@ -80,7 +80,7 @@
             });
 
             var suppliers_data={data_store:'suppliers',return_column:'acc_name'};
-            set_my_value_list_json(suppliers_data,supplier_filter,function () 
+            set_my_value_list_json(suppliers_data,supplier_filter,function ()
             {
                 $(supplier_filter).focus();
             });
@@ -90,9 +90,9 @@
             $(add_supplier).on('click',function()
             {
                 modal13_action(function()
-                {	
+                {
                     var suppliers_data={data_store:'suppliers',return_column:'acc_name'};
-                    set_my_value_list_json(suppliers_data,supplier_filter,function () 
+                    set_my_value_list_json(suppliers_data,supplier_filter,function ()
                     {
                         $(supplier_filter).focus();
                     });
@@ -113,7 +113,7 @@
         {
             var bill_id=$("#form136_link").attr('data_id');
             if(bill_id==null)
-                bill_id="";	
+                bill_id="";
 
             $('#form136_body').html("");
             $('#form136_foot').html("");
@@ -122,7 +122,7 @@
             {
                 show_loader();
                 var filter_fields=document.getElementById('form136_master');
-                        
+
                 var bill_columns={data_store:'supplier_bills',count:1,
                                  indexes:[{index:'id',value:bill_id},
                                          {index:'bill_id'},
@@ -172,7 +172,7 @@
                                               {index:'storage'},
                                               {index:'qc'},
                                               {index:'bill_id',exact:bill_id}]};
-                        
+
                 read_json_rows('form136',bill_items_column,function(results)
                 {
                     results.forEach(function(result)
@@ -185,7 +185,7 @@
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Batch'><div class='btn-overlap'>";
                                 rowsHTML+="<input type='text' class='floatlabel' placeholder='Batch' readonly='readonly' form='form136_"+id+"' value='"+result.batch+"'>";
-                                rowsHTML+="<button class='btn btn-icon-only default right-overlap' title='Print Barcode' onclick=\"print_product_barcode('"+id+"','"+result.product_name+"','"+result.batch+"');\"><i class='fa fa-barcode'></i></button></div>";                    
+                                rowsHTML+="<button class='btn btn-icon-only default right-overlap' title='Print Barcode' onclick=\"print_product_barcode('"+id+"','"+result.product_name+"','"+result.batch+"');\"><i class='fa fa-barcode'></i></button></div>";
                                 rowsHTML+="<input type='number' class='floatlabel' placeholder='Quantity' readonly='readonly' form='form136_"+id+"' value='"+result.quantity+"' step='any'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Bill Price'>";
@@ -203,17 +203,17 @@
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Action'>";
                                 if(result.qc=='accepted')
-                                {						
+                                {
                                     rowsHTML+=" <i id='form136_check_image_"+id+"' class='fa fa-2x fa-check' title='Accepted' data-accepted='accepted'></i>";
                                 }
-                                else 
+                                else
                                 {
                                     rowsHTML+=" <i id='form136_check_image_"+id+"' class='fa fa-2x fa-close' title='Rejected' data-accepted='rejected'></i>";
                                 }
                                 rowsHTML+="<input type='hidden' form='form136_"+id+"' value='"+id+"'>";
                                 rowsHTML+="<input type='submit' class='submit_hidden' form='form136_"+id+"' id='save_form136_"+id+"'>";
                                 rowsHTML+="<button type='button' class='btn red' form='form136_"+id+"' id='delete_form136_"+id+"' onclick='form136_delete_item($(this));'><i class='fa fa-trash' title='Delete' name='delete'></i></button>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                         rowsHTML+="</tr>";
 
                         $('#form136_body').append(rowsHTML);
@@ -225,7 +225,7 @@
                         });
                     });
                     form136_get_totals();
-                    
+
                     $('#form136').formcontrol();
                     hide_loader();
                 });
@@ -249,7 +249,7 @@
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Batch'><div class='btn-overlap'>";
                         rowsHTML+="<input type='text' class='floatlabel' placeholder='Batch' readonly='readonly' form='form136_"+id+"'>";
-                        rowsHTML+="<button class='btn btn-icon-only default right-overlap' title='Print Barcode' id='form136_barcode_"+id+"'><i class='fa fa-barcode'></i></button></div>";                    
+                        rowsHTML+="<button class='btn btn-icon-only default right-overlap' title='Print Barcode' id='form136_barcode_"+id+"'><i class='fa fa-barcode'></i></button></div>";
                         rowsHTML+="<input type='number' class='floatlabel' placeholder='Quantity' form='form136_"+id+"' step='any'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Bill Price'>";
@@ -297,7 +297,7 @@
                 var po_tax_rate_filter=fields.elements[14];
 
                 batch_filter.value=String(bill_id).substr(1,8);
-                
+
                 function update_qc_icon(icon_elem)
                 {
                     var new_qc_icon="<i id='form136_check_image_"+id+"' class='fa fa-2x fa-close link' title='Rejected' data-accepted='rejected'></i>";
@@ -311,14 +311,14 @@
                         update_qc_icon($(this)[0]);
                     })
                 }
-                
+
                 $('#form136_check_image_'+id).on('click',function()
                 {
                     update_qc_icon($(this)[0]);
                 })
 
                 var barcode_filter=document.getElementById("form136_barcode_"+id);
-                $(barcode_filter).on('click',function () 
+                $(barcode_filter).on('click',function ()
                 {
                     print_product_barcode(String(id),name_filter.value,batch_filter.value);
                 });
@@ -339,14 +339,14 @@
                                  indexes:[{index:'type',exact:'product'},
                                          {index:'value',exact:'yes'},
                                          {index:'attribute',exact:'raw material'}]};
-                set_my_value_list_json(product_data,name_filter,function () 
+                set_my_value_list_json(product_data,name_filter,function ()
                 {
                     $(name_filter).focus();
                 });
 
                 var storage_data={data_store:'store_areas',return_column:'name'};
                 set_my_value_list_json(storage_data,storage_filter);
-               
+
                 $(name_filter).on('blur',function(event)
                 {
                     var po_item_data={data_store:'purchase_order_items',
@@ -364,16 +364,16 @@
                             po_unit_filter.value=po_items[0].price;
                             po_amount_filter.value=po_items[0].price;
                             po_tax_rate_filter.value=po_items[0].tax_rate;
-                            po_tax_filter.value=parseFloat(po_items[0].tax_rate)*parseFloat(po_items[0].price)/100;					
+                            po_tax_filter.value=parseFloat(po_items[0].tax_rate)*parseFloat(po_items[0].price)/100;
                         }
-                        else 
+                        else
                         {
                             po_unit_filter.value="";
                             po_amount_filter.value="";
                             po_tax_rate_filter.value="";
-                            po_tax_filter.value="";					
+                            po_tax_filter.value="";
                         }
-                    });		
+                    });
 
                     var tax_unit_data={data_store:'product_master',return_column:'tax',
                                       indexes:[{index:'name',exact:name_filter.value}]};
@@ -387,12 +387,12 @@
                     tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
 
                     po_amount_filter.value=parseFloat(po_unit_filter.value)*parseFloat(quantity_filter.value);
-                    po_tax_filter.value=parseFloat(po_tax_rate_filter.value)*parseFloat(po_amount_filter.value)/100;				
+                    po_tax_filter.value=parseFloat(po_tax_rate_filter.value)*parseFloat(po_amount_filter.value)/100;
                 });
 
                 ////////////////////////////////////
 
-                $(unit_filter).on('blur',function () 
+                $(unit_filter).on('blur',function ()
                 {
                     amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
                     tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
@@ -450,7 +450,7 @@
                         {index:'po_price',value:po_unit},
                         {index:'bill_id',value:bill_id},
                         {index:'storage',value:storage},
-                        {index:'qc',value:qc},  
+                        {index:'qc',value:qc},
 	 					{index:'last_updated',value:last_updated}]};
  				var batch_json={data_store:'product_instances',
 	 				data:[{index:'id',value:data_id},
@@ -458,28 +458,28 @@
 	 					{index:'batch',value:batch},
 	 					{index:'manufacture_date',value:''},
                         {index:'last_updated',value:last_updated}]};
- 				
+
                 create_json(batch_json);
                 create_json(data_json);
 
                 if(qc=='rejected')
                 {
                     var return_json={data_store:'supplier_returns',
-	 				warning:'no',  
+	 				warning:'no',
                     data:[{index:'id',value:bill_id},
 	 					{index:'supplier',value:supplier},
 	 					{index:'return_date',value:entry_date},
                         {index:'total',value:'0'},
-                        {index:'tax',value:'0'},    
+                        {index:'tax',value:'0'},
 	 					{index:'last_updated',value:last_updated}]};
- 				
+
                     var return_item_json={data_store:'supplier_return_items',
 	 				data:[{index:'id',value:data_id},
                         {index:'return_id',value:bill_id},
 	 					{index:'item_name',value:name},
 	 					{index:'batch',value:batch},
                         {index:'tax',value:'0'},
-                        {index:'refund_amount',value:'0'},  
+                        {index:'refund_amount',value:'0'},
                         {index:'quantity',value:quantity},
                         {index:'storage',value:storage},
 	 					{index:'last_updated',value:last_updated}]};
@@ -489,7 +489,7 @@
                 }
 
                 $(form).readonly();
-                
+
                 del_button.removeAttribute("onclick");
                 $(del_button).on('click',function(event)
                 {
@@ -585,7 +585,7 @@
                         {index:'order_id',value:order_id},
                         {index:'order_num',value:order_num},
                         {index:'supplier',value:supplier},
-                        {index:'bill_date',value:bill_date},  
+                        {index:'bill_date',value:bill_date},
 	 					{index:'entry_date',value:entry_date},
 	 					{index:'total',value:total},
 	 					{index:'amount',value:amount},
@@ -593,21 +593,17 @@
                         {index:'transaction_id',value:data_id},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Saved',notes:'Purchase Bill # '+bill_id,link_to:'form53'}};
- 				
+
                 var po_data={data_store:'purchase_orders',
                             indexes:[{index:'id',value:order_id},
                                     {index:'bill_id'},
                                     {index:'total_quantity'},
                                     {index:'quantity_received'}]};
-                read_json_rows('',po_data,function (porders) 
+                read_json_rows('',po_data,function (porders)
                 {
                     if(porders.length>0)
                     {
-                        var id_object_array=[];
-                        if(porders[0].bill_id!="" && porders[0].bill_id!=0 && porders[0].bill_id!="null" && porders[0].bill_id!=null)
-                        {
-                            id_object_array=JSON.parse(porders[0].bill_id);
-                        }
+                        var id_object_array=vUtil.jsonParse(porders[0].bill_id);
 
                         var id_object=new Object();
                         id_object.bill_num=bill_id;
@@ -633,8 +629,8 @@
                             quantity_received=parseFloat(porders[0].quantity_received);
                         }
 
-                        var status='received';				
-                        
+                        var status='received';
+
                         var new_bill_id=JSON.stringify(id_object_array);
                         var po_json={data_store:'purchase_orders',
                             data:[{index:'id',value:order_id},
@@ -642,7 +638,7 @@
                                 {index:'quantity_received',value:quantity_received},
                                 {index:'status',value:status},
                                 {index:'last_updated',value:last_updated}]};
- 				
+
                         update_json(po_json);
                     }
                 });
@@ -655,9 +651,9 @@
                                 {index:'giver',value:supplier},
                                 {index:'tax',value:(-tax)},
                                 {index:'last_updated',value:last_updated}]};
- 				
+
                 var pt_tran_id=get_new_key();
-                
+
                 var payment_json={data_store:'payments',
                             data:[{index:'id',value:pt_tran_id},
                                 {index:'status',value:'pending'},
@@ -671,9 +667,9 @@
                                 {index:'transaction_id',value:pt_tran_id},
                                 {index:'source_id',value:data_id},
                                 {index:'source',value:'purchase bill'},
-                                {index:'source_info',value:bill_id},  
+                                {index:'source_info',value:bill_id},
                                 {index:'last_updated',value:last_updated}]};
- 				
+
                 var pt_json={data_store:'transactions',
                             data:[{index:'id',value:pt_tran_id},
                                 {index:'trans_date',value:last_updated},
@@ -682,7 +678,7 @@
                                 {index:'receiver',value:supplier},
                                 {index:'tax',value:'0'},
                                 {index:'last_updated',value:last_updated}]};
- 				
+
                 create_json(data_json);
                 create_json(transaction_json);
                 create_json(pt_json);
@@ -743,7 +739,7 @@
                             tax+=parseFloat(subform.elements[5].value);
                         if(!isNaN(parseFloat(subform.elements[2].value)))
                             total_quantity+=parseFloat(subform.elements[2].value);
-                    }	
+                    }
                 });
 
                 amount=my_round(amount,2);
@@ -768,7 +764,7 @@
                         {index:'order_id',value:order_id},
                         {index:'order_num',value:order_num},
                         {index:'supplier',value:supplier},
-                        {index:'bill_date',value:bill_date},  
+                        {index:'bill_date',value:bill_date},
 	 					{index:'entry_date',value:entry_date},
 	 					{index:'total',value:total},
 	 					{index:'amount',value:amount},
@@ -776,21 +772,17 @@
                         {index:'transaction_id',value:data_id},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Updated',notes:'Purchase Bill # '+bill_id,link_to:'form53'}};
- 				
+
                 var po_data={data_store:'purchase_orders',
                             indexes:[{index:'id',value:order_id},
                                     {index:'bill_id'},
                                     {index:'total_quantity'},
                                     {index:'quantity_received'}]};
-                read_json_rows('',po_data,function (porders) 
+                read_json_rows('',po_data,function (porders)
                 {
                     if(porders.length>0)
                     {
-                        var id_object_array=[];
-                        if(porders[0].bill_id!="" && porders[0].bill_id!=0 && porders[0].bill_id!="null" && porders[0].bill_id!=null)
-                        {
-                            id_object_array=JSON.parse(porders[0].bill_id);
-                        }
+                        var id_object_array=vUtil.jsonParse(porders[0].bill_id);
 
                         for(var k in id_object_array)
                         {
@@ -819,8 +811,8 @@
                             quantity_received=parseFloat(porders[0].quantity_received);
                         }
 
-                        var status='received';				
-                        
+                        var status='received';
+
                         var new_bill_id=JSON.stringify(id_object_array);
 
                         var po_json={data_store:'purchase_orders',
@@ -829,7 +821,7 @@
                                 {index:'quantity_received',value:quantity_received},
                                 {index:'status',value:status},
                                 {index:'last_updated',value:last_updated}]};
- 				
+
                         update_json(po_json);
                     }
                 });
@@ -842,7 +834,7 @@
                                 {index:'giver',value:supplier},
                                 {index:'tax',value:(-tax)},
                                 {index:'last_updated',value:last_updated}]};
- 				
+
                 update_json(data_json);
                 update_json(transaction_json);
 
@@ -860,9 +852,9 @@
                                 {index:'transaction_id',value:payments[0]},
                                 {index:'source_id',value:data_id},
                                 {index:'source',value:'purchase bill'},
-                                {index:'source_info',value:bill_id},  
+                                {index:'source_info',value:bill_id},
                                 {index:'last_updated',value:last_updated}]};
- 				
+
                         var pt_json={data_store:'transactions',
                             data:[{index:'id',value:payments[0]},
                                 {index:'amount',value:total},
@@ -964,14 +956,14 @@
             print_form136(function(container)
             {
                 $.print(container);
-                container.innerHTML="";	
-            });	
+                container.innerHTML="";
+            });
         }
 
         function print_form136(func)
         {
             var form_id='form136';
-            ////////////setting up containers///////////////////////	
+            ////////////setting up containers///////////////////////
             var container=document.createElement('div');
             var header=document.createElement('div');
                 var logo=document.createElement('div');
@@ -980,7 +972,7 @@
 
             var invoice_line=document.createElement('div');
 
-            var info_section=document.createElement('div');	
+            var info_section=document.createElement('div');
                 var customer_info=document.createElement('div');
                 var business_info=document.createElement('div');
 
@@ -1013,7 +1005,7 @@
 
             var master_form=document.getElementById(form_id+'_master');
             var supplier_name=master_form.elements['supplier'].value;
-            var date=master_form.elements['bill_date'].value;	
+            var date=master_form.elements['bill_date'].value;
             var order_no=master_form.elements['po_num'].value;
             var bill_no=master_form.elements['bill_num'].value;
             var vat_no=get_session_var('vat');
@@ -1037,7 +1029,7 @@
 
             var table_element=document.getElementById(form_id+'_body');
 
-            /////////////adding new table //////////////////////////////////////////////////////	
+            /////////////adding new table //////////////////////////////////////////////////////
             var new_table=document.createElement('table');
             new_table.setAttribute('style','width:100%;font-size:11px;border:1px solid black;text-align:left;');
             var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
@@ -1094,7 +1086,7 @@
             table_rows+=table_foot_row;
             new_table.innerHTML=table_rows;
 
-            /////////////placing the containers //////////////////////////////////////////////////////	
+            /////////////placing the containers //////////////////////////////////////////////////////
 
             container.appendChild(header);
             container.appendChild(invoice_line);

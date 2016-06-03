@@ -4723,7 +4723,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 			if(checked)
 			{
 				//console.log($(this).attr('data-object'));
-				order_item=JSON.parse($(this).attr('data-object'));
+				order_item=vUtil.jsonParse($(this).attr('data-object'));
 				order_items.push(order_item);
 			}
 
@@ -5328,11 +5328,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 								{
 									if(sorders.length>0)
 									{
-										var id_object_array=[];
-										if(sorders[0].bill_id!="" && sorders[0].bill_id!=0 && sorders[0].bill_id!="null")
-										{
-											id_object_array=JSON.parse(sorders[0].bill_id);
-										}
+										var id_object_array=vUtil.jsonParse(sorders[0].bill_id);
 
 										var id_object=new Object();
 										id_object.bill_num=bill_num_ids[0].value;
@@ -7140,11 +7136,7 @@ function form122_create_form()
 		{
 			if(porders.length>0)
 			{
-				var id_object_array=[];
-				if(porders[0].bill_id!="" && porders[0].bill_id!=0 && porders[0].bill_id!="null")
-				{
-					id_object_array=JSON.parse(porders[0].bill_id);
-				}
+				var id_object_array=vUtil.jsonParse(porders[0].bill_id);
 
 				var id_object=new Object();
 				id_object.bill_num=bill_id;
@@ -11881,9 +11873,7 @@ function form248_create_item(form)
 
 		var old_order_history=form.elements[9].value;
 
-		var order_history=[];
-		if(old_order_history!="")
-			order_history=JSON.parse(old_order_history);
+		var order_history=vUtil.jsonParse(old_order_history);
 		var history_object=new Object();
 		history_object.timeStamp=get_my_time();
 		history_object.details="Order in-transit";
@@ -13344,11 +13334,7 @@ function form295_create_form()
 		{
 			if(porders.length>0)
 			{
-				var id_object_array=[];
-				if(porders[0].bill_id!="" && porders[0].bill_id!=0 && porders[0].bill_id!="null")
-				{
-					id_object_array=JSON.parse(porders[0].bill_id);
-				}
+				var id_object_array=vUtil.jsonParse(porders[0].bill_id);
 
 				var id_object=new Object();
 				id_object.bill_num=bill_num;
