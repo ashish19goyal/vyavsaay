@@ -16917,3 +16917,50 @@ function modal214_action(func)
 
 	$("#modal214_link").click();
 }
+
+/**
+ * @modalNo 215
+ * @modal Update Inventory (nvs)
+ */
+function modal215_action(item_name)
+{
+	var form=document.getElementById('modal215_form');
+
+	var fitem=form.elements['name'];
+	var fcurrent=form.elements['current'];
+	var fupdated=form.elements['updated'];
+	fitem.value=item_name;
+
+	get_inventory(item_name,'',function(inventory)
+	{
+		fcurrent.value=inventory;
+	});
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_update_access('form260') || is_update_access('form285'))
+		{
+			var updated=fupdated.value;
+			var current=fcurrent.value;
+			var change=parseFloat(updated)-parseFloat(current);
+			var last_updated=get_my_time();
+
+			var adjust_json={data_store:'inventory_adjust',
+			data:[{index:'id',value:id},
+				{index:'product_name',value:item_name},
+				{index:'batch',value:item_name},
+				{index:'quantity',value:change},
+				{index:'last_updated',value:last_updated}]};
+			create_json(adjust_json);
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
+		$(form).find(".close").click();
+	});
+
+	$("#modal215_link").click();
+}

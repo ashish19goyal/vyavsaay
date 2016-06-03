@@ -29,9 +29,8 @@
 				<tr>
 					<form id='form260_header'></form>
 						<th><input type='text' placeholder="Item" class='floatlabel' name='name' form='form260_header'></th>
-						<th><input type='text' placeholder="Quantity" readonly='readonly' form='form260_header'>
-						      <input type='submit' form='form260_header' class='submit_hidden'>
-            </th>
+						<th><input type='text' placeholder="Quantity" readonly='readonly' form='form260_header'></th>
+						<th><input type='submit' form='form260_header' class='submit_hidden'></th>
 				</tr>
 			</thead>
 			<tbody id='form260_body'>
@@ -92,8 +91,11 @@
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Quantity'>";
                                 rowsHTML+="<input type='number' step='any' readonly='readonly' form='form260_"+result.id+"'>";
-                                rowsHTML+="<input type='hidden' form='form260_"+result.id+"' value='"+result.id+"'>";
-                            rowsHTML+="</td>";
+														rowsHTML+="</td>";
+				                    rowsHTML+="<td data-th='Update'>";
+				                            rowsHTML+="<input type='hidden' form='form260_"+result.id+"' value='"+result.id+"'>";
+																		rowsHTML+="<button type='button' class='btn red-sunglo' onclick=\"modal215_action('"+result.name+"');\" form='form260_"+result.id+"'>Update Inventory</button>";
+		                        rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form260_body').append(rowsHTML);

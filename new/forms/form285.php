@@ -29,9 +29,8 @@
 				<tr>
 					<form id='form285_header'></form>
 						<th><input type='text' placeholder="Item" class='floatlabel' name='name' form='form285_header'></th>
-						<th><input type='text' placeholder="Quantity" readonly='readonly' form='form285_header'>
-						      <input type='submit' form='form285_header' class='submit_hidden'>
-                        </th>
+						<th><input type='text' placeholder="Quantity" readonly='readonly' form='form285_header'></th>
+						<th><input type='submit' form='form285_header' class='submit_hidden'></th>
 				</tr>
 			</thead>
 			<tbody id='form285_body'>
@@ -92,7 +91,10 @@
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Quantity'>";
                                 rowsHTML+="<input type='number' step='any' readonly='readonly' form='form285_"+result.id+"'>";
-                                rowsHTML+="<input type='hidden' form='form285_"+result.id+"' value='"+result.id+"'>";
+														rowsHTML+="</td>";
+		                        rowsHTML+="<td data-th='Update'>";
+		                            rowsHTML+="<input type='hidden' form='form285_"+result.id+"' value='"+result.id+"'>";
+																rowsHTML+="<button type='button' class='btn red-sunglo' onclick=\"modal215_action('"+result.name+"');\" form='form285_"+result.id+"'>Update Inventory</button>";
                             rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
