@@ -60,7 +60,7 @@ function report96_header_ini()
 	});
 
 	$(date_filter).datepicker();
-	date_filter.value=get_my_date();
+	date_filter.value=vTime.date();
 	
 	var person_data={data_store:'staff',return_column:'acc_name'};
 	set_my_value_list_json(person_data,person_filter,function () 

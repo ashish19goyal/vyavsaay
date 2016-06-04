@@ -57,10 +57,10 @@
 
         $('#report100_body').html('');
 
-        var due_time=get_raw_time(get_my_date())+86400000;
+        var due_time=get_raw_time(vTime.date())+86400000;
         if(typeof due_date!='undefined' && due_date=='week')
         {
-            due_time=get_raw_time(get_my_date())+7*86400000;
+            due_time=get_raw_time(vTime.date())+7*86400000;
         }
         else
         {

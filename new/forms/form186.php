@@ -79,10 +79,10 @@
         });
 
         $(from_filter).datepicker();
-        $(from_filter).val(get_my_date());
+        $(from_filter).val(vTime.date());
 
         $(to_filter).datepicker();
-        $(to_filter).val(get_my_date());
+        $(to_filter).val(vTime.date());
 
         plan_filter.value="";
         $(plan_filter).focus();

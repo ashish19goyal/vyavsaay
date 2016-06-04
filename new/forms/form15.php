@@ -98,7 +98,7 @@
 	});
 		
 	$(return_date).datepicker();
-	return_date.value=get_my_date();
+	return_date.value=vTime.date();
 }
 
 function form15_ini()

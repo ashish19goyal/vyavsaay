@@ -68,7 +68,7 @@
 			var date_filter=fields.elements['date'];
 
 			$(date_filter).datepicker();
-			date_filter.value=get_my_date();
+			date_filter.value=vTime.date();
 
 			var filter_fields=document.getElementById('form7_header');
 			var staff_filter=filter_fields.elements['staff'];

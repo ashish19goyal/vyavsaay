@@ -74,7 +74,7 @@
             coloader.value="";
             vendor.value="";            
             $(date).datepicker();
-            date.value=get_my_date();
+            date.value=vTime.date();
 
             var pass_id=$("#form344_link").attr('data_id');
             if(pass_id==null)

@@ -36,7 +36,7 @@ function report6_header_ini()
 	set_my_filter(customer_data,customer_filter);
 	
 	$(due_date).datepicker();
-	due_date.value=get_my_date();
+	due_date.value=vTime.date();
 }
 
 function report6_ini()

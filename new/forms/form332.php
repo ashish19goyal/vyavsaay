@@ -60,7 +60,7 @@
             bill_id_filter.value=get_new_key();
             address.value="";
             $(bill_date).datepicker();
-            $(bill_date).val(get_my_date());
+            $(bill_date).val(vTime.date());
             
             bill_type.value=get_session_var('user_setting_Store');
             

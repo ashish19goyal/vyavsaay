@@ -91,7 +91,7 @@ function form270_header_ini()
 	});
 
 	$(bill_date).datepicker();
-	$(bill_date).val(get_my_date());
+	$(bill_date).val(vTime.date());
 
     $('#form270').formcontrol();
 }

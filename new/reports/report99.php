@@ -45,7 +45,7 @@
         $(start_date).datepicker();
         $(end_date).datepicker();
         start_date.value=get_my_past_date((get_my_time()-(7*86400000)));
-        end_date.value=get_my_date();
+        end_date.value=vTime.date();
         
 		var paginator=$('#report99').paginator({visible:false,container:$('#report99')});        
 

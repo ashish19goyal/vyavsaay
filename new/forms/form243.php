@@ -220,7 +220,7 @@
             var bt=get_session_var('title');
             var business_address=get_session_var('address');
             var business_phone=get_session_var('phone');
-            var today_date=get_my_date();
+            var today_date=vTime.date();
             var signature_text="<br><br><br><br>Received By:<br>";
 
             ////////////////filling in the content into the containers//////////////////////////

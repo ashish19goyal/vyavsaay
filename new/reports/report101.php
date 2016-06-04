@@ -38,7 +38,7 @@
         var master_form=document.getElementById('report101_master');
         var date_filter=master_form.elements['date'];
         $(date_filter).datepicker();
-        date_filter.value=get_my_date();
+        date_filter.value=vTime.date();
         $('#report101').formcontrol();
     }
 

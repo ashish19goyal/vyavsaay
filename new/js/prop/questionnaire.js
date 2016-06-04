@@ -130,7 +130,7 @@ function initialize_questionnaires(id,ques_name)
 		var ques_header=document.getElementById(ques_name+"_ques_header");
 		ques_header.elements[1].value=get_new_key();
 		ques_header.elements[2].value=get_account_name();
-		ques_header.elements[3].value=get_my_date();
+		ques_header.elements[3].value=vTime.date();
 	});
 }
 

@@ -165,7 +165,7 @@
                 });
 
                 $(date_filter).datepicker();
-                date_filter.value=get_my_date();
+                date_filter.value=vTime.date();
 
                 $(person_filter).add(date_filter).on('blur change',function () 
                 {

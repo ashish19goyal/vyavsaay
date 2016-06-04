@@ -113,7 +113,7 @@
             seal_filter.value='';
 
             $(date).datepicker();
-            date.value=get_my_date();
+            date.value=vTime.date();
 
             var manifest_id=$("#form321_link").attr('data_id');
             if(manifest_id==null)

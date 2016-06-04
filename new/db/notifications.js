@@ -137,7 +137,8 @@ function notifications_3()
 							{index:'detail'},
 							{index:'identified_by'},
 							{index:'due_date',upperbound:lead_due_time,lowerbound:lead_past_time},
-							{index:'status',exact:'open'}];
+							{index:'status',exact:'open'},
+							{index:'last_updated'}];
 
 	read_json_rows('',leads_data,function(leads)
 	{
@@ -912,7 +913,7 @@ function worker_4()
 */
 function worker_5()
 {
-	var today=get_raw_time(get_my_date());
+	var today=get_raw_time(vTime.date());
 
 	var columns=new Object();
 		columns.data_store='attendance';

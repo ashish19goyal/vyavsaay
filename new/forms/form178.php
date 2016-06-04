@@ -56,7 +56,7 @@
             
             status_filter.value='draft';
             supplier_filter.value='';
-            order_date.value=get_my_date();
+            order_date.value=vTime.date();
 
             var po_id=$("#form178_link").attr('data_id');
             if(po_id==null || po_id=='')

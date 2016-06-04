@@ -54,7 +54,7 @@
         });
 
         $(end_filter).datepicker();
-        end_filter.value=get_my_date();
+        end_filter.value=vTime.date();
         
         $('#report105').formcontrol();
     }

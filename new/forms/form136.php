@@ -100,10 +100,10 @@
             });
 
             $(bill_date).datepicker();
-            bill_date.value=get_my_date();
+            bill_date.value=vTime.date();
 
             $(entry_date).datepicker();
-            entry_date.value=get_my_date();
+            entry_date.value=vTime.date();
 
             supplier_filter.value='';
             $('#form136').formcontrol();

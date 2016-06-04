@@ -197,7 +197,7 @@ function form10_header_ini()
 	});
 
 	$(bill_date).datepicker();
-	bill_date.value=get_my_date();
+	bill_date.value=vTime.date();
 	$(due_date).datepicker();
 	due_date.value=get_my_past_date((get_my_time()+(3*86400000)));
 }
@@ -298,7 +298,7 @@ function form12_header_ini()
 	set_my_value_list(customers_data,customers_filter);
 
 	$(bill_date).datepicker();
-	$(bill_date).val(get_my_date());
+	$(bill_date).val(vTime.date());
 	customers_filter.value='';
 	$(customers_filter).focus();
 }
@@ -538,10 +538,10 @@ function form21_header_ini()
 	});
 
 	$(bill_date).datepicker();
-	$(bill_date).val(get_my_date());
+	$(bill_date).val(vTime.date());
 
 	$(entry_date).datepicker();
-	$(entry_date).val(get_my_date());
+	$(entry_date).val(vTime.date());
 }
 
 
@@ -670,7 +670,7 @@ function form24_header_ini()
 	});
 
 	$(order_date).datepicker();
-	order_date.value=get_my_date();
+	order_date.value=vTime.date();
 	set_static_filter('purchase_orders','status',status_filter);
 	status_filter.value='draft';
 	supplier_filter.value='';
@@ -1147,7 +1147,7 @@ function form69_header_ini()
 	}
 
 	$(order_date).datepicker();
-	order_date.value=get_my_date();
+	order_date.value=vTime.date();
 	set_static_filter('sale_orders','status',status_filter);
 	status_filter.value='pending';
 	customers_filter.value='';
@@ -1253,7 +1253,7 @@ function form72_header_ini()
 	});
 
 	$(bill_date).datepicker();
-	$(bill_date).val(get_my_date());
+	$(bill_date).val(vTime.date());
 	customers_filter.value='';
 }
 
@@ -1512,7 +1512,7 @@ function form82_header_ini()
 	});
 
 	$(bill_date).datepicker();
-	$(bill_date).val(get_my_date());
+	$(bill_date).val(vTime.date());
 	customers_filter.value='';
 	$(customers_filter).focus();
 }
@@ -1574,7 +1574,7 @@ function form86_header_ini()
 	});
 
 	$(date_filter).datepicker();
-	date_filter.value=get_my_date();
+	date_filter.value=vTime.date();
 };
 
 /**
@@ -1903,7 +1903,7 @@ function form91_header_ini()
 	});
 
 	$(bill_date).datepicker();
-	bill_date.value=get_my_date();
+	bill_date.value=vTime.date();
 }
 
 
@@ -2195,7 +2195,7 @@ function form112_header_ini()
 	set_my_value_list(customers_data,customers_filter);
 
 	$(sale_date).datepicker();
-	$(sale_date).val(get_my_date());
+	$(sale_date).val(vTime.date());
 	customers_filter.value='';
 
 	$(customers_filter).focus();
@@ -2290,7 +2290,7 @@ function form114_header_ini()
 	});
 
 	$(purchase_date).datepicker();
-	$(purchase_date).val(get_my_date());
+	$(purchase_date).val(vTime.date());
 	supplier_filter.value='';
 
 	$('#form114_body').html("");
@@ -2505,7 +2505,7 @@ function form118_header_ini()
 	});
 
 	$(bill_date).datepicker();
-	$(bill_date).val(get_my_date());
+	$(bill_date).val(vTime.date());
 	customers_filter.value='';
 	$(customers_filter).focus();
 }
@@ -2953,7 +2953,7 @@ function form119_header_ini()
 	});
 
 	$(bill_date).datepicker();
-	$(bill_date).val(get_my_date());
+	$(bill_date).val(vTime.date());
 	customers_filter.value='';
 	$(customers_filter).focus();
 }
@@ -3197,10 +3197,10 @@ function form122_header_ini()
 	});
 
 	$(bill_date).datepicker();
-	$(bill_date).val(get_my_date());
+	$(bill_date).val(vTime.date());
 
 	$(entry_date).datepicker();
-	$(entry_date).val(get_my_date());
+	$(entry_date).val(vTime.date());
 
 	supplier_filter.value='';
 	$(supplier_filter).focus();
@@ -3324,7 +3324,7 @@ function form128_header_ini()
 	$(add_button).off('click');
 	$(add_button).on('click',function(event)
 	{
-		modal47_action(get_my_date());
+		modal47_action(vTime.date());
 	});
 
 	set_my_filter(id_data,id_filter);
@@ -3389,7 +3389,7 @@ function form130_header_ini()
 	});
 
 	$(bill_date).datepicker();
-	$(bill_date).val(get_my_date());
+	$(bill_date).val(vTime.date());
 	customers_filter.value='';
 
 	$(customers_filter).focus();
@@ -3591,7 +3591,7 @@ function form132_header_ini()
 				var staff_data="<attendance>"+
 								"<id></id>"+
 								"<presence exact='yes'>present</presence>"+
-								"<date exact='yes'>"+get_raw_time(get_my_date())+"</date>"+
+								"<date exact='yes'>"+get_raw_time(vTime.date())+"</date>"+
 								"</attendance>";
 				fetch_requested_data('form132',staff_data,function(staffs)
 				{
@@ -4066,7 +4066,7 @@ function form153_header_ini()
 	});
 
 	$(date).datepicker();
-	date.value=get_my_date();
+	date.value=vTime.date();
 }
 
 /**
@@ -4312,7 +4312,7 @@ function form154_header_ini()
 	});
 
 	$(bill_date).datepicker();
-	$(bill_date).val(get_my_date());
+	$(bill_date).val(vTime.date());
 	customers_filter.value='';
 	$(customers_filter).focus();
 }
@@ -4454,7 +4454,7 @@ function form158_header_ini()
 	});
 
 	$(bill_date).datepicker();
-	$(bill_date).val(get_my_date());
+	$(bill_date).val(vTime.date());
 	$(supplier_filter).focus();
 }
 
@@ -5073,10 +5073,10 @@ function form192_header_ini()
 	});
 
 	$(bill_date).datepicker();
-	$(bill_date).val(get_my_date());
+	$(bill_date).val(vTime.date());
 
 	$(entry_date).datepicker();
-	$(entry_date).val(get_my_date());
+	$(entry_date).val(vTime.date());
 
 	supplier_filter.value='';
 	$(supplier_filter).focus();
@@ -5453,7 +5453,7 @@ function form209_header_ini()
 	});
 
 	$(date_filter).datepicker();
-	$(date_filter).val(get_my_date());
+	$(date_filter).val(vTime.date());
 
 	customer_filter.value="";
 
@@ -5665,7 +5665,7 @@ function form215_header_ini()
 	});
 
 	$(man_date).datepicker();
-	man_date.value=get_my_date();
+	man_date.value=vTime.date();
 	$('#form215_share').hide();
 }
 
@@ -5796,7 +5796,7 @@ function form222_header_ini()
 	});
 
 	$(order_date).datepicker();
-	order_date.value=get_my_date();
+	order_date.value=vTime.date();
 	set_static_filter('purchase_orders','status',status_filter);
 	status_filter.value='draft';
 	supplier_filter.value='';
@@ -6003,7 +6003,7 @@ function form231_header_ini()
 
 	$(date_filter).datepicker();
 	$(next_filter).datepicker();
-	date_filter.value=get_my_date();
+	date_filter.value=vTime.date();
 
 	var patient_data="<customers>"+
 					"<acc_name></acc_name>"+
@@ -6388,7 +6388,7 @@ function form248_header_ini()
 	lbh.value="";
 	weight.value="";
 	$(date).datepicker();
-	date.value=get_my_date();
+	date.value=vTime.date();
 
 	var bag_id=$("#form248_link").attr('data_id');
 	if(bag_id==null)
@@ -6482,7 +6482,7 @@ function form250_header_ini()
 	branch.value="";
 	weight.value="";
 	$(date).datepicker();
-	date.value=get_my_date();
+	date.value=vTime.date();
 
 	var mts_id=$("#form250_link").attr('data_id');
 	if(mts_id==null)
@@ -7161,7 +7161,7 @@ function form294_header_ini()
 	});
 
 	$(bill_date).datepicker();
-	$(bill_date).val(get_my_date());
+	$(bill_date).val(vTime.date());
 	customers_filter.value='';
 }
 
@@ -7227,9 +7227,9 @@ function form295_header_ini()
 	});
 
 	$(bill_date).datepicker();
-	bill_date.value=get_my_date();
+	bill_date.value=vTime.date();
 	$(entry_date).datepicker();
-	entry_date.value=get_my_date();
+	entry_date.value=vTime.date();
 
 	supplier_filter.value='';
 }
@@ -7324,7 +7324,7 @@ function form296_header_ini()
 	});
 
 	$(order_date).datepicker();
-	order_date.value=get_my_date();
+	order_date.value=vTime.date();
 	set_static_filter('purchase_orders','status',status_filter);
 	status_filter.value='draft';
 	supplier_filter.value='';

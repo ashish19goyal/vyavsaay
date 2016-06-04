@@ -158,7 +158,7 @@
                             rowsHTML+="<input type='number' step='any' form='form334_"+id+"' required>";
                         rowsHTML+="</td>";
                         rowsHTML+="<td data-th='Date'>";
-                            rowsHTML+="<input type='text' form='form334_"+id+"' value='"+get_my_date()+"'>";
+                            rowsHTML+="<input type='text' form='form334_"+id+"' value='"+vTime.date()+"'>";
                         rowsHTML+="</td>";
                         rowsHTML+="<td data-th='Action'>";
                             rowsHTML+="<input type='hidden' form='form334_"+id+"' value='"+id+"'>";

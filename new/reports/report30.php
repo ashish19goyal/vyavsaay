@@ -34,7 +34,7 @@ function report30_header_ini()
 	$(start_date).val(get_my_past_date((get_my_time()-86400000)));
 
 	$(end_date).datepicker();
-	$(end_date).val(get_my_date());
+	$(end_date).val(vTime.date());
 }
 function report30_ini()
 {

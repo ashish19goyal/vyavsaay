@@ -114,7 +114,7 @@
         });
 
         $(drs_date).datepicker();
-        drs_date.value=get_my_date();
+        drs_date.value=vTime.date();
 
         $('#form200').formcontrol();
         var paginator=$('#form200_body').paginator({visible:false});

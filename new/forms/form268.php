@@ -72,7 +72,7 @@ function form268_header_ini()
 	address_filter.value='';
 
 	$(challan_date).datepicker();
-	challan_date.value=get_my_date();
+	challan_date.value=vTime.date();
 
 	set_static_value_list_json('delivery_challans','type',type_filter);
 

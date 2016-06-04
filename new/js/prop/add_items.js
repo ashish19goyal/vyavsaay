@@ -9699,7 +9699,7 @@ function form228_add_item()
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' id='form228_add_customer_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Date' required>";
-				rowsHTML+="<input type='text' form='form228_"+id+"' value='"+get_my_date()+"'>";
+				rowsHTML+="<input type='text' form='form228_"+id+"' value='"+vTime.date()+"'>";
 				rowsHTML+="<input type='hidden' form='form228_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
@@ -9799,7 +9799,7 @@ function form229_add_item()
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' id='form229_add_customer_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Date' required>";
-				rowsHTML+="<input type='text' form='form229_"+id+"' value='"+get_my_date()+"'>";
+				rowsHTML+="<input type='text' form='form229_"+id+"' value='"+vTime.date()+"'>";
 				rowsHTML+="<input type='hidden' form='form229_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
@@ -9904,7 +9904,7 @@ function form230_add_item()
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' id='form230_add_customer_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Details'>";
-				rowsHTML+="Date: <input type='text' required readonly='readonly' form='form230_"+id+"' value='"+get_my_date()+"'>";
+				rowsHTML+="Date: <input type='text' required readonly='readonly' form='form230_"+id+"' value='"+vTime.date()+"'>";
 				rowsHTML+="<br><textarea placeholder='Notes' form='form230_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
@@ -11205,7 +11205,7 @@ function form273_add_item()
 				rowsHTML+="<textarea form='form273_"+id+"' class='dblclick_editable'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Date'>";
-				rowsHTML+="<input type='text' form='form273_"+id+"' readonly='readonly' required value='"+get_my_date()+"'>";
+				rowsHTML+="<input type='text' form='form273_"+id+"' readonly='readonly' required value='"+vTime.date()+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form273_"+id+"' value='"+id+"'>";
@@ -11318,7 +11318,7 @@ function form275_add_item()
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' id='form275_add_customer_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Details'>";
-				rowsHTML+="Date: <input type='text' required readonly='readonly' form='form275_"+id+"' value='"+get_my_date()+"'>";
+				rowsHTML+="Date: <input type='text' required readonly='readonly' form='form275_"+id+"' value='"+vTime.date()+"'>";
 				rowsHTML+="<br><textarea placeholder='Notes' form='form275_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";

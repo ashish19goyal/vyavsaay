@@ -3422,7 +3422,7 @@ function print_modal131(func,order_num,received_quantity,total_quantity,supplier
 	var font_size=get_session_var('print_size');
 	var business_address=get_session_var('address');
 	var business_phone=get_session_var('phone');
-	var today_date=get_my_date();
+	var today_date=vTime.date();
 	var signature_text="<br>"+bt+"<br><br><br>Auth. Signatory<br>";
 	
 	////////////////filling in the content into the containers//////////////////////////
@@ -3755,7 +3755,7 @@ function print_form292(id,func)
 	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='font-size:16px;'>Invoice</b></div><hr style='border: 1px solid #00f;'>";
 	
 	customer_info.innerHTML="<b>Customer: </b><br>"+customer_name+"<br>Account Name: "+domain;
-	business_info.innerHTML="Bill #: "+bill_no+"<br>Date: "+get_my_date()+"<br>ST #: "+st_no;
+	business_info.innerHTML="Bill #: "+bill_no+"<br>Date: "+vTime.date()+"<br>ST #: "+st_no;
 
 	jurisdiction.innerHTML="All disputes subjected to Delhi jurisdiction.<br>This is a computer generated invoice.";
 	business_contact.innerHTML="<hr style='border: 1px solid #00f;margin:5px;'>Address: "+business_address+"<br>Phone: "+business_phone+", E-Mail: "+business_email+"<br>PAN: "+pan+"<hr style='border: 1px solid #00f;margin:5px;'>";

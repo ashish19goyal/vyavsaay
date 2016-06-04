@@ -3910,7 +3910,7 @@ function form118_update_form()
 					var loyalty_points_xml="<loyalty_points>"+
 						"<id></id>"+
 						"<points>"+points+"</points>"+
-						"<date>"+get_my_date()+"</date>"+
+						"<date>"+vTime.date()+"</date>"+
 						"<last_updated>"+last_updated+"</last_updated>"+
 						"</loyalty_points>";
 					if(is_online())

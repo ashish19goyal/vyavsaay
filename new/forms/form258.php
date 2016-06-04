@@ -142,7 +142,7 @@
 
             $(date_filter).datepicker();
             $(valid_filter).datepicker();
-            date_filter.value=get_my_date();
+            date_filter.value=vTime.date();
             valid_filter.value="";
 
             set_static_value_list_json('quotation','type',type_filter);

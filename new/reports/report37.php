@@ -35,7 +35,7 @@
 	set_my_filter(supplier_data,supplier_filter);
 	
 	$(due_date).datepicker();
-	due_date.value=get_my_date();
+	due_date.value=vTime.date();
 }
 
 function report37_ini()

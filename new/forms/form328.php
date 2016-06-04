@@ -94,7 +94,7 @@
             });
 
             $(return_date).datepicker();
-            return_date.value=get_my_date();
+            return_date.value=vTime.date();
             customer_filter.value='';
             $('#form328').formcontrol();
         }

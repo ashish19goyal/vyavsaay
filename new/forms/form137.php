@@ -165,7 +165,7 @@
                         rowsHTML+="<input type='number' class='floatlabel' placeholder='Rs.' step='any' form='form137_rows_"+id+"' required>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Details'>";
-                        rowsHTML+="<input type='text' class='floatlabel' placeholder='Date' readonly='readonly' form='form137_rows_"+id+"' value='"+get_my_date()+"'>";
+                        rowsHTML+="<input type='text' class='floatlabel' placeholder='Date' readonly='readonly' form='form137_rows_"+id+"' value='"+vTime.date()+"'>";
                         rowsHTML+="<textarea class='floatlabel' placeholder='Notes' form='form137_rows_"+id+"'></textarea>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Status'>";

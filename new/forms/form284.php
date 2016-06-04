@@ -190,7 +190,7 @@ function form284_header_ini()
 	});
 
 	$(bill_date).datepicker();
-	$(bill_date).val(get_my_date());
+	$(bill_date).val(vTime.date());
 	customers_filter.value='';
 
 	var paginator=$('#form284_body').paginator({visible:false});

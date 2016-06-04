@@ -107,7 +107,7 @@
             set_my_value_json(order_num_data,order_num_filter);
 
             $(order_date).datepicker();
-            order_date.value=get_my_date();
+            order_date.value=vTime.date();
             set_static_filter_json('sale_orders','status',status_filter);
             status_filter.value='pending';
             customers_filter.value='';

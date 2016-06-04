@@ -47,13 +47,13 @@ function report43_header_ini()
 	p1_start_filter.value=get_my_past_date((get_my_time()-86400000));
 	
 	$(p1_end_filter).datepicker();
-	p1_end_filter.value=get_my_date();
+	p1_end_filter.value=vTime.date();
 
 	$(p2_start_filter).datepicker();
 	p2_start_filter.value=get_my_past_date((get_my_time()-86400000));
 	
 	$(p2_end_filter).datepicker();
-	p2_end_filter.value=get_my_date();
+	p2_end_filter.value=vTime.date();
 }
 
 function report43_ini()

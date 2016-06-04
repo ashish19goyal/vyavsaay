@@ -87,7 +87,7 @@
             $(from_filter).val(get_my_past_date((get_my_time()-7*86400000)));
 
             $(to_filter).datepicker();
-            $(to_filter).val(get_my_date());
+            $(to_filter).val(vTime.date());
             $('#report69').formcontrol();
         }
 

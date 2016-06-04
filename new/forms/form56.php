@@ -176,7 +176,7 @@
                 var date_filter=fields.elements[3];
 
                 $(date_filter).datepicker();
-                date_filter.value=get_my_date();
+                date_filter.value=vTime.date();
 
                 $(fields).on("submit", function(event)
                 {

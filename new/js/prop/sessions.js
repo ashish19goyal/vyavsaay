@@ -10,7 +10,7 @@ function ini_session(domain,user)
 }
 
 /**
- * 
+ *
  * @param username
  * @param session_data
  */
@@ -20,29 +20,32 @@ function set_session(session_data,func)
 	{
 		localStorage.setItem(field,session_data[field]);
 	}
-	
+
 	if(typeof func=='undefined')
 	{
 		var domain=get_session_var('domain');
 		window.location.assign(server_root+"/main.php?dn="+domain);
-	}	
-	else 
+	}
+	else
 	{
 		func();
 	}
 }
 
 /**
- * 
+ *
  */
 function set_session_var(name,value)
 {
 	localStorage.setItem(name,value);
 }
 
-
+function delete_session_var(name)
+{
+	localStorage.removeItem(name);
+}
 /**
- * 
+ *
  * @returns {Boolean}
  */
 function is_online()
@@ -56,7 +59,7 @@ function is_online()
 
 
 /**
- * 
+ *
  * @param ses_var
  * @returns
  */
@@ -110,7 +113,7 @@ function get_name()
 
 
 /**
- * 
+ *
  * @returns {Boolean}
  */
 function is_set_session()
@@ -123,7 +126,7 @@ function is_set_session()
 }
 
 /**
- * 
+ *
  * @returns {String}
  */
 function get_theme()
@@ -216,7 +219,7 @@ function get_worker_repeat()
 }
 
 /**
- * 
+ *
  */
 function delete_session()
 {
@@ -288,11 +291,11 @@ function set_session_online(func)
 							func();
 						};
 					}
-					else 
+					else
 					{
 						//console.log('5.6.1');
 						set_session_var('offline','online');
-						hide_menu_items();						
+						hide_menu_items();
 						func();
 					}
 				};
@@ -324,7 +327,7 @@ function set_session_online(func)
 		    func();
 		};
 	}
-	else 
+	else
 	{
 		//console.log('5.11');
 		set_session_var('offline','online');
@@ -382,9 +385,9 @@ function set_session_offline()
 };
 
 function clear_appcache()
-{	
+{
 	var appCache = window.applicationCache;
-	
+
 	appCache.update();
 
 	if (appCache.status == window.applicationCache.UPDATEREADY)

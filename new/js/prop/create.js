@@ -6175,7 +6175,7 @@ function form118_create_form()
 						"<customer>"+customer+"</customer>"+
 						"<points_addition>"+program.points_addition+"</points_addition>"+
 						"<points>"+points+"</points>"+
-						"<date>"+get_my_date()+"</date>"+
+						"<date>"+vTime.date()+"</date>"+
 						"<source>sale</source>"+
 						"<source_id>"+data_id+"</source_id>"+
 						"<last_updated>"+last_updated+"</last_updated>"+

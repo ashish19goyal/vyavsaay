@@ -146,7 +146,7 @@
 						rowsHTML+="<input type='text' form='form221_"+id+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Date'>";
-						rowsHTML+="<input type='text' form='form221_"+id+"' value='"+get_my_date()+"' required>";
+						rowsHTML+="<input type='text' form='form221_"+id+"' value='"+vTime.date()+"' required>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Hours'>";
 						rowsHTML+="<input type='text' form='form221_"+id+"' required>";

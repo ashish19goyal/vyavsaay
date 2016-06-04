@@ -66,7 +66,7 @@ function report89_header_ini()
 	$(start_filter).datepicker();
 	$(end_filter).datepicker();
 	start_filter.value=get_my_past_date(get_my_time()-7*86400000);
-	end_filter.value=get_my_date();
+	end_filter.value=vTime.date();
 
     $('#report89').formcontrol();
 }

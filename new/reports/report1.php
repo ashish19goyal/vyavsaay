@@ -43,7 +43,7 @@
 	});
 	
 	$(date_since).datepicker();
-	$(date_since).val(get_my_date());
+	$(date_since).val(vTime.date());
 }
 	
 	function report1_ini()

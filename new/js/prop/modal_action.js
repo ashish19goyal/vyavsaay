@@ -991,7 +991,7 @@ function modal15_action()
 	set_static_value_list('feedback','type',ftype);
 	set_static_value_list('feedback','rating',frating);
 	$(fdate).datepicker();
-	fdate.value=get_my_date();
+	fdate.value=vTime.date();
 
 	$(form).off("submit");
 	$(form).on("submit",function(event)
@@ -3894,7 +3894,7 @@ function modal39_action(schedule_date)
 	});
 
 	$(date_filter).datepicker();
-	date_filter.value=get_my_date();
+	date_filter.value=vTime.date();
 
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal39_attributes');
@@ -5882,7 +5882,7 @@ function modal106_action()
 	var type_filter=form.elements['type'];
 
 	$(date_filter).datepicker();
-	date_filter.value=get_my_date();
+	date_filter.value=vTime.date();
 
 	set_static_value_list_json('modal106','type',type_filter);
 	var account_data={data_store:'accounts',return_column:'acc_name'};
@@ -8805,7 +8805,7 @@ function modal134_action(lead_id,customer,lead_details)
 	$(date_filter).datepicker();
 	$(next_date_filter).datepicker();
 
-	date_filter.value=get_my_date();
+	date_filter.value=vTime.date();
 
 	set_static_value_list_json('followups','response',response_filter);
 
@@ -8898,7 +8898,6 @@ function modal135_action(type,master)
 		 					{index:'shortcut',value:''},
 		 					{index:'sync',value:'checked'},
 		 					{index:'last_updated',value:last_updated}]};
-
 			if(typeof master!='undefined' && master=='master')
 			{
 				server_create_master_all(data_json);
@@ -8906,6 +8905,7 @@ function modal135_action(type,master)
 			else
 			{
 				create_json(data_json);
+				set_session_var(name,value);
 	 		}
 		}
 		else
@@ -8916,6 +8916,7 @@ function modal135_action(type,master)
 	});
 
 	$("#modal135_link").click();
+	$('#modal135').formcontrol();
 }
 
 /**
@@ -10477,7 +10478,7 @@ function modal146_action(test_data_id,test_id,item)
 	});
 
 	$(fnext).datepicker();
-	fdate.value=get_my_date();
+	fdate.value=vTime.date();
 	set_static_filter_json('testing_results','response',fresult);
 
 	fpicture.addEventListener('change',function(evt)
@@ -10555,7 +10556,7 @@ function modal147_action(hiring_type,button)
 	var fquantity=form.elements[3];
 
 	$(fdate).datepicker();
-	fdate.value=get_my_date();
+	fdate.value=vTime.date();
 
 	var form_id=$(button).attr('form');
 	var master_form=document.getElementById(form_id);
@@ -11430,7 +11431,7 @@ function modal155_action()
 	var receipt_record_id="";
 
 	$(date_filter).datepicker();
-	date_filter.value=get_my_date();
+	date_filter.value=vTime.date();
 
 	var receipt_id_json={data_store:'user_preferences',count:1,
                         indexes:[{index:'id'},
@@ -12751,7 +12752,7 @@ function modal166_action(lead_id,supplier,lead_details)
 	$(date_filter).datepicker();
 	$(next_date_filter).datepicker();
 
-	date_filter.value=get_my_date();
+	date_filter.value=vTime.date();
 
 	set_static_value_list('followups','response',response_filter);
 
@@ -13357,7 +13358,7 @@ function modal172_action()
 	var type_filter=form.elements['type'];
 
 	$(date_filter).datepicker();
-	date_filter.value=get_my_date();
+	date_filter.value=vTime.date();
 
 	var accounts_data={data_store:'accounts',return_column:'acc_name'};
 	set_my_value_list_json(accounts_data,account_filter);
@@ -15603,7 +15604,7 @@ function modal197_action(data_id,letter_num,details)
 	{
 		event.preventDefault();
         var last_updated=get_my_time();
-		details=details+"\n"+get_my_date()+": "+notes.value;
+		details=details+"\n"+vTime.date()+": "+notes.value;
 
 		var data_json={data_store:'letters',
 	 				log:'yes',
@@ -15645,7 +15646,7 @@ function modal198_action(data_id,letter_num,details)
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-        details=details+"\n"+get_my_date()+": "+notes.value;
+        details=details+"\n"+vTime.date()+": "+notes.value;
         var due_date=get_raw_time(date.value);
         var last_updated=get_my_time();
         var res=response.value;
@@ -16480,7 +16481,7 @@ function modal208_action()
                                 data:[{index:'id',value:data_id},
                                     {index:'manifest_num',value:manifest_num},
                                     {index:'coloader',value:coloader},
-                                    {index:'date',value:get_raw_time(get_my_date())},
+                                    {index:'date',value:get_raw_time(vTime.date())},
                                     {index:'vendor',value:vendor},
                                     {index:'num_orders',value:data_array.length},
                                     {index:'last_updated',value:last_updated}],

@@ -58,7 +58,7 @@ function report67_header_ini()
 	$(from_filter).datepicker();
 	$(to_filter).datepicker();
 	from_filter.value=get_my_past_date((get_my_time()-86400000));
-	to_filter.value=get_my_date();
+	to_filter.value=vTime.date();
 }
 
 function report67_ini()

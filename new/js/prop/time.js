@@ -144,46 +144,48 @@ function get_my_time()
 	return seconds;
 }
 
-function get_my_date(raw_time)
-{
-	if(!raw_time)
-	{
-		var d=new Date();
-		var year = d.getFullYear();
-		var month =d.getMonth()+1;
-		if (month < 10) {
-		    month = "0" + month;
-		}
-		var date = d.getDate();
-		if (date < 10) {
-		    date = "0" + date;
-		}
+//this is to be replaced with vTime.date({time:raw_time});
+// function get_my_date(raw_time)
+// {
+// 	if(!raw_time)
+// 	{
+// 		var d=new Date();
+// 		var year = d.getFullYear();
+// 		var month =d.getMonth()+1;
+// 		if (month < 10) {
+// 		    month = "0" + month;
+// 		}
+// 		var date = d.getDate();
+// 		if (date < 10) {
+// 		    date = "0" + date;
+// 		}
+//
+// 		var time=date+"/"+month+"/"+year;
+// 		return time;
+// 	}
+// 	else if(raw_time=='')
+// 	{
+// 		return "";
+// 	}
+// 	else
+// 	{
+// 		var d= new Date(parseFloat(raw_time));
+// 		var year = d.getFullYear();
+// 		var month =d.getMonth()+1;
+// 		if (month < 10) {
+// 		    month = "0" + month;
+// 		}
+// 		var date = d.getDate();
+// 		if (date < 10) {
+// 		    date = "0" + date;
+// 		}
+//
+// 		var time=date+"/"+month+"/"+year;
+// 		return time;
+// 	}
+// }
 
-		var time=date+"/"+month+"/"+year;
-		return time;
-	}
-	else if(raw_time=='')
-	{
-		return "";
-	}
-	else
-	{
-		var d= new Date(parseFloat(raw_time));
-		var year = d.getFullYear();
-		var month =d.getMonth()+1;
-		if (month < 10) {
-		    month = "0" + month;
-		}
-		var date = d.getDate();
-		if (date < 10) {
-		    date = "0" + date;
-		}
-
-		var time=date+"/"+month+"/"+year;
-		return time;
-	}
-}
-
+//this is to be replaced with vTime.date({time:raw_time});
 function get_my_past_date(raw_time)
 {
 	if(raw_time=='' || raw_time=='0' || raw_time=='null' || raw_time=='undefined' || raw_time==null)

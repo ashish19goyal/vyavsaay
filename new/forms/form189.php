@@ -244,7 +244,7 @@
         ////////////////filling in the content into the containers//////////////////////////
 
         logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
-        plan_line.innerHTML="<div>Today's Schedule: "+get_my_date()+"</div>";	
+        plan_line.innerHTML="<div>Today's Schedule: "+vTime.date()+"</div>";	
         footer.innerHTML=business_address+"<br>Phone: "+business_phone+", Email: "+business_email+", Website: "+business_website;
         
         var plan_items_column={data_store:'production_plan_items',
@@ -255,7 +255,7 @@
                                           {index:'quantity'},
                                           {index:'brand'},
                                           {index:'status'},
-                                          {index:'from_time',lowerbound:get_raw_time(get_my_date()),upperbound:get_raw_time(get_my_date())+86400000},
+                                          {index:'from_time',lowerbound:get_raw_time(vTime.date()),upperbound:get_raw_time(vTime.date())+86400000},
                                           {index:'to_time'}]};
         read_json_rows('',plan_items_column,function(plan_items)
         {

@@ -64,7 +64,7 @@
             $(start_filter).datepicker();
             $(start_filter).val(get_my_past_date((get_my_time()-30*86400000)));
             $(end_filter).datepicker();
-            $(end_filter).val(get_my_date());
+            $(end_filter).val(vTime.date());
             $('#report60').formcontrol();
         }
 

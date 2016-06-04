@@ -58,7 +58,7 @@
             challan_id_filter.value=get_new_key();
             address.value="";
             $(challan_date).datepicker();
-            $(challan_date).val(get_my_date());
+            $(challan_date).val(vTime.date());
             
             var challan_id=$("#form323_link").attr('data_id');
             if(challan_id==null || challan_id=='')

@@ -67,7 +67,7 @@
             tin.value="";
             cst.value="";
             $(bill_date).datepicker();
-            $(bill_date).val(get_my_date());
+            $(bill_date).val(vTime.date());
             
             var type_data={data_store:'bill_types',return_column:'name',
                           indexes:[{index:'status',exact:'active'}]};

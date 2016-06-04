@@ -35,7 +35,7 @@
 	set_my_filter(product_data,product_filter);
 	
 	$(expiry_date).datepicker();
-	expiry_date.value=get_my_date();
+	expiry_date.value=vTime.date();
 }
 
 function report27_ini()
