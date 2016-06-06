@@ -40,7 +40,7 @@ var vUtil = function (options)
 		//parses a json string to get a js object/array
 		this.jsonParse = function(markers)
 		{
-			var markers_array={};
+			var markers_array=[];
 			if(markers!="" && markers!='undefined' && markers!=null)
 			{
 				try
