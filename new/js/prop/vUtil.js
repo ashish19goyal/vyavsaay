@@ -55,7 +55,7 @@ var vUtil = function (options)
 		}
 
     //extracts a single column from a multidimensional array
-    this.array_column=function (array, col_name)
+    this.arrayColumn=function (array, col_name)
     {
         var column = [];
         for(var i=0; i<array.length; i++)
@@ -64,6 +64,15 @@ var vUtil = function (options)
         }
         return column;
     };
+
+		//get an array with unique values only
+		this.arrayUnique = function(array)
+    {
+        return array.filter(function(el,index,arr)
+        {
+            return index===arr.indexOf(el);
+        });
+    }
 
     this.resize_picture=function (picture_tag,pic_width)
     {

@@ -2158,6 +2158,7 @@
 			<policy_holder index='yes' type="TEXT"></policy_holder>
 			<agent index='yes' type="TEXT"></agent>
 			<policy_num index='yes' type="TEXT"></policy_num>
+			<policy_name index='yes' type="TEXT"></policy_name>
 			<issuer index='yes' type="TEXT"></issuer>
 			<description index="no" type="TEXT"></description>
 			<premium index="no" type="DECIMAL(12,2)"></premium>
@@ -2166,7 +2167,7 @@
 			<issue_date index='yes' type="BIGINT"></issue_date>
 			<type index='yes' type="VARCHAR(30)"></type><!-- life/health/car -->
 			<issue_type index='yes' type="VARCHAR(10)"></issue_type><!-- new/renewed/ported -->
-			<status index='yes' type="VARCHAR(30)"></status><!-- active/expired/suspended -->
+			<status index='yes' type="VARCHAR(30)"></status><!-- active/expired -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</policies>
@@ -2202,4 +2203,13 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</policy_commissions>
+	<policy_types>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="TEXT"></name>
+			<issuer index='yes' type="TEXT"></issuer>
+			<description index='yes' type="TEXT"></description>
+			<type index='yes' type="VARCHAR(30)"></type><!-- life/health/car -->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</policy_types>
 </re_xml>

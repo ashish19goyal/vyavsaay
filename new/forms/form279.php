@@ -1,4 +1,4 @@
-<div id='form279' class='tab-pane portlet box green-meadow'>	   
+<div id='form279' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class='caption'>
             <div class='btn-group' id='form279_status' data-toggle='buttons'>
@@ -26,79 +26,79 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	   <form id='form279_header' autocomplete="off">
 			<fieldset>
 				<label><input type='text' placeholder="List" class='floatlabel' name='list'></label>
 				<label><input type='text' placeholder="Task" class='floatlabel' name='task'></label>
 				<label><input type='text' placeholder="Assignee" class='floatlabel' name='staff'></label>
-				<label><input type='submit' class='submit_hidden'></label>			
+				<label><input type='submit' class='submit_hidden'></label>
 			</fieldset>
 		</form>
 		<br>
-		
+
         <div id='form279_body' class='row'>
         </div>
     </div>
-	
+
 	<script>
 
 		function form279_header_ini()
-		{	
+		{
 			var form=document.getElementById('form279_header');
 			var list_filter=form.elements['list'];
 			var task_filter=form.elements['task'];
 			var assignee_filter=form.elements['staff'];
-			
+
 			$(form).off('submit');
 			$(form).on('submit',function(event)
 			{
 				event.preventDefault();
-				form279_ini('pending');
-			});	
-            
-            var list_data={data_store:'task_instances',return_column:'source_name'};
-            set_my_filter_json(list_data,list_filter);
-            
-            var task_data={data_store:'task_instances',return_column:'name'};
-            set_my_filter_json(task_data,task_filter);
+				form279_ini();
+			});
 
-            var assignee_data={data_store:'task_instances',return_column:'assignee'};
-            set_my_filter_json(assignee_data,assignee_filter);
-        }	
-		
+      var list_data={data_store:'task_instances',return_column:'source_name'};
+      set_my_filter_json(list_data,list_filter);
+
+      var task_data={data_store:'task_instances',return_column:'name'};
+      set_my_filter_json(task_data,task_filter);
+
+      var assignee_data={data_store:'task_instances',return_column:'assignee'};
+      set_my_filter_json(assignee_data,assignee_filter);
+  	}
+
 		function form279_ini(task_types)
 		{
 			var fid=$("#form279_link").attr('data_id');
 			if(fid==null)
-				fid="";	
-			
-            var status_filter='pending';
-            if(typeof task_types!='undefined' && task_types=='completed')
-            {
-                status_filter='completed';
-                $('#form279_status').find('label.completed').addClass('active');
-                $('#form279_status').find('label.pending').removeClass('active');
-            }
-            else
-            {
-                $('#form279_status').find('label.pending').addClass('active');
-                $('#form279_status').find('label.completed').removeClass('active');
-            }
+				fid="";
+
+      var status_filter='pending';
+      if(typeof task_types!='undefined' && task_types=='completed')
+      {
+          status_filter='completed';
+          $('#form279_status').find('label.completed').addClass('active');
+          $('#form279_status').find('label.pending').removeClass('active');
+      }
+      else
+      {
+          $('#form279_status').find('label.pending').addClass('active');
+          $('#form279_status').find('label.completed').removeClass('active');
+      }
 
 			var form=document.getElementById('form279_header');
 			var list_filter=form.elements['list'].value;
 			var task_filter=form.elements['task'].value;
 			var staff_filter=form.elements['staff'].value;
-			
+
 			show_loader();
-			$('#form279_body').html('');	
-			
+			$('#form279_body').html('');
+
 			var paginator=$('#form279_body').paginator();
-			
+
 			var columns=new Object();
 					columns.count=paginator.page_size();
 					columns.start_index=paginator.get_index();
@@ -117,9 +117,9 @@
                 results.forEach(function(result)
                 {
                     if(lists_array.indexOf(result.source_name)==-1)
-                        lists_array.push(result.source_name); 
+                        lists_array.push(result.source_name);
                 });
-                
+
                 lists_array.forEach(function(list_item)
                 {
                     var list_item_clean=list_item.replace(/ /g,"");
@@ -129,7 +129,7 @@
                                         "<div class='list-head-title-container'>"+
                                             "<a class='list-toggle-container' data-toggle='collapse' href='#form279_lists_heading_"+list_item_clean+"' aria-expanded='false'>"+
                                                 "<h3 class='list-title uppercase'>"+list_item+"</h3>"+
-                                            "</a>"+                                                             
+                                            "</a>"+
                                         "</div>"+
                                         "<a onclick=\"modal201_action('"+list_item+"');\"><div class='list-count pull-right yellow-crusta' style='padding:16px;'><i class='fa fa-plus'></i></div></a>"+
                                     "</div>"+
@@ -139,10 +139,10 @@
                                 "</div>"+
                             "</div>"+
                         "</div>";
-                    
+
                     $('#form279_body').append(list_html);
                 });
-                
+
 				results.forEach(function(result)
 				{
                     var list_item_clean=result.source_name.replace(/ /g,"");
@@ -165,7 +165,7 @@
                                         "<p>"+result.assignee+"</p>"+
                                     "</div>"+
                                 "</li>";
-                        
+
 					$('#form279_lists_'+list_item_clean).append(rowsHTML);
                 });
 
@@ -180,7 +180,7 @@
 				hide_loader();
 			});
 		};
-		
+
 		function form279_close_item(id,button)
 		{
 			if(is_update_access('form279'))
@@ -198,7 +198,7 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form279_delete_item(id,button)
 		{
 			if(is_delete_access('form279'))
@@ -216,25 +216,25 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form279_import_template()
 		{
 			var data_array=['id','task name','description','status','assignee','list name'];
 			my_array_to_csv(data_array);
 		};
-		
+
 		function form279_import_validate(data_array)
 		{
 			var validate_template_array=[{column:'task name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _,;:/\'()!@#$%-]+$')},
 									{column:'description',regex:new RegExp('^[0-9a-zA-Z _.,:/\'+@!$()-]+$')},
                                     {column:'list name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,:/\'+@!$()-]+$')},
-                                    {column:'assignee',regex:new RegExp('^[0-9a-zA-Z _.,:/\'+@!$()-]+$')},     
+                                    {column:'assignee',regex:new RegExp('^[0-9a-zA-Z _.,:/\'+@!$()-]+$')},
 									{column:'status',required:'yes',list:['pending','completed','cancelled']}];
-							
+
 			var error_array=validate_import_array(data_array,validate_template_array);
-			return error_array;					
+			return error_array;
 		}
-		
+
 		function form279_import(data_array,import_type)
 		{
 			var data_json={data_store:'task_instances',
@@ -245,7 +245,7 @@
 
 			var counter=1;
 			var last_updated=get_my_time();
-		
+
 			data_array.forEach(function(row)
 			{
 				counter+=1;
@@ -253,19 +253,19 @@
 				{
 					row.id=last_updated+counter;
 				}
-				
+
 				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'name',value:row['task name']},
 	 					{index:'description',value:row.description},
 	 					{index:'source_name',value:row['list name']},
 	 					{index:'status',value:row.status},
                         {index:'source',value:'to_do'},
-                        {index:'assignee',value:row.assignee},             
+                        {index:'assignee',value:row.assignee},
 	 					{index:'last_updated',value:last_updated}];
 
 				data_json.data.push(data_json_array);
 			});
-			
+
 			if(import_type=='create_new')
 			{
 				create_batch_json(data_json);

@@ -5,11 +5,11 @@
 			<label>SKU<br><input type='text' name='sku'></label>
 			<label>Item Name<br><input type='text' name='name'></label>
 			<label>Batch<br><input type='text' name='batch'></label>
-			<label>	
+			<label>
 				<input type='submit' value='Refresh' name='refresh' class='generic_icon'>
 				<input type='button' title='Print' name='print' class='print_icon'>
 				<input type='button' title='Download CSV' class='csv_icon' name='csv'>
-			</label>	
+			</label>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>
@@ -25,17 +25,17 @@
 		<tbody id='report93_body'>
 		</tbody>
 	</table>
-	
+
 	<script>
 
 function report93_header_ini()
-{	
+{
 	var form=document.getElementById('report93_header');
 	var brand_filter=form.elements['brand'];
 	var sku_filter=form.elements['sku'];
 	var name_filter=form.elements['name'];
 	var batch_filter=form.elements['batch'];
-	
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -47,7 +47,7 @@ function report93_header_ini()
 				"<make></make>"+
 				"</product_master>";
 	set_my_value_list(brand_data,brand_filter);
-	
+
 	var sku_data="<product_master>"+
 				"<name></name>"+
 				"</product_master>";
@@ -73,7 +73,7 @@ function report93_ini()
 	var sku=form.elements['sku'].value;
 	var item_name=form.elements['name'].value;
 	var batch=form.elements['batch'].value;
-	
+
 	$('#report93_body').html('');
 
 	var master_data="<product_master>" +
@@ -85,7 +85,7 @@ function report93_ini()
 	var results=[];
 	fetch_requested_data('report93',master_data,function(products)
 	{
-		products=array_unique(products);
+		products=vUtil.arrayUnique(products);
 		//console.log(products);
 		var sku_string="--";
 		for(var i in products)
@@ -114,7 +114,7 @@ function report93_ini()
 				}
 			}
 			var report93_count=product_instances.length;
-				
+
 			product_instances.forEach(function(product_instance)
 			{
 				report93_count+=1;
@@ -145,7 +145,7 @@ function report93_ini()
 						result_object['Storage']=area.name;
 						result_object['Expiry']=get_my_past_date(product_instance.expiry);
 						result_object['MRP']=product_instance.mrp;
-						
+
 						report93_count+=1;
 						get_store_inventory(area.name,area.item_name,area.batch,function(inventory)
 						{
@@ -158,7 +158,7 @@ function report93_ini()
 				});
 				report93_count-=1;
 			});
-			
+
 			var report93_complete=setInterval(function()
 			{
 				if(report93_count===0)
@@ -194,29 +194,29 @@ function report93_ini()
 								rowsHTML+=result['Quantity'];
 							rowsHTML+="</td>";
 						rowsHTML+="</tr>";
-			
+
 						$('#report93_body').append(rowsHTML);
-						
+
 					});
-				
+
 					var print_button=form.elements['print'];
 					print_tabular_report('report93','Stock Report',print_button);
-	
+
 					var csv_button=form.elements['csv'];
 					$(csv_button).off("click");
 					$(csv_button).on("click", function(event)
 					{
 						csv_download_report(results,'Stock Report');
 					});
-				
+
 					clearInterval(report93_complete);
-					
-					hide_loader();	  		   
+
+					hide_loader();
 				}
 			},1000);
 		});
 	});
 };
-	
+
 	</script>
 </div>

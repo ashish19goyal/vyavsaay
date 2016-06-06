@@ -1,7 +1,7 @@
 <div id='form348' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class='caption'>
-			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form348_add_item();'>Add <i class='fa fa-plus'></i></a>
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick='modal218_action();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
             <div class="btn-group">
@@ -16,6 +16,10 @@
                     <li>
                         <a id='form348_print'><i class='fa fa-print'></i> Print</a>
                     </li>
+										<li class="divider"> </li>
+                    <li>
+                        <a id='form348_upload' onclick=modal23_action(form348_import_template,form348_import,form348_import_validate);><i class='fa fa-upload'></i> Import</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -27,11 +31,10 @@
 			<thead>
 				<tr>
 					<form id='form348_header'></form>
-						<th><input type='text' placeholder="Name" class='floatlabel' name='name' form='form348_header'></th>
-						<th><input type='text' placeholder="Description" class='floatlabel' name='desc' form='form348_header'></th>
-						<th><input type='text' placeholder="Type" class='floatlabel' name='type' form='form348_header'></th>
-						<th><input type='text' placeholder="Code" class="floatlabel" name='code' form='form348_header'></th>
-						<th><input type='text' placeholder="Markers" class="floatlabel" name='markers' form='form348_header'></th>
+						<th><input type='text' placeholder="Commission #" class='floatlabel' name='comm' form='form348_header'></th>
+						<th><input type='text' placeholder="Policy" class='floatlabel' name='policy' form='form348_header'></th>
+						<th><input type='text' placeholder="Amount" readonly="readonly" name='amount' form='form348_header'></th>
+						<th><input type='text' placeholder="Status" class='floatlabel' name='status' form='form348_header'></th>
 						<th><input type='submit' form='form348_header' style='visibility: hidden;'></th>
 				</tr>
 			</thead>
@@ -45,9 +48,13 @@
 		function form348_header_ini()
 		{
 			var form=document.getElementById('form348_header');
-			var type_filter=form.elements['type'];
+			var policy_filter=form.elements['policy'];
+			var status_filter=form.elements['status'];
 
-			set_static_filter_json('tab_components','type',type_filter);
+			var policy_data={data_store:'policies',return_column:'policy_num'};
+			set_my_filter_json(policy_data,policy_filter);
+
+			set_static_filter_json('policy_commissions','status',status_filter);
 
 			$(form).off('submit');
 			$(form).on('submit',function(event)
@@ -64,11 +71,9 @@
 				fid="";
 
 			var form=document.getElementById('form348_header');
-			var name_filter=form.elements['name'].value;
-			var desc_filter=form.elements['desc'].value;
-			var type_filter=form.elements['type'].value;
-			var code_filter=form.elements['code'].value;
-			var marker_filter=form.elements['markers'].value;
+			var comm_filter=form.elements['comm'].value;
+			var policy_filter=form.elements['policy'].value;
+			var status_filter=form.elements['status'].value;
 
 			show_loader();
 			$('#form348_body').html('');
@@ -77,13 +82,12 @@
 
 			var new_columns={count:paginator.page_size(),
 											start_index:paginator.get_index(),
-											data_store:'tab_components',
+											data_store:'policy_commissions',
 											indexes:[{index:'id',value:fid},
-															{index:'name',value:name_filter},
-															{index:'description',value:desc_filter},
-															{index:'code',value:code_filter},
-															{index:'type',value:type_filter},
-															{index:'markers',value:marker_filter}]};
+															{index:'commission_num',value:comm_filter},
+															{index:'policy_num',value:policy_filter},
+															{index:'amount'},
+															{index:'status',value:status_filter}]};
 
 			read_json_rows('form348',new_columns,function(results)
 			{
@@ -91,20 +95,17 @@
 				{
 					var rowsHTML="<tr>";
 						rowsHTML+="<form id='form348_"+result.id+"'></form>";
-							rowsHTML+="<td data-th='Name'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form348_"+result.id+"' value='"+result.name+"'>";
+							rowsHTML+="<td data-th='Commission #'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form348_"+result.id+"' value='"+result.commission_num+"'>";
 							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Description'>";
-								rowsHTML+="<textarea class='dblclick_editable' readonly='readonly' form='form348_"+result.id+"'>"+result.description+"</textarea>";
+							rowsHTML+="<td data-th='Policy'>";
+								rowsHTML+="<textarea readonly='readonly' form='form348_"+result.id+"'>"+result.policy_num+"</textarea>";
 							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Type'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form348_"+result.id+"' value='"+result.type+"'>";
+							rowsHTML+="<td data-th='Amount'>";
+								rowsHTML+="<input type='number' readonly='readonly' form='form348_"+result.id+"' value='"+result.amount+"'>";
 							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Code'>";
-								rowsHTML+="<textarea class='dblclick_editable' readonly='readonly' form='form348_"+result.id+"'>"+result.code+"</textarea>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Markers'>";
-								rowsHTML+="<textarea class='dblclick_editable' readonly='readonly' form='form348_"+result.id+"'>"+result.markers+"</textarea>";
+							rowsHTML+="<td data-th='Status'>";
+								rowsHTML+="<input type='text' class='dblclick_editable' readonly='readonly' form='form348_"+result.id+"' value='"+result.status+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form348_"+result.id+"' value='"+result.id+"'>";
@@ -115,6 +116,9 @@
 
 					$('#form348_body').append(rowsHTML);
 					var fields=document.getElementById("form348_"+result.id);
+					var status_filter=fields.elements[3];
+
+					set_static_value_list('policy_commissions','status',status_filter);
 
 					$(fields).on("submit", function(event)
 					{
@@ -125,128 +129,23 @@
 
 				$('#form348').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Tab Components','form348',function (item){});
+				initialize_tabular_report_buttons(new_columns,'Policy Commissions','form348',function (item){});
 				hide_loader();
 			});
 		};
-
-		function form348_add_item()
-		{
-			if(is_create_access('form348'))
-			{
-				var id=get_new_key();
-				var rowsHTML="<tr>";
-					rowsHTML+="<form id='form348_"+id+"'></form>";
-						rowsHTML+="<td data-th='Name'>";
-							rowsHTML+="<input type='text' required form='form348_"+id+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Description'>";
-							rowsHTML+="<textarea class='dblclick_editable' form='form348_"+id+"'></textarea>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Type'>";
-							rowsHTML+="<input type='text' required class='dblclick_editable' form='form348_"+id+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Code'>";
-							rowsHTML+="<textarea class='dblclick_editable' required form='form348_"+id+"'></textarea>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Markers'>";
-							rowsHTML+="<textarea class='dblclick_editable' form='form348_"+id+"'></textarea>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Action'>";
-							rowsHTML+="<input type='hidden' form='form348_"+id+"' value='"+id+"'>";
-							rowsHTML+="<button type='submit' class='btn green' form='form348_"+id+"' title='Save' name='save'><i class='fa fa-save'></i></button>";
-							rowsHTML+="<button class='btn red' form='form348_"+id+"' title='Delete' name='delete' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
-						rowsHTML+="</td>";
-				rowsHTML+="</tr>";
-
-				$('#form348_body').prepend(rowsHTML);
-				var fields=document.getElementById("form348_"+id);
-				var name_filter=fields.elements[0];
-				var type_filter=fields.elements[2];
-
-				set_static_filter_json('tab_components','type',type_filter);
-
-				$(fields).on("submit", function(event)
-				{
-					event.preventDefault();
-					form348_create_item(fields);
-				});
-				$(name_filter).focus();
-				$('#form348').formcontrol();
-			}
-			else
-			{
-				$("#modal2_link").click();
-			}
-		}
-
-		function form348_create_item(form)
-		{
-			if(is_create_access('form348'))
-			{
-				var name=form.elements[0].value;
-				var description=form.elements[1].value;
-				var type=form.elements[2].value;
-				var code=form.elements[3].value;
-				var markers=form.elements[4].value;
-				var data_id=form.elements[5].value;
-				var del_button=form.elements['delete'];
-
-				var last_updated=get_my_time();
-
-				var data_json={data_store:'tab_components',
-	 				data:[{index:'id',value:data_id},
-	 					{index:'name',value:name,unique:'yes'},
-	 					{index:'description',value:description},
-	 					{index:'markers',value:markers},
-						{index:'type',value:type},
-						{index:'code',value:code},
-	 					{index:'last_updated',value:last_updated}]};
-
-				create_json(data_json);
-
-				$(form).readonly();
-
-				del_button.removeAttribute("onclick");
-				$(del_button).on('click',function(event)
-				{
-					form348_delete_item(del_button);
-				});
-
-				$(form).off('submit');
-				$(form).on('submit',function(event)
-				{
-					event.preventDefault();
-					form348_update_item(form);
-				});
-			}
-			else
-			{
-				$("#modal2_link").click();
-			}
-		}
 
 		function form348_update_item(form)
 		{
 			if(is_update_access('form348'))
 			{
-				var name=form.elements[0].value;
-				var description=form.elements[1].value;
-				var type=form.elements[2].value;
-				var code=form.elements[3].value;
-				var markers=form.elements[4].value;
-				var data_id=form.elements[5].value;
-				var del_button=form.elements['delete'];
+				var status=form.elements[3].value;
+				var data_id=form.elements[4].value;
 
 				var last_updated=get_my_time();
 
-				var data_json={data_store:'tab_components',
+				var data_json={data_store:'policy_commissions',
 	 				data:[{index:'id',value:data_id},
-	 					{index:'name',value:name,unique:'yes'},
-	 					{index:'description',value:description},
-	 					{index:'markers',value:markers},
-						{index:'type',value:type},
-						{index:'code',value:code},
+						{index:'status',value:status},
 	 					{index:'last_updated',value:last_updated}]};
 
 				update_json(data_json);
@@ -268,9 +167,8 @@
 					var form_id=$(button).attr('form');
 					var form=document.getElementById(form_id);
 
-					var name=form.elements[0].value;
-					var data_id=form.elements[5].value;
-					var data_json={data_store:'tab_components',
+					var data_id=form.elements[4].value;
+					var data_json={data_store:'policy_commissions',
  							data:[{index:'id',value:data_id}]};
 
 					delete_json(data_json);

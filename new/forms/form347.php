@@ -1,7 +1,11 @@
-<div id='form347' class='tab-pane portlet box green-meadow'>
+<div id='form347' class='tab-pane portlet box yellow-saffron'>
 	<div class="portlet-title">
 		<div class='caption'>
-			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form347_add_item();'>Add <i class='fa fa-plus'></i></a>
+			<div class='btn-group' id='form347_status' data-toggle='buttons'>
+					<label class='btn yellow-crusta current active' onclick=form347_ini('current');><input name='current' type='radio' class='toggle'>Active</label>
+					<label class='btn yellow-crusta expired' onclick=form347_ini('expired');><input type='radio' name='expired' class='toggle'>Expired</label>
+			</div>
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick='modal216_action();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
             <div class="btn-group">
@@ -16,273 +20,270 @@
                     <li>
                         <a id='form347_print'><i class='fa fa-print'></i> Print</a>
                     </li>
+                    <li class="divider"> </li>
+                    <li>
+                        <a id='form347_upload' onclick=modal23_action(form347_import_template,form347_import,form347_import_validate);><i class='fa fa-upload'></i> Import</a>
+                    </li>
                 </ul>
             </div>
         </div>
 	</div>
 
 	<div class="portlet-body">
-	<br>
-		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
-			<thead>
-				<tr>
-					<form id='form347_header'></form>
-						<th><input type='text' placeholder="Name" class='floatlabel' name='name' form='form347_header'></th>
-						<th><input type='text' placeholder="Description" class='floatlabel' name='desc' form='form347_header'></th>
-						<th><input type='text' placeholder="Type" class='floatlabel' name='type' form='form347_header'></th>
-						<th><input type='text' placeholder="Code" class="floatlabel" name='code' form='form347_header'></th>
-						<th><input type='text' placeholder="Markers" class="floatlabel" name='markers' form='form347_header'></th>
-						<th><input type='submit' form='form347_header' style='visibility: hidden;'></th>
-				</tr>
-			</thead>
-			<tbody id='form347_body'>
-			</tbody>
-		</table>
+		<form id='form347_header' autocomplete="off">
+			<fieldset>
+				<label><input type='text' placeholder="Policy #" class='floatlabel' name='num'></label>
+				<label><input type='text' placeholder="Policy Holder" class='floatlabel' name='holder'></label>
+				<label><input type='text' placeholder="Policy Provider" class='floatlabel' name='provider'></label>
+				<label><input type='text' placeholder="Agent" class='floatlabel' name='agent'></label>
+				<label><input type='submit' class='submit_hidden'></label>
+			</fieldset>
+		</form>
+		<br>
+		<div id='form347_body' class='row'>
+
+		</div>
 	</div>
 
-	<script>
+    <script>
+        function form347_header_ini()
+        {
+            var filter_fields=document.getElementById('form347_header');
+            var num_filter=filter_fields.elements['num'];
+            var owner_filter=filter_fields.elements['holder'];
+						var provider_filter=filter_fields.elements['provider'];
+						var agent_filter=filter_fields.elements['agent'];
 
-		function form347_header_ini()
-		{
-			var form=document.getElementById('form347_header');
-			var type_filter=form.elements['type'];
+            var num_data={data_store:'policies',return_column:'policy_num'};
+            set_my_filter_json(num_data,num_filter);
 
-			set_static_filter_json('tab_components','type',type_filter);
+            var owner_data={data_store:'customers',return_column:'acc_name'};
+            set_my_filter_json(owner_data,owner_filter);
 
-			$(form).off('submit');
-			$(form).on('submit',function(event)
-			{
-				event.preventDefault();
-				form347_ini();
-			});
-		}
+						var provider_data={data_store:'policy_types',return_column:'issuer'};
+            set_my_filter_json(provider_data,provider_filter);
 
-		function form347_ini()
-		{
-			var fid=$("#form347_link").attr('data_id');
-			if(fid==null)
-				fid="";
+						var agent_data={data_store:'staff',return_column:'acc_name'};
+            set_my_filter_json(agent_data,agent_filter);
 
-			var form=document.getElementById('form347_header');
-			var name_filter=form.elements['name'].value;
-			var desc_filter=form.elements['desc'].value;
-			var type_filter=form.elements['type'].value;
-			var code_filter=form.elements['code'].value;
-			var marker_filter=form.elements['markers'].value;
+						$(filter_fields).off('submit');
+            $(filter_fields).on('submit',function(event)
+            {
+                event.preventDefault();
+                form347_ini();
+            });
+        };
 
-			show_loader();
-			$('#form347_body').html('');
+        function form347_ini(policy_type)
+        {
+            show_loader();
+            var fid=$("#form347_link").attr('data_id');
+            if(fid==null)
+                fid="";
 
-			var paginator=$('#form347_body').paginator();
+            $('#form347_body').html("");
 
-			var new_columns={count:paginator.page_size(),
-											start_index:paginator.get_index(),
-											data_store:'tab_components',
-											indexes:[{index:'id',value:fid},
-															{index:'name',value:name_filter},
-															{index:'description',value:desc_filter},
-															{index:'code',value:code_filter},
-															{index:'type',value:type_filter},
-															{index:'markers',value:marker_filter}]};
+						var status_filter='active';
+			      if(typeof policy_type!='undefined' && policy_type=='expired')
+			      {
+			          status_filter='expired';
+			          $('#form347_status').find('label.expired').addClass('active');
+			          $('#form347_status').find('label.current').removeClass('active');
+			      }
+			      else
+			      {
+			          $('#form347_status').find('label.current').addClass('active');
+			          $('#form347_status').find('label.expired').removeClass('active');
+			      }
 
-			read_json_rows('form347',new_columns,function(results)
-			{
-				results.forEach(function(result)
-				{
-					var rowsHTML="<tr>";
-						rowsHTML+="<form id='form347_"+result.id+"'></form>";
-							rowsHTML+="<td data-th='Name'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form347_"+result.id+"' value='"+result.name+"'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Description'>";
-								rowsHTML+="<textarea class='dblclick_editable' readonly='readonly' form='form347_"+result.id+"'>"+result.description+"</textarea>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Type'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form347_"+result.id+"' value='"+result.type+"'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Code'>";
-								rowsHTML+="<textarea class='dblclick_editable' readonly='readonly' form='form347_"+result.id+"'>"+result.code+"</textarea>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Markers'>";
-								rowsHTML+="<textarea class='dblclick_editable' readonly='readonly' form='form347_"+result.id+"'>"+result.markers+"</textarea>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Action'>";
-								rowsHTML+="<input type='hidden' form='form347_"+result.id+"' value='"+result.id+"'>";
-								rowsHTML+="<button type='submit' class='btn green' form='form347_"+result.id+"' title='Save' name='save'><i class='fa fa-save'></i></button>";
-								rowsHTML+="<button class='btn red' form='form347_"+result.id+"' title='Delete' onclick='form347_delete_item($(this));' name='delete'><i class='fa fa-trash'></i></button>";
-							rowsHTML+="</td>";
-					rowsHTML+="</tr>";
+            var filter_fields=document.getElementById('form347_header');
+            var fnum=filter_fields.elements['num'].value;
+            var fholder=filter_fields.elements['holder'].value;
+						var fprovider=filter_fields.elements['provider'].value;
+						var fagent=filter_fields.elements['agent'].value;
 
-					$('#form347_body').append(rowsHTML);
-					var fields=document.getElementById("form347_"+result.id);
+            var paginator=$('#form347_body').paginator({'page_size':24});
 
-					$(fields).on("submit", function(event)
+						var columns={count:paginator.page_size(),
+												start_index:paginator.get_index(),
+												data_store:'policies',
+												indexes:[{index:'id',value:fid},
+																{index:'policy_num',value:fnum},
+																{index:'policy_holder',value:fholder},
+																{index:'agent',value:fagent},
+																{index:'status',exact:status_filter},
+																{index:'issuer',value:fprovider}]};
+
+            read_json_rows('form347',columns,function(results)
+            {
+                counter=0;
+                results.forEach(function(result)
+                {
+                    var clear_both="";
+										if((counter%4)==0)
+										{
+											clear_both="style='clear:both;'";
+										}
+										counter++;
+
+                    var rowsHTML="<div class='col-xs-6 col-sm-3 col-md-3' "+clear_both+">"+
+																		"<div class='thumbnail'>"+
+                                 	      "<div class='caption'>"+
+                                    	     "<form id='form347_"+result.id+"'>"+
+                                              "<a onclick=\"show_object('policies','"+result.policy_num+"');\"><textarea readonly='readonly' name='name' class='floatlabel' placeholder='Policy #' form='form347_"+result.id+"'>"+result.policy_num+"</textarea></a>"+
+                                              "<a onclick=\"show_object('customers','"+result.policy_holder+"');\"><textarea readonly='readonly' class='floatlabel' placeholder='Holder' name='holder' form='form347_"+result.id+"'>"+result.policy_holder+"</textarea></a>"+
+																							"<input type='text' readonly='readonly' class='floatlabel' placeholder='Provider' name='provider' form='form347_"+result.id+"' value='"+result.issuer+"'>"+
+																							"<input type='text' readonly='readonly' class='floatlabel' placeholder='Agent' name='agent' form='form347_"+result.id+"' value='"+result.agent+"'>"+
+	                                    	      "<input type='hidden' form='form347_"+result.id+"' name='id' value='"+result.id+"'>"+
+	           	    							        			"<button type='button' class='btn red' form='form347_"+result.id+"' name='delete' title='Delete' onclick='form347_delete_item($(this));'><i class='fa fa-2x fa-trash'></i></button>"+
+																						"</form>"+
+                                 	        "</div>"+
+                               	        "</div>"+
+                                    "</div>";
+
+                    $('#form347_body').append(rowsHTML);
+                });
+
+                $('#form347').formcontrol();
+								paginator.update_index(results.length);
+								initialize_tabular_report_buttons(columns,'Policies','form347',function (item){});
+                hide_loader();
+            });
+        };
+
+        function form347_delete_item(button)
+        {
+            if(is_delete_access('form347'))
+            {
+                modal115_action(function()
+                {
+                    var form_id=$(button).attr('form');
+                    var form=document.getElementById(form_id);
+
+                    var policy_num=form.elements['name'].value;
+                    var data_id=form.elements['id'].value;
+                    var last_updated=get_my_time();
+
+                    var data_json={data_store:'policies',
+													 				data:[{index:'id',value:data_id}],
+													 				log:'yes',
+													 				log_data:{title:'Deleted',notes:'Policy # '+policy_num,link_to:'form347'}};
+
+                    delete_json(data_json);
+                    $(button).parent().parent().parent().parent().remove();
+                });
+            }
+            else
+            {
+                $("#modal2_link").click();
+            }
+        }
+
+        function form347_import_template()
+        {
+            var data_array=['id','policy number','description','issuer','agent','premium','policy start date','policy end date','policy issue date','policy type','issue type','policy holder name','policy holder phone','policy holder email','policy holder address','policy holder birthdate','status'];
+            my_array_to_csv(data_array);
+        };
+
+        function form347_import_validate(data_array)
+        {
+            var validate_template_array=[{column:'policy number',required:'yes',regex:new RegExp('^[0-9a-zA-Z_., ()-]+$')},
+                                    {column:'policy holder name',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
+																		{column:'policy holder phone',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
+																		{column:'policy holder email',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
+																		{column:'policy holder address',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
+																		{column:'policy holder birthdate',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
+																		{column:'issuer',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
+																		{column:'agent',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
+																		{column:'premium',regex:new RegExp('^[0-9 .]+$')},
+																		{column:'policy start date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
+																		{column:'policy end date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
+																		{column:'policy issue date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
+																		{column:'policy type',list:['life','health','car']},
+																		{column:'issue type',list:['new','renewed','ported']},
+																		{column:'status',list:['active','expired']}];
+
+            var error_array=validate_import_array(data_array,validate_template_array);
+            return error_array;
+        }
+
+        function form347_import(data_array,import_type)
+        {
+          var data_json={data_store:'policies',
+		 					log:'yes',
+		 					data:[],
+		 					log_data:{title:'Policies',link_to:'form347'}};
+
+					var customer_json={data_store:'customers',
+							loader:'no',
+							data:[]};
+
+					var attribute_json={data_store:'attributes',
+									loader:'no',
+									data:[]};
+
+					var counter=1;
+					var last_updated=get_my_time();
+
+					data_array.forEach(function(row)
 					{
-						event.preventDefault();
-						form347_update_item(fields);
+						counter+=1;
+						if(import_type=='create_new')
+						{
+							row.id=last_updated+counter;
+						}
+
+						var holder=row['policy holder name']+" ("+row['policy holder phone']+")";
+						var data_json_array=[{index:'id',value:row.id},
+			 					{index:'policy_num',value:row['policy number'],unique:'yes'},
+			 					{index:'agent',value:row['agent']},
+								{index:'policy_holder',value:holder},
+								{index:'issuer',value:row['issuer']},
+								{index:'description',value:row['description']},
+								{index:'premium',value:row['premium']},
+								{index:'start_date',value:row['policy start date']},
+								{index:'end_date',value:row['policy end date']},
+								{index:'issue_date',value:row['policy issue date']},
+								{index:'type',value:row['policy type']},
+								{index:'issue_type',value:row['issue type']},
+								{index:'status',value:row['status']},
+			 					{index:'last_updated',value:last_updated}];
+
+						data_json.data.push(data_json_array);
+
+						var customer_json_array=[{index:'id',value:row.id},
+			 					{index:'name',value:row['policy holder name']},
+			 					{index:'phone',value:row['policy holder phone']},
+								{index:'email',value:row['policy holder email']},
+								{index:'address',value:row['policy holder address']},
+								{index:'acc_name',value:holder,unique:'yes'},
+			 					{index:'last_updated',value:last_updated}];
+
+						customer_json.data.push(customer_json_array);
+
+						var attribute_json_array=[{index:'id',value:row.id},
+			 					{index:'value',value:row['policy holder birthdate']},
+								{index:'attribute',value:'Birth Date'},
+								{index:'type',value:'customer'},
+								{index:'name',value:holder,unique:'yes'},
+			 					{index:'last_updated',value:last_updated}];
+
+						attribute_json.data.push(attribute_json_array);
 					});
-				});
 
-				$('#form347').formcontrol();
-				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Tab Components','form347',function (item){});
-				hide_loader();
-			});
-		};
+					if(import_type=='create_new')
+					{
+						create_batch_json(data_json);
+						create_batch_json(customer_json);
+						create_batch_json(attribute_json);
+					}
+					else
+					{
+						update_batch_json(data_json);
+						update_batch_json(customer_json);
+						update_batch_json(attribute_json);
+					}
+        };
 
-		function form347_add_item()
-		{
-			if(is_create_access('form347'))
-			{
-				var id=get_new_key();
-				var rowsHTML="<tr>";
-					rowsHTML+="<form id='form347_"+id+"'></form>";
-						rowsHTML+="<td data-th='Name'>";
-							rowsHTML+="<input type='text' required form='form347_"+id+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Description'>";
-							rowsHTML+="<textarea class='dblclick_editable' form='form347_"+id+"'></textarea>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Type'>";
-							rowsHTML+="<input type='text' required class='dblclick_editable' form='form347_"+id+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Code'>";
-							rowsHTML+="<textarea class='dblclick_editable' required form='form347_"+id+"'></textarea>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Markers'>";
-							rowsHTML+="<textarea class='dblclick_editable' form='form347_"+id+"'></textarea>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Action'>";
-							rowsHTML+="<input type='hidden' form='form347_"+id+"' value='"+id+"'>";
-							rowsHTML+="<button type='submit' class='btn green' form='form347_"+id+"' title='Save' name='save'><i class='fa fa-save'></i></button>";
-							rowsHTML+="<button class='btn red' form='form347_"+id+"' title='Delete' name='delete' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
-						rowsHTML+="</td>";
-				rowsHTML+="</tr>";
-
-				$('#form347_body').prepend(rowsHTML);
-				var fields=document.getElementById("form347_"+id);
-				var name_filter=fields.elements[0];
-				var type_filter=fields.elements[2];
-
-				set_static_filter_json('tab_components','type',type_filter);
-
-				$(fields).on("submit", function(event)
-				{
-					event.preventDefault();
-					form347_create_item(fields);
-				});
-				$(name_filter).focus();
-				$('#form347').formcontrol();
-			}
-			else
-			{
-				$("#modal2_link").click();
-			}
-		}
-
-		function form347_create_item(form)
-		{
-			if(is_create_access('form347'))
-			{
-				var name=form.elements[0].value;
-				var description=form.elements[1].value;
-				var type=form.elements[2].value;
-				var code=form.elements[3].value;
-				var markers=form.elements[4].value;
-				var data_id=form.elements[5].value;
-				var del_button=form.elements['delete'];
-
-				var last_updated=get_my_time();
-
-				var data_json={data_store:'tab_components',
-	 				data:[{index:'id',value:data_id},
-	 					{index:'name',value:name,unique:'yes'},
-	 					{index:'description',value:description},
-	 					{index:'markers',value:markers},
-						{index:'type',value:type},
-						{index:'code',value:code},
-	 					{index:'last_updated',value:last_updated}]};
-
-				create_json(data_json);
-
-				$(form).readonly();
-
-				del_button.removeAttribute("onclick");
-				$(del_button).on('click',function(event)
-				{
-					form347_delete_item(del_button);
-				});
-
-				$(form).off('submit');
-				$(form).on('submit',function(event)
-				{
-					event.preventDefault();
-					form347_update_item(form);
-				});
-			}
-			else
-			{
-				$("#modal2_link").click();
-			}
-		}
-
-		function form347_update_item(form)
-		{
-			if(is_update_access('form347'))
-			{
-				var name=form.elements[0].value;
-				var description=form.elements[1].value;
-				var type=form.elements[2].value;
-				var code=form.elements[3].value;
-				var markers=form.elements[4].value;
-				var data_id=form.elements[5].value;
-				var del_button=form.elements['delete'];
-
-				var last_updated=get_my_time();
-
-				var data_json={data_store:'tab_components',
-	 				data:[{index:'id',value:data_id},
-	 					{index:'name',value:name,unique:'yes'},
-	 					{index:'description',value:description},
-	 					{index:'markers',value:markers},
-						{index:'type',value:type},
-						{index:'code',value:code},
-	 					{index:'last_updated',value:last_updated}]};
-
-				update_json(data_json);
-
-				$(form).readonly();
-			}
-			else
-			{
-				$("#modal2_link").click();
-			}
-		}
-
-		function form347_delete_item(button)
-		{
-			if(is_delete_access('form347'))
-			{
-				modal115_action(function()
-				{
-					var form_id=$(button).attr('form');
-					var form=document.getElementById(form_id);
-
-					var name=form.elements[0].value;
-					var data_id=form.elements[5].value;
-					var data_json={data_store:'tab_components',
- 							data:[{index:'id',value:data_id}]};
-
-					delete_json(data_json);
-
-					$(button).parent().parent().remove();
-				});
-			}
-			else
-			{
-				$("#modal2_link").click();
-			}
-		}
-
-	</script>
+    </script>
 </div>

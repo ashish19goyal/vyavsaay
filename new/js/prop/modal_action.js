@@ -9131,9 +9131,9 @@ function modal138_action()
 					read_json_rows('',list_data,function(products)
 					{
 						hide_loader();
-						var orders_list=vUtil.array_column(orders,'order_num');
-						var skus_list=vUtil.array_column(skus,'channel_sku');
-						var products_list=vUtil.array_column(products,'name');
+						var orders_list=vUtil.arrayColumn(orders,'order_num');
+						var skus_list=vUtil.arrayColumn(skus,'channel_sku');
+						var products_list=vUtil.arrayColumn(products,'name');
 
 						var validate_template_array=[{column:'order_date',required:'yes',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
 												{column:'order_id',required:'yes',regex:new RegExp('^[0-9a-zA-Z-]+$'),anti_list:orders_list},

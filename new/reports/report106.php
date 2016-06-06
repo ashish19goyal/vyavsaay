@@ -1,4 +1,4 @@
-<div id='report106' class='tab-pane portlet box red-sunglo'>	   
+<div id='report106' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
         <div class='caption'>
             <a class='btn btn-circle grey btn-outline btn-sm' onclick='report106_ini();'>Refresh</a>
@@ -15,7 +15,7 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
 
 	<div class="portlet-body">
@@ -26,11 +26,11 @@
 
 	   <div class='horizontal-bar-chart' id='report106_chart'></div>
     </div>
-    
+
 	<script>
 
     function report106_header_ini()
-	{	
+	{
         var form=document.getElementById('report106_master');
         var start_date=form.elements['start'];
         var end_date=form.elements['end'];
@@ -46,23 +46,23 @@
         $(end_date).datepicker();
         start_date.value=get_my_past_date((get_my_time()-(7*86400000)));
         end_date.value=vTime.date();
-        
-		var paginator=$('#report106').paginator({visible:false,container:$('#report106')});        
+
+		var paginator=$('#report106').paginator({visible:false,container:$('#report106')});
 
         $('#report106').formcontrol();
 	}
 
-    function report106_ini()
+  function report106_ini()
 	{
 		show_loader();
         var form=document.getElementById('report106_master');
         var start_date=get_raw_time(form.elements['start'].value);
-        var end_date=get_raw_time(form.elements['end'].value)+8631061069;
+        var end_date=get_raw_time(form.elements['end'].value)+86400000;
 
-        var manifest_data={data_store:'manifests',			
+        var manifest_data={data_store:'manifests',
                     indexes:[{index:'id'},
                             {index:'manifest_num'},
-                            {index:'date',lowerbound:start_date,upperbound:end_date}]};		
+                            {index:'date',lowerbound:start_date,upperbound:end_date}]};
 
         read_json_rows('report106',manifest_data,function(orders)
         {
@@ -132,9 +132,9 @@
                         "gridPosition": "start"
                     }
             });
-            
+
             $('#report106_chart').find('div>div>a').hide();
-            
+
             var columns={data_store:'logistics_orders',
                     indexes:[{index:'id'},
                         {index:'awb_num'},
@@ -155,7 +155,7 @@
                         {index:'return_address2'},
                         {index:'return_address3'},
                         {index:'manifest_num',array:manifest_num_array}]};
-            			
+
             initialize_tabular_report_buttons(columns,'Manifest Report','report106',function (item)
             {
                 item['AWB No']=item.awb_num;
@@ -171,7 +171,7 @@
                 item['Consignee Address']=item.ship_to+", "+item.address1+", "+item.address2+", "+item.address3+", "+item.city;
                 item['Mobile No']=item.phone;
                 item['Product Name']=item.sku;
-                
+
                 delete item.id;
                 delete item.awb_num;
                 delete item.import_date;
@@ -193,7 +193,7 @@
                 delete item.manifest_num;
             });
 
-            hide_loader();		
+            hide_loader();
         });
 	}
 
