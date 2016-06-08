@@ -4586,6 +4586,7 @@ a.custom-tooltip:hover {
     background-size: 5px 5px;
   }
 }
+/*
 .about-title-wrapper {
   background: url(http://placehold.it/2800x716) no-repeat center 0;
 }
@@ -4604,6 +4605,7 @@ a.custom-tooltip:hover {
 .gallery-title-wrapper {
   background: url(http://placehold.it/3840x714) no-repeat center 0;
 }
+*/
 .page-title-wrapper {
   height: 358px;
   background-size: cover;
@@ -7148,12 +7150,12 @@ a.custom-tooltip:hover {
 .revo-slider .slide__image1 {
   width: 190px;
   height: 215px;
-  background-image: url("http://placehold.it/380x431");
+/*  background-image: url("http://placehold.it/380x431");*/
   background-size: 190px 215px;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   .revo-slider .slide__image1 {
-    background-image: url("http://placehold.it/760x862");
+    /*background-image: url("http://placehold.it/760x862");*/
     background-size: 190px 215px;
   }
 }
@@ -7220,12 +7222,12 @@ a.custom-tooltip:hover {
 .revo-slider .slide__image3 {
   width: 165px;
   height: 145px;
-  background-image: url("http://placehold.it/678x592");
+/*  background-image: url("http://placehold.it/678x592");*/
   background-size: 165px 145px;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   .revo-slider .slide__image3 {
-    background-image: url("http://placehold.it/1356x1184");
+    /*background-image: url("http://placehold.it/1356x1184");*/
     background-size: 165px 145px;
   }
 }
@@ -8649,7 +8651,7 @@ a.custom-tooltip:hover {
   .revo-slider .slide__image3 {
     width: 228px;
     height: 200px;
-    background-image: url("http://placehold.it/678x592");
+  /*  background-image: url("http://placehold.it/678x592");*/
     background-size: 228px 200px;
   }
   .price {
@@ -8660,7 +8662,7 @@ a.custom-tooltip:hover {
 }
 @media (min-width: 640px) and (max-width: 767px) and only screen and (-webkit-min-device-pixel-ratio: 2), (min-width: 640px) and (max-width: 767px) and only screen and (min--moz-device-pixel-ratio: 2), (min-width: 640px) and (max-width: 767px) and only screen and (-o-min-device-pixel-ratio: 2/1), (min-width: 640px) and (max-width: 767px) and only screen and (min-device-pixel-ratio: 2), (min-width: 640px) and (max-width: 767px) and only screen and (min-resolution: 192dpi), (min-width: 640px) and (max-width: 767px) and only screen and (min-resolution: 2dppx) {
   .revo-slider .slide__image3 {
-    background-image: url("http://placehold.it/1356x1184");
+    /*background-image: url("http://placehold.it/1356x1184");*/
     background-size: 228px 200px;
   }
 }
@@ -8870,8 +8872,8 @@ a.custom-tooltip:hover {
   .sidebar {
     padding-left: 40px;
   }
-  .sidebar--thin{ 
-    padding-left: 80px; 
+  .sidebar--thin{
+    padding-left: 80px;
   }
   .page-title {
     float: left;
@@ -9055,7 +9057,7 @@ a.custom-tooltip:hover {
   .revo-slider .slide__image3 {
     width: 265px;
     height: 232px;
-    background-image: url("http://placehold.it/678x592");
+  /*  background-image: url("http://placehold.it/678x592");*/
     background-size: 265px 232px;
   }
   .home-title-wrapper .page-title-main {
@@ -9117,7 +9119,7 @@ a.custom-tooltip:hover {
 }
 @media (min-width: 768px) and only screen and (-webkit-min-device-pixel-ratio: 2), (min-width: 768px) and only screen and (min--moz-device-pixel-ratio: 2), (min-width: 768px) and only screen and (-o-min-device-pixel-ratio: 2/1), (min-width: 768px) and only screen and (min-device-pixel-ratio: 2), (min-width: 768px) and only screen and (min-resolution: 192dpi), (min-width: 768px) and only screen and (min-resolution: 2dppx) {
   .revo-slider .slide__image3 {
-    background-image: url("http://placehold.it/1356x1184");
+/*    background-image: url("http://placehold.it/1356x1184");*/
     background-size: 265px 232px;
   }
 }
@@ -9380,7 +9382,7 @@ a.custom-tooltip:hover {
   .revo-slider .slide__image1 {
     width: 285px;
     height: 324px;
-    background-image: url("http://placehold.it/380x431");
+/*    background-image: url("http://placehold.it/380x431");*/
     background-size: 285px 324px;
   }
   .revo-slider .slide__image2 {
@@ -9396,7 +9398,7 @@ a.custom-tooltip:hover {
   .revo-slider .slide__image3 {
     width: 369px;
     height: 323px;
-    background-image: url("http://placehold.it/678x592");
+/*    background-image: url("http://placehold.it/678x592");*/
     background-size: 369px 323px;
   }
   .services--preview .service__title {
@@ -9418,7 +9420,7 @@ a.custom-tooltip:hover {
 }
 @media (min-width: 992px) and only screen and (-webkit-min-device-pixel-ratio: 2), (min-width: 992px) and only screen and (min--moz-device-pixel-ratio: 2), (min-width: 992px) and only screen and (-o-min-device-pixel-ratio: 2/1), (min-width: 992px) and only screen and (min-device-pixel-ratio: 2), (min-width: 992px) and only screen and (min-resolution: 192dpi), (min-width: 992px) and only screen and (min-resolution: 2dppx) {
   .revo-slider .slide__image1 {
-    background-image: url("http://placehold.it/760x862");
+/*    background-image: url("http://placehold.it/760x862");*/
     background-size: 285px 324px;
   }
 }
@@ -9430,7 +9432,7 @@ a.custom-tooltip:hover {
 }
 @media (min-width: 992px) and only screen and (-webkit-min-device-pixel-ratio: 2), (min-width: 992px) and only screen and (min--moz-device-pixel-ratio: 2), (min-width: 992px) and only screen and (-o-min-device-pixel-ratio: 2/1), (min-width: 992px) and only screen and (min-device-pixel-ratio: 2), (min-width: 992px) and only screen and (min-resolution: 192dpi), (min-width: 992px) and only screen and (min-resolution: 2dppx) {
   .revo-slider .slide__image3 {
-    background-image: url("http://placehold.it/1356x1184");
+/*    background-image: url("http://placehold.it/1356x1184");*/
     background-size: 369px 323px;
   }
 }
@@ -9630,7 +9632,7 @@ a.custom-tooltip:hover {
   .revo-slider .slide__image1 {
     width: 380px;
     height: 431px;
-    background-image: url("http://placehold.it/380x431");
+/*    background-image: url("http://placehold.it/380x431");*/
     background-repeat: no-repeat;
     background-size: 380px 431px;
   }
@@ -9659,7 +9661,7 @@ a.custom-tooltip:hover {
   .revo-slider .slide__image3 {
     width: 412px;
     height: 360px;
-    background-image: url("http://placehold.it/678x592");
+/*    background-image: url("http://placehold.it/678x592");*/
     background-size: 412px 360px;
   }
   .universe {
@@ -9683,7 +9685,7 @@ a.custom-tooltip:hover {
 }
 @media (min-width: 1200px) and only screen and (-webkit-min-device-pixel-ratio: 2), (min-width: 1200px) and only screen and (min--moz-device-pixel-ratio: 2), (min-width: 1200px) and only screen and (-o-min-device-pixel-ratio: 2/1), (min-width: 1200px) and only screen and (min-device-pixel-ratio: 2), (min-width: 1200px) and only screen and (min-resolution: 192dpi), (min-width: 1200px) and only screen and (min-resolution: 2dppx) {
   .revo-slider .slide__image1 {
-    background-image: url("http://placehold.it/760x862");
+/*    background-image: url("http://placehold.it/760x862");*/
     background-size: 380px 431px;
   }
 }
@@ -9695,7 +9697,7 @@ a.custom-tooltip:hover {
 }
 @media (min-width: 1200px) and only screen and (-webkit-min-device-pixel-ratio: 2), (min-width: 1200px) and only screen and (min--moz-device-pixel-ratio: 2), (min-width: 1200px) and only screen and (-o-min-device-pixel-ratio: 2/1), (min-width: 1200px) and only screen and (min-device-pixel-ratio: 2), (min-width: 1200px) and only screen and (min-resolution: 192dpi), (min-width: 1200px) and only screen and (min-resolution: 2dppx) {
   .revo-slider .slide__image3 {
-    background-image: url("http://placehold.it/1356x1184");
+    /*background-image: url("http://placehold.it/1356x1184");*/
     background-size: 412px 360px;
   }
 }
@@ -9720,7 +9722,7 @@ a.custom-tooltip:hover {
   .revo-slider .slide__image3 {
     width: 678px;
     height: 592px;
-    background-image: url("http://placehold.it/678x592");
+/*    background-image: url("http://placehold.it/678x592");*/
     background-size: 678px 592px;
   }
 }
@@ -9732,7 +9734,7 @@ a.custom-tooltip:hover {
 }
 @media (min-width: 1800px) and only screen and (-webkit-min-device-pixel-ratio: 2), (min-width: 1800px) and only screen and (min--moz-device-pixel-ratio: 2), (min-width: 1800px) and only screen and (-o-min-device-pixel-ratio: 2/1), (min-width: 1800px) and only screen and (min-device-pixel-ratio: 2), (min-width: 1800px) and only screen and (min-resolution: 192dpi), (min-width: 1800px) and only screen and (min-resolution: 2dppx) {
   .revo-slider .slide__image3 {
-    background-image: url("http://placehold.it/1356x1184");
+    /*background-image: url("http://placehold.it/1356x1184");*/
     background-size: 678px 592px;
   }
 }

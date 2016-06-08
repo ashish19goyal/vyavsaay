@@ -5,10 +5,10 @@ CACHE MANIFEST
 #Avoid using a continually-updating timestamp or random string to force updates every time.
 #The manifest is checked twice during an update,
 #once at the start and once after all cached files have been updated.
-#last updated on 4th Jan 2016 13:08pm
+#last updated on 6th June 2016 13:08pm
 #these files will be cached
 CACHE:
-/
+/new/
 case-studies.html
 footer.html
 header.html

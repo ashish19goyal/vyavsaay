@@ -16,6 +16,10 @@ function is_read_access(form_id)
 	var re=get_session_var('re');
 	var forms=get_session_var('forms');
 	var reports=get_session_var('reports');
+
+	if(vUtil.isBlank(re))
+		return false;
+
 	var found=re.search(form_id+"-");
 	var found_form=forms.search(form_id+"-");
 	var found_report=reports.search(form_id+"-");
@@ -130,30 +134,30 @@ function if_data_access_object(obj_type,obj_name,func_success,func_fail)
         case 'logistics_orders':index_name='awb_num';
                         break;
 	}
-	
+
 	var obj_data={data_store:obj_type,
 					access:{},
 					count:1,
 					indexes:[{index:index_name,exact:obj_name}]};
-	read_json_rows('',obj_data,function (objects) 
+	read_json_rows('',obj_data,function (objects)
 	{
         //console.log(obj_data);
 		if(objects.length>0)
 		{
 			func_success();
 		}
-		else 
+		else
 		{
 			func_fail();
 		}
-	});				
+	});
 }
 
 function if_data_read_access(tablename,func)
 {
 	var acc_name=get_account_name();
 	var user_roles=get_session_var('user_roles');
-	
+
 	var access_data="<data_access>" +
 			"<record_id></record_id>" +
 			"<criteria_field></criteria_field>" +
@@ -175,12 +179,12 @@ function if_data_read_access(tablename,func)
 			{
 				user_fields_array.push(data);
 			}
-			
+
 			if(data.user_type=='user' && data.user==acc_name)
 			{
 				final_array.push(data);
 			}
-			
+
 			if(data.user_type=='role')
 			{
 				var found=user_roles.indexOf(data.role);
@@ -198,7 +202,7 @@ function if_data_read_access(tablename,func)
 						"<id></id>"+
 						"<"+obj.user_field+">"+acc_name+"</"+obj.user_field+">"+
 						"</"+tablename+">";
-			fetch_requested_data('',access2_data,function (datas2) 
+			fetch_requested_data('',access2_data,function (datas2)
 			{
 				//console.log(datas2);
 				datas2.forEach(function(data2)
@@ -207,22 +211,22 @@ function if_data_read_access(tablename,func)
 					{
 						var newObject = jQuery.extend({}, obj);
 						newObject.record_id=data2.id;
-						
-						for (var key in data2) 
+
+						for (var key in data2)
 						{
 			        		newObject[key] = data2[key];
 				    	}
-				    	
+
 						final_array.push(newObject);
 					}
 					else if(obj.record_id==data2.id)
 					{
-						for (var key in data2) 
+						for (var key in data2)
 						{
 			       		obj[key] = data2[key];
 				    }
 						final_array.push(obj);
-					}					
+					}
 				});
 				count-=1;
 			});
@@ -235,6 +239,6 @@ function if_data_read_access(tablename,func)
   		   		clearInterval(final_array_timer);
 				func(final_array);
 			}
-    	},100);				
+    	},100);
 	});
 }
