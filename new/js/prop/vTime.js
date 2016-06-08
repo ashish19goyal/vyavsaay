@@ -7,21 +7,32 @@
 var vTime = function ()
 {
 	  //returns an unix timestamp in milliseconds
-    this.unix=function ()
+    this.unix=function (opts)
     {
+      var defs={date:'',inputFormat:'mm/dd/yyyy'};
+    	var sets = $.extend(defs, opts || {});
 
+      if(sets.date=='' || sets.date==null || sets.date==0 || sets.date=='null')
+      {
+        return '';
+      }
+
+      var d=new Date();
+      return d.getTime();
     };
 
     //returns date based on passed arguments
     this.date = function(opts)
     {
-      var defs={time:Date.now(),inputFormat:'unix',resultFormat:'mm/dd/yyyy'};
+      var defs={time:Date.now(),inputFormat:'unix',resultFormat:'mm/dd/yyyy',addDays:0};
     	var sets = $.extend(defs, opts || {});
 
       if(sets.time=='' || sets.time==null || sets.time=='null' || sets.time==0)
       {
         return "";
       }
+
+      sets.time=parseFloat(sets.time)+parseFloat(sets.addDays)*86400000;
 
       var inputDate=new Date(parseFloat(sets.time));
       var year = inputDate.getFullYear();
@@ -45,13 +56,15 @@ var vTime = function ()
     //returns date with time based on passed arguments
     this.datetime = function(opts)
     {
-      var defs={time:Date.now(),inputFormat:'unix',resultFormat:'mm/dd/yyyy hh:mm'};
+      var defs={time:Date.now(),inputFormat:'unix',resultFormat:'mm/dd/yyyy hh:mm',addDays:0};
     	var sets = $.extend(defs, opts || {});
 
       if(sets.time=='' || sets.time==null || sets.time=='null' || sets.time==0)
       {
         return "";
       }
+
+      sets.time=parseFloat(sets.time)+parseFloat(sets.addDays)*86400000;
 
       var inputDate=new Date(parseFloat(sets.time));
       var year = inputDate.getFullYear();
@@ -82,9 +95,8 @@ var vTime = function ()
     };
 
     //returns only time based on passed arguments
-    this.time = function()
+    this.time = function(opts)
     {
-
     };
 
     //return array of dates matching the criteria, for the last 100 years

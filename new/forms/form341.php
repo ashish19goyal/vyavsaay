@@ -101,7 +101,6 @@
 			{
 				results.forEach(function(result)
 				{
-					console.log(result);
 					var clients_array=vUtil.jsonParse(result.clients);
 
 					var rowsHTML="<tr>";

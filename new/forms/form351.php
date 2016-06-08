@@ -79,7 +79,7 @@
 					            indexes:[{index:'id',value:fid},
             									{index:'name',value:fname},
                               {index:'type',value:ftype},
-            									{index:'issuer',exact:fprovider},
+            									{index:'issuer',value:fprovider},
             									{index:'description',value:fdesc}]};
 
 			read_json_rows('form351',new_columns,function(results)

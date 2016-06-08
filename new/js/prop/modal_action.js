@@ -16947,3 +16947,50 @@ function modal215_action(item_name)
 
 	$("#modal215_link").click();
 }
+
+/**
+ * @modalNo 217
+ * @modal Add Policy Type
+ */
+function modal217_action(item_name)
+{
+	var form=document.getElementById('modal217_form');
+	var ftype=form.elements['type'];
+	var fissuer=form.elements['issuer'];
+
+	type_data={data_store:'policy_types',return_column:'type'};
+	set_my_filter_json(type_data,ftype);
+
+	issuer_data={data_store:'policy_types',return_column:'issuer'};
+	set_my_filter_json(issuer_data,fissuer);
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form351'))
+		{
+			var name=form.elements['name'].value;
+			var type=form.elements['type'].value;
+			var desc=form.elements['desc'].value;
+			var issuer=form.elements['issuer'].value;
+			var last_updated=get_my_time();
+
+			var adjust_json={data_store:'policy_types',
+			data:[{index:'id',value:get_new_key()},
+				{index:'name',value:name},
+				{index:'type',value:type},
+				{index:'description',value:desc},
+				{index:'issuer',value:issuer},
+				{index:'last_updated',value:last_updated}]};
+			create_json(adjust_json);
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
+		$(form).find(".close").click();
+	});
+
+	$("#modal217_link").click();
+}
