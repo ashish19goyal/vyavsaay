@@ -87,6 +87,9 @@
 															{index:'commission_num',value:comm_filter},
 															{index:'policy_num',value:policy_filter},
 															{index:'amount'},
+															{index:'policy_holder'},
+															{index:'issuer'},
+															{index:'agent'},
 															{index:'status',value:status_filter}]};
 
 			read_json_rows('form348',new_columns,function(results)
@@ -181,6 +184,52 @@
 				$("#modal2_link").click();
 			}
 		}
+
+		function form348_import_template()
+		{
+			var data_array=['id','commission number','policy number','commission amount','commission type','issuer','policy holder','agent','notes','issue date','status'];
+			my_array_to_csv(data_array);
+		};
+
+		function form348_import_validate(data_array)
+		{
+			var validate_template_array=[{column:'policy number',required:'yes',regex:new RegExp('^[0-9a-zA-Z_., ()-]+$')},
+															{column:'commission number',required:'yes',regex:new RegExp('^[0-9a-zA-Z_., ()-]+$')},
+															{column:'policy holder',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
+															{column:'issuer',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
+															{column:'agent',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
+															{column:'commission amount',regex:new RegExp('^[0-9 .]+$')},
+															{column:'issue date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
+															{column:'commission type',list:['customer','agent']},
+															{column:'status',list:['pending','received','rejected']}];
+
+			var error_array=validate_import_array(data_array,validate_template_array);
+			return error_array;
+		}
+
+		function form348_import(data_array,import_type)
+		{
+			var create_json={data_store:'policy_commissions',
+ 					log:'yes',
+ 					data:[],
+ 					log_data:{title:'commissions for policies',link_to:'form348'}};
+
+			var update_json={data_store:'policy_commissions',
+		 					log:'yes',
+		 					data:[],
+		 					log_data:{title:'commissions for policies',link_to:'form348'}};
+
+			var last_updated=get_my_time();
+
+			data_array.forEach(function(row)
+			{
+				create_json.data.push(create_json_array);
+			});
+
+			create_batch_json(create_json);
+			update_batch_json(update_json);
+		}
+	
 
 	</script>
 </div>

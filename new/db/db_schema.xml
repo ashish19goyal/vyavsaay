@@ -2182,7 +2182,6 @@
 			<amount index="no" type="DECIMAL(12,2)"></amount>
 			<request_date index='yes' type="BIGINT"></request_date>
 			<issue_date index='yes' type="BIGINT"></issue_date>
-			<policy_type index='yes' type="VARCHAR(30)"></policy_type><!-- life/health/car -->
 			<status index='yes' type="VARCHAR(30)"></status><!-- pending/approved/rejected -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
@@ -2197,7 +2196,6 @@
 			<notes index="no" type="TEXT"></notes>
 			<amount index="no" type="DECIMAL(12,2)"></amount>
 			<issue_date index='yes' type="BIGINT"></issue_date>
-			<policy_type index='yes' type="VARCHAR(30)"></policy_type><!-- life/health/car -->
 			<commission_type index='yes' type="VARCHAR(30)"></commission_type><!-- customer/agent/third party -->
 			<status index='yes' type="VARCHAR(30)"></status><!-- pending/received/rejected -->
 			<last_updated index='yes' type="BIGINT"></last_updated>

@@ -1,6 +1,11 @@
 <div id='form349' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class='caption'>
+			<div class='btn-group' id='form349_status' data-toggle='buttons'>
+					<label class='btn yellow-crusta pending active' onclick=form349_ini('pending');><input name='pending' type='radio' class='toggle'>Pending</label>
+					<label class='btn yellow-crusta approved' onclick=form349_ini('approved');><input type='radio' name='approved' class='toggle'>Approved</label>
+					<label class='btn yellow-crusta rejected' onclick=form349_ini('rejected');><input type='radio' name='rejected' class='toggle'>Rejected</label>
+			</div>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='modal219_action();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -31,10 +36,10 @@
 			<thead>
 				<tr>
 					<form id='form349_header'></form>
-						<th><input type='text' placeholder="Customer" class='floatlabel' name='customer' form='form349_header'></th>
-						<th><input type='text' placeholder="Details" class='floatlabel' name='detail' form='form349_header'></th>
-						<th><input type='text' placeholder="Follow up" readonly='readonly' name='date' form='form349_header'></th>
-						<th><input type='text' placeholder="Identified By/PoC" class='floatlabel' name='staff' form='form349_header'></th>
+						<th><input type='text' placeholder="Claim #" class='floatlabel' name='claim' form='form349_header'></th>
+						<th><input type='text' placeholder="Policy #" class='floatlabel' name='policy' form='form349_header'></th>
+						<th><input type='text' placeholder="Amount" readonly='readonly' form='form349_header'></th>
+						<th><input type='text' placeholder="Notes" readonly='readonly' form='form349_header'></th>
 						<th><input type='submit' form='form349_header' style='visibility: hidden;'></th>
 				</tr>
 			</thead>
@@ -47,14 +52,14 @@
 		function form349_header_ini()
 		{
 			var filter_fields=document.getElementById('form349_header');
-			var names_filter=filter_fields.elements['customer'];
-			var identified_filter=filter_fields.elements['staff'];
+			var claim_filter=filter_fields.elements['claim'];
+			var policy_filter=filter_fields.elements['policy'];
 
-			var names_data={data_store:'customers',return_column:'acc_name'};
-			set_my_filter_json(names_data,names_filter);
+			var claim_data={data_store:'policy_claims',return_column:'claim_num'};
+			set_my_filter_json(claim_data,claim_filter);
 
-			var identified_data={data_store:'staff',return_column:'acc_name'};
-			set_my_filter_json(identified_data,identified_filter);
+			var policy_data={data_store:'policies',return_column:'policy_num'};
+			set_my_filter_json(policy_data,policy_filter);
 
 			$(filter_fields).off('submit');
 			$(filter_fields).on('submit',function(event)
@@ -64,7 +69,7 @@
 			});
 		}
 
-		function form349_ini()
+		function form349_ini(claim_type)
 		{
 			show_loader();
 			var fid=$("#form349_link").attr('data_id');
@@ -73,59 +78,78 @@
 
 			$('#form349_body').html("");
 
+			var status_filter='pending';
+			if(typeof claim_type!='undefined' && claim_type=='approved')
+			{
+					status_filter='approved';
+					$('#form349_status').find('label.approved').addClass('active');
+					$('#form349_status').find('label.pending').removeClass('active');
+					$('#form349_status').find('label.rejected').removeClass('active');
+			}
+			else if(typeof claim_type!='undefined' && claim_type=='rejected')
+			{
+					status_filter='rejected';
+					$('#form349_status').find('label.rejected').addClass('active');
+					$('#form349_status').find('label.pending').removeClass('active');
+					$('#form349_status').find('label.approved').removeClass('active');
+			}
+			else
+			{
+					$('#form349_status').find('label.pending').addClass('active');
+					$('#form349_status').find('label.approved').removeClass('active');
+					$('#form349_status').find('label.rejected').removeClass('active');
+			}
+
 			var filter_fields=document.getElementById('form349_header');
-			var fname=filter_fields.elements['customer'].value;
-			var fdetail=filter_fields.elements['detail'].value;
-			var fidentity=filter_fields.elements['staff'].value;
+			var fclaim=filter_fields.elements['claim'].value;
+			var fpolicy=filter_fields.elements['policy'].value;
 
 			var paginator=$('#form349_body').paginator();
 
-			var new_columns=new Object();
-					new_columns.count=paginator.page_size();
-					new_columns.start_index=paginator.get_index();
-					new_columns.data_store='sale_leads';
-					new_columns.indexes=[{index:'id',value:fid},
-									{index:'customer',value:fname},
-									{index:'detail',value:fdetail},
-									{index:'status'},
-									{index:'due_date'},
-									{index:'identified_by',value:fidentity}];
+			var new_columns={count:paginator.page_size(),
+											start_index:paginator.get_index(),
+											data_store:'policy_claims',
+											indexes:[{index:'id',value:fid},
+															{index:'claim_num',value:fclaim},
+															{index:'policy_num',value:fpolicy},
+															{index:'policy_holder'},
+															{index:'amount'},
+															{index:'notes'},
+															{index:'agent'},
+															{index:'status',exact:status_filter}]};
 
 			read_json_rows('form349',new_columns,function(results)
 			{
 				results.forEach(function(result)
 				{
-					var row_class="";
-					if(result.status=='closed')
+					var notes_array=vUtil.jsonParse(result.notes);
+					var notes="";
+					notes_array.forEach(function(note)
 					{
-						row_class="class='active'";
-					}
-					var rowsHTML="<tr "+row_class+">";
+						notes+=vUtil.date({time:note.date})+": "+note.detail+"\n";
+					});
+					var rowsHTML="<tr>";
 						rowsHTML+="<form id='form349_"+result.id+"'></form>";
-							rowsHTML+="<td data-th='Customer'>";
-								rowsHTML+="<a onclick=\"show_object('customers','"+result.customer+"');\"><textarea readonly='readonly' form='form349_"+result.id+"' name='customer'>"+result.customer+"</textarea></a>";
+							rowsHTML+="<td data-th='Claim #'>";
+								rowsHTML+="<a onclick=\"show_object('policy_claims','"+result.claim_num+"');\"><textarea readonly='readonly' form='form349_"+result.id+"' name='claim'>"+result.claim_num+"</textarea></a>";
 							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Details'>";
-								rowsHTML+="<textarea readonly='readonly' form='form349_"+result.id+"' class='dblclick_editable' name='detail'>"+result.detail+"</textarea>";
+							rowsHTML+="<td data-th='Policy #'>";
+								rowsHTML+="<a onclick=\"show_object('policies','"+result.policy_num+"');\"><textarea readonly='readonly' form='form349_"+result.id+"' name='policy'>"+result.policy_num+"</textarea></a>";
 							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Follow up'>";
-								rowsHTML+="<input type='text' readonly='readonly' placeholder='Next Due Date' form='form349_"+result.id+"' name='date' class='floatlabel dblclick_editable' value='"+get_my_past_date(result.due_date)+"'>";
-							if(result.status!='closed')
+							rowsHTML+="<td data-th='Amount'>";
+								rowsHTML+="<input type='number' readonly='readonly' placeholder='Rs. ' form='form349_"+result.id+"' name='amount' class='floatlabel' step='any' value='"+result.amount+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Notes'>";
+								rowsHTML+="<textarea readonly='readonly' form='form349_"+result.id+"'>"+notes+"</textarea>";
+							if(result.status=='pending')
 							{
-								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form349_"+result.id+"' name='followup'>Follow up</button>";
+								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form349_"+result.id+"' name='note'>Follow up</button>";
 							}
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Identified By/PoC'>";
-							if(result.identified_by=="")
-								rowsHTML+="<input type='text' readonly='readonly' form='form349_"+result.id+"' name='staff' class='dblclick_editable' value='"+result.identified_by+"'>";
-							else
-								rowsHTML+="<input type='text' readonly='readonly' form='form349_"+result.id+"' name='staff' value='"+result.identified_by+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form349_"+result.id+"' name='id' value='"+result.id+"'>";
-								rowsHTML+="<button type='submit' class='btn green' form='form349_"+result.id+"' title='Save' name='save'><i class='fa fa-save'></i></button>";
 								rowsHTML+="<button type='button' class='btn red' form='form349_"+result.id+"' title='Delete' name='delete' onclick='form349_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-							if(result.status!='closed')
+							if(result.status=='pending')
 							{
 								rowsHTML+="<button type='button' class='btn yellow' form='form349_"+result.id+"' onclick=\"modal153_action(this,'"+result.id+"');\">Close Lead</button>";
 							}
@@ -134,221 +158,50 @@
 
 					$('#form349_body').append(rowsHTML);
 					var fields=document.getElementById("form349_"+result.id);
-					var identified_filter=fields.elements['staff'];
-					var followup_button=fields.elements['followup'];
 
-					$(followup_button).on('click',function ()
+					var note_button=fields.elements['note'];
+					var approve_button=fields.elements['approve'];
+					var reject_button=fields.elements['reject'];
+
+					$(note_button).on('click',function ()
 					{
-						modal134_action(result.id,result.customer,result.detail);
+						modal220_action(result.id);
 					});
 
-					var identified_data={data_store:'staff',return_column:'acc_name'};
-					set_my_value_list_json(identified_data,identified_filter);
-
-					$(fields).on("submit", function(event)
+					$(approve_button).on('click',function()
 					{
-						event.preventDefault();
-						form349_update_item(fields);
+						form349_update_item(fields,'approved');
 					});
+
+					$(reject_button).on('click',function()
+					{
+						form349_update_item(fields,'rejected');
+					});
+
 				});
 
 				$('#form349').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Sale Leads','form349',function (item){});
+				initialize_tabular_report_buttons(new_columns,'Policy Claims','form349',function (item){});
 				hide_loader();
 			});
 		};
 
-		function form349_add_item()
-		{
-			if(is_create_access('form349'))
-			{
-				var id=get_new_key();
-				var rowsHTML="<tr>";
-						rowsHTML+="<form id='form349_"+id+"'></form>";
-							rowsHTML+="<td data-th='Customer'>";
-								rowsHTML+="<input type='text' form='form349_"+id+"' name='customer'>";
-								rowsHTML+="<a title='Add new customer profile' class='btn btn-circle btn-icon-only grey-cascade' id='form349_add_customer_"+id+"'><i class='fa fa-plus'></i></a>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Details'>";
-								rowsHTML+="<textarea form='form349_"+id+"' class='dblclick_editable' name='detail'></textarea>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Follow up'>";
-								rowsHTML+="<input type='text' placeholder='Next Due Date' form='form349_"+id+"' name='date' class='floatlabel dblclick_editable'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Identified By/PoC'>";
-								rowsHTML+="<input type='text' form='form349_"+id+"' name='staff' class='dblclick_editable'>";
-								rowsHTML+="<a title='Add new staff profile' class='btn btn-circle btn-icon-only grey-cascade' id='form349_add_staff_"+id+"'><i class='fa fa-plus'></i></a>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Action'>";
-								rowsHTML+="<input type='hidden' form='form349_"+id+"' name='id' value='"+id+"'>";
-								rowsHTML+="<button type='submit' class='btn green' form='form349_"+id+"' title='Save' name='save'><i class='fa fa-save'></i></button>";
-								rowsHTML+="<button type='button' class='btn red' form='form349_"+id+"' title='Delete' name='delete' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
-							rowsHTML+="</td>";
-					rowsHTML+="</tr>";
-
-				$('#form349_body').prepend(rowsHTML);
-
-				var fields=document.getElementById("form349_"+id);
-				var customer_filter=fields.elements[0];
-				var detail_filter=fields.elements[1];
-				var due_filter=fields.elements[2];
-				var by_filter=fields.elements[3];
-
-				$(fields).on("submit", function(event)
-				{
-					event.preventDefault();
-					form349_create_item(fields);
-				});
-
-				var customer_data={data_store:'customers',return_column:'acc_name'};
-				set_my_value_list_json(customer_data,customer_filter,function ()
-				{
-					$(customer_filter).focus();
-				});
-
-				$(due_filter).datepicker();
-				due_filter.value=get_my_past_date(parseFloat(get_my_time())+86400000);
-
-				var staff_data={data_store:'staff',return_column:'acc_name'};
-				set_my_value_list_json(staff_data,by_filter);
-
-				var add_customer=document.getElementById('form349_add_customer_'+id);
-				$(add_customer).on('click',function()
-				{
-					modal11_action(function()
-					{
-						set_my_value_list_json(customer_data,customer_filter,function ()
-						{
-							$(customer_filter).focus();
-						});
-					});
-				});
-
-				var add_staff=document.getElementById('form349_add_staff_'+id);
-				$(add_staff).on('click',function()
-				{
-					modal16_action(function()
-					{
-						set_my_value_list_json(staff_data,by_filter);
-					});
-				});
-				$('#form349').formcontrol();
-			}
-			else
-			{
-				$("#modal2_link").click();
-			}
-		}
-
-		function form349_create_item(form)
-		{
-			if(is_create_access('form349'))
-			{
-				var customer=form.elements['customer'].value;
-				var detail=form.elements['detail'].value;
-				var due_date=get_raw_time(form.elements['date'].value);
-				var identified_by=form.elements['staff'].value;
-				var data_id=form.elements['id'].value;
-				var last_updated=get_my_time();
-
-				var data_json={data_store:'sale_leads',
-	 				log:'yes',
-	 				data:[{index:'id',value:data_id},
-	 					{index:'customer',value:customer},
-	 					{index:'detail',value:detail},
-	 					{index:'due_date',value:due_date},
-	 					{index:'status',value:'open'},
-	 					{index:'identified_by',value:identified_by},
-	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Added',notes:'Sale lead for customer '+customer,link_to:'form349'}};
-				create_json(data_json);
-
-				$(form).readonly();
-
-				var customer_data={data_store:'customers',
-										count:1,
-										indexes:[{index:'id'},
-													{index:'name'},
-													{index:'phone'},
-													{index:'email'},
-													{index:'acc_name',exact:customer}]};
-
-				read_json_rows('',customer_data,function(customers)
-				{
-					var customer_name=customers[0].name;
-					var customer_phone=customers[0].phone;
-					var business_title=get_session_var('title');
-					var sms_content=get_session_var('sms_content');
-					var message=sms_content.replace(/customer_name/g,customer_name);
-					message=message.replace(/business_title/g,business_title);
-
-					send_sms(customer_phone,message,'transaction');
-					///////////////////////////////////////////////////////////////////////////////
-
-					var nl_name=get_session_var('default_newsletter');
-					var nl_id_xml={data_store:'newsletter',return_column:'id',
-										indexes:[{index:'name',exact:nl_name}]};
-					read_json_single_column(nl_id_xml,function(nls)
-					{
-						if(nls.length>0)
-						{
-							var subject=nl_name;
-							var nl_id=nls[0];
-							print_newsletter(nl_name,nl_id,'mail',function(container)
-							{
-								var message=container.innerHTML;
-								var from=get_session_var('email');
-								var to_array=[{"name":customers[0].name,"email":customers[0].email,"customer_id":customers[0].id}];
-								var to=JSON.stringify(to_array);
-								send_email(to,from,business_title,subject,message,function(){});
-							});
-						}
-					});
-				});
-
-				var del_button=form.elements['delete'];
-				del_button.removeAttribute("onclick");
-				$(del_button).on('click',function(event)
-				{
-					form349_delete_item(del_button);
-				});
-
-				$(form).off('submit');
-				$(form).on('submit',function(event)
-				{
-					event.preventDefault();
-					form349_update_item(form);
-				});
-			}
-			else
-			{
-				$("#modal2_link").click();
-			}
-		}
-
-		function form349_update_item(form)
+		function form349_update_item(form,status)
 		{
 			if(is_update_access('form349'))
 			{
-				var customer=form.elements['customer'].value;
-				var detail=form.elements['detail'].value;
-				var due_date=get_raw_time(form.elements['date'].value);
-				var identified_by=form.elements['staff'].value;
+				var claim=form.elements['claim'].value;
 				var data_id=form.elements['id'].value;
 				var last_updated=get_my_time();
-				var data_json={data_store:'sale_leads',
+				var data_json={data_store:'policy_claims',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
-	 					{index:'customer',value:customer},
-	 					{index:'detail',value:detail},
-	 					{index:'due_date',value:due_date},
-	 					{index:'status',value:'open'},
-	 					{index:'identified_by',value:identified_by},
+	 					{index:'status',value:status},
 	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Updated',notes:'Sale lead for customer '+customer,link_to:'form349'}};
+	 				log_data:{title:status,notes:'Policy claim # '+claim,link_to:'form349'}};
+
 				update_json(data_json);
-				$(form).readonly();
 			}
 			else
 			{
@@ -364,17 +217,14 @@
 				{
 					var form_id=$(button).attr('form');
 					var form=document.getElementById(form_id);
-					var customer=form.elements['customer'].value;
+					var claim=form.elements['claim'].value;
 					var data_id=form.elements['id'].value;
-					var data_json={data_store:'sale_leads',
+					var data_json={data_store:'policy_claims',
 	 					log:'yes',
 	 					data:[{index:'id',value:data_id}],
-	 					log_data:{title:'Deleted',notes:'Sale lead for customer '+customer,link_to:'form349'}};
-					var follow_json={data_store:'followups',
-	 					data:[{index:'source_id',value:data_id}]};
+	 					log_data:{title:'Deleted',notes:'Policy claim # '+claim,link_to:'form349'}};
 
 					delete_json(data_json);
-					delete_json(follow_json);
 					$(button).parent().parent().remove();
 				});
 			}
@@ -386,15 +236,21 @@
 
 		function form349_import_template()
 		{
-			var data_array=['id','customer','detail','due_date','identified_by'];
+			var data_array=['id','claim number','policy number','claim amount','issuer','policy holder','agent','notes','request date','issue date','status'];
 			my_array_to_csv(data_array);
 		};
 
 		function form349_import_validate(data_array)
 		{
-			var validate_template_array=[{column:'customer',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-									{column:'detail',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-									{column:'due_date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')}];
+			var validate_template_array=[{column:'policy number',required:'yes',regex:new RegExp('^[0-9a-zA-Z_., ()-]+$')},
+															{column:'claim number',required:'yes',regex:new RegExp('^[0-9a-zA-Z_., ()-]+$')},
+															{column:'policy holder',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
+															{column:'issuer',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
+															{column:'agent',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
+															{column:'amount',regex:new RegExp('^[0-9 .]+$')},
+															{column:'request date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
+															{column:'issue date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
+															{column:'status',list:['pending','approved','rejected']}];
 
 			var error_array=validate_import_array(data_array,validate_template_array);
 			return error_array;
@@ -402,42 +258,27 @@
 
 		function form349_import(data_array,import_type)
 		{
-			var data_json={data_store:'sale_leads',
- 					loader:'no',
+			var create_json={data_store:'policy_claims',
  					log:'yes',
  					data:[],
- 					log_data:{title:'Sale leads for customers',link_to:'form349'}};
+ 					log_data:{title:'claims for policies',link_to:'form349'}};
 
-			var counter=1;
+			var update_json={data_store:'policy_claims',
+		 					log:'yes',
+		 					data:[],
+		 					log_data:{title:'claims for policies',link_to:'form349'}};
+
 			var last_updated=get_my_time();
 
 			data_array.forEach(function(row)
 			{
-				counter+=1;
-				if(import_type=='create_new')
-				{
-					row.id=last_updated+counter;
-				}
-
-				var data_json_array=[{index:'id',value:row.id},
-	 					{index:'customer',value:row.customer},
-	 					{index:'detail',value:row.detail},
-	 					{index:'due_date',value:get_raw_time(row.due_date)},
-	 					{index:'identified_by',value:row.identified_by},
-	 					{index:'last_updated',value:last_updated}];
-
-				data_json.data.push(data_json_array);
+				create_json.data.push(create_json_array);
 			});
 
-			if(import_type=='create_new')
-			{
-				create_batch_json(data_json);
-			}
-			else
-			{
-				update_batch_json(data_json);
-			}
+			create_batch_json(create_json);
+			update_batch_json(update_json);
 		}
+
 
 	</script>
 </div>
