@@ -162,7 +162,7 @@
 
                     var policy_num=form.elements['name'].value;
                     var data_id=form.elements['id'].value;
-                    var last_updated=get_my_time();
+                    var last_updated=vTime.unix();
 
                     var data_json={data_store:'policies',
 													 				data:[{index:'id',value:data_id}],
@@ -223,7 +223,7 @@
 									data:[]};
 
 					var counter=1;
-					var last_updated=get_my_time();
+					var last_updated=vTime.unix();
 
 					data_array.forEach(function(row)
 					{

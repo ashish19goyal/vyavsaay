@@ -2,9 +2,9 @@
 	<div class="portlet-title">
 		<div class='caption'>
 			<div class='btn-group' id='form349_status' data-toggle='buttons'>
-					<label class='btn yellow-crusta pending active' onclick=form349_ini('pending');><input name='pending' type='radio' class='toggle'>Pending</label>
-					<label class='btn yellow-crusta approved' onclick=form349_ini('approved');><input type='radio' name='approved' class='toggle'>Approved</label>
-					<label class='btn yellow-crusta rejected' onclick=form349_ini('rejected');><input type='radio' name='rejected' class='toggle'>Rejected</label>
+					<label class='btn green-jungle pending active' onclick=form349_ini('pending');><input name='pending' type='radio' class='toggle'>Pending</label>
+					<label class='btn green-jungle approved' onclick=form349_ini('approved');><input type='radio' name='approved' class='toggle'>Approved</label>
+					<label class='btn green-jungle rejected' onclick=form349_ini('rejected');><input type='radio' name='rejected' class='toggle'>Rejected</label>
 			</div>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='modal219_action();'>Add <i class='fa fa-plus'></i></a>
 		</div>
@@ -126,7 +126,7 @@
 					var notes="";
 					notes_array.forEach(function(note)
 					{
-						notes+=vUtil.date({time:note.date})+": "+note.detail+"\n";
+						notes+=vTime.date({time:note.date})+": "+note.detail+"\n";
 					});
 					var rowsHTML="<tr>";
 						rowsHTML+="<form id='form349_"+result.id+"'></form>";
@@ -143,7 +143,7 @@
 								rowsHTML+="<textarea readonly='readonly' form='form349_"+result.id+"'>"+notes+"</textarea>";
 							if(result.status=='pending')
 							{
-								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form349_"+result.id+"' name='note'>Follow up</button>";
+								rowsHTML+="<button type='button' class='btn grey' form='form349_"+result.id+"' title='Add Note' name='note'><i class='fa fa-plus'></i></button>";
 							}
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
@@ -151,7 +151,8 @@
 								rowsHTML+="<button type='button' class='btn red' form='form349_"+result.id+"' title='Delete' name='delete' onclick='form349_delete_item($(this));'><i class='fa fa-trash'></i></button>";
 							if(result.status=='pending')
 							{
-								rowsHTML+="<button type='button' class='btn yellow' form='form349_"+result.id+"' onclick=\"modal153_action(this,'"+result.id+"');\">Close Lead</button>";
+								rowsHTML+="<button type='button' class='btn grey' form='form349_"+result.id+"' title='Approve' name='approve'><i class='fa fa-check'></i></button>";
+								rowsHTML+="<button type='button' class='btn grey' form='form349_"+result.id+"' title='Reject' name='reject'><i class='fa fa-times'></i></button>";
 							}
 							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
@@ -171,11 +172,13 @@
 					$(approve_button).on('click',function()
 					{
 						form349_update_item(fields,'approved');
+						$(this).parent().parent().remove();
 					});
 
 					$(reject_button).on('click',function()
 					{
 						form349_update_item(fields,'rejected');
+						$(this).parent().parent().remove();
 					});
 
 				});
@@ -193,7 +196,7 @@
 			{
 				var claim=form.elements['claim'].value;
 				var data_id=form.elements['id'].value;
-				var last_updated=get_my_time();
+				var last_updated=vTime.unix();
 				var data_json={data_store:'policy_claims',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
@@ -268,7 +271,7 @@
 		 					data:[],
 		 					log_data:{title:'claims for policies',link_to:'form349'}};
 
-			var last_updated=get_my_time();
+			var last_updated=vTime.unix();
 
 			data_array.forEach(function(row)
 			{

@@ -48,7 +48,7 @@ var vUtil = function (options)
 						markers_array=JSON.parse(markers);
 				} catch (ee)
 				{
-						return {};
+						return [];
 				}
 			}
 			return markers_array;

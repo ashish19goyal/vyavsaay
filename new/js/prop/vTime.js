@@ -9,7 +9,7 @@ var vTime = function ()
 	  //returns an unix timestamp in milliseconds
     this.unix=function (opts)
     {
-      var defs={date:'',inputFormat:'mm/dd/yyyy'};
+      var defs={date:'today',inputFormat:'dd/mm/yyyy hh:mm:ss'};
     	var sets = $.extend(defs, opts || {});
 
       if(sets.date=='' || sets.date==null || sets.date==0 || sets.date=='null')
@@ -18,13 +18,81 @@ var vTime = function ()
       }
 
       var d=new Date();
+      if(sets.date=='today')
+      {
+        return d.getTime();
+      }
+
+      switch(sets.inputFormat)
+      {
+        case 'dd/mm/yyyy hh:mm:ss':
+                var date_time_array=String(sets.date).split(/ /);
+                var date_elem=date_time_array[0];
+                var date_array=date_elem.split(/[\-\/]+/);
+
+                var day=1;
+                var month=0;
+                var year=2016;
+                if(date_array.length==3)
+                {
+                  day=parseInt(date_array[0]);
+                  month=parseInt(date_array[1])-1;
+                  year=parseInt(date_array[2]);
+                }
+                else if(date_array.length==2)
+                {
+                  month=parseInt(date_array[0])-1;
+                  year=parseInt(date_array[1]);
+                }
+                else if(date_array.length==1)
+                {
+                  year=parseInt(date_array[0]);
+                }
+
+                if(year<50)
+                {
+                    year=2000+year;
+                }
+                else if(year>50 && year<100)
+                {
+                    year=1900+year;
+                }
+
+                var hour=0;
+                var minutes=0;
+                var seconds=0;
+
+                if(date_time_array.length==2)
+                {
+                  var time_elem=date_time_array[1];
+                  var time_array=time_elem.split(/:/);
+                  if(time_array.length==1)
+                  {
+                    hour=parseInt(time_array[0]);
+                  }
+                  else if(time_array.length==2)
+                  {
+                    hour=parseInt(time_array[0]);
+                    minutes=parseInt(time_array[1]);
+                  }
+                  else if(time_array.length==3)
+                  {
+                    hour=parseInt(time_array[0]);
+                    minutes=parseInt(time_array[1]);
+                    seconds=parseInt(time_array[2]);
+                  }
+                }
+                d=new Date(year,month,day,hour,minutes,seconds,0);
+            		break;
+      }
+
       return d.getTime();
     };
 
     //returns date based on passed arguments
     this.date = function(opts)
     {
-      var defs={time:Date.now(),inputFormat:'unix',resultFormat:'mm/dd/yyyy',addDays:0};
+      var defs={time:Date.now(),inputFormat:'unix',resultFormat:'dd/mm/yyyy',addDays:0};
     	var sets = $.extend(defs, opts || {});
 
       if(sets.time=='' || sets.time==null || sets.time=='null' || sets.time==0)
@@ -46,17 +114,17 @@ var vTime = function ()
       }
       switch(sets.resultFormat)
       {
-        case 'mm/dd/yyyy':return date+"/"+month+"/"+year;
-        case 'dd/mm/yyyy':return month+"/"+date+"/"+year;
-        case 'mm-dd-yyyy':return date+"-"+month+"-"+year;
-        case 'dd-mm-yyyy':return month+"-"+date+"-"+year;
+        case 'dd/mm/yyyy':return date+"/"+month+"/"+year;
+        case 'mm/dd/yyyy':return month+"/"+date+"/"+year;
+        case 'dd-mm-yyyy':return date+"-"+month+"-"+year;
+        case 'mm-dd-yyyy':return month+"-"+date+"-"+year;
       }
     };
 
     //returns date with time based on passed arguments
     this.datetime = function(opts)
     {
-      var defs={time:Date.now(),inputFormat:'unix',resultFormat:'mm/dd/yyyy hh:mm',addDays:0};
+      var defs={time:Date.now(),inputFormat:'unix',resultFormat:'dd/mm/yyyy hh:mm',addDays:0};
     	var sets = $.extend(defs, opts || {});
 
       if(sets.time=='' || sets.time==null || sets.time=='null' || sets.time==0)
@@ -87,10 +155,10 @@ var vTime = function ()
 
       switch(sets.resultFormat)
       {
-        case 'mm/dd/yyyy hh:mm':return date+"/"+month+"/"+year+" "+hour+":"+minutes;
-        case 'dd/mm/yyyy hh:mm':return month+"/"+date+"/"+year+" "+hour+":"+minutes;
-        case 'mm-dd-yyyy hh:mm':return date+"-"+month+"-"+year+" "+hour+":"+minutes;
-        case 'dd-mm-yyyy hh:mm':return month+"-"+date+"-"+year+" "+hour+":"+minutes;
+        case 'dd/mm/yyyy hh:mm':return date+"/"+month+"/"+year+" "+hour+":"+minutes;
+        case 'mm/dd/yyyy hh:mm':return month+"/"+date+"/"+year+" "+hour+":"+minutes;
+        case 'dd-mm-yyyy hh:mm':return date+"-"+month+"-"+year+" "+hour+":"+minutes;
+        case 'mm-dd-yyyy hh:mm':return month+"-"+date+"-"+year+" "+hour+":"+minutes;
       }
     };
 
@@ -102,7 +170,7 @@ var vTime = function ()
     //return array of dates matching the criteria, for the last 100 years
     this.anniversaryDates = function(opts)
     {
-      var defs={time:Date.now(),inputFormat:'unix',resultFormat:'mm/dd/yyyy'};
+      var defs={time:Date.now(),inputFormat:'unix',resultFormat:'dd/mm/yyyy'};
     	var sets = $.extend(defs, opts || {});
       var results=[];
 
@@ -117,7 +185,7 @@ var vTime = function ()
 
       switch(sets.resultFormat)
       {
-        case 'mm/dd/yyyy':break;
+        case 'dd/mm/yyyy':break;
         case 'all': for(var i=centuryOld;i<=currentYear;i++)
                     {
                       inputDate.setFullYear(i);

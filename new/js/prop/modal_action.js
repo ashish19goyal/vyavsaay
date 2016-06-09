@@ -16949,10 +16949,106 @@ function modal215_action(item_name)
 }
 
 /**
+ * @modalNo 216
+ * @modal Add Policy
+ */
+function modal216_action()
+{
+	var form=document.getElementById('modal216_form');
+	var fname=form.elements['name'];
+	var fagent=form.elements['agent'];
+	var fholder=form.elements['holder'];
+	var fstart=form.elements['start'];
+	var fend=form.elements['end'];
+	var fissue=form.elements['issue'];
+	var ftype=form.elements['type'];
+
+	$(fstart).datepicker();
+	$(fend).datepicker();
+	$(fissue).datepicker();
+
+	set_static_value_list_json('policies','issue_type',ftype);
+
+	name_data={data_store:'policy_types',return_column:'name'};
+	set_my_value_list_json(name_data,fname);
+
+	agent_data={data_store:'staff',return_column:'acc_name'};
+	set_my_value_list_json(agent_data,fagent);
+
+	holder_data={data_store:'customers',return_column:'acc_name'};
+	set_my_value_list_json(holder_data,fholder);
+
+	$(fname).off('blur');
+	$(fname).off('change');
+
+	var ptype="";
+	var pissuer="";
+	var pdesc="";
+
+	$(fname).on('blur change',function()
+	{
+		var policy_data={data_store:'policy_types',count:1,
+										indexes:[{index:'issuer'},{index:'description'},{index:'type'},
+														{index:'name',exact:fname.value}]};
+		read_json_rows('',policy_data,function(policies)
+		{
+			if(policies.length>0)
+			{
+				ptype=policies[0].type;
+				pissuer=policies[0].issuer;
+				pdesc=policies[0].description;
+			}
+		});
+	});
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form351'))
+		{
+			var policy_num=form.elements['policy_number'].value;
+			var start_date=vTime.unix({date:fstart.value});
+			var end_date=vTime.unix({date:fend.value});
+			var issue_date=vTime.unix({date:fissue.value});
+			var issue_type=ftype.value;
+			var premium=form.elements['premium'].value;
+			var last_updated=vTime.unix();
+
+			var data_json={data_store:'policies',
+			data:[{index:'id',value:get_new_key()},
+				{index:'policy_num',value:policy_num},
+				{index:'policy_name',value:fname.value},
+				{index:'description',value:pdesc},
+				{index:'issuer',value:pissuer},
+				{index:'policy_holder',value:fholder.value},
+				{index:'premium',value:premium},
+				{index:'agent',value:fagent.value},
+				{index:'start_date',value:start_date},
+				{index:'end_date',value:end_date},
+				{index:'issue_date',value:issue_date},
+				{index:'type',value:ptype},
+				{index:'issue_type',value:issue_type},
+				{index:'status',value:'active'},
+				{index:'last_updated',value:last_updated}]};
+			create_json(data_json);
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
+		$(form).find(".close").click();
+	});
+
+	$("#modal216_link").click();
+}
+
+
+/**
  * @modalNo 217
  * @modal Add Policy Type
  */
-function modal217_action(item_name)
+function modal217_action()
 {
 	var form=document.getElementById('modal217_form');
 	var ftype=form.elements['type'];
@@ -16993,4 +17089,212 @@ function modal217_action(item_name)
 	});
 
 	$("#modal217_link").click();
+}
+
+/**
+ * @modalNo 218
+ * @modal Add Commission
+ */
+function modal218_action()
+{
+	var form=document.getElementById('modal218_form');
+	var fpolicy=form.elements['policy_number'];
+	var fissue=form.elements['issue'];
+	var ftype=form.elements['type'];
+	var fname=form.elements['name'];
+	var fagent=form.elements['agent'];
+	var fholder=form.elements['holder'];
+
+	$(fissue).datepicker();
+
+	set_static_value_list_json('policy_commissions','commission_type',ftype);
+
+	policies_data={data_store:'policies',return_column:'policy_num'};
+	set_my_value_list_json(policies_data,fpolicy);
+
+	$(fpolicy).off('blur');
+	$(fpolicy).off('change');
+
+	var pissuer="";
+	$(fpolicy).on('blur change',function()
+	{
+		var policy_data={data_store:'policies',count:1,
+										indexes:[{index:'policy_name'},{index:'issuer'},{index:'policy_holder'},{index:'agent'},
+														{index:'policy_num',exact:fpolicy.value}]};
+		read_json_rows('',policy_data,function(policies)
+		{
+			if(policies.length>0)
+			{
+				fname.value=policies[0].policy_name;
+				fagent.value=policies[0].agent;
+				fholder.value=policies[0].policy_holder;
+				pissuer=policies[0].issuer;
+			}
+		});
+	});
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form351'))
+		{
+			var notes=form.elements['notes'].value;
+			var issue_date=vTime.unix({date:fissue.value});
+			var commission_amount=form.elements['commission'].value;
+			var commission_number=form.elements['commission_num'].value;
+			var last_updated=vTime.unix();
+
+			var data_json={data_store:'policy_commissions',
+			data:[{index:'id',value:get_new_key()},
+				{index:'policy_num',value:fpolicy.value},
+				{index:'commission_num',value:commission_number},
+				{index:'issuer',value:pissuer},
+				{index:'policy_holder',value:fholder.value},
+				{index:'amount',value:commission_amount},
+				{index:'agent',value:fagent.value},
+				{index:'issue_date',value:issue_date},
+				{index:'commission_type',value:ftype.value},
+				{index:'status',value:'pending'},
+				{index:'notes',value:notes},
+				{index:'last_updated',value:last_updated}]};
+			create_json(data_json);
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
+		$(form).find(".close").click();
+	});
+
+	$("#modal218_link").click();
+}
+
+/**
+ * @modalNo 219
+ * @modal Add Claim
+ */
+function modal219_action()
+{
+	var form=document.getElementById('modal219_form');
+	var fpolicy=form.elements['policy_number'];
+	var frequest=form.elements['request'];
+	var fissue=form.elements['issue'];
+	var fname=form.elements['name'];
+	var fagent=form.elements['agent'];
+	var fholder=form.elements['holder'];
+
+	$(fissue).datepicker();
+	$(frequest).datepicker();
+
+	policies_data={data_store:'policies',return_column:'policy_num'};
+	set_my_value_list_json(policies_data,fpolicy);
+
+	$(fpolicy).off('blur');
+	$(fpolicy).off('change');
+
+	var pissuer="";
+	$(fpolicy).on('blur change',function()
+	{
+		var policy_data={data_store:'policies',count:1,
+										indexes:[{index:'policy_name'},{index:'issuer'},{index:'policy_holder'},{index:'agent'},
+														{index:'policy_num',exact:fpolicy.value}]};
+		read_json_rows('',policy_data,function(policies)
+		{
+			if(policies.length>0)
+			{
+				fname.value=policies[0].policy_name;
+				fagent.value=policies[0].agent;
+				fholder.value=policies[0].policy_holder;
+				pissuer=policies[0].issuer;
+			}
+		});
+	});
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form351'))
+		{
+			var notes=form.elements['notes'].value;
+			var issue_date=vTime.unix({date:fissue.value});
+			var request_date=vTime.unix({date:frequest.value});
+			var claim_amount=form.elements['claim'].value;
+			var claim_number=form.elements['claim_num'].value;
+			var last_updated=vTime.unix();
+			var notes_array=[{date:last_updated,detail:notes}];
+			var notes_string=JSON.stringify(notes_array);
+			var data_json={data_store:'policy_claims',
+			data:[{index:'id',value:get_new_key()},
+				{index:'policy_num',value:fpolicy.value},
+				{index:'claim_num',value:claim_number},
+				{index:'issuer',value:pissuer},
+				{index:'policy_holder',value:fholder.value},
+				{index:'amount',value:claim_amount},
+				{index:'agent',value:fagent.value},
+				{index:'issue_date',value:issue_date},
+				{index:'request_date',value:request_date},
+				{index:'status',value:'pending'},
+				{index:'notes',value:notes_string},
+				{index:'last_updated',value:last_updated}]};
+			create_json(data_json);
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
+		$(form).find(".close").click();
+	});
+
+	$("#modal219_link").click();
+}
+
+/**
+ * @modalNo 220
+ * @modal Add note to policy claim
+ */
+function modal220_action(claim_id)
+{
+	var form=document.getElementById('modal220_form');
+	var date_filter=form.elements['date'];
+	var detail_filter=form.elements['details'];
+
+	$(date_filter).datepicker();
+	date_filter.value=vTime.date();
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_update_access('form349'))
+		{
+			var id=get_new_key();
+			var details=detail_filter.value;
+			var last_updated=get_my_time();
+
+			var claim_data={data_store:'policy_claims',count:1,return_column:'notes',indexes:[{index:'id',exact:claim_id}]};
+			read_json_single_column(claim_data,function(claims)
+			{
+				if(claims.length>0)
+				{
+					var notes_array=vUtil.jsonParse(claims[0]);
+					notes_array.push({date:vTime.unix(date_filter.value),detail:details});
+					var notes_string=JSON.stringify(notes_array);
+					var data_json={data_store:'policy_claims',
+				 				data:[{index:'id',value:claim_id},
+				 					{index:'notes',value:notes_string},
+				 					{index:'last_updated',value:last_updated}]};
+					update_json(data_json);
+				}
+			});
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
+		$(form).find(".close").click();
+	});
+
+	$("#modal220_link").click();
 }
