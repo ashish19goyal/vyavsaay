@@ -8,20 +8,22 @@
 	function generate_hash()
 	{
 		var password=document.getElementById('i_pass').value;
-		var salt='$2a$10$123456789123456789123456789123456789';
+		var domain=document.getElementById('i_dom').value;
+		var salt='$2a$10$'+domain+'123456789123456789123456789';
 		var salt_22=salt.substring(0, 29);
 		var bcrypt = new bCrypt();
-		
+
 		bcrypt.hashpw(password, salt_22, function(newhash)
 		{
 			document.getElementById('o_hash').value=newhash;
 		}, function() {});
 	}
-		
+
 </script>
 
 </head>
 <body>
+	<input type='text' id='i_dom' placeholder='Domain'>
 	<input type='password' id='i_pass' placeholder='enter password'>
 	<input type='button' value='Generate Hash' onclick='generate_hash();'>
 	<br>

@@ -9,7 +9,7 @@ function login_action(domain,username,pass,func)
 		var form=document.getElementById('login');
 		var l_id=form.elements[1].value;
 		var index=l_id.indexOf("@");
-		
+
 		if(index===-1)
 		{
 			domain=l_id;
@@ -22,7 +22,7 @@ function login_action(domain,username,pass,func)
 		}
 		pass=form.elements[2].value;
 	}
-	
+
 	//console.log(domain+username+pass);
 	try_local_db_login(username,domain,function(result)
 	{
@@ -35,7 +35,7 @@ function login_action(domain,username,pass,func)
 		var bcrypt = new bCrypt();
 		bcrypt.hashpw(pass, salt_22, function(newhash)
 		{
-			//console.log(newhash);
+			//console.log(newhash+"---"+password);
 			if(newhash.substring(3)==password.substring(3))
 			{
 				//console.log('logged in offline');
@@ -43,7 +43,7 @@ function login_action(domain,username,pass,func)
 				{
 					set_session_variables(domain,username,pass,func);
 				}
-				else 
+				else
 				{
 					set_session_variables(domain,username,pass);
 				}
@@ -55,13 +55,13 @@ function login_action(domain,username,pass,func)
 				{
 					login_online(username,domain,pass,func);
 				}
-				else 
+				else
 				{
 					login_online(username,domain,pass);
 				}
-			}			
+			}
 		}, function() {});
-		
+
 	},function()
 	{
 		//console.log('trying online login');
@@ -69,7 +69,7 @@ function login_action(domain,username,pass,func)
 		{
 			login_online(username,domain,pass,func);
 		}
-		else 
+		else
 		{
 			login_online(username,domain,pass);
 		}
@@ -84,10 +84,10 @@ function login_online(username,domain,pass,func)
 	{
 		//console.log(response_object);
 		//console.log(response_object.status);
-		
+
 		if(response_object.status=="Failed Authentication")
 		{
-			//console.log('failed because of db problem');					
+			//console.log('failed because of db problem');
 			document.getElementById("failed_auth").innerHTML="Login failed, try again!";
 			hide_loader();
 		}
@@ -100,7 +100,7 @@ function login_online(username,domain,pass,func)
 		{
 			var session_vars=response_object.data;
 			ini_session(domain,username);
-			
+
 			//console.log(session_vars);
 			set_session_online(function()
 			{
@@ -108,7 +108,7 @@ function login_online(username,domain,pass,func)
 				{
 					set_session(session_vars,func);
 				}
-				else 
+				else
 				{
 					set_session(session_vars);
 				}
@@ -142,7 +142,7 @@ function set_session_variables(domain,username,pass,func)
 			if(result)
 			{
 				var record=result.value;
-				
+
 				if(record['type']=='report')
 				{
 					if(record['value']=='checked')
@@ -172,7 +172,7 @@ function set_session_variables(domain,username,pass,func)
 					{
 						login_online(username,domain,pass,func);
 					}
-					else 
+					else
 					{
 						login_online(username,domain,pass);
 					}
@@ -208,14 +208,14 @@ function set_session_variables(domain,username,pass,func)
 								data.name=result21.value.name;
 								data.user_id=result21.value.id;
 							}
-							
+
 							var re='';
 							var cr='';
 							var up='';
 							var del='';
 							var user_roles="";
 							var access_control_count=1;
-							
+
 							static_local_db.transaction(['user_role_mapping'],"readonly").objectStore('user_role_mapping').index('username').openCursor(keyValue).onsuccess=function(e)
 							{
 								var result5=e.target.result;
@@ -223,7 +223,7 @@ function set_session_variables(domain,username,pass,func)
 								{
 									var record5=result5.value;
 									access_control_count+=1;
-									
+
 									user_roles+=record5.role_name+"--";
 
 									keyValue=IDBKeyRange.bound([record5.role_name,'0'],[record5.role_name,'99999999']);
@@ -233,13 +233,13 @@ function set_session_variables(domain,username,pass,func)
 										if(result3)
 										{
 											var record3=result3.value;
-											
+
 											if(record3.re==='checked')
-											{	
+											{
 												re+=record3.element_id+"-";
 											}
 											if(record3.cr==='checked')
-											{	
+											{
 												cr+=record3.element_id+"-";
 											}
 											if(record3.up==='checked')
@@ -250,7 +250,7 @@ function set_session_variables(domain,username,pass,func)
 											{
 												del+=record3.element_id+"-";
 											}
-											
+
 											result3.continue();
 										}
 										else{
@@ -268,13 +268,13 @@ function set_session_variables(domain,username,pass,func)
 										if(result3)
 										{
 											var record3=result3.value;
-											
+
 											if(record3.re==='checked')
-											{	
+											{
 												re+=record3.element_id+"-";
 											}
 											if(record3.cr==='checked')
-											{	
+											{
 												cr+=record3.element_id+"-";
 											}
 											if(record3.up==='checked')
@@ -285,7 +285,7 @@ function set_session_variables(domain,username,pass,func)
 											{
 												del+=record3.element_id+"-";
 											}
-										
+
 											result3.continue();
 										}
 										else
@@ -301,7 +301,7 @@ function set_session_variables(domain,username,pass,func)
                                                     {
                                                         data['user_setting_'+record.attribute]=record.value;
                                                     }
-                                                    result6.continue();   
+                                                    result6.continue();
                                                 }
                                                 else
                                                 {
@@ -324,17 +324,17 @@ function set_session_variables(domain,username,pass,func)
 									data.up=up;
 									data.del=del;
 									data.user_roles=user_roles;
-									
+
 									if(typeof func!='undefined')
 									{
 										set_session(data,func);
 									}
-									else 
+									else
 									{
 										set_session(data);
 									}
-							 	} 	
-							 },100);																					
+							 	}
+							 },100);
 						};
 					};
 				}
@@ -358,7 +358,7 @@ function try_local_db_login(username,domain,func_success,func_failure)
 		var db_name="re_local_" + domain;
 		var request = indexedDB.open(db_name);
 		//console.log("3.1.1");
-		
+
 		request.onsuccess=function(e)
 		{
 			//console.log("3.2");
@@ -378,16 +378,16 @@ function try_local_db_login(username,domain,func_success,func_failure)
 				//console.log("3.4");
 				var tran=db.transaction("accounts","readonly");
 				var table = tran.objectStore("accounts");
-				
+
 				var index=table.index("username");
 				var kv=IDBKeyRange.bound([username,'0'],[username,'99999999']);
 				var records=index.get(kv);
-				
+
 				records.onsuccess=function(e)
 				{
 					var result=records.result;
 					func_success(result);
-					//console.log("3.5");	
+					//console.log("3.5");
 				};
 				records.onerror=function(e)
 				{
@@ -398,7 +398,7 @@ function try_local_db_login(username,domain,func_success,func_failure)
 			//console.log("3.7");
 			db.close();
 		};
-		
+
 		request.onerror = function(e)
 		{
 			//console.log("3.8");
@@ -407,12 +407,12 @@ function try_local_db_login(username,domain,func_success,func_failure)
 				db.close();
 			func_failure();
 		};
-		
+
 		request.onabort=function(e)
 		{
 			console.log("3.9");
 		    var db=e.target.result;
-			if(db)		    
+			if(db)
 		    	db.close();
 		    console.log(this.error);
 		    func_failure();
@@ -434,18 +434,18 @@ function match_password()
 
 	var pass1=form.elements[4].value;
 	var pass2=form.elements[5].value;
-	
+
 	if(pass1==pass2 && pass1!="")
 	{
 		document.getElementById("password_match_validation").innerHTML="Match!!";
 		document.getElementById("password_match_validation").value="correct";
-	}	
+	}
 	else
 	{
 		document.getElementById("password_match_validation").innerHTML="Passwords do not match!";
 		document.getElementById("password_match_validation").value="incorrect";
 	}
-	
+
 }
 
 
@@ -471,7 +471,7 @@ function register_click()
 	{
 		document.getElementById("failed_register").innerHTML="Please update the incorrect fields to proceed!";
 	}
-	else	
+	else
 	{
 		show_loader();
 		var post_data={userid:userid,
@@ -496,7 +496,7 @@ function register_click()
 						document.getElementById("failed_register").innerHTML="An error occured, please try again.";
 						console.log(e.responseText);
 					}
-					window.location.assign("#register");	
+					window.location.assign("#register");
 					hide_loader();
 				});
 			}
@@ -504,9 +504,9 @@ function register_click()
 			{
 				console.log(e2.responseText);
 				document.getElementById("failed_register").innerHTML="An error occured, please try again.";
-				window.location.assign("#register");	
+				window.location.assign("#register");
 				hide_loader();
-			}	
+			}
 		});
 	}
 }
@@ -541,7 +541,7 @@ function userid_validation(userid)
 					document.getElementById("userid_validation").innerHTML="User ID is available.";
 					document.getElementById("userid_validation").value="correct";
 				}
-	
+
 			});
 		}
 	}
@@ -596,7 +596,7 @@ function verify_login(pass,func_success,func_failure)
 			}
 		});
 	}
-	else 
+	else
 	{
 		////////////checking if indexed db is supported/////////////////
 		if("indexedDB" in window)
@@ -604,7 +604,7 @@ function verify_login(pass,func_success,func_failure)
 			//console.log("3.1");
 			var db_name="re_local_" + domain;
 			var request = indexedDB.open(db_name);
-			
+
 			request.onsuccess=function(e)
 			{
 				//console.log("3.2");
@@ -624,11 +624,11 @@ function verify_login(pass,func_success,func_failure)
 					//console.log("3.4");
 					var tran=db.transaction("accounts","readonly");
 					var table = tran.objectStore("accounts");
-					
+
 					var index=table.index("username");
 					var kv=IDBKeyRange.bound([username,'0'],[username,'99999999']);
 					var records=index.get(kv);
-					
+
 					records.onsuccess=function(e)
 					{
 						var result=records.result;
@@ -648,8 +648,8 @@ function verify_login(pass,func_success,func_failure)
 							{
 								func_failure();
 							}
-						}, function() {});												
-						//console.log("3.5");	
+						}, function() {});
+						//console.log("3.5");
 					};
 					records.onerror=function(e)
 					{
@@ -660,7 +660,7 @@ function verify_login(pass,func_success,func_failure)
 				//console.log("3.7");
 				db.close();
 			};
-			
+
 			request.onerror = function(e)
 			{
 				//console.log("3.8");
