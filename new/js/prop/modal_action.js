@@ -11504,6 +11504,7 @@ function modal155_action()
 		var receipt_type=type_filter.value;
 		var account_name=account_filter.value;
 		var counter_payment=parseFloat(amount_filter.value);
+		var p_id=get_new_key();
 
 		if(is_create_access('form124') || is_create_access('form243') || is_create_access('form291') || is_create_access('form282'))
 		{
@@ -11588,6 +11589,7 @@ function modal155_action()
                         data:[{index:'id',value:new_id},
                             {index:'receipt_id',value:receipt_id},
                             {index:'payment_id',value:account.id},
+														{index:'receipt_link_id',value:p_id},
                             {index:'type',value:account.type},
                             {index:'amount',value:(parseFloat(account.total_amount)-parseFloat(account.paid_amount))},
                             {index:'acc_name',value:account_name},
@@ -11616,6 +11618,7 @@ function modal155_action()
                                 data:[{index:'id',value:new_id},
                                     {index:'receipt_id',value:receipt_id},
                                     {index:'payment_id',value:account.id},
+																		{index:'receipt_link_id',value:p_id},
                                     {index:'type',value:account.type},
                                     {index:'amount',value:(parseFloat(account.total_amount)-parseFloat(account.paid_amount))},
                                     {index:'acc_name',value:account_name},
@@ -11642,6 +11645,7 @@ function modal155_action()
                                     data:[{index:'id',value:new_id},
                                         {index:'receipt_id',value:receipt_id},
                                         {index:'payment_id',value:account.id},
+																				{index:'receipt_link_id',value:p_id},
                                         {index:'type',value:account.type},
                                         {index:'amount',value:balanced_amount},
                                         {index:'acc_name',value:account_name},
@@ -11666,6 +11670,7 @@ function modal155_action()
                                     data:[{index:'id',value:new_id},
                                         {index:'receipt_id',value:receipt_id},
                                         {index:'payment_id',value:account.id},
+																				{index:'receipt_link_id',value:p_id},
                                         {index:'type',value:account.type},
                                         {index:'amount',value:account.paid_amount},
                                         {index:'acc_name',value:account_name},
@@ -11694,6 +11699,7 @@ function modal155_action()
                                     data:[{index:'id',value:new_id},
                                         {index:'receipt_id',value:receipt_id},
                                         {index:'payment_id',value:account.id},
+																				{index:'receipt_link_id',value:p_id},
                                         {index:'type',value:account.type},
                                         {index:'amount',value:(parseFloat(account.total_amount)-parseFloat(account.paid_amount))},
                                         {index:'acc_name',value:account_name},
@@ -11721,6 +11727,7 @@ function modal155_action()
                                     data:[{index:'id',value:new_id},
                                         {index:'receipt_id',value:receipt_id},
                                         {index:'payment_id',value:account.id},
+																				{index:'receipt_link_id',value:p_id},
                                         {index:'type',value:account.type},
                                         {index:'amount',value:balanced_amount},
                                         {index:'acc_name',value:account_name},
@@ -11745,6 +11752,7 @@ function modal155_action()
                                     data:[{index:'id',value:new_id},
                                         {index:'receipt_id',value:receipt_id},
                                         {index:'payment_id',value:account.id},
+																				{index:'receipt_link_id',value:p_id},
                                         {index:'type',value:account.type},
                                         {index:'amount',value:account.paid_amount},
                                         {index:'acc_name',value:account_name},
@@ -11761,10 +11769,9 @@ function modal155_action()
 				});
 
 				new_id++;
-				var p_id=get_new_key();
 				if(total_amount<0)
 				{
-                    var payment_json={data_store:'payments',
+        	var payment_json={data_store:'payments',
 	 				data:[{index:'id',value:p_id},
 	 					{index:'status',value:'pending'},
 	 					{index:'type',value:'paid'},
@@ -11777,13 +11784,14 @@ function modal155_action()
 	 					{index:'transaction_id',value:p_id},
 	 					{index:'source_id',value:p_id},
 	 					{index:'source',value:'receipt'},
-                        {index:'source_info',value:receipt_id},
-                        {index:'notes',value:'Generated for receipt #'+receipt_id},
+            {index:'source_info',value:receipt_id},
+            {index:'notes',value:'Generated for receipt #'+receipt_id},
 	 					{index:'last_updated',value:last_updated}]};
 
-                    var receipts_json={data_store:'receipts_payment_mapping',
+        var receipts_json={data_store:'receipts_payment_mapping',
 	 				data:[{index:'id',value:new_id},
 	 					{index:'receipt_id',value:receipt_id},
+						{index:'receipt_link_id',value:p_id},
 	 					{index:'payment_id',value:p_id},
 	 					{index:'type',value:'paid'},
 	 					{index:'amount',value:(-total_amount)+""},
@@ -11795,7 +11803,7 @@ function modal155_action()
 					create_json(payment_json);
 				}
 
-                var receipt_json={data_store:'receipts',
+        var receipt_json={data_store:'receipts',
 	 				data:[{index:'id',value:p_id},
 	 					{index:'receipt_id',value:receipt_id},
 	 					{index:'type',value:receipt_type},
@@ -11808,7 +11816,7 @@ function modal155_action()
 				create_json(receipt_json);
 
 				var receipt_id_array=receipt_id.split('-');
-                var receipt_id_json={data_store:'user_preferences',
+        var receipt_id_json={data_store:'user_preferences',
 	 				data:[{index:'id',value:receipt_record_id},
 	 					{index:'value',value:(parseInt(receipt_id_array[1])+1)+""}]};
 				update_json(receipt_id_json);
@@ -13435,6 +13443,7 @@ function modal172_action()
 		var receipt_type=type_filter.value;
 		var account_name=account_filter.value;
 		var counter_payment=parseFloat(amount_filter.value);
+		var p_id=get_new_key();
 
 		if(is_create_access('form282'))
 		{
@@ -13495,7 +13504,7 @@ function modal172_action()
 						else
 						{	return -1;}
 					});
-					console.log(accounts);
+					//console.log(accounts);
 				}
 
 				console.log(total_amount);
@@ -13519,6 +13528,7 @@ function modal172_action()
                         data:[{index:'id',value:new_id},
                             {index:'receipt_id',value:receipt_id},
                             {index:'payment_id',value:account.id},
+														{index:'receipt_link_id',value:p_id},
                             {index:'type',value:account.type},
                             {index:'amount',value:(parseFloat(account.total_amount)-parseFloat(account.paid_amount))},
                             {index:'acc_name',value:account_name},
@@ -13546,6 +13556,7 @@ function modal172_action()
                                     data:[{index:'id',value:new_id},
                                         {index:'receipt_id',value:receipt_id},
                                         {index:'payment_id',value:account.id},
+																				{index:'receipt_link_id',value:p_id},
                                         {index:'type',value:account.type},
                                         {index:'amount',value:(parseFloat(account.total_amount)-parseFloat(account.paid_amount))},
                                         {index:'acc_name',value:account_name},
@@ -13572,6 +13583,7 @@ function modal172_action()
                                     data:[{index:'id',value:new_id},
                                         {index:'receipt_id',value:receipt_id},
                                         {index:'payment_id',value:account.id},
+																				{index:'receipt_link_id',value:p_id},
                                         {index:'type',value:account.type},
                                         {index:'amount',value:balanced_amount},
                                         {index:'acc_name',value:account_name},
@@ -13597,6 +13609,7 @@ function modal172_action()
                                         {index:'receipt_id',value:receipt_id},
                                         {index:'payment_id',value:account.id},
                                         {index:'type',value:account.type},
+																				{index:'receipt_link_id',value:p_id},
                                         {index:'amount',value:account.paid_amount},
                                         {index:'acc_name',value:account_name},
                                         {index:'date',value:receipt_date},
@@ -13624,6 +13637,7 @@ function modal172_action()
                                     data:[{index:'id',value:new_id},
                                         {index:'receipt_id',value:receipt_id},
                                         {index:'payment_id',value:account.id},
+																				{index:'receipt_link_id',value:p_id},
                                         {index:'type',value:account.type},
                                         {index:'amount',value:(parseFloat(account.total_amount)-parseFloat(account.paid_amount))},
                                         {index:'acc_name',value:account_name},
@@ -13650,6 +13664,7 @@ function modal172_action()
                                     data:[{index:'id',value:new_id},
                                         {index:'receipt_id',value:receipt_id},
                                         {index:'payment_id',value:account.id},
+																				{index:'receipt_link_id',value:p_id},
                                         {index:'type',value:account.type},
                                         {index:'amount',value:balanced_amount},
                                         {index:'acc_name',value:account_name},
@@ -13675,6 +13690,7 @@ function modal172_action()
                                     data:[{index:'id',value:new_id},
                                         {index:'receipt_id',value:receipt_id},
                                         {index:'payment_id',value:account.id},
+																				{index:'receipt_link_id',value:p_id},
                                         {index:'type',value:account.type},
                                         {index:'amount',value:account.paid_amount},
                                         {index:'acc_name',value:account_name},
@@ -13691,7 +13707,6 @@ function modal172_action()
 				});
 
 				new_id++;
-				var p_id=get_new_key();
 				if(total_amount<0)
 				{
                     var payment_json={data_store:'payments',
@@ -13715,6 +13730,7 @@ function modal172_action()
                                     data:[{index:'id',value:new_id},
                                         {index:'receipt_id',value:receipt_id},
                                         {index:'payment_id',value:p_id},
+																				{index:'receipt_link_id',value:p_id},
                                         {index:'type',value:'received'},
                                         {index:'amount',value:(-total_amount)+""},
                                         {index:'acc_name',value:account_name},
@@ -13725,7 +13741,7 @@ function modal172_action()
 					create_json(payment_json);
 				}
 
-                 var receipt_json={data_store:'receipts',
+        var receipt_json={data_store:'receipts',
 	 				data:[{index:'id',value:p_id},
 	 					{index:'receipt_id',value:receipt_id},
 	 					{index:'type',value:receipt_type},
@@ -17297,4 +17313,150 @@ function modal220_action(claim_id)
 	});
 
 	$("#modal220_link").click();
+}
+
+
+function modal221_action(t_func,i_func,v_func)
+{
+	var form=document.getElementById('modal221_form');
+
+	var template_button=form.elements['download'];
+	var select_file=form.elements['file'];
+	var dummy_button=form.elements['file_dummy'];
+	var selected_file=form.elements['selected_file'];
+	var import_button=form.elements['save'];
+
+	$(dummy_button).off('click');
+	$(dummy_button).on('click',function (e)
+	{
+		e.preventDefault();
+		$(select_file).trigger('click');
+	});
+
+	dummy_button.setAttribute('class','btn red-sunglo');
+
+	select_file.value="";
+	selected_file.value="";
+
+	$(select_file).off('change');
+	$(select_file).on('change',function ()
+	{
+		var file_name=select_file.value;
+		if(file_name!="" && (file_name.indexOf('csv')>-1))
+		{
+			dummy_button.setAttribute('class','btn green-jungle');
+			selected_file.value=file_name;
+		}
+		else
+		{
+			dummy_button.setAttribute('class','btn red-sunglo');
+
+			select_file.value="";
+			selected_file.value="";
+		}
+	});
+
+	$(template_button).off("click");
+	$(template_button).on("click",function(event)
+	{
+		t_func();
+	});
+
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		show_progress();
+  	show_loader();
+		var file=select_file.files[0];
+    var fileType = /csv/gi;
+
+    selected_file.value = "Uploading!! Please don't refresh";
+    var reader = new FileReader();
+    reader.onload = function(e)
+    {
+    	progress_value=5;
+    	var content=reader.result;
+    	var data_array=vUtil.csv2array(content);
+
+    	progress_value=10;
+      //console.log(data_array);
+
+     	if(typeof v_func!='undefined')
+     	{
+     		var error_array=v_func(data_array);
+     		if(error_array.status=='success')
+     		{
+     			i_func(data_array);
+
+        	progress_value=15;
+
+        	//console.log(data_array.length);
+
+        	var ajax_complete=setInterval(function()
+        	{
+        		//console.log(number_active_ajax);
+        		if(number_active_ajax===0)
+        		{
+        			progress_value=15+(1-(localdb_open_requests/(2*data_array.length)))*85;
+        		}
+        		else if(localdb_open_requests===0)
+        		{
+        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
+        		}
+
+        		if(number_active_ajax===0 && localdb_open_requests===0)
+        		{
+        			hide_progress();
+              hide_loader();
+        			selected_file.value="Upload complete";
+        			$(select_file).val('');
+        			clearInterval(ajax_complete);
+        		}
+        	},1000);
+          $(form).find(".close").click();
+     		}
+     		else
+     		{
+     			hide_progress();
+	   			selected_file.value="";
+	    		$(select_file).val('');
+	    		$(form).find(".close").click();
+	    		modal164_action(error_array);
+     		}
+     	}
+     	else
+     	{
+       		i_func(data_array);
+
+      		progress_value=15;
+
+        	//console.log(data_array.length);
+
+        	var ajax_complete=setInterval(function()
+        	{
+        		//console.log(number_active_ajax);
+        		if(number_active_ajax===0)
+        		{
+        			progress_value=15+(1-(localdb_open_requests/(2*data_array.length)))*85;
+        		}
+        		else if(localdb_open_requests===0)
+        		{
+        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
+        		}
+
+        		if(number_active_ajax===0 && localdb_open_requests===0)
+        		{
+        			hide_progress();
+        			selected_file.value="Upload complete";
+        			$(select_file).val('');
+        			$(form).find(".close").click();
+        			clearInterval(ajax_complete);
+        		}
+        	},1000);
+	      }
+	    }
+	    reader.readAsText(file);
+	});
+	$("#modal221_link").click();
 }

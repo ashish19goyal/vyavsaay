@@ -162,7 +162,7 @@
 
                     var payment_xml={data_store:'payments',
                                     indexes:[{index:'id'},
-                                            {index:'bill_id',exact:data_id},
+                                            {index:'source_id',exact:data_id},
                                             {index:'status',array:["pending","cancelled"]},
                                             {index:'transaction_id'}]};
                     read_json_rows('',payment_xml,function(payments)

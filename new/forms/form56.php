@@ -1,6 +1,6 @@
-<div id='form56' class='tab-pane portlet box green-meadow'>	   
+<div id='form56' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form56_add_item();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -22,9 +22,9 @@
                     </li>
                 </ul>
             </div>
-      </div>	
+      </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -43,7 +43,7 @@
 			</tbody>
 		</table>
 	</div>
-	
+
     <script>
 
         function form56_header_ini()
@@ -51,10 +51,10 @@
             var filter_fields=document.getElementById('form56_header');
             var account_filter=filter_fields.elements['account'];
             var type_filter=filter_fields.elements['type'];
-            
+
             var account_data={data_store:'accounts',return_column:'acc_name'};
             set_my_filter_json(account_data,account_filter);
-            set_static_filter_json('cash_register','type',type_filter);	
+            set_static_filter_json('cash_register','type',type_filter);
 
             $(filter_fields).off('submit');
             $(filter_fields).on('submit',function(event)
@@ -69,8 +69,8 @@
             show_loader();
             var fid=$("#form56_link").attr('data_id');
             if(fid==null)
-                fid="";	
-            
+                fid="";
+
             $('#form56_body').html("");
 
             var filter_fields=document.getElementById('form56_header');
@@ -79,24 +79,22 @@
             var fnotes=filter_fields.elements['notes'].value;
 
             var paginator=$('#form56_body').paginator();
-			
-			var columns=new Object();
-					columns.count=paginator.page_size();
-					columns.start_index=paginator.get_index();
-					columns.data_store='cash_register';
-					columns.indexes=[{index:'id',value:fid},
-									{index:'type',value:ftype},
-									{index:'acc_name',value:faccount},
-									{index:'notes',value:fnotes},
-                                    {index:'date'},
-                                    {index:'amount'}];
-			
+
+						var columns={count:paginator.page_size(),
+												start_index:paginator.get_index(),
+												data_store:'cash_register',
+												indexes:[{index:'id',value:fid},
+												{index:'type',value:ftype},
+												{index:'acc_name',value:faccount},
+												{index:'notes',value:fnotes},
+			                  {index:'date'},
+			                  {index:'amount'}]};
+
             read_json_rows('form56',columns,function(results)
             {
                 results.forEach(function(result)
                 {
-                    var rowsHTML="";
-                    rowsHTML+="<tr>";
+                    var rowsHTML="<tr>";
                         rowsHTML+="<form id='form56_"+result.id+"'></form>";
                             rowsHTML+="<td data-th='Account'>";
                                 rowsHTML+="<a onclick=\"show_object('accounts','"+result.acc_name+"');\"><textarea readonly='readonly' form='form56_"+result.id+"'>"+result.acc_name+"</textarea>";
@@ -116,8 +114,8 @@
                             rowsHTML+="<td data-th='Action'>";
                                 rowsHTML+="<input type='hidden' form='form56_"+result.id+"' value='"+result.id+"'>";
                                 rowsHTML+="<button type='submit' title='Save' class='btn green' form='form56_"+result.id+"' name='save'><i class='fa fa-save'></i></button>";
-                                rowsHTML+="<button type='button' class='btn red' name='delete' title='Delete' form='form56_"+result.id+"' onclick='form56_delete_item($(this));'><i class='fa fa-trash'></i></button>";	
-                            rowsHTML+="</td>";			
+                                rowsHTML+="<button type='button' class='btn red' name='delete' title='Delete' form='form56_"+result.id+"' onclick='form56_delete_item($(this));'><i class='fa fa-trash'></i></button>";
+                            rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form56_body').append(rowsHTML);
@@ -130,12 +128,12 @@
                 });
 
                 $('#form56').formcontrol();
-				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Cash Register','form56',function (item)
+								paginator.update_index(results.length);
+								initialize_tabular_report_buttons(columns,'Cash Register','form56',function (item)
                 {
                     item.date=get_my_past_date(item.date);
                 });
-				hide_loader();
+								hide_loader();
             });
         };
 
@@ -165,8 +163,8 @@
                     rowsHTML+="<td data-th='Action'>";
                         rowsHTML+="<input type='hidden' form='form56_"+id+"' value='"+id+"'>";
                         rowsHTML+="<button type='submit' class='btn green' title='Save' name='save' form='form56_"+id+"'><i class='fa fa-save'></i></button>";
-                        rowsHTML+="<button type='button' class='btn red' title='Delete' name='delete' form='form56_"+id+"' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";	
-                    rowsHTML+="</td>";			
+                        rowsHTML+="<button type='button' class='btn red' title='Delete' name='delete' form='form56_"+id+"' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
+                    rowsHTML+="</td>";
                 rowsHTML+="</tr>";
 
                 $('#form56_body').prepend(rowsHTML);
@@ -188,9 +186,9 @@
                 $(add_account).on('click',function()
                 {
                     modal12_action(function()
-                    {	
+                    {
                         var account_data={data_store:'accounts',return_column:'acc_name'};
-                        set_my_value_list_json(account_data,account_filter,function () 
+                        set_my_value_list_json(account_data,account_filter,function ()
                         {
                             $(account_filter).focus();
                         });
@@ -198,12 +196,12 @@
                 });
 
                 var account_data={data_store:'accounts',return_column:'acc_name'};
-                set_my_value_list_json(account_data,account_filter,function () 
+                set_my_value_list_json(account_data,account_filter,function ()
                 {
                     $(account_filter).focus();
-                });		
+                });
                 set_static_value_list_json('cash_register','type',type_filter);
-                
+
                 $('#form56').formcontrol();
             }
             else
@@ -243,54 +241,54 @@
                 var due_time=date+(parseFloat(period)*86400000);
 
                 var data_json={data_store:'cash_register',
-	 				log:'yes',
-	 				data:[{index:'id',value:data_id},
-	 					{index:'type',value:type},
-	 					{index:'acc_name',value:account},
-	 					{index:'notes',value:notes},
-                        {index:'amount',value:amount},
-                        {index:'date',value:date},  
-	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Added',notes:'Cash record of amount '+amount,link_to:'form56'}};
- 				
-                var transaction_json={data_store:'transactions',
-	 				data:[{index:'id',value:data_id},
-	 					{index:'trans_date',value:date},
-	 					{index:'amount',value:amount},
-	 					{index:'receiver',value:giver},
-                        {index:'giver',value:receiver},
-                        {index:'tax',value:'0'},  
-	 					{index:'last_updated',value:last_updated}]};
-                
-                var payment_id=get_my_time();
-                
-                var transaction2_json={data_store:'transactions',
-	 				data:[{index:'id',value:payment_id},
-	 					{index:'trans_date',value:date},
-	 					{index:'amount',value:amount},
-	 					{index:'receiver',value:receiver},
-                        {index:'giver',value:giver},
-                        {index:'tax',value:'0'},  
-	 					{index:'last_updated',value:last_updated}]};
-                
-                var payment_json={data_store:'payments',
-	 				data:[{index:'id',value:payment_id},
-	 					{index:'acc_name',value:account},
-	 					{index:'type',value:type},
-                        {index:'total_amount',value:amount},
-                        {index:'paid_amount',value:amount},  
-                        {index:'status',value:'closed'},  
-	 					{index:'date',value:date},
-                        {index:'due_date',value:due_time},
-                        {index:'mode',value:'cash'},
-                        {index:'transaction_id',value:payment_id},
-                        {index:'bill_id',value:data_id},  
-	 					{index:'last_updated',value:last_updated}]};
-                
+					 				log:'yes',
+					 				data:[{index:'id',value:data_id},
+					 					{index:'type',value:type},
+					 					{index:'acc_name',value:account},
+					 					{index:'notes',value:notes},
+				                        {index:'amount',value:amount},
+				                        {index:'date',value:date},
+					 					{index:'last_updated',value:last_updated}],
+					 				log_data:{title:'Added',notes:'Cash record of amount '+amount,link_to:'form56'}};
+
+          //       var transaction_json={data_store:'transactions',
+					// 	data:[{index:'id',value:data_id},
+	 			// 		{index:'trans_date',value:date},
+	 			// 		{index:'amount',value:amount},
+	 			// 		{index:'receiver',value:giver},
+          //               {index:'giver',value:receiver},
+          //               {index:'tax',value:'0'},
+	 			// 		{index:'last_updated',value:last_updated}]};
+					//
+          //       var payment_id=get_my_time();
+					//
+          //       var transaction2_json={data_store:'transactions',
+					// 	data:[{index:'id',value:payment_id},
+	 			// 		{index:'trans_date',value:date},
+	 			// 		{index:'amount',value:amount},
+	 			// 		{index:'receiver',value:receiver},
+          //               {index:'giver',value:giver},
+          //               {index:'tax',value:'0'},
+	 			// 		{index:'last_updated',value:last_updated}]};
+					//
+          //       var payment_json={data_store:'payments',
+					// 	data:[{index:'id',value:payment_id},
+	 			// 		{index:'acc_name',value:account},
+	 			// 		{index:'type',value:type},
+          //               {index:'total_amount',value:amount},
+          //               {index:'paid_amount',value:amount},
+          //               {index:'status',value:'closed'},
+	 			// 		{index:'date',value:date},
+          //               {index:'due_date',value:due_time},
+          //               {index:'mode',value:'cash'},
+          //               {index:'transaction_id',value:payment_id},
+          //               {index:'source_id',value:data_id},
+	 			// 		{index:'last_updated',value:last_updated}]};
+
                 create_json(data_json);
-                create_json(transaction_json);
-                create_json(transaction2_json);
-                create_json(payment_json);
+                // create_json(transaction_json);
+                // create_json(transaction2_json);
+                // create_json(payment_json);
 
                 $(form).readonly();
 
@@ -332,15 +330,15 @@
                 }
 
                 var data_json={data_store:'cash_register',
-	 				log:'yes',
-	 				data:[{index:'id',value:data_id},
-	 					{index:'type',value:type},
-	 					{index:'acc_name',value:account},
-	 					{index:'notes',value:notes},
-                        {index:'amount',value:amount},
-                        {index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Updated',notes:'Cash record of amount '+amount,link_to:'form56'}};
- 				
+						 				log:'yes',
+						 				data:[{index:'id',value:data_id},
+						 					{index:'type',value:type},
+						 					{index:'acc_name',value:account},
+						 					{index:'notes',value:notes},
+					                        {index:'amount',value:amount},
+					                        {index:'last_updated',value:last_updated}],
+						 				log_data:{title:'Updated',notes:'Cash record of amount '+amount,link_to:'form56'}};
+
                 update_json(data_json);
 
                 $(form).readonly();
@@ -366,37 +364,37 @@
                     var notes=form.elements[3].value;
                     var data_id=form.elements[5].value;
                     var last_updated=get_my_time();
-                    
+
                     var data_json={data_store:'cash_register',
-	 				log:'yes',
-	 				data:[{index:'id',value:data_id}],
-	 				log_data:{title:'Deleted',notes:'Cash record of amount '+amount,link_to:'form56'}};
- 				
-                    var transaction_json={data_store:'transactions',
-	 				data:[{index:'id',value:data_id}]};
- 				
-                    var payment_data={data_store:'payments',
-                                      indexes:[{index:'id'},
-                                              {index:'acc_name',exact:account},
-                                              {index:'type',value:type},
-                                              {index:'bill_id',exact:data_id}]};
-                    read_json_rows('',payment_data,function(payments)
-                    {
-                        if(payments.length>0)
-                        {
-                            var transaction2_json={data_store:'transactions',
-	 				          data:[{index:'id',value:payments[0].id}]};
+									 				log:'yes',
+									 				data:[{index:'id',value:data_id}],
+									 				log_data:{title:'Deleted',notes:'Cash record of amount '+amount,link_to:'form56'}};
 
-                            var payment_json={data_store:'payments',
-	 				          data:[{index:'id',value:payments[0].id}]};
-
-                            delete_json(payment_json);
-                            delete_json(transaction2_json);					
-                        }
-                    });
+                    // var transaction_json={data_store:'transactions',
+	 								// 				data:[{index:'id',value:data_id}]};
+										//
+                    // var payment_data={data_store:'payments',
+                    //                   indexes:[{index:'id'},
+                    //                           {index:'acc_name',exact:account},
+                    //                           {index:'type',value:type},
+                    //                           {index:'source_id',exact:data_id}]};
+                    // read_json_rows('',payment_data,function(payments)
+                    // {
+                    //     if(payments.length>0)
+                    //     {
+                    //         var transaction2_json={data_store:'transactions',
+										//       data:[{index:'id',value:payments[0].id}]};
+										//
+                    //         var payment_json={data_store:'payments',
+										//       data:[{index:'id',value:payments[0].id}]};
+										//
+                    //         delete_json(payment_json);
+                    //         delete_json(transaction2_json);
+                    //     }
+                    // });
 
                     delete_json(data_json);
-                    delete_json(transaction_json);
+                    //delete_json(transaction_json);
 
                     $(button).parent().parent().remove();
                 });
@@ -420,7 +418,7 @@
                                     {column:'type',required:'yes',list:['paid','received']}];
 
             var error_array=validate_import_array(data_array,validate_template_array);
-            return error_array;					
+            return error_array;
         }
 
         function form56_import(data_array,import_type)
@@ -430,14 +428,14 @@
  					log:'yes',
  					data:[],
  					log_data:{title:'Entries for cash register',link_to:'form56'}};
-            
-            var transaction_json={data_store:'transactions',
- 					loader:'no',
- 					data:[]};
 
-            var payment_json={data_store:'payments',
- 					loader:'no',
- 					data:[]};
+          //   var transaction_json={data_store:'transactions',
+ 				// 	loader:'no',
+ 				// 	data:[]};
+					//
+          //   var payment_json={data_store:'payments',
+ 				// 	loader:'no',
+ 				// 	data:[]};
 
 			var counter=1;
 			var last_updated=get_my_time();
@@ -451,7 +449,7 @@
 				}
                 var receiver=row.acc_name;
                 var giver="master";
-                
+
                 if(row.type=='received')
                 {
                     giver=row.acc_name;
@@ -463,58 +461,57 @@
 	 					{index:'acc_name',value:row.acc_name},
 	 					{index:'amount',value:row.amount},
 	 					{index:'notes',value:row.notes},
-                        {index:'date',value:get_raw_time(row.date)},
+            {index:'date',value:get_raw_time(row.date)},
 	 					{index:'last_updated',value:last_updated}];
 
-                var t1_json_array=[{index:'id',value:row.id},
-	 					{index:'amount',value:row.amount},
-	 					{index:'receiver',value:giver},
-	 					{index:'giver',value:receiver},
-	 					{index:'tax',value:'0'},
-                        {index:'trans_date',value:get_raw_time(row.date)},
-	 					{index:'last_updated',value:last_updated}];
-                
-                var t2_json_array=[{index:'id',value:payment_id+counter},
-	 					{index:'amount',value:row.amount},
-	 					{index:'receiver',value:receiver},
-	 					{index:'giver',value:giver},
-	 					{index:'tax',value:'0'},
-                        {index:'trans_date',value:get_raw_time(row.date)},
-	 					{index:'last_updated',value:last_updated}];
+        // var t1_json_array=[{index:'id',value:row.id},
+	 		// 			{index:'amount',value:row.amount},
+	 		// 			{index:'receiver',value:giver},
+	 		// 			{index:'giver',value:receiver},
+	 		// 			{index:'tax',value:'0'},
+        //     {index:'trans_date',value:get_raw_time(row.date)},
+	 		// 			{index:'last_updated',value:last_updated}];
+				//
+        // var t2_json_array=[{index:'id',value:payment_id+counter},
+	 		// 			{index:'amount',value:row.amount},
+	 		// 			{index:'receiver',value:receiver},
+	 		// 			{index:'giver',value:giver},
+	 		// 			{index:'tax',value:'0'},
+        //     {index:'trans_date',value:get_raw_time(row.date)},
+	 		// 			{index:'last_updated',value:last_updated}];
+				//
+        //     var payment_json_array=[{index:'id',value:payment_id+counter},
+				// 			 					{index:'acc_name',value:row.acc_name},
+				// 			 					{index:'type',value:row.type},
+				// 			 					{index:'total_amount',value:row.amount},
+				// 			 					{index:'paid_amount',value:row.amount},
+				// 			 					{index:'status',value:'closed'},
+        //                 {index:'date',value:get_raw_time(row.date)},
+        //                 {index:'due_date',value:get_my_time()},
+        //                 {index:'mode',value:'cash'},
+        //                 {index:'transaction_id',value:payment_id},
+        //                 {index:'source_id',value:row.id},
+	 		// 									{index:'last_updated',value:last_updated}];
 
-                var payment_json_array=[{index:'id',value:payment_id+counter},
-	 					{index:'acc_name',value:row.acc_name},
-	 					{index:'type',value:row.type},
-	 					{index:'total_amount',value:row.amount},
-	 					{index:'paid_amount',value:row.amount},
-	 					{index:'status',value:'closed'},
-                        {index:'date',value:get_raw_time(row.date)},
-                        {index:'due_date',value:get_my_time()},
-                        {index:'mode',value:'cash'},
-                        {index:'transaction_id',value:payment_id},
-                        {index:'bill_id',value:row.id},   
-	 					{index:'last_updated',value:last_updated}];
-
-               data_json.data.push(data_json_array);
-                transaction_json.data.push(t1_json_array);
-                transaction_json.data.push(t2_json_array);
-                payment_json.data.push(payment_json_array);
+            data_json.data.push(data_json_array);
+            // transaction_json.data.push(t1_json_array);
+            // transaction_json.data.push(t2_json_array);
+            // payment_json.data.push(payment_json_array);
 			});
-			
+
 			if(import_type=='create_new')
 			{
 				create_batch_json(data_json);
-                create_batch_json(transaction_json);
-                create_batch_json(payment_json);
+        // create_batch_json(transaction_json);
+        // create_batch_json(payment_json);
 			}
 			else
 			{
 				update_batch_json(data_json);
-                update_batch_json(transaction_json);
-                update_batch_json(payment_json);
+        // update_batch_json(transaction_json);
+        // update_batch_json(payment_json);
 			}
-            
-        };
+    };
 
     </script>
 </div>

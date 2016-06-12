@@ -1,4 +1,4 @@
-<div id='form283' class='tab-pane portlet box green-meadow'>	   
+<div id='form283' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class="actions">
             <div class="btn-group">
@@ -15,9 +15,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -35,7 +35,7 @@
 			</tbody>
 		</table>
 	</div>
-    
+
     <script>
         function form283_header_ini()
         {
@@ -62,7 +62,7 @@
             show_loader();
             var fid=$("#form283_link").attr('data_id');
             if(fid==null)
-                fid="";	
+                fid="";
 
             $('#form283_body').html("");
 
@@ -71,7 +71,7 @@
             var fname=filter_fields.elements['cust'].value;
 
             var paginator=$('#form283_body').paginator();
-			
+
 			var new_columns=new Object();
                 new_columns.count=paginator.page_size();
 				new_columns.start_index=paginator.get_index();
@@ -114,14 +114,14 @@
                             {
                                 rowsHTML+="<button type='button' class='btn red' form='form283_"+result.id+"' title='Delete Bill' onclick='form283_delete_item($(this));'><i class='fa fa-trash'></i></button>";
                             }
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form283_body').append(rowsHTML);
                     var fields=document.getElementById("form283_"+result.id);
 
                     if(result.status!='cancelled')
-                    {			
+                    {
                         var input_link=fields.elements[0];
                         $(input_link).parent().on("click", function(event)
                         {
@@ -159,27 +159,30 @@
                     var last_updated=get_my_time();
 
                     var bill_json={data_store:'bills',
-	 				log:'yes',
-	 				data:[{index:'id',value:data_id},
-	 					{index:'status',value:'cancelled'},
-	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:"Cancelled",notes:"Invoice # "+bill_num,link_to:"form283"}};
-                    var transaction_json={data_store:'transactions',
- 							data:[{index:'id',value:data_id}]};
-                    var items_json={data_store:'bill_items',
- 							data:[{index:'bill_id',value:data_id}]};
-                    var adjust_json={data_store:'inventory_adjust',
- 							data:[{index:'source',value:'sale'},
-                                 {index:'source_id',value:data_id}]};
-			
-                    update_json(bill_json);	
-                    delete_json(transaction_json);	
+									 				log:'yes',
+									 				data:[{index:'id',value:data_id},
+									 					{index:'status',value:'cancelled'},
+									 					{index:'last_updated',value:last_updated}],
+									 				log_data:{title:"Cancelled",notes:"Invoice # "+bill_num,link_to:"form283"}};
+
+										var transaction_json={data_store:'transactions',
+								 							data:[{index:'id',value:data_id}]};
+
+										var items_json={data_store:'bill_items',
+								 							data:[{index:'bill_id',value:data_id}]};
+
+										var adjust_json={data_store:'inventory_adjust',
+								 							data:[{index:'source',value:'sale'},
+								                   {index:'source_id',value:data_id}]};
+
+                    update_json(bill_json);
+                    delete_json(transaction_json);
                     delete_json(items_json);
                     delete_json(adjust_json);
 
                     var payment_xml={data_store:'payments',
                                     indexes:[{index:'id'},
-                                            {index:'bill_id',exact:data_id},
+                                            {index:'source_id',exact:data_id},
                                             {index:'status',array:['pending','cancelled']},
                                             {index:'transaction_id'}]};
                     read_json_rows('',payment_xml,function(payments)
@@ -187,14 +190,14 @@
                         if(payments.length>0)
                         {
                             var pt_json={data_store:'transactions',
- 							data:[{index:'id',value:payments[0].transaction_id}]};
+ 																data:[{index:'id',value:payments[0].transaction_id}]};
                             var pay_json={data_store:'payments',
- 							data:[{index:'id',value:payments[0].id}]};
-			
+ 																data:[{index:'id',value:payments[0].id}]};
+
                             delete_json(pay_json);
                             delete_json(pt_json);
                         }
-                    });			
+                    });
                     $(button).parent().parent().remove();
                 });
             }

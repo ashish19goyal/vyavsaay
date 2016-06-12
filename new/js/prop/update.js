@@ -1335,7 +1335,7 @@ function form21_update_form()
 
 		var payment_data="<payments>" +
 				"<id></id>" +
-				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
+				"<source_id exact='yes'>"+data_id+"</source_id>" +
 				"</payments>";
 		get_single_column_data(function(payments)
 		{
@@ -2493,7 +2493,7 @@ function form72_update_form()
 
 		var payment_data="<payments>" +
 				"<id></id>" +
-				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
+				"<source_id exact='yes'>"+data_id+"</source_id>" +
 				"</payments>";
 		get_single_column_data(function(payments)
 		{

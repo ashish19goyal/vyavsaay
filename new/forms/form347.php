@@ -5,12 +5,15 @@
 					<label class='btn yellow-crusta current active' onclick=form347_ini('current');><input name='current' type='radio' class='toggle'>Active</label>
 					<label class='btn yellow-crusta expired' onclick=form347_ini('expired');><input type='radio' name='expired' class='toggle'>Expired</label>
 			</div>
-			<a class='btn btn-circle grey btn-outline btn-sm' onclick='modal216_action();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
                 <ul class="dropdown-menu pull-right">
+										<li>
+												<a onclick='modal216_action();'><i class='fa fa-plus'> Add</i></a>
+										</li>
+										<li class="divider"> </li>
                     <li>
                         <a id='form347_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
                     </li>
@@ -22,7 +25,7 @@
                     </li>
                     <li class="divider"> </li>
                     <li>
-                        <a id='form347_upload' onclick=modal23_action(form347_import_template,form347_import,form347_import_validate);><i class='fa fa-upload'></i> Import</a>
+                        <a id='form347_upload' onclick=modal221_action(form347_import_template,form347_import,form347_import_validate);><i class='fa fa-upload'></i> Import</a>
                     </li>
                 </ul>
             </div>
@@ -207,7 +210,7 @@
             return error_array;
         }
 
-        function form347_import(data_array,import_type)
+        function form347_import(data_array)
         {
           var data_json={data_store:'policies',
 		 					log:'yes',
@@ -228,10 +231,6 @@
 					data_array.forEach(function(row)
 					{
 						counter+=1;
-						if(import_type=='create_new')
-						{
-							row.id=last_updated+counter;
-						}
 
 						var holder=row['policy holder name']+" ("+row['policy holder phone']+")";
 						var data_json_array=[{index:'id',value:row.id},
@@ -271,18 +270,13 @@
 						attribute_json.data.push(attribute_json_array);
 					});
 
-					if(import_type=='create_new')
-					{
 						create_batch_json(data_json);
 						create_batch_json(customer_json);
 						create_batch_json(attribute_json);
-					}
-					else
-					{
 						update_batch_json(data_json);
 						update_batch_json(customer_json);
 						update_batch_json(attribute_json);
-					}
+
         };
 
     </script>

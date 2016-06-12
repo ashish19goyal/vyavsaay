@@ -228,7 +228,7 @@ function form284_ini()
                                  {index:'storage'},
                                  {index:'notes'}]};"<bills>" +
 
-        read_json_rows('form284',bill_columns,function(bill_results)
+    read_json_rows('form284',bill_columns,function(bill_results)
 		{
 			if(bill_results.length>0)
 			{
@@ -288,7 +288,7 @@ function form284_ini()
 			}
         });
 
-		var bill_items_column={data_store:"bill_items",
+				var bill_items_column={data_store:"bill_items",
                               indexes:[{index:'id'},
                                       {index:'item_name'},
                                       {index:'item_desc'},
@@ -303,7 +303,7 @@ function form284_ini()
                                       {index:'tax'},
                                       {index:'from_date'},
                                       {index:'to_date'}]};
-		read_json_rows('form284',bill_items_column,function(results)
+				read_json_rows('form284',bill_items_column,function(results)
         {
             results.forEach(function(result)
             {
@@ -322,8 +322,8 @@ function form284_ini()
                         rowsHTML+="<input type='number' readonly='readonly' form='form284_"+id+"' value='"+result.quantity+"' step='any' placeholder='"+result.unit+"' class='floatlabel_right'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Amount'>";
-                        rowsHTML+="<input type='number' placeholder='Rate' class='floatlabel' readonly='readonly' form='form284_"+id+"' value='"+result.unit_price+"'>";
-                        rowsHTML+="<input type='number' placeholder='Amount' class='floatlabel' readonly='readonly' form='form284_"+id+"' value='"+result.amount+"'>";
+												rowsHTML+="<input type='number' placeholder='Amount' class='floatlabel' readonly='readonly' form='form284_"+id+"' value='"+result.amount+"'>";
+										    rowsHTML+="<input type='number' placeholder='Rate' class='floatlabel' readonly='readonly' form='form284_"+id+"' value='"+result.unit_price+"'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Action'>";
                         rowsHTML+="<input type='hidden' form='form284_"+id+"' value='"+id+"'>";
@@ -350,8 +350,8 @@ function form284_ini()
             $('#form284').formcontrol();
             hide_loader();
         });
-	}
-}
+			}
+		}
 
 function form284_add_item()
 {
@@ -377,8 +377,8 @@ function form284_add_item()
 				rowsHTML+="<input type='number' min='0' required placeholder='Quantity' form='form284_"+id+"' step='any'> <b id='form284_unit_"+id+"'></b>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+="<input type='number' placeholder='Rate' class='floatlabel' required form='form284_"+id+"' step='any'>";
-				rowsHTML+="<input type='number' required placeholder='Amount' class='floatlabel' readonly='readonly' form='form284_"+id+"' step='any'>";
+				rowsHTML+="<input type='number' required placeholder='Amount' class='floatlabel' form='form284_"+id+"' step='any'>";
+				rowsHTML+="<input type='number' placeholder='Rate' class='floatlabel' required readonly='readonly' form='form284_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form284_"+id+"' value='"+id+"'>";
@@ -394,8 +394,8 @@ function form284_add_item()
 		var name_filter=fields.elements[0];
 		var detail_filter=fields.elements[1];
 		var quantity_filter=fields.elements[2];
-		var price_filter=fields.elements[3];
-		var amount_filter=fields.elements[4];
+		var amount_filter=fields.elements[3];
+		var price_filter=fields.elements[4];
 		var id_filter=fields.elements[5];
 		var save_button=fields.elements[6];
 
@@ -423,7 +423,7 @@ function form284_add_item()
                           indexes:[{index:'name',exact:name_filter.value}]};
 			set_my_value_json(desc_data,detail_filter);
 
-            var unit_data={data_store:'attributes',count:1,return_column:'value',
+      var unit_data={data_store:'attributes',count:1,return_column:'value',
                           indexes:[{index:'attribute',exact:'Unit'},
                                   {index:'name',exact:name_filter.value}]};
 			read_json_single_column(unit_data,function(units)
@@ -436,14 +436,14 @@ function form284_add_item()
 			});
 		});
 
-		$(price_filter).add(quantity_filter).on('blur',function(event)
+		$(amount_filter).add(quantity_filter).on('blur',function(event)
 		{
-			amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(price_filter.value)),2);
+			price_filter.value=my_round((parseFloat(amount_filter.value)/parseFloat(quantity_filter.value)),2);
 		});
 
 		form284_update_serial_numbers();
 		form284_get_totals();
-        $('#form284').formcontrol();
+    $('#form284').formcontrol();
 	}
 	else
 	{
@@ -460,8 +460,8 @@ function form284_create_item(form)
 		var name=form.elements[0].value;
 		var details=form.elements[1].value;
 		var quantity=form.elements[2].value;
-		var price=form.elements[3].value;
-		var amount=form.elements[4].value;
+		var amount=form.elements[3].value;
+		var price=form.elements[4].value;
 		var data_id=form.elements[5].value;
 		var save_button=form.elements[6];
 		var del_button=form.elements[7];
@@ -546,8 +546,8 @@ function form284_create_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			if(!isNaN(parseFloat(subform.elements[4].value)))
-				amount+=parseFloat(subform.elements[4].value);
+			if(!isNaN(parseFloat(subform.elements[3].value)))
+				amount+=parseFloat(subform.elements[3].value);
 		});
 
 		amount=my_round(amount,2);
@@ -580,10 +580,10 @@ function form284_create_form()
 	 				data:[{index:'id',value:data_id},
 	 					{index:'trans_date',value:last_updated},
 	 					{index:'amount',value:total},
-                        {index:'giver',value:'master'},
-                        {index:'receiver',value:customer},
-                        {index:'tax',value:tax},
-                        {index:'last_updated',value:last_updated}]};
+            {index:'giver',value:'master'},
+            {index:'receiver',value:customer},
+            {index:'tax',value:tax},
+            {index:'last_updated',value:last_updated}]};
 
         var pt_tran_id=get_new_key();
 
@@ -685,8 +685,8 @@ function form284_update_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			if(!isNaN(parseFloat(subform.elements[4].value)))
-				amount+=parseFloat(subform.elements[4].value);
+			if(!isNaN(parseFloat(subform.elements[3].value)))
+				amount+=parseFloat(subform.elements[3].value);
 		});
 
 		amount=my_round(amount,2);
@@ -697,33 +697,33 @@ function form284_update_form()
 
         var data_json={data_store:'bills',
 	 				data:[{index:'id',value:data_id},
-	 					{index:'customer_name',value:customer},
-                        {index:'bill_date',value:bill_date},
-                        {index:'amount',value:amount},
-                        {index:'total',value:total},
-                        {index:'tax',value:tax},
-                        {index:'cartage',value:cartage},
-                        {index:'billing_type',value:bill_type},
-                        {index:'tax_rate',value:tax_rate},
-                        {index:'transaction_id',value:data_id},
-                        {index:'notes',value:narration},
+	 							{index:'customer_name',value:customer},
+                {index:'bill_date',value:bill_date},
+                {index:'amount',value:amount},
+                {index:'total',value:total},
+                {index:'tax',value:tax},
+                {index:'cartage',value:cartage},
+                {index:'billing_type',value:bill_type},
+                {index:'tax_rate',value:tax_rate},
+                {index:'transaction_id',value:data_id},
+                {index:'notes',value:narration},
         				{index:'last_updated',value:last_updated}],
-                    log:'yes',
-                    log_data:{title:'Updated',notes:'Invoice # '+bill_num,link_to:'form283'}};
+            log:'yes',
+            log_data:{title:'Updated',notes:'Invoice # '+bill_num,link_to:'form283'}};
 
         var transaction_json={data_store:'transactions',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'trans_date',value:last_updated},
 	 					{index:'amount',value:total},
-                        {index:'giver',value:'master'},
-                        {index:'receiver',value:customer},
-                        {index:'tax',value:tax},
-                        {index:'last_updated',value:last_updated}]};
+            {index:'giver',value:'master'},
+            {index:'receiver',value:customer},
+            {index:'tax',value:tax},
+            {index:'last_updated',value:last_updated}]};
 
         update_json(data_json);
-		update_json(transaction_json);
+				update_json(transaction_json);
 
-		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+				var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 					"<td>Amount:<br>Tax(%):@ <input type='number' readonly='readonly' value='"+tax_rate+"' step='any' id='form284_tax' class='dblclick_editable' style='width: 60%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"Rs. "+tax+" <br>" +
@@ -734,36 +734,36 @@ function form284_update_form()
 
 		$('#form284_foot').html(total_row);
 
-		var payment_data={data_store:'payments',return_column:'id',count:1,indexes:[{index:'bill_id',exact:data_id}]};
+		var payment_data={data_store:'payments',return_column:'id',count:1,indexes:[{index:'source_id',exact:data_id}]};
 		read_json_single_column(payment_data,function(payments)
 		{
 			if(payments.length>0)
 			{
-                var payment_json={data_store:'payments',
+          var payment_json={data_store:'payments',
 	 				data:[{index:'id',value:payments[0]},
 	 					{index:'type',value:'received'},
 	 					{index:'total_amount',value:total},
-                        {index:'acc_name',value:customer},
-                        {index:'last_updated',value:last_updated}]};
+            {index:'acc_name',value:customer},
+            {index:'last_updated',value:last_updated}]};
 
-                var pt_json={data_store:'transactions',
+          var pt_json={data_store:'transactions',
 	 				data:[{index:'id',value:payments[0]},
 	 					{index:'trans_date',value:last_updated},
 	 					{index:'amount',value:total},
-                        {index:'receiver',value:'master'},
-                        {index:'giver',value:customer},
-                        {index:'tax',value:0},
-                        {index:'last_updated',value:last_updated}]};
+            {index:'receiver',value:'master'},
+            {index:'giver',value:customer},
+            {index:'tax',value:0},
+            {index:'last_updated',value:last_updated}]};
 
 				update_json(payment_json,function()
 				{
 					//modal26_action(payments[y]);
 				});
-                update_json(pt_json);
+        update_json(pt_json);
 			}
 		});
 
-        $('#form284').formcontrol();
+    $('#form284').formcontrol();
 		$("[id^='save_form284_']").click();
 	}
 	else
@@ -782,9 +782,9 @@ function form284_delete_item(button)
 			var form=document.getElementById(form_id);
 			var data_id=form.elements[5].value;
 
-            var data_json={data_store:'bill_items',
+      var data_json={data_store:'bill_items',
 	 				data:[{index:'id',value:data_id}]};
-            var adjust_json={data_store:'inventory_adjust',
+      var adjust_json={data_store:'inventory_adjust',
 	 				data:[{index:'id',value:data_id}]};
 
 			delete_json(data_json);
@@ -828,8 +828,8 @@ function form284_get_totals()
 	{
 		var subform_id=$(this).attr('form');
 		var subform=document.getElementById(subform_id);
-		if(!isNaN(parseFloat(subform.elements[4].value)))
-				amount+=parseFloat(subform.elements[4].value);
+		if(!isNaN(parseFloat(subform.elements[3].value)))
+				amount+=parseFloat(subform.elements[3].value);
 	});
 
 	amount=my_round(amount,2);
@@ -948,8 +948,8 @@ function print_form284(func)
 		var item_name=form.elements[0].value;
 		var details=form.elements[1].value;
 		var quantity=""+form.elements[2].value;
-		var rate=form.elements[3].value;
-		var amount=form.elements[4].value;
+		var rate=form.elements[4].value;
+		var amount=form.elements[3].value;
 		var unit=form.elements[2].placeholder;
 
 		table_rows+="<tr>"+

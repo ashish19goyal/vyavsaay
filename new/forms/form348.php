@@ -6,13 +6,16 @@
 					<label class='btn green-jungle received' onclick=form348_ini('received');><input type='radio' name='received' class='toggle'>Received</label>
 					<label class='btn green-jungle rejected' onclick=form348_ini('rejected');><input type='radio' name='rejected' class='toggle'>Rejected</label>
 			</div>
-			<a class='btn btn-circle grey btn-outline btn-sm' onclick='modal218_action();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
                 <ul class="dropdown-menu pull-right">
-                    <li>
+										<li>
+												<a onclick='modal218_action();'><i class='fa fa-plus'> Add</i></a>
+										</li>
+										<li class="divider"> </li>
+										<li>
                         <a id='form348_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
                     </li>
                     <li>
@@ -23,7 +26,7 @@
                     </li>
 										<li class="divider"> </li>
                     <li>
-                        <a id='form348_upload' onclick=modal23_action(form348_import_template,form348_import,form348_import_validate);><i class='fa fa-upload'></i> Import</a>
+                        <a id='form348_upload' onclick=modal221_action(form348_import_template,form348_import,form348_import_validate);><i class='fa fa-upload'></i> Import</a>
                     </li>
                 </ul>
             </div>
@@ -250,7 +253,7 @@
 			return error_array;
 		}
 
-		function form348_import(data_array,import_type)
+		function form348_import(data_array)
 		{
 			var create_json={data_store:'policy_commissions',
  					log:'yes',

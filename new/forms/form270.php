@@ -572,12 +572,12 @@ function form270_update_form()
 		update_json(data_json);
 		update_json(transaction_json);
 
-		var payment_data={data_store:'payments',count:1,return_column:'id',indexes:[{index:'bill_id',exact:data_id}]};
+		var payment_data={data_store:'payments',count:1,return_column:'id',indexes:[{index:'source_id',exact:data_id}]};
 		read_json_single_column(payment_data,function(payments)
 		{
 			if(payments.length>0)
 			{
-                var payment_json={data_store:'payments',
+          var payment_json={data_store:'payments',
 	 				data:[{index:'id',value:payments[0]},
 	 					{index:'type',value:'paid'},
                         {index:'total_amount',value:total},
@@ -596,8 +596,8 @@ function form270_update_form()
                         {index:'tax',value:0},
 	 					{index:'last_updated',value:last_updated}]};
 
-                update_json(pt_json);
-                update_json(payment_json,function()
+        update_json(pt_json);
+        update_json(payment_json,function()
 				{
 					modal28_action(payments[0]);
 				});
@@ -626,7 +626,7 @@ function form270_delete_item(button)
 
 			var data_id=form.elements[6].value;
 
-            var data_json={data_store:'supplier_bill_items',
+      var data_json={data_store:'supplier_bill_items',
 	 				data:[{index:'id',value:data_id}]};
 			delete_json(data_json);
 

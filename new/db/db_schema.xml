@@ -367,6 +367,7 @@
 	<receipts_payment_mapping>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<receipt_id index='yes' type="VARCHAR(20)"></receipt_id>
+			<receipt_link_id index='yes' type="BIGINT"></receipt_link_id>
 			<payment_id index='yes' type="BIGINT"></payment_id>
 			<type index='yes' type="VARCHAR(10)"></type><!-- received/paid -->
 			<amount index='no' type="DECIMAL(12,2)"></amount>
