@@ -3184,8 +3184,10 @@ function modal31_action()
 	balance_filter.value="";
 	amount_filter.value="";
 
+	var receipt_id="";
 	$(receipt_filter).off('blur');
-	$(receipt_filter).on('blur',function(e)
+	$(receipt_filter).off('change');
+	$(receipt_filter).on('blur change',function(e)
 	{
 		var receipts_data={data_store:'receipts',count:1,
                            indexes:[{index:'id'},
@@ -3196,35 +3198,27 @@ function modal31_action()
 		{
 			if(receipts.length>0)
 			{
+				receipt_id=receipts[0].id;
 				account_filter.value=receipts[0].acc_name;
-				var receipt_amount=0;
-				for(var j in receipts)
-				{
-					receipt_amount+=parseFloat(receipts[j].amount);
-				}
-				amount_filter.value=receipt_amount;
+				amount_filter.value=receipts[0].amount;
 
-				var payments_data={data_store:'payments',
+				var transactions_data={data_store:'transactions',
                                   indexes:[{index:'id'},
                                           {index:'type'},
-                                          {index:'total_amount'},
-                                          {index:'paid_amount'},
-                                          {index:'status',exact:'pending'},
+                                          {index:'amount'},
                                           {index:'acc_name',exact:account_filter.value}]};
-				read_json_rows('',payments_data,function(payments)
+				read_json_rows('',transactions_data,function(transactions)
 				{
 					var balance_amount=0;
-					payments.forEach(function(payment)
+					transactions.forEach(function(tran)
 					{
-						if(payment.type=='received')
+						if(tran.type=='received')
 						{
-							balance_amount+=parseFloat(payment.total_amount);
-							balance_amount-=parseFloat(payment.paid_amount);
+							balance_amount-=parseFloat(tran.amount);
 						}
-						else if(payment.type=='paid')
+						else if(tran.type=='given')
 						{
-							balance_amount-=parseFloat(payment.total_amount);
-							balance_amount+=parseFloat(payment.paid_amount);
+							balance_amount+=parseFloat(tran.amount);
 						}
 					});
 
@@ -3255,48 +3249,14 @@ function modal31_action()
 
 		if(is_delete_access('form124') || is_delete_access('form243') || is_delete_access('form291') || is_delete_access('form282'))
 		{
-			var receipts_data={data_store:'receipts_payment_mapping',
-                              indexes:[{index:'id'},
-                                      {index:'receipt_id',exact:receipt_id},
-                                      {index:'payment_id'},
-                                      {index:'amount'}]};
-			read_json_rows('',receipts_data,function(receipts)
-			{
-				receipts.forEach(function(receipt)
-				{
-					var payments_data={data_store:'payments',
-                                      indexes:[{index:'id',value:receipt.payment_id+""},
-                                              {index:'paid_amount'}]};
-					read_json_rows('',payments_data,function(payments)
-					{
-						var last_updated=get_my_time();
-						payments.forEach(function(payment)
-						{
-							var paid_amount=parseFloat(payment.paid_amount)-parseFloat(receipt.amount);
-							var payment_json={data_store:'payments',
-                                data:[{index:'id',value:payment.id},
-                                    {index:'paid_amount',value:paid_amount},
-                                    {index:'status',value:'pending'},
-                                    {index:'last_updated',value:last_updated}]};
+      var receipt_json={data_store:'receipts',
+	 					data:[{index:'id',value:receipt_id}]};
 
-							update_json(payment_json);
-						});
+    	var tran_json={data_store:'transactions',
+	 					data:[{index:'source_id',value:receipt_id}]};
 
-                        var receipt_json={data_store:'receipts',
-	 					data:[{index:'receipt_id',value:receipt_id}]};
-
-                        var receipt_payment_json={data_store:'receipts_payment_mapping',
-	 					data:[{index:'receipt_id',value:receipt_id}]};
-
-                        var payment_json={data_store:'payments',
-	 					data:[{index:'bill_id',value:receipt_id}]};
-
-						delete_json(receipt_json);
-						delete_json(receipt_payment_json);
-						delete_json(payment_json);
-					});
-				});
-			});
+			delete_json(receipt_json);
+			delete_json(tran_json);
 		}
 		else
 		{
@@ -11427,7 +11387,6 @@ function modal155_action()
 	var narration_filter=form.elements['narration'];
 	var amount_filter=form.elements['amount'];
 	var balance_filter=form.elements['balance'];
-	var type_filter=form.elements['type'];
 	var receipt_record_id="";
 
 	$(date_filter).datepicker();
@@ -11450,29 +11409,26 @@ function modal155_action()
 	set_my_value_list_json(accounts_data,account_filter);
 
 	$(account_filter).off('blur');
-	$(account_filter).on('blur',function(e)
+	$(account_filter).off('change');
+	$(account_filter).on('blur change',function(e)
 	{
-		var payments_data={data_store:'payments',
-                          indexes:[{index:'id'},
-                                  {index:'type'},
-                                  {index:'total_amount'},
-                                  {index:'paid_amount'},
-                                  {index:'status',exact:'pending'},
-                                  {index:'acc_name',exact:account_filter.value}]};
-		read_json_rows('',payments_data,function(payments)
+		var transactions_data={data_store:'transactions',
+															indexes:[{index:'id'},
+																			{index:'type'},
+																			{index:'amount'},
+																			{index:'acc_name',exact:account_filter.value}]};
+		read_json_rows('',transactions_data,function(transactions)
 		{
 			var balance_amount=0;
-			payments.forEach(function(payment)
+			transactions.forEach(function(tran)
 			{
-				if(payment.type=='received')
+				if(tran.type=='received')
 				{
-					balance_amount+=parseFloat(payment.total_amount);
-					balance_amount-=parseFloat(payment.paid_amount);
+					balance_amount-=parseFloat(tran.amount);
 				}
-				else if(payment.type=='paid')
+				else if(tran.type=='given')
 				{
-					balance_amount-=parseFloat(payment.total_amount);
-					balance_amount+=parseFloat(payment.paid_amount);
+					balance_amount+=parseFloat(tran.amount);
 				}
 			});
 
@@ -11489,7 +11445,6 @@ function modal155_action()
 				balance_amount=(-balance_amount);
 				balance_filter.value="Payable: Rs. "+balance_amount;
 			}
-			type_filter.value='received';
 		});
 	});
 
@@ -11501,314 +11456,36 @@ function modal155_action()
 		var received_amount=amount_filter.value;
 		var receipt_date=get_raw_time(date_filter.value);
 		var receipt_id=form.elements['receipt_id'].value;
-		var receipt_type=type_filter.value;
+		var receipt_type='received';
 		var account_name=account_filter.value;
-		var counter_payment=parseFloat(amount_filter.value);
+		var narration=narration_filter.value;
+		var last_updated=vTime.unix();
 		var p_id=get_new_key();
 
 		if(is_create_access('form124') || is_create_access('form243') || is_create_access('form291') || is_create_access('form282'))
 		{
-			var accounts_data={data_store:'payments',
-                              indexes:[{index:'id'},
-                                      {index:'type'},
-                                      {index:'status',exact:'pending'},
-                                      {index:'acc_name',exact:account_name},
-                                      {index:'date'},
-                                      {index:'total_amount'},
-                                      {index:'paid_amount'}]};
-			read_json_rows('',accounts_data,function(accounts)
-			{
-				accounts.sort(function(a,b)
-				{
-					if(a.date>b.date)
-					{	return 1;}
-					else
-					{	return -1;}
-				});
+			var transaction_json={data_store:'transactions',
+				data:[{index:'id',value:p_id},
+					{index:'acc_name',value:account_name},
+					{index:'type',value:receipt_type},
+					{index:'amount',value:received_amount},
+					{index:'tax',value:'0'},
+					{index:'source_id',value:p_id},
+					{index:'source_info',value:receipt_id},
+					{index:'source',value:'receipt'},
+					{index:'source_link',value:'form291'},
+					{index:'trans_date',value:receipt_date},
+					{index:'notes',value:narration},
+					{index:'last_updated',value:last_updated}]};
 
-				var total_amount=0;
-
-				for(var i=0;i<accounts.length;i++)
-				{
-					if(accounts[i].type=='received')
-					{
-						total_amount+=parseFloat(accounts[i].total_amount);
-						total_amount-=parseFloat(accounts[i].paid_amount);
-					}
-					else if(accounts[i].type=='paid')
-					{
-						total_amount-=parseFloat(accounts[i].total_amount);
-						total_amount+=parseFloat(accounts[i].paid_amount);
-					}
-				}
-
-				total_amount=total_amount-counter_payment;
-
-				if(total_amount>0)
-				{
-					accounts.sort(function(a,b)
-					{
-						if(a.type>b.type)
-						{	return 1;}
-						else
-						{	return -1;}
-					});
-					console.log(accounts);
-				}
-				else
-				{
-					accounts.sort(function(a,b)
-					{
-						if(a.type<b.type)
-						{	return 1;}
-						else
-						{	return -1;}
-					});
-					//console.log(accounts);
-				}
-
-				console.log(total_amount);
-
-				var new_id=get_new_key();
-				var last_updated=get_my_time();
-				accounts.forEach(function(account)
-				{
-					new_id++;
-					if(total_amount==0)
-					{
-                        var notes=account.notes+"\nClosed by receipt # "+receipt_id;
-
-                        var payment_json={data_store:'payments',
-                        data:[{index:'id',value:account.id},
-                            {index:'status',value:'closed'},
-                            {index:'paid_amount',value:account.total_amount},
-                            {index:'notes',value:notes},
-                            {index:'last_updated',value:last_updated}]};
-
-                        var receipts_json={data_store:'receipts_payment_mapping',
-                        data:[{index:'id',value:new_id},
-                            {index:'receipt_id',value:receipt_id},
-                            {index:'payment_id',value:account.id},
-														{index:'receipt_link_id',value:p_id},
-                            {index:'type',value:account.type},
-                            {index:'amount',value:(parseFloat(account.total_amount)-parseFloat(account.paid_amount))},
-                            {index:'acc_name',value:account_name},
-                            {index:'date',value:receipt_date},
-                            {index:'last_updated',value:last_updated}]};
-
-						update_json(payment_json);
-						create_json(receipts_json);
-					}
-					else
-					{
-						if(account.type=='paid')
-						{
-							if(total_amount>0)
-							{
-								var notes=account.notes+"\nClosed by receipt # "+receipt_id;
-
-                                var payment_json={data_store:'payments',
-                                data:[{index:'id',value:account.id},
-                                    {index:'status',value:'closed'},
-                                    {index:'paid_amount',value:account.total_amount},
-                                    {index:'notes',value:notes},
-                                    {index:'last_updated',value:last_updated}]};
-
-                                var receipts_json={data_store:'receipts_payment_mapping',
-                                data:[{index:'id',value:new_id},
-                                    {index:'receipt_id',value:receipt_id},
-                                    {index:'payment_id',value:account.id},
-																		{index:'receipt_link_id',value:p_id},
-                                    {index:'type',value:account.type},
-                                    {index:'amount',value:(parseFloat(account.total_amount)-parseFloat(account.paid_amount))},
-                                    {index:'acc_name',value:account_name},
-                                    {index:'date',value:receipt_date},
-                                    {index:'last_updated',value:last_updated}]};
-
-                                update_json(payment_json);
-								create_json(receipts_json);
-							}
-							else
-							{
-								if(parseFloat(account.total_amount)>-(total_amount))
-								{
-									var balanced_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount)+total_amount;
-									var notes=account.notes+"\n Rs."+balanced_amount+" balanced against receipt # "+receipt_id;
-                                    var payment_json={data_store:'payments',
-                                    data:[{index:'id',value:account.id},
-                                        {index:'status',value:'pending'},
-                                        {index:'paid_amount',value:parseFloat(account.total_amount)+total_amount},
-                                        {index:'notes',value:notes},
-                                        {index:'last_updated',value:last_updated}]};
-
-                                    var receipts_json={data_store:'receipts_payment_mapping',
-                                    data:[{index:'id',value:new_id},
-                                        {index:'receipt_id',value:receipt_id},
-                                        {index:'payment_id',value:account.id},
-																				{index:'receipt_link_id',value:p_id},
-                                        {index:'type',value:account.type},
-                                        {index:'amount',value:balanced_amount},
-                                        {index:'acc_name',value:account_name},
-                                        {index:'date',value:receipt_date},
-                                        {index:'last_updated',value:last_updated}]};
-
-									update_json(payment_json);
-									create_json(receipts_json);
-									total_amount=0;
-								}
-								else
-								{
-									var notes=account.notes+"\n Rs."+account.paid_amount+" balanced against receipt # "+receipt_id;
-                                    var payment_json={data_store:'payments',
-                                    data:[{index:'id',value:account.id},
-                                        {index:'status',value:'pending'},
-                                        {index:'paid_amount',value:'0'},
-                                        {index:'notes',value:notes},
-                                        {index:'last_updated',value:last_updated}]};
-
-                                    var receipts_json={data_store:'receipts_payment_mapping',
-                                    data:[{index:'id',value:new_id},
-                                        {index:'receipt_id',value:receipt_id},
-                                        {index:'payment_id',value:account.id},
-																				{index:'receipt_link_id',value:p_id},
-                                        {index:'type',value:account.type},
-                                        {index:'amount',value:account.paid_amount},
-                                        {index:'acc_name',value:account_name},
-                                        {index:'date',value:receipt_date},
-                                        {index:'last_updated',value:last_updated}]};
-
-									update_json(payment_json);
-									create_json(receipts_json);
-									total_amount=total_amount+parseFloat(account.total_amount);
-								}
-							}
-						}
-						else
-						{
-							if(total_amount<0)
-							{
-								var notes=account.notes+"\nClosed by receipt # "+receipt_id;
-                                var payment_json={data_store:'payments',
-                                    data:[{index:'id',value:account.id},
-                                        {index:'status',value:'closed'},
-                                        {index:'paid_amount',value:account.total_amount},
-                                        {index:'notes',value:notes},
-                                        {index:'last_updated',value:last_updated}]};
-
-                                var receipts_json={data_store:'receipts_payment_mapping',
-                                    data:[{index:'id',value:new_id},
-                                        {index:'receipt_id',value:receipt_id},
-                                        {index:'payment_id',value:account.id},
-																				{index:'receipt_link_id',value:p_id},
-                                        {index:'type',value:account.type},
-                                        {index:'amount',value:(parseFloat(account.total_amount)-parseFloat(account.paid_amount))},
-                                        {index:'acc_name',value:account_name},
-                                        {index:'date',value:receipt_date},
-                                        {index:'last_updated',value:last_updated}]};
-
-								update_json(payment_json);
-								create_json(receipts_json);
-							}
-							else
-							{
-								if(parseFloat(account.total_amount)>total_amount)
-								{
-									var balanced_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount)-total_amount;
-									var notes=account.notes+"\n Rs."+balanced_amount+" balanced against receipt # "+receipt_id;
-
-                                    var payment_json={data_store:'payments',
-                                    data:[{index:'id',value:account.id},
-                                        {index:'status',value:'pending'},
-                                        {index:'paid_amount',value:(parseFloat(account.total_amount)-total_amount)},
-                                        {index:'notes',value:notes},
-                                        {index:'last_updated',value:last_updated}]};
-
-                                    var receipts_json={data_store:'receipts_payment_mapping',
-                                    data:[{index:'id',value:new_id},
-                                        {index:'receipt_id',value:receipt_id},
-                                        {index:'payment_id',value:account.id},
-																				{index:'receipt_link_id',value:p_id},
-                                        {index:'type',value:account.type},
-                                        {index:'amount',value:balanced_amount},
-                                        {index:'acc_name',value:account_name},
-                                        {index:'date',value:receipt_date},
-                                        {index:'last_updated',value:last_updated}]};
-
-									update_json(payment_json);
-									create_json(receipts_json);
-									total_amount=0;
-								}
-								else
-								{
-									var notes=account.notes+"\n Rs."+account.paid_amount+" balanced against receipt # "+receipt_id;
-                                    var payment_json={data_store:'payments',
-                                    data:[{index:'id',value:account.id},
-                                        {index:'status',value:'pending'},
-                                        {index:'paid_amount',value:'0'},
-                                        {index:'notes',value:notes},
-                                        {index:'last_updated',value:last_updated}]};
-
-                                    var receipts_json={data_store:'receipts_payment_mapping',
-                                    data:[{index:'id',value:new_id},
-                                        {index:'receipt_id',value:receipt_id},
-                                        {index:'payment_id',value:account.id},
-																				{index:'receipt_link_id',value:p_id},
-                                        {index:'type',value:account.type},
-                                        {index:'amount',value:account.paid_amount},
-                                        {index:'acc_name',value:account_name},
-                                        {index:'date',value:receipt_date},
-                                        {index:'last_updated',value:last_updated}]};
-
-									update_json(payment_json);
-									create_json(receipts_json);
-									total_amount=total_amount-parseFloat(account.total_amount);
-								}
-							}
-						}
-					}
-				});
-
-				new_id++;
-				if(total_amount<0)
-				{
-        	var payment_json={data_store:'payments',
-	 				data:[{index:'id',value:p_id},
-	 					{index:'status',value:'pending'},
-	 					{index:'type',value:'paid'},
-	 					{index:'date',value:receipt_date},
-	 					{index:'total_amount',value:(-total_amount)+""},
-	 					{index:'paid_amount',value:'0'},
-	 					{index:'acc_name',value:account_name},
-	 					{index:'due_date',value:get_credit_period()},
-	 					{index:'mode',value:'cash'},
-	 					{index:'transaction_id',value:p_id},
-	 					{index:'source_id',value:p_id},
-	 					{index:'source',value:'receipt'},
-            {index:'source_info',value:receipt_id},
-            {index:'notes',value:'Generated for receipt #'+receipt_id},
-	 					{index:'last_updated',value:last_updated}]};
-
-        var receipts_json={data_store:'receipts_payment_mapping',
-	 				data:[{index:'id',value:new_id},
-	 					{index:'receipt_id',value:receipt_id},
-						{index:'receipt_link_id',value:p_id},
-	 					{index:'payment_id',value:p_id},
-	 					{index:'type',value:'paid'},
-	 					{index:'amount',value:(-total_amount)+""},
-	 					{index:'acc_name',value:account_name},
-	 					{index:'date',value:receipt_date},
-	 					{index:'last_updated',value:last_updated}]};
-
-					create_json(receipts_json);
-					create_json(payment_json);
-				}
+					create_json(transaction_json);
 
         var receipt_json={data_store:'receipts',
 	 				data:[{index:'id',value:p_id},
 	 					{index:'receipt_id',value:receipt_id},
 	 					{index:'type',value:receipt_type},
-	 					{index:'amount',value:amount_filter.value},
-	 					{index:'narration',value:narration_filter.value},
+	 					{index:'amount',value:received_amount},
+	 					{index:'narration',value:narration},
 	 					{index:'acc_name',value:account_name},
 	 					{index:'date',value:receipt_date},
 	 					{index:'last_updated',value:last_updated}]};
@@ -11820,7 +11497,7 @@ function modal155_action()
 	 				data:[{index:'id',value:receipt_record_id},
 	 					{index:'value',value:(parseInt(receipt_id_array[1])+1)+""}]};
 				update_json(receipt_id_json);
-			});
+
 		}
 		else
 		{
@@ -13363,7 +13040,6 @@ function modal172_action()
 	var narration_filter=form.elements['narration'];
 	var amount_filter=form.elements['amount'];
 	var balance_filter=form.elements['balance'];
-	var type_filter=form.elements['type'];
 
 	$(date_filter).datepicker();
 	date_filter.value=vTime.date();
@@ -13380,37 +13056,39 @@ function modal172_action()
 			var found = $.inArray($(this).val(), receipts) > -1;
 			if(found)
 			{
-	            $(this).val('');
-	            $(this).attr('placeholder','Duplicate Receipt Number');
-	        }
+	        $(this).val('');
+	        $(this).attr('placeholder','Duplicate Receipt Number');
+	    }
 		});
+
+		var found = $.inArray($(receipt_filter).val(), receipts) > -1;
+		if(found)
+		{
+				$(receipt_filter).val('');
+				$(receipt_filter).attr('placeholder','Duplicate Receipt Number');
+		}
 	},receipts_data);
 
 	$(account_filter).off('blur');
 	$(account_filter).on('blur',function(e)
 	{
-		var payments_data={data_store:'payments',
-                          indexes:[{index:'id'},
-                                  {index:'type'},
-                                  {index:'total_amount'},
-                                  {index:'paid_amount'},
-                                  {index:'status',exact:'pending'},
-                                  {index:'acc_name',exact:account_filter.value}]};
-
-		read_json_rows('',payments_data,function(payments)
+		var transactions_data={data_store:'transactions',
+															indexes:[{index:'id'},
+																			{index:'type'},
+																			{index:'amount'},
+																			{index:'acc_name',exact:account_filter.value}]};
+		read_json_rows('',transactions_data,function(transactions)
 		{
 			var balance_amount=0;
-			payments.forEach(function(payment)
+			transactions.forEach(function(tran)
 			{
-				if(payment.type=='paid')
+				if(tran.type=='received')
 				{
-					balance_amount+=parseFloat(payment.total_amount);
-					balance_amount-=parseFloat(payment.paid_amount);
+					balance_amount-=parseFloat(tran.amount);
 				}
-				else if(payment.type=='received')
+				else if(tran.type=='given')
 				{
-					balance_amount-=parseFloat(payment.total_amount);
-					balance_amount+=parseFloat(payment.paid_amount);
+					balance_amount+=parseFloat(tran.amount);
 				}
 			});
 
@@ -13420,14 +13098,13 @@ function modal172_action()
 			}
 			else if(balance_amount>0)
 			{
-				balance_filter.value="Payable: Rs. "+balance_amount;
+				balance_filter.value="Receivable: Rs. "+balance_amount;
 			}
 			else
 			{
 				balance_amount=(-balance_amount);
-				balance_filter.value="Receivable: Rs. "+balance_amount;
+				balance_filter.value="Payable: Rs. "+balance_amount;
 			}
-			type_filter.value='paid';
 		});
 	});
 
@@ -13439,307 +13116,30 @@ function modal172_action()
 		var paid_amount=amount_filter.value;
 		var receipt_date=get_raw_time(date_filter.value);
 		var narration=narration_filter.value;
-		var receipt_id=form.elements[1].value;
-		var receipt_type=type_filter.value;
+		var receipt_id=receipt_filter.value;
+		var receipt_type='paid';
 		var account_name=account_filter.value;
 		var counter_payment=parseFloat(amount_filter.value);
 		var p_id=get_new_key();
-
+		var last_updated=vTime.unix();
+		
 		if(is_create_access('form282'))
 		{
-			var accounts_data={data_store:'payments',
-                              indexes:[{index:'id'},
-                                      {index:'type'},
-                                      {index:'status',exact:'pending'},
-                                      {index:'acc_name',exact:account_name},
-                                      {index:'date'},
-                                      {index:'total_amount'},
-                                      {index:'paid_amount'},
-                                      {index:'notes'}]};
-			read_json_rows('',accounts_data,function(accounts)
-			{
-				accounts.sort(function(a,b)
-				{
-					if(a.date>b.date)
-					{	return 1;}
-					else
-					{	return -1;}
-				});
+			var transaction_json={data_store:'transactions',
+				data:[{index:'id',value:p_id},
+					{index:'acc_name',value:account_name},
+					{index:'type',value:'given'},
+					{index:'amount',value:paid_amount},
+					{index:'tax',value:'0'},
+					{index:'source_id',value:p_id},
+					{index:'source_info',value:receipt_id},
+					{index:'source',value:'receipt'},
+					{index:'source_link',value:'form282'},
+					{index:'trans_date',value:receipt_date},
+					{index:'notes',value:narration},
+					{index:'last_updated',value:last_updated}]};
 
-				var total_amount=0;
-
-				for(var i=0;i<accounts.length;i++)
-				{
-					if(accounts[i].type=='paid')
-					{
-						total_amount+=parseFloat(accounts[i].total_amount);
-						total_amount-=parseFloat(accounts[i].paid_amount);
-					}
-					else if(accounts[i].type=='received')
-					{
-						total_amount-=parseFloat(accounts[i].total_amount);
-						total_amount+=parseFloat(accounts[i].paid_amount);
-					}
-				}
-
-				total_amount=total_amount-counter_payment;
-
-				if(total_amount>0)
-				{
-					accounts.sort(function(a,b)
-					{
-						if(a.type>b.type)
-						{	return 1;}
-						else
-						{	return -1;}
-					});
-					console.log(accounts);
-				}
-				else
-				{
-					accounts.sort(function(a,b)
-					{
-						if(a.type<b.type)
-						{	return 1;}
-						else
-						{	return -1;}
-					});
-					//console.log(accounts);
-				}
-
-				console.log(total_amount);
-
-				var new_id=get_new_key();
-				var last_updated=get_my_time();
-				accounts.forEach(function(account)
-				{
-					new_id++;
-					if(total_amount==0)
-					{
-						var notes=account.notes+"\nClosed by receipt # "+receipt_id;
-						 var payment_json={data_store:'payments',
-                        data:[{index:'id',value:account.id},
-                            {index:'status',value:'closed'},
-                            {index:'paid_amount',value:account.total_amount},
-                            {index:'notes',value:notes},
-                            {index:'last_updated',value:last_updated}]};
-
-                        var receipts_json={data_store:'receipts_payment_mapping',
-                        data:[{index:'id',value:new_id},
-                            {index:'receipt_id',value:receipt_id},
-                            {index:'payment_id',value:account.id},
-														{index:'receipt_link_id',value:p_id},
-                            {index:'type',value:account.type},
-                            {index:'amount',value:(parseFloat(account.total_amount)-parseFloat(account.paid_amount))},
-                            {index:'acc_name',value:account_name},
-                            {index:'date',value:receipt_date},
-                            {index:'last_updated',value:last_updated}]};
-
-                        update_json(payment_json);
-						create_json(receipts_json);
-					}
-					else
-					{
-						if(account.type=='received')
-						{
-							if(total_amount>0)
-							{
-								var notes=account.notes+"\nClosed by receipt # "+receipt_id;
-								var payment_json={data_store:'payments',
-                                    data:[{index:'id',value:account.id},
-                                        {index:'status',value:'closed'},
-                                        {index:'paid_amount',value:account.total_amount},
-                                        {index:'notes',value:notes},
-                                        {index:'last_updated',value:last_updated}]};
-
-                                    var receipts_json={data_store:'receipts_payment_mapping',
-                                    data:[{index:'id',value:new_id},
-                                        {index:'receipt_id',value:receipt_id},
-                                        {index:'payment_id',value:account.id},
-																				{index:'receipt_link_id',value:p_id},
-                                        {index:'type',value:account.type},
-                                        {index:'amount',value:(parseFloat(account.total_amount)-parseFloat(account.paid_amount))},
-                                        {index:'acc_name',value:account_name},
-                                        {index:'date',value:receipt_date},
-                                        {index:'last_updated',value:last_updated}]};
-
-                                update_json(payment_json);
-								create_json(receipts_json);
-							}
-							else
-							{
-								if(parseFloat(account.total_amount)>-(total_amount))
-								{
-									var balanced_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount)+total_amount;
-									var notes=account.notes+"\n Rs."+balanced_amount+" balanced against receipt # "+receipt_id;
-									var payment_json={data_store:'payments',
-                                    data:[{index:'id',value:account.id},
-                                        {index:'status',value:'pending'},
-                                        {index:'paid_amount',value:parseFloat(account.total_amount)+total_amount},
-                                        {index:'notes',value:notes},
-                                        {index:'last_updated',value:last_updated}]};
-
-                                    var receipts_json={data_store:'receipts_payment_mapping',
-                                    data:[{index:'id',value:new_id},
-                                        {index:'receipt_id',value:receipt_id},
-                                        {index:'payment_id',value:account.id},
-																				{index:'receipt_link_id',value:p_id},
-                                        {index:'type',value:account.type},
-                                        {index:'amount',value:balanced_amount},
-                                        {index:'acc_name',value:account_name},
-                                        {index:'date',value:receipt_date},
-                                        {index:'last_updated',value:last_updated}]};
-
-									update_json(payment_json);
-									create_json(receipts_json);
-									total_amount=0;
-								}
-								else
-								{
-									var notes=account.notes+"\n Rs."+account.paid_amount+" balanced against receipt # "+receipt_id;
-                                    var payment_json={data_store:'payments',
-                                    data:[{index:'id',value:account.id},
-                                        {index:'status',value:'pending'},
-                                        {index:'paid_amount',value:'0'},
-                                        {index:'notes',value:notes},
-                                        {index:'last_updated',value:last_updated}]};
-
-                                    var receipts_json={data_store:'receipts_payment_mapping',
-                                    data:[{index:'id',value:new_id},
-                                        {index:'receipt_id',value:receipt_id},
-                                        {index:'payment_id',value:account.id},
-                                        {index:'type',value:account.type},
-																				{index:'receipt_link_id',value:p_id},
-                                        {index:'amount',value:account.paid_amount},
-                                        {index:'acc_name',value:account_name},
-                                        {index:'date',value:receipt_date},
-                                        {index:'last_updated',value:last_updated}]};
-
-									update_json(payment_json);
-									create_json(receipts_json);
-									total_amount=total_amount+parseFloat(account.total_amount);
-								}
-							}
-						}
-						else
-						{
-							if(total_amount<0)
-							{
-								var notes=account.notes+"\nClosed by receipt # "+receipt_id;
-								var payment_json={data_store:'payments',
-                                    data:[{index:'id',value:account.id},
-                                        {index:'status',value:'closed'},
-                                        {index:'paid_amount',value:account.total_amount},
-                                        {index:'notes',value:notes},
-                                        {index:'last_updated',value:last_updated}]};
-
-                                    var receipts_json={data_store:'receipts_payment_mapping',
-                                    data:[{index:'id',value:new_id},
-                                        {index:'receipt_id',value:receipt_id},
-                                        {index:'payment_id',value:account.id},
-																				{index:'receipt_link_id',value:p_id},
-                                        {index:'type',value:account.type},
-                                        {index:'amount',value:(parseFloat(account.total_amount)-parseFloat(account.paid_amount))},
-                                        {index:'acc_name',value:account_name},
-                                        {index:'date',value:receipt_date},
-                                        {index:'last_updated',value:last_updated}]};
-
-                                update_json(payment_json);
-								create_json(receipts_json);
-							}
-							else
-							{
-								if(parseFloat(account.total_amount)>total_amount)
-								{
-									var balanced_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount)-total_amount;
-									var notes=account.notes+"\n Rs."+balanced_amount+" balanced against receipt # "+receipt_id;
-									var payment_json={data_store:'payments',
-                                    data:[{index:'id',value:account.id},
-                                        {index:'status',value:'pending'},
-                                        {index:'paid_amount',value:(parseFloat(account.total_amount)-total_amount)},
-                                        {index:'notes',value:notes},
-                                        {index:'last_updated',value:last_updated}]};
-
-                                    var receipts_json={data_store:'receipts_payment_mapping',
-                                    data:[{index:'id',value:new_id},
-                                        {index:'receipt_id',value:receipt_id},
-                                        {index:'payment_id',value:account.id},
-																				{index:'receipt_link_id',value:p_id},
-                                        {index:'type',value:account.type},
-                                        {index:'amount',value:balanced_amount},
-                                        {index:'acc_name',value:account_name},
-                                        {index:'date',value:receipt_date},
-                                        {index:'last_updated',value:last_updated}]};
-
-                                    update_json(payment_json);
-									create_json(receipts_json);
-									total_amount=0;
-								}
-								else
-								{
-									var notes=account.notes+"\n Rs."+account.paid_amount+" balanced against receipt # "+receipt_id;
-
-                                    var payment_json={data_store:'payments',
-                                    data:[{index:'id',value:account.id},
-                                        {index:'status',value:'pending'},
-                                        {index:'paid_amount',value:'0'},
-                                        {index:'notes',value:notes},
-                                        {index:'last_updated',value:last_updated}]};
-
-                                    var receipts_json={data_store:'receipts_payment_mapping',
-                                    data:[{index:'id',value:new_id},
-                                        {index:'receipt_id',value:receipt_id},
-                                        {index:'payment_id',value:account.id},
-																				{index:'receipt_link_id',value:p_id},
-                                        {index:'type',value:account.type},
-                                        {index:'amount',value:account.paid_amount},
-                                        {index:'acc_name',value:account_name},
-                                        {index:'date',value:receipt_date},
-                                        {index:'last_updated',value:last_updated}]};
-
-									update_json(payment_json);
-									create_json(receipts_json);
-									total_amount=total_amount-parseFloat(account.total_amount);
-								}
-							}
-						}
-					}
-				});
-
-				new_id++;
-				if(total_amount<0)
-				{
-                    var payment_json={data_store:'payments',
-                                    data:[{index:'id',value:p_id},
-                                        {index:'status',value:'pending'},
-                                        {index:'type',value:'received'},
-                                        {index:'date',value:receipt_date},
-                                        {index:'total_amount',value:(-total_amount)+""},
-                                        {index:'paid_amount',value:'0'},
-                                        {index:'acc_name',value:account_name},
-                                        {index:'due_date',value:get_debit_period()},
-                                        {index:'mode',value:'cash'},
-                                        {index:'transaction_id',value:p_id},
-                                        {index:'source_id',value:p_id},
-                                        {index:'source',value:'receipt'},
-                                        {index:'source_info',value:receipt_id},
-                                        {index:'notes',value:'Gernerated for receipt #'+receipt_id},
-                                        {index:'last_updated',value:last_updated}]};
-
-                    var receipts_json={data_store:'receipts_payment_mapping',
-                                    data:[{index:'id',value:new_id},
-                                        {index:'receipt_id',value:receipt_id},
-                                        {index:'payment_id',value:p_id},
-																				{index:'receipt_link_id',value:p_id},
-                                        {index:'type',value:'received'},
-                                        {index:'amount',value:(-total_amount)+""},
-                                        {index:'acc_name',value:account_name},
-                                        {index:'date',value:receipt_date},
-                                        {index:'last_updated',value:last_updated}]};
-
-					create_json(receipts_json);
-					create_json(payment_json);
-				}
+				create_json(transaction_json);
 
         var receipt_json={data_store:'receipts',
 	 				data:[{index:'id',value:p_id},
@@ -13752,7 +13152,6 @@ function modal172_action()
 	 					{index:'last_updated',value:last_updated}]};
 
 				create_json(receipt_json);
-			});
 		}
 		else
 		{

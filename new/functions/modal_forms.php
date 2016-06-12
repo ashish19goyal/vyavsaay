@@ -2094,7 +2094,7 @@
 					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal155_form' name='balance' readonly='readonly'></div>
 					     		</div>
                         </div>
-                        <input type='hidden' form='modal155_form' name='type'>
+
 		             </div>
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal155_form' name='save'>Add</button>
@@ -2418,9 +2418,8 @@
 								   <div class="col-sm-12 col-md-4">Balance</div>
 					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal172_form' name='balance' readonly='readonly'></div>
 					     		</div>
-                        </div>
-                        <input type='hidden' form='modal172_form' name='type'>
-		             </div>
+                </div>
+                </div>
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal172_form' name='save'>Add</button>
 	               	<button type="button" class="btn red" form='modal172_form' data-dismiss='modal' name='cancel'>Cancel</button>

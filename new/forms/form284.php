@@ -578,39 +578,44 @@ function form284_create_form()
 
         var transaction_json={data_store:'transactions',
 	 				data:[{index:'id',value:data_id},
-	 					{index:'trans_date',value:last_updated},
-	 					{index:'amount',value:total},
-            {index:'giver',value:'master'},
-            {index:'receiver',value:customer},
+						{index:'acc_name',value:customer},
+						{index:'type',value:'given'},
+						{index:'amount',value:total},
             {index:'tax',value:tax},
-            {index:'last_updated',value:last_updated}]};
-
-        var pt_tran_id=get_new_key();
-
-        var payment_json={data_store:'payments',
-	 				data:[{index:'id',value:pt_tran_id},
-	 					{index:'status',value:'pending'},
-	 					{index:'type',value:'received'},
-            {index:'date',value:last_updated},
-            {index:'total_amount',value:total},
-            {index:'paid_amount',value:0},
-            {index:'acc_name',value:customer},
-            {index:'due_date',value:get_credit_period()},
-            {index:'mode',value:get_payment_mode()},
-            {index:'transaction_id',value:pt_tran_id},
-            {index:'source_id',value:data_id},
-            {index:'source',value:'sale bill'},
-            {index:'source_info',value:bill_num},
-            {index:'last_updated',value:last_updated}]};
-
-        var pt_json={data_store:'transactions',
-	 				data:[{index:'id',value:pt_tran_id},
-	 					{index:'trans_date',value:last_updated},
-	 					{index:'amount',value:total},
-	          {index:'receiver',value:'master'},
-	          {index:'giver',value:customer},
-	          {index:'tax',value:0},
+						{index:'source_id',value:data_id},
+						{index:'source_info',value:bill_num},
+						{index:'source',value:'sale bill'},
+						{index:'source_link',value:'form283'},
+						{index:'trans_date',value:last_updated},
+						{index:'notes',value:narration},
 	 					{index:'last_updated',value:last_updated}]};
+
+        // var pt_tran_id=get_new_key();
+
+        // var payment_json={data_store:'payments',
+	 		// 		data:[{index:'id',value:pt_tran_id},
+	 		// 			{index:'status',value:'pending'},
+	 		// 			{index:'type',value:'received'},
+        //     {index:'date',value:last_updated},
+        //     {index:'total_amount',value:total},
+        //     {index:'paid_amount',value:0},
+        //     {index:'acc_name',value:customer},
+        //     {index:'due_date',value:get_credit_period()},
+        //     {index:'mode',value:get_payment_mode()},
+        //     {index:'transaction_id',value:pt_tran_id},
+        //     {index:'source_id',value:data_id},
+        //     {index:'source',value:'sale bill'},
+        //     {index:'source_info',value:bill_num},
+        //     {index:'last_updated',value:last_updated}]};
+
+        // var pt_json={data_store:'transactions',
+	 		// 		data:[{index:'id',value:pt_tran_id},
+	 		// 			{index:'trans_date',value:last_updated},
+	 		// 			{index:'amount',value:total},
+	      //     {index:'receiver',value:'master'},
+	      //     {index:'giver',value:customer},
+	      //     {index:'tax',value:0},
+	 		// 			{index:'last_updated',value:last_updated}]};
 
 		var num_data={data_store:'user_preferences',return_column:'id',count:1,
                      indexes:[{index:'name',exact:bill_type+"_bill_num"}]};
@@ -629,8 +634,8 @@ function form284_create_form()
 
 		create_json(data_json);
 		create_json(transaction_json);
-		create_json(pt_json);
-		create_json(payment_json);
+		// create_json(pt_json);
+		// create_json(payment_json);
 
 		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 					"<td>Amount:<br>Tax(%):@ <input type='number' value='"+tax_rate+"' step='any' readonly='readonly' id='form284_tax' class='dblclick_editable' style='width: 60%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>Cartage: <br>Total: </td>" +
@@ -711,14 +716,19 @@ function form284_update_form()
             log:'yes',
             log_data:{title:'Updated',notes:'Invoice # '+bill_num,link_to:'form283'}};
 
-        var transaction_json={data_store:'transactions',
-	 				data:[{index:'id',value:data_id},
-	 					{index:'trans_date',value:last_updated},
-	 					{index:'amount',value:total},
-            {index:'giver',value:'master'},
-            {index:'receiver',value:customer},
-            {index:'tax',value:tax},
-            {index:'last_updated',value:last_updated}]};
+				var transaction_json={data_store:'transactions',
+			 				data:[{index:'id',value:data_id},
+								{index:'acc_name',value:customer},
+								{index:'type',value:'given'},
+								{index:'amount',value:total},
+		            {index:'tax',value:tax},
+								{index:'source_id',value:data_id},
+								{index:'source_info',value:bill_num},
+								{index:'source',value:'sale bill'},
+								{index:'source_link',value:'form283'},
+								{index:'trans_date',value:last_updated},
+								{index:'notes',value:narration},
+			 					{index:'last_updated',value:last_updated}]};
 
         update_json(data_json);
 				update_json(transaction_json);
@@ -734,34 +744,34 @@ function form284_update_form()
 
 		$('#form284_foot').html(total_row);
 
-		var payment_data={data_store:'payments',return_column:'id',count:1,indexes:[{index:'source_id',exact:data_id}]};
-		read_json_single_column(payment_data,function(payments)
-		{
-			if(payments.length>0)
-			{
-          var payment_json={data_store:'payments',
-	 				data:[{index:'id',value:payments[0]},
-	 					{index:'type',value:'received'},
-	 					{index:'total_amount',value:total},
-            {index:'acc_name',value:customer},
-            {index:'last_updated',value:last_updated}]};
-
-          var pt_json={data_store:'transactions',
-	 				data:[{index:'id',value:payments[0]},
-	 					{index:'trans_date',value:last_updated},
-	 					{index:'amount',value:total},
-            {index:'receiver',value:'master'},
-            {index:'giver',value:customer},
-            {index:'tax',value:0},
-            {index:'last_updated',value:last_updated}]};
-
-				update_json(payment_json,function()
-				{
-					//modal26_action(payments[y]);
-				});
-        update_json(pt_json);
-			}
-		});
+		// var payment_data={data_store:'payments',return_column:'id',count:1,indexes:[{index:'source_id',exact:data_id}]};
+		// read_json_single_column(payment_data,function(payments)
+		// {
+		// 	if(payments.length>0)
+		// 	{
+    //       var payment_json={data_store:'payments',
+	 // 				data:[{index:'id',value:payments[0]},
+	 // 					{index:'type',value:'received'},
+	 // 					{index:'total_amount',value:total},
+    //         {index:'acc_name',value:customer},
+    //         {index:'last_updated',value:last_updated}]};
+		//
+    //       var pt_json={data_store:'transactions',
+	 // 				data:[{index:'id',value:payments[0]},
+	 // 					{index:'trans_date',value:last_updated},
+	 // 					{index:'amount',value:total},
+    //         {index:'receiver',value:'master'},
+    //         {index:'giver',value:customer},
+    //         {index:'tax',value:0},
+    //         {index:'last_updated',value:last_updated}]};
+		//
+		// 		update_json(payment_json,function()
+		// 		{
+		// 			//modal26_action(payments[y]);
+		// 		});
+    //     update_json(pt_json);
+		// 	}
+		// });
 
     $('#form284').formcontrol();
 		$("[id^='save_form284_']").click();

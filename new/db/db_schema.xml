@@ -344,12 +344,17 @@
 	</supplier_return_items>
 	<transactions>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<trans_date index='yes' type="BIGINT"></trans_date>
+			<acc_name index='yes' type="TEXT"></acc_name>
+			<type index='yes' type="VARCHAR(10)"></type><!-- received/given -->
 			<amount index='no' type="DECIMAL(12,2)"></amount>
-			<receiver index='yes' type="TEXT"></receiver>
-			<giver index='yes' type="TEXT"></giver>
 			<tax index='yes' type="DECIMAL(12,2)"></tax>
 			<service_tax index='yes' type="DECIMAL(12,2)"></service_tax>
+			<trans_date index='yes' type="BIGINT"></trans_date>
+			<source_id index='yes' type="BIGINT"></source_id>
+			<source_info index='yes' type="TEXT"></source_info>
+			<source index='yes' type="TEXT"></source>
+			<source_link index='yes' type="VARCHAR(20)"></source_link>
+			<notes index='yes' type="TEXT"></notes>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</transactions>
@@ -364,18 +369,6 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</cash_register>
-	<receipts_payment_mapping>
-			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<receipt_id index='yes' type="VARCHAR(20)"></receipt_id>
-			<receipt_link_id index='yes' type="BIGINT"></receipt_link_id>
-			<payment_id index='yes' type="BIGINT"></payment_id>
-			<type index='yes' type="VARCHAR(10)"></type><!-- received/paid -->
-			<amount index='no' type="DECIMAL(12,2)"></amount>
-			<acc_name index='yes' type="TEXT"></acc_name>
-			<date index='yes' type="BIGINT"></date>
-			<last_updated index='yes' type="BIGINT"></last_updated>
-			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
-	</receipts_payment_mapping>
 	<receipts>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<receipt_id index='yes' type="VARCHAR(20)"></receipt_id>
@@ -400,24 +393,6 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</bank_accounts>
-	<payments>  
-			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<acc_name index='yes' type="TEXT"></acc_name>
-			<type index='yes' type="VARCHAR(10)"></type><!-- received/paid -->
-			<total_amount index='no' type="DECIMAL(12,2)"></total_amount>
-			<paid_amount index='no' type="DECIMAL(12,2)"></paid_amount>
-			<status index='yes' type="VARCHAR(10)"></status><!-- pending/closed-->
-			<date index='yes' type="BIGINT"></date>
-			<due_date index='yes' type="BIGINT"></due_date>
-			<mode index='yes' type="VARCHAR(15)"></mode><!-- cash/cheque/draft/credit card/debit card/online banking/coupons -->
-			<transaction_id index='yes' type="BIGINT"></transaction_id>
-			<source_id index='yes' type="BIGINT"></source_id>
-			<source_info index='yes' type="TEXT"></source_info>
-			<source index='yes' type="TEXT"></source>
-			<notes index='yes' type="TEXT"></notes>
-			<last_updated index='yes' type="BIGINT"></last_updated>
-			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
-	</payments>
 	<credit_notes>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<amount index='no' type="DECIMAL(12,2)"></amount>

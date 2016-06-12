@@ -15,6 +15,7 @@
                 <label><div class='btn-overlap'><input type='text' required name='supplier' placeholder='Supplier' class='floatlabel'><button type='button' title='Add new supplier' class='btn btn-icon-only default right-overlap' id='form270_add_supplier'><i class='fa fa-plus'></i></button></div></label>
                 <label><input type='text' required name='bill_num' class='floatlabel' placeholder='Bill Number'></label>
                 <label><input type='text' name='date' required class='floatlabel' placeholder='Bill Date'></label>
+								<label><textarea name='notes' class='floatlabel' placeholder='Narration'></textarea></label>
                 <input type='hidden' name='bill_id'>
                 <input type='submit' class='submit_hidden'>
             </fieldset>
@@ -25,7 +26,7 @@
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr style='color:#9a9a9a;'>
-                    <th>Item</th>
+          <th>Item</th>
 					<th>Quantity</th>
 					<th>Rate</th>
 					<th>Amount</th>
@@ -34,8 +35,8 @@
 			</thead>
 			<tbody id='form270_body'>
 			</tbody>
-            <tfoot id='form270_foot'>
-            </tfoot>
+      <tfoot id='form270_foot'>
+      </tfoot>
 		</table>
     </div>
 
@@ -45,6 +46,7 @@ function form270_header_ini()
 	var fields=document.getElementById('form270_master');
 	var supplier_filter=fields.elements['supplier'];
 	supplier_filter.value='';
+	fields.elements['notes'].value="";
 
 	fields.elements['bill_num'].value="";
 	var bill_date=fields.elements['date'];
@@ -130,6 +132,7 @@ function form270_ini()
 				filter_fields.elements['supplier'].value=bill_results[0].supplier;
 				filter_fields.elements['bill_num'].value=bill_results[0].bill_id;
 				filter_fields.elements['date'].value=get_my_past_date(bill_results[0].bill_date);
+				filter_fields.elements['notes'].value=bill_results[0].notes;
 				filter_fields.elements['bill_id'].value=bill_id;
 				var save_button=document.getElementById('form270_save');
 
@@ -368,6 +371,7 @@ function form270_create_form()
 
 		var supplier=form.elements['supplier'].value;
 		var bill_id=form.elements['bill_num'].value;
+		var notes=form.elements['notes'].value;
 		var bill_date=get_raw_time(form.elements['date'].value);
 
 		var amount=0;
@@ -417,63 +421,69 @@ function form270_create_form()
 		var save_button=document.getElementById('form270_save');
 		var last_updated=get_my_time();
 
-        var data_json={data_store:'supplier_bills',
-	 				data:[{index:'id',value:data_id},
-	 					{index:'bill_id',value:bill_id},
-	 					{index:'supplier',value:supplier},
-                        {index:'bill_date',value:bill_date},
-                        {index:'amount',value:amount},
-                        {index:'total',value:total},
-                        {index:'tax',value:tax},
-                        {index:'cartage',value:cartage},
-                        {index:'transaction_id',value:data_id},
-	 					{index:'last_updated',value:last_updated}],
-                    log:'yes',
-                    log_data:{title:'Saved',notes:'Purchase Bill #'+bill_id,link_to:'form53'}};
+    var data_json={data_store:'supplier_bills',
+				data:[{index:'id',value:data_id},
+					{index:'bill_id',value:bill_id},
+					{index:'supplier',value:supplier},
+          {index:'bill_date',value:bill_date},
+          {index:'amount',value:amount},
+          {index:'total',value:total},
+          {index:'tax',value:tax},
+          {index:'cartage',value:cartage},
+          {index:'transaction_id',value:data_id},
+					{index:'notes',value:notes},
+					{index:'last_updated',value:last_updated}],
+      log:'yes',
+      log_data:{title:'Saved',notes:'Purchase Bill #'+bill_id,link_to:'form53'}};
 
-        var transaction_json={data_store:'transactions',
-	 				data:[{index:'id',value:data_id},
-	 					{index:'trans_date',value:last_updated},
-	 					{index:'amount',value:total},
-                        {index:'receiver',value:'master'},
-                        {index:'giver',value:supplier},
-                        {index:'tax',value:(-tax)},
-                        {index:'last_updated',value:last_updated}]};
+		var transaction_json={data_store:'transactions',
+				data:[{index:'id',value:data_id},
+					{index:'acc_name',value:supplier},
+					{index:'type',value:'received'},
+					{index:'amount',value:total},
+					{index:'tax',value:tax},
+					{index:'source_id',value:data_id},
+					{index:'source_info',value:bill_id},
+					{index:'source',value:'purchase bill'},
+					{index:'source_link',value:'form53'},
+					{index:'trans_date',value:last_updated},
+					{index:'notes',value:notes},
+					{index:'last_updated',value:last_updated}]};
 
-        var pt_tran_id=get_new_key();
-
-        var payment_json={data_store:'payments',
-	 				data:[{index:'id',value:pt_tran_id},
-	 					{index:'status',value:'pending'},
-	 					{index:'type',value:'paid'},
-                        {index:'date',value:last_updated},
-                        {index:'total_amount',value:total},
-                        {index:'paid_amount',value:0},
-                        {index:'acc_name',value:supplier},
-                        {index:'due_date',value:get_debit_period()},
-                        {index:'mode',value:get_payment_mode()},
-                        {index:'transaction_id',value:pt_tran_id},
-                        {index:'source_id',value:data_id},
-                        {index:'source',value:'purchase bill'},
-                        {index:'source_info',value:bill_id},
-                        {index:'last_updated',value:last_updated}]};
-
-        var pt_json={data_store:'transactions',
-	 				data:[{index:'id',value:pt_tran_id},
-	 					{index:'trans_date',value:last_updated},
-	 					{index:'amount',value:total},
-                        {index:'giver',value:'master'},
-                        {index:'receiver',value:supplier},
-                        {index:'tax',value:0},
-	 					{index:'last_updated',value:last_updated}]};
+        // var pt_tran_id=get_new_key();
+				//
+        // var payment_json={data_store:'payments',
+	 		// 		data:[{index:'id',value:pt_tran_id},
+	 		// 			{index:'status',value:'pending'},
+	 		// 			{index:'type',value:'paid'},
+        //                 {index:'date',value:last_updated},
+        //                 {index:'total_amount',value:total},
+        //                 {index:'paid_amount',value:0},
+        //                 {index:'acc_name',value:supplier},
+        //                 {index:'due_date',value:get_debit_period()},
+        //                 {index:'mode',value:get_payment_mode()},
+        //                 {index:'transaction_id',value:pt_tran_id},
+        //                 {index:'source_id',value:data_id},
+        //                 {index:'source',value:'purchase bill'},
+        //                 {index:'source_info',value:bill_id},
+        //                 {index:'last_updated',value:last_updated}]};
+				//
+        // var pt_json={data_store:'transactions',
+	 		// 		data:[{index:'id',value:pt_tran_id},
+	 		// 			{index:'trans_date',value:last_updated},
+	 		// 			{index:'amount',value:total},
+        //                 {index:'giver',value:'master'},
+        //                 {index:'receiver',value:supplier},
+        //                 {index:'tax',value:0},
+	 		// 			{index:'last_updated',value:last_updated}]};
 
 		create_json(data_json);
 		create_json(transaction_json);
-		create_json(pt_json);
-		create_json(payment_json,function()
-		{
-			modal28_action(pt_tran_id);
-		});
+		// create_json(pt_json);
+		// create_json(payment_json,function()
+		// {
+		// 	modal28_action(pt_tran_id);
+		// });
 
 		$(save_button).off('click');
 		$(save_button).on('click',function(event)
@@ -498,6 +508,7 @@ function form270_update_form()
 
 		var supplier=form.elements['supplier'].value;
 		var bill_id=form.elements['bill_num'].value;
+		var notes=form.elements['notes'].value;
 		var bill_date=get_raw_time(form.elements['date'].value);
 
 		var amount=0;
@@ -550,59 +561,65 @@ function form270_update_form()
 	 				data:[{index:'id',value:data_id},
 	 					{index:'bill_id',value:bill_id},
 	 					{index:'supplier',value:supplier},
-                        {index:'bill_date',value:bill_date},
-                        {index:'amount',value:amount},
-                        {index:'total',value:total},
-                        {index:'tax',value:tax},
-                        {index:'cartage',value:cartage},
-                        {index:'transaction_id',value:data_id},
+            {index:'bill_date',value:bill_date},
+            {index:'amount',value:amount},
+            {index:'total',value:total},
+            {index:'tax',value:tax},
+            {index:'cartage',value:cartage},
+            {index:'transaction_id',value:data_id},
+						{index:'notes',value:notes},
 	 					{index:'last_updated',value:last_updated}],
-                    log:'yes',
-                    log_data:{title:'Updated',notes:'Purchase Bill #'+bill_id,link_to:'form53'}};
+        log:'yes',
+        log_data:{title:'Updated',notes:'Purchase Bill #'+bill_id,link_to:'form53'}};
 
-        var transaction_json={data_store:'transactions',
-	 				data:[{index:'id',value:data_id},
-	 					{index:'trans_date',value:last_updated},
-	 					{index:'amount',value:total},
-                        {index:'receiver',value:'master'},
-                        {index:'giver',value:supplier},
-                        {index:'tax',value:(-tax)},
-                        {index:'last_updated',value:last_updated}]};
+				var transaction_json={data_store:'transactions',
+						data:[{index:'id',value:data_id},
+							{index:'acc_name',value:supplier},
+							{index:'type',value:'received'},
+							{index:'amount',value:total},
+							{index:'tax',value:tax},
+							{index:'source_id',value:data_id},
+							{index:'source_info',value:bill_id},
+							{index:'source',value:'purchase bill'},
+							{index:'source_link',value:'form53'},
+							{index:'trans_date',value:last_updated},
+							{index:'notes',value:notes},
+							{index:'last_updated',value:last_updated}]};
 
 		update_json(data_json);
 		update_json(transaction_json);
 
-		var payment_data={data_store:'payments',count:1,return_column:'id',indexes:[{index:'source_id',exact:data_id}]};
-		read_json_single_column(payment_data,function(payments)
-		{
-			if(payments.length>0)
-			{
-          var payment_json={data_store:'payments',
-	 				data:[{index:'id',value:payments[0]},
-	 					{index:'type',value:'paid'},
-                        {index:'total_amount',value:total},
-                        {index:'acc_name',value:supplier},
-                        {index:'transaction_id',value:payments[0]},
-                        {index:'source_id',value:data_id},
-                        {index:'source',value:'purchase bill'},
-                        {index:'source_info',value:bill_id},
-                        {index:'last_updated',value:last_updated}]};
-
-                var pt_json={data_store:'transactions',
-	 				data:[{index:'id',value:payments[0]},
-	 					{index:'amount',value:total},
-                        {index:'giver',value:'master'},
-                        {index:'receiver',value:supplier},
-                        {index:'tax',value:0},
-	 					{index:'last_updated',value:last_updated}]};
-
-        update_json(pt_json);
-        update_json(payment_json,function()
-				{
-					modal28_action(payments[0]);
-				});
-			}
-		});
+		// var payment_data={data_store:'payments',count:1,return_column:'id',indexes:[{index:'source_id',exact:data_id}]};
+		// read_json_single_column(payment_data,function(payments)
+		// {
+		// 	if(payments.length>0)
+		// 	{
+    //       var payment_json={data_store:'payments',
+	 // 				data:[{index:'id',value:payments[0]},
+	 // 					{index:'type',value:'paid'},
+    //                     {index:'total_amount',value:total},
+    //                     {index:'acc_name',value:supplier},
+    //                     {index:'transaction_id',value:payments[0]},
+    //                     {index:'source_id',value:data_id},
+    //                     {index:'source',value:'purchase bill'},
+    //                     {index:'source_info',value:bill_id},
+    //                     {index:'last_updated',value:last_updated}]};
+		//
+    //             var pt_json={data_store:'transactions',
+	 // 				data:[{index:'id',value:payments[0]},
+	 // 					{index:'amount',value:total},
+    //                     {index:'giver',value:'master'},
+    //                     {index:'receiver',value:supplier},
+    //                     {index:'tax',value:0},
+	 // 					{index:'last_updated',value:last_updated}]};
+		//
+    //     update_json(pt_json);
+    //     update_json(payment_json,function()
+		// 		{
+		// 			modal28_action(payments[0]);
+		// 		});
+		// 	}
+		// });
 
 		$("[id^='save_form270_']").click();
 	}

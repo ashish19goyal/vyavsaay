@@ -1,9 +1,9 @@
-<div id='report60' class='tab-pane portlet box red-sunglo'>	   
+<div id='report60' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report60_ini();'>Refresh</a>
             <a class='btn btn-circle grey btn-outline btn-sm' onclick='modal106_action();' title='Add Ledger Entry'>Add</a>
-		</div>		
+		</div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
@@ -19,15 +19,15 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 		<form id='report60_header' autocomplete="off">
 			<fieldset>
 				<label><input type='text' placeholder="Start Date" class='floatlabel' required name='start'></label>
-                <label><input type='text' placeholder="End Date" class='floatlabel' required name='end'></label>
-				<label><input type='submit' class='submit_hidden'></label>			
+        <label><input type='text' placeholder="End Date" class='floatlabel' required name='end'></label>
+				<label><input type='submit' class='submit_hidden'></label>
 			</fieldset>
 		</form>
 	<br>
@@ -35,21 +35,21 @@
 			<thead>
 				<tr>
 					<th>Date</th>
-                    <th>Account</th>
+          <th>Account</th>
 					<th>Particulars</th>
 					<th>Debit</th>
 					<th>Credit</th>
-                    <th>Balance</th>
+          <th>Balance</th>
 				</tr>
 			</thead>
 			<tbody id='report60_body'>
 			</tbody>
 		</table>
-	</div>	
+	</div>
 	<script>
 
         function report60_header_ini()
-        {	
+        {
             var form=document.getElementById('report60_header');
             var start_filter=form.elements['start'];
             var end_filter=form.elements['end'];
@@ -77,229 +77,101 @@
             show_loader();
             $('#report60_body').html('');
 
-            var payments_data={data_store:'payments',
-                              indexes:[{index:'id'},
-                                      {index:'type'},
-                                      {index:'total_amount'},
-                                      {index:'paid_amount'},
-                                      {index:'mode'},
-                                      {index:'status',array:['pending','closed']},
-                                      {index:'source_id'},
-                                      {index:'source'},
-                                      {index:'source_info'}, 
-                                      {index:'date',upperbound:end_date},
-                                      {index:'acc_name'}]};
+						var tran_data={data_store:'transactions',
+															indexes:[{index:'id'},
+																			{index:'type'},
+																			{index:'amount'},
+																			{index:'source_link'},
+																			{index:'source'},
+																			{index:'source_id'},
+																			{index:'source_info'},
+																			{index:'notes'},
+																			{index:'trans_date',upperbound:end_date},
+																			{index:'acc_name'},
+																			{index:'last_updated'}]};
 
-            read_json_rows('report60',payments_data,function(payments)
-            {	
-                var receipts_data={data_store:'receipts_payment_mapping',
-                                  indexes:[{index:'id'},
-                                          {index:'receipt_id'},
-                                          {index:'payment_id'},
-                                          {index:'type'},
-                                          {index:'amount'},
-                                          {index:'date',upperbound:end_date},
-                                          {index:'acc_name'}]};
-                read_json_rows('report60',receipts_data,function(receipts)
-                {	
-                    for(var k in receipts)
-                    {
-                        var receipt_to_pay=new Object();
-                        receipt_to_pay.acc_name=receipts[k].acc_name;
-                        receipt_to_pay.type="received";
-                        if(receipts[k].type=='received')
-                        {
-                            receipt_to_pay.type="paid";
-                        }
-                        receipt_to_pay.mode='credit';
-                        receipt_to_pay.total_amount=receipts[k].amount;
-                        receipt_to_pay.paid_amount=0;
-                        receipt_to_pay.date=receipts[k].date;
-                        receipt_to_pay.source='receipt';
-                        receipt_to_pay.source_id=receipts[k].id;
-                        receipt_to_pay.source_info=receipts[k].receipt_id;
-                        receipt_to_pay.id=receipts[k].payment_id;
-                        receipt_to_pay.status='from receipt';
-                        for(var j in payments)
-                        {
-                            if(payments[j].id==receipt_to_pay.id)
-                            {
-                                payments[j].paid_amount=parseFloat(payments[j].paid_amount)-parseFloat(receipt_to_pay.total_amount);
-                            }
-                        }				
+            read_json_rows('report60',tran_data,function(transactions)
+            {
+							transactions.sort(function(a,b)
+							{
+									if(parseFloat(a.trans_date)>parseFloat(b.trans_date))
+									{	return 1;}
+									else if(parseFloat(a.trans_date)==parseFloat(b.trans_date) && parseFloat(a.last_updated)>parseFloat(b.last_updated))
+									{ return 1;}
+									else
+									{	return -1;}
+							});
 
-                        payments.push(receipt_to_pay);
-                    }
+							var balance=0;
 
-                    payments.sort(function(a,b)
-                    {
-                        if(parseFloat(a.date)>parseFloat(b.date))
-                        {	return 1;}
-                        else 
-                        {	return -1;}
-                    });
+							for(var p=0;p<transactions.length;p++)
+							{
+									if(transactions[p].trans_date<get_raw_time(start_date))
+									{
+											if(transactions[p].type=='given')
+											{
+													balance+=parseFloat(transactions[p].amount);
+											}
+											else
+											{
+													balance-=parseFloat(transactions[p].amount);
+											}
 
-                    var balance=0;
+											transactions.splice(p,1);
+											p--;
+									}
+							}
 
-                    for(var p=0;p<payments.length;p++)
-                    {
-                        if(payments[p].date<get_raw_time(start_date))
-                        {
-                            if(payments[p].type=='received')
-                            {
-                                balance+=parseFloat(payments[p].total_amount);
-                            }
-                            else 
-                            {
-                                balance-=parseFloat(payments[p].total_amount);
-                            }
+              transactions.forEach(function(tran)
+              {
+								var credit="-";
+								var debit="-";
+								var particulars=tran.source+" - "+tran.source_info+"<br>Notes: "+tran.notes;
+								var source_form=tran.source_link;
 
-                            if(parseFloat(payments[p].paid_amount)>0 && payments[p].paid_amount!='')
-                            {
-                                if(payments[p].type=='received')
-                                {
-                                    balance-=parseFloat(payments[p].paid_amount);						
-                                }
-                                else 
-                                {
-                                    balance+=parseFloat(payments[p].paid_amount);
-                                }
-                            }
+								if(tran.type=='received')
+								{
+									balance-=parseFloat(tran.amount);
+									credit="<span class='label label-sm label-success'>Rs. "+tran.amount+"</span>";
+								}
+								else {
+									balance+=parseFloat(tran.amount);
+									debit="<span class='label label-sm label-warning'>Rs. "+tran.amount+"</span>";
+								}
 
-                            payments.splice(p,1);					
-                            p--;				
-                        }
-                    }									
+                  var rowsHTML="<tr>";
+                  rowsHTML+="<td data-th='Date'>";
+                      rowsHTML+=get_my_past_date(tran.trans_date);
+                  rowsHTML+="</td>";
+                  rowsHTML+="<td data-th='Account'><a onclick=\"show_object('accounts','"+tran.acc_name+"');\">";
+                      rowsHTML+=tran.acc_name;
+                  rowsHTML+="</a></td>";
+                  rowsHTML+="<td data-th='Particulars'><a id='report60_particulars_"+tran.id+"'>";
+                      rowsHTML+=particulars;
+                  rowsHTML+="</a></td>";
+                  rowsHTML+="<td data-th='Debit'>";
+                      rowsHTML+=debit;
+                  rowsHTML+="</td>";
+                  rowsHTML+="<td data-th='Credit'>";
+                      rowsHTML+=credit;
+                  rowsHTML+="</td>";
+                  rowsHTML+="<td data-th='Balance'>";
+                      rowsHTML+="Rs. "+my_round(balance,2);
+                  rowsHTML+="</td>";
+                  rowsHTML+="</tr>";
 
-                    payments.forEach(function(payment)
-                    {
-                        var debit="-";
-                        var credit="-";
-                        var particulars="";
-                        var source_form="";
-                        var source_form_array=[];
+                  $('#report60_body').append(rowsHTML);
+                  var particulars_link=document.getElementById('report60_particulars_'+tran.id);
 
-                        if(payment.type=='received')
-                        {
-                            balance+=parseFloat(payment.total_amount);
-                            credit="<span class='label label-sm label-danger'>Rs. "+payment.total_amount+"</span>";
-                            particulars="To "+payment.acc_name+" for "+payment.source+" # "+payment.source_info;
-                            if(payment.status=='from receipt')
-                            {
-                                source_form='form243';
-                                particulars="To "+payment.acc_name+" through receipt # "+payment.source_info;
-                            }
-                            else
-                            {
-                                source_form='form42';
-                                source_form_array.push('form92');
-                            }
-                        }
-                        else 
-                        {
-                            balance-=parseFloat(payment.total_amount);
-                            debit="<span class='label label-sm label-success'>Rs. "+payment.total_amount+"</span>";
-                            particulars="From "+payment.acc_name+" for "+payment.source+" # "+payment.source_info;
-                            if(payment.status=='from receipt')
-                            {
-                                source_form='form282';
-                                particulars="From "+payment.acc_name+" through receipt # "+payment.source_info;
-                            }
-                            else
-                            {
-                                source_form='form53';
-                            }
-                        }
-
-                        var rowsHTML="<tr>";
-                        rowsHTML+="<td data-th='Date'>";
-                            rowsHTML+=get_my_past_date(payment.date);
-                        rowsHTML+="</td>";
-                        rowsHTML+="<td data-th='Account'><a onclick=\"show_object('accounts','"+payment.acc_name+"');\">";
-                            rowsHTML+=payment.acc_name;
-                        rowsHTML+="</a></td>";
-                        rowsHTML+="<td data-th='Particulars'><a id='report60_particulars_"+payment.id+"'>";
-                            rowsHTML+=particulars;
-                        rowsHTML+="</a></td>";
-                        rowsHTML+="<td data-th='Debit'>";
-                            rowsHTML+=debit;
-                        rowsHTML+="</td>";
-                        rowsHTML+="<td data-th='Credit'>";
-                            rowsHTML+=credit;
-                        rowsHTML+="</td>";
-                        rowsHTML+="<td data-th='Balance'>";
-                            rowsHTML+="Rs. "+my_round(balance,2);
-                        rowsHTML+="</td>";
-                        rowsHTML+="</tr>";
-
-                        $('#report60_body').append(rowsHTML);
-                        var particulars_link=document.getElementById('report60_particulars_'+payment.id);
-                        var source_id=payment.source_id;
-                        $(particulars_link).on('click',function()
-                        {
-                            element_display(source_id,source_form,source_form_array);
-                        });
-                        
-                        if(parseFloat(payment.paid_amount)>0 && payment.paid_amount!='')
-                        {
-                            var debit2="-";
-                            var credit2="-";
-                            var particulars2="";
-                            var source_form2="";
-                            var source_form_array2=[];
-
-                            if(payment.type=='received')
-                            {
-                                balance-=parseFloat(payment.paid_amount);						
-                                debit2="<span class='label label-sm label-success'>Rs. "+payment.paid_amount+"</span>";
-                                particulars2="From "+payment.acc_name+" by payment id "+payment.id;
-                                source_form2='form241';
-                                source_form_array2.push('form11');
-                            }
-                            else 
-                            {
-                                balance+=parseFloat(payment.paid_amount);
-                                credit2="<span class='label label-sm label-danger'>Rs. "+payment.paid_amount+"</span>";
-                                particulars2="To "+payment.acc_name+" by payment id "+payment.id;
-                                source_form2='form242';
-                                source_form_array2.push('form11');
-                            }
-
-                            var rowsHTML="<tr>";
-                            rowsHTML+="<td data-th='Date'>";
-                                rowsHTML+=get_my_past_date(payment.date);
-                            rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Account'><a onclick=\"show_object('accounts','"+payment.acc_name+"');\">";
-                                rowsHTML+=payment.acc_name;
-                            rowsHTML+="</a></td>";
-                            rowsHTML+="<td data-th='Particulars'><a id='report60_particulars_"+(parseFloat(payment.id)+1)+"'>";
-                                rowsHTML+=particulars2;
-                            rowsHTML+="</a></td>";
-                            rowsHTML+="<td data-th='Debit'>";
-                                rowsHTML+=debit2;
-                            rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Credit'>";
-                                rowsHTML+=credit2;
-                            rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Balance'>";
-                                rowsHTML+="Rs. "+my_round(balance,2);
-                            rowsHTML+="</td>";
-                            rowsHTML+="</tr>";
-
-                            $('#report60_body').append(rowsHTML);
-                            var particulars_link=document.getElementById('report60_particulars_'+(parseFloat(payment.id)+1));
-                            var source_id=payment.source_id;
-                            $(particulars_link).on('click',function()
-                            {
-                                element_display(source_id,source_form2,source_form_array2);
-                            });
-                        }
-                    });
-                    initialize_static_tabular_report_buttons('Trial Balance','report60');
-                    hide_loader();
-                });
-            });
+									$(particulars_link).on('click',function()
+                  {
+                      element_display(tran.source_id,source_form);
+                  });
+              });
+              initialize_static_tabular_report_buttons('Trial Balance','report60');
+              hide_loader();
+          });
         };
-	
+
 	</script>
 </div>

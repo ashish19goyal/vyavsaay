@@ -28,7 +28,7 @@
 						<th><input type='text' placeholder="Supplier" class='floatlabel' name='supplier' form='form53_header'></th>
 						<th><input type='text' placeholder="Bill Date" readonly='readonly' name='date' form='form53_header'></th>
 						<th><input type='text' placeholder="Bill Total" readonly="readonly" form='form53_header'></th>
-                        <th><input type='text' placeholder="Notes" readonly="readonly" form='form53_header'></th>
+            <th><input type='text' placeholder="Notes" readonly="readonly" form='form53_header'></th>
 						<th><input type='submit' form='form53_header' style='visibility: hidden;'></th>
 				</tr>
 			</thead>
@@ -73,18 +73,18 @@
 
             var paginator=$('#form53_body').paginator();
 
-			var columns=new Object();
-					columns.count=paginator.page_size();
-					columns.start_index=paginator.get_index();
-					columns.data_store='supplier_bills';
+						var columns=new Object();
+								columns.count=paginator.page_size();
+								columns.start_index=paginator.get_index();
+								columns.data_store='supplier_bills';
 
-					columns.indexes=[{index:'id',value:fid},
-									{index:'bill_id',value:fbill_id},
-									{index:'supplier',value:fname},
-									{index:'bill_date'},
-									{index:'total'},
-                                    {index:'notes'},
-                                    {index:'order_id'}];
+								columns.indexes=[{index:'id',value:fid},
+												{index:'bill_id',value:fbill_id},
+												{index:'supplier',value:fname},
+												{index:'bill_date'},
+												{index:'total'},
+                        {index:'notes'},
+                        {index:'order_id'}];
 
             read_json_rows('form53',columns,function(results)
             {
@@ -121,13 +121,13 @@
                 });
 
                 $('#form53').formcontrol();
-				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Purchase Bills','form53',function (item)
+								paginator.update_index(results.length);
+								initialize_tabular_report_buttons(columns,'Purchase Bills','form53',function (item)
                 {
                     item.bill_date=get_my_past_date(item.bill_date);
                     delete item.order_id;
                 });
-				hide_loader();
+								hide_loader();
             });
         }
 
@@ -160,24 +160,24 @@
                     delete_json(return_bill_json);
                     $(button).parent().parent().remove();
 
-                    var payment_xml={data_store:'payments',
-                                    indexes:[{index:'id'},
-                                            {index:'source_id',exact:data_id},
-                                            {index:'status',array:["pending","cancelled"]},
-                                            {index:'transaction_id'}]};
-                    read_json_rows('',payment_xml,function(payments)
-                    {
-                        if(payments.length>0)
-                        {
-                            var pt_json={data_store:'transactions',
-                                                data:[{index:'id',value:payments[0].transaction_id}]};
-                            var pay_json={data_store:'payments',
-                                                data:[{index:'id',value:payments[0].id}]};
-
-                            delete_json(pay_json);
-                            delete_json(pt_json);
-                        }
-                    });
+                    // var payment_xml={data_store:'payments',
+                    //                 indexes:[{index:'id'},
+                    //                         {index:'source_id',exact:data_id},
+                    //                         {index:'status',array:["pending","cancelled"]},
+                    //                         {index:'transaction_id'}]};
+                    // read_json_rows('',payment_xml,function(payments)
+                    // {
+                    //     if(payments.length>0)
+                    //     {
+                    //         var pt_json={data_store:'transactions',
+                    //                             data:[{index:'id',value:payments[0].transaction_id}]};
+                    //         var pay_json={data_store:'payments',
+                    //                             data:[{index:'id',value:payments[0].id}]};
+										//
+                    //         delete_json(pay_json);
+                    //         delete_json(pt_json);
+                    //     }
+                    // });
 
                     var items_data={data_store:'supplier_bill_items',
                         data:[{index:'bill_id',value:data_id}]};
@@ -270,12 +270,12 @@
                 var last_updated=get_my_time();
 
                 var data_json={data_store:'supplier_bills',
-	 				log:'yes',
-	 				data:[{index:'id',value:bill_id},
-	 					{index:'notes',value:'approved'},
-	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Approved',notes:'Purchase bill # '+bill_num,link_to:'form53'}};
- 				update_json(data_json);
+						 				log:'yes',
+						 				data:[{index:'id',value:bill_id},
+						 					{index:'notes',value:'approved'},
+						 					{index:'last_updated',value:last_updated}],
+						 				log_data:{title:'Approved',notes:'Purchase bill # '+bill_num,link_to:'form53'}};
+ 								update_json(data_json);
             }
             else
             {

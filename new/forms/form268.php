@@ -19,8 +19,10 @@
                 <label><input type='text' name='awb_num' class='floatlabel' placeholder='AWB #'></label>
                 <label><input type='text' name='vehicle_num' class='floatlabel' placeholder='Vehicle #'></label>
                 <label><input type='text' name='type' class='floatlabel' placeholder='Type' required></label>
-                <label><input type='text' name='prepared' class='floatlabel' placeholder='Prepared By'></label><input type='hidden' name='id'>
-                <input type='hidden' name='address'>
+                <label><input type='text' name='prepared' class='floatlabel' placeholder='Prepared By'></label>
+								<label><textarea name='narration' class='floatlabel' placeholder='Narration'></textarea></label>
+                <input type='hidden' name='id'>
+								<input type='hidden' name='address'>
                 <input type='submit' class='submit_hidden'>
             </fieldset>
         </form>
@@ -56,12 +58,14 @@ function form268_header_ini()
 	var type_filter=fields.elements['type'];
 	var prepared_filter=fields.elements['prepared'];
 	var address_filter=fields.elements['address'];
+	var notes_filter=fields.elements['narration'];
 	var id_filter=fields.elements['id'];
 	var save_button=document.getElementById('form268_save');
 	var share_button=document.getElementById('form268_share');
 
 	$(share_button).off('click');
 
+	notes_filter.value="";
 	id_filter.value=get_new_key();
 	customer_filter.value='';
 	challan_num.value="";
@@ -174,6 +178,7 @@ function form268_ini()
                                     {index:'vehicle_num'},
                                     {index:'prepared_by'},
                                     {index:'type'},
+																		{index:'notes'},
                                     {index:'address'}]};
 
 		var filter_fields=document.getElementById('form268_master');
@@ -191,6 +196,7 @@ function form268_ini()
 				filter_fields.elements['type'].value=challan_results[0].type;
 				filter_fields.elements['prepared'].value=challan_results[0].prepared_by;
 				filter_fields.elements['address'].value=challan_results[0].address;
+				filter_fields.elements['narration'].value=challan_results[0].notes;
 
 				var save_button=document.getElementById('form268_save');
 
@@ -406,6 +412,7 @@ function form268_create_form()
 		var type=form.elements['type'].value;
 		var prepared_by=form.elements['prepared'].value;
 		var address=form.elements['address'].value;
+		var notes=form.elements['narration'].value;
 		var data_id=form.elements['id'].value;
 		var save_button=document.getElementById('form268_save');
     var share_button=document.getElementById('form268_share');
@@ -446,7 +453,8 @@ function form268_create_form()
             {index:'type',value:type},
             {index:'prepared_by',value:prepared_by},
             {index:'address',value:address},
-	 					{index:'last_updated',value:last_updated}],
+						{index:'notes',value:notes},
+            {index:'last_updated',value:last_updated}],
           log:'yes',
           log_data:{title:'Saved',notes:'Delivery Challan # '+challan_num,link_to:'form269'}};
 
@@ -496,6 +504,7 @@ function form268_update_form()
 		var type=form.elements['type'].value;
 		var prepared_by=form.elements['prepared'].value;
 		var address=form.elements['address'].value;
+		var notes=form.elements['narration'].value;
 		var data_id=form.elements['id'].value;
 		var save_button=document.getElementById('form268_save');
 		var last_updated=get_my_time();
@@ -525,6 +534,7 @@ function form268_update_form()
             {index:'vehicle_num',value:vehicle_num},
             {index:'prepared_by',value:prepared_by},
             {index:'address',value:address},
+						{index:'notes',value:notes},
 	 					{index:'last_updated',value:last_updated}],
           log:'yes',
           log_data:{title:'Updated',notes:'Delivery Challan # '+challan_num,link_to:'form269'}};

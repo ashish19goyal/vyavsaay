@@ -132,14 +132,14 @@
                 });
 
                 $('#form283').formcontrol();
-				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Invoices','form283',function (item)
+								paginator.update_index(results.length);
+								initialize_tabular_report_buttons(new_columns,'Invoices','form283',function (item)
                 {
                     item['bill date']=get_my_past_date(item.bill_date);
                     delete item.bill_date;
                     delete item.performa;
                 });
-				hide_loader();
+								hide_loader();
             });
         }
 
@@ -180,24 +180,24 @@
                     delete_json(items_json);
                     delete_json(adjust_json);
 
-                    var payment_xml={data_store:'payments',
-                                    indexes:[{index:'id'},
-                                            {index:'source_id',exact:data_id},
-                                            {index:'status',array:['pending','cancelled']},
-                                            {index:'transaction_id'}]};
-                    read_json_rows('',payment_xml,function(payments)
-                    {
-                        if(payments.length>0)
-                        {
-                            var pt_json={data_store:'transactions',
- 																data:[{index:'id',value:payments[0].transaction_id}]};
-                            var pay_json={data_store:'payments',
- 																data:[{index:'id',value:payments[0].id}]};
-
-                            delete_json(pay_json);
-                            delete_json(pt_json);
-                        }
-                    });
+                    // var payment_xml={data_store:'payments',
+                    //                 indexes:[{index:'id'},
+                    //                         {index:'source_id',exact:data_id},
+                    //                         {index:'status',array:['pending','cancelled']},
+                    //                         {index:'transaction_id'}]};
+                    // read_json_rows('',payment_xml,function(payments)
+                    // {
+                    //     if(payments.length>0)
+                    //     {
+                    //         var pt_json={data_store:'transactions',
+ 									// 							data:[{index:'id',value:payments[0].transaction_id}]};
+                    //         var pay_json={data_store:'payments',
+ 									// 							data:[{index:'id',value:payments[0].id}]};
+										//
+                    //         delete_json(pay_json);
+                    //         delete_json(pt_json);
+                    //     }
+                    // });
                     $(button).parent().parent().remove();
                 });
             }
