@@ -1,15 +1,15 @@
-<div id='form19' class='tab-pane portlet box green-meadow'>	   
+<div id='form19' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form19_add_item();'>Add <i class='fa fa-plus'></i></a>
             <a class='btn btn-circle grey btn-outline btn-sm' id='form19_save'>Save <i class='fa fa-save'></i></a>
 		</div>
 		<div class="actions">
       	<a class='btn btn-default btn-sm' id='form19_print' onclick=form19_print_form();><i class='fa fa-print'></i> Print</a>
-        <a class='btn btn-default btn-sm' id='form19_share'><i class='fa fa-envelope'></i> Email</a>    
+        <a class='btn btn-default btn-sm' id='form19_share'><i class='fa fa-envelope'></i> Email</a>
       </div>
 	</div>
-	
+
 	<div class="portlet-body">
         <form id='form19_master' autocomplete="off">
             <fieldset>
@@ -19,9 +19,9 @@
                 <input type='submit' class='submit_hidden'>
             </fieldset>
         </form>
-        
+
         <br>
-		
+
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr style='color:#9a9a9a;'>
@@ -39,7 +39,7 @@
             </tfoot>
 		</table>
     </div>
-    
+
     <script>
         function form19_header_ini()
         {
@@ -103,7 +103,7 @@
         {
             var data_id=$("#form19_link").attr('data_id');
             if(data_id==null)
-                data_id="";	
+                data_id="";
 
             $('#form19_body').html("");
             $('#form19_foot').html("");
@@ -155,9 +155,9 @@
                                     "</tr>";
                         $('#form19_foot').html(total_row);
                     }
-                    
+
                 });
-                
+
                 read_json_rows('form19',return_items_column,function(results)
                 {
                     results.forEach(function(result)
@@ -187,24 +187,24 @@
                                 rowsHTML+="<input type='hidden' form='form19_"+id+"' value='"+id+"'>";
                                 rowsHTML+="<input type='button' class='submit_hidden' form='form19_"+id+"' id='save_form19_"+id+"'>";
                                 rowsHTML+="<button type='button' class='btn red' form='form19_"+id+"' id='delete_form19_"+id+"' onclick='form19_delete_item($(this));' name='delete'><i class='fa fa-trash'></i></button>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                         rowsHTML+="</tr>";
 
                         $('#form19_body').append(rowsHTML);
                     });
 
                     $('#form19').formcontrol();
-                    
+
                     var bt=get_session_var('title');
                     $('#form19_share').show();
                     $('#form19_share').click(function()
                     {
-                        modal101_action(bt+' - Purchase Return # '+filter_fields.elements['id'].value,filter_fields.elements['supplier'].value,'customer',function (func) 
+                        modal101_action(bt+' - Purchase Return # '+filter_fields.elements['id'].value,filter_fields.elements['supplier'].value,'customer',function (func)
                         {
                             print_form19(func);
                         });
                     });
-                    
+
                     hide_loader();
                 });
             }
@@ -217,12 +217,13 @@
                 var id=get_new_key();
                 var rowsHTML="<tr>";
                 rowsHTML+="<form id='form19_"+id+"' autocomplete='off'></form>";
-                    rowsHTML+="<td data-th='Item'>";
-                        rowsHTML+="<input type='text' required form='form19_"+id+"'>";
-                    rowsHTML+="</td>";
-                    rowsHTML+="<td data-th='Batch'>";
+										rowsHTML+="<td data-th='Item'><div class='btn-overlap'>";
+												rowsHTML+="<input type='text' placeholder='Item' class='floatlabel' required form='form19_"+id+"' id='form19_item_"+id+"'>";
+												rowsHTML+="<button class='btn btn-icon-only default right-overlap' onclick=\"modal194_action('#form19_item_"+id+"');\"><i class='fa fa-search'></i></button></div>";
+										rowsHTML+="</td>";
+										rowsHTML+="<td data-th='Batch'>";
                         rowsHTML+="<input type='text' class='floatlabel' placeholder='Batch' required form='form19_"+id+"'>";
-                        rowsHTML+="<input type='text' class='floatlabel' placeholder='Storage' required form='form19_"+id+"'>";    
+                        rowsHTML+="<input type='text' class='floatlabel' placeholder='Storage' required form='form19_"+id+"'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Notes'>";
                         rowsHTML+="<textarea form='form19_"+id+"'></textarea>";
@@ -242,7 +243,7 @@
                         rowsHTML+="<input type='button' class='submit_hidden' form='form19_"+id+"' id='save_form19_"+id+"' >";
                         rowsHTML+="<button type='button' class='btn red' form='form19_"+id+"' id='delete_form19_"+id+"' onclick='$(this).parent().parent().remove();' title='Delete' name='delete'><i class='fa fa-trash'></i></button>";
                         rowsHTML+="<input type='submit' class='submit_hidden' form='form19_"+id+"'>";
-                    rowsHTML+="</td>";			
+                    rowsHTML+="</td>";
                 rowsHTML+="</tr>";
 
                 $('#form19_body').prepend(rowsHTML);
@@ -272,7 +273,7 @@
                 });
 
                 var product_data={data_store:'product_master',return_column:'name'};
-                set_my_value_list_json(product_data,name_filter,function () 
+                set_my_value_list_json(product_data,name_filter,function ()
                 {
                     $(name_filter).focus();
                 });
@@ -342,7 +343,7 @@
                 });
 
                 $(quantity_filter).on('blur',function(event)
-                {		
+                {
                     total_filter.value=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
                     tax_filter.value=parseFloat(quantity_filter.value)*parseFloat(tax_unit_filter.value);
                 });
@@ -370,7 +371,7 @@
                 var tax=form.elements[7].value;
                 var data_id=form.elements[8].value;
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'supplier_return_items',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'return_id',value:return_id},
@@ -381,9 +382,9 @@
                         {index:'saleable',value:saleable},
                         {index:'refund_amount',value:total},
                         {index:'tax',value:tax},
-                        {index:'storage',value:storage},  
+                        {index:'storage',value:storage},
 	 					{index:'last_updated',value:last_updated}]};
- 				
+
                 create_json(data_json);
 
                 if(saleable!="checked")
@@ -398,7 +399,7 @@
                         {index:'source_link',value:'form19'},
                         {index:'storage',value:storage},
                         {index:'last_updated',value:last_updated}]};
- 				
+
                     create_json(discard_json);
                 }
 
@@ -430,7 +431,7 @@
                 var supplier=form.elements['supplier'].value;
                 var return_date=get_raw_time(form.elements['date'].value);
                 var data_id=form.elements['id'].value;
-                
+
                 var amount=0;
                 var tax=0;
 
@@ -438,13 +439,13 @@
                 $('#form19_share').show();
                 $('#form19_share').click(function()
                 {
-                    modal101_action(bt+' - Purchase Return # '+data_id,supplier,'supplier',function (func) 
+                    modal101_action(bt+' - Purchase Return # '+data_id,supplier,'supplier',function (func)
                     {
                         print_form19(func);
                     });
                 });
 
-                    
+
                 $("[id^='save_form19']").each(function(index)
                 {
                     var subform_id=$(this).attr('form');
@@ -465,15 +466,15 @@
                 $('#form19_foot').html(total_row);
 
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'supplier_returns',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'supplier',value:supplier},
 	 					{index:'return_date',value:return_date},
-                        {index:'amount',value:amount},  
+                        {index:'amount',value:amount},
                         {index:'total',value:total},
                         {index:'tax',value:tax},
-                        {index:'transaction_id',value:data_id},  
+                        {index:'transaction_id',value:data_id},
 	 					{index:'last_updated',value:last_updated}],
                     log:'yes',
                     log_data:{title:'Created',notes:'Purchase return # '+data_id,link_to:'form17'}};
@@ -483,34 +484,34 @@
 	 					{index:'trans_date',value:last_updated},
 	 					{index:'amount',value:total},
                         {index:'receiver',value:supplier},
-                        {index:'giver',value:'master'},  
+                        {index:'giver',value:'master'},
                         {index:'tax',value:tax},
                         {index:'last_updated',value:last_updated}]};
 
                 var pt_tran_id=get_new_key();
-                
+
                 var payment_json={data_store:'payments',
 	 				data:[{index:'id',value:pt_tran_id},
                         {index:'status',value:'pending'},
-                        {index:'type',value:'received'},  
+                        {index:'type',value:'received'},
 	 					{index:'date',value:last_updated},
 	 					{index:'total_amount',value:total},
-                        {index:'paid_amount',value:'0'},  
-                        {index:'acc_name',value:supplier},  
+                        {index:'paid_amount',value:'0'},
+                        {index:'acc_name',value:supplier},
                         {index:'due_date',value:get_credit_period()},
                         {index:'mode',value:get_payment_mode()},
                         {index:'transaction_id',value:pt_tran_id},
                         {index:'source_id',value:data_id},
-                        {index:'source',value:'purchase return'},  
+                        {index:'source',value:'purchase return'},
                         {index:'source_info',value:data_id},
                         {index:'last_updated',value:last_updated}]};
-                
+
                 var pt_json={data_store:'transactions',
 	 				data:[{index:'id',value:pt_tran_id},
 	 					{index:'trans_date',value:last_updated},
 	 					{index:'amount',value:total},
                         {index:'receiver',value:'master'},
-                        {index:'giver',value:supplier},  
+                        {index:'giver',value:supplier},
                         {index:'tax',value:'0'},
                         {index:'last_updated',value:last_updated}]};
 
@@ -521,7 +522,7 @@
                 {
                     modal26_action(pt_tran_id);
                 });
-                
+
                 var save_button=document.getElementById('form19_save');
                 $(save_button).off('click');
                 $(save_button).on('click',function(event)
@@ -546,20 +547,20 @@
                 var supplier=form.elements['supplier'].value;
                 var return_date=get_raw_time(form.elements['date'].value);
                 var data_id=form.elements['id'].value;
-                
+
                 var amount=0;
                 var tax=0;
 
                 $("[id^='save_form19_']").each(function(index)
                 {
                     var subform_id=$(this).attr('form');
-                    var subform=document.getElementById(subform_id);	
+                    var subform=document.getElementById(subform_id);
                     if(!isNaN(subform.elements[6].value))
                         amount+=parseFloat(subform.elements[6].value);
                     if(!isNaN(subform.elements[7].value))
                         tax+=parseFloat(subform.elements[7].value);
                 });
-                
+
                 var total=vUtil.round(amount+tax,0);
                 var total_row="<tr><td colspan='3' data-th='Total'>Amount<br>Tax<br>Total</td>" +
                         "<td colspan='2'>Rs. "+amount+
@@ -575,10 +576,10 @@
 	 				data:[{index:'id',value:data_id},
 	 					{index:'supplier',value:supplier},
 	 					{index:'return_date',value:return_date},
-                        {index:'amount',value:amount},  
+                        {index:'amount',value:amount},
                         {index:'total',value:total},
                         {index:'tax',value:tax},
-                        {index:'transaction_id',value:data_id},  
+                        {index:'transaction_id',value:data_id},
 	 					{index:'last_updated',value:last_updated}],
                     log:'yes',
                     log_data:{title:'Updated',notes:'Purchase return # '+data_id,link_to:'form17'}};
@@ -588,15 +589,15 @@
 	 					{index:'trans_date',value:last_updated},
 	 					{index:'amount',value:total},
                         {index:'receiver',value:supplier},
-                        {index:'giver',value:'master'},  
+                        {index:'giver',value:'master'},
                         {index:'tax',value:tax},
                         {index:'last_updated',value:last_updated}]};
 
                 var pt_tran_id=get_new_key();
-                
+
                 update_json(data_json);
                 update_json(transaction_json);
-                
+
                 var payment_data={data_store:'payments',return_column:'id',
                                  indexes:[{index:'source_id',exact:data_id}]};
                 read_json_single_column(payment_data,function(payments)
@@ -605,19 +606,19 @@
                     {
                         var payment_json={data_store:'payments',
                         data:[{index:'id',value:payments[0]},
-                            {index:'type',value:'received'},  
+                            {index:'type',value:'received'},
                             {index:'total_amount',value:total},
-                            {index:'acc_name',value:supplier},  
+                            {index:'acc_name',value:supplier},
                             {index:'source_id',value:data_id},
-                            {index:'source',value:'purchase return'},  
+                            {index:'source',value:'purchase return'},
                             {index:'source_info',value:data_id},
                             {index:'last_updated',value:last_updated}]};
-                
+
                         var pt_json={data_store:'transactions',
                         data:[{index:'id',value:payments[0]},
                             {index:'amount',value:total},
                             {index:'receiver',value:'master'},
-                            {index:'giver',value:supplier},  
+                            {index:'giver',value:supplier},
                             {index:'tax',value:'0'},
                             {index:'last_updated',value:last_updated}]};
 
@@ -628,7 +629,7 @@
                         update_json(pt_json);
                     }
                 });
-                
+
                 $("[id^='save_form19_']").click();
             }
             else
@@ -656,7 +657,7 @@
 	 				      data:[{index:'id',value:data_id}]};
                     var discard_json={data_store:'discarded',
 	 				      data:[{index:'id',value:data_id}]};
- 				   
+
                     delete_json(data_json);
                     delete_json(discard_json);
 
@@ -670,12 +671,12 @@
         }
 
         function form19_print_form()
-        {	
+        {
             print_form19(function(container)
             {
                 $.print(container);
-                container.innerHTML="";	
-            });	
+                container.innerHTML="";
+            });
         }
 
         function print_form19(func)
@@ -684,10 +685,10 @@
             var header=document.createElement('div');
                 var logo=document.createElement('div');
                 var business_intro=document.createElement('div');
-                
+
             var invoice_line=document.createElement('div');
 
-            var info_section=document.createElement('div');	
+            var info_section=document.createElement('div');
                 var customer_info=document.createElement('div');
                 var business_info=document.createElement('div');
 
@@ -722,7 +723,7 @@
 
             var master_form=document.getElementById('form19_master');
             var supplier_name=master_form.elements['supplier'].value;
-            var date=master_form.elements['date'].value;	
+            var date=master_form.elements['date'].value;
             var return_id=master_form.elements['id'].value;
             var vat_no=get_session_var('vat');
 
@@ -743,7 +744,7 @@
 
             var table_element=document.getElementById('form19_body');
 
-            /////////////adding new table //////////////////////////////////////////////////////	
+            /////////////adding new table //////////////////////////////////////////////////////
             var new_table=document.createElement('table');
             new_table.setAttribute('style','width:100%;font-size:11px;border:1px solid black;text-align:left;');
             var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
@@ -790,7 +791,7 @@
             table_rows+=table_foot_row;
             new_table.innerHTML=table_rows;
 
-            /////////////placing the containers //////////////////////////////////////////////////////	
+            /////////////placing the containers //////////////////////////////////////////////////////
 
             container.appendChild(header);
             container.appendChild(invoice_line);
@@ -800,7 +801,7 @@
             container.appendChild(footer);
 
             header.appendChild(logo);
-            
+
             info_section.appendChild(customer_info);
             info_section.appendChild(business_info);
 
@@ -810,6 +811,6 @@
 
             func(container);
         }
-        
+
     </script>
 </div>

@@ -1,15 +1,15 @@
-<div id='form180' class='tab-pane portlet box green-meadow'>	   
+<div id='form180' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form180_add_item();'>Add <i class='fa fa-plus'></i></a>
             <a class='btn btn-circle grey btn-outline btn-sm' id='form180_save'>Save <i class='fa fa-save'></i></a>
 		</div>
 		<div class="actions">
       	<a class='btn btn-default btn-sm' id='form180_print' onclick=form180_print_form();><i class='fa fa-print'></i> Print</a>
-        <a class='btn btn-default btn-sm' id='form180_share'><i class='fa fa-envelope'></i> Email</a>    
+        <a class='btn btn-default btn-sm' id='form180_share'><i class='fa fa-envelope'></i> Email</a>
       </div>
 	</div>
-	
+
 	<div class="portlet-body">
         <form id='form180_master' autocomplete="off">
             <fieldset>
@@ -26,21 +26,21 @@
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr style='color:#9a9a9a;'>
-                    <th>Item</th>
+          <th>Item</th>
 					<th>Quantity</th>
 					<th>Rate</th>
-                    <th>Total</th>
+          <th>Total</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody id='form180_body'>
 			</tbody>
-            <tfoot id='form180_foot'>
-            </tfoot>
+      <tfoot id='form180_foot'>
+      </tfoot>
 		</table>
     </div>
 
-	
+
 	<script>
 	  function form180_header_ini()
         {
@@ -83,7 +83,7 @@
             });
 
             var customers_data={data_store:'customers',return_column:'acc_name'};
-            set_my_value_list_json(customers_data,customers_filter,function () 
+            set_my_value_list_json(customers_data,customers_filter,function ()
             {
                 $(customers_filter).focus();
             });
@@ -95,7 +95,7 @@
                 modal11_action(function()
                 {
                     var customers_data={data_store:'customers',return_column:'acc_name'};
-                    set_my_value_list_json(customers_data,customers_filter,function () 
+                    set_my_value_list_json(customers_data,customers_filter,function ()
                     {
                         $(customers_filter).focus();
                     });
@@ -111,7 +111,7 @@
             set_static_filter_json('sale_orders','status',status_filter);
             status_filter.value='pending';
             customers_filter.value='';
-            
+
             $('#form180').formcontrol();
         }
 
@@ -119,7 +119,7 @@
         {
             var order_id=$("#form180_link").attr('data_id');
             if(order_id==null)
-                order_id="";	
+                order_id="";
 
             $('#form180_body').html("");
             $('#form180_foot').html("");
@@ -202,10 +202,10 @@
                                 rowsHTML+="<input type='hidden' form='form180_"+id+"' value='"+id+"'>";
                                 rowsHTML+="<input type='button' class='submit_hidden' form='form180_"+id+"' id='save_form180_"+id+"'>";
                                 rowsHTML+="<button type='button' class='btn red' name='delete' title='Delete' form='form180_"+id+"' id='delete_form180_"+id+"' onclick='form180_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                         rowsHTML+="</tr>";
 
-                        $('#form180_body').append(rowsHTML);					
+                        $('#form180_body').append(rowsHTML);
                     });
                     form180_get_totals();
                     $('#form180').formcontrol();
@@ -221,11 +221,12 @@
                 var id=get_new_key();
                 var rowsHTML="<tr>";
                 rowsHTML+="<form id='form180_"+id+"' autocomplete='off'></form>";
-                    rowsHTML+="<td data-th='Item'>";
-                        rowsHTML+="<input type='text' class='floatlabel' placeholder='Item' required form='form180_"+id+"'>";
-                        rowsHTML+="<textarea placeholder='Name' class='floatlabel' form='form180_"+id+"'></textarea>";
-                    rowsHTML+="</td>";
-                    rowsHTML+="<td data-th='Quantity'>";
+										rowsHTML+="<td data-th='Item'><div class='btn-overlap'>";
+												rowsHTML+="<input type='text' placeholder='Item' class='floatlabel' required form='form180_"+id+"' id='form180_item_"+id+"'>";
+												rowsHTML+="<button class='btn btn-icon-only default right-overlap' onclick=\"modal194_action('#form180_item_"+id+"');\"><i class='fa fa-search'></i></button></div>";
+												rowsHTML+="<textarea placeholder='Description' class='floatlabel' form='form180_"+id+"'></textarea>";
+										rowsHTML+="</td>";
+										rowsHTML+="<td data-th='Quantity'>";
                         rowsHTML+="<input type='number' placeholder='Quantity' required form='form180_"+id+"' value='' step='any'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Rate'>";
@@ -243,7 +244,7 @@
                         rowsHTML+="<button type='button' class='btn red' form='form180_"+id+"' id='delete_form180_"+id+"' onclick='$(this).parent().parent().remove(); form180_get_totals();' name='delete' title='Delete'><i class='fa fa-trash'></i></button>";
                         rowsHTML+="<input type='submit' class='submit_hidden' form='form180_"+id+"'>";
                         rowsHTML+="<input type='hidden' form='form180_"+id+"' name='tax_rate'>";
-                    rowsHTML+="</td>";			
+                    rowsHTML+="</td>";
                 rowsHTML+="</tr>";
 
                 $('#form180_body').prepend(rowsHTML);
@@ -280,7 +281,7 @@
                                  indexes:[{index:'type',exact:'product'},
                                          {index:'value',exact:'yes'},
                                          {index:'attribute',exact:'manufactured'}]};
-                set_my_value_list_json(product_data,name_filter,function () 
+                set_my_value_list_json(product_data,name_filter,function ()
                 {
                     $(name_filter).focus();
                 });
@@ -293,7 +294,7 @@
                                         indexes:[{index:'description'},
                                                  {index:'tax'},
                                                 {index:'name',exact:name_filter.value}]};
-                        read_json_rows('',master_data,function (products) 
+                        read_json_rows('',master_data,function (products)
                         {
                             if(products.length>0)
                             {
@@ -320,7 +321,7 @@
                 $(quantity_filter).add(price_filter).on('blur',function(event)
                 {
                     amount_filter.value=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
-                    tax_filter.value=vUtil.round(((parseFloat(tax_unit_filter.value)*(parseFloat(amount_filter.value)))/100),2);			
+                    tax_filter.value=vUtil.round(((parseFloat(tax_unit_filter.value)*(parseFloat(amount_filter.value)))/100),2);
                     if(isNaN(parseFloat(tax_filter.value)))
                         tax_filter.value=0;
                     total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
@@ -354,21 +355,21 @@
                 var save_button=form.elements[9];
                 var del_button=form.elements[10];
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'sale_order_items',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'item_name',value:name},
 	 					{index:'item_desc',value:desc},
 	 					{index:'quantity',value:quantity},
                         {index:'unit_price',value:price},
-                        {index:'mrp',value:mrp},  
+                        {index:'mrp',value:mrp},
                         {index:'amount',value:amount},
                         {index:'total',value:total},
                         {index:'tax',value:tax},
                         {index:'order_id',value:order_id},
-                        {index:'bill_status',value:order_status},  
+                        {index:'bill_status',value:order_status},
 	 					{index:'last_updated',value:last_updated}]};
- 				
+
                 create_json(data_json);
 
                 $(form).readonly();
@@ -394,7 +395,7 @@
                 var form=document.getElementById("form180_master");
 
                 var customer=form.elements['customer'].value;
-                var order_date=get_raw_time(form.elements['order_date'].value);		
+                var order_date=get_raw_time(form.elements['order_date'].value);
                 var status=form.elements['status'].value;
                 var data_id=form.elements['order_id'].value;
                 var order_num=form.elements['order_num'].value;
@@ -412,12 +413,12 @@
                     var subform=document.getElementById(subform_id);
                     if(!isNaN(parseFloat(subform.elements[5].value)))
                         amount+=parseFloat(subform.elements[5].value);
-                    if(!isNaN(parseFloat(subform.elements[6].value)))			
+                    if(!isNaN(parseFloat(subform.elements[6].value)))
                         tax+=parseFloat(subform.elements[6].value);
-                    if(!isNaN(parseFloat(subform.elements[7].value)))			
-                        total+=parseFloat(subform.elements[7].value);						
-                    if(!isNaN(parseFloat(subform.elements[2].value)))			
-                        total_quantity+=parseFloat(subform.elements[2].value);		
+                    if(!isNaN(parseFloat(subform.elements[7].value)))
+                        total+=parseFloat(subform.elements[7].value);
+                    if(!isNaN(parseFloat(subform.elements[2].value)))
+                        total_quantity+=parseFloat(subform.elements[2].value);
                 });
 
                 var total_row="<tr><td colspan='1' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
@@ -429,7 +430,7 @@
                                     "</tr>";
                 $('#form180_foot').html(total_row);
 
-                var last_updated=get_my_time();	
+                var last_updated=get_my_time();
                 var data_json={data_store:'sale_orders',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'customer_name',value:customer},
@@ -443,7 +444,7 @@
                         {index:'last_updated',value:last_updated}],
                     log:'yes',
                     log_data:{title:'Created',notes:'Sale order # '+order_num,link_to:'form181'}};
- 				
+
                 create_json(data_json);
 
                 var num_data={data_store:'user_preferences',return_column:'id',indexes:[{index:'name',exact:'so_num'}]};
@@ -482,12 +483,12 @@
                 var form=document.getElementById("form180_master");
 
                 var customer=form.elements['customer'].value;
-                var order_date=get_raw_time(form.elements['order_date'].value);		
+                var order_date=get_raw_time(form.elements['order_date'].value);
                 var status=form.elements['status'].value;
                 var data_id=form.elements['order_id'].value;
                 var order_num=form.elements['order_num'].value;
                 var save_button=document.getElementById('form180_save');
-                var last_updated=get_my_time();	
+                var last_updated=get_my_time();
 
                 var amount=0;
                 var tax=0;
@@ -501,13 +502,13 @@
                     var row_id=subform.elements[8].value;
                     if(!isNaN(parseFloat(subform.elements[5].value)))
                         amount+=parseFloat(subform.elements[5].value);
-                    if(!isNaN(parseFloat(subform.elements[6].value)))			
+                    if(!isNaN(parseFloat(subform.elements[6].value)))
                         tax+=parseFloat(subform.elements[6].value);
-                    if(!isNaN(parseFloat(subform.elements[7].value)))			
+                    if(!isNaN(parseFloat(subform.elements[7].value)))
                         total+=parseFloat(subform.elements[7].value);
-                    if(!isNaN(parseFloat(subform.elements[2].value)))			
-                        total_quantity+=parseFloat(subform.elements[2].value);		
-                    
+                    if(!isNaN(parseFloat(subform.elements[2].value)))
+                        total_quantity+=parseFloat(subform.elements[2].value);
+
                     var data_json={data_store:'sale_order_items',
                         data:[{index:'id',value:row_id},
                             {index:'bill_status',value:status},
@@ -530,7 +531,7 @@
                                     "</tr>";
 
                 $('#form180_foot').html(total_row);
-                
+
                 var data_json={data_store:'sale_orders',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'customer_name',value:customer},
@@ -543,7 +544,7 @@
                         {index:'last_updated',value:last_updated}],
                     log:'yes',
                     log_data:{title:'Updated',notes:'Sale order # '+order_num,link_to:'form181'}};
- 				
+
                 update_json(data_json);
 
                 $("[id^='save_form180_']").click();
@@ -559,7 +560,7 @@
             if(is_delete_access('form180'))
             {
                 modal115_action(function()
-                {			
+                {
                     var form_id=$(button).attr('form');
                     var form=document.getElementById(form_id);
 
@@ -567,7 +568,7 @@
                     var last_updated=get_my_time();
                     var data_json={data_store:'sale_order_items',
 	 				data:[{index:'id',value:data_id}]};
- 				
+
                     delete_json(data_json);
                     $(button).parent().parent().remove();
 
@@ -581,12 +582,12 @@
         }
 
         function form180_print_form()
-        {	
+        {
             print_form180(function(container)
             {
                 $.print(container);
-                container.innerHTML="";	
-            });	
+                container.innerHTML="";
+            });
         }
 
         /**
@@ -595,7 +596,7 @@
         function print_form180(func)
         {
             var form_id='form180';
-            ////////////setting up containers///////////////////////	
+            ////////////setting up containers///////////////////////
             var container=document.createElement('div');
             var header=document.createElement('div');
                 var logo=document.createElement('div');
@@ -604,7 +605,7 @@
 
             var invoice_line=document.createElement('div');
 
-            var info_section=document.createElement('div');	
+            var info_section=document.createElement('div');
                 var customer_info=document.createElement('div');
                 var business_info=document.createElement('div');
 
@@ -639,7 +640,7 @@
 
             var master_form=document.getElementById(form_id+'_master');
             var customer_name=master_form.elements['customer'].value;
-            var date=master_form.elements['order_date'].value;	
+            var date=master_form.elements['order_date'].value;
             var bill_num=master_form.elements['order_num'].value;
             var bill_type=master_form.elements['bill_type'].value;
             var vat_no=get_session_var('vat');
@@ -663,7 +664,7 @@
 
             var table_element=document.getElementById(form_id+'_body');
 
-            /////////////adding new table //////////////////////////////////////////////////////	
+            /////////////adding new table //////////////////////////////////////////////////////
             var new_table=document.createElement('table');
             new_table.setAttribute('style','width:100%;font-size:11px;border:1px solid black;text-align:left;');
             var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
@@ -720,7 +721,7 @@
             table_rows+=table_foot_row;
             new_table.innerHTML=table_rows;
 
-            /////////////placing the containers //////////////////////////////////////////////////////	
+            /////////////placing the containers //////////////////////////////////////////////////////
 
             container.appendChild(header);
             container.appendChild(invoice_line);
@@ -761,8 +762,8 @@
                     tax+=parseFloat(subform.elements[6].value);
                     total+=parseFloat(subform.elements[7].value);
                 }
-                if(!isNaN(parseFloat(subform.elements[2].value)))			
-                    total_quantity+=parseFloat(subform.elements[2].value);		
+                if(!isNaN(parseFloat(subform.elements[2].value)))
+                    total_quantity+=parseFloat(subform.elements[2].value);
             });
 
             var form=document.getElementById("form180_master");

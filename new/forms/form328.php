@@ -1,15 +1,15 @@
-<div id='form328' class='tab-pane portlet box green-meadow'>	   
+<div id='form328' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form328_add_item();'>Add <i class='fa fa-plus'></i></a>
             <a class='btn btn-circle grey btn-outline btn-sm' id='form328_save'>Save <i class='fa fa-save'></i></a>
 		</div>
 		<div class="actions">
       	<a class='btn btn-default btn-sm' id='form328_print' onclick=form328_print_form();><i class='fa fa-print'></i> Print</a>
-        <a class='btn btn-default btn-sm' id='form328_share'><i class='fa fa-envelope'></i> Email</a>    
+        <a class='btn btn-default btn-sm' id='form328_share'><i class='fa fa-envelope'></i> Email</a>
       </div>
 	</div>
-	
+
 	<div class="portlet-body">
         <form id='form328_master' autocomplete="off">
             <fieldset>
@@ -19,27 +19,27 @@
                 <input type='submit' class='submit_hidden'>
             </fieldset>
         </form>
-        
+
         <br>
-		
+
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr style='color:#9a9a9a;'>
-                    <th>Item</th>
+          <th>Item</th>
 					<th>Batch</th>
 					<th>Quantity</th>
-                    <th>Type</th>
+          <th>Type</th>
 					<th>Details</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody id='form328_body'>
 			</tbody>
-            <tfoot id='form328_foot'>
-            </tfoot>
+      <tfoot id='form328_foot'>
+      </tfoot>
 		</table>
     </div>
-    
+
     <script>
         function form328_header_ini()
         {
@@ -103,7 +103,7 @@
         {
             var data_id=$("#form328_link").attr('data_id');
             if(data_id==null)
-                data_id="";	
+                data_id="";
 
             $('#form328_body').html("");
             $('#form328_foot').html("");
@@ -112,7 +112,7 @@
             {
                 show_loader();
                 var filter_fields=document.getElementById('form328_master');
-                        
+
                 var return_columns={data_store:'customer_returns',count:1,
                                    indexes:[{index:'id',value:data_id},
                                            {index:'customer'},
@@ -126,7 +126,7 @@
                                                 {index:'item_name'},
                                                 {index:'batch'},
                                                 {index:'storage'},
-                                                {index:'exchange_storage'}, 
+                                                {index:'exchange_storage'},
                                                 {index:'notes'},
                                                 {index:'quantity'},
                                                 {index:'refund_amount'},
@@ -159,9 +159,9 @@
                                     "</tr>";
                         $('#form328_foot').html(total_row);
                     }
-                    
+
                 });
-                
+
                 read_json_rows('form328',return_items_column,function(results)
                 {
                     results.forEach(function(result)
@@ -193,7 +193,7 @@
                                 rowsHTML+="<input type='hidden' form='form328_"+id+"' value='"+id+"'>";
                                 rowsHTML+="<input type='button' class='submit_hidden' form='form328_"+id+"' id='save_form328_"+id+"'>";
                                 rowsHTML+="<button type='button' class='btn red' form='form328_"+id+"' id='delete_form328_"+id+"' onclick='form328_delete_item($(this));' name='delete'><i class='fa fa-trash'></i></button>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                         rowsHTML+="</tr>";
 
                         $('#form328_body').append(rowsHTML);
@@ -203,7 +203,7 @@
                         var tax_filter=form328.elements[7];
                         var new_batch_filter=form328.elements[8];
                         var new_tax_filter=form328.elements[9];
-                        
+
                         var batch_object={product:result.item_name,batch:result.batch};
                         $(batch).parent().on('click',function()
                         {
@@ -224,17 +224,17 @@
                     });
 
                     $('#form328').formcontrol();
-                        
+
                     var bt=get_session_var('title');
                     $('#form328_share').show();
                     $('#form328_share').click(function()
                     {
-                        modal101_action(bt+' - Sale Return # '+filter_fields.elements['id'].value,filter_fields.elements['customer'].value,'customer',function (func) 
+                        modal101_action(bt+' - Sale Return # '+filter_fields.elements['id'].value,filter_fields.elements['customer'].value,'customer',function (func)
                         {
                             print_form328(func);
                         });
                     });
-                    
+
                     hide_loader();
                 });
             }
@@ -247,12 +247,13 @@
                 var id=get_new_key();
                 var rowsHTML="<tr>";
                 rowsHTML+="<form id='form328_"+id+"' autocomplete='off'></form>";
-                    rowsHTML+="<td data-th='Item'>";
-                        rowsHTML+="<input type='text' placeholder='Item' required form='form328_"+id+"'>";
-                    rowsHTML+="</td>";
-                    rowsHTML+="<td data-th='Batch'>";
+										rowsHTML+="<td data-th='Item'><div class='btn-overlap'>";
+												rowsHTML+="<input type='text' placeholder='Item' class='floatlabel' required form='form328_"+id+"' id='form328_item_"+id+"'>";
+												rowsHTML+="<button class='btn btn-icon-only default right-overlap' onclick=\"modal194_action('#form328_item_"+id+"');\"><i class='fa fa-search'></i></button></div>";
+										rowsHTML+="</td>";
+										rowsHTML+="<td data-th='Batch'>";
                         rowsHTML+="<input type='text' class='floatlabel' placeholder='Batch' required form='form328_"+id+"'>";
-                        rowsHTML+="<input type='text' class='floatlabel' placeholder='Storage' required form='form328_"+id+"'>";    
+                        rowsHTML+="<input type='text' class='floatlabel' placeholder='Storage' required form='form328_"+id+"'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Quantity'>";
                         rowsHTML+="<input type='number' class='floatlabel' placeholder='Quantity' required form='form328_"+id+"' step='any'>";
@@ -274,7 +275,7 @@
                         rowsHTML+="<input type='button' class='submit_hidden' form='form328_"+id+"' id='save_form328_"+id+"' >";
                         rowsHTML+="<button type='button' class='btn red' form='form328_"+id+"' id='delete_form328_"+id+"' onclick='$(this).parent().parent().remove();' title='Delete' name='delete'><i class='fa fa-trash'></i></button>";
                         rowsHTML+="<input type='submit' class='submit_hidden' form='form328_"+id+"'>";
-                    rowsHTML+="</td>";			
+                    rowsHTML+="</td>";
                 rowsHTML+="</tr>";
 
                 $('#form328_body').prepend(rowsHTML);
@@ -296,7 +297,7 @@
 
                 $(new_batch_filter).hide();
                 $(new_storage_filter).hide();
-                
+
                 $(save_button).on("click", function(event)
                 {
                     event.preventDefault();
@@ -325,7 +326,7 @@
                                    indexes:[{index:'product_name',exact:name_filter.value}]};
                     set_my_value_list_json(batch_data,batch_filter);
                     set_my_value_list_json(batch_data,new_batch_filter);
-                    
+
                     batch_filter.value="";
                     quantity_filter.value=0;
                     type_filter.value="";
@@ -371,7 +372,7 @@
                     new_batch_filter.value="";
                     new_storage_filter.value="";
                     type_filter.value="";
-                    quantity_filter.value=0;    
+                    quantity_filter.value=0;
                 });
 
                 set_static_value_list_json('customer_return_items','type',type_filter);
@@ -408,7 +409,7 @@
                         tax_filter.value=parseFloat(tax_unit_filter.value)*parseFloat(quantity_filter.value);
                     }
                 });
-                
+
                 $('#form328').formcontrol();
             }
             else
@@ -438,7 +439,7 @@
                 var save_button=form.elements[13];
                 var del_button=form.elements[14];
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'customer_return_items',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'return_id',value:return_id},
@@ -449,11 +450,11 @@
                         {index:'saleable',value:saleable},
                         {index:'refund_amount',value:amount},
                         {index:'tax',value:tax},
-                        {index:'storage',value:storage},  
-	 					{index:'exchange_storage',value:new_storage},  
-	 					{index:'exchange_batch',value:new_batch},  
+                        {index:'storage',value:storage},
+	 					{index:'exchange_storage',value:new_storage},
+	 					{index:'exchange_batch',value:new_batch},
 	 					{index:'last_updated',value:last_updated}]};
- 				
+
                 create_json(data_json);
 
                 if(saleable!="checked")
@@ -468,7 +469,7 @@
                         {index:'source_link',value:'form328'},
                         {index:'storage',value:storage},
                         {index:'last_updated',value:last_updated}]};
- 				
+
                     create_json(discard_json);
                 }
 
@@ -490,7 +491,7 @@
 
                         create_json(storage_json);
                     }
-                });		
+                });
 
                 $(form).readonly();
 
@@ -518,7 +519,7 @@
                 var customer=form.elements['customer'].value;
                 var return_date=get_raw_time(form.elements['date'].value);
                 var data_id=form.elements['id'].value;
-                
+
                 var amount=0;
                 var tax=0;
 
@@ -526,13 +527,13 @@
                 $('#form328_share').show();
                 $('#form328_share').click(function()
                 {
-                    modal101_action(bt+' - Sale Return # '+data_id,customer,'customer',function (func) 
+                    modal101_action(bt+' - Sale Return # '+data_id,customer,'customer',function (func)
                     {
                         print_form328(func);
                     });
                 });
 
-                    
+
                 $("[id^='save_form328']").each(function(index)
                 {
                     var subform_id=$(this).attr('form');
@@ -553,15 +554,15 @@
                 $('#form328_foot').html(total_row);
 
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'customer_returns',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'customer',value:customer},
 	 					{index:'return_date',value:return_date},
-                        {index:'amount',value:amount},  
+                        {index:'amount',value:amount},
                         {index:'total',value:total},
                         {index:'tax',value:tax},
-                        {index:'transaction_id',value:data_id},  
+                        {index:'transaction_id',value:data_id},
 	 					{index:'last_updated',value:last_updated}],
                     log:'yes',
                     log_data:{title:'Created',notes:'Sale return # '+data_id,link_to:'form329'}};
@@ -571,34 +572,34 @@
 	 					{index:'trans_date',value:last_updated},
 	 					{index:'amount',value:total},
                         {index:'giver',value:customer},
-                        {index:'receiver',value:'master'},  
+                        {index:'receiver',value:'master'},
                         {index:'tax',value:tax},
                         {index:'last_updated',value:last_updated}]};
 
                 var pt_tran_id=get_new_key();
-                
+
                 var payment_json={data_store:'payments',
 	 				data:[{index:'id',value:pt_tran_id},
                         {index:'status',value:'pending'},
-                        {index:'type',value:'paid'},  
+                        {index:'type',value:'paid'},
 	 					{index:'date',value:last_updated},
 	 					{index:'total_amount',value:total},
-                        {index:'paid_amount',value:'0'},  
-                        {index:'acc_name',value:customer},  
+                        {index:'paid_amount',value:'0'},
+                        {index:'acc_name',value:customer},
                         {index:'due_date',value:get_debit_period()},
                         {index:'mode',value:get_payment_mode()},
                         {index:'transaction_id',value:pt_tran_id},
                         {index:'source_id',value:data_id},
-                        {index:'source',value:'sale return'},  
+                        {index:'source',value:'sale return'},
                         {index:'source_info',value:data_id},
                         {index:'last_updated',value:last_updated}]};
-                
+
                 var pt_json={data_store:'transactions',
 	 				data:[{index:'id',value:pt_tran_id},
 	 					{index:'trans_date',value:last_updated},
 	 					{index:'amount',value:total},
                         {index:'giver',value:'master'},
-                        {index:'receiver',value:customer},  
+                        {index:'receiver',value:customer},
                         {index:'tax',value:'0'},
                         {index:'last_updated',value:last_updated}]};
 
@@ -609,7 +610,7 @@
                 {
                     modal28_action(pt_tran_id);
                 });
-                
+
                 var save_button=document.getElementById('form328_save');
                 $(save_button).off('click');
                 $(save_button).on('click',function(event)
@@ -634,20 +635,20 @@
                 var customer=form.elements['customer'].value;
                 var return_date=get_raw_time(form.elements['date'].value);
                 var data_id=form.elements['id'].value;
-                
+
                 var amount=0;
                 var tax=0;
 
                 $("[id^='save_form328_']").each(function(index)
                 {
                     var subform_id=$(this).attr('form');
-                    var subform=document.getElementById(subform_id);	
+                    var subform=document.getElementById(subform_id);
                     if(!isNaN(subform.elements[6].value))
                         amount+=parseFloat(subform.elements[6].value);
                     if(!isNaN(subform.elements[7].value))
                         tax+=parseFloat(subform.elements[7].value);
                 });
-                
+
                 var total=vUtil.round(amount+tax,0);
                 var total_row="<tr><td colspan='3' data-th='Total'>Amount<br>Tax<br>Total</td>" +
                         "<td colspan='2'>Rs. "+amount+
@@ -663,10 +664,10 @@
 	 				data:[{index:'id',value:data_id},
 	 					{index:'customer',value:customer},
 	 					{index:'return_date',value:return_date},
-                        {index:'amount',value:amount},  
+                        {index:'amount',value:amount},
                         {index:'total',value:total},
                         {index:'tax',value:tax},
-                        {index:'transaction_id',value:data_id},  
+                        {index:'transaction_id',value:data_id},
 	 					{index:'last_updated',value:last_updated}],
                     log:'yes',
                     log_data:{title:'Updated',notes:'Purchase return # '+data_id,link_to:'form17'}};
@@ -676,15 +677,15 @@
 	 					{index:'trans_date',value:last_updated},
 	 					{index:'amount',value:total},
                         {index:'giver',value:customer},
-                        {index:'receiver',value:'master'},  
+                        {index:'receiver',value:'master'},
                         {index:'tax',value:tax},
                         {index:'last_updated',value:last_updated}]};
 
                 var pt_tran_id=get_new_key();
-                
+
                 update_json(data_json);
                 update_json(transaction_json);
-                
+
                 var payment_data={data_store:'payments',return_column:'id',
                                  indexes:[{index:'source_id',exact:data_id}]};
                 read_json_single_column(payment_data,function(payments)
@@ -693,19 +694,19 @@
                     {
                         var payment_json={data_store:'payments',
                         data:[{index:'id',value:payments[0]},
-                            {index:'type',value:'paid'},  
+                            {index:'type',value:'paid'},
                             {index:'total_amount',value:total},
-                            {index:'acc_name',value:customer},  
+                            {index:'acc_name',value:customer},
                             {index:'source_id',value:data_id},
-                            {index:'source',value:'sale return'},  
+                            {index:'source',value:'sale return'},
                             {index:'source_info',value:data_id},
                             {index:'last_updated',value:last_updated}]};
-                
+
                         var pt_json={data_store:'transactions',
                         data:[{index:'id',value:payments[0]},
                             {index:'amount',value:total},
                             {index:'giver',value:'master'},
-                            {index:'receiver',value:customer},  
+                            {index:'receiver',value:customer},
                             {index:'tax',value:'0'},
                             {index:'last_updated',value:last_updated}]};
 
@@ -716,7 +717,7 @@
                         update_json(pt_json);
                     }
                 });
-                
+
                 $("[id^='save_form328_']").click();
             }
             else
@@ -740,7 +741,7 @@
 	 				      data:[{index:'id',value:data_id}]};
                     var discard_json={data_store:'discarded',
 	 				      data:[{index:'id',value:data_id}]};
- 				   
+
                     delete_json(data_json);
                     delete_json(discard_json);
 
@@ -754,12 +755,12 @@
         }
 
         function form328_print_form()
-        {	
+        {
             print_form328(function(container)
             {
                 $.print(container);
-                container.innerHTML="";	
-            });	
+                container.innerHTML="";
+            });
         }
 
         function print_form328(func)
@@ -768,10 +769,10 @@
             var header=document.createElement('div');
                 var logo=document.createElement('div');
                 var business_intro=document.createElement('div');
-                
+
             var invoice_line=document.createElement('div');
 
-            var info_section=document.createElement('div');	
+            var info_section=document.createElement('div');
                 var customer_info=document.createElement('div');
                 var business_info=document.createElement('div');
 
@@ -806,7 +807,7 @@
 
             var master_form=document.getElementById('form328_master');
             var customer_name=master_form.elements['customer'].value;
-            var date=master_form.elements['date'].value;	
+            var date=master_form.elements['date'].value;
             var return_id=master_form.elements['id'].value;
             var vat_no=get_session_var('vat');
 
@@ -827,7 +828,7 @@
 
             var table_element=document.getElementById('form328_body');
 
-            /////////////adding new table //////////////////////////////////////////////////////	
+            /////////////adding new table //////////////////////////////////////////////////////
             var new_table=document.createElement('table');
             new_table.setAttribute('style','width:100%;font-size:11px;border:1px solid black;text-align:left;');
             var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
@@ -874,7 +875,7 @@
             table_rows+=table_foot_row;
             new_table.innerHTML=table_rows;
 
-            /////////////placing the containers //////////////////////////////////////////////////////	
+            /////////////placing the containers //////////////////////////////////////////////////////
 
             container.appendChild(header);
             container.appendChild(invoice_line);
@@ -884,7 +885,7 @@
             container.appendChild(footer);
 
             header.appendChild(logo);
-            
+
             info_section.appendChild(customer_info);
             info_section.appendChild(business_info);
 
@@ -894,6 +895,6 @@
 
             func(container);
         }
-        
+
     </script>
 </div>

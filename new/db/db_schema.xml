@@ -106,6 +106,7 @@
 			<item_desc index='yes' type="TEXT"></item_desc>
 			<supplier_sku index='yes' type="TEXT"></supplier_sku>
 			<supplier index='yes' type='TEXT'></supplier>
+			<company index='yes' type='TEXT'></company>
 			<margin index='no' type="DECIMAL(12,2)"></margin>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
@@ -247,6 +248,8 @@
 			<new_order_id index='yes' type="BIGINT"></new_order_id>
 			<cst index='yes' type="VARCHAR(10)"></cst><!--yes/no-->
 			<payment_mode index='yes' type="VARCHAR(30)"></payment_mode><!--advance/credit/consignment-->
+			<ship_to index='yes' type="TEXT"></ship_to>
+			<terms index='yes' type="TEXT"></terms>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</purchase_orders>
