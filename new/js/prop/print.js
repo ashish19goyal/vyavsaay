@@ -911,10 +911,10 @@ function print_form72(func)
 		}
 	});
 	
-	total_amount=my_round(total_amount,2);
-	total_vat=my_round(total_vat,2);
-	total_st=my_round(total_st,2);
-	master_total=my_round(master_total,0);
+	total_amount=vUtil.round(total_amount,2);
+	total_vat=vUtil.round(total_vat,2);
+	total_st=vUtil.round(total_st,2);
+	master_total=vUtil.round(master_total,0);
 	
 	var row_count=$(table_element).find('tbody>tr').length;
 	var rows_to_add=5-row_count;
@@ -2858,7 +2858,7 @@ function print_form210(bill_id)
 				var bill_tax="";
 				for(var x in tax_array)
 				{
-					tax_array[x]=my_round(tax_array[x],2);
+					tax_array[x]=vUtil.round(tax_array[x],2);
 					tax_string+=tax_name+" @"+x+"%: <br>";		
 					bill_tax+="Rs. "+tax_array[x]+": <br>";
 				}
@@ -3964,9 +3964,9 @@ function print_form294(func)
 		cartage=parseFloat(document.getElementById('form294_cartage').value);
 	}
 
-	var total_amount=my_round(total_amount,2);
-	var tax=my_round((tax_rate*((total_amount-discount)/100)),2);		
-	var total_total=my_round(total_amount+tax-discount+cartage,0);
+	var total_amount=vUtil.round(total_amount,2);
+	var tax=vUtil.round((tax_rate*((total_amount-discount)/100)),2);		
+	var total_total=vUtil.round(total_amount+tax-discount+cartage,0);
 
 	var wording_total=number2text(total_total);
 	

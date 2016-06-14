@@ -53,14 +53,14 @@ window.addEventListener("orientationchange", resizeColorBox, false);
 $('.custom-tooltip').tooltip();
 
 
-//Mobile menu
-$('#navigation').mobileMenu({
-	triggerMenu:'#navigation-toggle',
-	subMenuTrigger: ".sub-nav-toggle",
-	animationSpeed: 500 
-});
+// //Mobile menu
+// $('#navigation').mobileMenu({
+// 	triggerMenu:'#navigation-toggle',
+// 	subMenuTrigger: ".sub-nav-toggle",
+// 	animationSpeed: 500
+// });
 
-	
+
 	var $block =$('<div/>',{
 		'class':'top-scroll'
 		})
@@ -73,8 +73,8 @@ $('#navigation').mobileMenu({
 			}, 800);
 			return false;
 		});
-		
-		
+
+
 //initialization
 
 var didScroll = false;
@@ -85,10 +85,10 @@ $(window).scroll(function () {
 setInterval(function scrollHandler() {
 	if (didScroll) {
 		didScroll = false;
-		
+
 		if ($(this).scrollTop() > 35) {
 		showElem();
-					
+
 		} else {
 			hideElem();
 		}
@@ -100,9 +100,9 @@ function hideElem(){
 	$('.main-nav')[0].classList.remove('fixed-pos');
 	$block.fadeOut();
 }
-	
+
 function showElem(){
-	$('.main-nav')[0].classList.add('fixed-pos');	
+	$('.main-nav')[0].classList.add('fixed-pos');
 	$block.fadeIn();
 }
 });
@@ -134,7 +134,7 @@ function init_Roundabout() {
 		duration: 400,
 		easing: 'easeOutQuad',
 		enableDrag: true,
-		dropEasing: 'easeOutBack', 
+		dropEasing: 'easeOutBack',
 		dragFactor: 2,
 		responsive: true
 	});
@@ -146,7 +146,7 @@ function init_RevoSlider() {
 		delay: 8000,
 		startheight: 450,
 		startwidth: 1160,
-		
+
 		hideThumbs: 0,
 		thumbWidth: 170,					// Thumb With and Height and Amount (only if navigation Tyope set to thumb !)
 		thumbHeight: 106,
@@ -168,7 +168,7 @@ function init_RevoSlider() {
 
 		hideCaptionAtLimit:0,				// It Defines if a caption should be shown under a Screen Resolution ( Basod on The Width of Browser)
 		hideAllCaptionAtLilmit: 687,		// Hide all The Captions if Width of Browser is less then this value
-		
+
 		fullWidth:'off',
 		hideTimerBar: 'on',
 		shadow: 0							//0 = no Shadow, 1,2,3 = 3 Different Art of Shadows  (No Shadow in Fullwidth Version !)
@@ -182,7 +182,7 @@ function init_RevoSliderFull() {
 		delay: 8000,
 		startheight: 629,
 		startwidth: 1920,
-	
+
 		navigationType:'none',				// bullet, thumb, none
 		navigationArrows:'solo',			// nexttobullets, solo (old name verticalcentered), none
 		navigationStyle:'round',			// Possible values: 'preview1', 'preview2','preview3','preview4','round', 'square', 'round-old', 'square-old', 'navbar-old'
@@ -203,10 +203,10 @@ function init_RevoSliderFull() {
 		stopAtSlide:-1,						// Stop Timer if Slide 'x' has been Reached. If stopAfterLoops set to 0, then it stops already in the first Loop at slide X which defined. -1 means do not stop at any slide. stopAfterLoops has no sinn in this case.
 		stopAfterLoops:-1,					// Stop Timer if All slides has been played 'x' times. IT will stop at THe slide which is defined via stopAtSlide:x, if set to -1 slide never stop automatic
 
-		hideThumbs: 0,	
+		hideThumbs: 0,
 		hideCaptionAtLimit:0,				// It Defines if a caption should be shown under a Screen Resolution ( Basod on The Width of Browser)
 		hideAllCaptionAtLilmit: 463,		// Hide all The Captions if Width of Browser is less then this value
-		
+
 		fullWidth:'off',
 		hideTimerBar: 'on',
 		shadow: 0,							//0 = no Shadow, 1,2,3 = 3 Different Art of Shadows  (No Shadow in Fullwidth Version !)
@@ -244,8 +244,8 @@ function init_Timeline() {
 
 //Magnific popup
 function init_Gallery() {
-	//Pop up fuction for gallery elements	
-		
+	//Pop up fuction for gallery elements
+
 	//pop up for photo (object - images)
 	$('.popup-item').magnificPopup({
 		type: 'image',
@@ -264,7 +264,7 @@ function init_Gallery() {
 		}
 	});
 
-	//pop up for photo (object - title link)	
+	//pop up for photo (object - title link)
 	$('.popup-item--link').magnificPopup({
 		type: 'image',
 		tLoading: 'Loading image #%curr%...',
@@ -280,7 +280,7 @@ function init_Gallery() {
 				return item.el.attr('title');
 			}
 		}
-	});		
+	});
 }
 
 
@@ -292,7 +292,7 @@ function init_BlogMasonry() {
 	$container.masonry({
 	  'columnWidth': '.block-width-1',
 	  itemSelector: '.post--preview-block',
-	  'gutter': 30			
+	  'gutter': 30
 	});
 }
 
@@ -304,7 +304,7 @@ function init_GalleryMasonry() {
 	$container.masonry({
 	  'columnWidth': '.item-width-1',
 	  itemSelector: '.gallery-item--random',
-	  'gutter': 12			
+	  'gutter': 12
 	});
 }
 
@@ -391,7 +391,7 @@ function init_TeamSlider() {
 		slidesPerView: 4,
 		calculateHeight: true,
 		mode: 'horizontal'
-	});  
+	});
 
 	$('.swiper-controls .prev-arrow').on('click', function(e){
         e.preventDefault();
@@ -408,7 +408,7 @@ function init_TeamSlider() {
     switch (true) {
 	  	case (displayWidth>1200):
 	   		teamSwiper.params.slidesPerView=4;
-        	teamSwiper.resizeFix();   
+        	teamSwiper.resizeFix();
 	   	break;
 	  	case (displayWidth>970 && displayWidth<=1200):
 	   		teamSwiper.params.slidesPerView=3;
@@ -431,7 +431,7 @@ function init_TeamSlider() {
 		switch (true) {
 		  	case (displayWidth>1200):
 		   		teamSwiper.params.slidesPerView=4;
-	        	teamSwiper.reInit();   
+	        	teamSwiper.reInit();
 		   	break;
 		  	case (displayWidth>970 && displayWidth<=1200):
 		   		teamSwiper.params.slidesPerView=3;
@@ -457,7 +457,7 @@ function init_QoutationSlider() {
 		slidesPerView: 1,
 		calculateHeight: true,
 		mode: 'horizontal'
-	});  
+	});
 
 	$('.qoutation-slider-controls .prev-arrow').on('click', function(e){
         e.preventDefault();
@@ -478,7 +478,7 @@ function init_DecoratedSlider() {
 		calculateHeight: true,
 		resizeReInit: true,
 		mode: 'horizontal'
-	});  
+	});
 
 	$('.decorated-slider-controls .prev-arrow').on('click', function(e){
         e.preventDefault();
@@ -495,7 +495,7 @@ function init_DecoratedSlider() {
     switch (true) {
 	  	case (displayWidth>1200):
 	   		decoratedSwiper.params.slidesPerView=4;
-        	decoratedSwiper.resizeFix();   
+        	decoratedSwiper.resizeFix();
 	   	break;
 	  	case (displayWidth>640 && displayWidth<=1200):
 	   		decoratedSwiper.params.slidesPerView=3;
@@ -518,7 +518,7 @@ function init_DecoratedSlider() {
 		switch (true) {
 		  	case (displayWidth>1200):
 		   		decoratedSwiper.params.slidesPerView=4;
-	        	decoratedSwiper.reInit();  
+	        	decoratedSwiper.reInit();
 		   	break;
 		  	case (displayWidth>640 && displayWidth<=1200):
 		   		decoratedSwiper.params.slidesPerView=3;
@@ -545,7 +545,7 @@ function init_Carousel() {
 		autoplay: 5000,
 		speed: 600,
 		mode: 'horizontal'
-	});  
+	});
 
 	$('.carousel-controls .prev-arrow').on('click', function(e){
         e.preventDefault();

@@ -18,7 +18,7 @@ function is_read_access(form_id)
 	var reports=get_session_var('reports');
 
 	if(vUtil.isBlank(re))
-		return false;
+	{	return false; }
 
 	var found=re.search(form_id+"-");
 	var found_form=forms.search(form_id+"-");

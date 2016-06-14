@@ -159,7 +159,7 @@
                       rowsHTML+=debit;
                   rowsHTML+="</td>";
                   rowsHTML+="<td data-th='Balance'>";
-                      rowsHTML+="Rs. "+my_round(balance,2);
+                      rowsHTML+="Rs. "+vUtil.round(balance,2);
                   rowsHTML+="</td>";
                   rowsHTML+="</tr>";
 

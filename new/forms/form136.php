@@ -383,8 +383,8 @@
 
                 $(quantity_filter).on('blur',function(event)
                 {
-                    amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
-                    tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
+                    amount_filter.value=vUtil.round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
+                    tax_filter.value=vUtil.round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
 
                     po_amount_filter.value=parseFloat(po_unit_filter.value)*parseFloat(quantity_filter.value);
                     po_tax_filter.value=parseFloat(po_tax_rate_filter.value)*parseFloat(po_amount_filter.value)/100;
@@ -394,8 +394,8 @@
 
                 $(unit_filter).on('blur',function ()
                 {
-                    amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
-                    tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
+                    amount_filter.value=vUtil.round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
+                    tax_filter.value=vUtil.round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
 
                 });
 
@@ -564,10 +564,10 @@
                     }
                 });
 
-                amount=my_round(amount,2);
-                tax=my_round(tax,2);
+                amount=vUtil.round(amount,2);
+                tax=vUtil.round(tax,2);
                 total=amount+tax;
-                total=my_round(total,0);
+                total=vUtil.round(total,0);
 
                 var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
                         "<td>Amount:</br>Tax: </br>Total: </td>" +
@@ -742,11 +742,11 @@
                     }
                 });
 
-                amount=my_round(amount,2);
-                tax=my_round(tax,2);
+                amount=vUtil.round(amount,2);
+                tax=vUtil.round(tax,2);
 
                 total=amount+tax;
-                total=my_round(total,0);
+                total=vUtil.round(total,0);
 
                 var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
                         "<td>Amount:</br>Tax: </br>Total: </td>" +
@@ -936,8 +936,8 @@
                 }
             });
 
-            amount=my_round(amount,2);
-            tax=my_round(tax,2);
+            amount=vUtil.round(amount,2);
+            tax=vUtil.round(tax,2);
             total=amount+tax;
 
             var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +

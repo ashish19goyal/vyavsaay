@@ -221,7 +221,7 @@
 					      var description_indexes=description.split(/[\s,]+/);
 					      var make_indexes=make.split(/[\s,]+/);
 					      var new_indexes=indexes.concat(description_indexes,make_indexes,old_indexes_array);
-					      var anew_indexes=array_unique(new_indexes);
+					      var anew_indexes=vUtil.arrayUnique(new_indexes);
 					      var index_string=JSON.stringify(anew_indexes);
 
                 var data_json={data_store:'product_master',
@@ -343,7 +343,7 @@
 				      var description_indexes=row.description.split(/[\s,]+/);
 				      var make_indexes=row.make.split(/[\s,]+/);
 				      var new_indexes=indexes.concat(description_indexes,make_indexes);
-				      var anew_indexes=array_unique(new_indexes);
+				      var anew_indexes=vUtil.arrayUnique(new_indexes);
 				      var index_string=JSON.stringify(anew_indexes);
 
 							var data_json_array=[{index:'id',value:row.id},

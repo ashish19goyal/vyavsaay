@@ -689,7 +689,7 @@
 
                 $(quantity_filter).add(price_filter).on('change blur',function(event)
                 {
-                    amount_filter.value=my_round((parseFloat(price_filter.value)*parseFloat(quantity_filter.value)),2);
+                    amount_filter.value=vUtil.round((parseFloat(price_filter.value)*parseFloat(quantity_filter.value)),2);
                 });
 
                 form258_get_totals();
@@ -996,15 +996,15 @@
                     tax_rate=parseFloat(document.getElementById('form258_tax').value);
                 }
 
-                var amount=my_round(amount,2);
-                var tax=my_round(tax_rate*(amount/100),2);
-                var total=my_round((tax+amount+cartage),0);
+                var amount=vUtil.round(amount,2);
+                var tax=vUtil.round(tax_rate*(amount/100),2);
+                var total=vUtil.round((tax+amount+cartage),0);
 
                 var total_row="<tr><td colspan='4' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
                                     "<td>Amount:<br>Tax(%):@ <input type='number' value='"+tax_rate+"' step='any' id='form258_tax' style='width: 60%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>Transport Charges: <br>Total: </td>" +
                                     "<td>Rs. "+amount+"</br>" +
                                     "Rs. "+tax+" <br>" +
-                                    "Rs. <input type='number' value='"+my_round(cartage,2)+"' step='any' id='form258_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>" +
+                                    "Rs. <input type='number' value='"+vUtil.round(cartage,2)+"' step='any' id='form258_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>" +
                                     "Rs. <vtotal>"+total+"</vtotal></td>" +
                                     "<td></td>" +
                                     "</tr>";
@@ -1201,15 +1201,15 @@
                     tax_rate=parseFloat(document.getElementById('form258_tax').value);
                 }
 
-                var amount=my_round(amount,2);
-                var tax=my_round(tax_rate*(amount/100),2);
-                var total=my_round((amount+tax+cartage),0);
+                var amount=vUtil.round(amount,2);
+                var tax=vUtil.round(tax_rate*(amount/100),2);
+                var total=vUtil.round((amount+tax+cartage),0);
 
                 var total_row="<tr><td colspan='4' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
                                     "<td>Amount:<br>Tax(%):@ <input type='number' value='"+tax_rate+"' step='any' id='form258_tax' style='width: 60%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>Transport Charges: <br>Total: </td>" +
                                     "<td>Rs. "+amount+"</br>" +
                                     "Rs. "+tax+" <br>" +
-                                    "Rs. <input type='number' value='"+my_round(cartage,2)+"' step='any' id='form258_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>" +
+                                    "Rs. <input type='number' value='"+vUtil.round(cartage,2)+"' step='any' id='form258_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>" +
                                     "Rs. <vtotal>"+total+"</vtotal></td>" +
                                     "<td></td>" +
                                     "</tr>";
@@ -1389,15 +1389,15 @@
                 tax_rate=parseFloat(document.getElementById('form258_tax').value);
             }
 
-            var amount=my_round(amount,2);
-            var tax=my_round(tax_rate*(amount/100),2);
-            var total=my_round((amount+tax+cartage),0);
+            var amount=vUtil.round(amount,2);
+            var tax=vUtil.round(tax_rate*(amount/100),2);
+            var total=vUtil.round((amount+tax+cartage),0);
 
             var total_row="<tr><td colspan='4' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
                                 "<td>Amount:<br>Tax(%):@ <input type='number' value='"+tax_rate+"' step='any' id='form258_tax' style='width: 60%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>Transport Charges: <br>Total: </td>" +
                                 "<td>Rs. "+amount+"</br>" +
                                 "Rs. "+tax+" <br>" +
-                                "Rs. <input type='number' value='"+my_round(cartage,2)+"' step='any' id='form258_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>" +
+                                "Rs. <input type='number' value='"+vUtil.round(cartage,2)+"' step='any' id='form258_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>" +
                                 "Rs. <vtotal>"+total+"</vtotal></td>" +
                                 "<td></td>" +
                                 "</tr>";

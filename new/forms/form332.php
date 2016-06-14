@@ -742,10 +742,10 @@
 
             var form=document.getElementById("form332_master");
 
-            amount=my_round(amount,2);
-            tax=my_round(tax,2);
-            discount=my_round(discount,2);	
-            total=my_round(total,2);
+            amount=vUtil.round(amount,2);
+            tax=vUtil.round(tax,2);
+            discount=vUtil.round(discount,2);	
+            total=vUtil.round(total,2);
 
             var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
                         "<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +

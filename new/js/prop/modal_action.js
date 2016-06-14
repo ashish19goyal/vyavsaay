@@ -916,7 +916,7 @@ function modal14_action(func)
 			var description_indexes=description.split(/[\s,]+/);
 			var make_indexes=make.split(/[\s,]+/);
 			var new_indexes=indexes.concat(description_indexes,make_indexes);
-			var anew_indexes=array_unique(new_indexes);
+			var anew_indexes=vUtil.arrayUnique(new_indexes);
 			var index_string=JSON.stringify(anew_indexes);
 
 			var tax=form.elements['tax'].value;
@@ -1466,7 +1466,7 @@ function modal19_action(button)
       var description_indexes=description.split(/[\s,]+/);
       var make_indexes=make.split(/[\s,]+/);
       var new_indexes=indexes.concat(description_indexes,make_indexes);
-      var anew_indexes=array_unique(new_indexes);
+      var anew_indexes=vUtil.arrayUnique(new_indexes);
       var index_string=JSON.stringify(anew_indexes);
 
 			var tax=form.elements[6].value;
@@ -6460,7 +6460,7 @@ function modal112_action(func)
       var description_indexes=description.split(/[\s,]+/);
       var make_indexes=make.split(/[\s,]+/);
       var new_indexes=indexes.concat(description_indexes,make_indexes);
-      var anew_indexes=array_unique(new_indexes);
+      var anew_indexes=vUtil.arrayUnique(new_indexes);
       var index_string=JSON.stringify(anew_indexes);
 
       var data_json={data_store:'product_master',
@@ -6842,7 +6842,7 @@ function modal114_action(func)
 			var description_indexes=description.split(/[\s,]+/);
 			var make_indexes=make.split(/[\s,]+/);
 			var new_indexes=indexes.concat(description_indexes,make_indexes);
-			var anew_indexes=array_unique(new_indexes);
+			var anew_indexes=vUtil.arrayUnique(new_indexes);
 			var index_string=JSON.stringify(anew_indexes);
 
 			var tax=form.elements[7].value;
@@ -9579,7 +9579,7 @@ function modal140_action(i_func)
 							unique_items_in_import.push(data_row.system_sku);
 						});
 
-						unique_items_in_import=array_unique(unique_items_in_import);
+						unique_items_in_import=vUtil.arrayUnique(unique_items_in_import);
 
 
 						//console.log(products);
@@ -11055,7 +11055,7 @@ function modal150_action(rack,report_id)
 			//$(master_form).trigger('submit');
 		});
 
-		master_form_array=array_unique(master_form_array);
+		master_form_array=vUtil.arrayUnique(master_form_array);
 		//console.log(master_form_array);
 
 		master_form_array.forEach(function(master_form_id)
@@ -11243,7 +11243,7 @@ function modal152_action(rack)
 			//$(master_form).trigger('submit');
 		});
 
-		master_form_array=array_unique(master_form_array);
+		master_form_array=vUtil.arrayUnique(master_form_array);
 		//console.log(master_form_array);
 
 		master_form_array.forEach(function(master_form_id)
@@ -13122,7 +13122,7 @@ function modal172_action()
 		var counter_payment=parseFloat(amount_filter.value);
 		var p_id=get_new_key();
 		var last_updated=vTime.unix();
-		
+
 		if(is_create_access('form282'))
 		{
 			var transaction_json={data_store:'transactions',
@@ -13323,7 +13323,7 @@ function modal174_action(func)
       var description_indexes=description.split(/[\s,]+/);
       var make_indexes=make.split(/[\s,]+/);
       var new_indexes=indexes.concat(description_indexes,make_indexes);
-      var anew_indexes=array_unique(new_indexes);
+      var anew_indexes=vUtil.arrayUnique(new_indexes);
       var index_string=JSON.stringify(anew_indexes);
 
 			var last_updated=get_my_time();
@@ -13778,7 +13778,7 @@ function modal177_action(func)
       var description_indexes=description.split(/[\s,]+/);
       var make_indexes=make.split(/[\s,]+/);
       var new_indexes=indexes.concat(description_indexes,make_indexes);
-      var anew_indexes=array_unique(new_indexes);
+      var anew_indexes=vUtil.arrayUnique(new_indexes);
       var index_string=JSON.stringify(anew_indexes);
 
 			var mrp=form.elements[8].value;
@@ -15358,7 +15358,7 @@ function modal203_action(func)
       var description_indexes=description.split(/[\s,]+/);
       var make_indexes=make.split(/[\s,]+/);
       var new_indexes=indexes.concat(description_indexes,make_indexes);
-      var anew_indexes=array_unique(new_indexes);
+      var anew_indexes=vUtil.arrayUnique(new_indexes);
       var index_string=JSON.stringify(anew_indexes);
 
 			var tax=form.elements['tax'].value;
@@ -16265,7 +16265,7 @@ function modal214_action(func)
       var description_indexes=description.split(/[\s,]+/);
       var make_indexes=make.split(/[\s,]+/);
       var new_indexes=indexes.concat(description_indexes,make_indexes);
-      var anew_indexes=array_unique(new_indexes);
+      var anew_indexes=vUtil.arrayUnique(new_indexes);
       var index_string=JSON.stringify(anew_indexes);
 
       var data_json={data_store:'product_master',
@@ -16858,4 +16858,139 @@ function modal221_action(t_func,i_func,v_func)
 	    reader.readAsText(file);
 	});
 	$("#modal221_link").click();
+}
+
+/**
+ * @modalNo 222
+ * @modal Add new product (cps)
+ * @param button
+ */
+function modal222_action(func)
+{
+	var form=document.getElementById('modal222_form');
+
+	var fname=form.elements['name'];
+	var fmake=form.elements['make'];
+	var fdescription=form.elements['desc'];
+	var fmanu=form.elements['manu'];
+	var fpurchased=form.elements['purchased'];
+	var fcost=form.elements['cost'];
+	var fsale=form.elements['sale'];
+
+	var make_data={data_store:'product_master',return_column:'make'};
+	set_my_filter_json(make_data,fmake);
+
+	set_value_list_json(['yes','no'],fmanu);
+	set_value_list_json(['yes','no'],fpurchased);
+
+	$(fcost).parent().parent().hide();
+	$(fsale).parent().parent().hide();
+
+	if(fmanu.value=='yes')
+	{
+		$(fsale).parent().parent().show();
+	}
+	if(fpurchased.value=='yes')
+	{
+		$(fcost).parent().parent().show();
+	}
+
+	vUtil.onChange(fmanu,function()
+	{
+		if(fmanu.value=='yes')
+		{
+			$(fsale).parent().parent().show();
+		}
+		else
+		{
+			$(fsale).parent().parent().hide();
+		}
+	});
+
+	vUtil.onChange(fpurchased,function()
+	{
+		if(fpurchased.value=='yes')
+		{
+			$(fcost).parent().parent().show();
+		}
+		else
+		{
+			$(fcost).parent().parent().hide();
+		}
+	});
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form39'))
+		{
+			var name=fname.value;
+			var make=fmake.value;
+			var description=fdescription.value;
+
+			var manufactured=fmanu.value;
+			var purchased=fpurchased.value;
+
+			var tax=form.elements['tax'].value;
+			var data_id=get_new_key();
+			var cost_price=fcost.value;
+      var sale_price=fsale.value;
+			var last_updated=get_my_time();
+      var indexes=name.split(/[\s,]+/);
+      var description_indexes=description.split(/[\s,]+/);
+      var make_indexes=make.split(/[\s,]+/);
+      var new_indexes=indexes.concat(description_indexes,make_indexes);
+      var anew_indexes=vUtil.arrayUnique(new_indexes);
+      var index_string=JSON.stringify(anew_indexes);
+
+      var data_json={data_store:'product_master',
+	 				log:'yes',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'name',value:name,unique:'yes'},
+	 					{index:'make',value:make},
+	 					{index:'description',value:description},
+	 					{index:'tax',value:tax},
+            {index:'indexes',value:index_string},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Added',notes:'Product '+name+' to inventory',link_to:'form39'}};
+
+      create_json(data_json,func);
+
+      var instance_json={data_store:'product_instances',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'product_name',value:name,uniqueWith:['batch']},
+	 					{index:'batch',value:name},
+	 					{index:'cost_price',value:cost_price},
+	 					{index:'sale_price',value:sale_price},
+	 					{index:'last_updated',value:last_updated}]};
+			create_json(instance_json);
+
+			var id=get_new_key();
+			var attribute_json={data_store:'attributes',
+				data:[{index:'id',value:id},
+					{index:'name',value:name},
+					{index:'type',value:'product'},
+					{index:'attribute',value:'manufactured'},
+					{index:'value',value:manufactured},
+					{index:'last_updated',value:last_updated}]};
+			create_json(attribute_json);
+
+			var attribute2_json={data_store:'attributes',
+				data:[{index:'id',value:id+1},
+					{index:'name',value:name},
+					{index:'type',value:'product'},
+					{index:'attribute',value:'raw material'},
+					{index:'value',value:purchased},
+					{index:'last_updated',value:last_updated}]};
+			create_json(attribute2_json);
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
+		$(form).find(".close").click();
+	});
+
+	$("#modal222_link").click();
 }

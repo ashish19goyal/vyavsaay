@@ -28,9 +28,9 @@ function form24_get_totals()
 		total+=.02*amount;
 	}
 */	
-	amount=my_round(amount,2);
-	tax=my_round(tax,2);
-	total=my_round(total,2);
+	amount=vUtil.round(amount,2);
+	tax=vUtil.round(tax,2);
+	total=vUtil.round(total,2);
 		
 	var total_row="<tr><td colspan='2' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 							"<td>Amount:<br>Tax: <br>Total: </td>" +
@@ -67,10 +67,10 @@ function form69_get_totals()
 			total_quantity+=parseFloat(subform.elements[4].value);	
 	});
 	
-	amount=my_round(amount,2);
-	freight=my_round(freight,2);
-	tax=my_round(tax,2);
-	total=my_round(total,2);
+	amount=vUtil.round(amount,2);
+	freight=vUtil.round(freight,2);
+	tax=vUtil.round(tax,2);
+	total=vUtil.round(total,2);
 
 	var total_row="<tr><td colspan='1' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 						"<td>Amount:</br>Tax: <br>Freight: </br>Total: </td>" +
@@ -122,11 +122,11 @@ function form72_get_totals()
 
 	});
 	
-	service_tax=my_round(service_tax,2);
-	vat=my_round(vat,2);
-	amount=my_round(amount,2);
-	discount=my_round(discount,2);
-	total=my_round(total,0);
+	service_tax=vUtil.round(service_tax,2);
+	vat=vUtil.round(vat,2);
+	amount=vUtil.round(amount,2);
+	discount=vUtil.round(discount,2);
+	total=vUtil.round(total,0);
 	
 	var tax_string="VAT: <br>S.Tax:";
 	var tax_amount_string="Rs. "+vat+"<br>Rs. "+service_tax+"<br>";
@@ -212,14 +212,14 @@ function form91_get_totals()
 	var tax="";
 	for(var x in tax_array)
 	{
-		tax_array[x]=my_round(tax_array[x],2);
+		tax_array[x]=vUtil.round(tax_array[x],2);
 		tax_string+=tax_name+" @"+x+"%: <br>";		
 		tax+="Rs. "+tax_array[x]+": <br>";
 	}
 
-	amount=my_round(amount,2);
-	freight=my_round(freight,2);
-	total=my_round(total,2);
+	amount=vUtil.round(amount,2);
+	freight=vUtil.round(freight,2);
+	total=vUtil.round(total,2);
 
 	var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 							"<td>Amount:</br>"+tax_string+"Freight: </br>Total: </td>" +
@@ -256,8 +256,8 @@ function form122_get_totals()
 			total_quantity+=parseFloat(subform.elements[4].value);
 	});
 
-	amount=my_round(amount,2);
-	tax=my_round(tax,2);
+	amount=vUtil.round(amount,2);
+	tax=vUtil.round(tax,2);
 	total=amount+tax;
 		
 	var total_row="<tr><td colspan='3' data-th='Total'>Total Accepted Quantity: "+total_accepted+"<br>Total Rejected Quantity: "+(total_quantity-total_accepted)+"</td>" +
@@ -294,11 +294,11 @@ function form153_get_totals()
 		if(isNaN(parseFloat(subform.elements[5].value)))
 			amount+=0;
 		else
-			amount+=my_round(parseFloat(subform.elements[5].value),0);	
+			amount+=vUtil.round(parseFloat(subform.elements[5].value),0);	
 	});
 
-	var tax=my_round((tax_rate*((amount-discount)/100)),0);
-	var total=my_round(amount+tax-discount,0);
+	var tax=vUtil.round((tax_rate*((amount-discount)/100)),0);
+	var total=vUtil.round(amount+tax-discount,0);
 
 	var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 					"<td>Amount:</br>Discount: </br>Tax:@ <input type='number' value='"+tax_rate+"' title='specify tax rate' step='any' id='form153_tax' class='dblclick_editable'>% </br>Total: </td>" +
@@ -599,7 +599,7 @@ function form248_update_serial_numbers()
 	
 	var form=document.getElementById("form248_master");
 	form.elements['num_orders'].value=num_orders;
-	form.elements['weight'].value=my_round(weight,4);
+	form.elements['weight'].value=vUtil.round(weight,4);
 }
 
 function form250_update_serial_numbers()
@@ -672,9 +672,9 @@ function form294_get_totals()
 			amount+=parseFloat(subform.elements[3].value);		
 	});
 
-	var amount=my_round(amount,2);
-	var tax=my_round((tax_rate*((amount-discount)/100)),2);		
-	var total=my_round(amount+tax-discount+cartage,0);
+	var amount=vUtil.round(amount,2);
+	var tax=vUtil.round((tax_rate*((amount-discount)/100)),2);		
+	var total=vUtil.round(amount+tax-discount+cartage,0);
 	
 	var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 				"<td>Amount:<disc><br>Discount: </disc><br>Tax:@ <input type='number' value='"+tax_rate+"' step='any' id='form294_tax' class='dblclick_editable'>% <br>Cartage: <br>Total: </td>" +
@@ -722,9 +722,9 @@ function form295_get_totals()
 			amount+=parseFloat(subform.elements[3].value);		
 	});
 
-	var amount=my_round(amount,2);
-	var tax=my_round((tax_rate*((amount-discount)/100)),2);		
-	var total=my_round(amount+tax-discount+cartage,0);
+	var amount=vUtil.round(amount,2);
+	var tax=vUtil.round((tax_rate*((amount-discount)/100)),2);		
+	var total=vUtil.round(amount+tax-discount+cartage,0);
 	
 	var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 				"<td>Amount:<disc><br>Discount: </disc><br>Tax:@ <input type='number' value='"+tax_rate+"' step='any' id='form295_tax' class='dblclick_editable'>% <br>Cartage: <br>Total: </td>" +
@@ -764,9 +764,9 @@ function form296_get_totals()
 	
 	var form=document.getElementById("form296_master");
 	
-	amount=my_round(amount,2);
-	tax=my_round(tax,2);
-	total=my_round(total,2);
+	amount=vUtil.round(amount,2);
+	tax=vUtil.round(tax,2);
+	total=vUtil.round(total,2);
 		
 	var total_row="<tr><td colspan='2' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 							"<td>Amount:<br>Tax: <br>Total: </td>" +

@@ -343,9 +343,9 @@
                                                 }
                                                 /////saving to bill item
 
-                                                var bill_item_amount=my_round((item_amount*batch_result.quantity/order_item.quantity),2);
-                                                var bill_item_total=my_round((item_total*batch_result.quantity/order_item.quantity),2);
-                                                var bill_item_tax=my_round((item_tax*batch_result.quantity/order_item.quantity),2);
+                                                var bill_item_amount=vUtil.round((item_amount*batch_result.quantity/order_item.quantity),2);
+                                                var bill_item_total=vUtil.round((item_total*batch_result.quantity/order_item.quantity),2);
+                                                var bill_item_tax=vUtil.round((item_tax*batch_result.quantity/order_item.quantity),2);
 
                                                 var bill_item_id=get_new_key();
                                                 var data_xml="<bill_items>" +

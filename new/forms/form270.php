@@ -295,14 +295,14 @@ function form270_add_item()
 
 		$(quantity_filter).add(price_filter).on('change blur',function(event)
 		{
-			amount_filter.value=my_round((parseFloat(price_filter.value)*parseFloat(quantity_filter.value)),2);
-			tax_filter.value=my_round((parseFloat(tax_unit_filter.value)*parseFloat(amount_filter.value)),2);
+			amount_filter.value=vUtil.round((parseFloat(price_filter.value)*parseFloat(quantity_filter.value)),2);
+			tax_filter.value=vUtil.round((parseFloat(tax_unit_filter.value)*parseFloat(amount_filter.value)),2);
 			$(amount_filter).trigger('change');
 		});
 
 		$(amount_filter).add(tax_filter).on('change blur',function(event)
 		{
-			total_filter.value=my_round((parseFloat(amount_filter.value)+parseFloat(tax_filter.value)),0);
+			total_filter.value=vUtil.round((parseFloat(amount_filter.value)+parseFloat(tax_filter.value)),0);
 		});
 
 		form270_get_totals();
@@ -401,15 +401,15 @@ function form270_create_form()
 			cartage=parseFloat(document.getElementById('form270_cartage').value);
 		}
 
-		var amount=my_round(amount,2);
-		var tax=my_round(tax,2);
-		var total=my_round((total+cartage),0);
+		var amount=vUtil.round(amount,2);
+		var tax=vUtil.round(tax,2);
+		var total=vUtil.round((total+cartage),0);
 
 		var total_row="<tr><td colspan='2' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 							"<td>Amount:<br>Tax:<br>Cartage: <br>Total: </td>" +
 							"<td>Rs. "+amount+"</br>" +
 							"Rs. "+tax+" <br>" +
-							"Rs. <input type='number' placeholder='Cartage' value='"+my_round(cartage,2)+"' step='any' id='form270_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>" +
+							"Rs. <input type='number' placeholder='Cartage' value='"+vUtil.round(cartage,2)+"' step='any' id='form270_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>" +
 							"Rs. "+total+"</td>" +
 							"<td></td>" +
 							"</tr>";
@@ -538,15 +538,15 @@ function form270_update_form()
 			cartage=parseFloat(document.getElementById('form270_cartage').value);
 		}
 
-		var amount=my_round(amount,2);
-		var tax=my_round(tax,2);
-		var total=my_round((total+cartage),0);
+		var amount=vUtil.round(amount,2);
+		var tax=vUtil.round(tax,2);
+		var total=vUtil.round((total+cartage),0);
 
 		var total_row="<tr><td colspan='2' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 							"<td>Amount:<br>Tax:<br>Cartage: <br>Total: </td>" +
 							"<td>Rs. "+amount+"</br>" +
 							"Rs. "+tax+" <br>" +
-							"Rs. <input type='number' placeholder='Cartage' value='"+my_round(cartage,2)+"' step='any' id='form270_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>" +
+							"Rs. <input type='number' placeholder='Cartage' value='"+vUtil.round(cartage,2)+"' step='any' id='form270_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>" +
 							"Rs. "+total+"</td>" +
 							"<td></td>" +
 							"</tr>";
@@ -685,15 +685,15 @@ function form270_get_totals()
 		cartage=parseFloat(document.getElementById('form270_cartage').value);
 	}
 
-	var amount=my_round(amount,2);
-	var tax=my_round(tax,2);
-	var total=my_round((total+cartage),0);
+	var amount=vUtil.round(amount,2);
+	var tax=vUtil.round(tax,2);
+	var total=vUtil.round((total+cartage),0);
 
 	var total_row="<tr><td colspan='2' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 						"<td>Amount:<br>Tax:<br>Cartage: <br>Total: </td>" +
 						"<td>Rs. "+amount+"</br>" +
 						"Rs. "+tax+" <br>" +
-						"Rs. <input type='number' placeholder='Cartage' value='"+my_round(cartage,2)+"' step='any' id='form270_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>" +
+						"Rs. <input type='number' placeholder='Cartage' value='"+vUtil.round(cartage,2)+"' step='any' id='form270_cartage' class='dblclick_editable' style='width: 80%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>" +
 						"Rs. "+total+"</td>" +
 						"<td></td>" +
 						"</tr>";

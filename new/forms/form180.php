@@ -320,7 +320,7 @@
                 $(quantity_filter).add(price_filter).on('blur',function(event)
                 {
                     amount_filter.value=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
-                    tax_filter.value=my_round(((parseFloat(tax_unit_filter.value)*(parseFloat(amount_filter.value)))/100),2);			
+                    tax_filter.value=vUtil.round(((parseFloat(tax_unit_filter.value)*(parseFloat(amount_filter.value)))/100),2);			
                     if(isNaN(parseFloat(tax_filter.value)))
                         tax_filter.value=0;
                     total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
@@ -767,9 +767,9 @@
 
             var form=document.getElementById("form180_master");
 
-            amount=my_round(amount,2);
-            tax=my_round(tax,2);
-            total=my_round(total,2);
+            amount=vUtil.round(amount,2);
+            tax=vUtil.round(tax,2);
+            total=vUtil.round(total,2);
 
             var total_row="<tr><td colspan='1' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
                                     "<td>Amount:<br>Tax: <br>Total: </td>" +

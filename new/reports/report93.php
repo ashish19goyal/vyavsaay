@@ -100,7 +100,6 @@ function report93_ini()
 								"</product_instances>";
 		fetch_requested_data('report93',product_instances_xml,function(product_instances)
 		{
-			//product_instances=array_unique(product_instances);
 			//console.log(product_instances);
 			for(var l=0;l<product_instances.length;l++)
 			{

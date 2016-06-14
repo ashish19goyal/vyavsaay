@@ -2121,7 +2121,7 @@ function form43_ini()
 											if(margins.length>0)
 											{
 												supplier_sku_filter.value=margins[0].supplier_sku;
-												price_filter.value=my_round((parseFloat(mrp_filter.value)*(100-parseFloat(margins[0].margin))/100),2);
+												price_filter.value=vUtil.round((parseFloat(mrp_filter.value)*(100-parseFloat(margins[0].margin))/100),2);
 												amount_filter.value=Math.round(parseFloat(quantity_filter.value)*parseFloat(price_filter.value));
 												tax_filter.value=Math.round(parseFloat(amount_filter.value)*(parseFloat(tax_rate_filter.value)/100));
 												total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
@@ -10759,7 +10759,7 @@ function form163_ini()
 
 			$(length_filter).add(breadth_filter).add(height_filter).add(weight_filter).on('blur',function()
 			{
-				volume_filter.value=my_round((parseFloat(length_filter.value)*parseFloat(breadth_filter.value)*parseFloat(height_filter.value)),2);
+				volume_filter.value=vUtil.round((parseFloat(length_filter.value)*parseFloat(breadth_filter.value)*parseFloat(height_filter.value)),2);
 				var channel_data="<sale_channels>"+
 							"<name></name>"+
 							"<dead_weight_factor></dead_weight_factor>"+
@@ -17453,12 +17453,12 @@ function form292_ini()
 			$(amount_filter).on('blur change',function ()
 			{
 				tax_filter.value=parseFloat(amount_filter.value)*parseFloat(tax_rate)/100;
-				total_filter.value=my_round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value),0);
+				total_filter.value=vUtil.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value),0);
 			});
 
 			$(tax_filter).on('blur change',function ()
 			{
-				total_filter.value=my_round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value),0);
+				total_filter.value=vUtil.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value),0);
 			});
 
 			set_static_value_list_json('system_billing','payment_status',status_filter);

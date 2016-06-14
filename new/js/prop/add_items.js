@@ -842,7 +842,7 @@ function form24_add_item()
 					if(margins.length>0)
 					{
 						supplier_sku_filter.value=margins[0].supplier_sku;
-						price_filter.value=my_round((parseFloat(mrp_filter.value)*(100-parseFloat(margins[0].margin))/100),2);
+						price_filter.value=vUtil.round((parseFloat(mrp_filter.value)*(100-parseFloat(margins[0].margin))/100),2);
 						amount_filter.value=Math.round(parseFloat(quantity_filter.value)*parseFloat(price_filter.value));
 						tax_filter.value=Math.round(parseFloat(amount_filter.value)*(parseFloat(tax_rate_filter.value)/100));
 						total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
@@ -1632,7 +1632,7 @@ function form69_add_item()
 							mrp_filter.value=prices[0].mrp;
 							sp_filter.value=prices[0].sale_price;
 							freight_unit_filter.value=prices[0].freight;
-							unit_price_filter.value=my_round(parseFloat(sp_filter.value)/(1+parseFloat(tax_unit_filter.value)/100),2);
+							unit_price_filter.value=vUtil.round(parseFloat(sp_filter.value)/(1+parseFloat(tax_unit_filter.value)/100),2);
 						}
 					});
 				});
@@ -1641,16 +1641,16 @@ function form69_add_item()
 
 		$(sp_filter).on('change blur',function(event)
 		{
-			unit_price_filter.value=my_round(parseFloat(sp_filter.value)/(1+parseFloat(tax_unit_filter.value)/100),2);
+			unit_price_filter.value=vUtil.round(parseFloat(sp_filter.value)/(1+parseFloat(tax_unit_filter.value)/100),2);
 			$(unit_price_filter).trigger('change');			
 		});
 		
 		$(quantity_filter).add(unit_price_filter).on('change',function(event)
 		{
-			amount_filter.value=my_round(parseFloat(quantity_filter.value)*parseFloat(unit_price_filter.value),2);
-			freight_filter.value=my_round((parseFloat(freight_unit_filter.value)*parseFloat(quantity_filter.value)),2);			
+			amount_filter.value=vUtil.round(parseFloat(quantity_filter.value)*parseFloat(unit_price_filter.value),2);
+			freight_filter.value=vUtil.round((parseFloat(freight_unit_filter.value)*parseFloat(quantity_filter.value)),2);			
 					
-			tax_filter.value=my_round(((parseFloat(tax_unit_filter.value)*(parseFloat(amount_filter.value)))/100),2);			
+			tax_filter.value=vUtil.round(((parseFloat(tax_unit_filter.value)*(parseFloat(amount_filter.value)))/100),2);			
 			if(isNaN(parseFloat(tax_filter.value)))
 				tax_filter.value=0;
 			if(isNaN(parseFloat(freight_filter.value)))
@@ -2678,8 +2678,8 @@ function form91_add_item()
 		{
 			var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
 			amount_filter.value=amount;
-			freight_filter.value=my_round((parseFloat(freight_unit_filter.value)*parseFloat(quantity_filter.value)),2);			
-			tax_filter.value=my_round(((parseFloat(tax_unit_filter.value)*amount)/100),2);			
+			freight_filter.value=vUtil.round((parseFloat(freight_unit_filter.value)*parseFloat(quantity_filter.value)),2);			
+			tax_filter.value=vUtil.round(((parseFloat(tax_unit_filter.value)*amount)/100),2);			
 			total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value)+parseFloat(freight_filter.value));
 		});
 
@@ -3142,8 +3142,8 @@ function form112_add_item()
 									"</channel_prices>";
 					set_my_value(sale_price_data,unit_filter,function () 
 					{					
-						amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
-						tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);			
+						amount_filter.value=vUtil.round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
+						tax_filter.value=vUtil.round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);			
 					});
 				}				
 			},last_batch_data);
@@ -3185,15 +3185,15 @@ function form112_add_item()
 							"</channel_prices>";
 			set_my_value(sale_price_data,unit_filter,function () 
 			{					
-				amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
-				tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);			
+				amount_filter.value=vUtil.round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
+				tax_filter.value=vUtil.round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);			
 			});			
 		});
 		
 		$(quantity_filter).add(unit_filter).on('blur',function () 
 		{
-			amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
-			tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
+			amount_filter.value=vUtil.round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
+			tax_filter.value=vUtil.round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
 		});
 	}
 	else
@@ -3394,7 +3394,7 @@ function form114_add_item()
 						{
 							if(margins.length>0)
 							{
-								unit_filter.value=my_round((parseFloat(mrp_price)*(100-parseFloat(margins[0].margin))/100),2);
+								unit_filter.value=vUtil.round((parseFloat(mrp_price)*(100-parseFloat(margins[0].margin))/100),2);
 								amount_filter.value=Math.round(parseFloat(quantity_filter.value)*parseFloat(unit_filter.value));
 								tax_filter.value=Math.round(parseFloat(amount_filter.value)*(parseFloat(tax_unit_filter.value)/100));
 								//total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
@@ -3446,7 +3446,7 @@ function form114_add_item()
 				{
 					if(margins.length>0)
 					{
-						unit_filter.value=my_round((parseFloat(mrp_price)*(100-parseFloat(margins[0].margin))/100),2);
+						unit_filter.value=vUtil.round((parseFloat(mrp_price)*(100-parseFloat(margins[0].margin))/100),2);
 						amount_filter.value=Math.round(parseFloat(quantity_filter.value)*parseFloat(unit_filter.value));
 						tax_filter.value=Math.round(parseFloat(amount_filter.value)*(parseFloat(tax_unit_filter.value)/100));
 						//total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
@@ -3464,8 +3464,8 @@ function form114_add_item()
 		
 		$(quantity_filter).add(unit_filter).on('blur',function () 
 		{
-			amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
-			tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
+			amount_filter.value=vUtil.round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
+			tax_filter.value=vUtil.round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
 		});
 	}
 	else
@@ -4036,7 +4036,7 @@ function form119_add_item()
 		
 		$(squantity_filter).on('blur',function(event)
 		{
-			var amount=my_round(parseFloat(squantity_filter.value)*parseFloat(price_filter.value),2);
+			var amount=vUtil.round(parseFloat(squantity_filter.value)*parseFloat(price_filter.value),2);
 			amount_filter.value=amount;
 			var offer_data="<offers>" +
 					"<offer_type>product</offer_type>" +
@@ -4142,10 +4142,10 @@ function form119_add_item()
 				{
 					taxes.forEach(function(tax)
 					{
-						tax_filter.value=my_round(parseFloat((parseFloat(tax.tax)*(amount-parseFloat(discount_filter.value)))/100),2);
+						tax_filter.value=vUtil.round(parseFloat((parseFloat(tax.tax)*(amount-parseFloat(discount_filter.value)))/100),2);
 					});
 					
-					total_filter.value=my_round((parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value)),2);
+					total_filter.value=vUtil.round((parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value)),2);
 				});
 			});
 		});
@@ -4551,7 +4551,7 @@ function form122_add_item()
 							if(margins.length>0)
 							{
 								margin_filter.value=margins[0].margin;
-								unit_filter.value=my_round((parseFloat(mrp_filter.value)*(100-parseFloat(margins[0].margin))/100),2);
+								unit_filter.value=vUtil.round((parseFloat(mrp_filter.value)*(100-parseFloat(margins[0].margin))/100),2);
 								amount_filter.value=Math.round(parseFloat(quantity_filter.value)*parseFloat(unit_filter.value));
 								tax_filter.value=Math.round(parseFloat(amount_filter.value)*(parseFloat(tax_unit_filter.value)/100));
 								//total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
@@ -4613,7 +4613,7 @@ function form122_add_item()
 					if(margins.length>0)
 					{
 						margin_filter.value=margins[0].margin;
-						unit_filter.value=my_round((parseFloat(mrp_filter.value)*(100-parseFloat(margins[0].margin))/100),2);
+						unit_filter.value=vUtil.round((parseFloat(mrp_filter.value)*(100-parseFloat(margins[0].margin))/100),2);
 						amount_filter.value=Math.round(parseFloat(quantity_filter.value)*parseFloat(unit_filter.value));
 						tax_filter.value=Math.round(parseFloat(amount_filter.value)*(parseFloat(tax_unit_filter.value)/100));
 						//total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
@@ -4631,8 +4631,8 @@ function form122_add_item()
 		
 		$(quantity_filter).on('blur',function () 
 		{
-			amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
-			tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
+			amount_filter.value=vUtil.round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
+			tax_filter.value=vUtil.round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
 
 			po_amount_filter.value=parseFloat(po_unit_filter.value)*parseFloat(quantity_filter.value);
 			po_tax_filter.value=parseFloat(po_tax_rate_filter.value)*parseFloat(po_amount_filter.value)/100;	
@@ -4688,8 +4688,8 @@ function form122_add_item()
 		
 		$(unit_filter).on('blur',function () 
 		{
-			amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
-			tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
+			amount_filter.value=vUtil.round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
+			tax_filter.value=vUtil.round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
 			
 			var new_margin=100*(1-(parseFloat(unit_filter.value)/(parseFloat(mrp_filter.value)*(1-(parseFloat(tax_unit_filter.value))/100))));
 			if(new_margin>parseFloat(margin_filter.value))
@@ -4925,9 +4925,9 @@ function form122_add_item()
 							if(margins.length>0)
 							{
 								var tax_factor=(100-parseFloat(tax_unit_filter.value))/100;
-								unit_filter.value=my_round(tax_factor*(mrp_price*(100-parseFloat(margins[0]))/100),2);
-								amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
-								tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);			
+								unit_filter.value=vUtil.round(tax_factor*(mrp_price*(100-parseFloat(margins[0]))/100),2);
+								amount_filter.value=vUtil.round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
+								tax_filter.value=vUtil.round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);			
 							}
 						},margin_data);					
 					},mrp_data);			
@@ -4970,9 +4970,9 @@ function form122_add_item()
 					if(margins.length>0)
 					{
 						var tax_factor=(100-parseFloat(tax_unit_filter.value))/100;
-						unit_filter.value=my_round(tax_factor*(mrp_price*(100-parseFloat(margins[0]))/100),2);
-						amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
-						tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
+						unit_filter.value=vUtil.round(tax_factor*(mrp_price*(100-parseFloat(margins[0]))/100),2);
+						amount_filter.value=vUtil.round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
+						tax_filter.value=vUtil.round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
 					}
 				},margin_data);					
 			},mrp_data);			
@@ -4980,8 +4980,8 @@ function form122_add_item()
 		
 		$(quantity_filter).add(unit_filter).on('blur',function () 
 		{
-			amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
-			tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
+			amount_filter.value=vUtil.round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
+			tax_filter.value=vUtil.round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
 		});
 	}
 	else
@@ -6089,16 +6089,16 @@ function form151_add_item()
 					});
 
 					price_filter.value=prices[0];
-					est_filter.value=my_round(parseFloat(price_filter.value)*parseFloat(quantity_filter.value),2);
-					amount_filter.value=my_round(parseFloat(price_filter.value)*parseFloat(quantity_filter.value),2);
+					est_filter.value=vUtil.round(parseFloat(price_filter.value)*parseFloat(quantity_filter.value),2);
+					amount_filter.value=vUtil.round(parseFloat(price_filter.value)*parseFloat(quantity_filter.value),2);
 				}
 			},price_data);
 		});
 		
 		$(quantity_filter).on('blur',function()
 		{
-			est_filter.value=my_round(parseFloat(price_filter.value)*parseFloat(quantity_filter.value),2);
-			amount_filter.value=my_round(parseFloat(price_filter.value)*parseFloat(quantity_filter.value),2);
+			est_filter.value=vUtil.round(parseFloat(price_filter.value)*parseFloat(quantity_filter.value),2);
+			amount_filter.value=vUtil.round(parseFloat(price_filter.value)*parseFloat(quantity_filter.value),2);
 		});
 							
 		//set_static_value_list('service_request_items','status',status_filter);
@@ -6734,14 +6734,14 @@ function form154_add_product()
 				var days=0;
 				if(to_filter!="" && from_filter!="" && parseFloat(to_filter.value)>=parseFloat(from_filter.value))
 				{
-					days=1+my_round(((get_raw_time(to_filter.value)-get_raw_time(from_filter.value))/86400000),0);
+					days=1+vUtil.round(((get_raw_time(to_filter.value)-get_raw_time(from_filter.value))/86400000),0);
 				}
 				days_filter.value=days;
 				
-				var amount=my_round(parseFloat(quantity_filter.value)*parseFloat(price_filter.value)*days,2);
+				var amount=vUtil.round(parseFloat(quantity_filter.value)*parseFloat(price_filter.value)*days,2);
 				amount_filter.value=Math.round(amount).toFixed(2);
 				
-				//tax_filter.value=my_round(parseFloat((parseFloat(tax_unit_filter.value)*(amount-parseFloat(discount_filter.value)))/100),2);
+				//tax_filter.value=vUtil.round(parseFloat((parseFloat(tax_unit_filter.value)*(amount-parseFloat(discount_filter.value)))/100),2);
 					
 				//total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value));				
 			});	
@@ -6916,7 +6916,7 @@ function form154_add_product()
 				var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
 				amount_filter.value=Math.round(amount).toFixed(2);
 					
-				//tax_filter.value=my_round(parseFloat((parseFloat(tax_unit_filter.value)*(amount-parseFloat(discount_filter.value)))/100),2);
+				//tax_filter.value=vUtil.round(parseFloat((parseFloat(tax_unit_filter.value)*(amount-parseFloat(discount_filter.value)))/100),2);
 				//total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value));
 			});
 			/*
@@ -7015,7 +7015,7 @@ function form154_add_service()
 		{
 			var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
 			amount_filter.value=Math.round(amount).toFixed(2);
-			//tax_filter.value=my_round(parseFloat((parseFloat(tax_unit_filter.value)*amount)),2);
+			//tax_filter.value=vUtil.round(parseFloat((parseFloat(tax_unit_filter.value)*amount)),2);
 			//total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
 		});
 		/*
@@ -7425,7 +7425,7 @@ function form158_add_item()
 		
 		$(quantity_filter).add(price_filter).on('blur',function(event)
 		{
-			//tax_filter.value=my_round((parseFloat(tax_unit_filter.value)*parseFloat(quantity_filter.value)*parseFloat(price_filter.value)/100),2);
+			//tax_filter.value=vUtil.round((parseFloat(tax_unit_filter.value)*parseFloat(quantity_filter.value)*parseFloat(price_filter.value)/100),2);
 			var amount=(parseFloat(price_filter.value)*parseFloat(quantity_filter.value));
 			amount_filter.value=Math.round(amount);
 		});
@@ -7817,13 +7817,13 @@ function form172_add_item()
 
 		$(commission_filter).add(sp_filter).on('change',function () 
 		{
-			commission_charges_filter.value=my_round((parseFloat(commission_filter.value)*parseFloat(sp_filter.value)/100),2);
+			commission_charges_filter.value=vUtil.round((parseFloat(commission_filter.value)*parseFloat(sp_filter.value)/100),2);
 			$(commission_charges_filter).trigger('change');
 		});
 
 		$(commission_charges_filter).add(pickup_filter).add(other_filter).on('change',function () 
 		{
-			tax_filter.value=my_round((parseFloat(get_session_var('service_tax_rate'))*(parseFloat(other_filter.value)+parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value))/100),2);						
+			tax_filter.value=vUtil.round((parseFloat(get_session_var('service_tax_rate'))*(parseFloat(other_filter.value)+parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value))/100),2);						
 			total_charges_filter.value=parseFloat(other_filter.value)+parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value)+parseFloat(tax_filter.value);
 			$(total_charges_filter).trigger('change');
 		});
@@ -7836,14 +7836,14 @@ function form172_add_item()
 
 		$(sp_filter).add(freight_filter).add(cp_filter).add(total_charges_filter).on('change',function ()
 		{
-			profit_filter.value=my_round((parseFloat(sp_filter.value)+parseFloat(freight_filter.value)-parseFloat(total_charges_filter.value)-parseFloat(cp_filter.value)),2);
+			profit_filter.value=vUtil.round((parseFloat(sp_filter.value)+parseFloat(freight_filter.value)-parseFloat(total_charges_filter.value)-parseFloat(cp_filter.value)),2);
 			$(profit_filter).trigger('change');			
 		});			
 				
 		$(profit_filter).add(sp_filter).add(mrp_filter).on('change',function()
 		{
-			profit_mrp_filter.value=my_round((parseFloat(profit_filter.value)/parseFloat(mrp_filter.value)*100),2);
-			profit_sp_filter.value=my_round((parseFloat(profit_filter.value)/parseFloat(sp_filter.value)*100),2);
+			profit_mrp_filter.value=vUtil.round((parseFloat(profit_filter.value)/parseFloat(mrp_filter.value)*100),2);
+			profit_sp_filter.value=vUtil.round((parseFloat(profit_filter.value)/parseFloat(sp_filter.value)*100),2);
 		});
 
 		$(fields).on("submit",function(event)
@@ -8456,10 +8456,10 @@ function form192_add_item()
 		
 		$(quantity_filter).add(price_filter).on('blur',function(event)
 		{
-			amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(price_filter.value)),2);
-			tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
+			amount_filter.value=vUtil.round((parseFloat(quantity_filter.value)*parseFloat(price_filter.value)),2);
+			tax_filter.value=vUtil.round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
 			var total=parseFloat(amount_filter.value)+parseFloat(tax_filter.value);
-			total_filter.value=my_round(total,0);
+			total_filter.value=vUtil.round(total,0);
 		});
 	}
 	else
@@ -11682,12 +11682,12 @@ function form292_add_item()
 		$(amount_filter).on('blur change',function () 
 		{
 			tax_filter.value=parseFloat(amount_filter.value)*parseFloat(tax_rate)/100;
-			total_filter.value=my_round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value),0);
+			total_filter.value=vUtil.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value),0);
 		});
 		
 		$(tax_filter).on('blur change',function () 
 		{
-			total_filter.value=my_round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value),0);
+			total_filter.value=vUtil.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value),0);
 		});
 
 		set_static_value_list_json('system_billing','payment_status',status_filter);
@@ -11855,7 +11855,7 @@ function form294_add_item()
 		$(price_filter).add(quantity_filter).on('blur',function(event)
 		{
 			var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
-			amount_filter.value=my_round(amount,2);				
+			amount_filter.value=vUtil.round(amount,2);				
 		});
 
 		form294_update_serial_numbers();
@@ -11989,7 +11989,7 @@ function form295_add_item()
 		$(price_filter).add(quantity_filter).on('blur',function(event)
 		{
 			var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
-			amount_filter.value=my_round(amount,2);				
+			amount_filter.value=vUtil.round(amount,2);				
 		});
 
 		form295_update_serial_numbers();

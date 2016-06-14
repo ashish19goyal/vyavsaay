@@ -1421,13 +1421,13 @@ function form24_update_form()
 		if(form.elements['cst'].checked)
 		{
 			cst='yes';
-			//tax+=my_round(.02*amount,2);
-			//total+=my_round(.02*amount,2);
+			//tax+=vUtil.round(.02*amount,2);
+			//total+=vUtil.round(.02*amount,2);
 		}
 
-		amount=my_round(amount,2);
-		tax=my_round(tax,2);
-		total=my_round(total,2);
+		amount=vUtil.round(amount,2);
+		tax=vUtil.round(tax,2);
+		total=vUtil.round(total,2);
 
 		var total_row="<tr><td colspan='2' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 								"<td>Amount:<br>Tax: <br>Total: </td>" +
@@ -2262,10 +2262,10 @@ function form69_update_form()
 				total_quantity+=parseFloat(subform.elements[4].value);
 		});
 
-		amount=my_round(amount,2);
-		tax=my_round(tax,2);
-		total=my_round(total,2);
-		freight=my_round(freight,2);
+		amount=vUtil.round(amount,2);
+		tax=vUtil.round(tax,2);
+		total=vUtil.round(total,2);
+		freight=vUtil.round(freight,2);
 
 		var total_row="<tr><td colspan='1' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 							"<td>Amount:</br>Tax: <br>Freight: </br>Total: </td>" +
@@ -2418,11 +2418,11 @@ function form72_update_form()
 
 		});
 
-		service_tax=my_round(service_tax,2);
-		vat=my_round(vat,2);
-		amount=my_round(amount,2);
-		discount=my_round(discount,2);
-		total=my_round(total,0);
+		service_tax=vUtil.round(service_tax,2);
+		vat=vUtil.round(vat,2);
+		amount=vUtil.round(amount,2);
+		discount=vUtil.round(discount,2);
+		total=vUtil.round(total,0);
 
 		var tax=service_tax+vat;
 
@@ -3083,14 +3083,14 @@ function form91_update_form()
 
 		for(var x in tax_array)
 		{
-			tax_array[x]=my_round(tax_array[x],2);
+			tax_array[x]=vUtil.round(tax_array[x],2);
 			tax_string+=tax_name+" @"+x+"%: <br>";
 			tax_amount_string+="Rs. "+tax_array[x]+": <br>";
 		}
 
-		amount=my_round(amount,2);
-		freight=my_round(freight,2);
-		total=my_round(total,2);
+		amount=vUtil.round(amount,2);
+		freight=vUtil.round(freight,2);
+		total=vUtil.round(total,2);
 
 		var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 								"<td>Amount:</br>"+tax_string+"Freight: </br>Total: </td>" +
@@ -3903,7 +3903,7 @@ function form118_update_form()
 									"</loyalty_points>";
 			fetch_requested_data('',loyalty_points_data,function(programs)
 			{
-				var new_programs=array_unique(programs);
+				var new_programs=vUtil.arrayUnique(programs);
 				new_programs.forEach(function(program)
 				{
 					var points=parseFloat(program.points_addition)*parseFloat(total);
@@ -4391,8 +4391,8 @@ function form122_update_form()
 			}
 		});
 
-		amount=my_round(amount,2);
-		tax=my_round(tax,2);
+		amount=vUtil.round(amount,2);
+		tax=vUtil.round(tax,2);
 		total=amount+tax;
 
 		var total_row="<tr><td colspan='3' data-th='Total'>Total Accepted Quantity: "+total_accepted+"<br>Total Rejected Quantity: "+(total_quantity-total_accepted)+"</td>" +
@@ -5633,13 +5633,13 @@ function form153_update_form()
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
 			//tax+=parseFloat(subform.elements[5].value);
-			amount+=my_round(parseFloat(subform.elements[5].value),0);
+			amount+=vUtil.round(parseFloat(subform.elements[5].value),0);
 			//total+=Math.round(parseFloat(subform.elements[7].value));
 			//discount+=parseFloat(subform.elements[8].value);
 		});
 
-		var tax=my_round((tax_rate*((amount-discount)/100)),0);
-		var total=my_round(amount+tax-discount,0);
+		var tax=vUtil.round((tax_rate*((amount-discount)/100)),0);
+		var total=vUtil.round(amount+tax-discount,0);
 
 		var last_updated=get_my_time();
 
@@ -9620,9 +9620,9 @@ function form294_update_form()
 				amount+=Math.round(parseFloat(subform.elements[3].value));
 		});
 
-		var amount=my_round(amount,2);
-		var tax=my_round((tax_rate*((amount-discount))/100),2);
-		var total=my_round(amount+tax-discount+cartage,0);
+		var amount=vUtil.round(amount,2);
+		var tax=vUtil.round((tax_rate*((amount-discount))/100),2);
+		var total=vUtil.round(amount+tax-discount+cartage,0);
 
 		var data_id=form.elements['bill_id'].value;
 		var last_updated=get_my_time();
@@ -9753,9 +9753,9 @@ function form295_update_form()
 				amount+=Math.round(parseFloat(subform.elements[3].value));
 		});
 
-		var amount=my_round(amount,2);
-		var tax=my_round((tax_rate*((amount-discount))/100),2);
-		var total=my_round(amount+tax-discount+cartage,0);
+		var amount=vUtil.round(amount,2);
+		var tax=vUtil.round((tax_rate*((amount-discount))/100),2);
+		var total=vUtil.round(amount+tax-discount+cartage,0);
 
 		var data_id=form.elements['bill_id'].value;
 		var last_updated=get_my_time();
@@ -9890,9 +9890,9 @@ function form296_update_form()
 
 		total=amount+tax;
 
-		amount=my_round(amount,2);
-		tax=my_round(tax,2);
-		total=my_round(total,2);
+		amount=vUtil.round(amount,2);
+		tax=vUtil.round(tax,2);
+		total=vUtil.round(total,2);
 
 		var total_row="<tr><td colspan='2' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 								"<td>Amount:<br>Tax: <br>Total: </td>" +

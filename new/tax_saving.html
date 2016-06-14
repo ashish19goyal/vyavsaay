@@ -165,19 +165,18 @@ It was a small saving for the business, but a significant win for us!!
 	<!--End footer -->
 </div>
 
-<!--End wrapper -->
 <script src='./js/open/jquery-1.11.1.min.js'></script>
-<script src="./appic/external/bootstrap/js/bootstrap.min.js"></script>				<!--Bootstrap JavaScript-->
-<script src="./appic/external/jquery-event/jquery.event.drag-2.2.js"></script>		<!--Script jquery event Drag-->
-<script src="./appic/external/jquery-event/jquery.event.drop-2.2.js"></script>		<!--Script jquery event Drop-->
-<script src="./appic/external/jquery-easing/jquery.easing.1.3.js"></script>			<!--Script jquery Easing-->
-<script src="./appic/external/jquery-roundabout/jquery.roundabout.min.js"></script>	<!--Script Roundabout-->
-<script src="./appic/external/swiper/idangerous.swiper.min.js"></script>			<!--Script Swiper slider -->
-<script src="./appic/external/gozha-nav/jquery.mobile.menu.js"></script>			<!--Script Mobile menu-->
-<script src="./appic/external/modernizr/modernizr.custom.91224.js"></script>		<!--Script Modernizr-->
-<script src="./appic/external/colorbox/jquery.colorbox.js"></script>				<!--Script Сolorbox-->
-<script src="./appic/js/custom.js"></script>
-<script src="./appic/js/form.js"></script>
+<script src="appic/external/bootstrap/js/bootstrap.min.js"></script>				<!--Bootstrap JavaScript-->
+<script src="appic/external/jquery-event/jquery.event.drag-2.2.js"></script>		<!--Script jquery event Drag-->
+<script src="appic/external/jquery-event/jquery.event.drop-2.2.js"></script>		<!--Script jquery event Drop-->
+<script src="appic/external/jquery-easing/jquery.easing.1.3.js"></script>			<!--Script jquery Easing-->
+<script src="appic/external/jquery-roundabout/jquery.roundabout.min.js"></script>	<!--Script Roundabout-->
+<script src="appic/external/swiper/idangerous.swiper.min.js"></script>			<!--Script Swiper slider -->
+<script src="appic/external/gozha-nav/jquery.mobile.menu.js"></script>			<!--Script Mobile menu-->
+<script src="appic/external/modernizr/modernizr.custom.91224.js"></script>		<!--Script Modernizr-->
+<script src="appic/external/colorbox/jquery.colorbox.js"></script>				<!--Script Сolorbox-->
+<script src="appic/external/jquery-twitter/jquery.twitter.js"></script>			<!--Script Twitter-->
+<script src="appic/external/jflickrfeed/jflickrfeed.js"></script>					<!--Script Widget Flikr-->
 
 <script src='./js/open/bcrypt.js'></script>
 <script src='./js/open/jquery.autosize.min.js'></script>
@@ -189,13 +188,18 @@ It was a small saving for the business, but a significant win for us!!
 <script src='./js/prop/local_db_handling.js'></script>
 <script src='./js/prop/login_helper.js'></script>
 <script src='./js/prop/sessions.js'></script>
+<script src='./js/prop/vUtil.js'></script>
+<script src="appic/js/custom.js"></script>
+<script src="appic/js/form.js"></script>
 
 <script>
 $(window).load(function()
 {
+	$('#index_footer').load('footer.html');
 	$('#index_header').load('header.html',function ()
 	{
 		default_load();
+
 		$("#login_box").dialog({
 	   		autoOpen: false,
 	   		width: 300,
@@ -206,7 +210,6 @@ $(window).load(function()
 
 		init_Button ();
 	});
-	$('#index_footer').load('footer.html');
 });
 
 </script>

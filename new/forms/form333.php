@@ -299,16 +299,16 @@
                 
                 $(quantity_filter).on('blur',function(event)
                 {
-                    amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
-                    tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
+                    amount_filter.value=vUtil.round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
+                    tax_filter.value=vUtil.round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
                 });
 
                 ////////////////////////////////////
 
                 $(unit_filter).on('blur',function () 
                 {
-                    amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
-                    tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
+                    amount_filter.value=vUtil.round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
+                    tax_filter.value=vUtil.round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
 
                 });
 
@@ -425,10 +425,10 @@
                         total_quantity+=parseFloat(subform.elements[2].value);
                 });
 
-                amount=my_round(amount,2);
-                tax=my_round(tax,2);
+                amount=vUtil.round(amount,2);
+                tax=vUtil.round(tax,2);
                 total=amount+tax;
-                total=my_round(total,0);
+                total=vUtil.round(total,0);
 
                 var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
                         "<td>Amount:</br>Tax: </br>Total: </td>" +
@@ -544,11 +544,11 @@
                         total_quantity+=parseFloat(subform.elements[2].value);
                 });
 
-                amount=my_round(amount,2);
-                tax=my_round(tax,2);
+                amount=vUtil.round(amount,2);
+                tax=vUtil.round(tax,2);
 
                 total=amount+tax;
-                total=my_round(total,0);
+                total=vUtil.round(total,0);
 
                 var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
                         "<td>Amount:</br>Tax: </br>Total: </td>" +
@@ -674,8 +674,8 @@
                     total_quantity+=parseFloat(subform.elements[2].value);
             });
 
-            amount=my_round(amount,2);
-            tax=my_round(tax,2);
+            amount=vUtil.round(amount,2);
+            tax=vUtil.round(tax,2);
             total=amount+tax;
 
             var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +

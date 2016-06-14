@@ -922,7 +922,7 @@ function local_read_json_column(columns,callback,results)
 						if(results.length===count)
 						{
 							localdb_open_requests-=1;
-							results=array_unique(results);
+							results=vUtil.arrayUnique(results);
 							callback(results);
 						}
 						else
@@ -945,7 +945,7 @@ function local_read_json_column(columns,callback,results)
 				}
 				else
 				{
-					results=array_unique(results);
+					results=vUtil.arrayUnique(results);
 					callback(results);
 				}
 			}
@@ -1343,10 +1343,10 @@ function local_generate_report_json(report_id,callback)
 			}
 			else
 			{
-				report_tables=array_unique(report_tables);
-				report_fields=array_unique(report_fields);
-				field_conditions=array_unique(field_conditions);
-				value_conditions=array_unique(value_conditions);
+				report_tables=vUtil.arrayUnique(report_tables);
+				report_fields=vUtil.arrayUnique(report_fields);
+				field_conditions=vUtil.arrayUnique(field_conditions);
+				value_conditions=vUtil.arrayUnique(value_conditions);
 
 				var trans=static_local_db.transaction(report_tables,"readonly");
 				var cursors=[];

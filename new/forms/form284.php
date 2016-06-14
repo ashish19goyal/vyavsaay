@@ -438,7 +438,7 @@ function form284_add_item()
 
 		$(amount_filter).add(quantity_filter).on('blur',function(event)
 		{
-			price_filter.value=my_round((parseFloat(amount_filter.value)/parseFloat(quantity_filter.value)),2);
+			price_filter.value=vUtil.round((parseFloat(amount_filter.value)/parseFloat(quantity_filter.value)),2);
 		});
 
 		form284_update_serial_numbers();
@@ -550,9 +550,9 @@ function form284_create_form()
 				amount+=parseFloat(subform.elements[3].value);
 		});
 
-		amount=my_round(amount,2);
-		var tax=my_round((tax_rate*((amount)/100)),2);
-		var total=my_round(amount+tax+cartage,0);
+		amount=vUtil.round(amount,2);
+		var tax=vUtil.round((tax_rate*((amount)/100)),2);
+		var total=vUtil.round(amount+tax+cartage,0);
 
 		var data_id=form.elements['bill_id'].value;
 		var save_button=document.getElementById('form284_save');
@@ -694,9 +694,9 @@ function form284_update_form()
 				amount+=parseFloat(subform.elements[3].value);
 		});
 
-		amount=my_round(amount,2);
-		var tax=my_round((tax_rate*((amount)/100)),2);
-		var total=my_round(amount+tax+cartage,0);
+		amount=vUtil.round(amount,2);
+		var tax=vUtil.round((tax_rate*((amount)/100)),2);
+		var total=vUtil.round(amount+tax+cartage,0);
 		var data_id=form.elements['bill_id'].value;
 		var last_updated=get_my_time();
 
@@ -842,9 +842,9 @@ function form284_get_totals()
 				amount+=parseFloat(subform.elements[3].value);
 	});
 
-	amount=my_round(amount,2);
-	var tax=my_round((tax_rate*((amount)/100)),2);
-	var total=my_round(amount+tax+cartage,0);
+	amount=vUtil.round(amount,2);
+	var tax=vUtil.round((tax_rate*((amount)/100)),2);
+	var total=vUtil.round(amount+tax+cartage,0);
 
 	var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 				"<td>Amount:<br>Tax(%):@ <input type='number' value='"+tax_rate+"' step='any' id='form284_tax' class='dblclick_editable' style='width: 60%;float: right;height: 20px;margin: 0px;padding: 0px 5px;'><br>Cartage: <br>Total: </td>" +

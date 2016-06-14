@@ -118,7 +118,7 @@
                             }
                         });
 
-                        balance_amount=my_round(balance_amount,2);
+                        balance_amount=vUtil.round(balance_amount,2);
                         var balance_display="";
                         if(balance_amount==0)
                         {

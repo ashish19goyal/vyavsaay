@@ -428,7 +428,7 @@ function local_read_single_column(columns,callback,results)
 							if(results.length===count)
 							{
 								localdb_open_requests-=1;
-								results=array_unique(results);								
+								results=vUtil.arrayUnique(results);								
 								callback(results);
 							}
 							else
@@ -452,7 +452,7 @@ function local_read_single_column(columns,callback,results)
 					}
 					else
 					{
-						results=array_unique(results);
+						results=vUtil.arrayUnique(results);
 						callback(results);
 					}
 				}

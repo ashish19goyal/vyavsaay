@@ -3255,9 +3255,9 @@ function form172_import(data_array,import_type)
 			row.id=last_updated+counter;
 		}
 
-		var profit=my_round((parseFloat(row.sale_price)+parseFloat(row.freight)-parseFloat(row.total_charges)-parseFloat(row.cost_price)),2);
-		var profit_mrp=my_round((profit/parseFloat(row.mrp)*100),2);
-		var profit_sp=my_round((profit/parseFloat(row.sale_price)*100),2);
+		var profit=vUtil.round((parseFloat(row.sale_price)+parseFloat(row.freight)-parseFloat(row.total_charges)-parseFloat(row.cost_price)),2);
+		var profit_mrp=vUtil.round((profit/parseFloat(row.mrp)*100),2);
+		var profit_sp=vUtil.round((profit/parseFloat(row.sale_price)*100),2);
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<channel>"+row.channel+"</channel>" +

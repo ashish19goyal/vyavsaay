@@ -217,8 +217,8 @@ function form144_ini()
 					budget_estimate_value+=parseFloat(result.est_expense);
 					budget_actual_value+=parseFloat(result.expense);
 				});
-				budget_estimate_filter.value=my_round(budget_estimate_value,2);
-				budget_actual_filter.value=parseFloat(budget_actual_filter.value)+my_round(budget_actual_value,2);
+				budget_estimate_filter.value=vUtil.round(budget_estimate_value,2);
+				budget_actual_filter.value=parseFloat(budget_actual_filter.value)+vUtil.round(budget_actual_value,2);
 				longPressEditable($('.dblclick_editable'));
 			});
 	
@@ -268,7 +268,7 @@ function form144_ini()
 					});
 					budget_actual_value+=parseFloat(result.amount);
 				});		
-				budget_actual_filter.value=parseFloat(budget_actual_filter.value)+my_round(budget_actual_value,2);		
+				budget_actual_filter.value=parseFloat(budget_actual_filter.value)+vUtil.round(budget_actual_value,2);		
 			});
 
 			hide_loader();

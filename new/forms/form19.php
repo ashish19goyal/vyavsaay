@@ -455,7 +455,7 @@
                         tax+=parseFloat(subform.elements[7].value);
                 });
 
-                var total=my_round(amount+tax,0);
+                var total=vUtil.round(amount+tax,0);
                 var total_row="<tr><td colspan='3' data-th='Total'>Amount<br>Tax<br>Total</td>" +
                         "<td colspan='2'>Rs. "+amount+
                         "<br>Rs. "+tax+
@@ -560,7 +560,7 @@
                         tax+=parseFloat(subform.elements[7].value);
                 });
                 
-                var total=my_round(amount+tax,0);
+                var total=vUtil.round(amount+tax,0);
                 var total_row="<tr><td colspan='3' data-th='Total'>Amount<br>Tax<br>Total</td>" +
                         "<td colspan='2'>Rs. "+amount+
                         "<br>Rs. "+tax+

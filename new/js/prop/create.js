@@ -1270,9 +1270,9 @@ function form24_create_form()
 			//total+=.02*amount;
 		}
 
-		amount=my_round(amount,2);
-		tax=my_round(tax,2);
-		total=my_round(total,2);
+		amount=vUtil.round(amount,2);
+		tax=vUtil.round(tax,2);
+		total=vUtil.round(total,2);
 
 		var total_row="<tr><td colspan='2' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 								"<td>Amount:<br>Tax: <br>Total: </td>" +
@@ -1906,10 +1906,10 @@ function form69_create_form()
 				total_quantity+=parseFloat(subform.elements[4].value);
 		});
 
-		amount=my_round(amount,2);
-		tax=my_round(tax,2);
-		total=my_round(total,2);
-		freight=my_round(freight,2);
+		amount=vUtil.round(amount,2);
+		tax=vUtil.round(tax,2);
+		total=vUtil.round(total,2);
+		freight=vUtil.round(freight,2);
 
 		var total_row="<tr><td colspan='1' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 							"<td>Amount:</br>Tax: <br>Freight: </br>Total: </td>" +
@@ -2633,11 +2633,11 @@ function form72_create_form()
 
 		});
 
-		service_tax=my_round(service_tax,2);
-		vat=my_round(vat,2);
-		amount=my_round(amount,2);
-		discount=my_round(discount,2);
-		total=my_round(total,0);
+		service_tax=vUtil.round(service_tax,2);
+		vat=vUtil.round(vat,2);
+		amount=vUtil.round(amount,2);
+		discount=vUtil.round(discount,2);
+		total=vUtil.round(total,0);
 
 		var tax=service_tax+vat;
 
@@ -4333,14 +4333,14 @@ function form91_create_form()
 
 		for(var x in tax_array)
 		{
-			tax_array[x]=my_round(tax_array[x],2);
+			tax_array[x]=vUtil.round(tax_array[x],2);
 			tax_string+=tax_name+" @"+x+"%: <br>";
 			tax_amount_string+="Rs. "+tax_array[x]+": <br>";
 		}
 
-		amount=my_round(amount,2);
-		freight=my_round(freight,2);
-		total=my_round(total,2);
+		amount=vUtil.round(amount,2);
+		freight=vUtil.round(freight,2);
+		total=vUtil.round(total,2);
 
 		var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 								"<td>Amount:</br>"+tax_string+"Freight: </br>Total: </td>" +
@@ -4838,8 +4838,8 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 											}
 											*/
 											//item_tax_rate=taxes[0].tax;
-											//item_amount=my_round((item_total-item_freight)/(1+(parseFloat(taxes[0].tax)/100)),2);
-											//item_tax=my_round((item_total-item_amount-item_freight),2);
+											//item_amount=vUtil.round((item_total-item_freight)/(1+(parseFloat(taxes[0].tax)/100)),2);
+											//item_tax=vUtil.round((item_total-item_amount-item_freight),2);
 
 											var unit_price=item_amount/parseFloat(order_item.quantity);
 
@@ -5151,8 +5151,8 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 														taxes[0].tax=get_session_var('cst_rate');
 													}
 													item_tax_rate=taxes[0].tax;
-													item_amount=my_round((item_total-item_freight)/(1+(parseFloat(taxes[0].tax)/100)),2);
-													item_tax=my_round((item_total-item_amount-item_freight),2);
+													item_amount=vUtil.round((item_total-item_freight)/(1+(parseFloat(taxes[0].tax)/100)),2);
+													item_tax=vUtil.round((item_total-item_amount-item_freight),2);
 													*/
 													var unit_price=item_amount/parseFloat(order_item.quantity);
 
@@ -5191,13 +5191,13 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 
 																var bill_item_picked_status='pending';
 																var bill_item_picked_quantity=0;
-																var bill_item_amount=my_round((item_amount*batch_result.quantity/order_item.quantity),2);
-																var bill_item_total=my_round((item_total*batch_result.quantity/order_item.quantity),2);
-																var bill_item_channel_charges=my_round((item_channel_charges*batch_result.quantity/order_item.quantity),2);
-																var bill_item_freight=my_round((item_freight*batch_result.quantity/order_item.quantity),2);
-																var bill_item_tax=my_round((item_tax*batch_result.quantity/order_item.quantity),2);
-																var bill_item_channel_tax=my_round((item_channel_tax*batch_result.quantity/order_item.quantity),2);
-																var bill_item_channel_payable=my_round((item_channel_payable*batch_result.quantity/order_item.quantity),2);
+																var bill_item_amount=vUtil.round((item_amount*batch_result.quantity/order_item.quantity),2);
+																var bill_item_total=vUtil.round((item_total*batch_result.quantity/order_item.quantity),2);
+																var bill_item_channel_charges=vUtil.round((item_channel_charges*batch_result.quantity/order_item.quantity),2);
+																var bill_item_freight=vUtil.round((item_freight*batch_result.quantity/order_item.quantity),2);
+																var bill_item_tax=vUtil.round((item_tax*batch_result.quantity/order_item.quantity),2);
+																var bill_item_channel_tax=vUtil.round((item_channel_tax*batch_result.quantity/order_item.quantity),2);
+																var bill_item_channel_payable=vUtil.round((item_channel_payable*batch_result.quantity/order_item.quantity),2);
 																var bill_item_id=get_new_key();
 
 																if(storage_result_array.length>1)
@@ -6165,7 +6165,7 @@ function form118_create_form()
 									"</loyalty_programs>";
 			fetch_requested_data('',loyalty_program_data,function(programs)
 			{
-				array_unique(programs);
+				vUtil.arrayUnique(programs);
 				programs.forEach(function(program)
 				{
 					var points=parseFloat(program.points_addition)*parseFloat(total);
@@ -7085,8 +7085,8 @@ function form122_create_form()
 			}
 		});
 
-		amount=my_round(amount,2);
-		tax=my_round(tax,2);
+		amount=vUtil.round(amount,2);
+		tax=vUtil.round(tax,2);
 		total=amount+tax;
 
 		var total_row="<tr><td colspan='3' data-th='Total'>Total Accepted Quantity: "+total_accepted+"<br>Total Rejected Quantity: "+(total_quantity-total_accepted)+"</td>" +
@@ -8903,11 +8903,11 @@ function form153_create_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			amount+=my_round(parseFloat(subform.elements[5].value),0);
+			amount+=vUtil.round(parseFloat(subform.elements[5].value),0);
 		});
 
-		var tax=my_round((tax_rate*((amount-discount)/100)),0);
-		var total=my_round(amount+tax-discount,0);
+		var tax=vUtil.round((tax_rate*((amount-discount)/100)),0);
+		var total=vUtil.round(amount+tax-discount,0);
 
 		var last_updated=get_my_time();
 
@@ -13017,9 +13017,9 @@ function form294_create_form()
 				amount+=parseFloat(subform.elements[3].value);
 		});
 
-		var amount=my_round(amount,2);
-		var tax=my_round((tax_rate*((amount-discount)/100)),2);
-		var total=my_round(amount+tax-discount+cartage,0);
+		var amount=vUtil.round(amount,2);
+		var tax=vUtil.round((tax_rate*((amount-discount)/100)),2);
+		var total=vUtil.round(amount+tax-discount+cartage,0);
 		var data_id=form.elements['bill_id'].value;
 		var save_button=form.elements['save'];
 		var last_updated=get_my_time();
@@ -13249,9 +13249,9 @@ function form295_create_form()
 				amount+=parseFloat(subform.elements[3].value);
 		});
 
-		var amount=my_round(amount,2);
-		var tax=my_round((tax_rate*((amount-discount)/100)),2);
-		var total=my_round(amount+tax-discount+cartage,0);
+		var amount=vUtil.round(amount,2);
+		var tax=vUtil.round((tax_rate*((amount-discount)/100)),2);
+		var total=vUtil.round(amount+tax-discount+cartage,0);
 		var data_id=form.elements['bill_id'].value;
 		var save_button=form.elements['save'];
 		var last_updated=get_my_time();
@@ -13508,9 +13508,9 @@ function form296_create_form()
 			},'csv',message_attachment);
 		});
 
-		amount=my_round(amount,2);
-		tax=my_round(tax,2);
-		total=my_round(total,2);
+		amount=vUtil.round(amount,2);
+		tax=vUtil.round(tax,2);
+		total=vUtil.round(total,2);
 
 		var total_row="<tr><td colspan='2' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 								"<td>Amount:<br>Tax: <br>Total: </td>" +

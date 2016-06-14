@@ -21,13 +21,14 @@ function default_load()
 	if(is_set_session())
 	{
 		//responsive_tabs();
+		// set_footer_message();
+
+		date_formating();
 		hide_unreadable_elements();
-        setup_grid_display_tabs();
-        date_formating();
-        set_footer_message();
-        my_sortable_tables();
+    setup_grid_display_tabs();
+    my_sortable_tables();
 		set_user_name();
-        if(typeof calculate_grid_metrics!='undefined')
+    if(typeof calculate_grid_metrics!='undefined')
 		{
 			calculate_grid_metrics();
 		}
@@ -37,7 +38,7 @@ function default_load()
 		}
 
 		document.getElementById('master_title').innerHTML=get_session_var('title');
-        navigate_history_url(location);
+    navigate_history_url(location);
 		hide_loader();
 	}
 	else
@@ -155,8 +156,9 @@ function setup_grid_display_tabs()
 {
 	system_grids_array.forEach(function(func)
 	{
-		var function_main=$("#"+func+"_main").find('ul').find('li').length;
-		var hidden_function_main=$("#"+func+"_main").find('ul').find('li:hidden').length;
+		var function_main=$("#"+func+"_main > ul > li").length;
+		var hidden_function_main=$("#"+func+"_main > ul > li[data-select='no']").length;
+		
 		if(function_main===0 || function_main===hidden_function_main)
 		{
 			$("#"+func+"_link").parent().hide();
@@ -716,7 +718,7 @@ function import_data(form_name)
 
 function set_footer_message()
 {
-//	var message=get_session_var('footer_message');
-//	if(message!="" && message!=null && message!='undefined')
-//		document.getElementById('footer_message').innerHTML=get_session_var('footer_message');
+	var message=get_session_var('footer_message');
+	if(message!="" && message!=null && message!='undefined')
+		document.getElementById('footer_message').innerHTML=get_session_var('footer_message');
 }

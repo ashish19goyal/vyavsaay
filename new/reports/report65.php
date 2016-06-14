@@ -92,7 +92,7 @@ function report65_ini()
 				rowsHTML+="Discount: Rs."+price.discount_customer;
 				rowsHTML+="<br>SP: Rs."+price.sale_price;
 				rowsHTML+="<br>Freight: Rs."+price.freight;
-				rowsHTML+="<br>To channel: Rs."+my_round((parseFloat(price.total_charges)+parseFloat(price.service_tax)),2);
+				rowsHTML+="<br>To channel: Rs."+vUtil.round((parseFloat(price.total_charges)+parseFloat(price.service_tax)),2);
 				rowsHTML+="<br>Profit: Rs."+price.profit;
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Time'>";

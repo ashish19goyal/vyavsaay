@@ -500,9 +500,9 @@
 
                                     var unit_price=batches[0].sale_price;
                                     var mrp=batches[0].mrp;
-                                    var bill_item_amount=my_round(parseFloat(unit_price)*parseFloat(order_item.quantity),2);
-                                    var bill_item_tax=my_round(item_tax_rate*parseFloat(bill_item_amount),2);
-                                    var bill_item_total=my_round(bill_item_amount+bill_item_tax,0);
+                                    var bill_item_amount=vUtil.round(parseFloat(unit_price)*parseFloat(order_item.quantity),2);
+                                    var bill_item_tax=vUtil.round(item_tax_rate*parseFloat(bill_item_amount),2);
+                                    var bill_item_total=vUtil.round(bill_item_amount+bill_item_tax,0);
 
                                     bill_item_id++;
                                     var data_json_array=[{index:'id',value:bill_item_id},

@@ -236,7 +236,7 @@
                         {
                            lbh_calculated*=parseFloat(l);
                         });
-                        var vol_weight=my_round(lbh_calculated/6000,2);
+                        var vol_weight=vUtil.round(lbh_calculated/6000,2);
                         var address=result.ship_to+", "+result.address1+", "+result.city+", "+result.state;
                         rowsHTML+="<form id='form321_"+id+"'></form>";
                             rowsHTML+="<td data-th='S.No.'>";
@@ -468,7 +468,7 @@
                                             {
                                                lbh_calculated*=parseFloat(l);
                                             });
-                                            vol_weight_filter.value=my_round(lbh_calculated/6000,2);
+                                            vol_weight_filter.value=vUtil.round(lbh_calculated/6000,2);
 
                                             weight_filter.value=orders[0].weight;
                                             pieces_filter.value=orders[0].pieces;
@@ -536,7 +536,7 @@
                                         {
                                            lbh_calculated*=parseFloat(l);
                                         });
-                                        vol_weight_filter.value=my_round(lbh_calculated/6000,2);
+                                        vol_weight_filter.value=vUtil.round(lbh_calculated/6000,2);
 
                                         weight_filter.value=orders[0].weight;
                                         pieces_filter.value=orders[0].pieces;

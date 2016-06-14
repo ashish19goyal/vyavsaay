@@ -28,14 +28,14 @@ var vUtil = function (options)
            return true;
         else
            return false;
-    }
+    };
 
 	//executes a function if it is set
 		this.execute=function(func)
     {
         if(typeof func!='undefined')
            func();
-    }
+    };
 
 		//parses a json string to get a js object/array
 		this.jsonParse = function(markers)
@@ -52,7 +52,7 @@ var vUtil = function (options)
 				}
 			}
 			return markers_array;
-		}
+		};
 
     //extracts a single column from a multidimensional array
     this.arrayColumn=function (array, col_name)
@@ -72,7 +72,23 @@ var vUtil = function (options)
         {
             return index===arr.indexOf(el);
         });
-    }
+    };
+
+		this.round = function(number,decimal)
+		{
+			if(!decimal)
+			{
+				return Math.round(number);
+			}
+
+			var multiplier=1;
+			for(var i=0;i<decimal;i++)
+			{
+					multiplier*=10;
+			}
+			var result=(Math.round(number*multiplier))/multiplier;
+			return result;
+		};
 
     this.resize_picture=function (picture_tag,pic_width)
     {
@@ -237,6 +253,21 @@ var vUtil = function (options)
         }
         return results;
     };
+
+
+		this.onChange = function(element,func)
+		{
+			$(element).off('blur');
+			$(element).off('change');
+
+			$(element).on('blur change',function()
+			{
+				if(!vUtil.isBlank(func))
+				{
+					func();
+				}
+			});
+		};
 };
 vUtil=new vUtil();
 
@@ -250,26 +281,6 @@ vUtil=new vUtil();
     {
         return String(str).replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
     }
-
-    function array_unique(array)
-    {
-        return array.filter(function(el,index,arr)
-        {
-            return index===arr.indexOf(el);
-        });
-    }
-
-    function my_round(any_number,decimal_p)
-    {
-        var multiplier=1;
-        for(var i=0;i<decimal_p;i++)
-        {
-            multiplier*=10;
-        }
-        var result=(Math.round(any_number*multiplier))/multiplier;
-        return result;
-    }
-
 
     /**
      * Converts a two dimensional array to csv file
