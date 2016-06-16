@@ -14,9 +14,10 @@
         <form id='form328_master' autocomplete="off">
             <fieldset>
                 <label><div class='btn-overlap'><input type='text' required name='customer' placeholder='Customer' class='floatlabel'><button type='button' title='Add new customer' class='btn btn-icon-only default right-overlap' id='form328_add_customer'><i class='fa fa-plus'></i></button></div></label>
-                <label><input type='text' name='id' class='floatlabel' placeholder='Return #'></label>
+                <label><input type='text' name='return_num' readonly='readonly' class='floatlabel' placeholder='Return #'></label>
                 <label><input type='text' class='floatlabel' requried placeholder='Return Date' name='date'></label>
-                <input type='submit' class='submit_hidden'>
+                <input type='hidden' name='id'>
+								<input type='submit' class='submit_hidden'>
             </fieldset>
         </form>
 
@@ -47,9 +48,28 @@
 
             var customer_filter=fields.elements['customer'];
             var return_date=fields.elements['date'];
+						var return_num_filter=fields.elements['return_num'];
             var id_filter=fields.elements['id'];
             id_filter.value=get_new_key();
             var save_button=document.getElementById('form328_save');
+
+						var return_id=$("#form19_link").attr('data_id');
+            if(vUtil.isBlank(return_id))
+            {
+                var return_num_data={data_store:'user_preferences',return_column:'value',
+                                 indexes:[{index:'name',exact:'sale_return_number'}]};
+                read_json_single_column(return_num_data,function(return_nums)
+                {
+                    if(return_nums.length>0)
+                    {
+                        return_num_filter.value=get_session_var('sale_return_prefix')+"-"+return_nums[0];
+                    }
+                    else
+                    {
+                        return_num_filter.value="";
+                    }
+                });
+            }
 
             $(save_button).off('click');
             $(save_button).on("click", function(event)
@@ -96,6 +116,8 @@
             $(return_date).datepicker();
             return_date.value=vTime.date();
             customer_filter.value='';
+
+						var paginator=$('#form328_body').paginator({visible:false});
             $('#form328').formcontrol();
         }
 
@@ -119,6 +141,7 @@
                                            {index:'total'},
                                            {index:'tax'},
                                             {index:'amount'},
+																						{index:'return_num'},
                                            {index:'return_date'}]};
                 var return_items_column={data_store:'customer_return_items',
                                         indexes:[{index:'id'},
@@ -139,7 +162,8 @@
                 {
                     if(return_results.length>0)
                     {
-                        filter_fields.elements['customer'].value=return_results[0].customer;
+												filter_fields.elements['return_num'].value=return_results[0].return_num;
+												filter_fields.elements['customer'].value=return_results[0].customer;
                         filter_fields.elements['date'].value=get_my_past_date(return_results[0].return_date);
                         filter_fields.elements['id'].value=data_id;
                         var save_button=document.getElementById('form328_save');
@@ -174,7 +198,7 @@
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Batch'>";
                                 rowsHTML+="<input type='text' class='floatlabel' placeholder='Batch' readonly='readonly' form='form328_"+id+"' value='"+result.batch+"'>";
-                                rowsHTML+="<input type='text' class='floatlabel' placeholder='Storage' readonly='readonly' form='form328_"+id+"' value='"+result.storage+"'>";
+                                rowsHTML+="<input type='text' class='floatlabel' placeholder='To Storage' readonly='readonly' form='form328_"+id+"' value='"+result.storage+"'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Quantity'>";
                                 rowsHTML+="<input type='number' placeholder='Quantity' readonly='readonly' form='form328_"+id+"' value='"+result.quantity+"' step='any'>";
@@ -187,7 +211,7 @@
                                 rowsHTML+="<input type='number' readonly='readonly' class='floatlabel' placeholder='Amount' step='any' form='form328_"+id+"' value='"+result.refund_amount+"'>";
                                 rowsHTML+="<input type='number' step='any' readonly='readonly' class='floatlabel' placeholder='Tax' form='form328_"+id+"' value='"+result.tax+"'>";
                                 rowsHTML+="<input type='text' readonly='readonly' class='floatlabel' placeholder='Exchange Batch' form='form328_"+id+"' value='"+result.exchange_batch+"'>";
-                                rowsHTML+="<input type='text' readonly='readonly' class='floatlabel' placeholder='Storage' form='form328_"+id+"' value='"+result.exchange_storage+"'>";
+                                rowsHTML+="<input type='text' readonly='readonly' class='floatlabel' placeholder='From Storage' form='form328_"+id+"' value='"+result.exchange_storage+"'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Action'>";
                                 rowsHTML+="<input type='hidden' form='form328_"+id+"' value='"+id+"'>";
@@ -220,7 +244,6 @@
                             $(new_batch_filter).hide();
                             $(new_tax_filter).hide();
                         }
-
                     });
 
                     $('#form328').formcontrol();
@@ -229,7 +252,7 @@
                     $('#form328_share').show();
                     $('#form328_share').click(function()
                     {
-                        modal101_action(bt+' - Sale Return # '+filter_fields.elements['id'].value,filter_fields.elements['customer'].value,'customer',function (func)
+                        modal101_action(bt+' - Sale Return # '+filter_fields.elements['return_num'].value,filter_fields.elements['customer'].value,'customer',function (func)
                         {
                             print_form328(func);
                         });
@@ -253,7 +276,7 @@
 										rowsHTML+="</td>";
 										rowsHTML+="<td data-th='Batch'>";
                         rowsHTML+="<input type='text' class='floatlabel' placeholder='Batch' required form='form328_"+id+"'>";
-                        rowsHTML+="<input type='text' class='floatlabel' placeholder='Storage' required form='form328_"+id+"'>";
+                        rowsHTML+="<input type='text' class='floatlabel' placeholder='To Storage' required form='form328_"+id+"'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Quantity'>";
                         rowsHTML+="<input type='number' class='floatlabel' placeholder='Quantity' required form='form328_"+id+"' step='any'>";
@@ -266,7 +289,7 @@
                         rowsHTML+="<input type='number' required class='floatlabel' placeholder='Amount' form='form328_"+id+"' step='any'>";
                         rowsHTML+="<input type='number' required class='floatlabel' placeholder='Tax' form='form328_"+id+"' step='any'>";
                         rowsHTML+="<input type='text' required class='floatlabel' placeholder='Exchange Batch' form='form328_"+id+"'>";
-                        rowsHTML+="<input type='text' required class='floatlabel' placeholder='Storage' form='form328_"+id+"'>";
+                        rowsHTML+="<input type='text' required class='floatlabel' placeholder='From Storage' form='form328_"+id+"'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Action'>";
                         rowsHTML+="<input type='hidden' form='form328_"+id+"' value='"+id+"'>";
@@ -516,7 +539,8 @@
             {
                 var form=document.getElementById("form328_master");
 
-                var customer=form.elements['customer'].value;
+								var return_num=form.elements['return_num'].value;
+								var customer=form.elements['customer'].value;
                 var return_date=get_raw_time(form.elements['date'].value);
                 var data_id=form.elements['id'].value;
 
@@ -527,7 +551,7 @@
                 $('#form328_share').show();
                 $('#form328_share').click(function()
                 {
-                    modal101_action(bt+' - Sale Return # '+data_id,customer,'customer',function (func)
+                    modal101_action(bt+' - Sale Return # '+return_num,customer,'customer',function (func)
                     {
                         print_form328(func);
                     });
@@ -556,59 +580,48 @@
                 var last_updated=get_my_time();
 
                 var data_json={data_store:'customer_returns',
-	 				data:[{index:'id',value:data_id},
-	 					{index:'customer',value:customer},
-	 					{index:'return_date',value:return_date},
+							 				data:[{index:'id',value:data_id},
+												{index:'return_num',value:return_num},
+												{index:'customer',value:customer},
+							 					{index:'return_date',value:return_date},
                         {index:'amount',value:amount},
                         {index:'total',value:total},
                         {index:'tax',value:tax},
                         {index:'transaction_id',value:data_id},
-	 					{index:'last_updated',value:last_updated}],
+	 											{index:'last_updated',value:last_updated}],
                     log:'yes',
-                    log_data:{title:'Created',notes:'Sale return # '+data_id,link_to:'form329'}};
+                    log_data:{title:'Created',notes:'Sale return # '+return_num,link_to:'form329'}};
 
-                var transaction_json={data_store:'transactions',
-	 				data:[{index:'id',value:data_id},
-	 					{index:'trans_date',value:last_updated},
-	 					{index:'amount',value:total},
-                        {index:'giver',value:customer},
-                        {index:'receiver',value:'master'},
-                        {index:'tax',value:tax},
-                        {index:'last_updated',value:last_updated}]};
-
-                var pt_tran_id=get_new_key();
-
-                var payment_json={data_store:'payments',
-	 				data:[{index:'id',value:pt_tran_id},
-                        {index:'status',value:'pending'},
-                        {index:'type',value:'paid'},
-	 					{index:'date',value:last_updated},
-	 					{index:'total_amount',value:total},
-                        {index:'paid_amount',value:'0'},
-                        {index:'acc_name',value:customer},
-                        {index:'due_date',value:get_debit_period()},
-                        {index:'mode',value:get_payment_mode()},
-                        {index:'transaction_id',value:pt_tran_id},
-                        {index:'source_id',value:data_id},
-                        {index:'source',value:'sale return'},
-                        {index:'source_info',value:data_id},
-                        {index:'last_updated',value:last_updated}]};
-
-                var pt_json={data_store:'transactions',
-	 				data:[{index:'id',value:pt_tran_id},
-	 					{index:'trans_date',value:last_updated},
-	 					{index:'amount',value:total},
-                        {index:'giver',value:'master'},
-                        {index:'receiver',value:customer},
-                        {index:'tax',value:'0'},
-                        {index:'last_updated',value:last_updated}]};
+							var transaction_json={data_store:'transactions',
+										data:[{index:'id',value:data_id},
+											{index:'acc_name',value:customer},
+											{index:'type',value:'received'},
+											{index:'amount',value:total},
+											{index:'tax',value:tax},
+											{index:'source_id',value:data_id},
+											{index:'source_info',value:return_num},
+											{index:'source',value:'sale return'},
+											{index:'source_link',value:'form329'},
+											{index:'trans_date',value:last_updated},
+											{index:'notes',value:''},
+											{index:'last_updated',value:last_updated}]};
 
                 create_json(data_json);
                 create_json(transaction_json);
-                create_json(pt_json);
-                create_json(payment_json,function()
+
+								var num_data={data_store:'user_preferences',return_column:'id',count:1,
+                             indexes:[{index:'name',exact:'sale_return_number'}]};
+                read_json_single_column(num_data,function (bill_num_ids)
                 {
-                    modal28_action(pt_tran_id);
+                    if(bill_num_ids.length>0)
+                    {
+                        var num_array=return_num.split('-');
+                        var num_json={data_store:'user_preferences',
+                        data:[{index:'id',value:bill_num_ids[0]},
+                            {index:'value',value:(parseInt(num_array[1])+1)},
+                            {index:'last_updated',value:last_updated}]};
+                        update_json(num_json);
+                    }
                 });
 
                 var save_button=document.getElementById('form328_save');
@@ -632,6 +645,7 @@
             {
                 var form=document.getElementById("form328_master");
 
+								var return_num=form.elements['return_num'].value;
                 var customer=form.elements['customer'].value;
                 var return_date=get_raw_time(form.elements['date'].value);
                 var data_id=form.elements['id'].value;
@@ -661,62 +675,32 @@
                 var last_updated=get_my_time();
 
                 var data_json={data_store:'customer_returns',
-	 				data:[{index:'id',value:data_id},
-	 					{index:'customer',value:customer},
-	 					{index:'return_date',value:return_date},
+							 				data:[{index:'id',value:data_id},
+							 					{index:'customer',value:customer},
+							 					{index:'return_date',value:return_date},
                         {index:'amount',value:amount},
                         {index:'total',value:total},
                         {index:'tax',value:tax},
                         {index:'transaction_id',value:data_id},
-	 					{index:'last_updated',value:last_updated}],
+	 											{index:'last_updated',value:last_updated}],
                     log:'yes',
-                    log_data:{title:'Updated',notes:'Purchase return # '+data_id,link_to:'form17'}};
+                    log_data:{title:'Updated',notes:'Sale return # '+return_num,link_to:'form329'}};
 
-                var transaction_json={data_store:'transactions',
-	 				data:[{index:'id',value:data_id},
-	 					{index:'trans_date',value:last_updated},
-	 					{index:'amount',value:total},
-                        {index:'giver',value:customer},
-                        {index:'receiver',value:'master'},
-                        {index:'tax',value:tax},
-                        {index:'last_updated',value:last_updated}]};
-
-                var pt_tran_id=get_new_key();
+										var transaction_json={data_store:'transactions',
+													data:[{index:'id',value:data_id},
+														{index:'acc_name',value:customer},
+														{index:'type',value:'received'},
+														{index:'amount',value:total},
+														{index:'tax',value:tax},
+														{index:'source_id',value:data_id},
+														{index:'source_info',value:return_num},
+														{index:'source',value:'sale return'},
+														{index:'source_link',value:'form329'},
+														{index:'notes',value:''},
+														{index:'last_updated',value:last_updated}]};
 
                 update_json(data_json);
                 update_json(transaction_json);
-
-                var payment_data={data_store:'payments',return_column:'id',
-                                 indexes:[{index:'source_id',exact:data_id}]};
-                read_json_single_column(payment_data,function(payments)
-                {
-                    if(payments.length>0)
-                    {
-                        var payment_json={data_store:'payments',
-                        data:[{index:'id',value:payments[0]},
-                            {index:'type',value:'paid'},
-                            {index:'total_amount',value:total},
-                            {index:'acc_name',value:customer},
-                            {index:'source_id',value:data_id},
-                            {index:'source',value:'sale return'},
-                            {index:'source_info',value:data_id},
-                            {index:'last_updated',value:last_updated}]};
-
-                        var pt_json={data_store:'transactions',
-                        data:[{index:'id',value:payments[0]},
-                            {index:'amount',value:total},
-                            {index:'giver',value:'master'},
-                            {index:'receiver',value:customer},
-                            {index:'tax',value:'0'},
-                            {index:'last_updated',value:last_updated}]};
-
-                        update_json(payment_json,function()
-                        {
-                            modal28_action(payments[0]);
-                        });
-                        update_json(pt_json);
-                    }
-                });
 
                 $("[id^='save_form328_']").click();
             }
@@ -738,9 +722,9 @@
                     var data_id=form.elements[10].value;
 
                     var data_json={data_store:'customer_return_items',
-	 				      data:[{index:'id',value:data_id}]};
+	 				      				data:[{index:'id',value:data_id}]};
                     var discard_json={data_store:'discarded',
-	 				      data:[{index:'id',value:data_id}]};
+	 				      				data:[{index:'id',value:data_id}]};
 
                     delete_json(data_json);
                     delete_json(discard_json);
@@ -768,7 +752,6 @@
             var container=document.createElement('div');
             var header=document.createElement('div');
                 var logo=document.createElement('div');
-                var business_intro=document.createElement('div');
 
             var invoice_line=document.createElement('div');
 
@@ -782,18 +765,19 @@
                 var tandc=document.createElement('div');
                 var signature=document.createElement('div');
                 var business_contact=document.createElement('div');
+								var clearance=document.createElement('div');
 
         ////////////setting styles for containers/////////////////////////
 
-            header.setAttribute('style','width:100%;min-height:100px;text-align:center');
-                business_intro.setAttribute('style','width:100%;text-align:center');
-                business_contact.setAttribute('style','display:inline-block;width:100%;text-align:center');
+            header.setAttribute('style','width:100%;min-height:70px;text-align:center');
             info_section.setAttribute('style','width:100%;min-height:80px');
-                customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:120px;border: 1px solid #00f;border-radius:5px;');
-                business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:120px;border: 1px solid #00f;border-radius:5px;');
+                customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:48%;height:120px;border: 1px solid #000;border-radius:5px;');
+                business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:48%;height:120px;border: 1px solid #000;border-radius:5px;');
             footer.setAttribute('style','width:100%;min-height:100px');
                 tandc.setAttribute('style','float:left;width:60%;min-height:50px');
                 signature.setAttribute('style','float:right;width:30%;min-height:60px');
+								clearance.setAttribute('style','clear:both;');
+								business_contact.setAttribute('style','display:inline-block;width:100%;text-align:center');
 
         ///////////////getting the content////////////////////////////////////////
 
@@ -808,6 +792,7 @@
             var master_form=document.getElementById('form328_master');
             var customer_name=master_form.elements['customer'].value;
             var date=master_form.elements['date'].value;
+						var return_num=master_form.elements['return_num'].value;
             var return_id=master_form.elements['id'].value;
             var vat_no=get_session_var('vat');
 
@@ -817,12 +802,12 @@
 
             logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
             //business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text;
-            business_contact.innerHTML="<hr style='border: 1px solid #00f;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email;
+            business_contact.innerHTML="<hr style='border: 1px solid #000;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email;
 
-            invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Sale Return</b></div><hr style='border: 1px solid #00f;'>";
+            invoice_line.innerHTML="<hr style='border: 1px solid #000;'><div style='text-align:center;'><b style='text-size:1.2em'>Sale Return # "+return_num+"</b></div><hr style='border: 1px solid #000;'>";
 
             customer_info.innerHTML="<b>Buyer</b><br>"+customer_name;
-            business_info.innerHTML="<b>Seller</b><br>"+bt+"<br>TIN: "+vat_no+"<br>Return Date: "+date+"<br>Return Id: "+return_id;
+            business_info.innerHTML="<b>Seller</b><br>"+bt+"<br>TIN: "+vat_no+"<br>Return Date: "+date+"<br>Return #: "+return_num;
 
             signature.innerHTML=signature_text;
 
@@ -830,13 +815,13 @@
 
             /////////////adding new table //////////////////////////////////////////////////////
             var new_table=document.createElement('table');
-            new_table.setAttribute('style','width:100%;font-size:11px;border:1px solid black;text-align:left;');
+            new_table.setAttribute('style','width:100%;font-size:15px;border:1px solid black;text-align:left;');
             var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
-                        "<td style='text-align:left;width:30%;'>Item</td>"+
-                        "<td style='text-align:left;width:15%'>Qty</td>"+
-                        "<td style='text-align:left;width:15%'>Amount</td>"+
-                        "<td style='text-align:left;width:15%'>Tax</td>"+
-                        "<td style='text-align:left;width:15%'>Total</td></tr>";
+                        "<td style='text-align:left;width:30%;padding:3px;font-weight:600;'>Item</td>"+
+                        "<td style='text-align:left;width:15%;padding:3px;font-weight:600;'>Qty</td>"+
+                        "<td style='text-align:left;width:15%;padding:3px;font-weight:600;'>Amount</td>"+
+                        "<td style='text-align:left;width:15%;padding:3px;font-weight:600;'>Tax</td>"+
+                        "<td style='text-align:left;width:15%;padding:3px;font-weight:600;'>Total</td></tr>";
 
             var table_rows=table_header;
             var counter=0;
@@ -852,15 +837,15 @@
                 var total=parseFloat(amount)+parseFloat(tax);
 
                 table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
-                        "<td style='text-align:left;word-wrap: break-word'>"+item_name+"</td>"+
-                        "<td style='text-align:left;word-wrap: break-word'>"+quantity+"</td>"+
-                        "<td style='text-align:left;word-wrap: break-word'>"+amount+"</td>"+
-                        "<td style='text-align:left;word-wrap: break-word'>"+tax+"</td>"+
-                        "<td style='text-align:left;word-wrap: break-word'>"+total+"</td></tr>";
+                        "<td style='text-align:left;word-wrap: break-word;padding:3px;'>"+item_name+"</td>"+
+                        "<td style='text-align:left;word-wrap: break-word;padding:3px;'>"+quantity+"</td>"+
+                        "<td style='text-align:left;word-wrap: break-word;padding:3px;'>"+amount+"</td>"+
+                        "<td style='text-align:left;word-wrap: break-word;padding:3px;'>"+tax+"</td>"+
+                        "<td style='text-align:left;word-wrap: break-word;padding:3px;'>"+total+"</td></tr>";
             });
 
             var row_count=$(table_element).find('tbody>tr').length;
-            var rows_to_add=12-row_count;
+            var rows_to_add=15-row_count;
             for(var i=0;i<rows_to_add;i++)
             {
                 table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td></tr>";
@@ -870,8 +855,8 @@
             var total_text1=$(table_foot).find('tr>td:first')[0].innerHTML;
             var total_text2=$(table_foot).find('tr>td:nth-child(2)')[0].innerHTML;
             var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
-                        "<td colspan='3' style='text-align:left;'>"+total_text1+"</td>"+
-                        "<td colspan='2' style='text-align:left;'>"+total_text2+"</td></tr>";
+                        "<td colspan='3' style='text-align:left;padding:3px;'>"+total_text1+"</td>"+
+                        "<td colspan='2' style='text-align:left;padding:3px;font-weight:600;'>"+total_text2+"</td></tr>";
             table_rows+=table_foot_row;
             new_table.innerHTML=table_rows;
 
@@ -891,6 +876,7 @@
 
             footer.appendChild(tandc);
             footer.appendChild(signature);
+						footer.appendChild(clearance);
             footer.appendChild(business_contact);
 
             func(container);

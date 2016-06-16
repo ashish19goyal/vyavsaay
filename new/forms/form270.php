@@ -582,7 +582,6 @@ function form270_update_form()
 							{index:'source_info',value:bill_id},
 							{index:'source',value:'purchase bill'},
 							{index:'source_link',value:'form53'},
-							{index:'trans_date',value:last_updated},
 							{index:'notes',value:notes},
 							{index:'last_updated',value:last_updated}]};
 

@@ -1,4 +1,4 @@
-<div id='form329' class='tab-pane portlet box green-meadow'>	   
+<div id='form329' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class="actions">
             <div class="btn-group">
@@ -15,9 +15,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -35,7 +35,7 @@
 			</tbody>
 		</table>
 	</div>
-    
+
     <script>
 
         function form329_header_ini()
@@ -51,7 +51,7 @@
                 form329_ini();
             });
 
-            var return_data={data_store:'customer_returns',return_column:'id'};
+            var return_data={data_store:'customer_returns',return_column:'return_num'};
             var sup_data={data_store:'customers',return_column:'acc_name'};
 
             set_my_filter_json(sup_data,name_filter);
@@ -63,37 +63,35 @@
             show_loader();
             var fid=$("#form329_link").attr('data_id');
             if(fid==null)
-                fid="";	
+                fid="";
 
             $('#form329_body').html("");
-            
+
             var filter_fields=document.getElementById('form329_header');
 
-            //populating form 
-            if(fid==="")
-                fid=filter_fields.elements['return'].value;
+            //populating form
+            var fnum=filter_fields.elements['return'].value;
             var fname=filter_fields.elements['customer'].value;
 
             var paginator=$('#form329_body').paginator();
-			
-			var columns=new Object();
-					columns.count=paginator.page_size();
-					columns.start_index=paginator.get_index();
-					columns.data_store='customer_returns';
 
-					columns.indexes=[{index:'id',value:fid},
-									{index:'customer',value:fname},
-									{index:'return_date'},
-									{index:'total'}];
-			
+						var columns={count:paginator.page_size(),
+												start_index:paginator.get_index(),
+												data_store:'customer_returns',
+												indexes:[{index:'id',value:fid},
+																{index:'return_num',value:fnum},
+																{index:'customer',value:fname},
+																{index:'return_date'},
+																{index:'total'}]};
+
             read_json_rows('form329',columns,function(results)
-            {	
+            {
                 results.forEach(function(result)
                 {
                     var rowsHTML="<tr>";
                         rowsHTML+="<form id='form329_"+result.id+"'></form>";
                             rowsHTML+="<td data-th='Return #'>";
-                                rowsHTML+="<a onclick=\"element_display('"+result.id+"','form328');\"><input type='text' readonly='readonly' form='form329_"+result.id+"' value='"+result.id+"'></a>";
+                                rowsHTML+="<a onclick=\"element_display('"+result.id+"','form328');\"><input type='text' readonly='readonly' form='form329_"+result.id+"' value='"+result.return_num+"'></a>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Customer'>";
                                 rowsHTML+="<a onclick=\"show_object('customers','"+result.customer+"');\"><textarea readonly='readonly' form='form329_"+result.id+"'>"+result.customer+"</textarea></a>";
@@ -105,17 +103,21 @@
                                 rowsHTML+="<input type='number' readonly='readonly' form='form329_"+result.id+"' value='"+result.total+"' step='any'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Action'>";
+																rowsHTML+="<input type='hidden' form='form329_"+result.id+"' name='id' value='"+result.id+"'>";
                                 rowsHTML+="<button type='button' class='btn red' form='form329_"+result.id+"' title='Delete Return' onclick='form329_delete_item($(this));' name='delete'><i class='fa fa-trash'></i></button>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form329_body').append(rowsHTML);
                 });
 
                 $('#form329').formcontrol();
-				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Sale Returns','form329',function (item){});
-				hide_loader();
+								paginator.update_index(results.length);
+								initialize_tabular_report_buttons(columns,'Sale Returns','form329',function (item)
+								{
+									item.return_date=vTime.date({time:item.return_date});
+								});
+								hide_loader();
             });
         }
 
@@ -128,15 +130,16 @@
                     var form_id=$(button).attr('form');
                     var form=document.getElementById(form_id);
 
-                    var data_id=form.elements[0].value;
+                    var return_num=form.elements[0].value;
+										var data_id=form.elements['id'].value;
                     var customer=form.elements[1].value;
                     var total=form.elements[3].value;
                     var last_updated=get_my_time();
                     var data_json={data_store:'customer_returns',
                         log:'yes',
                         data:[{index:'id',value:data_id}],
-                        log_data:{title:'Deleted',notes:'Sale return # '+data_id,link_to:'form329'}};
- 				
+                        log_data:{title:'Deleted',notes:'Sale return # '+return_num,link_to:'form329'}};
+
                     var transaction_json={data_store:'transactions',
                         data:[{index:'id',value:data_id}]};
 
@@ -144,32 +147,12 @@
                     delete_json(transaction_json);
                     $(button).parent().parent().remove();
 
-                    var payment_json={data_store:'payments',count:1,
-                                     indexes:[{index:'id'},
-                                             {index:'source_id',exact:data_id},
-                                             {index:'status',array:["pending","cancelled"]},
-                                             {index:'transaction_id'}]};
-                    read_json_rows('',payment_json,function(payments)
-                    {
-                        if(payments.length>0)
-                        {
-                            var pt_json={data_store:'transactions',
-                                        data:[{index:'id',value:payments[0].transaction_id}]};
-
-                            var pay_json={data_store:'payments',
-                                        data:[{index:'id',value:payments[0].id}]};
-
-                            delete_json(pay_json);
-                            delete_json(pt_json);
-                        }
-                    });
-
                     var items_json={data_store:'customer_return_items',
                                 data:[{index:'return_id',value:data_id}]};
                     var discard_json={data_store:'discarded',
                                 data:[{index:'source_id',value:data_id},
                                      {index:'source',value:'purchase return'}]};
-                    
+
                     delete_json(items_json);
                     delete_json(discard_json);
                 });

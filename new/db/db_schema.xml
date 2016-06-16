@@ -250,6 +250,7 @@
 			<payment_mode index='yes' type="VARCHAR(30)"></payment_mode><!--advance/credit/consignment-->
 			<ship_to index='yes' type="TEXT"></ship_to>
 			<terms index='yes' type="TEXT"></terms>
+			<order_placed_time index='yes' type="BIGINT"></order_placed_time>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</purchase_orders>
@@ -307,6 +308,7 @@
 			<discount index='no' type="DECIMAL(12,2)"></discount>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<total index='no' type="DECIMAL(12,2)"></total>
+			<po_quantity index='no' type="DECIMAL(12,2)"></po_quantity>
 			<po_price index='no' type="DECIMAL(12,2)"></po_price>
 			<po_amount index='no' type="DECIMAL(12,2)"></po_amount>
 			<po_tax index='no' type="DECIMAL(12,2)"></po_tax>
@@ -320,6 +322,7 @@
 	</supplier_bill_items>
 	<supplier_returns>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<return_num index='yes' type="TEXT"></return_num>
 			<supplier index='yes' type="TEXT"></supplier>
 			<return_date index='yes' type="BIGINT"></return_date>
 			<total index='no' type="DECIMAL(12,2)"></total>
@@ -577,6 +580,7 @@
 	</bill_items>
 	<customer_returns>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<return_num index='yes' type="TEXT"></return_num>
 			<customer index='yes' type="TEXT"></customer>
 			<return_date index='yes' type="BIGINT"></return_date>
 			<total index='no' type="DECIMAL(12,2)"></total>
@@ -1627,6 +1631,7 @@
 			<status index='yes' type='VARCHAR(30)'></status><!--pending/completed/overdue/inventoried-->
 			<from_time index='yes' type="BIGINT"></from_time>
 			<to_time index='yes' type="BIGINT"></to_time>
+			<production_line index='yes' type="TEXT"></production_line>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</production_plan_items>

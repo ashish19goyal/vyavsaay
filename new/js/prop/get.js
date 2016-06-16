@@ -7,9 +7,9 @@ function select_picture(evt,pictureinfo,func)
 {
 	var file=evt.target.files[0];
 	if(file.type.match('image.*'))
-	{	
+	{
 		var reader = new FileReader();
-						
+
 		reader.onloadend=function()
 		{
 		    var tempImg = new Image();
@@ -31,7 +31,7 @@ function select_picture(evt,pictureinfo,func)
 		               tempH = MAX_HEIGHT;
 		            }
 		        }
-		 
+
 		        var canvas = document.createElement('canvas');
 		        canvas.width = tempW;
 		        canvas.height = tempH;
@@ -40,7 +40,7 @@ function select_picture(evt,pictureinfo,func)
 		        var dataURL = canvas.toDataURL("image/jpeg");
 		        func(dataURL);
 		    };
-		 
+
 		};
 		reader.readAsDataURL(file);
 	}
@@ -50,9 +50,9 @@ function select_picture_large(evt,func)
 {
 	var file=evt.target.files[0];
 	if(file.type.match('image.*'))
-	{	
+	{
 		var reader = new FileReader();
-						
+
 		reader.onloadend=function()
 		{
 		    var tempImg = new Image();
@@ -74,7 +74,7 @@ function select_picture_large(evt,func)
 		               tempH = MAX_HEIGHT;
 		            }
 		        }
-		 
+
 		        var canvas = document.createElement('canvas');
 		        canvas.width = tempW;
 		        canvas.height = tempH;
@@ -83,7 +83,7 @@ function select_picture_large(evt,func)
 		        var dataURL = canvas.toDataURL("image/jpeg");
 		        func(dataURL);
 		    };
-		 
+
 		};
 		reader.readAsDataURL(file);
 	}
@@ -93,9 +93,9 @@ function select_picture_unsized(evt,func)
 {
 	var file=evt.target.files[0];
 	if(file.type.match('image.*'))
-	{	
+	{
 		var reader = new FileReader();
-						
+
 		reader.onloadend=function()
 		{
 		    var tempImg = new Image();
@@ -104,7 +104,7 @@ function select_picture_unsized(evt,func)
 		    {
 		        var tempW = tempImg.width;
 		        var tempH = tempImg.height;
-		        
+
 		        var canvas = document.createElement('canvas');
 		        canvas.width = tempW;
 		        canvas.height = tempH;
@@ -127,22 +127,13 @@ function select_document(evt,func)
 {
 	var file=evt.target.files[0];
 	var reader = new FileReader();
-					
+
 	reader.onloadend=function()
 	{
         var dataURL = reader.result;
-        func(dataURL);	
+        func(dataURL);
 	};
 	reader.readAsDataURL(file);
-}
-
-
-function get_new_key()
-{
-	var d=new Date();
-	var seconds=d.getTime();
-	//seconds=(seconds*1000)+Math.floor(Math.random()*1000);
-	return seconds;
 }
 
 
@@ -169,15 +160,15 @@ function get_export_data(columns,filename)
 			 					{index:'export_time',value:last_updated},
 			 					{index:'last_updated',value:last_updated}],
 			 				log_data:{title:'Exported',notes:filename+" report",link_to:''}};
-		 						
-		create_json(data_json);		
+
+		create_json(data_json);
 
 		results.forEach(function(result)
 		{
 			result.last_updated=get_my_datetime(result.last_updated);
 		});
 
-		hide_loader();			
+		hide_loader();
 		my_obj_array_to_csv(results,filename);
 	});
 }
@@ -192,7 +183,7 @@ function get_export_data_extended(columns,filename,func)
 	new_columns=new_columns.replace(" count='100'","");
 	new_columns=new_columns.replace("start_index","dont_use_index");
 	//console.log(new_columns);
-	
+
 	fetch_requested_data('',new_columns,function(results)
 	{
 		var data_id=get_new_key();
@@ -206,8 +197,8 @@ function get_export_data_extended(columns,filename,func)
 			 					{index:'export_time',value:last_updated},
 			 					{index:'last_updated',value:last_updated}],
 			 				log_data:{title:'Exported',notes:filename+" report",link_to:''}};
-		 						
-		create_json(data_json);		
+
+		create_json(data_json);
 
 		results.forEach(function(result)
 		{
@@ -216,12 +207,12 @@ function get_export_data_extended(columns,filename,func)
 
 		var export_complete=setInterval(function()
 		{
-			
+
 			//console.log(total_export_requests);
 			if(total_export_requests===0)
 			{
 				clearInterval(export_complete);
-				//console.log(results);				
+				//console.log(results);
 				hide_loader();
 				my_obj_array_to_csv(results,filename);
 			}
@@ -236,13 +227,13 @@ function get_export_data_extended(columns,filename,func)
 function get_export_data_restructured(columns,filename,func)
 {
 	show_loader();
-	
+
 	columns.count=0;
 	columns.start_index=0;
 	columns.batch_size=5000;
-	
+
 	read_json_rows('',columns,function(results)
-	{		
+	{
 		var data_id=get_new_key();
 		var last_updated=get_my_time();
 		var data_json={data_store:'export_log',
@@ -254,8 +245,8 @@ function get_export_data_restructured(columns,filename,func)
 			 					{index:'export_time',value:last_updated},
 			 					{index:'last_updated',value:last_updated}],
 			 				log_data:{title:'Exported',notes:filename+" report",link_to:''}};
-		 						
-		create_json(data_json);		
+
+		create_json(data_json);
 
 		var new_result_array=func(results);
 
@@ -265,7 +256,7 @@ function get_export_data_restructured(columns,filename,func)
 			if(total_export_requests===0)
 			{
 				clearInterval(export_complete);
-				//console.log(new_result_array);				
+				//console.log(new_result_array);
 				hide_loader();
 				my_obj_array_to_csv(new_result_array,filename);
 			}
@@ -282,7 +273,7 @@ function get_limited_export_data(columns,filename,func)
 	columns.count=0;
 	columns.start_index=0;
 	columns.batch_size=5000;
-	
+
 	read_json_rows('',columns,function(results)
 	{
 		var data_id=get_new_key();
@@ -296,9 +287,9 @@ function get_limited_export_data(columns,filename,func)
 			 					{index:'export_time',value:last_updated},
 			 					{index:'last_updated',value:last_updated}],
 			 				log_data:{title:'Exported',notes:filename+" report",link_to:''}};
-		 						
-		create_json(data_json);		
-		
+
+		create_json(data_json);
+
 		if(typeof func!='undefined')
 		{
 			results.forEach(function(result)
@@ -306,14 +297,14 @@ function get_limited_export_data(columns,filename,func)
 				func(result);
 			});
 		}
-		
+
 		var export_complete=setInterval(function()
 		{
 			//console.log(total_export_requests);
 			if(total_export_requests===0)
 			{
 				clearInterval(export_complete);
-				//console.log(results);				
+				//console.log(results);
 				hide_loader();
 				my_obj_array_to_csv(results,filename);
 			}
@@ -328,36 +319,36 @@ function initialize_tabular_report_buttons(columns,report_title,report_id,func)
 	var pdf_button=document.getElementById(report_id+'_pdf');
 	var print_button=document.getElementById(report_id+'_print');
 	var email_button=document.getElementById(report_id+'_email');
-	
+
 	if(typeof csv_button!='undefined')
-	{			
+	{
 		$(csv_button).off("click");
 		$(csv_button).on("click", function(event)
 		{
 			get_tabular_report_data(columns,report_title,'csv',func);
-		});	
+		});
 	}
-		
+
 	if(typeof pdf_button!='undefined')
-	{			
+	{
 		$(pdf_button).off("click");
 		$(pdf_button).on("click", function(event)
 		{
 			get_tabular_report_data(columns,report_title,'pdf',func);
-		});	
+		});
 	}
-	
+
 	if(typeof print_button!='undefined')
-	{			
+	{
 		$(print_button).off("click");
 		$(print_button).on("click", function(event)
 		{
 			get_tabular_report_data(columns,report_title,'print',func);
-		});	
+		});
 	}
-	
+
 	if(typeof email_button!='undefined')
-	{			
+	{
 		$(email_button).off("click");
 		$(email_button).on("click", function(event)
 		{
@@ -371,27 +362,27 @@ function initialize_static_tabular_report_buttons(report_title,report_id)
 	var pdf_button=document.getElementById(report_id+'_pdf');
 	var print_button=document.getElementById(report_id+'_print');
 	var email_button=document.getElementById(report_id+'_email');
-	
+
 	if(typeof pdf_button!='undefined')
-	{			
+	{
 		$(pdf_button).off("click");
 		$(pdf_button).on("click", function(event)
 		{
 			get_static_report_data(report_title,'pdf',report_id);
-		});	
+		});
 	}
-	
+
 	if(typeof print_button!='undefined')
-	{			
+	{
 		$(print_button).off("click");
 		$(print_button).on("click", function(event)
 		{
 			get_static_report_data(report_title,'print',report_id);
-		});	
+		});
 	}
-	
+
 	if(typeof email_button!='undefined')
-	{			
+	{
 		$(email_button).off("click");
 		$(email_button).on("click", function(event)
 		{
@@ -407,7 +398,7 @@ function get_tabular_report_data(columns,filename,action_type,func)
 	columns.count=0;
 	columns.start_index=0;
 	columns.batch_size=5000;
-	
+
 	read_json_rows('',columns,function(results)
 	{
 		var data_id=get_new_key();
@@ -421,8 +412,8 @@ function get_tabular_report_data(columns,filename,action_type,func)
 			 					{index:'export_time',value:last_updated},
 			 					{index:'last_updated',value:last_updated}],
 			 				log_data:{title:'Exported',notes:filename+" report",link_to:''}};
-		 						
-		create_json(data_json);		
+
+		create_json(data_json);
 
 		if(typeof func!='undefined')
 		{
@@ -431,7 +422,7 @@ function get_tabular_report_data(columns,filename,action_type,func)
 				func(result);
 			});
 		}
-		
+
 		var export_complete=setInterval(function()
 		{
 			if(total_export_requests===0)
@@ -443,32 +434,32 @@ function get_tabular_report_data(columns,filename,action_type,func)
                 {
                     results.forEach(function(result)
                     {
-                        delete result.id;    
+                        delete result.id;
                     });
                 }
 				switch(action_type)
 				{
 					case 'csv': my_obj_array_to_csv(results,filename);
 								break;
-					case 'pdf': print_report_table(results,filename,function (container) 
+					case 'pdf': print_report_table(results,filename,function (container)
                                 {
                                     var html_data=container.innerHTML;
-                                    var pdfcreator=new htmlToPdf({html:html_data});										
+                                    var pdfcreator=new htmlToPdf({html:html_data});
                                     pdfcreator.download(filename);
                                     container.innerHTML="";
                                 });
                                 break;
-					case 'print': print_report_table(results,filename,function (container) 
+					case 'print': print_report_table(results,filename,function (container)
                                 {
                                     $.print(container);
                                     container.innerHTML="";
                                 });
                                 break;
-					case 'email': modal183_action(bt+" - "+filename,function (func) 
+					case 'email': modal183_action(bt+" - "+filename,function (func)
                                 {
                                     print_report_table(results,filename,func);
                                 });
-                                break;												
+                                break;
 				}
 			}
 		},500);
@@ -488,31 +479,31 @@ function get_static_report_data(filename,action_type,report_id)
 		 					{index:'export_time',value:last_updated},
 		 					{index:'last_updated',value:last_updated}],
 		 				log_data:{title:'Exported',notes:filename+" report",link_to:report_id}};
-	create_json(data_json);		
-	
+	create_json(data_json);
+
 	var bt=get_session_var('title');
 	switch(action_type)
 	{
-		case 'pdf': print_static_report_table(report_id,filename,function (container) 
+		case 'pdf': print_static_report_table(report_id,filename,function (container)
 						{
                             var html_data=container.innerHTML;
-							var pdfcreator=new htmlToPdf({html:html_data});										
+							var pdfcreator=new htmlToPdf({html:html_data});
 							pdfcreator.download(filename);
                             container.innerHTML="";
 						});
 						break;
-		case 'print': print_static_report_table(report_id,filename,function (container) 
+		case 'print': print_static_report_table(report_id,filename,function (container)
 							{
 								$.print(container);
 								container.innerHTML="";
 							});
 							break;
-		case 'email': modal183_action(bt+" - "+filename,function (func) 
+		case 'email': modal183_action(bt+" - "+filename,function (func)
 							{
 								print_static_report_table(report_id,filename,func);
 							});
-							break;													
-	}	
+							break;
+	}
 }
 
 
@@ -532,10 +523,10 @@ function csv_download_report(result_array,filename)
 			 					{index:'export_time',value:last_updated},
 			 					{index:'last_updated',value:last_updated}],
 			 				log_data:{title:'Exported',notes:filename+" report",link_to:''}};
-		 						
-	create_json(data_json);		
 
-	hide_loader();			
+	create_json(data_json);
+
+	hide_loader();
 	my_obj_array_to_csv(result_array,filename);
 }
 
@@ -562,9 +553,9 @@ function validate_import_array(data_array,vt)
 			else if((typeof vt[a].required!='undefined') && vt[a].required=='yes' && (data_row[vt[a].column]=="" || data_row[vt[a].column]=='null'))
 			{
 				error_array.logs.push({row:row_count,column:vt[a].column,error:"Blank",data:''});
-				error_array.status='error';				
+				error_array.status='error';
 			}
-			else if(data_row[vt[a].column]!="")			
+			else if(data_row[vt[a].column]!="")
 			{
 				if(typeof vt[a].regex!='undefined')
 				{
@@ -577,11 +568,11 @@ function validate_import_array(data_array,vt)
 						error_array.status='error';
 					}
 				}
-				
+
 				if((typeof vt[a].list!='undefined') && $.inArray(data_row[vt[a].column],vt[a].list)==-1)
 				{
 					var list_string="";
-					
+
 					if(vt[a].list.length<10)
 					{
 						list_string=" - ";
@@ -597,7 +588,7 @@ function validate_import_array(data_array,vt)
 				if((typeof vt[a].anti_list!='undefined') && $.inArray(data_row[vt[a].column],vt[a].anti_list)!=-1)
 				{
 					var list_string="";
-					
+
 					if(vt[a].list.length<10)
 					{
 						list_string=" - ";
@@ -609,7 +600,7 @@ function validate_import_array(data_array,vt)
 					error_array.logs.push({row:row_count,column:vt[a].column,error:"Duplicate Data - "+list_string,data:data_row[vt[a].column]});
 					error_array.status='error';
 				}
-			}			
+			}
 		}
 	});
 	return error_array;
@@ -625,7 +616,7 @@ function my_datalist_change(element,func)
     	var options = $('#'+list_id)[0].options;
     	for (var i=0;i<options.length;i++)
     	{
-	       	if (options[i].value == $(this).val()) 
+	       	if (options[i].value == $(this).val())
     	    {
     	    	func();
     	    	break;
@@ -637,11 +628,11 @@ function my_datalist_change(element,func)
 
 function get_all_child_storage(store_area,area_array)
 {
-	var child_data={data_store:'store_areas',return_column:'name'};		
-		child_data.indexes=[{index:'parent',exact:store_area}];		
+	var child_data={data_store:'store_areas',return_column:'name'};
+		child_data.indexes=[{index:'parent',exact:store_area}];
 
-	storage_count_tracker+=1;				
-	
+	storage_count_tracker+=1;
+
 	read_json_single_column(child_data,function(children)
 	{
 		if(children.length>0)
@@ -661,18 +652,18 @@ function get_available_batch(item_name,batch_array,min_quantity,result_array,suc
 	if(batch_array.length>0)
 	{
 		get_inventory(item_name,batch_array[0],function(inventory)
-		{	
+		{
 			if(parseFloat(inventory)>0)
-			{	
+			{
 				if(parseFloat(inventory)>=parseFloat(min_quantity))
 				{
 					var result_item=new Object();
 					result_item.batch=batch_array[0];
 					result_item.quantity=min_quantity;
 					result_array.push(result_item);
-					success_func();	
+					success_func();
 				}
-				else 
+				else
 				{
 					var result_item=new Object();
 					result_item.batch=batch_array[0];
@@ -690,7 +681,7 @@ function get_available_batch(item_name,batch_array,min_quantity,result_array,suc
 			}
 		});
 	}
-	else 
+	else
 	{
 		success_func();
 	}
@@ -701,18 +692,18 @@ function get_available_storage(item_name,batch,storage_array,min_quantity,result
 	if(storage_array.length>0)
 	{
 		get_store_inventory(storage_array[0],item_name,batch,function(inventory)
-		{	
+		{
 			if(parseFloat(inventory)>0)
-			{	
+			{
 				if(parseFloat(inventory)>=parseFloat(min_quantity))
 				{
 					var result_item=new Object();
 					result_item.storage=storage_array[0];
 					result_item.quantity=min_quantity;
 					result_array.push(result_item);
-					success_func();	
+					success_func();
 				}
-				else 
+				else
 				{
 					var result_item=new Object();
 					result_item.storage=storage_array[0];
@@ -730,7 +721,7 @@ function get_available_storage(item_name,batch,storage_array,min_quantity,result
 			}
 		});
 	}
-	else 
+	else
 	{
 		success_func();
 	}

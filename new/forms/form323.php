@@ -1,15 +1,15 @@
-<div id='form323' class='tab-pane portlet box green-meadow'>	   
+<div id='form323' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form323_add_item();'>Add <i class='fa fa-plus'></i></a>
             <a class='btn btn-circle grey btn-outline btn-sm' id='form323_save'>Save <i class='fa fa-save'></i></a>
 		</div>
 		<div class="actions">
       	     <a class='btn btn-default btn-sm' id='form323_print' onclick=form323_print_form();><i class='fa fa-print'></i> Print</a>
-            <a class='btn btn-default btn-sm' id='form323_share'><i class='fa fa-envelope'></i> Email</a>    
+            <a class='btn btn-default btn-sm' id='form323_share'><i class='fa fa-envelope'></i> Email</a>
       </div>
 	</div>
-	
+
 	<div class="portlet-body">
         <form id='form323_master' autocomplete="off">
             <fieldset>
@@ -21,9 +21,9 @@
                 <input type='submit' class='submit_hidden'>
             </fieldset>
         </form>
-        
+
         <br>
-		
+
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr style='color:#9a9a9a;'>
@@ -41,7 +41,7 @@
             </tfoot>
 		</table>
     </div>
-    
+
     <script>
         function form323_header_ini()
         {
@@ -53,16 +53,16 @@
             var challan_id_filter=fields.elements['challan_id'];
             var address=fields.elements['address'];
             var save_button=document.getElementById('form323_save');
-            
+
             customers_filter.value='';
             challan_id_filter.value=get_new_key();
             address.value="";
             $(challan_date).datepicker();
             $(challan_date).val(vTime.date());
-            
+
             var challan_id=$("#form323_link").attr('data_id');
             if(challan_id==null || challan_id=='')
-            {	
+            {
                 var challan_num_data={data_store:'user_preferences',return_column:'value',
                                       indexes:[{index:'name',exact:'challan_num'}]};
                 read_json_single_column(challan_num_data,function(challan_nums)
@@ -93,7 +93,7 @@
             });
 
             var customers_data={data_store:'customers',return_column:'acc_name'};
-            set_my_value_list_json(customers_data,customers_filter,function () 
+            set_my_value_list_json(customers_data,customers_filter,function ()
             {
                 $(customers_filter).focus();
             });
@@ -105,13 +105,13 @@
                 modal11_action(function()
                 {
                     var customers_data={data_store:'customers',return_column:'acc_name'};
-                    set_my_value_list_json(customers_data,customers_filter,function () 
+                    set_my_value_list_json(customers_data,customers_filter,function ()
                     {
                         $(customers_filter).focus();
                     });
                 });
             });
-            
+
             $(customers_filter).off('blur');
             $(customers_filter).on('blur',function()
             {
@@ -119,7 +119,8 @@
                              indexes:[{index:'acc_name',exact:customers_filter.value}]};
                 set_my_value_json(address_data,address);
             });
-            
+
+						var paginator=$('#form323_body').paginator({visible:false});
             $('#form323').formcontrol();
         }
 
@@ -127,7 +128,7 @@
         {
             var challan_id=$("#form323_link").attr('data_id');
             if(challan_id==null)
-                challan_id="";	
+                challan_id="";
 
             $('#form323_body').html("");
             $('#form323_foot').html("");
@@ -143,7 +144,7 @@
                                          {index:'customer'},
                                          {index:'total_quantity'},
                                          {index:'challan_date'}]};
-                
+
                 read_json_rows('form323',challan_columns,function(challan_results)
                 {
                     if (challan_results.length>0)
@@ -154,7 +155,7 @@
                         filter_fields.elements['challan_id'].value=challan_id;
                         var address=filter_fields.elements['address'];
                         var save_button=document.getElementById('form323_save');
-                        
+
                         var address_data={data_store:'customers',return_column:'address',count:1,
                                      indexes:[{index:'acc_name',exact:challan_results[0].customer_name}]};
                         set_my_value_json(address_data,address);
@@ -167,14 +168,14 @@
                         });
                     }
                 });
-                
+
                 var challan_items_column={data_store:'delivery_challan_items',
                                       indexes:[{index:'id'},
                                               {index:'item_name'},
                                               {index:'item_desc'},
                                               {index:'batch'},
                                               {index:'quantity'},
-                                              {index:'storage'}, 
+                                              {index:'storage'},
                                               {index:'challan_id',exact:challan_id}]};
                 read_json_rows('form323',challan_items_column,function(results)
                 {
@@ -202,7 +203,7 @@
                                 rowsHTML+="<input type='hidden' form='form323_"+id+"' value='"+id+"'>";
                                 rowsHTML+="<input type='button' class='submit_hidden' form='form323_"+id+"' id='save_form323_"+id+"'>";
                                 rowsHTML+="<button type='button' class='btn red' form='form323_"+id+"' id='delete_form323_"+id+"' name='delete' title='Delete' onclick='form323_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                         rowsHTML+="</tr>";
 
                         $('#form323_body').append(rowsHTML);
@@ -218,13 +219,13 @@
                     $('#form323_share').show();
                     $('#form323_share').click(function()
                     {
-                        modal101_action(bt+' - Delivery Challan # '+filter_fields.elements['challan_num'].value,filter_fields.elements['customer'].value,'customer',function (func) 
+                        modal101_action(bt+' - Delivery Challan # '+filter_fields.elements['challan_num'].value,filter_fields.elements['customer'].value,'customer',function (func)
                         {
                             print_form323(func);
                         });
                     });
                     form323_get_totals();
-                    
+
                     $('#form323').formcontrol();
                     hide_loader();
                 });
@@ -259,13 +260,13 @@
                         rowsHTML+="<input type='button' class='submit_hidden' form='form323_"+id+"' id='save_form323_"+id+"' name='save'>";
                         rowsHTML+="<button type='button' class='btn red' form='form323_"+id+"' id='delete_form323_"+id+"' onclick='$(this).parent().parent().remove();' name='delete' title='Delete' form323_get_totals();'><i class='fa fa-trash'></i></button>";
                         rowsHTML+="<input type='submit' class='submit_hidden' form='form323_"+id+"'>";
-                    rowsHTML+="</td>";			
+                    rowsHTML+="</td>";
                 rowsHTML+="</tr>";
 
                 $('#form323_body').prepend(rowsHTML);
 
                 var filter_fields=document.getElementById('form323_master');
-                
+
                 var fields=document.getElementById("form323_"+id);
                 var name_filter=fields.elements[0];
                 var desc_filter=fields.elements[1];
@@ -274,7 +275,7 @@
                 var quantity_filter=fields.elements[4];
                 var id_filter=fields.elements[5];
                 var save_button=fields.elements['save'];
-                
+
                 $(save_button).on("click", function(event)
                 {
                     event.preventDefault();
@@ -291,10 +292,10 @@
                                  indexes:[{index:'type',exact:'product'},
                                          {index:'value',exact:'yes'},
                                          {index:'attribute',exact:'manufactured'}]};
-                set_my_value_list_json(product_data,name_filter,function () 
+                set_my_value_list_json(product_data,name_filter,function ()
                 {
                     $(name_filter).focus();
-                }); 
+                });
 
                 var store_data={data_store:'store_areas',return_column:'name'};
                 set_my_value_list_json(store_data,store_filter);
@@ -345,7 +346,7 @@
                 var last_updated=get_my_time();
                 var save_button=form.elements['save'];
                 var del_button=form.elements['delete'];
-                
+
                 var data_json={data_store:'delivery_challan_items',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'item_name',value:name},
@@ -353,9 +354,9 @@
 	 					{index:'storage',value:storage},
 	 					{index:'batch',value:batch},
                         {index:'quantity',value:quantity},
-                        {index:'challan_id',value:challan_id},  
+                        {index:'challan_id',value:challan_id},
 	 					{index:'last_updated',value:last_updated}]};
- 				
+
                 var adjust_json={data_store:'inventory_adjust',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'product_name',value:name},
@@ -363,15 +364,15 @@
 	 					{index:'batch',value:batch},
                         {index:'storage',value:storage},
 	 					{index:'quantity',value:(-quantity)+""},
-                        {index:'source_id',value:challan_id},  
-                        {index:'source',value:'delivery challan'},    
+                        {index:'source_id',value:challan_id},
+                        {index:'source',value:'delivery challan'},
 	 					{index:'last_updated',value:last_updated}]};
- 				
+
                 create_json(data_json);
                 create_json(adjust_json);
 
                 $(form).readonly();
-            
+
                 del_button.removeAttribute("onclick");
                 $(del_button).on('click',function(event)
                 {
@@ -402,7 +403,7 @@
                 $('#form323_share').show();
                 $('#form323_share').click(function()
                 {
-                    modal101_action(bt+' - Delivery Challan # '+challan_num,customer,'customer',function (func) 
+                    modal101_action(bt+' - Delivery Challan # '+challan_num,customer,'customer',function (func)
                     {
                         print_form323(func);
                     });
@@ -415,11 +416,11 @@
                     var subform_id=$(this).attr('form');
                     var subform=document.getElementById(subform_id);
                     if(!isNaN(parseFloat(subform.elements[3].value)))
-                        total_quantity+=parseFloat(subform.elements[3].value);							
+                        total_quantity+=parseFloat(subform.elements[3].value);
                 });
 
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'delivery_challans',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'customer',value:customer},
@@ -445,9 +446,9 @@
                         update_json(num_json);
                     }
                 });
-                
+
                 create_json(data_json);
-                
+
                 var total_row="<tr><td colspan='4' data-th='Total Quantity'>Total Quantity</id><td colspan='2'>"+total_quantity+"</td></tr>";
                 $('#form323_foot').html(total_row);
 
@@ -476,12 +477,12 @@
                 var challan_date=get_raw_time(form.elements['date'].value);
                 var challan_num=form.elements['challan_num'].value;
                 var data_id=form.elements['challan_id'].value;
-                
+
                 var bt=get_session_var('title');
                 $('#form323_share').show();
                 $('#form323_share').click(function()
                 {
-                    modal101_action(bt+' - Delivery Challan # '+challan_num,customer,'customer',function (func) 
+                    modal101_action(bt+' - Delivery Challan # '+challan_num,customer,'customer',function (func)
                     {
                         print_form323(func);
                     });
@@ -494,7 +495,7 @@
                     var subform_id=$(this).attr('form');
                     var subform=document.getElementById(subform_id);
                     if(!isNaN(parseFloat(subform.elements[3].value)))
-                        total_quantity+=parseFloat(subform.elements[3].value);							
+                        total_quantity+=parseFloat(subform.elements[3].value);
                 });
 
                 var last_updated=get_my_time();
@@ -509,10 +510,10 @@
                     log_data:{title:'Updated',notes:'Delivery Challan # '+challan_num,link_to:'form324'}};
 
                 update_json(data_json);
-                
+
                 var total_row="<tr><td colspan='4' data-th='Total'>Total Quantity</td><td colspan='2'>"+total_quantity+"</td></tr>";
                 $('#form323_foot').html(total_row);
-                
+
                 $("[id^='save_form323_']").click();
             }
             else
@@ -532,7 +533,7 @@
                     var form_id=$(button).attr('form');
                     var form=document.getElementById(form_id);
                     var data_id=form.elements[5].value;
-                        
+
                     var data_json={data_store:'delivery_challan_items',
 	 				data:[{index:'id',value:data_id}]};
 
@@ -541,7 +542,7 @@
 
                     delete_json(data_json);
                     delete_json(adjust_json);
-                    
+
                     $(button).parent().parent().remove();
                     form323_get_totals();
                 });
@@ -561,7 +562,7 @@
                 var subform_id=$(this).attr('form');
                 var subform=document.getElementById(subform_id);
                 if(!isNaN(parseFloat(subform.elements[4].value)))
-                    total_quantity+=parseFloat(subform.elements[4].value);							
+                    total_quantity+=parseFloat(subform.elements[4].value);
             });
 
             var form=document.getElementById("form323_master");
@@ -572,12 +573,12 @@
         }
 
         function form323_print_form()
-        {	
+        {
             print_form323(function(container)
             {
                 $.print(container);
-                container.innerHTML="";	
-            });	
+                container.innerHTML="";
+            });
         }
 
         function print_form323(func)
@@ -586,10 +587,10 @@
             var header=document.createElement('div');
                 var logo=document.createElement('div');
                 var business_intro=document.createElement('div');
-                
+
             var invoice_line=document.createElement('div');
 
-            var info_section=document.createElement('div');	
+            var info_section=document.createElement('div');
                 var customer_info=document.createElement('div');
                 var business_info=document.createElement('div');
 
@@ -602,12 +603,12 @@
 
         ////////////setting styles for containers/////////////////////////
 
-            header.setAttribute('style','width:100%;min-height:100px;text-align:center');
+            header.setAttribute('style','width:100%;min-height:70px;text-align:center');
                 business_intro.setAttribute('style','width:100%;text-align:center');
                 business_contact.setAttribute('style','display:inline-block;width:100%;text-align:center');
             info_section.setAttribute('style','width:100%;min-height:80px');
-                customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:120px;border: 1px solid #00f;border-radius:5px;');
-                business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:120px;border: 1px solid #00f;border-radius:5px;');
+                customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:48%;height:120px;border: 1px solid #000;border-radius:5px;');
+                business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:48%;height:120px;border: 1px solid #000;border-radius:5px;');
             footer.setAttribute('style','width:100%;min-height:100px');
                 tandc.setAttribute('style','float:left;width:60%;min-height:50px');
                 signature.setAttribute('style','float:right;width:30%;min-height:60px');
@@ -620,36 +621,36 @@
             var business_address=get_session_var('address');
             var business_phone=get_session_var('phone');
             var business_email=get_session_var('email');
-            
+
             var master_form=document.getElementById('form323_master');
             var customer_name=master_form.elements['customer'].value;
             var customer_address=master_form.elements['address'].value;
-            var date=master_form.elements['date'].value;	
+            var date=master_form.elements['date'].value;
             var challan_num=master_form.elements['challan_num'].value;
-            
+
             var signature_text="<br>"+bt+"<br><br><br>Auth. Signatory<br>";
 
             ////////////////filling in the content into the containers//////////////////////////
 
             logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
-            business_contact.innerHTML="<hr style='border: 1px solid #00f;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email;
+            business_contact.innerHTML="<hr style='border: 1px solid #000;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email;
 
-            invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Delivery Challan</b></div><hr style='border: 1px solid #00f;'>";
+            invoice_line.innerHTML="<hr style='border: 1px solid #000;'><div style='text-align:center;'><b style='text-size:1.2em'>Delivery Challan # "+challan_num+"</b></div><hr style='border: 1px solid #000;'>";
 
             customer_info.innerHTML="<b>Buyer</b><br>"+customer_name+"<br>Address: "+customer_address;
-            business_info.innerHTML="<b>Seller</b><br>Date: "+date+"<br>Invoice No: "+challan_num;
+            business_info.innerHTML="<b>Seller</b><br>"+bt+"<br>Date: "+date+"<br>Challan No: "+challan_num;
 
             signature.innerHTML=signature_text;
 
             var table_element=document.getElementById('form323_body');
 
-            /////////////adding new table //////////////////////////////////////////////////////	
+            /////////////adding new table //////////////////////////////////////////////////////
             var new_table=document.createElement('table');
-            new_table.setAttribute('style','width:100%;font-size:14px;border:1px solid black;text-align:left;');
+            new_table.setAttribute('style','width:100%;font-size:15px;border:1px solid black;text-align:left;');
             var table_header="<tr style='border-top:1px solid #000000;border-bottom: 1px solid #000000;'>"+
-                        "<td style='text-align:left;width:40%;'>Item</td>"+
-                        "<td style='text-align:left;width:40%;'>Description</td>"+
-                        "<td style='text-align:left;width:20%'>Quantity</td></tr>";
+                        "<td style='text-align:left;width:40%;padding:3px;font-weight:600;'>Item</td>"+
+                        "<td style='text-align:left;width:40%;padding:3px;font-weight:600;'>Description</td>"+
+                        "<td style='text-align:left;width:20%;padding:3px;font-weight:600;'>Quantity</td></tr>";
 
             var table_rows=table_header;
             var counter=0;
@@ -662,15 +663,15 @@
                 var item_desc=form.elements[1].value;
                 var batch=form.elements[3].value;
                 var quantity=""+form.elements[4].value;
-                
+
                 table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
-                        "<td style='text-align:left;word-wrap: break-word'>"+item_name+"</td>"+
-                        "<td style='text-align:left;word-wrap: break-word'>"+item_desc+"</td>"+
-                        "<td style='text-align:left;word-wrap: break-word'>"+quantity+"</td></tr>";
+                        "<td style='text-align:left;word-wrap: break-word;padding:3px;'>"+item_name+"</td>"+
+                        "<td style='text-align:left;word-wrap: break-word;padding:3px;'>"+item_desc+"</td>"+
+                        "<td style='text-align:left;word-wrap: break-word;padding:3px;'>"+quantity+"</td></tr>";
             });
 
             var row_count=$(table_element).find('tbody>tr').length;
-            var rows_to_add=12-row_count;
+            var rows_to_add=18-row_count;
             for(var i=0;i<rows_to_add;i++)
             {
                 table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td></tr>";
@@ -680,12 +681,12 @@
             var total_text1=$(table_foot).find('tr>td:first')[0].innerHTML;
             var total_text2=$(table_foot).find('tr>td:nth-child(2)')[0].innerHTML;
             var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
-                        "<td colspan='2' style='text-align:left;'>"+total_text1+"</td>"+
-                        "<td style='text-align:left;'>"+total_text2+"</td></tr>";
+                        "<td colspan='2' style='text-align:left;padding:3px;'>"+total_text1+"</td>"+
+                        "<td style='text-align:left;padding:3px;font-weight:600;'>"+total_text2+"</td></tr>";
             table_rows+=table_foot_row;
             new_table.innerHTML=table_rows;
 
-            /////////////placing the containers //////////////////////////////////////////////////////	
+            /////////////placing the containers //////////////////////////////////////////////////////
 
             container.appendChild(header);
             container.appendChild(invoice_line);
@@ -695,7 +696,7 @@
             container.appendChild(footer);
 
             header.appendChild(logo);
-            
+
             info_section.appendChild(customer_info);
             info_section.appendChild(business_info);
 

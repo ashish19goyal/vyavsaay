@@ -11,7 +11,7 @@
 <div id="modal2" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal2_form'>                               
+			<form id='modal2_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Access Denied</h4>
@@ -45,7 +45,7 @@
 <div id="modal5" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal5_form'>                               
+			<form id='modal5_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Duplicate Entry</h4>
@@ -79,14 +79,14 @@
 <div id="modal6" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal6_form'>                               
+			<form id='modal6_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Get Online</h4>
 				</div>
 				<div class="modal-body">
 					<div class="scroller" style="height:100px;" data-always-visible="1" data-rail-visible1="1">
-						This operation can be performed in online mode only. 
+						This operation can be performed in online mode only.
 						Please make sure you are connected to internet and change to online mode.
 					</div>
 				</div>
@@ -113,7 +113,7 @@
 <div id="modal7" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal7_form'>                               
+			<form id='modal7_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Offer Finished</h4>
@@ -146,15 +146,15 @@
 <div id="modal52" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
      <div class="modal-dialog">
          <div class="modal-content">
-             <form id='modal52_form'>                               
+             <form id='modal52_form'>
             	<div class="modal-header">
                  	<button type="button" class="close" data-dismiss="modal" onclick='delete_session();' aria-hidden="true"></button>
                  	<h4 class="modal-title">Offline Data Deleted</h4>
              	</div>
                <div class="modal-body">
                   <div class="scroller" style="height:100px;" data-always-visible="1" data-rail-visible1="1">
-                     Local storage on this system has been cleared. 
-							You will be logged out now. Login again to access the system in online mode.	
+                     Local storage on this system has been cleared.
+							You will be logged out now. Login again to access the system in online mode.
                	</div>
                </div>
             	<div class="modal-footer">
@@ -180,7 +180,7 @@
 <div id="modal56" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal56_form'>                               
+			<form id='modal56_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Location Not Available</h4>
@@ -213,7 +213,7 @@
 <div id="modal58" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal58_form'>                               
+			<form id='modal58_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Sent</h4>
@@ -246,7 +246,7 @@
 <div id="modal59" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal59_form'>                               
+			<form id='modal59_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Emails Disabled</h4>
@@ -279,7 +279,7 @@
 <div id="modal60" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal60_form'>                               
+			<form id='modal60_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">SMS Disabled</h4>
@@ -312,7 +312,7 @@
 <div id="modal61" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal61_form'>                               
+			<form id='modal61_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Updating Order Status</h4>
@@ -345,7 +345,7 @@
 <div id="modal62" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal62_form'>                               
+			<form id='modal62_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Thanks</h4>
@@ -378,7 +378,7 @@
 <div id="modal63" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal63_form'>                               
+			<form id='modal63_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Billing Aborted</h4>
@@ -411,7 +411,7 @@
 <div id="modal64" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal64_form'>                               
+			<form id='modal64_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Partial Billing Not Allowed</h4>
@@ -444,7 +444,7 @@
 <div id="modal65" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal65_form'>                               
+			<form id='modal65_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Repeated Entry</h4>
@@ -477,7 +477,7 @@
 <div id="modal66" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal66_form'>                               
+			<form id='modal66_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Incorrect Barcode</h4>
@@ -510,7 +510,7 @@
 <div id="modal67" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal67_form'>                               
+			<form id='modal67_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Wrong Pick</h4>
@@ -543,7 +543,7 @@
 <div id="modal68" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal68_form'>                               
+			<form id='modal68_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Change DRS number</h4>
@@ -576,7 +576,7 @@
 <div id="modal69" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal69_form'>                               
+			<form id='modal69_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Item packed</h4>
@@ -609,7 +609,7 @@
 <div id="modal70" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal70_form'>                               
+			<form id='modal70_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Item rejected</h4>
@@ -642,7 +642,7 @@
 <div id="modal71" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal71_form'>                               
+			<form id='modal71_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Item mismatch</h4>
@@ -675,7 +675,7 @@
 <div id="modal72" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal72_form'>                               
+			<form id='modal72_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Wrong Placement</h4>
@@ -708,7 +708,7 @@
 <div id="modal73" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal73_form'>                               
+			<form id='modal73_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Import Aborted</h4>
@@ -741,7 +741,7 @@
 <div id="modal74" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal74_form'>                               
+			<form id='modal74_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Network Error</h4>
@@ -774,7 +774,7 @@
 <div id="modal75" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal75_form'>                               
+			<form id='modal75_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">SKU in Inventory</h4>
@@ -807,7 +807,7 @@
 <div id="modal76" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal76_form'>                               
+			<form id='modal76_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Pincode not serviced</h4>
@@ -840,7 +840,7 @@
 <div id="modal77" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal77_form'>                               
+			<form id='modal77_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Change Manifest Number</h4>
@@ -873,7 +873,7 @@
 <div id="modal78" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal78_form'>                               
+			<form id='modal78_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Change MTS Number</h4>
@@ -906,7 +906,7 @@
 <div id="modal79" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal79_form'>                               
+			<form id='modal79_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Questionnaire Submitted</h4>
@@ -939,7 +939,7 @@
 <div id="modal80" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal80_form'>                               
+			<form id='modal80_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Data Sync Success!</h4>
@@ -972,7 +972,7 @@
 <div id="modal81" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal81_form'>                               
+			<form id='modal81_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Data Sync Failed!</h4>
@@ -1005,7 +1005,7 @@
 <div id="modal82" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal82_form'>                               
+			<form id='modal82_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Incorrect</h4>
@@ -1038,7 +1038,7 @@
 <div id="modal85" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal85_form'>                               
+			<form id='modal85_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">QR Data Conversion</h4>
@@ -1071,7 +1071,7 @@
 <div id="modal86" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal86_form'>                               
+			<form id='modal86_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">QR Scan Saved</h4>
@@ -1104,7 +1104,7 @@
 <div id="modal87" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal87_form'>                               
+			<form id='modal87_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">No Contact Information</h4>
@@ -1137,7 +1137,7 @@
 <div id="modal88" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal88_form'>                               
+			<form id='modal88_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">SMS Sent</h4>
@@ -1170,7 +1170,7 @@
 <div id="modal89" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal89_form'>                               
+			<form id='modal89_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Challan Aborted</h4>
@@ -1203,7 +1203,7 @@
 <div id="modal90" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal90_form'>                               
+			<form id='modal90_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Partial Challan Not Allowed</h4>
@@ -1236,7 +1236,7 @@
 <div id="modal91" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal91_form'>                               
+			<form id='modal91_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Partial Challan Not Allowed</h4>
@@ -1269,7 +1269,7 @@
 <div id="modal92" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal92_form'>                               
+			<form id='modal92_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">AWB Updated</h4>
@@ -1302,7 +1302,7 @@
 <div id="modal93" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal93_form'>                               
+			<form id='modal93_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Logs Cleared</h4>
@@ -1335,7 +1335,7 @@
 <div id="modal94" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal94_form'>                               
+			<form id='modal94_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">Configuration Updated</h4>
@@ -1368,7 +1368,7 @@
 <div id="modal95" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal95_form'>                               
+			<form id='modal95_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">No Orders Found</h4>
@@ -1401,7 +1401,7 @@
 <div id="modal96" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id='modal96_form'>                               
+			<form id='modal96_form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title">No Offline Access</h4>
@@ -1409,6 +1409,39 @@
 				<div class="modal-body">
 					<div class="scroller" style="height:100px;" data-always-visible="1" data-rail-visible1="1">
 						This operation can't be performed in offline mode. Please switch to online mode.
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn green" data-dismiss='modal' name='close' value='Ok'>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+/***function limiter***/
+
+/*box_id*:*modal97
+*@*box_title*:*Issue Purchase Order
+*@*box_type*:*static
+*@*function_name*:*
+*@*function_def*:*
+*@*status*:*active
+*@*last_updated*:*1
+*@*box_content*:*
+*/
+<a href='#modal97' data-toggle="modal" id='modal97_link'></a>
+<div id="modal97" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id='modal97_form'>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+					<h4 class="modal-title">Issue Purchase Order</h4>
+				</div>
+				<div class="modal-body">
+					<div class="scroller" style="height:100px;" data-always-visible="1" data-rail-visible1="1">
+						You can enter a purchase bill against a Purchase Order only. If you have not issued a PO, please do it.
 					</div>
 				</div>
 				<div class="modal-footer">

@@ -102,9 +102,23 @@
                 });
             });
 
-            var order_num_data={data_store:'user_preferences',count:1,return_column:'value',
+						var order_id=$("#form180_link").attr('data_id');
+						if(vUtil.isBlank(order_id))
+						{
+							var order_num_data={data_store:'user_preferences',count:1,return_column:'value',
                                indexes:[{index:'name',exact:'so_num'}]};
-            set_my_value_json(order_num_data,order_num_filter);
+							read_json_single_column(order_num_data,function(so_nums)
+ 							{
+ 									if(so_nums.length>0)
+ 									{
+ 											order_num_filter.value=get_session_var('so_prefix')+"-"+so_nums[0];
+ 									}
+ 									else
+ 									{
+ 											order_num_filter.value="";
+ 									}
+ 							});
+						}
 
             $(order_date).datepicker();
             order_date.value=vTime.date();
@@ -112,6 +126,7 @@
             status_filter.value='pending';
             customers_filter.value='';
 
+						var paginator=$('#form180_body').paginator({visible:false});
             $('#form180').formcontrol();
         }
 
@@ -432,10 +447,10 @@
 
                 var last_updated=get_my_time();
                 var data_json={data_store:'sale_orders',
-	 				data:[{index:'id',value:data_id},
-	 					{index:'customer_name',value:customer},
-	 					{index:'order_date',value:order_date},
-	 					{index:'order_num',value:order_num},
+							 				data:[{index:'id',value:data_id},
+							 					{index:'customer_name',value:customer},
+							 					{index:'order_date',value:order_date},
+							 					{index:'order_num',value:order_num},
                         {index:'status',value:status},
                         {index:'amount',value:amount},
                         {index:'billing_type',value:bill_type},
@@ -452,10 +467,11 @@
                 {
                     if(num_ids.length>0)
                     {
-                        var num_json={data_store:'user_preferences',
-                        data:[{index:'id',value:num_ids[0]},
-                            {index:'value',value:(parseInt(order_num)+1)},
-                            {index:'last_updated',value:last_updated}]};
+											var num_array=order_num.split('-');
+											var num_json={data_store:'user_preferences',
+											data:[{index:'id',value:num_ids[0]},
+													{index:'value',value:(parseInt(num_array[1])+1)},
+													{index:'last_updated',value:last_updated}]};
 
                         update_json(num_json);
                     }
@@ -533,10 +549,10 @@
                 $('#form180_foot').html(total_row);
 
                 var data_json={data_store:'sale_orders',
-	 				data:[{index:'id',value:data_id},
-	 					{index:'customer_name',value:customer},
-	 					{index:'order_date',value:order_date},
-	 					{index:'order_num',value:order_num},
+							 				data:[{index:'id',value:data_id},
+							 					{index:'customer_name',value:customer},
+							 					{index:'order_date',value:order_date},
+							 					{index:'order_num',value:order_num},
                         {index:'status',value:status},
                         {index:'amount',value:amount},
                         {index:'tax',value:tax},
@@ -567,7 +583,7 @@
                     var data_id=form.elements[8].value;
                     var last_updated=get_my_time();
                     var data_json={data_store:'sale_order_items',
-	 				data:[{index:'id',value:data_id}]};
+	 											data:[{index:'id',value:data_id}]};
 
                     delete_json(data_json);
                     $(button).parent().parent().remove();
@@ -590,9 +606,6 @@
             });
         }
 
-        /**
-        * This function prepares the printing template for the documents like bills and purchase orders
-        */
         function print_form180(func)
         {
             var form_id='form180';
@@ -600,8 +613,6 @@
             var container=document.createElement('div');
             var header=document.createElement('div');
                 var logo=document.createElement('div');
-                var business_intro=document.createElement('div');
-                var business_contact=document.createElement('div');
 
             var invoice_line=document.createElement('div');
 
@@ -614,19 +625,20 @@
             var footer=document.createElement('div');
                 var tandc=document.createElement('div');
                 var signature=document.createElement('div');
+								var clearance=document.createElement('div');
+								var business_contact=document.createElement('div');
 
         ////////////setting styles for containers/////////////////////////
 
-            header.setAttribute('style','width:100%;min-height:100px;text-align:center');
-                business_intro.setAttribute('style','width:100%;text-align:center');
-                business_contact.setAttribute('style','width:100%;text-align:center');
+            header.setAttribute('style','width:100%;min-height:70px;text-align:center');
             info_section.setAttribute('style','width:100%;min-height:80px');
-                customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;');
-                business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;');
+                customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:48%;height:120px;border: 1px solid #000;border-radius:5px;');
+                business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:48%;height:120px;border: 1px solid #000;border-radius:5px;');
             footer.setAttribute('style','width:100%;min-height:100px');
                 tandc.setAttribute('style','float:left;width:60%;min-height:50px');
                 signature.setAttribute('style','float:right;width:30%;min-height:60px');
-
+								clearance.setAttribute('style','clear:both;');
+								business_contact.setAttribute('style','width:100%;text-align:center;height:40px;font-size:12px;');
         ///////////////getting the content////////////////////////////////////////
 
             var bt=get_session_var('title');
@@ -652,12 +664,12 @@
 
             logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
             //business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text;
-            business_contact.innerHTML="<hr style='border: 1px solid #00f;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email;
+            business_contact.innerHTML="<hr style='border: 1px solid #000;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email;
 
-            invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Sale Order</b></div><hr style='border: 1px solid #00f;'>";
+            invoice_line.innerHTML="<hr style='border: 1px solid #000;'><div style='text-align:center;'><b style='text-size:1.2em'>Sale Order # "+bill_num+"</b></div><hr style='border: 1px solid #000;'>";
 
-            customer_info.innerHTML="<b>To</b><br>"+customer_name+"<br>Type: "+bill_type;
-            business_info.innerHTML="VAT #: "+vat_no+"<br>Date: "+date+"<br>Order No: "+bill_num;
+            customer_info.innerHTML="<b>Buyer</b><br>"+customer_name+"<br>Type: "+bill_type;
+            business_info.innerHTML="<b>Seller</b><br>"+bt+"<br>VAT #: "+vat_no+"<br>Date: "+date+"<br>Order No: "+bill_num;
 
             tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
             signature.innerHTML=signature_text;
@@ -666,15 +678,15 @@
 
             /////////////adding new table //////////////////////////////////////////////////////
             var new_table=document.createElement('table');
-            new_table.setAttribute('style','width:100%;font-size:11px;border:1px solid black;text-align:left;');
+            new_table.setAttribute('style','width:100%;font-size:15px;border:1px solid black;text-align:left;');
             var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
-                        "<td style='text-align:left;width:20%;'>Item</td>"+
-                        "<td style='text-align:left;width:25%;'>Description</td>"+
-                        "<td style='text-align:left;width:10%'>Qty</td>"+
-                        "<td style='text-align:left;width:10%'>Rate</td>"+
-                        "<td style='text-align:left;width:10%'>Amount</td>"+
-                        "<td style='text-align:left;width:10%'>Tax</td>"+
-                        "<td style='text-align:left;width:10%'>Total</td></tr>";
+                        "<td style='text-align:left;width:18%;font-weight:600;padding:3px;'>Item</td>"+
+                        "<td style='text-align:left;width:22%;font-weight:600;padding:3px;'>Description</td>"+
+                        "<td style='text-align:left;width:12%;font-weight:600;padding:3px;'>Qty</td>"+
+                        "<td style='text-align:left;width:12%;font-weight:600;padding:3px;'>Rate</td>"+
+                        "<td style='text-align:left;width:12%;font-weight:600;padding:3px;'>Amount</td>"+
+                        "<td style='text-align:left;width:12%;font-weight:600;padding:3px;'>Tax</td>"+
+                        "<td style='text-align:left;width:12%;font-weight:600;padding:3px;'>Total</td></tr>";
 
             var table_rows=table_header;
             var counter=0;
@@ -692,13 +704,13 @@
                 var total=form.elements[7].value;
 
                 table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
-                        "<td style='text-align:left;word-wrap: break-word;'>"+item_name+"</td>"+
-                        "<td style='text-align:left;word-wrap: break-word;'>"+item_desc+"</td>"+
-                        "<td style='text-align:left;word-wrap: break-word;'>"+quantity+"</td>"+
-                        "<td style='text-align:left;word-wrap: break-word;'>"+price+"</td>"+
-                        "<td style='text-align:left;word-wrap: break-word;'>"+amount+"</td>"+
-                        "<td style='text-align:left;word-wrap: break-word;'>"+tax+"</td>"+
-                        "<td style='text-align:left;word-wrap: break-word;'>"+total+"</td></tr>";
+                        "<td style='text-align:left;word-wrap: break-word;padding:3px;'>"+item_name+"</td>"+
+                        "<td style='text-align:left;word-wrap: break-word;padding:3px;'>"+item_desc+"</td>"+
+                        "<td style='text-align:left;word-wrap: break-word;padding:3px;'>"+quantity+"</td>"+
+                        "<td style='text-align:left;word-wrap: break-word;padding:3px;'>"+price+"</td>"+
+                        "<td style='text-align:left;word-wrap: break-word;padding:3px;'>"+amount+"</td>"+
+                        "<td style='text-align:left;word-wrap: break-word;padding:3px;'>"+tax+"</td>"+
+                        "<td style='text-align:left;word-wrap: break-word;padding:3px;'>"+total+"</td></tr>";
             });
 
             var row_count=$(table_element).find('tbody>tr').length;
@@ -714,9 +726,9 @@
             var total_amount=$(table_foot).find('tr>td:nth-child(3)')[0].innerHTML;
             //console.log(total_amount);
             var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
-                        "<td colspan='2' style='text-align:left;'>"+total_text1+"</td>"+
-                        "<td colspan='3' style='text-align:left;'>"+total_text2+"</td>"+
-                        "<td colspan='2' style='text-align:left;'>"+total_amount+"</td></tr>";
+                        "<td colspan='2' style='text-align:left;padding:3px;'>"+total_text1+"</td>"+
+                        "<td colspan='3' style='text-align:left;padding:3px;'>"+total_text2+"</td>"+
+                        "<td colspan='2' style='text-align:left;padding:3px;font-weight:600;'>"+total_amount+"</td></tr>";
             //console.log(table_foot_row);
             table_rows+=table_foot_row;
             new_table.innerHTML=table_rows;
@@ -732,13 +744,14 @@
 
             header.appendChild(logo);
             //header.appendChild(business_intro);
-            header.appendChild(business_contact);
 
             info_section.appendChild(customer_info);
             info_section.appendChild(business_info);
 
             footer.appendChild(tandc);
             footer.appendChild(signature);
+						footer.appendChild(clearance);
+						footer.appendChild(business_contact);
 
             func(container);
         }
@@ -772,7 +785,7 @@
             tax=vUtil.round(tax,2);
             total=vUtil.round(total,2);
 
-            var total_row="<tr><td colspan='1' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
+            var total_row="<tr><td colspan='2' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
                                     "<td>Amount:<br>Tax: <br>Total: </td>" +
                                     "<td>Rs. "+amount+"<br>" +
                                     "Rs. "+tax+"<br> " +

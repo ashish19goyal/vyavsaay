@@ -90,6 +90,12 @@ var vUtil = function (options)
 			return result;
 		};
 
+		this.newKey = function()
+		{
+			var d=new Date();
+			return d.getTime();
+		}
+
     this.resize_picture=function (picture_tag,pic_width)
     {
         var tempW = picture_tag.width;
@@ -271,6 +277,13 @@ var vUtil = function (options)
 };
 vUtil=new vUtil();
 
+		function get_new_key()
+		{
+			var d=new Date();
+			var seconds=d.getTime();
+			//seconds=(seconds*1000)+Math.floor(Math.random()*1000);
+			return seconds;
+		}
 
     function htmlentities(str)
     {
