@@ -2,7 +2,6 @@
 	<div class="portlet-title">
 		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='modal172_action();'>Add <i class='fa fa-plus'></i></a>
-            <a class='btn btn-circle grey btn-outline btn-sm' onclick='modal31_action();'>Delete <i class='fa fa-trash'></i></a>
 		</div>
 		<div class="actions">
             <div class="btn-group">
@@ -32,10 +31,8 @@
 						<th><input type='text' placeholder="Account" class='floatlabel' name='account' form='form282_header'></th>
 						<th><input type='text' placeholder="Amount" readonly='readonly' name='amount' form='form282_header'></th>
 						<th><input type='text' placeholder="Narration" class='floatlabel' name='narration' form='form282_header'></th>
-						<th>
-							<input type='text' placeholder="Documents" readonly="readonly" name='docs' form='form282_header'>
-            	<input type='submit' form='form282_header' class='submit_hidden'>
-            </th>
+						<th><input type='text' placeholder="Documents" readonly="readonly" name='docs' form='form282_header'></th>
+            			<th><input type='submit' form='form282_header' class='submit_hidden'></th>
 				</tr>
 			</thead>
 			<tbody id='form282_body'>
@@ -80,16 +77,15 @@
 
             var paginator=$('#form282_body').paginator();
 
-						var columns=new Object();
-								columns.count=paginator.page_size();
-								columns.start_index=paginator.get_index();
-								columns.data_store='receipts';
-								columns.indexes=[{index:'id',value:fid},
-									{index:'receipt_id',value:rid},
-									{index:'acc_name',value:faccount},
-									{index:'amount'},{index:'date'},
-                                    {index:'narration',value:fnarration},
-									{index:'type',exact:'paid'}];
+			var columns={count:paginator.page_size(),
+						data_store:'receipts',
+						start_index:paginator.get_index(),
+						indexes:[{index:'id',value:fid},
+						{index:'receipt_id',value:rid},
+						{index:'acc_name',value:faccount},
+						{index:'amount'},{index:'date'},
+                        {index:'narration',value:fnarration},
+						{index:'type',exact:'paid'}]};
 
             read_json_rows('form282',columns,function(results)
             {
@@ -107,14 +103,18 @@
                                 rowsHTML+="<input type='number' class='floatlabel' placeholder='Rs.' readonly='readonly' form='form282_"+result.id+"' value='"+result.amount+"'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Narration'>";
-                                rowsHTML+="<input type='text' class='floatlabel' placeholder='Issued On' value='"+get_my_past_date(result.date)+"' readonly='readonly'>";
+                                rowsHTML+="<input type='text' class='floatlabel' form='form282_"+result.id+"' placeholder='Issued On' value='"+get_my_past_date(result.date)+"' readonly='readonly'>";
                                 rowsHTML+="<textarea readonly='readonly' class='floatlabel' placeholder='Details' form='form282_"+result.id+"'>"+result.narration+"</textarea>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Document'>";
                                 rowsHTML+="<div id='form282_documents_"+result.id+"'></div>";
                                 rowsHTML+="<a title='Add document' class='btn btn-circle btn-icon-only grey-cascade' id='form282_add_document_"+result.id+"'><i class='fa fa-plus'></i></a>";
                             rowsHTML+="</td>";
-                    rowsHTML+="</tr>";
+							rowsHTML+="<td data-th='Action'>";
+								rowsHTML+="<input type='hidden' form='form282_"+result.id+"' value='"+result.id+"' name='id'>";
+								rowsHTML+="<button type='button' class='btn red' form='form282_"+result.id+"' title='Delete' onclick='form282_delete_item($(this));'><i class='fa fa-trash'></i></button>";
+                            rowsHTML+="</td>";
+					rowsHTML+="</tr>";
 
                     $('#form282_body').append(rowsHTML);
 
@@ -150,13 +150,42 @@
                 });
 
                 $('#form282').formcontrol();
-								paginator.update_index(results.length);
-								initialize_tabular_report_buttons(columns,'Receipts (Payable)','form282',function (item)
+				paginator.update_index(results.length);
+				initialize_tabular_report_buttons(columns,'Receipts (Payable)','form282',function (item)
                 {
                     item.date=get_my_past_date(item.date);
                 });
-								hide_loader();
+				hide_loader();
             });
         };
+
+		function form282_delete_item(button)
+		{
+			if(is_delete_access('form282'))
+	        {
+	            modal115_action(function()
+	            {
+					var form_id=$(button).attr('form');
+	                var form=document.getElementById(form_id);
+
+	                var data_id=form.elements['id'].value;
+
+					var transaction_json={data_store:'transactions',
+						data:[{index:'id',value:data_id}]};
+
+					delete_json(transaction_json);
+
+		        	var receipt_json={data_store:'receipts',
+			 				data:[{index:'id',value:data_id}]};
+
+					delete_json(receipt_json);
+					$(button).parent().parent().remove();
+				});
+			}
+			else
+			{
+				$("#modal2_link").click();
+			}
+		}
     </script>
 </div>

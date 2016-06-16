@@ -74,6 +74,22 @@
 }(jQuery));
 
 (function ($) {
+	$.fn.editable=function(options)
+	{
+		$(this).closest('tr').find('input,textarea').each(function()
+		{
+			$(this).removeAttr('readonly');
+		});
+
+		$(this).find('input,textarea').each(function()
+		{
+			$(this).removeAttr('readonly');
+		});
+	};
+}(jQuery));
+
+
+(function ($) {
 
 	$.fn.longpresseditable=function(options)
 	{

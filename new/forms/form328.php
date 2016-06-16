@@ -26,11 +26,11 @@
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr style='color:#9a9a9a;'>
-          <th>Item</th>
+          			<th>Item</th>
 					<th>Batch</th>
 					<th>Quantity</th>
-          <th>Type</th>
-					<th>Details</th>
+          			<th>Details</th>
+					<th>Reason</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -48,12 +48,12 @@
 
             var customer_filter=fields.elements['customer'];
             var return_date=fields.elements['date'];
-						var return_num_filter=fields.elements['return_num'];
+			var return_num_filter=fields.elements['return_num'];
             var id_filter=fields.elements['id'];
             id_filter.value=get_new_key();
             var save_button=document.getElementById('form328_save');
 
-						var return_id=$("#form19_link").attr('data_id');
+			var return_id=$("#form19_link").attr('data_id');
             if(vUtil.isBlank(return_id))
             {
                 var return_num_data={data_store:'user_preferences',return_column:'value',
@@ -117,7 +117,7 @@
             return_date.value=vTime.date();
             customer_filter.value='';
 
-						var paginator=$('#form328_body').paginator({visible:false});
+			$('#form328_body').paginator({visible:false});
             $('#form328').formcontrol();
         }
 
@@ -140,8 +140,8 @@
                                            {index:'customer'},
                                            {index:'total'},
                                            {index:'tax'},
-                                            {index:'amount'},
-																						{index:'return_num'},
+                                        	{index:'amount'},
+											{index:'return_num'},
                                            {index:'return_date'}]};
                 var return_items_column={data_store:'customer_return_items',
                                         indexes:[{index:'id'},
@@ -162,8 +162,8 @@
                 {
                     if(return_results.length>0)
                     {
-												filter_fields.elements['return_num'].value=return_results[0].return_num;
-												filter_fields.elements['customer'].value=return_results[0].customer;
+						filter_fields.elements['return_num'].value=return_results[0].return_num;
+						filter_fields.elements['customer'].value=return_results[0].customer;
                         filter_fields.elements['date'].value=get_my_past_date(return_results[0].return_date);
                         filter_fields.elements['id'].value=data_id;
                         var save_button=document.getElementById('form328_save');
@@ -202,16 +202,17 @@
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Quantity'>";
                                 rowsHTML+="<input type='number' placeholder='Quantity' readonly='readonly' form='form328_"+id+"' value='"+result.quantity+"' step='any'>";
-                            rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Type'>";
-                                rowsHTML+="Saleable: <input type='checkbox' readonly='readonly' form='form328_"+id+"' "+result.saleable+">";
-                                rowsHTML+="<input type='text' class='floatlabel' placeholder='Action' readonly='readonly' form='form328_"+id+"' value='"+result.type+"'>";
+								rowsHTML+="Saleable: <input type='checkbox' readonly='readonly' form='form328_"+id+"' "+result.saleable+">";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Details'>";
-                                rowsHTML+="<input type='number' readonly='readonly' class='floatlabel' placeholder='Amount' step='any' form='form328_"+id+"' value='"+result.refund_amount+"'>";
+								rowsHTML+="<input type='text' class='floatlabel' placeholder='Action' readonly='readonly' form='form328_"+id+"' value='"+result.type+"'>";
+							    rowsHTML+="<input type='number' readonly='readonly' class='floatlabel' placeholder='Amount' step='any' form='form328_"+id+"' value='"+result.refund_amount+"'>";
                                 rowsHTML+="<input type='number' step='any' readonly='readonly' class='floatlabel' placeholder='Tax' form='form328_"+id+"' value='"+result.tax+"'>";
                                 rowsHTML+="<input type='text' readonly='readonly' class='floatlabel' placeholder='Exchange Batch' form='form328_"+id+"' value='"+result.exchange_batch+"'>";
                                 rowsHTML+="<input type='text' readonly='readonly' class='floatlabel' placeholder='From Storage' form='form328_"+id+"' value='"+result.exchange_storage+"'>";
+                            rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Reason'>";
+								rowsHTML+="<textarea placeholder='Reason' readonly='readonly' form='form328_"+id+"'>"+result.notes+"</textarea>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Action'>";
                                 rowsHTML+="<input type='hidden' form='form328_"+id+"' value='"+id+"'>";
@@ -270,27 +271,28 @@
                 var id=get_new_key();
                 var rowsHTML="<tr>";
                 rowsHTML+="<form id='form328_"+id+"' autocomplete='off'></form>";
-										rowsHTML+="<td data-th='Item'><div class='btn-overlap'>";
-												rowsHTML+="<input type='text' placeholder='Item' class='floatlabel' required form='form328_"+id+"' id='form328_item_"+id+"'>";
-												rowsHTML+="<button class='btn btn-icon-only default right-overlap' onclick=\"modal194_action('#form328_item_"+id+"');\"><i class='fa fa-search'></i></button></div>";
-										rowsHTML+="</td>";
-										rowsHTML+="<td data-th='Batch'>";
+					rowsHTML+="<td data-th='Item'><div class='btn-overlap'>";
+							rowsHTML+="<input type='text' placeholder='Item' class='floatlabel' required form='form328_"+id+"' id='form328_item_"+id+"'>";
+							rowsHTML+="<button class='btn btn-icon-only default right-overlap' onclick=\"modal194_action('#form328_item_"+id+"');\"><i class='fa fa-search'></i></button></div>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Batch'>";
                         rowsHTML+="<input type='text' class='floatlabel' placeholder='Batch' required form='form328_"+id+"'>";
                         rowsHTML+="<input type='text' class='floatlabel' placeholder='To Storage' required form='form328_"+id+"'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Quantity'>";
                         rowsHTML+="<input type='number' class='floatlabel' placeholder='Quantity' required form='form328_"+id+"' step='any'>";
-                    rowsHTML+="</td>";
-                    rowsHTML+="<td data-th='Type'>";
-                        rowsHTML+="Saleable: <input type='checkbox' form='form328_"+id+"'>";
-                        rowsHTML+="<input type='text' class='floatlabel' placeholder='Action' required form='form328_"+id+"'>";
+						rowsHTML+="Saleable: <input type='checkbox' form='form328_"+id+"'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Details'>";
-                        rowsHTML+="<input type='number' required class='floatlabel' placeholder='Amount' form='form328_"+id+"' step='any'>";
+						rowsHTML+="<input type='text' class='floatlabel' placeholder='Action' required form='form328_"+id+"'>";
+					    rowsHTML+="<input type='number' required class='floatlabel' placeholder='Amount' form='form328_"+id+"' step='any'>";
                         rowsHTML+="<input type='number' required class='floatlabel' placeholder='Tax' form='form328_"+id+"' step='any'>";
                         rowsHTML+="<input type='text' required class='floatlabel' placeholder='Exchange Batch' form='form328_"+id+"'>";
                         rowsHTML+="<input type='text' required class='floatlabel' placeholder='From Storage' form='form328_"+id+"'>";
                     rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Reason'>";
+						rowsHTML+="<textarea placeholder='Reason' form='form328_"+id+"'></textarea>";
+					rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Action'>";
                         rowsHTML+="<input type='hidden' form='form328_"+id+"' value='"+id+"'>";
                         rowsHTML+="<input type='hidden' form='form328_"+id+"'>";
@@ -313,10 +315,10 @@
                 var tax_filter=fields.elements[7];
                 var new_batch_filter=fields.elements[8];
                 var new_storage_filter=fields.elements[9];
-                var id_filter=fields.elements[10];
-                var total_unit_filter=fields.elements[11];
-                var tax_unit_filter=fields.elements[12];
-                var save_button=fields.elements[13];
+                var id_filter=fields.elements[11];
+                var total_unit_filter=fields.elements[12];
+                var tax_unit_filter=fields.elements[13];
+                var save_button=fields.elements[14];
 
                 $(new_batch_filter).hide();
                 $(new_storage_filter).hide();
@@ -410,7 +412,7 @@
                         $(new_storage_filter).hide();
                         $(amount_filter).show();
                         $(tax_filter).show();
-                        new_batch_filter.value="";
+						new_batch_filter.value="";
                         new_storage_filter.value="";
                     }
                     else
@@ -458,9 +460,10 @@
                 var tax=form.elements[7].value;
                 var new_batch=form.elements[8].value;
                 var new_storage=form.elements[9].value;
-                var data_id=form.elements[10].value;
-                var save_button=form.elements[13];
-                var del_button=form.elements[14];
+				var reason=form.elements[10].value;
+                var data_id=form.elements[11].value;
+                var save_button=form.elements[14];
+                var del_button=form.elements[15];
                 var last_updated=get_my_time();
 
                 var data_json={data_store:'customer_return_items',
@@ -476,6 +479,7 @@
                         {index:'storage',value:storage},
 	 					{index:'exchange_storage',value:new_storage},
 	 					{index:'exchange_batch',value:new_batch},
+						{index:'notes',value:reason},
 	 					{index:'last_updated',value:last_updated}]};
 
                 create_json(data_json);
@@ -539,8 +543,8 @@
             {
                 var form=document.getElementById("form328_master");
 
-								var return_num=form.elements['return_num'].value;
-								var customer=form.elements['customer'].value;
+				var return_num=form.elements['return_num'].value;
+				var customer=form.elements['customer'].value;
                 var return_date=get_raw_time(form.elements['date'].value);
                 var data_id=form.elements['id'].value;
 
@@ -580,36 +584,36 @@
                 var last_updated=get_my_time();
 
                 var data_json={data_store:'customer_returns',
-							 				data:[{index:'id',value:data_id},
-												{index:'return_num',value:return_num},
-												{index:'customer',value:customer},
-							 					{index:'return_date',value:return_date},
+	 				data:[{index:'id',value:data_id},
+						{index:'return_num',value:return_num},
+						{index:'customer',value:customer},
+	 					{index:'return_date',value:return_date},
                         {index:'amount',value:amount},
                         {index:'total',value:total},
                         {index:'tax',value:tax},
                         {index:'transaction_id',value:data_id},
-	 											{index:'last_updated',value:last_updated}],
+	 					{index:'last_updated',value:last_updated}],
                     log:'yes',
                     log_data:{title:'Created',notes:'Sale return # '+return_num,link_to:'form329'}};
 
-							var transaction_json={data_store:'transactions',
-										data:[{index:'id',value:data_id},
-											{index:'acc_name',value:customer},
-											{index:'type',value:'received'},
-											{index:'amount',value:total},
-											{index:'tax',value:tax},
-											{index:'source_id',value:data_id},
-											{index:'source_info',value:return_num},
-											{index:'source',value:'sale return'},
-											{index:'source_link',value:'form329'},
-											{index:'trans_date',value:last_updated},
-											{index:'notes',value:''},
-											{index:'last_updated',value:last_updated}]};
+				var transaction_json={data_store:'transactions',
+							data:[{index:'id',value:data_id},
+								{index:'acc_name',value:customer},
+								{index:'type',value:'received'},
+								{index:'amount',value:total},
+								{index:'tax',value:tax},
+								{index:'source_id',value:data_id},
+								{index:'source_info',value:return_num},
+								{index:'source',value:'sale return'},
+								{index:'source_link',value:'form329'},
+								{index:'trans_date',value:last_updated},
+								{index:'notes',value:''},
+								{index:'last_updated',value:last_updated}]};
 
                 create_json(data_json);
                 create_json(transaction_json);
 
-								var num_data={data_store:'user_preferences',return_column:'id',count:1,
+				var num_data={data_store:'user_preferences',return_column:'id',count:1,
                              indexes:[{index:'name',exact:'sale_return_number'}]};
                 read_json_single_column(num_data,function (bill_num_ids)
                 {
@@ -645,7 +649,7 @@
             {
                 var form=document.getElementById("form328_master");
 
-								var return_num=form.elements['return_num'].value;
+				var return_num=form.elements['return_num'].value;
                 var customer=form.elements['customer'].value;
                 var return_date=get_raw_time(form.elements['date'].value);
                 var data_id=form.elements['id'].value;
@@ -675,29 +679,29 @@
                 var last_updated=get_my_time();
 
                 var data_json={data_store:'customer_returns',
-							 				data:[{index:'id',value:data_id},
-							 					{index:'customer',value:customer},
-							 					{index:'return_date',value:return_date},
+	 				data:[{index:'id',value:data_id},
+	 					{index:'customer',value:customer},
+	 					{index:'return_date',value:return_date},
                         {index:'amount',value:amount},
                         {index:'total',value:total},
                         {index:'tax',value:tax},
                         {index:'transaction_id',value:data_id},
-	 											{index:'last_updated',value:last_updated}],
+	 					{index:'last_updated',value:last_updated}],
                     log:'yes',
                     log_data:{title:'Updated',notes:'Sale return # '+return_num,link_to:'form329'}};
 
-										var transaction_json={data_store:'transactions',
-													data:[{index:'id',value:data_id},
-														{index:'acc_name',value:customer},
-														{index:'type',value:'received'},
-														{index:'amount',value:total},
-														{index:'tax',value:tax},
-														{index:'source_id',value:data_id},
-														{index:'source_info',value:return_num},
-														{index:'source',value:'sale return'},
-														{index:'source_link',value:'form329'},
-														{index:'notes',value:''},
-														{index:'last_updated',value:last_updated}]};
+				var transaction_json={data_store:'transactions',
+							data:[{index:'id',value:data_id},
+								{index:'acc_name',value:customer},
+								{index:'type',value:'received'},
+								{index:'amount',value:total},
+								{index:'tax',value:tax},
+								{index:'source_id',value:data_id},
+								{index:'source_info',value:return_num},
+								{index:'source',value:'sale return'},
+								{index:'source_link',value:'form329'},
+								{index:'notes',value:''},
+								{index:'last_updated',value:last_updated}]};
 
                 update_json(data_json);
                 update_json(transaction_json);
@@ -876,7 +880,7 @@
 
             footer.appendChild(tandc);
             footer.appendChild(signature);
-						footer.appendChild(clearance);
+			footer.appendChild(clearance);
             footer.appendChild(business_contact);
 
             func(container);

@@ -3249,10 +3249,10 @@ function modal31_action()
 
 		if(is_delete_access('form124') || is_delete_access('form243') || is_delete_access('form291') || is_delete_access('form282'))
 		{
-      var receipt_json={data_store:'receipts',
+      		var receipt_json={data_store:'receipts',
 	 					data:[{index:'id',value:receipt_id}]};
 
-    	var tran_json={data_store:'transactions',
+    		var tran_json={data_store:'transactions',
 	 					data:[{index:'source_id',value:receipt_id}]};
 
 			delete_json(receipt_json);
@@ -8165,7 +8165,7 @@ function modal126_action(po_id,po_num)
 				{
 					var attr_label=document.createElement('div');
                     attr_label.setAttribute('class','row');
-					attr_label.innerHTML="<div class='col-sm-3'><input type='radio' value='"+score.acc_name+"' "+radio_check+" name='supplier'></div><div class='col-sm-3'>"+score.score+"</div>";
+					attr_label.innerHTML="<div class='col-sm-3'><input type='radio' value='"+score.acc_name+"' "+radio_check+" name='supplier'></div><div class='col-sm-9'><b>"+score.score+"</b> : "+score.acc_name+"</div>";
 					if(radio_check=='checked')
 					{
 						radio_check="";
@@ -11413,10 +11413,10 @@ function modal155_action()
 	$(account_filter).on('blur change',function(e)
 	{
 		var transactions_data={data_store:'transactions',
-															indexes:[{index:'id'},
-																			{index:'type'},
-																			{index:'amount'},
-																			{index:'acc_name',exact:account_filter.value}]};
+						indexes:[{index:'id'},
+								{index:'type'},
+								{index:'amount'},
+								{index:'acc_name',exact:account_filter.value}]};
 		read_json_rows('',transactions_data,function(transactions)
 		{
 			var balance_amount=0;
@@ -11480,7 +11480,7 @@ function modal155_action()
 
 					create_json(transaction_json);
 
-        var receipt_json={data_store:'receipts',
+        	var receipt_json={data_store:'receipts',
 	 				data:[{index:'id',value:p_id},
 	 					{index:'receipt_id',value:receipt_id},
 	 					{index:'type',value:receipt_type},
@@ -11492,12 +11492,11 @@ function modal155_action()
 
 				create_json(receipt_json);
 
-				var receipt_id_array=receipt_id.split('-');
-        var receipt_id_json={data_store:'user_preferences',
+			var receipt_id_array=receipt_id.split('-');
+        	var receipt_id_json={data_store:'user_preferences',
 	 				data:[{index:'id',value:receipt_record_id},
 	 					{index:'value',value:(parseInt(receipt_id_array[1])+1)+""}]};
-				update_json(receipt_id_json);
-
+			update_json(receipt_id_json);
 		}
 		else
 		{

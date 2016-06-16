@@ -1,9 +1,8 @@
-<div id='form243' class='tab-pane portlet box green-meadow'>	   
+<div id='form243' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='modal155_action();'>Add <i class='fa fa-plus'></i></a>
-            <a class='btn btn-circle grey btn-outline btn-sm' onclick='modal31_action();'>Delete <i class='fa fa-trash'></i></a>
-		</div>
+        </div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
@@ -19,9 +18,9 @@
                     </li>
                 </ul>
             </div>
-      </div>	
+      </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -40,7 +39,7 @@
 			</tbody>
 		</table>
 	</div>
-    
+
     <script>
         function form243_header_ini()
         {
@@ -50,7 +49,7 @@
 
             var id_data={data_store:'receipts',return_column:'receipt_id'};
             var account_data={data_store:'accounts',return_column:'acc_name'};
-            
+
             $(filter_fields).off('submit');
             $(filter_fields).on('submit',function(event)
             {
@@ -67,7 +66,7 @@
             show_loader();
             var fid=$("#form243_link").attr('data_id');
             if(fid==null)
-                fid="";	
+                fid="";
 
             $('#form243_body').html("");
 
@@ -77,7 +76,7 @@
             var fnarration=filter_fields.elements['narration'].value;
 
             var paginator=$('#form243_body').paginator();
-			
+
 			var columns=new Object();
 					columns.count=paginator.page_size();
 					columns.start_index=paginator.get_index();
@@ -89,7 +88,7 @@
 									{index:'amount'},{index:'date'},
                                     {index:'narration',value:fnarration},
 									{index:'type',exact:'received'}];
-			
+
             read_json_rows('form243',columns,function(results)
             {
                 results.forEach(function(result)
@@ -108,7 +107,7 @@
                                 rowsHTML+="<input type='hidden' form='form243_"+result.id+"' value='"+result.id+"'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Narration'>";
-                                rowsHTML+="<input type='text' placeholder='Issued On' class='floatlabel' readonly='readonly' value='"+get_my_past_date(result.date)+"'>";
+                                rowsHTML+="<input type='text' placeholder='Issued On' form='form243_"+result.id+"' class='floatlabel' readonly='readonly' value='"+get_my_past_date(result.date)+"'>";
                                 rowsHTML+="<textarea readonly='readonly' class='floatlabel' placeholder='Details' form='form243_"+result.id+"'>"+result.narration+"</textarea>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Document'>";
@@ -118,7 +117,9 @@
                             rowsHTML+="<td data-th='Action'>";
                                 rowsHTML+="<button type='button' form='form243_"+result.id+"' title='Print Receipt' class='btn yellow btn-icon-only' name='print'><i class='fa fa-print'></i></button>";
                                 rowsHTML+="<button type='button' form='form243_"+result.id+"' title='Email Receipt' class='btn grey-mint btn-icon-only' name='email'><i class='fa fa-mail-forward'></i></button>";
-                            rowsHTML+="</td>";				
+								rowsHTML+="<input type='hidden' form='form243_"+result.id+"' value='"+result.id+"' name='id'>";
+                                rowsHTML+="<button type='button' class='btn red' form='form243_"+result.id+"' title='Delete' onclick='form243_delete_item($(this));'><i class='fa fa-trash'></i></button>";
+                            rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form243_body').append(rowsHTML);
@@ -127,23 +128,23 @@
                     var print_button=fields.elements['print'];
                     var share_button=fields.elements['email'];
 
-                    $(print_button).on('click',function () 
+                    $(print_button).on('click',function ()
                     {
                         form243_print(result.receipt_id,result.acc_name,result.amount,result.date,result.narration);
                     });
 
                     var bt=get_session_var('title');
-                    $(share_button).on('click',function () 
+                    $(share_button).on('click',function ()
                     {
-                        modal101_action('Payment Receipt - '+bt,result.acc_name,'customer',function (func) 
+                        modal101_action('Payment Receipt - '+bt,result.acc_name,'customer',function (func)
                         {
                             print_form243(func,result.receipt_id,result.acc_name,result.amount,result.date,result.narration);
                         });
                     });
 
-                    $(doc_filter).on('click',function () 
+                    $(doc_filter).on('click',function ()
                     {
-                        modal144_action('receipts',result.id,function (url,doc_name) 
+                        modal144_action('receipts',result.id,function (url,doc_name)
                         {
                             var docHTML="<a href='"+url+"' download='"+doc_name+"'><u>"+doc_name+"</u></a><br>";
                             var doc_container=document.getElementById('form243_documents_'+result.id);
@@ -178,25 +179,55 @@
             });
         };
 
+		function form243_delete_item(button)
+		{
+			if(is_delete_access('form243'))
+			{
+				modal115_action(function()
+				{
+					var form_id=$(button).attr('form');
+					var form=document.getElementById(form_id);
+
+					var data_id=form.elements['id'].value;
+
+					var transaction_json={data_store:'transactions',
+						data:[{index:'id',value:data_id}]};
+
+					delete_json(transaction_json);
+
+					var receipt_json={data_store:'receipts',
+							data:[{index:'id',value:data_id}]};
+
+					delete_json(receipt_json);
+
+					$(button).parent().parent().remove();
+				});
+			}
+			else
+			{
+				$("#modal2_link").click();
+			}
+		}
+
         function form243_print(receipt_id,acc_name,amount,date,narration,pan_text)
         {
             print_form243(function(container)
             {
                 $.print(container);
-                container.innerHTML="";	
-            },receipt_id,acc_name,amount,date,narration,pan_text);	
+                container.innerHTML="";
+            },receipt_id,acc_name,amount,date,narration,pan_text);
         }
 
         function print_form243(func,receipt_id,acc_name,amount,date,narration,pan_text)
-        {	
-            ////////////setting up containers///////////////////////	
+        {
+            ////////////setting up containers///////////////////////
             var container=document.createElement('div');
             var header=document.createElement('div');
                 var business_title=document.createElement('div');
 
             var invoice_box=document.createElement('div');
 
-            var info_section=document.createElement('div');	
+            var info_section=document.createElement('div');
                 var supplier_info=document.createElement('div');
                 var order_info=document.createElement('div');
 
@@ -249,6 +280,7 @@
 
             func(container);
         }
+
 
     </script>
 </div>

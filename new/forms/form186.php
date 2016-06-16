@@ -1,35 +1,36 @@
-<div id='form186' class='tab-pane portlet box green-meadow'>	   
+<div id='form186' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form186_add_item();'>Add <i class='fa fa-plus'></i></a>
             <a class='btn btn-circle grey btn-outline btn-sm' id='form186_save'>Save <i class='fa fa-save'></i></a>
 		</div>
 		<div class="actions">
       	<a class='btn btn-default btn-sm' id='form186_print' onclick=form186_print_form();><i class='fa fa-print'></i> Print</a>
-        <a class='btn btn-default btn-sm' id='form186_share'><i class='fa fa-envelope'></i> Email</a>    
+        <a class='btn btn-default btn-sm' id='form186_share'><i class='fa fa-envelope'></i> Email</a>
       </div>
 	</div>
-	
+
 	<div class="portlet-body">
         <form id='form186_master' autocomplete="off">
             <fieldset>
                 <label><input type='text' required name='plan' placeholder='Plan Name' class='floatlabel'></label>
+				<label><textarea name='notes' placeholder='Notes' class='floatlabel'></textarea></label>
                 <label><input type='text' required name='from' class='floatlabel' placeholder='From Date'></label>
                 <label><input type='text' required name='to' required class='floatlabel' placeholder='To Date'></label>
-                <label><input type='text' required name='status' class='floatlabel' placeholder='Status'></label>
+                <label><input type='text' required name='status' readonly='readonly' class='floatlabel' placeholder='Status'></label>
                 <input type='hidden' name='plan_id'>
                 <input type='submit' class='submit_hidden'>
             </fieldset>
         </form>
-        
+
         <br>
-		
+
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr style='color:#9a9a9a;'>
                     <th>Order</th>
 					<th>Item</th>
-					<th>Brand</th>
+					<th>Line</th>
 					<th>Quantity</th>
 					<th>Schedule</th>
 					<th>Status</th>
@@ -41,20 +42,25 @@
 		</table>
     </div>
 
-            
+
     <script>
     function form186_header_ini()
     {
         var fields=document.getElementById('form186_master');
 
+		$(fields).editable();
+
         var plan_filter=fields.elements['plan'];
         var from_filter=fields.elements['from'];
         var to_filter=fields.elements['to'];
         var status_filter=fields.elements['status'];
+		var notes_filter=fields.elements['notes'];
         fields.elements['plan_id'].value=get_new_key();
         var save_button=document.getElementById('form186_save');
 
-        status_filter.value='draft';
+		status_filter.value='draft';
+		notes_filter.value='';
+		$(status_filter).attr('readonly','readonly');
 
         $(save_button).off('click');
         $(save_button).on("click", function(event)
@@ -82,7 +88,7 @@
         $(from_filter).val(vTime.date());
 
         $(to_filter).datepicker();
-        $(to_filter).val(vTime.date());
+        $(to_filter).val(vTime.date({addDays:7}));
 
         plan_filter.value="";
         $(plan_filter).focus();
@@ -95,13 +101,16 @@
             form186_update_serial_numbers();
             $("[id^='save_form186_']").click();
         },false);
+
+		$('#form186_body').paginator({visible:false});
+		$('#form186').formcontrol();
     }
 
     function form186_ini()
     {
         var plan_id=$("#form186_link").attr('data_id');
         if(plan_id==null)
-            plan_id="";	
+            plan_id="";
 
         $('#form186_body').html("");
         $('#form186_foot').html("");
@@ -119,7 +128,7 @@
 
             var filter_fields=document.getElementById('form186_master');
 
-            ////separate fetch function to get plan details 
+            ////separate fetch function to get plan details
             read_json_rows('form186',plan_columns,function(plan_results)
             {
                 if (plan_results.length>0)
@@ -128,27 +137,30 @@
                     filter_fields.elements['from'].value=get_my_past_date(plan_results[0].from_time);
                     filter_fields.elements['to'].value=get_my_past_date(plan_results[0].to_time);
                     filter_fields.elements['status'].value=plan_results[0].status;
+					filter_fields.elements['notes'].value=plan_results[0].details;
                     filter_fields.elements['plan_id'].value=plan_id;
                     var save_button=document.getElementById('form186_save');
+
+					$(filter_fields).readonly();
 
                     $(save_button).off('click');
                     $(save_button).on("click", function(event)
                     {
                         event.preventDefault();
-                        form186_update_form();
                     });
                 }
-                
+
                 var plan_items_column={data_store:'production_plan_items',
                                       indexes:[{index:'id'},
                                               {index:'item'},
-                                              {index:'batch'},
                                               {index:'order_no'},
                                               {index:'quantity'},
                                               {index:'brand'},
                                               {index:'status'},
                                               {index:'from_time'},
-                                              {index:'to_time'},
+											  {index:'to_time'},
+											  {index:'produced_quantity'},
+											  {index:'production_line'},
                                               {index:'plan_id',exact:plan_id}]};
 
                 read_json_rows('form186',plan_items_column,function(results)
@@ -157,9 +169,9 @@
                     {
                         if(parseInt(a.order_no)<parseInt(b.order_no))
                         {	return 1;}
-                        else 
+                        else
                         {	return -1;}
-                    });	
+                    });
 
                     results.forEach(function(result)
                     {
@@ -171,13 +183,15 @@
                                 rowsHTML+="<input style='width:50px;' type='number' readonly='readonly' form='form186_"+id+"' value='"+result.order_no+"'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Item'>";
-                                rowsHTML+="<a onclick=\"show_object('product_master','"+result.item+"');\"><input type='text' readonly='readonly' form='form186_"+id+"' value='"+result.item+"'></a>";
+                                rowsHTML+="<a onclick=\"show_object('product_master','"+result.item+"');\"><input type='text' class='floatlabel' placeholder='Item' readonly='readonly' form='form186_"+id+"' value='"+result.item+"'></a>";
+								rowsHTML+="<input type='text' class='floatlabel' placeholder='Brand' readonly='readonly' form='form186_"+id+"' value='"+result.brand+"'>";
                             rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Brand'>";
-                                rowsHTML+="<input type='text' readonly='readonly' form='form186_"+id+"' value='"+result.brand+"'>";
-                            rowsHTML+="</td>";
+                            rowsHTML+="<td data-th='Line'>";
+								rowsHTML+="<input type='text' placeholder='Line' readonly='readonly' form='form186_"+id+"' value='"+result.production_line+"'>";
+							rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Quantity'>";
-                                rowsHTML+="<input type='number' readonly='readonly' form='form186_"+id+"' value='"+result.quantity+"' step='any'>";
+                                rowsHTML+="<input type='number' class='floatlabel' placeholder='Scheduled' readonly='readonly' form='form186_"+id+"' value='"+result.quantity+"' step='any'>";
+								rowsHTML+="<input type='number' class='floatlabel' placeholder='Produced' readonly='readonly' form='form186_"+id+"' value='"+result.produced_quantity+"' step='any'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Schedule'>";
                                 rowsHTML+="<input type='text' readonly='readonly' class='floatlabel dblclick_editable' placeholder='From' form='form186_"+id+"' value='"+get_my_past_date(result.from_time)+"'>";
@@ -193,16 +207,16 @@
                                 rowsHTML+="<button type='button' class='btn red' form='form186_"+id+"' id='delete_form186_"+id+"' name='delete' onclick='form186_delete_item($(this));'><i class='fa fa-trash'></i></button>";
                             if(plan_status=='approved' && result.status!='inventoried')
                             {
-                                rowsHTML+="<button type='button' class='btn default green-stripe' title='Inventory' name='ready' form='form186_"+id+"'>Inventory</button>";							
-                            }						
-                            rowsHTML+="</td>";			
+                                rowsHTML+="<button type='button' class='btn default green-stripe' title='Inventory' name='ready' form='form186_"+id+"'>Inventory</button>";
+                            }
+                            rowsHTML+="</td>";
                         rowsHTML+="</tr>";
 
                         $('#form186_body').prepend(rowsHTML);
                         var fields=document.getElementById('form186_'+id);
-                        var from_filter=fields.elements[4];
-                        var to_filter=fields.elements[5];
-                        var status_filter=fields.elements[6];
+                        var from_filter=fields.elements[6];
+                        var to_filter=fields.elements[7];
+                        var status_filter=fields.elements[8];
                         var save_button=fields.elements['save'];
                         var ready_button=fields.elements['ready'];
 
@@ -215,14 +229,14 @@
                             {
                                 event.preventDefault();
                                 form256_create_form();
-                            });						
+                            });
                         });
 
                         $(from_filter).datepicker();
                         $(to_filter).datepicker();
                         set_static_value_list_json('production_plan_items','status',status_filter);
 
-                        $(save_button).on('click',function (event) 
+                        $(save_button).on('click',function (event)
                         {
                             event.preventDefault();
                             form186_update_item(fields);
@@ -231,7 +245,7 @@
 
                     $('#form186_share').click(function()
                     {
-                        modal101_action('Production Plan','','staff',function (func) 
+                        modal101_action('Production Plan','','staff',function (func)
                         {
                             print_form186(func);
                         });
@@ -258,13 +272,15 @@
                     rowsHTML+="<input style='width:50px;' type='number' form='form186_"+id+"'>";
                 rowsHTML+="</td>";
                 rowsHTML+="<td data-th='Item'>";
-                    rowsHTML+="<input type='text' required form='form186_"+id+"'>";
+                    rowsHTML+="<input type='text' class='floatlabel' placeholder='Item' required form='form186_"+id+"'>";
+					rowsHTML+="<input type='text' class='floatlabel' placeholder='Brand' required form='form186_"+id+"'>";
                 rowsHTML+="</td>";
-                rowsHTML+="<td data-th='Brand'>";
-                    rowsHTML+="<input type='text' required form='form186_"+id+"'>";
+                rowsHTML+="<td data-th='Line'>";
+                    rowsHTML+="<input type='text' placeholder='Line' required form='form186_"+id+"'>";
                 rowsHTML+="</td>";
                 rowsHTML+="<td data-th='Quantity'>";
-                    rowsHTML+="<input type='number' required form='form186_"+id+"' step='any'>";
+                    rowsHTML+="<input type='number' class='floatlabel' placeholder='Scheduled' required form='form186_"+id+"' step='any'>";
+					rowsHTML+="<input type='number' class='floatlabel' placeholder='Produced' readonly='readonly' value='0' form='form186_"+id+"' step='any'>";
                 rowsHTML+="</td>";
                 rowsHTML+="<td data-th='Schedule'>";
                     rowsHTML+="<input class='floatlabel' placeholder='From' type='text' form='form186_"+id+"'>";
@@ -287,12 +303,14 @@
             var order_filter=fields.elements[0];
             var item_filter=fields.elements[1];
             var brand_filter=fields.elements[2];
-            var quantity_filter=fields.elements[3];
-            var from_filter=fields.elements[4];
-            var to_filter=fields.elements[5];
-            var status_filter=fields.elements[6];
-            var id_filter=fields.elements[7];
-            var save_button=fields.elements[8];
+			var line_filter=fields.elements[3];
+            var quantity_filter=fields.elements[4];
+			var prod_quantity_filter=fields.elements[5];
+            var from_filter=fields.elements[6];
+            var to_filter=fields.elements[7];
+            var status_filter=fields.elements[8];
+            var id_filter=fields.elements[9];
+            var save_button=fields.elements[10];
 
             $(save_button).on("click", function(event)
             {
@@ -310,7 +328,7 @@
                              indexes:[{index:'type',exact:'product'},
                                      {index:'value',exact:'yes'},
                                      {index:'attribute',exact:'manufactured'}]};
-            set_my_value_list_json(product_data,item_filter,function () 
+            set_my_value_list_json(product_data,item_filter,function ()
             {
                 $(item_filter).focus();
             });
@@ -339,172 +357,117 @@
             var master_form=document.getElementById("form186_master");
 
             var plan_id=master_form.elements['plan_id'].value;
+			var plan_name=master_form.elements['plan'].value;
 
             var order=form.elements[0].value;
             var item=form.elements[1].value;
             var brand=form.elements[2].value;
-            var quantity=form.elements[3].value;
-            var from=get_raw_time(form.elements[4].value);
-            var to=get_raw_time(form.elements[5].value);
-            var status=form.elements[6].value;
-            var data_id=form.elements[7].value;
-            var save_button=form.elements[8];
-            var del_button=form.elements[9];
+			var line=form.elements[3].value;
+            var quantity=form.elements[4].value;
+            var from=get_raw_time(form.elements[6].value);
+            var to=get_raw_time(form.elements[7].value);
+            var status=form.elements[8].value;
+            var data_id=form.elements[9].value;
+            var save_button=form.elements[10];
+            var del_button=form.elements[11];
             var last_updated=get_my_time();
 
-            var data_xml="<production_plan_items>" +
-                    "<id>"+data_id+"</id>" +
-                    "<order_no>"+order+"</order_no>" +
-                    "<item>"+item+"</item>" +
-                    "<brand>"+brand+"</brand>" +
-                    "<quantity>"+quantity+"</quantity>" +
-                    "<from_time>"+from+"</from_time>" +
-                    "<to_time>"+to+"</to_time>" +
-                    "<status>"+status+"</status>" +
-                    "<plan_id>"+plan_id+"</plan_id>" +
-                    "<last_updated>"+last_updated+"</last_updated>" +
-                    "</production_plan_items>";
+			var data_json={data_store:'production_plan_items',
+					data:[{index:'id',value:data_id},
+						{index:'order_no',value:order},
+						{index:'item',value:item},
+						{index:'brand',value:brand},
+						{index:'production_line',value:line},
+						{index:'quantity',value:quantity},
+						{index:'produced_quantity',value:'0'},
+						{index:'from_time',value:from},
+						{index:'to_time',value:to},
+						{index:'status',value:status},
+						{index:'plan_id',value:plan_id},
+						{index:'last_updated',value:last_updated}]};
 
-            create_simple(data_xml);
-            
-            var raw_data="<pre_requisites>" +
-                    "<type exact='yes'>product</type>" +
-                    "<requisite_type exact='yes'>product</requisite_type>"+
-                    "<name exact='yes'>"+item+"</name>" +
-                    "<requisite_name></requisite_name>"+
-                    "<quantity></quantity>"+
-                    "</pre_requisites>";
-            fetch_requested_data('',raw_data,function(raws)
+            create_json(data_json);
+
+            var raw_data={data_store:'pre_requisites',
+						indexes:[{index:'type',exact:'product'},
+								{index:'requisite_type',exact:'product'},
+								{index:'name',exact:item},
+								{index:'requisite_name'},
+								{index:'quantity'}]};
+            read_json_rows('form186',raw_data,function(raws)
             {
                 raws.forEach(function(raw)
                 {
-                    raw.quantity=parseFloat(raw.quantity)*parseFloat(quantity);			
-                    var batch_data="<product_instances>"+
-                                    "<batch></batch>"+
-                                    "<product_name exact='yes'>"+raw.requisite_name+"</product_name>"+
-                                    "</product_instances>";
-                    get_single_column_data(function (batches) 
+                    raw.quantity=parseFloat(raw.quantity)*parseFloat(quantity);
+                    var batch_data={data_store:'product_instances',return_column:'batch',
+									indexes:[{index:'product_name',exact:raw.requisite_name}]};
+                    read_json_single_column(batch_data,function (batches)
                     {
                         var batches_result_array=[];
                         get_available_batch(raw.requisite_name,batches,raw.quantity,batches_result_array,function()
                         {
                             if(parseFloat(raw.quantity)>0)
                             {
-                                var notif_notes=raw.quantity+" more pieces of "+raw.requisite_name+" are requirement for production of "+quantity+" pieces of "+item+". Please procure immediately.";
-                                var notif_xml="<notifications>" +
-                                        "<id>"+get_new_key()+"</id>" +
-                                        "<t_generated>"+get_my_time()+"</t_generated>" +
-                                        "<data_id>"+data_id+"</data_id>" +
-                                        "<title>Insufficient Inventory</title>" +
-                                        "<notes>"+notif_notes+"</notes>" +
-                                        "<link_to>form238</link_to>" +
-                                        "<target_user></target_user>"+
-                                        "<status>pending</status>" +
-                                        "<last_updated>"+last_updated+"</last_updated>" +
-                                        "</notifications>";
-                                create_simple(notif_xml);		
-                            }
-                            
-                            var batch_id=get_new_key();
-                            batches_result_array.forEach(function (batch_result) 
-                            {
-                                batch_id++;
-                               // console.log(batch_result);
-                                var batch_raw_xml="<batch_raw_material>"+
-                                    "<id>"+batch_id+"</id>"+
-                                    "<item>"+raw.requisite_name+"</item>"+
-                                    "<batch>"+batch_result.batch+"</batch>"+
-                                    "<quantity>"+batch_result.quantity+"</quantity>"+
-                                    "<production_id>"+data_id+"</production_id>"+
-                                    "<last_updated>"+last_updated+"</last_updated>" +
-                                    "</batch_raw_material>";
-                                create_simple(batch_raw_xml);
-                                ///////////////////////////////////////////////////////
-                                var storage_xml="<area_utilization>"+
-                                                "<name></name>"+
-                                                "<item_name exact='yes'>"+raw.requisite_name+"</item_name>"+
-                                                "<batch exact='yes'>"+batch_result.batch+"</batch>"+
-                                                "</area_utilization>";
-                                //console.log(storage);																	
-                                get_single_column_data(function (storages) 
-                                {
-                                   var storage_result_array=[]; get_available_storage(raw.requisite_name,batch_result.batch,storages,batch_result.quantity,storage_result_array,function () 
-                                    {
-                                        var item_storage="";
-                                        var store_item_id=get_new_key();
-                                        var adjust_count=1;	
-                                        var target=get_session_var('production_floor_store');
-                                        /*
-                                        if(storage_result_array.length>0)
-                                        {
-                                            item_storage=storage_result_array[0].storage;
+                                var notif_notes=raw.quantity+" more pieces of "+raw.requisite_name+" are required for production of "+quantity+" pieces of "+item+". Please procure immediately.";
+                                var notif_json={data_store:'notifications',
+										data:[{index:'id',value:get_new_key()},
+											{index:'t_generated',value:vTime.unix()},
+											{index:'data_id',value:data_id},
+											{index:'title',value:'Insufficient Inventory'},
+											{index:'notes',value:notif_notes},
+											{index:'link_to',value:'form238'},
+											{index:'target_user',value:''},
+											{index:'status',value:'pending'},
+											{index:'last_updated',value:last_updated}]};
 
-                                            adjust_count+=1;
-                                            var data_xml="<store_movement>" +
-                                                "<id>"+store_item_id+"</id>" +
-                                                "<item_name>"+raw.requisite_name+"</item_name>" +
-                                                "<batch>"+batch_result.batch+"</batch>" +
-                                                "<quantity>"+batch_result.quantity+"</quantity>" +
-                                                "<source>"+item_storage+"</source>"+
-                                                "<target>"+target+"</target>"+
-                                                "<status>pending</status>"+
-                                                "<dispatcher>"+get_account_name()+"</dispatcher>"+
-                                                "<receiver></receiver>"+
-                                                "<record_source>production_plan_item</record_source>"+
-                                                "<source_id>"+data_id+"</source_id>"+
-                                                "<applicable_from>"+from+"</applicable_from>" +
-                                                "<last_updated>"+last_updated+"</last_updated>" +
-                                                "</store_movement>";	
-                                            create_simple(data_xml);	
-                                        }*/
-                                        storage_result_array.forEach(function(storage_result)
-                                        {
-                                            adjust_count+=1;
-                                            var data_xml="<store_movement>" +
-                                                "<id>"+(store_item_id+adjust_count)+"</id>" +
-                                                "<item_name>"+raw.requisite_name+"</item_name>" +
-                                                "<batch>"+batch_result.batch+"</batch>" +
-                                                "<quantity>"+storage_result.quantity+"</quantity>" +
-                                                "<source>"+storage_result.storage+"</source>"+
-                                                "<target>"+target+"</target>"+
-                                                "<status>pending</status>"+
-                                                "<dispatcher>"+get_account_name()+"</dispatcher>"+
-                                                "<receiver></receiver>"+
-                                                "<record_source>production_plan_item</record_source>"+
-                                                "<source_id>"+data_id+"</source_id>"+
-                                                "<applicable_from>"+from+"</applicable_from>" +
-                                                "<last_updated>"+last_updated+"</last_updated>" +
-                                                "</store_movement>";
-                                            create_simple(data_xml);
-                                        });				
-                                    });
-                                },storage_xml);	
-                                    ////////////////////////////////////////////////////////
-                            });
+								create_json(notif_json);
+                            }
+
+                            // var batch_id=get_new_key();
+                            // batches_result_array.forEach(function (batch_result)
+                            // {
+                            //     var storage_json={data_store:'area_utilization',return_column:'name',
+							// 					indexes:[{index:'item_name',exact:raw.requisite_name},
+							// 							{index:'batch',exact:batch_result.batch}]};
+                            //     read_json_single_column(storage_json,function (storages)
+                            //     {
+                            //        	var storage_result_array=[];
+							// 	   	get_available_storage(raw.requisite_name,batch_result.batch,storages,batch_result.quantity,storage_result_array,function ()
+                            //     	{
+                            //             var item_storage="";
+                            //             var store_item_id=get_new_key();
+                            //             var adjust_count=1;
+                            //             var target=get_session_var('production_floor_store');
+                            //             storage_result_array.forEach(function(storage_result)
+                            //             {
+                            //                 adjust_count+=1;
+                            //                 var save_store_json={data_store:'store_movement',
+							// 								data:[{index:'id',value:(store_item_id+adjust_count)},
+							// 									{index:'item_name',value:raw.requisite_name},
+							// 									{index:'batch',value:batch_result.batch},
+							// 									{index:'quantity',value:storage_result.quantity},
+							// 									{index:'source',value:storage_result.storage},
+							// 									{index:'target',value:target},
+							// 									{index:'status',value:'pending'},
+							// 									{index:'dispatcher',value:get_account_name()},
+							// 									{index:'receiver',value:''},
+							// 									{index:'record_source',value:'production_plan_item'},
+							// 									{index:'source_id',value:data_id},
+							// 									{index:'applicable_from',value:from},
+							// 									{index:'last_updated',value:last_updated}]};
+							//
+							// 				create_json(save_store_json);
+                            //             });
+                            //         });
+                            //     });
+                            // });
                         });
-                    },batch_data);	
+                    });
                 });
             });
 
-            var task_hours=(parseFloat(to)-parseFloat(from))/86400000;
-            var data_xml="<task_instances>"+
-                    "<id>"+data_id+"</id>"+
-                    "<name>"+item+"("+quantity+" pieces)"+"</name>" +
-                    "<description>Perform production of "+quantity+" pieces of "+item+"</description>" +
-                    "<assignee></assignee>" +
-                    "<t_due>"+to+"</t_due>" +
-                    "<t_initiated>"+from+"</t_initiated>" +
-                    "<task_hours>"+task_hours+"</task_hours>" +
-                    "<status>pending</status>" +
-                    "<source>business process</source>" +
-                    "<source_id>"+data_id+"</source_id>" +
-                    "<last_updated>"+last_updated+"</last_updated>" +
-                    "</task_instances>";
-            create_simple(data_xml);
-
-            
             $(form).readonly();
-            
+
             del_button.removeAttribute("onclick");
             $(del_button).on('click',function(event)
             {
@@ -512,7 +475,7 @@
             });
 
             $(save_button).off('click');
-            $(save_button).on('click',function (e) 
+            $(save_button).on('click',function (e)
             {
                 e.preventDefault();
                 form186_update_item(form);
@@ -536,6 +499,7 @@
             var from=get_raw_time(form.elements['from'].value);
             var to=get_raw_time(form.elements['to'].value);
             var status=form.elements['status'].value;
+			var notes=form.elements['notes'].value;
             var data_id=form.elements['plan_id'].value;
             var save_button=document.getElementById('form186_save');
             var last_updated=get_my_time();
@@ -545,24 +509,24 @@
 	 					{index:'name',value:name},
 	 					{index:'from_time',value:from},
                         {index:'to_time',value:to},
-                        {index:'status',value:status},  
+                        {index:'status',value:status},
+						{index:'details',value:notes},
 	 					{index:'last_updated',value:last_updated}],
                     log:'yes',
                     log_data:{title:'Saved',notes:'Production plan '+name,link_to:'form189'}};
- 				
+
             create_json(data_json);
 
             $(save_button).off('click');
             $(save_button).on('click',function(event)
             {
                 event.preventDefault();
-                form186_update_form();
             });
 
             $('#form186_share').show();
             $('#form186_share').click(function()
             {
-                modal101_action('Production Plan','','staff',function (func) 
+                modal101_action('Production Plan','','staff',function (func)
                 {
                     print_form186(func);
                 });
@@ -580,19 +544,23 @@
     {
         if(is_update_access('form186'))
         {
-            var master_form=document.getElementById("form186_master");		
+            var master_form=document.getElementById("form186_master");
             var plan_id=master_form.elements['plan_id'].value;
 
-            var order=form.elements[0].value;
+			var order=form.elements[0].value;
             var item=form.elements[1].value;
             var brand=form.elements[2].value;
-            var quantity=form.elements[3].value;
-            var from=get_raw_time(form.elements[4].value);
-            var to=get_raw_time(form.elements[5].value);
-            var status=form.elements[6].value;
-            var data_id=form.elements[7].value;
+			var line=form.elements[3].value;
+            var quantity=form.elements[4].value;
+            var from=get_raw_time(form.elements[6].value);
+            var to=get_raw_time(form.elements[7].value);
+            var status=form.elements[8].value;
+            var data_id=form.elements[9].value;
+            var save_button=form.elements[10];
+            var del_button=form.elements[11];
             var last_updated=get_my_time();
-            
+			var task_hours=(parseFloat(to)-parseFloat(from))/86400000;
+
             var data_json={data_store:'production_plan_items',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'order_no',value:order},
@@ -601,15 +569,16 @@
 	 					{index:'quantity',value:quantity},
 	 					{index:'from_time',value:from},
                         {index:'to_time',value:to},
-                        {index:'status',value:status},  
+                        {index:'status',value:status},
 	 					{index:'plan_id',value:plan_id},
 	 					{index:'last_updated',value:last_updated}]};
- 			
+
             var task_json={data_store:'task_instances',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'name',value:item+" ("+quantity+"pieces)"},
 	 					{index:'t_due',value:to},
 	 					{index:'t_initiated',value:from},
+						{index:'task_hours',value:task_hours},
 	 					{index:'last_updated',value:last_updated}]};
             update_json(data_json);
             update_json(task_json);
@@ -617,54 +586,19 @@
             var store_movement_xml={data_store:'store_movement',return_column:'id',
                                    indexes:[{index:'record_source',exact:'production_plan_item'},
                                            {index:'source_id',exact:data_id}]};
-            read_json_single_column(store_movement_xml,function (movs) 
+            read_json_single_column(store_movement_xml,function (movs)
             {
-                movs.forEach(function (mov) 
+                movs.forEach(function (mov)
                 {
                     var mov_json={data_store:'store_movement',
 	 				data:[{index:'id',value:mov},
 	 					{index:'applicable_from',value:from},
 	 					{index:'last_updated',value:last_updated}]};
-                    update_json(mov_json);	
+                    update_json(mov_json);
                 });
-            });					
+            });
 
-            $(form).readonly();		
-        }
-        else
-        {
-            $("#modal2_link").click();
-        }
-    }
-
-
-    function form186_update_form()
-    {
-        if(is_update_access('form186'))
-        {
-            var form=document.getElementById("form186_master");
-
-            var name=form.elements['plan'].value;
-            var from=get_raw_time(form.elements['from'].value);
-            var to=get_raw_time(form.elements['to'].value);
-            var status=form.elements['status'].value;
-            var data_id=form.elements['plan_id'].value;
-            var save_button=document.getElementById('form186_save');
-            var last_updated=get_my_time();
-
-            var data_json={data_store:'production_plan',
-	 				data:[{index:'id',value:data_id},
-	 					{index:'name',value:name},
-	 					{index:'from_time',value:from},
-                        {index:'to_time',value:to},
-                        {index:'status',value:status},  
-	 					{index:'last_updated',value:last_updated}],
-                    log:'yes',
-                    log_data:{title:'Updated',notes:'Production plan '+name,link_to:'form189'}};
- 			
-            update_json(data_json);
-
-            $("[id^='save_form186_']").click();
+            $(form).readonly();
         }
         else
         {
@@ -689,7 +623,7 @@
                 var form_id=$(button).attr('form');
                 var form=document.getElementById(form_id);
 
-                var data_id=form.elements[7].value;
+                var data_id=form.elements[9].value;
                 var last_updated=get_my_time();
                 var data_json={data_store:'production_plan_items',
 	 				data:[{index:'id',value:data_id}]};
@@ -700,7 +634,7 @@
 	 		    var move_json={data_store:'store_movement',
 	 				data:[{index:'source_id',value:data_id},
                          {index:'record_source',value:'production_plan_item'}]};
-	 		    
+
                 delete_json(data_json);
                 delete_json(task_json);
                 delete_json(batch_raw_json);
@@ -719,15 +653,15 @@
         print_form186(function(container)
         {
             $.print(container);
-            container.innerHTML="";	
-        });	
+            container.innerHTML="";
+        });
     }
 
     function print_form186(func)
     {
         var form_id='form186';
 
-        ////////////setting up containers///////////////////////	
+        ////////////setting up containers///////////////////////
         var container=document.createElement('div');
         var header=document.createElement('div');
             var logo=document.createElement('div');
@@ -735,7 +669,7 @@
 
         var plan_line=document.createElement('div');
 
-        var info_section=document.createElement('div');	
+        var info_section=document.createElement('div');
             var plan_info=document.createElement('div');
 
         var table_container=document.createElement('div');
@@ -749,7 +683,7 @@
             business_title.setAttribute('style','float:right;width:50%;text-align:right;');
         plan_line.setAttribute('style','width:100%;min-height:60px;background-color:#bbbbbb;');
         info_section.setAttribute('style','width:100%;min-height:60px;text-align:left;');
-            plan_info.setAttribute('style','padding:5px;margin:5px;float:left;width:100%;height:90px;');
+            plan_info.setAttribute('style','padding:5px;margin:5px;float:left;width:100%;height:120px;');
 
         ///////////////getting the content////////////////////////////////////////
 
@@ -763,23 +697,24 @@
         var business_website=get_session_var('website');
 
         var master_form=document.getElementById(form_id+'_master');
-        var plan_name=master_form.elements[1].value;
-        var from_date=master_form.elements[2].value;
-        var to_date=master_form.elements[3].value;
-        var plan_status=master_form.elements[4].value;
+        var plan_name=master_form.elements['plan'].value;
+        var from_date=master_form.elements['from'].value;
+        var to_date=master_form.elements['to'].value;
+        var plan_status=master_form.elements['status'].value;
+		var notes=master_form.elements['notes'].value;
 
         ////////////////filling in the content into the containers//////////////////////////
 
         logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
         business_title.innerHTML=bt;
-        plan_line.innerHTML="<div style='float:left;width:50%'>From: "+from_date+"</div><div style='float:right;text-align:right;width:50%'>To: "+to_date+"</div>";	
-        plan_info.innerHTML="<hr style='border: 1px solid #000;margin:2px'>Plan Name: </b>"+plan_name+"<br>Plan Status: "+plan_status+"<hr style='border: 1px solid #000;margin:2px'>";
+        plan_line.innerHTML="<div style='float:left;width:50%'>From: "+from_date+"</div><div style='float:right;text-align:right;width:50%'>To: "+to_date+"</div>";
+        plan_info.innerHTML="<hr style='border: 1px solid #000;margin:2px'>Plan Name: </b>"+plan_name+"<br>Notes: "+notes+"<br>Plan Status: "+plan_status+"<hr style='border: 1px solid #000;margin:2px'>";
 
         var table_element=document.getElementById(form_id+'_body').parentNode;
         table_copy=table_element.cloneNode(true);
 
         table_copy.removeAttribute('class');
-        table_copy.setAttribute('width','1000px');
+        table_copy.setAttribute('width','100%');
         $(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,form,fresh").remove();
         $(table_copy).find('input,textarea').each(function(index)
         {
@@ -789,7 +724,7 @@
         $(table_copy).find('label').each(function(index)
         {
             $(this).replaceWith($(this).html());
-        });	
+        });
 
         $(table_copy).find('th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
         $(table_copy).find('td').attr('style',"border-right:2px solid black;border-left:2px solid black;text-align:left;font-size:"+font_size+"em");
@@ -797,10 +732,14 @@
         $(table_copy).find("tbody>tr").attr('style','border:2px solid black;flex:1;height:30px');
         $(table_copy).find("tbody").attr('style','border:2px solid black;');
 
-        $(table_copy).find("th:first, td:first").css('width','60px');
-        $(table_copy).find("th:nth-child(2), td:nth-child(2)").css('width','200px');
+        $(table_copy).find("th:first, td:first").css('width','5%');
+        $(table_copy).find("th:nth-child(2), td:nth-child(2)").css('width','30%');
+		$(table_copy).find("th:nth-child(3), td:nth-child(3)").css('width','20%');
+		$(table_copy).find("th:nth-child(4), td:nth-child(4)").css('width','20%');
+		$(table_copy).find("th:nth-child(5), td:nth-child(5)").css('width','15%');
+		$(table_copy).find("th:nth-child(6), td:nth-child(6)").css('width','10%');
 
-        /////////////placing the containers //////////////////////////////////////////////////////	
+        /////////////placing the containers //////////////////////////////////////////////////////
 
         container.appendChild(header);
         container.appendChild(plan_line);
@@ -815,5 +754,5 @@
 
         func(container);
     }
-    </script>        
+    </script>
 </div>

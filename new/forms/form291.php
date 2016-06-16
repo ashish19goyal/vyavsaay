@@ -32,10 +32,8 @@
 						<th><input type='text' placeholder="Account" class='floatlabel' name='account' form='form291_header'></th>
 						<th><input type='text' placeholder="Amount" readonly='readonly' name='amount' form='form291_header'></th>
 						<th><input type='text' placeholder="Narration" class='floatlabel' name='narration' form='form291_header'></th>
-						<th>
-                <input type='text' placeholder="Documents" readonly="readonly" name='docs' form='form291_header'>
-                <input type='submit' form='form291_header' class='submit_hidden'>
-            </th>
+						<th><input type='text' placeholder="Documents" readonly="readonly" name='docs' form='form291_header'></th>
+                		<th><input type='submit' form='form291_header' class='submit_hidden'></th>
 				</tr>
 			</thead>
 			<tbody id='form291_body'>
@@ -80,16 +78,15 @@
 
             var paginator=$('#form291_body').paginator();
 
-						var columns=new Object();
-								columns.count=paginator.page_size();
-								columns.start_index=paginator.get_index();
-								columns.data_store='receipts';
-								columns.indexes=[{index:'id',value:fid},
-									{index:'receipt_id',value:rid},
-									{index:'acc_name',value:faccount},
-									{index:'amount'},{index:'date'},
-                                    {index:'narration',value:fnarration},
-									{index:'type',exact:'received'}];
+			var columns={count:paginator.page_size(),
+						start_index:paginator.get_index(),
+						data_store:'receipts',
+						indexes:[{index:'id',value:fid},
+								{index:'receipt_id',value:rid},
+								{index:'acc_name',value:faccount},
+								{index:'amount'},{index:'date'},
+                                {index:'narration',value:fnarration},
+								{index:'type',exact:'received'}]};
 
             read_json_rows('form291',columns,function(results)
             {
@@ -119,6 +116,8 @@
                                 rowsHTML+="<button type='button' class='btn yellow-saffron' form='form291_"+result.id+"' value='Print Receipt' name='print'><i class='fa fa-print'></i></button>";
                                 rowsHTML+="<button type='button' form='form291_"+result.id+"' value='Email Receipt' class='btn red-haze' name='email'><i class='fa fa-envelope'></i></button>";
                                 rowsHTML+="<input type='hidden' form='form291_"+result.id+"' name='address'>";
+								rowsHTML+="<input type='hidden' form='form291_"+result.id+"' value='"+result.id+"' name='id'>";
+                                rowsHTML+="<button type='button' class='btn red' form='form291_"+result.id+"' title='Delete' onclick='form291_delete_item($(this));'><i class='fa fa-trash'></i></button>";
                             rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
@@ -185,14 +184,44 @@
                 });
 
                 $('#form291').formcontrol();
-								paginator.update_index(results.length);
-								initialize_tabular_report_buttons(columns,'Receipts (Receivable)','form291',function (item)
+				paginator.update_index(results.length);
+				initialize_tabular_report_buttons(columns,'Receipts (Receivable)','form291',function (item)
                 {
                     item.date=get_my_past_date(item.date);
                 });
-								hide_loader();
+				hide_loader();
             });
         };
+
+		function form291_delete_item(button)
+		{
+			if(is_delete_access('form291'))
+			{
+				modal115_action(function()
+				{
+					var form_id=$(button).attr('form');
+					var form=document.getElementById(form_id);
+
+					var data_id=form.elements['id'].value;
+
+					var transaction_json={data_store:'transactions',
+						data:[{index:'id',value:data_id}]};
+
+					delete_json(transaction_json);
+
+					var receipt_json={data_store:'receipts',
+							data:[{index:'id',value:data_id}]};
+
+					delete_json(receipt_json);
+
+					$(button).parent().parent().remove();
+				});
+			}
+			else
+			{
+				$("#modal2_link").click();
+			}
+		}
 
         function form291_print(receipt_id,acc_name,amount,date,narration,address)
         {

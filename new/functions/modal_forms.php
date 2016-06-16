@@ -1474,7 +1474,7 @@
 	                <div class="modal-body">
 		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
 		                  <div class="row">
-								   <div class="col-sm-12">Score of Applicable Suppliers</div>
+								<div class="col-sm-12">Applicable Suppliers</div>
 					       </div>
                            <br>
                           <div id='modal126_suppliers'></div>
@@ -4106,7 +4106,7 @@
 	                    <div class="col-sm-12 col-md-8"><input type='text' value='yes' required form='modal222_form' name='manu'></div>
 						     		</div>
 										<div class="row">
-									   	<div class="col-sm-12 col-md-4">Purchased</div>
+									   	<div class="col-sm-12 col-md-4">Raw Material</div>
 	                    <div class="col-sm-12 col-md-8"><input type='text' value='yes' required form='modal222_form' name='purchased'></div>
 						     		</div>
 			              <div class="row">
