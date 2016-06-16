@@ -76,18 +76,18 @@
 
             var paginator=$('#form179_body').paginator();
 
-						var columns={count:paginator.page_size(),
-												start_index:paginator.get_index(),
-												data_store:'purchase_orders',
-												indexes:[{index:'id',value:fid},
-												{index:'order_num',value:fnum},
-												{index:'supplier',value:fname},
-												{index:'order_date'},
+			var columns={count:paginator.page_size(),
+						start_index:paginator.get_index(),
+						data_store:'purchase_orders',
+						indexes:[{index:'id',value:fid},
+						{index:'order_num',value:fnum},
+						{index:'supplier',value:fname},
+						{index:'order_date'},
                         {index:'priority'},
                         {index:'bill_id'},
-												{index:'order_placed_time'},
-												{index:'last_updated'},
-												{index:'status',value:fstatus}]};
+						{index:'order_placed_time'},
+						{index:'last_updated'},
+						{index:'status',value:fstatus}]};
 
             read_json_rows('form179',columns,function(results)
             {
@@ -100,8 +100,8 @@
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Order Date'>";
                                 rowsHTML+="<input type='text' class='floatlabel' placeholder='Created on' name='order_date' readonly='readonly' form='form179_"+result.id+"' value='"+vTime.date({time:result.order_date})+"'>";
-																rowsHTML+="<input type='text' class='floatlabel' placeholder='Placed on' name='placed_date' readonly='readonly' form='form179_"+result.id+"' value='"+vTime.date({time:result.order_placed_time})+"'>";
-																rowsHTML+="<input type='text' class='floatlabel' placeholder='Last updated on' name='last_updated' readonly='readonly' form='form179_"+result.id+"' value='"+vTime.date({time:result.last_updated})+"'>";
+								rowsHTML+="<input type='text' class='floatlabel' placeholder='Placed on' name='placed_date' readonly='readonly' form='form179_"+result.id+"' value='"+vTime.date({time:result.order_placed_time})+"'>";
+								rowsHTML+="<input type='text' class='floatlabel' placeholder='Last updated on' name='last_updated' readonly='readonly' form='form179_"+result.id+"' value='"+vTime.date({time:result.last_updated})+"'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Score'>";
                                 rowsHTML+="<textarea readonly='readonly' name='score' form='form179_"+result.id+"'>"+result.priority+"</textarea>";
@@ -125,13 +125,13 @@
                                 rowsHTML+="<button type='button' class='btn red' form='form179_"+result.id+"' title='Delete order' name='delete' onclick='form179_delete_item($(this));'><i class='fa fa-trash'></i></button>";
                             if(!vUtil.isBlank(result.bill_id))
                             {
-                                rowsHTML+="<button type='button' name='view_bill' class='btn default yellow-stripe' form='form179_"+result.id+"'>View Bill</button>";
+                                rowsHTML+="<br><button type='button' name='view_bill' class='btn default yellow-stripe' form='form179_"+result.id+"'>View Bill</button>";
                             }
-                            else if(result.status=='order placed')
+                            if(result.status=='order placed' || result.status=='partially received')
                             {
-                                rowsHTML+="<button type='button' name='issue_grn' class='btn default green-stripe' form='form179_"+result.id+"'>Issue GRN</button>";
+                                rowsHTML+="<br><button type='button' name='issue_grn' class='btn default green-stripe' form='form179_"+result.id+"'>Issue GRN</button>";
                             }
-														rowsHTML+="<input type='hidden' name='old_status' form='form179_"+result.id+"' value='"+result.status+"'>";
+							rowsHTML+="<input type='hidden' name='old_status' form='form179_"+result.id+"' value='"+result.status+"'>";
                             rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
@@ -180,7 +180,7 @@
 										delete item.order_placed_time;
 										delete item.last_updated;
                 });
-								hide_loader();
+				hide_loader();
             });
         };
 
@@ -200,12 +200,12 @@
 								}
 
                 var data_json={data_store:'purchase_orders',
-						 				log:'yes',
-						 				data:[{index:'id',value:data_id},
-						 					{index:'order_placed_time',value:order_placed_date},
-						 					{index:'status',value:status},
-						 					{index:'last_updated',value:last_updated}],
-						 				log_data:{title:'Updated',notes:'Purchase order # '+order_num,link_to:'form179'}};
+			 				log:'yes',
+			 				data:[{index:'id',value:data_id},
+			 					{index:'order_placed_time',value:order_placed_date},
+			 					{index:'status',value:status},
+			 					{index:'last_updated',value:last_updated}],
+			 				log_data:{title:'Updated',notes:'Purchase order # '+order_num,link_to:'form179'}};
 
                 update_json(data_json);
                 $(form).readonly();

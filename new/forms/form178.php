@@ -16,7 +16,7 @@
               <label><div class='btn-overlap'><input type='text' name='supplier' placeholder='Supplier' class='floatlabel'><button type='button' title='Add new supplier' class='btn btn-icon-only default right-overlap' id='form178_add_supplier'><i class='fa fa-plus'></i></button></div></label>
               <label><input type='text' required name='status' class='floatlabel' placeholder='Status'></label>
               <label><input type='text' name='date' required class='floatlabel' placeholder='Order Date'></label>
-							<label><input type='text' name='ship_to' class='floatlabel' placeholder='Ship To'></label>
+				<label><input type='text' name='ship_to' class='floatlabel' placeholder='Ship To'></label>
               <label><input type='text' name='order_num' readonly="readonly" class='floatlabel' placeholder='Order #'></label>
               <input type='hidden' name='order_id'>
               <input type='submit' class='submit_hidden'>
@@ -115,7 +115,7 @@
 
             set_static_filter_json('purchase_orders','status',status_filter);
 
-						var paginator=$('#form178_body').paginator({visible:false});
+			$('#form178_body').paginator({visible:false});
             $('#form178').formcontrol();
         }
 
@@ -142,8 +142,8 @@
                                           {index:'tax'},
                                           {index:'total'},
                                           {index:'status'},
-																					{index:'terms'},
-																					{index:'ship_to'}]};
+										{index:'terms'},
+										{index:'ship_to'}]};
 
                 var order_items_column={data_store:'purchase_order_items',
                                   indexes:[{index:'id'},
@@ -167,10 +167,10 @@
                         filter_fields.elements['order_num'].value=order_results[0].order_num;
                         filter_fields.elements['status'].value=order_results[0].status;
                         filter_fields.elements['order_id'].value=order_id;
-												filter_fields.elements['ship_to'].value=order_results[0].ship_to;
+						filter_fields.elements['ship_to'].value=order_results[0].ship_to;
                         var save_button=document.getElementById('form178_save');
 
-												document.getElementById('form178_terms').value=order_results[0].terms;
+						document.getElementById('form178_terms').value=order_results[0].terms;
 
                         if(order_results[0].status=='order placed' || order_results[0].status=='closed' || order_results[0].status=='supplier finalized' || order_results[0].status=='partially received' || order_results[0].status=='received')
                         {
@@ -240,23 +240,23 @@
                         modal101_action(bt+' - PO # '+filter_fields.elements['order_num'].value,filter_fields.elements['supplier'].value,'supplier',function (func)
                         {
                             print_form178(func);
+
+							var order_num=filter_fields.elements['order_num'].value;
+							var status=filter_fields.elements['status'].value;
+
+							if(status=='supplier finalized')
+							{
+								var data_json={data_store:'purchase_orders',
+										log:'yes',
+										data:[{index:'id',value:order_id},
+											{index:'order_placed_time',value:vTime.unix()},
+											{index:'status',value:'order placed'},
+											{index:'last_updated',value:vTime.unix()}],
+										log_data:{title:'Placed',notes:'Purchase order # '+order_num,link_to:'form179'}};
+
+								update_json(data_json);
+							}
                         });
-
-						var order_num=filter_fields.elements['order_num'].value;
-                        var status=filter_fields.elements['status'].value;
-
-						if(status!='order placed')
-						{
-							var data_json={data_store:'purchase_orders',
-									log:'yes',
-									data:[{index:'id',value:order_id},
-										{index:'order_placed_time',value:vTime.unix()},
-										{index:'status',value:'order placed'},
-										{index:'last_updated',value:vTime.unix()}],
-									log_data:{title:'Placed',notes:'Purchase order # '+order_num,link_to:'form179'}};
-
-							update_json(data_json);
-						}
                     });
                     $('#form178').formcontrol();
                     hide_loader();
@@ -453,20 +453,20 @@
                     modal101_action(bt+' - PO # '+order_num,supplier,'supplier',function (func)
                     {
                         print_form178(func);
-                    });
 
-					if(status!='order placed')
-					{
-						var data_json={data_store:'purchase_orders',
-				 				log:'yes',
-				 				data:[{index:'id',value:data_id},
-				 					{index:'order_placed_time',value:vTime.unix()},
-				 					{index:'status',value:'order placed'},
-				 					{index:'last_updated',value:vTime.unix()}],
-				 				log_data:{title:'Placed',notes:'Purchase order # '+order_num,link_to:'form179'}};
+						if(status=='supplier finalized')
+						{
+							var data_json={data_store:'purchase_orders',
+					 				log:'yes',
+					 				data:[{index:'id',value:data_id},
+					 					{index:'order_placed_time',value:vTime.unix()},
+					 					{index:'status',value:'order placed'},
+					 					{index:'last_updated',value:vTime.unix()}],
+					 				log_data:{title:'Placed',notes:'Purchase order # '+order_num,link_to:'form179'}};
 
-						update_json(data_json);
-					}
+							update_json(data_json);
+						}
+					});
                 });
 
                 var amount=0;
@@ -569,20 +569,20 @@
 					modal101_action(bt+' - PO # '+order_num,supplier,'supplier',function (func)
 				  	{
                         print_form178(func);
-                    });
 
-					if(status!='order placed')
-					{
-						var data_json={data_store:'purchase_orders',
-								log:'yes',
-								data:[{index:'id',value:data_id},
-									{index:'order_placed_time',value:vTime.unix()},
-									{index:'status',value:'order placed'},
-									{index:'last_updated',value:vTime.unix()}],
-								log_data:{title:'Placed',notes:'Purchase order # '+order_num,link_to:'form179'}};
+						if(status=='supplier finalized')
+						{
+							var data_json={data_store:'purchase_orders',
+									log:'yes',
+									data:[{index:'id',value:data_id},
+										{index:'order_placed_time',value:vTime.unix()},
+										{index:'status',value:'order placed'},
+										{index:'last_updated',value:vTime.unix()}],
+									log_data:{title:'Placed',notes:'Purchase order # '+order_num,link_to:'form179'}};
 
-								update_json(data_json);
-					}
+							update_json(data_json);
+						}
+					});	
                 });
 
                 var amount=0;

@@ -160,25 +160,6 @@
                     delete_json(return_bill_json);
                     $(button).parent().parent().remove();
 
-                    // var payment_xml={data_store:'payments',
-                    //                 indexes:[{index:'id'},
-                    //                         {index:'source_id',exact:data_id},
-                    //                         {index:'status',array:["pending","cancelled"]},
-                    //                         {index:'transaction_id'}]};
-                    // read_json_rows('',payment_xml,function(payments)
-                    // {
-                    //     if(payments.length>0)
-                    //     {
-                    //         var pt_json={data_store:'transactions',
-                    //                             data:[{index:'id',value:payments[0].transaction_id}]};
-                    //         var pay_json={data_store:'payments',
-                    //                             data:[{index:'id',value:payments[0].id}]};
-										//
-                    //         delete_json(pay_json);
-                    //         delete_json(pt_json);
-                    //     }
-                    // });
-
                     var items_data={data_store:'supplier_bill_items',
                         data:[{index:'bill_id',value:data_id}]};
                     delete_json(items_data);

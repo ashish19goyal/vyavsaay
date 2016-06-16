@@ -1,4 +1,4 @@
-<div id='form185' class='tab-pane portlet box green-meadow'>	   
+<div id='form185' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class='caption'>
             <div class='btn-group' id='form185_view' data-toggle='buttons'>
@@ -26,9 +26,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	   <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
@@ -52,7 +52,7 @@
         </div>
 
     </div>
-    
+
     <script>
     function form185_header_ini()
     {
@@ -72,8 +72,8 @@
             event.preventDefault();
             form185_ini();
         });
-        
-        $("#form185_calendar").parent().parent().show();        
+
+        $("#form185_calendar").parent().parent().show();
     }
 
     function form185_ini(view)
@@ -84,7 +84,7 @@
         show_loader();
         $('#form185_body').html("");
         $('#form185_calendar').fullCalendar('destroy');
-            
+
         var view_filter='calendar';
         if(typeof view!='undefined' && view=='table')
         {
@@ -102,7 +102,7 @@
         {
             $("#form185_body").parent().hide();
             $("#form185_calendar").parent().parent().show();
-            
+
             $('#form185_calendar').fullCalendar({
                 header: {
                     left: 'prev,next',
@@ -111,7 +111,7 @@
                 },
                 editable: true,
                 slotEventOverlap:true,
-                events: function(start, end, timezone, callback) 
+                events: function(start, end, timezone, callback)
                 {
                     var start_time=parseFloat(start.unix())*1000;
                     var end_time=parseFloat(end.unix())*1000;
@@ -123,7 +123,7 @@
                                            {index:'status'},
                                            {index:'assignee'},
                                            {index:'task_hours'},
-                                           {index:'source',exact:'business process'}]};
+                                           {index:'source',exact:'manufacturing'}]};
                     read_json_rows('form185',tasks_data,function(tasks)
                     {
                         var events=[];
@@ -152,10 +152,11 @@
                                 end:get_iso_time(task.t_due),
                                 color: color,
                                 id: task.id,
+								desc: task.description
                             });
                         });
                         callback(events);
-                        
+
                         initialize_tabular_report_buttons(tasks_data,'Manufacturing Tasks','form185',function (item)
                         {
                             item['Due Time']=get_my_datetime(item.t_due);
@@ -178,35 +179,35 @@
                     //console.log(event);
                     var t_due=(parseFloat(event.end.unix())*1000);
                     var t_initiated=(parseFloat(event.start.unix())*1000);
-                    
+
                     var data_json={data_store:'task_instances',
  							data:[{index:'id',value:event.id},
                                  {index:'t_due',value:t_due},
                                  {index:'last_updated',value:get_my_time()}]};
                     update_json(data_json);
-                    
+
                     var prod_json={data_store:'production_plan_items',
  							data:[{index:'id',value:event.id},
                                  {index:'from_time',value:t_initiated},
                                  {index:'to_time',value:t_due},
                                  {index:'last_updated',value:get_my_time()}]};
                     update_json(prod_json);
-                    
+
                     var store_movement_xml={data_store:'store_movement',
                                            indexes:[{index:'id'},
                                                    {index:'record_source',exact:'production_plan_item'},
                                                    {index:'source_id',exact:event.id}]};
-                    read_json_rows('',store_movement_xml,function (movs) 
+                    read_json_rows('',store_movement_xml,function (movs)
                     {
-                        movs.forEach(function (mov) 
+                        movs.forEach(function (mov)
                         {
                             var mov_json={data_store:'store_movement',
  							data:[{index:'id',value:mov.id},
                                  {index:'applicable_from',value:t_initiated},
                                  {index:'last_updated',value:get_my_time()}]};
-                            update_json(mov_json);                    
+                            update_json(mov_json);
                         });
-                    });		
+                    });
                 },
                 eventResize: function(event, delta, revertFunc)
                 {
@@ -216,22 +217,30 @@
                                  {index:'task_hours',value:task_hours},
                                  {index:'last_updated',value:get_my_time()}]};
                     update_json(data_json);
-                }
+                },
+				eventMouseover: function(event, jsEvent, view)
+				{
+					$('.fc-title', this).append("<div id='form185_tooltip_"+event.id+"' class='hover-end'>"+event.desc+"</div>");
+				},
+				eventMouseout: function(event, jsEvent, view)
+				{
+					$('#form185_tooltip_'+event.id).remove();
+				}
             });
-            setTimeout(function(){$('#form185 .fc-today-button').click()},1000);    
+            setTimeout(function(){$('#form185 .fc-today-button').click()},1000);
         }
         else
-        {   
+        {
             $("#form185_body").parent().show();
             $("#form185_calendar").parent().parent().hide();
-            
+
             var fields=document.getElementById('form185_header');
             var task_filter=fields.elements['task'].value;
             var assignee_filter=fields.elements['assignee'].value;
             var status_filter=fields.elements['status'].value;
-        
+
             var paginator=$('#form185_body').paginator();
-			
+
             var columns={data_store:'task_instances',
                          count:paginator.page_size(),
                          start_index:paginator.get_index(),
@@ -243,9 +252,9 @@
                                    {index:'status',value:status_filter},
                                    {index:'assignee',value:assignee_filter},
                                    {index:'task_hours'},
-                                   {index:'source',exact:'business process'},
+                                   {index:'source',exact:'manufacturing'},
                                    {index:'source_name'}]};
-           
+
             read_json_rows('form185',columns,function(results)
             {
                 results.forEach(function(result)
@@ -271,7 +280,7 @@
                                 rowsHTML+="<input type='hidden' readonly='readonly' name='id' form='form185_"+result.id+"' value='"+result.id+"'>";
                                 rowsHTML+="<button type='submit' class='btn green' name='save' form='form185_"+result.id+"' title='Save'><i class='fa fa-save'></i></button>";
                                 rowsHTML+="<button type='button' class='btn red' form='form185_"+result.id+"' title='Delete' name='delete' onclick='form185_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form185_body').append(rowsHTML);
@@ -298,16 +307,16 @@
                 {
                     item['Due Time']=get_my_datetime(item.t_due);
                     delete item.t_due;
-                    
-                    delete item.task_hours;                    
+
+                    delete item.task_hours;
                     delete item.source_name;
                     delete item.source;
                 });
 				$('#form185').formcontrol();
-                
+
                 hide_loader();
             });
-            
+
         }
     }
 
@@ -327,7 +336,7 @@
  							data:[{index:'id',value:data_id}],
  							log:'yes',
  							log_data:{title:"Deleted",notes:"Task "+name,link_to:"form185"}};
-			
+
                 delete_json(data_json);
 
                 $(button).parent().parent().remove();
@@ -350,7 +359,7 @@
             var status=fields.elements[4].value;
             var data_id=form.elements['id'].value;
             var last_updated=get_my_time();
-            
+
             var data_json={data_store:'task_instances',
  							data:[{index:'id',value:data_id},
                                  {index:'name',value:name},
@@ -358,13 +367,13 @@
                                  {index:'description',value:details},
                                  {index:'t_due',value:due},
                                  {index:'status',value:status},
-                                 {index:'last_updated',value:last_updated}]};			
+                                 {index:'last_updated',value:last_updated}]};
 
             var prod_json={data_store:'production_plan_items',
  							data:[{index:'id',value:data_id},
                                  {index:'to_time',value:due},
                                  {index:'status',value:status},
-                                 {index:'last_updated',value:last_updated}]};			
+                                 {index:'last_updated',value:last_updated}]};
 
             update_json(data_json);
             update_json(prod_json);
@@ -373,17 +382,17 @@
                                    indexes:[{index:'id'},
                                            {index:'record_source',exact:'production_plan_items'},
                                            {index:'source_id',exact:data_id}]};
-            read_json_rows('',store_movement_xml,function (movs) 
+            read_json_rows('',store_movement_xml,function (movs)
             {
-                movs.forEach(function (mov) 
+                movs.forEach(function (mov)
                 {
                     var mov_json={data_store:'store_movement',
  							data:[{index:'id',value:mov.id},
                                  {index:'applicable_from',value:due},
                                  {index:'last_updated',value:get_my_time()}]};
-                    update_json(mov_json);    
+                    update_json(mov_json);
                 });
-            });					
+            });
 
             $(form).readonly();
         }

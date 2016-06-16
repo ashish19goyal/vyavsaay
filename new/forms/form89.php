@@ -92,7 +92,7 @@
 
 
 	function form89_ini(view)
-  {
+  	{
       var fid=$("#form89_link").attr('data_id');
       if(fid==null)
           fid="";
@@ -128,10 +128,10 @@
               slotEventOverlap:true,
               events: function(start, end, timezone, callback)
               {
-									var start_time=parseFloat(start.unix())*1000;
+				  var start_time=parseFloat(start.unix())*1000;
                   var end_time=parseFloat(end.unix())*1000;
                   var tasks_data={data_store:'appointments',
-																	access:{},
+								access:{},
                                  indexes:[{index:'id'},
                                          {index:'customer'},
                                          {index:'schedule',lowerbound:start_time,upperbound:end_time},
@@ -167,7 +167,7 @@
                               end:get_iso_time(parseFloat(task.schedule)+3600000*parseFloat(task.hours)),
                               color: color,
                               id: task.id,
-															notes: task.notes
+							notes: task.notes
                           });
                       });
                       callback(events);
@@ -187,31 +187,31 @@
               eventClick: function(calEvent,jsEvent,view){
                   modal37_action(calEvent.id,parseFloat(calEvent.start.unix())*1000);
               },
-							eventDrop: function(event,delta,revertFunc)
-							{
-								var schedule=(parseFloat(event.start.unix())*1000);
-								var data_json={data_store:'appointments',
-											data:[{index:'id',value:event.id},
-				                 {index:'schedule',value:schedule},
-				                 {index:'last_updated',value:get_my_time()}]};
-				            update_json(data_json);
-							},
-							eventResize: function(event, delta, revertFunc){
-								var hours=parseFloat((parseFloat(event.end.unix())-parseFloat(event.start.unix()))/3600);
-								var data_json={data_store:'appointments',
-											data:[{index:'id',value:event.id},
-				                 {index:'hours',value:hours},
-				                 {index:'last_updated',value:get_my_time()}]};
-				          	update_json(data_json);
-							},
-							eventMouseover: function(event, jsEvent, view)
-							{
-								$('.fc-title', this).append("<div id='form89_tooltip_"+event.id+"' class='hover-end'>"+event.notes+"</div>");
-								},
-							eventMouseout: function(event, jsEvent, view)
-							{
-								$('#form89_tooltip_'+event.id).remove();
-							}
+				eventDrop: function(event,delta,revertFunc)
+				{
+					var schedule=(parseFloat(event.start.unix())*1000);
+					var data_json={data_store:'appointments',
+								data:[{index:'id',value:event.id},
+	                 {index:'schedule',value:schedule},
+	                 {index:'last_updated',value:get_my_time()}]};
+	            update_json(data_json);
+				},
+				eventResize: function(event, delta, revertFunc){
+					var hours=parseFloat((parseFloat(event.end.unix())-parseFloat(event.start.unix()))/3600);
+					var data_json={data_store:'appointments',
+								data:[{index:'id',value:event.id},
+	                 {index:'hours',value:hours},
+	                 {index:'last_updated',value:get_my_time()}]};
+	          	update_json(data_json);
+				},
+				eventMouseover: function(event, jsEvent, view)
+				{
+					$('.fc-title', this).append("<div id='form89_tooltip_"+event.id+"' class='hover-end'>"+event.notes+"</div>");
+					},
+				eventMouseout: function(event, jsEvent, view)
+				{
+					$('#form89_tooltip_'+event.id).remove();
+				}
           });
           setTimeout(function(){$('#form89 .fc-today-button').click()},1000);
       }

@@ -629,17 +629,36 @@
 	                {
 	                    if(porders.length>0)
 	                    {
-	                        var id_object_array=[];
+	                        var id_object_array=vUtil.jsonParse(porders[0].bill_id);
 
-	                        var id_object=new Object();
-	                        id_object.bill_num=bill_id;
-	                        id_object.bill_id=data_id;
-	                        id_object.total_received=total_quantity;
-	                        id_object_array.push(id_object);
+	                        var id_object={bill_num:bill_id,
+	                        			bill_id:data_id,
+	                        			total_received:total_quantity};
+
+							var found=false;
+							for(var i in id_object_array)
+							{
+								if(id_object_array[i].bill_id==data_id)
+								{
+									id_object_array[i]=id_object;
+									found=true;
+									break;
+								}
+							}
+							if(!found)
+							{
+								id_object_array.push(id_object);
+							}
+
+							var total_received_quantity=0;
+							for(var i in id_object_array)
+							{
+								total_received_quantity+=parseFloat(id_object_array[i].total_received);
+							}
 
 							var status='partially received';
 
-	                        if(parseFloat(porders[0].total_quantity)<=total_quantity)
+	                        if(parseFloat(porders[0].total_quantity)<=total_received_quantity)
 	                        {
 	                            status='received';
 	                        }
@@ -772,16 +791,36 @@
 				{
 					if(porders.length>0)
 					{
-						var id_object_array=[];
-						var id_object=new Object();
-						id_object.bill_num=bill_id;
-						id_object.bill_id=data_id;
-						id_object.total_received=total_quantity;
-						id_object_array.push(id_object);
+						var id_object_array=vUtil.jsonParse(porders[0].bill_id);
+
+						var id_object={bill_num:bill_id,
+									bill_id:data_id,
+									total_received:total_quantity};
+
+						var found=false;
+						for(var i in id_object_array)
+						{
+							if(id_object_array[i].bill_id==data_id)
+							{
+								id_object_array[i]=id_object;
+								found=true;
+								break;
+							}
+						}
+						if(!found)
+						{
+							id_object_array.push(id_object);
+						}
+
+						var total_received_quantity=0;
+						for(var i in id_object_array)
+						{
+							total_received_quantity+=parseFloat(id_object_array[i].total_received);
+						}
 
 						var status='partially received';
 
-						if(parseFloat(porders[0].total_quantity)<=total_quantity)
+						if(parseFloat(porders[0].total_quantity)<=total_received_quantity)
 						{
 							status='received';
 						}
