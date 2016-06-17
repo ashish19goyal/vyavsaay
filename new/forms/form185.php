@@ -147,7 +147,7 @@
                                 color='#1bbc9b';
                             }
                             events.push({
-                                title: task.name+"\nAssigned to: "+task.assignee,
+                                title: task.name,
                                 start:get_iso_time(task.t_due-3600000*(parseFloat(task.task_hours))),
                                 end:get_iso_time(task.t_due),
                                 color: color,

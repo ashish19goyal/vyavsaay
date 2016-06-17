@@ -53,7 +53,7 @@
 		var plan_id_filter=fields.elements['plan_id'];
         var save_button=document.getElementById('form256_save');
 
-        $(plan_filter).off('click');
+        $(plan_filter).parent().off('click');
 
         $(save_button).off('click');
         $(save_button).on("click", function(event)
@@ -143,11 +143,11 @@
                     master_fields.elements['id'].value=bag_results[0].id;
                     master_fields.elements['quantity'].value=bag_results[0].quantity;
 					master_fields.elements['plan_id'].value=bag_results[0].production_plan_id;
-                    var pp_fitler=master_fields.elements['pplan'];
+                    var pp_filter=master_fields.elements['pplan'];
 					pp_filter.value=bag_results[0].production_plan;
 
-                    $(pp_fitler).parent().off('click');
-                    $(pp_fitler).parent().on('click',function()
+                    $(pp_filter).parent().off('click');
+                    $(pp_filter).parent().on('click',function()
                     {
                         element_display(bag_results[0].production_plan_id,'form186');
                     });

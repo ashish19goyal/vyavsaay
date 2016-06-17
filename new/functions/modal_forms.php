@@ -4092,44 +4092,45 @@
 		                  <div class="row">
 								   <div class="col-sm-12 col-md-4">Name</div>
 					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal222_form' required name='name'></div>
-					     		</div>
+					      </div>
 		                  <div class="row">
 								   <div class="col-sm-12 col-md-4">Make</div>
 					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal222_form' name='make'></div>
-					     		</div>
-		              <div class="row">
+					      </div>
+		              	  <div class="row">
 								   	<div class="col-sm-12 col-md-4">Description</div>
-                    <div class="col-sm-12 col-md-8"><textarea form='modal222_form' name='desc'></textarea></div>
-					     		</div>
-									<div class="row">
-								   	<div class="col-sm-12 col-md-4">Manufactured</div>
-                    <div class="col-sm-12 col-md-8"><input type='text' value='yes' required form='modal222_form' name='manu'></div>
-					     		</div>
-									<div class="row">
+                    				<div class="col-sm-12 col-md-8"><textarea form='modal222_form' name='desc'></textarea></div>
+					      </div>
+						  <div class="row">
+						   			<div class="col-sm-12 col-md-4">Manufactured</div>
+                    				<div class="col-sm-12 col-md-8"><input type='text' value='yes' required form='modal222_form' name='manu'></div>
+					      </div>
+						  <div class="row">
 								   	<div class="col-sm-12 col-md-4">Raw Material</div>
-                    <div class="col-sm-12 col-md-8"><input type='text' value='yes' required form='modal222_form' name='purchased'></div>
-					     		</div>
-		              <div class="row">
+                    				<div class="col-sm-12 col-md-8"><input type='text' value='yes' required form='modal222_form' name='purchased'></div>
+					      </div>
+		                  <div class="row">
 								   <div class="col-sm-12 col-md-4">Cost Price</div>
 					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal222_form' name='cost'></div>
-					     		</div>
-		              <div class="row">
+					     </div>
+		                 <div class="row">
 								   <div class="col-sm-12 col-md-4">Sale Price</div>
 					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal222_form' name='sale'></div>
-					     		</div>
-									<div class="row">
+					     </div>
+						 <div class="row">
 								   	<div class="col-sm-12 col-md-4">Tax Rate (%)</div>
 					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal222_form' name='tax'></div>
-					     		</div>
+					     </div>
 		            </div>
-	             	<div class="modal-footer">
+				</div>
+             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal222_form' name='save'>Add</button>
 	               	<button type="button" class="btn red" form='modal222_form' data-dismiss='modal' name='cancel'>Cancel</button>
-	             	</div>
-                </form>
-            </div>
-        </div>
-    </div>
+             	</div>
+	            </form>
+	        </div>
+	    </div>
+	</div>
 
 	<a href='#modal223' data-toggle="modal" id='modal223_link'></a>
 	<div id="modal223" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
@@ -4157,8 +4158,8 @@
 						</div>
 		            </div>
 	             	<div class="modal-footer">
-	               	<button type="submit" class="btn green" form='modal223_form' name='save'>Add</button>
-	               	<button type="button" class="btn red" form='modal223_form' data-dismiss='modal' name='cancel'>Cancel</button>
+		               	<button type="submit" class="btn green" form='modal223_form' name='save'>Add</button>
+		               	<button type="button" class="btn red" form='modal223_form' data-dismiss='modal' name='cancel'>Cancel</button>
 	             	</div>
                 </form>
             </div>

@@ -60,13 +60,13 @@ function declaring_global_variables()
 	total_export_requests=0;
  	newsletter_element_4_deletion = [];
  	status_label_colors={'pending':'label-warning',
- 			            			'converted':'label-success',
-						 						'completed':'label-success',
-						 						'active':'label-success',
-						 						'inactive':'label-danger',
-						 						'cold':'label-danger',
-						 						'warm':'label-success',
-												'hot':'label-success',
+    					'converted':'label-success',
+ 						'completed':'label-success',
+ 						'active':'label-success',
+ 						'inactive':'label-danger',
+ 						'cold':'label-danger',
+ 						'warm':'label-success',
+						'hot':'label-success',
                         'submitted':'label-warning',
                         'approved':'label-success',
                         'rejected':'label-danger',
@@ -158,7 +158,7 @@ function setup_grid_display_tabs()
 	{
 		var function_main=$("#"+func+"_main > ul > li").length;
 		var hidden_function_main=$("#"+func+"_main > ul > li[data-select='no']").length;
-		
+
 		if(function_main===0 || function_main===hidden_function_main)
 		{
 			$("#"+func+"_link").parent().hide();

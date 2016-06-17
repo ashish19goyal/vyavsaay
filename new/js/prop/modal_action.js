@@ -17040,7 +17040,7 @@ function modal223_action(production_item_id,item_name,plan_id,plan_name,produced
 			///add to inventory
 			var item_created_json={data_store:'inventory_adjust',
 					data:[{index:'id',value:id},
-						{index:'product_name',value:item_name},
+						{index:'product_name',value:item_name,uniqueWith:['batch']},
 						{index:'batch',value:batch},
 						{index:'quantity',value:quantity},
 						{index:'source',value:'manufacturing'},
@@ -17071,7 +17071,7 @@ function modal223_action(production_item_id,item_name,plan_id,plan_name,produced
 
 			var storage_json={data_store:'area_utilization',
 					data:[{index:'id',value:get_new_key()},
-						{index:'item_name',value:item_name,uniqueWith:['batch','name']},
+						{index:'item_name',value:item_name,uniqueWith:['batch']},
 						{index:'batch',value:batch},
 						{index:'name',value:storage},
 						{index:'last_updated',value:last_updated}]};
@@ -17085,6 +17085,14 @@ function modal223_action(production_item_id,item_name,plan_id,plan_name,produced
 			form256.elements['item_name'].value=item_name;
 			form256.elements['batch'].value=batch;
 			form256.elements['quantity'].value=quantity;
+
+			var pp_filter=form256.elements['pplan'];
+			$(pp_filter).parent().off('click');
+			$(pp_filter).parent().on('click',function()
+			{
+				element_display(plan_id,'form186');
+			});
+
 			form256_ini();
 		}
 		else
