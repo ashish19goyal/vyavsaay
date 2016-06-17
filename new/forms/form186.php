@@ -222,7 +222,7 @@
 
                         $(ready_button).on('click',function()
                         {
-							modal223_action(result.id,result.item,plan_id,filter_fields.elements['plan'].value);
+							modal223_action(result.id,result.item,plan_id,filter_fields.elements['plan'].value,result.produced_quantity,result.quantity);
                         });
 
                         $(from_filter).datepicker();

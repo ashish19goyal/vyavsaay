@@ -16999,7 +16999,7 @@ function modal222_action(func)
  * @modal Add Inventory (cps)
  * @param button
  */
-function modal223_action(production_item_id,item_name,plan_id,plan_name)
+function modal223_action(production_item_id,item_name,plan_id,plan_name,produced_quantity,scheduled_quantity)
 {
 	var form=document.getElementById('modal223_form');
 
@@ -17017,13 +17017,23 @@ function modal223_action(production_item_id,item_name,plan_id,plan_name)
 		{
 			var batch=fbatch.value;
 			var quantity=fquantity.value;
+			if(vUtil.isBlank(produced_quantity))
+			{
+				produced_quantity=0;
+			}
+			var total_produced=parseFloat(fquantity.value)+parseFloat(produced_quantity);
 			var id=get_new_key();
 			var last_updated=get_my_time();
 			var storage=get_session_var('production_floor_store');
-
+			var status='pending';
+			if(scheduled_quantity==total_produced)
+			{
+				status='inventoried';
+			}
 			var items_json={data_store:'production_plan_items',
 					data:[{index:'id',value:production_item_id},
-						{index:'status',value:'inventoried'},
+						{index:'status',value:status},
+						{index:'produced_quantity',value:total_produced},
 						{index:'last_updated',value:last_updated}]};
 			update_json(items_json);
 
