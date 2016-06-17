@@ -1639,9 +1639,13 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<production_id index='yes' type="BIGINT"></production_id>
 			<production_plan index='yes' type="TEXT"></production_plan>
+			<production_plan_id index='yes' type="BIGINT"></production_plan_id>
 			<item index='yes' type="TEXT"></item>
 			<batch index='yes' type="TEXT"></batch>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
+			<ritem index='yes' type="TEXT"></ritem>
+			<rbatch index='yes' type="TEXT"></rbatch>
+			<rquantity index='no' type="DECIMAL(12,2)"></rquantity>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</batch_raw_material>

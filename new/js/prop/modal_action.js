@@ -16993,3 +16993,96 @@ function modal222_action(func)
 
 	$("#modal222_link").click();
 }
+
+/**
+ * @modalNo 223
+ * @modal Add Inventory (cps)
+ * @param button
+ */
+function modal223_action(production_item_id,item_name,plan_id,plan_name)
+{
+	var form=document.getElementById('modal223_form');
+
+	var fname=form.elements['name'];
+	var fbatch=form.elements['batch'];
+	var fquantity=form.elements['quantity'];
+
+	fname.value=item_name;
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_update_access('form186'))
+		{
+			var batch=fbatch.value;
+			var quantity=fquantity.value;
+			var id=get_new_key();
+			var last_updated=get_my_time();
+			var storage=get_session_var('production_floor_store');
+
+			var items_json={data_store:'production_plan_items',
+					data:[{index:'id',value:production_item_id},
+						{index:'status',value:'inventoried'},
+						{index:'last_updated',value:last_updated}]};
+			update_json(items_json);
+
+			///add to inventory
+			var item_created_json={data_store:'inventory_adjust',
+					data:[{index:'id',value:id},
+						{index:'product_name',value:item_name},
+						{index:'batch',value:batch},
+						{index:'quantity',value:quantity},
+						{index:'source',value:'manufacturing'},
+						{index:'source_id',value:production_item_id},
+						{index:'storage',value:storage},
+						{index:'last_updated',value:last_updated}]};
+			create_json(item_created_json);
+
+			var instance_json={data_store:'product_instances',
+					data:[{index:'id',value:id},
+						{index:'product_name',value:item_name,uniqueWith:['batch']},
+						{index:'batch',value:batch},
+						{index:'manufacture_date',value:last_updated},
+						{index:'last_updated',value:last_updated}]};
+			create_json(instance_json);
+
+			var notification_json={data_store:'notifications',
+					data:[{index:'id',value:get_new_key()},
+						{index:'title',value:'Update pricing details'},
+						{index:'notes',value:'A new batch for '+item_name+' has been added. Please update pricing for the same.'},
+						{index:'link_to',value:'form183'},
+						{index:'data_id',value:id},
+						{index:'status',value:'pending'},
+						{index:'target_user',value:''},
+						{index:'t_generated',value:last_updated},
+						{index:'last_updated',value:last_updated}]};
+			create_json(notification_json);
+
+			var storage_json={data_store:'area_utilization',
+					data:[{index:'id',value:get_new_key()},
+						{index:'item_name',value:item_name,uniqueWith:['batch','name']},
+						{index:'batch',value:batch},
+						{index:'name',value:storage},
+						{index:'last_updated',value:last_updated}]};
+			create_json(storage_json);
+
+			element_display('','form256');
+			var form256=document.getElementById('form256_master');
+			form256.elements['id'].value=production_item_id;
+			form256.elements['pplan'].value=plan_name;
+			form256.elements['plan_id'].value=plan_id;
+			form256.elements['item_name'].value=item_name;
+			form256.elements['batch'].value=batch;
+			form256.elements['quantity'].value=quantity;
+			form256_ini();
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
+		$(form).find(".close").click();
+	});
+
+	$("#modal223_link").click();
+}

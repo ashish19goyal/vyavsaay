@@ -222,14 +222,7 @@
 
                         $(ready_button).on('click',function()
                         {
-                            element_display(result.id,'form256');
-                            var save_button=document.getElementById('form256_save');
-                            $(save_button).off('click');
-                            $(save_button).on("click", function(event)
-                            {
-                                event.preventDefault();
-                                form256_create_form();
-                            });
+							modal223_action(result.id,result.item,plan_id,filter_fields.elements['plan'].value);
                         });
 
                         $(from_filter).datepicker();
@@ -422,45 +415,6 @@
 
 								create_json(notif_json);
                             }
-
-                            // var batch_id=get_new_key();
-                            // batches_result_array.forEach(function (batch_result)
-                            // {
-                            //     var storage_json={data_store:'area_utilization',return_column:'name',
-							// 					indexes:[{index:'item_name',exact:raw.requisite_name},
-							// 							{index:'batch',exact:batch_result.batch}]};
-                            //     read_json_single_column(storage_json,function (storages)
-                            //     {
-                            //        	var storage_result_array=[];
-							// 	   	get_available_storage(raw.requisite_name,batch_result.batch,storages,batch_result.quantity,storage_result_array,function ()
-                            //     	{
-                            //             var item_storage="";
-                            //             var store_item_id=get_new_key();
-                            //             var adjust_count=1;
-                            //             var target=get_session_var('production_floor_store');
-                            //             storage_result_array.forEach(function(storage_result)
-                            //             {
-                            //                 adjust_count+=1;
-                            //                 var save_store_json={data_store:'store_movement',
-							// 								data:[{index:'id',value:(store_item_id+adjust_count)},
-							// 									{index:'item_name',value:raw.requisite_name},
-							// 									{index:'batch',value:batch_result.batch},
-							// 									{index:'quantity',value:storage_result.quantity},
-							// 									{index:'source',value:storage_result.storage},
-							// 									{index:'target',value:target},
-							// 									{index:'status',value:'pending'},
-							// 									{index:'dispatcher',value:get_account_name()},
-							// 									{index:'receiver',value:''},
-							// 									{index:'record_source',value:'production_plan_item'},
-							// 									{index:'source_id',value:data_id},
-							// 									{index:'applicable_from',value:from},
-							// 									{index:'last_updated',value:last_updated}]};
-							//
-							// 				create_json(save_store_json);
-                            //             });
-                            //         });
-                            //     });
-                            // });
                         });
                     });
                 });

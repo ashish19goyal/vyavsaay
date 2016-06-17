@@ -289,7 +289,65 @@
 					create_json(task_json);
 
 					///update logic to schedule store movement
+					var raw_data={data_store:'pre_requisites',
+								indexes:[{index:'type',exact:'product'},
+										{index:'requisite_type',exact:'product'},
+										{index:'name',exact:item.item},
+										{index:'requisite_name'},
+										{index:'quantity'}]};
+		            read_json_rows('form189',raw_data,function(raws)
+		            {
+		                raws.forEach(function(raw)
+		                {
+		                    raw.quantity=parseFloat(raw.quantity)*parseFloat(item.quantity);
+		                    var batch_data={data_store:'product_instances',return_column:'batch',
+											indexes:[{index:'product_name',exact:raw.requisite_name}]};
+		                    read_json_single_column(batch_data,function (batches)
+		                    {
+		                        var batches_result_array=[];
+		                        get_available_batch(raw.requisite_name,batches,raw.quantity,batches_result_array,function()
+		                        {
+		                            var batch_id=get_new_key();
+		                            batches_result_array.forEach(function (batch_result)
+		                            {
+		                                var storage_json={data_store:'area_utilization',return_column:'name',
+														indexes:[{index:'item_name',exact:raw.requisite_name},
+																{index:'batch',exact:batch_result.batch}]};
+		                                read_json_single_column(storage_json,function (storages)
+		                                {
+		                                   	var storage_result_array=[];
+										   	get_available_storage(raw.requisite_name,batch_result.batch,storages,batch_result.quantity,storage_result_array,function ()
+		                                	{
+		                                        var store_item_id=get_new_key();
+		                                        var adjust_count=1;
+		                                        var target=get_session_var('production_floor_store');
+		                                        storage_result_array.forEach(function(storage_result)
+		                                        {
+		                                            adjust_count+=1;
+		                                            var save_store_json={data_store:'store_movement',
+																	data:[{index:'id',value:(store_item_id+adjust_count)},
+																		{index:'item_name',value:raw.requisite_name},
+																		{index:'batch',value:batch_result.batch},
+																		{index:'quantity',value:storage_result.quantity},
+																		{index:'source',value:storage_result.storage},
+																		{index:'target',value:target},
+																		{index:'status',value:'pending'},
+																		{index:'dispatcher',value:get_account_name()},
+																		{index:'receiver',value:''},
+																		{index:'record_source',value:'production_plan_item'},
+																		{index:'source_id',value:item.id},
+																		{index:'applicable_from',value:item.from_time},
+																		{index:'last_updated',value:last_updated}]};
 
+													create_json(save_store_json);
+		                                        });
+		                                    });
+		                                });
+		                            });
+		                        });
+		                    });
+		                });
+		            });
 				});
 			});
 
