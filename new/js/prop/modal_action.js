@@ -17104,3 +17104,74 @@ function modal223_action(production_item_id,item_name,plan_id,plan_name,produced
 
 	$("#modal223_link").click();
 }
+
+/**
+ * @modalNo 224
+ * @modal COD Collection
+ * @param button
+ */
+function modal224_action(drs_num,amount,delivery_person)
+{
+	var form=document.getElementById('modal224_form');
+
+	var foperator=form.elements['operator'];
+	var fexpected=form.elements['expected'];
+	var falready=form.elements['already'];
+	var fupdated=form.elements['updated'];
+
+	foperator.value=get_account_name();
+	fexpected.value=amount;
+
+	var collection_record_id=get_new_key();
+	var collection_data={data_store:'cod_collections',return_column:'id',
+						indexes:[{index:'drs_num',exact:drs_num}]};
+	read_json_single_column(collection_data,function(cods)
+	{
+		if(cods.length>0)
+		{
+			collection_record_id=cods[0];
+		}
+	});
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_update_access('form353'))
+		{
+			var operator=foperator.value;
+			var additional=fupdated.value;
+			var id=get_new_key();
+			var last_updated=vTime.unix();
+
+			var drs_data={data_store:'cod_collections',
+					warning:'no',
+					data:[{index:'id',value:collection_record_id},
+						{index:'amount',value:amount},
+						{index:'drs_num',value:drs_num},
+						{index:'from_name',value:"DRS # "+drs_num},
+						{index:'acc_name',value:delivery_person},
+						{index:'date',value:last_updated},
+						{index:'last_updated',value:last_updated}]};
+			create_json(drs_data);
+			update_json(drs_data);
+
+			var operator_data={data_store:'cod_collections',
+					data:[{index:'id',value:id},
+						{index:'amount',value:additional},
+						{index:'drs_num',value:''},
+						{index:'acc_name',value:operator},
+						{index:'from_name',value:delivery_person},
+						{index:'date',value:last_updated},
+						{index:'last_updated',value:last_updated}]};
+			create_json(operator_data);
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
+		$(form).find(".close").click();
+	});
+
+	$("#modal224_link").click();
+}

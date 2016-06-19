@@ -411,8 +411,10 @@
 	<cod_collections>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
+			<drs_num index='no' type="VARCHAR(20)"></drs_num>
 			<date index='yes' type="BIGINT"></date>
 			<acc_name index='yes' type="TEXT"></acc_name>
+			<from_name index='yes' type="TEXT"></from_name>
 			<last_updated index='yes' type="BIGINT"></last_updated>		
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</cod_collections>

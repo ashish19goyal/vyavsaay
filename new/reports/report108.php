@@ -32,10 +32,10 @@
 			<thead>
 				<tr>
 					<th>Policy #</th>
-          <th>Policy Holder</th>
-          <th>Agent</th>
-          <th>Expiry Date</th>
-        </tr>
+		            <th>Policy Holder</th>
+		            <th>Agent</th>
+		            <th>Expiry Date</th>
+        		</tr>
 			</thead>
 			<tbody id='report108_body'></tbody>
 		</table>
@@ -47,14 +47,14 @@
     {
         var form=document.getElementById('report108_header');
         var end_filter=form.elements['upto'];
-				var holder_filter=form.elements['holder'];
-				var agent_filter=form.elements['agent'];
+		var holder_filter=form.elements['holder'];
+		var agent_filter=form.elements['agent'];
 
-				var agent_data={data_store:'staff',return_column:'acc_name'};
-				set_my_filter_json(agent_data,agent_filter);
+		var agent_data={data_store:'staff',return_column:'acc_name'};
+		set_my_filter_json(agent_data,agent_filter);
 
-				var holder_data={data_store:'customers',return_column:'acc_name'};
-				set_my_filter_json(holder_data,holder_filter);
+		var holder_data={data_store:'customers',return_column:'acc_name'};
+		set_my_filter_json(holder_data,holder_filter);
 
         $(form).off('submit');
         $(form).on('submit',function(event)
@@ -99,13 +99,13 @@
                 rowsHTML+="<tr>";
                 rowsHTML+="<form id='report108_"+item.id+"'></form>";
                 rowsHTML+="<td data-th='Policy #'>";
-				    			rowsHTML+="<a onclick=\"show_object('policies','"+item.policy_num+"');\">"+item.policy_num+"</a>";
+				    rowsHTML+="<a onclick=\"show_object('policies','"+item.policy_num+"');\">"+item.policy_num+"</a>";
                 rowsHTML+="</td>";
                 rowsHTML+="<td data-th='Policy Holder'>";
-									rowsHTML+="<a onclick=\"show_object('customers','"+item.policy_holder+"');\">"+item.policy_holder+"</a>";
+					rowsHTML+="<a onclick=\"show_object('customers','"+item.policy_holder+"');\">"+item.policy_holder+"</a>";
                 rowsHTML+="</td>";
-								rowsHTML+="<td data-th='Agent'>";
-									rowsHTML+="<a onclick=\"show_object('staff','"+item.agent+"');\">"+item.agent+"</a>";
+					rowsHTML+="<td data-th='Agent'>";
+					rowsHTML+="<a onclick=\"show_object('staff','"+item.agent+"');\">"+item.agent+"</a>";
                 rowsHTML+="</td>";
                 rowsHTML+="<td data-th='Expiry Date'>";
                     rowsHTML+=get_my_past_date(item.end_date);
@@ -120,12 +120,12 @@
                 item['Issuer']=item.issuer;
                 item['Policy Name']=item.policy_name;
                 item['Policy Type']=item.type;
-								item['Policy Description']=item.description;
-								item['Issue Date']=vTime.date({time:item.issue_date});
-								item['Policy Start Date']=vTime.date({time:item.start_date});
-								item['Policy End Date']=vTime.date({time:item.end_date});
-								item['Policy Holder']=item.policy_holder;
-								item['Agent']=item.agent;
+				item['Policy Description']=item.description;
+				item['Issue Date']=vTime.date({time:item.issue_date});
+				item['Policy Start Date']=vTime.date({time:item.start_date});
+				item['Policy End Date']=vTime.date({time:item.end_date});
+				item['Policy Holder']=item.policy_holder;
+				item['Agent']=item.agent;
                 item['Status']=item.status;
 
                 delete item.id;

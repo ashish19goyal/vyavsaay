@@ -1,18 +1,20 @@
-<div id='form211' class='tab-pane portlet box green-meadow'>
+<div id='form353' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class='caption'>
-            <a class='btn btn-circle grey btn-outline btn-sm' id='form211_save'>Save All <i class='fa fa-save'></i></a>
+            <a class='btn btn-circle grey btn-outline btn-sm' id='form353_save'>Save All <i class='fa fa-save'></i></a>
 		</div>
 	</div>
 
 	<div class="portlet-body">
-        <form id='form211_master' autocomplete="off">
+        <form id='form353_master' autocomplete="off">
             <fieldset>
                 <label><input type='text' name='drs' class='floatlabel' placeholder='DRS #'></label>
                 <label><input type='text' name='status' class='floatlabel' placeholder='Status'></label>
                 <label><textarea name='remark' class='floatlabel' placeholder='Remark'></textarea></label>
                 <label><input type='text' name='awb_num' class='floatlabel' placeholder='AWB #'></label>
-                <input type='submit' class='submit_hidden'>
+                <input type='hidden' name='collection'>
+				<input type='hidden' name='delivery_person'>
+				<input type='submit' class='submit_hidden'>
             </fieldset>
         </form>
 
@@ -28,26 +30,30 @@
 					<th></th>
 				</tr>
 			</thead>
-			<tbody id='form211_body'>
+			<tbody id='form353_body'>
 			</tbody>
-			<tbody id='form211_foot'>
+			<tbody id='form353_foot'>
 			</tbody>
         </table>
     </div>
 
     <script>
-    function form211_header_ini()
+    function form353_header_ini()
     {
-        $('#form211_body').html("");
+        $('#form353_body').html("");
 
-        var fields=document.getElementById('form211_master');
+        var fields=document.getElementById('form353_master');
 
         var drs_filter=fields.elements['drs'];
         var status_filter=fields.elements['status'];
         var remark_filter=fields.elements['remark'];
         var awb_filter=fields.elements['awb_num'];
-        var save_button=document.getElementById('form211_save');
+		var collection_filter=fields.elements['collection'];
+		var delivery_filter=fields.elements['delivery_person'];
+        var save_button=document.getElementById('form353_save');
 
+		collection_filter.value="";
+		delivery_filter.value="";
         drs_filter.value="";
         $(drs_filter).focus();
 
@@ -59,10 +65,10 @@
             if(event.keyCode == 13)
             {
                 event.preventDefault();
-                var subform=document.getElementById('form211_'+awb_filter.value);
+                var subform=document.getElementById('form353_'+awb_filter.value);
                 subform.elements[2].value=status_filter.value;
                 subform.elements[3].value=remark_filter.value;
-                form211_get_totals();
+                form353_get_totals();
                 awb_filter.value="";
             }
         });
@@ -73,7 +79,7 @@
             if(event.keyCode == 13)
             {
                 event.preventDefault();
-                form211_ini();
+                form353_ini();
             }
         });
 
@@ -81,67 +87,75 @@
         $(save_button).on("click", function(event)
         {
             event.preventDefault();
-            $("[id^='save_form211_']").click();
+            $("[id^='save_form353_']").click();
+			modal224_action(drs_filter.value,collection_filter.value,delivery_filter.value);
         });
+
+		$('#form353_body').paginator({visible:false});
     }
 
-    function form211_ini()
+    function form353_ini()
     {
-        $('#form211_body').html("");
-        $('#form211_foot').html("");
+        $('#form353_body').html("");
+        $('#form353_foot').html("");
 
-        var filter_fields=document.getElementById('form211_master');
+        var filter_fields=document.getElementById('form353_master');
         var drs_num=filter_fields['drs'].value;
         var all_status=filter_fields['status'].value;
         var all_remark=filter_fields['remark'].value;
         var awb_filter=filter_fields['awb_num'];
+		var delivery_filter=filter_fields['delivery_person'];
 
         if(drs_num!="")
         {
             show_loader();
 
-            var branch_object={index:'branch'};
+			var delivery_person_data={data_store:'drs',return_column:'employee',indexes:[{index:'drs_num',exact:drs_num}]};
+			set_my_value_json(delivery_person_data,delivery_filter);
 
+            var branch_object={index:'branch'};
             var new_columns={data_store:'logistics_orders',
                 			return_column:'awb_num',
                 			indexes:[{index:'awb_num'},
                                     {index:'id'},
-									{index:'type',exact:'NONCOD'},
+									{index:'type',exact:'COD'},
                                     {index:'drs_num',exact:drs_num},
                                     {index:'status'},
-									{index:'order_history'},
+                                    {index:'order_history'},
+									{index:'collectable_value'},
                                     branch_object]};
 
             set_my_value_list_json(new_columns,awb_filter);
 
-            read_json_rows('form211',new_columns,function(results)
+            read_json_rows('form353',new_columns,function(results)
             {
                 results.forEach(function(result)
                 {
                     var id=result.id;
                     var rowsHTML="<tr>";
-                    rowsHTML+="<form id='form211_"+result.awb_num+"'></form>";
+                    rowsHTML+="<form id='form353_"+result.awb_num+"'></form>";
                         rowsHTML+="<td data-th='AWB #'>";
-                            rowsHTML+="<input type='text' readonly='readonly' form='form211_"+result.awb_num+"' value='"+result.awb_num+"'>";
+                            rowsHTML+="<input type='text' readonly='readonly' form='form353_"+result.awb_num+"' value='"+result.awb_num+"'>";
                         rowsHTML+="</td>";
                         rowsHTML+="<td data-th='Current Status'>";
-                            rowsHTML+="<input type='text' readonly='readonly' form='form211_"+result.awb_num+"' value='"+result.status+"'>";
+                            rowsHTML+="<input type='text' readonly='readonly' form='form353_"+result.awb_num+"' value='"+result.status+"'>";
                         rowsHTML+="</td>";
                         rowsHTML+="<td data-th='Updated Status'>";
-                            rowsHTML+="<input type='text' form='form211_"+result.awb_num+"'>";
+                            rowsHTML+="<input type='text' form='form353_"+result.awb_num+"'>";
                         rowsHTML+="</td>";
                         rowsHTML+="<td data-th='Remark'>";
-                            rowsHTML+="<textarea form='form211_"+result.awb_num+"'></textarea>";
+                            rowsHTML+="<textarea form='form353_"+result.awb_num+"'></textarea>";
                         rowsHTML+="</td>";
                         rowsHTML+="<td data-th='Action'>";
-                            rowsHTML+="<input type='hidden' form='form211_"+result.awb_num+"' value='"+id+"'>";
-                            rowsHTML+="<button type='submit' class='btn green' form='form211_"+result.awb_num+"' id='save_form211_"+id+"' name='save'><i class='fa fa-save'></i></button>";
-                            rowsHTML+="<input type='hidden' form='form211_"+result.awb_num+"' value='"+result.order_history+"'>";
+                            rowsHTML+="<input type='hidden' form='form353_"+result.awb_num+"' value='"+id+"'>";
+                            rowsHTML+="<button type='submit' class='btn green' form='form353_"+result.awb_num+"' id='save_form353_"+id+"' name='save'><i class='fa fa-save'></i></button>";
+                            rowsHTML+="<input type='hidden' form='form353_"+result.awb_num+"' value='"+result.order_history+"'>";
+							rowsHTML+="<input type='hidden' form='form353_"+result.awb_num+"' name='amount' value='"+result.collectable_value+"'>";
                         rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
-                    $('#form211_body').prepend(rowsHTML);
-                    var fields=document.getElementById("form211_"+result.awb_num);
+                    $('#form353_body').prepend(rowsHTML);
+                    var fields=document.getElementById("form353_"+result.awb_num);
                     var status_filter=fields.elements[2];
 
                     set_static_value_list_json('logistics_orders','status',status_filter);
@@ -149,33 +163,38 @@
                     $(fields).on("submit", function(event)
                     {
                         event.preventDefault();
-                        form211_update_item(fields);
+                        form353_update_item(fields);
                     });
                 });
-                form211_get_totals();
+                form353_get_totals();
                 hide_loader();
             });
         }
     }
 
-    function form211_get_totals()
+    function form353_get_totals()
     {
         var out_for_delivery=0;
         var delivered=0;
         var pending=0;
         var undelivered=0;
+		var total_cod=0;
 
-        $("[id^='save_form211']").each(function(index)
+        $("[id^='save_form353']").each(function(index)
         {
             var subform_id=$(this).attr('form');
             var subform=document.getElementById(subform_id);
             var updated_status=subform.elements[2].value;
             var current_status=subform.elements[1].value;
+			var cod_amount=parseFloat(subform.elements['amount'].value);
 
             if(updated_status!="")
             {
                 if(updated_status=='delivered')
-                    delivered+=1;
+                {
+					delivered+=1;
+					total_cod+=cod_amount;
+				}
                 else if(updated_status=='undelivered')
                     undelivered+=1;
                 else if(updated_status=='out for delivery')
@@ -186,7 +205,10 @@
             else
             {
                 if(current_status=='delivered')
+				{
                     delivered+=1;
+					total_cod+=cod_amount;
+				}
                 else if(current_status=='undelivered')
                     undelivered+=1;
                 else if(current_status=='out for delivery')
@@ -196,17 +218,20 @@
             }
         });
 
+		var filter_fields=document.getElementById('form353_master');
+        filter_fields.elements['collection'].value=total_cod;
+
         var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
                                 "<td>Out for Delivery:<br>Delivered:<br>Undelivered:<br>Pending:</td>" +
                                 "<td>"+out_for_delivery+"<br>"+delivered+"<br>" +undelivered+"<br> " +pending+"</td>" +
                                 "<td></td>" +
                                 "</tr>";
-        $('#form211_foot').html(total_row);
+        $('#form353_foot').html(total_row);
     }
 
-    function form211_update_item(form)
+    function form353_update_item(form)
     {
-        if(is_update_access('form211'))
+        if(is_update_access('form353'))
         {
             var awb_num=form.elements[0].value;
             var status=form.elements[2].value;

@@ -1,8 +1,8 @@
-<div id='report76' class='tab-pane portlet box red-sunglo'>	   
+<div id='report76' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report76_ini();'>Refresh</a>
-		</div>		
+		</div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
@@ -15,9 +15,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 		<form id='report76_header' autocomplete="off">
 			<fieldset>
@@ -27,7 +27,7 @@
 				<label><input type='text' placeholder="Status" class='floatlabel' name='status'></label>
 				<label><input type='text' placeholder="Import Start Date" class='floatlabel' name='start'></label>
                 <label><input type='text' placeholder="Import End Date" class='floatlabel' name='end'></label>
-				<label><input type='submit' class='submit_hidden'></label>			
+				<label><input type='submit' class='submit_hidden'></label>
 			</fieldset>
 		</form>
 	<br>
@@ -47,7 +47,7 @@
 	<script>
 
     function report76_header_ini()
-    {	
+    {
         var form=document.getElementById('report76_header');
         var awb_filter=form.elements['awb'];
         var channel_filter=form.elements['channel'];
@@ -66,14 +66,14 @@
         var manifest_data={data_store:'logistics_orders',return_column:'manifest_id'};
         set_my_filter_json(manifest_data,manifest_filter);
 
-        set_static_filter_json('logistics_orders','status',status_filter);	
+        set_static_filter_json('logistics_orders','status',status_filter);
         set_static_value_list_json('logistics_orders','channel',channel_filter);
 
         $(start_filter).datepicker();
         $(end_filter).datepicker();
         start_filter.value=get_my_past_date(get_my_time()-(7*86400000));
         end_filter.value=vTime.date();
-        
+
         $('#report76').formcontrol();
     }
 
@@ -88,10 +88,10 @@
         var end_filter=get_raw_time(form.elements['end'].value)+86399999;
 
         show_loader();
-        $('#report76_body').html('');	
+        $('#report76_body').html('');
 
         var paginator=$('#report76_body').paginator({'page_size':25});
-        
+
         var columns={count:paginator.page_size(),
                     start_index:paginator.get_index(),
                     data_store:'logistics_orders',
@@ -120,7 +120,7 @@
                             {index:'return_address2'},
                             {index:'return_address3'},
                             {index:'drs_num'}]};
-            
+
         read_json_rows('report76',columns,function(items)
         {
             var rowsHTML="";
@@ -144,7 +144,8 @@
 
             });
             $('#report76_body').append(rowsHTML);
-
+			$('#report76').formcontrol();
+			
             initialize_tabular_report_buttons(columns,'Order Status','report76',function (item)
             {
                 item['AWB No']=item.awb_num;
@@ -166,7 +167,7 @@
                 item['Pincode']=item.pincode;
                 item['Mobile No']=item.phone;
                 item['Product Name']=item.sku;
-                
+
                 delete item.id;
                 delete item.awb_num;
                 delete item.import_date;
@@ -186,16 +187,16 @@
                 delete item.address2;
                 delete item.address3;
                 delete item.city;
-                delete item.pincode;     
+                delete item.pincode;
                 delete item.return_address1;
                 delete item.return_address2;
                 delete item.return_address3;
             });
-                    
+
             paginator.update_index(items.length);
             hide_loader();
         });
     };
-	
+
 	</script>
 </div>

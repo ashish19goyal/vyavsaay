@@ -1,4 +1,4 @@
-<div id='form336' class='tab-pane portlet box green-meadow'>	   
+<div id='form336' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
         <div class='caption'>
             <div class='col-md-6'><input type='text' style='height:30px;' id='form336_manifest_num' placeholder='Scan Manifest #' required></div>
@@ -22,7 +22,7 @@
             </div>
         </div>
 	</div>
-	
+
 	<div class="portlet-body">
         <form id='form336_master' autocomplete="off">
             <fieldset>
@@ -35,9 +35,9 @@
                 <input type='submit' class='submit_hidden'>
             </fieldset>
         </form>
-        
+
         <br>
-		
+
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr style='color:#9a9a9a;'>
@@ -53,7 +53,7 @@
 			</tbody>
         </table>
     </div>
-    
+
     <script>
         function form336_header_ini()
         {
@@ -82,7 +82,7 @@
             {
                 var pass_num_data={data_store:'user_preferences',return_column:'value',
                                       indexes:[{index:'name',exact:'pass_num'}]};
-                set_my_value_json(pass_num_data,pass_filter);	
+                set_my_value_json(pass_num_data,pass_filter);
             }
 
             $(save_button).off('click');
@@ -106,7 +106,7 @@
                 event.preventDefault();
                 form336_add_item();
             });
-            
+
             $('#form336_manifest_num').val('');
             $('#form336_manifest_num').off('keyup');
             $('#form336_manifest_num').on('keyup',function(e)
@@ -117,8 +117,8 @@
                     form336_add_items();
                 }
             });
-            
-            var paginator=$('#form336_body').paginator({visible:false});        
+
+            var paginator=$('#form336_body').paginator({visible:false});
 
             $('#form336').formcontrol();
         }
@@ -127,9 +127,9 @@
         {
             var pass_id=$("#form336_link").attr('data_id');
             if(pass_id==null)
-                pass_id="";	
+                pass_id="";
             $('#form336_body').html("");
-            
+
             if(pass_id!="")
             {
                 show_loader();
@@ -152,7 +152,7 @@
                         filter_fields.elements['date'].value=get_my_past_date(pass_results[0].date);
                         filter_fields.elements['id'].value=pass_results[0].id;
                         filter_fields.elements['num'].value=pass_results[0].num_orders;
-                        
+
                         var save_button=document.getElementById('form336_save');
                         $(save_button).off('click');
                         $(save_button).on("click", function(event)
@@ -162,16 +162,16 @@
                         });
                     }
                 });
-                        
+
                 var pass_items_column={data_store:'logistics_orders',
                                           indexes:[{index:'id'},
                                                   {index:'awb_num'},
                                                   {index:'sku'},
                                                   {index:'pieces'},
-                                                  {index:'weight'}, 
+                                                  {index:'weight'},
                                                   {index:'pass_num'},
                                                   {index:'lbh'},
-												  {index:'weight'}, 
+												  {index:'weight'},
                                                   {index:'pass_id',exact:pass_id}]};
 
                 read_json_rows('form336',pass_items_column,function(results)
@@ -202,14 +202,14 @@
                                 rowsHTML+="<input type='hidden' name='id' form='form336_"+id+"' value='"+id+"'>";
                                 rowsHTML+="<input type='button' name='save' class='submit_hidden' form='form336_"+id+"' id='save_form336_"+id+"'>";
                                 rowsHTML+="<button type='button' name='delete' class='btn red' form='form336_"+id+"' id='delete_form336_"+id+"' onclick='form336_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                         rowsHTML+="</tr>";
 
                         $('#form336_body').append(rowsHTML);
                         var item_form=document.getElementById('form336_'+id);
                         var save_button=item_form.elements['save'];
 
-                        $(save_button).on('click',function (e) 
+                        $(save_button).on('click',function (e)
                         {
                             e.preventDefault();
                             form336_update_item(item_form);
@@ -228,18 +228,18 @@
             if(is_create_access('form336'))
             {
                 var manifest_number= $('#form336_manifest_num').val();
-               
+
                 var pass_items_column={data_store:'logistics_orders',
                                           indexes:[{index:'id'},
                                                   {index:'awb_num'},
                                                   {index:'sku'},
                                                   {index:'pieces'},
                                                   {index:'weight'},
-												  {index:'lbh'}, 
+												  {index:'lbh'},
                                                   {index:'pass_num'},
                                                   {index:'manifest_num',exact:manifest_number}]};
                 read_json_rows('form336',pass_items_column,function(results)
-                {     
+                {
                     var orders_found=false;
                     var existing_orders=[];
                     $('#form336_body').find('form').each(function(index)
@@ -256,7 +256,7 @@
                             orders_found=true;
                             var id=result.id;
                             var rowsHTML="<tr>";
-                            
+
                             var address=result.city+", "+result.state;
                             rowsHTML+="<form id='form336_"+id+"'></form>";
                                 rowsHTML+="<td data-th='S.No.'>";
@@ -278,14 +278,14 @@
                                     rowsHTML+="<input type='hidden' name='id' form='form336_"+id+"' value='"+id+"'>";
                                     rowsHTML+="<input type='button' name='save' class='submit_hidden' form='form336_"+id+"' id='save_form336_"+id+"'>";
                                     rowsHTML+="<button type='button' name='delete' class='btn red' form='form336_"+id+"' id='delete_form336_"+id+"' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
-                                rowsHTML+="</td>";			
+                                rowsHTML+="</td>";
                             rowsHTML+="</tr>";
 
                             $('#form336_body').append(rowsHTML);
                             var item_form=document.getElementById('form336_'+id);
                             var save_button=item_form.elements['save'];
 
-                            $(save_button).on('click',function (e) 
+                            $(save_button).on('click',function (e)
                             {
                                 e.preventDefault();
                                 form336_create_item(item_form);
@@ -317,22 +317,22 @@
                 var master_form=document.getElementById('form336_master');
                 var pass_num=master_form.elements['pass_num'].value;
                 var pass_id=master_form.elements['id'].value;
-                
+
                 var data_id=form.elements['id'].value;
                 var save_button=form.elements['save'];
                 var del_button=form.elements['delete'];
 
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'logistics_orders',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'pass_num',value:pass_num},
                         {index:'pass_id',value:pass_id},
 	 					{index:'last_updated',value:last_updated}]};
  				update_json(data_json);
-				
+
                 $(form).readonly();
-                
+
                 del_button.removeAttribute("onclick");
                 $(del_button).on('click',function(event)
                 {
@@ -358,19 +358,19 @@
             {
                 var form=document.getElementById("form336_master");
                 form336_update_serial_numbers();
-                
+
                 var pass_num=form.elements['pass_num'].value;
                 var coloader=form.elements['loader'].value;
                 var vendor=form.elements['vendor'].value;
                 var date=get_raw_time(form.elements['date'].value);
                 var data_id=form.elements['id'].value;
                 var num_orders=form.elements['num'].value;
-                
+
                 var save_button=document.getElementById('form336_save');
                 var last_updated=get_my_time();
 
                 var pass_columns={data_store:'gate_pass',count:1,return_column:'id',
-                                 indexes:[{index:'pass_num',exact:pass_num}]};	
+                                 indexes:[{index:'pass_num',exact:pass_num}]};
                 read_json_single_column(pass_columns,function(gate_pass)
                 {
                     if(gate_pass.length==0)
@@ -379,11 +379,11 @@
                             log:'yes',
                             data:[{index:'id',value:data_id},
                                 {index:'pass_num',value:pass_num,unique:'yes'},
-                                {index:'coloader',value:coloader},  
+                                {index:'coloader',value:coloader},
                                 {index:'date',value:date},
                                 {index:'type',value:'non-bag'},
                                 {index:'vendor',value:vendor},
-                                {index:'num_orders',value:num_orders},  
+                                {index:'num_orders',value:num_orders},
                                 {index:'last_updated',value:last_updated}],
                             log_data:{title:'Created',notes:'Gate Pass # '+pass_num,link_to:'form337'}};
                         create_json(data_json);
@@ -408,14 +408,14 @@
                             e.preventDefault();
                             form336_update_form();
                         });
-                        
+
                         if(typeof func!='undefined')
                         {
                             func();
                         }
                         $("[id^='save_form336_']").click();
                     }
-                    else 
+                    else
                     {
                         $("#modal77_link").click();
                     }
@@ -454,7 +454,7 @@
             {
                 var form=document.getElementById("form336_master");
                 form336_update_serial_numbers();
-                
+
                 var pass_num=form.elements['pass_num'].value;
                 var coloader=form.elements['loader'].value;
                 var vendor=form.elements['vendor'].value;
@@ -475,17 +475,17 @@
                             log:'yes',
                             data:[{index:'id',value:data_id},
                                 {index:'pass_num',value:pass_num},
-                                {index:'coloader',value:coloader},  
+                                {index:'coloader',value:coloader},
                                 {index:'date',value:date},
                                 {index:'vendor',value:vendor},
-                                {index:'num_orders',value:num_orders},  
+                                {index:'num_orders',value:num_orders},
                                 {index:'last_updated',value:last_updated}],
                             log_data:{title:'Updated',notes:'Gate Pass # '+pass_num,link_to:'form337'}};
                         update_json(data_json);
 
                         $("[id^='save_form336_']").click();
                     }
-                    else 
+                    else
                     {
                         $("#modal77_link").click();
                     }
@@ -511,7 +511,7 @@
                     var data_json={data_store:'logistics_orders',
                             data:[{index:'id',value:data_id},
                                 {index:'pass_num',value:''},
-                                {index:'pass_id',value:''},  
+                                {index:'pass_id',value:''},
                                 {index:'last_updated',value:last_updated}]};
                     update_json(data_json);
 
@@ -542,13 +542,13 @@
                 var form=$(this)[0];
                 if(form.elements[0].value!="")
                 {
-                    var num_pieces=form.elements[2].value;
+                    var num_pieces=form.elements[3].value;
                     if(!vUtil.isBlank(num_pieces) && num_pieces!=0)
                         num_orders+=parseInt(num_pieces);
                     else
                         num_orders+=1;
                 }
-            
+
                 new_obj['AWB No']=form.elements[0].value;
                 new_obj['LBH']=form.elements[1].value;
                 new_obj['Weight']=form.elements[2].value;
@@ -558,7 +558,7 @@
             });
 
             filter_fields.elements['num'].value=num_orders;
-            
+
             $('#form336_share').off('click');
             $('#form336_share').click(function()
             {
@@ -582,15 +582,15 @@
             print_form336(function(container)
             {
                 $.print(container);
-                container.innerHTML="";	
-            });	
+                container.innerHTML="";
+            });
         }
 
         function print_form336(func)
         {
             var form_id='form336';
 
-            ////////////setting up containers///////////////////////	
+            ////////////setting up containers///////////////////////
             var container=document.createElement('div');
 
             var header=document.createElement('div');
@@ -661,7 +661,7 @@
             {
                 counter+=1;
                 var form=$(this)[0];
-        
+
                 var awb_num=""+form.elements[0].value;
 
                 var cnote_no=document.createElement('div');
@@ -682,10 +682,10 @@
                         "<td><div style='text-align:left;'>"+form.elements[1].value+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[2].value+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[3].value+"</div></td>"+
-                        "<td><div style='text-align:left;'>"+form.elements[4].value+"</div></td></tr>";				
+                        "<td><div style='text-align:left;'>"+form.elements[4].value+"</div></td></tr>";
             });
             new_table.innerHTML=table_rows;
-            /////////////placing the containers //////////////////////////////////////////////////////	
+            /////////////placing the containers //////////////////////////////////////////////////////
 
             container.appendChild(header);
             container.appendChild(mts_title);
