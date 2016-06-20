@@ -8,7 +8,7 @@ include_once 'config.php';
 class vDB
 {
 	private static $conn;
-  private static $instance;
+  	private static $instance;
 
 	private function __construct($db_name)
 	{
