@@ -581,7 +581,7 @@ function form268_create_form()
 						{index:'source_id',value:data_id},
 						{index:'source_info',value:bill_num},
 						{index:'source',value:'delivery challan'},
-						{index:'source_link',value:'form283'},
+						{index:'source_link',value:'form269'},
 						{index:'trans_date',value:bill_date},
 						{index:'notes',value:narration},
 	 					{index:'last_updated',value:last_updated}]};
@@ -716,7 +716,7 @@ function form268_update_form()
 						{index:'source_id',value:data_id},
 						{index:'source_info',value:bill_num},
 						{index:'source',value:'delivery challan'},
-						{index:'source_link',value:'form283'},
+						{index:'source_link',value:'form269'},
 						{index:'trans_date',value:bill_date},
 						{index:'notes',value:narration},
 	 					{index:'last_updated',value:last_updated}]};
