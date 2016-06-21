@@ -1831,58 +1831,6 @@ function form54_update_form(button)
 	}
 }
 
-
-/**
- * formNo 57
- * form Manage Services
- * @param button
- */
-function form57_update_item(form)
-{
-	if(is_update_access('form57'))
-	{
-		var service=form.elements[0].value;
-		var description=form.elements[1].value;
-		var price=form.elements[2].value;
-		var tax=form.elements[3].value;
-		var data_id=form.elements[4].value;
-		var last_updated=get_my_time();
-		var data_xml="<services>" +
-					"<id>"+data_id+"</id>" +
-					"<name unique='yes'>"+service+"</name>" +
-					"<description>"+description+"</description>" +
-					"<price>"+price+"</price>" +
-					"<tax>"+tax+"</tax>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</services>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>services</tablename>" +
-					"<link_to>form57</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Service "+service+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
-		for(var i=0;i<5;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-
 /**
  * formNo 58
  * form Manage Service pre-requisites
@@ -7805,52 +7753,6 @@ function form206_update_item(form)
 		update_row(data_xml,activity_xml);
 
 		for(var i=0;i<2;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
- * @form Update inventory (aurilion)
- * @param button
- */
-function form207_update_item(form)
-{
-	if(is_update_access('form1'))
-	{
-		var name=form.elements[0].value;
-		var batch=form.elements[1].value;
-		var expiry=get_raw_time(form.elements[2].value);
-		var mrp=form.elements[3].value;
-		var sp=form.elements[4].value;
-		var cp=form.elements[5].value;
-		var data_id=form.elements[8].value;
-		var last_updated=get_my_time();
-		var data_xml="<product_instances>" +
-					"<id>"+data_id+"</id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<batch>"+batch+"</batch>" +
-					"<mrp>"+mrp+"</mrp>"+
-					"<sale_price>"+sp+"</sale_price>"+
-					"<cost_price>"+cp+"</cost_price>"+
-					"<expiry>"+expiry+"</expiry>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</product_instances>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>product_instances</tablename>" +
-					"<link_to>form207</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Batch number "+batch+" of "+name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		update_row(data_xml,activity_xml);
-		for(var i=0;i<8;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}

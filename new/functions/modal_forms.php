@@ -304,18 +304,44 @@
 		</form>
 	</div>
 
-	<div id="modal20" title="Add new service">
-		<form id='modal20_form' autocomplete="off">
-			<fieldset>
-				<label>Name: <input type="text" required></label><br>
-				<label>Description: <textarea></textarea></label><br>
-				<label>Tax (%): <input type="number" step='any'></label><br>
-				<label>Price: <input type="number"></label><br>
-				<label id='modal20_attributes'></label><br>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
-	</div>
+	<a href='#modal20' data-toggle="modal" id='modal20_link'></a>
+	<div id="modal20" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal20_form' autocomplete="off">
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add Service</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Name</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal20_form' required name='name'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Description</div>
+					     			<div class="col-sm-12 col-md-8"><textarea form='modal20_form' name='desc'></textarea></div>
+					       </div>
+						   <div class="row">
+ 								   <div class="col-sm-12 col-md-4">Tax (in %)</div>
+                                     <div class="col-sm-12 col-md-8"><input type='number' step='any' required form='modal20_form' name='tax'></div>
+ 					    	</div>
+ 		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Price</div>
+					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal20_form' required name='price'></div>
+					    	</div>
+		                </div>
+						<div id='modal20_attributes'></div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal20_form' name='save'>Add</button>
+	               	<button type="button" class="btn red" form='modal20_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 	<div id="modal21" title="Copy service">
 		<form id='modal21_form' autocomplete="off">
@@ -1774,18 +1800,50 @@
 		</form>
 	</div>
 
-	<div id="modal142" title="Add new batch">
-		<form id='modal142_form' autocomplete="off">
-			<fieldset>
-				<label>Item: <input type="text" required></label><br>
-				<label>Batch: <input type='text' required></label><br>
-				<label>Expiry: <input type="text"></label><br>
-				<label>MRP: Rs. <input type="number" step='any'></label><br>
-				<label>Cost Price: Rs. <input type="number" step='any'></label><br>
-				<label>Sale Price: Rs. <input type="number" step='any'></label><br>
-				<input type="submit" value='Save' class='modal_submit'>
-			</fieldset>
-		</form>
+	<a href='#modal142' data-toggle="modal" id='modal142_link'></a>
+  	<div id="modal142" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <form id='modal142_form' autocomplete="off">
+					  <div class="modal-header">
+						  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+						  <h4 class="modal-title">Add Batch</h4>
+					  </div>
+					  <div class="modal-body">
+						  <div class="scroller" style="height:80%;" data-always-visible="1" data-rail-visible1="1">
+							  <div class="row">
+								  <div class="col-sm-12 col-md-4">Item</div>
+								  <div class="col-sm-12 col-md-8"><input type='text' form='modal142_form' required name='name'></div>
+							  </div>
+							  <div class="row">
+								  <div class="col-sm-12 col-md-4">Batch</div>
+								  <div class="col-sm-12 col-md-8"><input type='text' form='modal142_form' required name='batch'></div>
+							  </div>
+							  <div class="row">
+								  <div class="col-sm-12 col-md-4">Expiry</div>
+								  <div class="col-sm-12 col-md-8"><input type='text' form='modal142_form' name='expiry'></div>
+							  </div>
+							  <div class="row">
+								  <div class="col-sm-12 col-md-4">MRP</div>
+								  <div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal142_form' name='mrp'></div>
+							  </div>
+							  <div class="row">
+								  <div class="col-sm-12 col-md-4">Cost Price</div>
+								  <div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal142_form' name='cost'></div>
+							  </div>
+							  <div class="row">
+								  <div class="col-sm-12 col-md-4">Sale Price</div>
+								  <div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal142_form' name='sale'></div>
+							  </div>
+  		                  </div>
+  		             </div>
+					 <div class="modal-footer">
+						 <button type="submit" class="btn green" form='modal142_form' name='save'>Add</button>
+						 <button type="button" class="btn red" form='modal142_form' data-dismiss="modal" name='cancel'>Cancel</button>
+  	             	</div>
+				</form>
+			</div>
+		</div>
 	</div>
 
 	<div id="modal143" title="Update Inventory">

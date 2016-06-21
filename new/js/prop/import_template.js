@@ -147,16 +147,6 @@ function form43_import_template()
 };
 
 /**
-* @form manage services
-* @formNo 57
-*/
-function form57_import_template()
-{
-	var data_array=['id','name','description','price','duration','tax'];
-	my_array_to_csv(data_array);
-};
-
-/**
 * @form Service pre-requisites
 * @formNo 58
 */
@@ -807,18 +797,6 @@ function form195_import_template()
 	var data_array=['id','name','date','receiver','subject','salutation','content','signature','footer'];
 	my_array_to_csv(data_array);
 };
-
-
-/**
-* @form Update Inventory (aurilion)
-* @formNo 207
-*/
-function form207_import_template()
-{
-	var data_array=['id','product_name','batch','expiry','sale_price','cost_price','mrp','actual_quantity'];
-	my_array_to_csv(data_array);
-};
-
 
 
 /**

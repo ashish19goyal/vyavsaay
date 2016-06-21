@@ -817,31 +817,6 @@ function form54_header_ini()
 
 };
 
-
-/**
- * @form Manage services
- * @formNo 57
- */
-function form57_header_ini()
-{
-	var filter_fields=document.getElementById('form57_header');
-	var service_filter=filter_fields.elements[0];
-
-	var service_data="<services>" +
-			"<name></name>" +
-			"</services>";
-
-	set_my_filter(service_data,service_filter);
-
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form57_ini();
-	});
-
-};
-
 /**
  * @form Service Pre-requisites
  * @formNo 58
@@ -5344,34 +5319,6 @@ function form206_header_ini()
 	$('#form206_body').html("");
 }
 
-/**
- * @form Update Inventory (Aurilion)
- * @formNo 1
- */
-function form207_header_ini()
-{
-	var filter_fields=document.getElementById('form207_header');
-	var names_filter=filter_fields.elements[0];
-	var batches_filter=filter_fields.elements[1];
-
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form207_ini();
-	});
-	//setting autocompletes
-	var products_data="<product_master>" +
-			"<name></name>" +
-			"</product_master>";
-
-	var batch_data="<product_instances>" +
-			"<batch></batch>" +
-			"</product_instances>";
-
-	set_my_filter(products_data,names_filter);
-	set_my_filter(batch_data,batches_filter);
-};
 
 /**
  * @form Manage Production Plans

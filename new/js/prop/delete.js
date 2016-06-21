@@ -567,77 +567,6 @@ function form43_delete_item(button)
 }
 
 
-
-/**
- * formNo 57
- * form Manage Services
- * @param button
- */
-function form57_delete_item(button)
-{
-	if(is_delete_access('form57'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-
-			var service=form.elements[0].value;
-			var description=form.elements[1].value;
-			var data_id=form.elements[4].value;
-			var last_updated=get_my_time();
-			var data_xml="<services>" +
-						"<id>"+data_id+"</id>" +
-						"</services>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>services</tablename>" +
-						"<link_to>form57</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Service "+service+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var other_delete3="<pre_requisites>" +
-					"<name>"+service+"</name>" +
-					"<type>service</type>" +
-					"</pre_requisites>";
-			var other_delete4="<attributes>" +
-					"<name>"+service+"</name>" +
-					"<type>service</type>" +
-					"</attributes>";
-			var other_delete5="<cross_sells>" +
-					"<name>"+service+"</name>" +
-					"<type>service</type>" +
-					"</cross_sells>";
-			var other_delete6="<reviews>" +
-					"<name>"+service+"</name>" +
-					"<type>service</type>" +
-					"</reviews>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-				server_delete_simple(other_delete3);
-				server_delete_simple(other_delete4);
-				server_delete_simple(other_delete5);
-				server_delete_simple(other_delete6);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-				local_delete_simple(other_delete3);
-				local_delete_simple(other_delete4);
-				local_delete_simple(other_delete5);
-				local_delete_simple(other_delete6);
-			}
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
 /**
  * formNo 58
  * form Manage Service pre-requisites
@@ -4012,57 +3941,6 @@ function form206_delete_item(button)
 			update_row(data_xml,activity_xml);
 		}
 		$(button).parent().parent().remove();
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
- * @form Update Inventory (aurilion)
- * @param button
- */
-function form207_delete_item(button)
-{
-	if(is_delete_access('form207'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			var name=form.elements[0].value;
-			var batch=form.elements[1].value;
-			var data_id=form.elements[8].value;
-			var last_updated=get_my_time();
-			var data_xml="<product_instances>" +
-						"<id>"+data_id+"</id>" +
-						"</product_instances>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>product_instances</tablename>" +
-						"<link_to>form207</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Batch number "+batch+" of product "+name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var other_delete="<area_utilization>" +
-						"<item_name>"+name+"</item_name>" +
-						"<batch>"+batch+"</batch>" +
-						"</area_utilization>";
-
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-				server_delete_simple(other_delete);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-				local_delete_simple(other_delete);
-			}
-			$(button).parent().parent().remove();
-		});
 	}
 	else
 	{
