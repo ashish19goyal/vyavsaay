@@ -4166,4 +4166,51 @@
         </div>
     </div>
 
+	<a href='#modal225' data-toggle="modal" id='modal225_link'></a>
+	<div id="modal225" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal225_form' autocomplete="off">
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add Receipt</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Receipt Id</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal225_form' required name='receipt_id'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Date</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal225_form' name='date'></div>
+					       </div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Account</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal225_form' required name='account'></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Narration</div>
+                                    <div class="col-sm-12 col-md-8"><textarea form='modal225_form' name='narration'></textarea></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Receipt Amount</div>
+					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' min='0' form='modal225_form' name='amount' required></div>
+					     		</div>
+		                  <div class="row">
+								   <div class="col-sm-12 col-md-4">Balance</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal225_form' name='balance' readonly='readonly'></div>
+					     		</div>
+                        </div>
+
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal225_form' name='save'>Add</button>
+	               	<button type="button" class="btn red" form='modal225_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>

@@ -1,9 +1,8 @@
 <div id='form291' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class='caption'>
-			<a class='btn btn-circle grey btn-outline btn-sm' onclick='modal155_action();'>Add <i class='fa fa-plus'></i></a>
-            <a class='btn btn-circle grey btn-outline btn-sm' onclick='modal31_action();'>Delete <i class='fa fa-trash'></i></a>
-		</div>
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick='modal225_action();'>Add <i class='fa fa-plus'></i></a>
+        </div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>

@@ -36,9 +36,9 @@
 				<tr>
 					<th>Date</th>
 					<th>Particulars</th>
-					<th>Credit</th>
 					<th>Debit</th>
-          <th>Balance</th>
+					<th>Credit</th>
+					<th>Balance</th>
 				</tr>
 			</thead>
 			<tbody id='report58_body'>
@@ -89,23 +89,23 @@
                                       {index:'type'},
                                       {index:'amount'},
                                       {index:'source_link'},
-																			{index:'source'},
+									  {index:'source'},
                                       {index:'source_id'},
                                       {index:'source_info'},
-																			{index:'notes'},
+									  {index:'notes'},
                                       {index:'trans_date',upperbound:(get_raw_time(end_date)+86399999)},
                                       {index:'acc_name',exact:account},
-																			{index:'last_updated'}]};
+									  {index:'last_updated'}]};
             read_json_rows('report58',tran_data,function(transactions)
             {
 	              transactions.sort(function(a,b)
 	              {
-	                  if(parseFloat(a.trans_date)>parseFloat(b.trans_date))
-	                  {	return 1;}
-										else if(parseFloat(a.trans_date)==parseFloat(b.trans_date) && parseFloat(a.last_updated)>parseFloat(b.last_updated))
-										{ return 1;}
-										else
-	                  {	return -1;}
+	                  	if(parseFloat(a.trans_date)>parseFloat(b.trans_date))
+	                  	{	return 1;}
+						else if(parseFloat(a.trans_date)==parseFloat(b.trans_date) && parseFloat(a.last_updated)>parseFloat(b.last_updated))
+						{ return 1;}
+						else
+	                  	{	return -1;}
 	              });
 
               var balance=0;
@@ -135,14 +135,15 @@
                   var particulars=tran.source+" - "+tran.source_info+"<br>Notes: "+tran.notes;
 									var source_form=tran.source_link;
 
-									if(tran.type=='received')
-									{
-										balance-=parseFloat(tran.amount);
-	                  credit="<span class='label label-sm label-success'>Rs. "+tran.amount+"</span>";
+					if(tran.type=='received')
+					{
+						balance-=parseFloat(tran.amount);
+	                  	credit="<span class='label label-sm label-success'>Rs. "+tran.amount+"</span>";
 	                }
-									else {
-										balance+=parseFloat(tran.amount);
-	                  debit="<span class='label label-sm label-warning'>Rs. "+tran.amount+"</span>";
+					else
+					{
+						balance+=parseFloat(tran.amount);
+	                  	debit="<span class='label label-sm label-warning'>Rs. "+tran.amount+"</span>";
 	                }
 
                   var rowsHTML="<tr>";
@@ -152,11 +153,11 @@
                   rowsHTML+="<td data-th='Particulars'><a id='report58_particulars_"+tran.id+"'>";
                       rowsHTML+=particulars;
                   rowsHTML+="</a></td>";
-                  rowsHTML+="<td data-th='Credit'>";
-                      rowsHTML+=credit;
-                  rowsHTML+="</td>";
                   rowsHTML+="<td data-th='Debit'>";
                       rowsHTML+=debit;
+                  rowsHTML+="</td>";
+				  rowsHTML+="<td data-th='Credit'>";
+                      rowsHTML+=credit;
                   rowsHTML+="</td>";
                   rowsHTML+="<td data-th='Balance'>";
                       rowsHTML+="Rs. "+vUtil.round(balance,2);
@@ -168,11 +169,11 @@
 
                   $(particulars_link).on('click',function()
                   {
-										  element_display(tran.source_id,source_form);
+						element_display(tran.source_id,source_form);
                   });
               });
             	initialize_static_tabular_report_buttons('Ledger','report58');
-              hide_loader();
+              	hide_loader();
             });
         };
 

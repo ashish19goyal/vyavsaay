@@ -35,11 +35,11 @@
 			<thead>
 				<tr>
 					<th>Date</th>
-          <th>Account</th>
+          			<th>Account</th>
 					<th>Particulars</th>
 					<th>Debit</th>
 					<th>Credit</th>
-          <th>Balance</th>
+          			<th>Balance</th>
 				</tr>
 			</thead>
 			<tbody id='report60_body'>
@@ -77,67 +77,67 @@
             show_loader();
             $('#report60_body').html('');
 
-						var tran_data={data_store:'transactions',
-															indexes:[{index:'id'},
-																			{index:'type'},
-																			{index:'amount'},
-																			{index:'source_link'},
-																			{index:'source'},
-																			{index:'source_id'},
-																			{index:'source_info'},
-																			{index:'notes'},
-																			{index:'trans_date',upperbound:end_date},
-																			{index:'acc_name'},
-																			{index:'last_updated'}]};
+			var tran_data={data_store:'transactions',
+						indexes:[{index:'id'},
+								{index:'type'},
+								{index:'amount'},
+								{index:'source_link'},
+								{index:'source'},
+								{index:'source_id'},
+								{index:'source_info'},
+								{index:'notes'},
+								{index:'trans_date',upperbound:end_date},
+								{index:'acc_name'},
+								{index:'last_updated'}]};
 
             read_json_rows('report60',tran_data,function(transactions)
             {
-							transactions.sort(function(a,b)
-							{
-									if(parseFloat(a.trans_date)>parseFloat(b.trans_date))
-									{	return 1;}
-									else if(parseFloat(a.trans_date)==parseFloat(b.trans_date) && parseFloat(a.last_updated)>parseFloat(b.last_updated))
-									{ return 1;}
-									else
-									{	return -1;}
-							});
+				transactions.sort(function(a,b)
+				{
+						if(parseFloat(a.trans_date)>parseFloat(b.trans_date))
+						{	return 1;}
+						else if(parseFloat(a.trans_date)==parseFloat(b.trans_date) && parseFloat(a.last_updated)>parseFloat(b.last_updated))
+						{ return 1;}
+						else
+						{	return -1;}
+				});
 
-							var balance=0;
+				var balance=0;
 
-							for(var p=0;p<transactions.length;p++)
-							{
-									if(transactions[p].trans_date<get_raw_time(start_date))
-									{
-											if(transactions[p].type=='given')
-											{
-													balance+=parseFloat(transactions[p].amount);
-											}
-											else
-											{
-													balance-=parseFloat(transactions[p].amount);
-											}
-
-											transactions.splice(p,1);
-											p--;
-									}
-							}
-
-              transactions.forEach(function(tran)
-              {
-								var credit="-";
-								var debit="-";
-								var particulars=tran.source+" - "+tran.source_info+"<br>Notes: "+tran.notes;
-								var source_form=tran.source_link;
-
-								if(tran.type=='received')
+				for(var p=0;p<transactions.length;p++)
+				{
+						if(transactions[p].trans_date<get_raw_time(start_date))
+						{
+								if(transactions[p].type=='given')
 								{
-									balance-=parseFloat(tran.amount);
-									credit="<span class='label label-sm label-success'>Rs. "+tran.amount+"</span>";
+										balance+=parseFloat(transactions[p].amount);
 								}
-								else {
-									balance+=parseFloat(tran.amount);
-									debit="<span class='label label-sm label-warning'>Rs. "+tran.amount+"</span>";
+								else
+								{
+										balance-=parseFloat(transactions[p].amount);
 								}
+
+								transactions.splice(p,1);
+								p--;
+						}
+				}
+
+	              transactions.forEach(function(tran)
+	              {
+					var credit="-";
+					var debit="-";
+					var particulars=tran.source+" - "+tran.source_info+"<br>Notes: "+tran.notes;
+					var source_form=tran.source_link;
+
+					if(tran.type=='received')
+					{
+						balance-=parseFloat(tran.amount);
+						credit="<span class='label label-sm label-success'>Rs. "+tran.amount+"</span>";
+					}
+					else {
+						balance+=parseFloat(tran.amount);
+						debit="<span class='label label-sm label-warning'>Rs. "+tran.amount+"</span>";
+					}
 
                   var rowsHTML="<tr>";
                   rowsHTML+="<td data-th='Date'>";
@@ -163,7 +163,7 @@
                   $('#report60_body').append(rowsHTML);
                   var particulars_link=document.getElementById('report60_particulars_'+tran.id);
 
-									$(particulars_link).on('click',function()
+					$(particulars_link).on('click',function()
                   {
                       element_display(tran.source_id,source_form);
                   });

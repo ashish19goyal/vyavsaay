@@ -28,6 +28,7 @@
 						<th><input type='text' placeholder="Customer" class='floatlabel' name='cust' form='form283_header'></th>
 						<th><input type='text' placeholder="Date" readonly='readonly' form='form283_header'></th>
 						<th><input type='text' placeholder="Amount" readonly="readonly" form='form283_header'></th>
+						<th><input type='text' placeholder="Narration" readonly="readonly" form='form283_header'></th>
 						<th><input type='submit' form='form283_header' style='visibility: hidden;'></th>
 				</tr>
 			</thead>
@@ -82,6 +83,7 @@
                                     {index:'bill_date'},
                                     {index:'total'},
                                     {index:'status'},
+									{index:'notes'},
                                     {index:'performa',exact:'yes'}];
 
             read_json_rows('form283',new_columns,function(results)
@@ -108,8 +110,11 @@
                             rowsHTML+="<td data-th='Amount'>";
                                 rowsHTML+="<input type='text' readonly='readonly' form='form283_"+result.id+"' value='"+result.total+"'>";
                             rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Narration'>";
+                                rowsHTML+="<textarea readonly='readonly' form='form283_"+result.id+"'>"+result.notes+"</textarea>";
+                            rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Action'>";
-                                rowsHTML+="<input type='hidden' form='form283_"+result.id+"' value='"+result.id+"'>";
+                                rowsHTML+="<input type='hidden' form='form283_"+result.id+"' value='"+result.id+"' name='id'>";
                             if(result.status!='cancelled')
                             {
                                 rowsHTML+="<button type='button' class='btn red' form='form283_"+result.id+"' title='Delete Bill' onclick='form283_delete_item($(this));'><i class='fa fa-trash'></i></button>";
@@ -132,14 +137,14 @@
                 });
 
                 $('#form283').formcontrol();
-								paginator.update_index(results.length);
-								initialize_tabular_report_buttons(new_columns,'Invoices','form283',function (item)
+				paginator.update_index(results.length);
+				initialize_tabular_report_buttons(new_columns,'Invoices','form283',function (item)
                 {
                     item['bill date']=get_my_past_date(item.bill_date);
                     delete item.bill_date;
                     delete item.performa;
                 });
-								hide_loader();
+				hide_loader();
             });
         }
 
@@ -153,27 +158,25 @@
                     var form=document.getElementById(form_id);
 
                     var bill_num=form.elements[0].value;
-                    var customer_name=form.elements[1].value;
-                    var amount=form.elements[3].value;
-                    var data_id=form.elements[4].value;
+                    var data_id=form.elements['id'].value;
                     var last_updated=get_my_time();
 
                     var bill_json={data_store:'bills',
-									 				log:'yes',
-									 				data:[{index:'id',value:data_id},
-									 					{index:'status',value:'cancelled'},
-									 					{index:'last_updated',value:last_updated}],
-									 				log_data:{title:"Cancelled",notes:"Invoice # "+bill_num,link_to:"form283"}};
+				 				log:'yes',
+				 				data:[{index:'id',value:data_id},
+				 					{index:'status',value:'cancelled'},
+				 					{index:'last_updated',value:last_updated}],
+				 				log_data:{title:"Cancelled",notes:"Invoice # "+bill_num,link_to:"form283"}};
 
-										var transaction_json={data_store:'transactions',
-								 							data:[{index:'id',value:data_id}]};
+					var transaction_json={data_store:'transactions',
+			 							data:[{index:'id',value:data_id}]};
 
-										var items_json={data_store:'bill_items',
-								 							data:[{index:'bill_id',value:data_id}]};
+					var items_json={data_store:'bill_items',
+			 							data:[{index:'bill_id',value:data_id}]};
 
-										var adjust_json={data_store:'inventory_adjust',
-								 							data:[{index:'source',value:'sale'},
-								                   {index:'source_id',value:data_id}]};
+					var adjust_json={data_store:'inventory_adjust',
+			 							data:[{index:'source',value:'sale'},
+			                   {index:'source_id',value:data_id}]};
 
                     update_json(bill_json);
                     delete_json(transaction_json);

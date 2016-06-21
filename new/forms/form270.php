@@ -15,7 +15,7 @@
                 <label><div class='btn-overlap'><input type='text' required name='supplier' placeholder='Supplier' class='floatlabel'><button type='button' title='Add new supplier' class='btn btn-icon-only default right-overlap' id='form270_add_supplier'><i class='fa fa-plus'></i></button></div></label>
                 <label><input type='text' required name='bill_num' class='floatlabel' placeholder='Bill Number'></label>
                 <label><input type='text' name='date' required class='floatlabel' placeholder='Bill Date'></label>
-								<label><textarea name='notes' class='floatlabel' placeholder='Narration'></textarea></label>
+				<label><textarea name='notes' class='floatlabel' placeholder='Narration'></textarea></label>
                 <input type='hidden' name='bill_id'>
                 <input type='submit' class='submit_hidden'>
             </fieldset>
@@ -26,7 +26,7 @@
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr style='color:#9a9a9a;'>
-          <th>Item</th>
+          			<th>Item</th>
 					<th>Quantity</th>
 					<th>Rate</th>
 					<th>Amount</th>
@@ -35,8 +35,8 @@
 			</thead>
 			<tbody id='form270_body'>
 			</tbody>
-      <tfoot id='form270_foot'>
-      </tfoot>
+	      <tfoot id='form270_foot'>
+	      </tfoot>
 		</table>
     </div>
 
@@ -425,12 +425,12 @@ function form270_create_form()
 				data:[{index:'id',value:data_id},
 					{index:'bill_id',value:bill_id},
 					{index:'supplier',value:supplier},
-          {index:'bill_date',value:bill_date},
-          {index:'amount',value:amount},
-          {index:'total',value:total},
-          {index:'tax',value:tax},
-          {index:'cartage',value:cartage},
-          {index:'transaction_id',value:data_id},
+			          {index:'bill_date',value:bill_date},
+			          {index:'amount',value:amount},
+			          {index:'total',value:total},
+			          {index:'tax',value:tax},
+			          {index:'cartage',value:cartage},
+			          {index:'transaction_id',value:data_id},
 					{index:'notes',value:notes},
 					{index:'last_updated',value:last_updated}],
       log:'yes',
@@ -446,7 +446,7 @@ function form270_create_form()
 					{index:'source_info',value:bill_id},
 					{index:'source',value:'purchase bill'},
 					{index:'source_link',value:'form53'},
-					{index:'trans_date',value:last_updated},
+					{index:'trans_date',value:bill_date},
 					{index:'notes',value:notes},
 					{index:'last_updated',value:last_updated}]};
 
@@ -561,16 +561,16 @@ function form270_update_form()
 	 				data:[{index:'id',value:data_id},
 	 					{index:'bill_id',value:bill_id},
 	 					{index:'supplier',value:supplier},
-            {index:'bill_date',value:bill_date},
-            {index:'amount',value:amount},
-            {index:'total',value:total},
-            {index:'tax',value:tax},
-            {index:'cartage',value:cartage},
-            {index:'transaction_id',value:data_id},
+			            {index:'bill_date',value:bill_date},
+			            {index:'amount',value:amount},
+			            {index:'total',value:total},
+			            {index:'tax',value:tax},
+			            {index:'cartage',value:cartage},
+			            {index:'transaction_id',value:data_id},
 						{index:'notes',value:notes},
 	 					{index:'last_updated',value:last_updated}],
-        log:'yes',
-        log_data:{title:'Updated',notes:'Purchase Bill #'+bill_id,link_to:'form53'}};
+			        log:'yes',
+			        log_data:{title:'Updated',notes:'Purchase Bill #'+bill_id,link_to:'form53'}};
 
 				var transaction_json={data_store:'transactions',
 						data:[{index:'id',value:data_id},
@@ -582,6 +582,7 @@ function form270_update_form()
 							{index:'source_info',value:bill_id},
 							{index:'source',value:'purchase bill'},
 							{index:'source_link',value:'form53'},
+							{index:'trans_date',value:bill_date},
 							{index:'notes',value:notes},
 							{index:'last_updated',value:last_updated}]};
 

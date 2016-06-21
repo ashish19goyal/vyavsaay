@@ -13063,8 +13063,8 @@ function modal172_action()
 		var found = $.inArray($(receipt_filter).val(), receipts) > -1;
 		if(found)
 		{
-				$(receipt_filter).val('');
-				$(receipt_filter).attr('placeholder','Duplicate Receipt Number');
+			$(receipt_filter).val('');
+			$(receipt_filter).attr('placeholder','Duplicate Receipt Number');
 		}
 	},receipts_data);
 
@@ -13072,10 +13072,10 @@ function modal172_action()
 	$(account_filter).on('blur',function(e)
 	{
 		var transactions_data={data_store:'transactions',
-															indexes:[{index:'id'},
-																			{index:'type'},
-																			{index:'amount'},
-																			{index:'acc_name',exact:account_filter.value}]};
+								indexes:[{index:'id'},
+										{index:'type'},
+										{index:'amount'},
+										{index:'acc_name',exact:account_filter.value}]};
 		read_json_rows('',transactions_data,function(transactions)
 		{
 			var balance_amount=0;
@@ -13131,8 +13131,8 @@ function modal172_action()
 					{index:'amount',value:paid_amount},
 					{index:'tax',value:'0'},
 					{index:'source_id',value:p_id},
-					{index:'source_info',value:receipt_id},
-					{index:'source',value:'receipt'},
+					{index:'source_info',value:receipt_id,uniqueWith:['source']},
+					{index:'source',value:'payable'},
 					{index:'source_link',value:'form282'},
 					{index:'trans_date',value:receipt_date},
 					{index:'notes',value:narration},
@@ -13140,9 +13140,9 @@ function modal172_action()
 
 				create_json(transaction_json);
 
-        var receipt_json={data_store:'receipts',
+        	var receipt_json={data_store:'receipts',
 	 				data:[{index:'id',value:p_id},
-	 					{index:'receipt_id',value:receipt_id},
+	 					{index:'receipt_id',value:receipt_id,unique:'yes'},
 	 					{index:'type',value:receipt_type},
 	 					{index:'amount',value:paid_amount},
 	 					{index:'narration',value:narration},
@@ -13150,7 +13150,7 @@ function modal172_action()
 	 					{index:'date',value:receipt_date},
 	 					{index:'last_updated',value:last_updated}]};
 
-				create_json(receipt_json);
+			create_json(receipt_json);
 		}
 		else
 		{
@@ -17103,4 +17103,121 @@ function modal223_action(production_item_id,item_name,plan_id,plan_name,produced
 	});
 
 	$("#modal223_link").click();
+}
+
+/**
+ * @modal Add Receipt
+ * @modalNo 225
+ */
+function modal225_action()
+{
+	var form=document.getElementById("modal225_form");
+	var receipt_filter=form.elements['receipt_id'];
+	var date_filter=form.elements['date'];
+	var account_filter=form.elements['account'];
+	var narration_filter=form.elements['narration'];
+	var amount_filter=form.elements['amount'];
+	var balance_filter=form.elements['balance'];
+	var receipt_record_id="";
+
+	$(date_filter).datepicker();
+	date_filter.value=vTime.date();
+
+	var accounts_data={data_store:'customers',return_column:'acc_name'};
+	set_my_value_list_json(accounts_data,account_filter);
+
+	$(account_filter).off('blur');
+	$(account_filter).off('change');
+	$(account_filter).on('blur change',function(e)
+	{
+		var transactions_data={data_store:'transactions',
+						indexes:[{index:'id'},
+								{index:'type'},
+								{index:'amount'},
+								{index:'acc_name',exact:account_filter.value}]};
+		read_json_rows('',transactions_data,function(transactions)
+		{
+			var balance_amount=0;
+			transactions.forEach(function(tran)
+			{
+				if(tran.type=='received')
+				{
+					balance_amount-=parseFloat(tran.amount);
+				}
+				else if(tran.type=='given')
+				{
+					balance_amount+=parseFloat(tran.amount);
+				}
+			});
+
+			if(balance_amount==0)
+			{
+				balance_filter.value="Rs. 0";
+			}
+			else if(balance_amount>0)
+			{
+				balance_filter.value="Receivable: Rs. "+balance_amount;
+			}
+			else
+			{
+				balance_amount=(-balance_amount);
+				balance_filter.value="Payable: Rs. "+balance_amount;
+			}
+		});
+	});
+
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		///////////////////////////////////////
+		event.preventDefault();
+		var received_amount=amount_filter.value;
+		var receipt_date=get_raw_time(date_filter.value);
+		var receipt_id=form.elements['receipt_id'].value;
+		var receipt_type='received';
+		var account_name=account_filter.value;
+		var narration=narration_filter.value;
+		var last_updated=vTime.unix();
+		var p_id=get_new_key();
+
+		if(is_create_access('form124') || is_create_access('form243') || is_create_access('form291') || is_create_access('form282'))
+		{
+			var transaction_json={data_store:'transactions',
+				data:[{index:'id',value:p_id},
+					{index:'acc_name',value:account_name},
+					{index:'type',value:receipt_type},
+					{index:'amount',value:received_amount},
+					{index:'tax',value:'0'},
+					{index:'source_id',value:p_id},
+					{index:'source_info',value:receipt_id,uniqueWith:['source']},
+					{index:'source',value:'receipt'},
+					{index:'source_link',value:'form291'},
+					{index:'trans_date',value:receipt_date},
+					{index:'notes',value:narration},
+					{index:'last_updated',value:last_updated}]};
+
+					create_json(transaction_json);
+
+        	var receipt_json={data_store:'receipts',
+	 				data:[{index:'id',value:p_id},
+	 					{index:'receipt_id',value:receipt_id,unique:'yes'},
+	 					{index:'type',value:receipt_type},
+	 					{index:'amount',value:received_amount},
+	 					{index:'narration',value:narration},
+	 					{index:'acc_name',value:account_name},
+	 					{index:'date',value:receipt_date},
+	 					{index:'last_updated',value:last_updated}]};
+
+				create_json(receipt_json);
+
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
+
+		$(form).find(".close").click();
+	});
+
+	$("#modal225_link").click();
 }

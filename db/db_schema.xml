@@ -530,6 +530,9 @@
 			<manifest_id index="yes" type="BIGINT"></manifest_id>
 			<period_start index='yes' type="BIGINT"></period_start>
 			<period_end index='yes' type="BIGINT"></period_end>
+			<vehicle_num index="yes" type="TEXT"></vehicle_num>
+			<challan_num index="yes" type="TEXT"></challan_num>
+			<prepared_by index="yes" type="TEXT"></prepared_by>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</bills>
