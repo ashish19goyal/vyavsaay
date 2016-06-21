@@ -10068,10 +10068,10 @@ function modal143_action(item_name,batch)
 {
 	var form=document.getElementById('modal143_form');
 
-	var fitem=form.elements[1];
-	var fbatch=form.elements[2];
-	var ffresh=form.elements[3];
-	var finuse=form.elements[4];
+	var fitem=form.elements['name'];
+	var fbatch=form.elements['batch'];
+	var ffresh=form.elements['fresh'];
+	var finuse=form.elements['inuse'];
 	fitem.value=item_name;
 	fbatch.value=batch;
 
@@ -10085,14 +10085,12 @@ function modal143_action(item_name,batch)
 			var inuse=parseFloat(finuse.value);
 			var last_updated=get_my_time();
 
-			var inuse_data="<bill_items sum='yes'>"+
-							"<quantity></quantity>"+
-							"<hired exact='yes'>yes</hired>"+
-							"<fresh exact='yes'>yes</fresh>"+
-							"<item_name exact='yes'>"+item_name+"</item_name>"+
-							"<batch exact='yes'>"+batch+"</batch>"+
-							"</bill_items>";
-			get_single_column_data(function(hireables)
+			var inuse_data={data_store:'bill_items',sum:'yes',return_column:'quantity',
+							indexes:[{index:'hired',exact:'yes'},
+									{index:'fresh',exact:'yes'},
+									{index:'item_name',exact:item_name},
+									{index:'batch',exact:batch}]};
+			read_json_single_column(inuse_data,function(hireables)
 			{
 				var new_inuse=inuse;
 				if(hireables.length>0)
@@ -10100,41 +10098,42 @@ function modal143_action(item_name,batch)
 					new_inuse-=parseFloat(hireables[0]);
 				}
 
-				var hireable_xml="<bill_items sum='yes'>"+
-							"<id>"+get_new_key()+"</id>"+
-							"<quantity>"+new_inuse+"</quantity>"+
-							"<hired exact='yes'>yes</hired>"+
-							"<fresh exact='yes'>yes</fresh>"+
-							"<item_name exact='yes'>"+item_name+"</item_name>"+
-							"<batch exact='yes'>"+batch+"</batch>"+
-							"<from_date>"+last_updated+"</from_date>"+
-							"<to_date>"+last_updated+"</to_date>"+
-							"<last_updated>"+last_updated+"</last_updated>"+
-							"</bill_items>";
+				var hireable_json={data_store:'bill_items',
+					warning:'no',
+					data:[{index:'id',value:get_new_key()},
+						{index:'quantity',value:new_inuse},
+						{index:'hired',value:'yes'},
+						{index:'fresh',value:'yes'},
+						{index:'item_name',value:item_name},
+						{index:'batch',value:batch},
+						{index:'from_date',value:last_updated},
+						{index:'to_date',value:last_updated},
+						{index:'last_updated',value:last_updated}]};
 
 				get_inventory(item_name,batch,function(inventory)
 				{
 					var new_total=fresh+inuse-parseFloat(inventory);
-					var adjust_xml="<inventory_adjust>" +
-							"<id>"+get_new_key()+"</id>" +
-							"<product_name>"+item_name+"</product_name>" +
-							"<batch>"+batch+"</batch>" +
-							"<quantity>"+new_total+"</quantity>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</inventory_adjust>";
-					create_simple_no_warning(adjust_xml);
-					create_simple_no_warning(hireable_xml);
+					var adjust_json={data_store:'inventory_adjust',
+						warning:'no',
+						data:[{index:'id',value:get_new_key()},
+							{index:'quantity',value:new_total},
+							{index:'product_name',value:item_name},
+							{index:'batch',value:batch},
+							{index:'last_updated',value:last_updated}]};
+
+					create_json(adjust_json);
+					create_json(hireable_json);
 				});
-			},inuse_data);
+			});
 		}
 		else
 		{
 			$("#modal2_link").click();
 		}
-		$("#modal143").dialog("close");
+		$(form).find(".close").click();
 	});
 
-	$("#modal143").dialog("open");
+	$("#modal143_link").click();
 }
 
 /**

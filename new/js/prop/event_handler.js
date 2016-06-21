@@ -247,8 +247,7 @@ function modal_forms_ini()
 	{
 		dynamic_modal_array.push(i);
 	}
-	dynamic_modal_array.push(143);
-    dynamic_modal_array.push(145);
+	dynamic_modal_array.push(145);
     dynamic_modal_array.push(147);
     for(var i=150;i<=152;i++)
 	{
