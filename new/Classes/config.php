@@ -18,14 +18,13 @@ class config
 	 */
 	private function __construct()
 	{
-    $root_folder="../../";
-    if(isset($_SERVER['DOCUMENT_ROOT']) && $_SERVER['DOCUMENT_ROOT']!="")
-    {
-      $root_folder=$_SERVER['DOCUMENT_ROOT']."/";
-    }
-    $fr=$root_folder."../Config/config.php";
-
-    $this->attributes = include $fr ;
+	    $root_folder="../../";
+	    if(isset($_SERVER['DOCUMENT_ROOT']) && $_SERVER['DOCUMENT_ROOT']!="")
+	    {
+	    	$root_folder=$_SERVER['DOCUMENT_ROOT']."/";
+	    }
+	    $fr=$root_folder."../Config/config.php";
+	    $this->attributes = include $fr ;
 	}
 
 	/**
@@ -35,18 +34,18 @@ class config
 	{
 		if(!isset(self::$instance))
 		{
-      self::$instance = new config();
-    }
-    return self::$instance;
+      		self::$instance = new config();
+    	}
+    	return self::$instance;
 	}
 
-  public function get($key)
+  	public function get($key)
 	{
 		if(isset($this->attributes[$key]))
 		{
-      return $this->attributes[$key];
-    }
-    return '';
+      		return $this->attributes[$key];
+    	}
+    	return '';
 	}
 
 }
