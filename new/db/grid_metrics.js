@@ -37,8 +37,9 @@ function set_grid_item_1()
 */
 function set_grid_item_2()
 {
-	var new_columns={data_store:'bills',return_column:'id'};
-		new_columns.indexes=[{index:'bill_date',lowerbound:(get_raw_time(vTime.date())-1000),upperbound:(get_raw_time(vTime.date())+86399999)}];
+	var new_columns={data_store:'bills',return_column:'id',
+					indexes:[{index:'bill_date',lowerbound:(get_raw_time(vTime.date())-1000),
+					upperbound:(get_raw_time(vTime.date())+86399999)}]};
 
 	read_json_count(new_columns,function(bill_count)
 	{
@@ -87,8 +88,8 @@ function set_grid_item_3()
 */
 function set_grid_item_4()
 {
-	var new_columns={data_store:'supplier_bills',return_column:'id'};
-		new_columns.indexes=[{index:'entry_date',lowerbound:(get_raw_time(vTime.date())-1000),upperbound:(get_raw_time(vTime.date())+86399999)}];
+	var new_columns={data_store:'supplier_bills',return_column:'id',
+					indexes:[{index:'entry_date',lowerbound:(get_raw_time(vTime.date())-1000),upperbound:(get_raw_time(vTime.date())+86399999)}]};
 
 	read_json_count(new_columns,function(bill_count)
 	{
@@ -109,13 +110,12 @@ function set_grid_item_4()
 */
 function set_grid_item_5()
 {
-	var new_columns=new Object();
-		new_columns.sum='yes';
-		new_columns.data_store='payments';
-		new_columns.return_column='total_amount';
-		new_columns.indexes=[{index:'date',lowerbound:(get_raw_time(vTime.date())-1000),upperbound:(get_raw_time(vTime.date())+86399999)},
+	var new_columns={sum:'yes',
+					data_store:'payments',
+					return_column:'total_amount',
+					indexes:[{index:'date',lowerbound:(get_raw_time(vTime.date())-1000),upperbound:(get_raw_time(vTime.date())+86399999)},
 							{index:'type',exact:'received'},
-							{index:'status',array:['pending','closed']}];
+							{index:'status',array:['pending','closed']}]};
 
 	read_json_single_column(new_columns,function(results)
 	{
@@ -237,9 +237,8 @@ function set_grid_item_8()
 */
 function set_grid_item_9()
 {
-	var new_columns=new Object();
-		new_columns.data_store='services';
-		new_columns.indexes=[{index:'name'}];
+	var new_columns={data_store:'services',
+					indexes:[{index:'name'}]};
 
 	read_json_count(new_columns,function(item_count)
 	{
@@ -260,9 +259,8 @@ function set_grid_item_9()
 */
 function set_grid_item_11()
 {
-	var new_columns=new Object();
-		new_columns.data_store='product_instances';
-		new_columns.indexes=[{index:'id'},{index:'product_name'},{index:'sale_price'}];
+	var new_columns={data_store:'product_instances',
+					indexes:[{index:'id'},{index:'product_name'},{index:'sale_price'}]};
 
 	read_json_rows('',new_columns,function(results)
 	{
@@ -294,9 +292,8 @@ function set_grid_item_11()
 */
 function set_grid_item_12()
 {
-	var new_columns=new Object();
-		new_columns.data_store='product_instances';
-		new_columns.indexes=[{index:'id'},{index:'product_name'},{index:'sale_price'},{index:'cost_price'}];
+	var new_columns={data_store:'product_instances',
+					indexes:[{index:'id'},{index:'product_name'},{index:'sale_price'},{index:'cost_price'}]};
 
 	read_json_rows('',new_columns,function(results)
 	{
@@ -335,10 +332,9 @@ function set_grid_item_12()
 */
 function set_grid_item_13()
 {
-	var new_columns=new Object();
-		new_columns.data_store='bills';
-		new_columns.return_column='customer_name';
-		new_columns.indexes=[{index:'bill_date',lowerbound:(get_raw_time(vTime.date())-1000),upperbound:(get_raw_time(vTime.date())+86399000)}];
+	var new_columns={data_store:'bills',
+					return_column:'customer_name',
+					indexes:[{index:'bill_date',lowerbound:(get_raw_time(vTime.date())-1000),upperbound:(get_raw_time(vTime.date())+86399000)}]};
 
 	read_json_single_column(new_columns,function(results)
 	{
@@ -359,11 +355,10 @@ function set_grid_item_13()
 */
 function set_grid_item_14()
 {
-	var new_columns=new Object();
-		new_columns.count=1;
-		new_columns.data_store='bills';
-		new_columns.return_column='customer_name';
-		new_columns.indexes=[{index:'customer_name'}];
+	var new_columns={count:1,
+					data_store:'bills',
+					return_column:'customer_name',
+					indexes:[{index:'customer_name'}]};
 
 	read_json_single_column(new_columns,function(results)
 	{
@@ -582,11 +577,9 @@ function set_grid_item_23()
 */
 function set_grid_item_26()
 {
-	var new_columns=new Object();
-		new_columns.data_store='bills';
-		new_columns.return_column='total';
-
-		new_columns.indexes=[{index:'bill_date',lowerbound:(get_raw_time(vTime.date())-1000),upperbound:(get_raw_time(vTime.date())+86399000)}];
+	var new_columns={data_store:'bills',
+					return_column:'total',
+					indexes:[{index:'bill_date',lowerbound:(get_raw_time(vTime.date())-1000),upperbound:(get_raw_time(vTime.date())+86399000)}]};
 
 	read_json_single_column(new_columns,function(results)
 	{
@@ -681,10 +674,9 @@ function set_grid_item_29()
 */
 function set_grid_item_30()
 {
-	var new_columns=new Object();
-		new_columns.data_store='user_preferences';
-		new_columns.indexes=[{index:'type',array:['form','report']},
-							{index:'value',exact:'checked'}];
+	var new_columns={data_store:'user_preferences',
+					indexes:[{index:'type',array:['form','report']},
+							{index:'value',exact:'checked'}]};
 
 	read_json_count(new_columns,function(item_count)
 	{
@@ -1047,12 +1039,10 @@ function set_grid_item_46()
 */
 function set_grid_item_47()
 {
-	var new_columns=new Object();
-		new_columns.data_store='accounts';
-
-		new_columns.indexes=[{index:'username',unequal:"",isnull:'no'},
+	var new_columns={data_store:'accounts',
+					indexes:[{index:'username',unequal:"",isnull:'no'},
 							{index:'type',array:['master','staff']},
-							{index:'status',value:'active'}];
+							{index:'status',value:'active'}]};
 
 	read_json_count(new_columns,function(item_count)
 	{
@@ -1817,5 +1807,27 @@ function set_grid_item_77()
 	read_json_single_column(new_columns,function(items)
 	{
 		$('#grid_item_77').html(items.length);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_78
+*@*display_name*:*# Transactions Today
+*@*grid*:*commissions
+*@*function_name*:*set_grid_item_78();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_78()
+{
+	var new_columns={data_store:'transactions',return_column:'id',
+					indexes:[{index:'trans_date',lowerbound:get_raw_time(vTime.date())-1,upperbound:(get_raw_time(vTime.date())+86400000-1)}]};
+
+	read_json_single_column(new_columns,function(items)
+	{
+		$('#grid_item_78').html(items.length);
 	});
 };
