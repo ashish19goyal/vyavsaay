@@ -32,7 +32,7 @@
 				<tr>
 					<form id='form351_header'></form>
 						<th><input type='text' placeholder="Policy Name" class='floatlabel' name='name' form='form351_header'></th>
-            <th><input type='text' placeholder="Policy Type" class='floatlabel' name='type' form='form351_header'></th>
+            			<th><input type='text' placeholder="Policy Type" class='floatlabel' name='type' form='form351_header'></th>
 						<th><input type='text' placeholder="Provider" class='floatlabel' name='provider' form='form351_header'></th>
 						<th><input type='text' placeholder="Description" class='floatlabel' name='description' form='form351_header'></th>
 						<th><input type='submit' form='form351_header' style='visibility: hidden;'></th>
@@ -67,7 +67,7 @@
 
 			var filter_fields=document.getElementById('form351_header');
 			var fname=filter_fields.elements['name'].value;
-      var ftype=filter_fields.elements['type'].value;
+      		var ftype=filter_fields.elements['type'].value;
 			var fprovider=filter_fields.elements['provider'].value;
 			var fdesc=filter_fields.elements['description'].value;
 

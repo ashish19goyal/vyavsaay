@@ -475,68 +475,6 @@ function form16_import(data_array,import_type)
 
 
 /**
-* @form Enter Supplier bill
-* @formNo 21
-*/
-function form21_import(data_array,import_type)
-{
-	var data_xml="<supplier_bill_items>";
-	var counter=1;
-	var last_updated=get_my_time();
-
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</supplier_bill_items><separator></separator><supplier_bill_items>";
-		}
-		counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<product_name>"+row.product_name+"</product_name>" +
-				"<batch>"+row.batch+"</batch>" +
-				"<quantity>"+row.quantity+"</quantity>" +
-				"<bill_id>"+row.bill_id+"</bill_id>" +
-				"<unit_price>"+row.unit_price+"</unit_price>" +
-				"<amount>"+row.amount+"</amount>" +
-				"<tax>"+row.tax+"</tax>" +
-				"<total>"+row.total+"</total>" +
-				"<discount>"+row.discount+"</discount>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-
-	data_xml+="</supplier_bill_items>";
-	if(import_type=='create_new')
-	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
-	}
-	else
-	{
-		if(is_online())
-		{
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
-	}
-};
-
-/**
 * @form create purchase order
 * @formNo 24
 */
@@ -643,69 +581,6 @@ function form35_import(data_array,import_type)
 	}
 };
 
-
-/**
-* @form Manage Bills
-* @formNo 42
-*/
-function form42_import(data_array,import_type)
-{
-	var data_xml="<bills>";
-	var transaction_xml="<transactions>";
-	var counter=1;
-	var last_updated=get_my_time();
-
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</bills><separator></separator><bills>";
-			transaction_xml+="</transactions><separator></separator><transactions>";
-		}
-		counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<bill_num>"+row.bill_num+"</bill_num>"+
-				"<customer_name>"+row.customer_name+"</customer_name>" +
-				"<bill_date>"+get_raw_time(row.bill_date)+"</bill_date>" +
-				"<amount>"+row.amount+"</amount>" +
-				"<total>"+row.total+"</total>" +
-				"<type>"+row.type+"</type>" +
-				"<billing_type>"+row.billing_type+"</billing_type>" +
-				"<offer>"+row.offer+"</offer>" +
-				"<discount>"+row.discount+"</discount>" +
-				"<tax>"+row.tax+"</tax>" +
-				"<transaction_id>"+row.transaction_id+"</transaction_id>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-		transaction_xml+="<row>" +
-				"<id>"+row.transaction_id+"</id>" +
-				"<trans_date>"+get_raw_time(row.bill_date)+"</trans_date>" +
-				"<amount>"+row.total+"</amount>" +
-				"<receiver>"+row.customer_name+"</receiver>" +
-				"<giver>master</giver>" +
-				"<tax>"+row.tax+"</tax>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</row>";
-	});
-	data_xml+="</bills>";
-	transaction_xml+="</transactions>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-		create_batch(transaction_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-		update_batch(transaction_xml);
-	}
-};
 
 /**
 * @form Manage Purchase orders
@@ -1137,55 +1012,6 @@ function form70_import(data_array,import_type)
 				"</row>";
 	});
 	data_xml+="</sale_orders>";
-	if(import_type=='create_new')
-	{
-		create_batch(data_xml);
-	}
-	else
-	{
-		update_batch(data_xml);
-	}
-};
-
-
-/**
-* @form create bills
-* @formNo 72
-*/
-function form72_import(data_array,import_type)
-{
-	var data_xml="<bill_items>";
-	var counter=1;
-	var last_updated=get_my_time();
-
-	data_array.forEach(function(row)
-	{
-		if((counter%500)===0)
-		{
-			data_xml+="</bill_items><separator></separator><bill_items>";
-		}
-				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
-		data_xml+="<row>" +
-				"<id>"+row.id+"</id>" +
-				"<bill_id>"+row.bill_id+"</bill_id>" +
-				"<item_name>"+row.item_name+"</item_name>" +
-				"<batch>"+row.batch+"</batch>" +
-				"<quantity>"+row.quantity+"</quantity>" +
-				"<unit_price>"+row.unit_price+"</unit_price>" +
-				"<amount>"+row.amount+"</amount>" +
-				"<total>"+row.total+"</total>" +
-				"<discount>"+row.discount+"</discount>" +
-				"<tax>"+row.tax+"</tax>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";
-	});
-
-	data_xml+="</bill_items>";
 	if(import_type=='create_new')
 	{
 		create_batch(data_xml);

@@ -530,15 +530,11 @@ function import_data(form_name)
 		break;
 		case 'form16':modal23_action(form16_import_template,form16_import);
 		break;
-		case 'form21':modal23_action(form21_import_template,form21_import);
-		break;
 		case 'form24':modal23_action(form24_import_template,form24_import);
 		break;
 		case 'form35':modal23_action(form35_import_template,form35_import);
 		break;
 		case 'form41':modal23_action(form41_import_template,form41_import);
-		break;
-		case 'form42':modal23_action(form42_import_template,form42_import);
 		break;
 		case 'form43':modal23_action(form43_import_template,form43_import);
 		break;
@@ -561,8 +557,6 @@ function import_data(form_name)
 		case 'form69':modal23_action(form69_import_template,form69_import);
 		break;
 		case 'form70':modal23_action(form70_import_template,form70_import);
-		break;
-		case 'form72':modal23_action(form72_import_template,form72_import);
 		break;
 		case 'form74':modal23_action(form74_import_template,form74_import);
 		break;

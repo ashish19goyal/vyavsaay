@@ -4,34 +4,34 @@ function form24_get_totals()
 	var tax=0;
 	var total=0;
 	var total_quantity=0;
-	
+
 	$("[id^='save_form24']").each(function(index)
 	{
 		var subform_id=$(this).attr('form');
 		var subform=document.getElementById(subform_id);
-		
+
 		if(!isNaN(parseFloat(subform.elements[7].value)))
 		{
 			amount+=parseFloat(subform.elements[7].value);
 			tax+=parseFloat(subform.elements[9].value);
 			total+=parseFloat(subform.elements[10].value);
 		}
-		if(!isNaN(parseFloat(subform.elements[2].value)))			
-			total_quantity+=parseFloat(subform.elements[2].value);		
+		if(!isNaN(parseFloat(subform.elements[2].value)))
+			total_quantity+=parseFloat(subform.elements[2].value);
 	});
-	
+
 	var form=document.getElementById("form24_master");
-	
+
 /*	if(form.elements['cst'].checked)
 	{
 		tax+=.02*amount;
 		total+=.02*amount;
 	}
-*/	
+*/
 	amount=vUtil.round(amount,2);
 	tax=vUtil.round(tax,2);
 	total=vUtil.round(total,2);
-		
+
 	var total_row="<tr><td colspan='2' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 							"<td>Amount:<br>Tax: <br>Total: </td>" +
 							"<td>Rs. "+amount+"<br>" +
@@ -39,7 +39,7 @@ function form24_get_totals()
 							"Rs. "+total+"</td>" +
 							"<td></td>" +
 							"</tr>";
-					
+
 	$('#form24_foot').html(total_row);
 }
 
@@ -50,23 +50,23 @@ function form69_get_totals()
 	var freight=0;
 	var tax=0;
 	var total=0;
-	
+
 	$("[id^='save_form69']").each(function(index)
 	{
 		var subform_id=$(this).attr('form');
 		var subform=document.getElementById(subform_id);
 		if(!isNaN(parseFloat(subform.elements[8].value)))
 			amount+=parseFloat(subform.elements[8].value);
-		if(!isNaN(parseFloat(subform.elements[9].value)))			
+		if(!isNaN(parseFloat(subform.elements[9].value)))
 			tax+=parseFloat(subform.elements[9].value);
-		if(!isNaN(parseFloat(subform.elements[6].value)))			
+		if(!isNaN(parseFloat(subform.elements[6].value)))
 			freight+=parseFloat(subform.elements[6].value);
-		if(!isNaN(parseFloat(subform.elements[10].value)))			
-			total+=parseFloat(subform.elements[10].value);						
+		if(!isNaN(parseFloat(subform.elements[10].value)))
+			total+=parseFloat(subform.elements[10].value);
 		if(!isNaN(parseFloat(subform.elements[4].value)))
-			total_quantity+=parseFloat(subform.elements[4].value);	
+			total_quantity+=parseFloat(subform.elements[4].value);
 	});
-	
+
 	amount=vUtil.round(amount,2);
 	freight=vUtil.round(freight,2);
 	tax=vUtil.round(tax,2);
@@ -83,83 +83,6 @@ function form69_get_totals()
 	$('#form69_foot').html(total_row);
 }
 
-function form72_get_totals()
-{
-	var amount=0;
-	var discount=0;
-	var service_tax=0;
-	var vat=0;
-	var total=0;
-	
-	$("[id^='save_form72']").each(function(index)
-	{
-		var subform_id=$(this).attr('form');
-		var subform=document.getElementById(subform_id);
-		
-		if(!isNaN(parseFloat(subform.elements[5].value)))
-		{
-			amount+=parseFloat(subform.elements[5].value);
-		}
-		if(!isNaN(parseFloat(subform.elements[6].value)))
-		{
-			discount+=parseFloat(subform.elements[6].value);
-		}
-		if(!isNaN(parseFloat(subform.elements[8].value)))
-		{
-			total+=parseFloat(subform.elements[8].value);
-		}					
-		if(!isNaN(parseFloat(subform.elements[7].value)))
-		{
-			if(subform.elements[2].value=="NA")
-			{
-				service_tax+=parseFloat(subform.elements[7].value);
-			}
-			else 
-			{
-				vat+=parseFloat(subform.elements[7].value);
-			}
-		}					
-
-	});
-	
-	service_tax=vUtil.round(service_tax,2);
-	vat=vUtil.round(vat,2);
-	amount=vUtil.round(amount,2);
-	discount=vUtil.round(discount,2);
-	total=vUtil.round(total,0);
-	
-	var tax_string="VAT: <br>S.Tax:";
-	var tax_amount_string="Rs. "+vat+"<br>Rs. "+service_tax+"<br>";
-
-	if(vat==0)
-	{
-		tax_string="S.Tax:";
-		tax_amount_string="Rs. "+service_tax+"<br>";
-	}
-	
-	if(service_tax==0)
-	{
-		tax_string="VAT:";
-		tax_amount_string="Rs. "+vat+"<br>";
-	}
-	
-	if(service_tax==0 && vat==0)
-	{
-		tax_string="Tax:";
-		tax_amount_string="Rs. 0<br>";
-	}
-	
-	var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
-				"<td>Amount:<br>Discount: <br>"+tax_string+"<br>Total: </td>" +
-				"<td>Rs. "+amount+"</br>" +
-				"Rs. "+discount+"</br>" +
-				tax_amount_string +
-				"Rs. "+total+"</td>" +
-				"<td></td>" +
-				"</tr>";
-	$('#form72_foot').html(total_row);
-}
-
 
 function form91_get_totals()
 {
@@ -169,12 +92,12 @@ function form91_get_totals()
 	var freight=0;
 	var total=0;
 	var total_quantity=0;
-	
+
 	$("[id^='save_form91']").each(function(index)
 	{
 		var subform_id=$(this).attr('form');
 		var subform=document.getElementById(subform_id);
-		
+
 		if(!isNaN(parseFloat(subform.elements[3].value)))
 		{
 			total_quantity+=parseFloat(subform.elements[3].value);
@@ -198,9 +121,9 @@ function form91_get_totals()
 		if(!isNaN(parseFloat(subform.elements[9].value)))
 		{
 			total+=parseFloat(subform.elements[9].value);
-		}					
+		}
 	});
-	
+
 	var form=document.getElementById("form91_master");
 
 	if(form.elements['bill_type'].value=='Retail-CST' || form.elements['bill_type'].value=='Retail-CST-C')
@@ -213,7 +136,7 @@ function form91_get_totals()
 	for(var x in tax_array)
 	{
 		tax_array[x]=vUtil.round(tax_array[x],2);
-		tax_string+=tax_name+" @"+x+"%: <br>";		
+		tax_string+=tax_name+" @"+x+"%: <br>";
 		tax+="Rs. "+tax_array[x]+": <br>";
 	}
 
@@ -238,7 +161,7 @@ function form122_get_totals()
 	var amount=0;
 	var total_accepted=0;
 	var total_quantity=0;
-	
+
 	$("[id^='save_form122']").each(function(index)
 	{
 		var subform_id=$(this).attr('form');
@@ -250,7 +173,7 @@ function form122_get_totals()
 			if(!isNaN(parseFloat(subform.elements[8].value)))
 				tax+=parseFloat(subform.elements[8].value);
 			if(!isNaN(parseFloat(subform.elements[4].value)))
-				total_accepted+=parseFloat(subform.elements[4].value);			
+				total_accepted+=parseFloat(subform.elements[4].value);
 		}
 		if(!isNaN(parseFloat(subform.elements[4].value)))
 			total_quantity+=parseFloat(subform.elements[4].value);
@@ -259,7 +182,7 @@ function form122_get_totals()
 	amount=vUtil.round(amount,2);
 	tax=vUtil.round(tax,2);
 	total=amount+tax;
-		
+
 	var total_row="<tr><td colspan='3' data-th='Total'>Total Accepted Quantity: "+total_accepted+"<br>Total Rejected Quantity: "+(total_quantity-total_accepted)+"</td>" +
 				"<td>Amount:</br>Tax: </br>Total: </td>" +
 				"<td>Rs. "+amount+"</br>" +
@@ -267,7 +190,7 @@ function form122_get_totals()
 				"Rs. "+total+"</td>" +
 				"<td></td>" +
 				"</tr>";
-						
+
 	$('#form122_foot').html(total_row);
 }
 
@@ -278,7 +201,7 @@ function form153_get_totals()
 	var discount=0;
 	var tax=0;
 	var tax_rate=0;
-	
+
 	if(document.getElementById('form153_discount'))
 	{
 		discount=parseFloat(document.getElementById('form153_discount').value);
@@ -290,11 +213,11 @@ function form153_get_totals()
 		var subform_id=$(this).attr('form');
 		var subform=document.getElementById(subform_id);
 		//tax+=parseFloat(subform.elements[5].value);
-		
+
 		if(isNaN(parseFloat(subform.elements[5].value)))
 			amount+=0;
 		else
-			amount+=vUtil.round(parseFloat(subform.elements[5].value),0);	
+			amount+=vUtil.round(parseFloat(subform.elements[5].value),0);
 	});
 
 	var tax=vUtil.round((tax_rate*((amount-discount)/100)),0);
@@ -324,32 +247,32 @@ function form154_update_serial_numbers()
 function form154_get_totals()
 {
 	var form=document.getElementById("form154_master");
-		
+
 	var bill_type=form.elements['bill_type'].value;
 	var tax_type=form.elements['tax_type'].value;
-	
+
 	var tax_text="VAT";
 	if(tax_type=='CST' || tax_type=='Retail Central')
 	{
 		tax_text="CST";
 	}
-		
+
 	var hiring=false;
 	if(bill_type=='Hiring')
 		hiring=true;
-		
+
 	var amount=0;
 	var discount=0;
 	var cartage=0;
 	var tax_rate=0;
-	
+
 	if(document.getElementById('form154_discount'))
 	{
 		discount=parseFloat(document.getElementById('form154_discount').value);
 		tax_rate=parseFloat(document.getElementById('form154_tax').value);
 		cartage=parseFloat(document.getElementById('form154_cartage').value);
 	}
-	
+
 	$("[id^='save_form154']").each(function(index)
 	{
 		var subform_id=$(this).attr('form');
@@ -362,14 +285,14 @@ function form154_get_totals()
 				amount+=Math.round(parseFloat(subform.elements[7].value));
 		}
 		else if(bill_type=='Installation' || bill_type=='Repair')
-		{			
+		{
 			if(isNaN(parseFloat(subform.elements[3].value)))
 				amount+=0;
 			else
 				amount+=Math.round(parseFloat(subform.elements[3].value));
 		}
 		else
-		{			
+		{
 			if(isNaN(parseFloat(subform.elements[3].value)))
 				amount+=0;
 			else
@@ -377,11 +300,11 @@ function form154_get_totals()
 		}
 	});
 
-	var tax=Math.round((tax_rate*((amount-discount)/100)));		
+	var tax=Math.round((tax_rate*((amount-discount)/100)));
 	var total=Math.round(amount+tax-discount+cartage).toFixed(2);
-	
+
 	form.elements['bill_total'].value=total;
-	
+
 	var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 				"<td>Amount:<disc><br>Discount: </disc><br>"+tax_text+":@ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>% <br>Cartage: <br>Total: </td>" +
 				"<td>Rs. "+amount.toFixed(2)+"</br>" +
@@ -424,32 +347,32 @@ function form154_get_totals()
 function form158_get_totals()
 {
 	var amount=0;
-	
+
 	$("[id^='save_form158']").each(function(index)
 	{
 		var subform_id=$(this).attr('form');
 		var subform=document.getElementById(subform_id);
-		
+
 		if(isNaN(parseFloat(subform.elements[3].value)))
 			amount+=0;
-		else	
+		else
 			amount+=parseFloat(subform.elements[3].value);
-		
+
 	});
 	var discount=0;
 	var tax_rate=0;
 	var cartage=0;
-	
+
 	if(document.getElementById('form158_discount'))
 	{
 		discount=parseFloat(document.getElementById('form158_discount').value);
 		tax_rate=parseFloat(document.getElementById('form158_tax').value);
 		cartage=parseFloat(document.getElementById('form158_cartage').value);
 	}
-	
-	var tax=Math.round((tax_rate*((amount-discount)/100)));		
+
+	var tax=Math.round((tax_rate*((amount-discount)/100)));
 	var total=Math.round(amount+tax-discount+cartage);
-	
+
 	var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 							"<td>Amount:<br>Discount: <br>Tax:@ <input type='number' value='"+tax_rate+"' step='any' id='form158_tax' class='dblclick_editable'>%<br>Cartage: <br>Total: </td>" +
 							"<td>Rs. "+Math.round(amount)+"</br>" +
@@ -459,7 +382,7 @@ function form158_get_totals()
 							"Rs. "+Math.round(total)+"</td>" +
 							"<td></td>" +
 							"</tr>";
-					
+
 	$('#form158_foot').html(total_row);
 	longPressEditable($('.dblclick_editable'));
 }
@@ -476,20 +399,20 @@ function form165_get_totals()
 
 	var total_tbp=0;
 	var total_placed=0;
-	
+
 	$("[id^='row_form165_']").each(function(index)
 	{
 		if(!isNaN(parseFloat(this.elements[2].value)))
 		{
 			total_tbp+=parseFloat(this.elements[2].value);
-		}		
+		}
 		if(!isNaN(parseFloat(this.elements[3].value)))
 		{
 			total_placed+=parseFloat(this.elements[3].value);
-		}		
+		}
 
 	});
-	
+
 	master_form.elements['pending_count'].value=total_tbp-total_placed;
 }
 
@@ -507,16 +430,16 @@ function form193_get_totals()
 {
 	//console.log('getting totals');
 	var total_quantity=0;
-	
+
 	$("[id^='save_form193']").each(function(index)
 	{
 		var subform_id=$(this).attr('form');
 		var subform=document.getElementById(subform_id);
-		
+
 		if(subform.elements[1].value!="")
 		{
 			total_quantity+=1;
-		}		
+		}
 	});
 
 	var fields=document.getElementById('form193_master');
@@ -529,20 +452,20 @@ function form222_get_totals()
 	var amount=0;
 	var tax=0;
 	var total=0;
-	
+
 	$("[id^='save_form222']").each(function(index)
 	{
 		var subform_id=$(this).attr('form');
 		var subform=document.getElementById(subform_id);
-		
+
 		if(!isNaN(parseFloat(subform.elements[5].value)))
 		{
 			amount+=parseFloat(subform.elements[5].value);
 			tax+=parseFloat(subform.elements[6].value);
 			total+=parseFloat(subform.elements[7].value);
-		}		
+		}
 	});
-	
+
 	var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 							"<td>Amount:<br>Tax: <br>Total: </td>" +
 							"<td>Rs. "+amount+"<br>" +
@@ -557,16 +480,16 @@ function form222_get_totals()
 function form244_get_totals()
 {
 	var total_quantity=0;
-	
+
 	$("[id^='save_form244']").each(function(index)
 	{
 		var subform_id=$(this).attr('form');
 		var subform=document.getElementById(subform_id);
-		
+
 		if(subform.elements[1].value!="")
 		{
 			total_quantity+=1;
-		}		
+		}
 	});
 
 	var fields=document.getElementById('form244_master');
@@ -579,7 +502,7 @@ function form248_update_serial_numbers()
 	{
 		$(this).find('td:nth-child(2)').html(index+1);
 	});
-	
+
 	var num_orders=0;
 	var weight=0;
 	$("[id^='save_form248']").each(function(index)
@@ -589,14 +512,14 @@ function form248_update_serial_numbers()
 
 		if(subform.elements[0].value!="")
 		{
-			num_orders+=1;			
+			num_orders+=1;
 		}
 		if(!isNaN(parseFloat(subform.elements[3].value)))
 		{
-			weight+=parseFloat(subform.elements[3].value);			
+			weight+=parseFloat(subform.elements[3].value);
 		}
 	});
-	
+
 	var form=document.getElementById("form248_master");
 	form.elements['num_orders'].value=num_orders;
 	form.elements['weight'].value=vUtil.round(weight,4);
@@ -608,7 +531,7 @@ function form250_update_serial_numbers()
 	{
 		$(this).find('td:nth-child(2)').html(index+1);
 	});
-	
+
 	var num_bags=0;
 	var num_orders=0;
 	var weight=0;
@@ -619,18 +542,18 @@ function form250_update_serial_numbers()
 
 		if(subform.elements[0].value!="")
 		{
-			num_bags+=1;			
+			num_bags+=1;
 		}
 		if(!isNaN(parseFloat(subform.elements[3].value)))
 		{
-			num_orders+=parseFloat(subform.elements[3].value);			
+			num_orders+=parseFloat(subform.elements[3].value);
 		}
 		if(!isNaN(parseFloat(subform.elements[2].value)))
 		{
-			weight+=parseFloat(subform.elements[2].value);			
+			weight+=parseFloat(subform.elements[2].value);
 		}
 	});
-	
+
 	var form=document.getElementById("form250_master");
 	form.elements['num_orders'].value=num_orders;
 	form.elements['num_bags'].value=num_bags;
@@ -649,14 +572,14 @@ function form294_update_serial_numbers()
 function form294_get_totals()
 {
 	var form=document.getElementById("form294_master");
-		
+
 	var bill_type=form.elements['tax_type'].value;
-	
+
 	var amount=0;
 	var discount=0;
 	var cartage=0;
 	var tax_rate=0;
-	
+
 	if(document.getElementById('form294_discount'))
 	{
 		discount=parseFloat(document.getElementById('form294_discount').value);
@@ -669,13 +592,13 @@ function form294_get_totals()
 		var subform_id=$(this).attr('form');
 		var subform=document.getElementById(subform_id);
 		if(!isNaN(parseFloat(subform.elements[3].value)))
-			amount+=parseFloat(subform.elements[3].value);		
+			amount+=parseFloat(subform.elements[3].value);
 	});
 
 	var amount=vUtil.round(amount,2);
-	var tax=vUtil.round((tax_rate*((amount-discount)/100)),2);		
+	var tax=vUtil.round((tax_rate*((amount-discount)/100)),2);
 	var total=vUtil.round(amount+tax-discount+cartage,0);
-	
+
 	var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 				"<td>Amount:<disc><br>Discount: </disc><br>Tax:@ <input type='number' value='"+tax_rate+"' step='any' id='form294_tax' class='dblclick_editable'>% <br>Cartage: <br>Total: </td>" +
 				"<td>Rs. "+amount+"</br>" +
@@ -685,7 +608,7 @@ function form294_get_totals()
 				"Rs. "+total+"</td>" +
 				"<td></td>" +
 				"</tr>";
-	
+
 	$('#form294_foot').html(total_row);
 	longPressEditable($('.dblclick_editable'));
 }
@@ -701,12 +624,12 @@ function form295_update_serial_numbers()
 function form295_get_totals()
 {
 	var form=document.getElementById("form295_master");
-		
+
 	var amount=0;
 	var discount=0;
 	var cartage=0;
 	var tax_rate=0;
-	
+
 	if(document.getElementById('form295_discount'))
 	{
 		discount=parseFloat(document.getElementById('form295_discount').value);
@@ -719,13 +642,13 @@ function form295_get_totals()
 		var subform_id=$(this).attr('form');
 		var subform=document.getElementById(subform_id);
 		if(!isNaN(parseFloat(subform.elements[3].value)))
-			amount+=parseFloat(subform.elements[3].value);		
+			amount+=parseFloat(subform.elements[3].value);
 	});
 
 	var amount=vUtil.round(amount,2);
-	var tax=vUtil.round((tax_rate*((amount-discount)/100)),2);		
+	var tax=vUtil.round((tax_rate*((amount-discount)/100)),2);
 	var total=vUtil.round(amount+tax-discount+cartage,0);
-	
+
 	var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 				"<td>Amount:<disc><br>Discount: </disc><br>Tax:@ <input type='number' value='"+tax_rate+"' step='any' id='form295_tax' class='dblclick_editable'>% <br>Cartage: <br>Total: </td>" +
 				"<td>Rs. "+amount+"</br>" +
@@ -735,7 +658,7 @@ function form295_get_totals()
 				"Rs. "+total+"</td>" +
 				"<td></td>" +
 				"</tr>";
-	
+
 	$('#form295_foot').html(total_row);
 	longPressEditable($('.dblclick_editable'));
 }
@@ -746,28 +669,28 @@ function form296_get_totals()
 	var tax=0;
 	var total=0;
 	var total_quantity=0;
-	
+
 	$("[id^='save_form296']").each(function(index)
 	{
 		var subform_id=$(this).attr('form');
 		var subform=document.getElementById(subform_id);
-		
+
 		if(!isNaN(parseFloat(subform.elements[6].value)))
 		{
 			amount+=parseFloat(subform.elements[6].value);
 			tax+=parseFloat(subform.elements[8].value);
 			total+=parseFloat(subform.elements[9].value);
 		}
-		if(!isNaN(parseFloat(subform.elements[2].value)))			
-			total_quantity+=parseFloat(subform.elements[2].value);		
+		if(!isNaN(parseFloat(subform.elements[2].value)))
+			total_quantity+=parseFloat(subform.elements[2].value);
 	});
-	
+
 	var form=document.getElementById("form296_master");
-	
+
 	amount=vUtil.round(amount,2);
 	tax=vUtil.round(tax,2);
 	total=vUtil.round(total,2);
-		
+
 	var total_row="<tr><td colspan='2' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 							"<td>Amount:<br>Tax: <br>Total: </td>" +
 							"<td>Rs. "+amount+"<br>" +
@@ -775,6 +698,6 @@ function form296_get_totals()
 							"Rs. "+total+"</td>" +
 							"<td></td>" +
 							"</tr>";
-					
+
 	$('#form296_foot').html(total_row);
 }

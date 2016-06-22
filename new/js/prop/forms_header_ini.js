@@ -477,75 +477,6 @@ function form16_header_ini()
 
 
 /**
- * @form Create Supplier bills
- * @formNo 21
- */
-function form21_header_ini()
-{
-	var fields=document.getElementById('form21_master');
-
-	var supplier_filter=fields.elements['supplier'];
-	var bill_date=fields.elements['date'];
-	var entry_date=fields.elements['edate'];
-	fields.elements['bill_id'].value=get_new_key();
-	fields.elements['t_id'].value=fields.elements['bill_id'].value;
-	var save_button=fields.elements['save'];
-	fields.elements['bill_num'].value="";
-	supplier_filter.value='';
-
-	$(save_button).off('click');
-	$(save_button).on("click", function(event)
-	{
-		event.preventDefault();
-		form21_create_form();
-	});
-
-	$(document).off('keydown');
-	$(document).on('keydown', function(event) {
-		if( event.keyCode == 83 && event.ctrlKey) {
-	    	event.preventDefault();
-	    	$(save_button).trigger('click');
-	    }
-	});
-
-	$(fields).off('submit');
-	$(fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form21_add_item();
-	});
-
-	var suppliers_data="<suppliers>" +
-		"<acc_name></acc_name>" +
-		"</suppliers>";
-
-	set_my_value_list(suppliers_data,supplier_filter,function ()
-	{
-		$(supplier_filter).focus();
-	});
-
-	var add_supplier=document.getElementById('form21_add_supplier');
-	$(add_supplier).off('click');
-	$(add_supplier).on('click',function()
-	{
-		modal13_action(function()
-		{
-			var suppliers_data="<suppliers>" +
-				"<acc_name></acc_name>" +
-				"</suppliers>";
-			set_my_value_list(suppliers_data,supplier_filter);
-		});
-	});
-
-	$(bill_date).datepicker();
-	$(bill_date).val(vTime.date());
-
-	$(entry_date).datepicker();
-	$(entry_date).val(vTime.date());
-}
-
-
-/**
  * @form New Purchase Order
  * @formNo 24
  */
@@ -702,35 +633,6 @@ function form35_header_ini()
 	set_static_filter('offers','offer_type',type_filter);
 	set_static_filter('offers','status',status_filter);
 
-};
-
-
-/**
- * @form Manage Bills
- * @formNo 42
- */
-function form42_header_ini()
-{
-	var filter_fields=document.getElementById('form42_header');
-	var bill_filter=filter_fields.elements[0];
-	var name_filter=filter_fields.elements[1];
-
-	var bill_data="<bills>" +
-			"<bill_num></bill_num>" +
-			"</bills>";
-	var cust_data="<customers>" +
-			"<acc_name></acc_name>" +
-			"</customers>";
-
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form42_ini();
-	});
-
-	set_my_filter(bill_data,bill_filter);
-	set_my_filter(cust_data,name_filter);
 };
 
 
@@ -1157,80 +1059,6 @@ function form70_header_ini()
 	set_my_filter(cust_data,name_filter);
 	set_static_filter('sale_orders','status',status_filter);
 };
-
-
-/**
- * @form Create Bills (Aurilion)
- * @formNo 72
- */
-function form72_header_ini()
-{
-	var fields=document.getElementById('form72_master');
-
-	var customers_filter=fields.elements['customer'];
-	var bill_date=fields.elements['date'];
-	var bill_num=fields.elements['bill_num'];
-	fields.elements['bill_id'].value=get_new_key();
-	fields.elements['t_id'].value=fields.elements['bill_id'].value;
-	var save_button=fields.elements['save'];
-
-	var bill_id=$("#form72_link").attr('data_id');
-	if(bill_id==null || bill_id=='')
-	{
-		var bill_num_data="<user_preferences count='1'>"+
-							"<value></value>"+
-							"<name exact='yes'>bill_num</name>"+
-							"</user_preferences>";
-		set_my_value(bill_num_data,bill_num);
-	}
-
-	$(save_button).off('click');
-	$(save_button).on("click", function(event)
-	{
-		event.preventDefault();
-		form72_create_form();
-	});
-
-	$(document).off('keydown');
-	$(document).on('keydown', function(event) {
-		if( event.keyCode == 83 && event.ctrlKey) {
-	    	event.preventDefault();
-	    	$(save_button).trigger('click');
-	    }
-	});
-
-	$(fields).off('submit');
-	$(fields).on("submit", function(event)
-	{
-		event.preventDefault();
-		form72_add_product();
-	});
-
-	var customers_data="<customers>" +
-		"<acc_name></acc_name>" +
-		"</customers>";
-	set_my_value_list(customers_data,customers_filter,function ()
-	{
-		$(customers_filter).focus();
-	});
-
-	var add_customer=document.getElementById('form72_add_customer');
-	$(add_customer).off('click');
-	$(add_customer).on('click',function()
-	{
-		modal11_action(function()
-		{
-			var customers_data="<customers>" +
-				"<acc_name></acc_name>" +
-				"</customers>";
-			set_my_value_list(customers_data,customers_filter);
-		});
-	});
-
-	$(bill_date).datepicker();
-	$(bill_date).val(vTime.date());
-	customers_filter.value='';
-}
 
 
 /**

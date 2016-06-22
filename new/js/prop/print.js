@@ -15,13 +15,13 @@ function print_barcode(string)
 	var container=document.createElement('div');
 	var image_element=document.createElement('img');
 	var name_element=document.createElement('div');
-		
-	container.setAttribute('style','width:90%;height:90%;padding:0px;margin:0px');	
+
+	container.setAttribute('style','width:90%;height:90%;padding:0px;margin:0px');
 	image_element.setAttribute('style','width:200px;');
 	name_element.setAttribute('style','width:90%;font-weight:bold;font-size:11px;margin:1px;text-align:center;');
 	container.appendChild(image_element);
 	container.appendChild(name_element);
-	
+
 	name_element.innerHTML=string;
 	$(image_element).JsBarcode(string,{displayValue:false});
 	$.print(container);
@@ -36,21 +36,21 @@ function print_product_barcode(barcode,sku,name)
 	var sku_element=document.createElement('div');
 	var image_element=document.createElement('img');
 	var name_element=document.createElement('div');
-	
+
 	container.setAttribute('style','width:90%;height:90%;max-height:90%;margin:0px;padding:0px;');
 	sku_element.setAttribute('style','width:90%;height:20px;text-align:center;font-size:10px;margin:0px;padding:0px;');
 	image_element.setAttribute('style','width:200px;height:60px;margin:0px;padding:0px;');
 	name_element.setAttribute('style','width:90%;height:20px;font-size:9px;margin:0px;padding:0px;');
-	
+
 	container.appendChild(sku_element);
 	container.appendChild(image_element);
 	container.appendChild(name_element);
 
 	sku_element.innerHTML=sku;
 	$(image_element).JsBarcode(barcode,{displayValue:true,fontSize:24});
-	name_element.innerHTML=name;	   
-	
-	$.print(container);	
+	name_element.innerHTML=name;
+
+	$.print(container);
 }
 
 
@@ -64,12 +64,12 @@ function print_smaller_product_barcode(barcode,sku,name)
 	var sku_element=document.createElement('div');
 	var image_element=document.createElement('img');
 	//var name_element=document.createElement('div');
-	
+
 	container.setAttribute('style','width:95%;height:80%;max-height:90%;margin:0px;padding:0px;');
 	sku_element.setAttribute('style','width:95%;height:25px;text-align:center;font-size:12px;margin:0px;margin-top:2px;padding:0px;');
 	image_element.setAttribute('style','width:200px;height:60px;margin:2px;padding:2px;');
 	//name_element.setAttribute('style','width:95%;height:15px;font-size:9px;margin:0px;padding:0px;');
-	
+
 	container.appendChild(sku_element);
 	container.appendChild(image_element);
 	//container.appendChild(name_element);
@@ -87,7 +87,7 @@ function print_smaller_product_barcode(barcode,sku,name)
 	//$(image_element).barcode(barcode,'ean13',bsettings);
 	$(image_element).JsBarcode(barcode,{displayValue:true,fontSize:20});
 	//name_element.innerHTML=name;
-	$.print(container);	
+	$.print(container);
 }
 
 
@@ -121,26 +121,26 @@ function print_tabular_report(report_name,report_title,print_button)
 
 function print_static_report_table(report_id,report_title,func)
 {
-	////////////setting up containers///////////////////////	
+	////////////setting up containers///////////////////////
 	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
 		var business_intro=document.createElement('div');
-	
+
 	var report_title_line=document.createElement('div');
-	
+
 	var table_container=document.createElement('div');
 
 	var footer=document.createElement('div');
 		var business_contact=document.createElement('div');
-	
+
 ////////////setting styles for containers/////////////////////////
 
 	header.setAttribute('style','width:100%;text-align:center');
 		report_title_line.setAttribute('style','width:100%;text-align:center;font-size:18px;margin:10px 0px;');
 	footer.setAttribute('style','width:100%;min-height:100px;font-size:14px;');
 		business_contact.setAttribute('style','width:100%;text-align:center;margin:10px 0px;');
-	
+
 ///////////////getting the content////////////////////////////////////////
 
 	var bt=get_session_var('title');
@@ -149,14 +149,14 @@ function print_static_report_table(report_id,report_title,func)
 	var business_phone=get_session_var('phone');
 	var business_email=get_session_var('email');
 	var business_website=get_session_var('website');
-	
+
 	////////////////filling in the content into the containers//////////////////////////
 
 	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	business_contact.innerHTML="<hr style='border: 1px solid #000;margin:2px 0px;'><div>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website+"</div><hr style='border: 1px solid #000;margin:2px 0px;'>";
 	report_title_line.innerHTML="<hr style='border: 1px solid #000;margin:2px 0px;'><div style='text-align:center;'><b style='text-size:1.2em'>"+report_title+"</b></div><hr style='border: 1px solid #000;margin:2px 0px;'>";
 
-	/////////////adding new table //////////////////////////////////////////////////////	
+	/////////////adding new table //////////////////////////////////////////////////////
 
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','width:100%;font-size:14px;border:1px solid black;text-align:left;');
@@ -176,44 +176,44 @@ function print_static_report_table(report_id,report_title,func)
         $(this).remove();
     });
 
-	/////////////placing the containers //////////////////////////////////////////////////////	
-	
+	/////////////placing the containers //////////////////////////////////////////////////////
+
 	container.appendChild(header);
 	container.appendChild(report_title_line);
-	
+
 	container.appendChild(new_table);
 	container.appendChild(footer);
 
 	header.appendChild(logo);
-	
+
 	container.appendChild(business_contact);
-	
+
 	func(container);
 }
 
 
 function print_report_table(report_data,report_title,func)
 {
-	////////////setting up containers///////////////////////	
+	////////////setting up containers///////////////////////
 	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
 		var business_intro=document.createElement('div');
-	
+
 	var report_title_line=document.createElement('div');
-	
+
 	var table_container=document.createElement('div');
 
 	var footer=document.createElement('div');
 		var business_contact=document.createElement('div');
-	
+
 ////////////setting styles for containers/////////////////////////
 
 	header.setAttribute('style','width:100%;text-align:center');
 		report_title_line.setAttribute('style','width:100%;text-align:center;font-size:18px;margin:10px 0px;');
 	footer.setAttribute('style','width:100%;min-height:100px;font-size:14px;');
 		business_contact.setAttribute('style','width:100%;text-align:center;margin:10px 0px;');
-	
+
 ///////////////getting the content////////////////////////////////////////
 
 	var bt=get_session_var('title');
@@ -222,30 +222,30 @@ function print_report_table(report_data,report_title,func)
 	var business_phone=get_session_var('phone');
 	var business_email=get_session_var('email');
 	var business_website=get_session_var('website');
-	
+
 	////////////////filling in the content into the containers//////////////////////////
 
 	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	business_contact.innerHTML="<hr style='border: 1px solid #000;margin:2px 0px;'><div>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website+"</div><hr style='border: 1px solid #000;margin:2px 0px;'>";
 	report_title_line.innerHTML="<hr style='border: 1px solid #000;margin:2px 0px;'><div style='text-align:center;'><b style='text-size:1.2em'>"+report_title+"</b></div><hr style='border: 1px solid #000;margin:2px 0px;'>";
 
-	/////////////adding new table //////////////////////////////////////////////////////	
+	/////////////adding new table //////////////////////////////////////////////////////
 
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','width:100%;font-size:14px;border:1px solid black;text-align:left;');
 	new_table.setAttribute('class','plain_table');
 
 	var table_rows="";
-	
+
 	if(report_data.length>0)
 	{
 		var data_row=report_data[0];
 		table_rows+="<tr>";
-		
+
 		for(var i in data_row)
 		{
-			table_rows+="<th style='border: 1px solid #000;text-align:left;'>"+i+"</th>";				
-		}		
+			table_rows+="<th style='border: 1px solid #000;text-align:left;'>"+i+"</th>";
+		}
 		table_rows+="</tr>";
 	}
 
@@ -254,26 +254,26 @@ function print_report_table(report_data,report_title,func)
 		table_rows+="<tr>";
 		for(var i in data_row)
 		{
-			table_rows+="<td style='border: 1px solid #000;text-align:left;'>"+data_row[i]+"</td>";				
-		}		
+			table_rows+="<td style='border: 1px solid #000;text-align:left;'>"+data_row[i]+"</td>";
+		}
 		table_rows+="</tr>";
 	});
 
 	new_table.innerHTML=table_rows;
-	
-	/////////////placing the containers //////////////////////////////////////////////////////	
-	
+
+	/////////////placing the containers //////////////////////////////////////////////////////
+
 	container.appendChild(header);
 	container.appendChild(report_title_line);
-	
+
 	container.appendChild(new_table);
 	container.appendChild(footer);
 
 	header.appendChild(logo);
 	//footer.appendChild(signature);
-	
+
 	container.appendChild(business_contact);
-	
+
 	func(container);
 }
 
@@ -325,14 +325,14 @@ function print_tabular_form(form_id,form_title,table_copy)
 	signature.innerHTML="<div style='float:right;text-align:left;display:block;width:30%;font-size:"+font_size+"em'><b>Signature: </b></div>";
 	bill_message.innerHTML="<div style='float:left;text-align:left;display:block;width:60%;font-size:"+font_size+"em'><textarea style='border:none;width:100%;height:100px;'>"+get_session_var('bill_message')+"</textarea></div>";
 	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em;margin:2px;'><b>"+form_title+"</b></div>";
-	
+
 	business_title.innerHTML="<div style='display:block;font-size:1.5em;float:left;'><b>"+bt+"</b><br>" +
 							"<div style='font-size:"+font_size+"em;padding:5px'>VAT #: "+get_session_var('vat')+"<br>" +
 							"TIN #: "+get_session_var('tin')+"</div></div>"+
 							"<div style='display:block;float:right;'><div>Contact No: "+get_session_var('phone') +
 							"<br>Address: "+get_session_var('address')+"</div></div>";
 	business_title.setAttribute('style',"height:80px;padding:1%;border:2px solid black;border-bottom:none;font-size:"+font_size+"em");
-	
+
 	var form_master=form_id+"_master";
 	var header_element=document.getElementById(form_master);
 	var header_copy=header_element.cloneNode(true);
@@ -342,7 +342,7 @@ function print_tabular_form(form_id,form_title,table_copy)
 	{
 		$(this).replaceWith($(this).val());
 	});
-	
+
 	if(!table_copy)
 	{
 		var table_element=document.getElementById(form_id+'_body').parentNode;
@@ -358,10 +358,10 @@ function print_tabular_form(form_id,form_title,table_copy)
 	{
 		$(this).replaceWith($(this).html());
 	});
-	
+
 	$(table_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
 	header_copy.setAttribute('style',"padding:1%;font-size:"+font_size+"em;border:2px solid black;");
-	
+
 	container.appendChild(title);
 	container.appendChild(business_title);
 	container.appendChild(header_copy);
@@ -408,16 +408,16 @@ function print_flex_newsletter(nl_name,nl_id,print_type,func)
  * @formNo 2
  */
 function form2_print_form()
-{	
+{
 	var form=document.getElementById("form2_master");
 	var newsletter_name=form.elements[1].value;
 	var newsletter_id=form.elements[3].value;
-		
+
 	print_newsletter(newsletter_name,newsletter_id,'paper',function(container)
 	{
 		$.print(container);
-		container.innerHTML="";	
-	});	
+		container.innerHTML="";
+	});
 }
 
 /**
@@ -429,8 +429,8 @@ function form10_print_form()
 	print_form10(function(container)
 	{
 		$.print(container);
-		container.innerHTML="";	
-	});	
+		container.innerHTML="";
+	});
 }
 
 
@@ -441,20 +441,20 @@ function form10_print_form()
 function print_form10(func)
 {
 	var form_id='form10';
-	
-	////////////setting up containers///////////////////////	
+
+	////////////setting up containers///////////////////////
 	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var business_title=document.createElement('div');
-	
+
 	var invoice_box=document.createElement('div');
-	
-	var info_section=document.createElement('div');	
+
+	var info_section=document.createElement('div');
 		var customer_info=document.createElement('div');
 		var payment_info=document.createElement('div');
 
 	var table_container=document.createElement('div');
-		
+
 	////////////setting styles for containers/////////////////////////
 
 	header.setAttribute('style','width:100%;min-height:1in;');
@@ -463,7 +463,7 @@ function print_form10(func)
 	info_section.setAttribute('style','width:99%;min-height:.5in;border: 1px solid #000000;font-size:14px;padding:2px');
 		customer_info.setAttribute('style','padding:2px;margin:2px;float:left;width:48%;height:.5in;text-align:left;');
 		payment_info.setAttribute('style','padding:2px;margin:2px;float:right;width:48%;height:.5in;text-align:right;');
-	
+
 	///////////////getting the content////////////////////////////////////////
 
 	var bt=get_session_var('title');
@@ -478,18 +478,18 @@ function print_form10(func)
 	var due_date=master_form.elements['due_date'].value;
 	var invoice_no=master_form.elements['bill_num'].value;
 	var payment_text=master_form.elements['payment'].value;
-	
+
 	////////////////filling in the content into the containers//////////////////////////
 
 	business_title.innerHTML="<b>"+bt+"</b><br>"+business_address+"<br>"+business_phone;
 	invoice_box.innerHTML="<div style='float:left;width:50%;font-weight:bold'>Bill No.: "+invoice_no+"</div><div style='float:right;text-align:right;width:50%'>Bill Date: "+bill_date+"<br>Due Date: "+due_date+"</div>";
-	
+
 	customer_info.innerHTML=customer_name+"<br>"+customer_address;
 	payment_info.innerHTML=payment_text;
 
 	var table_element=document.getElementById(form_id+'_body');
-	
-	/////////////adding new table //////////////////////////////////////////////////////	
+
+	/////////////adding new table //////////////////////////////////////////////////////
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','font-size:13px;border:1px solid black;text-align:left;');
 	var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;font-weight:bold'><td style='text-align:left;width:.2in;'>Qty</td>"+
@@ -497,10 +497,10 @@ function print_form10(func)
 				"<td style='text-align:left;width:.5in'>Remark</td>"+
 				"<td style='text-align:left;width:.3in'>Rate</td>"+
 				"<td style='text-align:left;width:.3in'>Amount</td></tr>";
-				
+
 	var table_rows=table_header;
 	var counter=0;
-	
+
 	$(table_element).find('form').each(function(index)
 	{
 		counter+=1;
@@ -510,7 +510,7 @@ function print_form10(func)
 		var item_name=form.elements[0].value;
 		var remark=form.elements[1].value;
 		var rate=form.elements[3].value;
-		var amount=form.elements[4].value;		
+		var amount=form.elements[4].value;
 
 		table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
 				"<td style='text-align:left'>"+quantity+"</td>"+
@@ -519,7 +519,7 @@ function print_form10(func)
 				"<td style='text-align:left'>"+rate+"</td>"+
 				"<td style='text-align:left'>"+amount+"</td></tr>";
 	});
-	
+
 	var row_count=$(table_element).find('tbody>tr').length;
 	var rows_to_add=15-row_count;
 	for(var i=0;i<rows_to_add;i++)
@@ -531,15 +531,15 @@ function print_form10(func)
 	var total_quantity=$(table_foot).find('tr>td:first')[0].innerHTML;
 	var total_text=$(table_foot).find('tr>td:nth-child(2)')[0].innerHTML;
 	var total_amount=$(table_foot).find('tr>td:nth-child(3)')[0].innerHTML;
-	
+
 	var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
 				"<td colspan='2' style='text-align:left;'>"+total_quantity+"</td>"+
 				"<td style='text-align:left;'>"+total_text+"</td>"+
 				"<td colspan='2' style='text-align:left;width:.3in'>"+total_amount+"</td></tr>";
-		
+
 	table_rows+=table_foot_row;
 	new_table.innerHTML=table_rows;
-	
+
 
 	////////////////////////////////////////////////////////////////////////////////////////
 
@@ -567,28 +567,17 @@ function form12_print_form()
 }
 
 
-
-/**
- * @form Enter supplier bill
- * @formNo 21
- */
-function form21_print_form()
-{
-	print_tabular_form('form21','Purchase Bill');
-}
-
-
 /**
  * @form Create Purchase order
  * @formNo 24
  */
 function form24_print_form()
-{	
+{
 	print_form24(function(container)
 	{
 		$.print(container);
-		container.innerHTML="";	
-	});	
+		container.innerHTML="";
+	});
 }
 
 /**
@@ -597,16 +586,16 @@ function form24_print_form()
 function print_form24(func)
 {
 	var form_id='form24';
-	////////////setting up containers///////////////////////	
+	////////////setting up containers///////////////////////
 	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
 		var business_intro=document.createElement('div');
 		var business_contact=document.createElement('div');
-	
+
 	var invoice_line=document.createElement('div');
-	
-	var info_section=document.createElement('div');	
+
+	var info_section=document.createElement('div');
 		var customer_info=document.createElement('div');
 		var business_info=document.createElement('div');
 
@@ -642,35 +631,35 @@ function print_form24(func)
 
 	var master_form=document.getElementById(form_id+'_master');
 	var supplier_name=master_form.elements['supplier'].value;
-	var date=master_form.elements['date'].value;	
+	var date=master_form.elements['date'].value;
 	var order_no=master_form.elements['order_num'].value;
 	var supplier_address=master_form.elements['address'].value;
 	var supplier_tin=master_form.elements['tin'].value;
 	var payment_mode=master_form.elements['mode'].value;
 	var vat_no=get_session_var('vat');
 	var tin_no=get_session_var('tin');
-		
+
 	var tandc_text=get_session_var('po_message').replace(/\n/g,"<br>");
 	var signature_text="<br>"+bt+"<br><br><br>Auth. Signatory<br>";
-	
+
 	////////////////filling in the content into the containers//////////////////////////
 
 	//logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	logo.innerHTML=bt;
 	//business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text;
 	business_contact.innerHTML="<hr style='border: 1px solid #00f;'>Billing Address: "+business_address+"<br>Buyer VAT #:"+vat_no+"<br>Contact Nos.: "+business_phone+"<br>E-Mail: "+business_email;
-	
+
 	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Purchase Order #: "+order_no+"</b></div><hr style='border: 1px solid #00f;'>";
-	
+
 	customer_info.innerHTML="<b>Supplier: </b><br>"+supplier_name+"<br>"+supplier_address+"<br>TIN#: "+supplier_tin;
 	business_info.innerHTML="<b>Buyer</b><br>TIN #: "+tin_no+"<br>PO Issue Date: "+date+"<br>Purchase Order No: "+order_no+"<br>Mode of Payment: "+payment_mode;
-	
+
 	tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
 	signature.innerHTML=signature_text;
 
 	var table_element=document.getElementById(form_id+'_body');
-	
-	/////////////adding new table //////////////////////////////////////////////////////	
+
+	/////////////adding new table //////////////////////////////////////////////////////
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','width:100%;font-size:11px;border:1px solid black;text-align:left;');
 	new_table.setAttribute('class','plain_table');
@@ -684,10 +673,10 @@ function print_form24(func)
 				"<td style='border: 1px solid #000;text-align:left;width:45px'>Price</td>"+
 				"<td style='border: 1px solid #000;text-align:left;width:45px'>Tax</td>"+
 				"<td style='border: 1px solid #000;text-align:left;width:80px;font-size:1.2em;font-weight:bold'>Total(inc taxes)</td></tr>";
-				
+
 	var table_rows=table_header;
 	var counter=0;
-	
+
 	$(table_element).find('form').each(function(index)
 	{
 		counter+=1;
@@ -698,7 +687,7 @@ function print_form24(func)
 		var supplier_sku=form.elements[4].value;
 		var mrp=form.elements[5].value;
 		var price=form.elements[6].value;
-		var tax_rate=form.elements[8].value;		
+		var tax_rate=form.elements[8].value;
 		var total=form.elements[10].value;
 
 		table_rows+="<tr>"+
@@ -712,7 +701,7 @@ function print_form24(func)
 				"<td style='border: 1px solid #000;text-align:left;'>"+tax_rate+"</td>"+
 				"<td style='border: 1px solid #000;text-align:left;font-size:1.2em;font-weight:bold;'>"+total+"</td></tr>";
 	});
-	
+
 	var row_count=$(table_element).find('tbody>tr').length;
 	var rows_to_add=9-row_count;
 	for(var i=0;i<rows_to_add;i++)
@@ -724,34 +713,34 @@ function print_form24(func)
 	var total_quantity=$(table_foot).find('tr>td:first')[0].innerHTML;
 	var total_text=$(table_foot).find('tr>td:nth-child(2)')[0].innerHTML;
 	var total_amount=$(table_foot).find('tr>td:nth-child(3)')[0].innerHTML;
-	
+
 	var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
 				"<td colspan='4' style='border: 1px solid #000;text-align:left;'>"+total_quantity+"</td>"+
 				"<td colspan='3' style='border: 1px solid #000;text-align:left;'>"+total_text+"</td>"+
 				"<td colspan='2' style='border: 1px solid #000;text-align:left;font-size:1.2em;font-weight:bold;'>"+total_amount+"</td></tr>";
-		
+
 	table_rows+=table_foot_row;
 	new_table.innerHTML=table_rows;
-	
-	/////////////placing the containers //////////////////////////////////////////////////////	
-	
+
+	/////////////placing the containers //////////////////////////////////////////////////////
+
 	container.appendChild(header);
 	container.appendChild(invoice_line);
 	container.appendChild(info_section);
-	
+
 	container.appendChild(new_table);
 	container.appendChild(footer);
-	
+
 	header.appendChild(logo);
 	//header.appendChild(business_intro);
 	header.appendChild(business_contact);
-	
+
 	info_section.appendChild(customer_info);
 	info_section.appendChild(business_info);
-	
+
 	footer.appendChild(tandc);
 	footer.appendChild(signature);
-	
+
 	func(container);
 }
 
@@ -767,232 +756,6 @@ function form69_print_form()
 
 
 /**
- * @form Create bills
- * @formNo 72
- */
-function form72_print_form()
-{	
-	print_form72(function(container)
-	{
-		$.print(container);
-		container.innerHTML="";	
-	});	
-}
-
-/**
-* This function prepares the printing template for the documents like bills and purchase orders
-*/
-function print_form72(func)
-{
-	var form_id='form72';
-	////////////setting up containers///////////////////////	
-	var container=document.createElement('div');
-	var header=document.createElement('div');
-		var logo=document.createElement('div');
-		var business_intro=document.createElement('div');
-		var business_contact=document.createElement('div');
-	
-	var info_section=document.createElement('div');	
-
-	var table_container=document.createElement('div');
-
-	var footer=document.createElement('div');
-
-	////////////setting styles for containers/////////////////////////
-
-	header.setAttribute('style','width:100%;min-height:100px;text-align:center');
-	//	business_intro.setAttribute('style','width:100%;text-align:center');
-		business_contact.setAttribute('style','width:100%;text-align:center');
-	info_section.setAttribute('style','width:100%;min-height:80px;text-align:left;margin:5px;');
-	footer.setAttribute('style','width:100%;min-height:100px;text-align:center;margin:10px 5px;');
-
-	///////////////getting the content////////////////////////////////////////
-
-	var bt=get_session_var('title');
-	var logo_image=get_session_var('logo');
-	var business_address=get_session_var('address');
-	var business_phone=get_session_var('phone');
-	var business_email=get_session_var('email');
-	
-	var master_form=document.getElementById(form_id+'_master');
-	var customer_name=master_form.elements['customer'].value;
-	var date=master_form.elements['date'].value;	
-	var bill_num=master_form.elements['bill_num'].value;
-	var vat_no=get_session_var('vat');
-	var st_no=get_session_var('service_tax_no');
-	
-	var show_sub_totals=master_form.elements['sub_totals'];
-		
-	var bill_message=get_session_var('bill_message').replace(/\n/g,"<br>");
-	
-	////////////////filling in the content into the containers//////////////////////////
-
-	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
-	//business_intro.innerHTML=get_session_var('business_intro');
-	business_contact.innerHTML="<hr style='border: 1px solid #00f;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+"<br>VAT #: "+vat_no+"S.Tax #: "+st_no;
-	
-	var info_section_text="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Invoice No: "+bill_num+"</b></div><hr style='border: 1px solid #00f;'>"+
-							"<b>For: </b>"+customer_name+
-							"<br>Date: "+date;
-/*	
-	if(show_sub_totals.checked)	
-	{
-		info_section_text+="<br>VAT #: "+vat_no;
-	}
-*/	
-	info_section.innerHTML=info_section_text;
-	footer.innerHTML=bill_message;
-	
-	var table_element=document.getElementById(form_id+'_body');
-	
-	/////////////adding new table //////////////////////////////////////////////////////	
-	var new_table=document.createElement('table');
-	new_table.setAttribute('style','border:none;width:100%;font-size:14px;text-align:left;');
-	
-	var table_header_service="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
-				"<td style='text-align:left;width:130px;wrap:break-word'>Service</td>"+
-				"<td style='text-align:left;width:45px'>Qty</td>"+
-				"<td style='text-align:left;width:80px'>Total</td></tr>";
-
-	var table_header_product="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
-				"<td style='text-align:left;width:130px;wrap:break-word'>Item</td>"+
-				"<td style='text-align:left;width:45px'>Qty</td>"+
-				"<td style='text-align:left;width:80px'>Total</td></tr>";
-
-	var table_rows_service=table_header_service;
-	var table_rows_product=table_header_product;
-	var counter_service=0;
-	var counter_product=0;
-	var total_items=0;
-	var total_amount=0;
-	var total_vat=0;
-	var total_st=0;
-	var master_total=0;
-	
-	$(table_element).find('form').each(function(index)
-	{
-		var form=$(this)[0];
-		var item_name=form.elements[1].value;
-		var batch=form.elements[2].value;
-		var quantity=""+form.elements[3].value;
-		var price=form.elements[4].value;
-		var amount=form.elements[5].value;
-		var tax=form.elements[7].value;
-		var total=form.elements[8].value;
-		
-		if(batch=='NA')
-		{
-			counter_service+=1;
-			
-			total_items+=parseFloat(form.elements[3].value);			
-			total_amount+=parseFloat(form.elements[5].value);
-			total_st+=parseFloat(form.elements[7].value);
-			master_total+=parseFloat(form.elements[8].value);
-			
-			table_rows_service+="<tr>"+
-					"<td style='text-align:left;'>"+item_name+"</td>"+
-					"<td style='text-align:left;'>"+quantity+"</td>"+
-					"<td style='text-align:left;'>"+total+"</td></tr>";
-		}
-		else 
-		{
-			counter_product+=1;
-			
-			total_items+=parseFloat(form.elements[3].value);
-			total_amount+=parseFloat(form.elements[5].value);
-			total_vat+=parseFloat(form.elements[7].value);
-			master_total+=parseFloat(form.elements[8].value);
-			
-			table_rows_product+="<tr>"+
-					"<td style='text-align:left;'>"+item_name+"</td>"+
-					"<td style='text-align:left;'>"+quantity+"</td>"+
-					"<td style='text-align:left;'>"+total+"</td></tr>";
-
-		}
-	});
-	
-	total_amount=vUtil.round(total_amount,2);
-	total_vat=vUtil.round(total_vat,2);
-	total_st=vUtil.round(total_st,2);
-	master_total=vUtil.round(master_total,0);
-	
-	var row_count=$(table_element).find('tbody>tr').length;
-	var rows_to_add=5-row_count;
-	for(var i=0;i<3;i++)
-	{
-		table_rows_service+="<tr style='flex:2;height:20px;'><td></td><td></td><td></td></tr>";
-	}
-	for(var i=0;i<rows_to_add;i++)
-	{
-		table_rows_product+="<tr style='flex:2;height:20px;'><td></td><td></td><td></td></tr>";
-	}
-
-	var table_foot=document.getElementById(form_id+'_foot');
-	
-	var display_total="Total:";
-	var display_total_amount="Rs. "+master_total;
-	
-	if(show_sub_totals.checked)
-	{
-		display_total="Amount:<br>VAT: <br>S. Tax:<br>Total:";
-		display_total_amount="Rs. "+total_amount+"<br>Rs. "+total_vat+"<br>Rs. "+total_st+"<br>Rs. "+master_total;
-
-		if(counter_service==0)
-		{
-			display_total="Amount:<br>VAT: <br>Total:";
-			display_total_amount="Rs. "+total_amount+"<br>Rs. "+total_vat+"<br>Rs. "+master_total;
-		}
-
-		if(counter_product==0)
-		{
-			display_total="Amount:<br>S. Tax:<br>Total:";
-			display_total_amount="Rs. "+total_amount+"<br>Rs. "+total_st+"<br>Rs. "+master_total;
-		}
-		
-		if(counter_service==0 && counter_product==0)
-		{
-			display_total="Amount:<br>Tax:<br>Total:";
-			display_total_amount="Rs. "+total_amount+"<br>Rs. 0<br>Rs. "+master_total;
-		}
-	}
-	
-	//console.log(total_amount);
-	var table_foot_row="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
-				"<td style='text-align:left;'>Total bill Items:"+total_items+"</td>"+
-				"<td style='text-align:left;'>"+display_total+"</td>"+
-				"<td style='text-align:left;'>"+display_total_amount+"</td></tr>";
-	//console.log(table_foot_row);
-	var table_rows="";
-	if(counter_service>0)
-	{
-		table_rows+=table_rows_service;
-	}
-
-	if(counter_product>0)
-	{
-		table_rows+=table_rows_product;
-	}
-		
-	table_rows+=table_foot_row;
-	new_table.innerHTML=table_rows;
-	
-	/////////////placing the containers //////////////////////////////////////////////////////	
-	
-	container.appendChild(header);
-	container.appendChild(info_section);
-	
-	container.appendChild(new_table);
-	
-	container.appendChild(footer);
-	
-	header.appendChild(logo);
-	//header.appendChild(business_intro);
-	header.appendChild(business_contact);
-	
-	func(container);
-}
-
-/**
  * @form Scan items(multi-register)
  * @formNo 82
  */
@@ -1006,12 +769,12 @@ function form82_print_form()
  * @formNo 91
  */
 function form91_print_form()
-{	
+{
 	print_form91(function(container)
 	{
 		$.print(container);
-		container.innerHTML="";	
-	});	
+		container.innerHTML="";
+	});
 }
 
 /**
@@ -1021,14 +784,14 @@ function form91_print_form()
 function print_form91(func)
 {
 	var form_id='form91';
-	////////////setting up containers///////////////////////	
+	////////////setting up containers///////////////////////
 	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var invoice_info=document.createElement('div');
 		var business_title=document.createElement('div');
 		var business_contact=document.createElement('div');
-		
-	var info_section=document.createElement('div');	
+
+	var info_section=document.createElement('div');
 		var customer_info=document.createElement('div');
 		var business_info=document.createElement('div');
 
@@ -1063,7 +826,7 @@ function print_form91(func)
 	var master_form=document.getElementById(form_id+'_master');
 	var customer_name=master_form.elements['customer'].value;
 	var date=master_form.elements['date'].value;
-	var channel=master_form.elements['channel'].value;	
+	var channel=master_form.elements['channel'].value;
 	var bill_type=master_form.elements['bill_type'].value;
 	var order_no=master_form.elements['order_num'].value;
 	var bill_num=master_form.elements['bill_num'].value;
@@ -1072,33 +835,33 @@ function print_form91(func)
 	var customer_address=document.getElementById('form91_customer_info').innerHTML;
 	var customer_tin=master_form.elements['customer_tin'].value;
 	var tin_no=get_session_var('tin');
-		
+
 	var tandc_text=get_session_var('bill_message');
 	var signature_text="<br>for "+bt+"<br><br><br>Authorised Signatory<br>";
-	
+
 	////////////////filling in the content into the containers//////////////////////////
 
-	if(bill_type=="Tax")	
+	if(bill_type=="Tax")
 	{
 		invoice_info.innerHTML="TAX INVOICE";
 	}
-	else 
+	else
 	{
 		invoice_info.innerHTML="RETAIL INVOICE";
 	}
 
 	business_title.innerHTML=bt;
 	business_contact.innerHTML=business_address+"<br>Tel: "+business_phone+" emial: "+business_email;
-	
+
 	customer_info.innerHTML=customer_name+"<br>"+customer_address+"<br>TIN #:"+customer_tin;
 	business_info.innerHTML="Invoice #: "+bill_num+"<br>Dated: "+date+"<br>PO #: "+po_num+"<br>PO Date: "+po_date+"<br>TIN: "+tin_no;
-	
+
 	tandc.innerHTML="<b><u>Terms and Conditions</u></b><br>"+tandc_text;
 	signature.innerHTML=signature_text;
 
 	var table_element=document.getElementById(form_id+'_body');
-	
-	/////////////adding new table //////////////////////////////////////////////////////	
+
+	/////////////adding new table //////////////////////////////////////////////////////
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
 	var table_header="<thead style='border:1px solid #000000;'><tr>"+
@@ -1113,10 +876,10 @@ function print_form91(func)
 				"<td style='text-align:left;width:45px'>Tax%</td>"+
 				"<td style='text-align:left;width:45px'>Freight</td>"+
 				"<td style='text-align:left;width:80px'>Total</td></tr></thead>";
-				
+
 	var table_rows=table_header+"<tbody style='border: 1px solid #000000;'>";
 	var counter=0;
-	
+
 	$(table_element).find('form').each(function(index)
 	{
 		counter+=1;
@@ -1127,9 +890,9 @@ function print_form91(func)
 		var quantity=""+form.elements[3].value;
 		var mrp=""+form.elements[4].value;
 		var price=form.elements[5].value;
-		var tax_rate=form.elements[11].value;		
-		var amount=form.elements[7].value;		
-		var tax=form.elements[8].value;		
+		var tax_rate=form.elements[11].value;
+		var amount=form.elements[7].value;
+		var tax=form.elements[8].value;
 		var total=form.elements[9].value;
 		var freight=form.elements[6].value;
 
@@ -1146,7 +909,7 @@ function print_form91(func)
 				"<td style='text-align:left;'>"+freight+"</td>"+
 				"<td style='text-align:left;'>"+total+"</td></tr>";
 	});
-	
+
 	var row_count=$(table_element).find('tbody>tr').length;
 	var rows_to_add=15-row_count;
 	for(var i=0;i<rows_to_add;i++)
@@ -1155,10 +918,10 @@ function print_form91(func)
 	}
 
 	table_rows+="</tbody>";
-	
+
 	var bill_total=document.getElementById('form91_final_total').innerHTML;
 	var wording_total=number2text(bill_total);
-	
+
 	var against_c_form="";
 	if(bill_type=='Retail-CST-C')
 	{
@@ -1169,33 +932,33 @@ function print_form91(func)
 	var total_quantity=$(table_foot).find('tr>td:first')[0].innerHTML;
 	var total_text=$(table_foot).find('tr>td:nth-child(2)')[0].innerHTML;
 	var total_amount=$(table_foot).find('tr>td:nth-child(3)')[0].innerHTML;
-	
+
 	var table_foot_row="<tfoot style='border: 1px solid #000000;'><tr>"+
 				"<td colspan='6' style='text-align:left;'>"+wording_total+"<br>"+total_quantity+against_c_form+"</td>"+
 				"<td colspan='3' style='text-align:left;'>"+total_text+"</td>"+
 				"<td colspan='2' style='text-align:left;'>"+total_amount+"</td></tr></tfoot>";
-		
+
 	table_rows+=table_foot_row;
 	new_table.innerHTML=table_rows;
-	
-	/////////////placing the containers //////////////////////////////////////////////////////	
-	
+
+	/////////////placing the containers //////////////////////////////////////////////////////
+
 	container.appendChild(header);
 	container.appendChild(info_section);
-	
+
 	container.appendChild(new_table);
 	container.appendChild(footer);
-	
+
 	header.appendChild(invoice_info);
 	header.appendChild(business_title);
 	header.appendChild(business_contact);
-	
+
 	info_section.appendChild(customer_info);
 	info_section.appendChild(business_info);
-	
+
 	footer.appendChild(tandc);
 	footer.appendChild(signature);
-	
+
 	func(container);
 }
 
@@ -1221,26 +984,26 @@ function form119_print_form()
 	var table_element=document.getElementById('form119_body').parentNode;
 	var table_copy=table_element.cloneNode(true);
 	$(table_copy).find('datalist,form').remove();
-	
+
 	$(table_copy).find('input,textarea').each(function(index)
 	{
 		$(this).attr('value',$(this).val());
 	});
-	
+
 	var tbody=table_copy.children[1].innerHTML;
 	var new_tbody=tbody.replace(/<br>/g,'</td><td>');
-	
+
 	var tfoot=table_copy.children[2].innerHTML;
 	var new_tfoot=tfoot.replace(/<td>/g,"<td colspan='2'>");
 	var new_tfoot=new_tfoot.replace(/<td colspan='3'/g,"<td colspan='7'");
 	var new_tfoot=new_tfoot.replace(/<td colspan=\"3\"/g,"<td colspan='7'");
-	
+
 	//console.log(tbody);
 	table_copy.children[0].innerHTML=new_thead;
 	table_copy.children[1].innerHTML=new_tbody;
 	table_copy.children[2].innerHTML=new_tfoot;
-	
-	
+
+
 	var single_bill_items=parseInt(get_session_var('bill_print_items'));
 	var rows=table_copy.children[1].children.length;
 
@@ -1248,11 +1011,11 @@ function form119_print_form()
 	{
 		table_copy.children[1].children[i].children[1].setAttribute('colspan','2');
 	}
-	
+
 	while(rows>0)
 	{
 		var new_table_copy=table_copy.cloneNode(true);
-		
+
 		for(var j=single_bill_items;j<rows;j++)
 		{
 			new_table_copy.children[1].removeChild(new_table_copy.children[1].children[single_bill_items]);
@@ -1271,12 +1034,12 @@ function form119_print_form()
  * @formNo 122
  */
 function form122_print_form()
-{	
+{
 	print_form122(function(container)
 	{
 		$.print(container);
-		container.innerHTML="";	
-	});	
+		container.innerHTML="";
+	});
 }
 
 /**
@@ -1286,16 +1049,16 @@ function form122_print_form()
 function print_form122(func)
 {
 	var form_id='form122';
-	
-	////////////setting up containers///////////////////////	
+
+	////////////setting up containers///////////////////////
 	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var invoice_info=document.createElement('div');
 		var business_title=document.createElement('div');
 		var business_contact=document.createElement('div');
-	
-			
-	var info_section=document.createElement('div');	
+
+
+	var info_section=document.createElement('div');
 		var supplier_info=document.createElement('div');
 		var business_info=document.createElement('div');
 
@@ -1317,7 +1080,7 @@ function print_form122(func)
 		business_info.setAttribute('style','padding:5px;float:right;width:48%;height:100px;border: 1px solid #000;');
 	accepted_section.setAttribute('style','margin:20px;width:98%;text-align:center');
 	rejected_section.setAttribute('style','margin:20px;width:98%;text-align:center');
-		
+
 	footer.setAttribute('style','margin:10px;width:98%;min-height:100px');
 		tandc.setAttribute('style','float:left;width:44%;min-height:60px');
 		signature.setAttribute('style','float:right;width:54%;min-height:60px;text-align:right;');
@@ -1337,10 +1100,10 @@ function print_form122(func)
 	var bill_num=master_form.elements['bill_num'].value;
 	var po_num=master_form.elements['po_num'].value;
 	var tin_no=get_session_var('tin');
-		
+
 	var tandc_text=get_session_var('grn_message');
 	var signature_text="<br>for "+bt+"<br><br><br>Authorised Signatory<br>";
-	
+
 	////////////////filling in the content into the containers//////////////////////////
 
 	invoice_info.innerHTML="Goods Receiving Note";
@@ -1349,21 +1112,21 @@ function print_form122(func)
 
 	business_title.innerHTML=bt;
 	business_contact.innerHTML=business_address+"<br>Tel: "+business_phone+" emial: "+business_email;
-	
+
 	supplier_info.innerHTML=supplier_name+"<br>";
 	business_info.innerHTML="Invoice #: "+bill_num+"<br>Dated: "+date+"<br>PO #: "+po_num+"<br>";
-	
+
 	tandc.innerHTML="<b><u>Terms and Conditions</u></b><br>"+tandc_text;
 	signature.innerHTML=signature_text;
 
 	var table_element=document.getElementById(form_id+'_body');
-	
-	/////////////adding new table //////////////////////////////////////////////////////	
+
+	/////////////adding new table //////////////////////////////////////////////////////
 	var new_table1=document.createElement('table');
 	var new_table2=document.createElement('table');
 	new_table1.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
 	new_table2.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
-	
+
 	var table_header="<thead style='border:1px solid #000000;'><tr>"+
 				"<td style='text-align:left;width:30px;'>S.No.</td>"+
 				"<td style='text-align:left;width:60px;'>SKU</td>"+
@@ -1375,14 +1138,14 @@ function print_form122(func)
 				"<td style='text-align:left;width:45px'>Amount</td>"+
 				"<td style='text-align:left;width:45px'>Tax</td>"+
 				"<td style='text-align:left;width:80px'>Total</td></tr></thead>";
-				
+
 	var table_rows1=table_header+"<tbody style='border: 1px solid #000000;'>";
 	var table_rows2=table_header+"<tbody style='border: 1px solid #000000;'>";
 	var counter1=0;
 	var counter2=0;
 	var total_accepted_quantity=0;
 	var total_rejected_quantity=0;
-	
+
 	$(table_element).find('form').each(function(index)
 	{
 		var form=$(this)[0];
@@ -1392,9 +1155,9 @@ function print_form122(func)
 		var quantity=""+form.elements[4].value;
 		var mrp=""+form.elements[5].value;
 		var price=form.elements[6].value;
-		var amount=form.elements[7].value;		
+		var amount=form.elements[7].value;
 		var tax=form.elements[8].value;
-		var selection=form.elements[12].value;		
+		var selection=form.elements[12].value;
 		var total=parseFloat(amount)+parseFloat(tax);
 
 		if(selection=='accepted')
@@ -1413,7 +1176,7 @@ function print_form122(func)
 				"<td style='text-align:left;'>"+tax+"</td>"+
 				"<td style='text-align:left;'>"+total+"</td></tr>";
 		}
-		else 
+		else
 		{
 			counter2+=1;
 			total_rejected_quantity+=parseFloat(quantity);
@@ -1428,9 +1191,9 @@ function print_form122(func)
 				"<td style='text-align:left;'>"+amount+"</td>"+
 				"<td style='text-align:left;'>"+tax+"</td>"+
 				"<td style='text-align:left;'>"+total+"</td></tr>";
-		}		
+		}
 	});
-	
+
 	var row_count=$(table_element).find('tbody>tr').length;
 	var rows_to_add1=12-counter1;
 	for(var i=0;i<rows_to_add1;i++)
@@ -1444,13 +1207,13 @@ function print_form122(func)
 		table_rows2+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 	}
 
-	table_rows1+="</tbody>";	
-	table_rows2+="</tbody>";	
+	table_rows1+="</tbody>";
+	table_rows2+="</tbody>";
 
 	var table_foot=document.getElementById(form_id+'_foot');
 	var total_text=$(table_foot).find('tr>td:nth-child(2)')[0].innerHTML;
 	var total_amount=$(table_foot).find('tr>td:nth-child(3)')[0].innerHTML;
-	
+
 	var table_foot_row1="<tfoot style='border: 1px solid #000000;'><tr>"+
 				"<td colspan='5' style='text-align:left;'>Total Accepted Quantity: "+total_accepted_quantity+"</td>"+
 				"<td colspan='3' style='text-align:left;'>"+total_text+"</td>"+
@@ -1459,37 +1222,37 @@ function print_form122(func)
 	var table_foot_row2="<tfoot style='border: 1px solid #000000;'><tr>"+
 				"<td colspan='10' style='text-align:left;'>Total Rejected Quantity: "+total_rejected_quantity+"</td>"+
 				"</tr></tfoot>";
-		
+
 	table_rows1+=table_foot_row1;
 	table_rows2+=table_foot_row2;
-	
+
 	new_table1.innerHTML=table_rows1;
 	new_table2.innerHTML=table_rows2;
-	
-	/////////////placing the containers //////////////////////////////////////////////////////	
-	
+
+	/////////////placing the containers //////////////////////////////////////////////////////
+
 	container.appendChild(header);
 	container.appendChild(info_section);
-	
+
 	container.appendChild(accepted_section);
-	
+
 	container.appendChild(new_table1);
-	
+
 	container.appendChild(rejected_section);
 
 	container.appendChild(new_table2);
 	container.appendChild(footer);
-	
+
 	header.appendChild(invoice_info);
 	header.appendChild(business_title);
 	header.appendChild(business_contact);
-	
+
 	info_section.appendChild(supplier_info);
 	info_section.appendChild(business_info);
-	
+
 	footer.appendChild(tandc);
 	footer.appendChild(signature);
-	
+
 	func(container);
 }
 
@@ -1520,20 +1283,20 @@ function form151_print_form()
 	signature.innerHTML="<div style='float:right;text-align:left;display:block;width:30%;font-size:"+font_size+"em'><b>Signature: </b></div>";
 	bill_message.innerHTML="<div style='float:left;text-align:left;display:block;width:60%;font-size:"+font_size+"em'><textarea style='border:none;width:100%;height:100px;'>"+get_session_var('bill_message')+"</textarea></div>";
 	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em;margin:2px;'><b>Service Request Bill</b></div>";
-	
+
 	business_title.innerHTML="<div style='display:block;font-size:1.5em;float:left;'><b>"+bt+"</b><br>" +
 							"<div style='font-size:"+font_size+"em;padding:5px'>VAT #: "+get_session_var('vat')+"<br>" +
 							"TIN #: "+get_session_var('tin')+"</div></div>"+
 							"<div style='display:block;float:right;'><div>Contact No: "+get_session_var('phone') +
 							"<br>Address: "+get_session_var('address')+"</div></div>";
 	business_title.setAttribute('style',"height:80px;padding:1%;border:2px solid black;border-bottom:none;font-size:"+font_size+"em");
-	
+
 	var form_master="form151_master";
 	var header_element=document.getElementById(form_master);
 	$(header_element).find("textarea").each(function(index)
 	{
 		$(this).attr('value',$(this).val());
-	});	
+	});
 
 	var header_copy=header_element.cloneNode(true);
 	$(header_copy).find("a").remove();
@@ -1546,22 +1309,22 @@ function form151_print_form()
 	{
 		$(this).replaceWith($(this).attr('value'));
 	});
-	
+
 	var table_task_element=document.getElementById('form151_task_body').parentNode;
 	var table_item_element=document.getElementById('form151_item_body').parentNode;
 	var table_expense_element=document.getElementById('form151_expense_body').parentNode;
 	table_task_copy=table_task_element.cloneNode(true);
 	table_item_copy=table_item_element.cloneNode(true);
 	table_expense_copy=table_expense_element.cloneNode(true);
-	
+
 	table_task_copy.removeAttribute('class');
 	table_item_copy.removeAttribute('class');
 	table_expense_copy.removeAttribute('class');
-	
+
 	$(table_task_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,v1").remove();
 	$(table_item_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,v1").remove();
 	$(table_expense_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,v1").remove();
-	
+
 	$(table_task_copy).find('input,textarea').each(function(index)
 	{
 		$(this).replaceWith($(this).val());
@@ -1574,7 +1337,7 @@ function form151_print_form()
 	{
 		$(this).replaceWith($(this).val());
 	});
-	
+
 	$(table_task_copy).find('label').each(function(index)
 	{
 		$(this).replaceWith($(this).html());
@@ -1587,7 +1350,7 @@ function form151_print_form()
 	{
 		$(this).replaceWith($(this).html());
 	});
-	
+
 	$(table_task_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
 	$(table_item_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
 	$(table_expense_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
@@ -1595,12 +1358,12 @@ function form151_print_form()
 
 	var line_break1=document.createElement('br');
 	var line_break2=document.createElement('br');
-		
+
 	container.appendChild(title);
 	container.appendChild(business_title);
 	container.appendChild(header_copy);
 	container.appendChild(table_task_copy);
-	container.appendChild(line_break1);	
+	container.appendChild(line_break1);
 	container.appendChild(table_item_copy);
 	container.appendChild(line_break2);
 	container.appendChild(table_expense_copy);
@@ -1616,11 +1379,11 @@ function form151_print_form()
  * @formNo 153
  */
 function form153_print_form()
-{	
+{
 	print_form153(function(container)
 	{
 		$.print(container);
-		container.innerHTML="";	
+		container.innerHTML="";
 	});
 }
 
@@ -1632,7 +1395,7 @@ function print_form153(func)
 {
 	var form_id='form153';
 
-	////////////setting up containers///////////////////////	
+	////////////setting up containers///////////////////////
 	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
@@ -1640,7 +1403,7 @@ function print_form153(func)
 		var business_contact=document.createElement('div');
 
 	var customer_info=document.createElement('div');
-	
+
 	var quotation_intro=document.createElement('div');
 		//var subject=document.createElement('div');
 		var intro=document.createElement('div');
@@ -1675,47 +1438,47 @@ function print_form153(func)
 	var customer_name=master_form.elements[1].value;
 	var customer_address1=document.getElementById('form153_customer_info').innerHTML;
 	var customer_address=customer_address1.replace("Address<br>","");
-	var date=master_form.elements[3].value;	
-	
+	var date=master_form.elements[3].value;
+
 	//var subject_text="Subject: Quotation for supply of light and sound equipment";
 	var intro_text=master_form.elements[4].value;
-	
+
 	var tandc_text=get_session_var('quot_message');
 	var signature_text="<br>Thanking You.<br><br><br>Yours faithfully,<br>"+bt;
-	
+
 ////////////////filling in the content into the containers/////////////////////////////////////
 
 	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text+"<hr style='border: 1px solid #000;'>";
 	business_contact.innerHTML=business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website+"<hr style='border: 1px solid #000;'>";
-	
+
 	customer_info.innerHTML="<div style='width:70%;float:left;'>To<br>"+customer_name+"<br>"+customer_address+"</div><div style='width:30%;float:right;'>Date: "+date+"</div>";
-	
+
 	//subject.innerHTML="<br>"+subject_text;
 	var new_intro_text=intro_text.replace(/\n/g,"<br>");
-	intro.innerHTML=new_intro_text+"<br><br>";	
-	
+	intro.innerHTML=new_intro_text+"<br><br>";
+
 	tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
 	signature.innerHTML=signature_text;
-	
-		
+
+
 	var table_element=document.getElementById('form153_body').parentNode;
-	
+
 	$(table_element).find('textarea').each(function(index)
 	{
 		$(this).attr('value',$(this).val());
 	});
 
-	
+
 	table_copy=table_element.cloneNode(true);
-	
+
 	table_copy.removeAttribute('class');
 	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,v1").remove();
-	
+
 	$(table_copy).find('input[type=number]').each(function(index)
 	{
 		$(this).replaceWith(Math.round($(this).val()).toFixed(2));
-	});	
+	});
 	$(table_copy).find('input').each(function(index)
 	{
 		$(this).replaceWith($(this).val());
@@ -1724,32 +1487,32 @@ function print_form153(func)
 	{
 		$(this).replaceWith($(this).attr('value'));
 	});
-		
+
 	$(table_copy).find('label').each(function(index)
 	{
 		$(this).replaceWith($(this).html());
 	});
-	
+
 	$(table_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
-	
-/////////////placing the containers //////////////////////////////////////////////////////	
-	
+
+/////////////placing the containers //////////////////////////////////////////////////////
+
 	container.appendChild(header);
 	container.appendChild(customer_info);
 	container.appendChild(quotation_intro);
 	container.appendChild(table_copy);
 	container.appendChild(footer);
-	
+
 	header.appendChild(logo);
 	header.appendChild(business_intro);
 	header.appendChild(business_contact);
-	
+
 	//quotation_intro.appendChild(subject);
 	quotation_intro.appendChild(intro);
-	
+
 	footer.appendChild(tandc);
 	footer.appendChild(signature);
-	
+
 	func(container);
 }
 
@@ -1761,17 +1524,17 @@ function print_form153(func)
 function form154_print_form()
 {
 	var form_id='form154';
-	
-////////////setting up containers///////////////////////	
+
+////////////setting up containers///////////////////////
 	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
 		var business_intro=document.createElement('div');
 		var business_contact=document.createElement('div');
-	
+
 	var invoice_line=document.createElement('div');
-	
-	var info_section=document.createElement('div');	
+
+	var info_section=document.createElement('div');
 		var customer_info=document.createElement('div');
 		var business_info=document.createElement('div');
 
@@ -1811,11 +1574,11 @@ function form154_print_form()
 	var date=master_form.elements['date'].value;
 	var narration=master_form.elements['narration'].value;
 	var invoice_no=master_form.elements['bill_num'].value;
-	var customer_cst=master_form.elements['cst'].value;	
+	var customer_cst=master_form.elements['cst'].value;
 	var customer_tin=master_form.elements['tin'].value;
 	var tin_no=get_session_var('tin');
-	var sales_tax_no=get_session_var('sales_tax_no');	
-	var service_tax_no=get_session_var('service_tax_no');	
+	var sales_tax_no=get_session_var('sales_tax_no');
+	var service_tax_no=get_session_var('service_tax_no');
 	var tax_text="Tin No: "+tin_no;
 	var hiring=false;
 	var a1_job=false;
@@ -1839,7 +1602,7 @@ function form154_print_form()
 	else if(master_form.elements['bill_type'].value=='Hiring')
 	{
 		hiring=true;
-		tax_text="Service Tax no: "+service_tax_no;	
+		tax_text="Service Tax no: "+service_tax_no;
 	}
 	else
 	{
@@ -1847,26 +1610,26 @@ function form154_print_form()
 	}
 	var tandc_text=get_session_var('bill_message');
 	var signature_text="<br>For "+bt+"<br><br><br>Auth. Signatory<br>";
-	
+
 	////////////////filling in the content into the containers//////////////////////////
 
 	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	business_intro.innerHTML="<hr style='border: 1px solid #000;margin:2px;'>"+business_intro_text;
 	business_contact.innerHTML="<hr style='border: 1px solid #000;margin:2px;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website;
-	
+
 	invoice_line.innerHTML="<hr style='border: 1px solid #000;margin:2px'><div style='text-align:center;'><b style='text-size:1.2em'>"+invoice_text+"</b></div><br>";
-	
+
 	if(master_form.elements['bill_type'].value=='Tax' || master_form.elements['bill_type'].value=='Retail')
 	{
 		customer_info.innerHTML="<b>Customer</b><br>"+customer_name+"<br>"+customer_address+"<br>CST#: "+customer_cst+"<br>TIN#: "+customer_tin;
 	}
 	else
-	{		
+	{
 		customer_info.innerHTML="<b>Customer</b><br>"+customer_name+"<br>"+customer_address;
 	}
 
 	business_info.innerHTML=tax_text+"<br>Date: "+date+"<br>Invoice No: "+invoice_no+"<br>Narration: "+narration;
-	
+
 	tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
 	signature.innerHTML=signature_text;
 
@@ -1877,9 +1640,9 @@ function form154_print_form()
 	});
 
 	table_copy=table_element.cloneNode(true);
-	
+
 	table_copy.removeAttribute('class');
-	
+
 	var discount_amount=parseFloat(document.getElementById('form154_discount').value);
 	if(discount_amount==0)
 	{
@@ -1890,11 +1653,11 @@ function form154_print_form()
 	}
 
 	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,form,fresh,v1").remove();
-	
+
 	$(table_copy).find('input[type=number]').each(function(index)
 	{
 		$(this).replaceWith(Math.round($(this).val()).toFixed(2));
-	});	
+	});
 
 	$(table_copy).find('input').each(function(index)
 	{
@@ -1910,7 +1673,7 @@ function form154_print_form()
 		$(this).replaceWith($(this).html());
 	});
 
-	var wording_total=number2text(bill_total);	
+	var wording_total=number2text(bill_total);
 	if(hiring)
 	{
 		var head_html="<tr><form id='form154_header'></form>"+
@@ -1929,14 +1692,14 @@ function form154_print_form()
 		new_body_html=new_body_html.replace(/<td data-th=\"Date\">From:/g,"");
 		new_body_html=new_body_html.replace(/<br>To:/g,"");
 		new_body_html=new_body_html.replace(/<\/td><\/td>/g,"</td>");
-		
+
 		$(table_copy).find('tbody').html(new_body_html);
 		$(table_copy).find('tfoot > tr > td:first').attr('colspan','4');
 		$(table_copy).find('tfoot > tr > td:nth-child(2)').attr('colspan','2');
 		$(table_copy).find('tfoot > tr > td:nth-child(3)').attr('colspan','2');
-		$(table_copy).find('tfoot > tr > td:first').html('Total<br>'+wording_total);		
+		$(table_copy).find('tfoot > tr > td:first').html('Total<br>'+wording_total);
 	}
-	else 
+	else
 	{
 		$(table_copy).find('tfoot > tr > td:first').attr('colspan','2');
 		$(table_copy).find('tfoot > tr > td:nth-child(2)').attr('colspan','2');
@@ -1947,14 +1710,14 @@ function form154_print_form()
 		else
 		{
 			$(table_copy).find('tfoot > tr > td:first').html('Total<br>'+wording_total);
-		}		
+		}
 	}
-	
+
 	if(a1_job)
 	{
 		var new_table_row="<tr><td>1</td><td>";
 		var new_from_date="";
-		var new_to_date="";		
+		var new_to_date="";
 		var new_days="";
 		var new_amount=0;
 
@@ -1969,7 +1732,7 @@ function form154_print_form()
 		new_table_row+="</td><td>1 job</td><td>"+new_from_date+"</td><td>"+new_to_date+"</td><td>"+new_days+"</td><td></td><td>"+new_amount+"</td></tr>";
 		$(table_copy).find('tbody').html(new_table_row);
 	}
-	
+
 	//table_copy.removeAttribute('class');
 	//$(table_copy).attr('style','min-height:600px;');
 	$(table_copy).find('tbody').attr('style','height:500px;min-height:500px;');
@@ -1977,7 +1740,7 @@ function form154_print_form()
 	$(table_copy).find('td').attr('style',"border-right:2px solid black;border-left:2px solid black;text-align:left;font-size:"+font_size+"em");
 	$(table_copy).find('tfoot').attr('style',"border:2px solid black;text-align:left;");
 	$(table_copy).find("tbody>tr").attr('style','flex:1;height:20px');
-	
+
 	if(hiring)
 	{
 		$(table_copy).find("th:nth-child(3), td:nth-child(3)").css('width','200px');
@@ -1985,7 +1748,7 @@ function form154_print_form()
 		var row_count=$(table_copy).find('tbody>tr').length;
 		var rows_to_add=15-row_count;
 		for(var i=0;i<rows_to_add;i++)
-		{		
+		{
 			$(table_copy).find("tbody").append("<tr style='flex:2;border-right:2px solid black;border-left:2px solid black;'><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td></tr>");
 		}
 	}
@@ -2000,26 +1763,26 @@ function form154_print_form()
 			$(table_copy).find("tbody").append("<tr style='flex:2;border-right:2px solid black;border-left:2px solid black;'><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td></tr>");
 		}
 	}
-		
-	/////////////placing the containers //////////////////////////////////////////////////////	
-	
+
+	/////////////placing the containers //////////////////////////////////////////////////////
+
 	container.appendChild(header);
 	container.appendChild(invoice_line);
 	container.appendChild(info_section);
-	
+
 	container.appendChild(table_copy);
 	container.appendChild(footer);
-	
+
 	header.appendChild(logo);
 	header.appendChild(business_intro);
 	header.appendChild(business_contact);
-	
+
 	info_section.appendChild(customer_info);
 	info_section.appendChild(business_info);
-	
+
 	footer.appendChild(tandc);
 	footer.appendChild(signature);
-	
+
 	$.print(container);
 }
 
@@ -2032,16 +1795,16 @@ function form154_print_form()
 function print_form194(func)
 {
 	var form_id='form194';
-	
-	////////////setting up containers///////////////////////	
+
+	////////////setting up containers///////////////////////
 	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
 		var business_title=document.createElement('div');
-	
+
 	var invoice_line=document.createElement('div');
-	
-	var info_section=document.createElement('div');	
+
+	var info_section=document.createElement('div');
 		var customer_info=document.createElement('div');
 
 	var table_container=document.createElement('div');
@@ -2077,27 +1840,27 @@ function print_form194(func)
 	var customer_address=master_form.elements['customer_address'].value;
 	var date=master_form.elements[4].value;
 	var invoice_no=master_form.elements[3].value;
-	var service_tax_no=get_session_var('service_tax_no');	
+	var service_tax_no=get_session_var('service_tax_no');
 	var tax_text="Service Tax No: "+service_tax_no;
 
 	var tandc_text=get_session_var('bill_message');
-	
+
 	////////////////filling in the content into the containers//////////////////////////
 
 	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	business_title.innerHTML=bt;
 	invoice_line.innerHTML="<div style='float:left;width:50%'>Invoice #: "+invoice_no+"</div><div style='float:right;text-align:right;width:50%'>Invoice Date: "+date+"</div>";
-	
+
 	//invoice_line.innerHTML="<hr style='border: 1px solid #000;margin:2px'><div style='text-align:center;'><b style='text-size:1.2em'>"+invoice_text+"</b></div><br>";
-	
+
 	customer_info.innerHTML="<hr style='border: 1px solid #000;margin:2px'>Customer</b><br>"+customer_name+"<br>"+customer_address+"<hr style='border: 1px solid #000;margin:2px'>";
-	
+
 	tandc.innerHTML=tandc_text;
 	address.innerHTML=tax_text+" | Address: "+business_address;
 
 	var table_element=document.getElementById(form_id+'_body').parentNode;
 	table_copy=table_element.cloneNode(true);
-	
+
 	table_copy.removeAttribute('class');
 	table_copy.setAttribute('width','1000px');
 	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,form,fresh").remove();
@@ -2105,16 +1868,16 @@ function print_form194(func)
 	{
 		$(this).replaceWith($(this).val());
 	});
-	
+
 	$(table_copy).find('label').each(function(index)
 	{
 		$(this).replaceWith($(this).html());
 	});
-		
+
 	$(table_copy).find('tfoot > tr > td:first').attr('colspan','1');
 	$(table_copy).find('tfoot > tr > td:nth-child(2)').attr('colspan','2');
-	
-	
+
+
 	//table_copy.removeAttribute('class');
 	//$(table_copy).attr('style','min-height:600px;');
 	$(table_copy).find('tbody').attr('style','height:500px;min-height:500px;');
@@ -2122,7 +1885,7 @@ function print_form194(func)
 	$(table_copy).find('td').attr('style',"border-right:2px solid black;border-left:2px solid black;text-align:left;font-size:"+font_size+"em");
 	$(table_copy).find('tfoot').attr('style',"border:2px solid black;text-align:left;");
 	$(table_copy).find("tbody>tr").attr('style','flex:1;height:30px');
-	
+
 	$(table_copy).find("th:first, td:first").css('width','300px');
 	var row_count=$(table_copy).find('tbody>tr').length;
 	var rows_to_add=15-row_count;
@@ -2130,8 +1893,8 @@ function print_form194(func)
 	{
 		$(table_copy).find("tbody").append("<tr style='flex:2;border-right:2px solid black;border-left:2px solid black;'><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td></tr>");
 	}
-	
-	/////////////placing the containers //////////////////////////////////////////////////////	
+
+	/////////////placing the containers //////////////////////////////////////////////////////
 
 	container.appendChild(header);
 	container.appendChild(invoice_line);
@@ -2160,8 +1923,8 @@ function form195_print_form(id)
 	print_form195(id,function(container)
 	{
 		$.print(container);
-		container.innerHTML="";	
-	});	
+		container.innerHTML="";
+	});
 }
 
 /**
@@ -2171,14 +1934,14 @@ function form195_print_form(id)
 function print_form195(id,func)
 {
 	var form_id='form195';
-	
-	////////////setting up containers///////////////////////	
+
+	////////////setting up containers///////////////////////
 	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
 		var business_details=document.createElement('div');
-	
-	var top_section=document.createElement('div');	
+
+	var top_section=document.createElement('div');
 		var date_info=document.createElement('div');
 		var subject_info=document.createElement('div');
 		var to_info=document.createElement('div');
@@ -2226,25 +1989,25 @@ function print_form195(id,func)
 	var content=master_form.elements[6].value.replace(/\n/g,"<br>");
 	var signature_text=master_form.elements[7].value.replace(/\n/g,"<br>");
 	var tandc_text=master_form.elements[8].value.replace(/\n/g,"<br>");
-		
+
 	////////////////filling in the content into the containers//////////////////////////
 
 	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	business_details.innerHTML=business_address+"<br>Phone: "+business_phone+"<br>Email: "+business_email+"<br>Web: "+business_website;
 	date_info.innerHTML=date;
-	if(subject!="")	
+	if(subject!="")
 	{
 		subject_info.innerHTML="Subject: "+subject;
 	}
 	to_info.innerHTML=to;
 	salutation_info.innerHTML=salutation;
-	
+
 	content_section.innerHTML=content;
-	
+
 	signature.innerHTML=signature_text;
 	tandc.innerHTML=tandc_text;
-	
-	/////////////placing the containers //////////////////////////////////////////////////////	
+
+	/////////////placing the containers //////////////////////////////////////////////////////
 
 	container.appendChild(header);
 	container.appendChild(top_section);
@@ -2274,24 +2037,24 @@ function form196_print_form(nl_name,nl_id,print_type,func)
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
 		var business_intro=document.createElement('div');
-	
+
 	var nl_content=document.createElement('div');
-	
+
 	var footer=document.createElement('div');
 		var business_contact=document.createElement('div');
 		var powered_by=document.createElement('div');
-		
+
 ////////////setting styles for containers/////////////////////////
 
 	header.setAttribute('style','width:98%;min-height:100px;text-align:center');
 		business_intro.setAttribute('style','width:98%;text-align:center');
-	
+
 	nl_content.setAttribute('style','display:block;width:98%;min-height:60px');
 
 	footer.setAttribute('style','display:block;width:98%;');
 		business_contact.setAttribute('style','display:block;width:98%;text-align:center');
 		powered_by.setAttribute('style','display:block;width:98%;text-align:center');
-	
+
 ///////////////getting the content////////////////////////////////////////
 
 	var bt=get_session_var('title');
@@ -2302,34 +2065,34 @@ function form196_print_form(nl_name,nl_id,print_type,func)
 	var business_email=get_session_var('email');
 	var business_website=get_session_var('website');
 	var tandc_text=get_session_var('bill_message');
-	var powered_by_text=get_session_var('powered_by');	
+	var powered_by_text=get_session_var('powered_by');
 	var powered_by_link=get_session_var('powered_by_link');
 	var domain=get_session_var('domain');
-	
+
 ////////////////filling in the content into the containers/////////////////////////////////////
 
 	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text+"<hr style='border: 1px solid #000;'>";
-		
-	business_contact.innerHTML="<hr style='border: 1px solid #000;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website;	
 
-	if(powered_by_text!="")	
+	business_contact.innerHTML="<hr style='border: 1px solid #000;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website;
+
+	if(powered_by_text!="")
 	{
 		powered_by.innerHTML="<hr style='border: 1px solid #000;'>Powered By: <a href='"+powered_by_link+"'>"+powered_by_text+"</a> | <a href='https://vyavsaay.com/f/u.htm?d="+domain+"&i=*|customer_id|*'>Unsubscribe</a>";
-	}	
-	else 
+	}
+	else
 	{
 		powered_by.innerHTML="<hr style='border: 1px solid #000;'>Powered By: <a href='https://vyavsaay.com'>Vyavsaay ERP</a> | <a href='https://vyavsaay.com/f/u.htm?d="+domain+"&i=*|customer_id|*'>Unsubscribe</a>";
 	}
-/////////////placing the containers //////////////////////////////////////////////////////	
-	
+/////////////placing the containers //////////////////////////////////////////////////////
+
 	container.appendChild(header);
 	container.appendChild(nl_content);
 	container.appendChild(footer);
-	
+
 	header.appendChild(logo);
 	header.appendChild(business_intro);
-	
+
 	footer.appendChild(business_contact);
 	footer.appendChild(powered_by);
 
@@ -2344,7 +2107,7 @@ function form196_print_form(nl_name,nl_id,print_type,func)
 			"<column_size></column_size>"+
 			"<nl_id exact='yes'>"+nl_id+"</nl_id>" +
 			"</newsletter_items>";
-	
+
 	fetch_requested_data('',newsletter_items_data,function(results)
 	{
 		var right=false;
@@ -2355,31 +2118,31 @@ function form196_print_form(nl_name,nl_id,print_type,func)
 			var nl_item_pic=document.createElement('div');
 			var nl_item_detail=document.createElement('div');
 			var nl_item_link=document.createElement('a');
-			
+
 			var type=result.item_type;
 			var name=result.item_name;
 			var detail=result.item_detail.replace(/\n/g,"<br>");
 			var blob=result.data_blob.replace(/ /g,"+");
 			var pic_url=result.pic_url;
-							
+
 			var url=result.url;
 			var size=result.column_size;
-			
+
 			nl_item.style.display='block';
 			nl_item.style.margin='2px';
 			nl_item.style.padding='2px';
 			nl_item.style.border='1px solid #444';
 			nl_item.style.minHeight='150px';
-			
+
 			nl_item_link.style.textDecoration='none';
-			nl_item_pic.width='90%';			
-			
+			nl_item_pic.width='90%';
+
 			if(size=='2')
 			{
 				nl_item.style.width='98%';
 				nl_item.style.float='left';
 			}
-			else 
+			else
 			{
 				nl_item.style.width='48%';
 				if(right)
@@ -2392,26 +2155,26 @@ function form196_print_form(nl_name,nl_id,print_type,func)
 					right=true;
 				}
 			}
-			
+
 			nl_item_heading.setAttribute('style','display:block;margin:2px;padding:2px;width:90%');
-			
+
 			nl_item_pic.setAttribute('style','float:left;margin:2px;padding:2px;');
 			if(url!="")
 			{
 				nl_item_link.setAttribute('href',url);
-			}			
-			
+			}
+
 			nl_item_heading.innerHTML="<b>"+name+"</b>";
 			nl_item_detail.innerHTML=detail;
-			
+
 			nl_content.appendChild(nl_item);
 			nl_item.appendChild(nl_item_link);
-			nl_item_link.appendChild(nl_item_heading);			
-			
+			nl_item_link.appendChild(nl_item_heading);
+
 			var item_clear_div=document.createElement('div');
 			item_clear_div.setAttribute('style','clear:both;');
-			nl_item.appendChild(item_clear_div);			
-			
+			nl_item.appendChild(item_clear_div);
+
 			if(blob!='undefined' && blob!="")
 			{
 				if(print_type=='mail')
@@ -2422,17 +2185,17 @@ function form196_print_form(nl_name,nl_id,print_type,func)
 				{
 					nl_item_pic.innerHTML="<img src='"+blob+"'>";
 				}
-				nl_item_link.appendChild(nl_item_pic);				
+				nl_item_link.appendChild(nl_item_pic);
 			}
 
 			nl_item_link.appendChild(nl_item_detail);
-						
+
 		});
-		
+
 		var clear_div=document.createElement('div');
 		clear_div.setAttribute('style','clear:both;');
 		nl_content.appendChild(clear_div);
-		
+
 		func(container);
 	});
 }
@@ -2447,8 +2210,8 @@ function form209_print_form()
 	print_form209(function(container)
 	{
 		$.print(container);
-		container.innerHTML="";	
-	});	
+		container.innerHTML="";
+	});
 }
 
 /**
@@ -2458,16 +2221,16 @@ function form209_print_form()
 function print_form209(func)
 {
 	var form_id='form209';
-	
-	////////////setting up containers///////////////////////	
+
+	////////////setting up containers///////////////////////
 	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
 		var business_title=document.createElement('div');
-	
+
 	var plan_line=document.createElement('div');
-	
-	var info_section=document.createElement('div');	
+
+	var info_section=document.createElement('div');
 		var plan_info=document.createElement('div');
 
 	var table_container=document.createElement('div');
@@ -2501,18 +2264,18 @@ function print_form209(func)
 	var customer=master_form.elements['customer'].value;
 	var start_date=master_form.elements['date'].value;
 	var plan_status=master_form.elements['status'].value;
-		
+
 	////////////////filling in the content into the containers//////////////////////////
 
 	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	business_title.innerHTML=bt;
-	plan_line.innerHTML="<div style='float:left;width:50%'>Name: "+customer+"</div><div style='float:right;text-align:right;width:50%'>Starting From: "+start_date+"</div>";	
+	plan_line.innerHTML="<div style='float:left;width:50%'>Name: "+customer+"</div><div style='float:right;text-align:right;width:50%'>Starting From: "+start_date+"</div>";
 	plan_info.innerHTML="<hr style='border: 1px solid #000;margin:2px'>Plan #: </b>"+plan_num+"<br>Plan Status: "+plan_status+"<hr style='border: 1px solid #000;margin:2px'>";
-	
+
 	address.innerHTML="Address: "+business_address;
 
 	var table_element=document.getElementById(form_id+'_body');
-	/////////////adding new table //////////////////////////////////////////////////////	
+	/////////////adding new table //////////////////////////////////////////////////////
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','width:100%;font-size:11px;border:1px solid black;text-align:left;');
 	var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
@@ -2522,10 +2285,10 @@ function print_form209(func)
 				"<td style='text-align:left;width:45px'>From</td>"+
 				"<td style='text-align:left;width:45px'>To</td>"+
 				"<td style='text-align:left;width:45px'>Status</td></tr>";
-				
+
 	var table_rows=table_header;
 	var counter=0;
-	
+
 	$(table_element).find('form').each(function(index)
 	{
 		counter+=1;
@@ -2536,7 +2299,7 @@ function print_form209(func)
 		var from=form.elements[4].value;
 		var to=form.elements[5].value;
 		var status=form.elements[6].value;
-		
+
 		table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
 				"<td style='text-align:left;'>"+s_no+"</td>"+
 				"<td style='text-align:left;'>"+item_name+"</td>"+
@@ -2545,7 +2308,7 @@ function print_form209(func)
 				"<td style='text-align:left;'>"+to+"</td>"+
 				"<td style='text-align:left;'>"+status+"</td></tr>";
 	});
-	
+
 	var row_count=$(table_element).find('tbody>tr').length;
 	var rows_to_add=10-row_count;
 	for(var i=0;i<rows_to_add;i++)
@@ -2554,10 +2317,10 @@ function print_form209(func)
 	}
 
 	new_table.innerHTML=table_rows;
-	
-	/////////////placing the containers //////////////////////////////////////////////////////	
-	
-	/////////////placing the containers //////////////////////////////////////////////////////	
+
+	/////////////placing the containers //////////////////////////////////////////////////////
+
+	/////////////placing the containers //////////////////////////////////////////////////////
 
 	container.appendChild(header);
 	container.appendChild(plan_line);
@@ -2615,14 +2378,14 @@ function print_form210(bill_id)
 				"<freight></freight>"+
 				"<total></total>" +
 				"<storage></storage>" +
-				"<bill_id exact='yes'>"+bill_id+"</bill_id>" +				
+				"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
 				"</bill_items>";
 	var form210_print_count=2;
 	var customer_address="";
 	var customer_tin="";
 	var customer_name="";
 	var date="";
-	var channel="";	
+	var channel="";
 	var bill_type="";
 	var po_num="";
 	var bill_num="";
@@ -2645,7 +2408,7 @@ function print_form210(bill_id)
 				}
 				form210_print_count-=1;
 			},po_date_data);
-			
+
 			form210_print_count+=1;
 			var address_data="<customers>" +
 					"<address></address>" +
@@ -2656,16 +2419,16 @@ function print_form210(bill_id)
 			{
 				if(addresses.length>0)
 				{
-					customer_address="Address<br>"+addresses[0].address+", "+addresses[0].city;					
+					customer_address="Address<br>"+addresses[0].address+", "+addresses[0].city;
 				}
 				form210_print_count-=1;
 			});
-			
+
 			form210_print_count+=1;
 			var tin_data="<attributes count='1'>" +
 					"<value></value>" +
 					"<type exact='yes'>customer</type>"+
-					"<attribute array='yes'>--VAT#--CST#--</attribute>"+ 
+					"<attribute array='yes'>--VAT#--CST#--</attribute>"+
 					"<name exact='yes'>"+bill_results[0].customer_name+"</name>" +
 					"</attributes>";
 			get_single_column_data(function(tins)
@@ -2677,47 +2440,47 @@ function print_form210(bill_id)
 				form210_print_count-=1;
 			},tin_data);
 		}
-		
+
 		customer_name=bill_results[0].customer_name;
 		date=get_my_past_date(bill_results[0].bill_date);
-		channel=bill_results[0].channel;	
+		channel=bill_results[0].channel;
 		bill_type=bill_results[0].billing_type;
 		po_num=bill_results[0].order_num;
 		bill_num=bill_results[0].bill_num;
-		
+
 		form210_print_count-=1;
 	});
-	
-		
+
+
 	fetch_requested_data('',bill_items_column,function(results)
 	{
 		form210_print_count-=1;
-	
-	
+
+
 		var form210_complete=setInterval(function()
         {
         	if(form210_print_count===0)
         	{
-      
-				////////////setting up containers///////////////////////	
+
+				////////////setting up containers///////////////////////
 				var container=document.createElement('div');
 				var header=document.createElement('div');
 					var invoice_info=document.createElement('div');
 					var business_title=document.createElement('div');
 					var business_contact=document.createElement('div');
-					
-				var info_section=document.createElement('div');	
+
+				var info_section=document.createElement('div');
 					var customer_info=document.createElement('div');
 					var business_info=document.createElement('div');
-			
+
 				var table_container=document.createElement('div');
-			
+
 				var footer=document.createElement('div');
 					var tandc=document.createElement('div');
 					var signature=document.createElement('div');
-			
+
 			////////////setting styles for containers/////////////////////////
-			
+
 				header.setAttribute('style','border: 1px solid #000000;width:98%;min-height:100px;text-align:center');
 					invoice_info.setAttribute('style','margin:5px;width:98%;text-align:center');
 					business_title.setAttribute('style','margin:5px;width:100%;text-align:center;font-size:24px;');
@@ -2728,44 +2491,44 @@ function print_form210(bill_id)
 				footer.setAttribute('style','margin:10px;width:98%;min-height:100px');
 					tandc.setAttribute('style','float:left;width:44%;min-height:60px');
 					signature.setAttribute('style','float:right;width:54%;min-height:60px;text-align:right;');
-			
+
 			///////////////getting the content////////////////////////////////////////
-			
+
 				var bt=get_session_var('title');
 				//var font_size=get_session_var('print_size');
 				//var logo_image=get_session_var('logo');
 				var business_address=get_session_var('address');
 				var business_phone=get_session_var('phone');
 				var business_email=get_session_var('email');
-			
+
 				var tin_no=get_session_var('tin');
-					
+
 				var tandc_text=get_session_var('bill_message');
 				var signature_text="<br>for "+bt+"<br><br><br>Authorised Signatory<br>";
-				
+
 				////////////////filling in the content into the containers//////////////////////////
-			
-				if(bill_type=="Tax")	
+
+				if(bill_type=="Tax")
 				{
 					invoice_info.innerHTML="TAX INVOICE";
 				}
-				else 
+				else
 				{
 					invoice_info.innerHTML="RETAIL INVOICE";
 				}
-			
+
 				business_title.innerHTML=bt;
 				business_contact.innerHTML=business_address+"<br>Tel: "+business_phone+" emial: "+business_email;
-				
+
 				customer_info.innerHTML=customer_name+"<br>"+customer_address+"<br>TIN #:"+customer_tin;
 				business_info.innerHTML="Invoice #: "+bill_num+"<br>Dated: "+date+"<br>PO #: "+po_num+"<br>PO Date: "+po_date+"<br>TIN: "+tin_no;
-				
+
 				tandc.innerHTML="<b><u>Terms and Conditions</u></b><br>"+tandc_text;
 				signature.innerHTML=signature_text;
-			
+
 				var table_element=document.getElementById(form_id+'_body');
-				
-				/////////////adding new table //////////////////////////////////////////////////////	
+
+				/////////////adding new table //////////////////////////////////////////////////////
 				var new_table=document.createElement('table');
 				new_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
 				var table_header="<thead style='border:1px solid #000000;'><tr>"+
@@ -2780,7 +2543,7 @@ function print_form210(bill_id)
 							"<td style='text-align:left;width:45px'>Tax%</td>"+
 							"<td style='text-align:left;width:45px'>Freight</td>"+
 							"<td style='text-align:left;width:80px'>Total</td></tr></thead>";
-							
+
 				var table_rows=table_header+"<tbody style='border: 1px solid #000000;'>";
 				var counter=0;
 				var bill_total=0;
@@ -2788,7 +2551,7 @@ function print_form210(bill_id)
 				var bill_freight=0;
 				var total_quantity=0;
 				var tax_array=[];
-			
+
 				results.forEach(function(result)
 				{
 					counter+=1;
@@ -2798,24 +2561,24 @@ function print_form210(bill_id)
 					var quantity=""+result.quantity;
 					var mrp=""+result.mrp;
 					var price=result.unit_price;
-					var tax_rate=result.tax_rate;		
-					var amount=result.amount;		
-					var tax=result.tax;		
+					var tax_rate=result.tax_rate;
+					var amount=result.amount;
+					var tax=result.tax;
 					var total=result.total;
 					var freight=result.freight;
-					var tax_rate=result.tax_rate;		
-					
+					var tax_rate=result.tax_rate;
+
 					total_quantity+=parseFloat(quantity);
 					bill_total+=parseFloat(total);
 					bill_amount+=parseFloat(amount);
 					bill_freight+=parseFloat(freight);
-					
+
 					if(typeof tax_array[tax_rate]=='undefined')
 					{
 						tax_array[tax_rate]=0;
 					}
 					tax_array[tax_rate]+=parseFloat(tax);
-					
+
 					table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
 							"<td style='text-align:left;'>"+counter+"</td>"+
 							"<td style='text-align:left;word-wrap: break-word;'>"+sku+"</td>"+
@@ -2829,78 +2592,78 @@ function print_form210(bill_id)
 							"<td style='text-align:left;'>"+freight+"</td>"+
 							"<td style='text-align:left;'>"+total+"</td></tr>";
 				});
-				
+
 				var row_count=$(new_table).find('tbody>tr').length;
 				var rows_to_add=15-row_count;
 				for(var i=0;i<rows_to_add;i++)
 				{
 					table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 				}
-			
+
 				table_rows+="</tbody>";
-				
+
 				var wording_total=number2text(bill_total);
-				
+
 				var against_c_form="";
 				if(bill_type=='Retail-CST-C')
 				{
 					against_c_form="<br>Against C-Form";
 				}
-			
+
 				var tax_name="VAT";
-				
+
 				if(bill_type=='Retail-CST' || bill_type=='Retail-CST-C')
 				{
 					tax_name="CST";
 				}
-			
+
 				var tax_string="";
 				var bill_tax="";
 				for(var x in tax_array)
 				{
 					tax_array[x]=vUtil.round(tax_array[x],2);
-					tax_string+=tax_name+" @"+x+"%: <br>";		
+					tax_string+=tax_name+" @"+x+"%: <br>";
 					bill_tax+="Rs. "+tax_array[x]+": <br>";
 				}
-				
+
 				var table_foot=document.getElementById(form_id+'_foot');
 				var total_quantity="Total Quantity: "+total_quantity;
 				var total_text="Amount:</br>"+tax_string+"Freight: </br>Total:";
 				var total_amount="Rs. "+bill_amount+"</br>" +bill_tax+"Rs. "+bill_freight+"</br>Rs. "+bill_total;
-				
+
 				var table_foot_row="<tfoot style='border: 1px solid #000000;'><tr>"+
 							"<td colspan='6' style='text-align:left;'>"+wording_total+"<br>"+total_quantity+against_c_form+"</td>"+
 							"<td colspan='3' style='text-align:left;'>"+total_text+"</td>"+
 							"<td colspan='2' style='text-align:left;'>"+total_amount+"</td></tr></tfoot>";
-					
+
 				table_rows+=table_foot_row;
 				new_table.innerHTML=table_rows;
-				
-				/////////////placing the containers //////////////////////////////////////////////////////	
-				
+
+				/////////////placing the containers //////////////////////////////////////////////////////
+
 				container.appendChild(header);
 				container.appendChild(info_section);
-				
+
 				container.appendChild(new_table);
 				container.appendChild(footer);
-				
+
 				header.appendChild(invoice_info);
 				header.appendChild(business_title);
 				header.appendChild(business_contact);
-				
+
 				info_section.appendChild(customer_info);
 				info_section.appendChild(business_info);
-				
+
 				footer.appendChild(tandc);
 				footer.appendChild(signature);
-				
+
 				$.print(container);
 	  			container.innerHTML="";
-	  			
+
 	  			hide_loader();
       			clearInterval(form210_complete);
         	}
-        },1000);	
+        },1000);
 	});
 }
 
@@ -2913,8 +2676,8 @@ function form215_print_form()
 	print_form215(function(container)
 	{
 		$.print(container);
-		container.innerHTML="";	
-	});	
+		container.innerHTML="";
+	});
 }
 
 /**
@@ -2924,19 +2687,19 @@ function form215_print_form()
 function print_form215(func)
 {
 	var form_id='form215';
-	
-	////////////setting up containers///////////////////////	
+
+	////////////setting up containers///////////////////////
 	var container=document.createElement('div');
-	
+
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
 		var business_title=document.createElement('div');
 		var drs_barcode=document.createElement('img');
-	
+
 	var drs_title=document.createElement('div');
-	
+
 	var detail_section=document.createElement('div');
-	
+
 	var table_container=document.createElement('div');
 
 	////////////setting styles for containers/////////////////////////
@@ -2946,9 +2709,9 @@ function print_form215(func)
 		logo.setAttribute('style','float:left;width:35%;height:60px;');
 		business_title.setAttribute('style','float:left;width:40%;height:60px;text-align:center;font-weight:bold;');
 		drs_barcode.setAttribute('style','float:right;width:23%;height:60px;padding:left:5px;padding-right:5px;');
-	drs_title.setAttribute('style','display:block;width:98%;height:20px;text-align:center');	
+	drs_title.setAttribute('style','display:block;width:98%;height:20px;text-align:center');
 	detail_section.setAttribute('style','display:block;width:98%;height:30px;text-align:center;');
-	
+
 	///////////////getting the content////////////////////////////////////////
 
 	var bt=get_session_var('title');
@@ -2959,24 +2722,24 @@ function print_form215(func)
 	var drs_date=master_form.elements['date'].value;
 	//var print_date=master_form.elements['pdate'].value;
 	var drs_num=master_form.elements['man_num'].value;
-	
+
 	////////////////filling in the content into the containers//////////////////////////
-	
+
 	var table_element=document.getElementById(form_id+'_body');
-		
+
 	var total_items=$(table_element).find('tr').length;
 
 	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"' style='height:98%;margin-left:10%'>";
 	business_title.innerHTML=bt;
 
 	$(drs_barcode).JsBarcode(drs_num,{displayValue:false});
-		
+
 	drs_title.innerHTML="Dispatch Manifest";
 
 	employee_text="</td><td>Total Orders: "+total_items+"</td>";
 	drs_text="<td>Manifest #: "+drs_num+"</td><td>Manifest Date: "+drs_date+"</td>";
 	detail_text="<table style='border:none;width:98%;font-size:11px;'><tr>"+employee_text+"</tr><tr>"+drs_text+"</tr></table>";
-	
+
 	detail_section.innerHTML=detail_text;
 
 	var new_table=document.createElement('table');
@@ -2994,24 +2757,24 @@ function print_form215(func)
 
 	var td_text="<td style='border:solid 1px #000000'></td>";
 	var tr_text="<tr>"+td_text+td_text+td_text+td_text+td_text+"</tr>";
-	
+
 	$(table_element).find('form').each(function(index)
 	{
 		counter+=1;
 		var form=$(this)[0];
-		
+
 		var bill_id=""+form.elements[0].value;
 		var bill_num=""+form.elements[1].value;
 		var order_num=form.elements[2].value;
 		var channel=form.elements[3].value;
-		
+
 		var cnote_no=document.createElement('div');
 		var barcode_image=document.createElement('img');
 		var barcode_value=document.createElement('div');
-		
+
 		barcode_image.setAttribute('style','width:150px;height:30px;');
 		barcode_value.setAttribute('style','width:150px;font-size:14px;margin:1px;text-align:center;');
-		
+
 		barcode_value.innerHTML=bill_id;
 		$(barcode_image).JsBarcode(bill_id,{displayValue:false});
 
@@ -3022,17 +2785,17 @@ function print_form215(func)
 				"<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
 				"<td><div style='text-align:left;'>"+bill_num+"</div></td>"+
 				"<td><div style='text-align:left;>"+order_num+"</div></td>"+
-				"<td><div style='text-align:left;>"+channel+"</div></td></tr>";				
+				"<td><div style='text-align:left;>"+channel+"</div></td></tr>";
 	});
 	new_table.innerHTML=table_rows;
-	/////////////placing the containers //////////////////////////////////////////////////////	
+	/////////////placing the containers //////////////////////////////////////////////////////
 
 	container.appendChild(header);
 	container.appendChild(drs_title);
 	container.appendChild(detail_section);
 
 	container.appendChild(new_table);
-	
+
 	header.appendChild(logo);
 	header.appendChild(business_title);
 	header.appendChild(drs_barcode);
@@ -3046,12 +2809,12 @@ function print_form215(func)
  * @formNo 222
  */
 function form222_print_form()
-{	
+{
 	print_form222(function(container)
 	{
 		$.print(container);
-		container.innerHTML="";	
-	});	
+		container.innerHTML="";
+	});
 }
 
 /**
@@ -3060,16 +2823,16 @@ function form222_print_form()
 function print_form222(func)
 {
 	var form_id='form222';
-	////////////setting up containers///////////////////////	
+	////////////setting up containers///////////////////////
 	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
 		var business_intro=document.createElement('div');
 		var business_contact=document.createElement('div');
-	
+
 	var invoice_line=document.createElement('div');
-	
-	var info_section=document.createElement('div');	
+
+	var info_section=document.createElement('div');
 		var customer_info=document.createElement('div');
 		var business_info=document.createElement('div');
 
@@ -3104,30 +2867,30 @@ function print_form222(func)
 
 	var master_form=document.getElementById(form_id+'_master');
 	var supplier_name=master_form.elements['supplier'].value;
-	var date=master_form.elements['date'].value;	
+	var date=master_form.elements['date'].value;
 	var order_no=master_form.elements['order_num'].value;
 	var vat_no=get_session_var('vat');
-		
+
 	var tandc_text=get_session_var('po_message');
 	var signature_text="<br>"+bt+"<br><br><br>Auth. Signatory<br>";
-	
+
 	////////////////filling in the content into the containers//////////////////////////
 
 	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	//business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text;
 	business_contact.innerHTML="<hr style='border: 1px solid #00f;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email;
-	
+
 	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Purchase Order</b></div><hr style='border: 1px solid #00f;'>";
-	
+
 	customer_info.innerHTML="<b>To</b><br>"+supplier_name;
 	business_info.innerHTML="VAT #: "+vat_no+"<br>Date: "+date+"<br>Order No: "+order_no;
-	
+
 	tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
 	signature.innerHTML=signature_text;
 
 	var table_element=document.getElementById(form_id+'_body');
-	
-	/////////////adding new table //////////////////////////////////////////////////////	
+
+	/////////////adding new table //////////////////////////////////////////////////////
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','width:100%;font-size:11px;border:1px solid black;text-align:left;');
 	var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
@@ -3138,10 +2901,10 @@ function print_form222(func)
 				"<td style='text-align:left;width:45px'>Price</td>"+
 				"<td style='text-align:left;width:45px'>Tax</td>"+
 				"<td style='text-align:left;width:80px'>Total</td></tr>";
-				
+
 	var table_rows=table_header;
 	var counter=0;
-	
+
 	$(table_element).find('form').each(function(index)
 	{
 		counter+=1;
@@ -3164,7 +2927,7 @@ function print_form222(func)
 				"<td style='text-align:left;'>"+tax+"</td>"+
 				"<td style='text-align:left;'>"+total+"</td></tr>";
 	});
-	
+
 	var row_count=$(table_element).find('tbody>tr').length;
 	var rows_to_add=12-row_count;
 	for(var i=0;i<rows_to_add;i++)
@@ -3176,34 +2939,34 @@ function print_form222(func)
 	var total_quantity=$(table_foot).find('tr>td:first')[0].innerHTML;
 	var total_text=$(table_foot).find('tr>td:nth-child(2)')[0].innerHTML;
 	var total_amount=$(table_foot).find('tr>td:nth-child(3)')[0].innerHTML;
-	
+
 	var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
 				"<td colspan='3' style='text-align:left;'>"+total_quantity+"</td>"+
 				"<td colspan='3' style='text-align:left;'>"+total_text+"</td>"+
 				"<td colspan='2' style='text-align:left;'>"+total_amount+"</td></tr>";
-		
+
 	table_rows+=table_foot_row;
 	new_table.innerHTML=table_rows;
-	
-	/////////////placing the containers //////////////////////////////////////////////////////	
-	
+
+	/////////////placing the containers //////////////////////////////////////////////////////
+
 	container.appendChild(header);
 	container.appendChild(invoice_line);
 	container.appendChild(info_section);
-	
+
 	container.appendChild(new_table);
 	container.appendChild(footer);
-	
+
 	header.appendChild(logo);
 	//header.appendChild(business_intro);
 	header.appendChild(business_contact);
-	
+
 	info_section.appendChild(customer_info);
 	info_section.appendChild(business_info);
-	
+
 	footer.appendChild(tandc);
 	footer.appendChild(signature);
-	
+
 	func(container);
 }
 
@@ -3217,8 +2980,8 @@ function form231_print_form()
 	print_form231(function(container)
 	{
 		$.print(container);
-		container.innerHTML="";	
-	});	
+		container.innerHTML="";
+	});
 }
 
 /**
@@ -3228,18 +2991,18 @@ function form231_print_form()
 function print_form231(func)
 {
 	var form_id='form231';
-	
-	////////////setting up containers///////////////////////	
+
+	////////////setting up containers///////////////////////
 	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
 		var business_title=document.createElement('div');
 		var business_intro=document.createElement('div');
-	
+
 	var doctor_line=document.createElement('div');
-	
-	var info_section=document.createElement('div');	
-	
+
+	var info_section=document.createElement('div');
+
 	var main_section=document.createElement('div');
 		var rx_line=document.createElement('div');
 		var table_container=document.createElement('div');
@@ -3252,7 +3015,7 @@ function print_form231(func)
 
 	header.setAttribute('style','width:95%;min-height:200px;line-height:40px;');
 		logo.setAttribute('style','float:left;width:30%;height:200px;');
-		business_title.setAttribute('style','float:left;width:65%;text-align:left;font-size:30px;');		
+		business_title.setAttribute('style','float:left;width:65%;text-align:left;font-size:30px;');
 		business_intro.setAttribute('style','float:left;width:65%;text-align:left;font-size:25px;');
 	doctor_line.setAttribute('style','width:95%;min-height:40px;font-size:20px;font-weight:600;');
 	info_section.setAttribute('style','display:block;width:95%;min-height:60px;background-color:#bcd7ef;text-align:left;font-size:20px;line-height:25px;');
@@ -3284,20 +3047,20 @@ function print_form231(func)
 		next_visit="";
 	////////////////filling in the content into the containers//////////////////////////
 
-	logo.innerHTML="<img style='width:90%;height:90%;' src='https://vyavsaay.com/client_images/"+logo_image+"'>";	
+	logo.innerHTML="<img style='width:90%;height:90%;' src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	business_title.innerHTML=bt;
 	business_intro.innerHTML="<i>"+business_intro_text+"</i>";
-	
+
 	doctor_line.innerHTML="<div style='float:left'>Dr. Anish Goyal</div><div style='float:right'>Dr. Neha Sharma</div><br><hr style='border: 1px solid #000;margin:2px'>";
-	
-	info_section.innerHTML="Date: "+date+"<br>Patient: "+patient+"<br>Age: "+age+"<br>Sex: "+sex+"<br>Next Visit: "+next_visit;	
+
+	info_section.innerHTML="Date: "+date+"<br>Patient: "+patient+"<br>Age: "+age+"<br>Sex: "+sex+"<br>Next Visit: "+next_visit;
 	rx_line.innerHTML="Rx";
 	signature_box.innerHTML="<hr style='width:30%;border: 1px solid #000;margin:2px;float:right;'>Signature";
 
 	address.innerHTML="<hr style='width:100%;border: 1px solid #000;margin:2px'>"+business_address+"<br>Contact No. "+business_phone+"<br>Email: "+business_email+" Web: "+business_website;
 
 	var table_element=document.getElementById(form_id+'_body');
-	/////////////adding new table //////////////////////////////////////////////////////	
+	/////////////adding new table //////////////////////////////////////////////////////
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','float:left;width:100%;border:none;font-size:15px;text-align:left;');
 	var table_header="<tr style='border-bottom: 1px solid #000000;'>"+
@@ -3310,7 +3073,7 @@ function print_form231(func)
 
 	var table_rows=table_header;
 	var counter=0;
-	
+
 	$(table_element).find('form').each(function(index)
 	{
 		counter+=1;
@@ -3339,7 +3102,7 @@ function print_form231(func)
 
 	new_table.innerHTML=table_rows;
 
-	/////////////placing the containers //////////////////////////////////////////////////////	
+	/////////////placing the containers //////////////////////////////////////////////////////
 
 	container.appendChild(header);
 	container.appendChild(doctor_line);
@@ -3379,8 +3142,8 @@ function modal131_print(order_num,received_quantity,total_quantity,supplier_name
 	print_modal131(function(container)
 	{
 		$.print(container);
-		container.innerHTML="";	
-	},order_num,received_quantity,total_quantity,supplier_name,order_date);	
+		container.innerHTML="";
+	},order_num,received_quantity,total_quantity,supplier_name,order_date);
 }
 
 /**
@@ -3388,22 +3151,22 @@ function modal131_print(order_num,received_quantity,total_quantity,supplier_name
  * @formNo 131
  */
 function print_modal131(func,order_num,received_quantity,total_quantity,supplier_name,order_date)
-{	
-	////////////setting up containers///////////////////////	
+{
+	////////////setting up containers///////////////////////
 	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var business_title=document.createElement('div');
-	
+
 	var invoice_box=document.createElement('div');
 
-	var info_section=document.createElement('div');	
+	var info_section=document.createElement('div');
 		var supplier_info=document.createElement('div');
 		var order_info=document.createElement('div');
 
 	var footer=document.createElement('div');
 		var tandc=document.createElement('div');
 		var signature=document.createElement('div');
-		
+
 	////////////setting styles for containers/////////////////////////
 
 	header.setAttribute('style','width:100%;min-height:100px;');
@@ -3424,17 +3187,17 @@ function print_modal131(func,order_num,received_quantity,total_quantity,supplier
 	var business_phone=get_session_var('phone');
 	var today_date=vTime.date();
 	var signature_text="<br>"+bt+"<br><br><br>Auth. Signatory<br>";
-	
+
 	////////////////filling in the content into the containers//////////////////////////
 
 	business_title.innerHTML="<b>"+bt+"</b><br>"+business_address+"<br>"+business_phone;
 	invoice_box.innerHTML="<div style='float:left;width:50%'>Order No.: "+order_num+"</div><div style='float:right;text-align:right;width:50%'>Order Date: "+order_date+"<br>Receiving Date: "+today_date+"</div>";
-	
+
 	supplier_info.innerHTML="<b>Supplier</b><br>"+supplier_name;
 	order_info.innerHTML="Received "+received_quantity+" quantity out of total order of "+total_quantity+" quantity";
-	
+
 	////////////////filling in the content into the containers//////////////////////////
-	
+
 	tandc.innerHTML="";
 	signature.innerHTML=signature_text;
 
@@ -3464,49 +3227,49 @@ function form237_print_form(nl_name,nl_id,print_type,func)
 	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
-	
+
 	var nl_content=document.createElement('div');
-	
+
 	var footer=document.createElement('div');
 		var powered_by=document.createElement('div');
-	
+
 ////////////setting styles for containers/////////////////////////
 
 	header.setAttribute('style','width:98%;min-height:100px;text-align:center');
-	
+
 	nl_content.setAttribute('style','display:block;width:98%;height:auto;text-align:center;');
 
 	footer.setAttribute('style','width:98%;min-height:100px;text-align:center;margin:5px;');
 		powered_by.setAttribute('style','width:98%;text-align:center');
-	
+
 ///////////////getting the content////////////////////////////////////////
 
 	var bt=get_session_var('title');
 	var logo_image=get_session_var('logo');
-	var powered_by_text=get_session_var('powered_by');	
+	var powered_by_text=get_session_var('powered_by');
 	var powered_by_link=get_session_var('powered_by_link');
 	var domain=get_session_var('domain');
-	
+
 ////////////////filling in the content into the containers/////////////////////////////////////
 
 	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
-	
-	if(powered_by_text!="")	
+
+	if(powered_by_text!="")
 	{
 		powered_by.innerHTML="<hr style='border: 1px solid #000;'>Powered By: <a href='"+powered_by_link+"'>"+powered_by_text+"</a> | <a href='https://vyavsaay.com/f/u.htm?d="+domain+"&i=*|customer_id|*'>Unsubscribe</a>";
-	}	
-	else 
+	}
+	else
 	{
 		powered_by.innerHTML="<hr style='border: 1px solid #000;'>Powered By: <a href='https://vyavsaay.com'>Vyavsaay ERP</a> | <a href='https://vyavsaay.com/f/u.htm?d="+domain+"&i=*|customer_id|*'>Unsubscribe</a>";
 	}
-	
-/////////////placing the containers //////////////////////////////////////////////////////	
+
+/////////////placing the containers //////////////////////////////////////////////////////
 	container.appendChild(header);
 	container.appendChild(nl_content);
 	container.appendChild(footer);
-	
+
 	header.appendChild(logo);
-	
+
 	footer.appendChild(powered_by);
 
 /////////////////populating the content section with newsletter items//////////////////////////
@@ -3515,7 +3278,7 @@ function form237_print_form(nl_name,nl_id,print_type,func)
 		newsletter_data.count=1;
 		newsletter_data.indexes=[{index:'id',value:nl_id},
 							{index:'html_content'}];
-	
+
 	read_json_rows('',newsletter_data,function(results)
 	{
 		//console.log(results);
@@ -3523,17 +3286,17 @@ function form237_print_form(nl_name,nl_id,print_type,func)
 		{
 			var updated_content=revert_htmlentities(results[0].html_content);
 			$(nl_content).html(updated_content);
-			
+
 			$(nl_content).find('img').each(function(index)
 			{
 				var image_elem=$(this)[0];
 				var data_src=image_elem.getAttribute('data-src');
 
-				image_elem.src="https://s3-ap-southeast-1.amazonaws.com/vyavsaay-newsletter/"+data_src;	
+				image_elem.src="https://s3-ap-southeast-1.amazonaws.com/vyavsaay-newsletter/"+data_src;
 			});
 		}
 		//console.log(container.innerHTML);
-		
+
 		func(container);
 	});
 }
@@ -3548,8 +3311,8 @@ function form250_print_form()
 	print_form250(function(container)
 	{
 		$.print(container);
-		container.innerHTML="";	
-	});	
+		container.innerHTML="";
+	});
 }
 
 /**
@@ -3559,19 +3322,19 @@ function form250_print_form()
 function print_form250(func)
 {
 	var form_id='form250';
-	
-	////////////setting up containers///////////////////////	
+
+	////////////setting up containers///////////////////////
 	var container=document.createElement('div');
-	
+
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
 		var business_title=document.createElement('div');
 		var mts_barcode=document.createElement('img');
-	
+
 	var mts_title=document.createElement('div');
-	
+
 	var detail_section=document.createElement('div');
-	
+
 	var table_container=document.createElement('div');
 
 	////////////setting styles for containers/////////////////////////
@@ -3581,9 +3344,9 @@ function print_form250(func)
 		logo.setAttribute('style','float:left;width:35%;height:60px;');
 		business_title.setAttribute('style','float:left;width:40%;height:60px;text-align:center;font-weight:bold;');
 		mts_barcode.setAttribute('style','float:right;width:23%;height:60px;padding:left:5px;padding-right:5px;');
-	mts_title.setAttribute('style','display:block;width:98%;height:20px;text-align:center');	
+	mts_title.setAttribute('style','display:block;width:98%;height:20px;text-align:center');
 	detail_section.setAttribute('style','display:block;width:98%;height:30px;text-align:center;');
-	
+
 	///////////////getting the content////////////////////////////////////////
 
 	var bt=get_session_var('title');
@@ -3599,7 +3362,7 @@ function print_form250(func)
 	var num_bags=master_form.elements['num_bags'].value;
 
 	////////////////filling in the content into the containers//////////////////////////
-	
+
 	var table_element=document.getElementById(form_id+'_body');
 	var total_items=$(table_element).find('tr').length;
 
@@ -3607,13 +3370,13 @@ function print_form250(func)
 	business_title.innerHTML=bt;
 
 	$(mts_barcode).JsBarcode(mts_num,{displayValue:false});
-		
+
 	mts_title.innerHTML="Material Transfer Sheet";
 
 	employee_text="<td>Branch: "+branch_name+"</td><td>Total Bags: "+num_bags+"</td><td>Total Orders: "+num_orders+"</td>";
 	mts_text="<td>MTS #: "+mts_num+"</td><td>MTS Date: "+mts_date+"</td>";
 	detail_text="<table style='border:none;width:98%;font-size:11px;'><tr>"+employee_text+"</tr><tr>"+mts_text+"</tr></table>";
-	
+
 	detail_section.innerHTML=detail_text;
 
 	var new_table=document.createElement('table');
@@ -3638,37 +3401,37 @@ function print_form250(func)
 		counter+=1;
 		var form=$(this)[0];
 		//var mob_seal="<table style='width:95%;height:40px;'>"+tr_text+tr_text+"</table><br><div style='font-size:14px;'>"+form.elements[2].value+"</div>";
-		
+
 		var bag_num=""+form.elements[0].value;
-		
+
 		var cnote_no=document.createElement('div');
 		var barcode_image=document.createElement('img');
 		var barcode_value=document.createElement('div');
-		
+
 		barcode_image.setAttribute('style','width:130px;height:30px;');
 		barcode_value.setAttribute('style','width:130px;font-size:14px;margin:1px;text-align:center;');
-		
+
 		barcode_value.innerHTML=bag_num;
 		$(barcode_image).JsBarcode(bag_num,{displayValue:false});
 
 		cnote_no.appendChild(barcode_image);
 		cnote_no.appendChild(barcode_value);
-		
+
 		table_rows+="<tr style='border-top: 1px solid #000000;height:60px;'><td><div>"+counter+"</div></td>"+
 				"<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
 				"<td><div>"+form.elements[1].value+"</div></td>"+
 				"<td><div>"+form.elements[2].value+"</div></td>"+
-				"<td><div>"+form.elements[3].value+"</div></td></tr>";				
+				"<td><div>"+form.elements[3].value+"</div></td></tr>";
 	});
 	new_table.innerHTML=table_rows;
-	/////////////placing the containers //////////////////////////////////////////////////////	
+	/////////////placing the containers //////////////////////////////////////////////////////
 
 	container.appendChild(header);
 	container.appendChild(mts_title);
 	container.appendChild(detail_section);
 
 	container.appendChild(new_table);
-	
+
 	header.appendChild(logo);
 	header.appendChild(business_title);
 	header.appendChild(mts_barcode);
@@ -3686,8 +3449,8 @@ function form292_print_form(id)
 	print_form292(id,function(container)
 	{
 		$.print(container);
-		container.innerHTML="";	
-	});	
+		container.innerHTML="";
+	});
 }
 
 /**
@@ -3696,32 +3459,32 @@ function form292_print_form(id)
 function print_form292(id,func)
 {
 	var form_id='form292';
-	////////////setting up containers///////////////////////	
+	////////////setting up containers///////////////////////
 	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
-	
+
 	var invoice_line=document.createElement('div');
-	
-	var info_section=document.createElement('div');	
+
+	var info_section=document.createElement('div');
 		var customer_info=document.createElement('div');
 		var business_info=document.createElement('div');
 
 	var table_container=document.createElement('div');
-	
+
 	var footer=document.createElement('div');
 		var jurisdiction=document.createElement('div');
 		var business_contact=document.createElement('div');
-	
+
 ////////////setting styles for containers/////////////////////////
 
 	header.setAttribute('style','width:100%;text-align:center');
 		logo.setAttribute('style','width:100%;text-align:center;');
-	
+
 	info_section.setAttribute('style','width:100%;height:85px;font-size:14px;');
 		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;');
 		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;');
-	
+
 	footer.setAttribute('style','width:98%;min-height:100px;');
 		jurisdiction.setAttribute('style','margin:10px;width:98%;min-height:20px;text-align:left;font-size:12px;');
 		business_contact.setAttribute('style','margin:0px;padding:0px;width:98%;text-align:center;page-break-inside:avoid;font-size:12px;');
@@ -3745,15 +3508,15 @@ function print_form292(id,func)
 	var bill_amount=master_form.elements[7].value;
 	var bill_tax=master_form.elements[8].value;
 	var bill_total=master_form.elements[9].value;
-	
+
 	var st_no=get_session_var('service_tax_no');
 	var pan=get_session_var('pan');
 	////////////////filling in the content into the containers//////////////////////////
 
 	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
-	
+
 	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='font-size:16px;'>Invoice</b></div><hr style='border: 1px solid #00f;'>";
-	
+
 	customer_info.innerHTML="<b>Customer: </b><br>"+customer_name+"<br>Account Name: "+domain;
 	business_info.innerHTML="Bill #: "+bill_no+"<br>Date: "+vTime.date()+"<br>ST #: "+st_no;
 
@@ -3762,7 +3525,7 @@ function print_form292(id,func)
 
 	var table_element=document.getElementById(form_id+'_body');
 
-	/////////////adding new table //////////////////////////////////////////////////////	
+	/////////////adding new table //////////////////////////////////////////////////////
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','width:100%;font-size:14px;border:1px solid #00f;text-align:left;');
 	new_table.setAttribute('class','plain_table');
@@ -3775,7 +3538,7 @@ function print_form292(id,func)
 				"<td style='border: 1px solid #00f;text-align:left;width:15%'>Total</td></tr>";
 
 	var table_rows=table_header;
-		
+
 	table_rows+="<tr>"+
 				"<td style='border: 1px solid #00f;text-align:left;'>1</td>"+
 				"<td style='border: 1px solid #00f;text-align:left;'>"+narration+"</td>"+
@@ -3783,7 +3546,7 @@ function print_form292(id,func)
 				"<td style='border: 1px solid #00f;text-align:left;'>Rs. "+bill_amount+"</td>"+
 				"<td style='border: 1px solid #00f;text-align:left;'>Rs. "+bill_tax+"</td>"+
 				"<td style='border: 1px solid #00f;text-align:left;'>Rs. "+bill_total+"</td></tr>";
-	
+
 	var rows_to_add=10;
 	for(var i=0;i<rows_to_add;i++)
 	{
@@ -3791,33 +3554,33 @@ function print_form292(id,func)
 	}
 
 	var wording_total=number2text(bill_total);
-	
+
 	var table_foot_row="<tr style='border-right: 1px solid #00f;border-left: 1px solid #00f;border-top: 1px solid #00f;a'>"+
 				"<td colspan='3' style='border: 1px solid #00f;text-align:left;'>Total (in words): "+wording_total+"</td>"+
 				"<td colspan='1' style='border: 1px solid #00f;text-align:left;'>Total</td>"+
 				"<td colspan='2' style='border: 1px solid #00f;text-align:left;font-size:1.2em;font-weight:bold;'>Rs. "+bill_total+"</td></tr>";
-		
+
 	table_rows+=table_foot_row;
 	new_table.innerHTML=table_rows;
-	
-	/////////////placing the containers //////////////////////////////////////////////////////	
-	
+
+	/////////////placing the containers //////////////////////////////////////////////////////
+
 	container.appendChild(header);
 	container.appendChild(invoice_line);
 	container.appendChild(info_section);
-	
+
 	container.appendChild(new_table);
 	container.appendChild(footer);
-	
+
 	header.appendChild(logo);
 	header.appendChild(business_contact);
-	
+
 	info_section.appendChild(customer_info);
 	info_section.appendChild(business_info);
-	
+
 	footer.appendChild(jurisdiction);
 	footer.appendChild(business_contact);
-	
+
 	func(container);
 }
 
@@ -3826,7 +3589,7 @@ function form294_print_form()
 	print_form294(function(container)
 	{
 		$.print(container);
-		container.innerHTML="";	
+		container.innerHTML="";
 	});
 }
 
@@ -3837,16 +3600,16 @@ function form294_print_form()
 function print_form294(func)
 {
 	var form_id='form294';
-	
-////////////setting up containers///////////////////////	
+
+////////////setting up containers///////////////////////
 	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
 		var business_intro=document.createElement('div');
-	
+
 	var invoice_line=document.createElement('div');
-	
-	var info_section=document.createElement('div');	
+
+	var info_section=document.createElement('div');
 		var customer_info=document.createElement('div');
 		var business_info=document.createElement('div');
 
@@ -3856,7 +3619,7 @@ function print_form294(func)
 		var tandc=document.createElement('div');
 		var signature=document.createElement('div');
 		var business_contact=document.createElement('div');
-	
+
 ////////////setting styles for containers/////////////////////////
 
 	header.setAttribute('style','width:100%;text-align:center');
@@ -3869,7 +3632,7 @@ function print_form294(func)
 		tandc.setAttribute('style','float:left;width:60%;min-height:50px');
 		signature.setAttribute('style','float:right;width:30%;min-height:60px');
 	business_contact.setAttribute('style','width:100%;text-align:center;margin:10px;');
-	
+
 ///////////////getting the content////////////////////////////////////////
 
 	var bt=get_session_var('title');
@@ -3887,17 +3650,17 @@ function print_form294(func)
 	var customer_address=customer_address1.replace("Address<br>","");
 	var date=master_form.elements['date'].value;
 	var invoice_no=master_form.elements['bill_num'].value;
-	var customer_cst=master_form.elements['cst'].value;	
+	var customer_cst=master_form.elements['cst'].value;
 	var customer_tin=master_form.elements['tin'].value;
 	var tin_no=get_session_var('tin');
-	var sales_tax_no=get_session_var('sales_tax_no');	
-	var service_tax_no=get_session_var('service_tax_no');	
+	var sales_tax_no=get_session_var('sales_tax_no');
+	var service_tax_no=get_session_var('service_tax_no');
 	var tax_text="Tin No: "+tin_no;
-	
+
 	var invoice_text="Invoice";
 	var tandc_text=get_session_var('bill_message');
 	var signature_text="<br>For "+bt+"<br><br><br>Auth. Signatory<br>";
-	
+
 	////////////////filling in the content into the containers//////////////////////////
 
 	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
@@ -3913,7 +3676,7 @@ function print_form294(func)
 	signature.innerHTML=signature_text;
 
 	var table_element=document.getElementById(form_id+'_body');
-	/////////////adding new table //////////////////////////////////////////////////////	
+	/////////////adding new table //////////////////////////////////////////////////////
 
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','width:100%;font-size:14px;border:1px solid black;text-align:left;');
@@ -3936,7 +3699,7 @@ function print_form294(func)
 		var quantity=""+form.elements[1].value;
 		var rate=form.elements[2].value;
 		var amount=form.elements[3].value;
-		
+
 		table_rows+="<tr>"+
 				"<td style='border: 1px solid #000;text-align:left;'>"+counter+"</td>"+
 				"<td style='border: 1px solid #000;text-align:left;'>"+item_name+"</td>"+
@@ -3951,7 +3714,7 @@ function print_form294(func)
 		var subform_id=$(this).attr('form');
 		var subform=document.getElementById(subform_id);
 		if(!isNaN(parseFloat(subform.elements[3].value)))
-			total_amount+=parseFloat(subform.elements[3].value);		
+			total_amount+=parseFloat(subform.elements[3].value);
 	});
 
 	var tax_rate=0;
@@ -3965,14 +3728,14 @@ function print_form294(func)
 	}
 
 	var total_amount=vUtil.round(total_amount,2);
-	var tax=vUtil.round((tax_rate*((total_amount-discount)/100)),2);		
+	var tax=vUtil.round((tax_rate*((total_amount-discount)/100)),2);
 	var total_total=vUtil.round(total_amount+tax-discount+cartage,0);
 
 	var wording_total=number2text(total_total);
-	
+
 	var row_count=$(table_element).find('tbody>tr').length;
 	var rows_to_add=12-row_count;
-	
+
 	for(var i=0;i<rows_to_add;i++)
 	{
 		table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td></tr>";
@@ -3982,7 +3745,7 @@ function print_form294(func)
 	var total_quantity=$(table_foot).find('tr>td:first')[0].innerHTML;
 	var total_text_element=$(table_foot).find('tr>td:nth-child(2)');
 	var total_amount_element=$(table_foot).find('tr>td:nth-child(3)');
-	
+
 	$(total_amount_element).add(total_text_element).find("input").each(function(index)
 	{
 		$(this).replaceWith($(this).val());
@@ -3990,35 +3753,35 @@ function print_form294(func)
 
 	var total_text=$(total_text_element)[0].innerHTML;
 	var total_amount=$(total_amount_element)[0].innerHTML;
-	
+
 	var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
 				"<td colspan='2' style='border: 1px solid #000;text-align:left;'>Total (in words): "+wording_total+"</td>"+
 				"<td colspan='1' style='border: 1px solid #000;text-align:left;'>"+total_text+"</td>"+
 				"<td colspan='2' style='border: 1px solid #000;text-align:left;font-size:1.2em;font-weight:bold;'>"+total_amount+"</td></tr>";
-		
+
 	table_rows+=table_foot_row;
 	new_table.innerHTML=table_rows;
-	
-	/////////////placing the containers //////////////////////////////////////////////////////	
-	
+
+	/////////////placing the containers //////////////////////////////////////////////////////
+
 	container.appendChild(header);
 	container.appendChild(invoice_line);
 	container.appendChild(info_section);
-	
+
 	container.appendChild(new_table);
 	container.appendChild(footer);
-	
+
 	header.appendChild(logo);
 	header.appendChild(business_intro);
-	
+
 	info_section.appendChild(customer_info);
 	info_section.appendChild(business_info);
-	
+
 	footer.appendChild(tandc);
 	footer.appendChild(signature);
-	
+
 	container.appendChild(business_contact);
-	
+
 	func(container);
 }
 
@@ -4027,12 +3790,12 @@ function print_form294(func)
  * @formNo 296
  */
 function form296_print_form()
-{	
+{
 	print_form296(function(container)
 	{
 		$.print(container);
-		container.innerHTML="";	
-	});	
+		container.innerHTML="";
+	});
 }
 
 /**
@@ -4041,16 +3804,16 @@ function form296_print_form()
 function print_form296(func)
 {
 	var form_id='form296';
-	////////////setting up containers///////////////////////	
+	////////////setting up containers///////////////////////
 	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
 		var business_intro=document.createElement('div');
 		var business_contact=document.createElement('div');
-	
+
 	var invoice_line=document.createElement('div');
-	
-	var info_section=document.createElement('div');	
+
+	var info_section=document.createElement('div');
 		var customer_info=document.createElement('div');
 		var business_info=document.createElement('div');
 
@@ -4086,32 +3849,32 @@ function print_form296(func)
 
 	var master_form=document.getElementById(form_id+'_master');
 	var supplier_name=master_form.elements['supplier'].value;
-	var date=master_form.elements['date'].value;	
+	var date=master_form.elements['date'].value;
 	var order_no=master_form.elements['order_num'].value;
 	var supplier_address=master_form.elements['address'].value;
 	var vat_no=get_session_var('vat');
 	var tin_no=get_session_var('tin');
-		
+
 	var tandc_text=get_session_var('po_message').replace(/\n/g,"<br>");
 	var signature_text="<br>"+bt+"<br><br><br>Auth. Signatory<br>";
-	
+
 	////////////////filling in the content into the containers//////////////////////////
 
 	//logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	logo.innerHTML=bt;
 	business_contact.innerHTML="<hr style='border: 1px solid #00f;'>Billing Address: "+business_address+"<br>Buyer VAT #:"+vat_no+"<br>Contact Nos.: "+business_phone+"<br>E-Mail: "+business_email;
-	
+
 	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Purchase Order #: "+order_no+"</b></div><hr style='border: 1px solid #00f;'>";
-	
+
 	customer_info.innerHTML="<b>Supplier: </b><br>"+supplier_name+"<br>"+supplier_address;
 	business_info.innerHTML="<b>Buyer</b><br>TIN #: "+tin_no+"<br>PO Issue Date: "+date+"<br>Purchase Order No: "+order_no;
-	
+
 	tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
 	signature.innerHTML=signature_text;
 
 	var table_element=document.getElementById(form_id+'_body');
-	
-	/////////////adding new table //////////////////////////////////////////////////////	
+
+	/////////////adding new table //////////////////////////////////////////////////////
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','width:100%;font-size:11px;border:1px solid black;text-align:left;');
 	new_table.setAttribute('class','plain_table');
@@ -4124,10 +3887,10 @@ function print_form296(func)
 				"<td style='border: 1px solid #000;text-align:left;width:10%'>Price</td>"+
 				"<td style='border: 1px solid #000;text-align:left;width:10%'>Tax</td>"+
 				"<td style='border: 1px solid #000;text-align:left;width:10%;font-size:1.2em;font-weight:bold'>Total(inc taxes)</td></tr>";
-				
+
 	var table_rows=table_header;
 	var counter=0;
-	
+
 	$(table_element).find('form').each(function(index)
 	{
 		counter+=1;
@@ -4137,7 +3900,7 @@ function print_form296(func)
 		var quantity=""+form.elements[2].value;
 		var mrp=form.elements[4].value;
 		var price=form.elements[5].value;
-		var tax_rate=form.elements[7].value;		
+		var tax_rate=form.elements[7].value;
 		var total=form.elements[9].value;
 
 		table_rows+="<tr>"+
@@ -4150,7 +3913,7 @@ function print_form296(func)
 				"<td style='border: 1px solid #000;text-align:left;'>"+tax_rate+"</td>"+
 				"<td style='border: 1px solid #000;text-align:left;font-size:1.2em;font-weight:bold;'>"+total+"</td></tr>";
 	});
-	
+
 	var row_count=$(table_element).find('tbody>tr').length;
 	var rows_to_add=9-row_count;
 	for(var i=0;i<rows_to_add;i++)
@@ -4162,33 +3925,33 @@ function print_form296(func)
 	var total_quantity=$(table_foot).find('tr>td:first')[0].innerHTML;
 	var total_text=$(table_foot).find('tr>td:nth-child(2)')[0].innerHTML;
 	var total_amount=$(table_foot).find('tr>td:nth-child(3)')[0].innerHTML;
-	
+
 	var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
 				"<td colspan='4' style='border: 1px solid #000;text-align:left;'>"+total_quantity+"</td>"+
 				"<td colspan='3' style='border: 1px solid #000;text-align:left;'>"+total_text+"</td>"+
 				"<td colspan='2' style='border: 1px solid #000;text-align:left;font-size:1.2em;font-weight:bold;'>"+total_amount+"</td></tr>";
-		
+
 	table_rows+=table_foot_row;
 	new_table.innerHTML=table_rows;
-	
-	/////////////placing the containers //////////////////////////////////////////////////////	
-	
+
+	/////////////placing the containers //////////////////////////////////////////////////////
+
 	container.appendChild(header);
 	container.appendChild(invoice_line);
 	container.appendChild(info_section);
-	
+
 	container.appendChild(new_table);
 	container.appendChild(footer);
-	
+
 	header.appendChild(logo);
 	//header.appendChild(business_intro);
 	header.appendChild(business_contact);
-	
+
 	info_section.appendChild(customer_info);
 	info_section.appendChild(business_info);
-	
+
 	footer.appendChild(tandc);
 	footer.appendChild(signature);
-	
+
 	func(container);
 }

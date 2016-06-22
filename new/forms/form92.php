@@ -80,12 +80,10 @@
 
             var paginator=$('#form92_body').paginator();
 
-			var columns=new Object();
-					columns.count=paginator.page_size();
-					columns.start_index=paginator.get_index();
-					columns.data_store='bills';
-
-					columns.indexes=[{index:'id',value:fid},
+			var columns={count:paginator.page_size(),
+						start_index:paginator.get_index(),
+						data_store:'bills',
+						indexes:[{index:'id',value:fid},
 									{index:'bill_num',value:fnum},
 									{index:'customer_name',value:fname},
 									{index:'billing_type',value:ftype},
@@ -94,7 +92,7 @@
                                     {index:'tax'},
                                     {index:'total'},
                                     {index:'order_id'},
-                                    {index:'status'}];
+                                    {index:'status'}]};
 
             read_json_rows('form92',columns,function(results)
             {

@@ -325,40 +325,6 @@ function form16_delete_item(button)
 
 
 /**
- * @form New Supplier Bill
- * @param button
- */
-function form21_delete_item(button)
-{
-	if(is_delete_access('form21'))
-	{
-		modal115_action(function()
-		{
-			var bill_id=document.getElementById("form21_master").elements['bill_id'].value;
-
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-
-			var data_id=form.elements[9].value;
-			var last_updated=get_my_time();
-
-			var data_xml="<supplier_bill_items>" +
-						"<id>"+data_id+"</id>" +
-						"<bill_id>"+bill_id+"</bill_id>" +
-						"</supplier_bill_items>";
-			delete_simple(data_xml);
-
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-
-/**
  * @form New Purchase Order
  * @param button
  */
@@ -425,97 +391,6 @@ function form35_delete_item(button)
 						"</activity>";
 			delete_row(data_xml,activity_xml);
 			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-
-
-/**
- * @form Manage Bills
- * @param button
- */
-function form42_delete_item(button)
-{
-	if(is_delete_access('form42'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-
-			var bill_num=form.elements[0].value;
-			var customer_name=form.elements[1].value;
-			var amount=form.elements[3].value;
-			var data_id=form.elements[4].value;
-			var transaction_id=form.elements[7].value;
-			var edit_button=form.elements[5];
-			var last_updated=get_my_time();
-			var bill_xml="<bills>" +
-						"<id>"+data_id+"</id>" +
-						"<status>cancelled</status>"+
-						"</bills>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>bills</tablename>" +
-						"<link_to>form42</link_to>" +
-						"<title>Cancelled</title>" +
-						"<notes>Bill no "+bill_num+" for customer "+customer_name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var transaction_xml="<transactions>" +
-						"<id>"+transaction_id+"</id>" +
-						"</transactions>";
-			var points_xml="<loyalty_points>" +
-						"<source>sale</source>"+
-						"<source_id>"+data_id+"</source_id>" +
-						"</loyalty_points>";
-
-			$(button).parent().parent().attr('style','opacity:0.5');
-			$(button).parent().parent().attr('title','This bill was cancelled');
-			$(button).hide();
-			$(edit_button).hide();
-
-			update_row(bill_xml,activity_xml);
-			delete_simple(transaction_xml);
-			delete_simple(points_xml);
-
-			var payment_xml="<payments>" +
-					"<id></id>" +
-					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
-					"<status array='yes'>--pending--cancelled--</status>" +
-					"<transaction_id></transaction_id>" +
-					"</payments>";
-			fetch_requested_data('',payment_xml,function(payments)
-			{
-				for(var x in payments)
-				{
-					var pt_xml="<transactions>" +
-							"<id>"+payments[x].transaction_id+"</id>" +
-							"</transactions>";
-					var pay_xml="<payments>" +
-							"<id>"+payments[x].id+"</id>" +
-							"<bill_id></bill_id>" +
-							"<transaction_id></transaction_id>" +
-							"</payments>";
-
-					delete_simple(pay_xml);
-					delete_simple(pt_xml);
-					break;
-				}
-			});
-
-			var items_data="<bill_items>" +
-					"<id></id>" +
-					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
-					"</bill_items>";
-
-			delete_simple(items_data);
-
 		});
 	}
 	else
@@ -988,37 +863,6 @@ function form70_delete_item(button)
 	}
 }
 
-
-/**
- * @form New Bill
- * @param button
- */
-function form72_delete_item(button)
-{
-	if(is_delete_access('form72'))
-	{
-		modal115_action(function()
-		{
-			var bill_id=document.getElementById("form72_master").elements['bill_id'].value;
-
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			var data_id=form.elements[9].value;
-
-			var data_xml="<bill_items>" +
-					"<id>"+data_id+"</id>" +
-					"<bill_id>"+bill_id+"</bill_id>" +
-					"</bill_items>";
-			delete_simple(data_xml);
-			$(button).parent().parent().remove();
-			form72_get_totals();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form manage Task types

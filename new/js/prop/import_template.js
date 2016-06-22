@@ -89,17 +89,6 @@ function form16_import_template()
 };
 
 /**
-* @form Enter supplier bill
-* @formNo 21
-* @table supplier_bill_items
-*/
-function form21_import_template()
-{
-	var data_array=['id','quantity','product_name','batch','bill_id','unit_price','amount','tax','total','discount'];
-	my_array_to_csv(data_array);
-};
-
-/**
 * @form create Purchase Order
 * @formNo 24
 * @table purchase_order_items
@@ -121,17 +110,6 @@ function form35_import_template()
 	                'product_name','batch','service','criteria_type','criteria_amount','criteria_quantity',
 	                'result_type','discount_percent','discount_amount','quantity_add_percent','quantity_add_amount',
 	                'free_product_name','free_product_quantity'];
-	my_array_to_csv(data_array);
-};
-
-/**
-* @form Manage Bills
-* @formNo 42
-* @table bills
-*/
-function form42_import_template()
-{
-	var data_array=['id','bill_num','customer_name','bill_date','amount','total','type','billing_type','offer','discount','tax','transaction_id'];
 	my_array_to_csv(data_array);
 };
 
@@ -236,19 +214,6 @@ function form69_import_template()
 function form70_import_template()
 {
 	var data_array=['id','customer_name','order_date','type','status'];
-	my_array_to_csv(data_array);
-};
-
-
-
-/**
-* @form Create Bills
-* @formNo 72
-* @table bill_items
-*/
-function form72_import_template()
-{
-	var data_array=['id','bill_id','item_name','batch','quantity','unit_price','amount','total','discount','tax'];
 	my_array_to_csv(data_array);
 };
 

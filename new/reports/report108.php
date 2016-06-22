@@ -32,10 +32,10 @@
 			<thead>
 				<tr>
 					<th>Policy #</th>
-          <th>Policy Holder</th>
-          <th>Agent</th>
-          <th>Expiry Date</th>
-        </tr>
+          			<th>Policy Holder</th>
+          			<th>Agent</th>
+          			<th>Expiry Date</th>
+        		</tr>
 			</thead>
 			<tbody id='report108_body'></tbody>
 		</table>

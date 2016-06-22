@@ -158,7 +158,6 @@ function form270_ini()
 
 			var bill_items_column={data_store:'supplier_bill_items',
                                   indexes:[{index:'id'},
-                                          {index:'bill_id'},
                                           {index:'product_name'},
                                           {index:'amount'},
                                           {index:'tax'},
@@ -421,20 +420,20 @@ function form270_create_form()
 		var save_button=document.getElementById('form270_save');
 		var last_updated=get_my_time();
 
-    var data_json={data_store:'supplier_bills',
-				data:[{index:'id',value:data_id},
-					{index:'bill_id',value:bill_id},
-					{index:'supplier',value:supplier},
-			          {index:'bill_date',value:bill_date},
-			          {index:'amount',value:amount},
-			          {index:'total',value:total},
-			          {index:'tax',value:tax},
-			          {index:'cartage',value:cartage},
-			          {index:'transaction_id',value:data_id},
-					{index:'notes',value:notes},
-					{index:'last_updated',value:last_updated}],
-      log:'yes',
-      log_data:{title:'Saved',notes:'Purchase Bill #'+bill_id,link_to:'form53'}};
+	    var data_json={data_store:'supplier_bills',
+					data:[{index:'id',value:data_id},
+						{index:'bill_id',value:bill_id},
+						{index:'supplier',value:supplier},
+				          {index:'bill_date',value:bill_date},
+				          {index:'amount',value:amount},
+				          {index:'total',value:total},
+				          {index:'tax',value:tax},
+				          {index:'cartage',value:cartage},
+				          {index:'transaction_id',value:data_id},
+						{index:'notes',value:notes},
+						{index:'last_updated',value:last_updated}],
+	      log:'yes',
+	      log_data:{title:'Saved',notes:'Purchase Bill #'+bill_id,link_to:'form53'}};
 
 		var transaction_json={data_store:'transactions',
 				data:[{index:'id',value:data_id},
@@ -643,7 +642,7 @@ function form270_delete_item(button)
 
 			var data_id=form.elements[6].value;
 
-      var data_json={data_store:'supplier_bill_items',
+      		var data_json={data_store:'supplier_bill_items',
 	 				data:[{index:'id',value:data_id}]};
 			delete_json(data_json);
 
