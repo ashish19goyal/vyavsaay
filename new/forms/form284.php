@@ -194,7 +194,7 @@ function form284_header_ini()
 	customers_filter.value='';
 
 	var paginator=$('#form284_body').paginator({visible:false});
-  $('#form284').formcontrol();
+  	$('#form284').formcontrol();
 }
 
 function form284_ini()

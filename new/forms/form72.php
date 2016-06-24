@@ -1,39 +1,47 @@
-<div id='form72' class='tab-pane'>
-	<form id='form72_master' autocomplete="off">
-		<fieldset>
-			<label>Customer <img src='./images/add_image.png' class='add_image' title='Add new customer' id='form72_add_customer'><br>
-			<input type='text' required name='customer'></label>
-			<label>Bill Date<br><input type='text' name='date' required></label>
-			<label>Bill #<br><input type='text' name='bill_num' readonly="readonly"></label>
-			<label>Show Sub-totals: <input type='checkbox' checked name='sub_totals'></label>
-			<label>
-				<input type='hidden' name='bill_id'>
-				<input type='hidden' name='t_id'>
-			</label>
-			<label>	<input type='button' title='Save Bill' name='save' class='save_icon'></label>
-			<label>	<input type='button' title='Print Bill' name='print' class='print_icon' onclick='form72_print_form();'></label>
-			<label>	<input type='button' id='form72_share' name='share' class='share_icon' style='display:none;'></label>
-			<label>	<input type='submit' class='submit_hidden'></label>
-		</fieldset>
-	</form>
-	<table class='rwd-table'>
-		<thead>
-			<tr>
-				<form id='form72_header'></form>
-					<th>Item</th>
+<div id='form72' class='tab-pane portlet box green-meadow'>
+	<div class="portlet-title">
+		<div class='caption'>
+			<a class='btn btn-circle green-jungle btn-outline btn-sm' onclick='form72_add_product();'>Add Product <i class='fa fa-plus'></i></a>
+			<a class='btn btn-circle red-sunglo btn-outline btn-sm' onclick='form72_add_service();'>Add Service <i class='fa fa-plus'></i></a>
+            <a class='btn btn-circle grey btn-outline btn-sm' id='form72_save'>Save <i class='fa fa-save'></i></a>
+		</div>
+		<div class="actions">
+      	<a class='btn btn-default btn-sm' id='form72_print' onclick=form72_print_form();><i class='fa fa-print'></i> Print</a>
+      	<a class='btn btn-default btn-sm' id='form72_share'><i class='fa fa-envelope'></i> Mail</a>
+      </div>
+	</div>
+
+	<div class="portlet-body">
+        <form id='form72_master' autocomplete="off">
+            <fieldset>
+                <label><div class='btn-overlap'><input type='text' required name='customer' placeholder='Customer' class='floatlabel'><button type='button' title='Add new customer' class='btn btn-icon-only default right-overlap' id='form72_add_customer'><i class='fa fa-plus'></i></button></div></label>
+				<label><input type='text' name='date' required class='floatlabel' placeholder='Bill Date'></label>
+                <label><input type='text' name='bill_num' readonly='readonly' required class='floatlabel' placeholder='Bill #'></label>
+                <label><input type='checkbox' checked name='sub_totals'> Show Sub-Totals</label>
+                <input type='hidden' name='bill_id'>
+				<input type='submit' class='submit_hidden'>
+            </fieldset>
+        </form>
+
+        <br>
+
+    	<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
+			<thead>
+				<tr style='color:#9a9a9a;'>
+          			<th>Item</th>
 					<th>Batch</th>
-					<th>Quantity</th>
+          			<th>Quantity</th>
 					<th>Rate</th>
 					<th>Amount</th>
-					<th><input type='button' form='form72_header' title='Add product' class='add_icon' onclick='form72_add_product();'>
-						<input type='button' form='form72_header' title='Add Service' class='add_red_icon' onclick='form72_add_service();'></th>
-			</tr>
-		</thead>
-		<tbody id='form72_body'>
-		</tbody>
-		<tfoot id='form72_foot'>
-		</tfoot>
-	</table>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody id='form72_body'>
+			</tbody>
+		      <tfoot id='form72_foot'>
+		      </tfoot>
+		</table>
+    </div>
 
 	<script>
 	function form72_header_ini()
@@ -44,17 +52,14 @@
 		var bill_date=fields.elements['date'];
 		var bill_num=fields.elements['bill_num'];
 		fields.elements['bill_id'].value=get_new_key();
-		fields.elements['t_id'].value=fields.elements['bill_id'].value;
-		var save_button=fields.elements['save'];
+		var save_button=document.getElementById('form72_save');
 
 		var bill_id=$("#form72_link").attr('data_id');
-		if(bill_id==null || bill_id=='')
+		if(vUtil.isBlank(bill_id))
 		{
-			var bill_num_data="<user_preferences count='1'>"+
-								"<value></value>"+
-								"<name exact='yes'>bill_num</name>"+
-								"</user_preferences>";
-			set_my_value(bill_num_data,bill_num);
+			var bill_num_data={data_store:'user_preferences',return_column:'value',
+								indexes:[{index:'name',exact:'bill_num'}]};
+			set_my_value_json(bill_num_data,bill_num);
 		}
 
 		$(save_button).off('click');
@@ -76,13 +81,11 @@
 		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
-			form72_add_product();
+			form72_add_service();
 		});
 
-		var customers_data="<customers>" +
-			"<acc_name></acc_name>" +
-			"</customers>";
-		set_my_value_list(customers_data,customers_filter,function ()
+		var customers_data={data_store:'customers',return_column:'acc_name'};
+		set_my_value_list_json(customers_data,customers_filter,function ()
 		{
 			$(customers_filter).focus();
 		});
@@ -93,16 +96,15 @@
 		{
 			modal11_action(function()
 			{
-				var customers_data="<customers>" +
-					"<acc_name></acc_name>" +
-					"</customers>";
-				set_my_value_list(customers_data,customers_filter);
+				set_my_value_list_json(customers_data,customers_filter);
 			});
 		});
 
 		$(bill_date).datepicker();
-		$(bill_date).val(vTime.date());
+		bill_date.value=vTime.date();
 		customers_filter.value='';
+		var paginator=$('#form72_body').paginator({visible:false});
+		$('#form72').formcontrol();
 	}
 
 	function form72_ini()
