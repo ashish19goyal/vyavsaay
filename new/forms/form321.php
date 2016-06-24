@@ -27,6 +27,7 @@
             <fieldset>
                 <label><input type='text' required name='manifest_num' class='floatlabel' placeholder='Manifest #'></label>
                 <label><input type='text' name='date' required class='floatlabel' placeholder='Date'></label>
+				<label><input type='text' name='branch' class='floatlabel' placeholder='Branch'></label>
                 <label><input type='text' name='loader' class='floatlabel' placeholder='Co-loader'></label>
                 <label><input type='text' name='vendor' class='floatlabel' placeholder='Vendor'></label>
                 <label><input type='text' name='num' class='floatlabel' readonly='readonly' placeholder='Number of Pieces'></label>
@@ -69,6 +70,7 @@
             var manifest_filter=fields.elements['manifest_num'];
             var coloader=fields.elements['loader'];
             var vendor=fields.elements['vendor'];
+			var branch=fields.elements['branch'];
             var date=fields.elements['date'];
             var marker=fields.elements['marker'];
             var id_filter=fields.elements['id'];
@@ -105,6 +107,7 @@
 
             var save_button=document.getElementById('form321_save');
             manifest_filter.value="";
+			branch.value="";
             coloader.value="";
             vendor.value="";
             type_filter.value='non-bag';
@@ -149,6 +152,9 @@
                 form321_add_item();
             });
 
+			var branch_data={data_store:'store_areas',return_column:'name'};
+			set_my_value_list_json(branch_data,branch);
+
             var paginator=$('#form321_body').paginator({visible:false});
 
             $('#form321').formcontrol();
@@ -176,6 +182,7 @@
                                              {index:'lbh'},
                                              {index:'seal_num'},
                                              {index:'num_orders'},
+											 {index:'branch'},
                                              {index:'date'}]};
 
                 read_json_rows('form321',manifest_columns,function(manifest_results)
@@ -183,6 +190,7 @@
                     if(manifest_results.length>0)
                     {
                         filter_fields.elements['manifest_num'].value=manifest_results[0].manifest_num;
+						filter_fields.elements['branch'].value=manifest_results[0].branch;
                         filter_fields.elements['loader'].value=manifest_results[0].coloader;
                         filter_fields.elements['vendor'].value=manifest_results[0].vendor;
                         filter_fields.elements['date'].value=get_my_past_date(manifest_results[0].date);
@@ -221,6 +229,7 @@
                                                   {index:'weight'},
                                                   {index:'lbh'},
                                                   {index:'manifest_num'},
+												  {index:'merchant_name'},
                                                   {index:'man_id',exact:manifest_id}]};
 
                 read_json_rows('form321',manifest_items_column,function(results)
@@ -229,7 +238,6 @@
                     {
                         var id=result.id;
                         var rowsHTML="<tr>";
-
                         var lbh_calculated=1;
                         var lbh_array=result.lbh.split('*');
                         lbh_array.forEach(function(l)
@@ -237,7 +245,7 @@
                            lbh_calculated*=parseFloat(l);
                         });
                         var vol_weight=vUtil.round(lbh_calculated/6000,2);
-                        var address=result.ship_to+", "+result.address1+", "+result.city+", "+result.state;
+                        //var address=result.ship_to+", "+result.address1+", "+result.city+", "+result.state;
                         rowsHTML+="<form id='form321_"+id+"'></form>";
                             rowsHTML+="<td data-th='S.No.'>";
                             rowsHTML+="</td>";
@@ -259,7 +267,9 @@
                                 rowsHTML+="<input type='number' class='floatlabel' placeholder='Pieces' step='any' readonly='readonly' form='form321_"+id+"' value='"+result.pieces+"'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Destination'>";
-                                rowsHTML+="<textarea readonly='readonly' form='form321_"+id+"'>"+address+"</textarea>";
+                                rowsHTML+="<input type='text' readonly='readonly' placeholder='Consignee' class='floatlabel' form='form321_"+id+"' value='"+result.ship_to+"'>";
+                                rowsHTML+="<textarea readonly='readonly' placeholder='Address' class='floatlabel' form='form321_"+id+"'>"+result.address1+"</textarea>";
+                                rowsHTML+="<input type='text' readonly='readonly' placeholder='City' class='floatlabel' form='form321_"+id+"' value='"+result.city+"'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Action'>";
                                 rowsHTML+="<input type='hidden' form='form321_"+id+"' name='id' value='"+id+"'>";
@@ -314,7 +324,9 @@
                         rowsHTML+="<input type='number' readonly='readonly' class='floatlabel' placeholder='Pieces' form='form321_"+id+"'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Destination'>";
-                        rowsHTML+="<textarea readonly='readonly' form='form321_"+id+"'></textarea>";
+                        rowsHTML+="<input type='text' readonly='readonly' placeholder='Consignee' class='floatlabel' form='form321_"+id+"'>";
+                        rowsHTML+="<textarea readonly='readonly' placeholder='Address' class='floatlabel' form='form321_"+id+"'></textarea>";
+                        rowsHTML+="<input type='text' readonly='readonly' placeholder='City' class='floatlabel' form='form321_"+id+"'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Action'>";
                         rowsHTML+="<input type='hidden' name='id' form='form321_"+id+"' value='"+id+"'>";
@@ -334,7 +346,9 @@
                 var vol_weight_filter=item_form.elements[4];
                 var product_filter=item_form.elements[5];
                 var pieces_filter=item_form.elements[6];
-                var address_filter=item_form.elements[7];
+                var consignee_filter=item_form.elements[7];
+                var address_filter=item_form.elements[8];
+                var city_filter=item_form.elements[9];
                 var history_filter=item_form.elements['history'];
                 var id_filter=item_form.elements['id'];
                 var save_button=item_form.elements['save'];
@@ -457,7 +471,9 @@
                                         //console.log(orders);
                                         if(orders.length>0)
                                         {
-                                            address_filter.value=orders[0].ship_to+", "+orders[0].address1+", "+orders[0].city+", "+orders[0].state;
+											consignee_filter.value=orders[0].ship_to;
+                                            address_filter.value=orders[0].address1;
+											city_filter.value=orders[0].city;
                                             order_filter.value=orders[0].consignment_num;
                                             product_filter.value=orders[0].sku;
                                             lbh_filter.value=orders[0].lbh;
@@ -478,8 +494,10 @@
                                         }
                                         else
                                         {
-                                            address_filter.value="";
-                                            order_filter.value="";
+											consignee_filter.value="";
+											address_filter.value="";
+											city_filter.value="";
+											order_filter.value="";
                                             product_filter.value="";
                                             weight_filter.value="";
                                             pieces_filter.value="";
@@ -525,7 +543,9 @@
                                     //console.log(orders);
                                     if(orders.length>0)
                                     {
-                                        address_filter.value=orders[0].ship_to+", "+orders[0].address1+", "+orders[0].city+", "+orders[0].state;
+										consignee_filter.value=orders[0].ship_to;
+                                        address_filter.value=orders[0].address1;
+										city_filter.value=orders[0].city;
                                         order_filter.value=orders[0].consignment_num;
                                         product_filter.value=orders[0].sku;
                                         lbh_filter.value=orders[0].lbh;
@@ -546,7 +566,9 @@
                                     }
                                     else
                                     {
+										consignee_filter.value="";
                                         address_filter.value="";
+										city_filter.value="";
                                         order_filter.value="";
                                         product_filter.value="";
                                         weight_filter.value="";
@@ -586,6 +608,7 @@
                 var manifest_num=master_form.elements['manifest_num'].value;
                 var manifest_id=master_form.elements['id'].value;
                 var manifest_date=master_form.elements['date'].value;
+				var branch=master_form.elements['branch'].value;
 
                 var consignment_num=form.elements[1].value;
                 var lbh=form.elements[2].value;
@@ -612,6 +635,7 @@
 	 					{index:'weight',value:weight},
 	 					{index:'manifest_num',value:manifest_num},
                         {index:'man_id',value:manifest_id},
+						{index:'branch',value:branch},
                         {index:'status',value:'in-transit'},
                         {index:'order_history',value:order_history_string},
 	 					{index:'last_updated',value:last_updated}]};
@@ -647,7 +671,8 @@
                 var form=document.getElementById("form321_master");
 
                 var manifest_num=form.elements['manifest_num'].value;
-                var coloader=form.elements['loader'].value;
+				var branch=form.elements['branch'].value;
+				var coloader=form.elements['loader'].value;
                 var vendor=form.elements['vendor'].value;
                 var date=get_raw_time(form.elements['date'].value);
                 var num_orders=form.elements['num'].value;
@@ -675,6 +700,7 @@
                                         {index:'lbh',value:''},
                                         {index:'weight',value:''},
                                         {index:'seal_num',value:''},
+										{index:'branch',value:branch},
                                         {index:'last_updated',value:last_updated}],
                                       log:'yes',
                                       log_data:{title:'Created',notes:'Manifest # '+manifest_num,link_to:'form322'}};
@@ -717,15 +743,18 @@
             if(is_update_access('form321'))
             {
                 var manifest_num=document.getElementById('form321_master').elements['manifest_num'].value;
-                var data_id=form.elements['id'].value;
+				var branch=document.getElementById('form321_master').elements['branch'].value;
+				var data_id=form.elements['id'].value;
                 var last_updated=get_my_time();
 
                 var data_json={data_store:'logistics_orders',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'manifest_num',value:manifest_num},
-                        {index:'last_updated',value:last_updated}]};
+						{index:'branch',value:branch},
+						{index:'last_updated',value:last_updated}]};
 
                 update_json(data_json);
+				$(form).readonly();
             }
             else
             {
@@ -741,6 +770,7 @@
                 var form=document.getElementById("form321_master");
 
                 var manifest_num=form.elements['manifest_num'].value;
+				var branch=form.elements['branch'].value;
                 var coloader=form.elements['loader'].value;
                 var vendor=form.elements['vendor'].value;
                 var date=get_raw_time(form.elements['date'].value);
@@ -764,6 +794,7 @@
                                         {index:'num_orders',value:num_orders},
                                         {index:'date',value:date},
                                         {index:'vendor',value:vendor},
+										{index:'branch',value:branch},
                                         {index:'last_updated',value:last_updated}],
                                       log:'yes',
                                       log_data:{title:'Updated',notes:'Manifest # '+manifest_num,link_to:'form322'}};
@@ -831,6 +862,7 @@
 	 					{index:'consignment_num',value:''},
 	 					{index:'manifest_num',value:''},
                         {index:'man_id',value:''},
+						{index:'branch',value:''},
                         {index:'status',value:'pending'},
 	 					{index:'last_updated',value:last_updated}]};
 
@@ -875,7 +907,9 @@
                 new_obj['Volumetric Weight']=form.elements[4].value;
                 new_obj['Item']=form.elements[5].value;
                 new_obj['Pieces']=form.elements[6].value;
-                new_obj['Destination']=form.elements[7].value;
+                new_obj['Consignee']=form.elements[7].value;
+                new_obj['Address']=form.elements[8].value;
+                new_obj['City']=form.elements[9].value;
                 new_results.push(new_obj);
             });
 
@@ -928,9 +962,9 @@
 
             container.setAttribute('style','width:98%;height:90%;margin:0px;padding:0px;');
             header.setAttribute('style','display:block;width:98%;height:70px;margin-top:10px;');
-                logo.setAttribute('style','float:left;width:35%;height:60px;');
-                business_title.setAttribute('style','float:left;width:40%;height:60px;text-align:center;font-weight:bold;');
-                mts_barcode.setAttribute('style','float:right;width:23%;height:60px;padding:left:5px;padding-right:5px;');
+            logo.setAttribute('style','float:left;width:35%;height:60px;');
+            business_title.setAttribute('style','float:left;width:40%;height:60px;text-align:center;font-weight:bold;');
+            mts_barcode.setAttribute('style','float:right;width:23%;height:60px;padding:left:5px;padding-right:5px;');
             mts_title.setAttribute('style','display:block;width:98%;height:60px;text-align:center;font-size:40px;');
             detail_section.setAttribute('style','display:block;width:98%;height:30px;text-align:center;');
 
@@ -943,6 +977,7 @@
             var master_form=document.getElementById(form_id+'_master');
             var mts_date=master_form.elements['date'].value;
             var mts_num=master_form.elements['manifest_num'].value;
+			var branch=master_form.elements['branch'].value;
             var coloader=master_form.elements['loader'].value;
             var vendor=master_form.elements['vendor'].value;
             var type=master_form.elements['type'].value;
@@ -965,7 +1000,7 @@
                 var lbh=master_form.elements['lbh'].value;
                 row2="<tr><td>Type: Bag</td><td>Seal #: "+seal_num+"</td><td>LBH: "+lbh+"</td></tr>";
             }
-            detail_text="<table style='border:none;width:98%;font-size:11px;'><tr><td>Co-loader: "+coloader+"</td><td>Vendor: "+vendor+"</td><td>Date: "+mts_date+"</td></tr>"+row2+"</table>";
+            detail_text="<table style='border:none;width:98%;font-size:11px;'><tr><td>Branch: "+branch+"</td><td>Co-loader: "+coloader+"<br>Vendor: "+vendor+"</td><td>Date: "+mts_date+"</td></tr>"+row2+"</table>";
 
             detail_section.innerHTML=detail_text;
 
@@ -1004,7 +1039,7 @@
 
                 cnote_no.appendChild(barcode_image);
                 cnote_no.appendChild(barcode_value);
-
+				var destination=form.elements[7].value+", "+form.elements[8].value+", "+form.elements[9].value;
                 table_rows+="<tr style='border-top: 1px solid #000000;height:60px;'><td><div>"+counter+"</div></td>"+
                         "<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[1].value+"</div></td>"+
@@ -1012,7 +1047,7 @@
                         "<td><div style='text-align:left;'>Actual: "+form.elements[3].value+"<br>Volumetric: "+form.elements[4].value+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[6].value+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[5].value+"</div></td>"+
-                        "<td><div style='text-align:left;'>"+form.elements[7].value+"</div></td></tr>";
+                        "<td><div style='text-align:left;'>"+destination+"</div></td></tr>";
             });
             new_table.innerHTML=table_rows;
             /////////////placing the containers //////////////////////////////////////////////////////

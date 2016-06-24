@@ -26,7 +26,6 @@
                 <label><input type='text' required name='employee' class='floatlabel' placeholder='Employee'></label>
                 <label><input type='text' name='date' required class='floatlabel' placeholder='Date'></label>
                 <label><input type='number' readonly='readonly' class='floatlabel' placeholder='Total COD' step='any' name='total'></label>
-			    <label><input type='number' class='floatlabel' placeholder="COD Collected" step="any" name='collected'></label>
 			    <label><input type='text' name='num_orders' class='floatlabel' readonly='readonly' placeholder='Number of Orders'></label>
                 <label><input type='text' name='branch' class='floatlabel' placeholder='Branch' readonly='readonly'></label>
                 <input type='hidden' name='id'>
@@ -62,7 +61,6 @@
         var employee=fields.elements['employee'];
         var drs_date=fields.elements['date'];
         var total_cod=fields.elements['total'];
-        var collected_cod=fields.elements['collected'];
         var branch=fields.elements['branch'];
 
         fields.elements['saved'].value='no';
@@ -140,7 +138,6 @@
                                     {index:'drs_num'},
                                     {index:'employee'},
                                     {index:'collectable_amount'},
-                                    {index:'collected_amount'},
                                     {index:'drs_time'},
                                     {index:'branch'}]};
             read_json_rows('form219',drs_columns,function(drs_results)
@@ -153,7 +150,6 @@
                     filter_fields.elements['date'].value=get_my_past_date(drs_results[0].drs_time);
                     filter_fields.elements['id'].value=drs_results[0].id;
                     filter_fields.elements['total'].value=drs_results[0].collectable_amount;
-                    filter_fields.elements['collected'].value=drs_results[0].collected_amount;
                     filter_fields.elements['branch'].value=drs_results[0].branch;
                     filter_fields.elements['saved'].value='yes';
                 }
@@ -606,7 +602,6 @@
             var employee=form.elements['employee'].value;
             var ddate=get_raw_time(form.elements['date'].value);
             var collectable_amount=form.elements['total'].value;
-            var collected_amount=form.elements['collected'].value;
             var data_id=form.elements['id'].value;
             var branch=form.elements['branch'].value;
             form.elements['saved'].value='yes';
@@ -635,7 +630,6 @@
 	 					{index:'drs_time',value:ddate},
 	 					{index:'type',value:'COD'},
                         {index:'collectable_amount',value:collectable_amount},
-                        {index:'collected_amount',value:collected_amount},
                         {index:'branch',value:branch},
                         {index:'last_updated',value:last_updated}],
                     log:'yes',
@@ -706,7 +700,6 @@
         });
 
         var total_amount=0;
-        var collected_amount=0;
         var num_orders=0;
 
         $("[id^='save_form219']").each(function(index)
@@ -721,15 +714,11 @@
             if(!isNaN(parseFloat(subform.elements[3].value)))
             {
                 total_amount+=parseFloat(subform.elements[3].value);
-                if(subform.elements[6].value=='delivered')
-                    collected_amount+=parseFloat(subform.elements[3].value);
             }
-
         });
 
         var form=document.getElementById("form219_master");
         form.elements['total'].value=total_amount;
-        form.elements['collected'].value=collected_amount;
         form.elements['num_orders'].value=num_orders;
     }
 
@@ -744,7 +733,6 @@
             var employee=form.elements['employee'].value;
             var ddate=get_raw_time(form.elements['date'].value);
             var collectable_amount=form.elements['total'].value;
-            var collected_amount=form.elements['collected'].value;
             var data_id=form.elements['id'].value;
 
             $('#form219_share').off('click');
@@ -768,7 +756,6 @@
 	 					{index:'drs_num',value:drs_num},
 	 					{index:'employee',value:employee},
 	 					{index:'collectable_amount',value:collectable_amount},
-	 					{index:'collected_amount',value:collected_amount},
 	 					{index:'drs_time',value:ddate},
 	 					{index:'last_updated',value:last_updated}],
                     log:'yes',
@@ -885,10 +872,9 @@
 
         drs_title.innerHTML="Delivery Run Sheet";
 
-        employee_text="<td>Employee: "+employee_name+"</td><td>Total Items: "+total_items+"</td>";
-        drs_text="<td>DRS #: "+drs_num+"</td><td>DRS Date: "+drs_date+"</td>";
-        drs_text="<td>DRS #: "+drs_num+"</td><td>DRS Date: "+drs_date+"</td>";
-        detail_text="<table style='border:none;width:100%;font-size:11px;'><tr>"+employee_text+"</tr><tr>"+drs_text+"</tr></table>";
+        var employee_text="<td>Employee: "+employee_name+"</td><td>Total Items: "+total_items+"</td>";
+        var drs_text="<td>DRS #: "+drs_num+"</td><td>DRS Date: "+drs_date+"</td>";
+        var detail_text="<table style='border:none;width:100%;font-size:11px;'><tr>"+employee_text+"</tr><tr>"+drs_text+"</tr></table>";
 
         detail_section.innerHTML=detail_text;
 

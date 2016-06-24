@@ -154,6 +154,8 @@
                         {index:'return_address1'},
                         {index:'return_address2'},
                         {index:'return_address3'},
+						{index:'consignment_num'},
+						{index:'city'},
                         {index:'manifest_num',array:manifest_num_array}]};
 
             initialize_tabular_report_buttons(columns,'Manifest Report','report106',function (item)
@@ -168,7 +170,10 @@
                 item['AWB Type']=item.manifest_type;
                 item['Merchant Name']=item.merchant_name;
                 item['Merchant Address']=item.return_address1+", "+item.return_address2+", "+item.return_address3;
-                item['Consignee Address']=item.ship_to+", "+item.address1+", "+item.address2+", "+item.address3+", "+item.city;
+                item['Consignment Number']=item.consignment_num;
+                item['Consignee']=item.ship_to;
+                item['Consignee Address']=item.address1+", "+item.address2+", "+item.address3;
+                item['Consignee City']=item.city;
                 item['Mobile No']=item.phone;
                 item['Product Name']=item.sku;
 
@@ -190,6 +195,8 @@
                 delete item.address1;
                 delete item.address2;
                 delete item.address3;
+				delete item.city;
+				delete item.consignment_num;
                 delete item.manifest_num;
             });
 
