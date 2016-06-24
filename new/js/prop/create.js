@@ -2329,65 +2329,6 @@ function form70_bill(order_id)
 
 
 /**
- * @form De-duplication mapping
- * @param button
- */
-function form80_create_item(form)
-{
-	if(is_create_access('form80'))
-	{
-		var master_form=document.getElementById('form80_master');
-		var object=master_form.elements[1].value;
-		var table=master_form.elements[2].value;
-		var column=master_form.elements[3].value;
-		var refs=master_form.elements[4].value;
-		var ref_ids=master_form.elements[5].value;
-
-		var slave_value=form.elements[0].value;
-		var slave_id=form.elements[1].value;
-		var master_value=form.elements[2].value;
-		var master_id=form.elements[3].value;
-		var data_id=form.elements[4].value;
-		var last_updated=get_my_time();
-		var data_xml="<de_duplication>" +
-					"<id>"+data_id+"</id>" +
-					"<object>"+object+"</object>" +
-					"<tablename>"+table+"</tablename>" +
-					"<keycolumn>"+column+"</keycolumn>" +
-					"<references_value>"+refs+"</references_value>" +
-					"<references_id>"+ref_ids+"</references_id>" +
-					"<slave_id>"+slave_id+"</slave_id>" +
-					"<slave_value>"+slave_value+"</slave_value>" +
-					"<master_id>"+master_id+"</master_id>" +
-					"<master_value>"+master_value+"</master_value>" +
-					"<status>pending</status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</de_duplication>";
-		create_simple(data_xml);
-		for(var i=0;i<5;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-		var del_button=form.elements[6];
-		del_button.removeAttribute("onclick");
-		$(del_button).on('click',function(event)
-		{
-			form80_delete_item(del_button);
-		});
-
-		$(form).off('submit');
-		$(form).on('submit',function(event)
-		{
-			event.preventDefault();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
  * @form Sale leads
  * @param button
  */

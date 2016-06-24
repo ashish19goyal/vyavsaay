@@ -908,42 +908,6 @@ function form79_delete_item(button)
 	}
 }
 
-/**
- * @form De-duplication mapping
- * @param button
- */
-function form80_delete_item(button)
-{
-	if(is_delete_access('form80'))
-	{
-		modal115_action(function()
-		{
-			//console.log('deleting form80');
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			var slave_id=form.elements[1].value;
-			var data_id=form.elements[4].value;
-			var last_updated=get_my_time();
-			var data_xml="<de_duplication>" +
-						"<id>"+data_id+"</id>" +
-						"<slave_id>"+slave_id+"</slave_id>" +
-						"</de_duplication>";
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-			}
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Sale Leads

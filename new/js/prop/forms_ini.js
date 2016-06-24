@@ -3366,66 +3366,6 @@ function form79_ini()
 
 
 /**
- * @form De-duplication mapping
- * @formNo 80
- * @Loading light
- */
-function form80_ini()
-{
-	show_loader();
-	var fid=$("#form80_link").attr('data_id');
-	if(fid==null)
-		fid="";
-
-	var filter_fields=document.getElementById('form80_master');
-	var fobject=filter_fields.elements[1].value;
-
-	var columns="<de_duplication>" +
-		"<id></id>" +
-		"<object>"+fobject+"</object>" +
-		"<slave_id></slave_id>" +
-		"<slave_value></slave_value>" +
-		"<master_id></master_id>" +
-		"<master_value></master_value>" +
-		"<status exact='yes'>pending</status>" +
-		"</de_duplication>";
-
-	$('#form80_body').html("");
-
-	fetch_requested_data('form80',columns,function(results)
-	{
-		results.forEach(function(result)
-		{
-			var rowsHTML="<tr>";
-				rowsHTML+="<form id='form80_"+result.id+"'></form>";
-					rowsHTML+="<td data-th='Change'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form80_"+result.id+"' value='"+result.slave_value+"'>";
-						rowsHTML+="<input type='hidden' form='form80_"+result.id+"' value='"+result.slave_id+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='To'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form80_"+result.id+"' value='"+result.master_value+"'>";
-						rowsHTML+="<input type='hidden' form='form80_"+result.id+"' value='"+result.master_id+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='form80_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form80_"+result.id+"'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form80_"+result.id+"' onclick='form80_delete_item($(this));'>";
-					rowsHTML+="</td>";
-			rowsHTML+="</tr>";
-
-			$('#form80_body').append(rowsHTML);
-			var fields=document.getElementById("form80_"+result.id);
-			$(fields).on("submit", function(event)
-			{
-				event.preventDefault();
-			});
-		});
-		hide_loader();
-	});
-};
-
-
-/**
  * @form Sale Leads
  * @formNo 81
  * @Loading light

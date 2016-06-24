@@ -2290,21 +2290,6 @@ function form79_update_item(form)
 	}
 }
 
-/**
- * @form De-duplication mapping
- * @param button
- */
-function form80_update_form(button)
-{
-	if(is_update_access('form80'))
-	{
-		$("[id^='save_form80_']").click();
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
 
 /**
  * @form Sale leads
