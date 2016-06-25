@@ -1,4 +1,4 @@
-<div id='report99' class='tab-pane portlet box red-sunglo'>	   
+<div id='report99' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
         <div class='caption'>
             <a class='btn btn-circle grey btn-outline btn-sm' onclick='report99_ini();'>Refresh</a>
@@ -15,7 +15,7 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
 
 	<div class="portlet-body">
@@ -26,11 +26,11 @@
 
 	   <div class='horizontal-bar-chart' id='report99_chart'></div>
     </div>
-    
+
 	<script>
 
     function report99_header_ini()
-	{	
+	{
         var form=document.getElementById('report99_master');
         var start_date=form.elements['start'];
         var end_date=form.elements['end'];
@@ -46,8 +46,8 @@
         $(end_date).datepicker();
         start_date.value=get_my_past_date((get_my_time()-(7*86400000)));
         end_date.value=vTime.date();
-        
-		var paginator=$('#report99').paginator({visible:false,container:$('#report99')});        
+
+		var paginator=$('#report99').paginator({visible:false,container:$('#report99')});
 
         $('#report99').formcontrol();
 	}
@@ -59,10 +59,11 @@
         var start_date=get_raw_time(form.elements['start'].value);
         var end_date=get_raw_time(form.elements['end'].value)+86399999;
 
-        var rto_data={data_store:'rto',			
+        var rto_data={data_store:'rto',
+					access:{},
                     indexes:[{index:'id'},
                             {index:'rto_num'},
-                            {index:'rto_time',lowerbound:start_date,upperbound:end_date}]};		
+                            {index:'rto_time',lowerbound:start_date,upperbound:end_date}]};
 
         read_json_rows('report99',rto_data,function(orders)
         {
@@ -132,10 +133,11 @@
                         "gridPosition": "start"
                     }
             });
-            
+
             $('#report99_chart').find('div>div>a').hide();
-            
+
             var columns={data_store:'logistics_orders',
+					access:{},
                     indexes:[{index:'id'},
                         {index:'awb_num'},
                         {index:'import_date'},
@@ -156,7 +158,7 @@
                         {index:'return_address2'},
                         {index:'return_address3'},
                         {index:'rto_num',array:rto_num_array}]};
-            			
+
             initialize_tabular_report_buttons(columns,'RTO Report','report99',function (item)
             {
                 item['AWB No']=item.awb_num;
@@ -173,7 +175,7 @@
                 item['Consignee Address']=item.ship_to+", "+item.address1+", "+item.address2+", "+item.address3+", "+item.city;
                 item['Mobile No']=item.phone;
                 item['Product Name']=item.sku;
-                
+
                 delete item.id;
                 delete item.awb_num;
                 delete item.import_date;
@@ -196,7 +198,7 @@
                 delete item.rto_num;
             });
 
-            hide_loader();		
+            hide_loader();
         });
 	}
 

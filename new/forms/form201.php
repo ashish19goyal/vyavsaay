@@ -1,4 +1,4 @@
-<div id='form201' class='tab-pane portlet box green-meadow'>	   
+<div id='form201' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class="actions">
             <div class="btn-group">
@@ -15,9 +15,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -35,9 +35,9 @@
 			</tbody>
 		</table>
 	</div>
-    
+
     <script>
-    
+
     function form201_header_ini()
     {
         var filter_fields=document.getElementById('form201_header');
@@ -57,7 +57,7 @@
         });
 
         set_my_filter_json(drs_data,drs_filter);
-        set_my_filter_json(employee_data,employee_filter);	
+        set_my_filter_json(employee_data,employee_filter);
         set_static_filter_json('drs','type',type_filter);
         $(date_filter).datepicker();
     };
@@ -67,7 +67,7 @@
         show_loader();
         var fid=$("#form201_link").attr('data_id');
         if(fid==null)
-            fid="";	
+            fid="";
 
         var filter_fields=document.getElementById('form201_header');
         var fdrs=filter_fields.elements['drs'].value;
@@ -82,12 +82,13 @@
         {
             type_object={index:'type',exact:ftype};
         }
-        
+
         var paginator=$('#form201_body').paginator();
-			
+
         var new_columns={count:paginator.page_size(),
                          start_index:paginator.get_index(),
                          data_store:'drs',
+						 access:{},
                          indexes:[{index:'id',value:fid},
                                 {index:'drs_num',value:fdrs},
                                 {index:'employee',value:femployee},
@@ -126,7 +127,7 @@
                         rowsHTML+="<td data-th='Action'>";
                             rowsHTML+="<input type='hidden' form='form201_"+result.id+"' value='"+result.id+"' name='id'>";
                             rowsHTML+="<button type='button' class='btn red' form='form201_"+result.id+"' title='Delete order' onclick='form201_delete_item($(this));' name='delete'><i class='fa fa-trash'></i></button>";
-                        rowsHTML+="</td>";			
+                        rowsHTML+="</td>";
                 rowsHTML+="</tr>";
 
                 $('#form201_body').append(rowsHTML);
@@ -134,9 +135,9 @@
 
             $('#form201').formcontrol();
 			paginator.update_index(results.length);
-            
+
             var columns=new Object();
-                columns.data_store='logistics_orders';		
+                columns.data_store='logistics_orders';
                 columns.indexes=[{index:'id'},
                                 {index:'awb_num'},
                                 {index:'drs_time'},
@@ -157,7 +158,7 @@
                                 {index:'address2'},
                                 {index:'address3'},
                                 {index:'city'},
-                                {index:'drs_num',array:drs_num_array}];		
+                                {index:'drs_num',array:drs_num_array}];
 
                 initialize_tabular_report_buttons(columns,'DRS Orders','form201',function (item)
                 {
@@ -196,7 +197,7 @@
                     delete item.drs_num;
                     delete item.drs_time;
                 });
-                
+
             hide_loader();
         });
     };
@@ -212,7 +213,7 @@
 
                 var drs_num=form.elements[0].value;
                 var data_id=form.elements[4].value;
-                
+
                 var data_json={data_store:'drs',
                                 data:[{index:'id',value:data_id}],
                                 log:'yes',
@@ -240,7 +241,7 @@
                                         {index:'last_updated',value:last_updated}];
                         data_json.data.push(data_json_array);
                     });
-                    update_batch_json(data_json);                        
+                    update_batch_json(data_json);
                 });
                 $(button).parent().parent().remove();
             });

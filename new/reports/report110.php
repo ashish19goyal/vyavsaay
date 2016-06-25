@@ -74,7 +74,8 @@
         var paginator=$('#report110_body').paginator({'page_size':25});
 
         var columns={count:paginator.page_size(),
-                    start_index:paginator.get_index(),
+                    access:{},
+					start_index:paginator.get_index(),
                     data_store:'logistics_orders',
                     indexes:[{index:'id'},
                         {index:'awb_num',value:awb_filter},

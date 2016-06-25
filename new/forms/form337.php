@@ -1,4 +1,4 @@
-<div id='form337' class='tab-pane portlet box green-meadow'>	   
+<div id='form337' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class="actions">
             <div class="btn-group">
@@ -18,9 +18,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -39,9 +39,9 @@
 			</tbody>
 		</table>
 	</div>
-    
+
     <script>
-    
+
         function form337_header_ini()
         {
             var filter_fields=document.getElementById('form337_header');
@@ -50,7 +50,7 @@
             var loader_filter=filter_fields.elements['loader'];
             var vendor_filter=filter_fields.elements['vendor'];
             var date_filter=filter_fields.elements['date'];
-            
+
             $(filter_fields).off('submit');
             $(filter_fields).on('submit',function(event)
             {
@@ -69,7 +69,7 @@
             show_loader();
             var fid=$("#form337_link").attr('data_id');
             if(fid==null)
-                fid="";	
+                fid="";
 
             $('#form337_body').html("");
 
@@ -79,13 +79,14 @@
             var floader=filter_fields.elements['loader'].value;
             var fvendor=filter_fields.elements['vendor'].value;
             var fdate=get_raw_time(filter_fields.elements['date'].value);
-            
+
             var paginator=$('#form337_body').paginator();
-			
+
             var new_columns={count:paginator.page_size(),
                             start_index:paginator.get_index(),
                             data_store:'gate_pass',
-                            indexes:[{index:'id',value:fid},
+                            access:{},
+							indexes:[{index:'id',value:fid},
                                     {index:'pass_num',value:fpass},
                                     {index:'type',value:ftype},
                                     {index:'coloader',value:floader},
@@ -93,7 +94,7 @@
                                     {index:'date',value:fdate}]};
 
             read_json_rows('form337',new_columns,function(results)
-            {			
+            {
                 results.forEach(function(result)
                 {
                     var form_id='form336';
@@ -121,7 +122,7 @@
                             rowsHTML+="<td data-th='Action'>";
                                 rowsHTML+="<input type='hidden' form='form337_"+result.id+"' value='"+result.id+"' name='id'>";
                                 rowsHTML+="<button type='button' class='btn red' form='form337_"+result.id+"' title='Delete' name='delete' onclick='form337_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form337_body').append(rowsHTML);
@@ -153,7 +154,7 @@
  							log:'yes',
  							log_data:{title:"Deleted",notes:"Gate pass # "+pass_num,link_to:"form337"}};
                     delete_json(data_json);
-                    
+
                     var pass_items_json={data_store:'logistics_orders',return_column:'id',
                                        indexes:[{index:'status',exact:'in-transit'},
                                                {index:'pass_num',exact:pass_num}]};
@@ -173,7 +174,7 @@
 
                             data_json.data.push(data_json_array);
                         });
-                        update_batch_json(data_json);                        
+                        update_batch_json(data_json);
                     });
 
                     var manifests_items_json={data_store:'manifests',return_column:'id',
@@ -193,7 +194,7 @@
                                     {index:'last_updated',value:last_updated}];
                             data_json.data.push(data_json_array);
                         });
-                        update_batch_json(data_json);                        
+                        update_batch_json(data_json);
                     });
 
                     $(button).parent().parent().remove();

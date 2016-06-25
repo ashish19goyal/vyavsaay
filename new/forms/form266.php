@@ -1,4 +1,4 @@
-<div id='form266' class='tab-pane portlet box green-meadow'>	   
+<div id='form266' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class="actions">
             <div class="btn-group">
@@ -15,9 +15,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -34,7 +34,7 @@
 			</tbody>
 		</table>
 	</div>
-    
+
     <script>
         function form266_header_ini()
         {
@@ -63,7 +63,7 @@
             show_loader();
             var fid=$("#form266_link").attr('data_id');
             if(fid==null)
-                fid="";	
+                fid="";
 
             var filter_fields=document.getElementById('form266_header');
             var frto=filter_fields.elements['rto'].value;
@@ -71,17 +71,18 @@
             var fdate=get_raw_time(filter_fields.elements['date'].value);
 
             $('#form266_body').html("");
-            
+
             var paginator=$('#form266_body').paginator();
-			
+
 			var new_columns={count:paginator.page_size(),
                              start_index:paginator.get_index(),
                              data_store:'rto',
+							 access:{},
                              indexes:[{index:'id',value:fid},
                                     {index:'rto_num',value:frto},
                                     {index:'employee',value:femployee},
                                     {index:'rto_time',value:fdate}]};
-                                    
+
             read_json_rows('form266',new_columns,function(results)
             {
                 var rto_num_array=[];
@@ -102,14 +103,14 @@
                             rowsHTML+="<td data-th='Action'>";
                                 rowsHTML+="<input type='hidden' form='form266_"+result.id+"' value='"+result.id+"' name='id'>";
                                 rowsHTML+="<button type='button' class='btn red' form='form266_"+result.id+"' title='Delete RTO' name='delete' onclick='form266_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form266_body').append(rowsHTML);
                 });
 
                 var columns=new Object();
-                columns.data_store='logistics_orders';		
+                columns.data_store='logistics_orders';
                 columns.indexes=[{index:'id'},
                                 {index:'awb_num'},
                                 {index:'rto_time'},
@@ -131,7 +132,7 @@
                                 {index:'address2'},
                                 {index:'address3'},
                                 {index:'city'},
-                                {index:'rto_num',array:rto_num_array}];		
+                                {index:'rto_num',array:rto_num_array}];
 
                 initialize_tabular_report_buttons(columns,'RTO Orders','form266',function (item)
                 {
@@ -170,7 +171,7 @@
                     delete item.phone;
                     delete item.sku;
                 });
-                  
+
 				$('#form266').formcontrol();
 				paginator.update_index(results.length);
                 hide_loader();
@@ -216,7 +217,7 @@
                                             {index:'last_updated',value:last_updated}];
                             data_json.data.push(data_json_array);
                         });
-                        update_batch_json(data_json);                        
+                        update_batch_json(data_json);
                     });
 
                     $(button).parent().parent().remove();

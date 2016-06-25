@@ -1,6 +1,6 @@
-<div id='form344' class='tab-pane portlet box green-meadow'>	   
+<div id='form344' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form344_add_item();'>Add <i class='fa fa-plus'></i></a>
             <a class='btn btn-circle grey btn-outline btn-sm' id='form344_save'>Save <i class='fa fa-save'></i></a>
 		</div>
@@ -29,15 +29,16 @@
                 <label><input type='text' name='date' required class='floatlabel' placeholder='Date'></label>
                 <label><input type='text' name='loader' class='floatlabel' placeholder='Co-loader'></label>
                 <label><input type='text' name='vendor' class='floatlabel' placeholder='Vendor'></label>
-                <label><input type='number' name='num' readonly='readonly' class='floatlabel' placeholder='Number of Orders'></label>
+				<label><input type='text' name='branch' class='floatlabel' placeholder='Branch' required></label>
+				<label><input type='number' name='num' readonly='readonly' class='floatlabel' placeholder='Number of Orders'></label>
                 <input type='hidden' name='id'>
                 <input type='hidden' name='saved'>
                 <input type='submit' class='submit_hidden'>
             </fieldset>
         </form>
-        
+
         <br>
-		
+
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr style='color:#9a9a9a;'>
@@ -65,27 +66,32 @@
             var vendor=fields.elements['vendor'];
             var date=fields.elements['date'];
             var id_filter=fields.elements['id'];
+			var branch=fields.elements['branch'];
 
             fields.elements['saved'].value='no';
             fields.elements['id'].value=get_new_key();
-            
+
             var save_button=document.getElementById('form344_save');
             pass_filter.value="";
             coloader.value="";
-            vendor.value="";            
+            vendor.value="";
             $(date).datepicker();
             date.value=vTime.date();
+			branch.value="";
+
+			var branch_data={data_store:'store_areas',return_column:'name'};
+			set_my_value_list_json(branch_data,branch);
 
             var pass_id=$("#form344_link").attr('data_id');
             if(pass_id==null)
-                pass_id="";	
+                pass_id="";
 
             if(pass_id=="")
             {
                 id_filter.value=get_new_key();
                 var pass_num_data={data_store:'user_preferences',return_column:'value',
                                       indexes:[{index:'name',exact:'pass_num'}]};
-                set_my_value_json(pass_num_data,pass_filter);	
+                set_my_value_json(pass_num_data,pass_filter);
             }
 
             $(save_button).off('click');
@@ -109,8 +115,8 @@
                 event.preventDefault();
                 form344_add_item();
             });
-            
-            var paginator=$('#form344_body').paginator({visible:false});        
+
+            var paginator=$('#form344_body').paginator({visible:false});
 
             $('#form344').formcontrol();
         }
@@ -119,21 +125,23 @@
         {
             var pass_id=$("#form344_link").attr('data_id');
             if(pass_id==null)
-                pass_id="";	
+                pass_id="";
             $('#form344_body').html("");
-            
+
             var filter_fields=document.getElementById('form344_master');
-                    
+
             if(pass_id!="")
             {
                 show_loader();
                 var pass_columns={data_store:'gate_pass',count:1,
-                                     indexes:[{index:'id',value:pass_id},
+									access:{},
+									 indexes:[{index:'id',value:pass_id},
                                              {index:'pass_num'},
                                              {index:'coloader'},
                                              {index:'vendor'},
                                              {index:'type'},
-                                             {index:'num_orders'},
+											 {index:'branch'},
+											 {index:'num_orders'},
                                              {index:'date'}]};
 
                 read_json_rows('form344',pass_columns,function(pass_results)
@@ -143,11 +151,12 @@
                         filter_fields.elements['pass_num'].value=pass_results[0].pass_num;
                         filter_fields.elements['loader'].value=pass_results[0].coloader;
                         filter_fields.elements['vendor'].value=pass_results[0].vendor;
+						filter_fields.elements['branch'].value=pass_results[0].branch;
                         filter_fields.elements['date'].value=get_my_past_date(pass_results[0].date);
                         filter_fields.elements['id'].value=pass_results[0].id;
                         filter_fields.elements['num'].value=pass_results[0].num_orders;
                         filter_fields.elements['saved'].value='yes';
-                        
+
                         var save_button=document.getElementById('form344_save');
                         $(save_button).click('off');
                         $(save_button).click('on',function(e)
@@ -158,7 +167,7 @@
                     }
                     $('#form344').formcontrol();
                 });
-                        
+
                 var pass_items_column={data_store:'manifests',
                                           indexes:[{index:'id'},
                                                   {index:'manifest_num'},
@@ -199,19 +208,19 @@
                                 rowsHTML+="<input type='hidden' form='form344_"+id+"' name='awb_ids'>";
                                 rowsHTML+="<input type='button' class='submit_hidden' form='form344_"+id+"' id='save_form344_"+id+"' name='save'>";
                                 rowsHTML+="<button type='button' class='btn red' form='form344_"+id+"' id='delete_form344_"+id+"' onclick='form344_delete_item($(this));' name='delete'><i class='fa fa-trash'></i></button>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                         rowsHTML+="</tr>";
 
                         $('#form344_body').append(rowsHTML);
                         var item_form=document.getElementById('form344_'+id);
                         var save_button=item_form.elements['save'];
 
-                        $(save_button).on('click',function (e) 
+                        $(save_button).on('click',function (e)
                         {
                             e.preventDefault();
                             form344_update_item(item_form);
                         });
-                        
+
                         var awbs_data={data_store:'logistics_orders',
                                       indexes:[{index:'id'},{index:'awb_num'},{index:'man_id',exact:result.id}]};
                         read_json_rows('',awbs_data,function(awbs)
@@ -220,7 +229,7 @@
                             var id_string="";
                             awbs.forEach(function(awb)
                             {
-                               awb_string+=awb.awb_num+" "; 
+                               awb_string+=awb.awb_num+" ";
                                 id_string+=awb.id+",";
                             });
                             awb_string=awb_string.trim();
@@ -267,7 +276,7 @@
                         rowsHTML+="<input type='hidden' name='awb_ids' form='form344_"+id+"'>";
                         rowsHTML+="<input type='button' class='submit_hidden' form='form344_"+id+"' id='save_form344_"+id+"' name='save'>";
                         rowsHTML+="<button type='button' class='btn red' name='delete' form='form344_"+id+"' id='delete_form344_"+id+"' onclick='$(this).parent().parent().remove(); form344_update_serial_numbers();'><i class='fa fa-trash'></i></button>";
-                    rowsHTML+="</td>";			
+                    rowsHTML+="</td>";
                 rowsHTML+="</tr>";
 
                 $('#form344_body').prepend(rowsHTML);
@@ -281,7 +290,7 @@
                 var awbs_filter=item_form.elements[5];
                 var id_filter=item_form.elements['id'];
                 var save_button=item_form.elements['save'];
-                
+
                 var new_pass=true;
                 var saved=document.getElementById('form344_master').elements['saved'].value;
                 if(saved=='yes')
@@ -299,7 +308,7 @@
                         var subform_id=$(this).attr('form');
                         var subform=document.getElementById(subform_id);
                         total_entries+=1;
-                        if(subform.elements[0].value==seal_filter.value)	
+                        if(subform.elements[0].value==seal_filter.value)
                             double_entry+=1;
                     });
 
@@ -312,21 +321,21 @@
                                 form344_create_item(item_form);
                                 form344_add_item();
                             }
-                            else 
+                            else
                             {
                                 seal_filter.value="";
                                 $("#modal65_link").click();
                             }
                         });
                     }
-                    else 
+                    else
                     {
                         if(double_entry<2)
                         {
                             form344_create_item(item_form);
                             form344_add_item();
                         }
-                        else 
+                        else
                         {
                             seal_filter.value="";
                             $("#modal65_link").click();
@@ -335,9 +344,9 @@
                 });
 
                 $(seal_filter).focus();
-                $(seal_filter).on('keydown',function (event) 
+                $(seal_filter).on('keydown',function (event)
                 {
-                    if(event.keyCode == 13 ) 
+                    if(event.keyCode == 13 )
                     {
                         event.preventDefault();
 
@@ -350,13 +359,13 @@
 
                             total_entries+=1;
 
-                            if(subform.elements[0].value==seal_filter.value)	
+                            if(subform.elements[0].value==seal_filter.value)
                                 double_entry+=1;
                         });
 
                         if(total_entries==1 && new_pass)
                         {
-                            form344_create_form(function () 
+                            form344_create_form(function ()
                             {
                                 if(double_entry<2)
                                 {
@@ -368,8 +377,8 @@
                                                     {index:'seal_num',exact:seal_filter.value},
                                                     {index:'num_orders'},
                                                     {index:'type',exact:'bag'}]};
-                                    
-                                    read_json_rows('',orders_data,function (orders) 
+
+                                    read_json_rows('',orders_data,function (orders)
                                     {
                                         if(orders.length>0)
                                         {
@@ -386,7 +395,7 @@
                                                 var id_string="";
                                                 awbs.forEach(function(awb)
                                                 {
-                                                   awb_string+=awb.awb_num+" "; 
+                                                   awb_string+=awb.awb_num+" ";
                                                     id_string+=awb.id+",";
                                                 });
                                                 awb_string=awb_string.trim();
@@ -396,7 +405,7 @@
                                                 form344_add_item();
                                             });
                                         }
-                                        else 
+                                        else
                                         {
                                             manifest_filter.value="";
                                             pieces_filter.value="";
@@ -411,14 +420,14 @@
                                         $('#form344').formcontrol();
                                     });
                                 }
-                                else 
+                                else
                                 {
                                     seal_filter.value="";
                                     $("#modal65_link").click();
                                 }
                             });
                         }
-                        else 
+                        else
                         {
                             if(double_entry<2)
                             {
@@ -426,12 +435,12 @@
                                             indexes:[{index:'id'},
                                                     {index:'manifest_num'},
 													{index:'lbh'},
-													{index:'weight'}, 
+													{index:'weight'},
                                                     {index:'seal_num',exact:seal_filter.value},
                                                     {index:'num_orders'},
                                                     {index:'type',exact:'bag'}]};
-                                    
-                                read_json_rows('',orders_data,function (orders) 
+
+                                read_json_rows('',orders_data,function (orders)
                                 {
                                     if(orders.length>0)
                                     {
@@ -448,7 +457,7 @@
                                             var id_string="";
                                             awbs.forEach(function(awb)
                                             {
-                                               awb_string+=awb.awb_num+" "; 
+                                               awb_string+=awb.awb_num+" ";
                                                 id_string+=awb.id+",";
                                             });
                                             awb_string=awb_string.trim();
@@ -458,7 +467,7 @@
                                             form344_add_item();
                                         });
                                     }
-                                    else 
+                                    else
                                     {
                                         manifest_filter.value="";
                                         pieces_filter.value="";
@@ -473,7 +482,7 @@
                                     $('#form344').formcontrol();
                                 });
                             }
-                            else 
+                            else
                             {
                                 seal_filter.value="";
                                 $("#modal65_link").click();
@@ -498,7 +507,7 @@
                 var pass_num=master_form.elements['pass_num'].value;
                 var pass_id=master_form.elements['id'].value;
                 var pass_date=master_form.elements['date'].value;
-                
+
                 var manifest_num=form.elements[1].value;
                 var data_id=form.elements['id'].value;
                 var save_button=form.elements['save'];
@@ -509,12 +518,12 @@
 	 				data:[{index:'id',value:data_id},
 	 					{index:'pass_num',value:pass_num},
                         {index:'pass_id',value:pass_id},
-	 					{index:'last_updated',value:last_updated}]}; 				
+	 					{index:'last_updated',value:last_updated}]};
                 update_json(data_json);
 
                 var awbs=form.elements['awb_ids'].value;
                 var awbs_array=awbs.split(",");
-                
+
                 var data_json={data_store:'logistics_orders',
                         loader:'yes',
                         data:[]};
@@ -530,7 +539,7 @@
                     }
                 });
                 update_batch_json(data_json);
-                
+
                 $(form).readonly();
 
                 del_button.removeAttribute("onclick");
@@ -561,27 +570,29 @@
                 var pass_num=form.elements['pass_num'].value;
                 var coloader=form.elements['loader'].value;
                 var vendor=form.elements['vendor'].value;
+				var branch=form.elements['branch'].value;
                 var date=get_raw_time(form.elements['date'].value);
                 var data_id=form.elements['id'].value;
                 var num_orders=form.elements['num'].value;
                 form.elements['saved'].value='yes';
-                
+
                 var save_button=document.getElementById('form344_save');
                 var last_updated=get_my_time();
 
                 form344_update_serial_numbers();
-                
+
                 var pass_columns={data_store:"gate_pass",count:1,return_column:'id',indexes:[{index:'pass_num',exact:pass_num}]};
                 read_json_single_column(pass_columns,function(passs)
                 {
                     if(passs.length==0)
-                    {	
+                    {
                         var data_json={data_store:'gate_pass',
                                     data:[{index:'id',value:data_id},
                                         {index:'pass_num',value:pass_num},
                                         {index:'coloader',value:coloader},
                                         {index:'date',value:date},
                                         {index:'vendor',value:vendor},
+										{index:'branch',value:branch},
                                         {index:'type',value:'bag'},
                                         {index:'num_orders',value:num_orders},
                                         {index:'last_updated',value:last_updated}],
@@ -609,7 +620,7 @@
                             func();
                         }
                     }
-                    else 
+                    else
                     {
                         $("#modal77_link").click();
                     }
@@ -634,7 +645,7 @@
 	 					{index:'pass_num',value:pass_num},
                         {index:'last_updated',value:last_updated}]};
  				update_json(data_json);
-                
+
                 var data_json={data_store:'logistics_orders',
                         loader:'yes',
                         data:[]};
@@ -650,7 +661,7 @@
                     }
                 });
                 update_batch_json(data_json);
-                
+
             }
             else
             {
@@ -668,6 +679,7 @@
                 var pass_num=form.elements['pass_num'].value;
                 var coloader=form.elements['loader'].value;
                 var vendor=form.elements['vendor'].value;
+				var branch=form.elements['branch'].value;
                 var date=get_raw_time(form.elements['date'].value);
                 var data_id=form.elements['id'].value;
                 var num_orders=form.elements['num'].value;
@@ -675,7 +687,7 @@
                 var last_updated=get_my_time();
 
                 form344_update_serial_numbers();
-                
+
                 var pass_columns={data_store:"gate_pass",count:2,return_column:'id',indexes:[{index:'pass_num',exact:pass_num}]};
                 read_json_single_column(pass_columns,function(passs)
                 {
@@ -687,7 +699,8 @@
                                         {index:'coloader',value:coloader},
                                         {index:'date',value:date},
                                         {index:'vendor',value:vendor},
-                                        {index:'num_orders',value:num_orders},  
+										{index:'branch',value:branch},
+                                        {index:'num_orders',value:num_orders},
                                         {index:'last_updated',value:last_updated}],
                                       log:'yes',
                                       log_data:{title:'Updated',notes:'Pass # '+pass_num,link_to:'form322'}};
@@ -695,7 +708,7 @@
                         update_json(data_json);
                         $("[id^='save_form344_']").click();
                     }
-                    else 
+                    else
                     {
                         $("#modal77_link").click();
                     }
@@ -707,7 +720,7 @@
             }
         }
 
-        
+
         function form344_delete_item(button)
         {
             if(is_delete_access('form344'))
@@ -719,7 +732,7 @@
 
                     var data_id=form.elements['id'].value;
                     var last_updated=get_my_time();
-                    
+
                     var data_json={data_store:'manifests',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'pass_num',value:''},
@@ -727,7 +740,7 @@
 	 					{index:'last_updated',value:last_updated}]};
 
                     update_json(data_json);
-                    
+
                     var data_json={data_store:'logistics_orders',
                             loader:'yes',
                             data:[]};
@@ -763,7 +776,7 @@
             var filter_fields=document.getElementById('form344_master');
             var new_results=[];
             var num_orders=0;
-            
+
             $('#form344_body').find('form').each(function(index)
             {
                 var new_obj={};
@@ -775,7 +788,7 @@
                 new_obj['Pieces']=form.elements[4].value;
                 new_obj['AWBs']=form.elements[5].value;
                 new_results.push(new_obj);
-                
+
                 var num_pieces=form.elements[4].value;
                 if(!vUtil.isBlank(num_pieces) && num_pieces!=0)
                     num_orders+=parseInt(num_pieces);
@@ -784,7 +797,7 @@
             });
 
             filter_fields.elements['num'].value=num_orders;
-            
+
             $('#form344_share').off('click');
             $('#form344_share').click(function()
             {
@@ -808,15 +821,15 @@
             print_form344_form(function(container)
             {
                 $.print(container);
-                container.innerHTML="";	
-            });	
+                container.innerHTML="";
+            });
         }
 
         function print_form344_form(func)
         {
             var form_id='form344';
 
-            ////////////setting up containers///////////////////////	
+            ////////////setting up containers///////////////////////
             var container=document.createElement('div');
 
             var header=document.createElement('div');
@@ -835,7 +848,7 @@
                 logo.setAttribute('style','float:left;width:35%;height:60px;');
                 business_title.setAttribute('style','float:left;width:40%;height:60px;text-align:center;font-weight:bold;');
                 mts_barcode.setAttribute('style','float:right;width:23%;height:60px;padding:left:5px;padding-right:5px;');
-            mts_title.setAttribute('style','display:block;width:98%;height:60px;text-align:center;font-size:40px;');	
+            mts_title.setAttribute('style','display:block;width:98%;height:60px;text-align:center;font-size:40px;');
             detail_section.setAttribute('style','display:block;width:98%;height:30px;text-align:center;');
 
             ///////////////getting the content////////////////////////////////////////
@@ -849,7 +862,8 @@
             var mts_num=master_form.elements['pass_num'].value;
             var coloader=master_form.elements['loader'].value;
             var vendor=master_form.elements['vendor'].value;
-            
+			var branch=master_form.elements['branch'].value;
+
             ////////////////filling in the content into the containers//////////////////////////
 
             var table_element=document.getElementById(form_id+'_body');
@@ -860,8 +874,8 @@
 
             $(mts_barcode).JsBarcode(mts_num,{displayValue:true,fontSize:20});
 
-            mts_title.innerHTML="pass";
-            detail_text="<table style='border:none;width:98%;font-size:11px;'><tr><td>Co-loader: "+coloader+"</td><td>Vendor: "+vendor+"</td><td>Date: "+mts_date+"</td></tr></table>";
+            mts_title.innerHTML="Pass";
+            detail_text="<table style='border:none;width:98%;font-size:11px;'><tr><td>Co-loader: "+coloader+"<br>Vendor: "+vendor+"</td><td>Branch: "+branch+"</td><td>Date: "+mts_date+"</td></tr></table>";
 
             detail_section.innerHTML=detail_text;
 
@@ -884,7 +898,7 @@
             {
                 counter+=1;
                 var form=$(this)[0];
-        
+
                 var awb_num=""+form.elements[0].value;
 
                 var cnote_no=document.createElement('div');
@@ -906,10 +920,10 @@
                         "<td><div style='text-align:left;'>"+form.elements[2].value+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[3].value+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[4].value+"</div></td>"+
-                        "<td><div style='text-align:left;'>"+form.elements[5].value+"</div></td></tr>";				
+                        "<td><div style='text-align:left;'>"+form.elements[5].value+"</div></td></tr>";
             });
             new_table.innerHTML=table_rows;
-            /////////////placing the containers //////////////////////////////////////////////////////	
+            /////////////placing the containers //////////////////////////////////////////////////////
 
             container.appendChild(header);
             container.appendChild(mts_title);

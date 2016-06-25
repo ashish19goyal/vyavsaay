@@ -77,6 +77,7 @@
         var columns={count:paginator.page_size(),
                     start_index:paginator.get_index(),
                     data_store:'logistics_orders',
+					access:{},
                     indexes:[{index:'id'},
                         {index:'awb_num',value:awb_filter},
                         {index:'channel_name',value:channel_filter},

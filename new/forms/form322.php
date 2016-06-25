@@ -1,4 +1,4 @@
-<div id='form322' class='tab-pane portlet box green-meadow'>	   
+<div id='form322' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class="actions">
             <div class="btn-group">
@@ -18,9 +18,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -39,16 +39,16 @@
 			</tbody>
 		</table>
 	</div>
-    
+
     <script>
-    
+
         function form322_header_ini()
         {
             var filter_fields=document.getElementById('form322_header');
             var manifest_filter=filter_fields.elements['manifest'];
             var type_filter=filter_fields.elements['type'];
             var date_filter=filter_fields.elements['date'];
-            
+
             var manifest_data={data_store:'manifests',return_column:'manifest_num'};
 
             $(filter_fields).off('submit');
@@ -69,31 +69,32 @@
             var fid=$("#form322_link").attr('data_id');
             if(fid==null)
                 fid="";
-            
+
             $('#form322_body').html("");
-            
+
             var filter_fields=document.getElementById('form322_header');
             var fmanifest=filter_fields.elements['manifest'].value;
             var ftype=filter_fields.elements['type'].value;
             var fdate=get_raw_time(filter_fields.elements['date'].value);
-            
+
             var paginator=$('#form322_body').paginator();
-			
+
             var new_columns={count:paginator.page_size(),
                             start_index:paginator.get_index(),
-                            data_store:'manifests',
+                            access:{},
+							data_store:'manifests',
                             indexes:[{index:'id',value:fid},
                                     {index:'manifest_num',value:fmanifest},
                                     {index:'type',value:ftype},
                                     {index:'seal_num'},
-                                    {index:'lbh'}, 
-                                    {index:'weight'}, 
+                                    {index:'lbh'},
+                                    {index:'weight'},
                                     {index:'coloader'},
                                     {index:'vendor'},
                                     {index:'date',value:fdate}]};
 
             read_json_rows('form322',new_columns,function(results)
-            {			
+            {
                 results.forEach(function(result)
                 {
                     var rowsHTML="<tr>";
@@ -119,7 +120,7 @@
                             rowsHTML+="<td data-th='Action'>";
                                 rowsHTML+="<input type='hidden' form='form322_"+result.id+"' value='"+result.id+"' name='id'>";
                                 rowsHTML+="<button type='button' class='btn red' form='form322_"+result.id+"' title='Delete' onclick='form322_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form322_body').append(rowsHTML);
@@ -150,12 +151,12 @@
  							data:[{index:'id',value:data_id}],
  							log:'yes',
  							log_data:{title:"Deleted",notes:"Manifest # "+manifest_num,link_to:"form322"}};
-			
+
                     delete_json(data_json);
-                    
+
                     var manifest_items_json={data_store:'logistics_orders',return_column:'id',
                                             indexes:[{index:'manifest_num',exact:manifest_num}]};
-			
+
                     read_json_single_column(manifest_items_json,function(manifest_items)
                     {
                         var data_json={data_store:'logistics_orders',
@@ -174,7 +175,7 @@
                             data_json.data.push(data_json_array);
                         });
 
-                        update_batch_json(data_json);                        
+                        update_batch_json(data_json);
                     });
 
                     $(button).parent().parent().remove();

@@ -106,16 +106,15 @@
 
             var branch_object={index:'branch'};
 
-            var new_columns=new Object();
-                new_columns.data_store='logistics_orders';
-                new_columns.return_column='awb_num';
-
-                new_columns.indexes=[{index:'awb_num'},
+            var new_columns={data_store:'logistics_orders',
+                			return_column:'awb_num',
+							access:{},
+							indexes:[{index:'awb_num'},
                                     {index:'id'},
                                     {index:'rto_num',exact:rto_num},
                                     {index:'status'},
                                     {index:'order_history'},
-                                    branch_object];
+                                    branch_object]};
 
             set_my_value_list_json(new_columns,awb_filter);
 

@@ -60,6 +60,7 @@
         var end_date=get_raw_time(form.elements['end'].value)+86400000;
 
         var manifest_data={data_store:'manifests',
+					access:{},
                     indexes:[{index:'id'},
                             {index:'manifest_num'},
                             {index:'date',lowerbound:start_date,upperbound:end_date}]};
@@ -136,6 +137,7 @@
             $('#report106_chart').find('div>div>a').hide();
 
             var columns={data_store:'logistics_orders',
+					access:{},
                     indexes:[{index:'id'},
                         {index:'awb_num'},
                         {index:'import_date'},

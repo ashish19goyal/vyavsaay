@@ -1,14 +1,14 @@
-<div id='form203' class='tab-pane portlet box green-meadow'>	   
+<div id='form203' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='modal128_action();'>Add <i class='fa fa-plus'></i></a>
 		</div>
         <div class="actions">
       	    <a class='btn btn-default btn-sm' id='form203_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
-            <a class='btn btn-default btn-sm' id='form203_upload' onclick=modal149_action();><i class='fa fa-upload'></i> Import</a>    
-        </div>	
+            <a class='btn btn-default btn-sm' id='form203_upload' onclick=modal149_action();><i class='fa fa-upload'></i> Import</a>
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -28,9 +28,9 @@
 			</tbody>
 		</table>
 	</div>
-    
+
     <script>
-    
+
     function form203_header_ini()
     {
         var filter_fields=document.getElementById('form203_header');
@@ -59,10 +59,10 @@
         show_loader();
         var fid=$("#form203_link").attr('data_id');
         if(fid==null)
-            fid="";	
+            fid="";
 
         $('#form203_body').html("");
-        
+
         var filter_fields=document.getElementById('form203_header');
         var fawb=filter_fields.elements['awb'].value;
         var forder=filter_fields.elements['order'].value;
@@ -82,10 +82,11 @@
 
 
         var paginator=$('#form203_body').paginator();
-			
+
         var new_columns={count:paginator.page_size(),
                         start_index:paginator.get_index(),
                         data_store:'logistics_orders',
+						access:{},
                         indexes:[{index:'id',value:fid},
                                 {index:'order_num',value:forder},
                                 {index:'merchant_name'},
@@ -98,7 +99,7 @@
                                 awb_object]};
 
         read_json_rows('form203',new_columns,function(results)
-        {	
+        {
             results.forEach(function(result)
             {
                 var rowsHTML="<tr>";
@@ -126,7 +127,7 @@
                         rowsHTML+="<td data-th='Action'>";
                             rowsHTML+="<input type='hidden' form='form203_"+result.id+"' value='"+result.id+"' name='id'>";
                             rowsHTML+="<button type='button' class='btn red' form='form203_"+result.id+"' title='Delete order' onclick='form203_delete_item($(this));' name='delete'><i class='fa fa-trash'></i></button>";
-                        rowsHTML+="</td>";			
+                        rowsHTML+="</td>";
                 rowsHTML+="</tr>";
 
                 $('#form203_body').append(rowsHTML);
@@ -155,12 +156,12 @@
                 var awb_num=form.elements[0].value;
                 var data_id=form.elements['id'].value;
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'logistics_orders',
 	 					log:'yes',
 	 					data:[{index:'id',value:data_id}],
 	 					log_data:{title:'Deleted',notes:'AWB # '+awb_num,link_to:'form203'}};
-					
+
                 delete_json(data_json);
                 $(button).parent().parent().remove();
             });

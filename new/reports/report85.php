@@ -1,4 +1,4 @@
-<div id='report85' class='tab-pane portlet box red-sunglo'>	   
+<div id='report85' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
         <div class='caption'>
             <a class='btn btn-circle grey btn-outline btn-sm' onclick='report85_ini();'>Refresh</a>
@@ -15,7 +15,7 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
 
 	<div class="portlet-body">
@@ -28,9 +28,9 @@
     </div>
 
 	<script>
-		
+
 	function report85_header_ini()
-	{	
+	{
         var form=document.getElementById('report85_master');
         var start_date=form.elements['start'];
         var end_date=form.elements['end'];
@@ -46,8 +46,8 @@
         $(end_date).datepicker();
         start_date.value=get_my_past_date((get_my_time()-(7*86400000)));
         end_date.value=vTime.date();
-        
-		var paginator=$('#report85').paginator({visible:false,container:$('#report85')});        
+
+		var paginator=$('#report85').paginator({visible:false,container:$('#report85')});
 
         $('#report85').formcontrol();
 	}
@@ -59,10 +59,11 @@
         var start_date=get_raw_time(form.elements['start'].value);
         var end_date=get_raw_time(form.elements['end'].value)+86399999;
 
-        var drs_data={data_store:'drs',			
+        var drs_data={data_store:'drs',
+					access:{},
                     indexes:[{index:'id'},
                             {index:'drs_num'},
-                            {index:'drs_time',lowerbound:start_date,upperbound:end_date}]};		
+                            {index:'drs_time',lowerbound:start_date,upperbound:end_date}]};
 
         read_json_rows('report85',drs_data,function(orders)
         {
@@ -132,10 +133,11 @@
                         "gridPosition": "start"
                     }
             });
-            
+
             $('#report85_chart').find('div>div>a').hide();
-            
+
             var columns={data_store:'logistics_orders',
+					access:{},
                     indexes:[{index:'id'},
                         {index:'awb_num'},
                         {index:'import_date'},
@@ -152,7 +154,7 @@
                         {index:'return_address1'},
                         {index:'return_address2'},
                         {index:'return_address3'},
-                        {index:'drs_num',array:drs_num_array}]};		
+                        {index:'drs_num',array:drs_num_array}]};
 
             initialize_tabular_report_buttons(columns,'DRS Report','report85',function (item)
             {
@@ -170,7 +172,7 @@
                 item['Product Name']=item.sku;
                 item['DRS #']=item.drs_num;
                 item['DRS Time']=get_my_past_date(item.drs_time);
-             
+
                 delete item.id;
                 delete item.awb_num;
                 delete item.import_date;
@@ -190,7 +192,7 @@
                 delete item.drs_time;
             });
 
-            hide_loader();		
+            hide_loader();
         });
 	};
 

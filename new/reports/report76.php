@@ -95,6 +95,7 @@
         var columns={count:paginator.page_size(),
                     start_index:paginator.get_index(),
                     data_store:'logistics_orders',
+					access:{},
                     indexes:[{index:'id'},
                             {index:'awb_num',value:awb_filter},
                             {index:'import_date',lowerbound:start_filter,upperbound:end_filter},
@@ -145,7 +146,7 @@
             });
             $('#report76_body').append(rowsHTML);
 			$('#report76').formcontrol();
-			
+
             initialize_tabular_report_buttons(columns,'Order Status','report76',function (item)
             {
                 item['AWB No']=item.awb_num;

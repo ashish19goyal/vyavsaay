@@ -138,7 +138,8 @@
                     if(double_entry<2)
                     {
                         var order_data={data_store:'logistics_orders',count:1,
-                                       indexes:[{index:'id'},
+                                       access:{},
+									   indexes:[{index:'id'},
                                                {index:'order_history'},
                                                {index:'pieces'},
                                                {index:'sku'},

@@ -116,6 +116,7 @@
             var branch_object={index:'branch'};
             var new_columns={data_store:'logistics_orders',
                 			return_column:'awb_num',
+							access:{},
                 			indexes:[{index:'awb_num'},
                                     {index:'id'},
 									{index:'type',exact:'COD'},

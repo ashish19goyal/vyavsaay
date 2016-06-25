@@ -1,8 +1,8 @@
-<div id='report105' class='tab-pane portlet box red-sunglo'>	   
+<div id='report105' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report105_ini();'>Refresh</a>
-		</div>		
+		</div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
@@ -15,14 +15,14 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 		<form id='report105_header' autocomplete="off">
 			<fieldset>
 				<label><input type='text' placeholder="Upto Date" class='floatlabel' name='end'></label>
-				<label><input type='submit' class='submit_hidden'></label>			
+				<label><input type='submit' class='submit_hidden'></label>
 			</fieldset>
 		</form>
 	<br>
@@ -38,11 +38,11 @@
 			<tbody id='report105_body'></tbody>
 		</table>
 	</div>
-	
+
 	<script>
 
     function report105_header_ini()
-    {	
+    {
         var form=document.getElementById('report105_header');
         var end_filter=form.elements['end'];
 
@@ -55,7 +55,7 @@
 
         $(end_filter).datepicker();
         end_filter.value=vTime.date();
-        
+
         $('#report105').formcontrol();
     }
 
@@ -63,17 +63,18 @@
     {
         var form=document.getElementById('report105_header');
         var end_filter=get_raw_time(form.elements['end'].value)+86399999;
-        
+
         show_loader();
-        $('#report105_body').html('');	
+        $('#report105_body').html('');
 
         //access control is to be implemented based on store areas
         //the user should could be an owner of the branch to which this order belongs
-        
+
         var paginator=$('#report105_body').paginator({'page_size':25});
-        
+
         var columns={count:paginator.page_size(),
                     start_index:paginator.get_index(),
+					access:{},
                     data_store:'logistics_orders',
                     indexes:[{index:'id'},
                         {index:'awb_num'},
@@ -94,11 +95,11 @@
                         {index:'address2'},
                         {index:'address3'},
                         {index:'city'},
-                        {index:'pincode'},     
+                        {index:'pincode'},
                         {index:'return_address1'},
                         {index:'return_address2'},
-                        {index:'return_address3'}]};		
-        
+                        {index:'return_address3'}]};
+
         read_json_rows('report105',columns,function(items)
         {
             //console.log(items);
@@ -123,7 +124,7 @@
 
             });
             $('#report105_body').append(rowsHTML);
-            
+
             initialize_tabular_report_buttons(columns,'Stock Report','report105',function (item)
             {
                 item['AWB No']=item.awb_num;
@@ -144,7 +145,7 @@
                 item['Pincode']=item.pincode;
                 item['Mobile No']=item.phone;
                 item['Product Name']=item.sku;
-             
+
                 delete item.id;
                 delete item.awb_num;
                 delete item.import_date;
@@ -164,7 +165,7 @@
                 delete item.address2;
                 delete item.address3;
                 delete item.city;
-                delete item.pincode;     
+                delete item.pincode;
                 delete item.return_address1;
                 delete item.return_address2;
                 delete item.return_address3;
@@ -174,6 +175,6 @@
             hide_loader();
         });
     };
-	
+
 	</script>
 </div>

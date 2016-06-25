@@ -30,6 +30,7 @@
                 <label><input type='text' name='date' required class='floatlabel' placeholder='Date'></label>
                 <label><input type='text' name='loader' class='floatlabel' placeholder='Co-loader'></label>
                 <label><input type='text' name='vendor' class='floatlabel' placeholder='Vendor'></label>
+				<label><input type='text' name='branch' class='floatlabel' placeholder='Branch' required></label>
                 <label><input type='text' name='num' readonly='readonly' class='floatlabel' placeholder='No. of Orders'></label>
                 <input type='hidden' name='id'>
                 <input type='submit' class='submit_hidden'>
@@ -62,6 +63,7 @@
             var pass_filter=fields.elements['pass_num'];
             var coloader=fields.elements['loader'];
             var vendor=fields.elements['vendor'];
+			var branch=fields.elements['branch'];
             var date=fields.elements['date'];
             var num_orders=fields.elements['num'];
             num_orders.value=0;
@@ -73,6 +75,7 @@
             vendor.value="";
             $(date).datepicker();
             date.value=vTime.date();
+			branch.value="";
 
             var pass_id=$("#form336_link").attr('data_id');
             if(pass_id==null)
@@ -84,6 +87,9 @@
                                       indexes:[{index:'name',exact:'pass_num'}]};
                 set_my_value_json(pass_num_data,pass_filter);
             }
+
+			var branch_data={data_store:'store_areas',return_column:'name'};
+			set_my_value_list_json(branch_data,branch);
 
             $(save_button).off('click');
             $(save_button).on("click", function(event)
@@ -134,12 +140,14 @@
             {
                 show_loader();
                 var pass_columns={data_store:'gate_pass',count:1,
-                                     indexes:[{index:'id',value:pass_id},
-                                             {index:'pass_num'},
-                                             {index:'coloader'},
-                                             {index:'vendor'},
-                                            {index:'num_orders'},
-                                             {index:'date'}]};
+								 access:{},
+	                             indexes:[{index:'id',value:pass_id},
+	                                     {index:'pass_num'},
+	                                     {index:'coloader'},
+	                                     {index:'vendor'},
+										 {index:'branch'},
+	                                     {index:'num_orders'},
+	                                     {index:'date'}]};
 
                 read_json_rows('form336',pass_columns,function(pass_results)
                 {
@@ -149,6 +157,7 @@
                         filter_fields.elements['pass_num'].value=pass_results[0].pass_num;
                         filter_fields.elements['loader'].value=pass_results[0].coloader;
                         filter_fields.elements['vendor'].value=pass_results[0].vendor;
+						filter_fields.elements['branch'].value=pass_results[0].branch;
                         filter_fields.elements['date'].value=get_my_past_date(pass_results[0].date);
                         filter_fields.elements['id'].value=pass_results[0].id;
                         filter_fields.elements['num'].value=pass_results[0].num_orders;
@@ -362,6 +371,7 @@
                 var pass_num=form.elements['pass_num'].value;
                 var coloader=form.elements['loader'].value;
                 var vendor=form.elements['vendor'].value;
+				var branch=form.elements['branch'].value;
                 var date=get_raw_time(form.elements['date'].value);
                 var data_id=form.elements['id'].value;
                 var num_orders=form.elements['num'].value;
@@ -383,6 +393,7 @@
                                 {index:'date',value:date},
                                 {index:'type',value:'non-bag'},
                                 {index:'vendor',value:vendor},
+								{index:'branch',value:branch},
                                 {index:'num_orders',value:num_orders},
                                 {index:'last_updated',value:last_updated}],
                             log_data:{title:'Created',notes:'Gate Pass # '+pass_num,link_to:'form337'}};
@@ -458,6 +469,7 @@
                 var pass_num=form.elements['pass_num'].value;
                 var coloader=form.elements['loader'].value;
                 var vendor=form.elements['vendor'].value;
+				var branch=form.elements['branch'].value;
                 var num_orders=form.elements['num'].value;
                 var date=get_raw_time(form.elements['date'].value);
                 var data_id=form.elements['id'].value;
@@ -478,6 +490,7 @@
                                 {index:'coloader',value:coloader},
                                 {index:'date',value:date},
                                 {index:'vendor',value:vendor},
+								{index:'branch',value:branch},
                                 {index:'num_orders',value:num_orders},
                                 {index:'last_updated',value:last_updated}],
                             log_data:{title:'Updated',notes:'Gate Pass # '+pass_num,link_to:'form337'}};
@@ -624,6 +637,7 @@
             var coloader=master_form.elements['loader'].value;
             var num_orders=master_form.elements['num'].value;
             var vendor=master_form.elements['vendor'].value;
+			var branch=master_form.elements['branch'].value;
 
             ////////////////filling in the content into the containers//////////////////////////
 
@@ -637,7 +651,7 @@
 
             mts_title.innerHTML="Gate-Pass";
 
-            employee_text="<td>Co-loader: "+coloader+"</td><td>Vendor: "+vendor+"</td>";
+            employee_text="<td>Co-loader: "+coloader+"</td><td>Vendor: "+vendor+"</td><td>"+branch+"</td>";
             mts_text="<td>pass #: "+mts_num+"</td><td>Date: "+mts_date+"</td><td>Total Orders: "+num_orders+"</td>";
             detail_text="<table style='border:none;width:98%;font-size:11px;'><tr>"+employee_text+"</tr><tr>"+mts_text+"</tr></table>";
 
