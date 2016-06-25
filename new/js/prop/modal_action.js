@@ -17048,9 +17048,21 @@ function modal224_action(drs_num,amount,delivery_person)
 	foperator.value=get_account_name();
 	fexpected.value=amount;
 
+	var already_data={data_store:'cod_collections',return_column:'amount',sum:'yes',
+						indexes:[{index:'drs_num',exact:drs_num},
+						{index:'from_name',exact:delivery_person}]};
+	read_json_single_column(collection_data,function(cods)
+	{
+		if(cods.length>0)
+		{
+			falready.value=cods[0];
+		}
+	});
+
 	var collection_record_id=get_new_key();
 	var collection_data={data_store:'cod_collections',return_column:'id',
-						indexes:[{index:'drs_num',exact:drs_num}]};
+						indexes:[{index:'drs_num',exact:drs_num},
+						{index:'from_name',exact:"DRS # "+drs_num}]};
 	read_json_single_column(collection_data,function(cods)
 	{
 		if(cods.length>0)
@@ -17066,7 +17078,7 @@ function modal224_action(drs_num,amount,delivery_person)
 		if(is_update_access('form353'))
 		{
 			var operator=foperator.value;
-			var additional=fupdated.value;
+			var additional=parseFloat(fupdated.value)-parseFloat(falready.value);
 			var id=get_new_key();
 			var last_updated=vTime.unix();
 
@@ -17085,7 +17097,7 @@ function modal224_action(drs_num,amount,delivery_person)
 			var operator_data={data_store:'cod_collections',
 					data:[{index:'id',value:id},
 						{index:'amount',value:additional},
-						{index:'drs_num',value:''},
+						{index:'drs_num',value:drs_num},
 						{index:'acc_name',value:operator},
 						{index:'from_name',value:delivery_person},
 						{index:'date',value:last_updated},
