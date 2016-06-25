@@ -9110,67 +9110,6 @@ function form289_update_item(form)
 }
 
 /**
- * @form Vyavsaay Accounts
- * @param button
- */
-function form292_update_item(form)
-{
-	if(is_update_access('form292'))
-	{
-		var domain=form.elements[1].value;
-		var new_columns=new Object();
-		new_columns.data_store='system_billing';
-		new_columns.database='re_user_'+domain;
-
-		new_columns.data=[{index:'id',value:form.elements[12].value},
-							{index:'account_name',value:form.elements[0].value},
-							{index:'period_start',value:get_raw_time(form.elements[2].value)},
-							{index:'period_end',value:get_raw_time(form.elements[3].value)},
-							{index:'order_id',value:form.elements[4].value},
-							{index:'narration',value:form.elements[5].value},
-							{index:'user_accounts',value:form.elements[6].value},
-							{index:'amount',value:form.elements[7].value},
-							{index:'tax',value:form.elements[8].value},
-							{index:'total',value:form.elements[9].value},
-							{index:'payment_status',value:form.elements[10].value},
-							{index:'display',value:form.elements[11].value},
-							{index:'last_updated',value:get_my_time()}];
-
-		var two_columns=new Object();
-		two_columns.data_store='bills';
-		two_columns.database='re_user_vyavsaay';
-
-		two_columns.data=[{index:'id',value:form.elements[12].value},
-							{index:'customer_name',value:form.elements[0].value},
-							{index:'domain',value:form.elements[1].value},
-							{index:'period_start',value:get_raw_time(form.elements[2].value)},
-							{index:'period_end',value:get_raw_time(form.elements[3].value)},
-							{index:'bill_num',value:form.elements[4].value,unique:'yes'},
-							{index:'notes',value:form.elements[5].value},
-							{index:'total_quantity',value:form.elements[6].value},
-							{index:'amount',value:form.elements[7].value},
-							{index:'tax',value:form.elements[8].value},
-							{index:'total',value:form.elements[9].value},
-							{index:'status',value:form.elements[10].value},
-							{index:'display',value:form.elements[11].value},
-							{index:'bill_date',value:get_my_time()},
-							{index:'last_updated',value:get_my_time()}];
-
-		server_update_master(new_columns);
-		server_update_master(two_columns);
-
-		for(var i=0;i<12;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
  * @form Create Bill(Sehgal)
  * @formNo 294
  * @param button

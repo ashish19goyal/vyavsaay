@@ -6672,44 +6672,6 @@ function form290_header_ini()
 
 
 /**
- * @form Vyavsaay Billing
- * @formNo 292
- */
-function form292_header_ini()
-{
-	var filter_fields=document.getElementById('form292_header');
-	var name_filter=filter_fields.elements[0];
-	var invoice_filter=filter_fields.elements[1];
-	var status_filter=filter_fields.elements[2];
-
-	var name_data=new Object();
-		name_data.count=0;
-		name_data.start_index=0;
-		name_data.data_store='user_profile';
-		name_data.database='0';
-		name_data.indexes=[{index:'name'}];
-		name_data.return_column='name';
-	set_master_filter_json(name_data,name_filter);
-
-	var invoice_data=new Object();
-		invoice_data.count=0;
-		invoice_data.start_index=0;
-		invoice_data.data_store='bills';
-		invoice_data.indexes=[{index:'bill_num'}];
-		invoice_data.return_column='bill_num';
-	set_my_filter_json(invoice_data,invoice_filter);
-
-	set_static_filter_json('system_billing','payment_status',status_filter);
-
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		form292_ini();
-	});
-}
-
-/**
  * @form Create Bill (Sehgal)
  * @formNo 294
  */

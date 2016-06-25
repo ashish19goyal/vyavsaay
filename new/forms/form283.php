@@ -73,18 +73,17 @@
 
             var paginator=$('#form283_body').paginator();
 
-			var new_columns=new Object();
-                new_columns.count=paginator.page_size();
-				new_columns.start_index=paginator.get_index();
-				new_columns.data_store='bills';
-                new_columns.indexes=[{index:'id',value:fid},
+			var new_columns={count:paginator.page_size(),
+							start_index:paginator.get_index(),
+							data_store:'bills',
+                			indexes:[{index:'id',value:fid},
                                     {index:'bill_num',value:fnum},
                                     {index:'customer_name',value:fname},
                                     {index:'bill_date'},
                                     {index:'total'},
                                     {index:'status'},
 									{index:'notes'},
-                                    {index:'performa',exact:'yes'}];
+                                    {index:'performa',exact:'yes'}]};
 
             read_json_rows('form283',new_columns,function(results)
             {

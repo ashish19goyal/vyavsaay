@@ -4849,42 +4849,6 @@ function form290_delete_item(button)
 }
 
 /**
- * @form Vyavsaay Billing
- * @param button
- */
-function form292_delete_item(button)
-{
-	if(is_delete_access('form292'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			var domain=form.elements[1].value;
-			form.elements[10].value='cancelled';
-
-			var new_columns=new Object();
-			new_columns.data_store='system_billing';
-			new_columns.database='re_user_'+domain;
-			new_columns.data=[{index:'id',value:form.elements[12].value}];
-			server_delete_master(new_columns);
-
-			var two_columns=new Object();
-			two_columns.data_store='bills';
-			two_columns.database='re_user_vyavsaay';
-			two_columns.data=[{index:'id',value:form.elements[12].value},
-								{index:'status',value:'cancelled'},
-								{index:'last_updated',value:get_my_time()}];
-			server_update_master(two_columns);
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
  * @form Create Bills (Sehgal)
  * @formNo 294
  * @param button
