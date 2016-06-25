@@ -510,9 +510,9 @@
 		header.setAttribute('style','width:100%;text-align:center');
 			logo.setAttribute('style','width:100%;text-align:center;');
 
-		info_section.setAttribute('style','width:100%;height:85px;font-size:14px;');
-			customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:48%;height:80px;border: 1px solid #000;border-radius:5px;');
-			business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:48%;height:80px;border: 1px solid #000;border-radius:5px;');
+		info_section.setAttribute('style','width:100%;min-height:100px;font-size:14px;');
+			customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:48%;height:100px;border: 1px solid #000;border-radius:5px;');
+			business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:48%;height:100px;border: 1px solid #000;border-radius:5px;');
 
 		footer.setAttribute('style','width:98%;min-height:100px;');
 			jurisdiction.setAttribute('style','margin:10px;width:98%;min-height:20px;text-align:left;font-size:12px;');

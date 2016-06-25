@@ -132,6 +132,7 @@
 											"<input type='hidden' name='billing_name' value='"+result.account_name+"'>"+
 											"<input type='hidden' name='billing_address' value='"+get_session_var('address')+"'>"+
 											"<input type='hidden' name='billing_city' value='Delhi'>"+
+											"<input type='hidden' name='billing_zip' value='110001'>"+
 											"<input type='hidden' name='billing_state' value='Delhi'>"+
 											"<input type='hidden' name='billing_country' value='India'>"+
 											"<input type='hidden' name='billing_tel' value='"+get_session_var('phone')+"'>"+
