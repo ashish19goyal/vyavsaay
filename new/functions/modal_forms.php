@@ -484,30 +484,22 @@
 	                <div class="modal-body">
 		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
 		                  <div class="row">
-								   <div class="col-sm-12 col-md-4">Paid By</div>
-					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal26_form' required name='by'></div>
-					     		</div>
+						  		<div class="col-sm-12 col-md-4">Paid By</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal26_form' required name='by'></div>
+					      </div>
 		                  <div class="row">
-								   <div class="col-sm-12 col-md-4">Total Amount</div>
-					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal26_form' required name='total'></div>
-					     		</div>
+								<div class="col-sm-12 col-md-4">Total Amount</div>
+					     		<div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal26_form' required name='total'></div>
+					      </div>
 		                  <div class="row">
-								   <div class="col-sm-12 col-md-4">Paid Amount</div>
-					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' required form='modal26_form' name='paid'></div>
-					     		</div>
+								<div class="col-sm-12 col-md-4">Paid Amount</div>
+					     		<div class="col-sm-12 col-md-8"><input type='number' step='any' required form='modal26_form' name='paid'></div>
+					      </div>
 		                  <div class="row">
-								   <div class="col-sm-12 col-md-4">Due Date</div>
-					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal26_form' name='date'></div>
-					     		</div>
-		                  <div class="row">
-								   <div class="col-sm-12 col-md-4">Mode</div>
-					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal26_form' name='mode'></div>
-					     		</div>
-		                  <div class="row">
-								   <div class="col-sm-12 col-md-4">Status</div>
-					     			<div class="col-sm-12 col-md-8"><input type='text' required form='modal26_form' name='status'></div>
-					     		</div>
-		                  </div>
+								<div class="col-sm-12 col-md-4">Mode</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal26_form' name='mode'></div>
+					      </div>
+		            	</div>
 		             </div>
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal26_form' name='save'>Save</button>
@@ -543,30 +535,22 @@
 	                <div class="modal-body">
 		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
 		                  <div class="row">
-								   <div class="col-sm-12 col-md-4">Paid To</div>
-					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal28_form' readonly='readonly' required name='to'></div>
-					     		</div>
+								<div class="col-sm-12 col-md-4">Paid To</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal28_form' readonly='readonly' required name='to'></div>
+					      </div>
 		                  <div class="row">
-								   <div class="col-sm-12 col-md-4">Total Amount</div>
-					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal28_form' required name='total'></div>
-					     		</div>
+								<div class="col-sm-12 col-md-4">Total Amount</div>
+					     		<div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal28_form' required name='total'></div>
+					      </div>
 		                  <div class="row">
-								   <div class="col-sm-12 col-md-4">Amount Paid</div>
-					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal28_form' name='paid' required></div>
-					     		</div>
+								<div class="col-sm-12 col-md-4">Amount Paid</div>
+					     		<div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal28_form' name='paid' required></div>
+					      </div>
 		                  <div class="row">
-								   <div class="col-sm-12 col-md-4">Due Date</div>
-					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal28_form' name='date'></div>
-					     		</div>
-                         <div class="row">
-								   <div class="col-sm-12 col-md-4">Mode of Payment</div>
-					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal28_form' name='mode'></div>
-					     		</div>
-                         <div class="row">
-								   <div class="col-sm-12 col-md-4">Status</div>
-					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal28_form' name='status' required></div>
-					     		</div>
-                        </div>
+								<div class="col-sm-12 col-md-4">Mode of Payment</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal28_form' name='mode'></div>
+					      </div>
+                         </div>
 		             </div>
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal28_form' name='save'>Save</button>
@@ -4267,7 +4251,7 @@
 						     </div>
 			                 <div class="row">
 								  <div class="col-sm-12 col-md-4">Total Expected Collection</div>
-						    	  <div class="col-sm-12 col-md-8"><input type='number' required form='modal224_form' name='expected' step='any'></div>
+						    	  <div class="col-sm-12 col-md-8"><input type='number' readonly='readonly' required form='modal224_form' name='expected' step='any'></div>
 						     </div>
 							 <div class="row">
  							   	<div class="col-sm-12 col-md-4">Already Collected</div>

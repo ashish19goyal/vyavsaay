@@ -110,7 +110,7 @@
 							rowsHTML+="<input type='text' readonly='readonly' form='form42_"+result.id+"' value='"+result.total+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
-							rowsHTML+="<input type='hidden' form='form42_"+result.id+"' value='"+result.id+"'>";
+							rowsHTML+="<input type='hidden' form='form42_"+result.id+"' name='id' value='"+result.id+"'>";
 						if(result.status!='cancelled')
 						{
 							rowsHTML+="<button type='button' class='btn red' form='form42_"+result.id+"' title='Cancel Bill' onclick='form42_delete_item($(this));'><i class='fa fa-trash'></i></button>";
@@ -163,8 +163,16 @@
 				var transaction_json={data_store:'transactions',
 						data:[{index:'id',value:data_id}]};
 
+				var t2_json={data_store:'transactions',
+						data:[{index:'receipt_source_id',value:data_id}]};
+
+				var receipt_json={data_store:'receipts',
+						data:[{index:'source_id',value:data_id}]};
+
 				update_json(bill_json);
 				delete_json(transaction_json);
+				delete_json(t2_json);
+				delete_json(receipt_json);
 
 				var items_json={data_store:'bill_items',
 							data:[{index:'bill_id',value:data_id}]};

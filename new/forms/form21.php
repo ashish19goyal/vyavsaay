@@ -94,6 +94,7 @@
 
 		$(bill_date).datepicker();
 		$(bill_date).val(vTime.date());
+		var paginator=$('#form21_body').paginator({visible:false});
 		$('#form21').formcontrol();
 	}
 
@@ -380,7 +381,7 @@
 	{
 		if(is_create_access('form21'))
 		{
-			var bill_id=document.getElementById("form21_master").elements[6].value;
+			var bill_id=document.getElementById("form21_master").elements['bill_id'].value;
 			var name=form.elements[1].value;
 			var batch=form.elements[2].value;
 			var quantity=form.elements[3].value;
@@ -475,7 +476,7 @@
 					          {index:'tax',value:tax},
 					          {index:'discount',value:discount},
 					          {index:'transaction_id',value:data_id},
-							{index:'notes',value:notes},
+							{index:'notes',value:''},
 							{index:'last_updated',value:last_updated}],
 		      log:'yes',
 		      log_data:{title:'Saved',notes:'Purchase Bill #'+bill_id,link_to:'form53'}};
@@ -497,48 +498,38 @@
 			create_json(data_json);
 			create_json(transaction_json);
 
-			var rtran_json={data_store:'transactions',
-					data:[{index:'id',value:get_new_key()},
-						{index:'acc_name',value:supplier},
-						{index:'type',value:'given'},
-						{index:'amount',value:total},
-						{index:'tax',value:'0'},
-						{index:'source_id',value:data_id},
-						{index:'source_info',value:bill_id},
-						{index:'source',value:'payable'},
-						{index:'source_link',value:'form53'},
-						{index:'trans_date',value:bill_date},
-						{index:'notes',value:''},
-						{index:'last_updated',value:last_updated}]};
-
 			var receipt_id=get_new_key();
+			var receipt_num="PB-"+bill_id;
 			var receipt_json={data_store:'receipts',
 	 				data:[{index:'id',value:receipt_id},
-	 					{index:'receipt_id',value:receipt_id},
+	 					{index:'receipt_id',value:receipt_num},
 	 					{index:'type',value:'paid'},
 	 					{index:'amount',value:total},
 	 					{index:'narration',value:''},
 	 					{index:'acc_name',value:supplier},
 	 					{index:'date',value:bill_date},
+						{index:'source_id',value:data_id},
 	 					{index:'last_updated',value:last_updated}]};
 
 			var rtran_json={data_store:'transactions',
-					data:[{index:'id',value:get_new_key()},
+					data:[{index:'id',value:receipt_id},
 						{index:'acc_name',value:supplier},
 						{index:'type',value:'given'},
 						{index:'amount',value:total},
 						{index:'tax',value:'0'},
 						{index:'source_id',value:receipt_id},
-						{index:'source_info',value:receipt_id},
+						{index:'source_info',value:receipt_num},
 						{index:'source',value:'payable'},
 						{index:'source_link',value:'form282'},
 						{index:'trans_date',value:bill_date},
 						{index:'notes',value:''},
+						{index:'receipt_source_id',value:data_id},
 						{index:'last_updated',value:last_updated}]};
 
-			create_json(rtran_json,function()
+			create_json(rtran_json);
+			create_json(receipt_json,function()
 			{
-			 	modal28_action(receipt_id);
+				modal28_action(receipt_id,supplier,total,total,'cash');
 			});
 
 			$(save_button).off('click');
@@ -566,7 +557,6 @@
 			var bill_id=form.elements['bill_num'].value;
 			var bill_date=get_raw_time(form.elements['date'].value);
 			var data_id=form.elements['bill_id'].value;
-			var transaction_id=form.elements['t_id'].value;
 			var save_button=form.elements['save'];
 
 			var total=0;
@@ -606,7 +596,7 @@
 					          {index:'tax',value:tax},
 					          {index:'discount',value:discount},
 					          {index:'transaction_id',value:data_id},
-							{index:'notes',value:notes},
+							{index:'notes',value:''},
 							{index:'last_updated',value:last_updated}],
 		      log:'yes',
 		      log_data:{title:'Saved',notes:'Purchase Bill #'+bill_id,link_to:'form53'}};
@@ -627,6 +617,44 @@
 
 			update_json(data_json);
 			update_json(transaction_json);
+
+			var payment_data={data_store:'receipts',
+							indexes:[{index:'id'},{index:'amount'},{index:'mode_payment'},{index:'source_id',exact:data_id}]};
+			read_json_rows('',payment_data,function(payments)
+			{
+				if(payments.length>0)
+				{
+					var receipt_num="PB-"+bill_id;
+					var receipt_json={data_store:'receipts',
+			 				data:[{index:'id',value:payments[0].id},
+			 					{index:'receipt_id',value:receipt_num},
+			 					{index:'type',value:'paid'},
+			 					{index:'amount',value:total},
+			 					{index:'narration',value:''},
+			 					{index:'acc_name',value:supplier},
+			 					{index:'date',value:bill_date},
+			 					{index:'last_updated',value:last_updated}]};
+
+					var rtran_json={data_store:'transactions',
+							data:[{index:'id',value:payments[0].id},
+								{index:'acc_name',value:supplier},
+								{index:'type',value:'given'},
+								{index:'amount',value:total},
+								{index:'tax',value:'0'},
+								{index:'source_info',value:receipt_num},
+								{index:'source',value:'payable'},
+								{index:'source_link',value:'form282'},
+								{index:'trans_date',value:bill_date},
+								{index:'notes',value:''},
+								{index:'last_updated',value:last_updated}]};
+
+					update_json(rtran_json);
+					update_json(receipt_json,function()
+					{
+						modal28_action(payments[0].id,supplier,total,payments[0].amount,payments[0].mode_payment);
+					});
+				}
+			});
 
 			$("[id^='save_form21_']").click();
 		}

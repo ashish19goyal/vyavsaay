@@ -13,7 +13,6 @@
 	<div class="portlet-body">
         <form id='form225_master' autocomplete="off">
             <fieldset>
-                <!--<label style='vertical-align:top;'><a class='btn btn-circle btn-icon-only green' title='Add new customer' id='form225_add_customer'><i class='fa fa-plus'></i></a></label>-->
                 <label><div class='btn-overlap'><input type='text' required name='customer' placeholder='Customer' class='floatlabel'><button type='button' title='Add new customer' class='btn btn-icon-only default right-overlap' id='form225_add_customer'><i class='fa fa-plus'></i></button></div></label>
                 <label><input type='text' required name='bill_type' class='floatlabel' placeholder='Bill Type'></label>
                 <label><input type='text' name='date' required class='floatlabel' placeholder='Bill Date'></label>
@@ -443,10 +442,10 @@
                 var del_button=form.elements['delete'];
 
                 var data_json={data_store:'bill_items',
-							 				data:[{index:'id',value:data_id},
-							 					{index:'item_name',value:name},
-							 					{index:'item_desc',value:desc},
-							 					{index:'batch',value:batch},
+	 				data:[{index:'id',value:data_id},
+	 					{index:'item_name',value:name},
+	 					{index:'item_desc',value:desc},
+	 					{index:'batch',value:batch},
                         {index:'quantity',value:quantity},
                         {index:'unit_price',value:price},
                         {index:'amount',value:amount},
@@ -454,17 +453,17 @@
                         {index:'discount',value:discount},
                         {index:'tax',value:tax},
                         {index:'bill_id',value:bill_id},
-	 											{index:'last_updated',value:last_updated}]};
+						{index:'last_updated',value:last_updated}]};
 
                 var adjust_json={data_store:'inventory_adjust',
-							 				data:[{index:'id',value:data_id},
-							 					{index:'product_name',value:name},
-							 					{index:'item_desc',value:desc},
-							 					{index:'batch',value:batch},
+	 				data:[{index:'id',value:data_id},
+	 					{index:'product_name',value:name},
+	 					{index:'item_desc',value:desc},
+	 					{index:'batch',value:batch},
                         {index:'quantity',value:quantity},
                         {index:'source_id',value:bill_id},
                         {index:'source',value:'sale'},
-	 											{index:'last_updated',value:last_updated}]};
+						{index:'last_updated',value:last_updated}]};
 
                 create_json(data_json);
                 create_json(adjust_json);
@@ -535,33 +534,33 @@
                 var last_updated=get_my_time();
 
                 var data_json={data_store:'bills',
-							 				data:[{index:'id',value:data_id},
-							 					{index:'customer_name',value:customer},
-							 					{index:'bill_num',value:bill_num},
-							 					{index:'billing_type',value:bill_type},
+	 				data:[{index:'id',value:data_id},
+	 					{index:'customer_name',value:customer},
+	 					{index:'bill_num',value:bill_num},
+	 					{index:'billing_type',value:bill_type},
                         {index:'bill_date',value:bill_date},
                         {index:'amount',value:amount},
                         {index:'total',value:total},
                         {index:'discount',value:discount},
                         {index:'tax',value:tax},
                         {index:'transaction_id',value:data_id},
-	 											{index:'last_updated',value:last_updated}],
+	 					{index:'last_updated',value:last_updated}],
                     log:'yes',
                     log_data:{title:'Created',notes:bill_type+' Bill #'+bill_num,link_to:'form92'}};
 
-							var transaction_json={data_store:'transactions',
-										data:[{index:'id',value:data_id},
-											{index:'acc_name',value:customer},
-											{index:'type',value:'given'},
-											{index:'amount',value:total},
-											{index:'tax',value:tax},
-											{index:'source_id',value:data_id},
-											{index:'source_info',value:bill_num},
-											{index:'source',value:'sale bill'},
-											{index:'source_link',value:'form92'},
-											{index:'trans_date',value:last_updated},
-											{index:'notes',value:''},
-											{index:'last_updated',value:last_updated}]};
+				var transaction_json={data_store:'transactions',
+					data:[{index:'id',value:data_id},
+						{index:'acc_name',value:customer},
+						{index:'type',value:'given'},
+						{index:'amount',value:total},
+						{index:'tax',value:tax},
+						{index:'source_id',value:data_id},
+						{index:'source_info',value:bill_num},
+						{index:'source',value:'sale bill'},
+						{index:'source_link',value:'form92'},
+						{index:'trans_date',value:last_updated},
+						{index:'notes',value:''},
+						{index:'last_updated',value:last_updated}]};
 
 
                 var num_data={data_store:'user_preferences',return_column:'id',

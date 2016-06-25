@@ -363,6 +363,15 @@ function set_my_value_json(filter_data,filter_element,func)
 		{
 			func();
 		}
+
+		if($(filter_element).hasClass('floatlabel'))
+		{
+			$(filter_element).floatlabel();
+		}
+		if($(filter_element).hasClass('floatlabel_right'))
+		{
+			$(filter_element).floatlabel_right();
+		}
 	});
 }
 

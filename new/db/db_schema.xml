@@ -361,6 +361,7 @@
 			<source index='yes' type="TEXT"></source>
 			<source_link index='yes' type="VARCHAR(20)"></source_link>
 			<notes index='yes' type="TEXT"></notes>
+			<receipt_source_id index='yes' type="BIGINT"></receipt_source_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</transactions>
@@ -384,6 +385,7 @@
 			<narration index='no' type="TEXT"></narration>
 			<mode_payment index='yes' type="TEXT"></mode_payment><!--cash/checque/bank/card-->
 			<date index='yes' type="BIGINT"></date>
+			<source_id index='yes' type="BIGINT"></source_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</receipts>

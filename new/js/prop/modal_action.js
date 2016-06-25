@@ -2344,22 +2344,20 @@ function modal25_action(button)
  * @modalNo 26
  * @modal Payment Details
  */
-function modal26_action(payment_id,func)
+function modal26_action(receipt_id,customer,total,paid,mode,func)
 {
 	var form=document.getElementById('modal26_form');
 
 	var fcustomer=form.elements['by'];
 	var ftotal=form.elements['total'];
 	var fpaid=form.elements['paid'];
-	var fdue_date=form.elements['date'];
 	var fmode=form.elements['mode'];
-	var fstatus=form.elements['status'];
 
-	$(fdue_date).datepicker();
+	fcustomer.value=customer;
+	ftotal.value=total;
+	fpaid.value=paid;
+	fmode.value=mode;
 
-	var customer_data={data_store:'accounts',return_column:'acc_name'};
-	set_my_value_list_json(customer_data,fcustomer);
-	set_static_value_list_json('payments','status',fstatus);
 	set_static_value_list_json('payments','mode',fmode);
 
 	$(form).off("submit");
@@ -2367,72 +2365,35 @@ function modal26_action(payment_id,func)
 	{
 		event.preventDefault();
 
-        if(ftotal.value==fpaid.value)
-        {
-            fstatus.value='closed';
-        }
+		var customer=fcustomer.value;
+		var total=ftotal.value;
+		var paid=fpaid.value;
+		var mode=fmode.value;
+		var last_updated=get_my_time();
 
-		if(fstatus.value=='closed' && (ftotal.value>(fpaid.value+1) || fpaid.value==""))
+		var receipt_json={data_store:'receipts',
+				data:[{index:'id',value:receipt_id},
+					{index:'amount',value:paid},
+					{index:'mode_payment',value:mode},
+					{index:'last_updated',value:last_updated}]};
+
+		var rtran_json={data_store:'transactions',
+				data:[{index:'id',value:receipt_id},
+					{index:'amount',value:paid},
+					{index:'last_updated',value:last_updated}]};
+
+		update_json(receipt_json);
+		update_json(rtran_json);
+
+		if(func)
 		{
-			alert("Payment can't be closed as the full amount has not been paid.");
-			fstatus.value='pending';
+			func(mode,paid);
 		}
-        else
-		{
-			var customer=fcustomer.value;
-			var total=ftotal.value;
-			var paid=fpaid.value;
-			var due_date=get_raw_time(fdue_date.value);
-			var mode=fmode.value;
-			var status=fstatus.value;
-			var last_updated=get_my_time();
 
-            var data_json={data_store:'payments',
-	 				data:[{index:'id',value:payment_id},
-	 					{index:'acc_name',value:customer},
-                        {index:'due_date',value:due_date},
-                        {index:'paid_amount',value:paid},
-                        {index:'total_amount',value:total},
-                        {index:'type',value:'received'},
-                        {index:'mode',value:mode},
-                        {index:'status',value:status},
-	 					{index:'last_updated',value:last_updated}],
-                    log:'yes',
-                    log_data:{title:'Updated',notes:'Payment of Rs. '+paid+' from '+customer,link_to:'form11'}};
-
-			update_json(data_json);
-
-			if(func)
-			{
-				func(mode,paid);
-			}
-
-			$(form).find(".close").click();
-		}
+		$(form).find(".close").click();
 	});
 
-	var payments_data={data_store:'payments',
-                      indexes:[{index:'id',value:payment_id+""},
-                              {index:'acc_name'},
-                              {index:'type',exact:'received'},
-                              {index:'total_amount'},
-                              {index:'paid_amount'},
-                              {index:'status'},
-                              {index:'due_date'},
-                              {index:'mode'}]};
-	read_json_rows('',payments_data,function(payments)
-	{
-		if(payments.length>0)
-		{
-			fcustomer.value=payments[0].acc_name;
-			ftotal.value=payments[0].total_amount;
-			fpaid.value=payments[0].paid_amount;
-			fdue_date.value=get_my_past_date(payments[0].due_date);
-			fmode.value=payments[0].mode;
-			fstatus.value=payments[0].status;
-		}
-		$("#modal26_link").click();
-	});
+	$("#modal26_link").click();
 }
 
 
@@ -2609,86 +2570,56 @@ function modal27_action(product_name)
  * @modalNo 28
  * @modal Payment Details
  */
-function modal28_action(payment_id)
-{
-	var form=document.getElementById('modal28_form');
+ function modal28_action(receipt_id,supplier,total,paid,mode,func)
+ {
+ 	var form=document.getElementById('modal28_form');
 
-	var fsupplier=form.elements['to'];
-	var ftotal=form.elements['total'];
-	var fpaid=form.elements['paid'];
-	var fdue_date=form.elements['date'];
-	var fmode=form.elements['mode'];
-	var fstatus=form.elements['status'];
+ 	var fsupplier=form.elements['to'];
+ 	var ftotal=form.elements['total'];
+ 	var fpaid=form.elements['paid'];
+ 	var fmode=form.elements['mode'];
 
-	$(fdue_date).datepicker();
+ 	fsupplier.value=supplier;
+ 	ftotal.value=total;
+ 	fpaid.value=paid;
+	fmode.value=mode;
+	
+ 	set_static_value_list_json('payments','mode',fmode);
 
-	set_static_value_list_json('payments','status',fstatus);
-	set_static_value_list_json('payments','mode',fmode);
+ 	$(form).off("submit");
+ 	$(form).on("submit",function(event)
+ 	{
+ 		event.preventDefault();
 
-	$(form).off("submit");
-	$(form).on("submit",function(event)
-	{
-		event.preventDefault();
+ 		var total=ftotal.value;
+ 		var paid=fpaid.value;
+ 		var mode=fmode.value;
+ 		var last_updated=get_my_time();
 
-		if(fstatus.value=='closed' && (ftotal.value>(fpaid.value+1) || fpaid.value==""))
-		{
-			alert("Payment can't be closed as the full amount has not been paid.");
-			fstatus.value='pending';
-		}
-		else
-		{
-			var supplier=fsupplier.value;
-			var total=ftotal.value;
-			var paid=fpaid.value;
-			var due_date=get_raw_time(fdue_date.value);
-			var mode=fmode.value;
-			var status=fstatus.value;
-			var last_updated=get_my_time();
+ 		var receipt_json={data_store:'receipts',
+ 				data:[{index:'id',value:receipt_id},
+ 					{index:'amount',value:paid},
+ 					{index:'mode_payment',value:mode},
+ 					{index:'last_updated',value:last_updated}]};
 
-            var data_json={data_store:'payments',
-	 				log:'yes',
-	 				data:[{index:'id',value:payment_id},
-	 					{index:'acc_name',value:supplier},
-	 					{index:'type',value:'paid'},
-	 					{index:'total_amount',value:total},
-                        {index:'paid_amount',value:paid},
-                        {index:'status',value:status},
-                        {index:'due_date',value:due_date},
-                        {index:'mode',value:mode},
-                        {index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Updated',notes:'Payment of '+paid+ " to "+supplier,link_to:'form11'}};
+ 		var rtran_json={data_store:'transactions',
+ 				data:[{index:'id',value:receipt_id},
+ 					{index:'amount',value:paid},
+ 					{index:'last_updated',value:last_updated}]};
 
-			update_json(data_json);
+ 		update_json(receipt_json);
+ 		update_json(rtran_json);
 
-			$(form).find(".close").click();
-		}
-	});
+ 		if(func)
+ 		{
+ 			func(mode,paid);
+ 		}
 
-	var payments_data={data_store:'payments',
-                      indexes:[{index:'id',value:payment_id+""},
-                              {index:'acc_name'},
-                              {index:'type',exact:'paid'},
-                              {index:'total_amount'},
-                              {index:'paid_amount'},
-                              {index:'status'},
-                              {index:'due_date'},
-                              {index:'mode'}]};
-	read_json_rows('',payments_data,function(payments)
-	{
-        console.log(payments_data);
-        console.log(payments);
-		if(payments.length>0)
-		{
-			fsupplier.value=payments[0].acc_name;
-			ftotal.value=payments[0].total_amount;
-			fpaid.value=payments[0].paid_amount;
-			fdue_date.value=get_my_past_date(payments[0].due_date);
-			fmode.value=payments[0].mode;
-			fstatus.value=payments[0].status;
-		}
-		$("#modal28_link").click();
-	});
-}
+ 		$(form).find(".close").click();
+ 	});
+
+ 	$("#modal28_link").click();
+ }
 
 /**
  * @modal Update secondary payment details

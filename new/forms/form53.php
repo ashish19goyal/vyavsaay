@@ -155,6 +155,15 @@
                     var return_bill_json={data_store:'supplier_returns',
                         data:[{index:'id',value:data_id}]};
 
+					var t2_json={data_store:'transactions',
+							data:[{index:'receipt_source_id',value:data_id}]};
+
+					var receipt_json={data_store:'receipts',
+							data:[{index:'source_id',value:data_id}]};
+
+					delete_json(t2_json);
+					delete_json(receipt_json);
+
                     delete_json(bill_json);
                     delete_json(transaction_json);
                     delete_json(return_bill_json);
