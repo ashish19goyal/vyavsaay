@@ -31,6 +31,7 @@
 						<th><input type='text' placeholder="From" class='floatlabel' name='from' form='form271_header'></th>
 						<th><input type='text' placeholder="Date" class='floatlabel' name='date' form='form271_header'></th>
 						<th><input type='text' placeholder="Amount" readonly="readonly" form='form271_header'></th>
+						<th><input type='text' placeholder="Notes" readonly="readonly" form='form271_header'></th>
 						<th><input type='submit' form='form271_header' style='visibility: hidden;'></th>
 				</tr>
 			</thead>
@@ -83,6 +84,7 @@
                                     {index:'acc_name',value:fperson},
 									{index:'from_name',value:ffrom},
                                     {index:'date',value:fdate},
+									{index:'drs_num'},
                                     {index:'amount'}]};
 
             read_json_rows('form271',new_columns,function(results)
@@ -103,6 +105,9 @@
                             rowsHTML+="<td data-th='Amount'>";
                                 rowsHTML+="<input type='number' class='floatlabel' placeholder='Rs.' readonly='readonly' form='form271_"+result.id+"' step='any' value='"+result.amount+"'>";
                             rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Notes'>";
+                                rowsHTML+="<input type='text' readonly='readonly' form='form271_"+result.id+"' value='"+result.drs_num+"'>";
+                            rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Action'>";
                                 rowsHTML+="<input type='hidden' form='form271_"+result.id+"' value='"+result.id+"'>";
                                 rowsHTML+="<button type='button' class='btn red' form='form271_"+result.id+"' title='Delete' onclick='form271_delete_item($(this));' name='delete'><i class='fa fa-trash'></i></button>";
@@ -120,10 +125,12 @@
 					item['From']=item.from_name;
                     item['Date']=get_my_past_date(item.date);
 					item['Amount']=item.amount;
+					item['Notes']=item.drs_num;
 					delete item.acc_name;
 					delete item.from_name;
 					delete item.amount;
 					delete item.date;
+					delete item.drs_num;
                 });
 				hide_loader();
             });
@@ -147,6 +154,9 @@
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Amount'>";
                         rowsHTML+="<input type='number' class='floatlabel' placeholder='Rs.' step='any' required min='0' form='form271_"+id+"'>";
+                    rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Notes'>";
+                        rowsHTML+="<input type='text' form='form271_"+id+"'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Action'>";
                         rowsHTML+="<input type='hidden' form='form271_"+id+"' value='"+id+"'>";
@@ -212,7 +222,8 @@
 				var from=form.elements[1].value;
                 var date=get_raw_time(form.elements[2].value);
                 var amount=form.elements[3].value;
-                var data_id=form.elements[4].value;
+				var notes=form.elements[4].value;
+                var data_id=form.elements[5].value;
                 var save_button=form.elements['save'];
                 var del_button=form.elements['delete'];
                 var last_updated=get_my_time();
@@ -224,6 +235,7 @@
 						{index:'from_name',value:from},
 	 					{index:'date',value:date},
 	 					{index:'amount',value:amount},
+						{index:'drs_num',value:notes},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Added',notes:'Rs. '+amount+' passed from '+from+' to '+person,link_to:'form271'}};
 
@@ -260,7 +272,7 @@
 
 					var person=form.elements[0].value;
 					var amount=form.elements[3].value;
-					var data_id=form.elements[4].value;
+					var data_id=form.elements[5].value;
                     var data_json={data_store:'cod_collections',
 	 				              log:'yes',
 	 				              data:[{index:'id',value:data_id}],
