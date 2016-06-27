@@ -2,18 +2,22 @@
 	<div class="portlet-title">
 		<div class='caption'>
 			<div class='btn-group' id='form347_status' data-toggle='buttons'>
-					<label class='btn yellow-crusta current active' onclick=form347_ini('current');><input name='current' type='radio' class='toggle'>Active</label>
-					<label class='btn yellow-crusta expired' onclick=form347_ini('expired');><input type='radio' name='expired' class='toggle'>Expired</label>
+				<label class='btn yellow-crusta current active' onclick=form347_ini('current');><input name='current' type='radio' class='toggle'>Active</label>
+				<label class='btn yellow-crusta expired' onclick=form347_ini('expired');><input type='radio' name='expired' class='toggle'>Expired</label>
 			</div>
 		</div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
                 <ul class="dropdown-menu pull-right">
-										<li>
-												<a onclick='modal216_action();'><i class='fa fa-plus'> Add</i></a>
-										</li>
-										<li class="divider"> </li>
+					<li>
+						<a onclick='modal11_action();'><i class='fa fa-plus'> Add Customer</i></a>
+					</li>
+					<li>
+						<a onclick='modal216_action();'><i class='fa fa-plus'> Add Policy</i></a>
+					</li>
+					<li class="divider"> </li>
+
                     <li>
                         <a id='form347_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
                     </li>

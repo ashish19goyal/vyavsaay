@@ -33,8 +33,9 @@
 					<form id='form351_header'></form>
 						<th><input type='text' placeholder="Policy Name" class='floatlabel' name='name' form='form351_header'></th>
             			<th><input type='text' placeholder="Policy Type" class='floatlabel' name='type' form='form351_header'></th>
-						<th><input type='text' placeholder="Provider" class='floatlabel' name='provider' form='form351_header'></th>
+						<th><input type='text' placeholder="Accounts" class='floatlabel' name='account' form='form351_header'></th>
 						<th><input type='text' placeholder="Description" class='floatlabel' name='description' form='form351_header'></th>
+						<th><input type='text' placeholder="Details" readonly='readonly' form='form351_header'></th>
 						<th><input type='submit' form='form351_header' style='visibility: hidden;'></th>
 				</tr>
 			</thead>
@@ -47,6 +48,10 @@
 		function form351_header_ini()
 		{
 			var filter_fields=document.getElementById('form351_header');
+			var faccount=filter_fields.elements['account'];
+
+			var account_data={data_store:'staff',return_column:'acc_name'};
+			set_my_filter_json(account_data,faccount);
 
 			$(filter_fields).off('submit');
 			$(filter_fields).on('submit',function(event)
@@ -68,7 +73,7 @@
 			var filter_fields=document.getElementById('form351_header');
 			var fname=filter_fields.elements['name'].value;
       		var ftype=filter_fields.elements['type'].value;
-			var fprovider=filter_fields.elements['provider'].value;
+			var faccount=filter_fields.elements['account'].value;
 			var fdesc=filter_fields.elements['description'].value;
 
 			var paginator=$('#form351_body').paginator();
@@ -77,31 +82,48 @@
 					            start_index:paginator.get_index(),
 					            data_store:'policy_types',
 					            indexes:[{index:'id',value:fid},
-            									{index:'name',value:fname},
-                              {index:'type',value:ftype},
-            									{index:'issuer',value:fprovider},
-            									{index:'description',value:fdesc}]};
+            							{index:'name',value:fname},
+                              			{index:'type',value:ftype},
+            							{index:'issuer'},
+										{index:'term'},
+										{index:'preferred'},
+										{index:'accounts',value:faccount},
+            							{index:'description',value:fdesc}]};
 
 			read_json_rows('form351',new_columns,function(results)
 			{
 				results.forEach(function(result)
 				{
+					var accounts_array=vUtil.jsonParse(result.accounts);
+					var accounts_data="<ul id='form351_accounts_"+result.id+"'>";
+					accounts_array.forEach(function(account)
+					{
+						accounts_data+="<li>"+account+"</li>";
+					});
+					accounts_data+="</ul>";
+
 					var rowsHTML="<tr>";
 						rowsHTML+="<form id='form351_"+result.id+"'></form>";
 							rowsHTML+="<td data-th='Name'>";
 								rowsHTML+="<textarea readonly='readonly' form='form351_"+result.id+"'>"+result.name+"</textarea>";
 							rowsHTML+="</td>";
-              rowsHTML+="<td data-th='Type'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form351_"+result.id+"' value='"+result.type+"'>";
+              				rowsHTML+="<td data-th='Type'>";
+								rowsHTML+="<input type='text' class='floatlabel' placeholder='Policy Type' readonly='readonly' form='form351_"+result.id+"' value='"+result.type+"'>";
+								rowsHTML+="<textarea readonly='readonly' class='floatlabel' placeholder='Provider' form='form351_"+result.id+"'>"+result.issuer+"</textarea>";
 							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Provider'>";
-								rowsHTML+="<textarea readonly='readonly' form='form351_"+result.id+"'>"+result.issuer+"</textarea>";
+							rowsHTML+="<td data-th='Accounts'>";
+								rowsHTML+=accounts_data;
+								rowsHTML+="<button type='button' class='btn yellow' name='account' title='Edit Accounts' onclick=\"modal226_action('"+result.id+"');\"><i class='fa fa-pencil'></i></button>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Description'>";
 								rowsHTML+="<textarea class='dblclick_editable' readonly='readonly' form='form351_"+result.id+"'>"+result.description+"</textarea>";
 							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Details'>";
+								rowsHTML+="<input type='text' class='dblclick_editable floatlabel' placeholder='Term' readonly='readonly' form='form351_"+result.id+"' value='"+result.term+"'>";
+								rowsHTML+="<input type='text' class='dblclick_editable floatlabel' placeholder='Preferred' readonly='readonly' form='form351_"+result.id+"' value='"+result.preferred+"'>";
+							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
-								rowsHTML+="<input type='hidden' form='form351_"+result.id+"' value='"+result.id+"'>";
+								rowsHTML+="<input type='hidden' form='form351_"+result.id+"' value='"+result.id+"' name='id'>";
 								rowsHTML+="<button type='submit' class='btn green' name='save' form='form351_"+result.id+"' title='Save'><i class='fa fa-save'></i></button>";
 								rowsHTML+="<button type='button' class='btn red' name='delete' form='form351_"+result.id+"' title='Delete' onclick='form351_delete_item($(this));'><i class='fa fa-trash'></i></button>";
 							rowsHTML+="</td>";
@@ -109,6 +131,12 @@
 
 					$('#form351_body').append(rowsHTML);
 					var fields=document.getElementById("form351_"+result.id);
+					var term=fields.elements[4];
+					var preferred=fields.elements[5];
+
+					set_static_value_list_json('policy_types','term',term);
+					set_static_value_list_json('policy_types','preferred',preferred);
+
 					$(fields).on("submit", function(event)
 					{
 						event.preventDefault();
@@ -129,11 +157,15 @@
 			{
 				var name=form.elements[0].value;
 				var desc=form.elements[3].value;
-				var data_id=form.elements[4].value;
+				var term=form.elements[4].value;
+				var preferred=form.elements[5].value;
+				var data_id=form.elements['id'].value;
 				var last_updated=get_my_time();
 				var data_json={data_store:'policy_types',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'description',value:desc},
+						{index:'term',value:term},
+						{index:'preferred',value:preferred},
 	 					{index:'last_updated',value:last_updated}]};
 				update_json(data_json);
 				$(form).readonly();
@@ -155,7 +187,7 @@
 
 					var name=form.elements[0].value;
 					var provider=form.elements[2].value;
-					var data_id=form.elements[4].value;
+					var data_id=form.elements['id'].value;
 					var last_updated=get_my_time();
 
 					var data_json={data_store:'policy_types',
@@ -175,7 +207,7 @@
 
 		function form351_import_template()
 		{
-			var data_array=['id','name','type','issuer','description'];
+			var data_array=['id','name','type','issuer','description','term','preferred','accounts'];
 			my_array_to_csv(data_array);
 		};
 
@@ -183,8 +215,10 @@
 		{
 			var validate_template_array=[{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
                                   {column:'type',required:'yes',list:['health','life','car']},
+								  {column:'term',required:'yes',list:['one year','two years']},
+								  {column:'preferred',required:'yes',list:['yes','no']},
                                   {column:'issuer',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-                									{column:'description',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')}];
+                				  {column:'description',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')}];
 
 			var error_array=validate_import_array(data_array,validate_template_array);
 			return error_array;
@@ -207,10 +241,15 @@
 				{
 					row.id=last_updated+counter;
 				}
+				var accounts_array=row.accounts.split(';');
+				var accounts=JSON.stringify(accounts_array);
 
 				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'name',value:row.name},
 	 					{index:'type',value:row.type},
+						{index:'term',value:row.term},
+						{index:'preferred',value:row.preferred},
+						{index:'accounts',value:accounts},
 	 					{index:'issuer',value:row.issuer},
 	 					{index:'description',value:row.description},
 	 					{index:'last_updated',value:last_updated}];

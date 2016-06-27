@@ -212,7 +212,7 @@ function set_simple_select(filter_data,filter_element,func)
 
 	read_json_single_column(filter_data,function(data)
 	{
-    data=vUtil.arrayUnique(data);
+    	data=vUtil.arrayUnique(data);
 		data.forEach(function(d)
 		{
 			var option=document.createElement('option');
@@ -500,50 +500,50 @@ function set_master_value_json(filter_data,filter_element,func)
 
 function set_value_list_json(data,filter_element,func)
 {
-		var form=filter_element.form;
-		var datalist=document.createElement('datalist');
-		data=vUtil.arrayUnique(data);
-		data.forEach(function(d)
-		{
-			var option=document.createElement('option');
-			option.setAttribute('value',d);
-			datalist.appendChild(option);
-		});
+	var form=filter_element.form;
+	var datalist=document.createElement('datalist');
+	data=vUtil.arrayUnique(data);
+	data.forEach(function(d)
+	{
+		var option=document.createElement('option');
+		option.setAttribute('value',d);
+		datalist.appendChild(option);
+	});
 
-		var list_id=filter_element.getAttribute('list');
-		if(list_id=='' || list_id==null)
-		{
-			list_id="list_"+get_new_key();
-			filter_element.setAttribute("list",list_id);
-		}
-		else
-		{
-			var oldlist=document.getElementById(list_id);
-			form.removeChild(oldlist);
-		}
+	var list_id=filter_element.getAttribute('list');
+	if(list_id=='' || list_id==null)
+	{
+		list_id="list_"+get_new_key();
+		filter_element.setAttribute("list",list_id);
+	}
+	else
+	{
+		var oldlist=document.getElementById(list_id);
+		form.removeChild(oldlist);
+	}
 
-		form.appendChild(datalist);
-		datalist.setAttribute('id',list_id);
+	form.appendChild(datalist);
+	datalist.setAttribute('id',list_id);
 
-		var active_element=document.activeElement;
+	var active_element=document.activeElement;
 
-		if(active_element==filter_element)
-		{
-			$(filter_element).blur();
-			$(filter_element).focus();
-		}
+	if(active_element==filter_element)
+	{
+		$(filter_element).blur();
+		$(filter_element).focus();
+	}
 
-		$(filter_element).off("change");
-		$(filter_element).on("change",function(event)
+	$(filter_element).off("change");
+	$(filter_element).on("change",function(event)
+	{
+		var found = $.inArray($(this).val(), data) > -1;
+		if(!found)
 		{
-			var found = $.inArray($(this).val(), data) > -1;
-			if(!found)
-			{
-	            $(this).val('');
-	        }
-		});
-		if(typeof func!='undefined')
-		{
-			func();
-		}
+            $(this).val('');
+        }
+	});
+	if(typeof func!='undefined')
+	{
+		func();
+	}
 }

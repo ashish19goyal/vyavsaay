@@ -2154,15 +2154,24 @@
 			<policy_holder index='yes' type="TEXT"></policy_holder>
 			<agent index='yes' type="TEXT"></agent>
 			<policy_num index='yes' type="TEXT"></policy_num>
+			<application_num index='yes' type="TEXT"></application_num>
 			<policy_name index='yes' type="TEXT"></policy_name>
 			<issuer index='yes' type="TEXT"></issuer>
 			<description index="no" type="TEXT"></description>
 			<premium index="no" type="DECIMAL(12,2)"></premium>
+			<discount index="no" type="DECIMAL(12,2)"></discount>
+			<short_premium index="no" type="DECIMAL(12,2)"></short_premium>
 			<start_date index='yes' type="BIGINT"></start_date>
 			<end_date index='yes' type="BIGINT"></end_date>
 			<issue_date index='yes' type="BIGINT"></issue_date>
 			<type index='yes' type="VARCHAR(30)"></type><!-- life/health/car -->
-			<issue_type index='yes' type="VARCHAR(10)"></issue_type><!-- new/renewed/ported -->
+			<term index='yes' type="VARCHAR(30)"></term><!-- one year/two years -->
+			<preferred index='yes' type="VARCHAR(30)"></preferred><!-- yes/no -->
+			<issue_type index='yes' type="VARCHAR(20)"></issue_type><!-- fresh/renewal/portability -->
+			<ported_source index='yes' type="TEXT"></ported_source>
+			<renewed_source index='yes' type="TEXT"></renewed_source>
+			<dependents index='yes' type="TEXT"></dependents>
+			<account index='yes' type="TEXT"></account>
 			<status index='yes' type="VARCHAR(30)"></status><!-- active/expired -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
@@ -2203,6 +2212,10 @@
 			<issuer index='yes' type="TEXT"></issuer>
 			<description index='yes' type="TEXT"></description>
 			<type index='yes' type="VARCHAR(30)"></type><!-- life/health/car -->
+			<term index='yes' type="VARCHAR(30)"></term><!-- one year/two years -->
+			<preferred index='yes' type="VARCHAR(30)"></preferred><!-- yes/no -->
+			<premium_calculation index='yes' type="TEXT"></premium_calculation>
+			<accounts index='yes' type="TEXT"></accounts>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</policy_types>

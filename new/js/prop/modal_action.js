@@ -2583,7 +2583,7 @@ function modal27_action(product_name)
  	ftotal.value=total;
  	fpaid.value=paid;
 	fmode.value=mode;
-	
+
  	set_static_value_list_json('payments','mode',fmode);
 
  	$(form).off("submit");
@@ -16227,27 +16227,59 @@ function modal216_action()
 {
 	var form=document.getElementById('modal216_form');
 	var fname=form.elements['name'];
-	var fagent=form.elements['agent'];
 	var fholder=form.elements['holder'];
 	var fstart=form.elements['start'];
 	var fend=form.elements['end'];
 	var fissue=form.elements['issue'];
 	var ftype=form.elements['type'];
+	var frenewed_from=form.elements['renewed_from'];
+	var fported_from=form.elements['ported_from'];
+	var fagent=form.elements['agent'];
+	var faccount=form.elements['account'];
 
+	fname.value="";
+	fagent.value="";
+	fholder.value="";
+	fstart.value="";
+	fend.value="";
+	fissue.value="";
+	ftype.value="fresh";
+	frenewed_from.value="";
+	fported_from.value="";
+	faccount.value="";
+
+	$(frenewed_from).parent().parent().hide();
+	$(fported_from).parent().parent().hide();
 	$(fstart).datepicker();
 	$(fend).datepicker();
 	$(fissue).datepicker();
 
 	set_static_value_list_json('policies','issue_type',ftype);
 
-	name_data={data_store:'policy_types',return_column:'name'};
+	var name_data={data_store:'policy_types',return_column:'name'};
 	set_my_value_list_json(name_data,fname);
 
-	agent_data={data_store:'staff',return_column:'acc_name'};
+	var agent_data={data_store:'staff',return_column:'acc_name'};
 	set_my_value_list_json(agent_data,fagent);
 
-	holder_data={data_store:'customers',return_column:'acc_name'};
+	var holder_data={data_store:'customers',return_column:'acc_name'};
 	set_my_value_list_json(holder_data,fholder);
+
+	vUtil.onChange(ftype,function()
+	{
+		if(ftype.value=='renewal')
+		{
+			var renewed_data={data_store:'policies',return_column:'policy_num',indexes:[{index:'policy_holder',exact:fholder.value}]};
+			set_my_value_list_json(renewed_data,frenewed_from);
+			$(frenewed_from).parent().parent().show();
+			$(fported_from).parent().parent().hide();
+		}
+		else if(ftype.value=='portability')
+		{
+			$(frenewed_from).parent().parent().hide();
+			$(fported_from).parent().parent().show();
+		}
+	});
 
 	$(fname).off('blur');
 	$(fname).off('change');
@@ -16255,12 +16287,19 @@ function modal216_action()
 	var ptype="";
 	var pissuer="";
 	var pdesc="";
+	var pterm="";
+	var ppreferred="";
 
 	$(fname).on('blur change',function()
 	{
 		var policy_data={data_store:'policy_types',count:1,
-										indexes:[{index:'issuer'},{index:'description'},{index:'type'},
-														{index:'name',exact:fname.value}]};
+						indexes:[{index:'issuer'},
+								{index:'description'},
+								{index:'type'},
+								{index:'term'},
+								{index:'preferred'},
+								{index:'accounts'},
+								{index:'name',exact:fname.value}]};
 		read_json_rows('',policy_data,function(policies)
 		{
 			if(policies.length>0)
@@ -16268,6 +16307,12 @@ function modal216_action()
 				ptype=policies[0].type;
 				pissuer=policies[0].issuer;
 				pdesc=policies[0].description;
+				pterm=policies[0].term;
+				ppreferred=policies[0].preferred;
+
+				var accounts_array=vUtil.jsonParse(policies[0].accounts);
+				set_value_list_json(accounts_array,faccount);
+				faccount.value=accounts_array[0];
 			}
 		});
 	});
@@ -16278,28 +16323,37 @@ function modal216_action()
 		event.preventDefault();
 		if(is_create_access('form351'))
 		{
-			var policy_num=form.elements['policy_number'].value;
+			var app_num=form.elements['app_number'].value;
 			var start_date=vTime.unix({date:fstart.value});
 			var end_date=vTime.unix({date:fend.value});
 			var issue_date=vTime.unix({date:fissue.value});
 			var issue_type=ftype.value;
 			var premium=form.elements['premium'].value;
+			var discount=form.elements['discount'].value;
+			var short_premium=form.elements['spremium'].value;
 			var last_updated=vTime.unix();
 
 			var data_json={data_store:'policies',
 			data:[{index:'id',value:get_new_key()},
-				{index:'policy_num',value:policy_num},
+				{index:'application_num',value:app_num,unique:'yes'},
 				{index:'policy_name',value:fname.value},
 				{index:'description',value:pdesc},
 				{index:'issuer',value:pissuer},
 				{index:'policy_holder',value:fholder.value},
 				{index:'premium',value:premium},
+				{index:'discount',value:discount},
+				{index:'short_premium',value:short_premium},
 				{index:'agent',value:fagent.value},
 				{index:'start_date',value:start_date},
 				{index:'end_date',value:end_date},
 				{index:'issue_date',value:issue_date},
 				{index:'type',value:ptype},
+				{index:'term',value:pterm},
+				{index:'preferred',value:ppreferred},
 				{index:'issue_type',value:issue_type},
+				{index:'ported_source',value:fported_from.value},
+				{index:'renewed_source',value:frenewed_from.value},
+				{index:'account',value:faccount.value},
 				{index:'status',value:'active'},
 				{index:'last_updated',value:last_updated}]};
 			create_json(data_json);
@@ -16324,12 +16378,17 @@ function modal217_action()
 	var form=document.getElementById('modal217_form');
 	var ftype=form.elements['type'];
 	var fissuer=form.elements['issuer'];
+    var fterm=form.elements['term'];
+    var fpreferred=form.elements['preferred'];
 
 	type_data={data_store:'policy_types',return_column:'type'};
 	set_my_filter_json(type_data,ftype);
 
 	issuer_data={data_store:'policy_types',return_column:'issuer'};
 	set_my_filter_json(issuer_data,fissuer);
+
+	set_static_value_list_json('policy_types','term',fterm);
+	set_static_value_list_json('policy_types','preferred',fpreferred);
 
 	$(form).off("submit");
 	$(form).on("submit",function(event)
@@ -16338,19 +16397,23 @@ function modal217_action()
 		if(is_create_access('form351'))
 		{
 			var name=form.elements['name'].value;
-			var type=form.elements['type'].value;
+			var type=ftype.value;
 			var desc=form.elements['desc'].value;
-			var issuer=form.elements['issuer'].value;
+			var issuer=fissuer.value;
+			var term=fterm.value;
+			var preferred=fpreferred.value;
 			var last_updated=get_my_time();
 
-			var adjust_json={data_store:'policy_types',
+			var data_json={data_store:'policy_types',
 			data:[{index:'id',value:get_new_key()},
 				{index:'name',value:name},
 				{index:'type',value:type},
 				{index:'description',value:desc},
 				{index:'issuer',value:issuer},
+				{index:'term',value:term},
+				{index:'preferred',value:preferred},
 				{index:'last_updated',value:last_updated}]};
-			create_json(adjust_json);
+			create_json(data_json);
 		}
 		else
 		{
@@ -17158,4 +17221,83 @@ function modal225_action()
 	});
 
 	$("#modal225_link").click();
+}
+
+/**
+ * @modalNo 226
+ * @modal Edit Accounts
+ */
+function modal226_action(policy_id)
+{
+	var form=document.getElementById('modal226_form');
+	var add_button=form.elements['add_button'];
+	var delete_button=form.elements['delete_button'];
+
+	var attribute_label=document.getElementById('modal226_columns');
+	attribute_label.innerHTML="";
+
+	$(add_button).off('click');
+	$(add_button).on('click',function ()
+	{
+		var id=get_new_key();
+		var content="<div><input placeholder='Account Name' id='modal226_account_"+id+"' class='floatlabel' type='text'></div>";
+		$(attribute_label).append(content);
+		var staff_data={data_store:'staff',return_column:'acc_name'};
+		var staff_element=$('#modal226_account_'+id)[0];
+		set_my_value_list_json(staff_data,staff_element);
+		$(form).formcontrol();
+	});
+
+	$(delete_button).off('click');
+	$(delete_button).on('click',function ()
+	{
+		$('#modal226_columns>div:last-child').remove();
+	});
+
+	var attributes_data={data_store:'policy_types',count:1,return_column:'accounts',
+						indexes:[{index:'id',value:policy_id}]};
+	read_json_single_column(attributes_data,function(attributes)
+	{
+		if(attributes.length>0)
+		{
+			var values_array=vUtil.jsonParse(attributes[0]);
+			var content="";
+			values_array.forEach(function(fvalue)
+			{
+				content+="<div><input placeholder='Account Name' class='floatlabel' type='text' value='"+fvalue+"'></div>";
+			});
+			$(attribute_label).html(content);
+			$(form).formcontrol();
+		}
+	});
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_update_access('form351'))
+		{
+			var last_updated=get_my_time();
+			var returns_column_array=[];
+			$("#modal226_columns>div").each(function()
+			{
+				var return_obj=$(this).find('input').val();
+				returns_column_array.push(return_obj);
+			});
+
+			var return_columns=JSON.stringify(returns_column_array);
+			var search_json={data_store:'policy_types',
+	 				data:[{index:'id',value:policy_id},
+	 					{index:'accounts',value:return_columns},
+	 					{index:'last_updated',value:last_updated}]};
+			update_json(search_json);
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
+		$(form).find(".close").click();
+	});
+
+	$("#modal226_link").click();
 }
