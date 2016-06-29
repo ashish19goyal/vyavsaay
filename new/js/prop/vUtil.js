@@ -31,28 +31,29 @@ var vUtil = function (options)
     };
 
 	//executes a function if it is set
-		this.execute=function(func)
+	this.execute=function(func)
     {
         if(typeof func!='undefined')
            func();
     };
 
 		//parses a json string to get a js object/array
-		this.jsonParse = function(markers)
+	this.jsonParse = function(markers)
+	{
+		var markers_array=[];
+		if(markers!="" && markers!='undefined' && markers!=null && markers!=0)
 		{
-			var markers_array=[];
-			if(markers!="" && markers!='undefined' && markers!=null)
+			try
 			{
-				try
-				{
-						markers_array=JSON.parse(markers);
-				} catch (ee)
-				{
-						return [];
-				}
+				markers_array=JSON.parse(markers);
 			}
-			return markers_array;
-		};
+			catch (ee)
+			{
+				return [];
+			}
+		}
+		return markers_array;
+	};
 
     //extracts a single column from a multidimensional array
     this.arrayColumn=function (array, col_name)
@@ -66,7 +67,7 @@ var vUtil = function (options)
     };
 
 		//get an array with unique values only
-		this.arrayUnique = function(array)
+	this.arrayUnique = function(array)
     {
         return array.filter(function(el,index,arr)
         {
@@ -74,27 +75,27 @@ var vUtil = function (options)
         });
     };
 
-		this.round = function(number,decimal)
+	this.round = function(number,decimal)
+	{
+		if(!decimal)
 		{
-			if(!decimal)
-			{
-				return Math.round(number);
-			}
-
-			var multiplier=1;
-			for(var i=0;i<decimal;i++)
-			{
-					multiplier*=10;
-			}
-			var result=(Math.round(number*multiplier))/multiplier;
-			return result;
-		};
-
-		this.newKey = function()
-		{
-			var d=new Date();
-			return d.getTime();
+			return Math.round(number);
 		}
+
+		var multiplier=1;
+		for(var i=0;i<decimal;i++)
+		{
+				multiplier*=10;
+		}
+		var result=(Math.round(number*multiplier))/multiplier;
+		return result;
+	};
+
+	this.newKey = function()
+	{
+		var d=new Date();
+		return d.getTime();
+	}
 
     this.resize_picture=function (picture_tag,pic_width)
     {
@@ -261,19 +262,19 @@ var vUtil = function (options)
     };
 
 
-		this.onChange = function(element,func)
-		{
-			$(element).off('blur');
-			$(element).off('change');
+	this.onChange = function(element,func)
+	{
+		$(element).off('blur');
+		$(element).off('change');
 
-			$(element).on('blur change',function()
+		$(element).on('blur change',function()
+		{
+			if(!vUtil.isBlank(func))
 			{
-				if(!vUtil.isBlank(func))
-				{
-					func();
-				}
-			});
-		};
+				func();
+			}
+		});
+	};
 };
 vUtil=new vUtil();
 

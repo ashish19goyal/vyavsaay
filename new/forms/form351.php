@@ -44,6 +44,35 @@
 		</table>
 	</div>
 
+	<div class='modal_forms'>
+		<a href='#form351_popup' data-toggle="modal" id='form351_popup_link'></a>
+		<div id="form351_popup" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form id='form351_popup_form' autocomplete="off">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+							<h4 class="modal-title">Commission Settings</h4>
+						</div>
+						<div class="modal-body">
+						   <div class="scroller" style="height:80%;" data-always-visible="1" data-rail-visible1="1">
+							 <form id='form351_popup_form' autocomplete="off">
+								<fieldset>
+									<button type="button" class='btn green' name='add_button'><i class='fa fa-plus'></i></button>
+									<div id='form351_popup_columns'></div>
+								</fieldset>
+							 </form>
+						   </div>
+						 </div>
+						<div class="modal-footer">
+						<button type="submit" class="btn green" form='form351_popup_form' name='save'>Save</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script>
 		function form351_header_ini()
 		{
@@ -126,6 +155,7 @@
 								rowsHTML+="<input type='hidden' form='form351_"+result.id+"' value='"+result.id+"' name='id'>";
 								rowsHTML+="<button type='submit' class='btn green' name='save' form='form351_"+result.id+"' title='Save'><i class='fa fa-save'></i></button>";
 								rowsHTML+="<button type='button' class='btn red' name='delete' form='form351_"+result.id+"' title='Delete' onclick='form351_delete_item($(this));'><i class='fa fa-trash'></i></button>";
+								rowsHTML+="<button type='button' class='btn yellow' name='commissions' form='form351_"+result.id+"' title='Update Commission Settings' onclick=\"form351_popup_action('"+result.id+"');\"><i class='fa fa-money'></i></button>";
 							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
 
@@ -204,6 +234,109 @@
 				$("#modal2_link").click();
 			}
 		}
+
+		function form351_popup_action(policy_id)
+		{
+			var form=document.getElementById('form351_popup_form');
+			var add_button=form.elements['add_button'];
+
+			var attribute_label=document.getElementById('form351_popup_columns');
+			attribute_label.innerHTML="";
+
+			$(add_button).off('click');
+			$(add_button).on('click',function ()
+			{
+				var id=get_new_key();
+				var content="<div class='row' id='form351_popup_"+id+"'>"+
+								"<div class='col-md-4'>"+
+									"<input placeholder='Commission Type' class='floatlabel' name='type' type='text'>"+
+								"</div>"+
+								"<div class='col-md-3'>"+
+									"<input placeholder='Issue Type' class='floatlabel' name='issue' type='text'>"+
+								"</div>"+
+								"<div class='col-md-3'>"+
+									"<input placeholder='Commission %' class='floatlabel' name='commission' type='number' step='any'>"+
+								"</div>"+
+								"<div class='col-md-2'>"+
+									"<button type='button' class='btn red' onclick=$(this).parent().parent().remove();><i class='fa fa-trash'></i></button>"+
+								"</div>"+
+							"</div>";
+				$(attribute_label).append(content);
+
+				var row_element=$('#form351_popup_'+id);
+				var type_element=$(row_element).find("input[name='type']")[0];
+				var issue_element=$(row_element).find("input[name='issue']")[0];
+
+				set_static_value_list_json('policy_types','commissions',type_element);
+				set_static_value_list_json('policies','issue_type',issue_element);
+
+				$(form).formcontrol();
+			});
+
+			$("#form351_popup_link").click();
+
+			var attributes_data={data_store:'policy_types',count:1,return_column:'commissions',
+								indexes:[{index:'id',exact:policy_id}]};
+			read_json_single_column(attributes_data,function(attributes)
+			{
+				if(attributes.length>0)
+				{
+					var values_array=vUtil.jsonParse(attributes[0]);
+					var content="";
+					values_array.forEach(function(fvalue)
+					{
+						content+="<div class='row'>"+
+									"<div class='col-md-4'>"+
+										"<input placeholder='Commission Type' readonly='readonly' class='floatlabel' value='"+fvalue.type+"' name='type' type='text'>"+
+									"</div>"+
+									"<div class='col-md-3'>"+
+										"<input placeholder='Issue Type' readonly='readonly' class='floatlabel' value='"+fvalue.issue+"' name='issue' type='text'>"+
+									"</div>"+
+									"<div class='col-md-3'>"+
+										"<input placeholder='Commission %' readonly='readonly' class='floatlabel' value='"+fvalue.commission+"' name='commission' type='number' step='any'>"+
+									"</div>"+
+									"<div class='col-md-2'>"+
+										"<button type='button' class='btn red' onclick=$(this).parent().parent().remove();><i class='fa fa-trash'></i></button>"+
+									"</div>"+
+								"</div>";
+					});
+					$(attribute_label).html(content);
+				}
+				setTimeout(function(){$(form).formcontrol();},1000);
+			});
+
+			$(form).off("submit");
+			$(form).on("submit",function(event)
+			{
+				event.preventDefault();
+				if(is_update_access('form351'))
+				{
+					var last_updated=get_my_time();
+					var returns_column_array=[];
+
+					$("#form351_popup_columns>div").each(function()
+					{
+						var return_obj={type:$(this).find("input[name='type']").val(),
+										issue:$(this).find("input[name='issue']").val(),
+										commission:$(this).find("input[name='commission']").val()};
+						returns_column_array.push(return_obj);
+					});
+
+					var return_columns=JSON.stringify(returns_column_array);
+					var search_json={data_store:'policy_types',
+			 				data:[{index:'id',value:policy_id},
+			 					{index:'commissions',value:return_columns},
+			 					{index:'last_updated',value:last_updated}]};
+					update_json(search_json);
+				}
+				else
+				{
+					$("#modal2_link").click();
+				}
+				$(form).find(".close").click();
+			});
+		}
+
 
 		function form351_import_template()
 		{

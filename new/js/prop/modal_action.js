@@ -15119,7 +15119,7 @@ function modal202_action(data_id)
             desc_filter.value=tasks[0].description;
             staff_filter.value=tasks[0].assignee;
         }
-        $('#modal202').formcontrol();
+        setTimeout(function(){$('#modal202').formcontrol();},500);
     });
 
     $(form).off('submit');

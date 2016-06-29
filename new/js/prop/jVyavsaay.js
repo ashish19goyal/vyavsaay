@@ -14,7 +14,7 @@
 			$(this).find('textarea').autosize();
 			$(this).find("form").attr('autocomplete', 'off');
 			$(this).find('.dblclick_editable').longpresseditable();
-    });
+    	});
 	};
 }(jQuery));
 
@@ -34,13 +34,13 @@
 		else
 		{
 			var cm = CodeMirror.fromTextArea(this[0],
-								{
-									lineNumbers: true,
-									matchBrackets: true,
-         						mode: settings.mode,
-         						htmlMode: true,
-         						height:'auto'
-   							});
+					{
+						lineNumbers: true,
+						matchBrackets: true,
+ 						mode: settings.mode,
+ 						htmlMode: true,
+ 						height:'auto'
+					});
 			this.data('codeeditor', cm);
 			cm.setValue(settings.content);
 			return cm;

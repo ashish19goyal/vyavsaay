@@ -2167,7 +2167,7 @@
 			<type index='yes' type="VARCHAR(30)"></type><!-- life/health/car -->
 			<term index='yes' type="VARCHAR(30)"></term><!-- one year/two years -->
 			<preferred index='yes' type="VARCHAR(30)"></preferred><!-- yes/no -->
-			<issue_type index='yes' type="VARCHAR(10)"></issue_type><!-- fresh/renewal/portability -->
+			<issue_type index='yes' type="VARCHAR(20)"></issue_type><!-- fresh/renewal/portability -->
 			<ported_source index='yes' type="TEXT"></ported_source>
 			<renewed_source index='yes' type="TEXT"></renewed_source>
 			<dependents index='yes' type="TEXT"></dependents>
@@ -2215,6 +2215,7 @@
 			<term index='yes' type="VARCHAR(30)"></term><!-- one year/two years -->
 			<preferred index='yes' type="VARCHAR(30)"></preferred><!-- yes/no -->
 			<premium_calculation index='yes' type="TEXT"></premium_calculation>
+			<commissions index='yes' type="TEXT"></commissions>
 			<accounts index='yes' type="TEXT"></accounts>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>

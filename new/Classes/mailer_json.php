@@ -14,7 +14,7 @@ class send_mailer_json
 	public $username=null;
 	public $password=null;
 	public $sender_id=null;
- `` public $domain=null;
+    public $domain=null;
 	public $url=null;
 
 	public function __construct($domain)

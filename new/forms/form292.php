@@ -498,6 +498,7 @@
 		var info_section=document.createElement('div');
 			var customer_info=document.createElement('div');
 			var business_info=document.createElement('div');
+			var clear_both=document.createElement('div');
 
 		var table_container=document.createElement('div');
 
@@ -511,8 +512,9 @@
 			logo.setAttribute('style','width:100%;text-align:center;');
 
 		info_section.setAttribute('style','width:100%;min-height:100px;font-size:14px;');
-			customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:48%;height:100px;border: 1px solid #000;border-radius:5px;');
-			business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:48%;height:100px;border: 1px solid #000;border-radius:5px;');
+			customer_info.setAttribute('style','padding:5px;margin:5px 1px;float:left;width:48%;height:100px;border: 1px solid #000;border-radius:5px;');
+			business_info.setAttribute('style','padding:5px;margin:5px 1px;float:right;width:48%;height:100px;border: 1px solid #000;border-radius:5px;');
+			clear_both.setAttribute('style','clear:both');
 
 		footer.setAttribute('style','width:98%;min-height:100px;');
 			jurisdiction.setAttribute('style','margin:10px;width:98%;min-height:20px;text-align:left;font-size:12px;');
@@ -606,6 +608,7 @@
 
 		info_section.appendChild(customer_info);
 		info_section.appendChild(business_info);
+		info_section.appendChild(clear_both);
 
 		footer.appendChild(jurisdiction);
 		footer.appendChild(business_contact);
