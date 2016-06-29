@@ -14,7 +14,7 @@ class send_mailer_json
 	public $username=null;
 	public $password=null;
 	public $sender_id=null;
-  public $domain=null;
+ `` public $domain=null;
 	public $url=null;
 
 	public function __construct($domain)
@@ -30,7 +30,7 @@ class send_mailer_json
 	public function direct_send($subject,$message,$message_attachment,$receivers,$from,$from_name)
 	{
 		$merge_vars=array();
-	  $to=array();
+	  	$to=array();
 		$receivers_array=json_decode($receivers,true);
 
 		$global_merge_vars=array(

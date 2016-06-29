@@ -112,7 +112,7 @@
 				var rowsHTML="<tr>";
 					rowsHTML+="<form id='form292_"+result.id+"'></form>";
 						rowsHTML+="<td data-th='Domain'>";
-							rowsHTML+="<textarea class='floatlabel' placeholder='Name' readonly='readonly' form='form292_"+result.id+"'>"+result.customer_name+"</textarea>";
+							rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Name' readonly='readonly' form='form292_"+result.id+"'>"+result.customer_name+"</textarea>";
 							rowsHTML+="<input type='text' class='floatlabel' placeholder='Domain' readonly='readonly' form='form292_"+result.id+"' value='"+result.domain+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Period'>";
