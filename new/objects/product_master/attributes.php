@@ -9,9 +9,9 @@
 		function initialize_object_product_master_attributes(obj_name,obj_id)
 		{
             var container=document.getElementById('object_product_master_attributes');
-            container.innerHTML="";        
+            container.innerHTML="";
 			var attribute_data={data_store:'attributes',
-                           indexes:[{index:'id'},{index:'attribute'},{index:'value'},{index:'type',exact:'product'},{index:'name',value:obj_name}]};
+                           indexes:[{index:'id'},{index:'attribute'},{index:'value'},{index:'type',exact:'product'},{index:'name',exact:obj_name}]};
             read_json_rows('',attribute_data,function(results)
             {
                 results.forEach(function(result)
@@ -24,10 +24,10 @@
                             rowsHTML+=result.value;
                         rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-					
+
 					$(container).append(rowsHTML);
-				});		
+				});
             });
-		}        
+		}
 	</script>
 </div>
