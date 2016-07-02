@@ -340,7 +340,7 @@
 
 		function form351_import_template()
 		{
-			var data_array=['id','name','type','issuer','description','term','preferred','accounts'];
+			var data_array=['id','name','type','issuer','description','term','preferred','accounts','commissions'];
 			my_array_to_csv(data_array);
 		};
 
@@ -377,6 +377,9 @@
 				var accounts_array=row.accounts.split(';');
 				var accounts=JSON.stringify(accounts_array);
 
+				var com_array=row.accounts.split(';');
+				var commissions=JSON.stringify(com_array);
+
 				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'name',value:row.name},
 	 					{index:'type',value:row.type},
@@ -385,6 +388,7 @@
 						{index:'accounts',value:accounts},
 	 					{index:'issuer',value:row.issuer},
 	 					{index:'description',value:row.description},
+						{index:'commissions',value:commissions},
 	 					{index:'last_updated',value:last_updated}];
 
 				data_json.data.push(data_json_array);
