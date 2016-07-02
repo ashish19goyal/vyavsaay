@@ -1,8 +1,8 @@
-<div id='report9' class='tab-pane portlet box red-sunglo'>	   
+<div id='report9' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report9_ini();'>Refresh</a>
-		</div>		
+		</div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
@@ -15,7 +15,7 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
 
 	<div class="portlet-body">
@@ -46,11 +46,11 @@
 			</tfoot>
 		</table>
 	</div>
-		
+
 	<script>
 
         function report9_header_ini()
-        {	
+        {
             var form=document.getElementById('report9_header');
             var name_filter=form.elements['item_name'];
             var make_filter=form.elements['make'];
@@ -75,9 +75,10 @@
 
             $(start_date_filter).datepicker();
             $(end_date_filter).datepicker();
-            $(start_date_filter).val(get_my_past_date((get_my_time()-7*86400000)));
-            $(end_date_filter).val(vTime.date());
-            $('#report9').formcontrol();
+            start_date_filter.value=get_my_past_date((get_my_time()-7*86400000));
+            end_date_filter.value=vTime.date();
+			var paginator=$('#report9_body').paginator({'visible':false,'container':$('#report9_body')});
+			setTimeout(function(){$('#report9').formcontrol();},1000);
         }
 
         function report9_ini()
@@ -238,7 +239,7 @@
                                 $('#report9_foot').html(total_row);
 
                                 initialize_static_tabular_report_buttons('Sales Report','report9');
-                                
+
                                 hide_loader();
                             });
                         });
@@ -247,6 +248,6 @@
             });
         };
 
-	
+
 	</script>
 </div>
