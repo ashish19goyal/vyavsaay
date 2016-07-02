@@ -329,7 +329,7 @@ function form268_ini()
                     rowsHTML+="</td>";
                 rowsHTML+="</tr>";
 
-                $('#form268_body').prepend(rowsHTML);
+                $('#form268_body').append(rowsHTML);
 				var fields=document.getElementById("form268_"+result.id);
 				var quantity_filter=fields.elements[2];
 				var amount_filter=fields.elements[3];

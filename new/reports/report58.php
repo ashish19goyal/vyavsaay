@@ -2,6 +2,7 @@
 	<div class="portlet-title">
 		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report58_ini();'>Refresh</a>
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report58_popup_action();'>Add Entry</a>
 		</div>
 		<div class="actions">
             <div class="btn-group">
@@ -26,7 +27,7 @@
 			<fieldset>
 				<label><input type='text' placeholder="Account" class='floatlabel' required name='account'></label>
 				<label><input type='text' placeholder="Start Date" class='floatlabel' required name='start'></label>
-        <label><input type='text' placeholder="End Date" class='floatlabel' required name='end'></label>
+        		<label><input type='text' placeholder="End Date" class='floatlabel' required name='end'></label>
 				<label><input type='submit' class='submit_hidden'></label>
 			</fieldset>
 		</form>
@@ -39,11 +40,60 @@
 					<th>Debit</th>
 					<th>Credit</th>
 					<th>Balance</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody id='report58_body'>
 			</tbody>
 		</table>
+	</div>
+
+	<div class='modal_forms'>
+		<a href='#report58_popup' data-toggle="modal" id='report58_popup_link'></a>
+		<div id="report58_popup" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form id='report58_popup_form' autocomplete="off">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+							<h4 class="modal-title">Add Ledger Entry</h4>
+						</div>
+						<div class="modal-body">
+			               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+							   <div class="row">
+									<div class="col-sm-12 col-md-4">Type</div>
+						     		<div class="col-sm-12 col-md-8"><input type='text' form='report58_popup_form' name='type' required></textarea></div>
+						       </div>
+							   <div class="row">
+ 									<div class="col-sm-12 col-md-4">Date</div>
+ 					     			<div class="col-sm-12 col-md-8"><input type='text' required form='report58_popup_form' name='date'></div>
+ 						      </div>
+ 			                  <div class="row">
+									<div class="col-sm-12 col-md-4">Account</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' required form='report58_popup_form' name='account'></div>
+						      </div>
+			                  <div class="row">
+									<div class="col-sm-12 col-md-4">Narration</div>
+	                              	<div class="col-sm-12 col-md-8"><textarea required form='report58_popup_form' name='narration'></textarea></div>
+						       </div>
+						       <div class="row">
+									<div class="col-sm-12 col-md-4">Amount</div>
+						     		<div class="col-sm-12 col-md-8"><input type='number' step='any' form='report58_popup_form' name='amount' required></div>
+						       </div>
+							   <div class="row">
+									<div class="col-sm-12 col-md-4">Balance</div>
+						     		<div class="col-sm-12 col-md-8"><input type='text' readonly='readonly' form='report58_popup_form' name='balance'></div>
+						       </div>
+			               </div>
+			             </div>
+						<div class="modal-footer">
+							<button type="submit" class="btn green" form='report58_popup_form' name='save'>Add</button>
+							<button type="button" data-dismiss='modal' class="btn red" form='report58_popup_form' name='cancel'>Cancel</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<script>
@@ -162,7 +212,11 @@
                   rowsHTML+="<td data-th='Balance'>";
                       rowsHTML+="Rs. "+vUtil.round(balance,2);
                   rowsHTML+="</td>";
-                  rowsHTML+="</tr>";
+				  rowsHTML+="<td data-th='Balance'>";
+				  		if(tran.source=='manual entry')
+                        	rowsHTML+="<button type='button' class='btn red' name='delete' title='Delete' onclick=\"report58_delete_item($(this),'"+tran.id+"');\"><i class='fa fa-trash'></i></button>";
+                  rowsHTML+="</td>";
+				  rowsHTML+="</tr>";
 
                   $('#report58_body').append(rowsHTML);
                   var particulars_link=document.getElementById('report58_particulars_'+tran.id);
@@ -172,10 +226,132 @@
 						element_display(tran.source_id,source_form);
                   });
               });
-            	initialize_static_tabular_report_buttons('Ledger','report58');
-              	hide_loader();
+	        	initialize_static_tabular_report_buttons('Ledger','report58');
+	          	hide_loader();
             });
         };
 
+		function report58_delete_item(button,data_id)
+		{
+			if(is_delete_access('report58'))
+			{
+				modal115_action(function()
+				{
+					var data_json={data_store:'transactions',
+			 				data:[{index:'id',value:data_id}]};
+
+					delete_json(data_json);
+					$(button).parent().parent().remove();
+				});
+			}
+			else
+			{
+				$("#modal2_link").click();
+			}
+		}
+
+		function report58_popup_action()
+		{
+			var form=document.getElementById("report58_popup_form");
+			var type_filter=form.elements['type'];
+			var date_filter=form.elements['date'];
+			var account_filter=form.elements['account'];
+			var narration_filter=form.elements['narration'];
+			var amount_filter=form.elements['amount'];
+			var balance_filter=form.elements['balance'];
+
+			$(date_filter).datepicker();
+			date_filter.value=vTime.date();
+
+			set_static_value_list_json('transactions','type',type_filter);
+
+			var accounts_data={data_store:'accounts',return_column:'acc_name'};
+			set_my_value_list_json(accounts_data,account_filter);
+
+			vUtil.onChange(account_filter,function()
+			{
+				var transactions_data={data_store:'transactions',
+								indexes:[{index:'id'},
+										{index:'type'},
+										{index:'amount'},
+										{index:'acc_name',exact:account_filter.value}]};
+				read_json_rows('report58',transactions_data,function(transactions)
+				{
+					console.log(transactions);
+					var balance_amount=0;
+					transactions.forEach(function(tran)
+					{
+						if(tran.type=='received')
+						{
+							balance_amount-=parseFloat(tran.amount);
+						}
+						else if(tran.type=='given')
+						{
+							balance_amount+=parseFloat(tran.amount);
+						}
+					});
+
+					if(balance_amount==0)
+					{
+						balance_filter.value="Rs. 0";
+					}
+					else if(balance_amount>0)
+					{
+						balance_filter.value="Receivable: Rs. "+balance_amount;
+					}
+					else
+					{
+						balance_amount=(-balance_amount);
+						balance_filter.value="Payable: Rs. "+balance_amount;
+					}
+				});
+			});
+
+			$(form).off('submit');
+			$(form).on('submit',function(event)
+			{
+				///////////////////////////////////////
+				event.preventDefault();
+				var received_amount=amount_filter.value;
+				var receipt_date=get_raw_time(date_filter.value);
+				var type=type_filter.value;
+				var receipt_type='received';
+				if(type=='debit')
+				{
+					receipt_type='given';
+				}
+				var account_name=account_filter.value;
+				var narration=narration_filter.value;
+				var last_updated=vTime.unix();
+				var p_id=get_new_key();
+
+				if(is_create_access('report58'))
+				{
+					var transaction_json={data_store:'transactions',
+						data:[{index:'id',value:p_id},
+							{index:'acc_name',value:account_name},
+							{index:'type',value:receipt_type},
+							{index:'amount',value:received_amount},
+							{index:'tax',value:'0'},
+							{index:'source_id',value:p_id},
+							{index:'source_info',value:''},
+							{index:'source',value:'manual entry'},
+							{index:'source_link',value:'repot58'},
+							{index:'trans_date',value:receipt_date},
+							{index:'notes',value:narration},
+							{index:'last_updated',value:last_updated}]};
+
+					create_json(transaction_json);
+				}
+				else
+				{
+					$("#modal2_link").click();
+				}
+
+				$(form).find(".close").click();
+			});
+
+			$("#report58_popup_link").click();
+		}
 	</script>
 </div>

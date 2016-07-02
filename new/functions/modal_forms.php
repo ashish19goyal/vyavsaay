@@ -1113,48 +1113,6 @@
 		</form>
 	</div>
 
-    <a href='#modal106' data-toggle="modal" id='modal106_link'></a>
-	<div id="modal106" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id='modal106_form' autocomplete="off">
-	            	<div class="modal-header">
-                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    	<h4 class="modal-title">Add Ledger Entry</h4>
-                	</div>
-	                <div class="modal-body">
-		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
-		               	  <div class="row">
-									<div class="col-sm-12 col-md-4">Account</div>
-					     			<div class="col-sm-12 col-md-8"><input type='text' required form='modal106_form' name='account'></div>
-					      </div>
-		                  <div class="row">
-									<div class="col-sm-12 col-md-4">Date</div>
-					     			<div class="col-sm-12 col-md-8"><input type='text' required form='modal106_form' name='date'></div>
-					      </div>
-		                  <div class="row">
-									<div class="col-sm-12 col-md-4">Particulars</div>
-                              <div class="col-sm-12 col-md-8"><textarea required form='modal106_form' name='particulars'></textarea></div>
-					       </div>
-					       <div class="row">
-									<div class="col-sm-12 col-md-4">Type</div>
-					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal106_form' name='type' required></textarea></div>
-					       </div>
-					       <div class="row">
-									<div class="col-sm-12 col-md-4">Amount</div>
-					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal106_form' class='form-control input-medium date-picker' name='amount' required></div>
-					       </div>
-		               </div>
-		             </div>
-	             	<div class="modal-footer">
-	               	<button type="submit" class="btn green" form='modal106_form' name='save'>Save</button>
-	               	<button type="button" data-dismiss='modal' class="btn red" form='modal106_form' name='cancel'>Cancel</button>
-	             	</div>
-                </form>
-            </div>
-        </div>
-    </div>
-
 	<div id="modal107" title="Update Schedule">
 		<form id='modal107_form' autocomplete="off">
 			<fieldset>

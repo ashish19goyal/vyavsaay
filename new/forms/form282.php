@@ -172,6 +172,42 @@
             });
         };
 
+		function form282_update_item(form)
+		{
+			if(is_update_access('form282'))
+			{
+				var data_id=form.elements['id'].value;
+				var last_updated=vTime.unix();
+				var receipt_date=vTime.unix({date:form.elements[2].value});
+				var received_amount=form.elements[3].value;
+				var narration=form.elements[4].value;
+
+				var transaction_json={data_store:'transactions',
+					data:[{index:'id',value:data_id},
+						{index:'amount',value:received_amount},
+						{index:'trans_date',value:receipt_date},
+						{index:'notes',value:narration},
+						{index:'last_updated',value:last_updated}]};
+
+				update_json(transaction_json);
+
+	        	var receipt_json={data_store:'receipts',
+		 				data:[{index:'id',value:data_id},
+		 					{index:'amount',value:received_amount},
+		 					{index:'narration',value:narration},
+		 					{index:'date',value:receipt_date},
+		 					{index:'last_updated',value:last_updated}]};
+
+				update_json(receipt_json);
+
+				$(form).readonly();
+			}
+			else
+			{
+				$("#modal2_link").click();
+			}
+		}
+
 		function form282_delete_item(button)
 		{
 			if(is_delete_access('form282'))
