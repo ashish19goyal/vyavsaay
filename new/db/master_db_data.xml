@@ -1840,7 +1840,6 @@
 			<tablename>product_master</tablename>
 			<keycolumn>name</keycolumn>
 			<references_value>supplier_item_mapping--item--update;purchase_order_items--item_name--update;supplier_bill_items--product_name--update;supplier_return_items--item_name--update;offers--product_name--update;offers--free_product_name--update;sale_order_items--item_name--update;bill_items--item_name--update;customer_return_items--item_name--update;product_instances--product_name--update;sale_prices--product_name--update;inventory_adjust--product_name--update;discarded--product_name--update;attributes--name--update;cross_sells--name--update;cross_sells--cross_name--update;reviews--name--update;pre_requisites--name--update;pre_requisites--requisite_name--update;manage_pre_requisites--name--update;area_utilization--item_name--update;store_movement--item_name--update;manufacturing_schedule--product--update;sku_mapping--system_sku--update;channel_prices--item--update;category_sku_mapping--sku--update;checklist_mapping--item--update;unbilled_sale_items--item_name--update;unbilled_purchase_items--item_name--update;loyalty_programs--reward_product--update;service_request_items--item_name--update;quotation_items--item_name--update;production_plan_items--item--update;prescription_items--item--update;testing_results--item--update;</references_value>
-			<references_id></references_id>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1848,7 +1847,6 @@
 			<tablename>services</tablename>
 			<keycolumn>name</keycolumn>
 			<references_value>bill_items--item_name;offers--service;offers--free_service_name;sale_order_items--item_name;bill_items--item_name;bill_items--free_with;service_instances--service_name;attributes--item_name;cross_sells--name;cross_sells--cross_name;reviews--name;pre_requisites--name;pre_requisites--requisite_name;area_utilization--service_name;newsletter_items--item_name</references_value>
-			<references_id>task_instances--source_id</references_id>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1856,7 +1854,6 @@
 			<tablename>staff</tablename>
 			<keycolumn>acc_name</keycolumn>
 			<references_value>accounts--acc_name;attendance--acc_name;task_instances--assignee;transactions--receiver;transactions--giver;cash_register--acc_name;payments--acc_name;bill_items--staff</references_value>
-			<references_id></references_id>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1864,7 +1861,6 @@
 			<tablename>customers</tablename>
 			<keycolumn>acc_name</keycolumn>
 			<references_value>accounts--acc_name;transactions--receiver;transactions--giver;cash_register--acc_name;payments--acc_name;credit_notes--acc_name;sale_orders--customer_name;bills--customer_name;customer_returns--customer</references_value>
-			<references_id></references_id>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1872,7 +1868,6 @@
 			<tablename>suppliers</tablename>
 			<keycolumn>acc_name</keycolumn>
 			<references_value>accounts--acc_name;purchase_orders--supplier;supplier_bills--supplier;supplier_returns--supplier;transactions--receiver;transactions--giver;cash_register--acc_name;payments--acc_name</references_value>
-			<references_id></references_id>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1880,7 +1875,6 @@
 			<tablename>accounts</tablename>
 			<keycolumn>acc_name</keycolumn>
 			<references_value>transactions--receiver;transactions--giver;cash_register--acc_name;payments--acc_name</references_value>
-			<references_id></references_id>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1896,7 +1890,6 @@
 			<tablename>assets</tablename>
 			<keycolumn>name</keycolumn>
 			<references_value>pre_requisites--requisite_name;asset_valuations--asset_name;asset_maintenance--asset_name</references_value>
-			<references_id></references_id>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1904,7 +1897,6 @@
 			<tablename>task_type</tablename>
 			<keycolumn>name</keycolumn>
 			<references_value>task_instances--name;pre_requisites--requisite_name</references_value>
-			<references_id></references_id>
 			<last_updated>1</last_updated>
 		</row>
 	</de_duplication_ref>

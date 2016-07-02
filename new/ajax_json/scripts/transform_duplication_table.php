@@ -25,10 +25,6 @@
 			transform_deduplication($dbname);
 		}
 	}
-	else if($pass=='test')
-	{
-		transform_deduplication('re_user_nvs');
-	}
 	else
 	{
 		echo "Invalid session";
