@@ -344,7 +344,7 @@
 
         function form347_import_template()
         {
-            var data_array=['id','application number','policy number','description','issuer','agent','premium','policy start date','policy end date','policy issue date','policy type','issue type','policy holder name','policy holder phone','policy holder email','policy holder address','policy holder birthdate','status'];
+            var data_array=['id','application number','policy number','policy name','description','issuer','agent','premium','policy start date','policy end date','policy issue date','policy type','issue type','policy holder name','policy holder phone','policy holder email','policy holder address','policy holder birthdate','status'];
             my_array_to_csv(data_array);
         };
 
@@ -354,7 +354,7 @@
                                     {column:'policy holder name',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
 									{column:'policy holder phone',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
 									{column:'policy holder email',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
-									{column:'policy holder address',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
+									{column:'policy holder address',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()/-]+$')},
 									{column:'policy holder birthdate',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
 									{column:'issuer',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
 									{column:'agent',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
@@ -395,7 +395,8 @@
 						var holder=row['policy holder name']+" ("+row['policy holder phone']+")";
 						var data_json_array=[{index:'id',value:row.id},
 			 					{index:'policy_num',value:row['policy number'],unique:'yes'},
-			 					{index:'agent',value:row['agent']},
+								{index:'policy_name',value:row['policy name']},
+								{index:'agent',value:row['agent']},
 								{index:'policy_holder',value:holder},
 								{index:'issuer',value:row['issuer']},
 								{index:'description',value:row['description']},
