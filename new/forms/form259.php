@@ -1,4 +1,4 @@
-<div id='form259' class='tab-pane portlet box green-meadow'>	   
+<div id='form259' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class="actions">
             <div class="btn-group">
@@ -15,9 +15,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -26,7 +26,7 @@
 					<form id='form259_header'></form>
 						<th><input type='text' placeholder="Quotation #" class='floatlabel' name='quot' form='form259_header'></th>
 						<th><input type='text' placeholder="Customer" class='floatlabel' name='cust' form='form259_header'></th>
-						<th><input type='text' placeholder="Date" readonly='readonly' form='form259_header'></th>
+						<th><input type='text' placeholder="Date" class='floatlabel' name='date' form='form259_header'></th>
 						<th><input type='text' placeholder="Status" class='floatlabel' name='status' form='form259_header'></th>
 						<th><input type='submit' form='form259_header' style='visibility: hidden;'></th>
 				</tr>
@@ -35,13 +35,14 @@
 			</tbody>
 		</table>
 	</div>
-    
+
     <script>
     function form259_header_ini()
     {
         var filter_fields=document.getElementById('form259_header');
         var quot_filter=filter_fields.elements['quot'];
         var cust_filter=filter_fields.elements['cust'];
+		var date_filter=filter_fields.elements['date'];
         var status_filter=filter_fields.elements['status'];
 
         $(filter_fields).off('submit');
@@ -57,6 +58,8 @@
         set_my_filter_json(quot_data,quot_filter);
         set_my_filter_json(cust_data,cust_filter);
         set_static_filter_json('quotation','status',status_filter);
+
+		$('#form259').formcontrol();
     };
 
     function form259_ini()
@@ -71,22 +74,22 @@
         var filter_fields=document.getElementById('form259_header');
         var fquot_id=filter_fields.elements['quot'].value;
         var fname=filter_fields.elements['cust'].value;
+		var fdate=vTime.unix({date:filter_fields.elements['date'].value});
         var fstatus=filter_fields.elements['status'].value;
 
         var paginator=$('#form259_body').paginator();
-			
-			var columns=new Object();
-				columns.count=paginator.page_size();
-				columns.start_index=paginator.get_index();
-				columns.data_store='quotation';
-				columns.indexes=[{index:'id',value:fid},
-                                {index:'quot_num',value:fquot_id},
-								{index:'customer',value:fname},
-								{index:'status',value:fstatus},
-								{index:'date'}];
-			
+
+		var columns={count:paginator.page_size(),
+					start_index:paginator.get_index(),
+					data_store:'quotation',
+					indexes:[{index:'id',value:fid},
+                            {index:'quot_num',value:fquot_id},
+							{index:'customer',value:fname},
+							{index:'status',value:fstatus},
+							{index:'date',value:fdate}]};
+
         read_json_rows('form259',columns,function(results)
-        {	
+        {
             results.forEach(function(result)
             {
                 var rowsHTML="<tr>";
@@ -106,7 +109,7 @@
                         rowsHTML+="<td data-th='Action'>";
                             rowsHTML+="<input type='hidden' form='form259_"+result.id+"' value='"+result.id+"'>";
                             rowsHTML+="<button type='button' class='btn red' form='form259_"+result.id+"' title='Delete Quotation' onclick='form259_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-                        rowsHTML+="</td>";			
+                        rowsHTML+="</td>";
                 rowsHTML+="</tr>";
 
                 $('#form259_body').append(rowsHTML);
@@ -132,14 +135,14 @@
                 var form=document.getElementById(form_id);
                 var quot_num=form.elements[0].value;
                 var data_id=form.elements[4].value;
-                
+
                 var data_json={data_store:'quotation',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id}],
 	 				log_data:{title:'Deleted',notes:'Quotation # '+quot_num,link_to:'form259'}};
- 				
+
                 var item_json={data_store:'quotation_items',data:[{index:'quotation_id',value:data_id}]};
- 				
+
                 delete_json(data_json);
                 delete_json(item_json);
 
@@ -151,6 +154,6 @@
             $("#modal2_link").click();
         }
     }
-        
+
     </script>
 </div>

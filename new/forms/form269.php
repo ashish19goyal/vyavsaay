@@ -26,9 +26,9 @@
 					<form id='form269_header'></form>
 						<th><input type='text' placeholder="Challan #" class='floatlabel' name='invoice' form='form269_header'></th>
 						<th><input type='text' placeholder="Customer" class='floatlabel' name='cust' form='form269_header'></th>
-						<th><input type='text' placeholder="Date" readonly='readonly' form='form269_header'></th>
-						<th><input type='text' placeholder="Amount" readonly="readonly" form='form269_header'></th>
-						<th><input type='text' placeholder="Narration" readonly="readonly" form='form269_header'></th>
+						<th><input type='text' placeholder="Date" class='floatlabel' name='date' form='form269_header'></th>
+						<th><input type='text' placeholder="Manual Challan #" class='floatlabel' name='man_challan' form='form269_header'></th>
+						<th><input type='text' placeholder="Details" readonly="readonly" form='form269_header'></th>
 						<th><input type='submit' form='form269_header' style='visibility: hidden;'></th>
 				</tr>
 			</thead>
@@ -43,9 +43,11 @@
             var filter_fields=document.getElementById('form269_header');
             var bill_filter=filter_fields.elements['invoice'];
             var name_filter=filter_fields.elements['cust'];
+			var man_challan_filter=filter_fields.elements['man_challan'];
 
             var bill_data={data_store:'bills',return_column:'bill_num'};
             var cust_data={data_store:'customers',return_column:'acc_name'};
+			var manc_data={data_store:'bills',return_column:'acc_name'};
 
             $(filter_fields).off('submit');
             $(filter_fields).on('submit',function(event)
@@ -70,6 +72,8 @@
             var filter_fields=document.getElementById('form269_header');
             var fnum=filter_fields.elements['invoice'].value;
             var fname=filter_fields.elements['cust'].value;
+			var fdate=vTime.unix({date:filter_fields.elements['date'].value});
+			var fmanc=filter_fields.elements['man_challan'].value;
 
             var paginator=$('#form269_body').paginator();
 
@@ -79,7 +83,8 @@
                 			indexes:[{index:'id',value:fid},
                                     {index:'bill_num',value:fnum},
                                     {index:'customer_name',value:fname},
-                                    {index:'bill_date'},
+									{index:'challan_num',value:fmanc},
+                                    {index:'bill_date',value:fdate},
                                     {index:'total'},
                                     {index:'status'},
 									{index:'notes'},
@@ -100,11 +105,12 @@
                             rowsHTML+="<td data-th='Date'>";
                                 rowsHTML+="<input type='text' readonly='readonly' form='form269_"+result.id+"' value='"+get_my_past_date(result.bill_date)+"'>";
                             rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Amount'>";
-                                rowsHTML+="<input type='text' readonly='readonly' form='form269_"+result.id+"' value='"+result.total+"'>";
+                            rowsHTML+="<td data-th='Manual Challan #'>";
+                                rowsHTML+="<input type='text' readonly='readonly' form='form269_"+result.id+"' value='"+result.challan_num+"'>";
                             rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Narration'>";
-                                rowsHTML+="<textarea readonly='readonly' form='form269_"+result.id+"'>"+result.notes+"</textarea>";
+							rowsHTML+="<td data-th='Details'>";
+								rowsHTML+="<input type='number' step='any' class='floatlabel' placeholder='Amount' readonly='readonly' form='form269_"+result.id+"' value='"+result.total+"'>";
+                                rowsHTML+="<textarea class='floatlabel' placeholder='Narration' readonly='readonly' form='form269_"+result.id+"'>"+result.notes+"</textarea>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Action'>";
                                 rowsHTML+="<input type='hidden' form='form269_"+result.id+"' value='"+result.id+"' name='id'>";
@@ -121,9 +127,11 @@
                 {
 					item['Challan #']=item.bill_num;
                     item['Challan Date']=get_my_past_date(item.bill_date);
+					item['Manual Challan #']=item.challan_num;
                     delete item.bill_date;
 					delete item.bill_num;
                     delete item.type;
+					delete item.challan_num;
                 });
 				hide_loader();
             });

@@ -12751,104 +12751,74 @@ function modal171_action(doc_type,person,person_type,func,attachment_type)
 		var message_attachment=container.innerHTML;
 		var from=get_session_var('email');
 
-		var person_filter=form.elements[1];
+		var person_filter=form.elements['to'];
 		$(person_filter).off('blur');
-		form.elements[3].value=doc_type;
+		form.elements['subject'].value=doc_type;
 
-		$("#modal171").dialog("open");
+		$("#modal171_link").click();
 
 		if(person!="")
 		{
-			var email_id_xml="<suppliers>"+
-					"<email></email>"+
-					"<name></name>"+
-					"<acc_name exact='yes'>"+person+"</acc_name>"+
-					"</suppliers>";
+			var email_id_xml={data_store:'suppliers',indexes:[{index:'email'},{index:'name'},{index:'acc_name',exact:person}]};
 			if(person_type=='customer')
 			{
-				email_id_xml="<customers>"+
-						"<email></email>"+
-						"<name></name>"+
-						"<acc_name exact='yes'>"+person+"</acc_name>"+
-						"</customers>";
+				email_id_xml.data_store='customers';
 			}
 			else if(person_type=='staff')
 			{
-				email_id_xml="<staff>"+
-						"<email></email>"+
-						"<name></name>"+
-						"<acc_name exact='yes'>"+person+"</acc_name>"+
-						"</staff>";
+				email_id_xml.data_store='staff';
 			}
 
-			fetch_requested_data('',email_id_xml,function(emails)
+			read_json_rows('',email_id_xml,function(emails)
 			{
 				if(emails.length>0)
 				{
-					form.elements[1].value=person;
-					form.elements[2].value=emails[0].email;
-					form.elements[5].value=emails[0].name;
+					form.elements['to'].value=person;
+					form.elements['email'].value=emails[0].email;
+					form.elements['hid'].value=emails[0].name;
 				}
-				$('textarea').autosize();
+				$('#modal171').formcontrol();
 				hide_loader();
 			});
 		}
 		else
 		{
-			var person_xml="<suppliers>"+
-						"<acc_name></acc_name>"+
-						"</suppliers>";
+			var person_xml={data_store:'suppliers',return_column:'acc_name'};
 			if(person_type=='customer')
 			{
-				person_xml="<customers>"+
-						"<acc_name></acc_name>"+
-						"</customers>";
+				person_xml.data_store='customers';
 			}
 			else if(person_type=='staff')
 			{
-				person_xml="<staff>"+
-						"<acc_name></acc_name>"+
-						"</staff>";
+				person_xml.data_store='staff';
 			}
 
 			person_filter.removeAttribute('readonly');
 
-			set_my_value_list_func(person_xml,person_filter,function ()
+			set_my_value_list_json(person_xml,person_filter,function ()
 			{
 				$(person_filter).focus();
 			});
 
 			$(person_filter).on('blur',function ()
 			{
-				var email_id_xml="<suppliers count='1'>"+
-					"<email></email>"+
-					"<name></name>"+
-					"<acc_name exact='yes'>"+person_filter.value+"</acc_name>"+
-					"</suppliers>";
-
+				var email_id_xml={data_store:'suppliers',indexes:[{index:'email'},{index:'name'},{index:'acc_name',exact:person_filter.value}]};
 				if(person_type=='customer')
 				{
-					email_id_xml="<customers>"+
-							"<email></email>"+
-							"<name></name>"+
-							"<acc_name exact='yes'>"+person_filter.value+"</acc_name>"+
-							"</customers>";
+					email_id_xml.data_store='customers';
 				}
 				else if(person_type=='staff')
 				{
-					email_id_xml="<staff>"+
-							"<email></email>"+
-							"<name></name>"+
-							"<acc_name exact='yes'>"+person_filter.value+"</acc_name>"+
-							"</staff>";
+					email_id_xml.data_store='staff';
 				}
-				fetch_requested_data('',email_id_xml,function(emails)
+
+				read_json_rows('',email_id_xml,function(emails)
 				{
-					form.elements[2].value=emails[0].email;
-					form.elements[5].value=emails[0].name;
+					form.elements['email'].value=emails[0].email;
+					form.elements['hid'].value=emails[0].name;
 				});
 			});
-			$('textarea').autosize();
+			$('#modal171').formcontrol();
 			hide_loader();
 		}
 
@@ -12857,15 +12827,14 @@ function modal171_action(doc_type,person,person_type,func,attachment_type)
 		{
 			event.preventDefault();
 			show_loader();
-			var receiver_array=[{"email":form.elements[2].value,"name":form.elements[5].value}];
+			var receiver_array=[{"email":form.elements['email'].value,"name":form.elements['hid'].value}];
 			var receiver=JSON.stringify(receiver_array);
 
-			var sub=form.elements[3].value;
-			var email_message=form.elements[4].value;
+			var sub=form.elements['subject'].value;
+			var email_message=form.elements['body'].value;
 			email_message=email_message.replace(/\n/g,'<br>');
 			if(typeof attachment_type!='undefined')
 			{
-				//console.log(message_attachment);
 				send_email_attachment(receiver,from,business_title,sub,email_message,message_attachment,attachment_type,function()
 				{
 					hide_loader();
@@ -12878,7 +12847,7 @@ function modal171_action(doc_type,person,person_type,func,attachment_type)
 					hide_loader();
 				});
 			}
-			$("#modal171").dialog("close");
+			$(form).find(".close").click();
 		});
 	});
 }
@@ -16357,6 +16326,21 @@ function modal216_action()
 				{index:'status',value:'active'},
 				{index:'last_updated',value:last_updated}]};
 			create_json(data_json);
+
+			var data_json={data_store:'policy_commissions',
+			data:[{index:'id',value:get_new_key()},
+				{index:'policy_num',value:app_num},
+				{index:'commission_num',value:''},
+				{index:'issuer',value:pissuer},
+				{index:'policy_holder',value:fholder.value},
+				{index:'amount',value:'1000'},
+				{index:'agent',value:fagent.value},
+				{index:'issue_date',value:issue_date},
+				{index:'commission_type',value:'base'},
+				{index:'status',value:'pending'},
+				{index:'notes',value:''},
+				{index:'last_updated',value:last_updated}]};
+			create_json(commission_json);
 		}
 		else
 		{
@@ -16441,7 +16425,7 @@ function modal218_action()
 
 	$(fissue).datepicker();
 
-	set_static_value_list_json('policy_commissions','commission_type',ftype);
+	set_static_value_list_json('policy_types','commissions',ftype);
 
 	policies_data={data_store:'policies',return_column:'policy_num'};
 	set_my_value_list_json(policies_data,fpolicy);
@@ -16453,8 +16437,8 @@ function modal218_action()
 	$(fpolicy).on('blur change',function()
 	{
 		var policy_data={data_store:'policies',count:1,
-										indexes:[{index:'policy_name'},{index:'issuer'},{index:'policy_holder'},{index:'agent'},
-														{index:'policy_num',exact:fpolicy.value}]};
+						indexes:[{index:'policy_name'},{index:'issuer'},{index:'policy_holder'},{index:'agent'},
+						{index:'policy_num',exact:fpolicy.value}]};
 		read_json_rows('',policy_data,function(policies)
 		{
 			if(policies.length>0)

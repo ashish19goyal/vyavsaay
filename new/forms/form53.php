@@ -26,7 +26,7 @@
 					<form id='form53_header'></form>
 						<th><input type='text' placeholder="Bill #" class='floatlabel' name='bill' form='form53_header'></th>
 						<th><input type='text' placeholder="Supplier" class='floatlabel' name='supplier' form='form53_header'></th>
-						<th><input type='text' placeholder="Bill Date" readonly='readonly' name='date' form='form53_header'></th>
+						<th><input type='text' placeholder="Bill Date" class='floatlabel' name='date' form='form53_header'></th>
 						<th><input type='text' placeholder="Bill Total" readonly="readonly" form='form53_header'></th>
             <th><input type='text' placeholder="Notes" readonly="readonly" form='form53_header'></th>
 						<th><input type='submit' form='form53_header' style='visibility: hidden;'></th>
@@ -70,28 +70,26 @@
             var filter_fields=document.getElementById('form53_header');
             var fbill_id=filter_fields.elements['bill'].value;
             var fname=filter_fields.elements['supplier'].value;
+			var fdate=vTime.unix({date:filter_fields.elements['date'].value});
 
             var paginator=$('#form53_body').paginator();
 
-						var columns=new Object();
-								columns.count=paginator.page_size();
-								columns.start_index=paginator.get_index();
-								columns.data_store='supplier_bills';
-
-								columns.indexes=[{index:'id',value:fid},
-												{index:'bill_id',value:fbill_id},
-												{index:'supplier',value:fname},
-												{index:'bill_date'},
-												{index:'total'},
+			var columns={count:paginator.page_size(),
+						start_index:paginator.get_index(),
+						data_store:'supplier_bills',
+						indexes:[{index:'id',value:fid},
+						{index:'bill_id',value:fbill_id},
+						{index:'supplier',value:fname},
+						{index:'bill_date',value:fdate},
+						{index:'total'},
                         {index:'notes'},
-                        {index:'order_id'}];
+                        {index:'order_id'}]};
 
             read_json_rows('form53',columns,function(results)
             {
                 results.forEach(function(result)
                 {
-                    var rowsHTML="";
-                    rowsHTML+="<tr>";
+                    var rowsHTML="<tr>";
                         rowsHTML+="<form id='form53_"+result.id+"'></form>";
                             rowsHTML+="<td data-th='Bill Number'>";
                                 rowsHTML+="<a onclick=\"element_display('"+result.id+"','form21',['form122','form136','form158','form192','form270','form295','form333']);\"><input type='text' readonly='readonly' class='input_link' form='form53_"+result.id+"' value='"+result.bill_id+"'></a>";
@@ -121,13 +119,13 @@
                 });
 
                 $('#form53').formcontrol();
-								paginator.update_index(results.length);
-								initialize_tabular_report_buttons(columns,'Purchase Bills','form53',function (item)
+				paginator.update_index(results.length);
+				initialize_tabular_report_buttons(columns,'Purchase Bills','form53',function (item)
                 {
                     item.bill_date=get_my_past_date(item.bill_date);
                     delete item.order_id;
                 });
-								hide_loader();
+				hide_loader();
             });
         }
 

@@ -263,7 +263,6 @@ function modal_forms_ini()
 		dynamic_modal_array.push(i);
 	}
 	dynamic_modal_array.push(170);
-	dynamic_modal_array.push(171);
 	dynamic_modal_array.push(173);
 	dynamic_modal_array.push(174);
 	dynamic_modal_array.push(177);

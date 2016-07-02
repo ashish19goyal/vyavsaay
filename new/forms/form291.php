@@ -29,8 +29,8 @@
 					<form id='form291_header'></form>
 						<th><input type='text' placeholder="Receipt Id" class='floatlabel' name='receipt' form='form291_header'></th>
 						<th><input type='text' placeholder="Account" class='floatlabel' name='account' form='form291_header'></th>
-						<th><input type='text' placeholder="Amount" readonly='readonly' name='amount' form='form291_header'></th>
-						<th><input type='text' placeholder="Narration" class='floatlabel' name='narration' form='form291_header'></th>
+						<th><input type='text' placeholder="Date" class='floatlabel' name='date' form='form291_header'></th>
+						<th><input type='text' placeholder="Details" class='floatlabel' name='narration' form='form291_header'></th>
 						<th><input type='text' placeholder="Documents" readonly="readonly" name='docs' form='form291_header'></th>
                 		<th><input type='submit' form='form291_header' class='submit_hidden'></th>
 				</tr>
@@ -74,6 +74,7 @@
             var rid=filter_fields.elements['receipt'].value;
             var faccount=filter_fields.elements['account'].value;
             var fnarration=filter_fields.elements['narration'].value;
+			var fdate=vTime.unix({date:filter_fields.elements['date'].value});
 
             var paginator=$('#form291_body').paginator();
 
@@ -83,7 +84,8 @@
 						indexes:[{index:'id',value:fid},
 								{index:'receipt_id',value:rid},
 								{index:'acc_name',value:faccount},
-								{index:'amount'},{index:'date'},
+								{index:'amount'},
+								{index:'date',value:fdate},
                                 {index:'narration',value:fnarration},
 								{index:'type',exact:'received'}]};
 
@@ -99,24 +101,24 @@
                             rowsHTML+="<td data-th='Account'>";
                                 rowsHTML+="<textarea readonly='readonly' form='form291_"+result.id+"'>"+result.acc_name+"</textarea>";
                             rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Amount'>";
-                                rowsHTML+="<input type='number' class='floatlabel' placeholder='Rs.' readonly='readonly' form='form291_"+result.id+"' value='"+result.amount+"'>";
-                                rowsHTML+="<input type='hidden' form='form291_"+result.id+"' value='"+result.id+"'>";
+                            rowsHTML+="<td data-th='Date'>";
+								rowsHTML+="<input type='text' name='date' class='dblclick_editable' value='"+get_my_past_date(result.date)+"' readonly='readonly'>";
                             rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Narration'>";
-                                rowsHTML+="<input type='text' class='floatlabel' placeholder='Issued On' value='"+get_my_past_date(result.date)+"' readonly='readonly'>";
-                                rowsHTML+="<textarea readonly='readonly' form='form291_"+result.id+"' class='floatlabel' placeholder='Details'>"+result.narration+"</textarea>";
+                            rowsHTML+="<td data-th='Details'>";
+								rowsHTML+="<input type='number' class='floatlabel dblclick_editable' placeholder='Amount Rs.' readonly='readonly' form='form291_"+result.id+"' value='"+result.amount+"'>";
+                                rowsHTML+="<textarea readonly='readonly' form='form291_"+result.id+"' class='floatlabel dblclick_editable' placeholder='Narration'>"+result.narration+"</textarea>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Document'>";
                                 rowsHTML+="<div id='form291_documents_"+result.id+"'></div>";
                                 rowsHTML+="<a title='Add document' class='btn btn-circle btn-icon-only grey-cascade' id='form291_add_document_"+result.id+"'><i class='fa fa-plus'></i></a>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Action'>";
-                                rowsHTML+="<button type='button' class='btn yellow-saffron' form='form291_"+result.id+"' value='Print Receipt' name='print'><i class='fa fa-print'></i></button>";
+								rowsHTML+="<button type='button' class='btn yellow-saffron' form='form291_"+result.id+"' value='Print Receipt' name='print'><i class='fa fa-print'></i></button>";
                                 rowsHTML+="<button type='button' form='form291_"+result.id+"' value='Email Receipt' class='btn red-haze' name='email'><i class='fa fa-envelope'></i></button>";
                                 rowsHTML+="<input type='hidden' form='form291_"+result.id+"' name='address'>";
 								rowsHTML+="<input type='hidden' form='form291_"+result.id+"' value='"+result.id+"' name='id'>";
-                                rowsHTML+="<button type='button' class='btn red' form='form291_"+result.id+"' title='Delete' onclick='form291_delete_item($(this));'><i class='fa fa-trash'></i></button>";
+								rowsHTML+="<button type='submit' class='btn green' form='form291_"+result.id+"' title='Update'><i class='fa fa-save'></i></button>";
+                            	rowsHTML+="<button type='button' class='btn red' form='form291_"+result.id+"' title='Delete' onclick='form291_delete_item($(this));'><i class='fa fa-trash'></i></button>";
                             rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
@@ -125,8 +127,16 @@
                     var print_button=fields.elements['print'];
                     var share_button=fields.elements['email'];
                     var address_filter=fields.elements['address'];
+					var date_filter=fields.elements['date'];
 
                     var doc_filter=document.getElementById('form291_add_document_'+result.id);
+
+					$(fields).off('submit');
+					$(fields).on('submit',function(e)
+					{
+						e.preventDefault();
+						form291_update_item(fields);
+					});
 
                     $(doc_filter).on('click',function ()
                     {
@@ -180,11 +190,13 @@
                             print_form291(func,result.receipt_id,result.acc_name,result.amount,result.date,result.narration,address_filter.value);
                         });
                     });
+
+					$(date_filter).datepicker();
                 });
 
                 $('#form291').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Receipts (Receivable)','form291',function (item)
+				initialize_tabular_report_buttons(columns,'Receipts','form291',function (item)
                 {
                     item.date=get_my_past_date(item.date);
                 });

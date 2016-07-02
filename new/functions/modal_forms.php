@@ -2438,17 +2438,43 @@
 		</form>
 	</div>
 
-	<div id="modal171" title="Email Document">
-		<form id='modal171_form' autocomplete="off">
-			<fieldset>
-				<label>To: <input type='text' readonly="readonly"></label><br>
-				<label>Email: <textarea required title='Separate email IDs with semicolon(;)'></textarea></label><br>
-				<label>Subject: <textarea></textarea></label><br>
-				<label>Body: <textarea></textarea></label><br>
-				<input type='hidden'>
-				<input type="submit" value='Send' class='modal_submit'>
-			</fieldset>
-		</form>
+	<a href='#modal171' data-toggle="modal" id='modal171_link'></a>
+	<div id="modal171" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form id='modal171_form' autocomplete="off">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+						<h4 class="modal-title">Email Document</h4>
+					</div>
+					<div class="modal-body">
+					   <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+						  <div class="row">
+							   <div class="col-sm-12 col-md-4">To</div>
+							   <div class="col-sm-12 col-md-8"><input type='text' form='modal171_form' readonly='readonly' name='to'></div>
+						  </div>
+						  <div class="row">
+							   <div class="col-sm-12 col-md-4">Email</div>
+							   <div class="col-sm-12 col-md-8"><textarea required form='modal171_form' name='email' title='Use semicolon(;) to spearate multiple email Ids'></textarea></div>
+						  </div>
+						  <div class="row">
+								<div class="col-sm-12 col-md-4">Subject</div>
+								<div class="col-sm-12 col-md-8"><textarea form='modal171_form' required name='subject'></textarea></div>
+						  </div>
+						  <div class="row">
+								<div class="col-sm-12 col-md-4">Body</div>
+								<div class="col-sm-12 col-md-8"><textarea form='modal171_form' name='body' required></textarea></div>
+								<input type='hidden' name='hid'>
+						  </div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn green" form='modal171_form' name='save'>Send</button>
+						<button type="button" class="btn red" form='modal171_form' data-dismiss='modal' name='cancel'>Cancel</button>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
 
     <a href='#modal172' data-toggle="modal" id='modal172_link'></a>
@@ -2458,39 +2484,39 @@
                 <form id='modal172_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    	<h4 class="modal-title">Add Receipt</h4>
+                    	<h4 class="modal-title">Add Payable</h4>
                 	</div>
 	                <div class="modal-body">
 		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
 		                  <div class="row">
-								   <div class="col-sm-12 col-md-4">Receipt Id</div>
-					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal172_form' required name='receipt_id'></div>
-					     		</div>
+							   <div class="col-sm-12 col-md-4">Payable Id</div>
+					     	   <div class="col-sm-12 col-md-8"><input type='text' form='modal172_form' required name='receipt_id'></div>
+					      </div>
 		                  <div class="row">
-								   <div class="col-sm-12 col-md-4">Date</div>
-					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal172_form' required name='date'></div>
-					       </div>
+							   <div class="col-sm-12 col-md-4">Date</div>
+					     	   <div class="col-sm-12 col-md-8"><input type='text' form='modal172_form' required name='date'></div>
+					      </div>
 		                  <div class="row">
-								   <div class="col-sm-12 col-md-4">Account</div>
-					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal172_form' required name='account'></div>
-					     		</div>
+								<div class="col-sm-12 col-md-4">Account</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal172_form' required name='account'></div>
+					      </div>
 		                  <div class="row">
-								   <div class="col-sm-12 col-md-4">Narration</div>
-                                    <div class="col-sm-12 col-md-8"><textarea form='modal172_form' name='narration'></textarea></div>
-					     		</div>
+						        <div class="col-sm-12 col-md-4">Narration</div>
+                                <div class="col-sm-12 col-md-8"><textarea form='modal172_form' name='narration'></textarea></div>
+					      </div>
 		                  <div class="row">
-								   <div class="col-sm-12 col-md-4">Receipt Amount</div>
-					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' min='0' form='modal172_form' name='amount' required></div>
-					     		</div>
+						        <div class="col-sm-12 col-md-4">Amount</div>
+					     		<div class="col-sm-12 col-md-8"><input type='number' step='any' min='0' form='modal172_form' name='amount' required></div>
+					      </div>
 		                  <div class="row">
-								   <div class="col-sm-12 col-md-4">Balance</div>
-					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal172_form' name='balance' readonly='readonly'></div>
-					     		</div>
-                </div>
-                </div>
+						        <div class="col-sm-12 col-md-4">Balance</div>
+					    		<div class="col-sm-12 col-md-8"><input type='text' form='modal172_form' name='balance' readonly='readonly'></div>
+					      </div>
+                		</div>
+                	</div>
 	             	<div class="modal-footer">
-	               	<button type="submit" class="btn green" form='modal172_form' name='save'>Add</button>
-	               	<button type="button" class="btn red" form='modal172_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	               		<button type="submit" class="btn green" form='modal172_form' name='save'>Add</button>
+	               		<button type="button" class="btn red" form='modal172_form' data-dismiss='modal' name='cancel'>Cancel</button>
 	             	</div>
                 </form>
             </div>

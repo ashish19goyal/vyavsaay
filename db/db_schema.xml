@@ -543,6 +543,7 @@
 	<bill_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<bill_id index='yes' type="BIGINT"></bill_id>
+			<s_no index='yes' type="INT"></s_no>
 			<item_name index='yes' type="TEXT"></item_name>
 			<item_desc index='no' type="TEXT"></item_desc>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>

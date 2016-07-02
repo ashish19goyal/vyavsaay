@@ -29,8 +29,8 @@
 					<form id='form282_header'></form>
 						<th><input type='text' placeholder="Receipt Id" class='floatlabel' name='receipt' form='form282_header'></th>
 						<th><input type='text' placeholder="Account" class='floatlabel' name='account' form='form282_header'></th>
-						<th><input type='text' placeholder="Amount" readonly='readonly' name='amount' form='form282_header'></th>
-						<th><input type='text' placeholder="Narration" class='floatlabel' name='narration' form='form282_header'></th>
+						<th><input type='text' placeholder="Date" class='floatlabel' name='date' form='form282_header'></th>
+						<th><input type='text' placeholder="Details" class='floatlabel' name='narration' form='form282_header'></th>
 						<th><input type='text' placeholder="Documents" readonly="readonly" name='docs' form='form282_header'></th>
             			<th><input type='submit' form='form282_header' class='submit_hidden'></th>
 				</tr>
@@ -74,6 +74,7 @@
             var rid=filter_fields.elements['receipt'].value;
             var faccount=filter_fields.elements['account'].value;
             var fnarration=filter_fields.elements['narration'].value;
+			var fdate=vTime.unix({date:filter_fields.elements['date'].value});
 
             var paginator=$('#form282_body').paginator();
 
@@ -83,7 +84,8 @@
 						indexes:[{index:'id',value:fid},
 						{index:'receipt_id',value:rid},
 						{index:'acc_name',value:faccount},
-						{index:'amount'},{index:'date'},
+						{index:'amount'},
+						{index:'date',value:fdate},
                         {index:'narration',value:fnarration},
 						{index:'type',exact:'paid'}]};
 
@@ -99,12 +101,12 @@
                             rowsHTML+="<td data-th='Account'>";
                                 rowsHTML+="<textarea readonly='readonly' form='form282_"+result.id+"'>"+result.acc_name+"</textarea>";
                             rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Amount'>";
-                                rowsHTML+="<input type='number' class='floatlabel' placeholder='Rs.' readonly='readonly' form='form282_"+result.id+"' value='"+result.amount+"'>";
+                            rowsHTML+="<td data-th='Date'>";
+								rowsHTML+="<input type='text' name='date' class='dblclick_editable' form='form282_"+result.id+"' value='"+get_my_past_date(result.date)+"' readonly='readonly'>";
                             rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Narration'>";
-                                rowsHTML+="<input type='text' class='floatlabel' form='form282_"+result.id+"' placeholder='Issued On' value='"+get_my_past_date(result.date)+"' readonly='readonly'>";
-                                rowsHTML+="<textarea readonly='readonly' class='floatlabel' placeholder='Details' form='form282_"+result.id+"'>"+result.narration+"</textarea>";
+                            rowsHTML+="<td data-th='Details'>";
+								rowsHTML+="<input type='number' class='floatlabel dblclick_editable' placeholder='Amount Rs.' readonly='readonly' form='form282_"+result.id+"' value='"+result.amount+"'>";
+						        rowsHTML+="<textarea readonly='readonly' class='floatlabel dblclick_editable' placeholder='Narration' form='form282_"+result.id+"'>"+result.narration+"</textarea>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Document'>";
                                 rowsHTML+="<div id='form282_documents_"+result.id+"'></div>";
@@ -112,7 +114,8 @@
                             rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form282_"+result.id+"' value='"+result.id+"' name='id'>";
-								rowsHTML+="<button type='button' class='btn red' form='form282_"+result.id+"' title='Delete' onclick='form282_delete_item($(this));'><i class='fa fa-trash'></i></button>";
+								rowsHTML+="<button type='submit' class='btn green' form='form282_"+result.id+"' title='Update'><i class='fa fa-save'></i></button>";
+                            	rowsHTML+="<button type='button' class='btn red' form='form282_"+result.id+"' title='Delete' onclick='form282_delete_item($(this));'><i class='fa fa-trash'></i></button>";
                             rowsHTML+="</td>";
 					rowsHTML+="</tr>";
 
@@ -120,6 +123,14 @@
 
                     var fields=document.getElementById('form282_'+result.id);
                     var doc_filter=document.getElementById('form282_add_document_'+result.id);
+					var date_filter=fields.elements['date'];
+
+					$(fields).off('submit');
+					$(fields).on('submit',function(e)
+					{
+						e.preventDefault();
+						form282_update_item(fields);
+					});
 
                     $(doc_filter).on('click',function ()
                     {
@@ -147,11 +158,13 @@
                         }
                         document.getElementById('form282_documents_'+result.id).innerHTML=docHTML;
                     });
+
+					$(date_filter).datepicker();
                 });
 
                 $('#form282').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Receipts (Payable)','form282',function (item)
+				initialize_tabular_report_buttons(columns,'Payables','form282',function (item)
                 {
                     item.date=get_my_past_date(item.date);
                 });

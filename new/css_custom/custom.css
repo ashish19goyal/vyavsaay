@@ -522,3 +522,7 @@ ul.v_task_list li>.task-status>a.done>i:hover{
     z-index:10040;
 }
 /********************/
+
+.capitalize{
+	text-transform: capitalize;
+}

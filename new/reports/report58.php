@@ -150,7 +150,7 @@
                   rowsHTML+="<td data-th='Date'>";
                       rowsHTML+=get_my_past_date(tran.trans_date);
                   rowsHTML+="</td>";
-                  rowsHTML+="<td data-th='Particulars'><a id='report58_particulars_"+tran.id+"'>";
+                  rowsHTML+="<td data-th='Particulars' style='text-transform:capitalize;'><a id='report58_particulars_"+tran.id+"'>";
                       rowsHTML+=particulars;
                   rowsHTML+="</a></td>";
                   rowsHTML+="<td data-th='Debit'>";

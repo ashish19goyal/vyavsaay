@@ -32,7 +32,7 @@
 
         <br>
 
-    	<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
+    	<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables sortable" width="100%">
 			<thead>
 				<tr style='color:#9a9a9a;'>
           			<th>S.No.</th>
@@ -169,6 +169,12 @@ function form268_header_ini()
 	$(bill_date).val(vTime.date());
 	customers_filter.value='';
 
+	var body_elem=document.getElementById('form268_body');
+	body_elem.addEventListener('table_sort',function(e)
+	{
+		form268_update_serial_numbers();
+	},false);
+
 	var paginator=$('#form268_body').paginator({visible:false});
   	$('#form268').formcontrol();
 }
@@ -272,7 +278,8 @@ function form268_ini()
 
 		var bill_items_column={data_store:"bill_items",
                       indexes:[{index:'id'},
-                              {index:'item_name'},
+							  {index:'s_no'},
+							  {index:'item_name'},
                               {index:'item_desc'},
                               {index:'unit_price'},
                               {index:'quantity'},
@@ -286,34 +293,60 @@ function form268_ini()
                               {index:'to_date'}]};
 		read_json_rows('form268',bill_items_column,function(results)
         {
+			results.sort(function(a,b)
+			{
+				if(parseInt(a.s_no)>parseInt(b.s_no))
+				{	return 1;}
+				else
+				{	return -1;}
+			});
+
             results.forEach(function(result)
             {
                 var id=result.id;
                 var rowsHTML="<tr>";
                 rowsHTML+="<form id='form268_"+id+"'></form>";
-                    rowsHTML+="<td data-th='S.No.'>";
+                    rowsHTML+="<td data-th='S.No.' id='form268_sno_"+id+"'>";
+						rowsHTML+=result.s_no;
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Item'>";
                         rowsHTML+="<a onclick=\"show_object('product_master','"+result.item_name+"');\"><textarea readonly='readonly' form='form268_"+id+"'>"+result.item_name+"</textarea></a>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Details'>";
-                        rowsHTML+="<textarea readonly='readonly' form='form268_"+id+"'>"+result.item_desc+"</textarea>";
+                        rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form268_"+id+"'>"+result.item_desc+"</textarea>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Quantity'>";
-                        rowsHTML+="<input type='number' readonly='readonly' form='form268_"+id+"' value='"+result.quantity+"' step='any' placeholder='"+result.unit+"' class='floatlabel_right'>";
+                        rowsHTML+="<input type='number' readonly='readonly' class='dblclick_editable' form='form268_"+id+"' value='"+result.quantity+"' step='any' placeholder='"+result.unit+"' class='floatlabel_right'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Amount'>";
-						rowsHTML+="<input type='number' placeholder='Amount' class='floatlabel' readonly='readonly' form='form268_"+id+"' value='"+result.amount+"'>";
+						rowsHTML+="<input type='number' placeholder='Amount' class='floatlabel dblclick_editable' readonly='readonly' form='form268_"+id+"' value='"+result.amount+"'>";
 				    	rowsHTML+="<input type='number' placeholder='Rate' class='floatlabel' readonly='readonly' form='form268_"+id+"' value='"+result.unit_price+"'>";
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Action'>";
                         rowsHTML+="<input type='hidden' form='form268_"+id+"' value='"+id+"'>";
-                        rowsHTML+="<input type='button' class='submit_hidden' form='form268_"+id+"' id='save_form268_"+id+"'>";
+                        rowsHTML+="<input type='button' class='submit_hidden' name='save' form='form268_"+id+"' id='save_form268_"+id+"'>";
                         rowsHTML+="<button type='button' class='btn red' form='form268_"+id+"' id='delete_form268_"+id+"' onclick='form268_delete_item($(this)); form268_get_totals();' name='delete'><i class='fa fa-trash'></i></button>";
                     rowsHTML+="</td>";
                 rowsHTML+="</tr>";
 
                 $('#form268_body').prepend(rowsHTML);
+				var fields=document.getElementById("form268_"+result.id);
+				var quantity_filter=fields.elements[2];
+				var amount_filter=fields.elements[3];
+				var price_filter=fields.elements[4];
+				var save_button=fields.elements['save'];
+
+				$(amount_filter).add(quantity_filter).on('blur',function(event)
+				{
+					price_filter.value=vUtil.round((parseFloat(amount_filter.value)/parseFloat(quantity_filter.value)),2);
+					$(price_filter).floatlabel();
+				});
+
+				$(save_button).on("click", function(event)
+				{
+					event.preventDefault();
+					form268_update_item(fields);
+				});
             });
 
             form268_update_serial_numbers();
@@ -345,20 +378,20 @@ function form268_add_item()
 		var id=get_new_key();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form268_"+id+"' autocomplete='off'></form>";
-			rowsHTML+="<td data-th='S.No.'>";
+			rowsHTML+="<td data-th='S.No.' id='form268_sno_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Item'><div class='btn-overlap'>";
 				rowsHTML+="<input type='text' placeholder='Item' required id='form268_item_"+id+"' form='form268_"+id+"'>";
 				rowsHTML+="<button class='btn btn-icon-only default right-overlap' onclick=\"modal194_action('#form268_item_"+id+"');\"><i class='fa fa-search'></i></button></div>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Details'>";
-				rowsHTML+="<textarea form='form268_"+id+"' placeholder='Details'></textarea>";
+				rowsHTML+="<textarea form='form268_"+id+"' class='dblclick_editable' placeholder='Details'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
-				rowsHTML+="<input type='number' min='0' required placeholder='Quantity' form='form268_"+id+"' step='any'> <b id='form268_unit_"+id+"'></b>";
+				rowsHTML+="<input type='number' min='0' class='dblclick_editable' required placeholder='Quantity' form='form268_"+id+"' step='any'> <b id='form268_unit_"+id+"'></b>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+="<input type='number' required placeholder='Amount' class='floatlabel' form='form268_"+id+"' step='any'>";
+				rowsHTML+="<input type='number' required placeholder='Amount' class='floatlabel dblclick_editable' form='form268_"+id+"' step='any'>";
 				rowsHTML+="<input type='number' placeholder='Rate' class='floatlabel' required readonly='readonly' form='form268_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
@@ -420,6 +453,7 @@ function form268_add_item()
 		$(amount_filter).add(quantity_filter).on('blur',function(event)
 		{
 			price_filter.value=vUtil.round((parseFloat(amount_filter.value)/parseFloat(quantity_filter.value)),2);
+			$(price_filter).floatlabel();
 		});
 
 		form268_update_serial_numbers();
@@ -445,6 +479,7 @@ function form268_create_item(form)
 		var amount=form.elements[3].value;
 		var price=form.elements[4].value;
 		var data_id=form.elements[5].value;
+		var s_no=$('#form268_sno_'+data_id).html();
 		var save_button=form.elements[6];
 		var del_button=form.elements[7];
 
@@ -453,6 +488,7 @@ function form268_create_item(form)
 
         var data_json={data_store:'bill_items',
 	 				data:[{index:'id',value:data_id},
+							{index:'s_no',value:s_no},
 		 					{index:'item_name',value:name},
 		 					{index:'item_desc',value:details},
                 			{index:'batch',value:name},
@@ -489,6 +525,67 @@ function form268_create_item(form)
 		});
 
 		$(save_button).off('click');
+		$(save_button).on('click',function(e)
+		{
+			e.preventDefault();
+			form268_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2_link").click();
+	}
+}
+
+function form268_update_item(form)
+{
+	if(is_update_access('form268'))
+	{
+		var bill_id=document.getElementById("form268_master").elements['bill_id'].value;
+		var challan_type=document.getElementById("form268_master").elements['bill_type'].value;
+
+		var name=form.elements[0].value;
+		var details=form.elements[1].value;
+		var quantity=form.elements[2].value;
+		var amount=form.elements[3].value;
+		var price=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var s_no=$('#form268_sno_'+data_id).html();
+
+		var unit=form.elements[2].placeholder;
+		var last_updated=get_my_time();
+
+        var data_json={data_store:'bill_items',
+	 				data:[{index:'id',value:data_id},
+							{index:'s_no',value:s_no},
+		 					{index:'item_name',value:name},
+		 					{index:'item_desc',value:details},
+                			{index:'batch',value:name},
+	 						{index:'quantity',value:quantity},
+			                {index:'unit',value:unit},
+			                {index:'unit_price',value:price},
+			                {index:'amount',value:amount},
+			                {index:'bill_id',value:bill_id},
+	 						{index:'last_updated',value:last_updated}]};
+
+        update_json(data_json);
+
+		var inventory_json={data_store:'inventory_adjust',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'product_name',value:name},
+	 					{index:'batch',value:name},
+	 					{index:'item_desc',value:details},
+	 					{index:'quantity',value:quantity},
+			            {index:'source',value:'delivery challan'},
+			            {index:'source_id',value:bill_id},
+	 					{index:'last_updated',value:last_updated}]};
+
+		if(challan_type=='service')
+		{
+			update_json(inventory_json);
+		}
+
+		$(form).readonly();
 	}
 	else
 	{

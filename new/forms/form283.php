@@ -26,7 +26,7 @@
 					<form id='form283_header'></form>
 						<th><input type='text' placeholder="Invoice #" class='floatlabel' name='invoice' form='form283_header'></th>
 						<th><input type='text' placeholder="Customer" class='floatlabel' name='cust' form='form283_header'></th>
-						<th><input type='text' placeholder="Date" readonly='readonly' form='form283_header'></th>
+						<th><input type='text' placeholder="Date" class='floatlabel' name='date' form='form283_header'></th>
 						<th><input type='text' placeholder="Amount" readonly="readonly" form='form283_header'></th>
 						<th><input type='text' placeholder="Narration" readonly="readonly" form='form283_header'></th>
 						<th><input type='submit' form='form283_header' style='visibility: hidden;'></th>
@@ -70,6 +70,7 @@
             var filter_fields=document.getElementById('form283_header');
             var fnum=filter_fields.elements['invoice'].value;
             var fname=filter_fields.elements['cust'].value;
+			var fdate=vTime.unix({date:filter_fields.elements['date'].value});
 
             var paginator=$('#form283_body').paginator();
 
@@ -79,7 +80,7 @@
                 			indexes:[{index:'id',value:fid},
                                     {index:'bill_num',value:fnum},
                                     {index:'customer_name',value:fname},
-                                    {index:'bill_date'},
+                                    {index:'bill_date',value:fdate},
                                     {index:'total'},
                                     {index:'status'},
 									{index:'notes'},
