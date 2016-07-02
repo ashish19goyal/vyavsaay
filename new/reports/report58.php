@@ -119,7 +119,7 @@
             $(end_filter).datepicker();
             $(end_filter).val(vTime.date());
 
-						var paginator=$('#report58_body').paginator({'visible':false,'container':$('#report58_body')});
+			var paginator=$('#report58_body').paginator({'visible':false,'container':$('#report58_body')});
 
             $('#report58').formcontrol();
         }
@@ -183,18 +183,18 @@
                   var credit="-";
                   var debit="-";
                   var particulars=tran.source+" - "+tran.source_info+"<br>Notes: "+tran.notes;
-									var source_form=tran.source_link;
+				  var source_form=tran.source_link;
 
 					if(tran.type=='received')
 					{
 						balance-=parseFloat(tran.amount);
-	                  	credit="<span class='label label-sm label-success'>Rs. "+tran.amount+"</span>";
-	                }
+					  	credit="<span class='label label-sm label-success'>Rs. "+tran.amount+"</span>";
+					}
 					else
 					{
 						balance+=parseFloat(tran.amount);
-	                  	debit="<span class='label label-sm label-warning'>Rs. "+tran.amount+"</span>";
-	                }
+					  	debit="<span class='label label-sm label-warning'>Rs. "+tran.amount+"</span>";
+					}
 
                   var rowsHTML="<tr>";
                   rowsHTML+="<td data-th='Date'>";

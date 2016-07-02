@@ -125,7 +125,7 @@ var vTime = function ()
     this.datetime = function(opts)
     {
       var defs={time:Date.now(),inputFormat:'unix',resultFormat:'dd/mm/yyyy hh:mm',addDays:0};
-    	var sets = $.extend(defs, opts || {});
+      var sets = $.extend(defs, opts || {});
 
       if(sets.time=='' || sets.time==null || sets.time=='null' || sets.time==0)
       {
@@ -165,6 +165,28 @@ var vTime = function ()
     //returns only time based on passed arguments
     this.time = function(opts)
     {
+        var defs={time:Date.now(),inputFormat:'unix',resultFormat:'hh:mm'};
+        var sets = $.extend(defs, opts || {});
+
+        if(sets.time=='' || sets.time==null || sets.time=='null' || sets.time==0)
+        {
+          return "";
+        }
+
+        var inputDate=new Date(parseFloat(sets.time));
+        var hour=inputDate.getHours();
+    		if (hour < 10) {
+    		    hour = "0" + hour;
+    		}
+		var minutes=inputDate.getMinutes();
+		if (minutes < 10) {
+		    minutes = "0" + minutes;
+		}
+
+        switch(sets.resultFormat)
+        {
+          case 'hh:mm':return hour+":"+minutes;
+        }
     };
 
     //return array of dates matching the criteria, for the last 100 years
