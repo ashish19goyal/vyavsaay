@@ -111,11 +111,10 @@ function set_grid_item_4()
 function set_grid_item_5()
 {
 	var new_columns={sum:'yes',
-					data_store:'payments',
-					return_column:'total_amount',
+					data_store:'receipts',
+					return_column:'amount',
 					indexes:[{index:'date',lowerbound:(get_raw_time(vTime.date())-1000),upperbound:(get_raw_time(vTime.date())+86399999)},
-							{index:'type',exact:'received'},
-							{index:'status',array:['pending','closed']}]};
+							{index:'type',exact:'received'}]};
 
 	read_json_single_column(new_columns,function(results)
 	{
@@ -139,13 +138,11 @@ function set_grid_item_5()
 */
 function set_grid_item_6()
 {
-	var new_columns=new Object();
-		new_columns.sum='yes';
-		new_columns.data_store='payments';
-		new_columns.return_column='total_amount';
-		new_columns.indexes=[{index:'date',lowerbound:(get_raw_time(vTime.date())-1000),upperbound:(get_raw_time(vTime.date())+86399999)},
-							{index:'type',exact:'paid'},
-							{index:'status',array:['pending','closed']}];
+	var new_columns={sum:'yes',
+					data_store:'receipts',
+					return_column:'amount',
+					indexes:[{index:'date',lowerbound:(get_raw_time(vTime.date())-1000),upperbound:(get_raw_time(vTime.date())+86399999)},
+							{index:'type',exact:'paid'}]};
 
 	read_json_single_column(new_columns,function(results)
 	{

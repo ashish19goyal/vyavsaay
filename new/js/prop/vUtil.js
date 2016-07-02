@@ -266,6 +266,7 @@ var vUtil = function (options)
 	{
 		$(element).off('blur');
 		$(element).off('change');
+		//$(element).off('input');
 
 		$(element).on('blur change',function()
 		{
@@ -278,13 +279,13 @@ var vUtil = function (options)
 };
 vUtil=new vUtil();
 
-		function get_new_key()
-		{
-			var d=new Date();
-			var seconds=d.getTime();
-			//seconds=(seconds*1000)+Math.floor(Math.random()*1000);
-			return seconds;
-		}
+	function get_new_key()
+	{
+		var d=new Date();
+		var seconds=d.getTime();
+		//seconds=(seconds*1000)+Math.floor(Math.random()*1000);
+		return seconds;
+	}
 
     function htmlentities(str)
     {

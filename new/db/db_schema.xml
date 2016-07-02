@@ -1044,8 +1044,9 @@
 			<object index='yes' type="VARCHAR(50)"></object>
 			<tablename index='yes' type="TEXT"></tablename>
 			<keycolumn index='yes' type="TEXT"></keycolumn>
-			<references_value index='no' type="TEXT"></references_value>
-			<references_id index='no' type="TEXT"></references_id>
+			<ref_table index='yes' type="TEXT"></ref_table>
+			<ref_field index='yes' type="TEXT"></ref_field>
+			<action index='yes' type="VARCHAR(10)"></action><!--update/delete-->
 			<last_updated index='yes' type="BIGINT"></last_updated>		
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</de_duplication_ref>

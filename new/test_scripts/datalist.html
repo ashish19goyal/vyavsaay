@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Rounding</title>
+
+</head>
+<body>
+	<input type='text' list='my' onmouseover=log();>
+
+	<datalist id='my' onmouseover=log2(); onclick='log2();'>
+		<option value='1' onclick='log2();'></option>
+		<option value='2'></option>
+		<option value='3'></option>
+		<option value='4'></option>
+		<option value='5'></option>
+	</datalist>
+</body>
+<script src='../js/open/jquery-1.11.1.min.js'></script>
+<script>
+	function log()
+	{
+		console.log('inside 1');
+	}
+
+	function log2()
+	{
+		console.log('inside 2');
+	}
+</script>
+</html>

@@ -1044,8 +1044,9 @@
 			<object index='yes' type="VARCHAR(50)"></object>
 			<tablename index='yes' type="TEXT"></tablename>
 			<keycolumn index='yes' type="TEXT"></keycolumn>
-			<references_value index='no' type="TEXT"></references_value>
-			<references_id index='no' type="TEXT"></references_id>
+			<ref_table index='yes' type="TEXT"></ref_table>
+			<ref_field index='yes' type="TEXT"></ref_field>
+			<action index='yes' type="VARCHAR(10)"></action><!--update/delete-->
 			<last_updated index='yes' type="BIGINT"></last_updated>		
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</de_duplication_ref>
@@ -2202,7 +2203,7 @@
 			<notes index="no" type="TEXT"></notes>
 			<amount index="no" type="DECIMAL(12,2)"></amount>
 			<issue_date index='yes' type="BIGINT"></issue_date>
-			<commission_type index='yes' type="VARCHAR(30)"></commission_type><!-- customer/agent/third party -->
+			<commission_type index='yes' type="VARCHAR(30)"></commission_type><!-- base/orc -->
 			<status index='yes' type="VARCHAR(30)"></status><!-- pending/received/rejected -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
