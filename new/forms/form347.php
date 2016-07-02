@@ -363,7 +363,7 @@
 									{column:'policy end date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
 									{column:'policy issue date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
 									{column:'policy type',list:['life','health','car']},
-									{column:'issue type',list:['new','renewed','ported']},
+									{column:'issue type',list:['fresh','renewal','portability']},
 									{column:'status',list:['active','expired']}];
 
             var error_array=validate_import_array(data_array,validate_template_array);
