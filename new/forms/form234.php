@@ -17,6 +17,10 @@
                         <a id='form234_print'><i class='fa fa-print'></i> Print</a>
                     </li>
                     <li class="divider"> </li>
+					<li>
+                        <a id='form234_rename' onclick=modal227_action('product');><i class='fa fa-pencil'></i> Rename</a>
+                    </li>
+                    <li class="divider"> </li>
                     <li>
                         <a id='form234_upload' onclick=modal23_action(form234_import_template,form234_import,form234_import_validate);><i class='fa fa-upload'></i> Import</a>
                     </li>

@@ -1033,8 +1033,6 @@
 			<slave_value index='yes' type="TEXT"></slave_value>
 			<master_id index='yes' type="BIGINT"></master_id>
 			<master_value index='yes' type="TEXT"></master_value>
-			<references_value index='no' type="TEXT"></references_value>
-			<references_id index='no' type="TEXT"></references_id>
 			<status index='yes' type="VARCHAR(25)"></status><!-- pending/closed/cancelled -->
 			<last_updated index='yes' type="BIGINT"></last_updated>		
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>

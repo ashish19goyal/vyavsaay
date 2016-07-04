@@ -180,7 +180,7 @@ function modal_forms_ini()
 		width=400;
 	}
 
-	var static_modal_array=[1,50,51,53,54,57,83,84];
+	var static_modal_array=[1,50,53,54,57,83,84];
 	static_modal_array.forEach(function(i)
 	{
 		var dialog=$("#modal"+i).dialog({

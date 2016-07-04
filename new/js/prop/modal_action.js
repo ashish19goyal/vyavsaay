@@ -5026,152 +5026,6 @@ function modal50_action()
 
 
 /**
- * @modal Merge records
- * @modalNo 51
- */
-function modal51_action(object)
-{
-	if(is_create_access('form80'))
-	{
-		$("#modal51").dialog("open");
-
-		var de_duplication_data="<de_duplication>" +
-					"<id></id>" +
-					"<object exact='yes'>"+object+"</object>"+
-					"<tablename></tablename>"+
-					"<keycolumn></keycolumn>"+
-					"<slave_id></slave_id>"+
-				    "<slave_value></slave_value>"+
-				    "<master_id></master_id>"+
-				    "<master_value></master_value>"+
-				    "<references_value></references_value>"+
-				    "<references_id></references_id>"+
-				    "<status exact='yes'>pending</status>"+
-				    "</de_duplication>";
-
-		fetch_requested_data('',de_duplication_data,function(results)
-		{
-			results.forEach(function(result)
-			{
-				if(result.slave_id!==result.master_id)
-				{
-					//////deleting the slave record from master table
-					var slave_xml="<"+result.tablename+">" +
-							"<id>"+result.slave_id+"</id>" +
-							"</"+result.tablename+">";
-
-					delete_simple(slave_xml);
-
-					//////replacing slave values with master values
-					var refs_array=result.references_value.split(";");
-					refs_array.forEach(function(refs)
-					{
-						var refs_split=refs.split("--");
-						var tablename=refs_split[0];
-						var column=refs_split[1];
-						var action_type=refs_split[2];
-
-						if(tablename!=="" && tablename!==null)
-						{
-							if(action_type=='delete')
-							{
-								var refs_data="<"+tablename+">" +
-										"<"+column+" exact='yes'>"+result.slave_value+"</"+column+">" +
-										"</"+tablename+">";
-								delete_simple(refs_data);
-							}
-							else
-							{
-								var refs_data="<"+tablename+">" +
-										"<id></id>" +
-										"<"+column+" exact='yes'>"+result.slave_value+"</"+column+">" +
-										"</"+tablename+">";
-								fetch_requested_data('',refs_data,function(ref_results)
-								{
-									var data_xml="<"+tablename+">";
-									var counter=1;
-									var last_updated=get_my_time();
-									ref_results.forEach(function(ref_result)
-									{
-										if((counter%500)===0)
-										{
-											data_xml+="</"+tablename+"><separator></separator><"+tablename+">";
-										}
-
-										counter+=1;
-										data_xml+="<row>" +
-												"<id>"+ref_result.id+"</id>" +
-												"<"+column+">"+result.master_value+"</"+column+">" +
-												"<last_updated>"+last_updated+"</last_updated>" +
-												"</row>";
-									});
-									data_xml+="</"+tablename+">";
-									//console.log(data_xml);
-									update_batch(data_xml);
-								});
-							}
-						}
-					});
-
-					////replacing slave ids with master ids
-					var ref_ids_array=result.references_id.split(";");
-					ref_ids_array.forEach(function(ref_ids)
-					{
-						var ref_ids_split=ref_ids.split("--");
-						var tablename=ref_ids_split[0];
-						var column=ref_ids_split[1];
-
-						if(tablename!=="" && tablename!==null)
-						{
-							var ref_ids_data="<"+tablename+">" +
-									"<id></id>" +
-									"<"+column+" exact='yes'>"+result.slave_id+"</"+column+">" +
-									"</"+tablename+">";
-							fetch_requested_data('',ref_ids_data,function(ref_id_results)
-							{
-								var data_xml="<"+tablename+">";
-								var counter=1;
-								var last_updated=get_my_time();
-								ref_id_results.forEach(function(ref_id_result)
-								{
-									if((counter%500)===0)
-									{
-										data_xml+="</"+tablename+"><separator></separator><"+tablename+">";
-									}
-
-									counter+=1;
-									data_xml+="<row>" +
-											"<id>"+ref_id_result.id+"</id>" +
-											"<"+column+">"+result.master_id+"</"+column+">" +
-											"<last_updated>"+last_updated+"</last_updated>" +
-											"</row>";
-								});
-								data_xml+="</"+tablename+">";
-								update_batch(data_xml);
-
-							});
-						}
-					});
-
-				}
-
-				/////marking the record as closed in de-duplication table
-				var de_duplication_xml="<de_duplication>" +
-						"<id>"+result.id+"</id>" +
-						"<status>closed</status>" +
-						"<last_updated>"+get_my_time()+"</last_updated>" +
-						"</de_duplication>";
-				update_simple(de_duplication_xml);
-			});
-		});
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
  * @modalNo 53
  * @modal Scheme to customer
  */
@@ -17209,4 +17063,121 @@ function modal226_action(policy_id)
 	});
 
 	$("#modal226_link").click();
+}
+
+
+function modal227_action(object)
+{
+	var form=document.getElementById('modal227_form');
+	var old_filter=form.elements['old'];
+	var new_filter=form.elements['new'];
+
+	var table_data={data_store:'de_duplication_ref',count:1,
+						indexes:[{index:'object',exact:object},
+								{index:'tablename'},
+								{index:'keycolumn'}]};
+	read_json_rows('',table_data,function(tables)
+	{
+		if(tables.length>0)
+		var old_data={data_store:tables[0].tablename,return_column:tables[0].keycolumn};
+		set_my_value_list_json(old_data,old_filter);
+
+		read_json_single_column(old_data,function(names)
+		{
+			$(new_filter).off('blur');
+			$(new_filter).on('blur',function(event)
+			{
+				var found = $.inArray($(this).val(), names) > -1;
+				if(found)
+				{
+		            $(this).val('');
+		            $(this).attr('placeholder','This name already exists');
+		        }
+			});
+		});
+	});
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_update_access('form80'))
+		{
+			var last_updated=get_my_time();
+			show_loader();
+			var references_data={data_store:'de_duplication_ref',
+								indexes:[{index:'object',exact:object},
+										{index:'tablename'},
+										{index:'keycolumn'},
+										{index:'ref_table'},
+										{index:'ref_field'},
+										{index:'action'}]};
+			read_json_rows('form80',references_data,function(refs_array)
+			{
+				var request_counter=0;
+
+				var master_table_data={data_store:refs_array[0].tablename,return_column:'id',indexes:[{index:refs_array[0].keycolumn,exact:old_filter.value}]};
+				read_json_single_column(master_table_data,function(master_results)
+				{
+					if(master_results.length>0)
+					{
+						var search_json={data_store:refs_array[0].tablename,
+								data:[{index:'id',value:master_results[0]},
+									{index:refs_array[0].keycolumn,value:new_filter.value},
+									{index:'last_updated',value:last_updated}]};
+						update_json(search_json);
+					}
+				});
+				//////replacing slave values with master values
+				refs_array.forEach(function(refs)
+				{
+					var tablename=refs.ref_table;
+					var column=refs.ref_field;
+					var action_type=refs.action;
+
+					if(!vUtil.isBlank(tablename))
+					{
+						var refs_data={data_store:tablename,return_column:'id',indexes:[{index:column,exact:old_filter.value}]};
+						read_json_single_column(refs_data,function(ref_results)
+						{
+							var data_json={data_store:tablename,data:[]};
+
+							var counter=1;
+
+							ref_results.forEach(function(ref_result)
+							{
+								counter+=1;
+								var data_json_array=[{index:'id',value:ref_result},
+										{index:column,value:new_filter.value},
+										{index:'last_updated',value:last_updated}];
+
+								data_json.data.push(data_json_array);
+							});
+							request_counter+=1;
+							update_batch_json(data_json,function()
+							{
+								request_counter-=1;
+							});
+						});
+					}
+				});
+
+				var request_timer = setInterval(function()
+				{
+					if(request_counter===0)
+					{
+						clearInterval(request_timer);
+						hide_loader();
+					}
+				},500);
+			});
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
+		$('#modal227_form').find('.close').click();
+	});
+
+	$("#modal227_link").click();
 }

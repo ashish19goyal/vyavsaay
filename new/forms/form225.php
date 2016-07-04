@@ -153,7 +153,7 @@
                 set_my_value_json(address_data,address);
             });
 
-						$('#form225_body').paginator({visible:false});
+			$('#form225_body').paginator({visible:false});
             $('#form225').formcontrol();
         }
 
@@ -655,29 +655,29 @@
                 var last_updated=get_my_time();
 
                 var data_json={data_store:'bills',
-							 				data:[{index:'id',value:data_id},
-							 					{index:'customer_name',value:customer},
+	 				data:[{index:'id',value:data_id},
+	 					{index:'customer_name',value:customer},
                         {index:'bill_date',value:bill_date},
                         {index:'amount',value:amount},
                         {index:'total',value:total},
                         {index:'discount',value:discount},
                         {index:'tax',value:tax},
- 												{index:'last_updated',value:last_updated}],
+ 						{index:'last_updated',value:last_updated}],
                     log:'yes',
                     log_data:{title:'Updated',notes:bill_type+' Bill #'+bill_num,link_to:'form92'}};
 
-							var transaction_json={data_store:'transactions',
-										data:[{index:'id',value:data_id},
-											{index:'acc_name',value:customer},
-											{index:'type',value:'given'},
-											{index:'amount',value:total},
-											{index:'tax',value:tax},
-											{index:'source_id',value:data_id},
-											{index:'source_info',value:bill_num},
-											{index:'source',value:'sale bill'},
-											{index:'source_link',value:'form92'},
-											{index:'notes',value:''},
-											{index:'last_updated',value:last_updated}]};
+				var transaction_json={data_store:'transactions',
+							data:[{index:'id',value:data_id},
+								{index:'acc_name',value:customer},
+								{index:'type',value:'given'},
+								{index:'amount',value:total},
+								{index:'tax',value:tax},
+								{index:'source_id',value:data_id},
+								{index:'source_info',value:bill_num},
+								{index:'source',value:'sale bill'},
+								{index:'source_link',value:'form92'},
+								{index:'notes',value:''},
+								{index:'last_updated',value:last_updated}]};
 
                 update_json(data_json);
                 update_json(transaction_json);
