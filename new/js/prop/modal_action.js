@@ -10255,7 +10255,7 @@ function modal148_action()
 	$(template_button).off("click");
 	$(template_button).on("click",function(event)
 	{
-		var data_array=['awb','date','order_status','remark','received by'];
+		var data_array=['awb','date','order_status','location','remark','received by'];
 		my_array_to_csv(data_array);
 	});
 
@@ -10280,6 +10280,7 @@ function modal148_action()
 			var validate_template_array=[{column:'date',required:'yes',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
 										{column:'awb',required:'yes',regex:new RegExp('^[0-9a-zA-Z]+$')},
 										{column:'order_status',required:'yes',list:['delivered','undelivered','pending','in-transit','RTO Delivered','RTO in-transit']},
+										{column:'location',regex:new RegExp('^[0-9a-zA-Z\' _.,/@$!()-]+$')},
 										{column:'received by',regex:new RegExp('^[0-9a-zA-Z\' _.,/@$!()-]+$')},
 										{column:'remark',regex:new RegExp('^[0-9a-zA-Z\' _.,/@$!()-]+$')}];
 
@@ -10337,7 +10338,7 @@ function modal148_action()
 							var history_object=vUtil.jsonParse(data_row.order_history);
 							var new_history_object=new Object();
 							new_history_object.timeStamp=get_raw_time(data_row.date);
-							new_history_object.location=data_row['received by'];
+							new_history_object.location=data_row['location'];
 							new_history_object.status=data_row['order_status'];
 							new_history_object.details=data_row.remark;
 
