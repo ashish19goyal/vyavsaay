@@ -7,10 +7,9 @@ include_once 'config.php';
 
 class vDB
 {
-	private static $conn;
-  	private static $instance;
+	private $conn;
 
-	private function __construct($db_name)
+	public function __construct($db_name)
 	{
 		$config = config::getInstance();
 		$dbhost = $config->get('host');
@@ -24,67 +23,67 @@ class vDB
 
 		$dsn="mysql:host=".$dbhost.";dbname=".$dbname.";charset=utf8";
 		$options=array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
-		self::$conn = new \PDO($dsn, $dbuser, $dbpass, $options);
-	}
-
-	//returns a singleton instance of the class
-	public static function getInstance()
-	{
-		if(!isset(self::$instance))
-		{
-      		self::$instance = new vDB();
-    	}
-    	return self::$instance;
+		$this->conn = new \PDO($dsn, $dbuser, $dbpass, $options);
 	}
 
 	//db level functions
-	private static function dbSelect($query,$values)
+	public function dbSelect($query,$values)
 	{
-		$stmt=self::$conn->prepare($query);
+		$stmt=$this->conn->prepare($query);
 		$stmt->execute($values);
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
-	private static function dbExecute($query,$values)
+	public function dbExecute($query,$values)
 	{
-		$stmt=self::$conn->prepare($query);
+		$stmt=$this->conn->prepare($query);
 		return $stmt->execute($values);
 	}
 
 	//generic functions in the context of vyavsaay
-	public function vDelete($indexes)
+	public function vDelete($table,$indexes)
 	{
-		$whereArray=self::getWhereClause($indexes);
-		$query=self::getQuery('delete','',$whereArray['query']);
-		return self::dbExecute($query,$whereArray['values']);
+		$whereArray=$this->getWhereClause($indexes);
+		$query=$this->getQuery($table,'delete','',$whereArray['query']);
+		return $this->dbExecute($query,$whereArray['values']);
 	}
 
-	public function vUpdate($indexes,$data)
+	public function vUpdate($table,$indexes,$data)
 	{
-		$setArray=self::getSetClause($data);
-		$whereArray=self::getWhereClause($indexes);
-		$query=self::getQuery('update',$setArray['query'],$whereArray['query']);
+		$setArray=$this->getSetClause($data);
+		$whereArray=$this->getWhereClause($indexes);
+		$query=$this->getQuery($table,'update',$setArray['query'],$whereArray['query']);
 		$values=array_merge($setArray['values'],$whereArray['values']);
-		return self::dbExecute($query,$values);
+		return $this->dbExecute($query,$values);
 	}
 
-	public function vCreate($data)
+	public function vCreate($table,$data)
 	{
-		$valuesArray=self::getValuesClause($data);
-		$query=self::getQuery('create',$valuesArray['query']);
-		return self::dbExecute($query,$valuesArray['values']);
+		$valuesArray=$this->getValuesClause($data);
+		$query=$this->getQuery($table,'create',$valuesArray['query']);
+		return $this->dbExecute($query,$valuesArray['values']);
 	}
 
-	public function vRead($indexes)
+	public function vRead($table,$indexes)
 	{
-		$whereArray=self::getWhereClause($indexes);
-		$query=self::getQuery('read','',$whereArray['query']);
-		return self::dbSelect($query,$whereArray['values']);
+		$whereArray=$this->getWhereClause($indexes);
+		$query=$this->getQuery($table,'read','',$whereArray['query']);
+		return $this->dbSelect($query,$whereArray['values']);
+	}
+
+	public function vPut($table,$data)
+	{
+		$result=$this->vCreate($table,$data);
+		if(!$result)
+		{
+			$result=$this->vUpdate($table,array(),$data);
+		}
+		return $result;
 	}
 
 	public function __destruct()
 	{
-		unset(self::$conn);
+		unset($this->conn);
 	}
 }
 ?>

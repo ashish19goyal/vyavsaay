@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>API testing</title>
+<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+</head>
+
+<body>
+	<form id='form' onsubmit='performance(); return false;'>
+		<input type='text' name='url' placeholder='URL'>
+		<input type='text' name='username' placeholder='Username'>
+		<input type='text' name='key' placeholder='Key'>
+		<input type='text' name='indexes' placeholder='Indexes (JSON)'>
+		<input type='text' name='data' placeholder='Data (JSON)'>
+		<button type='submit'>Call API</button>
+	</form>
+</body>
+	<script>
+        function performance()
+        {
+			var form=document.getElementById('form');
+			var url=form.elements['url'].value;
+			var username=form.elements['username'].value;
+			var key=form.elements['key'].value;
+			var indexes=form.elements['indexes'].value;
+			var data=form.elements['data'].value;
+			$.ajax(
+			{
+				type: "POST",
+				url: "../api/"+url,
+				data: {indexes:indexes,data:data,username:username,key:key},
+				error:function(xhr, ajaxOptions, thrownError)
+				{
+					console.log(xhr.responseText);
+		    	},
+				success: function(return_data,return_status,e)
+				{
+					console.log(e.responseText);
+				}
+			});
+        }
+    </script>
+</html>

@@ -12,10 +12,6 @@ class config
 	private $attributes = array();
 	private static $instance;
 
-	/**
-	 * Constructor takes parameter filename that is to be handled
-	 * @param unknown $filename
-	 */
 	private function __construct()
 	{
 	    $root_folder="../../";
