@@ -54,8 +54,15 @@ class vDB
 	*/
 	public function dbExecute($query,$values)
 	{
-		$stmt=$this->conn->prepare($query);
-		return $stmt->execute($values);
+		$result = false;
+		try{
+			$stmt=$this->conn->prepare($query);
+			$result = $stmt->execute($values);
+		}catch(PDOException $e)
+		{
+			$result = false;
+		}
+		return $result;
 	}
 
 
@@ -126,7 +133,7 @@ class vDB
 		);
 		$query=$this->getQuery('select',$subQueries);
 		$values = array_merge($whereArray['values'],$limitArray['values']);
-		
+
 		$rows = $this->dbSelect($query,$values);
 
 		$startIndex = isset($options['startIndex']) ? $options['startIndex'] : 0;
