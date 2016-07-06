@@ -9,7 +9,7 @@
 			<status index='no' type="VARCHAR(45)"></status><!-- active/suspended/archived -->
 			<dbname index='no' type="VARCHAR(100)"></dbname>
 			<email index='no' type="VARCHAR(100)"></email>
-	</user_profile>		
+	</user_profile>
 	<api_key_mapping>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<api_key index='no' type="VARCHAR(100) NOT NULL"></api_key>
@@ -18,5 +18,9 @@
 			<dbname index='no' type="VARCHAR(100)"></dbname>
 			<call_limit index='no' type="DECIMAL(12,2)"></call_limit>
 			<data_stores index='no' type="TEXT"></data_stores>
+			<request_types index='no' type="TEXT"></request_types>
+			<unique_fields index='no' type="TEXT"></unique_fields>
+			<required_fields index='no' type="TEXT"></required_fields>
+			<access_control index='no' type="TEXT"></access_control>
 	</api_key_mapping>
 </re_xml>

@@ -22,6 +22,10 @@
 			"dbname":{"index": "no","type": "VARCHAR(100)"},
 			"call_limit":{"index": "no","type": "DECIMAL(12,2)"},
 			"data_stores":{"index": "no","type": "TEXT"},
+			"request_types":{"index": "no","type": "TEXT"},
+			"unique_fields":{"index": "no","type": "TEXT"},
+			"required_fields":{"index": "no","type": "TEXT"},
+			"access_control":{"index": "no","type": "TEXT"},
 			"last_updated":{"index": "yes","type": "BIGINT"}
 		}
 	}
