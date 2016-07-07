@@ -14,17 +14,17 @@ class s3_object
 	public $bucketName=null;
 	public $awsAccessKey=null;
 	public $awsSecretKey=null;
-  public $conn=null;
-  public $domain=null;
+  	public $conn=null;
+  	public $domain=null;
 
-  public function __construct($domain='vyavsaay',$bucket='vyavsaay-newsletter')
+  	public function __construct($domain='vyavsaay',$bucket='vyavsaay-newsletter')
 	{
 		$config = config::getInstance();
 
-    $this->bucketName=$bucket;
+    	$this->bucketName=$bucket;
 		$this->awsAccessKey=$config->get("awsAccessKey");
 		$this->awsSecretKey=$config->get("awsSecretKey");
-    $this->domain=$domain;
+    	$this->domain=$domain;
 		$this->s3=new S3($this->awsAccessKey, $this->awsSecretKey);
 		$this->conn=new db_connect('re_user_'.$domain);
 	}
