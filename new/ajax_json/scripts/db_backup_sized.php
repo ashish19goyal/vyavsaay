@@ -26,15 +26,17 @@
     $delete_command = "rm dummy/$dbname.sql";
     exec($delete_command);
 
+	$time = time();
+
     $files=scandir('dummy');
     foreach($files as $file)
     {
         if(preg_match("/".$dbname."/",$file))
         {
             $file_data = file_get_contents("dummy/".$file);
-            if($s3->putObject($file_data,$bucketName,time()."_".$file,S3::ACL_PUBLIC_READ,array(),array('Content-Type' => $mime)))
+            if($s3->putObject($file_data,$bucketName,$time."_".$file,S3::ACL_PUBLIC_READ,array(),array('Content-Type' => $mime)))
             {
-                echo "backed up ".$file;
+                echo "backed up ".$time."_".$file;
             }
             $file_delete_command = "rm dummy/$file";
             exec($file_delete_command);
