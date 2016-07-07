@@ -20,7 +20,7 @@
 	$s3 = new S3($awsAccessKey, $awsSecretKey);
 
     $backup_command = "mysqldump --opt -h $dbhost -u $dbuser -p$dbpass $dbname > dummy/$dbname.sql";
-		exec($backup_command);
+	exec($backup_command);
 
     $split_command = "split -d -b 10m dummy/$dbname.sql dummy/$dbname";
     exec($split_command);
