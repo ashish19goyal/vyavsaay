@@ -185,7 +185,7 @@
                     var bt=get_session_var('title');
                     $(share_button).on('click',function ()
                     {
-                        modal101_action('Payment Receipt - '+BT,result.acc_name,'customer',function (func)
+                        modal101_action('Payment Receipt - '+bt,result.acc_name,'customer',function (func)
                         {
                             print_form291(func,result.receipt_id,result.acc_name,result.amount,result.date,result.narration,address_filter.value);
                         });
@@ -295,7 +295,8 @@
             var footer=document.createElement('div');
                 var signature=document.createElement('div');
                 var jurisdiction=document.createElement('div');
-                var business_contact=document.createElement('div');
+				var clear=document.createElement('div');
+				var business_contact=document.createElement('div');
 
             ////////////setting styles for containers/////////////////////////
 
@@ -310,6 +311,7 @@
                 signature.setAttribute('style','display:block;float:right;width:100%;text-align:right;');
                 jurisdiction.setAttribute('style','display:block;margin:5px;width:100%;text-align:left;font-size:11px;');
                 business_contact.setAttribute('style','display:block;margin:5px;padding:0px;line-height:11px;width:100%;text-align:center;font-size:11px;');
+				clear.setAttribute('style','clear:both');
 
             ///////////////getting the content////////////////////////////////////////
 
@@ -358,7 +360,8 @@
 
             footer.appendChild(jurisdiction);
             footer.appendChild(signature);
-            footer.appendChild(business_contact);
+			footer.appendChild(clear);
+			footer.appendChild(business_contact);
 
             func(container);
         }

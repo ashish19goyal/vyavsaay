@@ -5314,11 +5314,11 @@ function modal101_action(doc_type,person,person_type,func,attachment_type,messag
                                  indexes:[{index:'email'},{index:'name'},{index:'acc_name',exact:person_filter.value}]};
 				if(person_type=='customer')
 				{
-            email_id_xml.data_store='customers';
+                    email_id_xml.data_store='customers';
 				}
 				else if(person_type=='staff')
 				{
-            email_id_xml.data_store='staff';
+                    email_id_xml.data_store='staff';
 				}
 				read_json_rows('',email_id_xml,function(emails)
 				{
@@ -5338,11 +5338,11 @@ function modal101_action(doc_type,person,person_type,func,attachment_type,messag
             var to_array=form.elements['email'].value.split(';');
 			var receiver_array=[];
 
-      to_array.forEach(function(to)
-      {
-          var receiver={"email":to,"name":form.elements['acc_name'].value};
-          receiver_array.push(receiver);
-      });
+		    to_array.forEach(function(to)
+		    {
+		     	var receiver={"email":to,"name":form.elements['acc_name'].value};
+		     	receiver_array.push(receiver);
+		    });
 
 			var receiver=JSON.stringify(receiver_array);
 			var sub=form.elements[3].value;
@@ -5357,7 +5357,7 @@ function modal101_action(doc_type,person,person_type,func,attachment_type,messag
 			}
 			else
 			{
-        send_email(receiver,from,business_title,sub,email_message,function()
+        		send_email(receiver,from,business_title,sub,email_message,function()
 				{
 					hide_loader();
 				});
