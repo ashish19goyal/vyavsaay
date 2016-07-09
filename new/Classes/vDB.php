@@ -74,13 +74,14 @@ class vDB
 	public function vDelete($indexes)
 	{
 		$whereArray=$this->getWhereClause($indexes);
-
 		$subQueries = array(
 				'where' => $whereArray['query']
 		);
-		$query=$this->getQuery('delete',$subQueries);
 
-		$query=$this->getQuery('delete','',$whereArray['query']);
+		// $selectQuery=$this->getQuery('select',$subQueries);
+		// $rows = $this->dbSelect($selectQuery,$whereArray['values']);
+
+		$query=$this->getQuery('delete',$subQueries);
 		return $this->dbExecute($query,$whereArray['values']);
 	}
 
@@ -107,14 +108,50 @@ class vDB
 	*/
 	public function vCreate($data)
 	{
-		$valuesArray=$this->getValuesClause($data);
+		$valuesArray = $this->getValuesClause($data);
+		$uniqueWhereArray = $this->getUniqueWhereClause($data);
+		$uniqueIndexesClause = $this->getIndexesClause();
+		$unique=0;
 
-		$subQueries = array(
-				'values' => $valuesArray['query']
-		);
-		$query=$this->getQuery('insert',$subQueries);
+		if(count($uniqueWhereArray['values']>0))
+		{
+			$selectSubqueries = array(
+					"where" => $uniqueWhereArray['query'],
+					"index" => $uniqueIndexesClause
+			);
+			$selectQuery = $this->getQuery('select',$selectSubqueries);
+			$rows = $this->dbSelect($selectQuery,$uniqueWhereArray['values']);
+			$unique = count($rows);
+		}
+		if($unique==0)
+		{
+			$subQueries = array(
+					'values' => $valuesArray['query']
+			);
+			$query=$this->getQuery('insert',$subQueries);
 
-		return $this->dbExecute($query,$valuesArray['values']);
+			if($this->dbExecute($query,$valuesArray['values']))
+			{
+				return array(
+					'status' => 'success',
+					'row' => $data
+				);
+			}
+			else{
+				return array(
+					'status' => 'error',
+					'description' => 'data could not be saved',
+					'row' => $data
+				);
+			}
+		}
+		else {
+			return array(
+				'status' => 'error',
+				'description' => 'duplicate entry',
+				'row' => $data
+			);
+		}
 	}
 
 	/**
@@ -154,18 +191,18 @@ class vDB
 		return $result;
 	}
 
-	/**
-	* Puts data if it doesn't already exist
-	*/
-	public function vPut($data)
-	{
-		$result=$this->vCreate($data);
-		if(!$result)
-		{
-			$result=$this->vUpdate(array(),$data);
-		}
-		return $result;
-	}
+	// /**
+	// * Puts data if it doesn't already exist
+	// */
+	// public function vPut($data)
+	// {
+	// 	$result=$this->vCreate($data);
+	// 	if(!$result)
+	// 	{
+	// 		$result=$this->vUpdate(array(),$data);
+	// 	}
+	// 	return $result;
+	// }
 
 	//helper functions to generate queries
 
@@ -180,7 +217,7 @@ class vDB
 	/**
 	* Sets the table of the object to execute the queries
 	*/
-	public function getIndexesClause($indexes,$options)
+	public function getIndexesClause($indexes = array(array("index" => "id")),$options = array())
 	{
 		$all_indexes = isset($options['allIndexes']) ? $options['allIndexes'] : 'no';
 		if($all_indexes=='yes'|| count($indexes)==0)
@@ -346,6 +383,11 @@ class vDB
 			'values' => array()
 		);
 
+		$data[] = array(
+			"index" => "last_updated",
+			"value" => time()*1000
+		);
+
 		foreach($data as $index)
 		{
 			$result['query'].=$this->table.".".$index['index']." = ?,";
@@ -364,6 +406,11 @@ class vDB
 		$result = array(
 			'query' => '',
 			'values' => array()
+		);
+
+		$data[] = array(
+			"index" => "last_updated",
+			"value" => time()*1000
 		);
 
 		$insert = "";
@@ -452,5 +499,46 @@ class vDB
 		return "";
 	}
 
+
+	/**
+	* Generates the where clause based on unique columns required for insertion
+	*/
+	private function getUniqueWhereClause($data)
+	{
+		$result = array(
+			'query' => '',
+			'values' => array()
+		);
+
+		$indexed_columns = array();
+		foreach($data as $index)
+		{
+			$indexed_columns[$index['index']]=$index['value'];
+		}
+
+		foreach($data as $index)
+		{
+			if(isset($index['unique']) && $index['unique']=='yes')
+			{
+				$result['query'].=$index['index']."= ? or ";
+				$result['values'][] = $index['value'];
+			}
+			else if(isset($index['uniqueWith']))
+			{
+				$uniqueWithColumns=(array)$index['uniqueWith'];
+				$subcondition=$index['index']."=? and ";
+				foreach($uniqueWithColumns as $uwc)
+				{
+					$subcondition.=$uwc."=? and ";
+					$result['values'][] = $indexed_columns[$index['index']];
+				}
+				$subcondition=rtrim($subcondition," and ");
+				$result['query'].="(".$subcondition.") or ";
+			}
+		}
+		$result['query'] = rtrim($result['query'],"or ");
+		
+		return $result;
+	}
 }
 ?>
