@@ -15975,27 +15975,84 @@ function modal215_action(item_name)
 function modal216_action()
 {
 	var form=document.getElementById('modal216_form');
-	var fname=form.elements['name'];
+	var fapp=form.elements['app_num'];
+	var fcompany=form.elements['company'];
+	var fpreferred=form.elements['preferred'];
+	var fptype=form.elements['policy_type'];
+	var fterm=form.elements['term'];
+	var fpname=form.elements['policy_name'];
 	var fholder=form.elements['holder'];
+	var fsum=form.elements['sum'];
+	var fadults=form.elements['adults'];
+	var fchild=form.elements['children'];
+	var fage=form.elements['age'];
+	var fpremium=form.elements['premium'];
+	var fshort_premium=form.elements['spremium'];
+	var fdiscount=form.elements['discount'];
 	var fstart=form.elements['start'];
 	var fend=form.elements['end'];
 	var fissue=form.elements['issue'];
 	var ftype=form.elements['type'];
 	var frenewed_from=form.elements['renewed_from'];
 	var fported_from=form.elements['ported_from'];
+	var fsource=form.elements['source'];
+	var flead=form.elements['lead'];
+	var fmanager=form.elements['sales'];
+	var fcaller=form.elements['caller'];
 	var fagent=form.elements['agent'];
-	var faccount=form.elements['account'];
+	var select_file=form.elements['file'];
+	var dummy_button=form.elements['file_dummy'];
 
-	fname.value="";
-	fagent.value="";
+	$(dummy_button).off('click');
+	$(dummy_button).on('click',function (e)
+	{
+		e.preventDefault();
+		$(select_file).trigger('click');
+	});
+
+	dummy_button.setAttribute('class','btn red-sunglo');
+	select_file.value="";
+
+	$(select_file).off('change');
+	$(select_file).on('change',function ()
+	{
+		var file_name=select_file.value;
+		if(file_name!="")
+		{
+			dummy_button.setAttribute('class','btn green-jungle');
+		}
+		else
+		{
+			dummy_button.setAttribute('class','btn red-sunglo');
+			select_file.value="";
+		}
+	});
+
+	fapp.value="";
+	fcompany.value="";
+	fpreferred.value="";
+	fptype.value="";
+	fterm.value="";
+	fpname.value="";
 	fholder.value="";
+	fsum.value="";
+	fadults.value="";
+	fchild.value="";
+	fage.value="";
+	fpremium.value="";
+	fshort_premium.value="";
+	fdiscount.value="";
 	fstart.value="";
 	fend.value="";
 	fissue.value="";
 	ftype.value="fresh";
 	frenewed_from.value="";
 	fported_from.value="";
-	faccount.value="";
+	fsource.value="";
+	flead.value="";
+	fmanager.value="";
+	fcaller.value="";
+	fagent.value="";
 
 	$(frenewed_from).parent().parent().hide();
 	$(fported_from).parent().parent().hide();
@@ -16060,8 +16117,8 @@ function modal216_action()
 				ppreferred=policies[0].preferred;
 
 				var accounts_array=vUtil.jsonParse(policies[0].accounts);
-				set_value_list_json(accounts_array,faccount);
-				faccount.value=accounts_array[0];
+				//set_value_list_json(accounts_array,faccount);
+				//faccount.value=accounts_array[0];
 			}
 		});
 	});
@@ -16102,7 +16159,7 @@ function modal216_action()
 				{index:'issue_type',value:issue_type},
 				{index:'ported_source',value:fported_from.value},
 				{index:'renewed_source',value:frenewed_from.value},
-				{index:'account',value:faccount.value},
+				//{index:'account',value:faccount.value},
 				{index:'status',value:'active'},
 				{index:'last_updated',value:last_updated}]};
 			create_json(data_json);

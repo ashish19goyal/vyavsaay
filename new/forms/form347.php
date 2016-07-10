@@ -11,14 +11,6 @@
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
                 <ul class="dropdown-menu pull-right">
 					<li>
-						<a onclick='modal11_action();'><i class='fa fa-plus'> Add Customer</i></a>
-					</li>
-					<li>
-						<a onclick='modal216_action();'><i class='fa fa-plus'> Add Policy</i></a>
-					</li>
-					<li class="divider"> </li>
-
-                    <li>
                         <a id='form347_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
                     </li>
                     <li>
@@ -39,7 +31,9 @@
 	<div class="portlet-body">
 		<form id='form347_header' autocomplete="off">
 			<fieldset>
-				<label><input type='text' placeholder="Application #" class='floatlabel' name='app_num'></label>
+				<label style='float:right;'><button type='button' class='btn red-pink' onclick='modal11_action();' title='Add Customer'><i class='fa fa-plus'></i> Add Customer</button></label>
+				<label style='float:right;'><button type='button' class='btn purple-soft' onclick='modal216_action();' title='Add Policy'><i class='fa fa-plus'></i> Add Policy</button></label>
+				<br><label><input type='text' placeholder="Application #" class='floatlabel' name='app_num'></label>
 				<label><input type='text' placeholder="Policy #" class='floatlabel' name='num'></label>
 				<label><input type='text' placeholder="Policy Holder" class='floatlabel' name='holder'></label>
 				<label><input type='text' placeholder="Policy Provider" class='floatlabel' name='provider'></label>
@@ -48,9 +42,7 @@
 			</fieldset>
 		</form>
 		<br>
-		<div id='form347_body' class='row'>
-
-		</div>
+		<div id='form347_body' class='row'></div>
 	</div>
 
 	<div class='modal_forms'>

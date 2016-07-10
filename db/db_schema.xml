@@ -2151,16 +2151,20 @@
 	</tab_components>
 	<policies>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<application_num index='yes' type="TEXT"></application_num>
+			<issuer index='yes' type="TEXT"></issuer>
 			<policy_holder index='yes' type="TEXT"></policy_holder>
 			<agent index='yes' type="TEXT"></agent>
 			<policy_num index='yes' type="TEXT"></policy_num>
-			<application_num index='yes' type="TEXT"></application_num>
 			<policy_name index='yes' type="TEXT"></policy_name>
-			<issuer index='yes' type="TEXT"></issuer>
 			<description index="no" type="TEXT"></description>
+			<sum_insured index="no" type="DECIMAL(12,2)"></sum_insured>
 			<premium index="no" type="DECIMAL(12,2)"></premium>
 			<discount index="no" type="DECIMAL(12,2)"></discount>
 			<short_premium index="no" type="DECIMAL(12,2)"></short_premium>
+			<adults index="no" type="DECIMAL(12,2)"></adults>
+			<children index="no" type="DECIMAL(12,2)"></children>
+			<age index="no" type="DECIMAL(12,2)"></age>
 			<start_date index='yes' type="BIGINT"></start_date>
 			<end_date index='yes' type="BIGINT"></end_date>
 			<issue_date index='yes' type="BIGINT"></issue_date>
@@ -2171,7 +2175,10 @@
 			<ported_source index='yes' type="TEXT"></ported_source>
 			<renewed_source index='yes' type="TEXT"></renewed_source>
 			<dependents index='yes' type="TEXT"></dependents>
-			<account index='yes' type="TEXT"></account>
+			<team_lead index='yes' type="TEXT"></team_lead>
+			<sales_manager index='yes' type="TEXT"></sales_manager>
+			<tele_caller index='yes' type="TEXT"></tele_caller>
+			<sales_source index='yes' type="VARCHAR(30)"></sales_source><!--team/out source-->
 			<status index='yes' type="VARCHAR(30)"></status><!-- active/expired -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
