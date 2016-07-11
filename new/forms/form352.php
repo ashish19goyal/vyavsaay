@@ -11,7 +11,8 @@
                 <label><input type='text' name='gate' class='floatlabel' placeholder='Gate Pass #'></label>
                 <label><textarea name='remark' class='floatlabel' placeholder='Remark'></textarea></label>
                 <label><input type='text' name='awb_num' class='floatlabel' placeholder='AWB #'></label>
-                <input type='submit' class='submit_hidden'>
+                <input type='hidden' name='branch'>
+				<input type='submit' class='submit_hidden'>
             </fieldset>
         </form>
 
@@ -44,7 +45,8 @@
         var gate_filter=fields.elements['gate'];
         var remark_filter=fields.elements['remark'];
         var awb_filter=fields.elements['awb_num'];
-        var save_button=document.getElementById('form352_save');
+		var branch_filter=fields.elements['branch'];
+		var save_button=document.getElementById('form352_save');
 
         gate_filter.value="";
         $(gate_filter).focus();
@@ -56,13 +58,22 @@
             {
                 event.preventDefault();
                 var subform=document.getElementById('form352_'+awb_filter.value);
-                subform.elements[2].value="received";
-                subform.elements[3].value=remark_filter.value;
-                form352_get_totals();
-                awb_filter.value="";
+				if(!vUtil.isBlank(subform))
+				{
+	                subform.elements[2].value="received";
+	                subform.elements[3].value=remark_filter.value;
+	            }
+				else{
+					form352_add_item(awb_filter.value);
+				}
+				awb_filter.value="";
+				form352_get_totals();
             }
         });
 
+		var branch_data={data_store:'store_areas',return_column:'name',indexes:[{index:'owner',exact:get_account_name()}]};
+		set_my_value_json(branch_data,branch_filter);
+			
         $(gate_filter).off('keydown');
         $(gate_filter).on('keydown',function (event)
         {
@@ -95,17 +106,14 @@
         {
             show_loader();
 
-            var branch_object={index:'branch'};
-
             var new_columns={data_store:'logistics_orders',
                 			return_column:'awb_num',
-							access:{},
-                			indexes:[{index:'awb_num'},
+							indexes:[{index:'awb_num'},
                                     {index:'id'},
                                     {index:'pass_num',exact:gate_num},
                                     {index:'status'},
                                     {index:'order_history'},
-                                    branch_object]};
+                                    {index:'branch'}]};
 
             set_my_value_list_json(new_columns,awb_filter);
 
@@ -153,6 +161,63 @@
             });
         }
     }
+
+	function form352_add_item(awb_num)
+	{
+		var fields=document.getElementById('form352_master');
+        var remark_filter=fields.elements['remark'];
+		var branch_filter=fields.elements['branch'];
+
+		var new_columns={data_store:'logistics_orders',
+						indexes:[{index:'awb_num',exact:awb_num},
+								{index:'id'},
+								{index:'pass_num'},
+								{index:'status'},
+								{index:'order_history'},
+								{index:'branch'}]};
+
+		read_json_rows('form352',new_columns,function(results)
+		{
+			results.forEach(function(result)
+			{
+				var id=result.id;
+				var rowsHTML="<tr>";
+				rowsHTML+="<form id='form352_"+result.awb_num+"'></form>";
+					rowsHTML+="<td data-th='AWB #'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form352_"+result.awb_num+"' value='"+result.awb_num+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Current Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form352_"+result.awb_num+"' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Updated Status'>";
+						rowsHTML+="<input type='text' form='form352_"+result.awb_num+"' value='received'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Remark'>";
+						rowsHTML+="<textarea form='form352_"+result.awb_num+"'>"+remark_filter.value;+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form352_"+result.awb_num+"' value='"+id+"'>";
+						rowsHTML+="<button type='submit' class='btn green' form='form352_"+result.awb_num+"' id='save_form352_"+id+"' name='save'><i class='fa fa-save'></i></button>";
+						rowsHTML+="<input type='hidden' form='form352_"+result.awb_num+"' value='"+result.order_history+"'>";
+						rowsHTML+="<input type='hidden' form='form352_"+result.awb_num+"' name='branch' value='"+branch_filter.value+"'>";
+					rowsHTML+="</td>";
+				rowsHTML+="</tr>";
+
+				$('#form352_body').append(rowsHTML);
+				var fields=document.getElementById("form352_"+result.awb_num);
+				var status_filter=fields.elements[2];
+
+				set_static_value_list_json('logistics_orders','status',status_filter);
+
+				$(fields).on("submit", function(event)
+				{
+					event.preventDefault();
+					form352_update_item(fields);
+				});
+			});
+			hide_loader();
+		});
+	}
 
     function form352_get_totals()
     {
@@ -203,14 +268,12 @@
             if(status=="received")
             {
                 var old_order_history=form.elements[6].value;
+				var branch=form.elements['branch'].value;
                 var order_history=vUtil.jsonParse(old_order_history);
-                var history_object=new Object();
-                history_object.timeStamp=get_my_time();
-                history_object.details=remarks;
-                history_object.status=status;
-
-                history_object.location=form.elements['branch'].value;
-
+                var history_object={timeStamp:get_my_time(),
+                					details:remarks,
+                					status:status,
+                					location:branch};
                 order_history.push(history_object);
                 var order_history_string=JSON.stringify(order_history);
 
@@ -219,6 +282,7 @@
 	 					{index:'status',value:status},
 	 					{index:'comments',value:remarks},
 	 					{index:'order_history',value:order_history_string},
+						{index:'branch',value:branch},
                         {index:'last_updated',value:last_updated}]};
 
                 update_json(data_json);

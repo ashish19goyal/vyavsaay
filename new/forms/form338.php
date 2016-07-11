@@ -13,7 +13,8 @@
             <fieldset>
                 <label><textarea type='text' name='comment' class='floatlabel' placeholder='Comment'></textarea></label>
                 <label><input type='text' name='picked' class='floatlabel' placeholder='Picked by'></label>
-                <input type='submit' class='submit_hidden'>
+                <input type='hidden' name='branch'>
+				<input type='submit' class='submit_hidden'>
             </fieldset>
         </form>
 
@@ -42,9 +43,13 @@
 
         var comments_filter=fields.elements['comment'];
         var picked_filter=fields.elements['picked'];
+		var branch_filter=fields.elements['branch'];
 
         var staff_data={data_store:'staff',return_column:'acc_name'};
         set_my_value_list_json(staff_data,picked_filter);
+
+		var branch_data={data_store:'store_areas',return_column:'name',indexes:[{index:'owner',exact:get_account_name()}]};
+		set_my_value_json(branch_data,branch_filter);
 
         comments_filter.value="";
         picked_filter.value="";
@@ -138,8 +143,7 @@
                     if(double_entry<2)
                     {
                         var order_data={data_store:'logistics_orders',count:1,
-                                       access:{},
-									   indexes:[{index:'id'},
+                                       indexes:[{index:'id'},
                                                {index:'order_history'},
                                                {index:'pieces'},
                                                {index:'sku'},
@@ -223,6 +227,7 @@
             var master_form=document.getElementById("form338_master");
             var comments=master_form.elements['comment'].value;
             var picked_by=master_form.elements['picked'].value;
+			var branch=master_form.elements['branch'].value;
 
             var awb_num=form.elements[0].value;
             var status='RTO pending';
@@ -235,7 +240,7 @@
             var history_object=new Object();
             history_object.timeStamp=get_my_time();
             history_object.details=comments;
-            history_object.location=get_session_var('address');
+            history_object.location=branch;
             history_object.status=status;
             order_history.push(history_object);
             var order_history_string=JSON.stringify(order_history);
@@ -245,6 +250,7 @@
 	 					{index:'status',value:status},
 	 					{index:'comments',value:comments},
 	 					{index:'return_pickup_by',value:picked_by},
+						{index:'branch',value:branch},
 	 					{index:'order_history',value:order_history_string},
 	 					{index:'last_updated',value:last_updated}]};
             update_json(data_json);
