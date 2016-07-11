@@ -15975,7 +15975,7 @@ function modal215_action(item_name)
 function modal216_action()
 {
 	var form=document.getElementById('modal216_form');
-	var fapp=form.elements['app_num'];
+	var fapp=form.elements['app_number'];
 	var fcompany=form.elements['company'];
 	var fpreferred=form.elements['preferred'];
 	var fptype=form.elements['policy_type'];
