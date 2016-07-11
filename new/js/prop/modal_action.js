@@ -16087,40 +16087,28 @@ function modal216_action()
 		}
 	});
 
-	$(fname).off('blur');
-	$(fname).off('change');
+	$(fpname).off('blur');
+	$(fpname).off('change');
 
-	var ptype="";
-	var pissuer="";
-	var pdesc="";
-	var pterm="";
-	var ppreferred="";
-
-	$(fname).on('blur change',function()
+	$(fpname).on('blur change',function()
 	{
-		var policy_data={data_store:'policy_types',count:1,
-						indexes:[{index:'issuer'},
-								{index:'description'},
-								{index:'type'},
-								{index:'term'},
-								{index:'preferred'},
-								{index:'accounts'},
-								{index:'name',exact:fname.value}]};
-		read_json_rows('',policy_data,function(policies)
-		{
-			if(policies.length>0)
-			{
-				ptype=policies[0].type;
-				pissuer=policies[0].issuer;
-				pdesc=policies[0].description;
-				pterm=policies[0].term;
-				ppreferred=policies[0].preferred;
-
-				var accounts_array=vUtil.jsonParse(policies[0].accounts);
-				//set_value_list_json(accounts_array,faccount);
-				//faccount.value=accounts_array[0];
-			}
-		});
+		// var policy_data={data_store:'policy_types',count:1,
+		// 				indexes:[{index:'issuer'},
+		// 						{index:'description'},
+		// 						{index:'type'},
+		// 						{index:'term'},
+		// 						{index:'preferred'},
+		// 						{index:'accounts'},
+		// 						{index:'name',exact:fname.value}]};
+		// read_json_rows('',policy_data,function(policies)
+		// {
+		// 	if(policies.length>0)
+		// 	{
+		// 		var accounts_array=vUtil.jsonParse(policies[0].accounts);
+		// 		//set_value_list_json(accounts_array,faccount);
+		// 		//faccount.value=accounts_array[0];
+		// 	}
+		// });
 	});
 
 	$(form).off("submit");
