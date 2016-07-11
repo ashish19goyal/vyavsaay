@@ -16063,7 +16063,7 @@ function modal216_action()
 	set_static_value_list_json('policies','issue_type',ftype);
 
 	var name_data={data_store:'policy_types',return_column:'name'};
-	set_my_value_list_json(name_data,fname);
+	set_my_value_list_json(name_data,fpname);
 
 	var agent_data={data_store:'staff',return_column:'acc_name'};
 	set_my_value_list_json(agent_data,fagent);
