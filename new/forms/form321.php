@@ -156,8 +156,7 @@
 			set_my_value_list_json(branch_data,branch);
 
             var paginator=$('#form321_body').paginator({visible:false});
-
-            $('#form321').formcontrol();
+			setTimeout(function(){$('#form321').formcontrol();},500);
         }
 
         function form321_ini()
@@ -609,6 +608,7 @@
                 var manifest_id=master_form.elements['id'].value;
                 var manifest_date=master_form.elements['date'].value;
 				var branch=master_form.elements['branch'].value;
+				var manifest_date=vTime.unix({date:master_form.elements['date'].value});
 
                 var consignment_num=form.elements[1].value;
                 var lbh=form.elements[2].value;
@@ -635,6 +635,7 @@
 	 					{index:'weight',value:weight},
 	 					{index:'manifest_num',value:manifest_num},
                         {index:'man_id',value:manifest_id},
+						{index:'manifest_date',value:manifest_date},
 						{index:'branch',value:branch},
                         {index:'status',value:'in-transit'},
                         {index:'order_history',value:order_history_string},
@@ -744,6 +745,7 @@
             {
                 var manifest_num=document.getElementById('form321_master').elements['manifest_num'].value;
 				var branch=document.getElementById('form321_master').elements['branch'].value;
+				var manifest_date=vTime.unix({date:document.getElementById('form321_master').elements['date'].value});
 				var data_id=form.elements['id'].value;
                 var last_updated=get_my_time();
 
@@ -751,6 +753,7 @@
 	 				data:[{index:'id',value:data_id},
 	 					{index:'manifest_num',value:manifest_num},
 						{index:'branch',value:branch},
+						{index:'manifest_date',value:manifest_date},
 						{index:'last_updated',value:last_updated}]};
 
                 update_json(data_json);
@@ -862,6 +865,7 @@
 	 					{index:'consignment_num',value:''},
 	 					{index:'manifest_num',value:''},
                         {index:'man_id',value:''},
+						{index:'manifest_date',value:''},
 						{index:'branch',value:''},
                         {index:'status',value:'pending'},
 	 					{index:'last_updated',value:last_updated}]};

@@ -1825,6 +1825,7 @@
 			<manifest_num index='yes' type="TEXT"></manifest_num>
 			<consignment_num index='yes' type="TEXT"></consignment_num>
 			<man_id index='yes' type="BIGINT"></man_id>
+			<manifest_date index='yes' type="BIGINT"></manifest_date>
 			<pass_num index='yes' type="TEXT"></pass_num>
 			<pass_id index='yes' type="BIGINT"></pass_id>
 			<delivery_time index='yes' type="BIGINT"></delivery_time>

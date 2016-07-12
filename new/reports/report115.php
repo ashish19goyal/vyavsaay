@@ -24,11 +24,10 @@
 	<div class="portlet-body">
 		<form id='report115_header' autocomplete="off">
 			<fieldset>
-				<label><input type='text' placeholder="Id" class='floatlabel' name='receipt'></label>
-				<label><input type='text' placeholder="Type" class='floatlabel' name='type'></label>
-				<label><input type='text' placeholder="Account" class='floatlabel' name='account'></label>
-				<label><input type='text' placeholder="Start Date" class='floatlabel' name='start'></label>
-        		<label><input type='text' placeholder="End Date" class='floatlabel' name='end'></label>
+				<label><input type='text' placeholder="Branch" class='floatlabel' name='branch'></label>
+				<label><input type='text' placeholder="Shipment Start Date" class='floatlabel' name='start'></label>
+        		<label><input type='text' placeholder="Shipment End Date" class='floatlabel' name='end'></label>
+				<label><input type='text' placeholder="Report Date" required class='floatlabel' name='today'></label>
         		<label><input type='submit' class='submit_hidden'></label>
 			</fieldset>
 		</form>
@@ -36,28 +35,68 @@
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr>
-					<th>Id</th>
-					<th>Type</th>
-					<th>Account</th>
-					<th>Date</th>
-					<th>Narration</th>
-					<th>Amount</th>
+					<th>Branch</th>
+					<th>Total Assigned</th>
+					<th>Received</th>
+					<th>Previous Pending</th>
+					<th>Out for Delivery</th>
+					<th>Pending</th>
+					<th>RTO</th>
+					<th>Delivered</th>
+					<th>COD Collected</th>
+					<th>COD Pending</th>
 				</tr>
 			</thead>
 			<tbody id='report115_body'>
 			</tbody>
+			<tfoot id='report115_foot'>
+			</tfoot>
 		</table>
+	</div>
+
+	<div class='modal_forms'>
+		<a href='#report115_popup' data-toggle="modal" id='report115_popup_link'></a>
+		<div id="report115_popup" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form id='report115_popup_form'>
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+							<h4 class="modal-title">Order Details</h4>
+						</div>
+						<div class="modal-body">
+							<div class="scroller" style="height:100px;" data-always-visible="1" data-rail-visible1="1">
+								<table id='report115_popup_table'>
+									<thead>
+										<tr>
+											<th>AWB #</th>
+											<th>Order #</th>
+											<th>Ship To</th>
+											<th>Shipment Date</th>
+											<th>COD Value</th>
+										</tr>
+									</thead>
+									<tbody id='report115_popup_body'></tbody>
+								</table>
+ 							</div>
+						</div>
+						<div class="modal-footer">
+							<input type="button" class="btn green" data-dismiss='modal' name='close' value='Close'>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<script>
         function report115_header_ini()
         {
             var form=document.getElementById('report115_header');
-			var id_filter=form.elements['receipt'];
-			var type_filter=form.elements['type'];
-			var account_filter=form.elements['account'];
+			var branch_filter=form.elements['branch'];
 			var start_filter=form.elements['start'];
 			var end_filter=form.elements['end'];
+			var today_filter=form.elements['today'];
 
             $(form).off('submit');
             $(form).on('submit',function(event)
@@ -66,85 +105,145 @@
                 report115_ini();
             });
 
-			var account_data={data_store:'accounts',return_column:'acc_name'};
-			set_my_filter_json(account_data,account_filter);
-			set_value_list_json(['receipt','payable'],type_filter);
-            $(start_filter).datepicker();
+			var branch_data={data_store:'store_areas',return_column:'name'};
+			set_my_filter_json(branch_data,branch_filter);
+
+			$(start_filter).datepicker();
 			$(end_filter).datepicker();
-			start_filter.value=vTime.date({addDays:-30});
+			$(today_filter).datepicker();
+			start_filter.value=vTime.date({addDays:-7});
 			end_filter.value=vTime.date();
+			today_filter.value=vTime.date();
 
 			var paginator=$('#report115_body').paginator({'visible':false,'container':$('#report115_body')});
-
             setTimeout(function(){$('#report115').formcontrol();},1000);
         }
 
         function report115_ini()
         {
             var form=document.getElementById('report115_header');
-			var fid=form.elements['receipt'].value;
-			var ftype=form.elements['type'].value;
-			var account=form.elements['account'].value;
+			var branch=form.elements['branch'].value;
 			var start=vTime.unix({date:form.elements['start'].value});
 			var end=vTime.unix({date:form.elements['end'].value});
-			var rtype="";
-			if(ftype=='receipt')
-			{
-				rtype='received';
-			}
-			else if(ftype=='payable')
-			{
-				rtype='paid';
-			}
+			var today=vTime.unix({date:form.elements['today'].value});
 
             show_loader();
             $('#report115_body').html('');
 
-            var tran_data={data_store:'receipts',
-                              indexes:[{index:'id'},
-                                      {index:'receipt_id',value:fid},
-                                      {index:'type',value:rtype},
-									  {index:'acc_name',value:account},
-                                      {index:'date',lowerbound:start,upperbound:end},
-									  {index:'amount'},
-									  {index:'narration'},
-								  	  {index:'last_updated'}]};
-            read_json_rows('report115',tran_data,function(transactions)
-            {
-          	  transactions.forEach(function(tran)
-              {
-				  var type='receipt';
-				  if(tran.type=='paid')
-				  {
-					  type='payable';
-				  }
-                  var rowsHTML="<tr>";
-				  rowsHTML+="<td data-th='Id'>";
-                      rowsHTML+=tran.receipt_id;
-                  rowsHTML+="</td>";
-				  rowsHTML+="<td data-th='Type'>";
-                      rowsHTML+=type;
-                  rowsHTML+="</td>";
-                  rowsHTML+="<td data-th='Account'>";
-                      rowsHTML+=tran.acc_name;
-                  rowsHTML+="</td>";
-				  rowsHTML+="<td data-th='Date'>";
-                      rowsHTML+=vTime.date({time:tran.date});
-                  rowsHTML+="</td>";
-	              rowsHTML+="<td data-th='Narration'>";
-                      rowsHTML+=tran.narration;
-                  rowsHTML+="</td>";
-                  rowsHTML+="<td data-th='Amount'>";
-                      rowsHTML+=tran.amount;
-                  rowsHTML+="</td>";
-				  rowsHTML+="</tr>";
+			var branches_data={data_store:'store_areas',return_column:'name',
+								indexes:[{index:'name',value:branch}]};
 
-                  $('#report115_body').append(rowsHTML);
-              });
+			read_json_single_column(branches_data,function(branches_array)
+			{
+				var branches=[];
+				branches_array.forEach(function(branch)
+				{
+					var branch_obj={
+						'name':branch,
+						'total':0,
+						'received':0,
+						'ofd':0,
+						'pending':0,
+						'rto':0,
+						'delivered':0,
+						'cod_collected':0,
+						'cod_pending':0
+					};
+					branches.push(branch_obj);
+				});
 
-			  initialize_static_tabular_report_buttons('Receipts/Payables Report','report115');
-		      hide_loader();
-		    });
+	            var orders_data={data_store:'logistics_orders',
+	                              indexes:[{index:'id'},
+										  {index:'branch',array:branches_array},
+	                                      {index:'import_date',lowerbound:start,upperbound:end},
+										  {index:'manifest_date',exact:today},
+										  {index:'status'},
+									  	  {index:'collectable_value'}]};
+				console.log(orders_data);						  
+	            read_json_rows('report115',orders_data,function(orders)
+	            {
+					console.log(orders);
+					orders.forEach(function(order)
+					{
+						if(order.branch!="")
+						{
+							branches.forEach(function(branch)
+							{
+								if(order.branch==branch.name)
+								{
+									switch(order.status)
+									{
+										case 'received': branch.received+=1;
+														branch.cod_pending+=parseFloat(order.collectable_value);
+														branch.total+=1;
+														break;
+										case 'pending':
+										case 'undelivered':branch.pending+=1;
+														branch.cod_pending+=parseFloat(order.collectable_value);
+														branch.total+=1;
+														break;
+										case 'out for delivery':branch.ofd+=1;
+														branch.cod_pending+=parseFloat(order.collectable_value);
+														branch.total+=1;
+														break;
+										case 'delivered':branch.delivered+=1;
+														branch.cod_collected+=parseFloat(order.collectable_value);
+														branch.total+=1;
+														break;
+										case 'RTO Delivered':
+										case 'RTO pending':
+										case 'RTO out for delivery':branch.rto+=1;
+														branch.total+=1;
+														break;
+										default: branch.total+=1;
+									}
+								}
+							});
+						}
+					});
+
+		          	branches.forEach(function(branch)
+		            {
+						  var rowsHTML="<tr>";
+						  rowsHTML+="<td data-th='Branch'>";
+		                      rowsHTML+=branch.name;
+		                  rowsHTML+="</td>";
+						  rowsHTML+="<td data-th='Total Assigned'><a onclick=\"report115_popup_action('"+branch.name+"','total');\">";
+		                      rowsHTML+=branch.total;
+		                  rowsHTML+="</a></td>";
+		                  rowsHTML+="<td data-th='Received'><a onclick=\"report115_popup_action('"+branch.name+"','received');\">";
+		                      rowsHTML+=branch.received;
+		                  rowsHTML+="</a></td>";
+						  rowsHTML+="<td data-th='Previous Pending'><a onclick=\"report115_popup_action('"+branch.name+"','previous_pending');\">";
+		                      rowsHTML+=branch.previous;
+		                  rowsHTML+="</a></td>";
+						  rowsHTML+="<td data-th='Out for Delivery'><a onclick=\"report115_popup_action('"+branch.name+"','ofd');\">";
+		                      rowsHTML+=branch.ofd;
+		                  rowsHTML+="</a></td>";
+			              rowsHTML+="<td data-th='Pending'><a onclick=\"report115_popup_action('"+branch.name+"','pending');\">";
+		                      rowsHTML+=branch.pending;
+		                  rowsHTML+="</a></td>";
+		                  rowsHTML+="<td data-th='RTO'><a onclick=\"report115_popup_action('"+branch.name+"','rto');\">";
+		                      rowsHTML+=branch.rto;
+		                  rowsHTML+="</a></td>";
+						  rowsHTML+="<td data-th='Delivered'><a onclick=\"report115_popup_action('"+branch.name+"','delivered');\">";
+		                      rowsHTML+=branch.delivered;
+		                  rowsHTML+="</a></td>";
+						  rowsHTML+="<td data-th='COD Collected'><a onclick=\"report115_popup_action('"+branch.name+"','cod_collected');\">";
+		                      rowsHTML+="Rs. "+branch.cod_collected;
+		                  rowsHTML+="</a></td>";
+						  rowsHTML+="<td data-th='COD Pending'><a onclick=\"report115_popup_action('"+branch.name+"','cod_pending');\">";
+		                      rowsHTML+="Rs. "+branch.cod_pending;
+		                  rowsHTML+="</a></td>";
+						  rowsHTML+="</tr>";
+
+		                  $('#report115_body').append(rowsHTML);
+		            });
+
+					initialize_static_tabular_report_buttons('Branch Stock Report','report115');
+				    hide_loader();
+			    });
+			});
 		};
 	</script>
 </div>
