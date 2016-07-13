@@ -212,7 +212,7 @@
                             marker.innerHTML="Mark as bag";
                         }
                     }
-                    $('#form321').formcontrol();
+                    setTimeout(function(){$('#form321').formcontrol();},500);
                 });
 
                 var manifest_items_column={data_store:'logistics_orders',

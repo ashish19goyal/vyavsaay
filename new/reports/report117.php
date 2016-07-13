@@ -1,17 +1,17 @@
-<div id='report109' class='tab-pane portlet box red-sunglo'>
+<div id='report117' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
 		<div class='caption'>
-			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report109_ini();'>Refresh</a>
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report117_ini();'>Refresh</a>
 		</div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
                 <ul class="dropdown-menu pull-right">
                     <li>
-                        <a id='report109_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
+                        <a id='report117_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
                     </li>
                     <li>
-                        <a id='report109_email'><i class='fa fa-envelope'></i> Email</a>
+                        <a id='report117_email'><i class='fa fa-envelope'></i> Email</a>
                     </li>
                 </ul>
             </div>
@@ -19,7 +19,7 @@
 	</div>
 
 	<div class="portlet-body">
-		<form id='report109_header' autocomplete="off">
+		<form id='report117_header' autocomplete="off">
 			<fieldset>
 				<label><input type='text' placeholder="AWB #" class='floatlabel' name='awb'></label>
 				<label><input type='text' placeholder="Channel" class='floatlabel' name='channel'></label>
@@ -38,15 +38,15 @@
 					<th>Status</th>
         		</tr>
 			</thead>
-			<tbody id='report109_body'></tbody>
+			<tbody id='report117_body'></tbody>
 		</table>
 	</div>
 
 	<script>
 
-    function report109_header_ini()
+    function report117_header_ini()
     {
-        var form=document.getElementById('report109_header');
+        var form=document.getElementById('report117_header');
         var awb_filter=form.elements['awb'];
 		var channel_filter=form.elements['channel'];
 		var date_filter=form.elements['date'];
@@ -57,24 +57,24 @@
         $(form).on('submit',function(event)
         {
             event.preventDefault();
-            report109_ini();
+            report117_ini();
         });
 
         $(date_filter).datepicker();
-        setTimeout(function(){$('#report109').formcontrol();},500);
+        setTimeout(function(){$('#report117').formcontrol();},500);
     }
 
-    function report109_ini()
+    function report117_ini()
     {
-        var form=document.getElementById('report109_header');
+        var form=document.getElementById('report117_header');
         var awb_filter=form.elements['awb'].value;
 		var channel_filter=form.elements['channel'].value;
 		var date_filter=get_raw_time(form.elements['date'].value);
 
         show_loader();
-        $('#report109_body').html('');
+        $('#report117_body').html('');
 
-        var paginator=$('#report109_body').paginator({'page_size':25});
+        var paginator=$('#report117_body').paginator({'page_size':25});
 
         var columns={count:paginator.page_size(),
                     start_index:paginator.get_index(),
@@ -89,19 +89,20 @@
 						{index:'address1'},
 						{index:'city'},
 						{index:'phone'},
+						{index:'source',exact:'api'},
                         {index:'status',exact:'picked'}]};
 
-        read_json_rows('report109',columns,function(items)
+        read_json_rows('report117',columns,function(items)
         {
             var rowsHTML="";
             items.forEach(function(item)
             {
                 rowsHTML+="<tr>";
-                rowsHTML+="<form id='report109_"+item.id+"'></form>";
+                rowsHTML+="<form id='report117_"+item.id+"'></form>";
                 rowsHTML+="<td data-th='AWB #'>";
 				    rowsHTML+="<a onclick=\"element_display('"+item.id+"','form198');\">"+item.awb_num+"</a>";
                 rowsHTML+="</td>";
-                rowsHTML+="<td data-th='Import Date'>";
+                rowsHTML+="<td data-th='Pickup Date'>";
 					rowsHTML+=vTime.date({time:item.import_date});
                 rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Consignee'>";
@@ -115,11 +116,12 @@
                 rowsHTML+="</td>";
                 rowsHTML+="</tr>";
             });
-            $('#report109_body').append(rowsHTML);
+            $('#report117_body').append(rowsHTML);
 
-            initialize_tabular_report_buttons(columns,'Orders Not Received','report109',function (item)
+            initialize_tabular_report_buttons(columns,'New Orders from API','report117',function (item)
             {
 				item.import_date=vTime.date({time:item.import_date});
+				delete item.source;
 			});
 
             paginator.update_index(items.length);

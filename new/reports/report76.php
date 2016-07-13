@@ -74,7 +74,7 @@
         start_filter.value=get_my_past_date(get_my_time()-(7*86400000));
         end_filter.value=vTime.date();
 
-        $('#report76').formcontrol();
+        setTimeout(function(){$('#report76').formcontrol();},500);
     }
 
     function report76_ini()
