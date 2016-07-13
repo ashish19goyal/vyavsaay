@@ -917,9 +917,8 @@ function set_grid_item_41()
 */
 function set_grid_item_42()
 {
-	var new_columns=new Object();
-		new_columns.data_store='drs';
-		new_columns.indexes=[{index:'drs_time',lowebound:(get_raw_time(vTime.date())-1000)}];
+	var new_columns={data_store:'drs',
+					indexes:[{index:'drs_time',lowerbound:(get_raw_time(vTime.date())-1000)}]};
 
 	read_json_count(new_columns,function(item_count)
 	{
@@ -940,9 +939,8 @@ function set_grid_item_42()
 */
 function set_grid_item_43()
 {
-	var new_columns=new Object();
-		new_columns.data_store='rto';
-		new_columns.indexes=[{index:'rto_time',lowebound:(get_raw_time(vTime.date())-1000)}];
+	var new_columns={data_store:'rto',
+					indexes:[{index:'rto_time',lowerbound:(get_raw_time(vTime.date())-1000)}]};
 
 	read_json_count(new_columns,function(item_count)
 	{
@@ -965,7 +963,7 @@ function set_grid_item_44()
 {
 	var new_columns=new Object();
 		new_columns.data_store='quotation';
-		new_columns.indexes=[{index:'date',lowebound:(get_raw_time(vTime.date())-2592000000)}];
+		new_columns.indexes=[{index:'date',lowerbound:(get_raw_time(vTime.date())-2592000000)}];
 
 	read_json_count(new_columns,function(item_count)
 	{
@@ -1015,7 +1013,7 @@ function set_grid_item_46()
 	var new_columns=new Object();
 		new_columns.data_store='delivery_challans';
 
-		new_columns.indexes=[{index:'challan_date',lowebound:(get_raw_time(vTime.date())-1000)}];
+		new_columns.indexes=[{index:'challan_date',lowerbound:(get_raw_time(vTime.date())-1000)}];
 
 	read_json_count(new_columns,function(item_count)
 	{
@@ -1826,5 +1824,49 @@ function set_grid_item_78()
 	read_json_single_column(new_columns,function(items)
 	{
 		$('#grid_item_78').html(items.length);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_79
+*@*display_name*:*# Manifests (today)
+*@*grid*:*operations
+*@*function_name*:*set_grid_item_79();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_79()
+{
+	var new_columns={data_store:'manifests',
+					indexes:[{index:'date',lowerbound:(get_raw_time(vTime.date())-1000)}]};
+
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_79').html(item_count);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_80
+*@*display_name*:*# Gatepass (today)
+*@*grid*:*operations
+*@*function_name*:*set_grid_item_80();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_80()
+{
+	var new_columns={data_store:'gate_pass',
+					indexes:[{index:'date',lowerbound:(get_raw_time(vTime.date())-1000)}]};
+
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_80').html(item_count);
 	});
 };

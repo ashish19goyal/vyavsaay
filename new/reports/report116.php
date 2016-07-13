@@ -1,20 +1,20 @@
-<div id='report115' class='tab-pane portlet box red-sunglo'>
+<div id='report116' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
 		<div class='caption'>
-			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report115_ini();'>Refresh</a>
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report116_ini();'>Refresh</a>
 		</div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
                 <ul class="dropdown-menu pull-right">
                     <li>
-                      	<a id='report115_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
+                      	<a id='report116_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
                     </li>
                     <li>
-                        <a id='report115_print'><i class='fa fa-print'></i> Print</a>
+                        <a id='report116_print'><i class='fa fa-print'></i> Print</a>
                     </li>
                     <li>
-                        <a id='report115_email'><i class='fa fa-envelope'></i> Email</a>
+                        <a id='report116_email'><i class='fa fa-envelope'></i> Email</a>
                     </li>
                 </ul>
             </div>
@@ -22,11 +22,10 @@
 	</div>
 
 	<div class="portlet-body">
-		<form id='report115_header' autocomplete="off">
+		<form id='report116_header' autocomplete="off">
 			<fieldset>
 				<label><input type='text' placeholder="Branch" class='floatlabel' name='branch'></label>
-				<label><input type='text' placeholder="Shipment Start Date" class='floatlabel' name='start'></label>
-        		<label><input type='text' placeholder="Shipment End Date" class='floatlabel' name='end'></label>
+				<label><input type='text' placeholder="Manifest Date" class='floatlabel' name='date'></label>
 				<label><input type='submit' class='submit_hidden'></label>
 			</fieldset>
 		</form>
@@ -45,16 +44,16 @@
 					<th>COD Pending</th>
 				</tr>
 			</thead>
-			<tbody id='report115_body'>
+			<tbody id='report116_body'>
 			</tbody>
-			<tfoot id='report115_foot'>
+			<tfoot id='report116_foot'>
 			</tfoot>
 		</table>
 	</div>
 
 	<div class='modal_forms'>
-		<a href='#report115_popup' data-toggle="modal" id='report115_popup_link'></a>
-		<div id="report115_popup" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
+		<a href='#report116_popup' data-toggle="modal" id='report116_popup_link'></a>
+		<div id="report116_popup" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
 			<div class="modal-dialog modal-full">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -63,7 +62,7 @@
 					</div>
 					<div class="modal-body">
 						<div class="scroller" style="height:100px;" data-always-visible="1" data-rail-visible1="1">
-							<table id='report115_popup_table' class='table table-striped table-bordered table-hover dt-responsive no-more-tables'>
+							<table id='report116_popup_table' class='table table-striped table-bordered table-hover dt-responsive no-more-tables'>
 								<thead>
 									<tr>
 										<th>AWB #</th>
@@ -73,7 +72,7 @@
 										<th>COD Value</th>
 									</tr>
 								</thead>
-								<tbody id='report115_popup_body'></tbody>
+								<tbody id='report116_popup_body'></tbody>
 							</table>
 							</div>
 					</div>
@@ -86,41 +85,37 @@
 	</div>
 
 	<script>
-        function report115_header_ini()
+        function report116_header_ini()
         {
-            var form=document.getElementById('report115_header');
+            var form=document.getElementById('report116_header');
 			var branch_filter=form.elements['branch'];
-			var start_filter=form.elements['start'];
-			var end_filter=form.elements['end'];
+			var manifest_filter=form.elements['date'];
 
             $(form).off('submit');
             $(form).on('submit',function(event)
             {
                 event.preventDefault();
-                report115_ini();
+                report116_ini();
             });
 
 			var branch_data={data_store:'store_areas',return_column:'name'};
 			set_my_filter_json(branch_data,branch_filter);
 
-			$(start_filter).datepicker();
-			$(end_filter).datepicker();
-			start_filter.value=vTime.date({addDays:-7});
-			end_filter.value=vTime.date();
+			$(manifest_filter).datepicker();
+			manifest_filter.value=vTime.date();
 
-			var paginator=$('#report115_body').paginator({'visible':false,'container':$('#report115_body')});
-            setTimeout(function(){$('#report115').formcontrol();},1000);
+			var paginator=$('#report116_body').paginator({'visible':false,'container':$('#report116_body')});
+            setTimeout(function(){$('#report116').formcontrol();},1000);
         }
 
-        function report115_ini()
+        function report116_ini()
         {
-            var form=document.getElementById('report115_header');
+            var form=document.getElementById('report116_header');
 			var branch=form.elements['branch'].value;
-			var start=vTime.unix({date:form.elements['start'].value});
-			var end=vTime.unix({date:form.elements['end'].value});
+			var manifest_date=vTime.unix({date:form.elements['date'].value});
 
             show_loader();
-            $('#report115_body').html('');
+            $('#report116_body').html('');
 
 			var branches_data={data_store:'store_areas',return_column:'name',
 								indexes:[{index:'name',value:branch}]};
@@ -149,10 +144,10 @@
 	            var orders_data={data_store:'logistics_orders',
 	                              indexes:[{index:'id'},
 										  {index:'branch',array:branches_array},
-	                                      {index:'import_date',lowerbound:start,upperbound:end},
+	                                      {index:'manifest_date',exact:manifest_date},
 										  {index:'status'},
 									  	  {index:'collectable_value'}]};
-				read_json_rows('report115',orders_data,function(orders)
+				read_json_rows('report116',orders_data,function(orders)
 	            {
 					orders.forEach(function(order)
 					{
@@ -204,49 +199,48 @@
 						  rowsHTML+="<td data-th='Branch'>";
 		                      rowsHTML+=branch.name;
 		                  rowsHTML+="</td>";
-						  rowsHTML+="<td data-th='Total Assigned'><a onclick=\"report115_popup_action('"+branch.name+"','total');\">";
+						  rowsHTML+="<td data-th='Total Assigned'><a onclick=\"report116_popup_action('"+branch.name+"','total');\">";
 		                      rowsHTML+=branch.total;
 		                  rowsHTML+="</a></td>";
-		                  rowsHTML+="<td data-th='Received'><a onclick=\"report115_popup_action('"+branch.name+"','received');\">";
+		                  rowsHTML+="<td data-th='Received'><a onclick=\"report116_popup_action('"+branch.name+"','received');\">";
 		                      rowsHTML+=branch.received;
 		                  rowsHTML+="</a></td>";
-						  rowsHTML+="<td data-th='Out for Delivery'><a onclick=\"report115_popup_action('"+branch.name+"','ofd');\">";
+						  rowsHTML+="<td data-th='Out for Delivery'><a onclick=\"report116_popup_action('"+branch.name+"','ofd');\">";
 		                      rowsHTML+=branch.ofd;
 		                  rowsHTML+="</a></td>";
-			              rowsHTML+="<td data-th='Pending'><a onclick=\"report115_popup_action('"+branch.name+"','pending');\">";
+			              rowsHTML+="<td data-th='Pending'><a onclick=\"report116_popup_action('"+branch.name+"','pending');\">";
 		                      rowsHTML+=branch.pending;
 		                  rowsHTML+="</a></td>";
-		                  rowsHTML+="<td data-th='RTO'><a onclick=\"report115_popup_action('"+branch.name+"','rto');\">";
+		                  rowsHTML+="<td data-th='RTO'><a onclick=\"report116_popup_action('"+branch.name+"','rto');\">";
 		                      rowsHTML+=branch.rto;
 		                  rowsHTML+="</a></td>";
-						  rowsHTML+="<td data-th='Delivered'><a onclick=\"report115_popup_action('"+branch.name+"','delivered');\">";
+						  rowsHTML+="<td data-th='Delivered'><a onclick=\"report116_popup_action('"+branch.name+"','delivered');\">";
 		                      rowsHTML+=branch.delivered;
 		                  rowsHTML+="</a></td>";
-						  rowsHTML+="<td data-th='COD Collected'><a onclick=\"report115_popup_action('"+branch.name+"','delivered');\">";
+						  rowsHTML+="<td data-th='COD Collected'><a onclick=\"report116_popup_action('"+branch.name+"','delivered');\">";
 		                      rowsHTML+="Rs. "+branch.cod_collected;
 		                  rowsHTML+="</a></td>";
-						  rowsHTML+="<td data-th='COD Pending'><a onclick=\"report115_popup_action('"+branch.name+"','cod_pending');\">";
+						  rowsHTML+="<td data-th='COD Pending'><a onclick=\"report116_popup_action('"+branch.name+"','cod_pending');\">";
 		                      rowsHTML+="Rs. "+branch.cod_pending;
 		                  rowsHTML+="</a></td>";
 						  rowsHTML+="</tr>";
 
-		                  $('#report115_body').append(rowsHTML);
+		                  $('#report116_body').append(rowsHTML);
 		            });
 
-					initialize_static_tabular_report_buttons('Branch Stock Report','report115');
+					initialize_static_tabular_report_buttons('Branch Stock Report','report116');
 				    hide_loader();
 			    });
 			});
 		};
 
-		function report115_popup_action(branch,type)
+		function report116_popup_action(branch,type)
 		{
 			show_loader();
-			var form=document.getElementById('report115_header');
-			var start=vTime.unix({date:form.elements['start'].value});
-			var end=vTime.unix({date:form.elements['end'].value});
+			var form=document.getElementById('report116_header');
+			var manifest_date=vTime.unix({date:form.elements['date'].value});
 
-			$('#report115_popup_body').html('');
+			$('#report116_popup_body').html('');
 			var status_object={index:'status'};
 			switch(type)
 			{
@@ -265,7 +259,7 @@
 				case 'cod_pending':status_object={index:"status",array:['pending','undelivered','out for delivery']};
 								break;
 			}
-			var form=document.getElementById('report115_popup_form');
+			var form=document.getElementById('report116_popup_form');
 			var orders_data={data_store:'logistics_orders',
 							indexes:[{index:'awb_num'},
 									{index:'order_num'},
@@ -275,10 +269,11 @@
 									{index:'city'},
 									{index:'manifest_type'},
 									{index:'branch',exact:branch},
-									{index:'import_date',lowerbound:start,upperbound:end},
+									{index:'manifest_date',exact:manifest_date},
+									{index:'import_date'},
 									status_object,
 									{index:'collectable_value'}]};
-			read_json_rows('report115',orders_data,function(orders)
+			read_json_rows('report116',orders_data,function(orders)
 			{
 				orders.forEach(function(order)
 				{
@@ -303,12 +298,12 @@
 					rowsHTML+="</a></td>";
 					rowsHTML+="</tr>";
 
-					$('#report115_popup_body').append(rowsHTML);		
+					$('#report116_popup_body').append(rowsHTML);
 				});
 				hide_loader();
 			});
 
-			$("#report115_popup_link").click();
+			$("#report116_popup_link").click();
 		};
 	</script>
 </div>
