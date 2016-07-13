@@ -10530,11 +10530,10 @@ function modal149_action()
 					var channel=channel_filter.value;
 					row.id=last_updated+counter;
 					var order_history=[];
-					var history_object=new Object();
-					history_object.timeStamp=get_my_time();
-					history_object.details="Order dispatched from "+channel;
-					history_object.location=channel;
-					history_object.status="dispatched";
+					var history_object={timeStamp:get_my_time(),
+										details:"Order dispatched from "+channel,
+										location:channel,
+										status:"dispatched"};
 					order_history.push(history_object);
 					var order_history_string=JSON.stringify(order_history);
 					var product_name_array=row['Product name'].split('|');

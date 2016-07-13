@@ -149,7 +149,8 @@ class api
 	{
 		if(isset(self::$refactorFields))
 		{
-			$refactorFields = json_decode(self::$refactorFields,true);
+			$refactorFields=str_replace("{{time}}",time()*1000,self::$refactorFields);
+			$refactorFields = json_decode($refactorFields,true);
 			if(is_array($refactorFields))
 			{
 				foreach($refactorFields as $refactor)
