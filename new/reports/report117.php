@@ -23,7 +23,7 @@
 			<fieldset>
 				<label><input type='text' placeholder="AWB #" class='floatlabel' name='awb'></label>
 				<label><input type='text' placeholder="Channel" class='floatlabel' name='channel'></label>
-				<label><input type='text' placeholder="Import Date" class='floatlabel' name='date'></label>
+				<label><input type='text' placeholder="Pickup Date" class='floatlabel' name='date'></label>
 				<label><input type='submit' class='submit_hidden'></label>
 			</fieldset>
 		</form>
@@ -32,7 +32,7 @@
 			<thead>
 				<tr>
 					<th>AWB #</th>
-		            <th>Import Date</th>
+		            <th>Pickup Date</th>
 		            <th>Consignee</th>
 		            <th>Merchant</th>
 					<th>Status</th>
@@ -120,7 +120,7 @@
 
             initialize_tabular_report_buttons(columns,'New Orders from API','report117',function (item)
             {
-				item.import_date=vTime.date({time:item.import_date});
+				item['Pickup Date']=vTime.date({time:item.import_date});
 				delete item.source;
 			});
 
