@@ -157,7 +157,7 @@ class vDB
 	/**
 	* Returns the selection output as per the provided indexes
 	*/
-	public function vRead($indexes,$options)
+	public function vRead($indexes,$options = array())
 	{
 		$whereArray=$this->getWhereClause($indexes);
 		$limitArray=$this->getLimitClause($options);
@@ -537,7 +537,7 @@ class vDB
 			}
 		}
 		$result['query'] = rtrim($result['query'],"or ");
-		
+
 		return $result;
 	}
 }
