@@ -17,12 +17,19 @@
 			<username index='no' type="VARCHAR(100) NOT NULL"></username>
 			<status index='no' type="VARCHAR(45)"></status><!-- active/suspended -->
 			<dbname index='no' type="VARCHAR(100)"></dbname>
+			<domain index='no' type="VARCHAR(100)"></domain>
 			<call_limit index='no' type="DECIMAL(12,2)"></call_limit>
 			<data_stores index='no' type="TEXT"></data_stores>
 			<request_types index='no' type="TEXT"></request_types>
 			<required_fields index='no' type="TEXT"></required_fields>
 			<re_factoring index='no' type="TEXT"></re_factoring>
 			<indexes index='no' type="TEXT"></indexes>
+			<email index='no' type="TEXT"></email>
+			<email_title index='no' type="TEXT"></email_title>
+			<get_message index='no' type="TEXT"></get_message>
+			<put_message index='no' type="TEXT"></put_message>
+			<post_message index='no' type="TEXT"></post_message>
+			<delete_message index='no' type="TEXT"></delete_message>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</api_key_mapping>
 </re_xml>

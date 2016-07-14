@@ -12,10 +12,10 @@
 				<tr>
 					<form id='form357_header'></form>
 						<th><input type='text' placeholder="UserName" class='floatlabel' name='name' form='form357_header'></th>
-						<th><input type='text' placeholder="DB" class='floatlabel' name='db' form='form357_header'></th>
+						<th><input type='text' placeholder="Domain" class='floatlabel' name='domain' form='form357_header'></th>
 						<th><input type='text' placeholder="Data Store" class='floatlabel' name='store' form='form357_header'></th>
 						<th><input type='text' placeholder="Field Details" readonly='readonly' form='form357_header'></th>
-						<th><input type='text' placeholder="Status" class='floatlabel' name='status' form='form357_header'></th>
+						<th><input type='text' placeholder="Notification" readonly='readonly' form='form357_header'></th>
 						<th><input type='submit' form='form357_header' style='visibility: hidden;'></th>
 				</tr>
 			</thead>
@@ -29,20 +29,17 @@
 	{
 		var filter_fields=document.getElementById('form357_header');
 		var user_filter=filter_fields.elements['name'];
-		var db_filter=filter_fields.elements['db'];
+		var domain_filter=filter_fields.elements['domain'];
 		var store_filter=filter_fields.elements['store'];
-		var status_filter=filter_fields.elements['status'];
 
 		var user_data={database:'0',data_store:'api_key_mapping',return_column:'username'};
 		set_master_filter_json(user_data,user_filter);
 
-		var db_data={data_store:'api_key_mapping',database:'0',return_column:'dbname'};
-		set_master_filter_json(db_data,db_filter);
+		var domain_data={data_store:'api_key_mapping',database:'0',return_column:'domain'};
+		set_master_filter_json(domain_data,domain_filter);
 
 		var store_data={data_store:'api_key_mapping',database:'0',return_column:'data_stores'};
 		set_master_filter_json(store_data,store_filter);
-
-		set_static_filter_json('api_key_mapping','status',status_filter);
 
 		$(filter_fields).off('submit');
 		$(filter_fields).on('submit',function(event)
@@ -63,9 +60,8 @@
 
 		var filter_fields=document.getElementById('form357_header');
 		var fuser=filter_fields.elements['name'].value;
-		var fdb=filter_fields.elements['db'].value;
+		var fdomain=filter_fields.elements['domain'].value;
 		var fstore=filter_fields.elements['store'].value;
-		var fstatus=filter_fields.elements['status'].value;
 
 		var paginator=$('#form357_body').paginator();
 
@@ -77,12 +73,19 @@
 								{index:'username',value:fuser},
 								{index:'api_key'},
 								{index:'data_stores',value:fstore},
-								{index:'status',value:fstatus},
+								{index:'status'},
 								{index:'request_types'},
 								{index:'required_fields'},
 								{index:'re_factoring'},
 								{index:'indexes'},
-								{index:'dbname',value:fdb}]};
+								{index:'dbname'},
+								{index:'email'},
+								{index:'email_title'},
+								{index:'get_message'},
+								{index:'put_message'},
+								{index:'post_message'},
+								{index:'delete_message'},
+								{index:'domain',value:fdomain}]};
 
 		read_json_rows_master('form357',new_columns,function(results)
 		{
@@ -91,14 +94,16 @@
 				var rowsHTML="<tr>";
 					rowsHTML+="<form id='form357_"+result.id+"'></form>";
 						rowsHTML+="<td data-th='Username'>";
-							rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Username' readonly='readonly' form='form357_"+result.id+"'>"+result.username+"</textarea>";
+							rowsHTML+="<textarea class='floatlabel' placeholder='Username' readonly='readonly' form='form357_"+result.id+"'>"+result.username+"</textarea>";
 							rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Key' readonly='readonly' form='form357_"+result.id+"'>"+result.api_key+"</textarea>";
+							rowsHTML+="<input type='text' readonly='readonly' placeholder='Status' class='floatlabel dblclick_editable' required form='form357_"+result.id+"' value='"+result.status+"'>";
 						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='DB'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form357_"+result.id+"' value='"+result.dbname+"'>";
+						rowsHTML+="<td data-th='Domain'>";
+							rowsHTML+="<input type='text' class='floatlabel dblclick_editable' placeholder='Domain' readonly='readonly' form='form357_"+result.id+"' value='"+result.domain+"'>";
+							rowsHTML+="<input type='text' class='floatlabel' placeholder='DB' readonly='readonly' form='form357_"+result.id+"' value='"+result.dbname+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Data Store'>";
-							rowsHTML+="<input type='text' class='floatlabel dblclick_editable' placeholder='Store Name' readonly='readonly' form='form357_"+result.id+"' value='"+result.data_stores+"'>";
+							rowsHTML+="<input type='text' class='floatlabel' placeholder='Store Name' readonly='readonly' form='form357_"+result.id+"' value='"+result.data_stores+"'>";
 							rowsHTML+="<input type='text' class='floatlabel dblclick_editable' placeholder='Request Types' readonly='readonly' form='form357_"+result.id+"' value='"+result.request_types+"'>";
 							rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Get Indexes' readonly='readonly' form='form357_"+result.id+"'>"+result.indexes+"</textarea>";
 						rowsHTML+="</td>";
@@ -106,8 +111,13 @@
 							rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Required' readonly='readonly' form='form357_"+result.id+"'>"+result.required_fields+"</textarea>";
 							rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Re-factor' readonly='readonly' form='form357_"+result.id+"'>"+result.re_factoring+"</textarea>";
 						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Status'>";
-							rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' required form='form357_"+result.id+"' value='"+result.status+"'>";
+						rowsHTML+="<td data-th='Notification'>";
+							rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Emails' readonly='readonly' form='form357_"+result.id+"'>"+result.email+"</textarea>";
+							rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Title' readonly='readonly' form='form357_"+result.id+"'>"+result.email_title+"</textarea>";
+							rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Get Message' readonly='readonly' form='form357_"+result.id+"'>"+result.get_message+"</textarea>";
+							rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Put Message' readonly='readonly' form='form357_"+result.id+"'>"+result.put_message+"</textarea>";
+							rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Post Message' readonly='readonly' form='form357_"+result.id+"'>"+result.post_message+"</textarea>";
+							rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Delete Message' readonly='readonly' form='form357_"+result.id+"'>"+result.delete_message+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form357_"+result.id+"' name='id' value='"+result.id+"'>";
@@ -118,7 +128,7 @@
 
 				$('#form357_body').prepend(rowsHTML);
 				var fields=document.getElementById("form357_"+result.id);
-				var status_filter=fields.elements[8];
+				var status_filter=fields.elements[2];
 
 				set_static_value_list_json('api_key_mapping','status',status_filter);
 
@@ -144,23 +154,30 @@
 			var rowsHTML="<tr>";
 				rowsHTML+="<form id='form357_"+id+"'></form>";
 				rowsHTML+="<td data-th='Username'>";
-					rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Username' form='form357_"+id+"'></textarea>";
-					rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Key' form='form357_"+id+"'></textarea>";
+					rowsHTML+="<input type='text' class='floatlabel dblclick_editable' placeholder='Username' required form='form357_"+id+"'>";
+					rowsHTML+="<input type='text' class='floatlabel dblclick_editable' placeholder='Key' required form='form357_"+id+"'>";
+					rowsHTML+="<input type='text' class='floatlabel dblclick_editable' placeholder='Status' required form='form357_"+id+"'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='DB'>";
-					rowsHTML+="<input type='text' form='form357_"+id+"'>";
+					rowsHTML+="<input type='text' class='floatlabel' placeholder='Domain' required form='form357_"+id+"'>";
+					rowsHTML+="<input type='text' class='floatlabel' placeholder='Db' required form='form357_"+id+"'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Data Store'>";
-					rowsHTML+="<input type='text' class='floatlabel dblclick_editable' placeholder='Store Name' form='form357_"+id+"'>";
-					rowsHTML+="<input type='text' class='floatlabel dblclick_editable' placeholder='Request Types' form='form357_"+id+"'>";
+					rowsHTML+="<input type='text' class='floatlabel dblclick_editable' required placeholder='Store Name' form='form357_"+id+"'>";
+					rowsHTML+="<input type='text' class='floatlabel dblclick_editable' required placeholder='Request Types' form='form357_"+id+"'>";
 					rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='get Indexes' form='form357_"+id+"'></textarea>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Field Details'>";
 					rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Required' form='form357_"+id+"'></textarea>";
 					rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Re-factor' form='form357_"+id+"'></textarea>";
 				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Status'>";
-					rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' required form='form357_"+id+"'>";
+				rowsHTML+="<td data-th='Notification'>";
+					rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Emails' form='form357_"+id+"'></textarea>";
+					rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Title' form='form357_"+id+"'></textarea>";
+					rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Get Message' form='form357_"+id+"'></textarea>";
+					rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Put Message' form='form357_"+id+"'></textarea>";
+					rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Post Message' form='form357_"+id+"'></textarea>";
+					rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Delete Message' form='form357_"+id+"'></textarea>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Action'>";
 					rowsHTML+="<input type='hidden' form='form357_"+id+"' name='id' value='"+id+"'>";
@@ -173,7 +190,7 @@
 
 			var fields=document.getElementById("form357_"+id);
 			var user_filter=fields.elements[0];
-			var status_filter=fields.elements[8];
+			var status_filter=fields.elements[2];
 
 			$(user_filter).focus();
 
@@ -199,15 +216,22 @@
 		{
 			var new_columns={data_store:'api_key_mapping',database:'0',
 							data:[{index:'id',value:form.elements['id'].value},
-								{index:'username',value:form.elements[0].value,uniqueWith:['data_stores']},
+								{index:'username',value:form.elements[0].value,uniqueWith:['data_stores','domain']},
 								{index:'api_key',value:form.elements[1].value},
-								{index:'dbname',value:form.elements[2].value},
-								{index:'data_stores',value:form.elements[3].value},
-								{index:'request_types',value:form.elements[4].value},
-								{index:'indexes',value:form.elements[5].value},
-								{index:'required_fields',value:form.elements[6].value},
-								{index:'re_factoring',value:form.elements[7].value},
-								{index:'status',value:form.elements[8].value},
+								{index:'status',value:form.elements[2].value},
+								{index:'domain',value:form.elements[3].value},
+								{index:'dbname',value:form.elements[4].value},
+								{index:'data_stores',value:form.elements[5].value},
+								{index:'request_types',value:form.elements[6].value},
+								{index:'indexes',value:form.elements[7].value},
+								{index:'required_fields',value:form.elements[8].value},
+								{index:'re_factoring',value:form.elements[9].value},
+								{index:'email',value:form.elements[10].value},
+								{index:'email_title',value:form.elements[11].value},
+								{index:'get_message',value:form.elements[12].value},
+								{index:'put_message',value:form.elements[13].value},
+								{index:'post_message',value:form.elements[14].value},
+								{index:'delete_message',value:form.elements[15].value},
 								{index:'last_updated',value:get_my_time()}]};
 
 			var del_button=form.elements['delete'];
@@ -242,13 +266,20 @@
 							data:[{index:'id',value:form.elements['id'].value},
 								{index:'username',value:form.elements[0].value},
 								{index:'api_key',value:form.elements[1].value},
-								{index:'dbname',value:form.elements[2].value},
-								{index:'data_stores',value:form.elements[3].value},
-								{index:'request_types',value:form.elements[4].value},
-								{index:'indexes',value:form.elements[5].value},
-								{index:'required_fields',value:form.elements[6].value},
-								{index:'re_factoring',value:form.elements[7].value},
-								{index:'status',value:form.elements[8].value},
+								{index:'status',value:form.elements[2].value},
+								{index:'domain',value:form.elements[3].value},
+								{index:'dbname',value:form.elements[4].value},
+								{index:'data_stores',value:form.elements[5].value},
+								{index:'request_types',value:form.elements[6].value},
+								{index:'indexes',value:form.elements[7].value},
+								{index:'required_fields',value:form.elements[8].value},
+								{index:'re_factoring',value:form.elements[9].value},
+								{index:'email',value:form.elements[10].value},
+								{index:'email_title',value:form.elements[11].value},
+								{index:'get_message',value:form.elements[12].value},
+								{index:'put_message',value:form.elements[13].value},
+								{index:'post_message',value:form.elements[14].value},
+								{index:'delete_message',value:form.elements[15].value},
 								{index:'last_updated',value:get_my_time()}]};
 
 			server_update_master(new_columns);

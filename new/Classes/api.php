@@ -2,6 +2,8 @@
 namespace RetailingEssentials;
 
 include_once 'vDB.php';
+include_once 'mailer_json.php';
+include_once 'vUtil.php';
 
 /**
  * This class performs all the api handling and request generation
@@ -11,11 +13,19 @@ include_once 'vDB.php';
  */
 class api
 {
+	//for instance management
 	private static $instance;
+
+	//for authentication
+	private static $domain;
 	private static $username;
 	private static $apiKey;
+
+	//for api management
 	private static $table;
 	private static $requestType;
+
+	//api parameters
 	private static $data;
 	private static $row;
 	private static $indexes;
@@ -23,6 +33,14 @@ class api
 	private static $requiredFields;
 	private static $indexFields;
 	private static $refactorFields;
+
+	//for notification
+	private static $getMessage;
+	private static $putMessage;
+	private static $postMessage;
+	private static $deleteMessage;
+	private static $emailReceivers;
+	private static $emailTitle;
 
 	/**
 	 * Constructor
@@ -91,6 +109,13 @@ class api
 			self::$requiredFields=$result[0]['required_fields'];
 			self::$refactorFields=$result[0]['re_factoring'];
 			self::$indexFields=$result[0]['indexes'];
+			self::$domain=$result[0]['domain'];
+			self::$emailReceivers=$result[0]['email'];
+			self::$emailTitle=$result[0]['email_title'];
+			self::$getMessage=$result[0]['get_message'];
+			self::$putMessage=$result[0]['put_message'];
+			self::$postMessage=$result[0]['post_message'];
+			self::$deleteMessage=$result[0]['delete_message'];
 		}
 		return $response;
 	}
@@ -176,22 +201,65 @@ class api
 	}
 
 	/**
+	* This function notifies the API stakeholders about a hit
+	*/
+	public static function notify($result)
+	{
+		$email_message = "";
+		switch(self::$requestType)
+		{
+			case 'get': $email_message = self::$getMessage; break;
+			case 'put': $email_message = self::$putMessage; break;
+			case 'post': $email_message = self::$postMessage; break;
+			case 'delete': $email_message = self::$deleteMessage; break;
+		}
+
+		if(isset($email_message) && $email_message!="" && $email_message!=null && $email_message!="null" && $email_message!="0" && $result['status']!='error')
+		{
+			$vUtil = vUtil::getInstance(self::$domain);
+			$userPreferences = $vUtil::getUserPreferences(array('title','email'));
+			$bt= $userPreferences['title'];
+			$bemail = $userPreferences['email'];
+
+			$emails_array=explode(",",self::$emailReceivers);
+			$r_array=array();
+
+			foreach($emails_array as $em)
+			{
+				$receiver=array('name'=>$bt,'email'=>$em);
+				$r_array[]=$receiver;
+			}
+			$receivers=json_encode($r_array);
+
+			$formatted_message = $vUtil::getFormattedEmail(self::$emailTitle,$email_message);
+
+			try{
+				$email_instance=new send_mailer_json(self::$domain);
+				$email_instance->direct_send(self::$emailTitle,$formatted_message,'',$receivers,$bemail,$bt);
+				$email_instance->log_mailer(self::$domain,self::$emailTitle,$formatted_message,'',$receivers,$bemail,$bt);
+			}
+			catch(Exception $e){}
+		}
+	}
+
+	/**
 	* This function executes the request and returns formatted response
 	*/
 	public static function executeRequest($dbname)
 	{
+		$result = array(
+			'status' => 'error',
+			'description' => 'request type not supported'
+		);
 		switch(self::$requestType)
 		{
-			case 'get': return self::get($dbname);
-			case 'put': return self::put($dbname);
-			case 'post': return self::post($dbname);
-			case 'delete': return self::delete($dbname);
-
-			default: return array(
-				'status' => 'error',
-				'description' => 'request type not supported'
-			);
+			case 'get': $result = self::get($dbname); break;
+			case 'put': $result = self::put($dbname); break;
+			case 'post': $result = self::post($dbname); break;
+			case 'delete': $result = self::delete($dbname); break;
 		}
+		self::notify($result);
+		return $result;
 	}
 
 	/**

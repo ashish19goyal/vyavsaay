@@ -4,8 +4,10 @@
 
 	include_once "../Classes/vDB.php";
 	include_once "../Classes/mailer_json.php";
+	include_once "../Classes/vUtil.php";
 	use RetailingEssentials\vDB;
 	use RetailingEssentials\send_mailer_json;
+	use RetailingEssentials\vUtil;
 
 	date_default_timezone_set('Asia/Kolkata');
 /**
@@ -48,7 +50,11 @@ function cron1()
 	}
 
 	//print_r($branches);die;
-	$today = 1468348200000;
+	//print_r($branches_array);die;
+
+	$todate=date('d-m-Y',time());
+	$today=strtotime($todate)*1000;
+
 	$order_indexes = array(
 			array('index' => 'id'),
 			array('index' => 'branch', 'array' => $branches_array),
@@ -100,79 +106,66 @@ function cron1()
 			}
 		}
 	}
+	//print_r($branches);
 
-	$rowsHTML="<table>";
+	$vUtil = vUtil::getInstance('beacon');
+	$userPreferences = $vUtil::getUserPreferences(array('title','email','email_report'));
+	$bt= $userPreferences['title'];
+	$bemail = $userPreferences['email'];
+	$email = $userPreferences['email_report'];
 
-	foreach($branches as $branch)
+	$rowsHTML="<table style='width:100%;font-size:14px;border:1px solid black;text-align:left;' class='plain_table'>".
+				"<tr>".
+					"<th><b>Branch</b></th>".
+					"<th><b>Total Assigned</b></th>".
+					"<th><b>Received</b></th>".
+					"<th><b>Out for Delivery</b></th>".
+					"<th><b>Pending</b></th>".
+					"<th><b>RTO</b></th>".
+					"<th><b>Delivered</b></th>".
+					"<th><b>COD Collected</b></th>".
+					"<th><b>COD Pending</b></th>".
+				"</tr>";
+
+	foreach($branches as $b)
 	{
-		$branch['received']=$branch['total']-$branch['transit'];
-		$branch['cod_pending']=$branch['total_cod']-$branch['cod_collected'];
-
-	    $rowsHTML.="<tr>".
-		  			"<td data-th='Branch'>".
-			  			$branch['name'].
-			  		"</td>".
-		  			"<td data-th='Total Assigned'>".
-			  			$branch['total'].
-		  			"</td>".
-		  			"<td data-th='Received'>".
-			  			$branch['received'].
-		  			"</td>".
-		  			"<td data-th='Out for Delivery'>".
-			  			$branch['ofd'].
-		  			"</td>".
-		 			"<td data-th='Pending'>".
-			  			$branch['pending'].
-		  			"</td>".
-		  			"<td data-th='RTO'>".
-			  			$branch['rto'].
-		  			"</td>".
-		  			"<td data-th='Delivered'>".
-			  			$branch['delivered'].
-		  			"</td>".
-		  			"<td data-th='COD Collected'>".
-			  			"Rs. ".$branch['cod_collected'].
-		  			"</td>".
-		  			"<td data-th='COD Pending'>".
-			  			"Rs. ".$branch['cod_pending'].
-		  			"</td>".
+		$b['received']=$b['total']-$b['transit'];
+		$b['cod_pending']=$b['total_cod']-$b['cod_collected'];
+		$rowsHTML.="<tr>".
+		  			"<td>".$b['name']."</td>".
+		  			"<td>".$b['total']."</td>".
+		  			"<td>".$b['received']."</td>".
+		  			"<td>".$b['ofd']."</td>".
+		 			"<td>".$b['pending']."</td>".
+		  			"<td>".$b['rto']."</td>".
+		  			"<td>".$b['delivered']."</td>".
+		  			"<td>Rs. ".$b['cod_collected']."</td>".
+		  			"<td>Rs. ".$b['cod_pending']."</td>".
 		  		"</tr>";
 	}
 	$rowsHTML.="</table>";
-	// print_r($rowsHTML);die;
-	$email_instance=new send_mailer_json($domain);
-	$tselect_query="select name,value from user_preferences where name in (?,?,?,?)";
 
-	$tresult=$vDB->dbSelect($tselect_query,array('title','phone','email','address'));
-	$bt="";
-	$bphone="";
-	$baddress="";
-	$bemail="";
-	for($k=0;$k<count($tresult);$k++)
-	{
-		switch($tresult[$k]['name'])
-		{
-			case 'title': $bt=$tresult[$k]['value'];
-							break;
-			case 'phone': $bphone=$tresult[$k]['value'];
-							break;
-			case 'email': $bemail=$tresult[$k]['value'];
-							break;
-			case 'address': $baddress=$tresult[$k]['value'];
-							break;
-		}
-	}
+	$formated_time=date('d-m-Y h:i A',time());
+	$reportTitle=$bt.' - Branch Status Report - '.$formated_time;
 
-	$email="info@vyavsaay.com";
-	$schedule_format=date('d-m-Y h:i A',time());
+	$email_message = $vUtil::getFormattedEmail($reportTitle,$rowsHTML);
+
 	//sending email
 	if($email!="" && $email!=null)
 	{
-		$subject=$bt.' - Branch Status Report - '.$schedule_format;
-		$r_array=array(array('name'=>$bt,'email'=>$email));
+		$emails_array=explode(",",$email);
+		$r_array=array();
+
+		foreach($emails_array as $em)
+		{
+			$receiver=array('name'=>$bt,'email'=>$em);
+			$r_array[]=$receiver;
+		}
 		$receivers=json_encode($r_array);
-		$email_instance->direct_send($subject,$rowsHTML,'',$receivers,$bemail,$bt);
-		$email_instance->log_mailer($domain,$subject,$rowsHTML,'',$receivers,$bemail,$bt);
+
+		$email_instance=new send_mailer_json($domain);
+		$email_instance->direct_send($reportTitle,$email_message,'',$receivers,$bemail,$bt);
+		$email_instance->log_mailer($domain,$reportTitle,$email_message,'',$receivers,$bemail,$bt);
 	}
 }
 
@@ -206,16 +199,16 @@ else if($pid)
 else
 {
     //the main process
-    // while(true)
-    // {
-		// $ctime=localtime(time(),true);
-		// $chour=$ctime['tm_hour'];
-		// if($chour==20)
-		// {
+    while(true)
+    {
+		$ctime=localtime(time(),true);
+		$chour=$ctime['tm_hour'];
+		if($chour==20)
+		{
 			cron1();
-		// }
-		// sleep(3550);
-    // }
+		}
+		sleep(3550);
+    }
 }
 
 ?>
