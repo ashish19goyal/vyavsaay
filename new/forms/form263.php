@@ -144,7 +144,7 @@
 										rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form263_"+id+"' value='"+result.display_name+"'>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Onclick'>";
-										rowsHTML+="<textarea readonly='readonly' form='form263_"+id+"'>"+result.onclick+"</textarea>";
+										rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form263_"+id+"'>"+result.onclick+"</textarea>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Action'>";
 										rowsHTML+="<input type='hidden' form='form263_"+id+"' value='"+id+"'>";
