@@ -1,5 +1,5 @@
 <?php
-/*	input data format: 
+/*	input data format:
  * 			{
  				api_key:'',
  				username:'',
@@ -27,7 +27,7 @@
  				]
  			}
 
- *	output data format: 
+ *	output data format:
  *			{
  				status:'success/error',
  				data_store:'',
@@ -66,10 +66,10 @@
 	$api_array=array($api_key,$username,'active');
 	$api_stmt->execute($api_array);
 	$api_struct_res=$api_stmt->fetchAll(PDO::FETCH_ASSOC);
-	
+
 	//echo $api_struct_res[0]['dbname'];
 	$response_object=[];
-				
+
 	if(count($api_struct_res)>0)
 	{
 		$db_name=$api_struct_res[0]['dbname'];
@@ -100,13 +100,13 @@
 					$query.=$col['index']." <= ? and ";
 					$values_array[]=$col['value'];
 				}
-				
+
 				if(isset($col['lowerbound']))
 				{
 					$query.=$col['index']." >= ? and ";
 					$values_array[]=$col['value'];
 				}
-				
+
 				if(isset($col['array']))
 				{
 					$query.=$col['index']." in (";
@@ -130,23 +130,23 @@
 							$values_array[]=$col['value'];
 						}
 						else
-						{	
+						{
 							$query.=$col['index']." like ? and ";
 							$values_array[]="%".$col['value']."%";
 						}
 					}
 				}
-				
+
 				if(isset($col['exact']))
 				{
 					$query.=$col['index']." = ? and ";
 					$values_array[]=$col['value'];
 				}
 			}
-			
-			////////////////				
+
+			////////////////
 			$query=rtrim($query,"and ");
-			
+
 			if(count($values_array)===0)
 			{
 				$query="select * from $table";
@@ -154,29 +154,28 @@
 			$query.=$order_by."id DESC";
 
 			//echo $query;
-	
+
 			if($limit_count!==0)
 			{
 				$query.=$limit;
 				$values_array[]=$limit_start_index;
 				$values_array[]=$limit_count;
 			}
-			
+
 			$conn2=new db_connect($db_name);
 			$stmt=$conn2->conn->prepare($query);
 			$stmt->execute($values_array);
 			$struct_res=$stmt->fetchAll(PDO::FETCH_ASSOC);
-			
+
 			$response_object['status']='success';
 			$response_object['data_store']=$table;
 			$response_object['length']=count($struct_res);
 			$response_object['end_index']=$limit_start_index+count($struct_res);
-	
+
 			$response_rows=[];
-	
+
 			for($i=0;$i<count($struct_res);$i++)
 			{
-				//echo "new row<br>";
 				$response_rows[$i]=[];
 				foreach($struct_res[$i] as $key => $value)
 				{
@@ -187,24 +186,23 @@
 					else {
 						$response_rows[$i][$key]=$value;
 					}
-					//echo $value."<br>";
 				}
 			}
 
 			$response_object['rows']=$response_rows;
-			
+
 		}
-		else 
+		else
 		{
 			$response_object['status']='error';
 			$response_object['description']='access to data store not allowed';
 		}
 	}
-	else 
+	else
 	{
 		$response_object['status']='error';
 		$response_object['description']='api access not allowed';
-	}	
+	}
 
 	$jsonresponse=json_encode($response_object);
 	header ("Content-Type:application/json");

@@ -1,7 +1,7 @@
 <?php
 
 	$awb_num=$_POST['awb_num'];
-	//$awb_num='828867';	
+	//$awb_num='828867';
 	$data_object=[];
 	$data_object['api_key']="shopclues26082015";
 	$data_object['username']="shopclues";
@@ -15,7 +15,7 @@
 	$data_object['indexes'][0]['array']='yes';
 	$data_string="data=".json_encode($data_object);
 	//echo $data_string;
-	$url="https://vyavsaay.com/api/get_data.php";
+	$url="localhost/api/get_data.php";
 	//$url="https://vyavsaay.com/api/get_data.php";
 
 	$ch=curl_init();
@@ -29,12 +29,12 @@
 	//curl_setopt($ch, CURLOPT_STDERR, $verbose);
 	$result = curl_exec($ch);
 	curl_close($ch);
-	
-	if($result===false) 
+
+	if($result===false)
 	{
 	  	die("Curl failed");
 	}
-	else 
+	else
 	{
 		header ("Content-Type:application/json");
 		echo $result;
@@ -43,7 +43,7 @@
 	//rewind($verbose);
 	//$verboseLog = stream_get_contents($verbose);
 
-	//echo "Verbose information:\n<pre>", htmlspecialchars($verboseLog), "</pre>\n";	
+	//echo "Verbose information:\n<pre>", htmlspecialchars($verboseLog), "</pre>\n";
 
 	//header ("Content-Type:text/plain");
 	//echo "<HTML><BODY>".$result."</BODY></HTML>";

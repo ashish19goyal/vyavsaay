@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Shipment Tracking</title>
-    
+
     <link href="api.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -15,27 +15,27 @@
                     <li><a href="index.html#contact" class="menu_item">Contact Us</a></li>
                 </ul>
             </nav>
-        
+
         <img class=logo src="images/seven-horses-white.png" />
-        
-        
+
+
     </header>
     <div class="banner">
     <div class="banner_text">TRACK YOUR ORDER</div>
     <img class="hero_banner" src="images/about us.jpg">
     </div>
-    
-    
-	<form id='tracking_form'>	
+
+
+	<form id='tracking_form'>
 		<input class="tracktext" type='text' name='awb_num' id='awb_num' placeholder="Enter AWB Number" title='For tracking multiple AWB numbers, separate using comma (,)'>
 		<input class="button" type='submit' value='Track Now'>
 	</form>
-	<div class="order_details" id="result">       
+	<div class="order_details" id="result">
 	</div>
 </body>
 <script src='https://code.jquery.com/jquery-1.11.3.min.js'></script>
 <script>
-	
+
 	$(window).load(function()
 	{
 		var tracking_form=document.getElementById('tracking_form');
@@ -44,12 +44,12 @@
 			api_func();
 		});
 	});
-	
+
 	function api_func()
 	{
 		var awb_num=document.getElementById('awb_num').value;
 		var result_div=document.getElementById('result');
-				
+
 		$.ajax(
 		{
 			type: "POST",
@@ -57,18 +57,18 @@
 			data: {awb_num:awb_num},
 			error:function(xhr)
 			{
+                console.log(xhr.responseText);
 				result_div.innerHTML="oops!. Something weird happened. Please bear with us. We will be there soon.";
-				console.log(xhr.responseText);
 			},
 			success: function(return_data,return_status,e)
 			{
 				$("#result").html;
 				//console.log(e.responseText);
-								
+
 				$(result_div).html('');
-								
+
 				var response_object=JSON.parse(e.responseText);
-				
+                console.log(response_object);
 				if(response_object.status=='success')
 				{
 					var result_rows=response_object.rows;
@@ -78,35 +78,35 @@
 						result_master_head_box.innerHTML="<br>Summary";
 
 						var result_master_table=document.createElement('table');
-						result_master_table.innerHTML="<th>AWB #</th><th>Destination</th><th>Pickup Date</th><th>Status</th>";					
-						
+						result_master_table.innerHTML="<th>AWB #</th><th>Destination</th><th>Pickup Date</th><th>Status</th>";
+
 						result_div.appendChild(result_master_head_box);
 						result_div.appendChild(result_master_table);
 
 						result_rows.forEach(function(result_row)
 						{
 							var result_master_table_row=document.createElement('tr');
-							result_master_table_row.innerHTML="<td>"+result_row.awb_num+"</td><td>"+result_row.city+"</td><td>"+get_my_datetime(result_row.import_date)+"</td><td>"+result_row.status+"</td>";					
-	
-							result_master_table.appendChild(result_master_table_row);							
-						
+							result_master_table_row.innerHTML="<td>"+result_row.awb_num+"</td><td>"+result_row.city+"</td><td>"+get_my_datetime(result_row.import_date)+"</td><td>"+result_row.status+"</td>";
+
+							result_master_table.appendChild(result_master_table_row);
+
 							var result_head_box=document.createElement('div');
 							var result_table=document.createElement('table');
-							
+
 							result_head_box.innerHTML="<br>"+result_row.awb_num+" Details";
-							result_table.innerHTML="<th>Time</th><th>Details</th><th>Location</th><th>Status</th>";					
-							
+							result_table.innerHTML="<th>Time</th><th>Details</th><th>Location</th><th>Status</th>";
+
 							var order_history=result_row.order_history;
 							order_history.forEach(function(history)
 							{
 								var result_table_row=document.createElement('tr');
-								result_table_row.innerHTML="<td>"+get_my_datetime(history.timeStamp)+"</td><td>"+history.details+"</td><td>"+history.location+"</td><td>"+history.status+"</td>";					
+								result_table_row.innerHTML="<td>"+get_my_datetime(history.timeStamp)+"</td><td>"+history.details+"</td><td>"+history.location+"</td><td>"+history.status+"</td>";
 								result_table.appendChild(result_table_row);
 							});
-							
+
 							result_div.appendChild(result_head_box);
 							result_div.appendChild(result_table);
-						});						
+						});
 					}
 					else {
 						result_div.innerHTML="Sorry! we couldn't find any orders corresponding to this tracking number. Please re-verify and try again.";
@@ -118,7 +118,7 @@
 			}
 		});
 	}
-	
+
 	function get_my_datetime(raw_time)
 	{
 		if(!raw_time)
@@ -140,11 +140,11 @@
 			var minutes=d.getMinutes();
 			if (minutes < 10) {
 			    minutes = "0" + minutes;
-			}	
+			}
 			var time=date+"/"+month+"/"+year+" "+hour+":"+minutes;
 			return time;
 		}
-		else if(raw_time=="")	
+		else if(raw_time=="")
 		{
 			return "";
 		}
@@ -167,7 +167,7 @@
 			var minutes=d.getMinutes();
 			if (minutes < 10) {
 			    minutes = "0" + minutes;
-			}	
+			}
 			var time=date+"/"+month+"/"+year+" "+hour+":"+minutes;
 			return time;
 		}
