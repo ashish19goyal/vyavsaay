@@ -920,7 +920,7 @@
 
             $(mts_barcode).JsBarcode(mts_num,{displayValue:true,fontSize:20});
 
-            mts_title.innerHTML="Pass";
+            mts_title.innerHTML="Gate-Pass";
             detail_text="<table style='border:none;width:100%;font-size:11px;'>"+
 							"<tr>"+
 								"<td>Pass #: "+mts_num+"</td>"+
