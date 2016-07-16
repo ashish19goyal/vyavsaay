@@ -67,6 +67,36 @@ function form284_header_ini()
 
 	$(share_button).off('click');
 
+	vUtil.dropdownHover($(customers_filter),function(func)
+	{
+		var company_data={data_store:'attributes',count:1,return_column:'value',
+						indexes:[{index:'name',exact:customers_filter.value},
+								{index:'type',exact:'customer'},
+								{index:'attribute',exact:'Company Name'}]};
+		read_json_single_column(company_data,function(custs)
+		{
+			var cust_data={data_store:'customers',count:1,
+							indexes:[{index:'acc_name',exact:customers_filter.value},{index:'name'},
+									{index:'phone'},{index:'address'},{index:'email'}]};
+			read_json_rows('',cust_data,function(customers)
+			{
+				var html="";
+				if(customers.length>0)
+				{
+					html+= "<br><b>Name</b>: "+customers[0].name;
+					html+= "<br><b>Phone</b>: "+customers[0].phone;
+					html+= "<br><b>Email</b>: "+customers[0].email;
+					html+= "<br><b>Address</b>: "+customers[0].address;
+				}
+				if(custs.length>0)
+				{
+					html+= "<br><b>Company Name</b>: "+custs[0];
+				}
+				func(html);
+			});
+		});
+	});
+
 	narration.value="";
 	bill_type.removeAttribute('readonly');
 

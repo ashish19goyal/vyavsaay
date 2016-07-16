@@ -276,6 +276,38 @@ var vUtil = function (options)
 			}
 		});
 	};
+
+	this.dropdownHover = function(element,func)
+	{
+		if(!element.data['dropdownHover'])
+		{
+			$(element).parent().addClass('dropdown');
+			$(element).addClass('dropdown-toggle');
+			$(element).attr('data-toggle','dropdown');
+			$(element).attr('data-hover','dropdown');
+
+			var ul=document.createElement('div');
+			$(ul).addClass('dropdown-menu');
+			$(ul).attr('style','padding:2px;line-height:25px;background-color:#eee');
+			$(element).parent().append(ul);
+
+			$(element).dropdownHover();
+
+			$(element).on('mouseover',function()
+			{
+				$(ul).html("Loading...");
+				if(!vUtil.isBlank(func))
+				{
+					func(function(html)
+					{
+						$(ul).html(html);
+					});
+				}
+			});
+
+			element.data['dropdownHover']='yes';
+		}
+	};
 };
 vUtil=new vUtil();
 

@@ -2436,12 +2436,12 @@
                 <form id='modal172_form' autocomplete="off">
 	            	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    	<h4 class="modal-title">Add Payable</h4>
+                    	<h4 class="modal-title">Add Payment</h4>
                 	</div>
 	                <div class="modal-body">
 		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
 		                  <div class="row">
-							   <div class="col-sm-12 col-md-4">Payable Id</div>
+							   <div class="col-sm-12 col-md-4">Payment Id</div>
 					     	   <div class="col-sm-12 col-md-8"><input type='text' form='modal172_form' required name='receipt_id'></div>
 					      </div>
 		                  <div class="row">
@@ -3812,39 +3812,43 @@
 	        </div>
 	    </div>
 
-			<a href='#modal215' data-toggle="modal" id='modal215_link'></a>
-			<div id="modal215" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
-		        <div class="modal-dialog">
-		            <div class="modal-content">
-		                <form id='modal215_form' autocomplete="off">
-			            		<div class="modal-header">
-		                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-		                    	<h4 class="modal-title">Update Inventory</h4>
-		                	</div>
-			                <div class="modal-body">
-				               	<div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
-				                  <div class="row">
-										   			<div class="col-sm-12 col-md-4">Name</div>
-							     					<div class="col-sm-12 col-md-8"><input type='text' readonly='readonly' form='modal215_form' name='name'></div>
-							     				</div>
-						              <div class="row">
-												   	<div class="col-sm-12 col-md-4">Current Inventory</div>
-									     			<div class="col-sm-12 col-md-8"><input type='number' step='any' readonly='readonly' form='modal215_form' name='current'></div>
-									     		</div>
-						              <div class="row">
-												   	<div class="col-sm-12 col-md-4">Updated Inventory</div>
-				                  	<div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal215_form' required name='updated'></div>
-									     		</div>
-						            </div>
-											</div>
-			             	<div class="modal-footer">
-			               	<button type="submit" class="btn green" form='modal215_form' name='save'>Update</button>
-			               	<button type="button" class="btn red" form='modal215_form' data-dismiss='modal' name='cancel'>Cancel</button>
-			             	</div>
-		                </form>
-		            </div>
-		        </div>
-		    </div>
+	<a href='#modal215' data-toggle="modal" id='modal215_link'></a>
+	<div id="modal215" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal215_form' autocomplete="off">
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Update Inventory</h4>
+                	</div>
+	                <div class="modal-body">
+		               	<div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		                  <div class="row">
+								<div class="col-sm-12 col-md-4">Name</div>
+					     		<div class="col-sm-12 col-md-8"><input type='text' readonly='readonly' form='modal215_form' name='name'></div>
+					      </div>
+				          <div class="row">
+							   	<div class="col-sm-12 col-md-4">Current Inventory</div>
+								<div class="col-sm-12 col-md-8"><input type='number' step='any' readonly='readonly' form='modal215_form' name='current'></div>
+						  </div>
+				          <div class="row">
+							   	<div class="col-sm-12 col-md-4">Updated Inventory</div>
+		                  		<div class="col-sm-12 col-md-8"><input type='number' step='any' form='modal215_form' required name='updated'></div>
+						  </div>
+						  <div class="row">
+							   	<div class="col-sm-12 col-md-4">Particulars</div>
+		                  		<div class="col-sm-12 col-md-8"><input type='text' form='modal215_form' required name='part'></div>
+						  </div>
+				    	</div>
+					</div>
+	             	<div class="modal-footer">
+		               	<button type="submit" class="btn green" form='modal215_form' name='save'>Update</button>
+		               	<button type="button" class="btn red" form='modal215_form' data-dismiss='modal' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 	<a href='#modal216' data-toggle="modal" id='modal216_link'></a>
 	<div id="modal216" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">

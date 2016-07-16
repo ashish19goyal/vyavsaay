@@ -15931,7 +15931,9 @@ function modal215_action(item_name)
 	var fitem=form.elements['name'];
 	var fcurrent=form.elements['current'];
 	var fupdated=form.elements['updated'];
+	var fpart=form.elements['part'];
 	fitem.value=item_name;
+	fpart.value="";
 
 	get_inventory(item_name,'',function(inventory)
 	{
@@ -15946,6 +15948,7 @@ function modal215_action(item_name)
 		{
 			var updated=fupdated.value;
 			var current=fcurrent.value;
+			var particulars=fpart.value;
 			var change=parseFloat(updated)-parseFloat(current);
 			var last_updated=get_my_time();
 
@@ -15954,6 +15957,8 @@ function modal215_action(item_name)
 				{index:'product_name',value:item_name},
 				{index:'batch',value:item_name},
 				{index:'quantity',value:change},
+				{index:'source',value:'Manual Entry'},
+				{index:'item_desc',value:particulars},
 				{index:'last_updated',value:last_updated}]};
 			create_json(adjust_json);
 		}

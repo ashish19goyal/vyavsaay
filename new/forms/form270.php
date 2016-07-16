@@ -12,6 +12,7 @@
 	<div class="portlet-body">
         <form id='form270_master' autocomplete="off">
             <fieldset>
+				<button type='button' style='vertical-align:top;margin-top:15px;' title='Create new product' class='btn yellow-saffron' onclick='modal214_action();'>Create Product <i class='fa fa-plus'></i></button>
                 <label><div class='btn-overlap'><input type='text' required name='supplier' placeholder='Supplier' class='floatlabel'><button type='button' title='Add new supplier' class='btn btn-icon-only default right-overlap' id='form270_add_supplier'><i class='fa fa-plus'></i></button></div></label>
                 <label><input type='text' required name='bill_num' class='floatlabel' placeholder='Bill Number'></label>
                 <label><input type='text' name='date' required class='floatlabel' placeholder='Bill Date'></label>
@@ -53,6 +54,25 @@ function form270_header_ini()
 
 	fields.elements['bill_id'].value=get_new_key();
 	var save_button=document.getElementById('form270_save');
+
+	vUtil.dropdownHover($(supplier_filter),function(func)
+	{
+		var cust_data={data_store:'suppliers',count:1,
+						indexes:[{index:'acc_name',exact:supplier_filter.value},{index:'name'},
+								{index:'phone'},{index:'address'},{index:'email'}]};
+		read_json_rows('',cust_data,function(customers)
+		{
+			var html="";
+			if(customers.length>0)
+			{
+				html+= "<br><b>Name</b>: "+customers[0].name;
+				html+= "<br><b>Phone</b>: "+customers[0].phone;
+				html+= "<br><b>Email</b>: "+customers[0].email;
+				html+= "<br><b>Address</b>: "+customers[0].address;
+			}
+			func(html);
+		});
+	});
 
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)

@@ -323,7 +323,6 @@
                     {
                         if(double_entry<2)
                         {
-							console.log('check1');
 							form344_create_form(function()
 	                        {
                                 form344_create_item(item_form);
@@ -332,8 +331,7 @@
 						}
                         else
                         {
-							console.log('check2');
-                            seal_filter.value="";
+							seal_filter.value="";
                             $("#modal65_link").click();
                         }
                     }
@@ -341,14 +339,12 @@
                     {
                         if(double_entry<2)
                         {
-							console.log('check3');
-                            form344_create_item(item_form);
+							form344_create_item(item_form);
                             form344_add_item();
                         }
                         else
                         {
-							console.log('check4');
-                            seal_filter.value="";
+							seal_filter.value="";
                             $("#modal65_link").click();
                         }
                     }
@@ -376,11 +372,9 @@
 
                         if(total_entries==1 && new_pass)
                         {
-							console.log('check5');
-                            if(double_entry<2)
+							if(double_entry<2)
                             {
-								console.log('check6');
-                                var orders_data={data_store:'manifests',count:1,
+							    var orders_data={data_store:'manifests',count:1,
                                         indexes:[{index:'id'},
                                                 {index:'manifest_num'},
                                                 {index:'lbh'},
@@ -391,11 +385,9 @@
 
                                 read_json_rows('',orders_data,function (orders)
                                 {
-									console.log('check7');
-                                    if(orders.length>0)
+							        if(orders.length>0)
                                     {
-										console.log('check8');
-                                        manifest_filter.value=orders[0].manifest_num;
+							            manifest_filter.value=orders[0].manifest_num;
                                         pieces_filter.value=orders[0].num_orders;
                                         lbh_filter.value=orders[0].lbh;
                                         weight_filter.value=orders[0].weight;
@@ -423,8 +415,7 @@
                                     }
                                     else
                                     {
-										console.log('check9');
-                                        manifest_filter.value="";
+										manifest_filter.value="";
                                         pieces_filter.value="";
                                         lbh_filter.value="";
                                         weight_filter.value="";
@@ -445,10 +436,8 @@
                         }
                         else
                         {
-							console.log('check11');
                             if(double_entry<2)
                             {
-								console.log('check12');
                                 var orders_data={data_store:'manifests',count:1,
                                             indexes:[{index:'id'},
                                                     {index:'manifest_num'},
@@ -460,10 +449,8 @@
 
                                 read_json_rows('',orders_data,function (orders)
                                 {
-									console.log('check13');
                                     if(orders.length>0)
                                     {
-										console.log('check14');
                                         manifest_filter.value=orders[0].manifest_num;
                                         pieces_filter.value=orders[0].num_orders;
                                         lbh_filter.value=orders[0].lbh;
@@ -489,7 +476,6 @@
                                     }
                                     else
                                     {
-										console.log('check15');
                                         manifest_filter.value="";
                                         pieces_filter.value="";
                                         lbh_filter.value="";
@@ -505,7 +491,6 @@
                             }
                             else
                             {
-								console.log('check16');
                                 seal_filter.value="";
                                 $("#modal65_link").click();
                             }
@@ -678,6 +663,9 @@
 	 					{index:'pass_num',value:pass_num},
                         {index:'last_updated',value:last_updated}]};
  				update_json(data_json);
+
+				var awbs=form.elements['awb_ids'].value;
+				var awbs_array=awbs.split(",");
 
                 var data_json={data_store:'logistics_orders',
                         loader:'yes',

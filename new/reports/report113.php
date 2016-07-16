@@ -37,6 +37,7 @@
 					<th>Account</th>
 					<th>Date</th>
 					<th>Type</th>
+					<th>Particulars</th>
 					<th>Amount</th>
 				</tr>
 			</thead>
@@ -87,6 +88,7 @@
                               indexes:[{index:'id'},
                                       {index:'amount'},
                                       {index:'type'},
+									  {index:'notes'},
 									  {index:'acc_name',value:account},
                                       {index:'date',lowerbound:start,upperbound:end},
 								  	  {index:'last_updated'}]};
@@ -115,6 +117,9 @@
 	              rowsHTML+="<td data-th='Type'>";
                       rowsHTML+=tran.type;
                   rowsHTML+="</td>";
+				  rowsHTML+="<td data-th='Particulars'>";
+                      rowsHTML+=tran.notes;
+                  rowsHTML+="</td>";
                   rowsHTML+="<td data-th='Amount'>";
                       rowsHTML+=tran.amount;
                   rowsHTML+="</td>";
@@ -130,7 +135,7 @@
                   $('#report113_body').append(rowsHTML);
               });
 
-			  var footRow="<tr><td colspan='3'>Total Amount</td><td>Rs. "+total_amount+"</td></tr>";
+			  var footRow="<tr><td colspan='4'>Total Amount</td><td>Rs. "+total_amount+"</td></tr>";
 			  $('#report113_foot').append(footRow);
 
 			  initialize_static_tabular_report_buttons('Cash Register','report113');

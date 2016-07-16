@@ -27,7 +27,7 @@
 			<thead>
 				<tr>
 					<form id='form282_header'></form>
-						<th><input type='text' placeholder="Receipt Id" class='floatlabel' name='receipt' form='form282_header'></th>
+						<th><input type='text' placeholder="Payment Id" class='floatlabel' name='receipt' form='form282_header'></th>
 						<th><input type='text' placeholder="Account" class='floatlabel' name='account' form='form282_header'></th>
 						<th><input type='text' placeholder="Date" class='floatlabel' name='date' form='form282_header'></th>
 						<th><input type='text' placeholder="Details" class='floatlabel' name='narration' form='form282_header'></th>
@@ -95,7 +95,7 @@
                 {
                     var rowsHTML="<tr>";
                         rowsHTML+="<form id='form282_"+result.id+"'></form>";
-                            rowsHTML+="<td data-th='Receipt Id'>";
+                            rowsHTML+="<td data-th='Payment Id'>";
                                 rowsHTML+="<input type='text' readonly='readonly' form='form282_"+result.id+"' value='"+result.receipt_id+"'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Account'>";
@@ -164,7 +164,7 @@
 
                 $('#form282').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Payables','form282',function (item)
+				initialize_tabular_report_buttons(columns,'Payments','form282',function (item)
                 {
                     item.date=get_my_past_date(item.date);
                 });
