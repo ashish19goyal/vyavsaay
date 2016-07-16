@@ -7,6 +7,40 @@
  * batch_size: <integer>
  */
 
+function ajax_external(url,data,func)
+{
+	$.ajax(
+	{
+		type: "POST",
+		url: url,
+		data: data,
+		error:function(xhr, ajaxOptions, thrownError)
+		{
+			hide_loader();
+			//console.log(data);
+            console.log(xhr.responseText);
+		},
+		success: function(return_data,return_status,e)
+		{
+			var response_object={status:'error',rows:[],count:0};
+			try
+			{
+			  response_object=JSON.parse(e.responseText);
+			} catch (ee)
+			{
+			  console.log(data);
+			  console.log(e.responseText);
+			  hide_loader();
+			  return;
+			}
+
+			if(!vUtil.isBlank(func))
+			{
+				func(response_object);
+			}
+		}
+	});
+}
 
 /**
  * This function executes a custom function on ajax call

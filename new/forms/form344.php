@@ -29,9 +29,12 @@
                 <label><input type='text' name='date' required class='floatlabel' placeholder='Date'></label>
                 <label><input type='text' name='loader' class='floatlabel' placeholder='Co-loader'></label>
                 <label><input type='text' name='vendor' class='floatlabel' placeholder='Vendor'></label>
+				<label><input type='text' name='vehicle' class='floatlabel' placeholder='Vehicle #'></label>
+				<label><input type='text' name='exec' class='floatlabel' placeholder='Executive'></label>
 				<label><input type='text' name='branch' class='floatlabel' placeholder='Branch' required></label>
-				<label><input type='number' name='num' readonly='readonly' class='floatlabel' placeholder='Number of Orders'></label>
+				<label><input type='number' name='num' readonly='readonly' class='floatlabel' placeholder='Number of Pieces'></label>
                 <input type='hidden' name='id'>
+				<input type='hidden' name='orders'>
                 <input type='hidden' name='saved'>
                 <input type='submit' class='submit_hidden'>
             </fieldset>
@@ -118,7 +121,7 @@
 
             var paginator=$('#form344_body').paginator({visible:false});
 
-            $('#form344').formcontrol();
+            setTimeout(function(){$('#form344').formcontrol();},500);
         }
 
         function form344_ini()
@@ -141,6 +144,8 @@
                                              {index:'vendor'},
                                              {index:'type'},
 											 {index:'branch'},
+											 {index:'vehicle'},
+											 {index:'executive'},
 											 {index:'num_orders'},
                                              {index:'date'}]};
 
@@ -151,6 +156,8 @@
                         filter_fields.elements['pass_num'].value=pass_results[0].pass_num;
                         filter_fields.elements['loader'].value=pass_results[0].coloader;
                         filter_fields.elements['vendor'].value=pass_results[0].vendor;
+						filter_fields.elements['vehicle'].value=pass_results[0].vehicle;
+						filter_fields.elements['exec'].value=pass_results[0].executive;
 						filter_fields.elements['branch'].value=pass_results[0].branch;
                         filter_fields.elements['date'].value=get_my_past_date(pass_results[0].date);
                         filter_fields.elements['id'].value=pass_results[0].id;
@@ -314,29 +321,33 @@
 
                     if(total_entries==1 && new_pass)
                     {
-                        form344_create_form(function()
+                        if(double_entry<2)
                         {
-                            if(double_entry<2)
-                            {
+							console.log('check1');
+							form344_create_form(function()
+	                        {
                                 form344_create_item(item_form);
                                 form344_add_item();
-                            }
-                            else
-                            {
-                                seal_filter.value="";
-                                $("#modal65_link").click();
-                            }
-                        });
+                            });
+						}
+                        else
+                        {
+							console.log('check2');
+                            seal_filter.value="";
+                            $("#modal65_link").click();
+                        }
                     }
                     else
                     {
                         if(double_entry<2)
                         {
+							console.log('check3');
                             form344_create_item(item_form);
                             form344_add_item();
                         }
                         else
                         {
+							console.log('check4');
                             seal_filter.value="";
                             $("#modal65_link").click();
                         }
@@ -365,72 +376,79 @@
 
                         if(total_entries==1 && new_pass)
                         {
-                            form344_create_form(function ()
+							console.log('check5');
+                            if(double_entry<2)
                             {
-                                if(double_entry<2)
-                                {
-                                    var orders_data={data_store:'manifests',count:1,
-                                            indexes:[{index:'id'},
-                                                    {index:'manifest_num'},
-                                                    {index:'lbh'},
-                                                    {index:'weight'},
-                                                    {index:'seal_num',exact:seal_filter.value},
-                                                    {index:'num_orders'},
-                                                    {index:'type',exact:'bag'}]};
+								console.log('check6');
+                                var orders_data={data_store:'manifests',count:1,
+                                        indexes:[{index:'id'},
+                                                {index:'manifest_num'},
+                                                {index:'lbh'},
+                                                {index:'weight'},
+                                                {index:'seal_num',exact:seal_filter.value},
+                                                {index:'num_orders'},
+                                                {index:'type',exact:'bag'}]};
 
-                                    read_json_rows('',orders_data,function (orders)
-                                    {
-                                        if(orders.length>0)
-                                        {
-                                            manifest_filter.value=orders[0].manifest_num;
-                                            pieces_filter.value=orders[0].num_orders;
-                                            lbh_filter.value=orders[0].lbh;
-                                            weight_filter.value=orders[0].weight;
-                                            id_filter.value=orders[0].id;
-                                            var awbs_data={data_store:'logistics_orders',
-                                                          indexes:[{index:'id'},{index:'awb_num'},{index:'man_id',exact:id_filter.value}]};
-                                            read_json_rows('',awbs_data,function(awbs)
-                                            {
-                                                var awb_string="";
-                                                var id_string="";
-                                                awbs.forEach(function(awb)
-                                                {
-                                                   awb_string+=awb.awb_num+" ";
-                                                    id_string+=awb.id+",";
-                                                });
-                                                awb_string=awb_string.trim();
-                                                item_form.elements[5].value=awb_string;
-                                                item_form.elements['awb_ids'].value=id_string;
-                                                form344_create_item(item_form);
-                                                form344_add_item();
-                                            });
-                                        }
-                                        else
-                                        {
-                                            manifest_filter.value="";
-                                            pieces_filter.value="";
-                                            lbh_filter.value="";
-                                            weight_filter.value="";
-                                            awbs_filter.value="";
-                                            id_filter.value="";
-                                            seal_filter.value="";
-                                            item_form.elements['awb_ids'].value="";
-                                            $("#modal65_link").click();
-                                        }
-                                        $('#form344').formcontrol();
-                                    });
-                                }
-                                else
+                                read_json_rows('',orders_data,function (orders)
                                 {
-                                    seal_filter.value="";
-                                    $("#modal65_link").click();
-                                }
-                            });
+									console.log('check7');
+                                    if(orders.length>0)
+                                    {
+										console.log('check8');
+                                        manifest_filter.value=orders[0].manifest_num;
+                                        pieces_filter.value=orders[0].num_orders;
+                                        lbh_filter.value=orders[0].lbh;
+                                        weight_filter.value=orders[0].weight;
+                                        id_filter.value=orders[0].id;
+                                        var awbs_data={data_store:'logistics_orders',
+                                                      indexes:[{index:'id'},{index:'awb_num'},{index:'man_id',exact:id_filter.value}]};
+                                        read_json_rows('',awbs_data,function(awbs)
+                                        {
+                                            var awb_string="";
+                                            var id_string="";
+                                            awbs.forEach(function(awb)
+                                            {
+                                               awb_string+=awb.awb_num+" ";
+                                                id_string+=awb.id+",";
+                                            });
+                                            awb_string=awb_string.trim();
+                                            item_form.elements[5].value=awb_string;
+                                            item_form.elements['awb_ids'].value=id_string;
+											form344_create_form(function ()
+				                            {
+	                                            form344_create_item(item_form);
+	                                            form344_add_item();
+											});
+                                        });
+                                    }
+                                    else
+                                    {
+										console.log('check9');
+                                        manifest_filter.value="";
+                                        pieces_filter.value="";
+                                        lbh_filter.value="";
+                                        weight_filter.value="";
+                                        awbs_filter.value="";
+                                        id_filter.value="";
+                                        seal_filter.value="";
+                                        item_form.elements['awb_ids'].value="";
+                                        $("#modal65_link").click();
+                                    }
+                                    $('#form344').formcontrol();
+                                });
+                            }
+                            else
+                            {
+                                seal_filter.value="";
+                                $("#modal65_link").click();
+                            }
                         }
                         else
                         {
+							console.log('check11');
                             if(double_entry<2)
                             {
+								console.log('check12');
                                 var orders_data={data_store:'manifests',count:1,
                                             indexes:[{index:'id'},
                                                     {index:'manifest_num'},
@@ -442,8 +460,10 @@
 
                                 read_json_rows('',orders_data,function (orders)
                                 {
+									console.log('check13');
                                     if(orders.length>0)
                                     {
+										console.log('check14');
                                         manifest_filter.value=orders[0].manifest_num;
                                         pieces_filter.value=orders[0].num_orders;
                                         lbh_filter.value=orders[0].lbh;
@@ -469,6 +489,7 @@
                                     }
                                     else
                                     {
+										console.log('check15');
                                         manifest_filter.value="";
                                         pieces_filter.value="";
                                         lbh_filter.value="";
@@ -484,6 +505,7 @@
                             }
                             else
                             {
+								console.log('check16');
                                 seal_filter.value="";
                                 $("#modal65_link").click();
                             }
@@ -570,6 +592,8 @@
                 var pass_num=form.elements['pass_num'].value;
                 var coloader=form.elements['loader'].value;
                 var vendor=form.elements['vendor'].value;
+				var vehicle=form.elements['vehicle'].value;
+				var executive=form.elements['exec'].value;
 				var branch=form.elements['branch'].value;
                 var date=get_raw_time(form.elements['date'].value);
                 var data_id=form.elements['id'].value;
@@ -592,6 +616,8 @@
                                         {index:'coloader',value:coloader},
                                         {index:'date',value:date},
                                         {index:'vendor',value:vendor},
+										{index:'vehicle',value:vehicle},
+										{index:'executive',value:executive},
 										{index:'branch',value:branch},
                                         {index:'type',value:'bag'},
                                         {index:'num_orders',value:num_orders},
@@ -625,6 +651,13 @@
                         $("#modal77_link").click();
                     }
                 });
+
+				$(save_button).off('click');
+				$(save_button).on('click',function(e)
+				{
+					e.preventDefault();
+					form344_update_form();
+				});
             }
             else
             {
@@ -679,6 +712,8 @@
                 var pass_num=form.elements['pass_num'].value;
                 var coloader=form.elements['loader'].value;
                 var vendor=form.elements['vendor'].value;
+				var vehicle=form.elements['vehicle'].value;
+				var executive=form.elements['exec'].value;
 				var branch=form.elements['branch'].value;
                 var date=get_raw_time(form.elements['date'].value);
                 var data_id=form.elements['id'].value;
@@ -699,6 +734,8 @@
                                         {index:'coloader',value:coloader},
                                         {index:'date',value:date},
                                         {index:'vendor',value:vendor},
+										{index:'vehicle',value:vehicle},
+										{index:'executive',value:executive},
 										{index:'branch',value:branch},
                                         {index:'num_orders',value:num_orders},
                                         {index:'last_updated',value:last_updated}],
@@ -775,7 +812,8 @@
             });
             var filter_fields=document.getElementById('form344_master');
             var new_results=[];
-            var num_orders=0;
+            var total_orders=0;
+			var total_pieces=0;
 
             $('#form344_body').find('form').each(function(index)
             {
@@ -791,12 +829,16 @@
 
                 var num_pieces=form.elements[4].value;
                 if(!vUtil.isBlank(num_pieces) && num_pieces!=0)
-                    num_orders+=parseInt(num_pieces);
+                    total_pieces+=parseInt(num_pieces);
                 else
-                    num_orders+=1;
+                    total_pieces+=1;
+
+				var awbs_array=form.elements[5].value.split(" ");
+				total_orders+=awbs_array.length;
             });
 
-            filter_fields.elements['num'].value=num_orders;
+            filter_fields.elements['num'].value=total_pieces;
+			filter_fields.elements['orders'].value=total_orders;
 
             $('#form344_share').off('click');
             $('#form344_share').click(function()
@@ -844,12 +886,12 @@
             ////////////setting styles for containers/////////////////////////
 
             container.setAttribute('style','width:98%;height:90%;margin:0px;padding:0px;');
-            header.setAttribute('style','display:block;width:98%;height:70px;margin-top:10px;');
+            header.setAttribute('style','display:block;width:100%;height:70px;margin-top:10px;');
                 logo.setAttribute('style','float:left;width:35%;height:60px;');
                 business_title.setAttribute('style','float:left;width:40%;height:60px;text-align:center;font-weight:bold;');
-                mts_barcode.setAttribute('style','float:right;width:23%;height:60px;padding:left:5px;padding-right:5px;');
-            mts_title.setAttribute('style','display:block;width:98%;height:60px;text-align:center;font-size:40px;');
-            detail_section.setAttribute('style','display:block;width:98%;height:30px;text-align:center;');
+                mts_barcode.setAttribute('style','float:right;width:25%;height:60px;padding:left:5px;padding-right:5px;');
+            mts_title.setAttribute('style','display:block;width:100%;height:60px;text-align:center;font-size:40px;');
+            detail_section.setAttribute('style','display:block;width:100%;height:50px;text-align:center;');
 
             ///////////////getting the content////////////////////////////////////////
 
@@ -862,7 +904,11 @@
             var mts_num=master_form.elements['pass_num'].value;
             var coloader=master_form.elements['loader'].value;
             var vendor=master_form.elements['vendor'].value;
+			var vehicle=master_form.elements['vehicle'].value;
+			var executive=master_form.elements['exec'].value;
 			var branch=master_form.elements['branch'].value;
+			var num_pieces=master_form.elements['num'].value;
+			var num_orders=master_form.elements['orders'].value;
 
             ////////////////filling in the content into the containers//////////////////////////
 
@@ -875,12 +921,28 @@
             $(mts_barcode).JsBarcode(mts_num,{displayValue:true,fontSize:20});
 
             mts_title.innerHTML="Pass";
-            detail_text="<table style='border:none;width:98%;font-size:11px;'><tr><td>Co-loader: "+coloader+"<br>Vendor: "+vendor+"</td><td>Branch: "+branch+"</td><td>Date: "+mts_date+"</td></tr></table>";
+            detail_text="<table style='border:none;width:100%;font-size:11px;'>"+
+							"<tr>"+
+								"<td>Pass #: "+mts_num+"</td>"+
+								"<td>Total Orders: "+num_orders+"</td>"+
+								"<td>Total Pieces: "+num_pieces+"</td>"+
+							"</tr>"+
+							"<tr>"+
+								"<td>Co-loader: "+coloader+"</td>"+
+								"<td>Vehicle #: "+vehicle+"</td>"+
+								"<td>Branch: "+branch+"</td>"+
+							"</tr>"+
+							"<tr>"+
+								"<td>Vendor: "+vendor+"</td>"+
+								"<td>Executive: "+executive+"</td>"+
+								"<td>Date: "+mts_date+"</td>"+
+							"</tr>"+
+						"</table>";
 
             detail_section.innerHTML=detail_text;
 
             var new_table=document.createElement('table');
-            new_table.setAttribute('style','font-size:10px;border:none;text-align:left;');
+            new_table.setAttribute('style','font-size:10px;border:none;text-align:left;width:100%;');
             new_table.setAttribute('class','printing_tables');
 
             var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:5%'>S.No.</td>"+
@@ -914,13 +976,16 @@
                 cnote_no.appendChild(barcode_image);
                 cnote_no.appendChild(barcode_value);
 
-                table_rows+="<tr style='border-top: 1px solid #000000;height:60px;'><td><div>"+counter+"</div></td>"+
+				if(awb_num!="")
+				{
+                	table_rows+="<tr style='border-top: 1px solid #000000;height:60px;'><td><div>"+counter+"</div></td>"+
                         "<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[1].value+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[2].value+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[3].value+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[4].value+"</div></td>"+
                         "<td><div style='text-align:left;'>"+form.elements[5].value+"</div></td></tr>";
+				}
             });
             new_table.innerHTML=table_rows;
             /////////////placing the containers //////////////////////////////////////////////////////
@@ -935,7 +1000,7 @@
             header.appendChild(business_title);
             header.appendChild(mts_barcode);
 
-            func(container);
+			func(container);
         }
 
     </script>

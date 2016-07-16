@@ -16009,6 +16009,53 @@ function modal216_action()
 		$(select_file).trigger('click');
 	});
 
+	$('#modal216_premium_calculator').off('click');
+	$('#modal216_premium_calculator').on('click',function()
+	{
+		var url = "http://www.apollomunichinsurance.com/buyonline/PlanCalculator.ashx";
+		var data = {
+			id:3,
+			method:'GetPlanPremium',
+			params: [
+				{
+					NoOfMembers:2,
+					ProductCode:"11108",
+					ProductName:"Easy Health Individual Standard Two Year",
+					ProductCodeCriticalIllness:"11116",
+					ProductCodeCriticalAdvantage:"11196",
+					IsCriticalAdvantage:true,
+					PaymentFrequency:99,
+					IsCriticalRider:true,
+					Members:[
+						{
+							Index:1,
+							AgeRange:"18-34",
+							SACCode:1,
+							ClientCode:"Client1",
+							SumInsured:"300000",
+							CriticalSumInsured:0,
+							CriticalAdvSumInsured:0
+						},
+						{
+							Index:2,
+							AgeRange:"91d-16",
+							SACCode:3,
+							ClientCode:"Client2",
+							SumInsured:"300000",
+							CriticalSumInsured:0,
+							CriticalAdvSumInsured:0
+						}
+					]
+				}
+			]
+		};
+		ajax_external(url,data,function(response)
+		{
+			console.log("here is the response");
+			console.log(response);
+		});
+	});
+
 	dummy_button.setAttribute('class','btn red-sunglo');
 	select_file.value="";
 

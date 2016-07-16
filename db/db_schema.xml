@@ -1896,6 +1896,8 @@
 			<branch index='yes' type="TEXT"></branch>
 			<coloader index='yes' type="TEXT"></coloader>
 			<vendor index='yes' type="TEXT"></vendor>
+			<vehicle index='yes' type="TEXT"></vehicle>
+			<executive index='yes' type="TEXT"></executive>
 			<type index='yes' type="VARCHAR(20)"></type><!--bag/non-bag-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>

@@ -30,9 +30,12 @@
                 <label><input type='text' name='date' required class='floatlabel' placeholder='Date'></label>
                 <label><input type='text' name='loader' class='floatlabel' placeholder='Co-loader'></label>
                 <label><input type='text' name='vendor' class='floatlabel' placeholder='Vendor'></label>
+				<label><input type='text' name='vehicle' class='floatlabel' placeholder='Vehicle #'></label>
+				<label><input type='text' name='exec' class='floatlabel' placeholder='Executive'></label>
 				<label><input type='text' name='branch' class='floatlabel' placeholder='Branch' required></label>
-                <label><input type='text' name='num' readonly='readonly' class='floatlabel' placeholder='No. of Orders'></label>
+                <label><input type='text' name='num' readonly='readonly' class='floatlabel' placeholder='No. of Pieces'></label>
                 <input type='hidden' name='id'>
+				<input type='hidden' name='orders'>
                 <input type='submit' class='submit_hidden'>
             </fieldset>
         </form>
@@ -126,7 +129,7 @@
 
             var paginator=$('#form336_body').paginator({visible:false});
 
-            $('#form336').formcontrol();
+            setTimeout(function(){$('#form336').formcontrol();},500);
         }
 
         function form336_ini()
@@ -146,7 +149,9 @@
 	                                     {index:'coloader'},
 	                                     {index:'vendor'},
 										 {index:'branch'},
-	                                     {index:'num_orders'},
+										 {index:'vehicle'},
+										 {index:'executive'},
+										 {index:'num_orders'},
 	                                     {index:'date'}]};
 
                 read_json_rows('form336',pass_columns,function(pass_results)
@@ -157,6 +162,8 @@
                         filter_fields.elements['pass_num'].value=pass_results[0].pass_num;
                         filter_fields.elements['loader'].value=pass_results[0].coloader;
                         filter_fields.elements['vendor'].value=pass_results[0].vendor;
+						filter_fields.elements['vehicle'].value=pass_results[0].vehicle;
+						filter_fields.elements['exec'].value=pass_results[0].executive;
 						filter_fields.elements['branch'].value=pass_results[0].branch;
                         filter_fields.elements['date'].value=get_my_past_date(pass_results[0].date);
                         filter_fields.elements['id'].value=pass_results[0].id;
@@ -371,6 +378,8 @@
                 var pass_num=form.elements['pass_num'].value;
                 var coloader=form.elements['loader'].value;
                 var vendor=form.elements['vendor'].value;
+				var vehicle=form.elements['vehicle'].value;
+				var executive=form.elements['exec'].value;
 				var branch=form.elements['branch'].value;
                 var date=get_raw_time(form.elements['date'].value);
                 var data_id=form.elements['id'].value;
@@ -393,6 +402,8 @@
                                 {index:'date',value:date},
                                 {index:'type',value:'non-bag'},
                                 {index:'vendor',value:vendor},
+								{index:'vehicle',value:vehicle},
+								{index:'executive',value:executive},
 								{index:'branch',value:branch},
                                 {index:'num_orders',value:num_orders},
                                 {index:'last_updated',value:last_updated}],
@@ -469,6 +480,8 @@
                 var pass_num=form.elements['pass_num'].value;
                 var coloader=form.elements['loader'].value;
                 var vendor=form.elements['vendor'].value;
+				var vehicle=form.elements['vehicle'].value;
+				var executive=form.elements['exec'].value;
 				var branch=form.elements['branch'].value;
                 var num_orders=form.elements['num'].value;
                 var date=get_raw_time(form.elements['date'].value);
@@ -490,6 +503,8 @@
                                 {index:'coloader',value:coloader},
                                 {index:'date',value:date},
                                 {index:'vendor',value:vendor},
+								{index:'vehicle',value:vehicle},
+								{index:'executive',value:executive},
 								{index:'branch',value:branch},
                                 {index:'num_orders',value:num_orders},
                                 {index:'last_updated',value:last_updated}],
@@ -545,7 +560,8 @@
                 $(this).find('td:nth-child(2)').html(index+1);
             });
 
-            var num_orders=0;
+            var total_orders=0;
+			var total_pieces=0;
             var filter_fields=document.getElementById('form336_master');
 
             var new_results=[];
@@ -557,9 +573,11 @@
                 {
                     var num_pieces=form.elements[3].value;
                     if(!vUtil.isBlank(num_pieces) && num_pieces!=0)
-                        num_orders+=parseInt(num_pieces);
+                        total_pieces+=parseInt(num_pieces);
                     else
-                        num_orders+=1;
+                        total_pieces+=1;
+
+					total_orders+=1;
                 }
 
                 new_obj['AWB No']=form.elements[0].value;
@@ -570,7 +588,8 @@
                 new_results.push(new_obj);
             });
 
-            filter_fields.elements['num'].value=num_orders;
+            filter_fields.elements['num'].value=total_pieces;
+			filter_fields.elements['orders'].value=total_orders;
 
             $('#form336_share').off('click');
             $('#form336_share').click(function()
@@ -618,12 +637,12 @@
             ////////////setting styles for containers/////////////////////////
 
             container.setAttribute('style','width:98%;height:90%;margin:0px;padding:0px;');
-            header.setAttribute('style','display:block;width:98%;height:70px;margin-top:10px;');
+            header.setAttribute('style','display:block;width:100%;height:70px;margin-top:10px;');
                 logo.setAttribute('style','float:left;width:35%;height:60px;');
                 business_title.setAttribute('style','float:left;width:40%;height:60px;text-align:center;font-weight:bold;');
-                mts_barcode.setAttribute('style','float:right;width:23%;height:60px;padding:left:5px;padding-right:5px;');
+                mts_barcode.setAttribute('style','float:right;width:25%;height:60px;padding:left:5px;padding-right:5px;');
             mts_title.setAttribute('style','display:block;width:98%;height:50px;text-align:center;font-size:40px;');
-            detail_section.setAttribute('style','display:block;width:98%;height:30px;text-align:center;');
+            detail_section.setAttribute('style','display:block;width:100%;height:50px;text-align:center;');
 
             ///////////////getting the content////////////////////////////////////////
 
@@ -635,8 +654,11 @@
             var mts_date=master_form.elements['date'].value;
             var mts_num=master_form.elements['pass_num'].value;
             var coloader=master_form.elements['loader'].value;
-            var num_orders=master_form.elements['num'].value;
-            var vendor=master_form.elements['vendor'].value;
+			var num_pieces=master_form.elements['num'].value;
+			var num_orders=master_form.elements['orders'].value;
+			var vendor=master_form.elements['vendor'].value;
+			var vehicle=master_form.elements['vehicle'].value;
+			var executive=master_form.elements['exec'].value;
 			var branch=master_form.elements['branch'].value;
 
             ////////////////filling in the content into the containers//////////////////////////
@@ -650,15 +672,28 @@
             $(mts_barcode).JsBarcode(mts_num,{displayValue:false});
 
             mts_title.innerHTML="Gate-Pass";
-
-            employee_text="<td>Co-loader: "+coloader+"</td><td>Vendor: "+vendor+"</td><td>"+branch+"</td>";
-            mts_text="<td>pass #: "+mts_num+"</td><td>Date: "+mts_date+"</td><td>Total Orders: "+num_orders+"</td>";
-            detail_text="<table style='border:none;width:98%;font-size:11px;'><tr>"+employee_text+"</tr><tr>"+mts_text+"</tr></table>";
+			detail_text="<table style='border:none;width:100%;font-size:11px;'>"+
+							"<tr>"+
+								"<td>Pass #: "+mts_num+"</td>"+
+								"<td>Total Orders: "+num_orders+"</td>"+
+								"<td>Total Pieces: "+num_pieces+"</td>"+
+							"</tr>"+
+							"<tr>"+
+								"<td>Co-loader: "+coloader+"</td>"+
+								"<td>Vehicle #: "+vehicle+"</td>"+
+								"<td>Branch: "+branch+"</td>"+
+							"</tr>"+
+							"<tr>"+
+								"<td>Vendor: "+vendor+"</td>"+
+								"<td>Executive: "+executive+"</td>"+
+								"<td>Date: "+mts_date+"</td>"+
+							"</tr>"+
+						"</table>";
 
             detail_section.innerHTML=detail_text;
 
             var new_table=document.createElement('table');
-            new_table.setAttribute('style','font-size:10px;border:none;text-align:left;');
+            new_table.setAttribute('style','font-size:10px;border:none;text-align:left;width:100%;');
             new_table.setAttribute('class','printing_tables');
 
             var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:6%'>S.No.</td>"+
@@ -690,13 +725,15 @@
 
                 cnote_no.appendChild(barcode_image);
                 cnote_no.appendChild(barcode_value);
-
-                table_rows+="<tr style='border-top: 1px solid #000000;height:60px;'><td><div>"+counter+"</div></td>"+
-                        "<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
-                        "<td><div style='text-align:left;'>"+form.elements[1].value+"</div></td>"+
-                        "<td><div style='text-align:left;'>"+form.elements[2].value+"</div></td>"+
-                        "<td><div style='text-align:left;'>"+form.elements[3].value+"</div></td>"+
-                        "<td><div style='text-align:left;'>"+form.elements[4].value+"</div></td></tr>";
+				if(awb_num!="")
+				{
+	                table_rows+="<tr style='border-top: 1px solid #000000;height:60px;'><td><div>"+counter+"</div></td>"+
+	                        "<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
+	                        "<td><div style='text-align:left;'>"+form.elements[1].value+"</div></td>"+
+	                        "<td><div style='text-align:left;'>"+form.elements[2].value+"</div></td>"+
+	                        "<td><div style='text-align:left;'>"+form.elements[3].value+"</div></td>"+
+	                        "<td><div style='text-align:left;'>"+form.elements[4].value+"</div></td></tr>";
+				}
             });
             new_table.innerHTML=table_rows;
             /////////////placing the containers //////////////////////////////////////////////////////
@@ -711,7 +748,7 @@
             header.appendChild(business_title);
             header.appendChild(mts_barcode);
 
-            func(container);
+			func(container);
         }
     </script>
 </div>
