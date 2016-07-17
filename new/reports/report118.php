@@ -36,11 +36,11 @@
 				<tr>
 					<th>Date</th>
 					<th>Particulars</th>
-					<th>Type</th>
+					<th>Voucher Type</th>
 					<th>Voucher No.</th>
 					<th>Inwards</th>
 					<th>Outwards</th>
-					<th>Closing</th>
+					<th>Balance Quantity</th>
 				</tr>
 			</thead>
 			<tbody id='report118_body'>
@@ -80,103 +80,212 @@
         {
             var form=document.getElementById('report118_header');
             var item=form.elements['item'].value;
-            var start_date=form.elements['start'].value;
-            var end_date=form.elements['end'].value;
+            var start_date=vTime.unix({date:form.elements['start'].value});
+            var end_date=vTime.unix({date:form.elements['end'].value});
 
             show_loader();
             $('#report118_body').html('');
+			var all_transactions = [];
+			var trans_counter=3;
 
-            var tran_data={data_store:'transactions',
+			var bill_items_data={data_store:'bill_items',
                               indexes:[{index:'id'},
-                                      {index:'type'},
+                                      {index:'item_name',exact:item},
                                       {index:'amount'},
-                                      {index:'source_link'},
-									  {index:'source'},
-                                      {index:'source_id'},
-                                      {index:'source_info'},
-									  {index:'notes'},
-                                      {index:'trans_date',upperbound:(get_raw_time(end_date)+86399999)},
-                                      {index:'acc_name',exact:account},
-									  {index:'last_updated'}]};
-            read_json_rows('report118',tran_data,function(transactions)
+                                      {index:'quantity'},
+									  {index:'bill_id'}]};
+            read_json_rows('report118',bill_items_data,function(bill_items)
             {
-	              transactions.sort(function(a,b)
-	              {
-	                  	if(parseFloat(a.trans_date)>parseFloat(b.trans_date))
-	                  	{	return 1;}
-						else if(parseFloat(a.trans_date)==parseFloat(b.trans_date) && parseFloat(a.last_updated)>parseFloat(b.last_updated))
-						{ return 1;}
+				var bill_ids_array=vUtil.arrayColumn(bill_items,'bill_id');
+				var bills_data={data_store:'bills',
+							indexes:[{index:'customer_name'},
+							{index:'bill_num'},{index:'type'},{index:'id'},
+							{index:'bill_date',lowerbound:start_date,upperbound:end_date},
+							{index:'id',array:bill_ids_array}]};
+				read_json_rows('report118',bills_data,function(bills)
+				{
+					bill_items.forEach(function(bill_item)
+					{
+						for(var i in bills)
+						{
+							if(bill_item.bill_id==bills[i].id)
+							{
+								bill_item.date = bills[i].bill_date;
+								bill_item.particulars = bills[i].customer_name;
+								bill_item.type = bills[i].type;
+								bill_item.voucher_num = bills[i].bill_num;
+								bill_item.product_name = bill_item.item_name;
+								bill_item.link_id=bills[i].id;
+
+								bill_item.link_form="form269";
+
+								if(vUtil.isBlank(bill_item.type))
+								{
+									bill_item.type="Performa Invoice";
+									bill_item.link_form="form283";
+								}
+								all_transactions.push(bill_item);
+								break;
+							}
+						}
+					});
+					trans_counter-=1;
+				});
+			});
+
+
+			var sbill_items_data={data_store:'supplier_bill_items',
+                              indexes:[{index:'id'},
+                                      {index:'product_name',exact:item},
+                                      {index:'amount'},
+                                      {index:'quantity'},
+									  {index:'bill_id'}]};
+            read_json_rows('report118',sbill_items_data,function(bill_items)
+            {
+				var bill_ids_array=vUtil.arrayColumn(bill_items,'bill_id');
+				var bills_data={data_store:'supplier_bills',
+							indexes:[{index:'supplier'},{index:'id'},
+							{index:'bill_id'},
+							{index:'bill_date',lowerbound:start_date,upperbound:end_date},
+							{index:'id',array:bill_ids_array}]};
+				read_json_rows('report118',bills_data,function(bills)
+				{
+					bill_items.forEach(function(bill_item)
+					{
+						for(var i in bills)
+						{
+							if(bill_item.bill_id==bills[i].id)
+							{
+								bill_item.date = bills[i].bill_date;
+								bill_item.particulars = bills[i].supplier;
+								bill_item.type = 'Purchase';
+								bill_item.voucher_num = bills[i].bill_id;
+								bill_item.link_id=bills[i].id;
+								bill_item.link_form="form53";
+								all_transactions.push(bill_item);
+								break;
+							}
+						}
+					});
+					trans_counter-=1;
+				});
+			});
+
+			var inventory_data={data_store:'inventory_adjust',
+                              indexes:[{index:'id'},
+                                      {index:'product_name',exact:item},
+                                      {index:'source',exact:'Manual Entry'},
+                                      {index:'quantity'},
+									  {index:'item_desc'},
+									  {index:'last_updated'}]};
+            read_json_rows('report118',inventory_data,function(bill_items)
+            {
+				bill_items.forEach(function(bill_item)
+				{
+					bill_item.date = bill_item.last_updated;
+					bill_item.particulars = bill_item.item_desc;
+					bill_item.type = 'Manual Entry';
+					bill_item.voucher_num = "";
+					bill_item.link_id="";
+					bill_item.link_form="";
+					all_transactions.push(bill_item);
+
+					console.log(bill_item);
+				});
+				trans_counter-=1;
+			});
+
+			var trans_complete=setInterval(function()
+			{
+			   if(trans_counter===0)
+			   {
+					clearInterval(trans_complete);
+					all_transactions.sort(function(a,b)
+					{
+					  	if(parseFloat(a.date)>parseFloat(b.date))
+					  	{	return 1;}
 						else
-	                  	{	return -1;}
-	              });
+					  	{	return -1;}
+					});
 
-              var balance=0;
+	              	var balance=0;
 
-              for(var p=0;p<transactions.length;p++)
-              {
-                  if(transactions[p].trans_date<get_raw_time(start_date))
-                  {
-                      if(transactions[p].type=='given')
-                      {
-                          balance+=parseFloat(transactions[p].amount);
-                      }
-                      else
-                      {
-                          balance-=parseFloat(transactions[p].amount);
-                      }
-
-                      transactions.splice(p,1);
-                      p--;
-                  }
-              }
-
-              transactions.forEach(function(tran)
-              {
-                  var credit="-";
-                  var debit="-";
-                  var particulars=tran.source+" - "+tran.source_info+"<br>Notes: "+tran.notes;
-				  var source_form=tran.source_link;
-
-					if(tran.type=='received')
+					for(var p=0;p<all_transactions.length;p++)
 					{
-						balance-=parseFloat(tran.amount);
-					  	credit="<span class='label label-sm label-success'>Rs. "+tran.amount+"</span>";
-					}
-					else
-					{
-						balance+=parseFloat(tran.amount);
-					  	debit="<span class='label label-sm label-warning'>Rs. "+tran.amount+"</span>";
+					  if(all_transactions[p].date<get_raw_time(start_date))
+					  {
+					      if(all_transactions[p].type=='Purchase' || all_transactions[p].type=='Manual Entry')
+					      {
+					          balance+=parseFloat(all_transactions[p].quantity);
+					      }
+					      else
+					      {
+					          balance-=parseFloat(all_transactions[p].quantity);
+					      }
+
+					      all_transactions.splice(p,1);
+					      p--;
+					  }
 					}
 
-                  var rowsHTML="<tr>";
-                  rowsHTML+="<td data-th='Date'>";
-                      rowsHTML+=get_my_past_date(tran.trans_date);
-                  rowsHTML+="</td>";
-                  rowsHTML+="<td data-th='Particulars' style='text-transform:capitalize;'><a id='report118_particulars_"+tran.id+"'>";
-                      rowsHTML+=particulars;
-                  rowsHTML+="</a></td>";
-                  rowsHTML+="<td data-th='Debit'>";
-                      rowsHTML+=debit;
-                  rowsHTML+="</td>";
-				  rowsHTML+="<td data-th='Credit'>";
-                      rowsHTML+=credit;
-                  rowsHTML+="</td>";
-                  rowsHTML+="<td data-th='Balance'>";
-                      rowsHTML+="Rs. "+vUtil.round(balance,2);
-                  rowsHTML+="</td>";
-				  rowsHTML+="</tr>";
+					all_transactions.forEach(function(tran)
+					{
+						var inwards="-";
+						var outwards="-";
 
-                  $('#report118_body').append(rowsHTML);
-                  var particulars_link=document.getElementById('report118_particulars_'+tran.id);
+						if(tran.type=='Purchase')
+						{
+							balance+=parseFloat(tran.quantity);
+						  	inwards="<span class='label label-sm label-success'>Quantity: "+tran.quantity+"<br>Value: Rs. "+tran.amount+"</span>";
+						}
+						else if(tran.type=='Manual Entry')
+						{
+							balance+=parseFloat(tran.quantity);
+							if(tran.quantity>0)
+							{
+								inwards="<span class='label label-sm label-success'>Quantity: "+tran.quantity+"</span>";
+							}
+							else {
+								tran.quantity=-tran.quantity;
+						  		outwards="<span class='label label-sm label-warning'>Quantity: "+tran.quantity+"</span>";
+							}
+						}
+						else
+						{
+							balance-=parseFloat(tran.quantity);
+						  	outwards="<span class='label label-sm label-warning'>Quantity: "+tran.quantity+"<br>Value: Rs. "+tran.amount+"</span>";
+						}
 
-                  $(particulars_link).on('click',function()
-                  {
-						element_display(tran.source_id,source_form);
-                  });
-              });
-	        	initialize_static_tabular_report_buttons('Ledger','report118');
-	          	hide_loader();
-            });
-        };
+						var rowsHTML="<tr>";
+						rowsHTML+="<td data-th='Date'>";
+						  rowsHTML+=vTime.date({time:tran.date});
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Particulars' style='text-transform:capitalize;'>";
+						  rowsHTML+=tran.particulars;
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Voucher Type' class='capitalize'>";
+						  rowsHTML+=tran.type;
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Voucher Number'><a onclick=\"element_display('"+tran.link_id+"','"+tran.link_form+"');\">";
+						  rowsHTML+=tran.voucher_num;
+						rowsHTML+="</a></td>";
+						rowsHTML+="<td data-th='Inwards'>";
+						  rowsHTML+=inwards;
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Outwards'>";
+						  rowsHTML+=outwards;
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Balance Quantity'>";
+						  rowsHTML+=balance;
+						rowsHTML+="</td>";
+						rowsHTML+="</tr>";
+
+						$('#report118_body').append(rowsHTML);
+					});
+					initialize_static_tabular_report_buttons('Item Register','report118');
+					hide_loader();
+				}
+	        },500);
+	    };
 	</script>
 </div>

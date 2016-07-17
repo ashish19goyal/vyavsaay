@@ -389,6 +389,18 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</receipts>
+	<journals>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<journal_id index='yes' type="VARCHAR(20)"></journal_id>
+			<type index='yes' type="VARCHAR(10)"></type><!-- debit/credit -->
+			<amount index='no' type="DECIMAL(12,2)"></amount>
+			<acc_name index='yes' type="TEXT"></acc_name>
+			<narration index='no' type="TEXT"></narration>
+			<heading index='no' type="TEXT"></heading>
+			<date index='yes' type="BIGINT"></date>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</journals>
 	<bank_accounts>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="TEXT"></name>
