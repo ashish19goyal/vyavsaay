@@ -26,9 +26,18 @@
 					<form id='form53_header'></form>
 						<th><input type='text' placeholder="Bill #" class='floatlabel' name='bill' form='form53_header'></th>
 						<th><input type='text' placeholder="Supplier" class='floatlabel' name='supplier' form='form53_header'></th>
-						<th><input type='text' placeholder="Bill Date" class='floatlabel' name='date' form='form53_header'></th>
+						<th>
+							<div class='row'>
+								<div class='col-md-6' style='padding-right:0px;'>
+									<input type='text' placeholder="Start Date" class='floatlabel' name='start' form='form53_header'>
+								</div>
+								<div class='col-md-6' style='padding-left:0px;'>
+									<input type='text' placeholder="End Date" class='floatlabel' name='end' form='form53_header'>
+								</div>
+							</div>
+						</th>
 						<th><input type='text' placeholder="Bill Total" readonly="readonly" form='form53_header'></th>
-            <th><input type='text' placeholder="Notes" readonly="readonly" form='form53_header'></th>
+            			<th><input type='text' placeholder="Notes" readonly="readonly" form='form53_header'></th>
 						<th><input type='submit' form='form53_header' style='visibility: hidden;'></th>
 				</tr>
 			</thead>
@@ -70,7 +79,18 @@
             var filter_fields=document.getElementById('form53_header');
             var fbill_id=filter_fields.elements['bill'].value;
             var fname=filter_fields.elements['supplier'].value;
-			var fdate=vTime.unix({date:filter_fields.elements['date'].value});
+			var sdate=vTime.unix({date:filter_fields.elements['start'].value});
+			var edate=vTime.unix({date:filter_fields.elements['end'].value});
+
+			var date_object={index:'bill_date'};
+			if(sdate!="")
+			{
+				date_object.lowerbound=sdate;
+			}
+			if(edate!="")
+			{
+				date_object.upperbound=edate+86400000-1;
+			}
 
             var paginator=$('#form53_body').paginator();
 
@@ -80,7 +100,7 @@
 						indexes:[{index:'id',value:fid},
 						{index:'bill_id',value:fbill_id},
 						{index:'supplier',value:fname},
-						{index:'bill_date',value:fdate},
+						date_object,
 						{index:'total'},
                         {index:'notes'},
                         {index:'order_id'}]};

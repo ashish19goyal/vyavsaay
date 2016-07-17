@@ -29,7 +29,16 @@
 					<form id='form291_header'></form>
 						<th><input type='text' placeholder="Receipt Id" class='floatlabel' name='receipt' form='form291_header'></th>
 						<th><input type='text' placeholder="Account" class='floatlabel' name='account' form='form291_header'></th>
-						<th><input type='text' placeholder="Date" class='floatlabel' name='date' form='form291_header'></th>
+						<th>
+							<div class='row'>
+								<div class='col-md-6' style='padding-right:0px;'>
+									<input type='text' placeholder="Start Date" class='floatlabel' name='start' form='form291_header'>
+								</div>
+								<div class='col-md-6' style='padding-left:0px;'>
+									<input type='text' placeholder="End Date" class='floatlabel' name='end' form='form291_header'>
+								</div>
+							</div>
+						</th>
 						<th><input type='text' placeholder="Details" class='floatlabel' name='narration' form='form291_header'></th>
 						<th><input type='text' placeholder="Documents" readonly="readonly" name='docs' form='form291_header'></th>
                 		<th><input type='submit' form='form291_header' class='submit_hidden'></th>
@@ -74,7 +83,18 @@
             var rid=filter_fields.elements['receipt'].value;
             var faccount=filter_fields.elements['account'].value;
             var fnarration=filter_fields.elements['narration'].value;
-			var fdate=vTime.unix({date:filter_fields.elements['date'].value});
+			var sdate=vTime.unix({date:filter_fields.elements['start'].value});
+			var edate=vTime.unix({date:filter_fields.elements['end'].value});
+
+			var date_object={index:'date'};
+			if(sdate!="")
+			{
+				date_object.lowerbound=sdate;
+			}
+			if(edate!="")
+			{
+				date_object.upperbound=edate+86400000-1;
+			}
 
             var paginator=$('#form291_body').paginator();
 
@@ -85,7 +105,7 @@
 								{index:'receipt_id',value:rid},
 								{index:'acc_name',value:faccount},
 								{index:'amount'},
-								{index:'date',value:fdate},
+								date_object,
                                 {index:'narration',value:fnarration},
 								{index:'type',exact:'received'}]};
 

@@ -24,7 +24,8 @@
 	<div class="portlet-body">
 		<form id='report112_header' autocomplete="off">
 			<fieldset>
-				<label><input type='text' placeholder="Date" class='floatlabel' required name='date'></label>
+				<label><input type='text' placeholder="Start Date" class='floatlabel' required name='start'></label>
+				<label><input type='text' placeholder="End Date" class='floatlabel' required name='end'></label>
         		<label><input type='submit' class='submit_hidden'></label>
 			</fieldset>
 		</form>
@@ -47,7 +48,8 @@
         function report112_header_ini()
         {
             var form=document.getElementById('report112_header');
-            var date_filter=form.elements['date'];
+            var start_filter=form.elements['start'];
+			var end_filter=form.elements['end'];
 
             $(form).off('submit');
             $(form).on('submit',function(event)
@@ -56,19 +58,22 @@
                 report112_ini();
             });
 
-            $(date_filter).datepicker();
-            $(date_filter).val(vTime.date());
+            $(start_filter).datepicker();
+			$(end_filter).datepicker();
+
+            start_filter.value=vTime.date();
+			end_filter.value=vTime.date();
 
 			var paginator=$('#report112_body').paginator({'visible':false,'container':$('#report112_body')});
 
-            $('#report112').formcontrol();
+            setTimeout(function(){$('#report112').formcontrol();},500);
         }
 
         function report112_ini()
         {
             var form=document.getElementById('report112_header');
-            var start=vTime.unix({date:form.elements['date'].value});
-			var end=start+86400000-1;
+            var start=vTime.unix({date:form.elements['start'].value});
+			var end=vTime.unix({date:form.elements['end'].value})+86400000-1;
 
             show_loader();
             $('#report112_body').html('');
@@ -98,7 +103,7 @@
               {
                   var rowsHTML="<tr>";
                   rowsHTML+="<td data-th='Time'>";
-                      rowsHTML+=vTime.time({time:tran.last_updated});
+                      rowsHTML+=vTime.datetime({time:tran.last_updated});
                   rowsHTML+="</td>";
 				  rowsHTML+="<td data-th='Activity' style='text-transform:capitalize;'>";
                       rowsHTML+=tran.source;

@@ -30,7 +30,16 @@
 						<th><input type='text' placeholder="Journal Id" class='floatlabel' name='receipt' form='form359_header'></th>
 						<th><input type='text' placeholder="Account" class='floatlabel' name='account' form='form359_header'></th>
 						<th><input type='text' placeholder="Type" class='floatlabel' name='type' form='form359_header'></th>
-						<th><input type='text' placeholder="Date" class='floatlabel' name='date' form='form359_header'></th>
+						<th>
+							<div class='row'>
+								<div class='col-md-6' style='padding-right:0px;'>
+									<input type='text' placeholder="Start Date" class='floatlabel' name='start' form='form359_header'>
+								</div>
+								<div class='col-md-6' style='padding-left:0px;'>
+									<input type='text' placeholder="End Date" class='floatlabel' name='end' form='form359_header'>
+								</div>
+							</div>
+						</th>
 						<th><input type='text' placeholder="Details" class='floatlabel' name='narration' form='form359_header'></th>
 						<th><input type='text' placeholder="Documents" readonly="readonly" name='docs' form='form359_header'></th>
             			<th><input type='submit' form='form359_header' class='submit_hidden'></th>
@@ -135,7 +144,18 @@
             var faccount=filter_fields.elements['account'].value;
             var fnarration=filter_fields.elements['narration'].value;
 			var ftype=filter_fields.elements['type'].value;
-			var fdate=vTime.unix({date:filter_fields.elements['date'].value});
+			var sdate=vTime.unix({date:filter_fields.elements['start'].value});
+			var edate=vTime.unix({date:filter_fields.elements['end'].value});
+
+			var date_object={index:'date'};
+			if(sdate!="")
+			{
+				date_object.lowerbound=sdate;
+			}
+			if(edate!="")
+			{
+				date_object.upperbound=edate+86400000-1;
+			}
 
             var paginator=$('#form359_body').paginator();
 
@@ -146,8 +166,9 @@
 						{index:'journal_id',value:rid},
 						{index:'acc_name',value:faccount},
 						{index:'amount'},
-						{index:'date',value:fdate},
-                        {index:'narration',value:fnarration},
+						date_object,
+						{index:'heading'},
+						{index:'narration',value:fnarration},
 						{index:'type',value:ftype}]};
 
             read_json_rows('form359',columns,function(results)
@@ -157,7 +178,7 @@
                     var rowsHTML="<tr>";
                         rowsHTML+="<form id='form359_"+result.id+"'></form>";
                             rowsHTML+="<td data-th='Journal Id'>";
-                                rowsHTML+="<input type='text' readonly='readonly' form='form359_"+result.id+"' value='"+result.receipt_id+"'>";
+                                rowsHTML+="<input type='text' readonly='readonly' form='form359_"+result.id+"' value='"+result.journal_id+"'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Account'>";
                                 rowsHTML+="<textarea readonly='readonly' form='form359_"+result.id+"'>"+result.acc_name+"</textarea>";
@@ -170,7 +191,8 @@
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Details'>";
 								rowsHTML+="<input type='number' class='floatlabel dblclick_editable' placeholder='Amount Rs.' readonly='readonly' form='form359_"+result.id+"' value='"+result.amount+"'>";
-						        rowsHTML+="<textarea readonly='readonly' class='floatlabel dblclick_editable' placeholder='Narration' form='form359_"+result.id+"'>"+result.narration+"</textarea>";
+								rowsHTML+="<input type='text' readonly='readonly' class='floatlabel dblclick_editable' placeholder='Heading' form='form359_"+result.id+"' value='"+result.heading+"'>";
+                                rowsHTML+="<textarea readonly='readonly' class='floatlabel dblclick_editable' placeholder='Narration' form='form359_"+result.id+"'>"+result.narration+"</textarea>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form359_"+result.id+"' value='"+result.id+"' name='id'>";
@@ -212,13 +234,14 @@
 				var last_updated=vTime.unix();
 				var receipt_date=vTime.unix({date:form.elements[3].value});
 				var received_amount=form.elements[4].value;
-				var narration=form.elements[5].value;
+				var heading=form.elements[5].value;
+				var narration=form.elements[6].value;
 
 				var transaction_json={data_store:'transactions',
 					data:[{index:'id',value:data_id},
 						{index:'amount',value:received_amount},
 						{index:'trans_date',value:receipt_date},
-						{index:'notes',value:narration},
+						{index:'notes',value:heading+" - "+narration},
 						{index:'last_updated',value:last_updated}]};
 
 				update_json(transaction_json);
@@ -226,6 +249,7 @@
 	        	var receipt_json={data_store:'journals',
 		 				data:[{index:'id',value:data_id},
 		 					{index:'amount',value:received_amount},
+							{index:'heading',value:heading},
 		 					{index:'narration',value:narration},
 		 					{index:'date',value:receipt_date},
 		 					{index:'last_updated',value:last_updated}]};
@@ -367,14 +391,14 @@
 							{index:'source',value:'journal'},
 							{index:'source_link',value:'form359'},
 							{index:'trans_date',value:receipt_date},
-							{index:'notes',value:narration},
+							{index:'notes',value:heading+" - "+narration},
 							{index:'last_updated',value:last_updated}]};
 
 					var journal_json={data_store:'journals',
 							data:[{index:'id',value:p_id},
 							{index:'journal_id',value:jid},
 							{index:'acc_name',value:account_name},
-							{index:'amount',received_amount},
+							{index:'amount',value:received_amount},
 							{index:'date',value:receipt_date},
 							{index:'heading',value:heading},
 							{index:'narration',value:narration},
