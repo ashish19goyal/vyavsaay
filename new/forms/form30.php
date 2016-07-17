@@ -1,6 +1,6 @@
-<div id='form30' class='tab-pane portlet box yellow-saffron'>	   
+<div id='form30' class='tab-pane portlet box yellow-saffron'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='modal11_action();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -22,24 +22,24 @@
                     </li>
                 </ul>
             </div>
-      </div>	
+      </div>
 	</div>
-	
+
 	<div class="portlet-body">
 		<form id='form30_header' autocomplete="off">
 			<fieldset>
 				<label><input type='text' placeholder="Name" class='floatlabel' name='name'></label>
 				<label><input type='text' placeholder="Phone" class='floatlabel' name='contact'></label>
 				<label><input type='text' placeholder="Email" class='floatlabel' name='email'></label>
-				<label><input type='submit' class='submit_hidden'></label>			
+				<label><input type='submit' class='submit_hidden'></label>
 			</fieldset>
 		</form>
 		<br>
 		<div id='form30_body' class='row'>
-			
+
 		</div>
 	</div>
-	
+
 	<script>
 
 		function form30_header_ini()
@@ -47,33 +47,33 @@
 			var filter_fields=document.getElementById('form30_header');
 			var name_filter=filter_fields.elements['name'];
 			var contact_filter=filter_fields.elements['contact'];
-			
+
 			$(filter_fields).off('submit');
 			$(filter_fields).on('submit',function(event)
 			{
 				event.preventDefault();
 				form30_ini();
 			});
-		
+
 			var name_data={data_store:'customers',return_column:'name'};
 			set_my_filter_json(name_data,name_filter);
 		};
-		
+
 		function form30_ini()
 		{
 			show_loader();
 			var fid=$("#form30_link").attr('data_id');
 			if(fid==null)
-				fid="";	
-				
+				fid="";
+
 			$('#form30_body').html("");
 			var filter_fields=document.getElementById('form30_header');
 			var fname=filter_fields.elements['name'].value;
 			var fcontact=filter_fields.elements['contact'].value;
 			var femail=filter_fields.elements['email'].value;
-			
+
 			var paginator=$('#form30_body').paginator({'page_size':24});
-			
+
 			var columns=new Object();
 					columns.count=paginator.page_size();
 					columns.start_index=paginator.get_index();
@@ -84,8 +84,8 @@
 									{index:'acc_name'},
 									{index:'phone',value:fcontact},
 									{index:'email',value:femail},
-									{index:'address'}];		
-			
+									{index:'address'}];
+
 			read_json_rows('form30',columns,function(results)
 			{
 				var counter=0;
@@ -123,16 +123,16 @@
                                  	"</div>"+
                                	"</div>"+
                              "</div>";
-					
+
 					$('#form30_body').append(rowsHTML);
 					var fields=document.getElementById("form30_"+result.id);
 					var image_button=fields.elements['image'];
 					var image_dummy=fields.elements['image_dummy'];
 					var image_elem=document.getElementById('form30_image_'+result.id);
-							
+
 					var docs=new Object();
 					docs.data_store='documents';
-					docs.indexes=[{index:'id'},{index:'url'},{index:'doc_type',exact:'customer'},{index:'doc_name',exact:'image'},{index:'target_id',exact:result.id}];		
+					docs.indexes=[{index:'id'},{index:'url'},{index:'doc_type',exact:'customer'},{index:'doc_name',exact:'image'},{index:'target_id',exact:result.id}];
 					read_json_rows('',docs,function(pics)
 					{
 						if(pics.length>0)
@@ -141,13 +141,13 @@
 							image_elem.setAttribute('data-id',pics[0].id);
 						}
 					});
-					
-					$(image_button).on('click',function (e) 
+
+					$(image_button).on('click',function (e)
 					{
 						e.preventDefault();
 						$(image_dummy).click();
 					});
-					
+
 					$(image_dummy).on('change',function(evt)
 					{
 					   select_picture(evt,'',function(dataURL)
@@ -158,7 +158,7 @@
 							{
 								var data_id=get_new_key();
 								image_elem.setAttribute('data-id',data_id);
-								
+
 								var data_json={data_store:'documents',
 					 				data:[{index:'id',value:data_id},
 					 					{index:'target_id',value:result.id},
@@ -168,33 +168,33 @@
 					 					{index:'last_updated',value:last_updated}]};
 								create_json(data_json);
 							}
-							else 
+							else
 							{
 								var data_id=image_elem.getAttribute('data-id');
 								var data_json={data_store:'documents',
 					 				data:[{index:'id',value:data_id},
 					 					{index:'url',value:dataURL},
 					 					{index:'last_updated',value:last_updated}]};
-								update_json(data_json);								
+								update_json(data_json);
 							}
 						});
 					});
-					
+
 					$(fields).on("submit", function(event)
 					{
 						event.preventDefault();
 						form30_update_item(fields);
-					});					
+					});
 				});
-				
+
 				$('#form30').formcontrol();
-				paginator.update_index(results.length);				
+				paginator.update_index(results.length);
 				initialize_tabular_report_buttons(columns,'Customers','form30');
-								
+
 				hide_loader();
 			});
 		};
-		
+
 		function form30_update_item(form)
 		{
 			if(is_update_access('form30'))
@@ -206,7 +206,7 @@
 				var data_id=form.elements['id'].value;
 				var acc_name=form.elements['acc_name'].value;
 				var last_updated=get_my_time();
-				
+
 				var data_json={data_store:'customers',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'name',value:name},
@@ -218,7 +218,7 @@
 	 				log_data:{title:'Updated',notes:'Profile of customer '+name,link_to:'form30'}};
 
 				update_json(data_json);
-				
+
 				$(form).readonly();
 			}
 			else
@@ -226,33 +226,45 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form30_delete_item(button)
 		{
 			if(is_delete_access('form30'))
 			{
-				modal115_action(function()
+				var form_id=$(button).attr('form');
+				var form=document.getElementById(form_id);
+
+				var name=form.elements['name'].value;
+				var data_id=form.elements['id'].value;
+				var acc_name=form.elements['acc_name'].value;
+
+				var tran_data={data_store:'transactions',return_column:'id',
+								indexes:[{index:'acc_name',exact:acc_name}]};
+				read_json_count(tran_data,function(trans)
 				{
-					var form_id=$(button).attr('form');
-					var form=document.getElementById(form_id);
-					
-					var name=form.elements['name'].value;
-					var data_id=form.elements['id'].value;
-					var acc_name=form.elements['acc_name'].value;
-					
-					var data_json={data_store:'customers',
- 							data:[{index:'id',value:data_id}],
- 							log:'yes',
- 							log_data:{title:"Deleted",notes:"Profile of customer "+name,link_to:"form30"}};
-					var account_json={data_store:'accounts',
- 							data:[{index:'id',value:data_id},{index:'type',value:'customer'}]};
-					var attribute_json={data_store:'attributes',
- 							data:[{index:'name',value:acc_name},{index:'type',value:'customer'}]};
-								
-					delete_json(data_json);
-					delete_json(account_json);
-					delete_json(attribute_json);
-					$(button).parent().parent().parent().parent().remove();
+					if(trans>0)
+					{
+						$("#modal98_link").click();
+					}
+					else
+					{
+						modal115_action(function()
+						{
+							var data_json={data_store:'customers',
+		 							data:[{index:'id',value:data_id}],
+		 							log:'yes',
+		 							log_data:{title:"Deleted",notes:"Profile of customer "+name,link_to:"form30"}};
+							var account_json={data_store:'accounts',
+		 							data:[{index:'id',value:data_id},{index:'type',value:'customer'}]};
+							var attribute_json={data_store:'attributes',
+		 							data:[{index:'name',value:acc_name},{index:'type',value:'customer'}]};
+
+							delete_json(data_json);
+							delete_json(account_json);
+							delete_json(attribute_json);
+							$(button).parent().parent().parent().parent().remove();
+						});
+					}
 				});
 			}
 			else
@@ -260,18 +272,18 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form30_import_validate(data_array)
 		{
 			var validate_template_array=[{column:'acc_name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 									{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 									{column:'email',regex:new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z_.-]+$')},
 									{column:'phone',regex:new RegExp('^[0-9 ./,+-]+$')}];
-							
+
 			var error_array=validate_import_array(data_array,validate_template_array);
-			return error_array;					
+			return error_array;
 		}
-		
+
 		function form30_import(data_array,import_type)
 		{
 			var data_json={data_store:'customers',
@@ -286,7 +298,7 @@
 
 			var counter=1;
 			var last_updated=get_my_time();
-		
+
 			data_array.forEach(function(row)
 			{
 				counter+=1;
@@ -294,7 +306,7 @@
 				{
 					row.id=last_updated+counter;
 				}
-				
+
 				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'name',value:row.name},
 	 					{index:'phone',value:row.phone},
@@ -312,9 +324,9 @@
 	 					{index:'status',value:'active'},
 	 					{index:'last_updated',value:last_updated}];
 
-				account_json.data.push(account_json_array);				
+				account_json.data.push(account_json_array);
 			});
-			
+
 			if(import_type=='create_new')
 			{
 				create_batch_json(data_json);
@@ -326,7 +338,7 @@
 				update_batch_json(account_json);
 			}
 		}
-		
+
 		function form30_import_template()
 		{
 			var data_array=['id','name','phone','email','acc_name','address'];

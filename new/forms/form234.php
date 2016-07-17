@@ -253,40 +253,65 @@
         {
             if(is_delete_access('form234'))
             {
-                modal115_action(function()
-                {
-                    var form_id=$(button).attr('form');
-                    var form=document.getElementById(form_id);
+				var form_id=$(button).attr('form');
+				var form=document.getElementById(form_id);
 
-                    var name=form.elements['name'].value;
-                    var make=form.elements['make'].value;
-                    var data_id=form.elements['id'].value;
-                    var last_updated=get_my_time();
+				var name=form.elements['name'].value;
+				var make=form.elements['make'].value;
 
-                    var data_json={data_store:'product_master',
-					 							data:[{index:'id',value:data_id}],
-					 							log:'yes',
-					 							log_data:{title:"Deleted",notes:"Product "+name+" from inventory",link_to:"form234"}};
-										var other_json={data_store:'product_instances',
-					 							data:[{index:'product_name',value:name}]};
-										var other2_json={data_store:'documents',
-					 							data:[{index:'target_id',value:data_id},{index:'doc_type',value:'product_master'}]};
-										var other3_json={data_store:'pre_requisites',
-					 							data:[{index:'name',value:name},{index:'type',value:'product'}]};
-										var other4_json={data_store:'attributes',
-					 							data:[{index:'name',value:name},{index:'type',value:'product'}]};
-										var other5_json={data_store:'area_utilization',
-					 							data:[{index:'item_name',value:name}]};
+				var bitems_data={data_store:'bill_items',return_column:'id',
+								indexes:[{index:'item_name',exact:name}]};
+				read_json_count(bitems_data,function(trans)
+				{
+					if(trans>0)
+					{
+						$("#modal98_link").click();
+					}
+					else
+					{
+						var sitems_data={data_store:'supplier_bill_items',return_column:'id',
+										indexes:[{index:'product_name',exact:name}]};
+						read_json_count(sitems_data,function(trans)
+						{
+							if(trans>0)
+							{
+								$("#modal98_link").click();
+							}
+							else
+							{
+				                modal115_action(function()
+				                {
+				                    var data_id=form.elements['id'].value;
+				                    var last_updated=get_my_time();
 
-                    delete_json(data_json);
-                    delete_json(other_json);
-                    delete_json(other2_json);
-                    delete_json(other3_json);
-                    delete_json(other4_json);
-                    delete_json(other5_json);
+				                    var data_json={data_store:'product_master',
+									 							data:[{index:'id',value:data_id}],
+									 							log:'yes',
+									 							log_data:{title:"Deleted",notes:"Product "+name+" from inventory",link_to:"form234"}};
+														var other_json={data_store:'product_instances',
+									 							data:[{index:'product_name',value:name}]};
+														var other2_json={data_store:'documents',
+									 							data:[{index:'target_id',value:data_id},{index:'doc_type',value:'product_master'}]};
+														var other3_json={data_store:'pre_requisites',
+									 							data:[{index:'name',value:name},{index:'type',value:'product'}]};
+														var other4_json={data_store:'attributes',
+									 							data:[{index:'name',value:name},{index:'type',value:'product'}]};
+														var other5_json={data_store:'area_utilization',
+									 							data:[{index:'item_name',value:name}]};
 
-                    $(button).parent().parent().parent().parent().remove();
-                });
+				                    delete_json(data_json);
+				                    delete_json(other_json);
+				                    delete_json(other2_json);
+				                    delete_json(other3_json);
+				                    delete_json(other4_json);
+				                    delete_json(other5_json);
+
+				                    $(button).parent().parent().parent().parent().remove();
+				                });
+							}
+						});
+					}
+				});
             }
             else
             {
