@@ -3895,15 +3895,8 @@
 					   			<div class="col-sm-12 col-md-2">Age (oldset member)</div>
 		     					<div class="col-sm-12 col-md-4"><input type='number' step='any' required form='modal216_form' name='age'></div>
 		     					<div class="col-sm-12 col-md-2">Premium</div>
-		     					<div class="col-sm-12 col-md-4">
-									<div class='btn-overlap'>
-										<input type='number' required form='modal216_form' step='any' name='premium'>
-										<button type='button' title='Calculate Premium' class='btn btn-icon-only default right-overlap' id='modal216_premium_calculator'>
-											<i class='fa fa-refresh'></i>
-										</button>
-									</div>
-								</div>
-		     				</div>
+		     					<div class="col-sm-12 col-md-4"><input type='number' required form='modal216_form' step='any' name='premium'></div>
+							</div>
 							<div class="row">
 					   			<div class="col-sm-12 col-md-2">Short Premium</div>
 		     					<div class="col-sm-12 col-md-4"><input type='number' form='modal216_form' step='any' name='spremium' value='0'></div>
@@ -3945,7 +3938,7 @@
 		     					<div class="col-sm-12 col-md-4"><input type='text' required form='modal216_form' name='agent'></div>
 								<div class="col-sm-12 col-md-2">Attachment</div>
 		     					<div class="col-sm-12 col-md-4">
-									<input type="file" required form='modal216_form' name='file' style='display:none'>
+									<input type="file" required form='modal216_form' name='file' style='display:none' multiple>
 									<button type='button' name='file_dummy' form='modal216_form' class='btn yellow-saffron'>Select File</button>
 								</div>
 							</div>

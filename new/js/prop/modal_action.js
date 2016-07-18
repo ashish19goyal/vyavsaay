@@ -16014,53 +16014,6 @@ function modal216_action()
 		$(select_file).trigger('click');
 	});
 
-	$('#modal216_premium_calculator').off('click');
-	$('#modal216_premium_calculator').on('click',function()
-	{
-		var url = "http://www.apollomunichinsurance.com/buyonline/PlanCalculator.ashx";
-		var data = {
-			id:3,
-			method:'GetPlanPremium',
-			params: [
-				{
-					NoOfMembers:2,
-					ProductCode:"11108",
-					ProductName:"Easy Health Individual Standard Two Year",
-					ProductCodeCriticalIllness:"11116",
-					ProductCodeCriticalAdvantage:"11196",
-					IsCriticalAdvantage:true,
-					PaymentFrequency:99,
-					IsCriticalRider:true,
-					Members:[
-						{
-							Index:1,
-							AgeRange:"18-34",
-							SACCode:1,
-							ClientCode:"Client1",
-							SumInsured:"300000",
-							CriticalSumInsured:0,
-							CriticalAdvSumInsured:0
-						},
-						{
-							Index:2,
-							AgeRange:"91d-16",
-							SACCode:3,
-							ClientCode:"Client2",
-							SumInsured:"300000",
-							CriticalSumInsured:0,
-							CriticalAdvSumInsured:0
-						}
-					]
-				}
-			]
-		};
-		ajax_external(url,data,function(response)
-		{
-			console.log("here is the response");
-			console.log(response);
-		});
-	});
-
 	dummy_button.setAttribute('class','btn red-sunglo');
 	select_file.value="";
 
@@ -16116,11 +16069,32 @@ function modal216_action()
 	var name_data={data_store:'policy_types',return_column:'name'};
 	set_my_value_list_json(name_data,fpname);
 
-	var agent_data={data_store:'staff',return_column:'acc_name'};
-	set_my_value_list_json(agent_data,fagent);
-
 	var holder_data={data_store:'customers',return_column:'acc_name'};
 	set_my_value_list_json(holder_data,fholder);
+
+	var lead_data={data_store:'attributes',return_column:'name',
+					indexes:[{index:'type',exact:'staff'},
+							{index:'attribute',exact:'Designation'},
+							{index:'value',exact:'Team Lead'}]};
+	set_my_value_list_json(lead_data,flead);
+
+	var manager_data={data_store:'attributes',return_column:'name',
+					indexes:[{index:'type',exact:'staff'},
+							{index:'attribute',exact:'Designation'},
+							{index:'value',exact:'Sales Manager'}]};
+	set_my_value_list_json(manager_data,fmanager);
+
+	var caller_data={data_store:'attributes',return_column:'name',
+					indexes:[{index:'type',exact:'staff'},
+							{index:'attribute',exact:'Designation'},
+							{index:'value',exact:'Tele-Caller'}]};
+	set_my_value_list_json(caller_data,fcaller);
+
+	var agent_data={data_store:'attributes',return_column:'name',
+					indexes:[{index:'type',exact:'staff'},
+							{index:'attribute',exact:'Designation'},
+							{index:'value',exact:'Agent'}]};
+	set_my_value_list_json(agent_data,fagent);
 
 	vUtil.onChange(ftype,function()
 	{
@@ -16138,28 +16112,31 @@ function modal216_action()
 		}
 	});
 
-	$(fpname).off('blur');
-	$(fpname).off('change');
-
-	$(fpname).on('blur change',function()
+	var commissions = "";
+	vUtil.onChange(fpname,function()
 	{
-		// var policy_data={data_store:'policy_types',count:1,
-		// 				indexes:[{index:'issuer'},
-		// 						{index:'description'},
-		// 						{index:'type'},
-		// 						{index:'term'},
-		// 						{index:'preferred'},
-		// 						{index:'accounts'},
-		// 						{index:'name',exact:fname.value}]};
-		// read_json_rows('',policy_data,function(policies)
-		// {
-		// 	if(policies.length>0)
-		// 	{
-		// 		var accounts_array=vUtil.jsonParse(policies[0].accounts);
-		// 		//set_value_list_json(accounts_array,faccount);
-		// 		//faccount.value=accounts_array[0];
-		// 	}
-		// });
+		var policy_data={data_store:'policy_types',count:1,
+						indexes:[{index:'issuer'},
+								{index:'description'},
+								{index:'type'},
+								{index:'term'},
+								{index:'preferred'},
+								{index:'accounts'},
+								{index:'commissions'},
+								{index:'name',exact:fname.value}]};
+		read_json_rows('',policy_data,function(policies)
+		{
+			if(policies.length>0)
+			{
+				var accounts_array=vUtil.jsonParse(policies[0].accounts);
+				fagent.value = accounts_array[0];
+				fissuer.value = policies[0].issuer;
+				ftype.value = policies[0].type;
+				fterm.value = policies[0].term;
+				fpreferred.value = policies[0].preferred;
+				commissions = policies[0].commissions;
+			}
+		});
 	});
 
 	$(form).off("submit");
@@ -16198,7 +16175,6 @@ function modal216_action()
 				{index:'issue_type',value:issue_type},
 				{index:'ported_source',value:fported_from.value},
 				{index:'renewed_source',value:frenewed_from.value},
-				//{index:'account',value:faccount.value},
 				{index:'status',value:'active'},
 				{index:'last_updated',value:last_updated}]};
 			create_json(data_json);
@@ -17102,7 +17078,10 @@ function modal226_action(policy_id)
 		var id=get_new_key();
 		var content="<div><input placeholder='Account Name' id='modal226_account_"+id+"' class='floatlabel' type='text'></div>";
 		$(attribute_label).append(content);
-		var staff_data={data_store:'staff',return_column:'acc_name'};
+		var staff_data={data_store:'attributes',return_column:'name',
+						indexes:[{index:'type',exact:'staff'},
+								{index:'attribute',exact:'Designation'},
+								{index:'value',exact:'Agent'}]};
 		var staff_element=$('#modal226_account_'+id)[0];
 		set_my_value_list_json(staff_data,staff_element);
 		$(form).formcontrol();
