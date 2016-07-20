@@ -3863,19 +3863,19 @@
 		               	<div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
               				<div class="row">
 					   			<div class="col-sm-12 col-md-2">Application Number</div>
-		     					<div class="col-sm-12 col-md-4"><input type='text' form='modal216_form' name='app_number'></div>
+		     					<div class="col-sm-12 col-md-4"><input type='text' form='modal216_form' required name='app_number'></div>
 					   			<div class="col-sm-12 col-md-2">Issuing Company</div>
-		     					<div class="col-sm-12 col-md-4"><input type='text' required form='modal216_form' name='company'></div>
+		     					<div class="col-sm-12 col-md-4"><input type='text' form='modal216_form' name='company'></div>
 		     				</div>
 							<div class="row">
 					   			<div class="col-sm-12 col-md-2">Preferred</div>
-		     					<div class="col-sm-12 col-md-4"><input type='text' required form='modal216_form' name='preferred'></div>
+		     					<div class="col-sm-12 col-md-4"><input type='text' form='modal216_form' name='preferred'></div>
 					   			<div class="col-sm-12 col-md-2">Policy Type</div>
-		     					<div class="col-sm-12 col-md-4"><input type='text' required form='modal216_form' name='policy_type'></div>
+		     					<div class="col-sm-12 col-md-4"><input type='text' form='modal216_form' name='policy_type'></div>
 		     				</div>
 							<div class="row">
 					   			<div class="col-sm-12 col-md-2">Policy Term</div>
-		     					<div class="col-sm-12 col-md-4"><input type='text' required form='modal216_form' name='term'></div>
+		     					<div class="col-sm-12 col-md-4"><input type='text' form='modal216_form' name='term'></div>
 					   			<div class="col-sm-12 col-md-2">Policy Name</div>
 		     					<div class="col-sm-12 col-md-4"><input type='text' required form='modal216_form' name='policy_name'></div>
 		     				</div>
@@ -3893,7 +3893,7 @@
 		     				</div>
 							<div class="row">
 					   			<div class="col-sm-12 col-md-2">Age (oldset member)</div>
-		     					<div class="col-sm-12 col-md-4"><input type='number' step='any' required form='modal216_form' name='age'></div>
+		     					<div class="col-sm-12 col-md-4"><input type='number' step='any' form='modal216_form' name='age'></div>
 		     					<div class="col-sm-12 col-md-2">Premium</div>
 		     					<div class="col-sm-12 col-md-4"><input type='number' required form='modal216_form' step='any' name='premium'></div>
 							</div>
@@ -3906,39 +3906,39 @@
 							<div class="row">
 					   			<div class="col-sm-12 col-md-2">Start Date</div>
 		     					<div class="col-sm-12 col-md-4"><input type='text' form='modal216_form' name='start'></div>
-		     					<div class="col-sm-12 col-md-2">End Date</div>
-		     					<div class="col-sm-12 col-md-4"><input type='text' form='modal216_form' name='end'></div>
-		     				</div>
-							<div class="row">
-					   			<div class="col-sm-12 col-md-2">Issue Date</div>
+								<div class="col-sm-12 col-md-2">Issue Date</div>
 		     					<div class="col-sm-12 col-md-4"><input type='text' form='modal216_form' name='issue'></div>
-		     					<div class="col-sm-12 col-md-2">Type</div>
-		     					<div class="col-sm-12 col-md-4"><input type='text' required form='modal216_form' name='type'></div>
 		     				</div>
 							<div class="row">
-					   			<div class="col-sm-12 col-md-2">Ported From</div>
-		     					<div class="col-sm-12 col-md-4"><input type='text' form='modal216_form' name='ported_from'></div>
-					   			<div class="col-sm-12 col-md-2">Renewed From</div>
-		     					<div class="col-sm-12 col-md-4"><input type='text' form='modal216_form' name='renewed_from'></div>
+					   			<div class="col-sm-12 col-md-2">Type</div>
+		     					<div class="col-sm-12 col-md-4"><input type='text' required form='modal216_form' name='type'></div>
+		     					<div class='col-sm-12 col-md-6'>
+									<div class="col-sm-12 col-md-4">Ported From</div>
+		     						<div class="col-sm-12 col-md-8"><input type='text' form='modal216_form' name='ported_from'></div>
+								</div>
+								<div class='col-sm-12 col-md-6'>
+					   				<div class="col-sm-12 col-md-4">Renewed From</div>
+		     						<div class="col-sm-12 col-md-8"><input type='text' form='modal216_form' name='renewed_from'></div>
+								</div>
 		     				</div>
 							<div class="row">
 					   			<div class="col-sm-12 col-md-2">Source</div>
-		     					<div class="col-sm-12 col-md-4"><input type='text' required form='modal216_form' name='source'></div>
+		     					<div class="col-sm-12 col-md-4"><input type='text' form='modal216_form' name='source'></div>
 								<div class="col-sm-12 col-md-2">Team Lead</div>
-		     					<div class="col-sm-12 col-md-4"><input type='text' required form='modal216_form' name='lead'></div>
+		     					<div class="col-sm-12 col-md-4"><input type='text' form='modal216_form' name='lead'></div>
 							</div>
 							<div class="row">
 					   			<div class="col-sm-12 col-md-2">Sales Manager</div>
-		     					<div class="col-sm-12 col-md-4"><input type='text' required form='modal216_form' name='sales'></div>
+		     					<div class="col-sm-12 col-md-4"><input type='text' form='modal216_form' name='sales'></div>
 								<div class="col-sm-12 col-md-2">Tele-Caller</div>
-		     					<div class="col-sm-12 col-md-4"><input type='text' required form='modal216_form' name='caller'></div>
+		     					<div class="col-sm-12 col-md-4"><input type='text' form='modal216_form' name='caller'></div>
 							</div>
 							<div class="row">
 					   			<div class="col-sm-12 col-md-2">Agent</div>
 		     					<div class="col-sm-12 col-md-4"><input type='text' required form='modal216_form' name='agent'></div>
 								<div class="col-sm-12 col-md-2">Attachment</div>
 		     					<div class="col-sm-12 col-md-4">
-									<input type="file" required form='modal216_form' name='file' style='display:none' multiple>
+									<input type="file" form='modal216_form' name='file' style='display:none' multiple>
 									<button type='button' name='file_dummy' form='modal216_form' class='btn yellow-saffron'>Select File</button>
 								</div>
 							</div>

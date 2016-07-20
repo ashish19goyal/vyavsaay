@@ -15994,7 +15994,6 @@ function modal216_action()
 	var fshort_premium=form.elements['spremium'];
 	var fdiscount=form.elements['discount'];
 	var fstart=form.elements['start'];
-	var fend=form.elements['end'];
 	var fissue=form.elements['issue'];
 	var ftype=form.elements['type'];
 	var frenewed_from=form.elements['renewed_from'];
@@ -16047,7 +16046,6 @@ function modal216_action()
 	fshort_premium.value="";
 	fdiscount.value="";
 	fstart.value="";
-	fend.value="";
 	fissue.value="";
 	ftype.value="fresh";
 	frenewed_from.value="";
@@ -16058,19 +16056,36 @@ function modal216_action()
 	fcaller.value="";
 	fagent.value="";
 
-	$(frenewed_from).parent().parent().hide();
-	$(fported_from).parent().parent().hide();
 	$(fstart).datepicker();
-	$(fend).datepicker();
 	$(fissue).datepicker();
 
 	set_static_value_list_json('policies','issue_type',ftype);
+	set_static_value_list_json('policies','sales source',fsource);
 
 	var name_data={data_store:'policy_types',return_column:'name'};
 	set_my_value_list_json(name_data,fpname);
 
+	function policy_filtering()
+	{
+		fpname.value="";
+		var name_data={data_store:'policy_types',return_column:'name',
+						indexes:[{index:'issuer',value:fcompany.value},
+								{index:'type',value:fptype.value},
+								{index:'term',value:fterm.value},
+								{index:'preferred',value:fpreferred.value}]};
+		set_my_value_list_json(name_data,fpname);
+	};
+
+	vUtil.onChange(fcompany,policy_filtering);
+	vUtil.onChange(fptype,policy_filtering);
+	vUtil.onChange(fterm,policy_filtering);
+	vUtil.onChange(fpreferred,policy_filtering);
+
 	var holder_data={data_store:'customers',return_column:'acc_name'};
 	set_my_value_list_json(holder_data,fholder);
+
+	var company_data={data_store:'policy_types',return_column:'issuer'};
+	set_my_value_list_json(company_data,fcompany);
 
 	var lead_data={data_store:'attributes',return_column:'name',
 					indexes:[{index:'type',exact:'staff'},
@@ -16096,6 +16111,13 @@ function modal216_action()
 							{index:'value',exact:'Agent'}]};
 	set_my_value_list_json(agent_data,fagent);
 
+	set_static_value_list_json('policy_types','type',fptype);
+	set_static_value_list_json('policy_types','term',fterm);
+	set_static_value_list_json('policy_types','preferred',fpreferred);
+
+	$(frenewed_from).parent().parent().hide();
+	$(fported_from).parent().parent().hide();
+
 	vUtil.onChange(ftype,function()
 	{
 		if(ftype.value=='renewal')
@@ -16113,6 +16135,7 @@ function modal216_action()
 	});
 
 	var commissions = "";
+	var description = "";
 	vUtil.onChange(fpname,function()
 	{
 		var policy_data={data_store:'policy_types',count:1,
@@ -16123,18 +16146,19 @@ function modal216_action()
 								{index:'preferred'},
 								{index:'accounts'},
 								{index:'commissions'},
-								{index:'name',exact:fname.value}]};
+								{index:'name',exact:fpname.value}]};
 		read_json_rows('',policy_data,function(policies)
 		{
 			if(policies.length>0)
 			{
 				var accounts_array=vUtil.jsonParse(policies[0].accounts);
 				fagent.value = accounts_array[0];
-				fissuer.value = policies[0].issuer;
-				ftype.value = policies[0].type;
+				fcompany.value = policies[0].issuer;
+				fptype.value = policies[0].type;
 				fterm.value = policies[0].term;
 				fpreferred.value = policies[0].preferred;
 				commissions = policies[0].commissions;
+				description = policies[0].description;
 			}
 		});
 	});
@@ -16143,56 +16167,106 @@ function modal216_action()
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		if(is_create_access('form351'))
+		if(is_create_access('form347'))
 		{
-			var app_num=form.elements['app_number'].value;
-			var start_date=vTime.unix({date:fstart.value});
-			var end_date=vTime.unix({date:fend.value});
-			var issue_date=vTime.unix({date:fissue.value});
-			var issue_type=ftype.value;
-			var premium=form.elements['premium'].value;
-			var discount=form.elements['discount'].value;
-			var short_premium=form.elements['spremium'].value;
+			//saving attachments
 			var last_updated=vTime.unix();
+			var attachments = [];
+			var domain=get_session_var('domain');
+			var files = select_file.files;
+			console.log(files);
+			var counter=files.length;
+			for(var i=0; i<files.length; i++)
+			{
+				var file=files[i];
+				var contentType=file.type;
+				var file_attr=file.name.split('.');
+				var filetype=file_attr[file_attr.length-1];
+				vUtil.fileToDataUrl(file,function(dataURL)
+				{
+					if(dataURL!="")
+					{
+						var doc_name=domain+vTime.unix()+file.name;
+						var doc_mapping={name:file.name,url:doc_name};
+						attachments.push(doc_mapping);
 
-			var data_json={data_store:'policies',
-			data:[{index:'id',value:get_new_key()},
-				{index:'application_num',value:app_num,unique:'yes'},
-				{index:'policy_name',value:fname.value},
-				{index:'description',value:pdesc},
-				{index:'issuer',value:pissuer},
-				{index:'policy_holder',value:fholder.value},
-				{index:'premium',value:premium},
-				{index:'discount',value:discount},
-				{index:'short_premium',value:short_premium},
-				{index:'agent',value:fagent.value},
-				{index:'start_date',value:start_date},
-				{index:'end_date',value:end_date},
-				{index:'issue_date',value:issue_date},
-				{index:'type',value:ptype},
-				{index:'term',value:pterm},
-				{index:'preferred',value:ppreferred},
-				{index:'issue_type',value:issue_type},
-				{index:'ported_source',value:fported_from.value},
-				{index:'renewed_source',value:frenewed_from.value},
-				{index:'status',value:'active'},
-				{index:'last_updated',value:last_updated}]};
-			create_json(data_json);
+		                var data_json={type:'create',
+		                           bucket:'vyavsaay-documents',
+		                           blob: dataURL,
+		                           name:doc_name,
+		                           description:'',
+		                           content_type:contentType};
+						s3_object(data_json);
+						counter--;
+					}
+				});
+			}
 
-			var data_json={data_store:'policy_commissions',
-			data:[{index:'id',value:get_new_key()},
-				{index:'policy_num',value:app_num},
-				{index:'commission_num',value:''},
-				{index:'issuer',value:pissuer},
-				{index:'policy_holder',value:fholder.value},
-				{index:'amount',value:'1000'},
-				{index:'agent',value:fagent.value},
-				{index:'issue_date',value:issue_date},
-				{index:'commission_type',value:'base'},
-				{index:'status',value:'pending'},
-				{index:'notes',value:''},
-				{index:'last_updated',value:last_updated}]};
-			create_json(commission_json);
+			var start_date=vTime.unix({date:fstart.value});
+			if(fterm.value=="two years")
+			{
+				end_date = start_date + 2*365*86400000;
+			}
+			else{
+				end_date = start_date + 365*86400000;
+			}
+
+			var wait=setInterval(function()
+			{
+				if(counter==0)
+				{
+					clearInterval(wait);
+					var attachment_string=JSON.stringify(attachments);
+					var data_json={data_store:'policies',
+					data:[{index:'id',value:get_new_key()},
+						{index:'application_num',value:fapp.value,unique:'yes'},
+						{index:'policy_num',value:""},
+						{index:'policy_name',value:fpname.value},
+						{index:'description',value:description},
+						{index:'issuer',value:fcompany.value},
+						{index:'policy_holder',value:fholder.value},
+						{index:'premium',value:fpremium.value},
+						{index:'discount',value:fdiscount.value},
+						{index:'short_premium',value:fshort_premium.value},
+						{index:'agent',value:fagent.value},
+						{index:'start_date',value:start_date},
+						{index:'end_date',value:end_date},
+						{index:'issue_date',value:vTime.unix({date:fissue.value})},
+						{index:'type',value:fptype.value},
+						{index:'term',value:fterm.value},
+						{index:'preferred',value:fpreferred.value},
+						{index:'issue_type',value:ftype.value},
+						{index:'ported_source',value:fported_from.value},
+						{index:'renewed_source',value:frenewed_from.value},
+						{index:'sum_insured',value:fsum.value},
+						{index:'adults',value:fadults.value},
+						{index:'children',value:fchild.value},
+						{index:'age',value:fage.value},
+						{index:'team_lead',value:flead.value},
+						{index:'sales_manager',value:fmanager.value},
+						{index:'tele_caller',value:fcaller.value},
+						{index:'sales_source',value:fsource.value},
+						{index:'attachments',value:attachment_string},
+						{index:'status',value:'active'},
+						{index:'last_updated',value:last_updated}]};
+					create_json(data_json);
+
+					// var data_json={data_store:'policy_commissions',
+					// data:[{index:'id',value:get_new_key()},
+					// 	{index:'policy_num',value:app_num},
+					// 	{index:'commission_num',value:''},
+					// 	{index:'issuer',value:pissuer},
+					// 	{index:'policy_holder',value:fholder.value},
+					// 	{index:'amount',value:'1000'},
+					// 	{index:'agent',value:fagent.value},
+					// 	{index:'issue_date',value:issue_date},
+					// 	{index:'commission_type',value:'base'},
+					// 	{index:'status',value:'pending'},
+					// 	{index:'notes',value:''},
+					// 	{index:'last_updated',value:last_updated}]};
+					// create_json(commission_json);
+				}
+			},500);
 		}
 		else
 		{
@@ -16217,8 +16291,7 @@ function modal217_action()
     var fterm=form.elements['term'];
     var fpreferred=form.elements['preferred'];
 
-	type_data={data_store:'policy_types',return_column:'type'};
-	set_my_filter_json(type_data,ftype);
+	set_static_value_list_json('policy_types','type',ftype);
 
 	issuer_data={data_store:'policy_types',return_column:'issuer'};
 	set_my_filter_json(issuer_data,fissuer);

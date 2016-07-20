@@ -25,45 +25,15 @@
 	$input_data=$_POST['object_data'];
 	$input_object=json_decode($input_data,true);
 
-    $type="";
-    $bucket="";
-    $blob="";
-    $name="";
-    $contentType="";
-    $description="";
-    
-    if(isset($input_object['type']))
-    {
-	   $type=$input_object['type'];
-    }
-
-    if(isset($input_object['bucket']))
-    {
-        $bucket=$input_object['bucket'];
-    }
-
-    if(isset($input_object['blob']))
-    {
-        $blob=$input_object['blob'];
-    }
-
-    if(isset($input_object['name']))
-    {
-        $name=$input_object['name'];
-    }
-
-    if(isset($input_object['content_type']))
-    {
-        $contentType=$input_object['content_type'];
-    }
-	
-    if(isset($input_object['description']))
-    {
-	   $description=$input_object['description'];
-    }
+    $type= isset($input_object['type']) ? $input_object['type'] : "";
+	$bucket= isset($input_object['bucket']) ? $input_object['bucket'] : "";
+	$blob= isset($input_object['blob']) ? $input_object['blob'] : "";
+	$name= isset($input_object['name']) ? $input_object['name'] : "";
+	$contentType= isset($input_object['content_type']) ? $input_object['content_type'] : "";
+	$description= isset($input_object['description']) ? $input_object['description'] : "";
 
     $response_object=[];
-	
+
 	if(isset($_SESSION['session']))
 	{
 		if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['username']==$user && $_SESSION['re']==$read_access && $_SESSION['cr']==$create_access && $_SESSION['del']==$delete_access)
@@ -95,8 +65,8 @@
 	{
 		$response_object['status']='Invalid session';
 	}
-	
-	$jsonresponse=json_encode($response_object);		
+
+	$jsonresponse=json_encode($response_object);
 	header ("Content-Type:application/json");
 	echo $jsonresponse;
 

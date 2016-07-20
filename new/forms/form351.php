@@ -47,7 +47,7 @@
 	<div class='modal_forms'>
 		<a href='#form351_popup' data-toggle="modal" id='form351_popup_link'></a>
 		<div id="form351_popup" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
-			<div class="modal-dialog">
+			<div class="modal-dialog modal-full">
 				<div class="modal-content">
 					<form id='form351_popup_form' autocomplete="off">
 						<div class="modal-header">
@@ -78,9 +78,11 @@
 		{
 			var filter_fields=document.getElementById('form351_header');
 			var faccount=filter_fields.elements['account'];
+			var ftype=filter_fields.elements['type'];
 
 			var account_data={data_store:'staff',return_column:'acc_name'};
 			set_my_filter_json(account_data,faccount);
+			set_static_filter_json('policy_types','type',ftype);
 
 			$(filter_fields).off('submit');
 			$(filter_fields).on('submit',function(event)
@@ -248,16 +250,19 @@
 			{
 				var id=get_new_key();
 				var content="<div class='row' id='form351_popup_"+id+"'>"+
-								"<div class='col-md-4'>"+
+								"<div class='col-md-3'>"+
 									"<input placeholder='Commission Type' class='floatlabel' name='type' type='text'>"+
 								"</div>"+
-								"<div class='col-md-3'>"+
+								"<div class='col-md-2'>"+
 									"<input placeholder='Issue Type' class='floatlabel' name='issue' type='text'>"+
 								"</div>"+
-								"<div class='col-md-3'>"+
-									"<input placeholder='Commission %' class='floatlabel' name='commission' type='number' step='any'>"+
+								"<div class='col-md-4'>"+
+									"<textarea placeholder='Conditions' class='floatlabel' name='conditions'></textarea>"+
 								"</div>"+
 								"<div class='col-md-2'>"+
+									"<input placeholder='Commission %' class='floatlabel' name='commission' type='number' step='any'>"+
+								"</div>"+
+								"<div class='col-md-1'>"+
 									"<button type='button' class='btn red' onclick=$(this).parent().parent().remove();><i class='fa fa-trash'></i></button>"+
 								"</div>"+
 							"</div>";
@@ -286,16 +291,19 @@
 					values_array.forEach(function(fvalue)
 					{
 						content+="<div class='row'>"+
-									"<div class='col-md-4'>"+
+									"<div class='col-md-3'>"+
 										"<input placeholder='Commission Type' readonly='readonly' class='floatlabel' value='"+fvalue.type+"' name='type' type='text'>"+
 									"</div>"+
-									"<div class='col-md-3'>"+
+									"<div class='col-md-2'>"+
 										"<input placeholder='Issue Type' readonly='readonly' class='floatlabel' value='"+fvalue.issue+"' name='issue' type='text'>"+
 									"</div>"+
-									"<div class='col-md-3'>"+
-										"<input placeholder='Commission %' readonly='readonly' class='floatlabel' value='"+fvalue.commission+"' name='commission' type='number' step='any'>"+
+									"<div class='col-md-4'>"+
+										"<textarea placeholder='Conditions' class='floatlabel' name='conditions'>"+fvalue.conditions+"</textarea>"+
 									"</div>"+
 									"<div class='col-md-2'>"+
+										"<input placeholder='Commission %' readonly='readonly' class='floatlabel' value='"+fvalue.commission+"' name='commission' type='number' step='any'>"+
+									"</div>"+
+									"<div class='col-md-1'>"+
 										"<button type='button' class='btn red' onclick=$(this).parent().parent().remove();><i class='fa fa-trash'></i></button>"+
 									"</div>"+
 								"</div>";
@@ -318,6 +326,7 @@
 					{
 						var return_obj={type:$(this).find("input[name='type']").val(),
 										issue:$(this).find("input[name='issue']").val(),
+										conditions:$(this).find("textarea[name='conditions']").val(),
 										commission:$(this).find("input[name='commission']").val()};
 						returns_column_array.push(return_obj);
 					});
@@ -340,15 +349,15 @@
 
 		function form351_import_template()
 		{
-			var data_array=['id','name','type','issuer','description','term','preferred','accounts','commissions'];
+			var data_array=['id','name','type','issuer','description','term','preferred','commissions'];
 			my_array_to_csv(data_array);
 		};
 
 		function form351_import_validate(data_array)
 		{
 			var validate_template_array=[{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-                                  {column:'type',required:'yes',list:['health','life','car']},
-								  {column:'term',required:'yes',list:['one year','two years']},
+                                  {column:'type',required:'yes',list:['medical','mon-medical']},
+								  {column:'term',required:'yes',list:['one year','two years','one year, two years']},
 								  {column:'preferred',required:'yes',list:['yes','no']},
                                   {column:'issuer',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
                 				  {column:'description',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')}];
@@ -374,21 +383,15 @@
 				{
 					row.id=last_updated+counter;
 				}
-				var accounts_array=row.accounts.split(';');
-				var accounts=JSON.stringify(accounts_array);
-
-				var com_array=row.accounts.split(';');
-				var commissions=JSON.stringify(com_array);
 
 				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'name',value:row.name},
 	 					{index:'type',value:row.type},
 						{index:'term',value:row.term},
 						{index:'preferred',value:row.preferred},
-						{index:'accounts',value:accounts},
-	 					{index:'issuer',value:row.issuer},
+						{index:'issuer',value:row.issuer},
 	 					{index:'description',value:row.description},
-						{index:'commissions',value:commissions},
+						{index:'commissions',value:row.commissions},
 	 					{index:'last_updated',value:last_updated}];
 
 				data_json.data.push(data_json_array);

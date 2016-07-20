@@ -308,6 +308,17 @@ var vUtil = function (options)
 			element.data['dropdownHover']='yes';
 		}
 	};
+
+	this.fileToDataUrl = function(file,func)
+	{
+		var reader = new FileReader();
+		reader.onloadend=function()
+		{
+	        var dataURL = reader.result;
+	        func(dataURL);
+		};
+		reader.readAsDataURL(file);
+	}
 };
 vUtil=new vUtil();
 

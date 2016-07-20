@@ -133,6 +133,8 @@ function if_data_access_object(obj_type,obj_name,func_success,func_fail)
                         break;
         case 'logistics_orders':index_name='awb_num';
                         break;
+		case 'policies':index_name='policy_num';
+                        break;
 	}
 
 	var obj_data={data_store:obj_type,
