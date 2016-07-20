@@ -163,6 +163,7 @@
 														branch.total_cod+=parseFloat(order.collectable_value);
 														branch.total+=1;
 														break;
+										case 'received':
 										case 'pending':
 										case 'undelivered':branch.pending+=1;
 														branch.total_cod+=parseFloat(order.collectable_value);
@@ -250,7 +251,7 @@
 								break;
 				case 'ofd':status_object={index:"status",exact:'out for delivery'};
 								break;
-				case 'pending':status_object={index:"status",array:['pending','undelivered']};
+				case 'pending':status_object={index:"status",array:['pending','undelivered','received']};
 								break;
 				case 'rto':status_object={index:"status",array:['RTO pending','RTO delivered','RTO out for delivery']};
 								break;

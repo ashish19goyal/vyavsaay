@@ -81,6 +81,7 @@ function cron1()
 										$branch['total']+=1;
 										break;
 						case 'pending':
+						case 'received':
 						case 'undelivered':$branch['pending']+=1;
 										$branch['total_cod']+=floatval($order['collectable_value']);
 										$branch['total']+=1;
