@@ -1,6 +1,6 @@
-<div id='form8' class='tab-pane portlet box yellow-saffron'>	   
+<div id='form8' class='tab-pane portlet box yellow-saffron'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='modal16_action();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -22,9 +22,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 		<form id='form8_header' autocomplete="off">
 			<fieldset>
@@ -32,15 +32,15 @@
 				<label><input type='text' placeholder="Phone" class='floatlabel' name='contact'></label>
 				<label><input type='text' placeholder="Email" class='floatlabel' name='email'></label>
 				<label><input type='text' placeholder="Status" class='floatlabel' name='status'></label>
-				<label><input type='submit' class='submit_hidden'></label>			
+				<label><input type='submit' class='submit_hidden'></label>
 			</fieldset>
 		</form>
 		<br>
 		<div id='form8_body' class='row'>
-			
+
 		</div>
 	</div>
-	
+
 	<script>
 
 		function form8_header_ini()
@@ -48,39 +48,39 @@
 			var filter_fields=document.getElementById('form8_header');
 			var name_filter=filter_fields.elements['name'];
 			var status_filter=filter_fields.elements['status'];
-			
+
 			$(filter_fields).off('submit');
 			$(filter_fields).on('submit',function(event)
 			{
 				event.preventDefault();
 				form8_ini();
 			});
-		
+
 			var name_data=new Object();
 				name_data.data_store="staff";
 				name_data.return_column="name";
 				name_data.indexes=[{index:'id'}];
-			
+
 			set_my_filter_json(name_data,name_filter);
 			set_static_filter_json('staff','status',status_filter);
 		};
-		
+
 		function form8_ini()
 		{
 			show_loader();
 			var fid=$("#form8_link").attr('data_id');
 			if(fid==null)
-				fid="";	
-				
+				fid="";
+
 			$('#form8_body').html("");
 			var filter_fields=document.getElementById('form8_header');
 			var fname=filter_fields.elements['name'].value;
 			var fcontact=filter_fields.elements['contact'].value;
 			var femail=filter_fields.elements['email'].value;
 			var fstatus=filter_fields.elements['status'].value;
-			
+
 			var paginator=$('#form8_body').paginator({'page_size':24});
-			
+
 			var columns=new Object();
 					columns.count=paginator.page_size();
 					columns.start_index=paginator.get_index();
@@ -92,8 +92,8 @@
 									{index:'phone',value:fcontact},
 									{index:'email',value:femail},
 									{index:'status',value:fstatus},
-									{index:'address'}];		
-			
+									{index:'address'}];
+
 			read_json_rows('form8',columns,function(results)
 			{
 				var counter=0;
@@ -132,7 +132,7 @@
                                  	"</div>"+
                                	"</div>"+
                              "</div>";
-					
+
 					$('#form8_body').append(rowsHTML);
 					var fields=document.getElementById("form8_"+result.id);
 					var image_button=fields.elements['image'];
@@ -141,17 +141,17 @@
 					var delete_button=fields.elements['delete'];
 					var status_filter=fields.elements['status'];
 
-					set_static_select('staff','status',status_filter,function () 
+					set_static_select('staff','status',status_filter,function ()
 					{
 						$(status_filter).selectpicker('val',result.status);
 					});
-					
+
 					var master_data=new Object();
 						master_data.data_store="accounts";
 						master_data.count=1;
 						master_data.return_column='acc_name';
 						master_data.indexes=[{index:'username',exact:'master'}];
-					
+
 					read_json_single_column(master_data,function(accounts)
 					{
 						if(accounts[0]==result.acc_name)
@@ -159,9 +159,9 @@
 							$(delete_button).hide();
 						}
 					});
-					
+
 					var docs={data_store:'documents',
-							indexes:[{index:'id'},{index:'url'},{index:'doc_type',exact:'staff'},{index:'doc_name',exact:'image'},{index:'target_id',exact:result.id}]};		
+							indexes:[{index:'id'},{index:'url'},{index:'doc_type',exact:'staff'},{index:'doc_name',exact:'image'},{index:'target_id',exact:result.id}]};
 					read_json_rows('',docs,function(pics)
 					{
 						if(pics.length>0)
@@ -170,13 +170,13 @@
 							image_elem.setAttribute('data-id',pics[0].id);
 						}
 					});
-					
-					$(image_button).on('click',function (e) 
+
+					$(image_button).on('click',function (e)
 					{
 						e.preventDefault();
 						$(image_dummy).click();
 					});
-					
+
 					$(image_dummy).on('change',function(evt)
 					{
 					   select_picture(evt,'',function(dataURL)
@@ -187,7 +187,7 @@
 							{
 								var data_id=get_new_key();
 								image_elem.setAttribute('data-id',data_id);
-								
+
 								var data_json={data_store:'documents',
 					 				data:[{index:'id',value:data_id},
 					 					{index:'target_id',value:result.id},
@@ -197,33 +197,33 @@
 					 					{index:'last_updated',value:last_updated}]};
 								create_json(data_json);
 							}
-							else 
+							else
 							{
 								var data_id=image_elem.getAttribute('data-id');
 								var data_json={data_store:'documents',
 					 				data:[{index:'id',value:data_id},
 					 					{index:'url',value:dataURL},
 					 					{index:'last_updated',value:last_updated}]};
-								update_json(data_json);								
+								update_json(data_json);
 							}
 						});
 					});
-					
+
 					$(fields).on("submit", function(event)
 					{
 						event.preventDefault();
 						form8_update_item(fields);
-					});					
+					});
 				});
-				
+
 				$('#form8').formcontrol();
-				paginator.update_index(results.length);				
+				paginator.update_index(results.length);
 				initialize_tabular_report_buttons(columns,'Staff','form8');
-								
+
 				hide_loader();
 			});
 		};
-		
+
 		function form8_update_item(form)
 		{
 			if(is_update_access('form8'))
@@ -236,7 +236,7 @@
 				var data_id=form.elements['id'].value;
 				var acc_name=form.elements['acc_name'].value;
 				var last_updated=get_my_time();
-				
+
 				var data_json={data_store:'staff',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'name',value:name},
@@ -249,7 +249,7 @@
 	 				log_data:{title:'Updated',notes:'Profile of staff '+name,link_to:'form8'}};
 
 				update_json(data_json);
-				
+
 				$(form).readonly();
 			}
 			else
@@ -257,7 +257,7 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form8_delete_item(button)
 		{
 			if(is_delete_access('form8'))
@@ -266,11 +266,11 @@
 				{
 					var form_id=$(button).attr('form');
 					var form=document.getElementById(form_id);
-					
+
 					var name=form.elements['name'].value;
 					var data_id=form.elements['id'].value;
 					var acc_name=form.elements['acc_name'].value;
-					
+
 					var data_json={data_store:'staff',
  							data:[{index:'id',value:data_id}],
  							log:'yes',
@@ -279,7 +279,7 @@
  							data:[{index:'id',value:data_id},{index:'type',value:'staff'}]};
 					var attribute_json={data_store:'attributes',
  							data:[{index:'name',value:acc_name},{index:'type',value:'staff'}]};
-								
+
 					delete_json(data_json);
 					delete_json(account_json);
 					delete_json(attribute_json);
@@ -291,7 +291,7 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form8_import_template()
 		{
 			var data_array=['id','name','phone','email','status','acc_name','username',
@@ -307,9 +307,9 @@
 									{column:'phone',regex:new RegExp('^[0-9 ./,+-]+$')},
 									{column:'username',regex:new RegExp('^[0-9a-zA-Z]+$')},
 									{column:'status',list:['active','suspended','retired']}];
-							
+
 			var error_array=validate_import_array(data_array,validate_template_array);
-			return error_array;					
+			return error_array;
 		}
 
 		function form8_import(data_array,import_type)
@@ -326,7 +326,7 @@
 
 			var counter=1;
 			var last_updated=get_my_time();
-		
+
 			data_array.forEach(function(row)
 			{
 				counter+=1;
@@ -334,7 +334,7 @@
 				{
 					row.id=last_updated+counter;
 				}
-				
+
 				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'name',value:row.name},
 	 					{index:'phone',value:row.phone},
@@ -353,9 +353,9 @@
 	 					{index:'status',value:'active'},
 	 					{index:'last_updated',value:last_updated}];
 
-				account_json.data.push(account_json_array);				
+				account_json.data.push(account_json_array);
 			});
-			
+
 			if(import_type=='create_new')
 			{
 				create_batch_json(data_json);
@@ -367,6 +367,6 @@
 				update_batch_json(account_json);
 			}
 		}
-		
+
 	</script>
 </div>

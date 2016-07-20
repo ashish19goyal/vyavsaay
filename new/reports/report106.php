@@ -158,12 +158,15 @@
                         {index:'return_address3'},
 						{index:'consignment_num'},
 						{index:'city'},
+						{index:'pass_num'},
+						{index:'status'},
                         {index:'manifest_num',array:manifest_num_array}]};
 
             initialize_tabular_report_buttons(columns,'Manifest Report','report106',function (item)
             {
                 item['AWB No']=item.awb_num;
                 item['Manifest No']=item.manifest_num;
+				item['Gate Pass No']=item.pass_num;
                 item['Order Id']=item.order_num;
                 item['Import Date']=get_my_past_date(item.import_date);
                 item['Status']=item.status;
@@ -200,6 +203,7 @@
 				delete item.city;
 				delete item.consignment_num;
                 delete item.manifest_num;
+				delete item.pass_num;
             });
 
             hide_loader();
