@@ -62,7 +62,7 @@
 						<h4 class="modal-title">Order Details</h4>
 					</div>
 					<div class="modal-body">
-						<div class="scroller" style="height:100px;" data-always-visible="1" data-rail-visible1="1">
+						<div class="scroller" style="height:400px;" data-always-visible="1" data-rail-visible1="1">
 							<table id='report115_popup_table' class='table table-striped table-bordered table-hover dt-responsive no-more-tables'>
 								<thead>
 									<tr>
