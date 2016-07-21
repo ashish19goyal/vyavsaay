@@ -106,7 +106,8 @@
 						{index:'acc_name',value:faccount},
 						{index:'amount'},
 						date_object,
-                        {index:'narration',value:fnarration},
+						{index:'heading'},
+						{index:'narration',value:fnarration},
 						{index:'type',exact:'paid'}]};
 
             read_json_rows('form282',columns,function(results)
@@ -126,7 +127,8 @@
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Details'>";
 								rowsHTML+="<input type='number' class='floatlabel dblclick_editable' placeholder='Amount Rs.' readonly='readonly' form='form282_"+result.id+"' value='"+result.amount+"'>";
-						        rowsHTML+="<textarea readonly='readonly' class='floatlabel dblclick_editable' placeholder='Narration' form='form282_"+result.id+"'>"+result.narration+"</textarea>";
+								rowsHTML+="<input type='text' readonly='readonly' class='floatlabel dblclick_editable' placeholder='Heading' form='form282_"+result.id+"' value='"+result.heading+"'>";
+                                rowsHTML+="<textarea readonly='readonly' class='floatlabel dblclick_editable' placeholder='Narration' form='form282_"+result.id+"'>"+result.narration+"</textarea>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Document'>";
                                 rowsHTML+="<div id='form282_documents_"+result.id+"'></div>";
@@ -200,12 +202,14 @@
 				var last_updated=vTime.unix();
 				var receipt_date=vTime.unix({date:form.elements[2].value});
 				var received_amount=form.elements[3].value;
-				var narration=form.elements[4].value;
+				var heading=form.elements[4].value;
+				var narration=form.elements[5].value;
 
 				var transaction_json={data_store:'transactions',
 					data:[{index:'id',value:data_id},
 						{index:'amount',value:received_amount},
 						{index:'trans_date',value:receipt_date},
+						{index:'heading',value:heading},
 						{index:'notes',value:narration},
 						{index:'last_updated',value:last_updated}]};
 
@@ -214,6 +218,7 @@
 	        	var receipt_json={data_store:'receipts',
 		 				data:[{index:'id',value:data_id},
 		 					{index:'amount',value:received_amount},
+							{index:'heading',value:heading},
 		 					{index:'narration',value:narration},
 		 					{index:'date',value:receipt_date},
 		 					{index:'last_updated',value:last_updated}]};

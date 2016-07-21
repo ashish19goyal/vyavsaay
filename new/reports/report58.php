@@ -36,6 +36,7 @@
 				<tr>
 					<th>Date</th>
 					<th>Particulars</th>
+					<th>Voucher</th>
 					<th>Debit</th>
 					<th>Credit</th>
 					<th>Balance</th>
@@ -92,7 +93,8 @@
 									  {index:'source'},
                                       {index:'source_id'},
                                       {index:'source_info'},
-									  {index:'notes'},
+									  {index:'heading'},
+                                      {index:'notes'},
                                       {index:'trans_date',upperbound:(get_raw_time(end_date)+86399999)},
                                       {index:'acc_name',exact:account},
 									  {index:'last_updated'}]};
@@ -150,8 +152,11 @@
                   rowsHTML+="<td data-th='Date'>";
                       rowsHTML+=get_my_past_date(tran.trans_date);
                   rowsHTML+="</td>";
-                  rowsHTML+="<td data-th='Particulars' style='text-transform:capitalize;'><a id='report58_particulars_"+tran.id+"'>";
-                      rowsHTML+=particulars;
+                  rowsHTML+="<td data-th='Particulars' style='text-transform:capitalize;'>";
+                      rowsHTML+="<b>"+tran.heading+"</b><br>"+tran.notes;
+                  rowsHTML+="</td>";
+				  rowsHTML+="<td data-th='Voucher' style='text-transform:capitalize;'><a id='report58_particulars_"+tran.id+"'>";
+                      rowsHTML+=tran.source+" - "+tran.source_info;
                   rowsHTML+="</a></td>";
                   rowsHTML+="<td data-th='Debit'>";
                       rowsHTML+=debit;

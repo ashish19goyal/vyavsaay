@@ -391,7 +391,8 @@
 							{index:'source',value:'journal'},
 							{index:'source_link',value:'form359'},
 							{index:'trans_date',value:receipt_date},
-							{index:'notes',value:heading+" - "+narration},
+							{index:'heading',value:heading},
+							{index:'notes',value:narration},
 							{index:'last_updated',value:last_updated}]};
 
 					var journal_json={data_store:'journals',

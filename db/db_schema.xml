@@ -360,6 +360,7 @@
 			<source_info index='yes' type="TEXT"></source_info>
 			<source index='yes' type="TEXT"></source>
 			<source_link index='yes' type="VARCHAR(20)"></source_link>
+			<heading index='yes' type="TEXT"></heading>
 			<notes index='yes' type="TEXT"></notes>
 			<receipt_source_id index='yes' type="BIGINT"></receipt_source_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
@@ -382,6 +383,7 @@
 			<type index='yes' type="VARCHAR(10)"></type><!-- received/paid -->
 			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<acc_name index='yes' type="TEXT"></acc_name>
+			<heading index='no' type="TEXT"></heading>
 			<narration index='no' type="TEXT"></narration>
 			<mode_payment index='yes' type="TEXT"></mode_payment><!--cash/checque/bank/card-->
 			<date index='yes' type="BIGINT"></date>

@@ -12641,6 +12641,7 @@ function modal172_action()
 	var receipt_filter=form.elements['receipt_id'];
 	var date_filter=form.elements['date'];
 	var account_filter=form.elements['account'];
+	var heading_filter=form.elements['heading'];
 	var narration_filter=form.elements['narration'];
 	var amount_filter=form.elements['amount'];
 	var balance_filter=form.elements['balance'];
@@ -12719,6 +12720,7 @@ function modal172_action()
 		event.preventDefault();
 		var paid_amount=amount_filter.value;
 		var receipt_date=get_raw_time(date_filter.value);
+		var heading=heading_filter.value;
 		var narration=narration_filter.value;
 		var receipt_id=receipt_filter.value;
 		var receipt_type='paid';
@@ -12741,6 +12743,7 @@ function modal172_action()
 					{index:'source_link',value:'form282'},
 					{index:'trans_date',value:receipt_date},
 					{index:'notes',value:narration},
+					{index:'heading',value:heading},
 					{index:'last_updated',value:last_updated}]};
 
 				create_json(transaction_json);
@@ -12750,6 +12753,7 @@ function modal172_action()
 	 					{index:'receipt_id',value:receipt_id,unique:'yes'},
 	 					{index:'type',value:receipt_type},
 	 					{index:'amount',value:paid_amount},
+						{index:'heading',value:heading},
 	 					{index:'narration',value:narration},
 	 					{index:'acc_name',value:account_name},
 	 					{index:'date',value:receipt_date},
@@ -17027,6 +17031,7 @@ function modal225_action()
 	var receipt_filter=form.elements['receipt_id'];
 	var date_filter=form.elements['date'];
 	var account_filter=form.elements['account'];
+	var heading_filter=form.elements['heading'];
 	var narration_filter=form.elements['narration'];
 	var amount_filter=form.elements['amount'];
 	var balance_filter=form.elements['balance'];
@@ -17088,6 +17093,7 @@ function modal225_action()
 		var receipt_id=form.elements['receipt_id'].value;
 		var receipt_type='received';
 		var account_name=account_filter.value;
+		var heading=heading_filter.value;
 		var narration=narration_filter.value;
 		var last_updated=vTime.unix();
 		var p_id=get_new_key();
@@ -17105,6 +17111,7 @@ function modal225_action()
 					{index:'source',value:'receipt'},
 					{index:'source_link',value:'form291'},
 					{index:'trans_date',value:receipt_date},
+					{index:'heading',value:heading},
 					{index:'notes',value:narration},
 					{index:'last_updated',value:last_updated}]};
 
@@ -17115,6 +17122,7 @@ function modal225_action()
 	 					{index:'receipt_id',value:receipt_id,unique:'yes'},
 	 					{index:'type',value:receipt_type},
 	 					{index:'amount',value:received_amount},
+						{index:'heading',value:heading},
 	 					{index:'narration',value:narration},
 	 					{index:'acc_name',value:account_name},
 	 					{index:'date',value:receipt_date},

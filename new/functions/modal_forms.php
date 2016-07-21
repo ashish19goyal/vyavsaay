@@ -2452,7 +2452,11 @@
 								<div class="col-sm-12 col-md-4">Account</div>
 					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal172_form' required name='account'></div>
 					      </div>
-		                  <div class="row">
+						  <div class="row">
+								<div class="col-sm-12 col-md-4">Heading</div>
+								<div class="col-sm-12 col-md-8"><input type='text' form='modal172_form' name='heading'></div>
+						  </div>
+						  <div class="row">
 						        <div class="col-sm-12 col-md-4">Narration</div>
                                 <div class="col-sm-12 col-md-8"><textarea form='modal172_form' name='narration'></textarea></div>
 					      </div>
@@ -4319,25 +4323,29 @@
 	                <div class="modal-body">
 		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
 		                  <div class="row">
-								   <div class="col-sm-12 col-md-4">Receipt Id</div>
-					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal225_form' required name='receipt_id'></div>
-					     		</div>
+							    <div class="col-sm-12 col-md-4">Receipt Id</div>
+					        	<div class="col-sm-12 col-md-8"><input type='text' form='modal225_form' required name='receipt_id'></div>
+					      </div>
 		                  <div class="row">
 								   <div class="col-sm-12 col-md-4">Date</div>
 					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal225_form' name='date'></div>
-					       </div>
+					      </div>
 		                  <div class="row">
 								   <div class="col-sm-12 col-md-4">Account</div>
 					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal225_form' required name='account'></div>
-					     		</div>
+					      </div>
+						  <div class="row">
+								   <div class="col-sm-12 col-md-4">Heading</div>
+                                    <div class="col-sm-12 col-md-8"><input type='text' form='modal225_form' name='heading'></div>
+					      </div>
 		                  <div class="row">
 								   <div class="col-sm-12 col-md-4">Narration</div>
                                     <div class="col-sm-12 col-md-8"><textarea form='modal225_form' name='narration'></textarea></div>
-					     		</div>
+					      </div>
 		                  <div class="row">
 								   <div class="col-sm-12 col-md-4">Receipt Amount</div>
 					     			<div class="col-sm-12 col-md-8"><input type='number' step='any' min='0' form='modal225_form' name='amount' required></div>
-					     		</div>
+					      </div>
 		                  <div class="row">
 								   <div class="col-sm-12 col-md-4">Balance</div>
 					     			<div class="col-sm-12 col-md-8"><input type='text' form='modal225_form' name='balance' readonly='readonly'></div>

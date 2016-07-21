@@ -106,7 +106,8 @@
 								{index:'acc_name',value:faccount},
 								{index:'amount'},
 								date_object,
-                                {index:'narration',value:fnarration},
+								{index:'heading'},
+								{index:'narration',value:fnarration},
 								{index:'type',exact:'received'}]};
 
             read_json_rows('form291',columns,function(results)
@@ -126,6 +127,7 @@
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Details'>";
 								rowsHTML+="<input type='number' class='floatlabel dblclick_editable' placeholder='Amount Rs.' readonly='readonly' form='form291_"+result.id+"' value='"+result.amount+"'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form291_"+result.id+"' class='floatlabel dblclick_editable' placeholder='Heading' value='"+result.heading+"'>";
                                 rowsHTML+="<textarea readonly='readonly' form='form291_"+result.id+"' class='floatlabel dblclick_editable' placeholder='Narration'>"+result.narration+"</textarea>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Document'>";
@@ -199,7 +201,7 @@
 
                     $(print_button).on('click',function ()
                     {
-                        form291_print(result.receipt_id,result.acc_name,result.amount,result.date,result.narration,address_filter.value);
+                        form291_print(result.receipt_id,result.acc_name,result.amount,result.date,result.heading,result.narration,address_filter.value);
                     });
 
                     var bt=get_session_var('title');
@@ -207,7 +209,7 @@
                     {
                         modal101_action('Payment Receipt - '+bt,result.acc_name,'customer',function (func)
                         {
-                            print_form291(func,result.receipt_id,result.acc_name,result.amount,result.date,result.narration,address_filter.value);
+                            print_form291(func,result.receipt_id,result.acc_name,result.amount,result.date,result.heading,result.narration,address_filter.value);
                         });
                     });
 
@@ -232,12 +234,14 @@
 				var last_updated=vTime.unix();
 				var receipt_date=vTime.unix({date:form.elements[2].value});
 				var received_amount=form.elements[3].value;
-				var narration=form.elements[4].value;
+				var heading=form.elements[4].value;
+				var narration=form.elements[5].value;
 
 				var transaction_json={data_store:'transactions',
 					data:[{index:'id',value:data_id},
 						{index:'amount',value:received_amount},
 						{index:'trans_date',value:receipt_date},
+						{index:'heading',value:heading},
 						{index:'notes',value:narration},
 						{index:'last_updated',value:last_updated}]};
 
@@ -246,7 +250,8 @@
 	        	var receipt_json={data_store:'receipts',
 		 				data:[{index:'id',value:data_id},
 		 					{index:'amount',value:received_amount},
-		 					{index:'narration',value:narration},
+							{index:'heading',value:heading},
+							{index:'narration',value:narration},
 		 					{index:'date',value:receipt_date},
 		 					{index:'last_updated',value:last_updated}]};
 
@@ -290,16 +295,16 @@
 			}
 		}
 
-        function form291_print(receipt_id,acc_name,amount,date,narration,address)
+        function form291_print(receipt_id,acc_name,amount,date,heading,narration,address)
         {
             print_form291(function(container)
             {
                 $.print(container);
                 container.innerHTML="";
-            },receipt_id,acc_name,amount,date,narration,address);
+            },receipt_id,acc_name,amount,date,heading,narration,address);
         }
 
-        function print_form291(func,receipt_id,acc_name,amount,date,narration,address)
+        function print_form291(func,receipt_id,acc_name,amount,date,heading,narration,address)
         {
             ////////////setting up containers///////////////////////
             var container=document.createElement('div');
@@ -353,10 +358,12 @@
             info_div.innerHTML="<div style='width:50%;float:left;text-align:left;'>Receipt #: "+receipt_id+"</div><div style='width:50%;float:right;text-align:right;'>Dated: "+get_my_past_date(date)+"</div>";
 
             ///////////central information table///////////
-            var table_text="<table style='border:none;text-align:left;font-size:13px;'><tr style='border-top:1px solid #555;border-bottom:1px solid #555;'><th style='width:70%;border-right:1px solid #555;font-weight:400;'>Particulars</th><th style='font-weight:400;width:30%;'>Amount</th></tr>";
-                table_text+="<tr style='height:40px;'><td style='text-align:left;border-right:1px solid #555;'>Account: "+acc_name+"<br>Address: "+address+"</td><td></td></tr>";
-                table_text+="<tr style='height:40px;'><td style='text-align:left;border-right:1px solid #555;'>Remarks: "+narration+"</td><td></td></tr>";
-                table_text+="<tr style='border-top:1px solid #555;border-bottom:1px solid #555;text-align:left;'><td style='text-align:left;border-right:1px solid #555;'>Amount (in words): "+wording_total+"</td><td style='text-align:left;'>Rs. "+amount+"</td></tr></table>";
+            var table_text="<table style='border:none;text-align:left;font-size:13px;'><tr style='border-top:1px solid #555;border-bottom:1px solid #555;'><th style='width:70%;border-right:1px solid #555;font-weight:400;'>Particulars</th><th style='font-weight:400;width:30%;'>Amount</th></tr>"+
+                				"<tr style='height:40px;'><td style='text-align:left;border-right:1px solid #555;'>Account: "+acc_name+"<br>Address: "+address+"</td><td></td></tr>"+
+								"<tr style='height:40px;'><td style='text-align:left;border-right:1px solid #555;'>Heading: "+heading+"</td><td></td></tr>"+
+                				"<tr style='height:40px;'><td style='text-align:left;border-right:1px solid #555;'>Remarks: "+narration+"</td><td></td></tr>"+
+                				"<tr style='border-top:1px solid #555;border-bottom:1px solid #555;text-align:left;'><td style='text-align:left;border-right:1px solid #555;'>Amount (in words): "+wording_total+"</td><td style='text-align:left;'>Rs. "+amount+"</td></tr>"+
+							"</table>";
 
             /////////////////////////////////////////////
             info_table.innerHTML=table_text;
