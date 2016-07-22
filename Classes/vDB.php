@@ -138,9 +138,9 @@ class vDB
 		$valuesArray = $this->getValuesClause($data);
 		$uniqueWhereArray = $this->getUniqueWhereClause($data);
 		$uniqueIndexesClause = $this->getIndexesClause();
-		$unique=0;
 
-		if(count($uniqueWhereArray['values']>0))
+		$unique=0;
+		if(count($uniqueWhereArray['values'])>0)
 		{
 			$selectSubqueries = array(
 					"where" => $uniqueWhereArray['query'],
@@ -176,7 +176,7 @@ class vDB
 		else {
 			return array(
 				'status' => 'error',
-				'description' => 'duplicate entry',
+				'description' => 'duplicate record',
 				'row' => $data
 			);
 		}
@@ -588,11 +588,7 @@ class vDB
 			'values' => array()
 		);
 
-		$indexed_columns = array();
-		foreach($data as $index)
-		{
-			$indexed_columns[$index['index']]=$index['value'];
-		}
+		$indexed_columns = vUtil::getKVfromIndexedArray($data);
 
 		foreach($data as $index)
 		{
@@ -605,10 +601,11 @@ class vDB
 			{
 				$uniqueWithColumns=(array)$index['uniqueWith'];
 				$subcondition=$index['index']."=? and ";
+				$result['values'][] = $index['value'];
 				foreach($uniqueWithColumns as $uwc)
 				{
 					$subcondition.=$uwc."=? and ";
-					$result['values'][] = $indexed_columns[$index['index']];
+					$result['values'][] = $indexed_columns[$uwc];
 				}
 				$subcondition=rtrim($subcondition," and ");
 				$result['query'].="(".$subcondition.") or ";

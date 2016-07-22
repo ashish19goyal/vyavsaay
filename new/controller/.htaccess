@@ -2,5 +2,5 @@ RewriteEngine On
 #if a directory or file exists, use it
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond $1 !^(handler\.php)
+RewriteCond $1 !^(controller\.php)
 RewriteRule ^(.*)$ ./handler.php?url=$1 [L]

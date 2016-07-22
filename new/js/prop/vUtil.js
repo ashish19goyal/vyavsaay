@@ -319,6 +319,18 @@ var vUtil = function (options)
 		};
 		reader.readAsDataURL(file);
 	}
+
+	this.getCredentials = function()
+	{
+		return {
+			domain:get_domain(),
+			username:get_username(),
+			cr:get_session_var('cr'),
+			up:get_session_var('up'),
+			re:get_session_var('re'),
+			del:get_session_var('del'),
+		};
+	}
 };
 vUtil=new vUtil();
 

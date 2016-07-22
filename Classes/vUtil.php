@@ -190,6 +190,25 @@ class vUtil
 
 		return "";
 	}
+
+	/**
+	*	This function validates the session
+	*/
+	public static function validateSession($post)
+	{
+		$domain=$post['domain'];
+		$username=$post['username'];
+		$cr_access=$post['cr'];
+		$re_access=$post['re'];
+		$up_access=$post['up'];
+		$del_access=$post['del'];
+
+		if(isset($_SESSION['session']) && $_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['username']==$username && $_SESSION['cr']==$cr_access && $_SESSION['re']==$re_access && $_SESSION['up']==$up_access && $_SESSION['del']==$del_access)
+		{
+			return true;
+		}
+		return false;
+	}
 }
 
 

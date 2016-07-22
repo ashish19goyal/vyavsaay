@@ -318,15 +318,15 @@ function server_delete_logs(data_json,func)
 function server_create_json(data_json,func)
 {
 	show_loader();
-	var domain=get_domain();
-	var username=get_username();
-	var cr_access=get_session_var('cr');
-	var string_columns=JSON.stringify(data_json);
-	ajax_json(server_root+"/ajax_json/create.php",{domain:domain,username:username,cr:cr_access,data:string_columns},function(response_object)
+	var data = vUtil.getCredentials();
+	data['data']=JSON.stringify(data_json);
+
+	//ajax_json(server_root+"/ajax_json/create.php",{domain:domain,username:username,cr:cr_access,data:string_columns},function(response_object)
+	ajax_json(server_root+"/controller/create",data,function(response_object)
 	{
 		console.log(response_object.status);
 		hide_loader();
-		if(response_object.status=='duplicate record')
+		if(response_object.description=='duplicate record')
 		{
 			if(typeof response_object.warning=='undefined' || response_object.warning!="no")
 			{
