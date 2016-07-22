@@ -73,6 +73,7 @@
 								{index:'username',value:fuser},
 								{index:'api_key'},
 								{index:'data_stores',value:fstore},
+								{index:'return_index'},
 								{index:'status'},
 								{index:'request_types'},
 								{index:'required_fields'},
@@ -106,6 +107,7 @@
 							rowsHTML+="<input type='text' class='floatlabel' placeholder='Store Name' readonly='readonly' form='form357_"+result.id+"' value='"+result.data_stores+"'>";
 							rowsHTML+="<input type='text' class='floatlabel dblclick_editable' placeholder='Request Types' readonly='readonly' form='form357_"+result.id+"' value='"+result.request_types+"'>";
 							rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Get Indexes' readonly='readonly' form='form357_"+result.id+"'>"+result.indexes+"</textarea>";
+							rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Return Index' readonly='readonly' form='form357_"+result.id+"'>"+result.return_index+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Field Details'>";
 							rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Required' readonly='readonly' form='form357_"+result.id+"'>"+result.required_fields+"</textarea>";
@@ -165,7 +167,8 @@
 				rowsHTML+="<td data-th='Data Store'>";
 					rowsHTML+="<input type='text' class='floatlabel dblclick_editable' required placeholder='Store Name' form='form357_"+id+"'>";
 					rowsHTML+="<input type='text' class='floatlabel dblclick_editable' required placeholder='Request Types' form='form357_"+id+"'>";
-					rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='get Indexes' form='form357_"+id+"'></textarea>";
+					rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Get Indexes' form='form357_"+id+"'></textarea>";
+					rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Return Index' form='form357_"+id+"'></textarea>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Field Details'>";
 					rowsHTML+="<textarea class='floatlabel dblclick_editable' placeholder='Required' form='form357_"+id+"'></textarea>";
@@ -224,14 +227,15 @@
 								{index:'data_stores',value:form.elements[5].value},
 								{index:'request_types',value:form.elements[6].value},
 								{index:'indexes',value:form.elements[7].value},
-								{index:'required_fields',value:form.elements[8].value},
-								{index:'re_factoring',value:form.elements[9].value},
-								{index:'email',value:form.elements[10].value},
-								{index:'email_title',value:form.elements[11].value},
-								{index:'get_message',value:form.elements[12].value},
-								{index:'put_message',value:form.elements[13].value},
-								{index:'post_message',value:form.elements[14].value},
-								{index:'delete_message',value:form.elements[15].value},
+								{index:'return_index',value:form.elements[8].value},
+								{index:'required_fields',value:form.elements[9].value},
+								{index:'re_factoring',value:form.elements[10].value},
+								{index:'email',value:form.elements[11].value},
+								{index:'email_title',value:form.elements[12].value},
+								{index:'get_message',value:form.elements[13].value},
+								{index:'put_message',value:form.elements[14].value},
+								{index:'post_message',value:form.elements[15].value},
+								{index:'delete_message',value:form.elements[16].value},
 								{index:'last_updated',value:get_my_time()}]};
 
 			var del_button=form.elements['delete'];
@@ -272,14 +276,15 @@
 								{index:'data_stores',value:form.elements[5].value},
 								{index:'request_types',value:form.elements[6].value},
 								{index:'indexes',value:form.elements[7].value},
-								{index:'required_fields',value:form.elements[8].value},
-								{index:'re_factoring',value:form.elements[9].value},
-								{index:'email',value:form.elements[10].value},
-								{index:'email_title',value:form.elements[11].value},
-								{index:'get_message',value:form.elements[12].value},
-								{index:'put_message',value:form.elements[13].value},
-								{index:'post_message',value:form.elements[14].value},
-								{index:'delete_message',value:form.elements[15].value},
+								{index:'return_index',value:form.elements[8].value},
+								{index:'required_fields',value:form.elements[9].value},
+								{index:'re_factoring',value:form.elements[10].value},
+								{index:'email',value:form.elements[11].value},
+								{index:'email_title',value:form.elements[12].value},
+								{index:'get_message',value:form.elements[13].value},
+								{index:'put_message',value:form.elements[14].value},
+								{index:'post_message',value:form.elements[15].value},
+								{index:'delete_message',value:form.elements[16].value},
 								{index:'last_updated',value:get_my_time()}]};
 
 			server_update_master(new_columns);

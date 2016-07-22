@@ -1844,6 +1844,7 @@
 			<pass_id index='yes' type="BIGINT"></pass_id>
 			<delivery_time index='yes' type="BIGINT"></delivery_time>
 			<source index='yes' type="VARCHAR(20)"></source>
+			<company_id index='yes' type="VARCHAR(20)"></company_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</logistics_orders>
