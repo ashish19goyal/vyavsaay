@@ -28,6 +28,9 @@ class vUtil
     	return self::$instance;
 	}
 
+	/**
+	* This function encapsulates a table into an formatted email body
+	*/
 	public static function getFormattedEmail($reportTitle,$content)
 	{
 		$userPreferences = self::getUserPreferences(array('logo','address','phone','email','website'));
@@ -55,6 +58,9 @@ class vUtil
 		return $output;
 	}
 
+	/**
+	* This function returns the user preferences as per the array passed to it
+	*/
 	public static function getUserPreferences($preferences)
 	{
 		$vDB = new vDB(self::$dbName);
@@ -85,6 +91,104 @@ class vUtil
 		}
 
 		return $output;
+	}
+
+	/**
+	* This function creates a 1d array from 2d array, by getting the speicified index from 2nd dimension
+	*/
+	public static function get1Dfrom2D($array,$index)
+	{
+		$output=array();
+		if(!is_array($array))
+		{
+			return $output;
+		}
+
+		foreach($array as $subArray)
+		{
+			$k = isset($subArray[$index]) ? $subArray[$index] : null;
+			if($k)
+			{
+				$output[]=$k;
+			}
+		}
+
+		return $output;
+	}
+
+	/**
+	* This function creates an indexed array from simple key-value pair
+	*/
+	public static function getIndexedArray($kv)
+	{
+		$output=array();
+		if(!is_array($kv))
+		{
+			return $output;
+		}
+
+		foreach($kv as $k => $v)
+		{
+			$result = array(
+				"index" => $k,
+				"value" => $v
+			);
+			$output[]=$result;
+		}
+
+		return $output;
+	}
+
+	/**
+	* This function creates a key-value array from an indexed array
+	*/
+	public static function getKVfromIndexedArray($indexed)
+	{
+		$output=array();
+		if(!is_array($indexed))
+		{
+			return $output;
+		}
+
+		foreach($indexed as $index)
+		{
+			$output[$index['index']]=$index['value'];
+		}
+
+		return $output;
+	}
+
+	/**
+	* This function checks whether an index is set in an indexed array
+	*/
+	public static function issetIndex($array,$index)
+	{
+		foreach($array as $v)
+		{
+			if($v['index'] == $index)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	* This function returns a specified index from an indexed array
+	*/
+	public static function getIndexValue($array,$index)
+	{
+		foreach($array as $v)
+		{
+			if($v['index'] == $index)
+			{
+				$output = isset($v['value']) ? $v['value'] : $v['exact'];
+				return $output;
+			}
+		}
+
+		return "";
 	}
 }
 

@@ -33,6 +33,7 @@ class api
 	private static $requiredFields;
 	private static $indexFields;
 	private static $refactorFields;
+	private static $returnIndexes;
 
 	//for notification
 	private static $getMessage;
@@ -71,6 +72,8 @@ class api
 
 		self::$username = isset($post['username']) ? $post['username'] : null;
 		self::$apiKey = isset($post['key']) ? $post['key'] : null;
+
+		$_SESSION['name'] = self::$username;
 	}
 
 	/**
@@ -116,6 +119,7 @@ class api
 			self::$putMessage=$result[0]['put_message'];
 			self::$postMessage=$result[0]['post_message'];
 			self::$deleteMessage=$result[0]['delete_message'];
+			self::$returnIndexes=$result[0]['return_index'];
 		}
 		return $response;
 	}
@@ -259,7 +263,40 @@ class api
 			case 'delete': $result = self::delete($dbname); break;
 		}
 		self::notify($result);
+		$returnIndexes = self::getReturnIndexes();
+		$result = array_merge($result,$returnIndexes);
 		return $result;
+	}
+
+	/**
+	* Adds returnIndexes to request output
+	*/
+	private static function getReturnIndexes()
+	{
+		$returnIndexes = (isset(self::$returnIndexes)) ? json_decode(self::$returnIndexes,true) : array();
+		$output = array();
+		foreach($returnIndexes as $i)
+		{
+			$indexName = $i['index'];
+			$indexValue = "";
+			switch(self::$requestType)
+			{
+				case 'get':
+				case 'delete': $indexValue = vUtil::getIndexValue(self::$indexes,$indexName); break;
+				case 'put':
+				case 'post': if(count(self::$row)>0)
+							{
+								$indexValue = vUtil::getIndexValue(self::$row,$indexName);
+							}else if(count(self::$data)>0)
+							{
+								$indexValue = vUtil::getIndexValue(self::$data[0],$indexName);
+							}
+							break;
+			}
+			$output[$indexName] = $indexValue;
+		}
+
+		return $output;
 	}
 
 	/**
@@ -285,7 +322,6 @@ class api
 	private static function put($dbname)
 	{
 		$vDB=new vDB($dbname);
-		$vDB->setTable(self::$table);
 
 		$result = array(
 			'status' => 'success',
@@ -298,7 +334,19 @@ class api
 			if(self::validateRequiredFields(self::$row))
 			{
 				self::$row = self::refactorFields(self::$row);
-				return $vDB->vPut(self::$row);
+				$vDB->setTable(self::$table);
+				$dbResult = $vDB->vPut(self::$row);
+				$result['rows'][] = $dbResult;
+				if($dbResult['status']=='success')
+				{
+					$logData = array(
+						'data_store' => self::$table,
+						'type' => 'update',
+						'ids' => array($dbResult['id']),
+						'data' => self::$row
+					);
+					$vDB->log($logData);
+				}
 			}
 			else{
 				$result['rows'][] = array(
@@ -315,7 +363,19 @@ class api
 				if(self::validateRequiredFields($row))
 				{
 					$row = self::refactorFields($row);
-					return $vDB->vPut($row);
+					$vDB->setTable(self::$table);
+					$dbResult = $vDB->vPut($row);
+					$result['rows'][] = $dbResult;
+					if($dbResult['status']=='success')
+					{
+						$logData = array(
+							'data_store' => self::$table,
+							'type' => 'update',
+							'ids' => array($dbResult['id']),
+							'data' => $row
+						);
+						$vDB->log($logData);
+					}
 				}
 				else{
 					$result['rows'][] = array(
@@ -335,7 +395,6 @@ class api
 	private static function post($dbname)
 	{
 		$vDB=new vDB($dbname);
-		$vDB->setTable(self::$table);
 
 		$result = array(
 			'status' => 'success',
@@ -348,7 +407,19 @@ class api
 			if(self::validateRequiredFields(self::$row))
 			{
 				self::$row = self::refactorFields(self::$row);
-				return $vDB->vCreate(self::$row);
+				$vDB->setTable(self::$table);
+				$dbResult = $vDB->vCreate(self::$row);
+				$result['rows'][] = $dbResult;
+				if($dbResult['status']=='success')
+				{
+					$logData = array(
+						'data_store' => self::$table,
+						'type' => 'create',
+						'ids' => array($dbResult['id']),
+						'data' => self::$row
+					);
+					$vDB->log($logData);
+				}
 			}
 			else{
 				$result['rows'][] = array(
@@ -365,7 +436,19 @@ class api
 				if(self::validateRequiredFields($row))
 				{
 					$row = self::refactorFields($row);
-					return $vDB->vCreate($row);
+					$vDB->setTable(self::$table);
+					$dbResult = $vDB->vCreate($row);
+					$result['rows'][] = $dbResult;
+					if($dbResult['status']=='success')
+					{
+						$logData = array(
+							'data_store' => self::$table,
+							'type' => 'create',
+							'ids' => array($dbResult['id']),
+							'data' => $row
+						);
+						$vDB->log($logData);
+					}
 				}
 				else{
 					$result['rows'][] = array(
@@ -387,13 +470,30 @@ class api
 		$vDB=new vDB($dbname);
 		$vDB->setTable(self::$table);
 
-		$result = array(
-			'status' => 'success',
-			'data_store' => self::$table
-		);
 		self::inflateIndexes();
-		if($vDB->vDelete(self::$indexes))
-		return $result;
+		$output = $vDB->vDelete(self::$indexes);
+
+		if($output == false)
+		{
+			return array(
+				'status' => 'error',
+				'description' => 'Could not delete data'
+			);
+		}else
+		{
+			$logData = array(
+				'data_store' => self::$table,
+				'type' => 'delete',
+				'ids' => $output,
+				'data' => self::$indexes
+			);
+			$vDB->log($logData);
+			return array(
+				'status' => 'success',
+				'data_store' => self::$table,
+				'ids' => $output
+			);
+		}
 	}
 }
 

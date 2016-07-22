@@ -33,6 +33,7 @@ class api
 	private static $requiredFields;
 	private static $indexFields;
 	private static $refactorFields;
+	private static $returnIndexes;
 
 	//for notification
 	private static $getMessage;
@@ -118,6 +119,7 @@ class api
 			self::$putMessage=$result[0]['put_message'];
 			self::$postMessage=$result[0]['post_message'];
 			self::$deleteMessage=$result[0]['delete_message'];
+			self::$returnIndexes=$result[0]['return_index'];
 		}
 		return $response;
 	}
@@ -261,16 +263,41 @@ class api
 			case 'delete': $result = self::delete($dbname); break;
 		}
 		self::notify($result);
+		$returnIndexes = self::getReturnIndexes();
+		$result = array_merge($result,$returnIndexes);
 		return $result;
 	}
 
-	// /**
-	// * Logs the api request
-	// */
-	// private static function log($vDB,$logData)
-	// {
-	// 	$vDB->log($logData);
-	// }
+	/**
+	* Adds returnIndexes to request output
+	*/
+	private static function getReturnIndexes()
+	{
+		$returnIndexes = (isset(self::$returnIndexes)) ? json_decode(self::$returnIndexes,true) : array();
+		$output = array();
+		foreach($returnIndexes as $i)
+		{
+			$indexName = $i['index'];
+			$indexValue = "";
+			switch(self::$requestType)
+			{
+				case 'get':
+				case 'delete': $indexValue = vUtil::getIndexValue(self::$indexes,$indexName); break;
+				case 'put':
+				case 'post': if(count(self::$row)>0)
+							{
+								$indexValue = vUtil::getIndexValue(self::$row,$indexName);
+							}else if(count(self::$data)>0)
+							{
+								$indexValue = vUtil::getIndexValue(self::$data[0],$indexName);
+							}
+							break;
+			}
+			$output[$indexName] = $indexValue;
+		}
+
+		return $output;
+	}
 
 	/**
 	* This function executes a get request

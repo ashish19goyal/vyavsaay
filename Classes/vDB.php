@@ -4,6 +4,7 @@ namespace RetailingEssentials;
 use \PDO;
 
 include_once 'config.php';
+include_once 'vUtil.php';
 
 class vDB
 {
@@ -74,15 +75,24 @@ class vDB
 	public function vDelete($indexes)
 	{
 		$whereArray=$this->getWhereClause($indexes);
+		$indexesClause=$this->getIndexesClause();
 		$subQueries = array(
-				'where' => $whereArray['query']
+				'where' => $whereArray['query'],
+				'index' => $indexesClause
 		);
 
-		// $selectQuery=$this->getQuery('select',$subQueries);
-		// $rows = $this->dbSelect($selectQuery,$whereArray['values']);
-
+		$query=$this->getQuery('select',$subQueries);
+		$values = array_merge($whereArray['values']);
+		$rows = $this->dbSelect($query,$values);
+		$ids = vUtil::get1Dfrom2D($rows,'id');
+		// print_r($ids);die;
 		$query=$this->getQuery('delete',$subQueries);
-		return $this->dbExecute($query,$whereArray['values']);
+		if($this->dbExecute($query,$whereArray['values']))
+		{
+			return $ids;
+		}else {
+			return false;
+		}
 	}
 
 	/**
@@ -100,7 +110,24 @@ class vDB
 		$query=$this->getQuery('update',$subQueries);
 
 		$values=array_merge($setArray['values'],$whereArray['values']);
-		return $this->dbExecute($query,$values);
+
+		$id = vUtil::getIndexValue($indexes,'id');
+
+		if($this->dbExecute($query,$values))
+		{
+			return array(
+				'status' => 'success',
+				'row' => $indexes,
+				'id' => $id
+			);
+		}
+		else{
+			return array(
+				'status' => 'error',
+				'description' => 'data could not be saved',
+				'row' => $indexes
+			);
+		}
 	}
 
 	/**
@@ -134,7 +161,8 @@ class vDB
 			{
 				return array(
 					'status' => 'success',
-					'row' => $data
+					'row' => $data,
+					'id' => $this->conn->lastInsertId()
 				);
 			}
 			else{
@@ -157,7 +185,7 @@ class vDB
 	/**
 	* Returns the selection output as per the provided indexes
 	*/
-	public function vRead($indexes,$options)
+	public function vRead($indexes,$options = array())
 	{
 		$whereArray=$this->getWhereClause($indexes);
 		$limitArray=$this->getLimitClause($options);
@@ -203,6 +231,50 @@ class vDB
 	// 	}
 	// 	return $result;
 	// }
+
+
+	/**
+	* Logs a DB operation
+	* $requestData = array(
+	*	log => 'yes',
+	*	log_data => array(),
+	*	type => create/update/delete
+	*	ids => array()
+	* )
+	*/
+	public function log($requestData)
+	{
+		$log = (isset($requestData['log']) && $requestData['log']=='yes') ? true : false;
+
+		$this->setTable('activities');
+		$logData = $log ? $requestData['log_data'] : array();
+		$addData = array(
+			'data_type' => 'json',
+			'updated_by' => $_SESSION['name'],
+			'user_display' => isset($requestData['log']) ? $requestData['log'] : 'no',
+			'tablename' => $requestData['data_store'],
+			'data_xml' => json_encode($requestData['data']),
+			'status' => 'online',
+			'type' => $requestData['type'],
+			'last_updated' => 1000*time()
+		);
+
+		$affectedIds = (isset($requestData['ids'])) ? $requestData['ids'] : array(0);
+		foreach($affectedIds as $id)
+		{
+			$data = array_merge($logData,$addData,array('data_id' => $id));
+			$indexedData = vUtil::getIndexedArray($data);
+			$valuesArray = $this->getValuesClause($indexedData);
+			$subQueries = array(
+				'values' => $valuesArray['query']
+			);
+			$query=$this->getQuery('insert',$subQueries);
+			$this->dbExecute($query,$valuesArray['values']);
+		}
+
+		return true;
+	}
+
 
 	//helper functions to generate queries
 
@@ -383,10 +455,13 @@ class vDB
 			'values' => array()
 		);
 
-		$data[] = array(
-			"index" => "last_updated",
-			"value" => time()*1000
-		);
+		if(!vUtil::issetIndex($data,'last_updated'))
+		{
+			$data[] = array(
+				"index" => "last_updated",
+				"value" => time()*1000
+			);
+		}
 
 		foreach($data as $index)
 		{
@@ -408,10 +483,13 @@ class vDB
 			'values' => array()
 		);
 
-		$data[] = array(
-			"index" => "last_updated",
-			"value" => time()*1000
-		);
+		if(!vUtil::issetIndex($data,'last_updated'))
+		{
+			$data[] = array(
+				"index" => "last_updated",
+				"value" => time()*1000
+			);
+		}
 
 		$insert = "";
 		$values = "";
@@ -537,7 +615,7 @@ class vDB
 			}
 		}
 		$result['query'] = rtrim($result['query'],"or ");
-		
+
 		return $result;
 	}
 }
