@@ -224,12 +224,6 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<tablename>data_access</tablename>
-			<field_name>user</field_name>
-			<status>active</status>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
 			<tablename>unbilled_sale_items</tablename>
 			<field_name>customer</field_name>
 			<status>active</status>

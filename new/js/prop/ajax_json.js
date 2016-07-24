@@ -150,17 +150,15 @@ function ajax_json(url,kvp,func)
 
 function server_read_json_rows(columns,callback,results)
 {
-	var domain=get_domain();
-	var username=get_username();
-	var re_access=get_session_var('re');
-
 	if(typeof columns.batch_size!='undefined')
 	{
 		columns.count=columns.batch_size;
 	}
 
-	var string_columns=JSON.stringify(columns);
-	ajax_json(server_root+"/ajax_json/get_limited_rows.php",{domain:domain,username:username,re:re_access,data:string_columns},function(response_object)
+	var data = vUtil.getCredentials();
+	data['data']=JSON.stringify(columns);
+
+	ajax_json(server_root+"/controller/read_rows",data,function(response_object)
 	{
 		results=results.concat(response_object.rows);
 		if(response_object.count<columns.count || (typeof columns.batch_size=='undefined'))

@@ -16,7 +16,7 @@
     </ul>
 </li>
 
-<script>	
+<script>
 	function show_notifications()
 	{
 		hide_all();
@@ -24,30 +24,25 @@
 		notifications_ini();
 		notifications_update_seen();
 	}
-	
+
 	function notifications_update_seen()
 	{
-		var columns=new Object();
-			columns.data_store='notifications';
-			columns.indexes=[{index:'id'},{index:'status',exact:'pending'}];
-	
-		if_data_read_access('notifications',function(accessible_data)
-		{	
-			read_json_rows('',columns,function(notifs)
-			{
-				var data_json={data_store:'notifications',loader:'no',log:'no',data:[]};
-				var last_updated=get_my_time();
+		var columns={data_store:'notifications',access:{},indexes:[{index:'id'},{index:'status',exact:'pending'}]};
 
-				notifs.forEach(function(notif)
-				{
-					var data_json_array=[{index:'id',value:(notif.id)},
-								{index:'status',value:'reviewed'},
-								{index:'last_updated',value:last_updated}];
-					data_json.data.push(data_json_array);
-				});
-				
-				update_batch_json(data_json);
+		read_json_rows('',columns,function(notifs)
+		{
+			var data_json={data_store:'notifications',loader:'no',log:'no',data:[]};
+			var last_updated=get_my_time();
+
+			notifs.forEach(function(notif)
+			{
+				var data_json_array=[{index:'id',value:(notif.id)},
+							{index:'status',value:'reviewed'},
+							{index:'last_updated',value:last_updated}];
+				data_json.data.push(data_json_array);
 			});
+
+			update_batch_json(data_json);
 		});
 	}
 </script>

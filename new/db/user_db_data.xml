@@ -662,7 +662,7 @@
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--data_access--</tables>
+			<tables>--access_conditions--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>

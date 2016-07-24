@@ -2,10 +2,10 @@
 
 	session_start();
 
-	require_once '../Classes/vDB.php';
 	require_once '../Classes/vUtil.php';
-	use RetailingEssentials\vDB;
+	require_once '../Classes/handler.php';
 	use RetailingEssentials\vUtil;
+	use RetailingEssentials\handler;
 
 	$input_data=json_decode($_POST['data'],true);
 	$domain=$_POST['domain'];
@@ -16,26 +16,13 @@
 
 	if(vUtil::validateSession($_POST))
 	{
-		$vDB = new vDB("re_user_".$domain);
-		$dataStore = $input_data['data_store'];
-		$vDB->setTable($dataStore);
-		$data = isset($input_data['indexes']) ? $input_data['indexes'] : $input_data['data'];
+		$handler = handler::getInstance($domain);
 
 		switch($requestType)
 		{
-			case 'create': 	$dbResult = $vDB->vCreate($data);
-							if($dbResult['status']=='success')
-							{
-								$logData = array_merge($input_data,
-								 	array(
-										'type' => 'create',
-										'ids' => array($dbResult['id']),
-									));
-								$vDB->log($logData);
-							}
-							$response_object = array_merge($response_object,$dbResult);
-							$response_object['data_store']=$dataStore;
-							$response_object['warning']= isset($input_data['warning']) ? $input_data['warning'] : 'yes';
+			case 'create': 	$response_object = $handler::create($input_data);
+							break;
+			case 'read_rows': 	$response_object = $handler::read_rows($input_data);
 							break;
 		}
 	}
