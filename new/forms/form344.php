@@ -137,8 +137,8 @@
             {
                 show_loader();
                 var pass_columns={data_store:'gate_pass',count:1,
-									access:{},
-									 indexes:[{index:'id',value:pass_id},
+								access:'yes',
+								indexes:[{index:'id',value:pass_id},
                                              {index:'pass_num'},
                                              {index:'coloader'},
                                              {index:'vendor'},

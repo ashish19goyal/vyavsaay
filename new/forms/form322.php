@@ -81,7 +81,7 @@
 
             var new_columns={count:paginator.page_size(),
                             start_index:paginator.get_index(),
-                            access:{},
+                            access:'yes',
 							data_store:'manifests',
                             indexes:[{index:'id',value:fid},
                                     {index:'manifest_num',value:fmanifest},

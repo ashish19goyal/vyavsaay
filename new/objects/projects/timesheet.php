@@ -17,16 +17,16 @@
 		{
             var container=document.getElementById('object_projects_timesheet_body');
             container.innerHTML="";
-            
+
             var paginator=$('#object_projects_timesheet_body').paginator(
                         {
                             page_size:5,
                             func:"initialize_object_projects_timesheet('"+obj_name+"','"+obj_id+"');"});
-			
+
             var columns={data_store:'timesheet',
                          count:paginator.page_size(),
                          start_index:paginator.get_index(),
-                         access:{},
+                         access:'yes',
                          indexes:[{index:'id'},
                                  {index:'source',exact:'project'},
                                  {index:'source_name',exact:obj_name},
@@ -53,9 +53,9 @@
                     rowsHTML+="</tr>";
                     $('#object_projects_timesheet_body').append(rowsHTML);
                 });
-                paginator.update_index(results.length);                
+                paginator.update_index(results.length);
             });
-		} 
+		}
 
 	</script>
 </div>

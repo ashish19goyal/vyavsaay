@@ -1,4 +1,4 @@
-<div id='form104' class='tab-pane portlet box green-meadow'>	   
+<div id='form104' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class='caption'>
             <div class='btn-group' id='form104_view' data-toggle='buttons'>
@@ -26,9 +26,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	   <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
@@ -53,7 +53,7 @@
         </div>
 
     </div>
-    
+
     <script>
     function form104_header_ini()
     {
@@ -63,12 +63,12 @@
         var task_filter=fields.elements['task'];
         var assignee_filter=fields.elements['assignee'];
         var status_filter=fields.elements['status'];
-        
+
         var project_data={data_store:'projects',return_column:'name'};
         set_my_value_list_json(project_data,project_filter);
 
         $(fields).off('submit');
-        $(fields).on('submit',function (event) 
+        $(fields).on('submit',function (event)
         {
             event.preventDefault();
             form104_ini();
@@ -84,7 +84,7 @@
         show_loader();
         $('#form104_body').html("");
         $('#form104_calendar').fullCalendar('destroy');
-            
+
         var view_filter='calendar';
         if(typeof view!='undefined' && view=='table')
         {
@@ -102,7 +102,7 @@
         {
             $("#form104_body").parent().hide();
             $("#form104_calendar").parent().parent().show();
-            
+
             $('#form104_calendar').fullCalendar(
             {
                 header: {
@@ -112,13 +112,13 @@
                 },
                 editable: true,
                 slotEventOverlap:true,
-                events: function(start, end, timezone, callback) 
+                events: function(start, end, timezone, callback)
                 {
                     console.log('view5');
                     var start_time=parseFloat(start.unix())*1000;
                     var end_time=parseFloat(end.unix())*1000;
                     var tasks_data={data_store:'task_instances',
-                                    access:{},
+                                   access:'yes',
                                    indexes:[{index:'id',value:fid},
                                            {index:'name'},
                                            {index:'description'},
@@ -156,7 +156,7 @@
                             });
                         });
                         callback(events);
-                        
+
                         initialize_tabular_report_buttons(tasks_data,'Project Tasks','form104',function (item)
                         {
                             item['Due Time']=get_my_datetime(item.t_due);
@@ -182,7 +182,7 @@
                 eventDrop: function(event,delta,revertFunc)
                 {
                     var t_due=(parseFloat(event.end.unix())*1000);
-                    
+
                     var data_json={data_store:'task_instances',
  							data:[{index:'id',value:event.id},
                                  {index:'t_due',value:t_due},
@@ -210,13 +210,13 @@
             var task_filter=fields.elements['task'].value;
             var assignee_filter=fields.elements['assignee'].value;
             var status_filter=fields.elements['status'].value;
-        
+
             var paginator=$('#form104_body').paginator();
-			
+
             var columns={data_store:'task_instances',
                          count:paginator.page_size(),
                          start_index:paginator.get_index(),
-			             access:{},
+			             access:'yes',
                          indexes:[{index:'id',value:fid},
                                    {index:'name',value:task_filter},
                                    {index:'description'},
@@ -233,7 +233,7 @@
                 {
                     result.t_due=get_my_datetime(result.t_due);
                     result.t_initiated=get_my_datetime(result.t_initiated);
-                    
+
                     var rowsHTML="<tr>";
                         rowsHTML+="<form id='form104_"+result.id+"'></form>";
                             rowsHTML+="<td data-th='Project'>";
@@ -262,9 +262,9 @@
                     $('#form104_body').append(rowsHTML);
                     var fields=document.getElementById("form104_"+result.id);
                     var date_filter=fields.elements[3];
-                    
+
                     $(date_filter).vdatetimepicker();
-                    
+
                     $(fields).on("submit", function(event)
                     {
                         event.preventDefault();
@@ -288,9 +288,9 @@
                 {
                     item['Due Time']=get_my_datetime(item.t_due);
                     delete item.t_due;
-                    
+
                     delete item.task_hours;
-                    
+
                     item['Project']=(item.source_name);
                     delete item.source_name;
                     delete item.source;
@@ -324,7 +324,7 @@
                                  {index:'status',value:status},
                                  {index:'id',value:data_id}],
  							log:'yes',
- 							log_data:{title:"Updated",notes:"Task "+task,link_to:"form104"}};			
+ 							log_data:{title:"Updated",notes:"Task "+task,link_to:"form104"}};
             update_json(data_json);
             $(form).readonly();
         }
@@ -346,12 +346,12 @@
                 var data_id=form.elements['id'].value;
                 var task=form.elements['task'].value;
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'task_instances',
  							data:[{index:'id',value:data_id}],
  							log:'yes',
  							log_data:{title:"Deleted",notes:"Task "+task,link_to:"form104"}};
-			
+
                 delete_json(data_json);
                 $(button).parent().parent().remove();
             });
@@ -378,7 +378,7 @@
                                 {column:'status',required:'yes',list:["pending","completed","cancelled"]}];
 
         var error_array=validate_import_array(data_array,validate_template_array);
-        return error_array;					
+        return error_array;
     }
 
     function form104_import(data_array,import_type)
@@ -402,7 +402,7 @@
 
             var data_json_array=[{index:'id',value:row.id},
                     {index:'source_name',value:row.project},
-                    {index:'name',value:row.task},             
+                    {index:'name',value:row.task},
                     {index:'description',value:row.description},
                     {index:'assignee',value:row.assignee},
                     {index:'status',value:row.status},
@@ -415,6 +415,6 @@
             data_json.data.push(data_json_array);
         });
     };
-        
+
     </script>
 </div>

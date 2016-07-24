@@ -131,12 +131,12 @@
 										var start_time=parseFloat(start.unix())*1000;
 										var end_time=parseFloat(end.unix())*1000;
 										var attendance_data={data_store:'attendance',
-																				access:{},
-																			 	indexes:[{index:'id'},
-																							 {index:'acc_name'},
-																							 {index:'date',lowerbound:start_time,upperbound:end_time},
-																							 {index:'presence'},
-																							 {index:'hours_worked'}]};
+															access:'yes',
+														 	indexes:[{index:'id'},
+																	 {index:'acc_name'},
+																	 {index:'date',lowerbound:start_time,upperbound:end_time},
+																	 {index:'presence'},
+																	 {index:'hours_worked'}]};
 										read_json_rows('form7',attendance_data,function(attendances)
 										{
 											var events=[];
@@ -242,7 +242,7 @@
 						var columns={data_store:'attendance',
 												 count:paginator.page_size(),
 												 start_index:paginator.get_index(),
-													access:{},
+												 access:'yes',
 												 indexes:[{index:'id',value:fid},
 																	 {index:'acc_name',value:staff_filter},
 																	 {index:'presence'},

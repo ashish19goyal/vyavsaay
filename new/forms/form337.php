@@ -85,7 +85,7 @@
             var new_columns={count:paginator.page_size(),
                             start_index:paginator.get_index(),
                             data_store:'gate_pass',
-                            access:{},
+                            access:'yes',
 							indexes:[{index:'id',value:fid},
                                     {index:'pass_num',value:fpass},
                                     {index:'type',value:ftype},

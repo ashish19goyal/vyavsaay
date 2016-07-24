@@ -16,12 +16,12 @@
                     right: 'today'
                 },
                 slotEventOverlap:true,
-                events: function(start, end, timezone, callback) 
+                events: function(start, end, timezone, callback)
                 {
                     var start_time=parseFloat(start.unix())*1000;
                     var end_time=parseFloat(end.unix())*1000;
                     var tasks_data={data_store:'task_instances',
-                                    access:{},
+                                    access:'yes',
                                    indexes:[{index:'id'},
                                            {index:'name'},
                                            {index:'description'},
@@ -62,7 +62,7 @@
                 }
             });
             setTimeout(function(){$('#object_staff_tasks_calendar .fc-today-button').click()},1000);
-		} 
+		}
 
 	</script>
 </div>

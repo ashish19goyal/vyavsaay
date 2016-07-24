@@ -1,6 +1,6 @@
-<div id='form137' class='tab-pane portlet box green-meadow'>	   
+<div id='form137' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form137_add_item();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -19,9 +19,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
         <br>
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -78,13 +78,13 @@
             var fproject=fields.elements['project'].value;
 			var fperson=fields.elements['person'].value;
 			var fstatus=fields.elements['status'].value;
-            
+
             var paginator=$('#form137_body').paginator();
-			
+
             var columns={data_store:'expenses',
                          count:paginator.page_size(),
                          start_index:paginator.get_index(),
-                         access:{},
+                         access:'yes',
                          indexes:[{index:'id',value:fid},
                                  {index:'source',exact:'project'},
                                  {index:'source_name',value:fproject},
@@ -128,7 +128,7 @@
                         {
                             rowsHTML+="<button type='button' class='btn red' form='form137_rows_"+id+"' id='delete_form137_rows_"+id+"' onclick='form137_delete_item($(this));' name='delete'><i class='fa fa-trash'></i></button>";
                         }
-                        rowsHTML+="</td>";			
+                        rowsHTML+="</td>";
                     rowsHTML+="</tr>";
                     $('#form137_body').append(rowsHTML);
                 });
@@ -173,9 +173,9 @@
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Action'>";
                         rowsHTML+="<input type='hidden' form='form137_rows_"+id+"' value='"+id+"' name='id'>";
-                        rowsHTML+="<button type='submit' class='btn green' form='form137_rows_"+id+"' id='save_form137_"+id+"' name='save' title='Save'><i class='fa fa-save'></i></button>";	
+                        rowsHTML+="<button type='submit' class='btn green' form='form137_rows_"+id+"' id='save_form137_"+id+"' name='save' title='Save'><i class='fa fa-save'></i></button>";
                         rowsHTML+="<button type='button' class='btn red' form='form137_rows_"+id+"' onclick='$(this).parent().parent().remove();' name='delete'><i class='fa fa-trash'></i></button>";
-                    rowsHTML+="</td>";			
+                    rowsHTML+="</td>";
                 rowsHTML+="</tr>";
 
                 $('#form137_body').prepend(rowsHTML);
@@ -197,7 +197,7 @@
                 if(is_update_access('form137'))
                 {
                     var person_data={data_store:'staff',return_column:'acc_name'};
-                    set_my_value_list_json(person_data,person_filter,function () 
+                    set_my_value_list_json(person_data,person_filter,function ()
                     {
                         $(person_filter).focus();
                     });
@@ -226,13 +226,13 @@
                 var person=form.elements[0].value;
                 var project=form.elements[1].value;
                 var amount=form.elements[2].value;
-                var date=get_raw_time(form.elements[3].value);		
+                var date=get_raw_time(form.elements[3].value);
                 var details=form.elements[4].value;
-                var status=form.elements[5].value;		
+                var status=form.elements[5].value;
                 var data_id=form.elements['id'].value;
                 var del_button=form.elements['delete'];
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'expenses',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
@@ -246,7 +246,7 @@
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Submitted',notes:'Expense of Rs. '+amount+' for '+person,link_to:'form137'}};
  				create_json(data_json);
-				
+
                 $(form).readonly();
 
                 del_button.removeAttribute("onclick");
@@ -267,7 +267,7 @@
             if(is_update_access('form137'))
             {
                 var form_id=$(button).attr('form');
-                var form=document.getElementById(form_id);	
+                var form=document.getElementById(form_id);
 
                 var status='approved';
                 var person=form.elements[0].value;
@@ -281,7 +281,7 @@
 	 					{index:'status',value:status},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Rejected',notes:"Expense of Rs. "+amount+" for "+person,link_to:'form137'}};
- 				
+
                 update_json(data_json);
                 $(button).hide();
             }
@@ -296,7 +296,7 @@
             if(is_update_access('form137'))
             {
                 var form_id=$(button).attr('form');
-                var form=document.getElementById(form_id);	
+                var form=document.getElementById(form_id);
 
                 var status='rejected';
                 var person=form.elements[0].value;
@@ -310,7 +310,7 @@
 	 					{index:'status',value:status},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Rejected',notes:"Expense of Rs. "+amount+" for "+person,link_to:'form137'}};
- 				
+
                 update_json(data_json);
                 $(button).hide();
             }
@@ -323,23 +323,23 @@
         function form137_delete_item(button)
         {
             var form_id=$(button).attr('form');
-            var form=document.getElementById(form_id);	
+            var form=document.getElementById(form_id);
             var amount=form.elements[2].value;
             var person=form.elements[0].value;
-                    
+
             if(is_delete_access('form137') || person==get_account_name())
-            {	
+            {
                 modal115_action(function()
-                {	
+                {
                     var data_id=form.elements['id'].value;
-                    
+
                     var data_json={data_store:'expenses',
  							data:[{index:'id',value:data_id}],
  							log:'yes',
  							log_data:{title:"Deleted",notes:"Expense of Rs. "+amount+" for "+person,link_to:"form137"}};
-			
+
                     delete_json(data_json);
-                    
+
                     $(button).parent().parent().remove();
                 });
             }
@@ -364,7 +364,7 @@
                                     {column:'status',required:'yes',list:['submitted','approved','rejected']}];
 
             var error_array=validate_import_array(data_array,validate_template_array);
-            return error_array;					
+            return error_array;
         }
 
         function form137_import(data_array,import_type)
@@ -377,7 +377,7 @@
 
 			var counter=1;
 			var last_updated=get_my_time();
-		
+
 			data_array.forEach(function(row)
 			{
 				counter+=1;
@@ -385,7 +385,7 @@
 				{
 					row.id=last_updated+counter;
 				}
-				
+
 				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'status',value:row.status},
 	 					{index:'person',value:row.person},
@@ -393,12 +393,12 @@
 	 					{index:'detail',value:row.notes},
                         {index:'expense_date',value:get_raw_time(row.expense_date)},
                         {index:'source_name',value:row.project},
-                        {index:'source',value:'project'},             
+                        {index:'source',value:'project'},
 	 					{index:'last_updated',value:last_updated}];
 
 				data_json.data.push(data_json_array);
 			});
-			
+
 			if(import_type=='create_new')
 			{
 				create_batch_json(data_json);
@@ -406,8 +406,8 @@
 			else
 			{
 				update_batch_json(data_json);
-			}            
+			}
         };
-        
+
     </script>
 </div>

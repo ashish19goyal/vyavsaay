@@ -27,7 +27,7 @@
 
 	function notifications_update_seen()
 	{
-		var columns={data_store:'notifications',access:{},indexes:[{index:'id'},{index:'status',exact:'pending'}]};
+		var columns={data_store:'notifications',access:'yes',indexes:[{index:'id'},{index:'status',exact:'pending'}]};
 
 		read_json_rows('',columns,function(notifs)
 		{

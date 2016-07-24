@@ -79,7 +79,7 @@
 			var new_columns={count:paginator.page_size(),
                              start_index:paginator.get_index(),
 			                 data_store:'cod_collections',
-                             access:{},
+                             access:'yes',
 							 indexes:[{index:'id',value:fid},
                                     {index:'acc_name',value:fperson},
 									{index:'from_name',value:ffrom},

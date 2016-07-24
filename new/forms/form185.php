@@ -244,7 +244,7 @@
             var columns={data_store:'task_instances',
                          count:paginator.page_size(),
                          start_index:paginator.get_index(),
-			             access:{},
+			             access:'yes',
                          indexes:[{index:'id',value:fid},
                                    {index:'name',value:task_filter},
                                    {index:'description'},

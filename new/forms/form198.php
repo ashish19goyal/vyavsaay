@@ -105,7 +105,7 @@
 
         var new_columns={count:1,
                         data_store:'logistics_orders',
-                        access:{},
+                        access:'yes',
                         indexes:[{index:'id',value:fid},
                                 {index:'order_num'},
                                 {index:'awb_num',value:awb_num.value},

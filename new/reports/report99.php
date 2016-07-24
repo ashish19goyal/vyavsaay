@@ -60,7 +60,7 @@
         var end_date=get_raw_time(form.elements['end'].value)+86399999;
 
         var rto_data={data_store:'rto',
-					access:{},
+					access:'yes',
                     indexes:[{index:'id'},
                             {index:'rto_num'},
                             {index:'rto_time',lowerbound:start_date,upperbound:end_date}]};
@@ -137,7 +137,7 @@
             $('#report99_chart').find('div>div>a').hide();
 
             var columns={data_store:'logistics_orders',
-					access:{},
+					access:'yes',
                     indexes:[{index:'id'},
                         {index:'awb_num'},
                         {index:'import_date'},

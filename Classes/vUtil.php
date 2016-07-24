@@ -209,6 +209,18 @@ class vUtil
 		}
 		return false;
 	}
+
+	/**
+	*	This function checks if a variable is blank or not
+	*/
+	public static function isBlank($arg)
+	{
+		if($arg=="" || $arg==null || $arg=="null" || $arg=="undefined")
+		{
+			return true;
+		}
+		return false;
+	}
 }
 
 

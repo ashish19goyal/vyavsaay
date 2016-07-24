@@ -138,7 +138,7 @@ function if_data_access_object(obj_type,obj_name,func_success,func_fail)
 	}
 
 	var obj_data={data_store:obj_type,
-					access:{},
+					access:''yes'',
 					count:1,
 					indexes:[{index:index_name,exact:obj_name}]};
 	read_json_rows('',obj_data,function (objects)

@@ -77,7 +77,7 @@
 			var new_columns={count:paginator.page_size(),
                              start_index:paginator.get_index(),
                              data_store:'rto',
-							 access:{},
+							 access:'yes',
                              indexes:[{index:'id',value:fid},
                                     {index:'rto_num',value:frto},
                                     {index:'employee',value:femployee},

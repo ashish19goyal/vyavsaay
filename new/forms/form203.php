@@ -86,7 +86,7 @@
         var new_columns={count:paginator.page_size(),
                         start_index:paginator.get_index(),
                         data_store:'logistics_orders',
-						access:{},
+						access:'yes',
                         indexes:[{index:'id',value:fid},
                                 {index:'order_num',value:forder},
                                 {index:'merchant_name'},

@@ -45,6 +45,7 @@ class vDB
 	*/
 	public function dbSelect($query,$values)
 	{
+		//print_r($query);die;
 		$stmt=$this->conn->prepare($query);
 		$stmt->execute($values);
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -196,9 +197,21 @@ class vDB
 				'limit' => $limitArray['query'],
 				'index' => $indexesClause
 		);
-		$query=$this->getQuery('select',$subQueries);
-		$values = array_merge($whereArray['values'],$limitArray['values']);
 
+		$accessValues = array();
+
+		if(isset($options['access']) && $options['access']!=null)
+		{
+			$accessClause=$this->getAccessClause();
+			$subQueries['access'] = $accessClause['query'];
+			$accessValues = $accessClause['values'];
+		}
+
+		$values = array_merge($whereArray['values'],$accessValues,$limitArray['values']);
+
+		$query=$this->getQuery('select',$subQueries);
+		// print_r($query);
+		// print_r($values);die;
 		$rows = $this->dbSelect($query,$values);
 
 		$startIndex = isset($options['startIndex']) ? $options['startIndex'] : 0;
@@ -219,19 +232,18 @@ class vDB
 		return $result;
 	}
 
-	// /**
-	// * Puts data if it doesn't already exist
-	// */
-	// public function vPut($data)
-	// {
-	// 	$result=$this->vCreate($data);
-	// 	if(!$result)
-	// 	{
-	// 		$result=$this->vUpdate(array(),$data);
-	// 	}
-	// 	return $result;
-	// }
-
+	/**
+	* Puts data if it doesn't already exist
+	*/
+	public function vPut($data)
+	{
+		$result=$this->vCreate($data);
+		if($result['status']=='error' && $result['description']=='duplicate record')
+		{
+			$result=$this->vUpdate(array(),$data);
+		}
+		return $result;
+	}
 
 	/**
 	* Logs a DB operation
@@ -415,11 +427,11 @@ class vDB
 				$result['query'].=") and ";
 			}
 
-			if(isset($col['value']))
+			if(isset($index['value']))
 			{
-				if($col['value']!="")
+				if($index['value']!="")
 				{
-					if($col['index']=='id')
+					if($index['index']=='id')
 					{
 						$result['query'].=$this->table.".".$index['index']." = ? and ";
 						$result['values'][]=$index['value'];
@@ -534,51 +546,6 @@ class vDB
 	}
 
 	/**
-	* Generates the Complete query, from subqueries
-	*/
-	private function getQuery($type,$subQueries)
-	{
-		$index = isset($subQueries['index'])? $subQueries['index'] : "*";
-		$where = isset($subQueries['where'])? $subQueries['where'] : "";
-		$set = isset($subQueries['set'])? $subQueries['set'] : "";
-		$values = isset($subQueries['values'])? $subQueries['values'] : "";
-		$limit = isset($subQueries['limit'])? $subQueries['limit'] : "";
-
-		switch($type)
-		{
-			case 'select': if($where!="")
-							{
-								$query = "select " . $index . " from " . $this->table . " where " . $where . " " . $limit. ";";
-							}
-							else{
-								$query = "select " . $index . " from " . $this->table . " " . $limit. ";";
-							}
-							return $query;
-			case 'insert': if($values!="")
-							{
-								$query = "insert into " . $this->table . " " . $values. ";";
-								return $query;
-							}
-							break;
-			case 'update': if($where!="")
-							{
-								$query = "update " . $this->table . " set " . $set . " where " . $where. ";";
-								return $query;
-							}
-							break;
-			case 'delete': if($where!="")
-							{
-								$query = "delete from " . $this->table . " where " . $where. ";";
-								return $query;
-							}
-							break;
-		}
-
-		return "";
-	}
-
-
-	/**
 	* Generates the where clause based on unique columns required for insertion
 	*/
 	private function getUniqueWhereClause($data)
@@ -615,5 +582,184 @@ class vDB
 
 		return $result;
 	}
+
+	/**
+	* Generates the access clause of the query, based on the indexes
+	*/
+	private function getAccessClause()
+	{
+		$objectIds = $this->getAccessObjectIds();
+		$objQuery = "(false)";
+		if(count($objectIds)>0)
+		{
+			$placeholders = array_fill(0, count($objectIds), '?');
+			$placeholder = implode(",",$placeholders);
+			$objQuery = "(id in (".$placeholder."))";
+		}
+
+		$accessConditions = $this->getAccessConditions();
+
+		$conditions = $accessConditions['conditions'];
+		$condQuery = "(false)";
+		$condValues = array();
+		if(count($conditions)>0)
+		{
+			$condQuery = "(";
+			foreach($conditions as $cond)
+			{
+				if(!vUtil::isBlank($cond['criteria_field']))
+				{
+					$condQuery.=$cond['criteria_field']."=? or ";
+					$condValues[] = $cond['criteria_value'];
+				}
+				else{
+					$condQuery.="true or ";
+				}
+			}
+			$condQuery = rtrim($condQuery," or ");
+			$condQuery .= ")";
+		}
+
+		$fields = $accessConditions['fields'];
+		$fieldQuery = "(false)";
+		$fieldValues = array();
+		if(count($fields)>0)
+		{
+			$accessIds = $this->getAccessIdentifiers();
+			$placeholders = array_fill(0, count($accessIds), '?');
+			$placeholder = implode(",",$placeholders);
+
+			$fieldQuery = "(";
+			foreach($fields as $f)
+			{
+				if(!vUtil::isBlank($f['criteria_field']))
+				{
+					$fieldQuery.="(".$f['criteria_field']."=? and ".$f['user']." in (".$placeholder.")) or ";
+					$fieldValues[] = $f['criteria_value'];
+					$fieldValues = array_merge($fieldValues,$accessIds);
+				}
+				else{
+					$fieldQuery.="(true) or ";
+				}
+			}
+			$fieldQuery = rtrim($fieldQuery," or ");
+			$fieldQuery .= ")";
+		}
+
+		$result = array(
+			'query' => "(".$objQuery." or ".$condQuery." or ".$fieldQuery.")",
+			'values' => array_merge($objectIds,$condValues,$fieldValues)
+		);
+		// print_r($result);die;
+		return $result;
+	}
+
+
+	/**
+	* Generates the Complete query, from subqueries
+	*/
+	private function getQuery($type,$subQueries)
+	{
+		$index = isset($subQueries['index'])? $subQueries['index'] : "*";
+		$where = isset($subQueries['where'])? $subQueries['where'] : "";
+		$set = isset($subQueries['set'])? $subQueries['set'] : "";
+		$values = isset($subQueries['values'])? $subQueries['values'] : "";
+		$limit = isset($subQueries['limit'])? $subQueries['limit'] : "";
+		if($where!="")
+		{
+			$where = isset($subQueries['access']) ? $where." and ".$subQueries['access'] : $where;
+		}
+		else {
+			$where = isset($subQueries['access']) ? $subQueries['access'] : $where;
+		}
+
+		switch($type)
+		{
+			case 'select': if($where!="")
+							{
+								$query = "select " . $index . " from " . $this->table . " where " . $where . " ORDER BY id DESC " . $limit. ";";
+							}
+							else{
+								$query = "select " . $index . " from " . $this->table . " ORDER BY id DESC " . $limit. ";";
+							}
+							return $query;
+			case 'insert': if($values!="")
+							{
+								$query = "insert into " . $this->table . " " . $values. ";";
+								return $query;
+							}
+							break;
+			case 'update': if($where!="")
+							{
+								$query = "update " . $this->table . " set " . $set . " where " . $where. ";";
+								return $query;
+							}
+							break;
+			case 'delete': if($where!="")
+							{
+								$query = "delete from " . $this->table . " where " . $where. ";";
+								return $query;
+							}
+							break;
+		}
+
+		return "";
+	}
+
+
+	////////////////Functions to manage data based access control////
+
+	/**
+	* This function gets the access identifiers for the user
+	*/
+	private function getAccessIdentifiers()
+	{
+		$userRoles=trim($_SESSION['user_roles'],"--");
+		$urArray=explode("--",$userRoles);
+		$urArray[]=$_SESSION['acc_name'];
+		// print_r($urArray);die;
+		return $urArray;
+	}
+
+	/**
+	* This function returns all the ids of the records, that the user has access to
+	*/
+	private function getAccessObjectIds()
+	{
+		$accessIds = $this->getAccessIdentifiers();
+		$placeholders = array_fill(0, count($accessIds), '?');
+		$placeholder = implode(",",$placeholders);
+
+		$query = "select record_id from object_access where user_type in (?,?) and user in (".$placeholder.");";
+		$values = array_merge(array('user','role'),$accessIds);
+		$result = $this->dbSelect($query,$values);
+		$ids = vUtil::get1Dfrom2D($result,'record_id');
+		// print_r($ids);die;
+		return $ids;
+	}
+
+	/**
+	* This function returns all the access conditions for the applcicable data_store and user
+	*/
+	private function getAccessConditions()
+	{
+		$accessIds = $this->getAccessIdentifiers();
+		$placeholders = array_fill(0, count($accessIds), '?');
+		$placeholder = implode(",",$placeholders);
+
+		$queryConds = "select criteria_field,criteria_value from access_conditions where tablename=? and user_type in (?,?) and user in (".$placeholder.");";
+		$valuesConds = array_merge(array($this->table,'user','role'),$accessIds);
+		$resultConds = $this->dbSelect($queryConds,$valuesConds);
+
+		$queryFields = "select criteria_field,criteria_value,user from access_conditions where tablename=? and user_type=?;";
+		$valuesFields = array($this->table,'field');
+		$resultFields = $this->dbSelect($queryFields,$valuesFields);
+		// print_r($resultConds);die;
+		return array(
+			"conditions" => $resultConds,
+			"fields" => $resultFields
+		);
+	}
+
 }
 ?>

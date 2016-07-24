@@ -68,7 +68,7 @@ function report96_ini()
     var paginator=$('#report96_body').paginator({page_size:25});
 
 	var list1_data={data_store:'staff',
-                    access:{},
+                    access:'yes',
 					count:paginator.page_size(),
 			        start_index:paginator.get_index(),
                   	indexes:[{index:'id'},{index:'acc_name',value:person}]};

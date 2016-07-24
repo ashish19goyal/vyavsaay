@@ -131,7 +131,7 @@
 				  var start_time=parseFloat(start.unix())*1000;
                   var end_time=parseFloat(end.unix())*1000;
                   var tasks_data={data_store:'appointments',
-								access:{},
+								access:'yes',
                                  indexes:[{index:'id'},
                                          {index:'customer'},
                                          {index:'schedule',lowerbound:start_time,upperbound:end_time},
@@ -231,7 +231,7 @@
 					var columns={data_store:'appointments',
                        count:paginator.page_size(),
                        start_index:paginator.get_index(),
-		             			access:{},
+		               access:'yes',
                        indexes:[{index:'id',value:fid},
                                  {index:'customer',value:customer_filter},
                                  {index:'schedule'},
@@ -549,7 +549,7 @@
 		{
 			show_loader();
 			var columns={data_store:'appointments',
-                         access:{},
+                         access:'yes',
                          indexes:[{index:'id'},
                                    {index:'customer'},
                                    {index:'schedule',lowerbound:(get_my_time()-30*24*3600*1000)},

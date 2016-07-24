@@ -1499,7 +1499,7 @@ function worker_9()
 function worker_10()
 {
 	var notif_data={data_store:'notifications',
-					access:{},
+					access:'yes',
 					indexes:[{index:'id'},
 							{index:'target_user'},
 							{index:'status',exact:'pending'}]};
@@ -1537,7 +1537,7 @@ function worker_11()
 {
 	var columns={data_store:'notifications',
 				count:10,
-				 access:{},
+				 access:'yes',
 				indexes:[{index:'id'},
 						{index:'title'},
 						{index:'link_to'},

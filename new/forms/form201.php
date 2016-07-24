@@ -88,7 +88,7 @@
         var new_columns={count:paginator.page_size(),
                          start_index:paginator.get_index(),
                          data_store:'drs',
-						 access:{},
+						 access:'yes',
                          indexes:[{index:'id',value:fid},
                                 {index:'drs_num',value:fdrs},
                                 {index:'employee',value:femployee},
