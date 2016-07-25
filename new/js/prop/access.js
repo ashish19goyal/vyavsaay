@@ -154,3 +154,4 @@ function if_data_access_object(obj_type,obj_name,func_success,func_fail)
 		}
 	});
 }
+///end of file
