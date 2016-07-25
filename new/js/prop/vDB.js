@@ -82,26 +82,5 @@ var vDB = function (options)
             $("#modal2_link").click();
         }
     }
-
-    this.config_restore = function()
-    {
-        if(is_update_access('form99') || is_update_object('db_backup'))
-        {
-            var domain=get_domain();
-            var username=get_username();
-            var cr_access=get_session_var('cr');
-            show_loader();
-            ajax_with_custom_func(server_root+"/scripts/config_db_restore.php",{domain:domain,username:username,cr:cr_access},function(e)
-            {
-                var response=e.responseText;
-                $("#modal94_link").click();
-                hide_loader();
-            });
-        }
-        else
-        {
-            $("#modal2_link").click();
-        }
-    }
 };
 vDB = new vDB();
