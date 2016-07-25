@@ -1,7 +1,7 @@
 <?php
 
-	include_once "../../Classes/S3.php";
-	include_once '../../Classes/config.php';
+	include_once "../Classes/S3.php";
+	include_once '../Classes/config.php';
 	use RetailingEssentials\config;
 
 	$dbname="re_user_".$_GET['db'];

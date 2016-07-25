@@ -5,8 +5,8 @@
 *	p=vya
 */
 
-	include_once "../../Classes/S3.php";
-	include_once '../../Classes/config.php';
+	include_once "../Classes/S3.php";
+	include_once '../Classes/config.php';
 	use RetailingEssentials\config;
 
 	$time=$_GET['t'];

@@ -1,7 +1,7 @@
 <?php
 
-	include_once '../../Classes/config.php';
-	include_once '../../Classes/db.php';
+	include_once '../Classes/config.php';
+	include_once '../Classes/db.php';
 	use RetailingEssentials\db_connect;
 	use RetailingEssentials\config;
 
