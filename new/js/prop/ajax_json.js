@@ -98,7 +98,7 @@ function ajax_json(url,kvp,func)
 					var pass=document.getElementById("lock_form").elements['password'].value;
 
 					var user_kvp={domain:domain,user:user,pass:pass,os:navigator.platform,browser:navigator.userAgent};
-					ajax_json(server_root+"/ajax_json/login.php",user_kvp,function(response_object)
+					ajax_json(server_root+"/ajax/login.php",user_kvp,function(response_object)
 					{
 						if(response_object.status=="Failed Authentication")
 						{

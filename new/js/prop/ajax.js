@@ -23,19 +23,19 @@ function ajax_with_custom_func(url,kvp,func)
 	else {
 		number_active_ajax+=1;
 	}
-		
+
 	$.ajax(
 	{
 		type: "POST",
 		url: url,
 		data: kvp,
-		error:function(xhr, ajaxOptions, thrownError) 
+		error:function(xhr, ajaxOptions, thrownError)
 		{
 			number_active_ajax-=1;
 			hide_loader();
 			//$("#modal74_link").click();
 	        //console.log(xhr.status);
-		    console.log(xhr.responseText);    	    
+		    console.log(xhr.responseText);
     	    console.log(thrownError);
 		},
 		success: function(return_data,return_status,e)
@@ -47,13 +47,13 @@ function ajax_with_custom_func(url,kvp,func)
 				hide_loader();
 				var user=get_username();
 				var domain=get_domain();
-				
+
 				lock_screen(function()
 				{
 					show_loader();
 					var pass=document.getElementById("lock_form").elements['password'].value;
 					var user_kvp={domain:domain,user:user,pass:pass,os:navigator.platform,browser:navigator.userAgent};
-					ajax_json(server_root+"/ajax_json/login.php",user_kvp,function(response_object)
+					ajax_json(server_root+"/ajax/login.php",user_kvp,function(response_object)
 					{
 						if(response_object.status=="Failed Authentication")
 						{
@@ -70,7 +70,7 @@ function ajax_with_custom_func(url,kvp,func)
 						else
 						{
 							var session_vars=response_object.data;
-							
+
 							var offline=get_session_var('offline');
 							for(var field in session_vars)
 							{
@@ -87,11 +87,11 @@ function ajax_with_custom_func(url,kvp,func)
 							kvp.del=session_vars['del'];
 							kvp.re=session_vars['re'];
 
-							hide_loader();	
-							ajax_with_custom_func(url,kvp,func);								
+							hide_loader();
+							ajax_with_custom_func(url,kvp,func);
 						}
 					});
-				});				
+				});
 			}
 			else
 			{
@@ -99,7 +99,7 @@ function ajax_with_custom_func(url,kvp,func)
 				func(e);
 			}
 		}
-	});		
+	});
 };
 
 
@@ -122,7 +122,7 @@ function server_read_single_column(column,callback,results)
 		var parser=new DOMParser();
 		var dom_obj=parser.parseFromString(e.responseText, "text/xml");
 		if(dom_obj.documentElement.nodeName != "parsererror")
-		{			
+		{
 			var row=e.responseXML.childNodes[0].childNodes;
 			for(var i=0; i<row.length; i++)
 			{
@@ -306,7 +306,7 @@ function server_create_batch(data_xml)
 	var domain=get_domain();
 	var username=get_username();
 	var cr_access=get_session_var('cr');
-	
+
 	var data_xml_array=data_xml.split("<separator></separator>");
 	data_xml_array.forEach(function(data_chunk)
 	{
@@ -315,7 +315,7 @@ function server_create_batch(data_xml)
 			//console.log(e.responseText);
 		});
 	});
-	
+
 	var server_create_complete=setInterval(function()
 	{
 	   if(number_active_ajax===0)
@@ -323,7 +323,7 @@ function server_create_batch(data_xml)
 		   clearInterval(server_create_complete);
 		   hide_loader();
 	   }
-    },1000);		
+    },1000);
 }
 
 
@@ -332,7 +332,7 @@ function server_create_batch_noloader(data_xml)
 	var domain=get_domain();
 	var username=get_username();
 	var cr_access=get_session_var('cr');
-	
+
 	var data_xml_array=data_xml.split("<separator></separator>");
 	data_xml_array.forEach(function(data_chunk)
 	{
@@ -340,7 +340,7 @@ function server_create_batch_noloader(data_xml)
 		{
 			//console.log(e.responseText);
 		});
-	});	
+	});
 }
 
 
@@ -389,7 +389,7 @@ function server_update_simple_func(data_xml,func)
 	var username=get_username();
 	var up_access=get_session_var('up');
 	//data_xml=data_xml.replace(/\+/g,'%2B');
-	
+
 	ajax_with_custom_func(server_root+"/ajax/update_simple.php",{domain:domain,username:username,up:up_access,data_xml:data_xml},function(e)
 	{
 		//console.log(e.responseText);
@@ -407,7 +407,7 @@ function server_update_batch(data_xml)
 	var username=get_username();
 	var up_access=get_session_var('up');
 	//data_xml=data_xml.replace(/\+/g,'%2B');
-	
+
 	//console.log('got last sync time');
 	var data_xml_array=data_xml.split("<separator></separator>");
 	data_xml_array.forEach(function(data_chunk)
@@ -417,7 +417,7 @@ function server_update_batch(data_xml)
 			console.log(e.responseText);
 		});
 	});
-	
+
 	var server_update_complete=setInterval(function()
 	{
 	   if(number_active_ajax===0)
@@ -425,7 +425,7 @@ function server_update_batch(data_xml)
 		   clearInterval(server_update_complete);
 		   hide_loader();
 	   }
-    },1000);		
+    },1000);
 }
 
 

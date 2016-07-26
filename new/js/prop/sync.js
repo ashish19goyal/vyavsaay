@@ -6,14 +6,8 @@ function switch_to_online()
 {
 	if(is_update_access('sync_mode'))
 	{
-		var domain=get_domain();
-		var username=get_username();
-		var cr_access=get_session_var('cr');
-		var up_access=get_session_var('up');
-		var del_access=get_session_var('del');
-		var re_access=get_session_var('re');
-		
-		ajax_json(server_root+"/ajax_json/connection_testing.php",{domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,re:re_access},function(response_object)
+		var credentials=vUtil.getCredentials();
+		ajax_json(server_root+"/ajax/connection.php",credentials,function(response_object)
 		{
 			if(response_object.status==='connected')
 			{
@@ -33,7 +27,7 @@ function switch_to_online()
 					});
 				});
 			}
-			else 
+			else
 			{
 				$('#modal74').dialog("open");
 			}
@@ -64,17 +58,17 @@ function switch_to_offline()
 			{
 				//console.log('server to local complete');
 				progress_value=50;
-								
+
 				sync_local_to_server(function()
 				{
 					//console.log('sync local t0 server');
-					
+
 					progress_value=100;
 					set_session_offline();
 					hide_progress();
 					//hide_loader();
 				});
-				
+
 			});
 		});
 	}
@@ -85,26 +79,20 @@ function switch_to_offline()
 }
 
 /**
- * 
+ *
  */
 function sync_local_and_server()
 {
 	if(is_update_access('sync'))
 	{
-		var domain=get_domain();
-		var username=get_username();
-		var cr_access=get_session_var('cr');
-		var up_access=get_session_var('up');
-		var del_access=get_session_var('del');
-		var re_access=get_session_var('re');
-		
-		ajax_with_custom_func(server_root+"/ajax/connection_testing.php",{domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,re:re_access},function(e)
+		var credentials=vUtil.getCredentials();
+		ajax_json(server_root+"/ajax/connection.php",credentials,function(response_object)
 		{
-			if(e.responseText==='connected')
+			if(response_object.status==='connected')
 			{
 				show_progress();
 				show_loader();
-				
+
 				sync_local_to_server(function()
 				{
 					progress_value=50;
@@ -121,7 +109,7 @@ function sync_local_and_server()
 					});
 				});
 			}
-			else 
+			else
 			{
 				$("#modal74_link").click();
 			}
@@ -153,12 +141,12 @@ function sync_server_to_local(func)
 		start_offset=0;
 		var domain=get_domain();
 
-		var new_version=parseInt(static_local_db.version)+1;		
+		var new_version=parseInt(static_local_db.version)+1;
 		static_local_db.close();
 		delete(static_local_db);//="undefined";
-				
+
 		//console.log('db_closed');
-				
+
 		update_local_db(domain,function()
 		{
 			//console.log('row156');
@@ -168,7 +156,7 @@ function sync_server_to_local(func)
 				sync_server_to_local_ajax(start_table,start_offset,last_sync_time);
 			});
 		},new_version);
-		
+
 		var max_localdb_open_requests=0;
 		var progress_dummy=progress_value+1;
 		var online_counter=100;
@@ -176,7 +164,7 @@ function sync_server_to_local(func)
 		{
 			console.log("aj"+number_active_ajax);
 			console.log("l"+localdb_open_requests);
-			
+
 			if(online_counter>0)
 			{
 				online_counter-=1;
@@ -206,7 +194,7 @@ function sync_server_to_local(func)
 	  	   {
 	  	   		progress_value=progress_dummy+(1-(online_counter/100))*20;
 	  	   }
-	     },1000);	
+	     },1000);
 	 }
 };
 
@@ -217,7 +205,7 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
 	var re_access=get_session_var('re');
 	var db_name="re_local_" + domain;
 	//console.log(last_sync_time);
-	ajax_json(server_root+"/ajax_json/sync_download.php",{domain:domain,username:username,re:re_access,start_table:start_table,start_offset:start_offset,last_sync_time:last_sync_time},function(response_object)
+	ajax_json(server_root+"/ajax/sync_download.php",{domain:domain,username:username,re:re_access,start_table:start_table,start_offset:start_offset,last_sync_time:last_sync_time},function(response_object)
 	{
 		if(typeof static_local_db=='undefined')
 		{
@@ -231,25 +219,25 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
 			var end_table=response_object.end_table;
 			var end_offset=response_object.end_offset;
 			//console.log(end_table);
-			//console.log(end_offset);			
+			//console.log(end_offset);
 			if(end_table!="end_syncing")
 			{
 				sync_server_to_local_ajax(end_table,end_offset,last_sync_time);
 			}
-			
+
 			var tables=response_object.data;
-			
+
 			for(var i in tables)
 			{
 				//console.log(tableName);
 				var tableName=i;
-				
+
 				var objectStore=static_local_db.transaction([tableName],"readwrite").objectStore(tableName);
 				var this_table=tables[i];
 				var num_rows=tables[i].length;
-				
+
 				localdb_open_requests+=num_rows;
-				
+
 				local_put_record(this_table,objectStore,num_rows,0);
 
 				if(tableName=='activities')
@@ -259,7 +247,7 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
 				}
 			}
 		}
-		
+
 	});
 }
 
@@ -277,10 +265,10 @@ function local_put_record(this_table,objectStore,num_rows,row_index)
 				row[j]=JSON.stringify(this_table[row_index][j]);
 			}
 			else{
-				row[j]=this_table[row_index][j];				
+				row[j]=this_table[row_index][j];
 			}
 		}
-		
+
 		//console.log(row);
 		row_index+=1;
 		var req=objectStore.put(row);
@@ -309,9 +297,9 @@ function local_delete_record(this_table,num_rows,row_index)
 		{
 			row[j]=this_table[row_index][j];
 		}
-		
+
 		row_index+=1;
-		
+
 		if(row['type']==='delete')
 		{
 			localdb_open_requests+=1;
@@ -338,7 +326,7 @@ function sync_local_to_server(func)
 	var cr_access=get_session_var('cr');
 	var up_access=get_session_var('up');
 	var del_access=get_session_var('del');
-	
+
 	get_data_from_log_table(function(log_data)
 	{
 		get_last_sync_time(function(last_sync_time)
@@ -352,8 +340,8 @@ function sync_local_to_server(func)
 				{
 					run_daemons='yes';
 				}
-				var log_data_chunk=JSON.stringify(log_data_sub_array);				
-				ajax_json(server_root+"/ajax_json/sync_upload.php",{run_daemons:run_daemons,domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,data:log_data_chunk,last_sync:last_sync_time},function(response_object)
+				var log_data_chunk=JSON.stringify(log_data_sub_array);
+				ajax_json(server_root+"/ajax/sync_upload.php",{run_daemons:run_daemons,domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,data:log_data_chunk,last_sync:last_sync_time},function(response_object)
 				{
 					console.log(response_object);
 					set_activities_to_synced(response_object);
@@ -366,7 +354,7 @@ function sync_local_to_server(func)
   			   progress_value=progress_dummy+(1-(number_active_ajax/log_data.length))*30;
   			   //console.log(number_active_ajax);
   			   //console.log(localdb_open_requests);
-  			   
+
   			   if(number_active_ajax===0)
          	   {
   				   if(localdb_open_requests===0)
@@ -376,7 +364,7 @@ function sync_local_to_server(func)
   	         		   func();
   				   }
          	   }
-            },1000);		
+            },1000);
 		});
 	});
 };
@@ -400,14 +388,14 @@ function get_data_from_log_table(func)
 		var counter=0;
 		var log_data=[];
 		var sub_log_data=[];
-		
+
 		static_local_db.transaction(['activities'],"readonly").objectStore('activities').index('status').openCursor(keyValue,'next').onsuccess=function(e)
 		{
 			var result=e.target.result;
 			if(result)
 			{
 				var record=result.value;
-				
+
 				if(counter===200)
 				{
 					log_data.push(sub_log_data);
@@ -415,8 +403,8 @@ function get_data_from_log_table(func)
 					counter=0;
 				}
 				//	console.log(record);
-				sub_log_data.push(record);	
-				
+				sub_log_data.push(record);
+
 				counter+=1;
 				result.continue();
 			}
@@ -452,17 +440,17 @@ function set_activities_to_synced(response)
 		var transaction=static_local_db.transaction(['activities'],"readwrite");
 		var objectStore=transaction.objectStore('activities');
 		localdb_open_requests+=update_ids.length;
-		
-		transaction.onabort = function(e) 
+
+		transaction.onabort = function(e)
 		{
 			console.log("aborted");
 			console.log(this.error);
 		};
-		transaction.oncomplete = function(e) 
+		transaction.oncomplete = function(e)
 		{
-			console.log("transaction complete"); 
+			console.log("transaction complete");
 		};
-		
+
 		function local_update_record(row_index)
 		{
 			if(row_index<update_ids.length)
@@ -497,8 +485,8 @@ function set_activities_to_synced(response)
 				};
 			}
 		};
-		
-		local_update_record(0);	
+
+		local_update_record(0);
 	}
 }
 
@@ -529,7 +517,7 @@ function get_last_sync_time(func)
 				last_sync_time=data['value'];
 			}
 			//console.log(last_sync_time);
-			func(last_sync_time);	
+			func(last_sync_time);
 		};
 		req.onerror=function(e)
 		{
@@ -561,7 +549,7 @@ function update_last_sync_time(func)
 		var req=objectStore.put(row_data);
 		req.onsuccess=function(e)
 		{
-			func();	
+			func();
 		};
 		req.onerror=function(e)
 		{
@@ -569,4 +557,3 @@ function update_last_sync_time(func)
 		};
 	}
 }
-

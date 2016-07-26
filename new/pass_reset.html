@@ -131,12 +131,10 @@
 			var email=form.elements[1].value;
 
 			show_loader();
-			var post_data="userName="+username+
-							"&userEmail="+email;
-
-			ajax_with_custom_func("./ajax/pass_reset.php",post_data,function(e)
+			var post_data={userName:username,userEmail:email};
+			ajax_json("./ajax/pass_reset.php",post_data,function(response_object)
 			{
-				if(e.responseText.indexOf('failed')!=-1)
+				if(response_object.status!='success')
 				{
 					document.getElementById("reset_complete").innerHTML="Couldn't reset your password. Please confirm that the Username and email ID are correct.";
 				}
@@ -146,7 +144,7 @@
 					document.getElementById("reset_complete").innerHTML="We have sent you a mail with updated password information. Please check your mailbox.";
 				}
 				hide_loader();
-				console.log(e.responseText);
+				console.log(response_object);
 			});
 		}
 	});

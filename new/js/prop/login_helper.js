@@ -80,7 +80,7 @@ function login_action(domain,username,pass,func)
 function login_online(username,domain,pass,func)
 {
 	var user_kvp={domain:domain,user:username,pass:pass,os:navigator.platform,browser:navigator.userAgent};
-	ajax_json(server_root+"/ajax_json/login.php",user_kvp,function(response_object)
+	ajax_json(server_root+"/ajax/login.php",user_kvp,function(response_object)
 	{
 		//console.log(response_object);
 		//console.log(response_object.status);
@@ -480,13 +480,13 @@ function register_click()
 						pass:pass,
 						phone:phone};
 
-		ajax_with_custom_func(server_root+"/scripts/user_db_creation.php",{userid:userid},function(e2)
+		ajax_with_custom_fun(server_root+"/scripts/user_db_creation.php",{userid:userid},function(e2)
 		{
 			if(e2.responseText=="")
 			{
-				ajax_with_custom_func(server_root+"/ajax/register.php",post_data,function(e)
+				ajax_json(server_root+"/ajax/register.php",post_data,function(response_object)
 				{
-					if(e.responseText=="successful")
+					if(response_object.status=="success")
 					{
 						$("#r_register").slideUp();
 						document.getElementById("r_complete").innerHTML="Registration complete, proceed to <a href='#home' onclick='display_login_box();'>login</a>";
@@ -494,7 +494,7 @@ function register_click()
 					else
 					{
 						document.getElementById("failed_register").innerHTML="An error occured, please try again.";
-						console.log(e.responseText);
+						console.log(response_object);
 					}
 					window.location.assign("#register");
 					hide_loader();
@@ -527,11 +527,9 @@ function userid_validation(userid)
 		}
 		else
 		{
-			ajax_with_custom_func(server_root+"/ajax/verify_id.php",{userid:userid},function(e)
+			ajax_json(server_root+"/ajax/verify_id.php",{userid:userid},function(response_object)
 			{
-				status=e.responseText;
-				//console.log(status);
-				if(status=="match")
+				if(response_object.status=="match")
 				{
 					document.getElementById("userid_validation").innerHTML="This ID already exists, choose a different ID.";
 					document.getElementById("userid_validation").value="incorrect";
@@ -541,7 +539,6 @@ function userid_validation(userid)
 					document.getElementById("userid_validation").innerHTML="User ID is available.";
 					document.getElementById("userid_validation").value="correct";
 				}
-
 			});
 		}
 	}
@@ -554,11 +551,9 @@ function emailid_validation(emailid)
 {
 	if(emailid!="")
 	{
-		ajax_with_custom_func(server_root+"/ajax/verify_id.php",{email:emailid},function(e)
+		ajax_json(server_root+"/ajax/verify_id.php",{email:emailid},function(response_object)
 		{
-			status=e.responseText;
-			//console.log(status);
-			if(status=="match")
+			if(response_object.status=="match")
 			{
 				document.getElementById("emailid_validation").innerHTML="This email ID is already registered, choose a different ID.";
 				document.getElementById("emailid_validation").value="incorrect";
@@ -568,7 +563,6 @@ function emailid_validation(emailid)
 				document.getElementById("emailid_validation").innerHTML="";
 				document.getElementById("emailid_validation").value="correct";
 			}
-
 		});
 	}
 }
@@ -582,7 +576,7 @@ function verify_login(pass,func_success,func_failure)
 	if(is_online())
 	{
 		var user_kvp={domain:domain,user:username,pass:pass,os:navigator.platform,browser:navigator.userAgent};
-		ajax_json(server_root+"/ajax_json/login.php",user_kvp,function(response_object)
+		ajax_json(server_root+"/ajax/login.php",user_kvp,function(response_object)
 		{
 			//console.log(response_object);
 			//console.log(response_object.status);

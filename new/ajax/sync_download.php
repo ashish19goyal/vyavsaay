@@ -1,28 +1,24 @@
 <?php
 /*
  * output data format: 
- *	<re_xml>	
- *		<data>
- *			<tablename>
- *				<row>
- *					<column1>value1</column1>
- *					<column2>value2</column2>
- *					<column3></column3>
- *					<column(n)>value(n)</column(n)>
- *				</row>
- *				<row>
- *					<column1>value1</column1>
- *					<column2>value2</column2>
- *					<column3></column3>
- *					<column(n)>value(n)</column(n)>
- *				</row>
- *			</tablename>
- *		</data>
- *		<data>	
- *			<end_table>tablename</end_table>
- *			<end_offset>integrer value</end_offset>
- *		</data>
- *	</re_xml>	
+ *	{
+ 		end_table:"",
+ 		end_offset:"",
+ 		data:
+ 		{
+ 			tablename:
+ 			[
+ 				{
+ 					column1:value,
+ 					column2:value
+ 				},
+ 				{
+ 					column1:value,
+ 					column2:value
+ 				}
+ 			]
+ 		}
+ 	}
 */
 	session_start();
 	
@@ -35,19 +31,24 @@
 	$last_sync_time=$_POST['last_sync_time'];
 	$start_table=$_POST['start_table'];
 	$start_offset=intval($_POST['start_offset']);
-	
+	$jsonresponse=[];			
+			
 	if(isset($_SESSION['session']))
 	{
 		if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['username']==$username && $_SESSION['re']==$re_access)
 		{
+			$info_conn=new db_connect('information_schema');
+			$get_array=array();			
+			$get_query="select table_name from information_schema.tables where table_schema=?";
+			$get_array[]="re_user_".$domain;
+			$get_stmt=$info_conn->conn->prepare($get_query);
+			$get_stmt->execute($get_array);
+			$get_res=$get_stmt->fetchAll(PDO::FETCH_ASSOC);
+			
 			$conn=new db_connect("re_user_".$domain);
 			
-			$db_schema_xml=new DOMDocument();
-			$db_schema_xml->load("../db/db_schema.xml");
-			$db_schema=$db_schema_xml->documentElement;
+			$jsoneresponse['data']=[];
 			
-			$xmlresponse="<re_xml><data>";
-
 			$first_iteration=true;
 			$num_records=500;
 			$end_table='end_syncing';
@@ -65,10 +66,9 @@
 			}
 			//echo $selected_tables;
 			
-			foreach($db_schema->childNodes as $table)
+			foreach($get_res as $table)
 			{	
-				$table_name=$table->nodeName;
-				//echo $table_name;
+				$table_name=$table['table_name'];
 				if($table_name!=$start_table && $first_iteration && $start_table!="")
 				{
 					continue;
@@ -78,10 +78,10 @@
 				$found=strpos($selected_tables, "--".$table_name."--");
 				
 				
-				if($table_name!="#text" && ($found!==false))
+				if($found!==false)
 				{
-					$xmlresponse.="<$table_name>";
-					//echo $table_name;
+					$jsonresponse['data'][$table_name]=[];
+					
 					$stmt[$table_name]=$conn->conn->prepare("select * from $table_name where last_updated>? or last_sync_time>? limit ?,?;");
 					$stmt[$table_name]->execute(array($last_sync_time,$last_sync_time,$start_offset,$num_records));
 					$stmt_res=$stmt[$table_name]->fetchAll(PDO::FETCH_ASSOC);
@@ -97,18 +97,15 @@
 							}
 						}
 
-						$xmlresponse.="<row>";
-						
-						foreach ($stmt_res[$i] as $key => $value)
+						$response_row=[];
+						foreach($stmt_res[$i] as $key => $value)
 						{
-							$xmlresponse.="<".$key.">";
-							$xmlresponse.=htmlentities($value);
-							$xmlresponse.="</".$key.">";
+							$response_row[$key]=$value;
 						}
-						$xmlresponse.="</row>";
+						$response_row['id']="".$response_row['id'];
+						$response_row['last_updated']="".$response_row['last_updated'];
+						$jsonresponse['data'][$table_name][]=$response_row;						
 					}
-					
-					$xmlresponse.="</$table_name>";
 					
 					if(count($stmt_res)<$num_records)
 					{
@@ -126,24 +123,23 @@
 					}
 				}
 			}
-				
-			$xmlresponse.="</data>";
-			$xmlresponse.="<data>";
-			$xmlresponse.="<end_table>$end_table</end_table>";
-			$xmlresponse.="<end_offset>$start_offset</end_offset>";
-			$xmlresponse.="</data></re_xml>";
-			$xmlresponse=preg_replace('/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u',' ',$xmlresponse);
-	
-			header("Content-Type:text/xml");
-			echo $xmlresponse;
+			
+			$jsonresponse['status']='success';			
+			$jsonresponse['end_table']=$end_table;			
+			$jsonresponse['end_offset']=$start_offset;
 		}
 		else
 		{
-			echo "Invalid session";
+			$jsonresponse['status']='Invalid session';
 		}
 	}
 	else
 	{
-		echo "Invalid session";
+		$jsonresponse['status']='Invalid session';
 	}
+
+	$jsonresponse_string=json_encode($jsonresponse);			
+	header("Content-Type:application/json");
+	echo $jsonresponse_string;
+
 ?>
