@@ -63,6 +63,9 @@
                 report113_ini();
             });
 
+			var account_data = {data_store:"accounts",return_column:"acc_name"};
+			set_my_filter_json(account_data,account_filter);
+
             $(start_filter).datepicker();
 			$(end_filter).datepicker();
 			start_filter.value=vTime.date({addDays:-30});
