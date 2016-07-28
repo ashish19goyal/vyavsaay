@@ -540,11 +540,12 @@ function validate_import_array(data_array,vt)
 	var row_count=1;
 	data_array.forEach(function(data_row)
 	{
-		console.log(data_row);
+		// console.log(data_row);
 		row_count+=1;
 		for (var a=0;a<vt.length;a++)
 		{
-			//console.log(vt[a]);
+			// console.log(data_row[vt[a]['column']]);
+			// console.log(data_row);
 			if(data_row[vt[a].column]=='undefined')
 			{
 				error_array.logs.push({row:row_count,column:vt[a].column,error:"Undefined",data:''});
@@ -555,9 +556,8 @@ function validate_import_array(data_array,vt)
 				error_array.logs.push({row:row_count,column:vt[a].column,error:"Blank",data:''});
 				error_array.status='error';
 			}
-			else if(data_row[vt[a]['column']]!="")
+			else if(data_row[vt[a].column]!="")
 			{
-				console.log(vt[a]);
 				if(typeof vt[a].regex!='undefined')
 				{
 					var test_result=vt[a].regex.test(data_row[vt[a].column]);
