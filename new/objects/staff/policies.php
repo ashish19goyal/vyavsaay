@@ -27,7 +27,6 @@
                                         {index:'name',exact:obj_name}]};
             read_json_single_column(attribute_data,function(attributes)
             {
-                console.log(attributes);
                 if(attributes.length>0)
                 {
                     var designation = attributes[0];
@@ -54,10 +53,8 @@
                                         {index:'status'},
                                         attribute_object,
                                         {index:'issue_date'}]};
-                    console.log(policy_data);                    
                     read_json_rows('',policy_data,function(results)
                     {
-                        console.log(results);
                         results.forEach(function(result)
         				{
                             if(vUtil.isBlank(result.policy_num))
