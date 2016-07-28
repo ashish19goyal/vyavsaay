@@ -3887,25 +3887,25 @@
 					   			<div class="col-sm-12 col-md-2">Policy Holder</div>
 		     					<div class="col-sm-12 col-md-4"><input type='text' required form='modal216_form' name='holder'></div>
 		     					<div class="col-sm-12 col-md-2">Sum Insured</div>
-		     					<div class="col-sm-12 col-md-4"><input type='number' required form='modal216_form' step='any' name='sum'></div>
+		     					<div class="col-sm-12 col-md-4"><input type='number' required form='modal216_form' min='0' step='any' name='sum'></div>
 		     				</div>
 							<div class="row">
 					   			<div class="col-sm-12 col-md-2">Adults</div>
-		     					<div class="col-sm-12 col-md-4"><input type='number' step='any' required form='modal216_form' name='adults'></div>
+		     					<div class="col-sm-12 col-md-4"><input type='number' step='any' required form='modal216_form' min='0' name='adults'></div>
 		     					<div class="col-sm-12 col-md-2">Children</div>
-		     					<div class="col-sm-12 col-md-4"><input type='number' required form='modal216_form' step='any' name='children'></div>
+		     					<div class="col-sm-12 col-md-4"><input type='number' required form='modal216_form' step='any' min='0' name='children'></div>
 		     				</div>
 							<div class="row">
 					   			<div class="col-sm-12 col-md-2">Age (oldset member)</div>
-		     					<div class="col-sm-12 col-md-4"><input type='number' step='any' form='modal216_form' name='age'></div>
+		     					<div class="col-sm-12 col-md-4"><input type='number' step='any' form='modal216_form' min='0' name='age'></div>
 		     					<div class="col-sm-12 col-md-2">Premium</div>
-		     					<div class="col-sm-12 col-md-4"><input type='number' required form='modal216_form' step='any' name='premium'></div>
+		     					<div class="col-sm-12 col-md-4"><input type='number' required form='modal216_form' step='any' min='0' name='premium'></div>
 							</div>
 							<div class="row">
 					   			<div class="col-sm-12 col-md-2">Short Premium</div>
-		     					<div class="col-sm-12 col-md-4"><input type='number' form='modal216_form' step='any' name='spremium' value='0'></div>
+		     					<div class="col-sm-12 col-md-4"><input type='number' form='modal216_form' step='any' name='spremium' min='0' value='0'></div>
 		     					<div class="col-sm-12 col-md-2">Discount</div>
-		     					<div class="col-sm-12 col-md-4"><input type='number' form='modal216_form' step='any' name='discount' value='0'></div>
+		     					<div class="col-sm-12 col-md-4"><input type='number' form='modal216_form' step='any' name='discount' min='0' value='0'></div>
 		     				</div>
 							<div class="row">
 					   			<div class="col-sm-12 col-md-2">Start Date</div>

@@ -16074,14 +16074,14 @@ function modal216_action()
 		fpname.value="";
 		var name_data={data_store:'policy_types',return_column:'name',
 						indexes:[{index:'issuer',value:fcompany.value},
-								{index:'type',value:fptype.value},
+								// {index:'type',value:fptype.value},
 								{index:'term',value:fterm.value},
 								{index:'preferred',value:fpreferred.value}]};
 		set_my_value_list_json(name_data,fpname);
 	};
 
 	vUtil.onChange(fcompany,policy_filtering);
-	vUtil.onChange(fptype,policy_filtering);
+	//vUtil.onChange(fptype,policy_filtering);
 	vUtil.onChange(fterm,policy_filtering);
 	vUtil.onChange(fpreferred,policy_filtering);
 
@@ -16156,10 +16156,13 @@ function modal216_action()
 			if(policies.length>0)
 			{
 				var accounts_array=vUtil.jsonParse(policies[0].accounts);
-				fagent.value = accounts_array[0];
+				if(accounts_array.length>0)
+				{
+					fagent.value = accounts_array[0];
+				}
 				fcompany.value = policies[0].issuer;
-				fptype.value = policies[0].type;
-				fterm.value = policies[0].term;
+				//fterm.value = policies[0].term;
+				//fptype.value = policies[0].type;
 				fpreferred.value = policies[0].preferred;
 				commissions = policies[0].commissions;
 				description = policies[0].description;

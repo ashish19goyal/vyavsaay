@@ -1,5 +1,6 @@
 <?php
 
+	header("Access-Control-Allow-Origin: *");
 	require_once '../Classes/api.php';
 	use RetailingEssentials\api;
 
