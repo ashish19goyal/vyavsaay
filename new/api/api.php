@@ -3,7 +3,8 @@
 	require_once '../Classes/api.php';
 	use RetailingEssentials\api;
 
-	$api = api::getInstance($_GET,$_POST);
+	$post = json_decode(file_get_contents("php://input"),true);
+	$api = api::getInstance($_GET,$post);
 
 	$authentication = $api->authenticateRequest();
 

@@ -36,6 +36,7 @@
 				data: {indexes:indexes,data:data,username:username,key:key,options:options,row:row},
 				error:function(xhr, ajaxOptions, thrownError)
 				{
+					console.log('error');
 					console.log(xhr.responseText);
 		    	},
 				success: function(return_data,return_status,e)

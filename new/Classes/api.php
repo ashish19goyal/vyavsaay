@@ -54,21 +54,25 @@ class api
 		self::$table = isset($getArray[0]) ? $getArray[0] : null;
 		self::$requestType = isset($getArray[1]) ? $getArray[1] : null;
 
-		$data = isset($post['data']) ? $post['data'] : null;
-		$dArray = json_decode($data,true);
-		self::$data = is_array($dArray) ? $dArray : array();
+		// $data = isset($post['data']) ? $post['data'] : null;
+		// $dArray = json_decode($data,true);
+		// self::$data = is_array($dArray) ? $dArray : array();
+		self::$data = isset($post['data']) ? $post['data'] : array();
 
-		$row = isset($post['row']) ? $post['row'] : null;
-		$rArray = json_decode($row,true);
-		self::$row = is_array($rArray) ? $rArray : array();
+		// $row = isset($post['row']) ? $post['row'] : null;
+		// $rArray = json_decode($row,true);
+		// self::$row = is_array($rArray) ? $rArray : array();
+		self::$row = isset($post['row']) ? $post['row'] : array();
 
-		$indexes = isset($post['indexes']) ? $post['indexes'] : null;
-		$iArray = json_decode($indexes,true);
-		self::$indexes = is_array($iArray) ? $iArray : array();
+		// $indexes = isset($post['indexes']) ? $post['indexes'] : null;
+		// $iArray = json_decode($indexes,true);
+		// self::$indexes = is_array($iArray) ? $iArray : array();
+		self::$indexes = isset($post['indexes']) ? $post['indexes'] : array();
 
-		$options = isset($post['options']) ? $post['options'] : null;
-		$oArray = json_decode($options,true);
-		self::$options = is_array($oArray) ? $oArray : array();
+		// $options = isset($post['options']) ? $post['options'] : null;
+		// $oArray = json_decode($options,true);
+		// self::$options = is_array($oArray) ? $oArray : array();
+		self::$options = isset($post['options']) ? $post['options'] : array();
 
 		self::$username = isset($post['username']) ? $post['username'] : null;
 		self::$apiKey = isset($post['key']) ? $post['key'] : null;
