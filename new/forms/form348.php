@@ -39,10 +39,11 @@
 			<thead>
 				<tr>
 					<form id='form348_header'></form>
-						<th><input type='text' placeholder="Commission #" class='floatlabel' name='comm' form='form348_header'></th>
-						<th><input type='text' placeholder="Policy" class='floatlabel' name='policy' form='form348_header'></th>
+						<th><input type='text' placeholder="Application #" class='floatlabel' name='comm' form='form348_header'></th>
+						<th><input type='text' placeholder="Policy #" class='floatlabel' name='policy' form='form348_header'></th>
 						<th><input type='text' placeholder="Amount" readonly="readonly" name='amount' form='form348_header'></th>
 						<th><input type='text' placeholder="Agent" class='floatlabel' name='agent' form='form348_header'></th>
+						<th><input type='text' placeholder="Type" class='floatlabel' name='type' form='form348_header'></th>
 						<th><input type='submit' form='form348_header' style='visibility: hidden;'></th>
 				</tr>
 			</thead>
@@ -80,9 +81,10 @@
 				fid="";
 
 			var form=document.getElementById('form348_header');
-			var comm_filter=form.elements['comm'].value;
+			var app_filter=form.elements['comm'].value;
 			var policy_filter=form.elements['policy'].value;
 			var agent_filter=form.elements['agent'].value;
+			var type_filter=form.elements['type'].value;
 
 			show_loader();
 			$('#form348_body').html('');
@@ -112,17 +114,17 @@
 			var paginator=$('#form348_body').paginator();
 
 			var new_columns={count:paginator.page_size(),
-											start_index:paginator.get_index(),
-											data_store:'policy_commissions',
-											indexes:[{index:'id',value:fid},
-													{index:'commission_num',value:comm_filter},
-													{index:'policy_num',value:policy_filter},
-													{index:'application_num'},
-													{index:'amount'},
-													{index:'policy_holder'},
-													{index:'issuer'},
-													{index:'agent',value:agent_filter},
-													{index:'status',exact:status_filter}]};
+							start_index:paginator.get_index(),
+							data_store:'policy_commissions',
+							indexes:[{index:'id',value:fid},
+									{index:'policy_num',value:policy_filter},
+									{index:'application_num',value:app_filter},
+									{index:'amount'},
+									{index:'policy_holder'},
+									{index:'issuer'},
+									{index:'commission_type',value:type_filter},
+									{index:'agent',value:agent_filter},
+									{index:'status',exact:status_filter}]};
 
 			read_json_rows('form348',new_columns,function(results)
 			{
@@ -130,18 +132,20 @@
 				{
 					var rowsHTML="<tr>";
 						rowsHTML+="<form id='form348_"+result.id+"'></form>";
-							rowsHTML+="<td data-th='Commission #'>";
-								rowsHTML+="<a onclick=\"show_object('policy_commissions','"+result.commission_num+"');\"><input type='text' readonly='readonly' form='form348_"+result.id+"' value='"+result.commission_num+"'></a>";
+							rowsHTML+="<td data-th='Application #'>";
+								rowsHTML+="<input type='text' class='floatlabel' placeholder='Application #' readonly='readonly' form='form348_"+result.id+"' value='"+result.application_num+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Policy'>";
 								rowsHTML+="<a onclick=\"show_object('policies','"+result.policy_num+"');\"><input type='text' class='floatlabel' placeholder='Policy #' readonly='readonly' form='form348_"+result.id+"' value='"+result.policy_num+"'></a>";
-								rowsHTML+="<input type='text' class='floatlabel' placeholder='Application #' readonly='readonly' form='form348_"+result.id+"' value='"+result.application_num+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Amount'>";
 								rowsHTML+="<input type='number' readonly='readonly' form='form348_"+result.id+"' value='"+result.amount+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Agent'>";
-								rowsHTML+="<a onclick=\"show_object('staff','"+result.agent+"')\"><input type='text' readonly='readonly' form='form348_"+result.id+"' value='"+result.agent+"'></a>";
+								rowsHTML+="<a onclick=\"show_object('staff','"+result.agent+"')\"><textarea readonly='readonly' form='form348_"+result.id+"'>"+result.agent+"</textarea></a>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Type'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form348_"+result.id+"' value='"+result.commission_type+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form348_"+result.id+"' value='"+result.id+"' name='id'>";
@@ -228,14 +232,14 @@
 
 		function form348_import_template()
 		{
-			var data_array=['id','commission number','policy number','commission amount','commission type','issuer','policy holder','agent','notes','issue date','status'];
+			var data_array=['id','application number','policy number','commission amount','commission type','issuer','policy holder','agent','notes','issue date','status'];
 			my_array_to_csv(data_array);
 		};
 
 		function form348_import_validate(data_array)
 		{
 			var validate_template_array=[{column:'policy number',required:'yes',regex:new RegExp('^[0-9a-zA-Z_., ()-]+$')},
-										{column:'commission number',required:'yes',regex:new RegExp('^[0-9a-zA-Z_., ()-]+$')},
+										{column:'application number',required:'yes',regex:new RegExp('^[0-9a-zA-Z_., ()-]+$')},
 										{column:'policy holder',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
 										{column:'issuer',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
 										{column:'agent',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},

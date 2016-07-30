@@ -20,7 +20,7 @@
 
 	<div class="portlet-body">
         <form id='report107_master'>
-						<label><input type='text' name='agent' class='floatlabel' placeholder='Agent Name'></label>
+			<label><input type='text' name='agent' class='floatlabel' placeholder='Agent Name'></label>
             <label><input type='text' required name='start' class='floatlabel' placeholder='Start Date'></label>
             <label><input type='text' required name='end' class='floatlabel' placeholder='End Date'></label>
         </form>
@@ -44,62 +44,65 @@
           report107_ini();
       });
 
-			var agent_data={data_store:'staff',return_column:'acc_name'};
-			set_my_filter_json(agent_data,agent_filter);
+	  var agent_data={data_store:'attributes',return_column:'name',
+  						indexes:[{index:"attribute",exact:"Designation"},
+								{index:"type",exact:"staff"},
+								{index:"value",exact:"Agent"}]};
+	  set_my_filter_json(agent_data,agent_filter);
 
       $(start_date).datepicker();
       $(end_date).datepicker();
       start_date.value=get_my_past_date((get_my_time()-(30*86400000)));
       end_date.value=vTime.date();
 
-			var paginator=$('#report107').paginator({visible:false,container:$('#report107')});
+	  var paginator=$('#report107').paginator({visible:false,container:$('#report107')});
 
-      $('#report107').formcontrol();
+      setTimeout(function(){$('#report107').formcontrol();},500);
 	}
 
 	function report107_ini()
 	{
 		show_loader();
-    var form=document.getElementById('report107_master');
+    	var form=document.getElementById('report107_master');
 		var agent_name=form.elements['agent'].value;
-    var start_date=get_raw_time(form.elements['start'].value);
-    var end_date=get_raw_time(form.elements['end'].value)+86400000-1;
+	    var start_date=get_raw_time(form.elements['start'].value);
+	    var end_date=get_raw_time(form.elements['end'].value)+86400000-1;
 
-    var commissions_data={data_store:'policy_commissions',
+    	var commissions_data={data_store:'policy_commissions',
                 indexes:[{index:'id'},
-												{index:'commission_num'},
+						{index:'application_num'},
                         {index:'agent',value:agent_name},
-												{index:'amount'},
-												{index:'policy_num'},
-												{index:'policy_holder'},
-												{index:'issuer'},
-												{index:'policy_type'},
-												{index:'issue_date',lowerbound:start_date,upperbound:end_date},
-												{index:'status',exact:'received'},
-												{index:'notes'}]};
+						{index:'amount'},
+						{index:'policy_num'},
+						{index:'policy_holder'},
+						{index:'issuer'},
+						{index:'policy_type'},
+						{index:'issue_date',lowerbound:start_date,upperbound:end_date},
+						{index:'status',exact:'received'},
+						{index:'notes'}]};
 
-    read_json_rows('report107',commissions_data,function(commissions)
-    {
+		read_json_rows('report107',commissions_data,function(commissions)
+		{
 				//console.log(commissions);
-				var agents=vUtil.arrayColumn(commissions,'agent');
-				var unique_agents=vUtil.arrayUnique(agents);
-				var chart_data_array=[];
+			var agents=vUtil.arrayColumn(commissions,'agent');
+			var unique_agents=vUtil.arrayUnique(agents);
+			var chart_data_array=[];
 
-        unique_agents.forEach(function(ua)
-        {
-						var total_amount=0;
-						for(var i=0;i<commissions.length;i++)
-						{
-							if(ua==commissions[i].agent)
-								total_amount+=parseFloat(commissions[i].amount);
-						}
-						var obj={'agent':ua,'total_amount':total_amount};
-						chart_data_array.push(obj);
-        });
+	        unique_agents.forEach(function(ua)
+	        {
+				var total_amount=0;
+				for(var i=0;i<commissions.length;i++)
+				{
+					if(ua==commissions[i].agent)
+						total_amount+=parseFloat(commissions[i].amount);
+				}
+				var obj={'agent':ua,'total_amount':total_amount};
+				chart_data_array.push(obj);
+        	});
 
-				console.log(chart_data_array);
+			console.log(chart_data_array);
 
-        var chart = AmCharts.makeChart("report107_chart", {
+        	var chart = AmCharts.makeChart("report107_chart", {
                 "type": "serial",
                 "theme": "light",
                 "handDrawn": true,
@@ -141,18 +144,18 @@
 
         initialize_tabular_report_buttons(commissions_data,'Commissions Report','report107',function (item)
         {
-					  item['Agent']=item.agent;
-            item['Commission #']=item.commission_num;
+			item['Agent']=item.agent;
+            item['Application #']=item.application_num;
             item['Amount']=item.amount;
-						item['Policy #']=item.policy_num;
-						item['Issuer']=item.issuer;
+			item['Policy #']=item.policy_num;
+			item['Issuer']=item.issuer;
             item['Policy Holder']=item.policy_holder;
             item['Policy Type']=item.policy_type;
             item['Notes']=item.notes;
-						item['Issue Date']=get_my_past_date(item.issue_date);
+			item['Issue Date']=get_my_past_date(item.issue_date);
             item['Status']=item.status;
 
-            delete item.commission_num;
+            delete item.application_num;
             delete item.agent;
             delete item.amount;
             delete item.policy_num;
