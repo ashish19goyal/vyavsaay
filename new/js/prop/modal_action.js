@@ -16139,6 +16139,7 @@ function modal216_action()
 	$(frenewed_from).parent().parent().hide();
 	$(fported_from).parent().parent().hide();
 
+	var old_premium = 0;
 	vUtil.onChange(ftype,function()
 	{
 		if(ftype.value=='renewal')
@@ -16147,6 +16148,17 @@ function modal216_action()
 			set_my_value_list_json(renewed_data,frenewed_from);
 			$(frenewed_from).parent().parent().show();
 			$(fported_from).parent().parent().hide();
+			vUtil.onChange(frenewed_from,function()
+			{
+				var old_premium_data = {data_store:'policies',return_column:'premium',indexes:[{index:'policy_num',exact:frenewed_from.value}]};
+				read_json_single_column(old_premium_data,function(ops)
+				{
+					if(ops.length>0)
+					{
+						old_premium = ops[0];
+					}
+				});
+			});
 		}
 		else if(ftype.value=='portability')
 		{
@@ -16252,9 +16264,9 @@ function modal216_action()
 						"sum_insured":fsum.value,
 						"term":fterm.value,
 						"preferred":fpreferred.value,
-						"upsell":'no'
+						"upsell": (fpremium.value>old_premium) ? 'yes' : 'no';
 					};
-					console.log(data);
+
 					var attachment_string=JSON.stringify(attachments);
 					var data_json={data_store:'policies',
 					data:[{index:'id',value:get_new_key()},
