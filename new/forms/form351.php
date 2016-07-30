@@ -32,7 +32,7 @@
 				<tr>
 					<form id='form351_header'></form>
 						<th><input type='text' placeholder="Policy Name" class='floatlabel' name='name' form='form351_header'></th>
-            			<th><input type='text' placeholder="Policy Type" class='floatlabel' name='type' form='form351_header'></th>
+            			<th><input type='text' placeholder="Policy Issuer" class='floatlabel' name='issuer' form='form351_header'></th>
 						<th><input type='text' placeholder="Accounts" class='floatlabel' name='account' form='form351_header'></th>
 						<th><input type='text' placeholder="Description" class='floatlabel' name='description' form='form351_header'></th>
 						<th><input type='text' placeholder="Details" readonly='readonly' form='form351_header'></th>
@@ -78,11 +78,13 @@
 		{
 			var filter_fields=document.getElementById('form351_header');
 			var faccount=filter_fields.elements['account'];
-			var ftype=filter_fields.elements['type'];
+			var fissuer=filter_fields.elements['issuer'];
 
 			var account_data={data_store:'staff',return_column:'acc_name'};
 			set_my_filter_json(account_data,faccount);
-			set_static_filter_json('policy_types','type',ftype);
+
+			var issuer_data={data_store:'policy_types',return_column:'issuer'};
+			set_my_filter_json(issuer_data,fissuer);
 
 			$(filter_fields).off('submit');
 			$(filter_fields).on('submit',function(event)
@@ -103,7 +105,7 @@
 
 			var filter_fields=document.getElementById('form351_header');
 			var fname=filter_fields.elements['name'].value;
-      		var ftype=filter_fields.elements['type'].value;
+      		var fissuer=filter_fields.elements['issuer'].value;
 			var faccount=filter_fields.elements['account'].value;
 			var fdesc=filter_fields.elements['description'].value;
 
@@ -114,8 +116,8 @@
 					            data_store:'policy_types',
 					            indexes:[{index:'id',value:fid},
             							{index:'name',value:fname},
-                              			{index:'type',value:ftype},
-            							{index:'issuer'},
+                              			{index:'type'},
+            							{index:'issuer',value:fissuer},
 										{index:'term'},
 										{index:'preferred'},
 										{index:'accounts',value:faccount},
