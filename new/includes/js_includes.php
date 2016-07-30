@@ -56,3 +56,4 @@
 <script src='/new/js/prop/vGoogleCalendar.js'></script>
 <script src='/new/js/prop/vTime.js'></script>
 <script src='/new/js/prop/vUtil.js'></script>
+<script src='/new/js/prop/vImport.js'></script>

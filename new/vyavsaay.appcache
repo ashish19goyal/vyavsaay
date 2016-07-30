@@ -248,6 +248,7 @@ js/prop/time.js
 js/prop/update.js
 js/prop/vGoogleCalendar.js
 js/prop/vUtil.js
+js/prop/vImport.js
 js/prop/vTime.js
 favicon.ico
 #
