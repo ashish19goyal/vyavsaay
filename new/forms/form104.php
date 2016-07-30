@@ -377,7 +377,7 @@
                                 {column:'estimated hours',required:'yes',regex:new RegExp('^[0-9.]+$')},
                                 {column:'status',required:'yes',list:["pending","completed","cancelled"]}];
 
-        var error_array=validate_import_array(data_array,validate_template_array);
+        var error_array=vImport.validate(data_array,validate_template_array);
         return error_array;
     }
 

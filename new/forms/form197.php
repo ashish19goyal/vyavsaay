@@ -277,7 +277,7 @@
                                     {column:'supplier',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
 																		{column:'supplier',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')}];
 
-            var error_array=validate_import_array(data_array,validate_template_array);
+            var error_array=vImport.validate(data_array,validate_template_array);
             return error_array;
         }
 

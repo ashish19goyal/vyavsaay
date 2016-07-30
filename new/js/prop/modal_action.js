@@ -8802,7 +8802,7 @@ function modal138_action()
 												{column:'quantity',required:'yes',regex:new RegExp('^[0-9.]+$')},
 												{column:'tax_type',required:'yes',list:['Tax','Retail-VAT','Retail-CST','Retail-CST-C']}];
 
-						var error_array=validate_import_array(data_array,validate_template_array);
+						var error_array=vImport.validate(data_array,validate_template_array);
 						if(error_array.status=='success')
 						{
 			        		progress_value=10;
@@ -9235,7 +9235,7 @@ function modal140_action(i_func)
 												{column:'tax_rate',required:'yes',regex:new RegExp('^[0-9.]+$')},
 												{column:'cst',required:'yes',list:['yes','no']}];
 
-					var error_array=validate_import_array(data_array,validate_template_array);
+					var error_array=vImport.validate(data_array,validate_template_array);
 					//var error_array=new Object();
 					//error_array.status='success';
 					if(error_array.status=='success')
@@ -10284,7 +10284,7 @@ function modal148_action()
 										{column:'received by',regex:new RegExp('^[0-9a-zA-Z\' _.,/@$!()-]+$')},
 										{column:'remark',regex:new RegExp('^[0-9a-zA-Z\' _.,/@$!()-]+$')}];
 
-			var error_array=validate_import_array(data_array,validate_template_array);
+			var error_array=vImport.validate(data_array,validate_template_array);
 			//var error_array=new Object();
 			//error_array.status='success';
 			if(error_array.status=='success')
@@ -10510,7 +10510,7 @@ function modal149_action()
                 row['Product name']=product_name_array[0];
             });
 
-			var error_array=validate_import_array(data_array,validate_template_array);
+			var error_array=vImport.validate(data_array,validate_template_array);
 			if(error_array.status=='success')
 			{
 	        	progress_value=10;
@@ -11569,7 +11569,7 @@ function modal160_action()
 										{column:'link_to',regex:new RegExp('^[0-9a-zA-Z_]+$')},
 										{column:'last_updated',required:'yes',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')}];
 
-			var error_array=validate_import_array(data_array,validate_template_array);
+			var error_array=vImport.validate(data_array,validate_template_array);
 			if(error_array.status=='success')
 			{
 				progress_value=10;
@@ -12431,7 +12431,7 @@ function modal170_action()
 									{column:'AWB Number',regex:new RegExp('^[0-9a-zA-Z -]+$')},
 									{column:'Status',list:['dispatched','','null']}];
 
-			var error_array=validate_import_array(data_array,validate_template_array);
+			var error_array=vImport.validate(data_array,validate_template_array);
 			if(error_array.status=='success')
 			{
         		progress_value=10;
@@ -15469,7 +15469,7 @@ function modal208_action()
 			var validate_template_array=[{column:'Weight',regex:new RegExp('^[0-9 .]+$')},
 										{column:'AWB No',required:'yes',regex:new RegExp('^[0-9]+$')}];
 
-			var error_array=validate_import_array(data_array,validate_template_array);
+			var error_array=vImport.validate(data_array,validate_template_array);
 			if(error_array.status=='success')
 			{
 	        	progress_value=10;

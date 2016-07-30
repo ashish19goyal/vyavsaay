@@ -340,7 +340,7 @@
 									{column:'status',required:'yes',list:['active','inactive']},
 									{column:'box_type',required:'yes',list:['static','actionable']}];
 
-			var error_array=validate_import_array(data_array,validate_template_array);
+			var error_array=vImport.validate(data_array,validate_template_array);
 			return error_array;
 		}
 

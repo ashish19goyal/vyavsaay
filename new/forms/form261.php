@@ -333,7 +333,7 @@
                                     {column:'account number',required:'yes',regex:new RegExp('^[a-zA-Z0-9]+$')},
                                     {column:'status',required:'yes',list:['active','inactive']}];
 
-            var error_array=validate_import_array(data_array,validate_template_array);
+            var error_array=vImport.validate(data_array,validate_template_array);
             return error_array;					
         }
 
