@@ -16085,6 +16085,23 @@ function modal216_action()
 	vUtil.onChange(fterm,policy_filtering);
 	vUtil.onChange(fpreferred,policy_filtering);
 
+	function premium_calculation()
+	{
+		fpremium.value="";
+		var premium_data={data_store:'policy_premiums',return_column:'premium_amount',
+						indexes:[{index:'policy_name',exact:fpname.value},
+								{index:'sum_insured',exact:fsum.value},
+								{index:'adults',exact:fadults.value},
+								{index:'children',exact:fchild.value},
+								{index:'age_lower',upperbound:fage.value},
+								{index:'age_upper',lowerbound:fage.value}]};
+		set_my_value_json(premium_data,fpremium);
+	};
+	vUtil.onChange(fsum,premium_calculation);
+	vUtil.onChange(fadults,premium_calculation);
+	vUtil.onChange(fchild,premium_calculation);
+	vUtil.onChange(fage,premium_calculation);
+
 	var holder_data={data_store:'customers',return_column:'acc_name'};
 	set_my_value_list_json(holder_data,fholder);
 
@@ -16168,6 +16185,8 @@ function modal216_action()
 				description = policies[0].description;
 			}
 		});
+
+		premium_calculation();
 	});
 
 	$(form).off("submit");
