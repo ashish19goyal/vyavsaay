@@ -139,7 +139,7 @@
 								rowsHTML+="<textarea readonly='readonly' form='form351_"+result.id+"'>"+result.name+"</textarea>";
 							rowsHTML+="</td>";
               				rowsHTML+="<td data-th='Type'>";
-								rowsHTML+="<input type='text' class='floatlabel' placeholder='Policy Type' readonly='readonly' form='form351_"+result.id+"' value='"+result.type+"'>";
+								rowsHTML+="<input type='text' class='floatlabel dblclick_editable' placeholder='Policy Type' readonly='readonly' form='form351_"+result.id+"' value='"+result.type+"'>";
 								rowsHTML+="<textarea readonly='readonly' class='floatlabel' placeholder='Provider' form='form351_"+result.id+"'>"+result.issuer+"</textarea>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Accounts'>";
@@ -188,6 +188,7 @@
 			if(is_update_access('form351'))
 			{
 				var name=form.elements[0].value;
+				var type=form.elements[1].value;
 				var desc=form.elements[3].value;
 				var term=form.elements[4].value;
 				var preferred=form.elements[5].value;
@@ -196,6 +197,7 @@
 				var data_json={data_store:'policy_types',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'description',value:desc},
+						{index:'type',value:type},
 						{index:'term',value:term},
 						{index:'preferred',value:preferred},
 	 					{index:'last_updated',value:last_updated}]};
