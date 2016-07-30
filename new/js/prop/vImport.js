@@ -34,9 +34,10 @@ var vImport = function (options)
 				}
 				else if(data_row[vt[a].column]!="")
 				{
-					vImport.validateRegex(vt[a],data_row,error_array);
-					vImport.validateList(vt[a],data_row,error_array);
-					vImport.validateAntiList(vt[a],data_row,error_array);
+					vImport.validateRegex(vt[a],data_row,error_array,row_count);
+					vImport.validateList(vt[a],data_row,error_array,row_count);
+					vImport.validateAntiList(vt[a],data_row,error_array,row_count);
+					vImport.formulateJson(vt[a],data_row,error_array,row_count);
 				}
 			}
 		});
@@ -44,7 +45,7 @@ var vImport = function (options)
 	};
 
 	//this function validates the regex match
-	this.validateRegex = function(column,data_row,error_array)
+	this.validateRegex = function(column,data_row,error_array,row_count)
 	{
 		if(typeof column.regex!='undefined')
 		{
@@ -58,7 +59,7 @@ var vImport = function (options)
 	};
 
 	//this function validates that the provided list should be matched
-	this.validateList = function(column,data_row,error_array)
+	this.validateList = function(column,data_row,error_array,row_count)
 	{
 		if((typeof column.list!='undefined') && $.inArray(data_row[column.column],column.list)==-1)
 		{
@@ -77,7 +78,7 @@ var vImport = function (options)
 	};
 
 	//this function validates that the provided list should not be matched, i.e, avoids duplicate entries.
-	this.validateAntiList = function(column,data_row,error_array)
+	this.validateAntiList = function(column,data_row,error_array,row_count)
 	{
 		if((typeof column.anti_list!='undefined') && $.inArray(data_row[column.column],column.anti_list)!=-1)
 		{
@@ -94,6 +95,22 @@ var vImport = function (options)
 			error_array.status='error';
 		}
 	};
+
+	this.formulateJson = function(column,data_row,error_array,row_count)
+	{
+		if((typeof column.json!='undefined'))
+		{
+			data_row[column.column] = data_row[column.column].replace(/\'/g,"\"");
+			var x = data_row[column.column].replace(/\'/g,"\"");
+			try{
+				var data = JSON.parse(data_row[column.column]);
+			}catch(e)
+			{
+				error_array.logs.push({row:row_count,column:column.column,error:"JSON Error",data:data_row[column.column]});
+				error_array.status='error';
+			}
+		}
+	}
 
 };
 vImport=new vImport();

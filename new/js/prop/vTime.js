@@ -93,7 +93,7 @@ var vTime = function ()
     this.date = function(opts)
     {
       var defs={time:Date.now(),inputFormat:'unix',resultFormat:'dd/mm/yyyy',addDays:0};
-    	var sets = $.extend(defs, opts || {});
+      var sets = $.extend(defs, opts || {});
 
       if(sets.time=='' || sets.time==null || sets.time=='null' || sets.time==0)
       {

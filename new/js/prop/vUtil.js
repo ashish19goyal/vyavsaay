@@ -37,7 +37,7 @@ var vUtil = function (options)
            func();
     };
 
-		//parses a json string to get a js object/array
+	//parses a json string to get a js object/array
 	this.jsonParse = function(markers)
 	{
 		var markers_array=[];
@@ -168,6 +168,7 @@ var vUtil = function (options)
             }
             // Now that we have our value string, let's add
             // it to the data array.
+			strMatchedValue = strMatchedValue.replace(/^"(.*)"$/, '$1');
             arrData[arrData.length - 1].push(strMatchedValue);
         }
 
@@ -220,6 +221,10 @@ var vUtil = function (options)
         }
 
         var header_cols=rows[0].split(',');
+		for(var i in header_cols)
+        {
+			header_cols[i] = header_cols[i].replace(/^"(.*)"$/, '$1');
+		}
 
         for(var i=1;i<rows.length;i++)
         {

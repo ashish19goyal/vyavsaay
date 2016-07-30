@@ -302,7 +302,7 @@
 										"<input placeholder='Issue Type' readonly='readonly' class='floatlabel' value='"+fvalue.issue+"' name='issue' type='text'>"+
 									"</div>"+
 									"<div class='col-md-4'>"+
-										"<textarea placeholder='Conditions' class='floatlabel' name='conditions'>"+fvalue.conditions+"</textarea>"+
+										"<textarea placeholder='Conditions' class='floatlabel' name='conditions'>"+JSON.stringify(fvalue.conditions)+"</textarea>"+
 									"</div>"+
 									"<div class='col-md-2'>"+
 										"<input placeholder='Commission %' readonly='readonly' class='floatlabel' value='"+fvalue.commission+"' name='commission' type='number' step='any'>"+
@@ -330,7 +330,7 @@
 					{
 						var return_obj={type:$(this).find("input[name='type']").val(),
 										issue:$(this).find("input[name='issue']").val(),
-										conditions:$(this).find("textarea[name='conditions']").val(),
+										conditions:vUtil.jsonParse($(this).find("textarea[name='conditions']").val()),
 										commission:$(this).find("input[name='commission']").val()};
 						returns_column_array.push(return_obj);
 					});
@@ -360,11 +360,12 @@
 		function form351_import_validate(data_array)
 		{
 			var validate_template_array=[{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-                                  {column:'type',required:'yes',list:['medical','mon-medical']},
+                                  {column:'type',required:'yes',list:['health','life','car']},
 								  {column:'term',required:'yes',list:['one year','two years','one year, two years']},
 								  {column:'preferred',required:'yes',list:['yes','no']},
                                   {column:'issuer',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-                				  {column:'description',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')}];
+                				  {column:'description',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
+							  	  {column:'commissions',required:'yes',json:true}];
 
 			var error_array=vImport.validate(data_array,validate_template_array);
 			return error_array;

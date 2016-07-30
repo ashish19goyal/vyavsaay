@@ -16181,7 +16181,7 @@ function modal216_action()
 				//fterm.value = policies[0].term;
 				//fptype.value = policies[0].type;
 				fpreferred.value = policies[0].preferred;
-				commissions = policies[0].commissions;
+				commissions = vUtil.jsonParse(policies[0].commissions);
 				description = policies[0].description;
 			}
 		});
@@ -16200,7 +16200,7 @@ function modal216_action()
 			var attachments = [];
 			var domain=get_session_var('domain');
 			var files = select_file.files;
-			console.log(files);
+			// console.log(files);
 			var counter=files.length;
 			for(var i=0; i<files.length; i++)
 			{
@@ -16242,6 +16242,19 @@ function modal216_action()
 				if(counter==0)
 				{
 					clearInterval(wait);
+
+					var date_array=String(fissue.value).split(/[\-\/]+/);;
+					var month=parseInt(date_array[1]);
+					var monthArray=[4,5,6,7,8,9];
+					var first_half = (monthArray.indexOf(month)==-1) ? 'no' : 'yes';
+					var data={
+						"first_half_year":first_half,
+						"sum_insured":fsum.value,
+						"term":fterm.value,
+						"preferred":fpreferred.value,
+						"upsell":'no'
+					};
+					console.log(data);
 					var attachment_string=JSON.stringify(attachments);
 					var data_json={data_store:'policies',
 					data:[{index:'id',value:get_new_key()},
@@ -16277,20 +16290,53 @@ function modal216_action()
 						{index:'last_updated',value:last_updated}]};
 					create_json(data_json);
 
-					// var data_json={data_store:'policy_commissions',
-					// data:[{index:'id',value:get_new_key()},
-					// 	{index:'policy_num',value:app_num},
-					// 	{index:'commission_num',value:''},
-					// 	{index:'issuer',value:pissuer},
-					// 	{index:'policy_holder',value:fholder.value},
-					// 	{index:'amount',value:'1000'},
-					// 	{index:'agent',value:fagent.value},
-					// 	{index:'issue_date',value:issue_date},
-					// 	{index:'commission_type',value:'base'},
-					// 	{index:'status',value:'pending'},
-					// 	{index:'notes',value:''},
-					// 	{index:'last_updated',value:last_updated}]};
-					// create_json(commission_json);
+					var commission_id = vUtil.newKey();
+					commissions.forEach(function(commission)
+					{
+						commission_id++;
+						if(commission.issue==ftype.value)
+						{
+							var add=true;
+							var amount = parseFloat(commission.commission)*parseFloat(fpremium.value)/100;
+
+							if(!vUtil.isBlank(commission.conditions) && commission.conditions!=[])
+							{
+								commission.conditions.forEach(function(cond)
+								{
+									if(!vUtil.isBlank(cond.exact) && data[cond.index]!=cond.exact)
+									{
+										add=false;
+									}
+									if(!vUtil.isBlank(cond.lowerbound) && data[cond.index]<cond.lowerbound)
+									{
+										add=false;
+									}
+									if(!vUtil.isBlank(cond.upperbound) && data[cond.index]>cond.upperbound)
+									{
+										add=false;
+									}
+								});
+							}
+
+							if(add)
+							{
+								var commission_json={data_store:'policy_commissions',
+									data:[{index:'id',value:commission_id},
+										{index:'application_num',value:fapp.value},
+										{index:'commission_num',value:''},
+										{index:'issuer',value:fcompany.value},
+										{index:'policy_holder',value:fholder.value},
+										{index:'amount',value:amount},
+										{index:'agent',value:fagent.value},
+										{index:'issue_date',value:vTime.unix({date:fissue.value})},
+										{index:'commission_type',value:commission.type},
+										{index:'status',value:'pending'},
+										{index:'notes',value:''},
+										{index:'last_updated',value:last_updated}]};
+								create_json(commission_json);
+							}
+						}
+					});
 				}
 			},500);
 		}

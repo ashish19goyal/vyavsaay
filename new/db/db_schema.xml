@@ -2209,6 +2209,7 @@
 			<commission_num index='yes' type="TEXT"></commission_num>
 			<policy_holder index='yes' type="TEXT"></policy_holder>
 			<agent index='yes' type="TEXT"></agent>
+			<application_num index='yes' type="TEXT"></application_num>
 			<policy_num index='yes' type="TEXT"></policy_num>
 			<issuer index='yes' type="TEXT"></issuer>
 			<notes index="no" type="TEXT"></notes>
