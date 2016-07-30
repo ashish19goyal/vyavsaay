@@ -2232,4 +2232,17 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</policy_types>
+	<policy_premiums>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<policy_name index='yes' type="TEXT"></policy_name>
+			<issuer index='yes' type="TEXT"></issuer>
+			<age_lower index='yes' type="DECIMAL(12,2)"></age_lower>
+			<age_upper index='yes' type="DECIMAL(12,2)"></age_upper>
+			<sum_insured index='yes' type="DECIMAL(12,2)"></sum_insured>
+			<adults index='yes' type="DECIMAL(12,2)"></adults>
+			<children index='yes' type="DECIMAL(12,2)"></children>
+			<premium_amount index='yes' type="DECIMAL(12,2)"></premium_amount>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</policy_premiums>
 </re_xml>
