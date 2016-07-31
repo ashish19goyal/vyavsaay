@@ -68,12 +68,15 @@
 				case 'End Date':  break;
 				case 'Start Date':  break;
 				case 'Issue Date':  break;
-				case 'Tele Caller': value_data['return_column'] = 'applciation_num'; break;
-				case 'Application #': value_data['return_column'] = 'applciation_num'; break;
-				case 'Application #': value_data['return_column'] = 'applciation_num'; break;
-				case 'Application #': value_data['return_column'] = 'applciation_num'; break;
-				case 'Application #': value_data['return_column'] = 'applciation_num'; break;
-				case 'Application #': value_data['return_column'] = 'applciation_num'; break;
+				case 'Tele Caller': value_data['return_column'] = 'tele_caller'; break;
+				case 'Sales Manager': value_data['return_column'] = 'sales_manager'; break;
+				case 'Team Lead': value_data['return_column'] = 'team_lead'; break;
+				case 'Agent': value_data['return_column'] = 'agent'; break;
+				case 'Issuing Company': value_data['return_column'] = 'issuer'; break;
+				case 'Policy Name': value_data['return_column'] = 'policy_name'; break;
+				case 'Policy Holder': value_data['return_column'] = 'policy_holder'; break;
+				case 'Preferred': value_data['return_column'] = 'preferred'; break;
+				case 'Term': value_data['return_column'] = 'term'; break;
 			}
 			set_my_filter_json(value_data,v_filter);
 		});
@@ -91,9 +94,8 @@
     function report119_ini()
     {
         var form=document.getElementById('report119_header');
-        var awb_filter=form.elements['awb'].value;
-		var channel_filter=form.elements['channel'].value;
-		var date_filter=get_raw_time(form.elements['date'].value);
+        var f_filter=form.elements['filter'].value;
+		var v_filter=form.elements['v'].value;
 
         show_loader();
         $('#report119_body').html('');
@@ -102,9 +104,8 @@
 
         var columns={count:paginator.page_size(),
                     start_index:paginator.get_index(),
-                    data_store:'logistics_orders',
-					access:'yes',
-                    indexes:[{index:'id'},
+                    data_store:'policies',
+					indexes:[{index:'id'},
                         {index:'awb_num',value:awb_filter},
                         {index:'channel_name',value:channel_filter},
                         {index:'import_date',value:date_filter},
@@ -142,7 +143,7 @@
             });
             $('#report119_body').append(rowsHTML);
 
-            initialize_tabular_report_buttons(columns,'New Orders from API','report119',function (item)
+            initialize_tabular_report_buttons(columns,'Policies Report','report119',function (item)
             {
 				item['Pickup Date']=vTime.date({time:item.import_date});
 				delete item.source;
