@@ -16264,7 +16264,7 @@ function modal216_action()
 						"sum_insured":fsum.value,
 						"term":fterm.value,
 						"preferred":fpreferred.value,
-						"upsell": (fpremium.value>old_premium) ? 'yes' : 'no';
+						"upsell": (fpremium.value>old_premium) ? 'yes' : 'no'
 					};
 
 					var attachment_string=JSON.stringify(attachments);
