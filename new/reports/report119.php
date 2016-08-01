@@ -23,6 +23,7 @@
 			<fieldset>
 				<label><input type='text' placeholder="Filter By" class='floatlabel' name='filter'></label>
 				<label><input type='text' placeholder="Filter Value" class='floatlabel' name='v'></label>
+				<input type='hidden' name='index'>
 				<label><input type='submit' class='submit_hidden'></label>
 			</fieldset>
 		</form>
@@ -51,6 +52,7 @@
         var form=document.getElementById('report119_header');
         var f_filter=form.elements['filter'];
 		var v_filter=form.elements['v'];
+		var f_filter_index=form.elements['index'];
 
 		var data=['Application #','Policy #','Issue Type','End Date','Start Date','Issue Date',
 					'Tele Caller','Sales Manager','Team Lead','Agent','Issuing Company',
@@ -60,9 +62,9 @@
 		vUtil.onChange(f_filter,function()
 		{
 			var value_data={data_store:'policies'};
-			swtich(f_filter.value)
+			switch(f_filter.value)
 			{
-				case 'Application #': value_data['return_column'] = 'applciation_num'; break;
+				case 'Application #': value_data['return_column'] = f_filter_index.value = 'application_num'; break;
 				case 'Policy #': value_data['return_column'] = 'policy_num'; break;
 				case 'Issue Type': value_data['return_column'] = 'issue_type'; break;
 				case 'End Date':  break;
@@ -94,7 +96,7 @@
     function report119_ini()
     {
         var form=document.getElementById('report119_header');
-        var f_filter=form.elements['filter'].value;
+        var f_filter_index=form.elements['index'].value;
 		var v_filter=form.elements['v'].value;
 
         show_loader();
@@ -106,16 +108,16 @@
                     start_index:paginator.get_index(),
                     data_store:'policies',
 					indexes:[{index:'id'},
-                        {index:'awb_num',value:awb_filter},
-                        {index:'channel_name',value:channel_filter},
-                        {index:'import_date',value:date_filter},
-						{index:'ship_to'},
-						{index:'merchant_name'},
-						{index:'address1'},
-						{index:'city'},
-						{index:'phone'},
-						{index:'source',exact:'api'},
-                        {index:'status',exact:'picked'}]};
+                        {index:'policy_num'},
+                        {index:'application_num'},
+                        {index:'policy_holder'},
+						{index:'agent'},
+						{index:'sum_insured'},
+						{index:'premium'},
+						{index:'issue_date'},
+						{index:'end_date'},
+						{index:'status'}]};
+		columns.indexes.push({index:f_filter_index,exact:v_filter});
 
         read_json_rows('report119',columns,function(items)
         {
@@ -124,17 +126,26 @@
             {
                 rowsHTML+="<tr>";
                 rowsHTML+="<form id='report119_"+item.id+"'></form>";
-                rowsHTML+="<td data-th='AWB #'>";
-				    rowsHTML+="<a onclick=\"element_display('"+item.id+"','form198');\">"+item.awb_num+"</a>";
+                rowsHTML+="<td data-th='Application #'>";
+				    rowsHTML+=item.application_num;
                 rowsHTML+="</td>";
-                rowsHTML+="<td data-th='Pickup Date'>";
-					rowsHTML+=vTime.date({time:item.import_date});
+				rowsHTML+="<td data-th='Policy #'>";
+				    rowsHTML+=item.policy_num;
                 rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Consignee'>";
-					rowsHTML+=item.ship_to+", "+item.address1+", "+item.city;
+                rowsHTML+="<td data-th='Policy Holder'>";
+					rowsHTML+=item.policy_holder;
                 rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Merchant'>";
-					rowsHTML+=item.merchant_name;
+				rowsHTML+="<td data-th='Agent'>";
+					rowsHTML+=item.agent;
+                rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Sum Insured'>";
+					rowsHTML+=item.sum_insured;
+                rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Premium'>";
+					rowsHTML+=item.premium;
+                rowsHTML+="</td>";
+				rowsHTML+="<td data-th='End Date'>";
+					rowsHTML+=vTime.date({time:item.end_date});
                 rowsHTML+="</td>";
                 rowsHTML+="<td data-th='Status'>";
                     rowsHTML+=item.status;
@@ -145,8 +156,8 @@
 
             initialize_tabular_report_buttons(columns,'Policies Report','report119',function (item)
             {
-				item['Pickup Date']=vTime.date({time:item.import_date});
-				delete item.source;
+				item['End Date']=vTime.date({time:item.end_date});
+				delete item.end_date;
 			});
 
             paginator.update_index(items.length);

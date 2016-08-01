@@ -35,6 +35,15 @@
 			"post_message":{"index": "no","type": "TEXT"},
 			"delete_message":{"index": "no","type": "TEXT"},
 			"last_updated":{"index": "yes","type": "BIGINT"}
+		},
+		"api_logs":
+		{
+			"id":{"index": "no","type": "BIGINT NOT NULL AUTO_INCREMENT"},
+			"username":{"index": "no","type": "VARCHAR(100) NOT NULL"},
+			"api_key":{"index": "no","type": "VARCHAR(100) NOT NULL"},
+			"status":{"index": "no","type": "VARCHAR(45)"},
+			"type":{"index": "no","type": "VARCHAR(25)"},
+			"last_updated":{"index": "yes","type": "BIGINT"}
 		}
 	}
 }

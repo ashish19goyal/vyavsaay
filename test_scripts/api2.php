@@ -12,12 +12,12 @@
 		array("index" => "awb_num", "exact" => "788832")
 	);
 
-	$data_string="indexes=".json_encode($data_object['indexes'])."&key=".$data_object['key']."&username=".$data_object['username'];
-	// $data_string = array(
-    //       "key" => $data_object['key'],
-    //       "username" => $data_object['username'],
-    //       "data" => json_encode($data_object['indexes'])
-    //     );
+	// $data_string="indexes=".json_encode($data_object['indexes'])."&key=".$data_object['key']."&username=".$data_object['username'];
+	$data_string = json_encode(array(
+          "key" => $data_object['key'],
+          "username" => $data_object['username'],
+          "data" => $data_object['indexes']
+	  ));
 	//echo $data_string;
 	// $url="localhost/api/get_data.php";
 	$url="https://vyavsaay.com/api/logistics_orders/get";
