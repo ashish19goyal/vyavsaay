@@ -23,7 +23,7 @@
 			<fieldset>
 				<label><input type='text' placeholder="Filter By" class='floatlabel' name='filter'></label>
 				<label><input type='text' placeholder="Filter Value" class='floatlabel' name='v'></label>
-				<input type='hidden' name='index'>
+				<input type='hidden' name='index' valus='status'>
 				<label><input type='submit' class='submit_hidden'></label>
 			</fieldset>
 		</form>
@@ -65,20 +65,21 @@
 			switch(f_filter.value)
 			{
 				case 'Application #': value_data['return_column'] = f_filter_index.value = 'application_num'; break;
-				case 'Policy #': value_data['return_column'] = 'policy_num'; break;
-				case 'Issue Type': value_data['return_column'] = 'issue_type'; break;
-				case 'End Date':  break;
-				case 'Start Date':  break;
-				case 'Issue Date':  break;
-				case 'Tele Caller': value_data['return_column'] = 'tele_caller'; break;
-				case 'Sales Manager': value_data['return_column'] = 'sales_manager'; break;
-				case 'Team Lead': value_data['return_column'] = 'team_lead'; break;
-				case 'Agent': value_data['return_column'] = 'agent'; break;
-				case 'Issuing Company': value_data['return_column'] = 'issuer'; break;
-				case 'Policy Name': value_data['return_column'] = 'policy_name'; break;
-				case 'Policy Holder': value_data['return_column'] = 'policy_holder'; break;
-				case 'Preferred': value_data['return_column'] = 'preferred'; break;
-				case 'Term': value_data['return_column'] = 'term'; break;
+				case 'Policy #': value_data['return_column'] = f_filter_index.value = 'policy_num'; break;
+				case 'Issue Type': value_data['return_column'] = f_filter_index.value = 'issue_type'; break;
+				case 'End Date':  f_filter_index.value = 'end_date'; break;
+				case 'Start Date':  f_filter_index.value = 'start_date'; break;
+				case 'Issue Date':  f_filter_index.value = 'issue_date'; break;
+				case 'Tele Caller': value_data['return_column'] = f_filter_index.value = 'tele_caller'; break;
+				case 'Sales Manager': value_data['return_column'] = f_filter_index.value = 'sales_manager'; break;
+				case 'Team Lead': value_data['return_column'] = f_filter_index.value = 'team_lead'; break;
+				case 'Agent': value_data['return_column'] = f_filter_index.value = 'agent'; break;
+				case 'Issuing Company': value_data['return_column'] = f_filter_index.value = 'issuer'; break;
+				case 'Policy Name': value_data['return_column'] = f_filter_index.value = 'policy_name'; break;
+				case 'Policy Holder': value_data['return_column'] = f_filter_index.value = 'policy_holder'; break;
+				case 'Preferred': value_data['return_column'] = f_filter_index.value = 'preferred'; break;
+				case 'Term': value_data['return_column'] = f_filter_index.value = 'term'; break;
+				default: f_filter_index.value = 'status';
 			}
 			set_my_filter_json(value_data,v_filter);
 		});
@@ -117,7 +118,7 @@
 						{index:'issue_date'},
 						{index:'end_date'},
 						{index:'status'}]};
-		columns.indexes.push({index:f_filter_index,exact:v_filter});
+		columns.indexes.push({index:f_filter_index,value:v_filter});
 
         read_json_rows('report119',columns,function(items)
         {
