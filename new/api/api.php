@@ -1,13 +1,10 @@
 <?php
 
 	require_once '../Classes/api.php';
-	// require_once '../Classes/vDB.php';
 	use RetailingEssentials\api;
 
 	$post = json_decode(file_get_contents("php://input"),true);
 	$api = api::getInstance($_GET,$post);
-
-	// $vDB=new vDB(0);
 
 	$authentication = $api->authenticateRequest();
 

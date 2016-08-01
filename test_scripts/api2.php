@@ -16,10 +16,10 @@
 	$data_string = json_encode(array(
           "key" => $data_object['key'],
           "username" => $data_object['username'],
-          "data" => $data_object['indexes']
+          "indexes" => $data_object['indexes']
 	  ));
 	//echo $data_string;
-	// $url="localhost/api/get_data.php";
+	// $url="localhost/api/logistics_orders/get";
 	$url="https://vyavsaay.com/api/logistics_orders/get";
 
 	$headers = array('Content-Type: application/json');
