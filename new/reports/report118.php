@@ -79,7 +79,7 @@
         function report118_ini()
         {
             var form=document.getElementById('report118_header');
-            var item=form.elements['item'].value;
+            var item=form.elements['name'].value;
             var start_date=vTime.unix({date:form.elements['start'].value});
             var end_date=vTime.unix({date:form.elements['end'].value});
 
