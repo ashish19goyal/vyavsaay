@@ -23,7 +23,9 @@
 			<fieldset>
 				<label><input type='text' placeholder="Filter By" class='floatlabel' name='filter'></label>
 				<label><input type='text' placeholder="Filter Value" class='floatlabel' name='v'></label>
-				<input type='hidden' name='index' valus='status'>
+				<label><input type='text' placeholder="From Date" class='floatlabel' name='from'></label>
+				<label><input type='text' placeholder="To Date" class='floatlabel' name='to'></label>
+				<input type='hidden' name='index' value='status'>
 				<label><input type='submit' class='submit_hidden'></label>
 			</fieldset>
 		</form>
@@ -52,6 +54,8 @@
         var form=document.getElementById('report119_header');
         var f_filter=form.elements['filter'];
 		var v_filter=form.elements['v'];
+		var from_filter=form.elements['from'];
+		var to_filter=form.elements['to'];
 		var f_filter_index=form.elements['index'];
 
 		var data=['Application #','Policy #','Issue Type','End Date','Start Date','Issue Date',
@@ -59,29 +63,50 @@
 					'Policy Name','Policy Holder','Preferred','Term'];
 		set_value_list_json(data,f_filter);
 
+		$(from_filter).datepicker();
+		$(to_filter).datepicker();
+
+		function s(x){
+			if(!vUtil.isBlank(x) && x=='d'){
+				$(from_filter).show();
+				$(to_filter).show();
+				$(v_filter).hide();
+				$('#report119').formcontrol();
+			}else{
+				$(from_filter).hide();
+				$(to_filter).hide();
+				$(v_filter).show();
+				var value_data={data_store:'policies',return_column:f_filter_index.value};
+				set_my_filter_json(value_data,v_filter);
+			}
+			v_filter.value="";
+			from_filter.value="";
+			to_filter.value="";
+		}
+
+		s();
+		f_filter.value="";
 		vUtil.onChange(f_filter,function()
 		{
-			var value_data={data_store:'policies'};
 			switch(f_filter.value)
 			{
-				case 'Application #': value_data['return_column'] = f_filter_index.value = 'application_num'; break;
-				case 'Policy #': value_data['return_column'] = f_filter_index.value = 'policy_num'; break;
-				case 'Issue Type': value_data['return_column'] = f_filter_index.value = 'issue_type'; break;
-				case 'End Date':  f_filter_index.value = 'end_date'; break;
-				case 'Start Date':  f_filter_index.value = 'start_date'; break;
-				case 'Issue Date':  f_filter_index.value = 'issue_date'; break;
-				case 'Tele Caller': value_data['return_column'] = f_filter_index.value = 'tele_caller'; break;
-				case 'Sales Manager': value_data['return_column'] = f_filter_index.value = 'sales_manager'; break;
-				case 'Team Lead': value_data['return_column'] = f_filter_index.value = 'team_lead'; break;
-				case 'Agent': value_data['return_column'] = f_filter_index.value = 'agent'; break;
-				case 'Issuing Company': value_data['return_column'] = f_filter_index.value = 'issuer'; break;
-				case 'Policy Name': value_data['return_column'] = f_filter_index.value = 'policy_name'; break;
-				case 'Policy Holder': value_data['return_column'] = f_filter_index.value = 'policy_holder'; break;
-				case 'Preferred': value_data['return_column'] = f_filter_index.value = 'preferred'; break;
-				case 'Term': value_data['return_column'] = f_filter_index.value = 'term'; break;
-				default: f_filter_index.value = 'status';
+				case 'Application #': f_filter_index.value = 'application_num'; s(); break;
+				case 'Policy #': f_filter_index.value = 'policy_num'; s(); break;
+				case 'Issue Type': f_filter_index.value = 'issue_type'; s(); break;
+				case 'End Date':  f_filter_index.value = 'end_date'; s('d'); break;
+				case 'Start Date':  f_filter_index.value = 'start_date'; s('d'); break;
+				case 'Issue Date':  f_filter_index.value = 'issue_date'; s('d'); break;
+				case 'Tele Caller': f_filter_index.value = 'tele_caller'; s(); break;
+				case 'Sales Manager': f_filter_index.value = 'sales_manager'; s(); break;
+				case 'Team Lead': f_filter_index.value = 'team_lead'; s(); break;
+				case 'Agent': f_filter_index.value = 'agent'; s(); break;
+				case 'Issuing Company': f_filter_index.value = 'issuer'; s(); break;
+				case 'Policy Name': f_filter_index.value = 'policy_name'; s(); break;
+				case 'Policy Holder': f_filter_index.value = 'policy_holder'; s(); break;
+				case 'Preferred': f_filter_index.value = 'preferred'; s(); break;
+				case 'Term': f_filter_index.value = 'term'; s(); break;
+				default: f_filter_index.value = 'status'; s();
 			}
-			set_my_filter_json(value_data,v_filter);
 		});
 
 		$(form).off('submit');
@@ -99,6 +124,8 @@
         var form=document.getElementById('report119_header');
         var f_filter_index=form.elements['index'].value;
 		var v_filter=form.elements['v'].value;
+		var from_filter=vTime.unix({date:form.elements['from'].value});
+		var to_filter=vTime.unix({date:form.elements['to'].value});
 
         show_loader();
         $('#report119_body').html('');
@@ -118,8 +145,18 @@
 						{index:'issue_date'},
 						{index:'end_date'},
 						{index:'status'}]};
-		columns.indexes.push({index:f_filter_index,value:v_filter});
-
+		if(!vUtil.isBlank(v_filter)){
+			columns.indexes.push({index:f_filter_index,value:v_filter});
+		}
+		else{
+			if(!vUtil.isBlank(from_filter)){
+				columns.indexes.push({index:f_filter_index,lowerbound:from_filter});
+			}
+		 	if(!vUtil.isBlank(to_filter)){
+				columns.indexes.push({index:f_filter_index,upperbound:to_filter});
+			}
+		}
+		console.log(columns);
         read_json_rows('report119',columns,function(items)
         {
             var rowsHTML="";
