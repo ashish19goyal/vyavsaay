@@ -427,6 +427,25 @@ class vDB
 				$result['query'].=") and ";
 			}
 
+			if(isset($index['anti_array']))
+			{
+				$result['query'].=$this->table.".".$index['index']." not in (";
+				$exploded_values=(array)$index['anti_array'];
+				foreach($exploded_values as $value)
+				{
+					$result['query'].="?,";
+					$result['values'][]=$value;
+				}
+				if(count($exploded_values)==0)
+				{
+					$result['query'].="?,";
+					$result['values'][]="--";
+				}
+
+				$result['query']=rtrim($result['query'],",");
+				$result['query'].=") and ";
+			}
+
 			if(isset($index['value']))
 			{
 				if($index['value']!="")
