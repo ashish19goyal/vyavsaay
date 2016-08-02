@@ -156,7 +156,7 @@
 				columns.indexes.push({index:f_filter_index,upperbound:to_filter});
 			}
 		}
-		console.log(columns);
+
         read_json_rows('report119',columns,function(items)
         {
             var rowsHTML="";

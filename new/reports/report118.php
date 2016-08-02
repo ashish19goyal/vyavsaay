@@ -73,7 +73,7 @@
 
 			var paginator=$('#report118_body').paginator({'visible':false,'container':$('#report118_body')});
 
-            $('#report118').formcontrol();
+            setTimeout(function(){$('#report118').formcontrol();},500);
         }
 
         function report118_ini()
@@ -100,7 +100,7 @@
 				var bills_data={data_store:'bills',
 							indexes:[{index:'customer_name'},
 							{index:'bill_num'},{index:'type'},{index:'id'},
-							{index:'bill_date',lowerbound:start_date,upperbound:end_date},
+							{index:'bill_date',upperbound:end_date},
 							{index:'id',array:bill_ids_array}]};
 				read_json_rows('report118',bills_data,function(bills)
 				{
@@ -124,10 +124,10 @@
 									bill_item.type="Performa Invoice";
 									bill_item.link_form="form283";
 								}
-								all_transactions.push(bill_item);
 								break;
 							}
 						}
+						all_transactions.push(bill_item);
 					});
 					trans_counter-=1;
 				});
@@ -146,7 +146,7 @@
 				var bills_data={data_store:'supplier_bills',
 							indexes:[{index:'supplier'},{index:'id'},
 							{index:'bill_id'},
-							{index:'bill_date',lowerbound:start_date,upperbound:end_date},
+							{index:'bill_date',upperbound:end_date},
 							{index:'id',array:bill_ids_array}]};
 				read_json_rows('report118',bills_data,function(bills)
 				{
@@ -162,10 +162,10 @@
 								bill_item.voucher_num = bills[i].bill_id;
 								bill_item.link_id=bills[i].id;
 								bill_item.link_form="form53";
-								all_transactions.push(bill_item);
 								break;
 							}
 						}
+						all_transactions.push(bill_item);
 					});
 					trans_counter-=1;
 				});
@@ -190,7 +190,7 @@
 					bill_item.link_form="";
 					all_transactions.push(bill_item);
 
-					console.log(bill_item);
+					// console.log(bill_item);
 				});
 				trans_counter-=1;
 			});
@@ -207,12 +207,11 @@
 						else
 					  	{	return -1;}
 					});
-
 	              	var balance=0;
 
 					for(var p=0;p<all_transactions.length;p++)
 					{
-					  if(all_transactions[p].date<get_raw_time(start_date))
+					  if(parseFloat(all_transactions[p].date)<start_date)
 					  {
 					      if(all_transactions[p].type=='Purchase' || all_transactions[p].type=='Manual Entry')
 					      {

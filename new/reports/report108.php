@@ -73,8 +73,8 @@
     {
         var form=document.getElementById('report108_header');
         var agent_filter=form.elements['agent'].value;
-				var holder_filter=form.elements['holder'].value;
-				var end_filter=get_raw_time(form.elements['upto'].value)+86399999;
+		var holder_filter=form.elements['holder'].value;
+		var end_filter=get_raw_time(form.elements['upto'].value)+86399999;
 
         show_loader();
         $('#report108_body').html('');

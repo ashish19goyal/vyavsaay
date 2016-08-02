@@ -1870,3 +1870,25 @@ function set_grid_item_80()
 		$('#grid_item_80').html(item_count);
 	});
 };
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_81
+*@*display_name*:*Upcoming Renewals (in a week)
+*@*grid*:*reports
+*@*function_name*:*set_grid_item_81();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_81(s)
+{
+	var new_columns={data_store:'policies',
+					indexes:[{index:'end_date',lowerbound:vTime.unix(),upperbound:vTime.unix()+30*86400000}]};
+
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_81').html(item_count);
+	});
+};
