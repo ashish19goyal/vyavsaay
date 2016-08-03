@@ -34,7 +34,7 @@
 								 {index:'amount'},
                                  {index:'bill_id'},
                                  {index:'last_updated'}]};
-
+            console.log(columns);
             read_json_rows('',columns,function(results)
             {
                 var bill_ids_array=vUtil.arrayColumn(results,'bill_id');
