@@ -1,18 +1,18 @@
-<div id='report119' class='tab-pane portlet box red-sunglo'>
+<div id='report122' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
 		<div class='caption'>
-			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report119_ini();'>Refresh</a>
-			<a class='btn btn-circle grey btn-outline btn-sm' onclick=report119_add_filter();>Add Filter</a>
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report122_ini();'>Refresh</a>
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick=report122_add_filter();>Add Filter</a>
 		</div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
                 <ul class="dropdown-menu pull-right">
                     <li>
-                        <a id='report119_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
+                        <a id='report122_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
                     </li>
                     <li>
-                        <a id='report119_email'><i class='fa fa-envelope'></i> Email</a>
+                        <a id='report122_email'><i class='fa fa-envelope'></i> Email</a>
                     </li>
                 </ul>
             </div>
@@ -20,32 +20,31 @@
 	</div>
 
 	<div class="portlet-body">
-		<form id='report119_header' autocomplete="off">
+		<form id='report122_header' autocomplete="off">
 			<input type='submit' class='submit_hidden'>
-			<fieldset id='report119_filters'></fieldset>
+			<fieldset id='report122_filters'></fieldset>
 		</form>
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr>
-					<th>Policy #</th>
+					<th>Application #</th>
 					<th>Issuing Company</th>
 		            <th>Holder</th>
 		            <th>Agent</th>
 					<th>Sum Insured</th>
 					<th>Premium</th>
-					<th>End Date</th>
 				</tr>
 			</thead>
-			<tbody id='report119_body'></tbody>
+			<tbody id='report122_body'></tbody>
 		</table>
 	</div>
 
 	<script>
 
-	function report119_add_filter()
+	function report122_add_filter()
 	{
-		var form=document.getElementById('report119_header');
+		var form=document.getElementById('report122_header');
 		var f_filter=document.createElement('input');
 		f_filter.type='text';
 		f_filter.placeholder='Filter By';
@@ -108,10 +107,10 @@
 		// label5.appendChild(remove_link);
 		col.appendChild(i_filter);
 
-		var fieldset=document.getElementById('report119_filters');
+		var fieldset=document.getElementById('report122_filters');
 		fieldset.appendChild(row);
 
-		var data=['Application #','Policy #','Issue Type','End Date','Start Date','Issue Date',
+		var data=['Application #','Issue Type','End Date','Start Date','Issue Date',
 					'Tele Caller','Sales Manager','Team Lead','Agent','Issuing Company',
 					'Policy Name','Policy Holder','Preferred','Term'];
 		set_value_list_json(data,f_filter);
@@ -124,7 +123,7 @@
 				$(from_filter).show();
 				$(to_filter).show();
 				$(v_filter).hide();
-				$('#report119').formcontrol();
+				$('#report122').formcontrol();
 			}else{
 				$(from_filter).hide();
 				$(to_filter).hide();
@@ -143,7 +142,6 @@
 			switch(f_filter.value)
 			{
 				case 'Application #': i_filter.value = 'application_num'; s(); break;
-				case 'Policy #': i_filter.value = 'policy_num'; s(); break;
 				case 'Issue Type': i_filter.value = 'issue_type'; s(); break;
 				case 'End Date':  i_filter.value = 'end_date'; s('d'); break;
 				case 'Start Date':  i_filter.value = 'start_date'; s('d'); break;
@@ -160,39 +158,39 @@
 				default: i_filter.value = 'status'; s();
 			}
 		});
-		$('#report119').formcontrol();
+		$('#report122').formcontrol();
 	}
 
-    function report119_header_ini()
+    function report122_header_ini()
     {
-		var form=document.getElementById('report119_header');
-		$('#report119_filters').html('');
-		report119_add_filter();
+		var form=document.getElementById('report122_header');
+		$('#report122_filters').html('');
+		report122_add_filter();
 
 		$(form).off('submit');
         $(form).on('submit',function(event)
         {
             event.preventDefault();
-            report119_ini();
+            report122_ini();
         });
 
-        setTimeout(function(){$('#report119').formcontrol();},500);
+        setTimeout(function(){$('#report122').formcontrol();},500);
     }
 
-    function report119_ini()
+    function report122_ini()
     {
-        var form=document.getElementById('report119_header');
+        var form=document.getElementById('report122_header');
 
         show_loader();
-        $('#report119_body').html('');
+        $('#report122_body').html('');
 
-        var paginator=$('#report119_body').paginator({'page_size':25});
+        var paginator=$('#report122_body').paginator({'page_size':25});
 
         var columns={count:paginator.page_size(),
                     start_index:paginator.get_index(),
                     data_store:'policies',
 					indexes:[{index:'id'},
-                        {index:'policy_num'},
+                        {index:'application_num'},
                         {index:'issuer'},
                         {index:'policy_holder'},
 						{index:'agent'},
@@ -200,9 +198,9 @@
 						{index:'premium'},
 						{index:'issue_date'},
 						{index:'end_date'},
-						{index:'status',exact:'issued'}]};
+						{index:'status',exact:'applied'}]};
 
-		$('#report119_filters .row').each(function(index)
+		$('#report122_filters .row').each(function(index)
 		{
 			var row = this;
 			var f_filter = $(this).find("input[data-name='f']").val();
@@ -224,15 +222,15 @@
 			}
 		});
 
-		read_json_rows('report119',columns,function(items)
+		read_json_rows('report122',columns,function(items)
         {
             var rowsHTML="";
             items.forEach(function(item)
             {
                 rowsHTML+="<tr>";
-                rowsHTML+="<form id='report119_"+item.id+"'></form>";
-                rowsHTML+="<td data-th='Policy #'>";
-				    rowsHTML+="<a onclick=\"show_object('policies','"+item.policy_num+"');\">"+item.policy_num+"</a>";
+                rowsHTML+="<form id='report122_"+item.id+"'></form>";
+                rowsHTML+="<td data-th='Application #'>";
+				    rowsHTML+="<a onclick=\"show_object('policies','','"+item.id+"');\">"+item.application_num+"</a>";
                 rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Issuing Company'>";
 					rowsHTML+=item.issuer;
@@ -249,18 +247,12 @@
 				rowsHTML+="<td data-th='Premium'>";
 					rowsHTML+=item.premium;
                 rowsHTML+="</td>";
-				rowsHTML+="<td data-th='End Date'>";
-					rowsHTML+=vTime.date({time:item.end_date});
-                rowsHTML+="</td>";
-                rowsHTML+="</tr>";
+				rowsHTML+="</tr>";
             });
-            $('#report119_body').append(rowsHTML);
+            $('#report122_body').append(rowsHTML);
 
-            initialize_tabular_report_buttons(columns,'Policies Report','report119',function (item)
-            {
-				item['End Date']=vTime.date({time:item.end_date});
-				delete item.end_date;
-			});
+            initialize_tabular_report_buttons(columns,'Policies Report','report122',function (item)
+            {});
 
             paginator.update_index(items.length);
             hide_loader();

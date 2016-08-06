@@ -2165,6 +2165,7 @@
 			<description index="no" type="TEXT"></description>
 			<sum_insured index="no" type="DECIMAL(12,2)"></sum_insured>
 			<premium index="no" type="DECIMAL(12,2)"></premium>
+			<received_amount index="no" type="DECIMAL(12,2)"></received_amount>
 			<discount index="no" type="DECIMAL(12,2)"></discount>
 			<short_premium index="no" type="DECIMAL(12,2)"></short_premium>
 			<adults index="no" type="DECIMAL(12,2)"></adults>

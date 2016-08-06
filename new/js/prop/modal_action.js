@@ -8462,7 +8462,7 @@ function modal134_action(lead_id,customer,lead_details)
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		if(is_update_access('form213') || is_update_access('form289'))
+		if(is_update_access('form213') || is_update_access('form289') || is_update_access('form361'))
 		{
 			var id=get_new_key();
 			var date=get_raw_time(date_filter.value);
@@ -10965,7 +10965,7 @@ function modal153_action(button,lead_id)
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		if(is_update_access('form213') || is_update_access('form289'))
+		if(is_update_access('form213') || is_update_access('form289') || is_update_access('form361'))
 		{
 			var lead_form_id=$(button).attr('form');
 			var last_updated=get_my_time();
@@ -15975,6 +15975,305 @@ function modal215_action(item_name)
 
 	$("#modal215_link").click();
 }
+
+
+function modal216_action(policy_holder_value,func)
+{
+	var form=document.getElementById('modal216_form');
+	var fapp=form.elements['app_number'];
+	var fcompany=form.elements['company'];
+	var fpreferred=form.elements['preferred'];
+	var fptype=form.elements['policy_type'];
+	var fterm=form.elements['term'];
+	var fpname=form.elements['policy_name'];
+	var fholder=form.elements['holder'];
+	var fsum=form.elements['sum'];
+	var fadults=form.elements['adults'];
+	var fchild=form.elements['children'];
+	var fage=form.elements['age'];
+	var fpremium=form.elements['premium'];
+	var freceived=form.elements['received_amount'];
+	var fdiscount=form.elements['discount'];
+	var ftype=form.elements['type'];
+	var fported_from=form.elements['ported_from'];
+	var fsource=form.elements['source'];
+	var flead=form.elements['lead'];
+	var fmanager=form.elements['sales'];
+	var fcaller=form.elements['caller'];
+	var fagent=form.elements['agent'];
+	var select_file=form.elements['file'];
+	var dummy_button=form.elements['file_dummy'];
+
+	$(dummy_button).off('click');
+	$(dummy_button).on('click',function (e)
+	{
+		e.preventDefault();
+		$(select_file).trigger('click');
+	});
+
+	dummy_button.setAttribute('class','btn red-sunglo');
+	select_file.value="";
+
+	$(select_file).off('change');
+	$(select_file).on('change',function ()
+	{
+		var file_name=select_file.value;
+		if(file_name!="")
+		{
+			dummy_button.setAttribute('class','btn green-jungle');
+		}
+		else
+		{
+			dummy_button.setAttribute('class','btn red-sunglo');
+			select_file.value="";
+		}
+	});
+
+	fapp.value="";
+	fcompany.value="";
+	fpreferred.value="";
+	fptype.value="";
+	fterm.value="";
+	fpname.value="";
+	fholder.value="";
+	fsum.value="";
+	fadults.value="";
+	fchild.value="";
+	fage.value="";
+	fpremium.value="";
+	freceived.value="";
+	fdiscount.value="";
+	ftype.value="fresh";
+	fported_from.value="";
+	fsource.value="";
+	flead.value="";
+	fmanager.value="";
+	fcaller.value="";
+	fagent.value="";
+
+	if(!vUtil.isBlank(policy_holder_value))
+	{
+		fholder.value=policy_holder_value;
+	}
+
+	set_value_list_json(['fresh','portability'],ftype);
+	set_value_list_json([100000,200000,300000,400000,500000,700000,750000,1000000,1500000,2000000,2500000,5000000,10000000,20000000,50000000],fsum);
+	set_value_list_json([1,2],fadults);
+	set_value_list_json([0,1,2,3],fchild);
+
+	set_static_value_list_json('policies','sales source',fsource);
+
+	var name_data={data_store:'policy_types',return_column:'name'};
+	set_my_value_list_json(name_data,fpname);
+
+	function policy_filtering()
+	{
+		fpname.value="";
+		var name_data={data_store:'policy_types',return_column:'name',
+						indexes:[{index:'issuer',value:fcompany.value},
+								{index:'term',value:fterm.value},
+								{index:'preferred',value:fpreferred.value}]};
+		set_my_value_list_json(name_data,fpname);
+	};
+
+	function discount_cal()
+	{
+		var short_premium = parseFloat(fpremium.value) - parseFloat(freceived.value);
+		var discount = vUtil.round(short_premium/(fpremium.value)*100,2);
+		fdiscount.value = short_premium+" ("+discount+" %)";
+	}
+
+	vUtil.onChange(fcompany,policy_filtering);
+	vUtil.onChange(fterm,policy_filtering);
+	vUtil.onChange(fpreferred,policy_filtering);
+	vUtil.onChange(fpremium,discount_cal);
+	vUtil.onChange(freceived,discount_cal);
+
+	function premium_calculation()
+	{
+		fpremium.value="";
+		var premium_data={data_store:'policy_premiums',return_column:'premium_amount',
+						indexes:[{index:'policy_name',exact:fpname.value},
+								{index:'sum_insured',exact:fsum.value},
+								{index:'adults',exact:fadults.value},
+								{index:'children',exact:fchild.value},
+								{index:'age_lower',upperbound:fage.value},
+								{index:'age_upper',lowerbound:fage.value}]};
+		set_my_value_json(premium_data,fpremium);
+	};
+	vUtil.onChange(fsum,premium_calculation);
+	vUtil.onChange(fadults,premium_calculation);
+	vUtil.onChange(fchild,premium_calculation);
+	vUtil.onChange(fage,premium_calculation);
+
+	var holder_data={data_store:'customers',return_column:'acc_name'};
+	set_my_value_list_json(holder_data,fholder);
+
+	var company_data={data_store:'policy_types',return_column:'issuer'};
+	set_my_value_list_json(company_data,fcompany);
+
+	var lead_data={data_store:'attributes',return_column:'name',
+					indexes:[{index:'type',exact:'staff'},
+							{index:'attribute',exact:'Designation'},
+							{index:'value',exact:'Team Lead'}]};
+	set_my_value_list_json(lead_data,flead);
+
+	var manager_data={data_store:'attributes',return_column:'name',
+					indexes:[{index:'type',exact:'staff'},
+							{index:'attribute',exact:'Designation'},
+							{index:'value',exact:'Sales Manager'}]};
+	set_my_value_list_json(manager_data,fmanager);
+
+	var caller_data={data_store:'attributes',return_column:'name',
+					indexes:[{index:'type',exact:'staff'},
+							{index:'attribute',exact:'Designation'},
+							{index:'value',exact:'Tele-Caller'}]};
+	set_my_value_list_json(caller_data,fcaller);
+
+	var agent_data={data_store:'attributes',return_column:'name',
+					indexes:[{index:'type',exact:'staff'},
+							{index:'attribute',exact:'Designation'},
+							{index:'value',exact:'Agent'}]};
+	set_my_value_list_json(agent_data,fagent);
+
+	set_static_value_list_json('policy_types','type',fptype);
+	set_static_value_list_json('policy_types','term',fterm);
+	set_static_value_list_json('policy_types','preferred',fpreferred);
+
+	$(fported_from).parent().parent().hide();
+
+	vUtil.onChange(ftype,function()
+	{
+		if(ftype.value=='portability')
+		{
+			$(fported_from).parent().parent().show();
+		}
+	});
+
+	var description = "";
+	vUtil.onChange(fpname,function()
+	{
+		var policy_data={data_store:'policy_types',count:1,
+						indexes:[{index:'issuer'},
+								{index:'description'},
+								{index:'type'},
+								{index:'term'},
+								{index:'preferred'},
+								{index:'accounts'},
+								{index:'name',exact:fpname.value}]};
+		read_json_rows('',policy_data,function(policies)
+		{
+			if(policies.length>0)
+			{
+				var accounts_array=vUtil.jsonParse(policies[0].accounts);
+				if(accounts_array.length>0)
+				{
+					fagent.value = accounts_array[0];
+				}
+				fcompany.value = policies[0].issuer;
+				fpreferred.value = policies[0].preferred;
+				description = policies[0].description;
+			}
+		});
+
+		premium_calculation();
+	});
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form347'))
+		{
+			//saving attachments
+			var last_updated=vTime.unix();
+			var attachments = [];
+			var domain=get_session_var('domain');
+			var files = select_file.files;
+			// console.log(files);
+			var counter=files.length;
+			for(var i=0; i<files.length; i++)
+			{
+				var file=files[i];
+				var contentType=file.type;
+				var file_attr=file.name.split('.');
+				var filetype=file_attr[file_attr.length-1];
+				vUtil.fileToDataUrl(file,function(dataURL)
+				{
+					if(dataURL!="")
+					{
+						var doc_name=domain+vTime.unix()+file.name;
+						var doc_mapping={name:file.name,url:doc_name};
+						attachments.push(doc_mapping);
+
+						var data_json={type:'create',
+								   bucket:'vyavsaay-documents',
+								   blob: dataURL,
+								   name:doc_name,
+								   description:'',
+								   content_type:contentType};
+						s3_object(data_json);
+						counter--;
+					}
+				});
+			}
+
+			var wait=setInterval(function()
+			{
+				if(counter==0)
+				{
+					clearInterval(wait);
+					var short_premium = parseFloat(fpremium.value) - parseFloat(freceived.value);
+					var discount = vUtil.round(short_premium/(fpremium.value)*100,2);
+					var attachment_string=JSON.stringify(attachments);
+					var data_json={data_store:'policies',
+					data:[{index:'id',value:get_new_key()},
+						{index:'application_num',value:fapp.value,unique:'yes'},
+						{index:'policy_num',value:""},
+						{index:'policy_name',value:fpname.value},
+						{index:'description',value:description},
+						{index:'issuer',value:fcompany.value},
+						{index:'policy_holder',value:fholder.value},
+						{index:'premium',value:fpremium.value},
+						{index:'discount',value:discount},
+						{index:'received_amount',value:freceived.value},
+						{index:'short_premium',value:short_premium},
+						{index:'agent',value:fagent.value},
+						{index:'type',value:fptype.value},
+						{index:'term',value:fterm.value},
+						{index:'preferred',value:fpreferred.value},
+						{index:'issue_type',value:ftype.value},
+						{index:'ported_source',value:fported_from.value},
+						{index:'sum_insured',value:fsum.value},
+						{index:'adults',value:fadults.value},
+						{index:'children',value:fchild.value},
+						{index:'age',value:fage.value},
+						{index:'team_lead',value:flead.value},
+						{index:'sales_manager',value:fmanager.value},
+						{index:'tele_caller',value:fcaller.value},
+						{index:'sales_source',value:fsource.value},
+						{index:'attachments',value:attachment_string},
+						{index:'status',value:'applied'},
+						{index:'last_updated',value:last_updated}]};
+					create_json(data_json);
+
+					if(!vUtil.isBlank(func))
+					{
+						func(fapp.value);
+					}
+				}
+			},500);
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
+		$(form).find(".close").click();
+	});
+
+	$("#modal216_link").click();
+}
+
 
 /**
  * @modalNo 217

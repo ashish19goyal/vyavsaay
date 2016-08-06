@@ -2,6 +2,7 @@
 	<div class="portlet-title">
         <div class='caption'>
             <a class='btn btn-circle grey btn-outline btn-sm' onclick='report120_ini();'>Refresh</a>
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick=report120_add_filter();>Add Filter</a>
         </div>
         <div class="actions">
             <div class="btn-group">
@@ -19,34 +20,82 @@
 	</div>
 
 	<div class="portlet-body">
-        <form id='report120_master'>
-			<label><input type='text' placeholder="Filter By" class='floatlabel' name='filter'></label>
-			<label><input type='text' placeholder="Filter Value" class='floatlabel' name='v'></label>
-			<label><input type='text' placeholder="From Date" class='floatlabel' name='from'></label>
-			<label><input type='text' placeholder="To Date" class='floatlabel' name='to'></label>
-			<input type='hidden' name='index' value='status'>
+		<form id='report120_header' autocomplete="off">
+			<input type='submit' class='submit_hidden'>
+			<fieldset id='report120_filters'></fieldset>
 		</form>
-
 	   <div class='horizontal-bar-chart' id='report120_chart'></div>
     </div>
 
 	<script>
 
-	function report120_header_ini()
+	function report120_add_filter()
 	{
-		var form=document.getElementById('report120_master');
-		$(form).off('submit');
-		$(form).on('submit',function(event)
-		{
-		  event.preventDefault();
-		  report120_ini();
-	  	});
+		var form=document.getElementById('report120_header');
+		var f_filter=document.createElement('input');
+		f_filter.type='text';
+		f_filter.placeholder='Filter By';
+		f_filter.className='floatlabel';
+		f_filter.setAttribute('data-name','f');
 
-		var f_filter=form.elements['filter'];
-		var v_filter=form.elements['v'];
-		var from_filter=form.elements['from'];
-		var to_filter=form.elements['to'];
-		var f_filter_index=form.elements['index'];
+		var v_filter=document.createElement('input');
+		v_filter.type='text';
+		v_filter.placeholder='Filter Value';
+		v_filter.className='floatlabel';
+		v_filter.setAttribute('data-name','v');
+
+		var i_filter=document.createElement('input');
+		i_filter.type='hidden';
+		i_filter.setAttribute('data-name','i');
+		i_filter.value='status';
+
+		var from_filter=document.createElement('input');
+		from_filter.type='text';
+		from_filter.placeholder='From Date';
+		from_filter.className='floatlabel';
+		from_filter.setAttribute('data-name','from');
+
+		var to_filter=document.createElement('input');
+		to_filter.type='text';
+		to_filter.placeholder='To Date';
+		to_filter.className='floatlabel';
+		to_filter.setAttribute('data-name','to');
+
+		var remove_link = document.createElement('a');
+		remove_link.onclick = function(){
+			$(this).parent().parent().remove();
+		};
+		remove_link.style="vertical-align:top";
+		remove_link.title="Remove Filter";
+		remove_link.innerHTML = "<i class='fa fa-times' style='font-size:25px;margin-top:20px;'></i>";
+
+		var row=document.createElement('div');
+		row.className='row';
+		var col=document.createElement('div');
+		col.className='col-md-12';
+
+		var label1=document.createElement('label');
+		var label2=document.createElement('label');
+		var label3=document.createElement('label');
+		var label4=document.createElement('label');
+		// var label5=document.createElement('label');
+
+		row.appendChild(col);
+		col.appendChild(label1);
+		col.appendChild(label2);
+		col.appendChild(label3);
+		col.appendChild(label4);
+		col.appendChild(remove_link);
+
+		label1.appendChild(f_filter);
+		label2.appendChild(v_filter);
+		label3.appendChild(from_filter);
+		label4.appendChild(to_filter);
+		// label5.appendChild(remove_link);
+		col.appendChild(i_filter);
+
+		var fieldset=document.getElementById('report120_filters');
+		fieldset.appendChild(row);
 
 		var data=['Application #','Policy #','Issue Type','End Date','Start Date','Issue Date',
 					'Tele Caller','Sales Manager','Team Lead','Agent','Issuing Company',
@@ -61,12 +110,12 @@
 				$(from_filter).show();
 				$(to_filter).show();
 				$(v_filter).hide();
-				$('#report119').formcontrol();
+				$('#report120').formcontrol();
 			}else{
 				$(from_filter).hide();
 				$(to_filter).hide();
 				$(v_filter).show();
-				var value_data={data_store:'policies',return_column:f_filter_index.value};
+				var value_data={data_store:'policies',return_column:i_filter.value};
 				set_my_filter_json(value_data,v_filter);
 			}
 			v_filter.value="";
@@ -75,29 +124,44 @@
 		}
 
 		s();
-		f_filter.value="";
 		vUtil.onChange(f_filter,function()
 		{
 			switch(f_filter.value)
 			{
-				case 'Application #': f_filter_index.value = 'application_num'; s(); break;
-				case 'Policy #': f_filter_index.value = 'policy_num'; s(); break;
-				case 'Issue Type': f_filter_index.value = 'issue_type'; s(); break;
-				case 'End Date':  f_filter_index.value = 'end_date'; s('d'); break;
-				case 'Start Date':  f_filter_index.value = 'start_date'; s('d'); break;
-				case 'Issue Date':  f_filter_index.value = 'issue_date'; s('d'); break;
-				case 'Tele Caller': f_filter_index.value = 'tele_caller'; s(); break;
-				case 'Sales Manager': f_filter_index.value = 'sales_manager'; s(); break;
-				case 'Team Lead': f_filter_index.value = 'team_lead'; s(); break;
-				case 'Agent': f_filter_index.value = 'agent'; s(); break;
-				case 'Issuing Company': f_filter_index.value = 'issuer'; s(); break;
-				case 'Policy Name': f_filter_index.value = 'policy_name'; s(); break;
-				case 'Policy Holder': f_filter_index.value = 'policy_holder'; s(); break;
-				case 'Preferred': f_filter_index.value = 'preferred'; s(); break;
-				case 'Term': f_filter_index.value = 'term'; s(); break;
-				default: f_filter_index.value = 'status'; s();
+				case 'Application #': i_filter.value = 'application_num'; s(); break;
+				case 'Policy #': i_filter.value = 'policy_num'; s(); break;
+				case 'Issue Type': i_filter.value = 'issue_type'; s(); break;
+				case 'End Date':  i_filter.value = 'end_date'; s('d'); break;
+				case 'Start Date':  i_filter.value = 'start_date'; s('d'); break;
+				case 'Issue Date':  i_filter.value = 'issue_date'; s('d'); break;
+				case 'Tele Caller': i_filter.value = 'tele_caller'; s(); break;
+				case 'Sales Manager': i_filter.value = 'sales_manager'; s(); break;
+				case 'Team Lead': i_filter.value = 'team_lead'; s(); break;
+				case 'Agent': i_filter.value = 'agent'; s(); break;
+				case 'Issuing Company': i_filter.value = 'issuer'; s(); break;
+				case 'Policy Name': i_filter.value = 'policy_name'; s(); break;
+				case 'Policy Holder': i_filter.value = 'policy_holder'; s(); break;
+				case 'Preferred': i_filter.value = 'preferred'; s(); break;
+				case 'Term': i_filter.value = 'term'; s(); break;
+				default: i_filter.value = 'status'; s();
 			}
 		});
+		$('#report120').formcontrol();
+	}
+
+	function report120_header_ini()
+	{
+		var form=document.getElementById('report120_master');
+
+		$('#report120_filters').html('');
+		report120_add_filter();
+
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+		  event.preventDefault();
+		  report120_ini();
+	  	});
 
 		var paginator=$('#report120').paginator({visible:false,container:$('#report120')});
       	setTimeout(function(){$('#report120').formcontrol();},500);
@@ -107,12 +171,8 @@
 	{
 		show_loader();
     	var form=document.getElementById('report120_master');
-		var f_filter_index=form.elements['index'].value;
-		var v_filter=form.elements['v'].value;
-		var from_filter=vTime.unix({date:form.elements['from'].value});
-		var to_filter=vTime.unix({date:form.elements['to'].value});
 
-    	var policies_data={data_store:'policies',
+    	var columns={data_store:'policies',
                 indexes:[{index:'id'},
 						{index:'application_num'},
 						{index:'agent'},
@@ -121,21 +181,32 @@
 						{index:'policy_holder'},
 						{index:'issue_date'},
 						{index:'premium'},
-						{index:'sum_insured'}]};
+						{index:'sum_insured'},
+						{index:'status',exact:'issued'}]};
 
-		if(!vUtil.isBlank(v_filter)){
-			policies_data.indexes.push({index:f_filter_index,value:v_filter});
-		}
-		else{
-			if(!vUtil.isBlank(from_filter)){
-				policies_data.indexes.push({index:f_filter_index,lowerbound:from_filter});
-			}
-			if(!vUtil.isBlank(to_filter)){
-				policies_data.indexes.push({index:f_filter_index,upperbound:to_filter});
-			}
-		}
+		$('#report120_filters .row').each(function(index)
+		{
+			var row = this;
+			var f_filter = $(this).find("input[data-name='f']").val();
+			var v_filter = $(this).find("input[data-name='v']").val();
+			var i_filter = $(this).find("input[data-name='i']").val();
+			var from_filter = $(this).find("input[data-name='from']").val();
+			var to_filter = $(this).find("input[data-name='to']").val();
 
-		read_json_rows('report120',policies_data,function(policies)
+			if(!vUtil.isBlank(v_filter)){
+				columns.indexes.push({index:i_filter,value:v_filter});
+			}
+			else{
+				if(!vUtil.isBlank(from_filter)){
+					columns.indexes.push({index:i_filter,lowerbound:from_filter});
+				}
+			 	if(!vUtil.isBlank(to_filter)){
+					columns.indexes.push({index:i_filter,upperbound:to_filter});
+				}
+			}
+		});
+
+		read_json_rows('report120',columns,function(policies)
 		{
 			var policy_numbers = vUtil.arrayColumn(policies,'policy_num');
 			var commissions_data={data_store:'policy_commissions',
@@ -230,7 +301,7 @@
 
 	        $('#report120_chart').find('div>div>a').hide();
 
-	        initialize_tabular_report_buttons(policies_data,'Policy Financials','report120',function (item)
+	        initialize_tabular_report_buttons(columns,'Policy Financials','report120',function (item)
 	        {
 				item['Application #']=item.application_num;
 	            item['Policy #']=item.policy_num;

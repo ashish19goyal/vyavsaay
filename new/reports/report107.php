@@ -2,6 +2,7 @@
 	<div class="portlet-title">
         <div class='caption'>
             <a class='btn btn-circle grey btn-outline btn-sm' onclick='report107_ini();'>Refresh</a>
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick=report107_add_filter();>Add Filter</a>
         </div>
         <div class="actions">
             <div class="btn-group">
@@ -19,23 +20,129 @@
 	</div>
 
 	<div class="portlet-body">
-        <form id='report107_master'>
-			<label><input type='text' name='agent' class='floatlabel' placeholder='Agent Name'></label>
-            <label><input type='text' required name='start' class='floatlabel' placeholder='Start Date'></label>
-            <label><input type='text' required name='end' class='floatlabel' placeholder='End Date'></label>
-        </form>
-
+		<form id='report107_header' autocomplete="off">
+			<input type='submit' class='submit_hidden'>
+			<fieldset id='report107_filters'></fieldset>
+		</form>
 	   <div class='horizontal-bar-chart' id='report107_chart'></div>
     </div>
 
 	<script>
 
-  function report107_header_ini()
+	function report107_add_filter()
 	{
-      var form=document.getElementById('report107_master');
-			var agent_filter=form.elements['agent'];
-      var start_date=form.elements['start'];
-      var end_date=form.elements['end'];
+		var form=document.getElementById('report107_header');
+		var f_filter=document.createElement('input');
+		f_filter.type='text';
+		f_filter.placeholder='Filter By';
+		f_filter.className='floatlabel';
+		f_filter.setAttribute('data-name','f');
+
+		var v_filter=document.createElement('input');
+		v_filter.type='text';
+		v_filter.placeholder='Filter Value';
+		v_filter.className='floatlabel';
+		v_filter.setAttribute('data-name','v');
+
+		var i_filter=document.createElement('input');
+		i_filter.type='hidden';
+		i_filter.setAttribute('data-name','i');
+		i_filter.value='status';
+
+		var from_filter=document.createElement('input');
+		from_filter.type='text';
+		from_filter.placeholder='From Date';
+		from_filter.className='floatlabel';
+		from_filter.setAttribute('data-name','from');
+
+		var to_filter=document.createElement('input');
+		to_filter.type='text';
+		to_filter.placeholder='To Date';
+		to_filter.className='floatlabel';
+		to_filter.setAttribute('data-name','to');
+
+		var remove_link = document.createElement('a');
+		remove_link.onclick = function(){
+			$(this).parent().parent().remove();
+		};
+		remove_link.style="vertical-align:top";
+		remove_link.title="Remove Filter";
+		remove_link.innerHTML = "<i class='fa fa-times' style='font-size:25px;margin-top:20px;'></i>";
+
+		var row=document.createElement('div');
+		row.className='row';
+		var col=document.createElement('div');
+		col.className='col-md-12';
+
+		var label1=document.createElement('label');
+		var label2=document.createElement('label');
+		var label3=document.createElement('label');
+		var label4=document.createElement('label');
+		// var label5=document.createElement('label');
+
+		row.appendChild(col);
+		col.appendChild(label1);
+		col.appendChild(label2);
+		col.appendChild(label3);
+		col.appendChild(label4);
+		col.appendChild(remove_link);
+
+		label1.appendChild(f_filter);
+		label2.appendChild(v_filter);
+		label3.appendChild(from_filter);
+		label4.appendChild(to_filter);
+		// label5.appendChild(remove_link);
+		col.appendChild(i_filter);
+
+		var fieldset=document.getElementById('report107_filters');
+		fieldset.appendChild(row);
+
+		var data=['Policy #','Issue Date','Agent','Issuing Company','Policy Holder'];
+		set_value_list_json(data,f_filter);
+
+		$(from_filter).datepicker();
+		$(to_filter).datepicker();
+
+		function s(x){
+			if(!vUtil.isBlank(x) && x=='d'){
+				$(from_filter).show();
+				$(to_filter).show();
+				$(v_filter).hide();
+				$('#report107').formcontrol();
+			}else{
+				$(from_filter).hide();
+				$(to_filter).hide();
+				$(v_filter).show();
+				var value_data={data_store:'policy_commissions',return_column:i_filter.value};
+				set_my_filter_json(value_data,v_filter);
+			}
+			v_filter.value="";
+			from_filter.value="";
+			to_filter.value="";
+		}
+
+		s();
+		vUtil.onChange(f_filter,function()
+		{
+			switch(f_filter.value)
+			{
+				case 'Policy #': i_filter.value = 'policy_num'; s(); break;
+				case 'Issue Date':  i_filter.value = 'issue_date'; s('d'); break;
+				case 'Agent': i_filter.value = 'agent'; s(); break;
+				case 'Issuing Company': i_filter.value = 'issuer'; s(); break;
+				case 'Policy Holder': i_filter.value = 'policy_holder'; s(); break;
+				default: i_filter.value = 'status'; s();
+			}
+		});
+		$('#report107').formcontrol();
+	}
+
+  	function report107_header_ini()
+	{
+      var form=document.getElementById('report107_header');
+
+	  $('#report107_filters').html('');
+	  report107_add_filter();
 
       $(form).off('submit');
       $(form).on('submit',function(event)
@@ -44,44 +151,50 @@
           report107_ini();
       });
 
-	  var agent_data={data_store:'attributes',return_column:'name',
-  						indexes:[{index:"attribute",exact:"Designation"},
-								{index:"type",exact:"staff"},
-								{index:"value",exact:"Agent"}]};
-	  set_my_filter_json(agent_data,agent_filter);
-
-      $(start_date).datepicker();
-      $(end_date).datepicker();
-      start_date.value=get_my_past_date((get_my_time()-(30*86400000)));
-      end_date.value=vTime.date();
-
 	  var paginator=$('#report107').paginator({visible:false,container:$('#report107')});
-
       setTimeout(function(){$('#report107').formcontrol();},500);
 	}
 
 	function report107_ini()
 	{
 		show_loader();
-    	var form=document.getElementById('report107_master');
-		var agent_name=form.elements['agent'].value;
-	    var start_date=get_raw_time(form.elements['start'].value);
-	    var end_date=get_raw_time(form.elements['end'].value)+86400000-1;
+    	var form=document.getElementById('report107_header');
 
-    	var commissions_data={data_store:'policy_commissions',
+    	var columns={data_store:'policy_commissions',
                 indexes:[{index:'id'},
 						{index:'application_num'},
-                        {index:'agent',value:agent_name},
+                        {index:'agent'},
 						{index:'amount'},
 						{index:'policy_num'},
 						{index:'policy_holder'},
 						{index:'issuer'},
 						{index:'policy_type'},
-						{index:'issue_date',lowerbound:start_date,upperbound:end_date},
-						{index:'status',exact:'received'},
+						{index:'issue_date'},
 						{index:'notes'}]};
 
-		read_json_rows('report107',commissions_data,function(commissions)
+		$('#report107_filters .row').each(function(index)
+		{
+			var row = this;
+			var f_filter = $(this).find("input[data-name='f']").val();
+			var v_filter = $(this).find("input[data-name='v']").val();
+			var i_filter = $(this).find("input[data-name='i']").val();
+			var from_filter = $(this).find("input[data-name='from']").val();
+			var to_filter = $(this).find("input[data-name='to']").val();
+
+			if(!vUtil.isBlank(v_filter)){
+				columns.indexes.push({index:i_filter,value:v_filter});
+			}
+			else{
+				if(!vUtil.isBlank(from_filter)){
+					columns.indexes.push({index:i_filter,lowerbound:from_filter});
+				}
+			 	if(!vUtil.isBlank(to_filter)){
+					columns.indexes.push({index:i_filter,upperbound:to_filter});
+				}
+			}
+		});
+
+		read_json_rows('report107',columns,function(commissions)
 		{
 				//console.log(commissions);
 			var agents=vUtil.arrayColumn(commissions,'agent');
@@ -142,7 +255,7 @@
 
         $('#report107_chart').find('div>div>a').hide();
 
-        initialize_tabular_report_buttons(commissions_data,'Commissions Report','report107',function (item)
+        initialize_tabular_report_buttons(columns,'Commissions Report','report107',function (item)
         {
 			item['Agent']=item.agent;
             item['Application #']=item.application_num;
