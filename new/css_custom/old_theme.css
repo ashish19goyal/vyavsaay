@@ -44,7 +44,7 @@ div.header_person{
 	cursor: pointer;
 	background-size: 25px 25px;
 	color:transparent;
-	float: right;		
+	float: right;
 	margin: 0.5% 1% .5% 0%;
 	vertical-align:middle;
 }
@@ -84,14 +84,14 @@ a div{
 
 
 
-/* 
+/*
 formatting for feeds
 */
 
 .feed_item{
 	border: 1px solid #000;
 	margin: 5px;
-	padding: 5px;	
+	padding: 5px;
 	text-align: left;
 }
 
@@ -137,7 +137,7 @@ textarea.feed_comments{
 
 .feed_post{
 	width:80%;
-	text-align: left;	
+	text-align: left;
 	margin-right: 5px;
 }
 
@@ -370,17 +370,6 @@ tr.cancelled_row{
 	vertical-align:middle;
 }
 
-.copy_icon{
-	height:25px;
-	width: 25px;
-	background:url('/images/copy.png') no-repeat left top;
-	border: 0;
-	cursor: pointer;
-	background-size: 25px 25px;
-	color:transparent;
-	vertical-align:middle;
-}
-
 .edit_icon{
 	height:25px;
 	width: 25px;
@@ -403,27 +392,6 @@ tr.cancelled_row{
 	vertical-align:middle;
 }
 
-.green_circle
-{
-	height:25px;
-	width: 25px;
-	background:url('/images/green_circle.png') no-repeat left top;
-	border: 0;
-	background-size: 25px 25px;
-	color:transparent;
-	vertical-align:middle;
-}
-
-.red_circle
-{
-	height:25px;
-	width: 25px;
-	background:url('/images/red_circle.png') no-repeat left top;
-	border: 0;
-	background-size: 25px 25px;
-	color:transparent;
-	vertical-align:middle;
-}
 
 .barcode_icon{
 	height:25px;
@@ -548,8 +516,8 @@ a.small_cross_icon{
 }
 
 .customers_bar_wrap{
-	clear: left; 
-	padding: 0 5px;  
+	clear: left;
+	padding: 0 5px;
 }
 
 .ui-slider .ui-slider-handle {
@@ -559,35 +527,35 @@ a.small_cross_icon{
     background-color:#7A8491;
 }
 
-.figure{ 
-  width: 90px; 
-  float: left; 
-  border: 2px solid white; 
-  -webkit-box-shadow: 0 3px 10px #ccc; 
+.figure{
+  width: 90px;
+  float: left;
+  border: 2px solid white;
+  -webkit-box-shadow: 0 3px 10px #ccc;
   -moz-box-shadow: 0 3px 10px #ccc;
-  -webkit-transform: rotate(2deg); 
+  -webkit-transform: rotate(2deg);
   -moz-transform: rotate(2deg);
-  -webkit-transition: all 0.7s ease; 
+  -webkit-transition: all 0.7s ease;
   -moz-transition: all 1s ease;
   position: relative;
 }
 
-.figure>img{ 
+.figure>img{
   width: 100%; /* Scale down */
 }
 
 .figure:hover {
-  -webkit-transform: rotate(-1deg); 
+  -webkit-transform: rotate(-1deg);
   -moz-transform: rotate(1deg);
-  -webkit-box-shadow: 0 3px 10px #666; 
+  -webkit-box-shadow: 0 3px 10px #666;
   -moz-box-shadow: 0 3px 10px #666;
 }
 
 .figure:active{
   outline: none;
-  -webkit-transform: rotate(-1deg) scale(2.5); 
+  -webkit-transform: rotate(-1deg) scale(2.5);
   -moz-transform: rotate(-1deg) scale(2.5);
-  -webkit-box-shadow: 0 3px 10px #666; 
+  -webkit-box-shadow: 0 3px 10px #666;
   -moz-box-shadow: 0 3px 10px #666;
   z-index: 9999;
 }
@@ -648,7 +616,7 @@ a.small_cross_icon{
 }
 
 /** report sizing and display ***/
-canvas{ 
+canvas{
 	display:block;
 	position:absolute;
 	border: 1px solid black;
@@ -680,14 +648,14 @@ textarea.ultrawidebox{
 .glowing_td{
 	-webkit-transform:scale(1.1) translate(-10px,0px);
 	-moz-transform: scale(1.1) translate(-10px,0px);
-	-webkit-box-shadow: 0 3px 10px #666; 
+	-webkit-box-shadow: 0 3px 10px #666;
 	-moz-box-shadow: 0 3px 10px #666;
 	transition: 1s all;
 	-webkit-transition: 1s all;
 	-moz-transition: 1s all;
 	-o-transition: 1s all;
 	background: #bdbdbd;
-	font-size: 1.2em;	
+	font-size: 1.2em;
 	border: 2px solid #ffffff;
 }
 
@@ -713,7 +681,7 @@ textarea.ultrawidebox{
 
 @media screen and (min-width: 550px) {
 	#side_menu{
-		background-color: #A2A2A2;	
+		background-color: #A2A2A2;
 		width: 50px;
 		height: auto;
 		position: fixed;
@@ -727,7 +695,7 @@ textarea.ultrawidebox{
 		margin: 1% 1% 1% 0%;
 		z-index:99;
 	}
-	
+
 	.menu_icon{
 		position:relative;
 		width: 40px;
@@ -735,7 +703,7 @@ textarea.ultrawidebox{
 		margin: 25% 15% 25% 15%;
 		cursor: pointer;
 	}
-	
+
 	.icon{
 		width:100%;
 		border-radius: 2px;
@@ -790,7 +758,7 @@ textarea.ultrawidebox{
 }
 
 @media screen and (min-width: 1100px) {
-	
+
 	#content_box{
 		min-width:900px;
 	}
@@ -819,14 +787,14 @@ textarea.ultrawidebox{
 
 
 /*this is applicable for mobile screens*/
-@media screen and (max-width: 550px) 
-{	
+@media screen and (max-width: 550px)
+{
 
 	.customers_pane{
 		max-width:300px;
 	}
 	#side_menu{
-		background-color: #A2A2A2;	
+		background-color: #A2A2A2;
 		width: 98%;
 		height: 75px;
 		position: fixed;
@@ -872,41 +840,41 @@ textarea.ultrawidebox{
 		height:50px;
 		width:87%;
 	}
-	
-	
+
+
 	.export_icon, .generic_icon, .import_icon{
 		height:30px;
 		font-size: 20px;
 	}
-		
+
 	canvas{
 		position:relative;
 	}
-		
+
 	.submit_hidden{
 		min-width:1px;
 	}
-	
+
 	.save_icon,.delete_icon,.share_icon,.edit_icon,.refresh_icon,.copy_icon,.add_icon,.add_image,.print_icon,.csv_icon,.csv_red_icon,.doc_search_icon{
-		min-width:40px;		
+		min-width:40px;
 		height:40px;
 		width:40px;
 		background-size: 40px 40px;
 	}
-		
+
 	v2{
 		margin-left: 175px;
 	}
 }
 
 table.printing_tables tr>td>div{
-	page-break-inside:avoid; 
+	page-break-inside:avoid;
 	page-break-after:auto;
 	page-break-before:auto;
 }
 
 .print_element{
-	page-break-inside:avoid; 
+	page-break-inside:avoid;
 }
 
 @media print {
