@@ -164,7 +164,7 @@
                     {
                         order_history[k].timeStamp = order_history[k].timestamp;
                     }
-                    tableHTML+="<tr><td data-th='Time'>"+vTime.datetime({time:order_history[k].timeStamp})+"</td>"+
+                    tableHTML+="<tr><td data-th='Time'>"+get_my_past_datetime(order_history[k].timeStamp)+"</td>"+
                         "<td data-th='Details'>"+order_history[k].details+"</td>"+
                         "<td data-th='Location'>"+order_history[k].location+"</td>"+
                         "<td data-th='Status'>"+order_history[k].status+"</td>"+
