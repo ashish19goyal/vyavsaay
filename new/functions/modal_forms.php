@@ -4149,8 +4149,8 @@
 			        </div>
 			    </div>
 
-		<a href='#modal221' data-toggle="modal" id='modal221_link'></a>
-		<div id="modal221" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+	<a href='#modal221' data-toggle="modal" id='modal221_link'></a>
+	<div id="modal221" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form id='modal221_form' autocomplete="off">
@@ -4161,20 +4161,20 @@
 	                <div class="modal-body">
 		              	<div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
 		                  <div class="row">
-											  <div class='col-md-6'>
-													<button type="button" name='download' style='margin-bottom:10px;' class='btn green-jungle'>Download Import Template</button>
-												</div>
-								     	</div>
-					            <div class="row">
-											 	<div class='col-md-6'>
-											 		<input type="file" required name='file' value='Select file' accept=".csv" style='display:none'>
-													<button type='button' name='file_dummy' class='btn red-sunglo'>Select File</button>
-												</div>
-				          		</div>
-		              		<div class="row">
-												<div class='col-md-6'><output name='selected_file'></output></div>
-					      			</div>
-		            		</div>
+							  <div class='col-md-6'>
+									<button type="button" name='download' style='margin-bottom:10px;' class='btn green-jungle'>Download Import Template</button>
+							  </div>
+						  </div>
+					      <div class="row">
+							  <div class='col-md-6'>
+							 		<input type="file" required name='file' value='Select file' accept=".csv" style='display:none'>
+									<button type='button' name='file_dummy' class='btn red-sunglo'>Select File</button>
+							  </div>
+				          </div>
+		              	  <div class="row">
+						     <div class='col-md-6'><output name='selected_file'></output></div>
+					      </div>
+		            	</div>
 		             </div>
 	             	<div class="modal-footer">
 	               	<button type="submit" class="btn green" form='modal221_form' name='save'>Import</button>

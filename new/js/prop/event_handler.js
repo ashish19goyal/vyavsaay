@@ -357,6 +357,7 @@ function set_user_name()
 			indexes:[{index:'doc_type',exact:'staff'},{index:'doc_name',exact:'image'},{index:'target_id',exact:user_id}]};
 	read_json_single_column(docs,function(pics)
 	{
+		
 		if(pics.length>0)
 		{
 			$('.profile-image').attr('src',pics[0]);

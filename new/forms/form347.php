@@ -21,7 +21,7 @@
                     </li>
                     <li class="divider"> </li>
                     <li>
-                        <a id='form347_upload' onclick=modal221_action(form347_import_template,form347_import,form347_import_validate);><i class='fa fa-upload'></i> Import</a>
+                        <a id='form347_upload' onclick=form347_popup_import_action();><i class='fa fa-upload'></i> Import</a>
                     </li>
                 </ul>
             </div>
@@ -72,6 +72,43 @@
 	            </div>
 	        </div>
 	    </div>
+
+		<a href='#form347_popup_import' data-toggle="modal" id='form347_popup_import_link'></a>
+		<div id="form347_popup_import" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+	        <div class="modal-dialog">
+	            <div class="modal-content">
+	                <form id='form347_popup_import_form' autocomplete="off">
+		            	<div class="modal-header">
+	                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+	                    	<h4 class="modal-title">Data Import</h4>
+	                	</div>
+		                <div class="modal-body">
+			              	<div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+							  <div class="row">
+							  	  <div class="col-sm-12 col-md-4">Import Type</div>
+								  <div class="col-sm-12 col-md-8"><input type='text' required form='form347_popup_import_form' name='type'></div>
+  							  </div>
+  						      <div class="row">
+								  <div class='col-md-6'>
+										<button type="button" name='download' style='margin-bottom:10px;' class='btn green-jungle'>Download Import Template</button>
+								  </div>
+							  </div>
+						      <div class="row">
+								  <div class='col-md-6'>
+								 		<button type='button' name='file_dummy' class='btn red-sunglo'>Select File</button>
+								  </div>
+					          </div>
+			            	</div>
+			            </div>
+		             	<div class="modal-footer">
+		               		<button type="submit" class="btn green" form='form347_popup_import_form' name='save'>Import</button>
+		               		<button type="button" class="btn red" form='form347_popup_import_form' data-dismiss='modal' name='cancel'>Cancel</button>
+		             	</div>
+	                </form>
+	            </div>
+	        </div>
+	    </div>
+
 	</div>
 
     <script>
@@ -334,13 +371,129 @@
 			});
 		}
 
-        function form347_import_template()
+		function form347_popup_import_action()
+		{
+			var form=document.getElementById('form347_popup_import_form');
+
+			var import_type=form.elements['type'];
+			var template_button=form.elements['download'];
+			var dummy_button=form.elements['file_dummy'];
+			var import_button=form.elements['save'];
+
+			var import_types_list = ['New Applications','MIS','Apollo Policies', 'Apollo Renewals', 'Max Policies','Max Renewals', 'Star Policies','ICICI Policies'];
+			set_value_list_json(import_types_list,import_type);
+
+			//initializing file import button
+			var file_object=vUtil.jsonParse($(dummy_button).fileInput());
+			var select_file=document.getElementById(file_object.input);
+			var selected_file=document.getElementById(file_object.output);
+
+			$(template_button).off("click");
+			$(template_button).on("click",function(event)
+			{
+				form347_import_template(import_type.value);
+			});
+
+			$(form).off('submit');
+			$(form).on('submit',function(event)
+			{
+				event.preventDefault();
+
+				vImport.readFile(select_file,function(content)
+			    {
+					switch(import_type.value){
+						case 'New Applications':vImport.importData(content,form,form347_na_import,form347_na_import_validate);
+												break;
+						case 'MIS':vImport.importData(content,form,form347_mis_import,form347_mis_import_validate);
+												break;
+						case 'Apollo Policies':vImport.importData(content,form,form347_ap_import,form347_ap_import_validate);
+												break;
+						case 'Apollo Renewals':vImport.importData(content,form,form347_ar_import,form347_ar_import_validate);
+												break;
+						case 'Max Policies':vImport.importData(content,form,form347_mp_import,form347_mp_import_validate);
+												break;
+						case 'Max Renewals':vImport.importData(content,form,form347_mr_import,form347_mr_import_validate);
+												break;
+						case 'Star Policies':vImport.importData(content,form,form347_sp_import,form347_sp_import_validate);
+												break;
+						case 'ICICI Policies':vImport.importData(content,form,form347_ip_import,form347_ip_import_validate);
+												break;
+					}
+			    });
+			});
+			$("#form347_popup_import_link").click();
+		}
+
+        function form347_import_template(import_type)
         {
-            var data_array=['id','application number','policy number','policy name','description','issuer','agent','premium','policy start date','policy end date','policy issue date','policy type','issue type','policy holder name','policy holder phone','policy holder email','policy holder address','policy holder birthdate','status'];
+			var data_array=[];
+			switch(import_type)
+			{
+            	case 'New Applications': data_array=['application number','policy number','policy name',
+													'description','issuer','agent','sum insured','premium','received amount',
+													'adults','children','age (oldest member)','policy start date',
+													'policy term','policy issue date','policy type','issue type','ported from',
+													'renewed from','sales source','team lead','sales manager','tele caller'
+													'policy holder name','policy holder phone','policy holder email',
+													'policy holder address','policy holder birthdate'];
+													break;
+				case 'MIS':data_array=['application number','policy number','policy name',
+										'description','issuer','agent','sum insured','premium','received amount',
+										'adults','children','age (oldest member)','policy start date',
+										'policy term','policy issue date','policy type','issue type','ported from',
+										'renewed from','sales source','team lead','sales manager','tele caller'
+										'policy holder name','policy holder phone','policy holder email',
+										'policy holder address','policy holder birthdate'];
+										break;
+				case 'Apollo Policies':data_array=['Main_Member_Name','Product_Name','Policy_Number',
+													'Premium','Sum_Insured','Policy_issue_date','Policy_start_date',
+													'Policy_end_date','Address_of_main_member'];
+													break;
+				case 'Apollo Renewals':data_array=['Policy_Number','Member_Name','Product_Name',
+													'Policy_start_date','Member_ID','Policy_issue_date','Policy_end_date',
+													'Premium','Application_Number'];
+													break;
+				case 'Max Policies':data_array=['First Name','Last Name','Full Name','Application Number',
+												'Policy Number','Customer Id','Plan Type','Product Id',
+												'Product Genre','Insured Lives','Logged Premium',
+												'Issued Premium (Without Taxes)','Loading Premium','Sum Assured',
+												'Individual Sum Assured','Critical Illness Sum Assured',
+												'Personal Accident Sum Assured','Hospital Cash Sum Assured',
+												'Login Branch','Sales Branch','Zone','Channel','Sub Channel',
+												'Agent Code','Agent Name','Agency Manager Id','Agency Manager Name',
+												'Logged Date','Logged Month','Issued Date','Issued Month',
+												'Maximus Status','Lead Status','Hums Status','Hums Status Update Date',
+												'Current Team','Current Status Ageing','Login Ageing','Designation',
+												'Policy Start Date','Policy End Date'];
+												break;
+				case 'Max Renewals': data_array=['First Name','Last Name','Full Name','Policy Number','Previous Policy Number',
+												'Policy Expiry Date','Customer Id','Plan Type','Product Genre','Insured Lives',
+												'Renewal Premium','Loading Premium','Sum Assured','Individual Sum Assured',
+												'Critical Illness Sum Assured','Personal Accident Sum Assured',
+												'Hospital Cash Sum Assured','Branch','Zone','Renewal Channel','Sub Channel',
+												'Renewal Agent Code','Renewal Agent Name','Agency Manager Id',
+												'Agency Manager Name','Renewal Logged Date','Renewal Logged Month',
+												'Renewal Issuance Date','Renewal Issuance Month','Maximus Status','Lead Status',
+												'Current Team','Current Status Ageing','Login Ageing','Policy Start Date',
+												'Designation'];
+												break;
+				case 'Star Policies':data_array=['S.No','Office Code','Office Name','Product','Policy Number','Premium',
+												'Policy From Date','Policy To Date','Policy Issue Date','Intermediatery Type',
+												'Intermediatery Code','Intermediatery Name','Fullfiller Code','Fullfiller Name',
+												'Fresh/Renewal','Assured Name','Telephone No','ADDRESS','Claims Paid',
+												'Previous Policy Number'];
+												break;
+				case 'ICICI Policies':data_array=['Product Class','Product Sub Class','Policy Business Type',
+										'Policy Number (Click to view certificate)','Email','Policy Cover Note No',
+										'Customer Full Name','OD premium','Net GWP	Commission %',
+										'Policy Endorsement Type','Policy Reporting Type','Policy Start Date',
+										'Policy Endorsement Date'];
+										break;
+			}
             my_array_to_csv(data_array);
         };
 
-        function form347_import_validate(data_array)
+        function form347_na_import_validate(data_array)
         {
             var validate_template_array=[{column:'policy number',required:'yes',regex:new RegExp('^[0-9a-zA-Z_., ()-]+$')},
                                     {column:'policy holder name',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
@@ -362,73 +515,73 @@
             return error_array;
         }
 
-        function form347_import(data_array)
+        function form347_na_import(data_array)
         {
           	var data_json={data_store:'policies',
 		 					log:'yes',
 		 					data:[],
 		 					log_data:{title:'Policies',link_to:'form347'}};
 
-					var customer_json={data_store:'customers',
+			var customer_json={data_store:'customers',
 							loader:'no',
 							data:[]};
 
-					var attribute_json={data_store:'attributes',
-									loader:'no',
-									data:[]};
+			var attribute_json={data_store:'attributes',
+							loader:'no',
+							data:[]};
 
-					var counter=1;
-					var last_updated=vTime.unix();
+			var counter=1;
+			var last_updated=vTime.unix();
 
-					data_array.forEach(function(row)
-					{
-						counter+=1;
+			data_array.forEach(function(row)
+			{
+				counter+=1;
 
-						var holder=row['policy holder name']+" ("+row['policy holder phone']+")";
-						var data_json_array=[{index:'id',value:row.id},
-			 					{index:'policy_num',value:row['policy number'],unique:'yes'},
-								{index:'policy_name',value:row['policy name']},
-								{index:'agent',value:row['agent']},
-								{index:'policy_holder',value:holder},
-								{index:'issuer',value:row['issuer']},
-								{index:'description',value:row['description']},
-								{index:'premium',value:row['premium']},
-								{index:'start_date',value:row['policy start date']},
-								{index:'end_date',value:row['policy end date']},
-								{index:'issue_date',value:row['policy issue date']},
-								{index:'type',value:row['policy type']},
-								{index:'issue_type',value:row['issue type']},
-								{index:'status',value:row['status']},
-			 					{index:'last_updated',value:last_updated}];
+				var holder=row['policy holder name']+" ("+row['policy holder phone']+")";
+				var data_json_array=[{index:'id',value:row.id},
+	 					{index:'policy_num',value:row['policy number'],unique:'yes'},
+						{index:'policy_name',value:row['policy name']},
+						{index:'agent',value:row['agent']},
+						{index:'policy_holder',value:holder},
+						{index:'issuer',value:row['issuer']},
+						{index:'description',value:row['description']},
+						{index:'premium',value:row['premium']},
+						{index:'start_date',value:row['policy start date']},
+						{index:'end_date',value:row['policy end date']},
+						{index:'issue_date',value:row['policy issue date']},
+						{index:'type',value:row['policy type']},
+						{index:'issue_type',value:row['issue type']},
+						{index:'status',value:row['status']},
+	 					{index:'last_updated',value:last_updated}];
 
-						data_json.data.push(data_json_array);
+				data_json.data.push(data_json_array);
 
-						var customer_json_array=[{index:'id',value:row.id},
-			 					{index:'name',value:row['policy holder name']},
-			 					{index:'phone',value:row['policy holder phone']},
-								{index:'email',value:row['policy holder email']},
-								{index:'address',value:row['policy holder address']},
-								{index:'acc_name',value:holder,unique:'yes'},
-			 					{index:'last_updated',value:last_updated}];
+				var customer_json_array=[{index:'id',value:row.id},
+	 					{index:'name',value:row['policy holder name']},
+	 					{index:'phone',value:row['policy holder phone']},
+						{index:'email',value:row['policy holder email']},
+						{index:'address',value:row['policy holder address']},
+						{index:'acc_name',value:holder,unique:'yes'},
+	 					{index:'last_updated',value:last_updated}];
 
-						customer_json.data.push(customer_json_array);
+				customer_json.data.push(customer_json_array);
 
-						var attribute_json_array=[{index:'id',value:row.id},
-			 					{index:'value',value:row['policy holder birthdate']},
-								{index:'attribute',value:'Birth Date'},
-								{index:'type',value:'customer'},
-								{index:'name',value:holder,unique:'yes'},
-			 					{index:'last_updated',value:last_updated}];
+				var attribute_json_array=[{index:'id',value:row.id},
+	 					{index:'value',value:row['policy holder birthdate']},
+						{index:'attribute',value:'Birth Date'},
+						{index:'type',value:'customer'},
+						{index:'name',value:holder,unique:'yes'},
+	 					{index:'last_updated',value:last_updated}];
 
-						attribute_json.data.push(attribute_json_array);
-					});
+				attribute_json.data.push(attribute_json_array);
+			});
 
-						create_batch_json(data_json);
-						create_batch_json(customer_json);
-						create_batch_json(attribute_json);
-						update_batch_json(data_json);
-						update_batch_json(customer_json);
-						update_batch_json(attribute_json);
+			create_batch_json(data_json);
+			create_batch_json(customer_json);
+			create_batch_json(attribute_json);
+			update_batch_json(data_json);
+			update_batch_json(customer_json);
+			update_batch_json(attribute_json);
 
         };
 
