@@ -160,7 +160,11 @@
                 var tableHTML="";
                 for(var k in order_history)
                 {
-                    tableHTML+="<tr><td data-th='Time'>"+get_my_datetime(order_history[k].timeStamp)+"</td>"+
+                    if(vUtil.isBlank(order_history[k].timeStamp))
+                    {
+                        order_history[k].timeStamp = order_history[k].timestamp;
+                    }
+                    tableHTML+="<tr><td data-th='Time'>"+vTime.datetime({time:order_history[k].timeStamp})+"</td>"+
                         "<td data-th='Details'>"+order_history[k].details+"</td>"+
                         "<td data-th='Location'>"+order_history[k].location+"</td>"+
                         "<td data-th='Status'>"+order_history[k].status+"</td>"+
@@ -262,13 +266,12 @@
             $('#form198_table').find('tr').each(function()
             {
                 var row=$(this);
-                var row_object={timestamp:get_raw_time($(row).find('td:first-child').html()),
+                var row_object={timeStamp:vTime.unix({date:$(row).find('td:first-child').html()}),
                                 details:$(row).find('td:nth-child(2)').html(),
                                 location:$(row).find('td:nth-child(3)').html(),
                                 status:$(row).find('td:nth-child(4)').html()};
                 order_history_object.push(row_object);
             });
-            console.log(order_history_object);
             var order_history=JSON.stringify(order_history_object);
 
             var data_json={data_store:'logistics_orders',
