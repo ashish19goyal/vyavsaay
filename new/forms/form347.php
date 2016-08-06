@@ -32,7 +32,7 @@
 		<form id='form347_header' autocomplete="off">
 			<fieldset>
 				<label style='float:right;'><button type='button' class='btn red-pink' onclick='modal11_action();' title='Add Customer'><i class='fa fa-plus'></i> Add Customer</button></label>
-				<label style='float:right;'><button type='button' class='btn purple-soft' onclick='modal216_action();' title='Add Policy'><i class='fa fa-plus'></i> Add Policy</button></label>
+				<label style='float:right;'><button type='button' class='btn purple-soft' onclick='form347_popup_add_policy_action();' title='Add Policy'><i class='fa fa-plus'></i> Add Policy</button></label>
 				<br><label><input type='text' placeholder="Application #" class='floatlabel' name='app_num'></label>
 				<label><input type='text' placeholder="Policy #" class='floatlabel' name='num'></label>
 				<label><input type='text' placeholder="Policy Holder" class='floatlabel' name='holder'></label>
@@ -108,6 +108,99 @@
 	            </div>
 	        </div>
 	    </div>
+
+		<a href='#form347_popup_add_policy' data-toggle="modal" id='form347_popup_add_policy_link'></a>
+		<div id="form347_popup_add_policy" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-full">
+				<div class="modal-content">
+					<form id='form347_popup_add_policy_form' autocomplete="off">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+							<h4 class="modal-title">Add Policy</h4>
+						</div>
+						<div class="modal-body">
+							<div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+								<div class="row">
+									<div class="col-sm-12 col-md-2">Application Number</div>
+									<div class="col-sm-12 col-md-4"><input type='text' form='form347_popup_add_policy_form' required name='app_number'></div>
+									<div class="col-sm-12 col-md-2">Issuing Company</div>
+									<div class="col-sm-12 col-md-4"><input type='text' form='form347_popup_add_policy_form' name='company'></div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 col-md-2">Preferred</div>
+									<div class="col-sm-12 col-md-4"><input type='text' form='form347_popup_add_policy_form' name='preferred'></div>
+									<div class="col-sm-12 col-md-2">Policy Type</div>
+									<div class="col-sm-12 col-md-4"><input type='text' form='form347_popup_add_policy_form' name='policy_type'></div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 col-md-2">Policy Term</div>
+									<div class="col-sm-12 col-md-4"><input type='text' form='form347_popup_add_policy_form' name='term'></div>
+									<div class="col-sm-12 col-md-2">Policy Name</div>
+									<div class="col-sm-12 col-md-4"><input type='text' required form='form347_popup_add_policy_form' name='policy_name'></div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 col-md-2">Policy Holder</div>
+									<div class="col-sm-12 col-md-4"><input type='text' required form='form347_popup_add_policy_form' name='holder'></div>
+									<div class="col-sm-12 col-md-2">Sum Insured</div>
+									<div class="col-sm-12 col-md-4"><input type='text' required form='form347_popup_add_policy_form' name='sum'></div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 col-md-2">Adults</div>
+									<div class="col-sm-12 col-md-4"><input type='text' required form='form347_popup_add_policy_form' name='adults'></div>
+									<div class="col-sm-12 col-md-2">Children</div>
+									<div class="col-sm-12 col-md-4"><input type='text' required form='form347_popup_add_policy_form' name='children'></div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 col-md-2">Age (oldset member)</div>
+									<div class="col-sm-12 col-md-4"><input type='number' step='any' form='form347_popup_add_policy_form' min='0' name='age'></div>
+									<div class="col-sm-12 col-md-2">Premium</div>
+									<div class="col-sm-12 col-md-4"><input type='number' required form='form347_popup_add_policy_form' step='any' min='0' name='premium'></div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 col-md-2">Short Premium</div>
+									<div class="col-sm-12 col-md-4"><input type='number' form='form347_popup_add_policy_form' step='any' name='spremium' min='0' value='0'></div>
+									<div class="col-sm-12 col-md-2">Discount</div>
+									<div class="col-sm-12 col-md-4"><input type='number' form='form347_popup_add_policy_form' step='any' name='discount' min='0' value='0'></div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 col-md-2">Type</div>
+									<div class="col-sm-12 col-md-4"><input type='text' required form='form347_popup_add_policy_form' name='type'></div>
+									<div class='col-sm-12 col-md-6'>
+										<div class="col-sm-12 col-md-4">Ported From</div>
+										<div class="col-sm-12 col-md-8"><input type='text' form='form347_popup_add_policy_form' name='ported_from'></div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 col-md-2">Source</div>
+									<div class="col-sm-12 col-md-4"><input type='text' form='form347_popup_add_policy_form' name='source'></div>
+									<div class="col-sm-12 col-md-2">Team Lead</div>
+									<div class="col-sm-12 col-md-4"><input type='text' form='form347_popup_add_policy_form' name='lead'></div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 col-md-2">Sales Manager</div>
+									<div class="col-sm-12 col-md-4"><input type='text' form='form347_popup_add_policy_form' name='sales'></div>
+									<div class="col-sm-12 col-md-2">Tele-Caller</div>
+									<div class="col-sm-12 col-md-4"><input type='text' form='form347_popup_add_policy_form' name='caller'></div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 col-md-2">Agent</div>
+									<div class="col-sm-12 col-md-4"><input type='text' required form='form347_popup_add_policy_form' name='agent'></div>
+									<div class="col-sm-12 col-md-2">Attachment</div>
+									<div class="col-sm-12 col-md-4">
+										<input type="file" form='form347_popup_add_policy_form' name='file' style='display:none' multiple>
+										<button type='button' name='file_dummy' form='form347_popup_add_policy_form' class='btn yellow-saffron'>Select File</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn green" form='form347_popup_add_policy_form' name='save'>Add</button>
+							<button type="button" class="btn red" form='form347_popup_add_policy_form' data-dismiss='modal' name='cancel'>Cancel</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 
 	</div>
 
@@ -203,7 +296,7 @@
                                  	      "<div class='caption'>"+
                                     	     "<form id='form347_"+result.id+"'>"+
 													"<textarea readonly='readonly' name='app_num' class='floatlabel' placeholder='Application #' form='form347_"+result.id+"'>"+result.application_num+"</textarea>"+
-													"<a onclick=\"show_object('policies','"+result.policy_num+"');\"><textarea readonly='readonly' name='name' class='floatlabel' placeholder='Policy #' form='form347_"+result.id+"'>"+result.policy_num+"</textarea></a>"+
+													"<a onclick=\"show_object('policies','"+result.policy_num+"','"+result.id+"');\"><textarea readonly='readonly' name='name' class='floatlabel' placeholder='Policy #' form='form347_"+result.id+"'>"+result.policy_num+"</textarea></a>"+
 	                                              	"<a onclick=\"show_object('customers','"+result.policy_holder+"');\"><textarea readonly='readonly' class='floatlabel' placeholder='Holder' name='holder' form='form347_"+result.id+"'>"+result.policy_holder+"</textarea></a>"+
 													"<input type='text' readonly='readonly' class='floatlabel' placeholder='Provider' name='provider' form='form347_"+result.id+"' value='"+result.issuer+"'>"+
 													"<input type='text' readonly='readonly' class='floatlabel' placeholder='Agent' name='agent' form='form347_"+result.id+"' value='"+result.agent+"'>"+
@@ -251,6 +344,89 @@
                 $("#modal2_link").click();
             }
         }
+
+		function form347_policy_ids(policies,policy_num_index,func)
+		{
+			var policy_nums = vUtil.arrayColumn(policies,policy_num_index);
+			var id_data  = {data_store:'policies',indexes:[{index:'id'},{index:'policy_num',array:policy_nums}]};
+			read_json_rows('form347',id_data,function(ids)
+			{
+				ids.forEach(function(id)
+				{
+					policies.forEach(function(policy)
+					{
+						if(policy[policy_num_index]==id['policy_num'])
+						{
+							policy['id'] = id['id'];
+						}
+					});
+				});
+				func(policies);
+			});
+		}
+
+		function form347_add_commissions()
+		{
+			var date_array=String(fissue.value).split(/[\-\/]+/);;
+			var month=parseInt(date_array[1]);
+			var monthArray=[4,5,6,7,8,9];
+			var first_half = (monthArray.indexOf(month)==-1) ? 'no' : 'yes';
+			var data={
+				"first_half_year":first_half,
+				"sum_insured":fsum.value,
+				"term":fterm.value,
+				"preferred":fpreferred.value,
+				"upsell": (fpremium.value>old_premium) ? 'yes' : 'no'
+			};
+
+			var commission_id = vUtil.newKey();
+			commissions.forEach(function(commission)
+			{
+				commission_id++;
+				if(commission.issue==ftype.value)
+				{
+					var add=true;
+					var amount = parseFloat(commission.commission)*parseFloat(fpremium.value)/100;
+
+					if(!vUtil.isBlank(commission.conditions) && commission.conditions!=[])
+					{
+						commission.conditions.forEach(function(cond)
+						{
+							if(!vUtil.isBlank(cond.exact) && data[cond.index]!=cond.exact)
+							{
+								add=false;
+							}
+							if(!vUtil.isBlank(cond.lowerbound) && data[cond.index]<cond.lowerbound)
+							{
+								add=false;
+							}
+							if(!vUtil.isBlank(cond.upperbound) && data[cond.index]>cond.upperbound)
+							{
+								add=false;
+							}
+						});
+					}
+
+					if(add)
+					{
+						var commission_json={data_store:'policy_commissions',
+							data:[{index:'id',value:commission_id},
+								{index:'application_num',value:fapp.value},
+								{index:'commission_num',value:''},
+								{index:'issuer',value:fcompany.value},
+								{index:'policy_holder',value:fholder.value},
+								{index:'amount',value:amount},
+								{index:'agent',value:fagent.value},
+								{index:'issue_date',value:vTime.unix({date:fissue.value})},
+								{index:'commission_type',value:commission.type},
+								{index:'status',value:'pending'},
+								{index:'notes',value:''},
+								{index:'last_updated',value:last_updated}]};
+						create_json(commission_json);
+					}
+				}
+			});
+		}
 
 		function form347_popup_action(policy_id,customer_name)
 		{
@@ -424,6 +600,283 @@
 			$("#form347_popup_import_link").click();
 		}
 
+
+		function form347_popup_add_policy_action()
+		{
+			var form=document.getElementById('form347_popup_add_policy_form');
+			var fapp=form.elements['app_number'];
+			var fcompany=form.elements['company'];
+			var fpreferred=form.elements['preferred'];
+			var fptype=form.elements['policy_type'];
+			var fterm=form.elements['term'];
+			var fpname=form.elements['policy_name'];
+			var fholder=form.elements['holder'];
+			var fsum=form.elements['sum'];
+			var fadults=form.elements['adults'];
+			var fchild=form.elements['children'];
+			var fage=form.elements['age'];
+			var fpremium=form.elements['premium'];
+			var fshort_premium=form.elements['spremium'];
+			var fdiscount=form.elements['discount'];
+			var ftype=form.elements['type'];
+			var fported_from=form.elements['ported_from'];
+			var fsource=form.elements['source'];
+			var flead=form.elements['lead'];
+			var fmanager=form.elements['sales'];
+			var fcaller=form.elements['caller'];
+			var fagent=form.elements['agent'];
+			var select_file=form.elements['file'];
+			var dummy_button=form.elements['file_dummy'];
+
+			$(dummy_button).off('click');
+			$(dummy_button).on('click',function (e)
+			{
+				e.preventDefault();
+				$(select_file).trigger('click');
+			});
+
+			dummy_button.setAttribute('class','btn red-sunglo');
+			select_file.value="";
+
+			$(select_file).off('change');
+			$(select_file).on('change',function ()
+			{
+				var file_name=select_file.value;
+				if(file_name!="")
+				{
+					dummy_button.setAttribute('class','btn green-jungle');
+				}
+				else
+				{
+					dummy_button.setAttribute('class','btn red-sunglo');
+					select_file.value="";
+				}
+			});
+
+			fapp.value="";
+			fcompany.value="";
+			fpreferred.value="";
+			fptype.value="";
+			fterm.value="";
+			fpname.value="";
+			fholder.value="";
+			fsum.value="";
+			fadults.value="";
+			fchild.value="";
+			fage.value="";
+			fpremium.value="";
+			fshort_premium.value="";
+			fdiscount.value="";
+			ftype.value="fresh";
+			fported_from.value="";
+			fsource.value="";
+			flead.value="";
+			fmanager.value="";
+			fcaller.value="";
+			fagent.value="";
+
+			set_value_list_json(['fresh','portability'],ftype);
+			set_value_list_json([100000,200000,300000,400000,500000,700000,750000,1000000,1500000,2000000,2500000,5000000,10000000,20000000,50000000],fsum);
+			set_value_list_json([1,2],fadults);
+			set_value_list_json([0,1,2,3],fchild);
+
+			set_static_value_list_json('policies','sales source',fsource);
+
+			var name_data={data_store:'policy_types',return_column:'name'};
+			set_my_value_list_json(name_data,fpname);
+
+			function policy_filtering()
+			{
+				fpname.value="";
+				var name_data={data_store:'policy_types',return_column:'name',
+								indexes:[{index:'issuer',value:fcompany.value},
+										{index:'term',value:fterm.value},
+										{index:'preferred',value:fpreferred.value}]};
+				set_my_value_list_json(name_data,fpname);
+			};
+
+			vUtil.onChange(fcompany,policy_filtering);
+			vUtil.onChange(fterm,policy_filtering);
+			vUtil.onChange(fpreferred,policy_filtering);
+
+			function premium_calculation()
+			{
+				fpremium.value="";
+				var premium_data={data_store:'policy_premiums',return_column:'premium_amount',
+								indexes:[{index:'policy_name',exact:fpname.value},
+										{index:'sum_insured',exact:fsum.value},
+										{index:'adults',exact:fadults.value},
+										{index:'children',exact:fchild.value},
+										{index:'age_lower',upperbound:fage.value},
+										{index:'age_upper',lowerbound:fage.value}]};
+				set_my_value_json(premium_data,fpremium);
+			};
+			vUtil.onChange(fsum,premium_calculation);
+			vUtil.onChange(fadults,premium_calculation);
+			vUtil.onChange(fchild,premium_calculation);
+			vUtil.onChange(fage,premium_calculation);
+
+			var holder_data={data_store:'customers',return_column:'acc_name'};
+			set_my_value_list_json(holder_data,fholder);
+
+			var company_data={data_store:'policy_types',return_column:'issuer'};
+			set_my_value_list_json(company_data,fcompany);
+
+			var lead_data={data_store:'attributes',return_column:'name',
+							indexes:[{index:'type',exact:'staff'},
+									{index:'attribute',exact:'Designation'},
+									{index:'value',exact:'Team Lead'}]};
+			set_my_value_list_json(lead_data,flead);
+
+			var manager_data={data_store:'attributes',return_column:'name',
+							indexes:[{index:'type',exact:'staff'},
+									{index:'attribute',exact:'Designation'},
+									{index:'value',exact:'Sales Manager'}]};
+			set_my_value_list_json(manager_data,fmanager);
+
+			var caller_data={data_store:'attributes',return_column:'name',
+							indexes:[{index:'type',exact:'staff'},
+									{index:'attribute',exact:'Designation'},
+									{index:'value',exact:'Tele-Caller'}]};
+			set_my_value_list_json(caller_data,fcaller);
+
+			var agent_data={data_store:'attributes',return_column:'name',
+							indexes:[{index:'type',exact:'staff'},
+									{index:'attribute',exact:'Designation'},
+									{index:'value',exact:'Agent'}]};
+			set_my_value_list_json(agent_data,fagent);
+
+			set_static_value_list_json('policy_types','type',fptype);
+			set_static_value_list_json('policy_types','term',fterm);
+			set_static_value_list_json('policy_types','preferred',fpreferred);
+
+			$(fported_from).parent().parent().hide();
+
+			vUtil.onChange(ftype,function()
+			{
+				if(ftype.value=='portability')
+				{
+					$(fported_from).parent().parent().show();
+				}
+			});
+
+			var description = "";
+			vUtil.onChange(fpname,function()
+			{
+				var policy_data={data_store:'policy_types',count:1,
+								indexes:[{index:'issuer'},
+										{index:'description'},
+										{index:'type'},
+										{index:'term'},
+										{index:'preferred'},
+										{index:'accounts'},
+										{index:'name',exact:fpname.value}]};
+				read_json_rows('',policy_data,function(policies)
+				{
+					if(policies.length>0)
+					{
+						var accounts_array=vUtil.jsonParse(policies[0].accounts);
+						if(accounts_array.length>0)
+						{
+							fagent.value = accounts_array[0];
+						}
+						fcompany.value = policies[0].issuer;
+						fpreferred.value = policies[0].preferred;
+						description = policies[0].description;
+					}
+				});
+
+				premium_calculation();
+			});
+
+			$(form).off("submit");
+			$(form).on("submit",function(event)
+			{
+				event.preventDefault();
+				if(is_create_access('form347'))
+				{
+					//saving attachments
+					var last_updated=vTime.unix();
+					var attachments = [];
+					var domain=get_session_var('domain');
+					var files = select_file.files;
+					// console.log(files);
+					var counter=files.length;
+					for(var i=0; i<files.length; i++)
+					{
+						var file=files[i];
+						var contentType=file.type;
+						var file_attr=file.name.split('.');
+						var filetype=file_attr[file_attr.length-1];
+						vUtil.fileToDataUrl(file,function(dataURL)
+						{
+							if(dataURL!="")
+							{
+								var doc_name=domain+vTime.unix()+file.name;
+								var doc_mapping={name:file.name,url:doc_name};
+								attachments.push(doc_mapping);
+
+				                var data_json={type:'create',
+				                           bucket:'vyavsaay-documents',
+				                           blob: dataURL,
+				                           name:doc_name,
+				                           description:'',
+				                           content_type:contentType};
+								s3_object(data_json);
+								counter--;
+							}
+						});
+					}
+
+					var wait=setInterval(function()
+					{
+						if(counter==0)
+						{
+							clearInterval(wait);
+
+							var attachment_string=JSON.stringify(attachments);
+							var data_json={data_store:'policies',
+							data:[{index:'id',value:get_new_key()},
+								{index:'application_num',value:fapp.value,unique:'yes'},
+								{index:'policy_num',value:""},
+								{index:'policy_name',value:fpname.value},
+								{index:'description',value:description},
+								{index:'issuer',value:fcompany.value},
+								{index:'policy_holder',value:fholder.value},
+								{index:'premium',value:fpremium.value},
+								{index:'discount',value:fdiscount.value},
+								{index:'short_premium',value:fshort_premium.value},
+								{index:'agent',value:fagent.value},
+								{index:'type',value:fptype.value},
+								{index:'term',value:fterm.value},
+								{index:'preferred',value:fpreferred.value},
+								{index:'issue_type',value:ftype.value},
+								{index:'ported_source',value:fported_from.value},
+								{index:'sum_insured',value:fsum.value},
+								{index:'adults',value:fadults.value},
+								{index:'children',value:fchild.value},
+								{index:'age',value:fage.value},
+								{index:'team_lead',value:flead.value},
+								{index:'sales_manager',value:fmanager.value},
+								{index:'tele_caller',value:fcaller.value},
+								{index:'sales_source',value:fsource.value},
+								{index:'attachments',value:attachment_string},
+								{index:'status',value:'applied'},
+								{index:'last_updated',value:last_updated}]};
+							create_json(data_json);
+						}
+					},500);
+				}
+				else
+				{
+					$("#modal2_link").click();
+				}
+				$(form).find(".close").click();
+			});
+
+			$("#form347_popup_add_policy_link").click();
+		}
+
         function form347_import_template(import_type)
         {
 			var data_array=[];
@@ -433,7 +886,7 @@
 													'description','issuer','agent','sum insured','premium','received amount',
 													'adults','children','age (oldest member)','policy start date',
 													'policy term','policy issue date','policy type','issue type','ported from',
-													'renewed from','sales source','team lead','sales manager','tele caller'
+													'renewed from','sales source','team lead','sales manager','tele caller',
 													'policy holder name','policy holder phone','policy holder email',
 													'policy holder address','policy holder birthdate'];
 													break;
@@ -441,7 +894,7 @@
 										'description','issuer','agent','sum insured','premium','received amount',
 										'adults','children','age (oldest member)','policy start date',
 										'policy term','policy issue date','policy type','issue type','ported from',
-										'renewed from','sales source','team lead','sales manager','tele caller'
+										'renewed from','sales source','team lead','sales manager','tele caller',
 										'policy holder name','policy holder phone','policy holder email',
 										'policy holder address','policy holder birthdate'];
 										break;

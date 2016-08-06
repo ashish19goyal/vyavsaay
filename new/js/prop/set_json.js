@@ -513,7 +513,7 @@ function set_value_list_json(data,filter_element,func)
 	var list_id=filter_element.getAttribute('list');
 	if(list_id=='' || list_id==null)
 	{
-		list_id="list_"+get_new_key();
+		list_id="list_"+vUtil.uniqueNewKey();
 		filter_element.setAttribute("list",list_id);
 	}
 	else

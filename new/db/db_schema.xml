@@ -2185,7 +2185,7 @@
 			<tele_caller index='yes' type="TEXT"></tele_caller>
 			<sales_source index='yes' type="VARCHAR(30)"></sales_source><!--team/out source-->
 			<attachments index='yes' type="TEXT"></attachments>
-			<status index='yes' type="VARCHAR(30)"></status><!-- active/expired -->
+			<status index='yes' type="VARCHAR(30)"></status><!-- applied/issued -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</policies>

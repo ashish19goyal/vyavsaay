@@ -60,15 +60,15 @@
 				form279_ini();
 			});
 
-      var list_data={data_store:'task_instances',return_column:'source_name'};
-      set_my_filter_json(list_data,list_filter);
+	      var list_data={data_store:'task_instances',return_column:'source_name'};
+	      set_my_filter_json(list_data,list_filter);
 
-      var task_data={data_store:'task_instances',return_column:'name'};
-      set_my_filter_json(task_data,task_filter);
+	      var task_data={data_store:'task_instances',return_column:'name'};
+	      set_my_filter_json(task_data,task_filter);
 
-      var assignee_data={data_store:'task_instances',return_column:'assignee'};
-      set_my_filter_json(assignee_data,assignee_filter);
-  	}
+	      var assignee_data={data_store:'task_instances',return_column:'assignee'};
+	      set_my_filter_json(assignee_data,assignee_filter);
+	  	}
 
 		function form279_ini(task_types)
 		{
@@ -76,18 +76,18 @@
 			if(fid==null)
 				fid="";
 
-      var status_filter='pending';
-      if(typeof task_types!='undefined' && task_types=='completed')
-      {
-          status_filter='completed';
-          $('#form279_status').find('label.completed').addClass('active');
-          $('#form279_status').find('label.pending').removeClass('active');
-      }
-      else
-      {
-          $('#form279_status').find('label.pending').addClass('active');
-          $('#form279_status').find('label.completed').removeClass('active');
-      }
+		      var status_filter='pending';
+		      if(typeof task_types!='undefined' && task_types=='completed')
+		      {
+		          status_filter='completed';
+		          $('#form279_status').find('label.completed').addClass('active');
+		          $('#form279_status').find('label.pending').removeClass('active');
+		      }
+		      else
+		      {
+		          $('#form279_status').find('label.pending').addClass('active');
+		          $('#form279_status').find('label.completed').removeClass('active');
+		      }
 
 			var form=document.getElementById('form279_header');
 			var list_filter=form.elements['list'].value;
@@ -99,18 +99,16 @@
 
 			var paginator=$('#form279_body').paginator();
 
-			var columns=new Object();
-					columns.count=paginator.page_size();
-					columns.start_index=paginator.get_index();
-					columns.data_store='task_instances';
-
-					columns.indexes=[{index:'id',value:fid},
-									{index:'name',value:task_filter},
-									{index:'description'},
-									{index:'source_name',value:list_filter},
-									{index:'status',exact:status_filter},
-                                    {index:'assignee',value:staff_filter},
-                                    {index:'source',exact:'to_do'}];
+			var columns={count:paginator.page_size(),
+						start_index:paginator.get_index(),
+						data_store:'task_instances',
+						indexes:[{index:'id',value:fid},
+								{index:'name',value:task_filter},
+								{index:'description'},
+								{index:'source_name',value:list_filter},
+								{index:'status',exact:status_filter},
+                                {index:'assignee',value:staff_filter},
+                                {index:'source',exact:'to_do'}]};
 			read_json_rows('form279',columns,function(results)
 			{
                 var lists_array=[];
@@ -154,6 +152,12 @@
                                         "<i class='fa fa-check'></i>"+
                                     "</a>";
                         }
+						else if(result.status=='completed')
+						{
+							rowsHTML+="<a class='done' onclick=form279_reopen_item('"+result.id+"',this); title='Re-open'>"+
+                                        "<i class='fa fa-reply'></i>"+
+                                    "</a>";
+						}
                         rowsHTML+="<a class='pending' title='Delete' onclick=form279_delete_item('"+result.id+"',this);>"+
                             "<i class='fa fa-close link'></i>"+
                                     "</a>"+
@@ -180,6 +184,24 @@
 				hide_loader();
 			});
 		};
+
+		function form279_reopen_item(id,button)
+		{
+			if(is_update_access('form279'))
+			{
+				var last_updated=get_my_time();
+				var data_json={data_store:'task_instances',
+	 				data:[{index:'id',value:id},
+	 					{index:'status',value:'pending'},
+	 					{index:'last_updated',value:last_updated}]};
+ 				update_json(data_json);
+                $(button).parent().parent().remove();
+			}
+			else
+			{
+				$("#modal2_link").click();
+			}
+		}
 
 		function form279_close_item(id,button)
 		{

@@ -97,6 +97,13 @@ var vUtil = function (options)
 		return d.getTime();
 	}
 
+	this.uniqueNewKey = function()
+	{
+		var d=new Date();
+		var key = (d.getTime()+Math.random())*1000;
+		return key;
+	}
+
     this.resize_picture=function (picture_tag,pic_width)
     {
         var tempW = picture_tag.width;

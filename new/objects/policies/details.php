@@ -69,6 +69,11 @@
 	<script>
 		function initialize_object_policies_details(obj_name,obj_id)
 		{
+			var add_index={index:'policy_num',exact:obj_name};
+			if(vUtil.isBlank(obj_name))
+			{
+				add_index={index:'id',exact:obj_id};
+			}
             var detail_data={data_store:'policies',count:1,
 							indexes:[{index:'id'},
 								 {index:'application_num'},
@@ -97,7 +102,8 @@
 								 {index:'tele_caller'},
 								 {index:'sales_source'},
 								 {index:'status'},
-                                {index:'policy_num',exact:obj_name}]};
+                                 {index:'policy_num'},
+								 add_index]};
             read_json_rows('',detail_data,function(details)
             {
 				if(details.length>0)

@@ -130,7 +130,7 @@
 
         var paginator=$('#report121_body').paginator({'page_size':25});
 
-		var renewed_data={data_store:'policies',return_column:'renewed_source'};
+		var renewed_data={data_store:'policies',return_column:'application_number'};
 		read_json_single_column(renewed_data,function(renewals)
 		{
 			console.log(renewals);

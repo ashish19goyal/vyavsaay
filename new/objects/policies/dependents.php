@@ -15,8 +15,15 @@
 		{
             var container=document.getElementById('object_policies_dependents');
             container.innerHTML="";
+
+            var add_index={index:'policy_num',exact:obj_name};
+			if(vUtil.isBlank(obj_name))
+			{
+				add_index={index:'id',exact:obj_id};
+			}
+
 			var attribute_data={data_store:'policies',return_column:'dependents',count:1,
-                           indexes:[{index:'policy_num',exact:obj_name}]};
+                           indexes:[{index:'policy_num'},add_index]};
             read_json_single_column(attribute_data,function(results)
             {
 				if(results.length>0)
