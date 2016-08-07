@@ -2159,6 +2159,7 @@
 			<application_num index='yes' type="TEXT"></application_num>
 			<issuer index='yes' type="TEXT"></issuer>
 			<policy_holder index='yes' type="TEXT"></policy_holder>
+			<member_id index='yes' type="TEXT"></member_id>
 			<agent index='yes' type="TEXT"></agent>
 			<policy_num index='yes' type="TEXT"></policy_num>
 			<policy_name index='yes' type="TEXT"></policy_name>
