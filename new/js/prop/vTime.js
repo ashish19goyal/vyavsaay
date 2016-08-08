@@ -253,5 +253,54 @@ var vTime = function ()
                     return results;
       }
     };
+
+    /**
+    *   This function returns the month of the specified date
+    */
+    this.month=function (opts)
+    {
+        var defs={date:'today',inputFormat:'dd/mm/yyyy'};
+    	var sets = $.extend(defs, opts || {});
+
+        if(sets.date=='' || sets.date==null || sets.date==0 || sets.date=='null')
+        {
+            return '';
+        }
+
+        var d=new Date();
+        if(sets.date=='today')
+        {
+            return d.getMonth()+1;
+        }
+
+        switch(sets.inputFormat)
+        {
+            case 'dd/mm/yyyy':
+                var date_time_array=String(sets.date).split(/ /);
+                var date_elem=date_time_array[0];
+                var date_array=date_elem.split(/[\-\/]+/);
+                return parseInt(date_array[1]);
+
+            case 'mm/dd/yyyy':
+                var date_time_array=String(sets.date).split(/ /);
+                var date_elem=date_time_array[0];
+                var date_array=date_elem.split(/[\-\/]+/);
+                return parseInt(date_array[0]);
+
+            case 'unix':
+                d=new Date(parseFloat(sets.time));
+        }
+
+      return d.getMonth()+1;
+    };
+
+    /**
+    *   This function returns the quarter of the specified date
+    */
+    this.quarter=function (opts)
+    {
+        var quarter = parseInt(((this.month(opts)-1)/3)+1);
+        return quarter;
+    };
 };
 vTime=new vTime();

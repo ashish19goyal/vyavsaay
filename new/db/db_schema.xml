@@ -2175,6 +2175,8 @@
 			<start_date index='yes' type="BIGINT"></start_date>
 			<end_date index='yes' type="BIGINT"></end_date>
 			<issue_date index='yes' type="BIGINT"></issue_date>
+			<issued_in_quarter index='yes' type="INT"></issued_in_quarter>
+			<upsell index='yes' type="VARCHAR(10)"></upsell>
 			<type index='yes' type="VARCHAR(30)"></type><!-- life/health/car -->
 			<term index='yes' type="VARCHAR(30)"></term><!-- one year/two years -->
 			<preferred index='yes' type="VARCHAR(30)"></preferred><!-- yes/no -->

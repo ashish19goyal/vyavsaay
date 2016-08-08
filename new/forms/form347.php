@@ -252,14 +252,47 @@
             }
         }
 
+		function form347_policy_holder_ids(policy_holders,func)
+		{
+			var id_data  = {data_store:'customers',indexes:[{index:'id'},
+							{index:'acc_name',array:policy_holders}]};
+			read_json_rows('form347',id_data,function(ids)
+			{
+				func(ids);
+			});
+		}
+
+		function form347_policy_holder_ids(policies,policy_holder_index,func)
+		{
+			var policy_holders = vUtil.arrayColumn(policies,policy_holder_index);
+			var id_data  = {data_store:'customers',indexes:[{index:'id'},
+							{index:'acc_name',array:policy_holders}]};
+			read_json_rows('form347',id_data,function(ids)
+			{
+				ids.forEach(function(id)
+				{
+					for(var i in policies)
+					{
+						if(policies[i][policy_holder_index]==id['acc_name'])
+						{
+							policies[i].policy_holder_id = id['id'];
+						}
+					}
+				});
+				// console.log(policies);
+				func();
+			});
+		}
+
 		function form347_policy_ids(policies,policy_num_index,issuer,func)
 		{
 			var policy_nums = vUtil.arrayColumn(policies,policy_num_index);
-			var id_data  = {data_store:'policies',indexes:[{index:'id'},{index:'policy_num',array:policy_nums}
-							,{index:'issuer',value:issuer}]};
+			var id_data  = {data_store:'policies',indexes:[{index:'id'},
+							{index:'policy_holder'},
+							{index:'policy_num',array:policy_nums},
+							{index:'issuer',value:issuer}]};
 			read_json_rows('form347',id_data,function(ids)
 			{
-				// console.log(ids);
 				ids.forEach(function(id)
 				{
 					for(var i in policies)
@@ -267,6 +300,7 @@
 						if(policies[i][policy_num_index]==id['policy_num'])
 						{
 							policies[i].id = id['id'];
+							policies[i].policy_holder = id['policy_holder'];
 						}
 					}
 				});
@@ -296,16 +330,50 @@
 						}
 					}
 				});
-				func();
+
+				var renewal_data  = {data_store:'policies',indexes:[{index:'id'},
+								{index:'policy_holder'},
+								{index:'premium'},
+								{index:'policy_num',array:app_nums},
+								{index:'issuer',value:issuer}]};
+				read_json_rows('form347',renewal_data,function(ids)
+				{
+					// console.log(ids);
+					ids.forEach(function(id)
+					{
+						for(var i in policies)
+						{
+							if(policies[i][app_num_index]==id['policy_num'])
+							{
+								policies[i].policy_holder = id['policy_holder'];
+								policies[i].issue_type = 'renewal';
+								policies[i].old_premium = id.premium;
+							}
+						}
+					});
+					func();
+				});
 			});
 		}
 
-		function form347_policy_bank(issuer,func)
+		function form347_policy_bank(policies,policy_name_index,issuer,func)
 		{
 			var bank_data  = {data_store:'policy_types',all_indexes:'yes',indexes:[{index:'issuer',value:issuer}]};
-			read_json_rows('form347',bank_data,function(bank)
+			read_json_rows('form347',bank_data,function(banks)
 			{
-				func(bank);
+				banks.forEach(function(policy)
+				{
+					for(var i in policies)
+					{
+						if(policies[i][policy_name_index]==policy['name'])
+						{
+							policies[i].description = policy['description'];
+							policies[i].type = policy['type'];
+							policies[i].preferred = policy['preferred'];
+						}
+					}
+				});
+				func();
 			});
 		}
 
@@ -500,7 +568,7 @@
 			var dummy_button=form.elements['file_dummy'];
 			var import_button=form.elements['save'];
 
-			var import_types_list = ['New Applications','MIS','Apollo Policies', 'Apollo Renewals', 'Max Policies','Max Renewals', 'Star Policies','ICICI Policies'];
+			var import_types_list = ['New Applications','MIS', 'Apollo Policies Search','Apollo Policies Sold', 'Max Policies','Max Renewals', 'Star Policies','ICICI Policies'];
 			set_value_list_json(import_types_list,import_type);
 
 			//initializing file import button
@@ -526,9 +594,9 @@
 												break;
 						case 'MIS':vImport.importData(content,form,form347_mis_import,form347_mis_import_validate);
 												break;
-						case 'Apollo Policies':vImport.importData(content,form,form347_ap_import,form347_ap_import_validate);
+						case 'Apollo Policies Sold':vImport.importData(content,form,form347_ap_import,form347_ap_import_validate);
 												break;
-						case 'Apollo Renewals':vImport.importData(content,form,form347_ar_import,form347_ar_import_validate);
+						case 'Apollo Policies Search':vImport.importData(content,form,form347_ar_import,form347_ar_import_validate);
 												break;
 						case 'Max Policies':vImport.importData(content,form,form347_mp_import,form347_mp_import_validate);
 												break;
@@ -566,11 +634,11 @@
 										'policy holder name','policy holder phone','policy holder email',
 										'policy holder address','policy holder birthdate'];
 										break;
-				case 'Apollo Policies':data_array=['Main_Member_Name','Product_Name','Policy_Number',
+				case 'Apollo Policies Sold':data_array=['Main_Member_Name','Product_Name','Policy_Number',
 													'Premium','Sum_Insured','Policy_issue_date','Policy_start_date',
 													'Policy_end_date','Address_of_main_member'];
 													break;
-				case 'Apollo Renewals':data_array=['Policy_Number','Member_Name','Product_Name',
+				case 'Apollo Policies Search':data_array=['Policy_Number','Member_Name','Product_Name',
 													'Policy_start_date','Member_ID','Policy_issue_date','Policy_end_date',
 													'Premium','Application_Number'];
 													break;
@@ -636,22 +704,28 @@
             return error_array;
         }
 
+		/**
+		*	Import validation for apollo policies search report
+		*/
 		function form347_ar_import_validate(data_array)
         {
             var validate_template_array=[{column:'Policy_Number',required:'yes',regex:new RegExp('^[0-9a-zA-Z_-]+$')},
-                                    {column:'Member_Name',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'Product_Name',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'Policy_start_date',regex:new RegExp('^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4} 12:00:00 AM')},
-									{column:'Member_ID',regex:new RegExp('^[0-9]+$')},
-									{column:'Policy_issue_date',regex:new RegExp('^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4} 12:00:00 AM')},
-									{column:'Policy_end_date',regex:new RegExp('^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4} 12:00:00 AM')},
-									{column:'Application_Number',regex:new RegExp('^[0-9a-zA-Z_-]+$')},
-									{column:'Premium',regex:new RegExp('^[0-9 .]+$')}];
+                                    {column:'Member_Name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Product_Name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Policy_start_date',required:'yes',regex:new RegExp('^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4} 12:00:00 AM')},
+									{column:'Member_ID',required:'yes',regex:new RegExp('^[0-9]+$')},
+									{column:'Policy_issue_date',required:'yes',regex:new RegExp('^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4} 12:00:00 AM')},
+									{column:'Policy_end_date',required:'yes',regex:new RegExp('^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4} 12:00:00 AM')},
+									{column:'Application_Number',required:'yes',regex:new RegExp('^[0-9a-zA-Z_-]+$')},
+									{column:'Premium',required:'yes',regex:new RegExp('^[0-9 .]+$')}];
 
             var error_array=vImport.validate(data_array,validate_template_array);
             return error_array;
         }
 
+		/**
+		*	Import for apollo policies search report
+		*/
 		function form347_ar_import(policies)
         {
           	var create_policy_json={data_store:'policies',data:[]};
@@ -659,7 +733,6 @@
 		 					log_data:{title:'Policies from Apollo',link_to:'form347'}};
 			var customer_json={data_store:'customers',loader:'no',data:[]};
 			var attribute_json={data_store:'attributes',loader:'no',data:[]};
-			var commissions_json={data_store:'policy_commissions',loader:'no',data:[]};
 
 			var counter=1;
 			var last_updated=vTime.unix();
@@ -669,123 +742,266 @@
 			{
 				policies[a].id="";
 				policies[a].policy_holder="";
+				policies[a].description="";
+				policies[a].type="";
+				policies[a].preferred="";
+				policies[a].issue_type='';
+				policies[a].old_premium=0;
 			}
 
-			form347_policy_ids(policies,'Policy_Number','Apollo',function()
+			form347_policy_bank(policies,'Product_Name','Apollo',function()
 			{
-				// console.log(policies);
-				for(var i=0;i<policies.length;i++)
+				form347_policy_ids(policies,'Policy_Number','Apollo',function()
 				{
-					if(!vUtil.isBlank(policies[i].id))
+					// console.log(policies);
+					for(var i=0;i<policies.length;i++)
 					{
-						var data_json_array=[{index:'id',value:policies[i].id},
-			 					{index:'policy_name',value:policies[i].Product_Name},
-								{index:'application_num',value:policies[i].Application_Number},
-								{index:'member_id',value:policies[i].Member_ID},
-								{index:'premium',value:policies[i].Premium},
-								{index:'issuer',value:'Apollo'},
-								{index:'start_date',value:vTime.unix({date:policies[i].Policy_start_date,format:'mm/dd/yyyy hh:mm:ss AM'})},
-								{index:'end_date',value:vTime.unix({date:policies[i].Policy_end_date,format:'mm/dd/yyyy hh:mm:ss AM'})},
-								{index:'issue_date',value:vTime.unix({date:policies[i].Policy_issue_date,format:'mm/dd/yyyy hh:mm:ss AM'})},
-								{index:'status',value:'issued'},
-			 					{index:'last_updated',value:last_updated}];
-
-						update_policy_json.data.push(data_json_array);
-						policies.splice(i,1);
-						i--;
-					}
-				}
-
-				if(policies.length>0)
-				{
-					form347_application_ids(policies,'Application_Number','Apollo',function()
-					{
-						// console.log(policies);
-
-						for(var i=0;i<policies.length;i++)
+						policies[i].start_time = vTime.unix({date:policies[i].Policy_start_date,format:'mm/dd/yyyy hh:mm:ss AM'});
+						policies[i].end_time = vTime.unix({date:policies[i].Policy_end_date,format:'mm/dd/yyyy hh:mm:ss AM'});
+						policies[i].issue_time = vTime.unix({date:policies[i].Policy_issue_date,format:'mm/dd/yyyy hh:mm:ss AM'});
+						policies[i].term = ((policies[i].end_time-policies[i].start_time)/366>1) ? 'two years' : 'one year';
+						policies[i].issued_in_quarter = vTime.quarter({time:policies[i].issue_time,format:'unix'});
+						if(!vUtil.isBlank(policies[i].id))
 						{
-							counter++;
-							if(!vUtil.isBlank(policies[i].id))
-							{
-								var policy_array=[{index:'id',value:policies[i].id},
-					 					{index:'policy_name',value:policies[i].Product_Name},
-										{index:'policy_num',value:policies[i].Policy_Number},
-										{index:'member_id',value:policies[i].Member_ID},
-										{index:'premium',value:policies[i].Premium},
-										{index:'issuer',value:'Apollo'},
-										{index:'start_date',value:vTime.unix({date:policies[i].Policy_start_date,format:'mm/dd/yyyy hh:mm:ss AM'})},
-										{index:'end_date',value:vTime.unix({date:policies[i].Policy_end_date,format:'mm/dd/yyyy hh:mm:ss AM'})},
-										{index:'issue_date',value:vTime.unix({date:policies[i].Policy_issue_date,format:'mm/dd/yyyy hh:mm:ss AM'})},
-										{index:'status',value:'issued'},
-					 					{index:'last_updated',value:last_updated}];
+							var data_json_array=[{index:'id',value:policies[i].id},
+				 					{index:'policy_name',value:policies[i].Product_Name},
+									{index:'application_num',value:policies[i].Application_Number},
+									{index:'member_id',value:policies[i].Member_ID},
+									{index:'premium',value:policies[i].Premium},
+									{index:'issuer',value:'Apollo'},
+									{index:'term',value:policies[i].term},
+									{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
+									{index:'start_date',value:policies[i].start_time},
+									{index:'end_date',value:policies[i].end_time},
+									{index:'issue_date',value:policies[i].issue_time},
+									{index:'type',value:policies[i].type},
+									{index:'description',value:policies[i].description},
+									{index:'preferred',value:policies[i].preferred},
+									{index:'status',value:'issued'},
+				 					{index:'last_updated',value:last_updated}];
 
-								update_policy_json.data.push(policy_array);
-
-								var attributes_array=[{index:'id',value:vUtil.newKey()+counter},
-					 					{index:'attribute',value:'Member ID',uniqueWith:['value','name']},
-										{index:'type',value:'customer'},
-										{index:'value',value:policies[i].Member_ID},
-										{index:'name',value:policies[i].policy_holder},
-					 					{index:'last_updated',value:last_updated}];
-
-								attribute_json.data.push(attributes_array);
-
-								policies.splice(i,1);
-								i--;
-							}
+							update_policy_json.data.push(data_json_array);
+							policies.splice(i,1);
+							i--;
 						}
+					}
 
-						if(policies.length>0)
+					if(policies.length>0)
+					{
+						form347_application_ids(policies,'Application_Number','Apollo',function()
 						{
-							for(var i=0; i<policies.length;i++)
+							for(var i=0;i<policies.length;i++)
 							{
 								counter++;
-								policies[i].policy_holder=policies[i].Member_Name+" ("+policies[i].Member_ID+")";
-								var policy_array=[{index:'id',value:vUtil.newKey()+counter},
-					 					{index:'policy_name',value:policies[i].Product_Name},
-										{index:'application_num',value:policies[i].Application_Number},
-										{index:'policy_num',value:policies[i].Policy_Number,unique:'yes'},
-										{index:'policy_holder',value:policies[i].policy_holder},
-										{index:'member_id',value:policies[i].Member_ID},
-										{index:'premium',value:policies[i].Premium},
-										{index:'issuer',value:'Apollo'},
-										{index:'start_date',value:vTime.unix({date:policies[i].Policy_start_date,format:'mm/dd/yyyy hh:mm:ss AM'})},
-										{index:'end_date',value:vTime.unix({date:policies[i].Policy_end_date,format:'mm/dd/yyyy hh:mm:ss AM'})},
-										{index:'issue_date',value:vTime.unix({date:policies[i].Policy_issue_date,format:'mm/dd/yyyy hh:mm:ss AM'})},
-										{index:'status',value:'issued'},
-					 					{index:'last_updated',value:last_updated}];
+								if(!vUtil.isBlank(policies[i].id))
+								{
+									var policy_array=[{index:'id',value:policies[i].id},
+						 					{index:'policy_name',value:policies[i].Product_Name},
+											{index:'policy_num',value:policies[i].Policy_Number},
+											{index:'member_id',value:policies[i].Member_ID},
+											{index:'premium',value:policies[i].Premium},
+											{index:'issuer',value:'Apollo'},
+											{index:'term',value:policies[i].term},
+											{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
+											{index:'start_date',value:policies[i].start_time},
+											{index:'end_date',value:policies[i].end_time},
+											{index:'issue_date',value:policies[i].issue_time},
+											{index:'status',value:'issued'},
+											{index:'type',value:policies[i].type},
+											{index:'description',value:policies[i].description},
+											{index:'preferred',value:policies[i].preferred},
+											{index:'last_updated',value:last_updated}];
+									if(!vUtil.isBlank(policies[i].issue_type))
+									{
+										var issue_type_obj = {index:'issue_type',value:policies[i].issue_type};
+										policy_array.push(issue_type_obj);
+									}
+									var upsell= (policies[i].old_premium!=0 && parseFloat(policies[i].Premium) > parseFloat(policies[i].old_premium)) ? 'yes' :'no';
+									var upsell_obj = {index:'upsell',value:upsell};
+									policy_array.push(upsell_obj);
 
-								create_policy_json.data.push(policy_array);
+									update_policy_json.data.push(policy_array);
 
-								var attributes_array=[{index:'id',value:vUtil.newKey()+counter},
-					 					{index:'attribute',value:'Member ID',uniqueWith:['value','name']},
-										{index:'type',value:'customer'},
-										{index:'value',value:policies[i].Member_ID},
-										{index:'name',value:policies[i].policy_holder},
-					 					{index:'last_updated',value:last_updated}];
+									var attributes_array=[{index:'id',value:vUtil.newKey()+counter},
+						 					{index:'attribute',value:'Member ID',uniqueWith:['value','name']},
+											{index:'type',value:'customer'},
+											{index:'value',value:policies[i].Member_ID},
+											{index:'name',value:policies[i].policy_holder},
+						 					{index:'last_updated',value:last_updated}];
 
-								attribute_json.data.push(attributes_array);
+									attribute_json.data.push(attributes_array);
 
-								var customer_json_array=[{index:'id',value:vUtil.newKey()+counter},
-										{index:'name',value:policies[i].Member_Name},
-										{index:'acc_name',value:policies[i].policy_holder,unique:'yes'},
-										{index:'last_updated',value:last_updated}];
-
-								customer_json.data.push(customer_json_array);
-
+									policies.splice(i,1);
+									i--;
+								}
 							}
-						}
 
-						create_batch_json(create_policy_json);
-						create_batch_json(customer_json);
-						create_batch_json(attribute_json);
-						create_batch_json(commissions_json);
+							if(policies.length>0)
+							{
+								for(var i=0; i<policies.length;i++)
+								{
+									counter++;
+									if(vUtil.isBlank(policies[i].policy_holder))
+									{
+										policies[i].policy_holder=policies[i].Member_Name+" ("+policies[i].Member_ID+")";
+									}
+									var policy_array=[{index:'id',value:vUtil.newKey()+counter},
+						 					{index:'policy_name',value:policies[i].Product_Name},
+											{index:'application_num',value:policies[i].Application_Number},
+											{index:'policy_num',value:policies[i].Policy_Number,unique:'yes'},
+											{index:'policy_holder',value:policies[i].policy_holder},
+											{index:'member_id',value:policies[i].Member_ID},
+											{index:'premium',value:policies[i].Premium},
+											{index:'issuer',value:'Apollo'},
+											{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
+											{index:'term',value:policies[i].term},
+											{index:'start_date',value:policies[i].start_time},
+											{index:'end_date',value:policies[i].end_time},
+											{index:'issue_date',value:policies[i].issue_time},
+											{index:'status',value:'issued'},
+											{index:'type',value:policies[i].type},
+											{index:'description',value:policies[i].description},
+											{index:'preferred',value:policies[i].preferred},
+											{index:'last_updated',value:last_updated}];
+
+									if(vUtil.isBlank(policies[i].issue_type))
+									{
+										policies[i].issue_type='fresh';
+									}
+									var issue_type_obj = {index:'issue_type',value:policies[i].issue_type};
+									policy_array.push(issue_type_obj);
+
+									var upsell= (policies[i].old_premium!=0 && parseFloat(policies[i].Premium) > parseFloat(policies[i].old_premium)) ? 'yes' :'no';
+									var upsell_obj = {index:'upsell',value:upsell};
+									policy_array.push(upsell_obj);
+
+									create_policy_json.data.push(policy_array);
+
+									var attributes_array=[{index:'id',value:vUtil.newKey()+counter},
+						 					{index:'attribute',value:'Member ID',uniqueWith:['value','name']},
+											{index:'type',value:'customer'},
+											{index:'value',value:policies[i].Member_ID},
+											{index:'name',value:policies[i].policy_holder},
+						 					{index:'last_updated',value:last_updated}];
+
+									attribute_json.data.push(attributes_array);
+
+									var customer_json_array=[{index:'id',value:vUtil.newKey()+counter},
+											{index:'name',value:policies[i].Member_Name},
+											{index:'acc_name',value:policies[i].policy_holder,unique:'yes'},
+											{index:'last_updated',value:last_updated}];
+
+									customer_json.data.push(customer_json_array);
+
+								}
+							}
+
+							create_batch_json(create_policy_json);
+							create_batch_json(customer_json);
+							create_batch_json(attribute_json);
+							update_batch_json(update_policy_json);
+						});
+					}
+					else{
 						update_batch_json(update_policy_json);
+					}
+				});
+			});
+        };
+
+		/**
+		*	Import validation for apollo policies sold report
+		*/
+		function form347_ap_import_validate(data_array)
+        {
+            var validate_template_array=[{column:'Policy_Number',required:'yes',regex:new RegExp('^[0-9a-zA-Z_-]+$')},
+                                    {column:'Main_Member_Name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Product_Name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Policy_start_date',required:'yes',regex:new RegExp('^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4} 12:00:00 AM')},
+									{column:'Address_of_main_member',required:'yes',regex:new RegExp('^[0-9a-zA-Z .,;!/$%^&*()#@\\_-]+$')},
+									{column:'Policy_issue_date',required:'yes',regex:new RegExp('^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4} 12:00:00 AM')},
+									{column:'Policy_end_date',required:'yes',regex:new RegExp('^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4} 12:00:00 AM')},
+									{column:'Premium',required:'yes',regex:new RegExp('^[0-9 .]+$')},
+									{column:'Sum_Insured',required:'yes',regex:new RegExp('^[0-9 .]+$')}];
+
+            var error_array=vImport.validate(data_array,validate_template_array);
+            return error_array;
+        }
+
+		/**
+		*	Import validation for apollo policies sold report
+		*/
+		function form347_ap_import(policies)
+        {
+          	var update_policy_json={data_store:'policies',log:'yes',data:[],
+		 					log_data:{title:'Policies from Apollo',link_to:'form347'}};
+			var customer_json={data_store:'customers',loader:'no',data:[]};
+
+			var counter=1;
+			var last_updated=vTime.unix();
+			show_loader();
+
+			for(var a in policies)
+			{
+				policies[a].id="";
+				policies[a].description="";
+				policies[a].type="";
+				policies[a].preferred="";
+				policies[a].policy_holder="";
+				policies[a].policy_holder_id="";
+			}
+
+			form347_policy_bank(policies,'Product_Name','Apollo',function()
+			{
+				form347_policy_ids(policies,'Policy_Number','Apollo',function()
+				{
+					// console.log(policies);
+					for(var i=0;i<policies.length;i++)
+					{
+						policies[i].start_time = vTime.unix({date:policies[i].Policy_start_date,format:'mm/dd/yyyy hh:mm:ss AM'});
+						policies[i].end_time = vTime.unix({date:policies[i].Policy_end_date,format:'mm/dd/yyyy hh:mm:ss AM'});
+						policies[i].issue_time = vTime.unix({date:policies[i].Policy_issue_date,format:'mm/dd/yyyy hh:mm:ss AM'});
+						policies[i].term = ((policies[i].end_time-policies[i].start_time)/366>1) ? 'two years' : 'one year';
+						policies[i].issued_in_quarter = vTime.quarter({time:policies[i].issue_time,format:'unix'});
+						if(!vUtil.isBlank(policies[i].id))
+						{
+							var data_json_array=[{index:'id',value:policies[i].id},
+				 					{index:'policy_name',value:policies[i].Product_Name},
+									{index:'premium',value:policies[i].Premium},
+									{index:'sum_insured',value:policies[i].Sum_Insured},
+									{index:'issuer',value:'Apollo'},
+									{index:'term',value:policies[i].term},
+									{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
+									{index:'start_date',value:policies[i].start_time},
+									{index:'end_date',value:policies[i].end_time},
+									{index:'issue_date',value:policies[i].issue_time},
+									{index:'type',value:policies[i].type},
+									{index:'description',value:policies[i].description},
+									{index:'preferred',value:policies[i].preferred},
+									{index:'status',value:'issued'},
+				 					{index:'last_updated',value:last_updated}];
+
+							update_policy_json.data.push(data_json_array);
+						}
+					}
+
+					form347_policy_holder_ids(policies,'policy_holder',function()
+					{
+						policies.forEach(function(policy)
+						{
+							var data_json_array=[{index:'id',value:policy.policy_holder_id},
+				 					{index:'address',value:policy.Address_of_main_member},
+									{index:'name',value:policy.Main_Member_Name},
+									{index:'last_updated',value:last_updated}];
+
+							customer_json.data.push(data_json_array);
+						});
+
+						update_batch_json(update_policy_json);
+						update_batch_json(customer_json);
+
 					});
-				}
-				else{
-					update_batch_json(update_policy_json);
-				}
+				});
 			});
         };
 
