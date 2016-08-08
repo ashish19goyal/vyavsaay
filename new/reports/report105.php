@@ -137,7 +137,7 @@
                 item['COD Amount']=item.collectable_value;
                 item['Delivery Boy']=item.delivery_person;
                 item['AWB Type']=item.manifest_type;
-                item['Customer Name']=item.merchant_name;
+                item['Client Name']=item.merchant_name;
                 item['Address']=item.return_address1+", "+item.return_address2+", "+item.return_address3;
                 item['Consignee Name']=item.ship_to;
                 item['Consignee Address']=item.address1+", "+item.address2+", "+item.address3;
