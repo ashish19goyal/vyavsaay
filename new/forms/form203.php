@@ -90,12 +90,15 @@
                         indexes:[{index:'id',value:fid},
                                 {index:'order_num',value:forder},
                                 {index:'merchant_name'},
-                                {index:'ship_to'},
+								{index:'return_address1'},
+		                        {index:'ship_to'},
                                 {index:'import_date',value:fdate},
                                 {index:'type'},
                                 {index:'manifest_type'},
                                 {index:'branch'},
-                                status_object,
+								{index:'sku'},
+								{index:'pieces'},
+		                        status_object,
                                 awb_object]};
 
         read_json_rows('form203',new_columns,function(results)

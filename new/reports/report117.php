@@ -84,11 +84,14 @@
                         {index:'awb_num',value:awb_filter},
                         {index:'channel_name',value:channel_filter},
                         {index:'import_date',value:date_filter},
-						{index:'ship_to'},
 						{index:'merchant_name'},
+						{index:'return_address1'},
+						{index:'ship_to'},
 						{index:'address1'},
 						{index:'city'},
 						{index:'phone'},
+						{index:'sku'},
+						{index:'pieces'},
 						{index:'source',exact:'api'},
                         {index:'status',exact:'picked'}]};
 
@@ -122,6 +125,7 @@
             {
 				item['Pickup Date']=vTime.date({time:item.import_date});
 				delete item.source;
+				delete item.import_date;
 			});
 
             paginator.update_index(items.length);

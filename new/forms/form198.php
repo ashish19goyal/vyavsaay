@@ -51,6 +51,7 @@
 						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>LBH</span></div><div class='col-md-8 col-sm-8'><input type='text' name='lbh'></div></div>
 						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Import Date</span></div><div class='col-md-8 col-sm-8'><input type='text' name='ddate'></div></div>
 						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Product Name</span></div><div class='col-md-8 col-sm-8'><input type='text' name='product_name'></div></div>
+                        <div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Pieces</span></div><div class='col-md-8 col-sm-8'><input type='number' name='pieces'></div></div>
 						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Status</span></div><div class='col-md-8 col-sm-8'><input type='text' name='status'></div></div>
 						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>DRS #</span></div><div class='col-md-8 col-sm-8'><input type='text' name='drs'></div></div>
 						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>RTO #</span></div><div class='col-md-8 col-sm-8'><input type='text' name='rto'></div></div>
@@ -200,6 +201,7 @@
                 form.elements['lbh'].value=result.lbh;
                 form.elements['ddate'].value=get_my_past_date(result.import_date);
                 form.elements['product_name'].value=result.sku;
+                form.elements['pieces'].value=result.pieces;
                 form.elements['status'].value=result.status;
                 form.elements['drs'].value=result.drs_num;
                 form.elements['rto'].value=result.rto_num;
@@ -254,6 +256,7 @@
             var rpincode=form.elements['rpincode'].value;
             var lbh=form.elements['lbh'].value;
             var product_name=form.elements['product_name'].value;
+            var pieces=form.elements['pieces'].value;
             var status=form.elements['status'].value;
             var delivery_person=form.elements['delivery_person'].value;
             var branch=form.elements['branch'].value;
@@ -301,7 +304,8 @@
                         {index:'return_address3',value:r_address3},
                         {index:'lbh',value:lbh},
                         {index:'import_date',value:import_date},
-	 					{index:'product_name',value:product_name},
+	 					{index:'sku',value:product_name},
+                        {index:'pieces',value:pieces},
                         {index:'status',value:status},
                         {index:'delivery_person',value:delivery_person},
                         {index:'branch',value:branch},
