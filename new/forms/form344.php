@@ -198,7 +198,7 @@
                                 rowsHTML+="<input type='text' readonly='readonly' form='form344_"+id+"' value='"+result.seal_num+"'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Manifest #'>";
-                                rowsHTML+="<a onclick=\"element_display('"+result.id+"','form321');\"><input type='text' readonly='readonly' form='form344_"+id+"' value='"+result.pass_num+"'></a>";
+                                rowsHTML+="<a onclick=\"element_display('"+result.id+"','form321');\"><input type='text' readonly='readonly' form='form344_"+id+"' value='"+result.manifest_num+"'></a>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Details'>";
                                 rowsHTML+="<input type='text' class='floatlabel' placeholder='LBH' readonly='readonly' form='form344_"+id+"' value='"+result.lbh+"'>";
