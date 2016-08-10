@@ -69,7 +69,7 @@
         var form=document.getElementById('report117_header');
         var awb_filter=form.elements['awb'].value;
 		var channel_filter=form.elements['channel'].value;
-		var date_filter=get_raw_time(form.elements['date'].value);
+		var date_filter=vTime.unix({date:form.elements['date'].value});
 
         show_loader();
         $('#report117_body').html('');
@@ -94,6 +94,10 @@
 						{index:'pieces'},
 						{index:'source',exact:'api'},
                         {index:'status',exact:'picked'}]};
+		if(!vUtil.isBlank(date_filter)){
+			var date_filter_index={index:'import_date',lowerbound:date_filter,upperbound:date_filter+86400000};
+			columns.indexes.push(date_filter_index);
+		}
 
         read_json_rows('report117',columns,function(items)
         {
@@ -124,7 +128,10 @@
             initialize_tabular_report_buttons(columns,'New Orders from API','report117',function (item)
             {
 				item['Pickup Date']=vTime.date({time:item.import_date});
+				item['Pickup Time']=vTime.time({time:item.import_date});
+				item['Product']=item.sku;
 				delete item.source;
+				delete item.sku;
 				delete item.import_date;
 			});
 
