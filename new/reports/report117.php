@@ -83,7 +83,7 @@
                     indexes:[{index:'id'},
                         {index:'awb_num',value:awb_filter},
                         {index:'channel_name',value:channel_filter},
-                        {index:'import_date',value:date_filter},
+                        {index:'import_date'},
 						{index:'merchant_name'},
 						{index:'return_address1'},
 						{index:'ship_to'},
@@ -127,9 +127,9 @@
 
             initialize_tabular_report_buttons(columns,'New Orders from API','report117',function (item)
             {
-				item['Pickup Date']=vTime.date({time:item.import_date});
-				item['Pickup Time']=vTime.time({time:item.import_date});
 				item['Product']=item.sku;
+				item['Posted Date']=vTime.date({time:item.import_date});
+				item['Posted Time']=vTime.time({time:item.import_date});
 				delete item.source;
 				delete item.sku;
 				delete item.import_date;
