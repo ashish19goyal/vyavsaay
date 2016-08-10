@@ -238,6 +238,10 @@
                         var id=result.id;
                         var rowsHTML="<tr>";
                         var lbh_calculated=1;
+						if(vUtil.isBlank(result.lbh))
+						{
+							result.lbh = "";
+						}
                         var lbh_array=result.lbh.split('*');
                         lbh_array.forEach(function(l)
                         {
@@ -478,6 +482,10 @@
                                             lbh_filter.value=orders[0].lbh;
 
                                             var lbh_calculated=1;
+											if(vUtil.isBlank(orders[0].lbh))
+											{
+												orders[0].lbh = "";
+											}
                                             var lbh_array=orders[0].lbh.split('*');
                                             lbh_array.forEach(function(l)
                                             {
@@ -550,6 +558,10 @@
                                         lbh_filter.value=orders[0].lbh;
 
                                         var lbh_calculated=1;
+										if(vUtil.isBlank(orders[0].lbh))
+										{
+											orders[0].lbh = "";
+										}
                                         var lbh_array=orders[0].lbh.split('*');
                                         lbh_array.forEach(function(l)
                                         {

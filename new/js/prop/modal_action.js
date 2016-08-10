@@ -10308,7 +10308,7 @@ function modal148_action()
 										   {index:'awb_num',array:awb_id_array}]};
 				read_json_rows('',order_id_xml,function (order_ids)
 				{
-					console.log(order_ids);
+					// console.log(order_ids);
 					for (var k=0;k<data_array.length;k++)
 					{
 						for(var l=0;l<order_ids.length;l++)
@@ -10323,7 +10323,7 @@ function modal148_action()
 						}
 					}
 
-					//console.log(data_array);
+					// console.log(data_array);
 					data_array.forEach(function (data_row)
 					{
 						if(typeof data_row.id!='undefined')
