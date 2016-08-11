@@ -568,7 +568,7 @@
 			var dummy_button=form.elements['file_dummy'];
 			var import_button=form.elements['save'];
 
-			var import_types_list = ['New Applications','MIS', 'Apollo Policies Search','Apollo Policies Sold', 'Max Policies','Max Renewals', 'Star Policies','ICICI Policies'];
+			var import_types_list = ['New Applications','MIS', 'Apollo Policies Search','Apollo Policies Sold', 'ICICI Policies', 'Max Policies','Max Renewals', 'Star Policies'];
 			set_value_list_json(import_types_list,import_type);
 
 			//initializing file import button
@@ -1004,6 +1004,216 @@
 				});
 			});
         };
+
+
+		/**
+		*	Import validation for ICICI policies
+		*/
+		function form347_ip_import_validate(data_array)
+        {
+            var validate_template_array=[{column:'Product Class',required:'yes',regex:new RegExp('^[0-9a-zA-Z _-]+$')},
+									{column:'Product Sub Class',required:'yes',regex:new RegExp('^[0-9a-zA-Z_ -]+$')},
+                                    {column:'Policy Business Type',required:'yes',list:['NEW BUSINESS','ROLL OVER','RENEWAL BUSINESS']},
+									{column:'Policy Number (Click to view certificate)',required:'yes',regex:new RegExp('^[0-9a-zA-Z/]+$')},
+									{column:'Policy Endorsement Type',required:'yes',list:['ISSUED','RENEWED','ENDORSED','CANCELLED']},
+									{column:'Customer Full Name',required:'yes',regex:new RegExp('^[0-9a-zA-Z .-]+$')},
+									{column:'Policy Endorsement Date',required:'yes',regex:new RegExp('^[0-9]{1,2}\-[a-zA-Z]{3}\-[0-9]{4}')},
+									{column:'Policy Start Date',required:'yes',regex:new RegExp('^[0-9]{1,2}\-[a-zA-Z]{3}\-[0-9]{4}')},
+									{column:'Policy Cover Note No',required:'yes',regex:new RegExp('^[0-9a-zA-Z_-]+$')},
+									{column:'Net GWP',required:'yes',regex:new RegExp('^[0-9 .]+$')},
+									{column:'Commission %',required:'yes',regex:new RegExp('^[0-9 .]+$')}];
+
+            var error_array=vImport.validate(data_array,validate_template_array);
+            return error_array;
+        }
+
+		/**
+		*	Import for ICICI policies search report
+		*/
+		function form347_ip_import(policies)
+        {
+          	var create_policy_json={data_store:'policies',data:[]};
+			var update_policy_json={data_store:'policies',log:'yes',data:[],
+		 					log_data:{title:'Policies from Apollo',link_to:'form347'}};
+			var customer_json={data_store:'customers',loader:'no',data:[]};
+			var attribute_json={data_store:'attributes',loader:'no',data:[]};
+
+			var counter=1;
+			var last_updated=vTime.unix();
+			show_loader();
+
+			for(var a in policies)
+			{
+				policies[a].id="";
+				policies[a].policy_holder="";
+				policies[a].description="";
+				policies[a].type="";
+				policies[a].preferred="";
+				policies[a].issue_type='';
+				policies[a].old_premium=0;
+				policies[a].Policy_Number = policies[a]['Policy Number (Click to view certificate)'];
+			}
+
+			form347_policy_bank(policies,'Product Sub Class','ICICI',function()
+			{
+				form347_policy_ids(policies,'Policy_Number','ICICI',function()
+				{
+					// console.log(policies);
+					for(var i=0;i<policies.length;i++)
+					{
+						policies[i].start_time = vTime.unix({date:policies[i].Policy_start_date,format:'mm/dd/yyyy hh:mm:ss AM'});
+						policies[i].end_time = vTime.unix({date:policies[i].Policy_end_date,format:'mm/dd/yyyy hh:mm:ss AM'});
+						policies[i].issue_time = vTime.unix({date:policies[i].Policy_issue_date,format:'mm/dd/yyyy hh:mm:ss AM'});
+						policies[i].term = ((policies[i].end_time-policies[i].start_time)/366>1) ? 'two years' : 'one year';
+						policies[i].issued_in_quarter = vTime.quarter({time:policies[i].issue_time,format:'unix'});
+						if(!vUtil.isBlank(policies[i].id))
+						{
+							var data_json_array=[{index:'id',value:policies[i].id},
+				 					{index:'policy_name',value:policies[i].Product_Name},
+									{index:'application_num',value:policies[i].Application_Number},
+									{index:'member_id',value:policies[i].Member_ID},
+									{index:'premium',value:policies[i].Premium},
+									{index:'issuer',value:'Apollo'},
+									{index:'term',value:policies[i].term},
+									{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
+									{index:'start_date',value:policies[i].start_time},
+									{index:'end_date',value:policies[i].end_time},
+									{index:'issue_date',value:policies[i].issue_time},
+									{index:'type',value:policies[i].type},
+									{index:'description',value:policies[i].description},
+									{index:'preferred',value:policies[i].preferred},
+									{index:'status',value:'issued'},
+				 					{index:'last_updated',value:last_updated}];
+
+							update_policy_json.data.push(data_json_array);
+							policies.splice(i,1);
+							i--;
+						}
+					}
+
+					if(policies.length>0)
+					{
+						form347_application_ids(policies,'Application_Number','Apollo',function()
+						{
+							for(var i=0;i<policies.length;i++)
+							{
+								counter++;
+								if(!vUtil.isBlank(policies[i].id))
+								{
+									var policy_array=[{index:'id',value:policies[i].id},
+						 					{index:'policy_name',value:policies[i].Product_Name},
+											{index:'policy_num',value:policies[i].Policy_Number},
+											{index:'member_id',value:policies[i].Member_ID},
+											{index:'premium',value:policies[i].Premium},
+											{index:'issuer',value:'Apollo'},
+											{index:'term',value:policies[i].term},
+											{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
+											{index:'start_date',value:policies[i].start_time},
+											{index:'end_date',value:policies[i].end_time},
+											{index:'issue_date',value:policies[i].issue_time},
+											{index:'status',value:'issued'},
+											{index:'type',value:policies[i].type},
+											{index:'description',value:policies[i].description},
+											{index:'preferred',value:policies[i].preferred},
+											{index:'last_updated',value:last_updated}];
+									if(!vUtil.isBlank(policies[i].issue_type))
+									{
+										var issue_type_obj = {index:'issue_type',value:policies[i].issue_type};
+										policy_array.push(issue_type_obj);
+									}
+									var upsell= (policies[i].old_premium!=0 && parseFloat(policies[i].Premium) > parseFloat(policies[i].old_premium)) ? 'yes' :'no';
+									var upsell_obj = {index:'upsell',value:upsell};
+									policy_array.push(upsell_obj);
+
+									update_policy_json.data.push(policy_array);
+
+									var attributes_array=[{index:'id',value:vUtil.newKey()+counter},
+						 					{index:'attribute',value:'Member ID',uniqueWith:['value','name']},
+											{index:'type',value:'customer'},
+											{index:'value',value:policies[i].Member_ID},
+											{index:'name',value:policies[i].policy_holder},
+						 					{index:'last_updated',value:last_updated}];
+
+									attribute_json.data.push(attributes_array);
+
+									policies.splice(i,1);
+									i--;
+								}
+							}
+
+							if(policies.length>0)
+							{
+								for(var i=0; i<policies.length;i++)
+								{
+									counter++;
+									if(vUtil.isBlank(policies[i].policy_holder))
+									{
+										policies[i].policy_holder=policies[i].Member_Name+" ("+policies[i].Member_ID+")";
+									}
+									var policy_array=[{index:'id',value:vUtil.newKey()+counter},
+						 					{index:'policy_name',value:policies[i].Product_Name},
+											{index:'application_num',value:policies[i].Application_Number},
+											{index:'policy_num',value:policies[i].Policy_Number,unique:'yes'},
+											{index:'policy_holder',value:policies[i].policy_holder},
+											{index:'member_id',value:policies[i].Member_ID},
+											{index:'premium',value:policies[i].Premium},
+											{index:'issuer',value:'Apollo'},
+											{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
+											{index:'term',value:policies[i].term},
+											{index:'start_date',value:policies[i].start_time},
+											{index:'end_date',value:policies[i].end_time},
+											{index:'issue_date',value:policies[i].issue_time},
+											{index:'status',value:'issued'},
+											{index:'type',value:policies[i].type},
+											{index:'description',value:policies[i].description},
+											{index:'preferred',value:policies[i].preferred},
+											{index:'last_updated',value:last_updated}];
+
+									if(vUtil.isBlank(policies[i].issue_type))
+									{
+										policies[i].issue_type='fresh';
+									}
+									var issue_type_obj = {index:'issue_type',value:policies[i].issue_type};
+									policy_array.push(issue_type_obj);
+
+									var upsell= (policies[i].old_premium!=0 && parseFloat(policies[i].Premium) > parseFloat(policies[i].old_premium)) ? 'yes' :'no';
+									var upsell_obj = {index:'upsell',value:upsell};
+									policy_array.push(upsell_obj);
+
+									create_policy_json.data.push(policy_array);
+
+									var attributes_array=[{index:'id',value:vUtil.newKey()+counter},
+						 					{index:'attribute',value:'Member ID',uniqueWith:['value','name']},
+											{index:'type',value:'customer'},
+											{index:'value',value:policies[i].Member_ID},
+											{index:'name',value:policies[i].policy_holder},
+						 					{index:'last_updated',value:last_updated}];
+
+									attribute_json.data.push(attributes_array);
+
+									var customer_json_array=[{index:'id',value:vUtil.newKey()+counter},
+											{index:'name',value:policies[i].Member_Name},
+											{index:'acc_name',value:policies[i].policy_holder,unique:'yes'},
+											{index:'last_updated',value:last_updated}];
+
+									customer_json.data.push(customer_json_array);
+
+								}
+							}
+
+							create_batch_json(create_policy_json);
+							create_batch_json(customer_json);
+							create_batch_json(attribute_json);
+							update_batch_json(update_policy_json);
+						});
+					}
+					else{
+						update_batch_json(update_policy_json);
+					}
+				});
+			});
+        };
+
 
         function form347_na_import(data_array)
         {

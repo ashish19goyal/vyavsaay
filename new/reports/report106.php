@@ -63,7 +63,9 @@
 					access:'yes',
                     indexes:[{index:'id'},
                             {index:'manifest_num'},
-                            {index:'date',lowerbound:start_date,upperbound:end_date}]};
+							{index:'coloader'},
+							{index:'vendor'},
+							{index:'date',lowerbound:start_date,upperbound:end_date}]};
 
         read_json_rows('report106',manifest_data,function(orders)
         {
@@ -75,26 +77,26 @@
                     return 1;
             });
 
-            var manifest_num_array=[];
+            var manifest_num_array=vUtil.arrayColumn(orders,'manifest_num');
+
+			var orders_data = {};
             for(var i=0;i<orders.length;i++)
             {
-                manifest_num_array.push(orders[i].manifest_num);
-                orders[i].date=get_my_past_date(orders[i].date);
+				if(vUtil.isBlank(orders_data[orders[i].date]))
+                {
+					var no = {date:vTime.date({time:orders[i].date}),manifest_count:1};
+					orders_data[orders[i].date] = no;
+				}
+				else{
+					orders_data[orders[i].date].manifest_count+=1;
+				}
             }
 
-            for(var i=0;i<orders.length;i++)
-            {
-                orders[i].manifest_count=1;
-                for(var j=i+1;j<orders.length;j++)
-                {
-                    if(orders[i].date==orders[j].date)
-                    {
-                        orders[i].manifest_count+=1;
-                        orders.splice(j,1);
-                        j-=1;
-                    }
-                }
-            }
+			var orders_array=[];
+			for(var x in orders_data)
+			{
+				orders_array.push(orders_data[x]);
+			}
 
             var chart = AmCharts.makeChart("report106_chart", {
                     "type": "serial",
@@ -107,7 +109,7 @@
                         "valueWidth": 0,
                         "verticalGap": 0
                     },
-                    "dataProvider": orders,
+                    "dataProvider": orders_array,
                     "valueAxes": [{
                         "stackType": "regular",
                         "axisAlpha": 0.3,
@@ -164,7 +166,7 @@
 
             initialize_tabular_report_buttons(columns,'Manifest Report','report106',function (item)
             {
-                item['AWB No']=item.awb_num;
+				item['AWB No']=item.awb_num;
                 item['Manifest No']=item.manifest_num;
 				item['Gate Pass No']=item.pass_num;
                 item['Order Id']=item.order_num;
@@ -182,6 +184,16 @@
                 item['Mobile No']=item.phone;
                 item['Product Name']=item.sku;
 
+				for(var i in orders)
+				{
+					if(item.manifest_num==orders[i].manifest_num)
+					{
+						item['Co-loader'] = orders[i].coloader;
+						item['Vendor'] = orders[i].vendor;
+						item['Manifest Date'] = vTime.date({time:orders[i].date});
+						break;
+					}
+				}
                 delete item.id;
                 delete item.awb_num;
                 delete item.import_date;
