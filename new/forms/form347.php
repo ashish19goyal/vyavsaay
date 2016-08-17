@@ -252,16 +252,7 @@
             }
         }
 
-		function form347_policy_holder_ids(policy_holders,func)
-		{
-			var id_data  = {data_store:'customers',indexes:[{index:'id'},
-							{index:'acc_name',array:policy_holders}]};
-			read_json_rows('form347',id_data,function(ids)
-			{
-				func(ids);
-			});
-		}
-
+		
 		function form347_policy_holder_ids(policies,policy_holder_index,func)
 		{
 			var policy_holders = vUtil.arrayColumn(policies,policy_holder_index);

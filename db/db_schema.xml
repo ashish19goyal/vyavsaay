@@ -2210,17 +2210,15 @@
 	</policy_claims>
 	<policy_commissions>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<commission_num index='yes' type="TEXT"></commission_num>
-			<policy_holder index='yes' type="TEXT"></policy_holder>
 			<agent index='yes' type="TEXT"></agent>
-			<application_num index='yes' type="TEXT"></application_num>
 			<policy_num index='yes' type="TEXT"></policy_num>
 			<issuer index='yes' type="TEXT"></issuer>
 			<notes index="no" type="TEXT"></notes>
+			<premium index="no" type="DECIMAL(12,2)"></premium>
+			<comm_percent index="no" type="DECIMAL(12,2)"></comm_percent>
 			<amount index="no" type="DECIMAL(12,2)"></amount>
 			<issue_date index='yes' type="BIGINT"></issue_date>
 			<commission_type index='yes' type="VARCHAR(30)"></commission_type><!-- base/orc -->
-			<status index='yes' type="VARCHAR(30)"></status><!-- pending/received/rejected -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</policy_commissions>

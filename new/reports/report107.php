@@ -97,7 +97,7 @@
 		var fieldset=document.getElementById('report107_filters');
 		fieldset.appendChild(row);
 
-		var data=['Policy #','Issue Date','Agent','Issuing Company','Policy Holder'];
+		var data=['Policy #','Issue Date','Agent','Issuing Company','Commission Type'];
 		set_value_list_json(data,f_filter);
 
 		$(from_filter).datepicker();
@@ -130,8 +130,8 @@
 				case 'Issue Date':  i_filter.value = 'issue_date'; s('d'); break;
 				case 'Agent': i_filter.value = 'agent'; s(); break;
 				case 'Issuing Company': i_filter.value = 'issuer'; s(); break;
-				case 'Policy Holder': i_filter.value = 'policy_holder'; s(); break;
-				default: i_filter.value = 'status'; s();
+				case 'Commission Type': i_filter.value = 'commission_type'; s(); break;
+				default: i_filter.value = 'commission_type'; s();
 			}
 		});
 		$('#report107').formcontrol();
@@ -162,15 +162,14 @@
 
     	var columns={data_store:'policy_commissions',
                 indexes:[{index:'id'},
-						{index:'application_num'},
-                        {index:'agent'},
+						{index:'agent'},
 						{index:'amount'},
 						{index:'policy_num'},
-						{index:'policy_holder'},
 						{index:'issuer'},
-						{index:'policy_type'},
+						{index:'premium'},
+						{index:'comm_percent'},
 						{index:'issue_date'},
-						{index:'notes'}]};
+						{index:'commission_type'}]};
 
 		$('#report107_filters .row').each(function(index)
 		{
@@ -257,27 +256,23 @@
 
         initialize_tabular_report_buttons(columns,'Commissions Report','report107',function (item)
         {
+			item['Issuing Company']=item.issuer;
+            item['Policy #']=item.policy_num;
 			item['Agent']=item.agent;
-            item['Application #']=item.application_num;
-            item['Amount']=item.amount;
-			item['Policy #']=item.policy_num;
-			item['Issuer']=item.issuer;
-            item['Policy Holder']=item.policy_holder;
-            item['Policy Type']=item.policy_type;
-            item['Notes']=item.notes;
+			item['Premium']=item.premium;
+			item['Commission Type']=item.commission_type;
+			item['Commission %']=item.comm_percent;
+			item['Commission Amount']=item.amount;
 			item['Issue Date']=get_my_past_date(item.issue_date);
-            item['Status']=item.status;
 
-            delete item.application_num;
             delete item.agent;
             delete item.amount;
             delete item.policy_num;
             delete item.issuer;
-            delete item.policy_holder;
-            delete item.policy_type;
-            delete item.notes;
+            delete item.commission_type;
+            delete item.comm_percent;
+			delete item.premium;
             delete item.issue_date;
-            delete item.status;
         });
 
         hide_loader();

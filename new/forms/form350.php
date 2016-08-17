@@ -98,29 +98,24 @@
 				var list_value=vTime.anniversaryDates({'resultFormat':'all'});
 				console.log(list_value);
 				var attribute_columns={data_store:'attributes',return_column:'name',
-															indexes:[{index:'attribute',exact:list},
-																			{index:'type',exact:'customer'},
-																			{index:'value',array:list_value}]};
+									indexes:[{index:'attribute',exact:list},
+											{index:'type',exact:'customer'},
+											{index:'value',array:list_value}]};
 				read_json_single_column(attribute_columns,function(attributes)
 				{
 					var customer_columns={data_store:'customers',
-																indexes:[{index:'id'},
-																				{index:'name'},
-																				{index:'email'},
-																				{index:'phone'},
-																				{index:'acc_name',array:attributes},
-																				{index:'email_subscription',unequal:'no'}]};
+										indexes:[{index:'id'},
+												{index:'name'},
+												{index:'email'},
+												{index:'phone'},
+												{index:'acc_name',array:attributes},
+												{index:'email_subscription',unequal:'no'}]};
 
 					read_json_rows('form350',customer_columns,function(results)
 					{
 						form350_print_form(nl_name,nl_id,'mail',function(container)
 						{
 							var business_title=get_session_var('title');
-							var subject=nl_name;
-
-							var email_id_string="";
-							var email_message=container.innerHTML;
-							var from=get_session_var('email');
 
 							var sms_type=get_session_var('sms_type');
 							if(sms_type=='undefined')
@@ -135,7 +130,10 @@
 								var message=sms_content.replace(/customer_name/g,customer_name);
 								message=message.replace(/business_title/g,business_title);
 
-								send_sms(customer_phone,message,sms_type);
+								if(!vUtil.isBlank(message))
+								{
+									send_sms(customer_phone,message,sms_type);
+								}
 
 								if(result.email!="")
 								{
@@ -144,14 +142,24 @@
 								}
 							});
 
-							var email_to=JSON.stringify(to_array);
-							//console.log(email_to);
+							if(!vUtil.isBlank(container))
+							{
+								var subject=nl_name;
+								var email_message=container.innerHTML;
+								var from=get_session_var('email');
+								var email_to=JSON.stringify(to_array);
 
-							send_email(email_to,from,business_title,subject,email_message,function()
+								send_email(email_to,from,business_title,subject,email_message,function()
+								{
+									$("#modal58_link").click();
+									hide_loader();
+								});
+							}
+							else
 							{
 								$("#modal58_link").click();
 								hide_loader();
-							});
+							}
 						});
 					});
 				});
@@ -209,11 +217,10 @@
 			footer.appendChild(powered_by);
 
 		/////////////////populating the content section with newsletter items//////////////////////////
-			var newsletter_data=new Object();
-				newsletter_data.data_store='newsletter';
-				newsletter_data.count=1;
-				newsletter_data.indexes=[{index:'id',value:nl_id},
-									{index:'html_content'}];
+			var newsletter_data={data_store:'newsletter',
+								count:1,
+								indexes:[{index:'id',exact:nl_id},
+										{index:'html_content'}]};
 
 			read_json_rows('',newsletter_data,function(results)
 			{
@@ -230,10 +237,13 @@
 
 						image_elem.src="https://s3-ap-southeast-1.amazonaws.com/vyavsaay-newsletter/"+data_src;
 					});
+					func(container);
+				}
+				else
+				{
+					func();
 				}
 				//console.log(container.innerHTML);
-
-				func(container);
 			});
 		}
 

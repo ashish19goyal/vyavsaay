@@ -128,26 +128,19 @@
 
 				read_json_single_column(attribute_columns,function(attributes)
 				{
-					var customer_columns=new Object();
-					customer_columns.data_store='customers';
-					customer_columns.indexes=[{index:'id'},
+					var customer_columns={data_store:'customers',
+										indexes:[{index:'id'},
 										{index:'name'},
 										{index:'email'},
 										{index:'phone'},
 										{index:'acc_name',array:attributes},
-										{index:'email_subscription',unequal:'no'}];
+										{index:'email_subscription',unequal:'no'}]};
 
 					read_json_rows('',customer_columns,function(results)
 					{
 						form237_print_form(nl_name,nl_id,'mail',function(container)
 						{
 							var business_title=get_session_var('title');
-							var subject=nl_name;
-
-							var email_id_string="";
-							var email_message=container.innerHTML;
-							var from=get_session_var('email');
-
 							var sms_type=get_session_var('sms_type');
 							if(sms_type=='undefined')
 							{
@@ -161,7 +154,10 @@
 								var message=sms_content.replace(/customer_name/g,customer_name);
 								message=message.replace(/business_title/g,business_title);
 
-								send_sms(customer_phone,message,sms_type);
+								if(!vUtil.isBlank(message))
+								{
+									send_sms(customer_phone,message,sms_type);
+								}
 
 								if(result.email!="")
 								{
@@ -170,14 +166,24 @@
 								}
 							});
 
-							var email_to=JSON.stringify(to_array);
-							//console.log(email_to);
+							if(!vUtil.isBlank(container))
+							{
+								var subject=nl_name;
+								var email_message=container.innerHTML;
+								var from=get_session_var('email');
+								var email_to=JSON.stringify(to_array);
 
-							send_email(email_to,from,business_title,subject,email_message,function()
+								send_email(email_to,from,business_title,subject,email_message,function()
+								{
+									$("#modal58_link").click();
+									hide_loader();
+								});
+							}
+							else
 							{
 								$("#modal58_link").click();
 								hide_loader();
-							});
+							}
 						});
 					});
 				});
@@ -202,26 +208,19 @@
 			{
 				show_loader();
 
-				var customer_columns=new Object();
-					customer_columns.data_store='customers';
-					customer_columns.indexes=[{index:'id'},
+				var customer_columns={data_store:'customers',
+									indexes:[{index:'id'},
 										{index:'name'},
 										{index:'email'},
 										{index:'phone'},
 										{index:'acc_name'},
-										{index:'email_subscription',unequal:'no'}];
+										{index:'email_subscription',unequal:'no'}]};
 
 				read_json_rows('',customer_columns,function(results)
 				{
 					form237_print_form(nl_name,nl_id,'mail',function(container)
 					{
 						var business_title=get_session_var('title');
-						var subject=nl_name;
-
-						var email_id_string="";
-						var email_message=container.innerHTML;
-						var from=get_session_var('email');
-
 						var sms_type=get_session_var('sms_type');
 						if(sms_type=='undefined')
 						{
@@ -235,7 +234,10 @@
 							var message=sms_content.replace(/customer_name/g,customer_name);
 							message=message.replace(/business_title/g,business_title);
 
-							send_sms(customer_phone,message,sms_type);
+							if(!vUtil.isBlank(message))
+							{
+								send_sms(customer_phone,message,sms_type);
+							}
 
 							if(result.email!="")
 							{
@@ -244,13 +246,25 @@
 							}
 						});
 
-						var email_to=JSON.stringify(to_array);
+						if(!vUtil.isBlank(container))
+						{
+							var subject=nl_name;
+							var email_message=container.innerHTML;
+							var from=get_session_var('email');
+							var email_to=JSON.stringify(to_array);
 
-						send_email(email_to,from,business_title,subject,email_message,function()
+							send_email(email_to,from,business_title,subject,email_message,function()
+							{
+								$("#modal58_link").click();
+								hide_loader();
+							});
+						}
+						else
 						{
 							$("#modal58_link").click();
 							hide_loader();
-						});
+						}
+
 					});
 				});
 			}
