@@ -208,11 +208,9 @@
 					if(ua==commissions[i].agent)
 						total_amount+=parseFloat(commissions[i].amount);
 				}
-				var obj={'agent':ua,'total_amount':total_amount};
+				var obj={'agent':ua,'total_amount':vUtil.round(total_amount)};
 				chart_data_array.push(obj);
         	});
-
-			console.log(chart_data_array);
 
         	var chart = AmCharts.makeChart("report107_chart", {
                 "type": "serial",

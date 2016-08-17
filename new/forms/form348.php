@@ -40,7 +40,7 @@
 						<th><input type='text' placeholder="Premium" readonly="readonly" form='form348_header'></th>
 						<th><input type='text' placeholder="Commission %" readonly="readonly" form='form348_header'></th>
 						<th><input type='text' placeholder="Amount" readonly="readonly" form='form348_header'></th>
-						<th><input type='submit' form='form348_header' style='visibility: hidden;'></th>
+						<th><input type='submit' form='form348_header' style='display:none;'></th>
 				</tr>
 			</thead>
 			<tbody id='form348_body'>
@@ -321,13 +321,19 @@
 												'Net Premuim','Service Tax','Gross Premium','Comm %','Comm Amount'];
 									break;
 				case 'Apollo ORC':data_array=[];
-										break;
-				case 'ICICI Basic':data_array=[];
-													break;
+									break;
+				case 'ICICI Basic':data_array=['IssueStatus','IssueDate','CustomerName','PolicyNumber','NetGWP',
+											'ServiceTax','EducationCess','PremiumForPayout','CommissionPercentage',
+											'AgentCommission','TDS','NetAmt','RmName','AgentLocation','FinalVertical'];
+									break;
 				case 'ICICI ORC':data_array=[];
-													break;
-				case 'Max Basic':data_array=[];
-												break;
+									break;
+				case 'Max Basic':data_array=['Policy Number','Customer Id','Customer Name','Agent Code',
+											'Gwp(Before Tax)','Commission Structure','Service Tax','TDS','Net Payment',
+											'Agent Type','Agent Name','Agent Branch','Bank Name','Account Number',
+											'Bank Branch','Bank City','Pan Number','Licence Expiry Date','Email',
+											'Payment Status','IFSC Code','Cheque Number','Cheque Date'];
+									break;
 				case 'Max ORC': data_array=[];
 												break;
 				case 'Star Basic':data_array=[];
@@ -394,6 +400,163 @@
 									{index:'amount',value:commissions[i]['Comm Amount']},
 									{index:'comm_percent',value:commissions[i]['Comm %']},
 									{index:'premium',value:commissions[i]['Net Premuim']},
+									{index:'issue_date',value:commissions[i].issue_date},
+									{index:'issuer',value:commissions[i].issuer},
+									{index:'commission_type',value:commissions[i].commission_type},
+									{index:'agent',value:commissions[i].agent},
+									{index:'last_updated',value:last_updated}];
+
+						create_comm_json.data.push(data_json_array);
+					}
+				}
+				create_batch_json(create_comm_json);
+			});
+		};
+
+
+		/**
+		*	Import validation for Max basic commissions
+		*/
+		function form348_mb_import_validate(data_array)
+        {
+            var validate_template_array=[{column:'Policy Number',required:'yes',regex:new RegExp('^[0-9a-zA-Z_-]+$')},
+                                    {column:'Customer Id',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Customer Name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Agent Code',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Gwp(Before Tax)',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'Commission Structure',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'Service Tax',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'TDS',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'Net Payment',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'Agent Type',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Agent Name',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Agent Branch',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Bank Name',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Account Number',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Bank Branch',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Bank City',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Pan Number',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Licence Expiry Date',regex:new RegExp('^[0-9]{1,2}\-[a-zA-Z]{3}\-[0-9]{2}')},
+									{column:'Email',regex:new RegExp('^[0-9a-zA-Z _.,()@-]+$')},
+									{column:'Payment Status',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'IFSC Code',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Cheque Number',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')}];
+
+            var error_array=vImport.validate(data_array,validate_template_array);
+            return error_array;
+        }
+
+		/**
+		*	Import for Max basic commissions
+		*/
+		function form348_mb_import(commissions)
+		{
+			var create_comm_json={data_store:'policy_commissions',log:'yes',data:[],
+							log_data:{title:'Basic Commissions from Max',link_to:'form348'}};
+
+			var counter=1;
+			var last_updated=vTime.unix();
+			show_loader();
+
+			for(var a in commissions)
+			{
+				commissions[a].policy_num=commissions[a]['Policy Number'];
+				commissions[a].issue_date="";
+				commissions[a].issuer="Max";
+				commissions[a].commission_type="basic";
+				commissions[a].agent="";
+				commissions[a].import=false;
+				commissions[a].comm_percent= (vUtil.isBlank(commissions[a]['Gwp(Before Tax)']) || commissions[a]['Gwp(Before Tax)']==0) ? 0 : vUtil.round((100*commissions[a]['Commission Structure']/commissions[a]['Gwp(Before Tax)']),2) ;
+			}
+
+			form348_policy_details(commissions,'policy_num','Max',function()
+			{
+				// console.log(commissions);
+				var key=vUtil.newKey();
+				for(var i=0;i<commissions.length;i++)
+				{
+					if(commissions[i].import)
+					{
+						key++;
+						var data_json_array=[{index:'id',value:key},
+									{index:'policy_num',value:commissions[i].policy_num,uniqueWith:['commission_type','premium']},
+									{index:'amount',value:commissions[i]['Commission Structure']},
+									{index:'comm_percent',value:commissions[i]['comm_percent']},
+									{index:'premium',value:commissions[i]['Gwp(Before Tax)']},
+									{index:'issue_date',value:commissions[i].issue_date},
+									{index:'issuer',value:commissions[i].issuer},
+									{index:'commission_type',value:commissions[i].commission_type},
+									{index:'agent',value:commissions[i].agent},
+									{index:'last_updated',value:last_updated}];
+
+						create_comm_json.data.push(data_json_array);
+					}
+				}
+				create_batch_json(create_comm_json);
+			});
+		};
+
+		/**
+		*	Import validation for ICICI basic commissions
+		*/
+		function form348_ib_import_validate(data_array)
+		{
+			var validate_template_array=[{column:'IssueStatus',regex:new RegExp('^[0-9a-zA-Z_-]+$')},
+									{column:'IssueDate',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'CustomerName',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'PolicyNumber',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,/()-]+$')},
+									{column:'NetGWP',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'ServiceTax',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'EducationCess',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'PremiumForPayout',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'CommissionPercentage',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'AgentCommission',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'TDS',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'NetAmt',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'RmName',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'AgentLocation',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'FinalVertical',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')}];
+
+			var error_array=vImport.validate(data_array,validate_template_array);
+			return error_array;
+		}
+
+		/**
+		*	Import for ICICI basic commissions
+		*/
+		function form348_ib_import(commissions)
+		{
+			var create_comm_json={data_store:'policy_commissions',log:'yes',data:[],
+							log_data:{title:'Basic Commissions from Max',link_to:'form348'}};
+
+			var counter=1;
+			var last_updated=vTime.unix();
+			show_loader();
+
+			for(var a in commissions)
+			{
+				commissions[a].policy_num=commissions[a]['PolicyNumber'];
+				commissions[a].issue_date="";
+				commissions[a].issuer="ICICI";
+				commissions[a].commission_type="basic";
+				commissions[a].agent="";
+				commissions[a].import=false;
+			}
+
+			form348_policy_details(commissions,'policy_num','Max',function()
+			{
+				// console.log(commissions);
+				var key=vUtil.newKey();
+				for(var i=0;i<commissions.length;i++)
+				{
+					if(commissions[i].import)
+					{
+						key++;
+						var data_json_array=[{index:'id',value:key},
+									{index:'policy_num',value:commissions[i].policy_num,uniqueWith:['commission_type','premium']},
+									{index:'amount',value:commissions[i]['AgentCommission']},
+									{index:'comm_percent',value:commissions[i]['CommissionPercentage']},
+									{index:'premium',value:commissions[i]['PremiumForPayout']},
 									{index:'issue_date',value:commissions[i].issue_date},
 									{index:'issuer',value:commissions[i].issuer},
 									{index:'commission_type',value:commissions[i].commission_type},
