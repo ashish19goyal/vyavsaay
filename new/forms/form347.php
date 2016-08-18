@@ -252,7 +252,7 @@
             }
         }
 
-		
+
 		function form347_policy_holder_ids(policies,policy_holder_index,func)
 		{
 			var policy_holders = vUtil.arrayColumn(policies,policy_holder_index);
@@ -559,7 +559,7 @@
 			var dummy_button=form.elements['file_dummy'];
 			var import_button=form.elements['save'];
 
-			var import_types_list = ['New Applications','MIS', 'Apollo Policies Search','Apollo Policies Sold', 'ICICI Policies', 'Max Policies','Max Renewals', 'Star Policies'];
+			var import_types_list = ['Apollo Policies Search','Apollo Policies Sold', 'ICICI Policies', 'Max Policies','Max Renewals', 'Star Policies','New Applications','MIS'];
 			set_value_list_json(import_types_list,import_type);
 
 			//initializing file import button
@@ -581,10 +581,6 @@
 				vImport.readFile(select_file,function(content)
 			    {
 					switch(import_type.value){
-						case 'New Applications':vImport.importData(content,form,form347_na_import,form347_na_import_validate);
-												break;
-						case 'MIS':vImport.importData(content,form,form347_mis_import,form347_mis_import_validate);
-												break;
 						case 'Apollo Policies Sold':vImport.importData(content,form,form347_ap_import,form347_ap_import_validate);
 												break;
 						case 'Apollo Policies Search':vImport.importData(content,form,form347_ar_import,form347_ar_import_validate);
@@ -597,12 +593,15 @@
 												break;
 						case 'ICICI Policies':vImport.importData(content,form,form347_ip_import,form347_ip_import_validate);
 												break;
+						case 'New Applications':vImport.importData(content,form,form347_na_import,form347_na_import_validate);
+												break;
+						case 'MIS':vImport.importData(content,form,form347_mis_import,form347_mis_import_validate);
+												break;
 					}
 			    });
 			});
 			$("#form347_popup_import_link").click();
 		}
-
 
         function form347_import_template(import_type)
         {
@@ -672,28 +671,6 @@
 			}
             my_array_to_csv(data_array);
         };
-
-        function form347_na_import_validate(data_array)
-        {
-            var validate_template_array=[{column:'policy number',required:'yes',regex:new RegExp('^[0-9a-zA-Z_., ()-]+$')},
-                                    {column:'policy holder name',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
-									{column:'policy holder phone',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
-									{column:'policy holder email',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
-									{column:'policy holder address',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()/-]+$')},
-									{column:'policy holder birthdate',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
-									{column:'issuer',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
-									{column:'agent',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
-									{column:'premium',regex:new RegExp('^[0-9 .]+$')},
-									{column:'policy start date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
-									{column:'policy end date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
-									{column:'policy issue date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
-									{column:'policy type',list:['life','health','car']},
-									{column:'issue type',list:['fresh','renewal','portability']},
-									{column:'status',list:['active','expired']}];
-
-            var error_array=vImport.validate(data_array,validate_template_array);
-            return error_array;
-        }
 
 		/**
 		*	Import validation for apollo policies search report
@@ -1043,6 +1020,11 @@
 				policies[a].issue_type='';
 				policies[a].old_premium=0;
 				policies[a].Policy_Number = policies[a]['Policy Number (Click to view certificate)'];
+				policies[a].start_time = vTime.unix({date:policies[a]['Policy Start Date'],format:'dd-mmm-yyyy'});
+				policies[a].end_time = policies[a].start_time+(365*86400000);
+				policies[a].issue_time = vTime.unix({date:policies[a]['Policy Endorsement Date'],format:'dd-mmm-yyyy'});
+				policies[a].term = 'one year';
+				policies[a].issued_in_quarter = vTime.quarter({time:policies[a].issue_time,format:'unix'});
 			}
 
 			form347_policy_bank(policies,'Product Sub Class','ICICI',function()
@@ -1052,19 +1034,14 @@
 					// console.log(policies);
 					for(var i=0;i<policies.length;i++)
 					{
-						policies[i].start_time = vTime.unix({date:policies[i].Policy_start_date,format:'mm/dd/yyyy hh:mm:ss AM'});
-						policies[i].end_time = vTime.unix({date:policies[i].Policy_end_date,format:'mm/dd/yyyy hh:mm:ss AM'});
-						policies[i].issue_time = vTime.unix({date:policies[i].Policy_issue_date,format:'mm/dd/yyyy hh:mm:ss AM'});
-						policies[i].term = ((policies[i].end_time-policies[i].start_time)/366>1) ? 'two years' : 'one year';
-						policies[i].issued_in_quarter = vTime.quarter({time:policies[i].issue_time,format:'unix'});
 						if(!vUtil.isBlank(policies[i].id))
 						{
 							var data_json_array=[{index:'id',value:policies[i].id},
 				 					{index:'policy_name',value:policies[i].Product_Name},
-									{index:'application_num',value:policies[i].Application_Number},
-									{index:'member_id',value:policies[i].Member_ID},
-									{index:'premium',value:policies[i].Premium},
-									{index:'issuer',value:'Apollo'},
+									{index:'application_num',value:''},
+									{index:'cover_note',value:policies[i]['Policy Cover Note No']},
+									{index:'premium',value:policies[i]['Net GWP']},
+									{index:'issuer',value:'ICICI'},
 									{index:'term',value:policies[i].term},
 									{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
 									{index:'start_date',value:policies[i].start_time},
@@ -1084,7 +1061,7 @@
 
 					if(policies.length>0)
 					{
-						form347_application_ids(policies,'Application_Number','Apollo',function()
+						form347_policy_ids_by_name(policies,'ICICI',function()
 						{
 							for(var i=0;i<policies.length;i++)
 							{
@@ -1092,26 +1069,26 @@
 								if(!vUtil.isBlank(policies[i].id))
 								{
 									var policy_array=[{index:'id',value:policies[i].id},
-						 					{index:'policy_name',value:policies[i].Product_Name},
-											{index:'policy_num',value:policies[i].Policy_Number},
-											{index:'member_id',value:policies[i].Member_ID},
-											{index:'premium',value:policies[i].Premium},
-											{index:'issuer',value:'Apollo'},
+											{index:'policy_name',value:policies[i].Product_Name},
+											{index:'application_num',value:''},
+											{index:'cover_note',value:policies[i]['Policy Cover Note No']},
+											{index:'premium',value:policies[i]['Net GWP']},
+											{index:'issuer',value:'ICICI'},
 											{index:'term',value:policies[i].term},
 											{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
 											{index:'start_date',value:policies[i].start_time},
 											{index:'end_date',value:policies[i].end_time},
 											{index:'issue_date',value:policies[i].issue_time},
-											{index:'status',value:'issued'},
 											{index:'type',value:policies[i].type},
 											{index:'description',value:policies[i].description},
 											{index:'preferred',value:policies[i].preferred},
+											{index:'status',value:'issued'},
 											{index:'last_updated',value:last_updated}];
-									if(!vUtil.isBlank(policies[i].issue_type))
-									{
-										var issue_type_obj = {index:'issue_type',value:policies[i].issue_type};
-										policy_array.push(issue_type_obj);
-									}
+
+									var issue_type= (policies[i]['']!=0 && parseFloat(policies[i].Premium) > parseFloat(policies[i].old_premium)) ? 'yes' :'no';
+									var issue_type_obj = {index:'issue_type',value:policies[i].issue_type};
+									policy_array.push(issue_type_obj);
+
 									var upsell= (policies[i].old_premium!=0 && parseFloat(policies[i].Premium) > parseFloat(policies[i].old_premium)) ? 'yes' :'no';
 									var upsell_obj = {index:'upsell',value:upsell};
 									policy_array.push(upsell_obj);
@@ -1205,7 +1182,34 @@
 			});
         };
 
+		/**
+		* Validate import of new applications
+		*/
+		function form347_na_import_validate(data_array)
+		{
+			var validate_template_array=[{column:'policy number',required:'yes',regex:new RegExp('^[0-9a-zA-Z_., ()-]+$')},
+									{column:'policy holder name',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
+									{column:'policy holder phone',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
+									{column:'policy holder email',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
+									{column:'policy holder address',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()/-]+$')},
+									{column:'policy holder birthdate',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
+									{column:'issuer',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
+									{column:'agent',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
+									{column:'premium',regex:new RegExp('^[0-9 .]+$')},
+									{column:'policy start date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
+									{column:'policy end date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
+									{column:'policy issue date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
+									{column:'policy type',list:['life','health','car']},
+									{column:'issue type',list:['fresh','renewal','portability']},
+									{column:'status',list:['active','expired']}];
 
+			var error_array=vImport.validate(data_array,validate_template_array);
+			return error_array;
+		}
+
+		/**
+		* Import new applications
+		*/
         function form347_na_import(data_array)
         {
           	var data_json={data_store:'policies',
