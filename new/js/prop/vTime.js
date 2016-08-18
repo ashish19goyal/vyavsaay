@@ -117,6 +117,40 @@ var vTime = function ()
                 }
                 d=new Date(year,month,day,hour,minutes,seconds,0);
             	break;
+        case 'dd-mmm-yyyy':
+                var date_array=sets.date.split(/[\-]+/);
+
+                var day=parseInt(date_array[0]);
+                var monthString=date_array[1].toLowerCase();
+                var year=parseInt(date_array[2]);
+                var month=0;
+
+                switch(monthString)
+                {
+                    case 'jan':month=0;break;
+                    case 'feb':month=1;break;
+                    case 'mar':month=2;break;
+                    case 'apr':month=3;break;
+                    case 'may':month=4;break;
+                    case 'jun':month=5;break;
+                    case 'jul':month=6;break;
+                    case 'aug':month=7;break;
+                    case 'sep':month=8;break;
+                    case 'oct':month=9;break;
+                    case 'nov':month=10;break;
+                    case 'dec':month=11;break;
+                }
+                if(year<50)
+                {
+                    year=2000+year;
+                }
+                else if(year>50 && year<100)
+                {
+                    year=1900+year;
+                }
+
+                d=new Date(year,month,day,0,0,0,0);
+            	break;
       }
 
       return d.getTime();
