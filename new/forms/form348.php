@@ -543,7 +543,7 @@
 				commissions[a].import=false;
 			}
 
-			form348_policy_details(commissions,'policy_num','Max',function()
+			form348_policy_details(commissions,'policy_num','ICICI',function()
 			{
 				// console.log(commissions);
 				var key=vUtil.newKey();
