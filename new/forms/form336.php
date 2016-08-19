@@ -368,6 +368,7 @@
             }
         }
 
+
         function form336_create_form(func)
         {
             if(is_create_access('form336'))
