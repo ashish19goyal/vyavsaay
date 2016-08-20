@@ -30,16 +30,8 @@
 
 	<div class="portlet-body">
 		<form id='form347_header' autocomplete="off">
-			<fieldset>
-				<label style='float:right;'><button type='button' class='btn red-pink' onclick='modal11_action();' title='Add Customer'><i class='fa fa-plus'></i> Add Customer</button></label>
-				<label style='float:right;'><button type='button' class='btn purple-soft' onclick='modal216_action();' title='Add Policy'><i class='fa fa-plus'></i> Add Policy</button></label>
-				<br><label><input type='text' placeholder="Application #" class='floatlabel' name='app_num'></label>
-				<label><input type='text' placeholder="Policy #" class='floatlabel' name='num'></label>
-				<label><input type='text' placeholder="Policy Holder" class='floatlabel' name='holder'></label>
-				<label><input type='text' placeholder="Policy Provider" class='floatlabel' name='provider'></label>
-				<label><input type='text' placeholder="Agent" class='floatlabel' name='agent'></label>
-				<label><input type='submit' class='submit_hidden'></label>
-			</fieldset>
+			<input type='submit' class='submit_hidden'>
+			<fieldset id='form347_filters'></fieldset>
 		</form>
 		<br>
 		<div id='form347_body' class='row'></div>
@@ -114,29 +106,133 @@
 	</div>
 
     <script>
+
+	function form347_add_filter()
+	{
+		var form=document.getElementById('form347_header');
+		var f_filter=document.createElement('input');
+		f_filter.type='text';
+		f_filter.placeholder='Filter By';
+		f_filter.className='floatlabel';
+		f_filter.setAttribute('data-name','f');
+
+		var v_filter=document.createElement('input');
+		v_filter.type='text';
+		v_filter.placeholder='Filter Value';
+		v_filter.className='floatlabel';
+		v_filter.setAttribute('data-name','v');
+
+		var i_filter=document.createElement('input');
+		i_filter.type='hidden';
+		i_filter.setAttribute('data-name','i');
+		i_filter.value='status';
+
+		var from_filter=document.createElement('input');
+		from_filter.type='text';
+		from_filter.placeholder='From Date';
+		from_filter.className='floatlabel';
+		from_filter.setAttribute('data-name','from');
+
+		var to_filter=document.createElement('input');
+		to_filter.type='text';
+		to_filter.placeholder='To Date';
+		to_filter.className='floatlabel';
+		to_filter.setAttribute('data-name','to');
+
+		var remove_link = document.createElement('a');
+		remove_link.onclick = function(){
+			$(this).parent().parent().remove();
+		};
+		remove_link.style="vertical-align:top";
+		remove_link.title="Remove Filter";
+		remove_link.innerHTML = "<i class='fa fa-times' style='font-size:25px;margin-top:20px;'></i>";
+
+		var row=document.createElement('div');
+		row.className='row';
+		var col=document.createElement('div');
+		col.className='col-md-12';
+
+		var label1=document.createElement('label');
+		var label2=document.createElement('label');
+		var label3=document.createElement('label');
+		var label4=document.createElement('label');
+		// var label5=document.createElement('label');
+
+		row.appendChild(col);
+		col.appendChild(label1);
+		col.appendChild(label2);
+		col.appendChild(label3);
+		col.appendChild(label4);
+		col.appendChild(remove_link);
+
+		label1.appendChild(f_filter);
+		label2.appendChild(v_filter);
+		label3.appendChild(from_filter);
+		label4.appendChild(to_filter);
+		// label5.appendChild(remove_link);
+		col.appendChild(i_filter);
+
+		var fieldset=document.getElementById('form347_filters');
+		fieldset.appendChild(row);
+
+		var data=['Application #','Policy #','Issue Type','End Date','Start Date','Issue Date',
+					'Tele Caller','Sales Manager','Team Lead','Agent','Issuing Company',
+					'Policy Name','Policy Holder','Preferred','Term'];
+		set_value_list_json(data,f_filter);
+
+		$(from_filter).datepicker();
+		$(to_filter).datepicker();
+
+		function s(x){
+			if(!vUtil.isBlank(x) && x=='d'){
+				$(from_filter).show();
+				$(to_filter).show();
+				$(v_filter).hide();
+				$('#form347').formcontrol();
+			}else{
+				$(from_filter).hide();
+				$(to_filter).hide();
+				$(v_filter).show();
+				var value_data={data_store:'policies',return_column:i_filter.value};
+				set_my_filter_json(value_data,v_filter);
+			}
+			v_filter.value="";
+			from_filter.value="";
+			to_filter.value="";
+		}
+
+		s();
+		vUtil.onChange(f_filter,function()
+		{
+			switch(f_filter.value)
+			{
+				case 'Application #': i_filter.value = 'application_num'; s(); break;
+				case 'Policy #': i_filter.value = 'policy_num'; s(); break;
+				case 'Issue Type': i_filter.value = 'issue_type'; s(); break;
+				case 'End Date':  i_filter.value = 'end_date'; s('d'); break;
+				case 'Start Date':  i_filter.value = 'start_date'; s('d'); break;
+				case 'Issue Date':  i_filter.value = 'issue_date'; s('d'); break;
+				case 'Tele Caller': i_filter.value = 'tele_caller'; s(); break;
+				case 'Sales Manager': i_filter.value = 'sales_manager'; s(); break;
+				case 'Team Lead': i_filter.value = 'team_lead'; s(); break;
+				case 'Agent': i_filter.value = 'agent'; s(); break;
+				case 'Issuing Company': i_filter.value = 'issuer'; s(); break;
+				case 'Policy Name': i_filter.value = 'policy_name'; s(); break;
+				case 'Policy Holder': i_filter.value = 'policy_holder'; s(); break;
+				case 'Preferred': i_filter.value = 'preferred'; s(); break;
+				case 'Term': i_filter.value = 'term'; s(); break;
+				default: i_filter.value = 'status'; s();
+			}
+		});
+		$('#form347').formcontrol();
+	}
+
+
         function form347_header_ini()
         {
             var filter_fields=document.getElementById('form347_header');
-			var appnum_filter=filter_fields.elements['app_num'];
-            var num_filter=filter_fields.elements['num'];
-            var owner_filter=filter_fields.elements['holder'];
-			var provider_filter=filter_fields.elements['provider'];
-			var agent_filter=filter_fields.elements['agent'];
-
-			var appnum_data={data_store:'policies',return_column:'application_num'};
-			set_my_filter_json(appnum_data,appnum_filter);
-
-            var num_data={data_store:'policies',return_column:'policy_num'};
-            set_my_filter_json(num_data,num_filter);
-
-            var owner_data={data_store:'customers',return_column:'acc_name'};
-            set_my_filter_json(owner_data,owner_filter);
-
-			var provider_data={data_store:'policy_types',return_column:'issuer'};
-            set_my_filter_json(provider_data,provider_filter);
-
-			var agent_data={data_store:'staff',return_column:'acc_name'};
-            set_my_filter_json(agent_data,agent_filter);
+			$('#form347_filters').html('');
+			form347_add_filter();
 
 			$(filter_fields).off('submit');
             $(filter_fields).on('submit',function(event)
@@ -168,25 +264,40 @@
 			  	$('#form347_status').find('label.applied').removeClass('active');
 		  	}
 
-            var filter_fields=document.getElementById('form347_header');
-			var fappnum=filter_fields.elements['app_num'].value;
-            var fnum=filter_fields.elements['num'].value;
-            var fholder=filter_fields.elements['holder'].value;
-			var fprovider=filter_fields.elements['provider'].value;
-			var fagent=filter_fields.elements['agent'].value;
-
             var paginator=$('#form347_body').paginator({'page_size':24});
 
 			var columns={count:paginator.page_size(),
 						start_index:paginator.get_index(),
 						data_store:'policies',
 						indexes:[{index:'id',value:fid},
-								{index:'application_num',value:fappnum},
-								{index:'policy_num',value:fnum},
-								{index:'policy_holder',value:fholder},
-								{index:'agent',value:fagent},
+								{index:'application_num'},
+								{index:'policy_num'},
+								{index:'policy_holder'},
+								{index:'agent'},
 								{index:'status',exact:status_filter},
-								{index:'issuer',value:fprovider}]};
+								{index:'issuer'}]};
+
+			$('#form347_filters .row').each(function(index)
+			{
+				var row = this;
+				var f_filter = $(this).find("input[data-name='f']").val();
+				var v_filter = $(this).find("input[data-name='v']").val();
+				var i_filter = $(this).find("input[data-name='i']").val();
+				var from_filter = $(this).find("input[data-name='from']").val();
+				var to_filter = $(this).find("input[data-name='to']").val();
+
+				if(!vUtil.isBlank(v_filter)){
+					columns.indexes.push({index:i_filter,value:v_filter});
+				}
+				else{
+					if(!vUtil.isBlank(from_filter)){
+						columns.indexes.push({index:i_filter,lowerbound:from_filter});
+					}
+				 	if(!vUtil.isBlank(to_filter)){
+						columns.indexes.push({index:i_filter,upperbound:to_filter});
+					}
+				}
+			});
 
             read_json_rows('form347',columns,function(results)
             {

@@ -25,12 +25,9 @@ var vUtil = function (options)
     this.isBlank=function(variable)
     {
 		if(variable=="" || variable==null || variable=="null" || variable=='undefined')
+		{
            return true;
-        else{
-			variable=variable.trim();
-			if(variable=="")
-				return true;
-		}
+	    }
         return false;
     };
 
