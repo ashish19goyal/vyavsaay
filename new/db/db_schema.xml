@@ -2219,7 +2219,7 @@
 			<comm_percent index="no" type="DECIMAL(12,2)"></comm_percent>
 			<amount index="no" type="DECIMAL(12,2)"></amount>
 			<issue_date index='yes' type="BIGINT"></issue_date>
-			<commission_type index='yes' type="VARCHAR(30)"></commission_type><!-- base/orc -->
+			<commission_type index='yes' type="VARCHAR(30)"></commission_type><!-- basic/orc -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</policy_commissions>
