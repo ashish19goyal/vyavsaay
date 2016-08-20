@@ -24,10 +24,14 @@ var vUtil = function (options)
 	//check if an element is null or blank
     this.isBlank=function(variable)
     {
-        if(variable=="" || variable==null || variable=="null")
+		if(variable=="" || variable==null || variable=="null" || variable=='undefined')
            return true;
-        else
-           return false;
+        else{
+			variable=variable.trim();
+			if(variable=="")
+				return true;
+		}
+        return false;
     };
 
 	//executes a function if it is set

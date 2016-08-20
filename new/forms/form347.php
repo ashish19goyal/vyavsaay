@@ -88,14 +88,16 @@
 							  	  <div class="col-sm-12 col-md-4">Import Type</div>
 								  <div class="col-sm-12 col-md-8"><input type='text' required form='form347_popup_import_form' name='type'></div>
   							  </div>
-  						      <div class="row">
-								  <div class='col-md-6'>
-										<button type="button" name='download' style='margin-bottom:10px;' class='btn green-jungle'>Download Import Template</button>
-								  </div>
-							  </div>
+							  <div class="row">
+							  	  <div class="col-sm-12 col-md-4">Agent</div>
+								  <div class="col-sm-12 col-md-8"><input type='text' required form='form347_popup_import_form' name='agent'></div>
+  							  </div>
 						      <div class="row">
 								  <div class='col-md-6'>
 								 		<button type='button' name='file_dummy' class='btn red-sunglo'>Select File</button>
+								  </div>
+								  <div class='col-md-6'>
+										<button type="button" name='download' style='margin-bottom:10px;' class='btn green-jungle'>Download Import Template</button>
 								  </div>
 					          </div>
 			            	</div>
@@ -220,8 +222,8 @@
 
                 $('#form347').formcontrol();
 				paginator.update_index(results.length);
+				hide_loader();
 				initialize_tabular_report_buttons(columns,'Policies','form347',function (item){});
-                hide_loader();
             });
         };
 
@@ -309,6 +311,7 @@
 							{index:'policy_holder',approx_array:holder_names},
 							{index:'policy_num'},
 							{index:'end_date'},
+							{index:'premium'},
 							{index:'issuer',value:issuer}]};
 			read_json_rows('form347',id_data,function(ids)
 			{
@@ -321,6 +324,76 @@
 						if(id['policy_holder'].indexOf(policies[i][names_index])>-1 && match)
 						{
 							policies[i].application_num = id['policy_num'];
+							policies[i].policy_holder = id['policy_holder'];
+							policies[i].old_premium = id['premium'];
+							break;
+						}
+					}
+				});
+				func();
+			});
+		}
+
+		function form347_policy_ids_by_name_phone(policies,issuer,func)
+		{
+			var holder_names = vUtil.arrayColumn(policies,'Assured Name');
+
+			var holder_phones = vUtil.arrayColumn(policies,'Telephone No');
+			for(var i in holder_phones)
+			{
+				var phones = holder_phones[i].split("/");
+				phones.forEach(function(phone)
+				{
+					if(phone!="NA" && phone!="na" && !vUtil.isBlank(phone))
+					{
+						holder_names.push(phone);
+					}
+				});
+			}
+
+			var id_data  = {data_store:'policies',indexes:[{index:'id'},
+							{index:'policy_holder',approx_array:holder_names},
+							{index:'policy_num',exact:''},
+							{index:'policy_name'},
+							{index:'issuer',value:issuer}]};
+			read_json_rows('form347',id_data,function(ids)
+			{
+				ids.forEach(function(id)
+				{
+					for(var i in policies)
+					{
+						if(id['policy_holder'].indexOf(policies[i]['Assured Name'])>-1 && id['policy_name'].toLowerCase()==policies[i]['Product'].toLowerCase())
+						{
+							policies[i].id = id['id'];
+							policies[i].application_num = id['application_num'];
+							policies[i].policy_holder = id['policy_holder'];
+							break;
+						}
+					}
+				});
+				func();
+			});
+		}
+
+		function form347_renewal_policy_details_name_phone(policies,issuer,func)
+		{
+			var old_policies = vUtil.arrayColumn(policies,'Previous Policy Number');
+
+			var id_data  = {data_store:'policies',indexes:[{index:'id'},
+							{index:'policy_holder'},
+							{index:'policy_num',array:old_policies},
+							{index:'premium'},
+							{index:'issuer',value:issuer}]};
+			read_json_rows('form347',id_data,function(ids)
+			{
+				ids.forEach(function(id)
+				{
+					for(var i in policies)
+					{
+						if(id['policy_num']==policies[i]['Previous Policy Number'])
+						{
+							policies[i].policy_holder = id['policy_holder'];
+							policies[i].old_premium = id['premium'];
 							break;
 						}
 					}
@@ -611,12 +684,19 @@
 			var form=document.getElementById('form347_popup_import_form');
 
 			var import_type=form.elements['type'];
+			var agent_filter=form.elements['agent'];
 			var template_button=form.elements['download'];
 			var dummy_button=form.elements['file_dummy'];
 			var import_button=form.elements['save'];
 
 			var import_types_list = ['Apollo Policies Search','Apollo Policies Sold', 'ICICI Policies', 'Max Logged Business','Max Renewal Business', 'Star Policies','New Applications','MIS'];
 			set_value_list_json(import_types_list,import_type);
+
+			var agent_data={data_store:'attributes',return_column:'name',
+							indexes:[{index:'value',exact:'Agent'},
+									{index:'type',exact:'staff'},
+									{index:'attribute',exact:'Designation'}]};
+			set_my_value_list_json(agent_data,agent_filter);
 
 			//initializing file import button
 			var file_object=vUtil.jsonParse($(dummy_button).fileInput());
@@ -665,29 +745,29 @@
 			switch(import_type)
 			{
             	case 'New Applications': data_array=['application number','policy number','policy name',
-													'description','issuer','agent','sum insured','premium','received amount',
-													'adults','children','age (oldest member)','policy start date',
-													'policy term','policy issue date','policy type','issue type','ported from',
-													'renewed from','sales source','team lead','sales manager','tele caller',
-													'policy holder name','policy holder phone','policy holder email',
-													'policy holder address','policy holder birthdate'];
-													break;
+												'description','issuer','agent','sum insured','premium','received amount',
+												'adults','children','age (oldest member)','policy start date',
+												'policy term','policy issue date','policy type','issue type','ported from',
+												'renewed from','sales source','team lead','sales manager','tele caller',
+												'policy holder name','policy holder phone','policy holder email',
+												'policy holder address','policy holder birthdate'];
+												break;
 				case 'MIS':data_array=['application number','policy number','policy name',
-										'description','issuer','agent','sum insured','premium','received amount',
-										'adults','children','age (oldest member)','policy start date',
-										'policy term','policy issue date','policy type','issue type','ported from',
-										'renewed from','sales source','team lead','sales manager','tele caller',
-										'policy holder name','policy holder phone','policy holder email',
-										'policy holder address','policy holder birthdate'];
-										break;
+												'description','issuer','agent','sum insured','premium','received amount',
+												'adults','children','age (oldest member)','policy start date',
+												'policy term','policy issue date','policy type','issue type','ported from',
+												'renewed from','sales source','team lead','sales manager','tele caller',
+												'policy holder name','policy holder phone','policy holder email',
+												'policy holder address','policy holder birthdate'];
+												break;
 				case 'Apollo Policies Sold':data_array=['Main_Member_Name','Product_Name','Policy_Number',
-													'Premium','Sum_Insured','Policy_issue_date','Policy_start_date',
-													'Policy_end_date','Address_of_main_member'];
-													break;
+												'Premium','Sum_Insured','Policy_issue_date','Policy_start_date',
+												'Policy_end_date','Address_of_main_member'];
+												break;
 				case 'Apollo Policies Search':data_array=['Policy_Number','Member_Name','Product_Name',
-													'Policy_start_date','Member_ID','Policy_issue_date','Policy_end_date',
-													'Premium','Application_Number'];
-													break;
+												'Policy_start_date','Member_ID','Policy_issue_date','Policy_end_date',
+												'Premium','Application_Number'];
+												break;
 				case 'Max Logged Business':data_array=['First Name','Last Name','Full Name','Application Number',
 												'Policy Number','Customer Id','Plan Type','Product Id',
 												'Product Genre','Insured Lives','Logged Premium',
@@ -719,11 +799,11 @@
 												'Previous Policy Number'];
 												break;
 				case 'ICICI Policies':data_array=['Product Class','Product Sub Class','Policy Business Type',
-										'Policy Number (Click to view certificate)','Email','Policy Cover Note No',
-										'Customer Full Name','OD premium','Net GWP	Commission %',
-										'Policy Endorsement Type','Policy Reporting Type','Policy Start Date',
-										'Policy Endorsement Date'];
-										break;
+												'Policy Number (Click to view certificate)','Email','Policy Cover Note No',
+												'Customer Full Name','OD premium','Net GWP	Commission %',
+												'Policy Endorsement Type','Policy Reporting Type','Policy Start Date',
+												'Policy Endorsement Date'];
+												break;
 			}
             my_array_to_csv(data_array);
         };
@@ -771,6 +851,12 @@
 				policies[a].preferred="";
 				policies[a].issue_type='';
 				policies[a].old_premium=0;
+				policies[a].agent=document.getElementById('form347_popup_import_form').elements['agent'].value;
+				policies[a].start_time = vTime.unix({date:policies[a].Policy_start_date,inputFormat:'mm/dd/yyyy hh:mm:ss AM'});
+				policies[a].end_time = vTime.unix({date:policies[a].Policy_end_date,inputFormat:'mm/dd/yyyy hh:mm:ss AM'});
+				policies[a].issue_time = vTime.unix({date:policies[a].Policy_issue_date,inputFormat:'mm/dd/yyyy hh:mm:ss AM'});
+				policies[a].term = ((policies[a].end_time-policies[a].start_time)/(366*86400000)>1) ? 'two years' : 'one year';
+				policies[a].issued_in_quarter = vTime.quarter({time:policies[a].issue_time,inputFormat:'unix'});
 			}
 
 			form347_policy_bank(policies,'Product_Name','Apollo',function()
@@ -780,11 +866,6 @@
 					// console.log(policies);
 					for(var i=0;i<policies.length;i++)
 					{
-						policies[i].start_time = vTime.unix({date:policies[i].Policy_start_date,inputFormat:'mm/dd/yyyy hh:mm:ss AM'});
-						policies[i].end_time = vTime.unix({date:policies[i].Policy_end_date,inputFormat:'mm/dd/yyyy hh:mm:ss AM'});
-						policies[i].issue_time = vTime.unix({date:policies[i].Policy_issue_date,inputFormat:'mm/dd/yyyy hh:mm:ss AM'});
-						policies[i].term = ((policies[i].end_time-policies[i].start_time)/366>1) ? 'two years' : 'one year';
-						policies[i].issued_in_quarter = vTime.quarter({time:policies[i].issue_time,inputFormat:'unix'});
 						if(!vUtil.isBlank(policies[i].id))
 						{
 							var data_json_array=[{index:'id',value:policies[i].id},
@@ -794,6 +875,7 @@
 									{index:'premium',value:policies[i].Premium},
 									{index:'issuer',value:'Apollo'},
 									{index:'term',value:policies[i].term},
+									{index:'agent',value:policies[i].agent},
 									{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
 									{index:'start_date',value:policies[i].start_time},
 									{index:'end_date',value:policies[i].end_time},
@@ -826,6 +908,7 @@
 											{index:'premium',value:policies[i].Premium},
 											{index:'issuer',value:'Apollo'},
 											{index:'term',value:policies[i].term},
+											{index:'agent',value:policies[i].agent},
 											{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
 											{index:'start_date',value:policies[i].start_time},
 											{index:'end_date',value:policies[i].end_time},
@@ -877,6 +960,7 @@
 											{index:'member_id',value:policies[i].Member_ID},
 											{index:'premium',value:policies[i].Premium},
 											{index:'issuer',value:'Apollo'},
+											{index:'agent',value:policies[i].agent},
 											{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
 											{index:'term',value:policies[i].term},
 											{index:'start_date',value:policies[i].start_time},
@@ -973,6 +1057,13 @@
 				policies[a].preferred="";
 				policies[a].policy_holder="";
 				policies[a].policy_holder_id="";
+				policies[a].agent=document.getElementById('form347_popup_import_form').elements['agent'].value;
+				policies[a].start_time = vTime.unix({date:policies[a].Policy_start_date,inputFormat:'mm/dd/yyyy hh:mm:ss AM'});
+				policies[a].end_time = vTime.unix({date:policies[a].Policy_end_date,inputFormat:'mm/dd/yyyy hh:mm:ss AM'});
+				policies[a].issue_time = vTime.unix({date:policies[a].Policy_issue_date,inputFormat:'mm/dd/yyyy hh:mm:ss AM'});
+				policies[a].term = ((policies[a].end_time-policies[a].start_time)/(366*86400000)>1) ? 'two years' : 'one year';
+				policies[a].issued_in_quarter = vTime.quarter({time:policies[a].issue_time,inputFormat:'unix'});
+				policies[a].agent=document.getElementById('form347_popup_import_form').elements['agent'].value;
 			}
 
 			form347_policy_bank(policies,'Product_Name','Apollo',function()
@@ -982,11 +1073,6 @@
 					// console.log(policies);
 					for(var i=0;i<policies.length;i++)
 					{
-						policies[i].start_time = vTime.unix({date:policies[i].Policy_start_date,inputFormat:'mm/dd/yyyy hh:mm:ss AM'});
-						policies[i].end_time = vTime.unix({date:policies[i].Policy_end_date,inputFormat:'mm/dd/yyyy hh:mm:ss AM'});
-						policies[i].issue_time = vTime.unix({date:policies[i].Policy_issue_date,inputFormat:'mm/dd/yyyy hh:mm:ss AM'});
-						policies[i].term = ((policies[i].end_time-policies[i].start_time)/366>1) ? 'two years' : 'one year';
-						policies[i].issued_in_quarter = vTime.quarter({time:policies[i].issue_time,inputFormat:'unix'});
 						if(!vUtil.isBlank(policies[i].id))
 						{
 							var data_json_array=[{index:'id',value:policies[i].id},
@@ -995,6 +1081,7 @@
 									{index:'sum_insured',value:policies[i].Sum_Insured},
 									{index:'issuer',value:'Apollo'},
 									{index:'term',value:policies[i].term},
+									{index:'agent',value:policies[i].agent},
 									{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
 									{index:'start_date',value:policies[i].start_time},
 									{index:'end_date',value:policies[i].end_time},
@@ -1081,6 +1168,7 @@
 				policies[a].term = 'one year';
 				policies[a].application_num = '';
 				policies[a].issued_in_quarter = vTime.quarter({time:policies[a].issue_time,inputFormat:'unix'});
+				policies[a].agent=document.getElementById('form347_popup_import_form').elements['agent'].value;
 			}
 			// console.log(policies);
 			form347_policy_bank(policies,'Product Sub Class','ICICI',function()
@@ -1098,6 +1186,7 @@
 									{index:'premium',value:policies[i]['Net GWP']},
 									{index:'issuer',value:'ICICI'},
 									{index:'term',value:policies[i].term},
+									{index:'agent',value:policies[i].agent},
 									{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
 									{index:'start_date',value:policies[i].start_time},
 									{index:'end_date',value:policies[i].end_time},
@@ -1131,6 +1220,7 @@
 											{index:'premium',value:policies[i]['Net GWP']},
 											{index:'issuer',value:'ICICI'},
 											{index:'term',value:policies[i].term},
+											{index:'agent',value:policies[i].agent},
 											{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
 											{index:'start_date',value:policies[i].start_time},
 											{index:'end_date',value:policies[i].end_time},
@@ -1177,6 +1267,7 @@
 												{index:'premium',value:policies[i]['Net GWP']},
 												{index:'issuer',value:'ICICI'},
 												{index:'term',value:policies[i].term},
+												{index:'agent',value:policies[i].agent},
 												{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
 												{index:'start_date',value:policies[i].start_time},
 												{index:'end_date',value:policies[i].end_time},
@@ -1229,19 +1320,19 @@
 		{
 			var validate_template_array=[{column:'Full Name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
 									{column:'Application Number',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'Policy Number',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'Customer Id',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'Plan Type',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'Product Id',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'Product Genre',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'Insured Lives',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
-									{column:'Logged Premium',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
-									{column:'Issued Premium (Without Taxes)',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
-									{column:'Sum Assured',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
-									{column:'Individual Sum Assured',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
-									{column:'Issued Date',required:'yes',regex:new RegExp('^[0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4}')},
-									{column:'Policy Start Date',required:'yes',regex:new RegExp('^[0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4}')},
-									{column:'Policy End Date',required:'yes',regex:new RegExp('^[0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4}')}];
+									{column:'Policy Number',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Customer Id',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Plan Type',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Product Id',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Product Genre',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Insured Lives',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'Logged Premium',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'Issued Premium (Without Taxes)',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'Sum Assured',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'Individual Sum Assured',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'Issued Date',regex:new RegExp('^[0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4}')},
+									{column:'Policy Start Date',regex:new RegExp('^[0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4}')},
+									{column:'Policy End Date',regex:new RegExp('^[0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4}')}];
 
 			var error_array=vImport.validate(data_array,validate_template_array);
 			return error_array;
@@ -1262,38 +1353,50 @@
 			var last_updated=vTime.unix();
 			show_loader();
 
-			for(var a in policies)
+			for(var a=0;a<policies.length;a++)
 			{
+				if(vUtil.isBlank(policies[a]['Policy Number']))
+				{
+					policies.splice(a,1);
+					a--;
+					continue;
+				}
+
 				policies[a].id="";
 				policies[a].policy_holder="";
 				policies[a].description="";
 				policies[a].type="";
 				policies[a].preferred="";
+				policies[a].issuer='Max';
 				policies[a].issue_type='';
 				policies[a].old_premium=0;
+				policies[a].sum_insured=parseFloat(policies[a]['Insured Lives'])*parseFloat(policies[a]['Individual Sum Assured']);
+				policies[a].policy_name=policies[a]['Product Genre']+" - "+policies[a]['Plan Type'];
 				policies[a].start_time = vTime.unix({date:policies[a]['Policy Start Date'],inputFormat:'dd-mmm-yyyy'});
 				policies[a].end_time = vTime.unix({date:policies[a]['Policy End Date'],inputFormat:'dd-mmm-yyyy'});
 				policies[a].issue_time = vTime.unix({date:policies[a]['Issued Date'],inputFormat:'dd-mmm-yyyy'});
-				policies[a].term = ((policies[i].end_time-policies[a].start_time)/366>1) ? 'two years' : 'one year';
+				policies[a].term = ((policies[a].end_time-policies[a].start_time)/(366*86400000)>1) ? 'two years' : 'one year';
 				policies[a].issued_in_quarter = vTime.quarter({time:policies[a].issue_time,inputFormat:'unix'});
+				policies[a].agent=document.getElementById('form347_popup_import_form').elements['agent'].value;
 			}
 
-			form347_policy_bank(policies,'Plan Type','Max',function()
+			form347_policy_bank(policies,'policy_name','Max',function()
 			{
 				form347_policy_ids(policies,'Policy Number','Max',function()
 				{
-					// console.log(policies);
 					for(var i=0;i<policies.length;i++)
 					{
 						if(!vUtil.isBlank(policies[i].id))
 						{
 							var data_json_array=[{index:'id',value:policies[i].id},
-									{index:'policy_name',value:policies[i].Product_Name},
-									{index:'application_num',value:policies[i].Application_Number},
-									{index:'member_id',value:policies[i].Member_ID},
-									{index:'premium',value:policies[i].Premium},
-									{index:'issuer',value:'Apollo'},
+									{index:'policy_name',value:policies[i].policy_name},
+									{index:'application_num',value:policies[i]['Application Number']},
+									{index:'member_id',value:policies[i]['Customer Id']},
+									{index:'premium',value:policies[i]['Issued Premium (Without Taxes)']},
+									{index:'sum_insured',value:policies[i].sum_insured},
+									{index:'issuer',value:policies[i].issuer},
 									{index:'term',value:policies[i].term},
+									{index:'agent',value:policies[i].agent},
 									{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
 									{index:'start_date',value:policies[i].start_time},
 									{index:'end_date',value:policies[i].end_time},
@@ -1319,37 +1422,33 @@
 								counter++;
 								if(!vUtil.isBlank(policies[i].id))
 								{
-									var policy_array=[{index:'id',value:policies[i].id},
-											{index:'policy_name',value:policies[i].Product_Name},
-											{index:'policy_num',value:policies[i].Policy_Number},
-											{index:'member_id',value:policies[i].Member_ID},
-											{index:'premium',value:policies[i].Premium},
-											{index:'issuer',value:'Apollo'},
+									var data_json_array=[{index:'id',value:policies[i].id},
+											{index:'policy_name',value:policies[i].policy_name},
+											{index:'application_num',value:policies[i]['Application Number']},
+											{index:'member_id',value:policies[i]['Customer Id']},
+											{index:'premium',value:policies[i]['Issued Premium (Without Taxes)']},
+											{index:'sum_insured',value:policies[i].sum_insured},
+											{index:'issuer',value:policies[i].issuer},
 											{index:'term',value:policies[i].term},
+											{index:'agent',value:policies[i].agent},
 											{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
 											{index:'start_date',value:policies[i].start_time},
 											{index:'end_date',value:policies[i].end_time},
 											{index:'issue_date',value:policies[i].issue_time},
-											{index:'status',value:'issued'},
 											{index:'type',value:policies[i].type},
 											{index:'description',value:policies[i].description},
 											{index:'preferred',value:policies[i].preferred},
+											{index:'status',value:'issued'},
+											{index:'issue_type',value:'fresh'},
+											{index:'upsell',value:'no'},
 											{index:'last_updated',value:last_updated}];
-									if(!vUtil.isBlank(policies[i].issue_type))
-									{
-										var issue_type_obj = {index:'issue_type',value:policies[i].issue_type};
-										policy_array.push(issue_type_obj);
-									}
-									var upsell= (policies[i].old_premium!=0 && parseFloat(policies[i].Premium) > parseFloat(policies[i].old_premium)) ? 'yes' :'no';
-									var upsell_obj = {index:'upsell',value:upsell};
-									policy_array.push(upsell_obj);
 
-									update_policy_json.data.push(policy_array);
+									update_policy_json.data.push(data_json_array);
 
 									var attributes_array=[{index:'id',value:vUtil.newKey()+counter},
-											{index:'attribute',value:'Member ID',uniqueWith:['value','name']},
+											{index:'attribute',value:'Customer ID',uniqueWith:['value','name']},
 											{index:'type',value:'customer'},
-											{index:'value',value:policies[i].Member_ID},
+											{index:'value',value:policies[i]['Customer Id']},
 											{index:'name',value:policies[i].policy_holder},
 											{index:'last_updated',value:last_updated}];
 
@@ -1367,51 +1466,45 @@
 									counter++;
 									if(vUtil.isBlank(policies[i].policy_holder))
 									{
-										policies[i].policy_holder=policies[i].Member_Name+" ("+policies[i].Member_ID+")";
+										policies[i].policy_holder=policies[i]['Full Name']+" ("+policies[i]['Customer Id']+")";
 									}
-									var policy_array=[{index:'id',value:vUtil.newKey()+counter},
-											{index:'policy_name',value:policies[i].Product_Name},
-											{index:'application_num',value:policies[i].Application_Number},
-											{index:'policy_num',value:policies[i].Policy_Number,unique:'yes'},
-											{index:'policy_holder',value:policies[i].policy_holder},
-											{index:'member_id',value:policies[i].Member_ID},
-											{index:'premium',value:policies[i].Premium},
-											{index:'issuer',value:'Apollo'},
-											{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
+
+									var data_json_array=[{index:'id',value:policies[i].id},
+											{index:'policy_name',value:policies[i].policy_name},
+											{index:'application_num',value:policies[i]['Application Number']},
+											{index:'policy_num',value:policies[i]['Policy Number']},
+											{index:'member_id',value:policies[i]['Customer Id']},
+											{index:'premium',value:policies[i]['Issued Premium (Without Taxes)']},
+											{index:'sum_insured',value:policies[i].sum_insured},
+											{index:'issuer',value:policies[i].issuer},
 											{index:'term',value:policies[i].term},
+											{index:'agent',value:policies[i].agent},
+											{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
 											{index:'start_date',value:policies[i].start_time},
 											{index:'end_date',value:policies[i].end_time},
 											{index:'issue_date',value:policies[i].issue_time},
-											{index:'status',value:'issued'},
 											{index:'type',value:policies[i].type},
 											{index:'description',value:policies[i].description},
 											{index:'preferred',value:policies[i].preferred},
+											{index:'policy_holder',value:policies[i].policy_holder},
+											{index:'status',value:'issued'},
+											{index:'issue_type',value:'fresh'},
+											{index:'upsell',value:'no'},
 											{index:'last_updated',value:last_updated}];
 
-									if(vUtil.isBlank(policies[i].issue_type))
-									{
-										policies[i].issue_type='fresh';
-									}
-									var issue_type_obj = {index:'issue_type',value:policies[i].issue_type};
-									policy_array.push(issue_type_obj);
-
-									var upsell= (policies[i].old_premium!=0 && parseFloat(policies[i].Premium) > parseFloat(policies[i].old_premium)) ? 'yes' :'no';
-									var upsell_obj = {index:'upsell',value:upsell};
-									policy_array.push(upsell_obj);
-
-									create_policy_json.data.push(policy_array);
+									create_policy_json.data.push(data_json_array);
 
 									var attributes_array=[{index:'id',value:vUtil.newKey()+counter},
-											{index:'attribute',value:'Member ID',uniqueWith:['value','name']},
+											{index:'attribute',value:'Customer ID',uniqueWith:['value','name']},
 											{index:'type',value:'customer'},
-											{index:'value',value:policies[i].Member_ID},
+											{index:'value',value:policies[i]['Customer Id']},
 											{index:'name',value:policies[i].policy_holder},
 											{index:'last_updated',value:last_updated}];
 
 									attribute_json.data.push(attributes_array);
 
 									var customer_json_array=[{index:'id',value:vUtil.newKey()+counter},
-											{index:'name',value:policies[i].Member_Name},
+											{index:'name',value:policies[i]['Full Name']},
 											{index:'acc_name',value:policies[i].policy_holder,unique:'yes'},
 											{index:'last_updated',value:last_updated}];
 
@@ -1434,102 +1527,373 @@
 		};
 
 		/**
-		* Validate import of new applications
+		*	Import validation for max renewal business report
 		*/
-		function form347_na_import_validate(data_array)
+		function form347_mr_import_validate(data_array)
 		{
-			var validate_template_array=[{column:'policy number',required:'yes',regex:new RegExp('^[0-9a-zA-Z_., ()-]+$')},
-									{column:'policy holder name',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
-									{column:'policy holder phone',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
-									{column:'policy holder email',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
-									{column:'policy holder address',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()/-]+$')},
-									{column:'policy holder birthdate',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
-									{column:'issuer',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
-									{column:'agent',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
-									{column:'premium',regex:new RegExp('^[0-9 .]+$')},
-									{column:'policy start date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
-									{column:'policy end date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
-									{column:'policy issue date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
-									{column:'policy type',list:['life','health','car']},
-									{column:'issue type',list:['fresh','renewal','portability']},
-									{column:'status',list:['active','expired']}];
+			var validate_template_array=[{column:'Full Name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Previous Policy Number',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Policy Number',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Customer Id',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Plan Type',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Product Id',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Product Genre',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Insured Lives',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'Renewal Premium',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'Sum Assured',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'Individual Sum Assured',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'Renewal Issuance Date',regex:new RegExp('^[0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4}')},
+									{column:'Policy Start Date',regex:new RegExp('^[0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4}')},
+									{column:'Policy Expiry Date',regex:new RegExp('^[0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4}')}];
 
 			var error_array=vImport.validate(data_array,validate_template_array);
 			return error_array;
 		}
 
 		/**
-		* Import new applications
+		*	Import for max renewal business report
 		*/
-        function form347_na_import(data_array)
-        {
-          	var data_json={data_store:'policies',
-		 					log:'yes',
-		 					data:[],
-		 					log_data:{title:'Policies',link_to:'form347'}};
-
-			var customer_json={data_store:'customers',
-							loader:'no',
-							data:[]};
-
-			var attribute_json={data_store:'attributes',
-							loader:'no',
-							data:[]};
+		function form347_mr_import(policies)
+		{
+			var create_policy_json={data_store:'policies',data:[]};
+			var update_policy_json={data_store:'policies',log:'yes',data:[],
+							log_data:{title:'Renewed Policies from Max',link_to:'form347'}};
+			var customer_json={data_store:'customers',loader:'no',data:[]};
+			var attribute_json={data_store:'attributes',loader:'no',data:[]};
 
 			var counter=1;
 			var last_updated=vTime.unix();
+			show_loader();
 
-			data_array.forEach(function(row)
+			for(var a=0;a<policies.length;a++)
 			{
-				counter+=1;
+				if(vUtil.isBlank(policies[a]['Policy Number']))
+				{
+					policies.splice(a,1);
+					a--;
+					continue;
+				}
 
-				var holder=row['policy holder name']+" ("+row['policy holder phone']+")";
-				var data_json_array=[{index:'id',value:row.id},
-	 					{index:'policy_num',value:row['policy number'],unique:'yes'},
-						{index:'policy_name',value:row['policy name']},
-						{index:'agent',value:row['agent']},
-						{index:'policy_holder',value:holder},
-						{index:'issuer',value:row['issuer']},
-						{index:'description',value:row['description']},
-						{index:'premium',value:row['premium']},
-						{index:'start_date',value:row['policy start date']},
-						{index:'end_date',value:row['policy end date']},
-						{index:'issue_date',value:row['policy issue date']},
-						{index:'type',value:row['policy type']},
-						{index:'issue_type',value:row['issue type']},
-						{index:'status',value:row['status']},
-	 					{index:'last_updated',value:last_updated}];
+				policies[a].id="";
+				policies[a].policy_holder="";
+				policies[a].description="";
+				policies[a].type="";
+				policies[a].preferred="";
+				policies[a].issuer='Max';
+				policies[a].issue_type='';
+				policies[a].old_premium=0;
+				policies[a].sum_insured=parseFloat(policies[a]['Insured Lives'])*parseFloat(policies[a]['Individual Sum Assured']);
+				policies[a].policy_name=policies[a]['Product Genre']+" - "+policies[a]['Plan Type'];
+				policies[a].start_time = vTime.unix({date:policies[a]['Policy Start Date'],inputFormat:'dd-mmm-yyyy'});
+				policies[a].end_time = vTime.unix({date:policies[a]['Policy Expiry Date'],inputFormat:'dd-mmm-yyyy'});
+				policies[a].issue_time = vTime.unix({date:policies[a]['Renewal Issuance Date'],inputFormat:'dd-mmm-yyyy'});
+				policies[a].term = ((policies[a].end_time-policies[a].start_time)/(366*86400000)>1) ? 'two years' : 'one year';
+				policies[a].issued_in_quarter = vTime.quarter({time:policies[a].issue_time,inputFormat:'unix'});
+				policies[a].agent=document.getElementById('form347_popup_import_form').elements['agent'].value;
+			}
 
-				data_json.data.push(data_json_array);
+			form347_policy_bank(policies,'policy_name','Max',function()
+			{
+				form347_policy_ids(policies,'Policy Number','Max',function()
+				{
+					for(var i=0;i<policies.length;i++)
+					{
+						if(!vUtil.isBlank(policies[i].id))
+						{
+							var data_json_array=[{index:'id',value:policies[i].id},
+									{index:'policy_name',value:policies[i].policy_name},
+									{index:'application_num',value:policies[i]['Previous Policy Number']},
+									{index:'member_id',value:policies[i]['Customer Id']},
+									{index:'premium',value:policies[i]['Renewal Premium']},
+									{index:'sum_insured',value:policies[i].sum_insured},
+									{index:'issuer',value:policies[i].issuer},
+									{index:'term',value:policies[i].term},
+									{index:'agent',value:policies[i].agent},
+									{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
+									{index:'start_date',value:policies[i].start_time},
+									{index:'end_date',value:policies[i].end_time},
+									{index:'issue_date',value:policies[i].issue_time},
+									{index:'type',value:policies[i].type},
+									{index:'description',value:policies[i].description},
+									{index:'preferred',value:policies[i].preferred},
+									{index:'status',value:'issued'},
+									{index:'last_updated',value:last_updated}];
 
-				var customer_json_array=[{index:'id',value:row.id},
-	 					{index:'name',value:row['policy holder name']},
-	 					{index:'phone',value:row['policy holder phone']},
-						{index:'email',value:row['policy holder email']},
-						{index:'address',value:row['policy holder address']},
-						{index:'acc_name',value:holder,unique:'yes'},
-	 					{index:'last_updated',value:last_updated}];
+							update_policy_json.data.push(data_json_array);
+							policies.splice(i,1);
+							i--;
+						}
+					}
 
-				customer_json.data.push(customer_json_array);
+					if(policies.length>0)
+					{
+						form347_application_ids(policies,'Previous Policy Number','Max',function()
+						{
+							var newKey=vUtil.newKey();
+							for(var i=0; i<policies.length;i++)
+							{
+								newKey++;
+								if(vUtil.isBlank(policies[i].policy_holder))
+								{
+									policies[i].policy_holder=policies[i]['Full Name']+" ("+policies[i]['Customer Id']+")";
+								}
 
-				var attribute_json_array=[{index:'id',value:row.id},
-	 					{index:'value',value:row['policy holder birthdate']},
-						{index:'attribute',value:'Birth Date'},
-						{index:'type',value:'customer'},
-						{index:'name',value:holder,unique:'yes'},
-	 					{index:'last_updated',value:last_updated}];
+								var data_json_array=[{index:'id',value:newKey},
+										{index:'policy_name',value:policies[i].policy_name},
+										{index:'application_num',value:policies[i]['Previous Policy Number']},
+										{index:'policy_num',value:policies[i]['Policy Number']},
+										{index:'member_id',value:policies[i]['Customer Id']},
+										{index:'premium',value:policies[i]['Renewal Premium']},
+										{index:'sum_insured',value:policies[i].sum_insured},
+										{index:'issuer',value:policies[i].issuer},
+										{index:'term',value:policies[i].term},
+										{index:'agent',value:policies[i].agent},
+										{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
+										{index:'start_date',value:policies[i].start_time},
+										{index:'end_date',value:policies[i].end_time},
+										{index:'issue_date',value:policies[i].issue_time},
+										{index:'type',value:policies[i].type},
+										{index:'description',value:policies[i].description},
+										{index:'preferred',value:policies[i].preferred},
+										{index:'policy_holder',value:policies[i].policy_holder},
+										{index:'status',value:'issued'},
+										{index:'issue_type',value:'renewal'},
+										{index:'last_updated',value:last_updated}];
 
-				attribute_json.data.push(attribute_json_array);
+								var upsell= (policies[i].old_premium!=0 && parseFloat(policies[i]['Renewal Premium']) > parseFloat(policies[i].old_premium)) ? 'yes' :'no';
+								var upsell_obj = {index:'upsell',value:upsell};
+								data_json_array.push(upsell_obj);
+
+								create_policy_json.data.push(data_json_array);
+
+								var attributes_array=[{index:'id',value:newKey},
+										{index:'attribute',value:'Customer ID',uniqueWith:['value','name']},
+										{index:'type',value:'customer'},
+										{index:'value',value:policies[i]['Customer Id']},
+										{index:'name',value:policies[i].policy_holder},
+										{index:'last_updated',value:last_updated}];
+
+								attribute_json.data.push(attributes_array);
+
+								var customer_json_array=[{index:'id',value:newKey},
+										{index:'name',value:policies[i]['Full Name']},
+										{index:'acc_name',value:policies[i].policy_holder,unique:'yes'},
+										{index:'last_updated',value:last_updated}];
+
+								customer_json.data.push(customer_json_array);
+							}
+							create_batch_json(create_policy_json);
+							create_batch_json(attribute_json);
+							create_batch_json(customer_json);
+						});
+					}
+					else
+					{
+						update_batch_json(update_policy_json);
+					}
+				});
 			});
+		};
 
-			create_batch_json(data_json);
-			create_batch_json(customer_json);
-			create_batch_json(attribute_json);
-			update_batch_json(data_json);
-			update_batch_json(customer_json);
-			update_batch_json(attribute_json);
+		/**
+		*	Import validation for Star business report
+		*/
+		function form347_sp_import_validate(data_array)
+		{
+			var validate_template_array=[{column:'Assured Name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Previous Policy Number',regex:new RegExp('^[0-9a-zA-Z\/-]+$')},
+									{column:'Policy Number',regex:new RegExp('^[0-9a-zA-Z\/-]+$')},
+									{column:'Fresh/Renewal',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Product',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Telephone No',regex:new RegExp('^[0-9a-zA-Z \/-]+$')},
+									{column:'ADDRESS',regex:new RegExp('^[0-9a-zA-Z _.,;#@!$%&^*|:<>()\/-]+$')},
+									{column:'Premium',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'Policy Issue Date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
+									{column:'Policy From Date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
+									{column:'Policy To Date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')}];
 
-        };
+			var error_array=vImport.validate(data_array,validate_template_array);
+			return error_array;
+		}
+
+		/**
+		*	Import for Star business report
+		*/
+		function form347_sp_import(policies)
+		{
+			var create_policy_json={data_store:'policies',data:[]};
+			var update_policy_json={data_store:'policies',log:'yes',data:[],
+							log_data:{title:'Renewed Policies from Max',link_to:'form347'}};
+			var customer_json={data_store:'customers',loader:'no',data:[]};
+			var attribute_json={data_store:'attributes',loader:'no',data:[]};
+
+			var counter=1;
+			var last_updated=vTime.unix();
+			show_loader();
+
+			for(var a=0;a<policies.length;a++)
+			{
+				if(vUtil.isBlank(policies[a]['Policy Number']))
+				{
+					policies.splice(a,1);
+					a--;
+					continue;
+				}
+
+				policies[a].id="";
+				policies[a].policy_holder="";
+				policies[a].description="";
+				policies[a].type="";
+				policies[a].preferred="";
+				policies[a].issuer='Star';
+				policies[a].issue_type='';
+				policies[a].old_premium=0;
+				policies[a].policy_name=policies[a]['Product'];
+				policies[a].start_time = vTime.unix({date:policies[a]['Policy From Date']});
+				policies[a].end_time = vTime.unix({date:policies[a]['Policy To Date']});
+				policies[a].issue_time = vTime.unix({date:policies[a]['Policy Issue Date']});
+				policies[a].term = ((policies[a].end_time-policies[a].start_time)/(366*86400000)>1) ? 'two years' : 'one year';
+				policies[a].issued_in_quarter = vTime.quarter({time:policies[a].issue_time,inputFormat:'unix'});
+				policies[a].agent=document.getElementById('form347_popup_import_form').elements['agent'].value;
+			}
+
+			form347_policy_bank(policies,'policy_name','Star',function()
+			{
+				form347_policy_ids(policies,'Policy Number','Star',function()
+				{
+					for(var i=0;i<policies.length;i++)
+					{
+						if(!vUtil.isBlank(policies[i].id))
+						{
+							var data_json_array=[{index:'id',value:policies[i].id},
+									{index:'policy_name',value:policies[i].policy_name},
+									{index:'application_num',value:policies[i]['Previous Policy Number']},
+									{index:'premium',value:policies[i]['Premium']},
+									{index:'issuer',value:policies[i].issuer},
+									{index:'term',value:policies[i].term},
+									{index:'agent',value:policies[i].agent},
+									{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
+									{index:'start_date',value:policies[i].start_time},
+									{index:'end_date',value:policies[i].end_time},
+									{index:'issue_date',value:policies[i].issue_time},
+									{index:'type',value:policies[i].type},
+									{index:'description',value:policies[i].description},
+									{index:'preferred',value:policies[i].preferred},
+									{index:'status',value:'issued'},
+									{index:'last_updated',value:last_updated}];
+
+							update_policy_json.data.push(data_json_array);
+							policies.splice(i,1);
+							i--;
+						}
+					}
+
+					if(policies.length>0)
+					{
+						form347_policy_ids_by_name_phone(policies,'Star',function()
+						{
+							for(var i=0;i<policies.length;i++)
+							{
+								counter++;
+								if(!vUtil.isBlank(policies[i].id))
+								{
+									var policy_array=[{index:'id',value:policies[i].id},
+											{index:'policy_num',value:policies[i]['Policy Number']},
+											{index:'policy_name',value:policies[i].policy_name},
+											{index:'premium',value:policies[i]['Net GWP']},
+											{index:'issuer',value:policies[i].issuer},
+											{index:'term',value:policies[i].term},
+											{index:'agent',value:policies[i].agent},
+											{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
+											{index:'start_date',value:policies[i].start_time},
+											{index:'end_date',value:policies[i].end_time},
+											{index:'issue_date',value:policies[i].issue_time},
+											{index:'type',value:policies[i].type},
+											{index:'description',value:policies[i].description},
+											{index:'preferred',value:policies[i].preferred},
+											{index:'status',value:'issued'},
+											{index:'last_updated',value:last_updated}];
+
+									var issue_type= (policies[i]['Fresh/Renewal'] == "RENEWAL") ? 'renewal' :'fresh';
+									var issue_type_obj = {index:'issue_type',value:issue_type};
+									policy_array.push(issue_type_obj);
+
+									var upsell= (policies[i].old_premium!=0 && parseFloat(policies[i]['Premium']) > parseFloat(policies[i].old_premium)) ? 'yes' :'no';
+									var upsell_obj = {index:'upsell',value:upsell};
+									policy_array.push(upsell_obj);
+
+									update_policy_json.data.push(policy_array);
+
+									policies.splice(i,1);
+									i--;
+								}
+							}
+
+							if(policies.length>0)
+							{
+								form347_renewal_policy_details_name_phone(policies,'Star',function()
+								{
+									var newKey=vUtil.newKey();
+									for(var i=0; i<policies.length;i++)
+									{
+										newKey++;
+										if(vUtil.isBlank(policies[i].policy_holder))
+										{
+											policies[i].policy_holder=policies[i]['Assured Name']+" ("+policies[i]['Telephone No']+")";
+										}
+										var policy_array=[{index:'id',value:newKey},
+												{index:'policy_num',value:policies[i]['Policy Number']},
+												{index:'policy_name',value:policies[i].policy_name},
+												{index:'policy_holder',value:policies[i].policy_holder},
+												{index:'application_num',value:policies[i]['Previous Policy Number']},
+												{index:'premium',value:policies[i]['Premium']},
+												{index:'issuer',value:policies[i].issuer},
+												{index:'term',value:policies[i].term},
+												{index:'agent',value:policies[i].agent},
+												{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
+												{index:'start_date',value:policies[i].start_time},
+												{index:'end_date',value:policies[i].end_time},
+												{index:'issue_date',value:policies[i].issue_time},
+												{index:'type',value:policies[i].type},
+												{index:'description',value:policies[i].description},
+												{index:'preferred',value:policies[i].preferred},
+												{index:'status',value:'issued'},
+												{index:'last_updated',value:last_updated}];
+
+										var issue_type= (policies[i]['Fresh/Renewal'] == "RENEWAL") ? 'renewal' :'fresh';
+										var issue_type_obj = {index:'issue_type',value:issue_type};
+										policy_array.push(issue_type_obj);
+
+										var upsell= (policies[i].old_premium!=0 && parseFloat(policies[i]['Premium']) > parseFloat(policies[i].old_premium)) ? 'yes' :'no';
+										var upsell_obj = {index:'upsell',value:upsell};
+										policy_array.push(upsell_obj);
+
+										create_policy_json.data.push(policy_array);
+
+										var customer_json_array=[{index:'id',value:newKey},
+												{index:'name',value:policies[i]['Assured Name']},
+												{index:'phone',value:policies[i]['Telephone No']},
+												{index:'address',value:policies[i]['ADDRESS']},
+												{index:'acc_name',value:policies[i].policy_holder,unique:'yes'},
+												{index:'last_updated',value:last_updated}];
+
+										customer_json.data.push(customer_json_array);
+									}
+									create_batch_json(create_policy_json);
+									create_batch_json(customer_json);
+								});
+							}
+							else{
+								update_batch_json(update_policy_json);
+							}
+						});
+					}
+					else{
+						update_batch_json(update_policy_json);
+					}
+				});
+			});
+		};
 
     </script>
 </div>
