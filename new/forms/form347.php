@@ -30,9 +30,13 @@
 
 	<div class="portlet-body">
 		<form id='form347_header' autocomplete="off">
+			<label style='float:right;'><button type='button' class='btn red-pink' onclick='modal11_action();' title='Add Customer'><i class='fa fa-plus'></i> Add Customer</button></label>
+			<label style='float:right;'><button type='button' class='btn purple-soft' onclick='modal216_action();' title='Add Policy'><i class='fa fa-plus'></i> Add Policy</button></label>
+			<label style='float:right;'><button type='button' class='btn yellow-saffron' onclick='form347_add_filter();' title='Add Filter'><i class='fa fa-plus'></i> Add Filter</button></label>
 			<input type='submit' class='submit_hidden'>
 			<fieldset id='form347_filters'></fieldset>
 		</form>
+
 		<br>
 		<div id='form347_body' class='row'></div>
 	</div>
