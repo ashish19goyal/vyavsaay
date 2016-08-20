@@ -56,6 +56,7 @@
 						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>DRS #</span></div><div class='col-md-8 col-sm-8'><input type='text' name='drs'></div></div>
 						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>RTO #</span></div><div class='col-md-8 col-sm-8'><input type='text' name='rto'></div></div>
 						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Manifest #</span></div><div class='col-md-8 col-sm-8'><input type='text' name='manifest_num'></div></div>
+                        <div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Gate Pass #</span></div><div class='col-md-8 col-sm-8'><input type='text' name='pass_num'></div></div>
 						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Delivery Person</span></div><div class='col-md-8 col-sm-8'><input type='text' name='delivery_person'></div></div>
 						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Branch</span></div><div class='col-md-8 col-sm-8'><input type='text' name='branch'></div></div>
 						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Received By</span></div><div class='col-md-8 col-sm-8'><input type='text' name='received_by'></div></div>
@@ -142,6 +143,7 @@
                                 {index:'drs_num'},
                                 {index:'rto_num'},
                                 {index:'manifest_num'},
+                                {index:'pass_num'},
                                 {index:'branch'},
                                 {index:'received_by'},
                                 {index:'received_by_phone'},
@@ -206,6 +208,7 @@
                 form.elements['drs'].value=result.drs_num;
                 form.elements['rto'].value=result.rto_num;
                 form.elements['manifest_num'].value=result.manifest_num;
+                form.elements['pass_num'].value=result.pass_num;
                 form.elements['delivery_person'].value=result.delivery_person;
                 form.elements['branch'].value=result.branch;
                 form.elements['received_by'].value=result.received_by;
