@@ -612,69 +612,6 @@
 			});
 		}
 
-		function form347_add_commissions(commissions_json,policy_bank,policy_data)
-		{
-			var date_array=String(fissue.value).split(/[\-\/]+/);;
-			var month=parseInt(date_array[1]);
-			var monthArray=[4,5,6,7,8,9];
-			var first_half = (monthArray.indexOf(month)==-1) ? 'no' : 'yes';
-			var data={
-				"first_half_year":first_half,
-				"sum_insured":fsum.value,
-				"term":fterm.value,
-				"preferred":fpreferred.value,
-				"upsell": (fpremium.value>old_premium) ? 'yes' : 'no'
-			};
-
-			var commission_id = vUtil.newKey();
-			commissions.forEach(function(commission)
-			{
-				commission_id++;
-				if(commission.issue==ftype.value)
-				{
-					var add=true;
-					var amount = parseFloat(commission.commission)*parseFloat(fpremium.value)/100;
-
-					if(!vUtil.isBlank(commission.conditions) && commission.conditions!=[])
-					{
-						commission.conditions.forEach(function(cond)
-						{
-							if(!vUtil.isBlank(cond.exact) && data[cond.index]!=cond.exact)
-							{
-								add=false;
-							}
-							if(!vUtil.isBlank(cond.lowerbound) && data[cond.index]<cond.lowerbound)
-							{
-								add=false;
-							}
-							if(!vUtil.isBlank(cond.upperbound) && data[cond.index]>cond.upperbound)
-							{
-								add=false;
-							}
-						});
-					}
-
-					if(add)
-					{
-						var commission_json={data_store:'policy_commissions',
-							data:[{index:'id',value:commission_id},
-								{index:'application_num',value:fapp.value},
-								{index:'commission_num',value:''},
-								{index:'issuer',value:fcompany.value},
-								{index:'policy_holder',value:fholder.value},
-								{index:'amount',value:amount},
-								{index:'agent',value:fagent.value},
-								{index:'issue_date',value:vTime.unix({date:fissue.value})},
-								{index:'commission_type',value:commission.type},
-								{index:'status',value:'pending'},
-								{index:'notes',value:''},
-								{index:'last_updated',value:last_updated}]};
-						create_json(commission_json);
-					}
-				}
-			});
-		}
-
 		function form347_popup_action(policy_id,customer_name)
 		{
 			var form=document.getElementById('form347_popup_form');

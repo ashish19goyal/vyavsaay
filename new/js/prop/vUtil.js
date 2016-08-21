@@ -67,7 +67,18 @@ var vUtil = function (options)
         return column;
     };
 
-		//get an array with unique values only
+	//extracts a single column from a multidimensional array and returns as an object
+    this.keyedArrayColumn=function (array, key, col_name)
+    {
+        var column = {};
+        for(var i=0; i<array.length; i++)
+        {
+            column[array[i][key]]=array[i][col_name];
+        }
+        return column;
+    };
+
+	//get an array with unique values only
 	this.arrayUnique = function(array)
     {
         return array.filter(function(el,index,arr)

@@ -40,6 +40,31 @@
 		</table>
 	</div>
 
+	<div class='modal_forms'>
+
+	<a href='#report123_popup' data-toggle="modal" id='report123_popup_link'></a>
+		<div id="report123_popup" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form id='report123_popup_form' autocomplete="off">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+							<h4 class="modal-title">Valdiation Failed</h4>
+						</div>
+						<div class="modal-body">
+							<div id='report123_popup_message' class="scroller" style="height:100px;" data-always-visible="1" data-rail-visible1="1">
+								Validation Failed!
+							</div>
+						</div>
+						<div class="modal-footer">
+							<input type="button" class="btn green" data-dismiss='modal' name='close' value='Ok'>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script>
 
 	function report123_add_filter()
@@ -196,6 +221,11 @@
 						{index:'premium'},
 						{index:'policy_num'},
 						{index:'policy_name'},
+						{index:'sum_insured'},
+						{index:'term'},
+						{index:'upsell'},
+						{index:'issue_type'},
+						{index:'issued_in_quarter'},
 						{index:'status',exact:'issued'}]};
 
 		$('#report123_filters .row').each(function(index)
@@ -228,6 +258,11 @@
 									{index:'commissions'}]};
 			read_json_rows('report123',bank_data,function(policy_types)
 	        {
+				var policy_commissions = vUtil.keyedArrayColumn(policy_types,'name','commissions');
+				for(var i in policy_commissions){
+					policy_commissions[i] = vUtil.jsonParse(policy_commissions[i]);
+				}
+
 				var policy_num = vUtil.arrayColumn(policies,'policy_num');
 				var commissions_data={data_store:'policy_commissions',
 									indexes:[{index:'policy_num',array:policy_num},
@@ -266,15 +301,17 @@
 							rowsHTML+=item.premium;
 		                rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Basic Comm.'>";
-							rowsHTML+="<span class='label label-sm label-warning'><a id='report123_basic_"+item.id+"'>"+item.basic+"</a></span>";
+							rowsHTML+="<span class='label label-sm' id='report123_basic_"+item.id+"'>"+item.basic+"</span>";
 		                rowsHTML+="</td>";
 						rowsHTML+="<td data-th='ORC Comm.'>";
-							rowsHTML+="<span class='label label-sm label-warning'><a id='report123_orc_"+item.id+"'>"+item.orc+"</a></span>";
+							rowsHTML+="<span class='label label-sm' id='report123_orc_"+item.id+"'>"+item.orc+"</span>";
 						rowsHTML+="</td>";
 						rowsHTML+="</tr>";
 
 						$('#report123_body').append(rowsHTML);
 
+						report123_evaluate_commission('basic',item,policy_commissions);
+						report123_evaluate_commission('orc',item,policy_commissions);
 		            });
 
 					initialize_static_tabular_report_buttons('Commissions Validation','report123');
@@ -285,6 +322,76 @@
 			});
         });
     };
+
+	function report123_evaluate_commission(comm_type,data,policy_commissions)
+	{
+		var commissions = policy_commissions[data.policy_name];
+		var found=false;
+		var match=false;
+
+		if(!vUtil.isBlank(commissions))
+		{
+			commissions.forEach(function(commission)
+			{
+				if(commission.type.toLowerCase()==comm_type.toLowerCase() && commission.issue.toLowerCase()==data['issue_type'].toLowerCase() && !found)
+				{
+					commission.conditions = vUtil.jsonParse(commission.conditions);
+					var all_match=true;
+					commission.conditions.forEach(function(cond)
+					{
+						if((!vUtil.isBlank(cond.exact) && data[cond.index]!=cond.exact) || (!vUtil.isBlank(cond.lowerbound) && data[cond.index]<cond.lowerbound) || (!vUtil.isBlank(cond.upperbound) && data[cond.index]>cond.upperbound))
+						{
+							all_match=false;
+						}
+					});
+
+					if(all_match)
+					{
+						found=true;
+						if(parseFloat(data[comm_type+"_percent"])==parseFloat(commission.commission))
+						{
+							match=true;
+						}
+					}
+				}
+			});
+
+			if(vUtil.isBlank(data[comm_type]))
+			{
+				$('#report123_'+comm_type+"_"+data.id).addClass('label-warning');
+				$('#report123_'+comm_type+"_"+data.id).addClass('link');
+				$('#report123_'+comm_type+"_"+data.id).click(function()
+				{
+					$('#report123_popup_message').html("Commission details have not been imported for this policy.");
+					$('#report123_popup_link').click();
+				});
+			}
+			else if(match && found)
+			{
+				$('#report123_'+comm_type+"_"+data.id).addClass('label-success');
+			}
+			else if(found)
+			{
+				$('#report123_'+comm_type+"_"+data.id).addClass('label-danger');
+				$('#report123_'+comm_type+"_"+data.id).addClass('link');
+				$('#report123_'+comm_type+"_"+data.id).click(function()
+				{
+					$('#report123_popup_message').html("Commission Amount doesn't match system settings. Please check.");
+					$('#report123_popup_link').click();
+				});
+			}
+			else
+			{
+				$('#report123_'+comm_type+"_"+data.id).addClass('label-warning');
+				$('#report123_'+comm_type+"_"+data.id).addClass('link');
+				$('#report123_'+comm_type+"_"+data.id).click(function()
+				{
+					$('#report123_popup_message').html('Could not find the commission settings, matching this policy. Please re-check the commission setings in the policy bank.');
+					$('#report123_popup_link').click();
+				});
+			}
+		}
+	};
 
 	</script>
 </div>
