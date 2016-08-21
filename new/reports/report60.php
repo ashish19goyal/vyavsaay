@@ -115,7 +115,10 @@
             $(start_filter).val(get_my_past_date((get_my_time()-30*86400000)));
             $(end_filter).datepicker();
             $(end_filter).val(vTime.date());
-            $('#report60').formcontrol();
+
+			var paginator=$('#report60_body').paginator({'visible':false,'container':$('#report60_body')});
+
+			setTimeout(function(){$('#report60').formcontrol();},500);
         }
 
         function report60_ini()
@@ -156,20 +159,20 @@
 
 				for(var p=0;p<transactions.length;p++)
 				{
-						if(transactions[p].trans_date<get_raw_time(start_date))
+					if(transactions[p].trans_date<start_date)
+					{
+						if(transactions[p].type=='given')
 						{
-								if(transactions[p].type=='given')
-								{
-										balance+=parseFloat(transactions[p].amount);
-								}
-								else
-								{
-										balance-=parseFloat(transactions[p].amount);
-								}
-
-								transactions.splice(p,1);
-								p--;
+								balance+=parseFloat(transactions[p].amount);
 						}
+						else
+						{
+								balance-=parseFloat(transactions[p].amount);
+						}
+
+						transactions.splice(p,1);
+						p--;
+					}
 				}
 
 	              transactions.forEach(function(tran)
