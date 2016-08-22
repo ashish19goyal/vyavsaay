@@ -87,46 +87,47 @@
 							var mainSearchStr=mainSearchForm.elements['search_box'].value;
 							var searchForm=document.getElementById('search_form_'+tablename);
 							var searchStr=searchForm.elements['search_box'].value;
-							if(searchStr=='' || searchStr==null)
+							if(vUtil.isBlank(searchStr))
 							{
 								searchStr=mainSearchStr;
 							}
+
 							var new_search_array=searchStr.split(' ');
-							var search_array=[searchStr];
+							var search_array=[searchStr.toLowerCase()];
 							new_search_array.forEach(function(new_search_string)
 							{
 								if(new_search_string.length>=3)
-									search_array.push(new_search_string);
-
-								var search_columns=new Object();
-								search_columns.count=result_count;
-								search_columns.start_index=0;
-								search_columns.data_store=tablename;
-								search_columns.indexes=[{index:'id'},{index:search_column,approx_array:search_array}];
-
-								var return_columns=vUtil.jsonParse(return_columns_string);
-								for(var i in return_columns)
 								{
-									var search_index=new Object();
-									search_index.index=return_columns[i]['column'];
-									search_columns.indexes.push(search_index);
+									search_array.push(new_search_string.toLowerCase());
 								}
+							});
 
-								read_json_rows('',search_columns,function(results)
+							var search_columns={count:result_count,
+												data_store:tablename,
+												indexes:[{index:'id'},{index:search_column,approx_array:search_array}]};
+
+							var return_columns=vUtil.jsonParse(return_columns_string);
+							for(var i in return_columns)
+							{
+								var search_index={index:return_columns[i]['column']};
+								search_columns.indexes.push(search_index);
+							}
+
+							read_json_rows('',search_columns,function(results)
+							{
+								results.forEach(function(result)
 								{
-									var result_html='';
-									results.forEach(function(result)
+									result.search_priority=100;
+									for(var i in search_array)
 									{
-										result.search_priority=100;
-										for(var i in search_array)
+										if(result[search_column].toLowerCase().indexOf(search_array[i])>-1)
 										{
-											if(result[search_column].indexOf(search_array[i])>-1)
-											{
-												result.search_priority=i;
-												break;
-											}
+											result.search_priority=i;
+											break;
 										}
+									}
 								});
+
 								results.sort(function(a,b)
 								{
 									if(parseInt(a.search_priority)>parseInt(b.search_priority))
@@ -135,42 +136,45 @@
 									{	return -1;}
 								});
 
+								var result_html='';
 								results.forEach(function(result)
 								{
 									var already_present=document.getElementById(tablename+"_"+result.id);
-									if(already_present=='undefined' || already_present==null)
+									if(vUtil.isBlank(already_present))
 									{
+										var local_record_detail=record_detail;
+										var local_record_title=record_title;
 										for(var x=0;x<return_columns.length;x++)
 										{
 											var regex=new RegExp(return_columns[x]['key']);
-											if(result[return_columns[x].column]!='' && result[return_columns[x].column]!=null)
+											if(!vUtil.isBlank(result[return_columns[x].column]))
 											{
-												record_detail=record_detail.replace(regex,result[return_columns[x]['column']]);
-												record_title=record_title.replace(regex,result[return_columns[x]['column']]);
+												local_record_detail=local_record_detail.replace(regex,result[return_columns[x]['column']]);
+												local_record_title=local_record_title.replace(regex,result[return_columns[x]['column']]);
 											}
 											else
 											{
-												record_detail=record_detail.replace(regex,'');
-												record_title=record_title.replace(regex,'');
+												local_record_detail=local_record_detail.replace(regex,'');
+												local_record_title=local_record_title.replace(regex,'');
 											}
 										}
-										if(record_detail!='' && record_detail!=null && record_detail!='null')
+										if(!vUtil.isBlank(record_detail))
 										{
 											if(tablename=='activities')
 											{
-												result_html+="<div class='search-classic' id='"+tablename+"_"+result.id+"'><h4><a onclick=element_display('"+result.data_id+"','"+result.link_to+"');>"+record_title+"</a></h4><p>"+record_detail+"</p></div>";
+												result_html+="<div class='search-classic' id='"+tablename+"_"+result.id+"'><h4><a onclick=element_display('"+result.data_id+"','"+result.link_to+"');>"+local_record_title+"</a></h4><p>"+local_record_detail+"</p></div>";
 											}
 											else
 											{
-												result_html="<div class='search-classic' id='"+tablename+"_"+result.id+"'><h4><a onclick=element_display('"+result.id+"','"+result_form+"');>"+record_title+"</a></h4><p>"+record_detail+"</p></div>";
+												result_html+="<div class='search-classic' id='"+tablename+"_"+result.id+"'><h4><a onclick=element_display('"+result.id+"','"+result_form+"');>"+local_record_title+"</a></h4><p>"+local_record_detail+"</p></div>";
 											}
 										}
 									}
 								});
+
 								$('#search_results_'+tablename).append(result_html);
 							});
-						});
-					}
+						}
 					</script>
 				</div>
 			</div>
