@@ -216,14 +216,14 @@
 			}
 			else{
 				if(!vUtil.isBlank(from_filter)){
-					columns.indexes.push({index:i_filter,lowerbound:from_filter});
+					columns.indexes.push({index:i_filter,lowerbound:vTime.unix({date:from_filter})});
 				}
 			 	if(!vUtil.isBlank(to_filter)){
-					columns.indexes.push({index:i_filter,upperbound:to_filter});
+					columns.indexes.push({index:i_filter,upperbound:vTime.unix({date:to_filter})});
 				}
 			}
 		});
-
+		console.log(columns);
 		read_json_rows('report119',columns,function(items)
         {
             var rowsHTML="";
