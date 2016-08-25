@@ -155,7 +155,7 @@
 
 	function form207_update_item(form)
 	{
-		if(is_update_access('form1'))
+		if(is_update_access('form207'))
 		{
 			var name=form.elements[0].value;
 			var batch=form.elements[1].value;

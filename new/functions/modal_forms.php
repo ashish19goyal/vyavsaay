@@ -1789,7 +1789,7 @@
                   <form id='modal143_form' autocomplete="off">
 					  <div class="modal-header">
 						  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						  <h4 class="modal-title">Add Batch</h4>
+						  <h4 class="modal-title">Update Inventory</h4>
 					  </div>
 					  <div class="modal-body">
 						  <div class="scroller" style="height:80%;" data-always-visible="1" data-rail-visible1="1">
