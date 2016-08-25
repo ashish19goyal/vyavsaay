@@ -35,7 +35,7 @@
             <a onclick="sync_local_and_server();">
                 <i class="icon-cloud-upload"></i> Sync Offline Data </a>
         </li>
-        <li>
+        <li id='delete_offline_data'>
             <a onclick="delete_local_db();">
                 <i class="icon-trash"></i> Delete Offline Data </a>
         </li>
@@ -56,7 +56,7 @@
             <a onclick="server_delete_logs({},function(){$('#modal93_link').click()});">
                 <i class="icon-clock"></i> Delete Logs </a>
         </li>
-        
+
         <li class="divider"> </li>
 
         <li>

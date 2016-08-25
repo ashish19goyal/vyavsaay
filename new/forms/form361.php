@@ -159,7 +159,7 @@
 
 					$(close_button).on('click',function ()
 					{
-						modal216_action(result.customer,function(application_num)
+						modal216_action(result.customer,result.identified_by,function(application_num)
 						{
 							var detail=result.detail+"\n\nGenerated Application #: "+application_num;
 							var last_updated=get_my_time();

@@ -1828,6 +1828,7 @@
 			<manifest_date index='yes' type="BIGINT"></manifest_date>
 			<pass_num index='yes' type="TEXT"></pass_num>
 			<pass_id index='yes' type="BIGINT"></pass_id>
+			<pass_date index='yes' type="BIGINT"></pass_date>
 			<delivery_time index='yes' type="BIGINT"></delivery_time>
 			<source index='yes' type="VARCHAR(20)"></source>
 			<company_id index='yes' type="VARCHAR(20)"></company_id>

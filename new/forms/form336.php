@@ -333,6 +333,7 @@
                 var master_form=document.getElementById('form336_master');
                 var pass_num=master_form.elements['pass_num'].value;
                 var pass_id=master_form.elements['id'].value;
+				var pass_date=vTime.unix({date:master_form.elements['date'].value});
 
                 var data_id=form.elements['id'].value;
                 var save_button=form.elements['save'];
@@ -344,6 +345,7 @@
 	 				data:[{index:'id',value:data_id},
 	 					{index:'pass_num',value:pass_num},
                         {index:'pass_id',value:pass_id},
+						{index:'pass_date',value:pass_date},
 	 					{index:'last_updated',value:last_updated}]};
  				update_json(data_json);
 
@@ -455,12 +457,14 @@
             if(is_update_access('form336'))
             {
                 var pass_num=document.getElementById('form336_master').elements['pass_num'].value;
+				var pass_date=vTime.unix({date:document.getElementById('form336_master').elements['date'].value});
                 var data_id=form.elements['id'].value;
                 var last_updated=get_my_time();
 
                 var data_json={data_store:'logistics_orders',
                                 data:[{index:'id',value:data_id},
                                         {index:'pass_num',value:pass_num},
+										{index:'pass_date',value:pass_date},
                                         {index:'last_updated',value:last_updated}]};
                 update_json(data_json);
             }
@@ -541,6 +545,7 @@
                             data:[{index:'id',value:data_id},
                                 {index:'pass_num',value:''},
                                 {index:'pass_id',value:''},
+								{index:'pass_date',value:''},
                                 {index:'last_updated',value:last_updated}]};
                     update_json(data_json);
 

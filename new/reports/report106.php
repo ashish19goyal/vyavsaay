@@ -63,6 +63,7 @@
 					access:'yes',
                     indexes:[{index:'id'},
                             {index:'manifest_num'},
+							{index:'seal_num'},
 							{index:'coloader'},
 							{index:'vendor'},
 							{index:'date',lowerbound:start_date,upperbound:end_date}]};
@@ -161,14 +162,34 @@
 						{index:'consignment_num'},
 						{index:'city'},
 						{index:'pass_num'},
+						{index:'pass_date'},
 						{index:'status'},
                         {index:'manifest_num',array:manifest_num_array}]};
 
             initialize_tabular_report_buttons(columns,'Manifest Report','report106',function (item)
             {
+				var coloader="";
+				var vendor="";
+				var manifest_date="";
+				var seal_num="";
+				for(var i in orders)
+				{
+					if(item.manifest_num==orders[i].manifest_num)
+					{
+						coloader = orders[i].coloader;
+						vendor = orders[i].vendor;
+						manifest_date = vTime.date({time:orders[i].date});
+						seal_num = orders[i].seal_num;
+						break;
+					}
+				}
+
 				item['AWB No']=item.awb_num;
                 item['Manifest No']=item.manifest_num;
+				item['Manifest Date']=item.manifest_date;
 				item['Gate Pass No']=item.pass_num;
+				item['Gate Pass Date']=vTime.date({time:item.pass_date});
+				item['Seal No']=seal_num;
                 item['Order Id']=item.order_num;
                 item['Import Date']=get_my_past_date(item.import_date);
                 item['Status']=item.status;
@@ -183,17 +204,9 @@
                 item['Consignee City']=item.city;
                 item['Mobile No']=item.phone;
                 item['Product Name']=item.sku;
+				item['Co-loader']=coloader;
+				item['Vendor']=vendor;
 
-				for(var i in orders)
-				{
-					if(item.manifest_num==orders[i].manifest_num)
-					{
-						item['Co-loader'] = orders[i].coloader;
-						item['Vendor'] = orders[i].vendor;
-						item['Manifest Date'] = vTime.date({time:orders[i].date});
-						break;
-					}
-				}
                 delete item.id;
                 delete item.awb_num;
                 delete item.import_date;
@@ -216,6 +229,7 @@
 				delete item.consignment_num;
                 delete item.manifest_num;
 				delete item.pass_num;
+				delete item.pass_date;
             });
 
             hide_loader();

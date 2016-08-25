@@ -15977,7 +15977,7 @@ function modal215_action(item_name)
 }
 
 
-function modal216_action(policy_holder_value,func)
+function modal216_action(policy_holder_value,tele_caller_value,func)
 {
 	var form=document.getElementById('modal216_form');
 	var fapp=form.elements['app_number'];
@@ -16054,6 +16054,11 @@ function modal216_action(policy_holder_value,func)
 	if(!vUtil.isBlank(policy_holder_value))
 	{
 		fholder.value=policy_holder_value;
+	}
+
+	if(!vUtil.isBlank(tele_caller_value))
+	{
+		fcaller.value=tele_caller_value;
 	}
 
 	set_value_list_json(['fresh','portability'],ftype);

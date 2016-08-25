@@ -513,7 +513,7 @@
                 var master_form=document.getElementById('form344_master');
                 var pass_num=master_form.elements['pass_num'].value;
                 var pass_id=master_form.elements['id'].value;
-                var pass_date=master_form.elements['date'].value;
+                var pass_date=vTime.unix({date:master_form.elements['date'].value});
 
                 var manifest_num=form.elements[1].value;
                 var data_id=form.elements['id'].value;
@@ -541,6 +541,7 @@
                         var data_json_array=[{index:'id',value:row},
                                 {index:'pass_num',value:pass_num},
                                 {index:'pass_id',value:pass_id},
+								{index:'pass_date',value:pass_date},
                                 {index:'last_updated',value:last_updated}];
                         data_json.data.push(data_json_array);
                     }
@@ -655,6 +656,7 @@
             if(is_update_access('form344'))
             {
                 var pass_num=document.getElementById('form344_master').elements['pass_num'].value;
+				var pass_date=vTime.unix({date:document.getElementById('form344_master').elements['pass_num'].value});
                 var data_id=form.elements['id'].value;
                 var last_updated=get_my_time();
 
@@ -677,6 +679,7 @@
                         var data_json_array=[{index:'id',value:row},
                                 {index:'pass_num',value:pass_num},
                                 {index:'pass_id',value:pass_id},
+								{index:'pass_date',value:pass_date},
                                 {index:'last_updated',value:last_updated}];
                         data_json.data.push(data_json_array);
                     }
@@ -776,6 +779,7 @@
                             var data_json_array=[{index:'id',value:row},
                                     {index:'pass_num',value:''},
                                     {index:'pass_id',value:''},
+									{index:'pass_date',value:''},
                                     {index:'last_updated',value:last_updated}];
                             data_json.data.push(data_json_array);
                         }
