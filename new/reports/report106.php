@@ -186,7 +186,7 @@
 
 				item['AWB No']=item.awb_num;
                 item['Manifest No']=item.manifest_num;
-				item['Manifest Date']=item.manifest_date;
+				item['Manifest Date']=manifest_date;
 				item['Gate Pass No']=item.pass_num;
 				item['Gate Pass Date']=vTime.date({time:item.pass_date});
 				item['Seal No']=seal_num;
