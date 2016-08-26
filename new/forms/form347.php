@@ -908,7 +908,7 @@
 				policies[a].end_time = vTime.unix({date:policies[a].Policy_end_date,inputFormat:'mm/dd/yyyy hh:mm:ss AM'});
 				policies[a].issue_time = vTime.unix({date:policies[a].Policy_issue_date,inputFormat:'mm/dd/yyyy hh:mm:ss AM'});
 				policies[a].term = ((policies[a].end_time-policies[a].start_time)/(366*86400000)>1) ? 'two years' : 'one year';
-				policies[a].issued_in_quarter = vTime.quarter({time:policies[a].issue_time,inputFormat:'unix'});
+				policies[a].issued_in_quarter = vTime.quarter({date:policies[a].issue_time,inputFormat:'unix'});
 			}
 
 			form347_policy_bank(policies,'Product_Name','Apollo',function()
@@ -1114,7 +1114,7 @@
 				policies[a].end_time = vTime.unix({date:policies[a].Policy_end_date,inputFormat:'mm/dd/yyyy hh:mm:ss AM'});
 				policies[a].issue_time = vTime.unix({date:policies[a].Policy_issue_date,inputFormat:'mm/dd/yyyy hh:mm:ss AM'});
 				policies[a].term = ((policies[a].end_time-policies[a].start_time)/(366*86400000)>1) ? 'two years' : 'one year';
-				policies[a].issued_in_quarter = vTime.quarter({time:policies[a].issue_time,inputFormat:'unix'});
+				policies[a].issued_in_quarter = vTime.quarter({date:policies[a].issue_time,inputFormat:'unix'});
 				policies[a].agent=document.getElementById('form347_popup_import_form').elements['agent'].value;
 			}
 
@@ -1219,7 +1219,7 @@
 				policies[a].issue_time = vTime.unix({date:policies[a]['Policy Endorsement Date'],inputFormat:'dd-mmm-yyyy'});
 				policies[a].term = 'one year';
 				policies[a].application_num = '';
-				policies[a].issued_in_quarter = vTime.quarter({time:policies[a].issue_time,inputFormat:'unix'});
+				policies[a].issued_in_quarter = vTime.quarter({date:policies[a].issue_time,inputFormat:'unix'});
 				policies[a].agent=document.getElementById('form347_popup_import_form').elements['agent'].value;
 			}
 			// console.log(policies);
@@ -1428,7 +1428,7 @@
 				policies[a].end_time = vTime.unix({date:policies[a]['Policy End Date'],inputFormat:'dd-mmm-yyyy'});
 				policies[a].issue_time = vTime.unix({date:policies[a]['Issued Date'],inputFormat:'dd-mmm-yyyy'});
 				policies[a].term = ((policies[a].end_time-policies[a].start_time)/(366*86400000)>1) ? 'two years' : 'one year';
-				policies[a].issued_in_quarter = vTime.quarter({time:policies[a].issue_time,inputFormat:'unix'});
+				policies[a].issued_in_quarter = vTime.quarter({date:policies[a].issue_time,inputFormat:'unix'});
 				policies[a].agent=document.getElementById('form347_popup_import_form').elements['agent'].value;
 			}
 
@@ -1640,7 +1640,7 @@
 				policies[a].end_time = vTime.unix({date:policies[a]['Policy Expiry Date'],inputFormat:'dd-mmm-yyyy'});
 				policies[a].issue_time = vTime.unix({date:policies[a]['Renewal Issuance Date'],inputFormat:'dd-mmm-yyyy'});
 				policies[a].term = ((policies[a].end_time-policies[a].start_time)/(366*86400000)>1) ? 'two years' : 'one year';
-				policies[a].issued_in_quarter = vTime.quarter({time:policies[a].issue_time,inputFormat:'unix'});
+				policies[a].issued_in_quarter = vTime.quarter({date:policies[a].issue_time,inputFormat:'unix'});
 				policies[a].agent=document.getElementById('form347_popup_import_form').elements['agent'].value;
 			}
 
@@ -1805,7 +1805,7 @@
 				policies[a].end_time = vTime.unix({date:policies[a]['Policy To Date']});
 				policies[a].issue_time = vTime.unix({date:policies[a]['Policy Issue Date']});
 				policies[a].term = ((policies[a].end_time-policies[a].start_time)/(366*86400000)>1) ? 'two years' : 'one year';
-				policies[a].issued_in_quarter = vTime.quarter({time:policies[a].issue_time,inputFormat:'unix'});
+				policies[a].issued_in_quarter = vTime.quarter({date:policies[a].issue_time,inputFormat:'unix'});
 				policies[a].agent=document.getElementById('form347_popup_import_form').elements['agent'].value;
 			}
 

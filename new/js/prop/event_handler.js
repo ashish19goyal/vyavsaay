@@ -58,6 +58,7 @@ function declaring_global_variables()
 	vyavsaay_active_tab="";
 	storage_count_tracker=0;
 	total_export_requests=0;
+	global_server_read_batch_size=500;
  	newsletter_element_4_deletion = [];
  	status_label_colors={'pending':'label-warning',
     					'converted':'label-success',

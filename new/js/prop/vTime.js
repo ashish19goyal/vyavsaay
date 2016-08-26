@@ -260,7 +260,7 @@ var vTime = function ()
     this.anniversaryDates = function(opts)
     {
       var defs={time:Date.now(),inputFormat:'unix',resultFormat:'dd/mm/yyyy'};
-    	var sets = $.extend(defs, opts || {});
+      var sets = $.extend(defs, opts || {});
       var results=[];
 
       var inputDate=new Date();
@@ -296,7 +296,7 @@ var vTime = function ()
         var defs={date:'today',inputFormat:'dd/mm/yyyy'};
     	var sets = $.extend(defs, opts || {});
 
-        if(sets.date=='' || sets.date==null || sets.date==0 || sets.date=='null')
+        if(vUtil.isBlank(sets.date))
         {
             return '';
         }
@@ -322,10 +322,20 @@ var vTime = function ()
                 return parseInt(date_array[0]);
 
             case 'unix':
-                d=new Date(parseFloat(sets.time));
+                d=new Date(parseFloat(sets.date));
         }
 
       return d.getMonth()+1;
+    };
+
+    /**
+    *   This function returns the name of the month of the specified date
+    */
+    this.monthName=function (opts)
+    {
+        var month = this.month(opts)-1;
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return months[month];
     };
 
     /**
