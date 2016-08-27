@@ -56,6 +56,17 @@ var vUtil = function (options)
 		return markers_array;
 	};
 
+	//converts an object into an array
+    this.objectToArray=function (obj)
+    {
+        var column = [];
+        for(var i in obj)
+        {
+            column.push(obj[i]);
+        }
+        return column;
+    };
+
     //extracts a single column from a multidimensional array
     this.arrayColumn=function (array, col_name)
     {

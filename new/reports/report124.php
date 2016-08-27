@@ -241,18 +241,25 @@
 
 		read_json_rows('report124',columns,function(policies)
         {
-			var months_array=[];
+			var months_object={};
 			for(var i in policies)
 			{
+				policies[i].year = vTime.year({date:policies[i].issue_date,inputFormat:'unix'});
 				policies[i].month = vTime.monthName({date:policies[i].issue_date,inputFormat:'unix'});
-				months_array.push(policies[i].month);
+				var obj_name = policies[i].year+"-"+policies[i].month;
+				months_object[obj_name]={m:policies[i].month,y:policies[i].year};
 			}
 
-			months_array = vUtil.arrayUnique(months_array);
+			var months_array = vUtil.objectToArray(months_object);
 
 			var allMonths = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 			months_array.sort(function(a,b){
-			    return allMonths.indexOf(a) > allMonths.indexOf(b);
+				if(a.y>b.y)
+					return 1;
+				else if(a.y<b.y)
+					return -1;
+				else
+			    	return allMonths.indexOf(a.m) > allMonths.indexOf(b.m);
 			});
 
 			var numMonths = months_array.length;
@@ -262,15 +269,35 @@
 				$(this).attr('colspan',numMonths);
 			});
 
+			var row2 = "<tr><td>-</td><td>-</td></tr>";
+			$('#report124_body1').append(row2);
+			$('#report124_body1').append(row2);
+
+			var yearsCells = "";
+			var years_object = {};
+			for(var a in months_array)
+			{
+				if(vUtil.isBlank(years_object[months_array[a].y]))
+				{
+					years_object[months_array[a].y]=0;
+				}
+
+				years_object[months_array[a].y]+=1;
+			}
+
+			for(var b in years_object)
+			{
+				yearsCells+="<td colspan='"+years_object[b]+"'>"+b+"</td>";
+			}
+
 			var monthsCells = "";
 			for(var i in months_array)
 			{
-				monthsCells+="<td>"+months_array[i]+"</td>";
+				monthsCells+="<td>"+months_array[i].m+"</td>";
 			}
 
-			var row2 = "<tr><td>-</td><td>-</td></tr>";
-			$('#report124_body1').append(row2);
-
+			var row2 = "<tr>"+yearsCells+yearsCells+yearsCells+"</tr>";
+			$('#report124_body2').append(row2);
 			var row2 = "<tr>"+monthsCells+monthsCells+monthsCells+"</tr>";
 			$('#report124_body2').append(row2);
 
@@ -291,9 +318,9 @@
 											'issuer':'Total'};
 
 					months_array.forEach(function(month){
-						grid_array[total_obj]['num-'+month] = 0;
-						grid_array[total_obj]['p-'+month] = 0;
-						grid_array[total_obj]['sp-'+month] = 0;
+						grid_array[total_obj]['num-'+month.y+month.m] = 0;
+						grid_array[total_obj]['p-'+month.y+month.m] = 0;
+						grid_array[total_obj]['sp-'+month.y+month.m] = 0;
 					});
 				}
 
@@ -303,26 +330,26 @@
 											'issuer':item.issuer};
 
 					months_array.forEach(function(month){
-						grid_array[obj_name]['num-'+month] = 0;
-						grid_array[obj_name]['p-'+month] = 0;
-						grid_array[obj_name]['sp-'+month] = 0;
+						grid_array[obj_name]['num-'+month.y+month.m] = 0;
+						grid_array[obj_name]['p-'+month.y+month.m] = 0;
+						grid_array[obj_name]['sp-'+month.y+month.m] = 0;
 					});
 				}
 
-				grid_array[total_obj]['num-'+item.month] += 1;
+				grid_array[total_obj]['num-'+item.year+item.month] += 1;
 				if(!vUtil.isBlank(item.premium) && !isNaN(item.premium)){
-					grid_array[total_obj]['p-'+item.month] += parseFloat(item.premium);
+					grid_array[total_obj]['p-'+item.year+item.month] += parseFloat(item.premium);
 				}
 				if(!vUtil.isBlank(item.short_premium) && !isNaN(item.short_premium)){
-					grid_array[total_obj]['sp-'+item.month] += parseFloat(item.short_premium);
+					grid_array[total_obj]['sp-'+item.year+item.month] += parseFloat(item.short_premium);
 				}
 
-				grid_array[obj_name]['num-'+item.month] += 1;
+				grid_array[obj_name]['num-'+item.year+item.month] += 1;
 				if(!vUtil.isBlank(item.premium) && !isNaN(item.premium)){
-					grid_array[obj_name]['p-'+item.month] += parseFloat(item.premium);
+					grid_array[obj_name]['p-'+item.year+item.month] += parseFloat(item.premium);
 				}
 				if(!vUtil.isBlank(item.short_premium) && !isNaN(item.short_premium)){
-					grid_array[obj_name]['sp-'+item.month] += parseFloat(item.short_premium);
+					grid_array[obj_name]['sp-'+item.year+item.month] += parseFloat(item.short_premium);
 				}
 
 			});
@@ -333,10 +360,10 @@
 				if(!vUtil.isBlank(item.tele_caller || true))
 				{
 					var rows1HTML="<tr>";
-	                rows1HTML+="<td data-th='Caller'>";
+	                rows1HTML+="<td>";
 						rows1HTML+=item.tele_caller;
 	                rows1HTML+="</td>";
-					rows1HTML+="<td data-th='Issuing Company'>";
+					rows1HTML+="<td>";
 						rows1HTML+=item.issuer;
 	                rows1HTML+="</td>";
 					rows1HTML+="</tr>";
@@ -348,9 +375,9 @@
 					var spremium ="";
 					months_array.forEach(function(month)
 					{
-						num+="<td data-th='# of Policies - "+month+"'>"+item['num-'+month]+"</td>";
-						premium+="<td data-th='Premium - "+month+"'>"+vUtil.round(item['p-'+month])+"</td>";
-						spremium+="<td data-th='Short Premium - "+month+"'>"+vUtil.round(item['sp-'+month])+"</td>";
+						num+="<td>"+item['num-'+month.y+month.m]+"</td>";
+						premium+="<td>"+vUtil.round(item['p-'+month.y+month.m])+"</td>";
+						spremium+="<td>"+vUtil.round(item['sp-'+month.y+month.m])+"</td>";
 					});
 
 					var	rows2HTML="<tr>"+num+premium+spremium+"</tr>";
