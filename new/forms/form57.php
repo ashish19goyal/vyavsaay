@@ -196,7 +196,7 @@
 	function form57_import_template()
 	{
 		var data_array=['id','name','description','price','tax'];
-		my_array_to_csv(data_array);
+		vUtil.arrayToCSV(data_array);
 	};
 
 	function form57_import_validate(data_array)

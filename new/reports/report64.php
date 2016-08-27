@@ -78,7 +78,7 @@ function report64_header_ini()
 				update_simple(items_xml);
 
 				var discarded_xml="<discarded>"+
-						"<id>"+get_new_key()+"</id>"+					
+						"<id>"+vUtil.newKey()+"</id>"+					
 						"<batch>"+items[0].batch+"</batch>"+
                         "<quantity>"+items[0].quantity+"</quantity>"+
                         "<product_name>"+items[0].item_name+"</product_name>"+

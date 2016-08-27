@@ -60,7 +60,7 @@ function form268_header_ini()
 	var bill_date=fields.elements['date'];
 	var narration=fields.elements['narration'];
 	var bill_num=fields.elements['bill_num'];
-	fields.elements['bill_id'].value=get_new_key();
+	fields.elements['bill_id'].value=vUtil.newKey();
 	var save_button=document.getElementById('form268_save');
 	var cst_filter=fields.elements['cst'];
 	var tin_filter=fields.elements['tin'];
@@ -405,7 +405,7 @@ function form268_add_item()
 
 	if(is_create_access('form268'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form268_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='S.No.' id='form268_sno_"+id+"'>";

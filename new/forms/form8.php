@@ -185,7 +185,7 @@
 							var last_updated=get_my_time();
 							if(image_elem.getAttribute('data-id')=="")
 							{
-								var data_id=get_new_key();
+								var data_id=vUtil.newKey();
 								image_elem.setAttribute('data-id',data_id);
 
 								var data_json={data_store:'documents',
@@ -296,7 +296,7 @@
 		{
 			var data_array=['id','name','phone','email','status','acc_name','username',
 			                'address'];
-			my_array_to_csv(data_array);
+			vUtil.arrayToCSV(data_array);
 		};
 
 		function form8_import_validate(data_array)

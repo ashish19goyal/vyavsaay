@@ -243,7 +243,7 @@
 		function form349_import_template()
 		{
 			var data_array=['id','claim number','policy number','claim amount','issuer','policy holder','agent','notes','request date','issue date','status'];
-			my_array_to_csv(data_array);
+			vUtil.arrayToCSV(data_array);
 		};
 
 		function form349_import_validate(data_array)

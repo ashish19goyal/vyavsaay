@@ -55,7 +55,7 @@
             var save_button=document.getElementById('form323_save');
 
             customers_filter.value='';
-            challan_id_filter.value=get_new_key();
+            challan_id_filter.value=vUtil.newKey();
             address.value="";
             $(challan_date).datepicker();
             $(challan_date).val(vTime.date());
@@ -236,7 +236,7 @@
         {
             if(is_create_access('form323'))
             {
-                var id=get_new_key();
+                var id=vUtil.newKey();
                 var rowsHTML="<tr>";
                 rowsHTML+="<form id='form323_"+id+"' autocomplete='off'></form>";
                     rowsHTML+="<td data-th='Item'><div class='btn-overlap'>";

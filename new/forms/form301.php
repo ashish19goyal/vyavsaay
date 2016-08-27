@@ -37,7 +37,7 @@
 		{
 			var form=document.getElementById('form301_master');
 			var source=form.elements['source'].value;
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var last_updated=get_my_time();
 			var data_xml="<qr_scans>" +
 					"<id>"+data_id+"</id>" +

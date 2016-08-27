@@ -366,6 +366,110 @@ var vUtil = function (options)
 			del:get_session_var('del'),
 		};
 	}
+
+	/*
+	*	Converts a one dimensional array to CSV file with just the header row
+	*/
+	this.arrayToCSV = function (data_array,filename)
+    {
+		if(vUtil.isBlank(filename)){
+			filename='import template';
+		}
+        var csvString = data_array.join(",");
+
+        var a = document.createElement('a');
+        var type = 'text/csv;';
+        var blob = new Blob([csvString], { type: type });
+        var URL = window.URL || window.webkitURL;
+        var downloadUrl = URL.createObjectURL(blob);
+
+        a.setAttribute('href',downloadUrl);
+        a.download = filename+".csv";
+        a.target = '_blank';
+
+        document.body.appendChild(a);
+        a.click();
+    };
+
+	/**
+     * Converts an array of objects into a csv string
+     */
+    this.objArrayToCSVString = function (data_array)
+    {
+        var csvRows = [];
+
+        ///for header row
+        var header_string="";
+        var header_array=[];
+        for(var p in data_array[0])
+        {
+            header_array.push(p);
+            header_string+=p+",";
+        }
+
+        csvRows.push(header_string);
+
+        /////for data rows
+        data_array.forEach(function(data_row)
+        {
+            //console.log(data_row);
+            var data_string="";
+            for(var i=0;i<header_array.length;i++)
+            {
+                if(!vUtil.isBlank(data_row[header_array[i]]))
+                {
+                    if(header_array[i]=='id')
+                    {
+                        data_string+="'"+data_row[header_array[i]]+",";
+                    }
+                    else
+                    {
+						if(String(data_row[header_array[i]]).search("\""))
+                        {
+                            data_row[header_array[i]]=data_row[header_array[i]].replace(/"/g, '""');
+                        }
+                        if(String(data_row[header_array[i]]).search(","))
+                        {
+                            data_row[header_array[i]]="\""+data_row[header_array[i]]+"\"";
+                        }
+                        data_string+=data_row[header_array[i]]+",";
+                    }
+                }
+                else
+                {
+                    data_string+=",";
+                }
+            }
+            csvRows.push(data_string);
+        });
+
+        var csvString = csvRows.join("\n");
+        return csvString;
+    }
+
+
+	/**
+     * Converts an array of objects into a csv file
+     */
+    this.objArrayToCSV = function (data_array,file_name)
+    {
+        var csvString = this.objArrayToCSVString(data_array);
+        var a = document.createElement('a');
+
+        var type = 'text/csv;';
+        var blob = new Blob([csvString], { type: type });
+        var URL = window.URL || window.webkitURL;
+        var downloadUrl = URL.createObjectURL(blob);
+
+        a.setAttribute('href',downloadUrl);
+        a.download = file_name+'.csv';
+        a.target = '_blank';
+
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
 };
 vUtil=new vUtil();
 
@@ -385,151 +489,4 @@ vUtil=new vUtil();
     function revert_htmlentities(str)
     {
         return String(str).replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
-    }
-
-    /**
-     * Converts a two dimensional array to csv file
-     * @param data_array
-     */
-    function my_array_to_csv(data_array)
-    {
-        var csvString = data_array.join(",");
-        //csvString=escape(csvString);
-
-        var a = document.createElement('a');
-        //a.href = 'data:attachment/csv,' + csvString;
-        //a.href = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csvString);
-        //a.target = '_blank';
-        //a.download = 'import_template.csv';
-
-        var type = 'text/csv;';
-        var blob = new Blob([csvString], { type: type });
-        var URL = window.URL || window.webkitURL;
-        var downloadUrl = URL.createObjectURL(blob);
-
-        a.setAttribute('href',downloadUrl);
-        a.download = 'import_template.csv';
-        a.target = '_blank';
-
-        document.body.appendChild(a);
-        a.click();
-    }
-
-
-    /**
-     * Converts an array of objects into a csv file
-     */
-    function my_obj_array_to_csv(data_array,file_name)
-    {
-        var csvRows = [];
-
-        ///for header row
-        var header_string="";
-        var header_array=[];
-        for(var p in data_array[0])
-        {
-            header_array.push(p);
-            header_string+=p+",";
-        }
-
-        csvRows.push(header_string);
-
-        /////for data rows
-        data_array.forEach(function(data_row)
-        {
-            //console.log(data_row);
-            var data_string="";
-            for(var i=0;i<header_array.length;i++)
-            {
-                if(typeof data_row[header_array[i]]!= 'undefined')
-                {
-                    if(header_array[i]=='id')
-                    {
-                        data_string+="'"+data_row[header_array[i]]+",";
-                    }
-                    else
-                    {
-                        if(String(data_row[header_array[i]]).search(",") || String(data_row[header_array[i]]).search(";"))
-                        {
-                            data_row[header_array[i]]="\""+data_row[header_array[i]]+"\"";
-                        }
-                        data_string+=data_row[header_array[i]]+",";
-                    }
-                }
-                else
-                {
-                    data_string+=",";
-                }
-            }
-            csvRows.push(data_string);
-        });
-
-        var csvString = csvRows.join("\n");
-        var a = document.createElement('a');
-
-        var type = 'text/csv;';
-        var blob = new Blob([csvString], { type: type });
-        var URL = window.URL || window.webkitURL;
-        var downloadUrl = URL.createObjectURL(blob);
-
-        a.setAttribute('href',downloadUrl);
-        a.download = file_name+'.csv';
-        a.target = '_blank';
-
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    }
-
-
-    /**
-     * Converts an array of objects into a csv file
-     */
-    function my_obj_array_to_csv_string(data_array)
-    {
-        var csvRows = [];
-
-        ///for header row
-        var header_string="";
-        var header_array=[];
-        for(var p in data_array[0])
-        {
-            header_array.push(p);
-            header_string+=p+",";
-        }
-
-        csvRows.push(header_string);
-
-        /////for data rows
-        data_array.forEach(function(data_row)
-        {
-            //console.log(data_row);
-            var data_string="";
-            for(var i=0;i<header_array.length;i++)
-            {
-                if(typeof data_row[header_array[i]]!= 'undefined')
-                {
-                    if(header_array[i]=='id')
-                    {
-                        data_string+="'"+data_row[header_array[i]]+",";
-                    }
-                    else
-                    {
-                        if(String(data_row[header_array[i]]).search(","))
-                        {
-                            data_row[header_array[i]]="\""+data_row[header_array[i]]+"\"";
-                        }
-                        data_string+=data_row[header_array[i]]+",";
-                    }
-                }
-                else
-                {
-                    data_string+=",";
-                }
-            }
-            csvRows.push(data_string);
-        });
-
-        var csvString = csvRows.join("\n");
-        return csvString;
     }

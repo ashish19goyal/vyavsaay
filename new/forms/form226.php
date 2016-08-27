@@ -132,7 +132,7 @@ function form226_add_item()
 {
 	if(is_create_access('form226'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 			rowsHTML+="<form id='form226_"+id+"'></form>";
 				rowsHTML+="<td data-th='Person'>";
@@ -273,7 +273,7 @@ function form226_delete_item(button)
 function form226_import_template()
 {
 	var data_array=['id','person','date','starting_km','ending_km','total_run'];
-	my_array_to_csv(data_array);
+	vUtil.arrayToCSV(data_array);
 };
 
 function form226_import_validate(data_array)

@@ -187,7 +187,7 @@
         function form83_import_template()
         {
             var data_array=['id','name','owner'];
-            my_array_to_csv(data_array);
+            vUtil.arrayToCSV(data_array);
         };
 
         function form83_import_validate(data_array)

@@ -130,7 +130,7 @@
         function form260_import_template()
         {
             var data_array=['id','item','quantity'];
-            my_array_to_csv(data_array);
+            vUtil.arrayToCSV(data_array);
         };
 
         function form260_import_validate(data_array)

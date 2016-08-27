@@ -108,7 +108,7 @@
 			master_form.elements['disp'].value="";
 			master_form.elements['desc'].value="";
 			var id_filter=master_form.elements['id'];
-			id_filter.value=get_new_key();
+			id_filter.value=vUtil.newKey();
 
 			var save_button=document.getElementById('form342_save');
 			$(save_button).off('click');
@@ -340,7 +340,7 @@
 		{
 			if(is_create_access('form342'))
 			{
-				var id=get_new_key();
+				var id=vUtil.newKey();
 
 				var markers_array=[];
 				$("#form342_attributes_form").find('textarea').each(function()

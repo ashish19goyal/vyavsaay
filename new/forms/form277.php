@@ -148,7 +148,7 @@
 		{
 			if(is_create_access('form277'))
 			{
-				var id=get_new_key();
+				var id=vUtil.newKey();
 		
 				var rowsHTML="<tr>";
 						rowsHTML+="<form id='form277_"+id+"'></form>";
@@ -313,7 +313,7 @@
 		function form277_import_template()
 		{
 			var data_array=['id','name','description','function_name','function_def','initial_delay','repeat_delay','status'];
-			my_array_to_csv(data_array);
+			vUtil.arrayToCSV(data_array);
 		};
 		
 		function form277_import_validate(data_array)

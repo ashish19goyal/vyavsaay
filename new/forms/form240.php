@@ -47,7 +47,7 @@
             var num_filter=fields.elements['num'];
             var id_filter=fields.elements['id'];
 
-            id_filter.value=get_new_key();
+            id_filter.value=vUtil.newKey();
             num_filter.value=0;
 
             $(save_button).off('click');
@@ -183,7 +183,7 @@
         {
             if(is_create_access('form240'))
             {
-                var id=get_new_key();
+                var id=vUtil.newKey();
                 var rowsHTML="<tr>";
                 rowsHTML+="<form id='form240_"+id+"'></form>";
                     rowsHTML+="<td data-th='S.No.'>";

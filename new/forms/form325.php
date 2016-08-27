@@ -242,7 +242,7 @@
 
                 var actual_order_items=[];
                 var order_items=[];
-                var bill_key=get_new_key();
+                var bill_key=vUtil.newKey();
 
                 $("#modal159_item_table tr").each(function(index)
                 {
@@ -347,7 +347,7 @@
                                                 var bill_item_total=vUtil.round((item_total*batch_result.quantity/order_item.quantity),2);
                                                 var bill_item_tax=vUtil.round((item_tax*batch_result.quantity/order_item.quantity),2);
 
-                                                var bill_item_id=get_new_key();
+                                                var bill_item_id=vUtil.newKey();
                                                 var data_xml="<bill_items>" +
                                                         "<id>"+bill_item_id+"</id>" +
                                                         "<item_name>"+order_item.item_name+"</item_name>" +
@@ -484,7 +484,7 @@
                                                 "<tax>"+bill_tax+"</tax>" +
                                                 "<last_updated>"+get_my_time()+"</last_updated>" +
                                                 "</transactions>";
-                                        var pt_tran_id=get_new_key();
+                                        var pt_tran_id=vUtil.newKey();
                                         var payment_xml="<payments>" +
                                                 "<id>"+pt_tran_id+"</id>" +
                                                 "<status>pending</status>" +

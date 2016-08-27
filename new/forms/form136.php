@@ -254,7 +254,7 @@
 	                var order_id=master_form.elements['order_id'].value;
 	                var bill_id=master_form.elements['id'].value;
 
-	                var id=get_new_key();
+	                var id=vUtil.newKey();
 	                var rowsHTML="<tr>";
 	                rowsHTML+="<form id='form136_"+id+"' autocomplete='off'></form>";
 	                    rowsHTML+="<td data-th='Item'>";
@@ -533,7 +533,7 @@
                     if(placements.length===0)
                     {
                         var storage_json={data_store:'area_utilization',
-                            data:[{index:'id',value:get_new_key()},
+                            data:[{index:'id',value:vUtil.newKey()},
                                 {index:'name',value:storage},
                                 {index:'item_name',value:name},
                                 {index:'batch',value:batch},

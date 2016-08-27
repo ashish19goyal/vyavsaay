@@ -70,7 +70,7 @@
             var date=fields.elements['date'];
             var num_orders=fields.elements['num'];
             num_orders.value=0;
-            fields.elements['id'].value=get_new_key();
+            fields.elements['id'].value=vUtil.newKey();
 
             var save_button=document.getElementById('form336_save');
             pass_filter.value="";
@@ -600,7 +600,7 @@
             $('#form336_share').off('click');
             $('#form336_share').click(function()
             {
-                var message_attachment=my_obj_array_to_csv_string(new_results);
+                var message_attachment=vUtil.objArrayToCSVString(new_results);
                 var subject='Gate Pass # '+filter_fields.elements['pass_num'].value;
                 var body="Hi,\nPlease find attached the gate pass with this mail.\nCo-loader: "+filter_fields.elements['loader'].value+"\nVendor:"+filter_fields.elements['vendor'].value+"\nDate:"+filter_fields.elements['date'].value+"\n\nRegards,\nBeacon Couriers";
 
@@ -610,7 +610,7 @@
             $('#form336_csv').off('click');
             $('#form336_csv').click(function()
             {
-                my_obj_array_to_csv(new_results,'Gate Pass # '+filter_fields.elements['pass_num'].value);
+                vUtil.objArrayToCSV(new_results,'Gate Pass # '+filter_fields.elements['pass_num'].value);
             });
 
         }

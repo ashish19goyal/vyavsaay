@@ -43,7 +43,7 @@
 			fields.elements['name'].value="";
 			fields.elements['desc'].value="";
 			var report_id=fields.elements['report_id'];
-			report_id.value=get_new_key();
+			report_id.value=vUtil.newKey();
 			
 			var generate_button=document.getElementById('form111_generate_button');
 			$(generate_button).off('click');
@@ -145,7 +145,7 @@
 		{
 			if(is_create_access('form111'))
 			{
-				var id=get_new_key();
+				var id=vUtil.newKey();
 				var rowsHTML="<tr>";
 				rowsHTML+="<form id='form111_"+id+"' autocomplete='off'></form>";
 					rowsHTML+="<td data-th='Table'>";

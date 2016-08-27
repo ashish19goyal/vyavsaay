@@ -322,7 +322,7 @@
 				var account_name=account_filter.value;
 				var narration=narration_filter.value;
 				var last_updated=vTime.unix();
-				var p_id=get_new_key();
+				var p_id=vUtil.newKey();
 
 				if(is_create_access('report60'))
 				{

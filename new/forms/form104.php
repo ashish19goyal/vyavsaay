@@ -365,7 +365,7 @@
     function form104_import_template()
     {
         var data_array=['id','project','task','description','assignee','due time','estimated hours','status'];
-        my_array_to_csv(data_array);
+        vUtil.arrayToCSV(data_array);
     };
 
     function form104_import_validate(data_array)

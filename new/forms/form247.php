@@ -139,7 +139,7 @@
     {
         if(is_create_access('form247'))
         {
-            var id=get_new_key();
+            var id=vUtil.newKey();
             var rowsHTML="<tr>";
             rowsHTML+="<form id='form247_"+id+"'></form>";
                 rowsHTML+="<td data-th='Pincode'>";
@@ -287,7 +287,7 @@
     function form247_import_template()
     {
         var data_array=['id','pincode','zone','status'];
-        my_array_to_csv(data_array);
+        vUtil.arrayToCSV(data_array);
     };
 
     function form247_import_validate(data_array)

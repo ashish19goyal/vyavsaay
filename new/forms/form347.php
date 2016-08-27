@@ -623,7 +623,7 @@
 			$(add_button).off('click');
 			$(add_button).on('click',function ()
 			{
-				var id=get_new_key();
+				var id=vUtil.newKey();
 				var content="<div class='row' id='form347_popup_"+id+"'>"+
 								"<div class='col-md-5'>"+
 									"<input placeholder='Name' class='floatlabel' name='name' type='text'>"+
@@ -857,7 +857,7 @@
 												'Policy Endorsement Date'];
 												break;
 			}
-            my_array_to_csv(data_array);
+            vUtil.arrayToCSV(data_array);
         };
 
 		/**

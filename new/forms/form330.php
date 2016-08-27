@@ -242,7 +242,7 @@
                 if(parseFloat(quantity)!=parseFloat(old_quantity))
                 {
                     var adjust_json={data_store:'inventory_adjust',
-                        data:[{index:'id',value:get_new_key()},
+                        data:[{index:'id',value:vUtil.newKey()},
                              {index:'product_name',value:name},
                              {index:'batch',value:name}, 
                              {index:'storage',value:storage},
@@ -258,7 +258,7 @@
                         if(placements.length==0)
                         {
                             var adjust_json={data_store:'area_utilization',
-                            data:[{index:'id',value:get_new_key()},
+                            data:[{index:'id',value:vUtil.newKey()},
                                  {index:'item_name',value:name},
                                  {index:'batch',value:name}, 
                                  {index:'name',value:storage},

@@ -141,7 +141,7 @@
         {
             if(is_create_access('form56'))
             {
-                var id=get_new_key();
+                var id=vUtil.newKey();
                 var rowsHTML="<tr>";
                 rowsHTML+="<form id='form56_"+id+"' autocomplete='off'></form>";
                     rowsHTML+="<td data-th='Account'>";
@@ -408,7 +408,7 @@
         function form56_import_template()
         {
             var data_array=['id','type','acc_name','amount','date','notes'];
-            my_array_to_csv(data_array);
+            vUtil.arrayToCSV(data_array);
         };
 
         function form56_import_validate(data_array)
@@ -439,7 +439,7 @@
 
 			var counter=1;
 			var last_updated=get_my_time();
-            var payment_id=get_new_key()+100000;
+            var payment_id=vUtil.newKey()+100000;
 			data_array.forEach(function(row)
 			{
 				counter+=1;

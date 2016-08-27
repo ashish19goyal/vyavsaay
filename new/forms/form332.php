@@ -57,7 +57,7 @@
             var save_button=document.getElementById('form332_save');
             
             customers_filter.value='';
-            bill_id_filter.value=get_new_key();
+            bill_id_filter.value=vUtil.newKey();
             address.value="";
             $(bill_date).datepicker();
             $(bill_date).val(vTime.date());
@@ -236,7 +236,7 @@
         {
             if(is_create_access('form332'))
             {
-                var id=get_new_key();
+                var id=vUtil.newKey();
                 var rowsHTML="<tr>";
                 rowsHTML+="<form id='form332_"+id+"' autocomplete='off'></form>";
                     rowsHTML+="<td data-th='Item'><div class='btn-overlap'>";
@@ -485,7 +485,7 @@
                         {index:'tax',value:tax},
                         {index:'last_updated',value:last_updated}]};
 
-                var pt_tran_id=get_new_key();
+                var pt_tran_id=vUtil.newKey();
                 
                 var payment_json={data_store:'payments',
 	 				data:[{index:'id',value:pt_tran_id},
@@ -630,7 +630,7 @@
                         {index:'tax',value:tax},
                         {index:'last_updated',value:last_updated}]};
 
-                var pt_tran_id=get_new_key();
+                var pt_tran_id=vUtil.newKey();
                 
                 update_json(data_json);
                 update_json(transaction_json);

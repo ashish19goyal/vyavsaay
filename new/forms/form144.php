@@ -280,7 +280,7 @@ function form144_add_expense()
 {
 	if(is_create_access('form144'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form144_expense_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Person'>";

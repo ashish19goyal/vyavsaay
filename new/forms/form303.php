@@ -211,7 +211,7 @@
 			if(is_create_access('form303'))
 			{
 				var rowsHTML="";
-				var id=get_new_key();
+				var id=vUtil.newKey();
 				rowsHTML+="<tr>";
 				rowsHTML+="<form id='form303_"+id+"' autocomplete='off'></form>";
 					rowsHTML+="<td data-th='Item Name'>";
@@ -355,7 +355,7 @@
 				var data_id=form.elements[3].value;
 				var last_updated=get_my_time();
 				var data_xml="<inventory_adjust>" +
-							"<id>"+get_new_key()+"</id>" +
+							"<id>"+vUtil.newKey()+"</id>" +
 							"<product_name>"+product_name+"</product_name>" +
 							"<batch>"+product_name+"</batch>" +
 							"<storage>"+name+"</storage>" +
@@ -423,7 +423,7 @@
 		function form303_import_template()
 		{
 			var data_array=['id','item_name','storage'];
-			my_array_to_csv(data_array);
+			vUtil.arrayToCSV(data_array);
 		};
 		
 		function form303_import_validate(data_array)

@@ -110,7 +110,7 @@
 						read_json_rows('form51',elements_name,function(elements)
 						{
 							var counter=0;
-							var new_key=get_new_key();
+							var new_key=vUtil.newKey();
 							elements.forEach(function(element)
 							{
 								counter+=1;
@@ -206,7 +206,7 @@
 		{
 			if(is_create_access('form51'))
 			{
-				var id=get_new_key();
+				var id=vUtil.newKey();
 				var rowsHTML="<tr>";
 					rowsHTML+="<form id='form51_"+id+"' class='save_form51'></form>";
 						rowsHTML+="<td data-th='Name'>";

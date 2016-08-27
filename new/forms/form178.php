@@ -54,7 +54,7 @@
             var order_num=fields.elements['order_num'];
 						var ship_to=fields.elements['ship_to'];
             var status_filter=fields.elements['status'];
-            fields.elements['order_id'].value=get_new_key();
+            fields.elements['order_id'].value=vUtil.newKey();
             var save_button=document.getElementById('form178_save');
 						var tAndC=document.getElementById('form178_terms');
 
@@ -268,7 +268,7 @@
         {
             if(is_create_access('form178'))
             {
-                var id=get_new_key();
+                var id=vUtil.newKey();
                 var rowsHTML="<tr>";
                 rowsHTML+="<form id='form178_"+id+"' autocomplete='off'></form>";
                     rowsHTML+="<td data-th='Item'><div class='btn-overlap'>";

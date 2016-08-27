@@ -83,7 +83,7 @@
     {
         if(is_create_access('form199'))
         {
-            var id=get_new_key();
+            var id=vUtil.newKey();
             var rowsHTML="<tr>";
             rowsHTML+="<form id='form199_"+id+"' autocomplete='off'></form>";
                 rowsHTML+="<td data-th='AWB #'>";

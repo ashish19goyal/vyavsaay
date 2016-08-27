@@ -145,7 +145,7 @@
             if(is_create_access('form334'))
 			{
                 var store=get_session_var('user_setting_Store');
-                var id=get_new_key();
+                var id=vUtil.newKey();
                 var rowsHTML="<tr>";
                     rowsHTML+="<form id='form334_"+id+"'></form>";
                         rowsHTML+="<td data-th='Item'>";

@@ -124,7 +124,7 @@
 						{
 							var elements_array=vUtil.jsonParse(results[0].elements);
 
-							var new_id=get_new_key();
+							var new_id=vUtil.newKey();
 							var counter=0;
 							elements_array.forEach(function(result)
 							{
@@ -168,7 +168,7 @@
 		{
 			if(is_create_access('form263'))
 			{
-				var id=get_new_key();
+				var id=vUtil.newKey();
 				var rowsHTML="<tr>";
 				rowsHTML+="<form id='form263_"+id+"'></form>";
 					rowsHTML+="<td data-th='S.No.'>";

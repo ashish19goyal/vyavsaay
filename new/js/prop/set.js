@@ -14,7 +14,7 @@ function set_my_filter(filter_data,filter_element,func)
 		var list_id=filter_element.getAttribute('list');
 		if(list_id=='' || list_id==null)
 		{
-			list_id="list_"+get_new_key();
+			list_id="list_"+vUtil.newKey();
 			filter_element.setAttribute('list',list_id);
 		}
 		else
@@ -156,7 +156,7 @@ function set_my_value_list(filter_data,filter_element,func)
 		var list_id=filter_element.getAttribute('list');
 		if(list_id=='' || list_id==null)
 		{
-			list_id="list_"+get_new_key();
+			list_id="list_"+vUtil.newKey();
 			filter_element.setAttribute("list",list_id);
 		}
 		else
@@ -208,7 +208,7 @@ function set_my_value_list_func(filter_data,filter_element,func)
 		var list_id=filter_element.getAttribute('list');
 		if(list_id=='' || list_id==null)
 		{
-			list_id="list_"+get_new_key();
+			list_id="list_"+vUtil.newKey();
 			filter_element.setAttribute("list",list_id);
 		}
 		else
@@ -251,7 +251,7 @@ function set_multiple_value_list(filter_data_array,filter_element)
 	var list_id=filter_element.getAttribute('list');
 	if(list_id=='' || list_id==null)
 	{
-		list_id="list_"+get_new_key();
+		list_id="list_"+vUtil.newKey();
 		filter_element.setAttribute("list",list_id);
 	}
 	else

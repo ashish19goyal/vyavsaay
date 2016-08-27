@@ -225,7 +225,7 @@
         function form71_import_template()
         {
             var data_array=['id','acc_name','description'];
-            my_array_to_csv(data_array);
+            vUtil.arrayToCSV(data_array);
         };
 
         function form71_import_validate(data_array)

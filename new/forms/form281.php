@@ -157,7 +157,7 @@
 		{
 			if(is_create_access('form281'))
 			{
-				var id=get_new_key();
+				var id=vUtil.newKey();
 
 				var rowsHTML="<tr>";
 						rowsHTML+="<form id='form281_"+id+"'></form>";
@@ -329,7 +329,7 @@
 		function form281_import_template()
 		{
 			var data_array=['id','box_id','box_title','box_type','box_content','function_name','function_def','status'];
-			my_array_to_csv(data_array);
+			vUtil.arrayToCSV(data_array);
 		};
 
 		function form281_import_validate(data_array)

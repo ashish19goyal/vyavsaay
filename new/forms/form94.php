@@ -247,7 +247,7 @@ function form94_accept_item(form)
 		delete_row(data_xml,activity_xml);
 		$(form).parent().remove();
 		
-		var adjust_id=get_new_key();
+		var adjust_id=vUtil.newKey();
 		var adjust1_xml="<inventory_adjust>"+
 						"<id>"+adjust_id+"</id>"+
 						"<batch>"+batch+"</batch>"+
@@ -324,7 +324,7 @@ function form94_reject_item(form)
 function form94_import_template()
 {
 	var data_array=['id','product_name','batch','quantity','storage'];
-	my_array_to_csv(data_array);
+	vUtil.arrayToCSV(data_array);
 };
         
 function form94_import(data_array,import_type)

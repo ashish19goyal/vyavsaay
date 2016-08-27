@@ -357,11 +357,11 @@
 			for (var a in grid_array)
 			{
 				var item = grid_array[a];
-				if(!vUtil.isBlank(item.tele_caller || true))
+				if(!vUtil.isBlank(item.tele_caller) || true)
 				{
 					var rows1HTML="<tr>";
 	                rows1HTML+="<td>";
-						rows1HTML+=item.tele_caller;
+						rows1HTML+="<a onclick=\"show_object('staff','"+item.telecaller+"');\">"+item.tele_caller+"</a>";
 	                rows1HTML+="</td>";
 					rows1HTML+="<td>";
 						rows1HTML+=item.issuer;

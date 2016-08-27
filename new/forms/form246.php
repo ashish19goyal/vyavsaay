@@ -121,7 +121,7 @@
     {
         if(is_create_access('form246'))
         {
-            var id=get_new_key();
+            var id=vUtil.newKey();
             var rowsHTML="<tr>";
             rowsHTML+="<form id='form246_"+id+"'></form>";
                 rowsHTML+="<td data-th='Zone'>";
@@ -275,7 +275,7 @@
     function form246_import_template()
     {
         var data_array=['id','name','description'];
-        my_array_to_csv(data_array);
+        vUtil.arrayToCSV(data_array);
     };
 
     function form246_import_validate(data_array)

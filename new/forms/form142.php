@@ -45,7 +45,7 @@
 			var display_filter=fields.elements['disp'];
 			var grid_filter=fields.elements['grid'];
 			var status_filter=fields.elements['status'];
-			fields.elements['id'].value=get_new_key();
+			fields.elements['id'].value=vUtil.newKey();
 			
 			var save_button=document.getElementById('form142_save_ques');
 			
@@ -199,7 +199,7 @@
 		{
 			if(is_create_access('form142'))
 			{
-				var id=get_new_key();
+				var id=vUtil.newKey();
 				var rowsHTML="<tr>";
 				rowsHTML+="<form id='form142_"+id+"'></form>";
 					rowsHTML+="<td data-th='Name'>";

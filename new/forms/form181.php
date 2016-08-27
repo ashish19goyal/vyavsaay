@@ -223,7 +223,7 @@
                 var pending_items_count=0;
                 var actual_order_items=[];
                 var order_items=[];
-                var bill_key=get_new_key();
+                var bill_key=vUtil.newKey();
 
                 $("#modal195_item_table tr").each(function(index)
                 {
@@ -250,8 +250,8 @@
                         var challan_items_json={data_store:'delivery_challan_items',loader:'no',data:[]};
                         var challan_items_adjust_json={data_store:'inventory_adjust',loader:'no',data:[]};
 
-                        var master_bill_item_id=get_new_key();
-                        var bill_item_id=get_new_key();
+                        var master_bill_item_id=vUtil.newKey();
+                        var bill_item_id=vUtil.newKey();
                         order_items.forEach(function(order_item)
                         {
                             var batch_data={data_store:'product_instances',
@@ -456,7 +456,7 @@
                 var bill_total=0;
 
                 var order_items=[];
-                var bill_key=get_new_key();
+                var bill_key=vUtil.newKey();
 
                 var challan_data={data_store:'delivery_challans',return_column:'id',count:1,
                                   indexes:[{index:'order_id',exact:order_id}]};
@@ -475,8 +475,8 @@
                     {
                         var bill_items_json={data_store:'bill_items',loader:'no',data:[]};
                         var bill_items_adjust_json={data_store:'inventory_adjust',loader:'no',data:[]};
-                        var master_bill_item_id=get_new_key();
-                        var bill_item_id=get_new_key();
+                        var master_bill_item_id=vUtil.newKey();
+                        var bill_item_id=vUtil.newKey();
                         var pending_items_count=challan_items.length;
 
                         challan_items.forEach(function(order_item)
@@ -627,7 +627,7 @@
                                                 {index:'tax',value:bill_tax},
                                                 {index:'last_updated',value:get_my_time()}]};
 
-                                        var pt_tran_id=get_new_key();
+                                        var pt_tran_id=vUtil.newKey();
 
                                         var payment_json={data_store:'payments',
                                             data:[{index:'id',value:pt_tran_id},

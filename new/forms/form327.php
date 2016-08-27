@@ -218,7 +218,7 @@
 		function form327_import_template()
 		{
 			var data_array=['id','letter number','file number','DPO section','department','office','brief notes','remarks','due_date','assigned_to'];
-			my_array_to_csv(data_array);
+			vUtil.arrayToCSV(data_array);
 		};
 		
 		function form327_import_validate(data_array)

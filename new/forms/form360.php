@@ -136,7 +136,7 @@
 		{
 			if(is_create_access('form360'))
 			{
-				var id=get_new_key();
+				var id=vUtil.newKey();
 				var rowsHTML="<tr>";
 					rowsHTML+="<form id='form360_"+id+"'></form>";
 						rowsHTML+="<td data-th='Policy'>";
@@ -306,7 +306,7 @@
 		function form360_import_template()
 		{
 			var data_array=['id','policy_name','issuer','adults','children','age_lower','age_upper','sum_insured','premium_amount'];
-			my_array_to_csv(data_array);
+			vUtil.arrayToCSV(data_array);
 		};
 
 		function form360_import_validate(data_array)

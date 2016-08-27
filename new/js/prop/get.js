@@ -149,7 +149,7 @@ function get_export_data(columns,filename)
 	show_loader();
 	fetch_requested_data('',new_columns,function(results)
 	{
-		var data_id=get_new_key();
+		var data_id=vUtil.newKey();
 		var last_updated=get_my_time();
 		var data_json={data_store:'export_log',
 			 				log:'yes',
@@ -169,7 +169,7 @@ function get_export_data(columns,filename)
 		});
 
 		hide_loader();
-		my_obj_array_to_csv(results,filename);
+		vUtil.objArrayToCSV(results,filename);
 	});
 }
 
@@ -186,7 +186,7 @@ function get_export_data_extended(columns,filename,func)
 
 	fetch_requested_data('',new_columns,function(results)
 	{
-		var data_id=get_new_key();
+		var data_id=vUtil.newKey();
 		var last_updated=get_my_time();
 		var data_json={data_store:'export_log',
 			 				log:'yes',
@@ -214,7 +214,7 @@ function get_export_data_extended(columns,filename,func)
 				clearInterval(export_complete);
 				//console.log(results);
 				hide_loader();
-				my_obj_array_to_csv(results,filename);
+				vUtil.objArrayToCSV(results,filename);
 			}
 		},1000);
 	});
@@ -227,13 +227,12 @@ function get_export_data_extended(columns,filename,func)
 function get_export_data_restructured(columns,filename,func)
 {
 	show_loader();
-
-	columns.count=0;
+	delete columns.count;
 	columns.start_index=0;
 
 	read_json_rows('',columns,function(results)
 	{
-		var data_id=get_new_key();
+		var data_id=vUtil.newKey();
 		var last_updated=get_my_time();
 		var data_json={data_store:'export_log',
 			 				log:'yes',
@@ -257,7 +256,7 @@ function get_export_data_restructured(columns,filename,func)
 				clearInterval(export_complete);
 				//console.log(new_result_array);
 				hide_loader();
-				my_obj_array_to_csv(new_result_array,filename);
+				vUtil.objArrayToCSV(new_result_array,filename);
 			}
 		},1000);
 	});
@@ -269,12 +268,12 @@ function get_export_data_restructured(columns,filename,func)
 function get_limited_export_data(columns,filename,func)
 {
 	show_loader();
-	columns.count=0;
+	delete columns.count;
 	columns.start_index=0;
 
 	read_json_rows('',columns,function(results)
 	{
-		var data_id=get_new_key();
+		var data_id=vUtil.newKey();
 		var last_updated=get_my_time();
 		var data_json={data_store:'export_log',
 			 				log:'yes',
@@ -304,7 +303,7 @@ function get_limited_export_data(columns,filename,func)
 				clearInterval(export_complete);
 				//console.log(results);
 				hide_loader();
-				my_obj_array_to_csv(results,filename);
+				vUtil.objArrayToCSV(results,filename);
 			}
 		},1000);
 	});
@@ -393,12 +392,12 @@ function initialize_static_tabular_report_buttons(report_title,report_id)
 function get_tabular_report_data(columns,filename,action_type,func)
 {
 	show_loader();
-	columns.count=0;
+	delete columns.count;
 	columns.start_index=0;
 
 	read_json_rows('',columns,function(results)
 	{
-		var data_id=get_new_key();
+		var data_id=vUtil.newKey();
 		var last_updated=get_my_time();
 		var data_json={data_store:'export_log',
 			 				log:'yes',
@@ -436,7 +435,7 @@ function get_tabular_report_data(columns,filename,action_type,func)
                 }
 				switch(action_type)
 				{
-					case 'csv': my_obj_array_to_csv(results,filename);
+					case 'csv': vUtil.objArrayToCSV(results,filename);
 								break;
 					case 'pdf': print_report_table(results,filename,function (container)
                                 {
@@ -465,7 +464,7 @@ function get_tabular_report_data(columns,filename,action_type,func)
 
 function get_static_report_data(filename,action_type,report_id)
 {
-	var data_id=get_new_key();
+	var data_id=vUtil.newKey();
 	var last_updated=get_my_time();
 	var data_json={data_store:'export_log',
 		 				log:'yes',
@@ -509,7 +508,7 @@ function get_static_report_data(filename,action_type,report_id)
 */
 function csv_download_report(result_array,filename)
 {
-	var data_id=get_new_key();
+	var data_id=vUtil.newKey();
 	var last_updated=get_my_time();
 	var data_json={data_store:'export_log',
 			 				log:'yes',
@@ -524,7 +523,7 @@ function csv_download_report(result_array,filename)
 	create_json(data_json);
 
 	hide_loader();
-	my_obj_array_to_csv(result_array,filename);
+	vUtil.objArrayToCSV(result_array,filename);
 }
 
 

@@ -135,7 +135,7 @@
         {
             if(is_create_access('form147'))
             {
-                var id=get_new_key();
+                var id=vUtil.newKey();
                 var rowsHTML="<tr>";
                 rowsHTML+="<form id='form147_"+id+"' autocomplete='off'></form>";
                     rowsHTML+="<td data-th='Role'>";
@@ -289,7 +289,7 @@
         function form147_import_template()
         {
             var data_array=['id','role_name','description','status'];
-            my_array_to_csv(data_array);
+            vUtil.arrayToCSV(data_array);
         };
 
         function form147_import_validate(data_array)

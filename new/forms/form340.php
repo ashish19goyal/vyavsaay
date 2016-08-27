@@ -166,7 +166,7 @@
 		{
 			if(is_create_access('form340'))
 			{
-				var id=get_new_key();
+				var id=vUtil.newKey();
 				var rowsHTML="<tr>";
 						rowsHTML+="<form id='form340_"+id+"'></form>";
 							rowsHTML+="<td data-th='Customer'>";
@@ -349,7 +349,7 @@
 		function form340_import_template()
 		{
 			var data_array=['id','person','party name','location','email','contact','requirement','identified by','followup date'];
-			my_array_to_csv(data_array);
+			vUtil.arrayToCSV(data_array);
 		};
 		
 		function form340_import_validate(data_array)

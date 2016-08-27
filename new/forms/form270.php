@@ -52,7 +52,7 @@ function form270_header_ini()
 	fields.elements['bill_num'].value="";
 	var bill_date=fields.elements['date'];
 
-	fields.elements['bill_id'].value=get_new_key();
+	fields.elements['bill_id'].value=vUtil.newKey();
 	var save_button=document.getElementById('form270_save');
 
 	vUtil.dropdownHover($(supplier_filter),function(func)
@@ -231,7 +231,7 @@ function form270_add_item()
 	{
 		var filter_fields=document.getElementById('form270_master');
 
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form270_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'><div class='btn-overlap'>";
@@ -469,7 +469,7 @@ function form270_create_form()
 					{index:'notes',value:notes},
 					{index:'last_updated',value:last_updated}]};
 
-        // var pt_tran_id=get_new_key();
+        // var pt_tran_id=vUtil.newKey();
 				//
         // var payment_json={data_store:'payments',
 	 		// 		data:[{index:'id',value:pt_tran_id},

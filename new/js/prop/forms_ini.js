@@ -1223,7 +1223,7 @@ function form24_ini()
 					$('#form24_body').append(rowsHTML);
 				});
 
-				var message_attachment=my_obj_array_to_csv_string(data_array);
+				var message_attachment=vUtil.objArrayToCSVString(data_array);
 				var bt=get_session_var('title');
 				$('#form24_share').show();
 				$('#form24_share').click(function()
@@ -1751,7 +1751,7 @@ function form43_ini()
 							element_display('','form24');
 							po_items.forEach(function(po_item)
 							{
-								var id=get_new_key();
+								var id=vUtil.newKey();
 								var rowsHTML="<tr>";
 								rowsHTML+="<form id='form24_"+id+"' autocomplete='off'></form>";
 									rowsHTML+="<td data-th='Item Name'>";
@@ -10658,7 +10658,7 @@ function form169_ini()
 				}
 				if(pic_results.length===0)
 				{
-					pic_results_id=get_new_key();
+					pic_results_id=vUtil.newKey();
 					pic_results_url="";
 				}
 
@@ -14733,7 +14733,7 @@ function form235_ini()
 				}
 				if(pic_results.length===0)
 				{
-					pic_results_id=get_new_key();
+					pic_results_id=vUtil.newKey();
 					pic_results_url="";
 				}
 
@@ -16260,8 +16260,6 @@ function form274_ini()
 			});
 
 			var seller_data=new Object();
-				seller_data.count=0;
-				seller_data.start_index=0;
 				seller_data.data_store='purchase_leads';
 				seller_data.return_column='quantity';
 				seller_data.sum='yes';
@@ -16270,8 +16268,6 @@ function form274_ini()
 			set_my_value_json(seller_data,s_in);
 
 			var buyer_data=new Object();
-				buyer_data.count=0;
-				buyer_data.start_index=0;
 				buyer_data.data_store='sale_leads';
 				buyer_data.return_column='quantity';
 				buyer_data.sum='yes';
@@ -17106,7 +17102,7 @@ function form296_ini()
 					$('#form296_body').append(rowsHTML);
 				});
 
-				var message_attachment=my_obj_array_to_csv_string(data_array);
+				var message_attachment=vUtil.objArrayToCSVString(data_array);
 				var bt=get_session_var('title');
 				$('#form296_share').show();
 				$('#form296_share').click(function()
@@ -17329,7 +17325,7 @@ function form300_ini()
 						rowsHTML+="<textarea readonly='readonly' form='form300_"+result.id+"' class='dblclick_editable'>"+result.description+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Picture'>";
-							rowsHTML+="<output form='form300_"+result.id+"'><div class='figure' id='figure_form300_"+result.id+"' name='"+get_new_key()+"'><img id='img_form300_"+result.id+"'></div></output>";
+							rowsHTML+="<output form='form300_"+result.id+"'><div class='figure' id='figure_form300_"+result.id+"' name='"+vUtil.newKey()+"'><img id='img_form300_"+result.id+"'></div></output>";
 							rowsHTML+="<input type='file' style='display:none' form='form300_"+result.id+"'>";
 							rowsHTML+="<input type='button' class='generic_red_icon' form='form300_"+result.id+"' value='Change Picture'>";
 					rowsHTML+="</td>";

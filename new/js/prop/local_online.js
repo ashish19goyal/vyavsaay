@@ -95,7 +95,7 @@ function generate_report(report_id)
 					result.last_updated=get_my_datetime(result.last_updated);
 				}
 			});
-			my_obj_array_to_csv(results,'report');
+			vUtil.objArrayToCSV(results,'report');
 		});
 	}
 	else
@@ -110,7 +110,7 @@ function generate_report(report_id)
 				}
 			});
 
-			my_obj_array_to_csv(results,'report');
+			vUtil.objArrayToCSV(results,'report');
 		});
 	}
 }
@@ -517,7 +517,7 @@ function send_email(to,from,from_name,subject,message,func)
 				else
 				{
 					var email_data="<emails>"+
-								"<id>"+get_new_key()+"</id>"+
+								"<id>"+vUtil.newKey()+"</id>"+
 								"<subject>"+subject+"</subject>"+
 								"<message>"+htmlentities(message)+"</message>"+
 								"<message_attachment>"+message_attachment+"</message_attachment>"+
@@ -574,7 +574,7 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
 					else
 					{
 						var email_data="<emails>"+
-									"<id>"+get_new_key()+"</id>"+
+									"<id>"+vUtil.newKey()+"</id>"+
 									"<subject>"+subject+"</subject>"+
 									"<message>"+htmlentities(message)+"</message>"+
 									"<message_attachment>"+new_message_attachment+"</message_attachment>"+
@@ -612,7 +612,7 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
                 else
                 {
                     var email_data="<emails>"+
-                                "<id>"+get_new_key()+"</id>"+
+                                "<id>"+vUtil.newKey()+"</id>"+
                                 "<subject>"+subject+"</subject>"+
                                 "<message>"+htmlentities(message)+"</message>"+
                                 "<message_attachment>"+new_message_attachment+"</message_attachment>"+
@@ -646,7 +646,7 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
 			else
 			{
 				var email_data="<emails>"+
-							"<id>"+get_new_key()+"</id>"+
+							"<id>"+vUtil.newKey()+"</id>"+
 							"<subject>"+subject+"</subject>"+
 							"<message>"+htmlentities(message)+"</message>"+
 							"<message_attachment>"+message_attachment+"</message_attachment>"+
@@ -682,7 +682,7 @@ function send_sms(to,message,type)
 		else
 		{
 			var sms_data="<sms>"+
-						"<id>"+get_new_key()+"</id>"+
+						"<id>"+vUtil.newKey()+"</id>"+
 						"<receiver>"+to+"</receiver>"+
 						"<message>"+htmlentities(message)+"</message>"+
 						"<status>pending</status>"+

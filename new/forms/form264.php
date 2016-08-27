@@ -159,7 +159,7 @@
 		{
 			if(is_create_access('form264'))
 			{
-				var id=get_new_key();
+				var id=vUtil.newKey();
 		
 				var rowsHTML="<tr>";
 						rowsHTML+="<form id='form264_"+id+"'></form>";
@@ -329,7 +329,7 @@
 		function form264_import_template()
 		{
 			var data_array=['id','metric_id','display_name','grid','function_name','function_def','status','repeat_time'];
-			my_array_to_csv(data_array);
+			vUtil.arrayToCSV(data_array);
 		};
 		
 		function form264_import_validate(data_array)

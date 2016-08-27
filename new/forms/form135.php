@@ -367,7 +367,7 @@ function form135_add_task()
 		var fields=document.getElementById('form135_master');
 		var project_id=fields.elements[4].value;
 
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form135_task_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Phase'>";
@@ -437,7 +437,7 @@ function form135_add_document()
 {
 	if(is_create_access('form135'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form135_document_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Document Name'>";
@@ -486,7 +486,7 @@ function form135_add_team()
 {
 	if(is_create_access('form135'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form135_team_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Member'>";
@@ -705,7 +705,7 @@ function form135_create_team(form)
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var access_xml="<data_access>" +
-					"<id>"+get_new_key()+"</id>" +
+					"<id>"+vUtil.newKey()+"</id>" +
 					"<tablename>projects</tablename>" +
 					"<record_id>"+project_id+"</record_id>" +
 					"<access_type>read</access_type>" +

@@ -7,7 +7,7 @@ function form2_add_item()
 	if(is_create_access('form2'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form2_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item Type'>";
@@ -78,7 +78,7 @@ function form10_add_item()
 	if(is_create_access('form10'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form10_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
@@ -207,7 +207,7 @@ function form12_add_item()
 	if(is_create_access('form12'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form12_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
@@ -509,7 +509,7 @@ function form24_add_item()
 	if(is_create_access('form24'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form24_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item Name'>";
@@ -693,7 +693,7 @@ function form58_add_item()
 	if(is_create_access('form58'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form58_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
@@ -796,7 +796,7 @@ function form59_add_item()
 	if(is_create_access('form59'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form59_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
@@ -893,7 +893,7 @@ function form61_add_item()
 	if(is_create_access('form61'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form61_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
@@ -969,7 +969,7 @@ function form62_add_item()
 	if(is_create_access('form62'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form62_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
@@ -1060,7 +1060,7 @@ function form63_add_item()
 	if(is_create_access('form63'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form63_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
@@ -1152,7 +1152,7 @@ function form64_add_item()
 	if(is_create_access('form64'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form64_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
@@ -1239,7 +1239,7 @@ function form66_add_item()
 	if(is_create_access('form66'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form66_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
@@ -1330,7 +1330,7 @@ function form69_add_item()
 		var channel_name=master_form.elements['channel'].value;
 		var bill_type=master_form.elements['bill_type'].value;
 
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form69_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
@@ -1491,7 +1491,7 @@ function form81_add_item()
 	if(is_create_access('form81'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form81_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Customer'>";
@@ -1590,7 +1590,7 @@ function form82_add_item()
 	if(is_create_access('form82'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='row_form82_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Barcode'>";
@@ -1722,7 +1722,7 @@ function form84_add_item()
 	if(is_create_access('form84'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form84_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Customer'>";
@@ -1821,7 +1821,7 @@ function form88_add_item()
 	if(is_create_access('form88'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form88_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product'>";
@@ -1907,7 +1907,7 @@ function form91_add_item()
 	if(is_create_access('form91'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form91_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
@@ -2154,7 +2154,7 @@ function form101_add_item()
 	if(is_create_access('form101'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form101_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Project Name'>";
@@ -2209,7 +2209,7 @@ function form102_add_item()
 	if(is_create_access('form102'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form102_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Member'>";
@@ -2284,7 +2284,7 @@ function form103_add_item()
 	if(is_create_access('form103'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form103_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Phase Name'>";
@@ -2345,7 +2345,7 @@ function form109_add_item()
 	if(is_create_access('form109'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form109_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
@@ -2421,7 +2421,7 @@ function form112_add_item()
 	if(is_create_access('form112'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form112_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
@@ -2662,7 +2662,7 @@ function form114_add_item()
 	{
 		var supplier_name=document.getElementById('form114_master').elements['supplier'].value;
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form114_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
@@ -2933,7 +2933,7 @@ function form118_add_item()
 	if(is_create_access('form118'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form118_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
@@ -3233,7 +3233,7 @@ function form119_add_item()
 
 	if(is_create_access('form119'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form119_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
@@ -3614,7 +3614,7 @@ function form121_add_item()
 	if(is_create_access('form121'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form121_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Program Name'>";
@@ -3710,7 +3710,7 @@ function form122_add_item()
 		{
 			accepted_readonly="readonly='readonly'";
 		}
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form122_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
@@ -4172,7 +4172,7 @@ function form122_add_item()
 		var supplier_name=master_form.elements['supplier'].value;
 		var order_id=master_form.elements['order_id'].value;
 
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form122_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
@@ -4450,7 +4450,7 @@ function form125_add_item()
 	if(is_create_access('form125'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form125_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Customer'>";
@@ -4510,7 +4510,7 @@ function form130_add_product()
 	if(is_create_access('form130'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form130_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item Name'>";
@@ -4826,7 +4826,7 @@ function form130_add_service()
 	if(is_create_access('form130'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form130_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
@@ -5030,7 +5030,7 @@ function form134_add_machine()
 {
 	if(is_create_access('form134'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form134_machine_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Machine Type'>";
@@ -5087,7 +5087,7 @@ function form134_add_team()
 {
 	if(is_create_access('form134'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form134_team_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Assignee'>";
@@ -5158,7 +5158,7 @@ function form134_add_document()
 {
 	if(is_create_access('form134'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form134_document_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Document Name'>";
@@ -5210,7 +5210,7 @@ function form134_add_task()
 {
 	if(is_create_access('form134'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form134_task_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Task'>";
@@ -5270,7 +5270,7 @@ function form139_add_item()
 {
 	if(is_create_access('form139'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form139_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Customer'>";
@@ -5328,7 +5328,7 @@ function form140_add_item()
 {
 	if(is_create_access('form140'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form140_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Supplier'>";
@@ -5390,7 +5390,7 @@ function form146_add_item()
 	if(is_create_access('form146'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form146_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product'>";
@@ -5472,7 +5472,7 @@ function form151_add_item()
 {
 	if(is_create_access('form151'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form151_item_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item Name'>";
@@ -5566,7 +5566,7 @@ function form151_add_expense()
 {
 	if(is_create_access('form151'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form151_expense_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Person'>";
@@ -5632,7 +5632,7 @@ function form153_add_product()
 	if(is_create_access('form153'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form153_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
@@ -5809,7 +5809,7 @@ function form153_add_service()
 	if(is_create_access('form153'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form153_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
@@ -5910,7 +5910,7 @@ function form154_add_product()
 	{
 		if(hiring)
 		{
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			var rowsHTML="<tr>";
 			rowsHTML+="<form id='form154_"+id+"' autocomplete='off'></form>";
 				rowsHTML+="<td data-th='S.No.'>";
@@ -6203,7 +6203,7 @@ function form154_add_product()
 		}
 		else
 		{
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			var rowsHTML="<tr>";
 			rowsHTML+="<form id='form154_"+id+"' autocomplete='off'></form>";
 				rowsHTML+="<td data-th='S.No.'>";
@@ -6399,7 +6399,7 @@ function form154_add_service()
 
 	if(is_create_access('form154'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form154_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='S.No.'>";
@@ -6493,7 +6493,7 @@ function form156_add_item()
 	if(is_create_access('form156'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form156_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item Name'>";
@@ -6602,7 +6602,7 @@ function form157_add_item()
 	if(is_create_access('form157'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form157_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product'>";
@@ -6722,7 +6722,7 @@ function form158_add_item()
 		var imported=filter_fields.elements['imported'].checked;
 
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form158_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
@@ -6819,7 +6819,7 @@ function form158_add_item()
 			var list_id=storage_filter.getAttribute('list');
 			if(list_id=='' || list_id==null)
 			{
-				list_id="list_"+get_new_key();
+				list_id="list_"+vUtil.newKey();
 				storage_filter.setAttribute("list",list_id);
 			}
 			else
@@ -6895,7 +6895,7 @@ function form161_add_item()
 	if(is_create_access('form161'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form161_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Checkpoint'>";
@@ -6945,7 +6945,7 @@ function form162_add_item()
 	if(is_create_access('form162'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form162_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
@@ -7006,7 +7006,7 @@ function form167_add_item()
 	if(is_create_access('form167'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form167_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Type'>";
@@ -7070,7 +7070,7 @@ function form171_add_item()
 	if(is_create_access('form171'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form171_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
@@ -7117,7 +7117,7 @@ function form172_add_item()
 {
 	if(is_create_access('form172'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 			rowsHTML+="<form id='form172_"+id+"'></form>";
 				rowsHTML+="<td data-th='Channel'>";
@@ -7319,7 +7319,7 @@ function form173_add_item()
 	if(is_create_access('form173'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form173_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Channel'>";
@@ -7394,7 +7394,7 @@ function form174_add_item()
 	if(is_create_access('form174'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form174_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Channel'>";
@@ -7456,7 +7456,7 @@ function form175_add_item()
 	if(is_create_access('form175'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form175_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Channel'>";
@@ -7535,7 +7535,7 @@ function form176_add_item()
 {
 	if(is_create_access('form176'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 			rowsHTML+="<form id='form176_"+id+"'></form>";
 				rowsHTML+="<td data-th='Channel'>";
@@ -7622,7 +7622,7 @@ function form177_add_item()
 	if(is_create_access('form177'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form177_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Type'>";
@@ -7679,7 +7679,7 @@ function form184_add_item()
 	if(is_create_access('form184'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form184_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Order'>";
@@ -7749,7 +7749,7 @@ function form187_add_item()
 	if(is_create_access('form187'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form187_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Order'>";
@@ -7813,7 +7813,7 @@ function form192_add_item()
 {
 	if(is_create_access('form192'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form192_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
@@ -7925,7 +7925,7 @@ function form193_add_item()
 {
 	if(is_create_access('form193'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='193form193_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td id='form193_barcode_"+id+"' data-th='Barcode'>";
@@ -8131,7 +8131,7 @@ function form202_add_item()
 {
 	if(is_create_access('form202'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form202_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='AWB #'>";
@@ -8263,7 +8263,7 @@ function form204_add_item()
 {
 	if(is_create_access('form204'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form204_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='AWB #'>";
@@ -8383,7 +8383,7 @@ function form205_add_item()
 {
 	if(is_create_access('form205'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form205_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='AWB #'>";
@@ -8504,7 +8504,7 @@ function form206_add_item()
 {
 	if(is_create_access('form206'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form206_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='AWB #'>";
@@ -8626,7 +8626,7 @@ function form209_add_item()
 	{
 		var filter_fields=document.getElementById('form209_master');
 
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form209_"+id+"'></form>";
 			rowsHTML+="<td data-th='Order'>";
@@ -8702,7 +8702,7 @@ function form215_add_item()
 {
 	if(is_create_access('form215'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form215_"+id+"'></form>";
 			rowsHTML+="<td data-th='S.No.'>";
@@ -8834,7 +8834,7 @@ function form215_add_item()
 									invoice_filter.value="";
 									channel_filter.value="";
 									order_filter.value="";
-									id_filter.value=get_new_key();
+									id_filter.value=vUtil.newKey();
 									bill_id_filter.value="";
 									$("#modal65_link").click();
 								}
@@ -8875,7 +8875,7 @@ function form215_add_item()
 								invoice_filter.value="";
 								channel_filter.value="";
 								order_filter.value="";
-								id_filter.value=get_new_key();
+								id_filter.value=vUtil.newKey();
 								bill_id_filter.value="";
 								$("#modal65_link").click();
 							}
@@ -8909,7 +8909,7 @@ function form217_add_item()
 	if(is_create_access('form217'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form217_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Supplier'>";
@@ -8983,7 +8983,7 @@ function form222_add_item()
 	if(is_create_access('form222'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form222_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
@@ -9132,7 +9132,7 @@ function form228_add_item()
 	if(is_create_access('form228'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form228_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
@@ -9232,7 +9232,7 @@ function form229_add_item()
 	if(is_create_access('form229'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form229_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
@@ -9332,7 +9332,7 @@ function form230_add_item()
 	if(is_create_access('form230'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form230_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
@@ -9444,7 +9444,7 @@ function form231_add_item()
 		var filter_fields=document.getElementById('form231_master');
 
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form231_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Type'>";
@@ -9526,7 +9526,7 @@ function form244_add_item()
 {
 	if(is_create_access('form244'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='244form244_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td id='form244_barcode_"+id+"' data-th='Barcode'>";
@@ -9733,7 +9733,7 @@ function form245_add_item()
 {
 	if(is_create_access('form245'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form245_"+id+"'></form>";
 			rowsHTML+="<td data-th='S.No.'>";
@@ -9811,7 +9811,7 @@ function form248_add_item()
 {
 	if(is_create_access('form248'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form248_"+id+"'></form>";
 			rowsHTML+="<td data-th='S.No.'>";
@@ -10065,7 +10065,7 @@ function form250_add_item()
 {
 	if(is_create_access('form250'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form250_"+id+"'></form>";
 			rowsHTML+="<td data-th='S.No.'>";
@@ -10286,7 +10286,7 @@ function form252_add_item()
 	if(is_create_access('form252'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form252_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Customer'>";
@@ -10373,7 +10373,7 @@ function form253_add_item()
 	if(is_create_access('form253'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form253_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Customer'>";
@@ -10460,7 +10460,7 @@ function form254_add_item()
 	if(is_create_access('form254'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form254_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Customer'>";
@@ -10547,7 +10547,7 @@ function form255_add_item()
 	if(is_create_access('form255'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form255_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Customer'>";
@@ -10635,7 +10635,7 @@ function form273_add_item()
 	if(is_create_access('form273'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form273_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Supplier'>";
@@ -10749,7 +10749,7 @@ function form275_add_item()
 {
 	if(is_create_access('form275'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form275_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
@@ -10856,7 +10856,7 @@ function form289_add_item()
 	if(is_create_access('form289'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form289_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Customer'>";
@@ -10913,8 +10913,6 @@ function form289_add_item()
 		});
 
 		var names_data=new Object();
-			names_data.count=0;
-			names_data.start_index=0;
 			names_data.data_store='customers';
 			names_data.indexes=[{index:'acc_name'}];
 			names_data.return_column='acc_name';
@@ -10980,7 +10978,7 @@ function form290_add_item()
 {
 	if(is_create_access('form290'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form290_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Cities'>";
@@ -11015,16 +11013,12 @@ function form290_add_item()
 		$(city_filter).focus();
 
 		var names_data=new Object();
-			names_data.count=0;
-			names_data.start_index=0;
 			names_data.data_store='cities_data';
 			names_data.indexes=[{index:'state'}];
 			names_data.return_column='state';
 		set_my_filter_json(names_data,state_filter);
 
 		var item_data=new Object();
-			item_data.count=0;
-			item_data.start_index=0;
 			item_data.data_store='cities_data';
 			item_data.indexes=[{index:'country'}];
 			item_data.return_column='country';
@@ -11051,7 +11045,7 @@ function form294_add_item()
 
 	if(is_create_access('form294'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form294_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='S.No.'>";
@@ -11209,7 +11203,7 @@ function form295_add_item()
 
 	if(is_create_access('form295'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form295_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='S.No.'>";
@@ -11341,7 +11335,7 @@ function form296_add_item()
 	if(is_create_access('form296'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form296_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item Name'>";
@@ -11486,7 +11480,7 @@ function form302_add_item()
 {
 	if(is_create_access('form302'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 
 			var rowsHTML="<tr>";
 				rowsHTML+="<form id='form302_"+id+"'></form>";

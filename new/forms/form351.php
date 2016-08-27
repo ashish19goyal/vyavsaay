@@ -252,7 +252,7 @@
 			$(add_button).off('click');
 			$(add_button).on('click',function ()
 			{
-				var id=get_new_key();
+				var id=vUtil.newKey();
 				var content="<div class='row' id='form351_popup_"+id+"'>"+
 								"<div class='col-md-3'>"+
 									"<input placeholder='Commission Type' class='floatlabel' name='type' type='text'>"+
@@ -354,7 +354,7 @@
 		function form351_import_template()
 		{
 			var data_array=['id','name','type','issuer','description','term','preferred','commissions'];
-			my_array_to_csv(data_array);
+			vUtil.arrayToCSV(data_array);
 		};
 
 		function form351_import_validate(data_array)

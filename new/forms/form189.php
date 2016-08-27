@@ -307,7 +307,7 @@
 		                        var batches_result_array=[];
 		                        get_available_batch(raw.requisite_name,batches,raw.quantity,batches_result_array,function()
 		                        {
-		                            var batch_id=get_new_key();
+		                            var batch_id=vUtil.newKey();
 		                            batches_result_array.forEach(function (batch_result)
 		                            {
 		                                var storage_json={data_store:'area_utilization',return_column:'name',
@@ -318,7 +318,7 @@
 		                                   	var storage_result_array=[];
 										   	get_available_storage(raw.requisite_name,batch_result.batch,storages,batch_result.quantity,storage_result_array,function ()
 		                                	{
-		                                        var store_item_id=get_new_key();
+		                                        var store_item_id=vUtil.newKey();
 		                                        var adjust_count=1;
 		                                        var target=get_session_var('production_floor_store');
 		                                        storage_result_array.forEach(function(storage_result)

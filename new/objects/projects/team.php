@@ -84,7 +84,7 @@
         {
             if(is_create_access('projects'))
             {
-                var id=get_new_key();
+                var id=vUtil.newKey();
                 var rowsHTML="<tr>";
                 rowsHTML+="<form id='object_projects_team_"+id+"' autocomplete='off'></form>";
                     rowsHTML+="<td data-th='Member'>";

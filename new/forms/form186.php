@@ -55,7 +55,7 @@
         var to_filter=fields.elements['to'];
         var status_filter=fields.elements['status'];
 		var notes_filter=fields.elements['notes'];
-        fields.elements['plan_id'].value=get_new_key();
+        fields.elements['plan_id'].value=vUtil.newKey();
         var save_button=document.getElementById('form186_save');
 
 		status_filter.value='draft';
@@ -258,7 +258,7 @@
             var min_date=filter_fields.elements['from'].value;
             var max_date=filter_fields.elements['to'].value;
 
-            var id=get_new_key();
+            var id=vUtil.newKey();
             var rowsHTML="<tr>";
             rowsHTML+="<form id='form186_"+id+"' autocomplete='off'></form>";
                 rowsHTML+="<td data-th='Order'>";
@@ -403,7 +403,7 @@
                             {
                                 var notif_notes=raw.quantity+" more pieces of "+raw.requisite_name+" are required for production of "+quantity+" pieces of "+item+". Please procure immediately.";
                                 var notif_json={data_store:'notifications',
-										data:[{index:'id',value:get_new_key()},
+										data:[{index:'id',value:vUtil.newKey()},
 											{index:'t_generated',value:vTime.unix()},
 											{index:'data_id',value:data_id},
 											{index:'title',value:'Insufficient Inventory'},

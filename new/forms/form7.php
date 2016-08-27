@@ -308,7 +308,7 @@
 		{
 			if(is_create_access('form7'))
 			{
-				var id=get_new_key();
+				var id=vUtil.newKey();
 				var rowsHTML="<tr>";
 				rowsHTML+="<form id='form7_"+id+"' autocomplete='off'></form>";
 					rowsHTML+="<td data-th='Staff'>";

@@ -307,7 +307,7 @@
 	{
 		if(is_create_access('form89'))
 		{
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			var rowsHTML="<tr>";
 			rowsHTML+="<form id='form89_"+id+"' autocomplete='off'></form>";
 				rowsHTML+="<td data-th='Customer'><div class='btn-overlap'>";
@@ -486,7 +486,7 @@
 	function form89_import_template()
 	{
 		var data_array=['id','customer','schedule','status','assignee','hours','notes'];
-		my_array_to_csv(data_array);
+		vUtil.arrayToCSV(data_array);
 	};
 
 	function form89_import(data_array,import_type)

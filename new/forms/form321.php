@@ -83,7 +83,7 @@
             marker.innerHTML="Mark as bag";
 
             fields.elements['saved'].value='no';
-            fields.elements['id'].value=get_new_key();
+            fields.elements['id'].value=vUtil.newKey();
 
             $(marker).off('click');
             $(marker).on('click',function()
@@ -124,7 +124,7 @@
 
             if(manifest_id=="")
             {
-                id_filter.value=get_new_key();
+                id_filter.value=vUtil.newKey();
                 var manifest_num_data={data_store:'user_preferences',return_column:'value',
                                       indexes:[{index:'name',exact:'manifest_num'}]};
                 set_my_value_json(manifest_num_data,manifest_filter);
@@ -304,7 +304,7 @@
         {
             if(is_create_access('form321'))
             {
-                var id=get_new_key();
+                var id=vUtil.newKey();
                 var rowsHTML="<tr>";
                 rowsHTML+="<form id='form321_"+id+"'></form>";
                     rowsHTML+="<td data-th='S.No.'>";
@@ -934,7 +934,7 @@
             $('#form321_share').off('click');
             $('#form321_share').click(function()
             {
-                var message_attachment=my_obj_array_to_csv_string(new_results);
+                var message_attachment=vUtil.objArrayToCSVString(new_results);
                 var subject='Manifest Sheet # '+filter_fields.elements['manifest_num'].value;
                 var body="Hi,\nPlease find attached the manifest with this mail.\nCo-loader: "+filter_fields.elements['loader'].value+"\nVendor:"+filter_fields.elements['vendor'].value+"\nDate:"+filter_fields.elements['date'].value+"\n\nRegards,\nBeacon Couriers";
 
@@ -944,7 +944,7 @@
             $('#form321_csv').off('click');
             $('#form321_csv').click(function()
             {
-                my_obj_array_to_csv(new_results,'Manifest # '+filter_fields.elements['manifest_num'].value);
+                vUtil.objArrayToCSV(new_results,'Manifest # '+filter_fields.elements['manifest_num'].value);
             });
 
         }

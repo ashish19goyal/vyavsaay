@@ -221,7 +221,7 @@
 		function form220_import_template()
 		{
 			var data_array=['id','name','details','priority','start_date','status'];
-			my_array_to_csv(data_array);
+			vUtil.arrayToCSV(data_array);
 		};
 		
 		

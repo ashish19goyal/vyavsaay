@@ -146,7 +146,7 @@
 		{
 			if(is_create_access('form191'))
 			{
-				var id=get_new_key();
+				var id=vUtil.newKey();
 		
 				var rowsHTML="<tr>";
 						rowsHTML+="<form id='form191_"+id+"'></form>";
@@ -286,7 +286,7 @@
 		function form191_import_template()
 		{
 			var data_array=['id','tablename','listname','value'];
-			my_array_to_csv(data_array);
+			vUtil.arrayToCSV(data_array);
 		};
 		
 		function form191_import(data_array,import_type)

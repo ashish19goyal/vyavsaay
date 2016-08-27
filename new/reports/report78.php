@@ -142,7 +142,7 @@ function report78_ini()
         function report78_import_template()
 		{
 			var data_array=['id','customer','date','response','call bites'];
-			my_array_to_csv(data_array);
+			vUtil.arrayToCSV(data_array);
 		};
 
 		function report78_import_validate(data_array)

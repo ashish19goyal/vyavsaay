@@ -135,7 +135,7 @@
 		{
 			if(is_create_access('form96'))
 			{
-				var id=get_new_key();
+				var id=vUtil.newKey();
 				var rowsHTML="<tr>";
 				rowsHTML+="<form id='form96_"+id+"' autocomplete='off'></form>";
 					rowsHTML+="<td data-th='Name'>";
@@ -287,7 +287,7 @@
 		function form96_import_template()
 		{
 			var data_array=['id','name','attribute','value'];
-			my_array_to_csv(data_array);
+			vUtil.arrayToCSV(data_array);
 		};
 
 		function form96_import_validate(data_array)

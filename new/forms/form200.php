@@ -63,7 +63,7 @@
         var branch=fields.elements['branch'];
 
         fields.elements['saved'].value='no';
-        fields.elements['id'].value=get_new_key();
+        fields.elements['id'].value=vUtil.newKey();
 
         var save_button=document.getElementById('form200_save');
         drs_filter.value="";
@@ -240,7 +240,7 @@
     {
         if(is_create_access('form200'))
         {
-            var id=get_new_key();
+            var id=vUtil.newKey();
             var rowsHTML="<tr>";
             rowsHTML+="<form id='form200_"+id+"'></form>";
                 rowsHTML+="<td data-th='S.No.'>";

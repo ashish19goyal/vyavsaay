@@ -143,7 +143,7 @@
 		{
 			if(is_create_access('form149'))
 			{
-				var id=get_new_key();
+				var id=vUtil.newKey();
 				var rowsHTML="<tr>";
 						rowsHTML+="<form id='form149_"+id+"'></form>";
 							rowsHTML+="<td data-th='Role'>";
@@ -294,7 +294,7 @@
 		function form149_import_template()
 		{
 			var data_array=['id','role_name','username','status'];
-			my_array_to_csv(data_array);
+			vUtil.arrayToCSV(data_array);
 		};
 		
 		function form149_import_validate(data_array)

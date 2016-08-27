@@ -16,7 +16,7 @@
 		function like_feed(feed_id,element)
 {
 	var like_xml="<feed_likes>"+
-				"<id>"+get_new_key()+"</id>"+	
+				"<id>"+vUtil.newKey()+"</id>"+	
 				"<feed_id exact='yes'>"+feed_id+"</feed_id>"+
 				"<person exact='yes'>"+get_account_name()+"</person>"+
 				"<last_updated>"+get_my_time()+"</last_updated>"+						
@@ -58,7 +58,7 @@ function create_feed_comment(feed_id,element)
 {
 	var comment_text=element.value;
 	var account_name=get_account_name();
-	var data_id=get_new_key();
+	var data_id=vUtil.newKey();
 	var comment_xml="<feed_comments>"+
 				"<id>"+data_id+"</id>"+	
 				"<feed_id exact='yes'>"+feed_id+"</feed_id>"+

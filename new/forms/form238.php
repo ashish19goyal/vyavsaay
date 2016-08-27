@@ -236,7 +236,7 @@
         function form238_import_template()
         {
             var data_array=['id','item name','batch','manufacture date','actual quantity','cost price'];
-            my_array_to_csv(data_array);
+            vUtil.arrayToCSV(data_array);
         };
 
         function form238_import(data_array,import_type)

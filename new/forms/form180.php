@@ -52,7 +52,7 @@
             var order_num_filter=fields.elements['order_num'];
             var type_filter=fields.elements['bill_type'];
 
-            fields.elements['order_id'].value=get_new_key();
+            fields.elements['order_id'].value=vUtil.newKey();
             order_num_filter.value="";
 
             var save_button=document.getElementById('form180_save');
@@ -233,7 +233,7 @@
         {
             if(is_create_access('form180'))
             {
-                var id=get_new_key();
+                var id=vUtil.newKey();
                 var rowsHTML="<tr>";
                 rowsHTML+="<form id='form180_"+id+"' autocomplete='off'></form>";
 										rowsHTML+="<td data-th='Item'><div class='btn-overlap'>";

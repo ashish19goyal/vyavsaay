@@ -1193,13 +1193,9 @@ function set_grid_item_53()
 			if(!isNaN(adjusts[a].quantity) && adjusts[a].quantity!=null)
 				adjust_quantity-=parseFloat(adjusts[a].quantity);
 		}
-		var new_columns2=new Object();
-			new_columns2.count=0;
-			new_columns2.start_index=0;
-			new_columns2.data_store='bill_items';
-
-			new_columns2.indexes=[{index:'picked_status',exact:'pending'},
-								{index:'quantity'},{index:'picked_quantity'}];
+		var new_columns2={data_store:'bill_items',
+						indexes:[{index:'picked_status',exact:'pending'},
+								{index:'quantity'},{index:'picked_quantity'}]};
 
 		read_json_rows('',new_columns2,function(bill_items)
 		{
@@ -1245,13 +1241,9 @@ function set_grid_item_54()
 			if(!isNaN(adjusts[a].placed_quantity) && adjusts[a].placed_quantity!=null)
 				adjust_quantity-=parseFloat(adjusts[a].placed_quantity);
 		}
-		var new_columns2=new Object();
-			new_columns2.count=0;
-			new_columns2.start_index=0;
-			new_columns2.data_store='supplier_bill_items';
-
-			new_columns2.indexes=[{index:'put_away_status',exact:'pending'},
-							{index:'quantity'},{index:'placed_quantity'}];
+		var new_columns2={data_store:'supplier_bill_items',
+						indexes:[{index:'put_away_status',exact:'pending'},
+							{index:'quantity'},{index:'placed_quantity'}]};
 
 		read_json_rows('',new_columns2,function(bill_items)
 		{

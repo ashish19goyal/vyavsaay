@@ -51,7 +51,7 @@
 		var customers_filter=fields.elements['customer'];
 		var bill_date=fields.elements['date'];
 		var bill_num=fields.elements['bill_num'];
-		fields.elements['bill_id'].value=get_new_key();
+		fields.elements['bill_id'].value=vUtil.newKey();
 		var save_button=document.getElementById('form72_save');
 
 		var bill_id=$("#form72_link").attr('data_id');
@@ -219,7 +219,7 @@
 	{
 		if(is_create_access('form72'))
 		{
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			var rowsHTML="<tr>";
 			rowsHTML+="<form id='form72_"+id+"' autocomplete='off'></form>";
 				rowsHTML+="<td data-th='Item'>";
@@ -370,7 +370,7 @@
 	{
 		if(is_create_access('form72'))
 		{
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			var rowsHTML="<tr>";
 			rowsHTML+="<form id='form72_"+id+"' autocomplete='off'></form>";
 				rowsHTML+="<td data-th='Item'>";
@@ -649,7 +649,7 @@
 					{index:'notes',value:''},
 					{index:'last_updated',value:last_updated}]};
 
-			var receipt_id=get_new_key();
+			var receipt_id=vUtil.newKey();
 			var receipt_num="B-"+bill_num;
 			var receipt_json={data_store:'receipts',
 					data:[{index:'id',value:receipt_id},

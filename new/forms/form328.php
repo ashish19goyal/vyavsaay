@@ -50,7 +50,7 @@
             var return_date=fields.elements['date'];
 			var return_num_filter=fields.elements['return_num'];
             var id_filter=fields.elements['id'];
-            id_filter.value=get_new_key();
+            id_filter.value=vUtil.newKey();
             var save_button=document.getElementById('form328_save');
 
 			var return_id=$("#form19_link").attr('data_id');
@@ -268,7 +268,7 @@
         {
             if(is_create_access('form328'))
             {
-                var id=get_new_key();
+                var id=vUtil.newKey();
                 var rowsHTML="<tr>";
                 rowsHTML+="<form id='form328_"+id+"' autocomplete='off'></form>";
 					rowsHTML+="<td data-th='Item'><div class='btn-overlap'>";
@@ -510,7 +510,7 @@
                     if(placements.length===0)
                     {
                         var storage_json={data_store:'area_utilization',
-                            data:[{index:'id',value:get_new_key()},
+                            data:[{index:'id',value:vUtil.newKey()},
                                 {index:'name',value:storage},
                                 {index:'batch',value:batch},
                                 {index:'item_name',value:name},

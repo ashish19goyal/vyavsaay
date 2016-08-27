@@ -136,7 +136,7 @@
 		{
 			if(is_create_access('form221'))
 			{
-				var id=get_new_key();
+				var id=vUtil.newKey();
 				var rowsHTML="<tr>";
 				rowsHTML+="<form id='form221_"+id+"' autocomplete='off'></form>";
 					rowsHTML+="<td data-th='Name'>";
@@ -263,7 +263,7 @@
 		function form221_import_template()
 		{
 			var data_array=['id','name','project','date','hours_worked'];
-			my_array_to_csv(data_array);
+			vUtil.arrayToCSV(data_array);
 		}
 		
 		function form221_import_validate(data_array)

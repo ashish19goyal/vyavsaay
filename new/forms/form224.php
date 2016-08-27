@@ -150,8 +150,8 @@
     {
         if(is_create_access('form224'))
         {
-            var test_id=Math.round(get_new_key()/1000000);
-            var id=get_new_key();
+            var test_id=Math.round(vUtil.newKey()/1000000);
+            var id=vUtil.newKey();
             var rowsHTML="<tr>";
             rowsHTML+="<form id='form224_"+id+"' autocomplete='off'></form>";
                 rowsHTML+="<td data-th='Test Id'>";

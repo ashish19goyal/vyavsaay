@@ -57,7 +57,7 @@
 			var master_form=document.getElementById('form299_form');
 			master_form.elements['name'].value="";
 			var id_filter=master_form.elements['id'];
-			id_filter.value=get_new_key();
+			id_filter.value=vUtil.newKey();
 			var add_image_button=master_form.elements['add_image'];
 
 			$(add_image_button).off('click');

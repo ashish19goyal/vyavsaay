@@ -242,7 +242,7 @@
 		function form279_import_template()
 		{
 			var data_array=['id','task name','description','status','assignee','list name'];
-			my_array_to_csv(data_array);
+			vUtil.arrayToCSV(data_array);
 		};
 
 		function form279_import_validate(data_array)

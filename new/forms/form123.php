@@ -139,7 +139,7 @@
 		{
 			if(is_create_access('form123'))
 			{
-				var id=get_new_key();
+				var id=vUtil.newKey();
 				var rowsHTML="<tr>";
 				rowsHTML+="<form id='form123_"+id+"' autocomplete='off'></form>";
 					rowsHTML+="<td data-th='Object'>";
@@ -292,7 +292,7 @@
 		function form123_import_template()
 		{
 			var data_array=['id','object','attribute','values','status'];
-			my_array_to_csv(data_array);
+			vUtil.arrayToCSV(data_array);
 		};
 		
 		function form123_import_validate(data_array)

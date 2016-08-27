@@ -132,7 +132,7 @@
 			var master_form=document.getElementById('form345_form');
 			master_form.elements['name'].value="";
 			var id_filter=master_form.elements['id'];
-			id_filter.value=get_new_key();
+			id_filter.value=vUtil.newKey();
 			var add_image_button=document.getElementById('form345_add_image');
 
 			$(add_image_button).off('click');
@@ -390,7 +390,7 @@
 		{
 			if(is_create_access('form345'))
 			{
-				var id=get_new_key();
+				var id=vUtil.newKey();
 
 				var markers_array=[];
 				$("#form345_attributes_form").find('textarea').each(function()

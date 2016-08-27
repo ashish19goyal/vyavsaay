@@ -288,7 +288,7 @@ function form10_create_form()
 					"<tax>"+tax+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
-		var pt_tran_id=get_new_key();
+		var pt_tran_id=vUtil.newKey();
 		var payment_xml="<payments>" +
 					"<id>"+pt_tran_id+"</id>" +
 					"<status>pending</status>" +
@@ -466,7 +466,7 @@ function form12_create_item(form)
 							free_batch=data[0];
 						}
 
-						var id=get_new_key();
+						var id=vUtil.newKey();
 						rowsHTML="<tr>";
 							rowsHTML+="<form id='form12_"+id+"'></form>";
 			                	rowsHTML+="<td>";
@@ -659,7 +659,7 @@ function form12_create_form()
 									free_batch=data[0];
 								}
 
-								var id=get_new_key();
+								var id=vUtil.newKey();
 								rowsHTML="<tr>";
 									rowsHTML+="<form id='form12_"+id+"'></form>";
 					                	rowsHTML+="<td>";
@@ -761,7 +761,7 @@ function form12_create_form()
 						"<tax>"+tax+"</tax>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</transactions>";
-			var pt_tran_id=get_new_key();
+			var pt_tran_id=vUtil.newKey();
 			var payment_xml="<payments>" +
 						"<id>"+pt_tran_id+"</id>" +
 						"<status>closed</status>" +
@@ -1069,7 +1069,7 @@ function form24_create_form()
 			data_array.push(new_object);
 		});
 
-		var message_attachment=my_obj_array_to_csv_string(data_array);
+		var message_attachment=vUtil.objArrayToCSVString(data_array);
 		$('#form24_share').show();
 		$('#form24_share').click(function()
 		{
@@ -1127,7 +1127,7 @@ function form24_create_form()
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var	notification_xml="<notifications>" +
-					"<id>"+get_new_key()+"</id>" +
+					"<id>"+vUtil.newKey()+"</id>" +
 					"<t_generated>"+get_my_time()+"</t_generated>" +
 					"<data_id unique='yes'>"+data_id+"</data_id>" +
 					"<title>Purchase Order created</title>" +
@@ -1939,7 +1939,7 @@ function form70_bill(order_id)
 															free_batch=data[0];
 														}
 
-														var bill_item_id=get_new_key();
+														var bill_item_id=vUtil.newKey();
 										                var free_xml="<bill_items>" +
 																	"<id>"+bill_item_id+"</id>" +
 																	"<item_name>"+free_product_name+"</item_name>" +
@@ -2017,7 +2017,7 @@ function form70_bill(order_id)
 														{
 															free_batch=data[0];
 														}
-														var bill_item_id=get_new_key();
+														var bill_item_id=vUtil.newKey();
 										                var free_xml="<bill_items>" +
 																	"<id>"+bill_item_id+"</id>" +
 																	"<item_name>"+free_product_name+"</item_name>" +
@@ -2068,7 +2068,7 @@ function form70_bill(order_id)
 									item_total=parseFloat(item_amount)+parseFloat(item_tax)-parseFloat(item_discount);
 
 									/////saving to bill item
-									var bill_item_id=get_new_key();
+									var bill_item_id=vUtil.newKey();
 					                var data_xml="<bill_items>" +
 											"<id>"+bill_item_id+"</id>" +
 											"<item_name>"+order_item.item_name+"</item_name>" +
@@ -2198,7 +2198,7 @@ function form70_bill(order_id)
 											{
 												free_batch=data[0];
 											}
-											var bill_item_id=get_new_key();
+											var bill_item_id=vUtil.newKey();
 							                var free_xml="<bill_items>" +
 														"<id>"+bill_item_id+"</id>" +
 														"<item_name>"+free_product_name+"</item_name>" +
@@ -2271,7 +2271,7 @@ function form70_bill(order_id)
 										"<tax>"+bill_tax+"</tax>" +
 										"<last_updated>"+get_my_time()+"</last_updated>" +
 										"</transactions>";
-							var pt_tran_id=get_new_key();
+							var pt_tran_id=vUtil.newKey();
 							var payment_xml="<payments>" +
 										"<id>"+pt_tran_id+"</id>" +
 										"<status>pending</status>" +
@@ -2583,7 +2583,7 @@ function form82_bill()
 										{
 											free_batch=data[0];
 										}
-										var bill_item_id=get_new_key();
+										var bill_item_id=vUtil.newKey();
 						                var free_xml="<bill_items>" +
 													"<id>"+bill_item_id+"</id>" +
 													"<item_name>"+free_product_name+"</item_name>" +
@@ -2662,7 +2662,7 @@ function form82_bill()
 											free_batch=data[0];
 										}
 
-										var bill_item_id=get_new_key();
+										var bill_item_id=vUtil.newKey();
 										var free_xml="<bill_items>" +
 													"<id>"+bill_item_id+"</id>" +
 													"<item_name>"+free_product_name+"</item_name>" +
@@ -2711,7 +2711,7 @@ function form82_bill()
 					item_total=parseFloat(item_amount)+parseFloat(item_tax)-parseFloat(item_discount);
 
 					/////saving to bill item
-					var bill_item_id=get_new_key();
+					var bill_item_id=vUtil.newKey();
 					var data_xml="<bill_items>" +
 							"<id>"+bill_item_id+"</id>" +
 							"<item_name>"+order_item.item_name+"</item_name>" +
@@ -2820,7 +2820,7 @@ function form82_bill()
 										{
 											free_batch=data[0];
 										}
-										var bill_item_id=get_new_key();
+										var bill_item_id=vUtil.newKey();
 										var free_xml="<bill_items>" +
 													"<id>"+bill_item_id+"</id>" +
 													"<item_name>"+free_product_name+"</item_name>" +
@@ -2916,7 +2916,7 @@ function form82_bill()
 								"<tax>"+bill_tax+"</tax>" +
 								"<last_updated>"+get_my_time()+"</last_updated>" +
 								"</transactions>";
-					var pt_tran_id=get_new_key();
+					var pt_tran_id=vUtil.newKey();
 					var payment_xml="<payments>" +
 								"<id>"+pt_tran_id+"</id>" +
 								"<status>closed</status>" +
@@ -3085,7 +3085,7 @@ function form84_bills()
 		subscriptions.forEach(function(subscription)
 		{
 			var bill_type='service';
-			var order_id=get_new_key();
+			var order_id=vUtil.newKey();
 			var item_amount=0;
 			var item_total=0;
 			var item_offer="";
@@ -3145,7 +3145,7 @@ function form84_bills()
 							else if(offers[i].result_type=='service free')
 							{
 								var free_service_name=offers[i].free_service_name;
-								var id=get_new_key();
+								var id=vUtil.newKey();
 				        		var free_pre_requisite_data="<pre_requisites>" +
 										"<type exact='yes'>service</type>" +
 										"<requisite_type exact='yes'>task</requisite_type>" +
@@ -3182,7 +3182,7 @@ function form84_bills()
 
 									free_pre_requisites.forEach(function(free_pre_requisite)
 									{
-										var task_id=get_new_key();
+										var task_id=vUtil.newKey();
 										var task_xml="<task_instances>" +
 												"<id>"+task_id+"</id>" +
 												"<name>"+free_pre_requisite.name+"</name>" +
@@ -3234,7 +3234,7 @@ function form84_bills()
 							else if(offers[i].result_type=='service free')
 							{
 								var free_service_name=offers[i].free_service_name;
-								var id=get_new_key();
+								var id=vUtil.newKey();
 				        		var free_pre_requisite_data="<pre_requisites>" +
 										"<type exact='yes'>service</type>" +
 										"<requisite_type exact='yes'>task</requisite_type>" +
@@ -3271,7 +3271,7 @@ function form84_bills()
 
 									free_pre_requisites.forEach(function(free_pre_requisite)
 									{
-										var task_id=get_new_key();
+										var task_id=vUtil.newKey();
 										var task_xml="<task_instances>" +
 												"<id>"+task_id+"</id>" +
 												"<name>"+free_pre_requisite.name+"</name>" +
@@ -3321,7 +3321,7 @@ function form84_bills()
 					{
 						var bill_num=bill_nums[0];
 						/////saving to bill item
-						var bill_item_id=get_new_key();
+						var bill_item_id=vUtil.newKey();
 		                var data_xml="<bill_items>" +
 									"<id>"+bill_item_id+"</id>" +
 									"<item_name>"+subscription.service+"</item_name>" +
@@ -3369,7 +3369,7 @@ function form84_bills()
 									"<tax>"+item_tax+"</tax>" +
 									"<last_updated>"+get_my_time()+"</last_updated>" +
 									"</transactions>";
-						var pt_tran_id=get_new_key();
+						var pt_tran_id=vUtil.newKey();
 						var payment_xml="<payments>" +
 									"<id>"+pt_tran_id+"</id>" +
 									"<status>pending</status>" +
@@ -3450,7 +3450,7 @@ function form84_bills()
 					{
 						pre_requisites.forEach(function(pre_requisite)
 						{
-							var task_id=get_new_key();
+							var task_id=vUtil.newKey();
 							var task_xml="<task_instances>" +
 									"<id>"+task_id+"</id>" +
 									"<name>"+pre_requisite.name+"</name>" +
@@ -3604,7 +3604,7 @@ function form88_create_item(form)
 			{
 				pre_requisites.forEach(function(pre_requisite)
 				{
-					var task_id=get_new_key();
+					var task_id=vUtil.newKey();
 					var task_xml="<task_instances>" +
 							"<id>"+task_id+"</id>" +
 							"<name>"+pre_requisite.name+"</name>" +
@@ -3891,7 +3891,7 @@ function form91_create_form()
 					"<tax>"+tax+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
-		var pt_tran_id=get_new_key();
+		var pt_tran_id=vUtil.newKey();
 		var payment_xml="<payments>" +
 					"<id>"+pt_tran_id+"</id>" +
 					"<status>closed</status>" +
@@ -3990,7 +3990,7 @@ function form101_create_item(form)
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var access_xml="<data_access>" +
-					"<id>"+get_new_key()+"</id>" +
+					"<id>"+vUtil.newKey()+"</id>" +
 					"<tablename>projects</tablename>" +
 					"<record_id>"+data_id+"</record_id>" +
 					"<access_type>all</access_type>" +
@@ -4058,7 +4058,7 @@ function form102_create_item(form)
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</project_team>";
 		var access_xml="<data_access>" +
-					"<id>"+get_new_key()+"</id>" +
+					"<id>"+vUtil.newKey()+"</id>" +
 					"<tablename>project_team</tablename>" +
 					"<record_id>"+data_id+"</record_id>" +
 					"<access_type>all</access_type>" +
@@ -4137,7 +4137,7 @@ function form103_create_item(form)
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</project_phases>";
 		var access_xml="<data_access>" +
-					"<id>"+get_new_key()+"</id>" +
+					"<id>"+vUtil.newKey()+"</id>" +
 					"<tablename>project_phases</tablename>" +
 					"<record_id>"+data_id+"</record_id>" +
 					"<access_type>all</access_type>" +
@@ -4210,7 +4210,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 
 		var actual_order_items=[];
 		var order_items=[];
-		var bill_key=get_new_key();
+		var bill_key=vUtil.newKey();
 
 		$("#modal133_item_table tr").each(function(index)
 		{
@@ -4342,7 +4342,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 											var unit_price=item_amount/parseFloat(order_item.quantity);
 
 											var item_storage="";
-											var bill_item_id=get_new_key();
+											var bill_item_id=vUtil.newKey();
 											var adjust2_data_xml="<inventory_adjust>"+
 													"<id>"+bill_item_id+"</id>" +
 													"<product_name>"+order_item.item_name+"</product_name>" +
@@ -4476,7 +4476,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 													console.log(storage_result_array);
 
 													var item_storage="";
-													var bill_item_id=get_new_key();
+													var bill_item_id=vUtil.newKey();
 													var adjust_count=1;
 
 													if(storage_result_array.length>0)
@@ -4696,7 +4696,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 																var bill_item_tax=vUtil.round((item_tax*batch_result.quantity/order_item.quantity),2);
 																var bill_item_channel_tax=vUtil.round((item_channel_tax*batch_result.quantity/order_item.quantity),2);
 																var bill_item_channel_payable=vUtil.round((item_channel_payable*batch_result.quantity/order_item.quantity),2);
-																var bill_item_id=get_new_key();
+																var bill_item_id=vUtil.newKey();
 
 																if(storage_result_array.length>1)
 																{
@@ -4912,7 +4912,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 										"<tax>"+bill_tax+"</tax>" +
 										"<last_updated>"+get_my_time()+"</last_updated>" +
 										"</transactions>";
-								var pt_tran_id=get_new_key();
+								var pt_tran_id=vUtil.newKey();
 								var payment_xml="<payments>" +
 										"<id>"+pt_tran_id+"</id>" +
 										"<status>pending</status>" +
@@ -5193,7 +5193,7 @@ function form114_create_item(form)
 			if(placements.length===0)
 			{
 				var storage_xml="<area_utilization>" +
-						"<id>"+get_new_key()+"</id>" +
+						"<id>"+vUtil.newKey()+"</id>" +
 						"<name>"+storage+"</name>" +
 						"<item_name>"+item_name+"</item_name>" +
 						"<batch>"+batch+"</batch>" +
@@ -5299,7 +5299,7 @@ function form118_create_item(form)
 							free_batch=data[0];
 						}
 
-						var id=get_new_key();
+						var id=vUtil.newKey();
 						rowsHTML="<tr>";
 							rowsHTML+="<form id='form118_"+id+"'></form>";
 			                	rowsHTML+="<td data-th='Item'>";
@@ -5484,7 +5484,7 @@ function form118_create_form()
 									free_batch=data[0];
 								}
 
-								var id=get_new_key();
+								var id=vUtil.newKey();
 								rowsHTML="<tr>";
 									rowsHTML+="<form id='form118_"+id+"'></form>";
 					                	rowsHTML+="<td data-th='Item'>";
@@ -5585,7 +5585,7 @@ function form118_create_form()
 						"<tax>"+tax+"</tax>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</transactions>";
-			var pt_tran_id=get_new_key();
+			var pt_tran_id=vUtil.newKey();
 			var payment_xml="<payments>" +
 						"<id>"+pt_tran_id+"</id>" +
 						"<status>closed</status>" +
@@ -5668,7 +5668,7 @@ function form118_create_form()
 				{
 					var points=parseFloat(program.points_addition)*parseFloat(total);
 					var loyalty_points_xml="<loyalty_points>"+
-						"<id>"+get_new_key()+"</id>"+
+						"<id>"+vUtil.newKey()+"</id>"+
 						"<program_name>"+program.name+"</program_name>"+
 						"<customer>"+customer+"</customer>"+
 						"<points_addition>"+program.points_addition+"</points_addition>"+
@@ -5817,7 +5817,7 @@ function form119_create_item(form)
 							free_batch=data[0];
 						}
 
-						var id=get_new_key();
+						var id=vUtil.newKey();
 
 						var rowsHTML="<tr>";
 						rowsHTML+="<form id='form119_"+id+"'></form>";
@@ -6039,7 +6039,7 @@ function form119_create_form()
 									free_batch=data[0];
 								}
 
-								var id=get_new_key();
+								var id=vUtil.newKey();
 
 								var rowsHTML="<tr>";
 								rowsHTML+="<form id='form119_"+id+"'></form>";
@@ -6197,7 +6197,7 @@ function form119_create_form()
 				}
 			},num_data);
 
-			var pt_tran_id=get_new_key();
+			var pt_tran_id=vUtil.newKey();
 			var p_status="closed";
 			var p_amount=total;
 			if((get_payment_mode())=='credit')
@@ -6496,7 +6496,7 @@ function form122_create_item(form)
 			if(placements.length===0)
 			{
 				var storage_xml="<area_utilization>" +
-						"<id>"+get_new_key()+"</id>" +
+						"<id>"+vUtil.newKey()+"</id>" +
 						"<name>"+storage+"</name>" +
 						"<item_name>"+item_name+"</item_name>" +
 						"<batch>"+batch+"</batch>" +
@@ -6695,7 +6695,7 @@ function form122_create_form()
 					"<tax>"+(-tax)+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
-		var pt_tran_id=get_new_key();
+		var pt_tran_id=vUtil.newKey();
 		var payment_xml="<payments>" +
 					"<id>"+pt_tran_id+"</id>" +
 					"<status>pending</status>" +
@@ -6722,7 +6722,7 @@ function form122_create_form()
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
 		var	notification_xml="<notifications>" +
-					"<id>"+get_new_key()+"</id>" +
+					"<id>"+vUtil.newKey()+"</id>" +
 					"<t_generated>"+get_my_time()+"</t_generated>" +
 					"<data_id unique='yes'>"+data_id+"</data_id>" +
 					"<title>Pending purchase bill approval</title>" +
@@ -6905,7 +6905,7 @@ function form130_create_item(form)
 
 				pre_requisites.forEach(function(pre_requisite)
 				{
-					var task_id=get_new_key();
+					var task_id=vUtil.newKey();
 					var task_xml="<task_instances>" +
 							"<id>"+task_id+"</id>" +
 							"<name>"+pre_requisite.name+"</name>" +
@@ -6970,7 +6970,7 @@ function form130_create_item(form)
 		////adding free service
 		if(free_service_name!="" && free_service_name!=null)
 		{
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			rowsHTML="<tr>";
 				rowsHTML+="<form id='form130_"+id+"'></form>";
                 	rowsHTML+="<td>";
@@ -7051,7 +7051,7 @@ function form130_create_item(form)
 							free_batch=data[0];
 						}
 
-						var id=get_new_key();
+						var id=vUtil.newKey();
 						rowsHTML="<tr>";
 							rowsHTML+="<form id='form130_"+id+"'></form>";
 		                	rowsHTML+="<td>";
@@ -7244,7 +7244,7 @@ function form130_create_form()
 									free_batch=data[0];
 								}
 
-								var id=get_new_key();
+								var id=vUtil.newKey();
 								rowsHTML="<tr>";
 									rowsHTML+="<form id='form130_"+id+"'></form>";
 					                	rowsHTML+="<td>";
@@ -7315,7 +7315,7 @@ function form130_create_form()
 				else if(offers[i].result_type=='service free')
 				{
 					var free_service_name=offers[i].free_service_name;
-					var id=get_new_key();
+					var id=vUtil.newKey();
 					rowsHTML="<tr>";
 						rowsHTML+="<form id='form130_"+id+"'></form>";
 		                	rowsHTML+="<td>";
@@ -7386,7 +7386,7 @@ function form130_create_form()
 
 						free_pre_requisites.forEach(function(free_pre_requisite)
 						{
-							var task_id=get_new_key();
+							var task_id=vUtil.newKey();
 							var task_xml="<task_instances>" +
 									"<id>"+task_id+"</id>" +
 									"<name>"+free_pre_requisite.name+"</name>" +
@@ -7455,7 +7455,7 @@ function form130_create_form()
 						"<tax>"+tax+"</tax>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</transactions>";
-			var pt_tran_id=get_new_key();
+			var pt_tran_id=vUtil.newKey();
 			var payment_xml="<payments>" +
 						"<id>"+pt_tran_id+"</id>" +
 						"<status>closed</status>" +
@@ -7556,7 +7556,7 @@ function form134_add_issue(button,problem_type,problem_detail,solution)
 		get_single_column_data(function(problems)
 		{
 			var last_updated=get_my_time();
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 
 			if(problems.length==0)
 			{
@@ -7608,7 +7608,7 @@ function form134_add_issue(button,problem_type,problem_detail,solution)
 					if(solutions.length==0)
 					{
 						var solution_xml="<solutions>" +
-						"<id>"+get_new_key()+"</id>" +
+						"<id>"+vUtil.newKey()+"</id>" +
 						"<issue_id>"+issue_id+"</issue_id>"+
 						"<detail>"+solution+"</detail>"+
 						"<status>active</status>"+
@@ -7742,7 +7742,7 @@ function form134_create_team(form)
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var access_xml="<data_access>" +
-					"<id>"+get_new_key()+"</id>" +
+					"<id>"+vUtil.newKey()+"</id>" +
 					"<tablename>service_requests</tablename>" +
 					"<record_id>"+request_id+"</record_id>" +
 					"<access_type>all</access_type>" +
@@ -8120,7 +8120,7 @@ function form150_post_feed()
 		var project_id=form.elements[3].value;
 		var owner=get_account_name();
 		var last_updated=get_my_time();
-		var data_id=get_new_key();
+		var data_id=vUtil.newKey();
 		var data_xml="<feeds>" +
 					"<id>"+data_id+"</id>" +
 					"<content_type>text</content_type>"+
@@ -8826,7 +8826,7 @@ function form154_create_form()
 					"<tax>"+tax+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
-		var pt_tran_id=get_new_key();
+		var pt_tran_id=vUtil.newKey();
 		var payment_xml="<payments>" +
 					"<id>"+pt_tran_id+"</id>" +
 					"<status>pending</status>" +
@@ -9082,7 +9082,7 @@ function form157_create_item(form)
 			if(placements.length===0 && target!="")
 			{
 				var storage_xml="<area_utilization>" +
-						"<id>"+get_new_key()+"</id>" +
+						"<id>"+vUtil.newKey()+"</id>" +
 						"<name>"+target+"</name>" +
 						"<item_name>"+product_name+"</item_name>" +
 						"<batch>"+product_name+"</batch>" +
@@ -9180,7 +9180,7 @@ function form158_create_item(form)
 			if(placements.length===0)
 			{
 				var storage_xml="<area_utilization>" +
-						"<id>"+get_new_key()+"</id>" +
+						"<id>"+vUtil.newKey()+"</id>" +
 						"<name>"+storage+"</name>" +
 						"<item_name>"+name+"</item_name>" +
 						"<batch>"+name+"</batch>" +
@@ -9303,7 +9303,7 @@ function form158_create_form()
 					"<tax>"+(-tax)+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
-		var pt_tran_id=get_new_key();
+		var pt_tran_id=vUtil.newKey();
 		var payment_xml="<payments>" +
 					"<id>"+pt_tran_id+"</id>" +
 					"<status>pending</status>" +
@@ -9593,7 +9593,7 @@ function form171_create_item(form)
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var pickup_xml="<pickup_charges>" +
-					"<id>"+get_new_key()+"</id>" +
+					"<id>"+vUtil.newKey()+"</id>" +
 					"<channel>"+name+"</channel>" +
 					"<pincode>all</pincode>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
@@ -9624,7 +9624,7 @@ function form171_create_item(form)
 			var sku_mapping_xml="<sku_mapping>";
 			var cat_sku_mapping_xml="<category_sku_mapping>";
 			var channel_price_xml="<channel_prices>";
-			var id=parseFloat(get_new_key());
+			var id=parseFloat(vUtil.newKey());
 			var counter=0;
 			var last_updated=get_my_time();
 			items.forEach(function(item)
@@ -10308,7 +10308,7 @@ function form192_create_form()
 					"<tax>"+(-tax)+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
-		var pt_tran_id=get_new_key();
+		var pt_tran_id=vUtil.newKey();
 		var payment_xml="<payments>" +
 					"<id>"+pt_tran_id+"</id>" +
 					"<status>pending</status>" +
@@ -10814,7 +10814,7 @@ function form222_create_form()
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var	notification_xml="<notifications>" +
-					"<id>"+get_new_key()+"</id>" +
+					"<id>"+vUtil.newKey()+"</id>" +
 					"<t_generated>"+get_my_time()+"</t_generated>" +
 					"<data_id unique='yes'>"+data_id+"</data_id>" +
 					"<title>Purchase Order created</title>" +
@@ -11182,7 +11182,7 @@ function form233_create_item()
 		var name=form.elements['name'].value;
 		var description=form.elements['description'].value;
 
-		var new_key=get_new_key();
+		var new_key=vUtil.newKey();
 		var counter=0;
 
 		$("[id^='vyavsaay_image_box_']").each(function(index)
@@ -11196,7 +11196,7 @@ function form233_create_item()
 			if(data_src=="" || data_src=='undefined' || data_src=='null' || data_src==null)
 			{
 				var blob=image_elem.src;
-				var blob_name=get_new_key()+".jpeg";
+				var blob_name=vUtil.newKey()+".jpeg";
 
 				image_elem.setAttribute('data-src',blob_name);
 				if(is_online())
@@ -12345,7 +12345,7 @@ function form294_create_item(form)
 			if(placements.length===0)
 			{
 				var storage_xml="<area_utilization>" +
-						"<id>"+get_new_key()+"</id>" +
+						"<id>"+vUtil.newKey()+"</id>" +
 						"<name>"+storage+"</name>" +
 						"<item_name>"+name+"</item_name>" +
 						"<batch>"+name+"</batch>" +
@@ -12457,7 +12457,7 @@ function form294_create_form()
 					"<tax>"+tax+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
-		var pt_tran_id=get_new_key();
+		var pt_tran_id=vUtil.newKey();
 		var payment_xml="<payments>" +
 					"<id>"+pt_tran_id+"</id>" +
 					"<status>pending</status>" +
@@ -12584,7 +12584,7 @@ function form295_create_item(form)
 			if(placements.length===0)
 			{
 				var storage_xml="<area_utilization>" +
-						"<id>"+get_new_key()+"</id>" +
+						"<id>"+vUtil.newKey()+"</id>" +
 						"<name>"+storage+"</name>" +
 						"<item_name>"+name+"</item_name>" +
 						"<batch>"+name+"</batch>" +
@@ -12692,7 +12692,7 @@ function form295_create_form()
 					"<tax>"+tax+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
-		var pt_tran_id=get_new_key();
+		var pt_tran_id=vUtil.newKey();
 		var payment_xml="<payments>" +
 					"<id>"+pt_tran_id+"</id>" +
 					"<status>pending</status>" +
@@ -12899,7 +12899,7 @@ function form296_create_form()
 			data_array.push(new_object);
 		});
 
-		var message_attachment=my_obj_array_to_csv_string(data_array);
+		var message_attachment=vUtil.objArrayToCSVString(data_array);
 		$('#form296_share').show();
 		$('#form296_share').click(function()
 		{

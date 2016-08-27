@@ -61,7 +61,7 @@
             var save_button=document.getElementById('form225_save');
 
             customers_filter.value='';
-            bill_id_filter.value=get_new_key();
+            bill_id_filter.value=vUtil.newKey();
             address.value="";
             tin.value="";
             cst.value="";
@@ -294,7 +294,7 @@
         {
             if(is_create_access('form225'))
             {
-                var id=get_new_key();
+                var id=vUtil.newKey();
                 var rowsHTML="<tr>";
                 rowsHTML+="<form id='form225_"+id+"' autocomplete='off'></form>";
                     rowsHTML+="<td data-th='Item'><div class='btn-overlap'>";

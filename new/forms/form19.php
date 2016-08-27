@@ -50,7 +50,7 @@
             var return_date=fields.elements['date'];
 						var return_num_filter=fields.elements['return_num'];
             var id_filter=fields.elements['id'];
-            id_filter.value=get_new_key();
+            id_filter.value=vUtil.newKey();
 
 						var return_id=$("#form19_link").attr('data_id');
             if(vUtil.isBlank(return_id))
@@ -237,7 +237,7 @@
         {
             if(is_create_access('form19'))
             {
-                var id=get_new_key();
+                var id=vUtil.newKey();
                 var rowsHTML="<tr>";
                 rowsHTML+="<form id='form19_"+id+"' autocomplete='off'></form>";
 										rowsHTML+="<td data-th='Item'><div class='btn-overlap'>";

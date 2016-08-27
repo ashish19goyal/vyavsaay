@@ -341,7 +341,7 @@
 				case 'Star ORC':data_array=[];
 										break;
 			}
-            my_array_to_csv(data_array);
+            vUtil.arrayToCSV(data_array);
         };
 
 		/**

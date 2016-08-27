@@ -153,7 +153,7 @@
 				var identified_by=form.elements['contact'].value;
 				var acc_name=name+" ("+phone+")";
 					
-				var id=get_new_key();
+				var id=vUtil.newKey();
 				var last_updated=get_my_time();
 				var customer_json={data_store:'customers',
 			 				warning:'no',

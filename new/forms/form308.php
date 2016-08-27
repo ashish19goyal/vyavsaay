@@ -144,7 +144,7 @@
 		{
 			if(is_create_access('form308'))
 			{
-				var id=get_new_key();
+				var id=vUtil.newKey();
 		
 				var rowsHTML="<tr>";
 						rowsHTML+="<form id='form308_"+id+"'></form>";

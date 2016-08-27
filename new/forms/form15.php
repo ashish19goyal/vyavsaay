@@ -45,8 +45,8 @@
 	var channel=fields.elements['channel'];
 	var order_num=fields.elements['order_num'];
 	var order_id=fields.elements['order_id'];
-	fields.elements['return_id'].value=get_new_key();
-	fields.elements['t_id'].value=get_new_key();
+	fields.elements['return_id'].value=vUtil.newKey();
+	fields.elements['t_id'].value=vUtil.newKey();
 	var save_button=fields.elements['save'];
 
 	customers_filter.value="";
@@ -233,7 +233,7 @@ function form15_add_item()
 	if(is_create_access('form15'))
 	{
 		var rowsHTML="";
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form15_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
@@ -484,7 +484,7 @@ function form15_create_item(form)
 				
 		if(saleable!="checked")
 		{
-			var discard_id=get_new_key();
+			var discard_id=vUtil.newKey();
 			var discard_xml="<discarded>" +
 					"<id>"+discard_id+"</id>" +
 					"<product_name>"+name+"</product_name>" +
@@ -518,7 +518,7 @@ function form15_create_item(form)
 			if(placements.length===0)
 			{
 				var storage_xml="<area_utilization>" +
-						"<id>"+get_new_key()+"</id>" +
+						"<id>"+vUtil.newKey()+"</id>" +
 						"<name>"+storage+"</name>" +
 						"<item_name>"+name+"</item_name>" +
 						"<batch>"+batch+"</batch>" +
@@ -620,7 +620,7 @@ function form15_create_form()
 					"<tax>"+(-tax)+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
-		var pt_tran_id=get_new_key();
+		var pt_tran_id=vUtil.newKey();
 		var payment_xml="<payments>" +
 					"<id>"+pt_tran_id+"</id>" +
 					"<status>pending</status>" +

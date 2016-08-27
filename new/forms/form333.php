@@ -215,7 +215,7 @@
                 var supplier_name=master_form.elements['supplier'].value;
                 var bill_id=master_form.elements['id'].value;
 
-                var id=get_new_key();
+                var id=vUtil.newKey();
                 var rowsHTML="<tr>";
                 rowsHTML+="<form id='form333_"+id+"' autocomplete='off'></form>";
                     rowsHTML+="<td data-th='Item'>";
@@ -379,7 +379,7 @@
                     if(placements.length===0)
                     {
                         var storage_json={data_store:'area_utilization',
-                            data:[{index:'id',value:get_new_key()},
+                            data:[{index:'id',value:vUtil.newKey()},
                                 {index:'name',value:storage},
                                 {index:'item_name',value:name},
                                 {index:'batch',value:batch},
@@ -462,7 +462,7 @@
                                 {index:'tax',value:(-tax)},
                                 {index:'last_updated',value:last_updated}]};
  				
-                var pt_tran_id=get_new_key();
+                var pt_tran_id=vUtil.newKey();
                 
                 var payment_json={data_store:'payments',
                             data:[{index:'id',value:pt_tran_id},

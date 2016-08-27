@@ -57,7 +57,7 @@ function form284_header_ini()
 	var bill_date=fields.elements['date'];
 	var narration=fields.elements['narration'];
 	var bill_num=fields.elements['bill_num'];
-	fields.elements['bill_id'].value=get_new_key();
+	fields.elements['bill_id'].value=vUtil.newKey();
 	var save_button=document.getElementById('form284_save');
 	var cst_filter=fields.elements['cst'];
 	var tin_filter=fields.elements['tin'];
@@ -425,7 +425,7 @@ function form284_add_item()
 
 	if(is_create_access('form284'))
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form284_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='S.No.' id='form284_sno_"+id+"'>";
@@ -711,7 +711,7 @@ function form284_create_form()
 						{index:'notes',value:narration},
 	 					{index:'last_updated',value:last_updated}]};
 
-        // var pt_tran_id=get_new_key();
+        // var pt_tran_id=vUtil.newKey();
 
         // var payment_json={data_store:'payments',
 	 		// 		data:[{index:'id',value:pt_tran_id},

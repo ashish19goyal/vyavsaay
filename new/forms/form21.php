@@ -46,7 +46,7 @@
 
 		var supplier_filter=fields.elements['supplier'];
 		var bill_date=fields.elements['date'];
-		fields.elements['bill_id'].value=get_new_key();
+		fields.elements['bill_id'].value=vUtil.newKey();
 		var save_button=document.getElementById('form21_save');
 		fields.elements['bill_num'].value="";
 		supplier_filter.value='';
@@ -214,7 +214,7 @@
 	{
 		if(is_create_access('form21'))
 		{
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			var rowsHTML="<tr>";
 			rowsHTML+="<form id='form21_"+id+"' autocomplete='off'></form>";
 				rowsHTML+="<td data-th='Item'>";
@@ -498,7 +498,7 @@
 			create_json(data_json);
 			create_json(transaction_json);
 
-			var receipt_id=get_new_key();
+			var receipt_id=vUtil.newKey();
 			var receipt_num="PB-"+bill_id;
 			var receipt_json={data_store:'receipts',
 	 				data:[{index:'id',value:receipt_id},

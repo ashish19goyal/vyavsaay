@@ -205,7 +205,7 @@
 						var new_total=parseFloat(fquantity.value)-parseFloat(inventory);
 						var adjust_json={data_store:'inventory_adjust',
 							warning:'no',
-							data:[{index:'id',value:get_new_key()},
+							data:[{index:'id',value:vUtil.newKey()},
 								{index:'quantity',value:new_total},
 								{index:'product_name',value:item_name},
 								{index:'batch',value:''},

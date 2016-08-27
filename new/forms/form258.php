@@ -162,7 +162,7 @@
 				});
 			});
 
-            id_filter.value=get_new_key();
+            id_filter.value=vUtil.newKey();
             customer_filter.value='';
             quot_num.value="";
             status_filter.value='draft';
@@ -289,7 +289,7 @@
             });
 
             var tc_counter=0;
-            var tc_id=get_new_key();
+            var tc_id=vUtil.newKey();
             var rowsHTML="";
             tc_array.forEach(function (tc)
             {
@@ -444,7 +444,7 @@
 
                         /////////////////terms and conditions////////////////
                         var tc_array=vUtil.jsonParse(quot_results[0].terms);
-                        var tc_id=get_new_key();
+                        var tc_id=vUtil.newKey();
                         var tc_counter=0;
                         var rowsHTML="";
                         tc_array.forEach(function (tc)
@@ -474,7 +474,7 @@
 
                         /////////////////banks////////////////
                         var bank_array=vUtil.jsonParse(quot_results[0].banks);
-                        var bank_id=get_new_key();
+                        var bank_id=vUtil.newKey();
                         var bank_counter=0;
                         var bank_rowsHTML="";
                         bank_array.forEach(function (bank)
@@ -509,7 +509,7 @@
                         /////////////////specifications////////////////
                         //console.log(quot_results[0].specifications);
                         var spec_array=vUtil.jsonParse(quot_results[0].specifications);
-                        var spec_id=get_new_key();
+                        var spec_id=vUtil.newKey();
                         var spec_counter=0;
                         var spec_rowsHTML="";
                         spec_array.forEach(function (spec)
@@ -539,7 +539,7 @@
 
                         /////////////////spares////////////////
                         var spare_array=vUtil.jsonParse(quot_results[0].spares);
-                        var spare_id=get_new_key();
+                        var spare_id=vUtil.newKey();
                         var spare_counter=0;
                         var spare_rowsHTML="";
                         spare_array.forEach(function (spare)
@@ -571,7 +571,7 @@
 
 
                         var item_array=vUtil.jsonParse(quot_results[0].items);
-                        var item_id=get_new_key();
+                        var item_id=vUtil.newKey();
                         var item_counter=0;
                         var item_rowsHTML="";
 
@@ -664,7 +664,7 @@
         {
             if(is_create_access('form258'))
             {
-                var id=get_new_key();
+                var id=vUtil.newKey();
                 var	item_rowsHTML="<tr>";
                     item_rowsHTML+="<form id='form258_item_"+id+"' autocomplete='off'></form>";
                         item_rowsHTML+="<td data-th='S.No.'>";
@@ -736,7 +736,7 @@
         {
             if(is_create_access('form258'))
             {
-                var id=get_new_key();
+                var id=vUtil.newKey();
                 var	spare_rowsHTML="<tr>";
                     spare_rowsHTML+="<form id='form258_spare_"+id+"' autocomplete='off'></form>";
                         spare_rowsHTML+="<td data-th='S.No.'>";
@@ -812,7 +812,7 @@
         {
             if(is_create_access('form258'))
             {
-                var id=get_new_key();
+                var id=vUtil.newKey();
                 var	spec_rowsHTML="<tr>";
                     spec_rowsHTML+="<form id='form258_spec_"+id+"' autocomplete='off'></form>";
                         spec_rowsHTML+="<td data-th='S.No.'>";
@@ -854,7 +854,7 @@
         {
             if(is_create_access('form258'))
             {
-                var id=get_new_key();
+                var id=vUtil.newKey();
                 var	bank_rowsHTML="<tr>";
                     bank_rowsHTML+="<form id='form258_bank_"+id+"' autocomplete='off'></form>";
                         bank_rowsHTML+="<td data-th='S.No.'>";
@@ -932,7 +932,7 @@
         {
             if(is_create_access('form258'))
             {
-                var id=get_new_key();
+                var id=vUtil.newKey();
                 var	rowsHTML="<tr>";
                     rowsHTML+="<form id='form258_tc_"+id+"' autocomplete='off'></form>";
                         rowsHTML+="<td data-th='S.No.'>";

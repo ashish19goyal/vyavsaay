@@ -163,7 +163,7 @@
         {
             if(is_create_access('form145'))
             {
-                var id=get_new_key();
+                var id=vUtil.newKey();
                 var rowsHTML="<tr>";
                 rowsHTML+="<form id='form145_"+id+"' autocomplete='off'></form>";
                     rowsHTML+="<td data-th='Item'>";
@@ -304,7 +304,7 @@
                     if(placements==0 && target!="")
                     {
                         var storage_json={data_store:'area_utilization',
-                            data:[{index:'id',value:get_new_key()},
+                            data:[{index:'id',value:vUtil.newKey()},
 	 					         {index:'item_name',value:product_name},
 	 					         {index:'batch',value:batch},
 	 					         {index:'name',value:target},
@@ -447,7 +447,7 @@
         {
             var data_array=['id','item_name','batch','quantity','source','target',
                             'status','dispatcher','receiver','schedule'];
-            my_array_to_csv(data_array);
+            vUtil.arrayToCSV(data_array);
         };
 
         function form145_import_validate(data_array)

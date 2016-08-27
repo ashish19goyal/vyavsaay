@@ -156,7 +156,7 @@
 							var last_updated=get_my_time();
 							if(image_elem.getAttribute('data-id')=="")
 							{
-								var data_id=get_new_key();
+								var data_id=vUtil.newKey();
 								image_elem.setAttribute('data-id',data_id);
 
 								var data_json={data_store:'documents',
@@ -342,7 +342,7 @@
 		function form30_import_template()
 		{
 			var data_array=['id','name','phone','email','acc_name','address'];
-			my_array_to_csv(data_array);
+			vUtil.arrayToCSV(data_array);
 		};
 
 	</script>

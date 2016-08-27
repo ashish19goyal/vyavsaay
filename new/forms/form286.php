@@ -73,12 +73,8 @@
 		{
 			show_loader();
 
-			var new_columns=new Object();
-				new_columns.count=0;
-				new_columns.start_index=0;
-				new_columns.data_store='system_billing';
-
-				new_columns.indexes=[{index:'id'},
+			var new_columns={data_store:'system_billing',
+						indexes:[{index:'id'},
 									{index:'order_id'},
 									{index:'narration'},
 									{index:'account_name'},
@@ -90,7 +86,7 @@
 									{index:'period_start'},
 									{index:'period_end'},
 									{index:'display',exact:'show'},
-									{index:'payment_status'}];
+									{index:'payment_status'}]};
 
 			read_json_rows('form286',new_columns,function(results)
 			{
