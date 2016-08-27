@@ -309,6 +309,50 @@ function get_limited_export_data(columns,filename,func)
 	});
 }
 
+function initialize_fixed_tabular_report_buttons(data,report_title,report_id,func)
+{
+	var csv_button=document.getElementById(report_id+'_csv');
+	var pdf_button=document.getElementById(report_id+'_pdf');
+	var print_button=document.getElementById(report_id+'_print');
+	var email_button=document.getElementById(report_id+'_email');
+
+	if(typeof csv_button!='undefined')
+	{
+		$(csv_button).off("click");
+		$(csv_button).on("click", function(event)
+		{
+			get_fixed_tabular_report_data(data,report_title,'csv',func);
+		});
+	}
+
+	if(typeof pdf_button!='undefined')
+	{
+		$(pdf_button).off("click");
+		$(pdf_button).on("click", function(event)
+		{
+			get_fixed_tabular_report_data(data,report_title,'pdf',func);
+		});
+	}
+
+	if(typeof print_button!='undefined')
+	{
+		$(print_button).off("click");
+		$(print_button).on("click", function(event)
+		{
+			get_fixed_tabular_report_data(data,report_title,'print',func);
+		});
+	}
+
+	if(typeof email_button!='undefined')
+	{
+		$(email_button).off("click");
+		$(email_button).on("click", function(event)
+		{
+			get_fixed_tabular_report_data(data,report_title,'email',func);
+		});
+	}
+}
+
 
 function initialize_tabular_report_buttons(columns,report_title,report_id,func)
 {
@@ -388,6 +432,65 @@ function initialize_static_tabular_report_buttons(report_title,report_id)
 	}
 }
 
+
+function get_fixed_tabular_report_data(results,filename,action_type,func)
+{
+
+	var data_id=vUtil.newKey();
+	var last_updated=get_my_time();
+	var data_json={data_store:'export_log',
+		 				log:'yes',
+		 				warning:'no',
+		 				data:[{index:'id',value:data_id},
+		 					{index:'acc_name',value:get_account_name()},
+		 					{index:'filename',value:filename},
+		 					{index:'export_time',value:last_updated},
+		 					{index:'last_updated',value:last_updated}],
+		 				log_data:{title:'Exported',notes:filename+" report",link_to:''}};
+
+	create_json(data_json);
+
+	if(typeof func!='undefined')
+	{
+		results.forEach(function(result)
+		{
+			func(result);
+		});
+	}
+
+	var bt=get_session_var('title');
+    if(action_type!='csv')
+    {
+        results.forEach(function(result)
+        {
+            delete result.id;
+        });
+    }
+	switch(action_type)
+	{
+		case 'csv': vUtil.objArrayToCSV(results,filename);
+					break;
+		case 'pdf': print_report_table(results,filename,function (container)
+                    {
+                        var html_data=container.innerHTML;
+                        var pdfcreator=new htmlToPdf({html:html_data});
+                        pdfcreator.download(filename);
+                        container.innerHTML="";
+                    });
+                    break;
+		case 'print': print_report_table(results,filename,function (container)
+                    {
+                        $.print(container);
+                        container.innerHTML="";
+                    });
+                    break;
+		case 'email': modal183_action(bt+" - "+filename,function (func)
+                    {
+                        print_report_table(results,filename,func);
+                    });
+                    break;
+	}
+}
 
 function get_tabular_report_data(columns,filename,action_type,func)
 {
@@ -481,24 +584,24 @@ function get_static_report_data(filename,action_type,report_id)
 	switch(action_type)
 	{
 		case 'pdf': print_static_report_table(report_id,filename,function (container)
-						{
-                            var html_data=container.innerHTML;
-							var pdfcreator=new htmlToPdf({html:html_data});
-							pdfcreator.download(filename);
-                            container.innerHTML="";
-						});
-						break;
+					{
+                        var html_data=container.innerHTML;
+						var pdfcreator=new htmlToPdf({html:html_data});
+						pdfcreator.download(filename);
+                        container.innerHTML="";
+					});
+					break;
 		case 'print': print_static_report_table(report_id,filename,function (container)
-							{
-								$.print(container);
-								container.innerHTML="";
-							});
-							break;
+					{
+						$.print(container);
+						container.innerHTML="";
+					});
+					break;
 		case 'email': modal183_action(bt+" - "+filename,function (func)
-							{
-								print_static_report_table(report_id,filename,func);
-							});
-							break;
+					{
+						print_static_report_table(report_id,filename,func);
+					});
+					break;
 	}
 }
 

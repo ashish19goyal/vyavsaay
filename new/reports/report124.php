@@ -14,6 +14,12 @@
                     <li>
                         <a id='report124_email'><i class='fa fa-envelope'></i> Email</a>
                     </li>
+					<li>
+                        <a id='report124_print'><i class='fa fa-print'></i> Print</a>
+                    </li>
+					<li>
+						<a id='report124_pdf'><i class='fa fa-file-pdf-o'></i> Download as PDF</a>
+					</li>
                 </ul>
             </div>
         </div>
@@ -242,6 +248,18 @@
 		read_json_rows('report124',columns,function(policies)
         {
 			var months_object={};
+			var export_data_array=[];
+			var export_row1={};
+			var export_row2={};
+			var export_row3={};
+
+			export_row1['1']="Caller";
+			export_row2['1']="-";
+			export_row3['1']="-";
+			export_row1['2']="Issuing Company";
+			export_row2['2']="-";
+			export_row3['2']="-";
+
 			for(var i in policies)
 			{
 				policies[i].year = vTime.year({date:policies[i].issue_date,inputFormat:'unix'});
@@ -263,6 +281,29 @@
 			});
 
 			var numMonths = months_array.length;
+
+			for (var x=0; x<numMonths;x++)
+			{
+				var a = (3+x).toString();
+				var b = (3+x+numMonths).toString();
+				var c = (3+x+2*numMonths).toString();
+
+				export_row1[a]="# of Policies";
+				export_row1[b]="Total Premium";
+				export_row1[c]="Total Short Premium";
+
+				export_row2[a]=months_array[x].y;
+				export_row2[b]=months_array[x].y;
+				export_row2[c]=months_array[x].y;
+
+				export_row3[a]=months_array[x].m;
+				export_row3[b]=months_array[x].m;
+				export_row3[c]=months_array[x].m;
+			}
+
+			export_data_array.push(export_row1);
+			export_data_array.push(export_row2);
+			export_data_array.push(export_row3);
 
 			$('#report124_thead>tr>th').each(function(index)
 			{
@@ -359,6 +400,10 @@
 				var item = grid_array[a];
 				if(!vUtil.isBlank(item.tele_caller) || true)
 				{
+					var export_row = {};
+					export_row['1']=item.tele_caller;
+					export_row['2']=item.issuer;
+
 					var rows1HTML="<tr>";
 	                rows1HTML+="<td>";
 						rows1HTML+="<a onclick=\"show_object('staff','"+item.telecaller+"');\">"+item.tele_caller+"</a>";
@@ -373,20 +418,32 @@
 					var num = "";
 					var premium = "";
 					var spremium ="";
+
+					var x=0;
 					months_array.forEach(function(month)
 					{
 						num+="<td>"+item['num-'+month.y+month.m]+"</td>";
 						premium+="<td>"+vUtil.round(item['p-'+month.y+month.m])+"</td>";
 						spremium+="<td>"+vUtil.round(item['sp-'+month.y+month.m])+"</td>";
+
+						var a = (3+x).toString();
+						var b = (3+x+numMonths).toString();
+						var c = (3+x+2*numMonths).toString();
+						export_row[a]=vUtil.round(item['num-'+month.y+month.m]);
+						export_row[b]=vUtil.round(item['p-'+month.y+month.m]);
+						export_row[c]=vUtil.round(item['sp-'+month.y+month.m]);
+						x++;
 					});
 
 					var	rows2HTML="<tr>"+num+premium+spremium+"</tr>";
 
+					export_data_array.push(export_row);
+
 					$('#report124_body2').append(rows2HTML);
 				}
             }
-
-			initialize_static_tabular_report_buttons('Tele-caller Performance Grid','report124');
+			console.log(export_data_array);
+			initialize_fixed_tabular_report_buttons(export_data_array,'Tele-caller Performance Grid','report124');
 
             hide_loader();
         });
