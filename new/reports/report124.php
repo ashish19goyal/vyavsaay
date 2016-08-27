@@ -406,7 +406,7 @@
 
 					var rows1HTML="<tr>";
 	                rows1HTML+="<td>";
-						rows1HTML+="<a onclick=\"show_object('staff','"+item.telecaller+"');\">"+item.tele_caller+"</a>";
+						rows1HTML+="<a onclick=\"show_object('staff','"+item.tele_caller+"');\">"+item.tele_caller+"</a>";
 	                rows1HTML+="</td>";
 					rows1HTML+="<td>";
 						rows1HTML+=item.issuer;
@@ -442,7 +442,7 @@
 					$('#report124_body2').append(rows2HTML);
 				}
             }
-			console.log(export_data_array);
+
 			initialize_fixed_tabular_report_buttons(export_data_array,'Tele-caller Performance Grid','report124');
 
             hide_loader();

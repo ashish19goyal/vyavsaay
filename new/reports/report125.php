@@ -1,75 +1,72 @@
-<div id='report123' class='tab-pane portlet box red-sunglo'>
+<div id='report125' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
 		<div class='caption'>
-			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report123_ini();'>Refresh</a>
-			<a class='btn btn-circle grey btn-outline btn-sm' onclick=report123_add_filter();>Add Filter</a>
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report125_ini();'>Refresh</a>
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick=report125_add_filter();>Add Filter</a>
 		</div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
                 <ul class="dropdown-menu pull-right">
                     <li>
-                        <a id='report123_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
+                        <a id='report125_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
                     </li>
                     <li>
-                        <a id='report123_email'><i class='fa fa-envelope'></i> Email</a>
+                        <a id='report125_email'><i class='fa fa-envelope'></i> Email</a>
                     </li>
+					<li>
+                        <a id='report125_print'><i class='fa fa-print'></i> Print</a>
+                    </li>
+					<li>
+						<a id='report125_pdf'><i class='fa fa-file-pdf-o'></i> Download as PDF</a>
+					</li>
                 </ul>
             </div>
         </div>
 	</div>
 
 	<div class="portlet-body">
-		<form id='report123_header' autocomplete="off">
+		<form id='report125_header' autocomplete="off">
 			<input type='submit' class='submit_hidden'>
-			<fieldset id='report123_filters'></fieldset>
+			<fieldset id='report125_filters'></fieldset>
 		</form>
-	<br>
-		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
-			<thead>
-				<tr>
-					<th>Issuing Company</th>
-		            <th>Agent</th>
-					<th>Policy #</th>
-					<th>Premium</th>
-					<th>Basic Comm.</th>
-					<th>ORC Comm.</th>
-				</tr>
-			</thead>
-			<tbody id='report123_body'></tbody>
-		</table>
-	</div>
-
-	<div class='modal_forms'>
-
-	<a href='#report123_popup' data-toggle="modal" id='report123_popup_link'></a>
-		<div id="report123_popup" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<form id='report123_popup_form' autocomplete="off">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-							<h4 class="modal-title">Valdiation Failed</h4>
-						</div>
-						<div class="modal-body">
-							<div id='report123_popup_message' class="scroller" style="height:100px;" data-always-visible="1" data-rail-visible1="1">
-								Validation Failed!
-							</div>
-						</div>
-						<div class="modal-footer">
-							<input type="button" class="btn green" data-dismiss='modal' name='close' value='Ok'>
-						</div>
-					</form>
+		<br>
+		<!-- <table width="100%"> -->
+		<div class='row'>
+			<div class='col-sm-4' style='padding-left:0px;padding-right:0px;'>
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>Caller</th>
+							<th>Issuing Company</th>
+				        </tr>
+					</thead>
+					<tbody id='report125_body1'></tbody>
+				</table>
+			</div>
+			<div class='col-sm-8' style='padding-left:0px;padding-right:0px;'>
+				<div style='width:100%;overflow-x:auto;overflow-y:hidden;'>
+					<table class="table table-striped table-bordered table-hover">
+						<thead id='report125_thead'>
+							<tr>
+							    <th># of Policies</th>
+								<th>Total Premium</th>
+								<th>Total Short Premium</th>
+							</tr>
+						</thead>
+						<tbody id='report125_body2'></tbody>
+					</table>
 				</div>
 			</div>
 		</div>
+
 	</div>
 
 	<script>
 
-	function report123_add_filter()
+	function report125_add_filter()
 	{
-		var form=document.getElementById('report123_header');
+		var form=document.getElementById('report125_header');
 		var f_filter=document.createElement('input');
 		f_filter.type='text';
 		f_filter.placeholder='Filter By';
@@ -132,7 +129,7 @@
 		// label5.appendChild(remove_link);
 		col.appendChild(i_filter);
 
-		var fieldset=document.getElementById('report123_filters');
+		var fieldset=document.getElementById('report125_filters');
 		fieldset.appendChild(row);
 
 		var data=['Application #','Policy #','Issue Type','End Date','Start Date','Issue Date',
@@ -148,7 +145,7 @@
 				$(from_filter).show();
 				$(to_filter).show();
 				$(v_filter).hide();
-				$('#report123').formcontrol();
+				$('#report125').formcontrol();
 			}else{
 				$(from_filter).hide();
 				$(to_filter).hide();
@@ -184,51 +181,49 @@
 				default: i_filter.value = 'status'; s();
 			}
 		});
-		$('#report123').formcontrol();
+		$('#report125').formcontrol();
 	}
 
-    function report123_header_ini()
+    function report125_header_ini()
     {
-		var form=document.getElementById('report123_header');
-		$('#report123_filters').html('');
-		report123_add_filter();
+		var form=document.getElementById('report125_header');
+		$('#report125_filters').html('');
+		report125_add_filter();
 
 		$(form).off('submit');
         $(form).on('submit',function(event)
         {
             event.preventDefault();
-            report123_ini();
+            report125_ini();
         });
 
-        setTimeout(function(){$('#report123').formcontrol();},500);
+		$('#report125_thead>tr>th').each(function(index)
+		{
+			$(this).attr('colspan',1);
+		});
+
+		var paginator=$('#report125_body1').paginator({visible:false});
+        setTimeout(function(){$('#report125').formcontrol();},500);
     }
 
-    function report123_ini()
+    function report125_ini()
     {
-        var form=document.getElementById('report123_header');
+        var form=document.getElementById('report125_header');
 
         show_loader();
-        $('#report123_body').html('');
+        $('#report125_body1').html('');
+		$('#report125_body2').html('');
 
-        var paginator=$('#report123_body').paginator({'page_size':50});
-
-        var columns={count:paginator.page_size(),
-                    start_index:paginator.get_index(),
-                    data_store:'policies',
+        var columns={data_store:'policies',
 					indexes:[{index:'id'},
                         {index:'issuer'},
-                        {index:'agent'},
+                        {index:'tele_caller'},
 						{index:'premium'},
-						{index:'policy_num'},
-						{index:'policy_name'},
-						{index:'sum_insured'},
-						{index:'term'},
-						{index:'upsell'},
-						{index:'issue_type'},
-						{index:'issued_in_quarter'},
+						{index:'short_premium'},
+						{index:'issue_date'},
 						{index:'status',exact:'issued'}]};
 
-		$('#report123_filters .row').each(function(index)
+		$('#report125_filters .row').each(function(index)
 		{
 			var row = this;
 			var f_filter = $(this).find("input[data-name='f']").val();
@@ -250,148 +245,208 @@
 			}
 		});
 
-		read_json_rows('report123',columns,function(policies)
+		read_json_rows('report125',columns,function(policies)
         {
-			var policy_names = vUtil.arrayColumn(policies,'policy_name');
-			var bank_data={data_store:'policy_types',
-							indexes:[{index:'name',array:policy_names},
-									{index:'commissions'}]};
-			read_json_rows('report123',bank_data,function(policy_types)
-	        {
-				var policy_commissions = vUtil.keyedArrayColumn(policy_types,'name','commissions');
-				for(var i in policy_commissions){
-					policy_commissions[i] = vUtil.jsonParse(policy_commissions[i]);
+			var months_object={};
+			var export_data_array=[];
+			var export_row1={};
+			var export_row2={};
+			var export_row3={};
+
+			export_row1['1']="Caller";
+			export_row2['1']="-";
+			export_row3['1']="-";
+			export_row1['2']="Issuing Company";
+			export_row2['2']="-";
+			export_row3['2']="-";
+
+			for(var i in policies)
+			{
+				policies[i].year = vTime.year({date:policies[i].issue_date,inputFormat:'unix'});
+				policies[i].month = vTime.monthName({date:policies[i].issue_date,inputFormat:'unix'});
+				var obj_name = policies[i].year+"-"+policies[i].month;
+				months_object[obj_name]={m:policies[i].month,y:policies[i].year};
+			}
+
+			var months_array = vUtil.objectToArray(months_object);
+
+			var allMonths = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+			months_array.sort(function(a,b){
+				if(a.y>b.y)
+					return 1;
+				else if(a.y<b.y)
+					return -1;
+				else
+			    	return allMonths.indexOf(a.m) > allMonths.indexOf(b.m);
+			});
+
+			var numMonths = months_array.length;
+
+			for (var x=0; x<numMonths;x++)
+			{
+				var a = (3+x).toString();
+				var b = (3+x+numMonths).toString();
+				var c = (3+x+2*numMonths).toString();
+
+				export_row1[a]="# of Policies";
+				export_row1[b]="Total Premium";
+				export_row1[c]="Total Short Premium";
+
+				export_row2[a]=months_array[x].y;
+				export_row2[b]=months_array[x].y;
+				export_row2[c]=months_array[x].y;
+
+				export_row3[a]=months_array[x].m;
+				export_row3[b]=months_array[x].m;
+				export_row3[c]=months_array[x].m;
+			}
+
+			export_data_array.push(export_row1);
+			export_data_array.push(export_row2);
+			export_data_array.push(export_row3);
+
+			$('#report125_thead>tr>th').each(function(index)
+			{
+				$(this).attr('colspan',numMonths);
+			});
+
+			var row2 = "<tr><td>-</td><td>-</td></tr>";
+			$('#report125_body1').append(row2);
+			$('#report125_body1').append(row2);
+
+			var yearsCells = "";
+			var years_object = {};
+			for(var a in months_array)
+			{
+				if(vUtil.isBlank(years_object[months_array[a].y]))
+				{
+					years_object[months_array[a].y]=0;
 				}
 
-				var policy_num = vUtil.arrayColumn(policies,'policy_num');
-				var commissions_data={data_store:'policy_commissions',
-									indexes:[{index:'policy_num',array:policy_num},
-											{index:'comm_percent'},
-											{index:'amount'},
-											{index:'commission_type'}]};
-				read_json_rows('report123',commissions_data,function(commissions)
-				{
-					for(var i in commissions)
-					{
-						for(var a in policies)
-						{
-							if(policies[a].policy_num==commissions[i].policy_num)
-							{
-								policies[a][commissions[i].commission_type] = commissions[i].amount;
-								policies[a][commissions[i].commission_type+"_percent"] = commissions[i].comm_percent;
-								break;
-							}
-						}
-					}
+				years_object[months_array[a].y]+=1;
+			}
 
-		            policies.forEach(function(item)
-		            {
-						var rowsHTML="<tr>";
-		                rowsHTML+="<form id='report123_"+item.id+"'></form>";
-		                rowsHTML+="<td data-th='Issuing Company'>";
-							rowsHTML+=item.issuer;
-		                rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Agent'>";
-							rowsHTML+=item.agent;
-		                rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Policy #'>";
-							rowsHTML+="<a onclick=\"show_object('policies','"+item.policy_num+"');\">"+item.policy_num+"</a>";
-		                rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Premium'>";
-							rowsHTML+=item.premium;
-		                rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Basic Comm.'>";
-							rowsHTML+="<span class='label label-sm' id='report123_basic_"+item.id+"'>"+item.basic+"</span>";
-		                rowsHTML+="</td>";
-						rowsHTML+="<td data-th='ORC Comm.'>";
-							rowsHTML+="<span class='label label-sm' id='report123_orc_"+item.id+"'>"+item.orc+"</span>";
-						rowsHTML+="</td>";
-						rowsHTML+="</tr>";
-
-						$('#report123_body').append(rowsHTML);
-
-						report123_evaluate_commission('basic',item,policy_commissions);
-						report123_evaluate_commission('orc',item,policy_commissions);
-		            });
-
-					initialize_static_tabular_report_buttons('Commissions Validation','report123');
-
-		            paginator.update_index(policies.length);
-		            hide_loader();
-				});
-			});
-        });
-    };
-
-	function report123_evaluate_commission(comm_type,data,policy_commissions)
-	{
-		var commissions = policy_commissions[data.policy_name];
-		var found=false;
-		var match=false;
-
-		if(!vUtil.isBlank(commissions))
-		{
-			commissions.forEach(function(commission)
+			for(var b in years_object)
 			{
-				if(commission.type.toLowerCase()==comm_type.toLowerCase() && commission.issue.toLowerCase()==data['issue_type'].toLowerCase() && !found)
+				yearsCells+="<td colspan='"+years_object[b]+"'>"+b+"</td>";
+			}
+
+			var monthsCells = "";
+			for(var i in months_array)
+			{
+				monthsCells+="<td>"+months_array[i].m+"</td>";
+			}
+
+			var row2 = "<tr>"+yearsCells+yearsCells+yearsCells+"</tr>";
+			$('#report125_body2').append(row2);
+			var row2 = "<tr>"+monthsCells+monthsCells+monthsCells+"</tr>";
+			$('#report125_body2').append(row2);
+
+			var grid_array={};
+
+			policies.sort(function(a,b){
+				return a.tele_caller > b.tele_caller;
+			});
+
+            policies.forEach(function(item)
+            {
+				var obj_name = item.tele_caller+"-"+item.issuer;
+				var total_obj = item.tele_caller+"-total";
+
+				if(vUtil.isBlank(grid_array[total_obj]))
 				{
-					commission.conditions = vUtil.jsonParse(commission.conditions);
-					var all_match=true;
-					commission.conditions.forEach(function(cond)
+					grid_array[total_obj]= {'tele_caller':item.tele_caller,
+											'issuer':'Total'};
+
+					months_array.forEach(function(month){
+						grid_array[total_obj]['num-'+month.y+month.m] = 0;
+						grid_array[total_obj]['p-'+month.y+month.m] = 0;
+						grid_array[total_obj]['sp-'+month.y+month.m] = 0;
+					});
+				}
+
+				if(vUtil.isBlank(grid_array[obj_name]))
+				{
+					grid_array[obj_name]= {'tele_caller':item.tele_caller,
+											'issuer':item.issuer};
+
+					months_array.forEach(function(month){
+						grid_array[obj_name]['num-'+month.y+month.m] = 0;
+						grid_array[obj_name]['p-'+month.y+month.m] = 0;
+						grid_array[obj_name]['sp-'+month.y+month.m] = 0;
+					});
+				}
+
+				grid_array[total_obj]['num-'+item.year+item.month] += 1;
+				if(!vUtil.isBlank(item.premium) && !isNaN(item.premium)){
+					grid_array[total_obj]['p-'+item.year+item.month] += parseFloat(item.premium);
+				}
+				if(!vUtil.isBlank(item.short_premium) && !isNaN(item.short_premium)){
+					grid_array[total_obj]['sp-'+item.year+item.month] += parseFloat(item.short_premium);
+				}
+
+				grid_array[obj_name]['num-'+item.year+item.month] += 1;
+				if(!vUtil.isBlank(item.premium) && !isNaN(item.premium)){
+					grid_array[obj_name]['p-'+item.year+item.month] += parseFloat(item.premium);
+				}
+				if(!vUtil.isBlank(item.short_premium) && !isNaN(item.short_premium)){
+					grid_array[obj_name]['sp-'+item.year+item.month] += parseFloat(item.short_premium);
+				}
+
+			});
+
+			for (var a in grid_array)
+			{
+				var item = grid_array[a];
+				if(!vUtil.isBlank(item.tele_caller) || true)
+				{
+					var export_row = {};
+					export_row['1']=item.tele_caller;
+					export_row['2']=item.issuer;
+
+					var rows1HTML="<tr>";
+	                rows1HTML+="<td>";
+						rows1HTML+="<a onclick=\"show_object('staff','"+item.telecaller+"');\">"+item.tele_caller+"</a>";
+	                rows1HTML+="</td>";
+					rows1HTML+="<td>";
+						rows1HTML+=item.issuer;
+	                rows1HTML+="</td>";
+					rows1HTML+="</tr>";
+
+					$('#report125_body1').append(rows1HTML);
+
+					var num = "";
+					var premium = "";
+					var spremium ="";
+
+					var x=0;
+					months_array.forEach(function(month)
 					{
-						if((!vUtil.isBlank(cond.exact) && data[cond.index]!=cond.exact) || (!vUtil.isBlank(cond.lowerbound) && data[cond.index]<cond.lowerbound) || (!vUtil.isBlank(cond.upperbound) && data[cond.index]>cond.upperbound))
-						{
-							all_match=false;
-						}
+						num+="<td>"+item['num-'+month.y+month.m]+"</td>";
+						premium+="<td>"+vUtil.round(item['p-'+month.y+month.m])+"</td>";
+						spremium+="<td>"+vUtil.round(item['sp-'+month.y+month.m])+"</td>";
+
+						var a = (3+x).toString();
+						var b = (3+x+numMonths).toString();
+						var c = (3+x+2*numMonths).toString();
+						export_row[a]=vUtil.round(item['num-'+month.y+month.m]);
+						export_row[b]=vUtil.round(item['p-'+month.y+month.m]);
+						export_row[c]=vUtil.round(item['sp-'+month.y+month.m]);
+						x++;
 					});
 
-					if(all_match)
-					{
-						found=true;
-						if(parseFloat(data[comm_type+"_percent"])==parseFloat(commission.commission))
-						{
-							match=true;
-						}
-					}
-				}
-			});
+					var	rows2HTML="<tr>"+num+premium+spremium+"</tr>";
 
-			if(vUtil.isBlank(data[comm_type]))
-			{
-				$('#report123_'+comm_type+"_"+data.id).addClass('label-warning');
-				$('#report123_'+comm_type+"_"+data.id).addClass('link');
-				$('#report123_'+comm_type+"_"+data.id).click(function()
-				{
-					$('#report123_popup_message').html("Commission details have not been imported for this policy.");
-					$('#report123_popup_link').click();
-				});
-			}
-			else if(match && found)
-			{
-				$('#report123_'+comm_type+"_"+data.id).addClass('label-success');
-			}
-			else if(found)
-			{
-				$('#report123_'+comm_type+"_"+data.id).addClass('label-danger');
-				$('#report123_'+comm_type+"_"+data.id).addClass('link');
-				$('#report123_'+comm_type+"_"+data.id).click(function()
-				{
-					$('#report123_popup_message').html("Commission Amount doesn't match system settings. Please check.");
-					$('#report123_popup_link').click();
-				});
-			}
-			else
-			{
-				$('#report123_'+comm_type+"_"+data.id).addClass('label-warning');
-				$('#report123_'+comm_type+"_"+data.id).addClass('link');
-				$('#report123_'+comm_type+"_"+data.id).click(function()
-				{
-					$('#report123_popup_message').html('Could not find the commission settings, matching this policy. Please re-check the commission setings in the policy bank.');
-					$('#report123_popup_link').click();
-				});
-			}
-		}
-	};
+					export_data_array.push(export_row);
+
+					$('#report125_body2').append(rows2HTML);
+				}
+            }
+			initialize_fixed_tabular_report_buttons(export_data_array,'Renewals Report','report125');
+
+            hide_loader();
+        });
+    };
 
 	</script>
 </div>
