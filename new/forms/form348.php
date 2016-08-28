@@ -19,6 +19,10 @@
                     <li>
                         <a id='form348_print'><i class='fa fa-print'></i> Print</a>
                     </li>
+					<li class='divider'></li>
+					<li>
+                        <a id='form348_recalculate' onclick=form348_recalculate_commissions();><i class='fa fa-refresh'></i> Recalculate Commissions</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -232,6 +236,114 @@
 				$("#modal2_link").click();
 			}
 		}
+
+		function form348_recalculate_commissions()
+		{
+			if(is_update_access('form348'))
+			{
+				var comm_data={data_store:'policy_commissions',
+								indexes:[{index:'amount',exact:""},
+										{index:'id'},
+										{index:'policy_num'},
+										{index:'comm_percent'},
+										{index:'premium'},
+										{index:'commission_type'},
+										{index:'issue_date'}]};
+				read_json_rows('form348',comm_data,function(commissions)
+				{
+					var policy_nums = vUtil.arrayColumn(commissions,'policy_num');
+
+					var policy_data={data_store:'policies',
+									indexes:[{index:'policy_num',array:policy_nums},
+											{index:'policy_name'},
+											{index:'sum_insured'},
+											{index:'issued_in_quarter'},
+											{index:'upsell'},
+											{index:'issue_type'},
+											{index:'term'}]};
+					read_json_rows('form348',policy_data,function(policies)
+					{
+						var policy_names = vUtil.arrayColumn(policies,'policy_name');
+						var policy_names_data={data_store:'policy_types',
+										indexes:[{index:'name',array:policy_names},
+												{index:'commissions'}]};
+						read_json_rows('form348',policy_names_data,function(policy_types)
+						{
+							var last_updated = vTime.unix();
+
+							for(var i in commissions)
+							{
+								for(var j in policies)
+								{
+									if(commissions[i].policy_num==policies[j].policy_num)
+									{
+										commissions[i].policy_name = policies[j].policy_name;
+										commissions[i].sum_insured = policies[j].sum_insured;
+										commissions[i].issued_in_quarter = policies[j].issued_in_quarter;
+										commissions[i].upsell = policies[j].upsell;
+										commissions[i].issue_type = policies[j].issue_type;
+										commissions[i].term = policies[j].term;
+										break;
+									}
+								}
+
+								for(var k in policy_types)
+								{
+									if(commissions[i].policy_name==policy_types[k].name)
+									{
+										commissions[i].commissions = vUtil.jsonParse(policy_types[k].commissions);
+										break;
+									}
+								}
+							}
+
+							var update_comm_json={data_store:'policy_commissions',data:[]};
+
+							commissions.forEach(function(comm)
+							{
+								if(!vUtil.isBlank(comm.commissions))
+								{
+									comm.commissions.forEach(function(commission)
+									{
+										if(commission.type.toLowerCase()==comm.commission_type.toLowerCase() && commission.issue.toLowerCase()==comm['issue_type'].toLowerCase())
+										{
+											commission.conditions = vUtil.jsonParse(commission.conditions);
+											var all_match=true;
+
+											commission.conditions.forEach(function(cond)
+											{
+												if((!vUtil.isBlank(cond.exact) && comm[cond.index]!=cond.exact) || (!vUtil.isBlank(cond.lowerbound) && comm[cond.index]<cond.lowerbound) || (!vUtil.isBlank(cond.upperbound) && comm[cond.index]>cond.upperbound))
+												{
+													all_match=false;
+												}
+											});
+
+											if(all_match)
+											{
+												comm['comm_percent'] = commission.commission;
+												comm['amount'] = parseFloat(commission.commission)*parseFloat(comm['premium'])/100;
+
+												var data_array=[{index:'id',value:comm['id']},
+														{index:'comm_percent',value:comm['comm_percent']},
+														{index:'amount',value:comm['amount']},
+														{index:'last_updated',value:last_updated}];
+
+												update_comm_json.data.push(data_array);
+											}
+										}
+									});
+								}
+
+							});
+							update_batch_json(update_comm_json);
+						});
+					});
+				});
+			}
+			else{
+				$("#modal2_link").click();
+			}
+		};
 
 	</script>
 </div>
