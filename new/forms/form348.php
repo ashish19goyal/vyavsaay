@@ -19,10 +19,6 @@
                     <li>
                         <a id='form348_print'><i class='fa fa-print'></i> Print</a>
                     </li>
-						<li class="divider"> </li>
-                    <li>
-                        <a id='form348_upload' onclick=form348_popup_import_action();><i class='fa fa-upload'></i> Import</a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -46,45 +42,6 @@
 			<tbody id='form348_body'>
 			</tbody>
 		</table>
-	</div>
-
-	<div class='modal_forms'>
-
-		<a href='#form348_popup_import' data-toggle="modal" id='form348_popup_import_link'></a>
-		<div id="form348_popup_import" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<form id='form348_popup_import_form' autocomplete="off">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-							<h4 class="modal-title">Data Import</h4>
-						</div>
-						<div class="modal-body">
-							<div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
-							  <div class="row">
-								  <div class="col-sm-12 col-md-4">Import Type</div>
-								  <div class="col-sm-12 col-md-8"><input type='text' required form='form348_popup_import_form' name='type'></div>
-							  </div>
-							  <div class="row">
-								  <div class='col-md-6'>
-										<button type="button" name='download' style='margin-bottom:10px;' class='btn green-jungle'>Download Import Template</button>
-								  </div>
-							  </div>
-							  <div class="row">
-								  <div class='col-md-6'>
-										<button type='button' name='file_dummy' class='btn red-sunglo'>Select File</button>
-								  </div>
-							  </div>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="submit" class="btn green" form='form348_popup_import_form' name='save'>Import</button>
-							<button type="button" class="btn red" form='form348_popup_import_form' data-dismiss='modal' name='cancel'>Cancel</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
 	</div>
 
 	<script>
@@ -173,21 +130,47 @@
 								rowsHTML+="<a onclick=\"show_object('staff','"+result.agent+"')\"><textarea readonly='readonly' form='form348_"+result.id+"'>"+result.agent+"</textarea></a>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Premium'>";
-								rowsHTML+="<input type='number' step='any' readonly='readonly' form='form348_"+result.id+"' value='"+result.premium+"'>";
+								rowsHTML+="<input type='number' step='any' readonly='readonly' class='dblclick_editable' form='form348_"+result.id+"' value='"+result.premium+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Commission %'>";
-								rowsHTML+="<input type='number' step='any' readonly='readonly' form='form348_"+result.id+"' value='"+result.comm_percent+"'>";
+								rowsHTML+="<input type='number' step='any' readonly='readonly' class='dblclick_editable' form='form348_"+result.id+"' value='"+result.comm_percent+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Amount'>";
-								rowsHTML+="<input type='number' step='any' readonly='readonly' form='form348_"+result.id+"' value='"+result.amount+"'>";
+								rowsHTML+="<input type='number' step='any' readonly='readonly' class='dblclick_editable' form='form348_"+result.id+"' value='"+result.amount+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form348_"+result.id+"' value='"+result.id+"' name='id'>";
-								rowsHTML+="<button class='btn red' type='button'  form='form348_"+result.id+"' title='Delete' onclick='form348_delete_item($(this));' name='delete'><i class='fa fa-trash'></i></button>";
+								rowsHTML+="<button class='btn green' type='submit'  form='form348_"+result.id+"' title='Update' name='save'><i class='fa fa-save'></i></button>";
+								// rowsHTML+="<button class='btn red' type='button'  form='form348_"+result.id+"' title='Delete' onclick='form348_delete_item($(this));' name='delete'><i class='fa fa-trash'></i></button>";
 							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
 
 					$('#form348_body').append(rowsHTML);
+					var fields=document.getElementById("form348_"+result.id);
+					var p_filter = fields.elements[3];
+					var c_filter = fields.elements[4];
+					var a_filter = fields.elements[5];
+
+					vUtil.onChange(p_filter,function()
+					{
+						a_filter.value = vUtil.round((p_filter.value*c_filter.value/100),2);
+					});
+
+					vUtil.onChange(c_filter,function()
+					{
+						a_filter.value = vUtil.round((p_filter.value*c_filter.value/100),2);
+					});
+
+					vUtil.onChange(a_filter,function()
+					{
+						c_filter.value = vUtil.round((100*a_filter.value/p_filter.value),2);
+					});
+
+					$(fields).on("submit", function(event)
+					{
+						event.preventDefault();
+						form348_update_item(fields);
+					});
 				});
 
 				$('#form348').formcontrol();
@@ -203,372 +186,52 @@
 			});
 		};
 
-		function form348_delete_item(button)
+		// function form348_delete_item(button)
+		// {
+		// 	if(is_delete_access('form348'))
+		// 	{
+		// 		modal115_action(function()
+		// 		{
+		// 			var form_id=$(button).attr('form');
+		// 			var form=document.getElementById(form_id);
+		//
+		// 			var data_id=form.elements['id'].value;
+		// 			var data_json={data_store:'policy_commissions',
+ 	// 						data:[{index:'id',value:data_id}]};
+		//
+		// 			delete_json(data_json);
+		//
+		// 			$(button).parent().parent().remove();
+		// 		});
+		// 	}
+		// 	else
+		// 	{
+		// 		$("#modal2_link").click();
+		// 	}
+		// }
+
+		function form348_update_item(form)
 		{
-			if(is_delete_access('form348'))
+			if(is_update_access('form348'))
 			{
-				modal115_action(function()
-				{
-					var form_id=$(button).attr('form');
-					var form=document.getElementById(form_id);
+				var data_id=form.elements['id'].value;
+				var premium = form.elements[3].value;
+				var comm = form.elements[4].value;
+				var amount = form.elements[5].value;
+				var data_json={data_store:'policy_commissions',
+						data:[{index:'id',value:data_id},
+							{index:'premium',value:premium},
+							{index:'amount',value:amount},
+							{index:'comm_percent',value:comm}]};
 
-					var data_id=form.elements['id'].value;
-					var data_json={data_store:'policy_commissions',
- 							data:[{index:'id',value:data_id}]};
-
-					delete_json(data_json);
-
-					$(button).parent().parent().remove();
-				});
+				update_json(data_json);
+				$(form).readonly();
 			}
 			else
 			{
 				$("#modal2_link").click();
 			}
 		}
-
-		/**
-		* This function inflates the policy data in the commission
-		*/
-		function form348_policy_details(commissions,policy_num_index,issuer,func)
-		{
-			var policy_nums = vUtil.arrayColumn(commissions,policy_num_index);
-			var policy_data  = {data_store:'policies',indexes:[{index:'id'},
-							{index:'policy_num',array:policy_nums},
-							{index:'issuer',exact:issuer},
-							{index:'agent'},
-							{index:'issue_date'}]};
-			read_json_rows('form348',policy_data,function(ids)
-			{
-				ids.forEach(function(id)
-				{
-					for(var i in commissions)
-					{
-						if(commissions[i][policy_num_index]==id['policy_num'])
-						{
-							commissions[i].issue_date = id['issue_date'];
-							commissions[i].agent = id['agent'];
-							commissions[i].import=true;
-						}
-					}
-				});
-				// console.log(policies);
-				func();
-			});
-		}
-
-		function form348_popup_import_action()
-		{
-			var form=document.getElementById('form348_popup_import_form');
-
-			var import_type=form.elements['type'];
-			var template_button=form.elements['download'];
-			var dummy_button=form.elements['file_dummy'];
-			var import_button=form.elements['save'];
-
-			var import_types_list = ['Apollo Basic','Apollo ORC', 'ICICI Basic', 'ICICI ORC','Max Basic','Max ORC','Star Basic','Star ORC'];
-			set_value_list_json(import_types_list,import_type);
-
-			//initializing file import button
-			var file_object=vUtil.jsonParse($(dummy_button).fileInput());
-			var select_file=document.getElementById(file_object.input);
-			var selected_file=document.getElementById(file_object.output);
-
-			$(template_button).off("click");
-			$(template_button).on("click",function(event)
-			{
-				form348_import_template(import_type.value);
-			});
-
-			$(form).off('submit');
-			$(form).on('submit',function(event)
-			{
-				event.preventDefault();
-
-				vImport.readFile(select_file,function(content)
-			    {
-					switch(import_type.value){
-						case 'Apollo Basic':vImport.importData(content,form,form348_ab_import,form348_ab_import_validate);
-												break;
-						case 'Apollo ORC':vImport.importData(content,form,form348_ao_import,form348_ao_import_validate);
-												break;
-						case 'ICICI Basic':vImport.importData(content,form,form348_ib_import,form348_ib_import_validate);
-												break;
-						case 'ICICI ORC':vImport.importData(content,form,form348_io_import,form348_io_import_validate);
-												break;
-						case 'Max Basic':vImport.importData(content,form,form348_mb_import,form348_mb_import_validate);
-												break;
-						case 'Max ORC':vImport.importData(content,form,form348_mo_import,form348_mo_import_validate);
-												break;
-						case 'Star Basic':vImport.importData(content,form,form348_sb_import,form348_sb_import_validate);
-												break;
-						case 'Star ORC':vImport.importData(content,form,form348_so_import,form348_so_import_validate);
-												break;
-					}
-			    });
-			});
-			$("#form348_popup_import_link").click();
-		}
-
-
-        function form348_import_template(import_type)
-        {
-			var data_array=[];
-			switch(import_type)
-			{
-            	case 'Apollo Basic': data_array=['Policy Number / Endorsement Number','Policy Holder Name',
-												'Product Name','Policy Issuance Date','Policy Start Date',
-												'Net Premuim','Service Tax','Gross Premium','Comm %','Comm Amount'];
-									break;
-				case 'Apollo ORC':data_array=[];
-									break;
-				case 'ICICI Basic':data_array=['IssueStatus','IssueDate','CustomerName','PolicyNumber','NetGWP',
-											'ServiceTax','EducationCess','PremiumForPayout','CommissionPercentage',
-											'AgentCommission','TDS','NetAmt','RmName','AgentLocation','FinalVertical'];
-									break;
-				case 'ICICI ORC':data_array=[];
-									break;
-				case 'Max Basic':data_array=['Policy Number','Customer Id','Customer Name','Agent Code',
-											'Gwp(Before Tax)','Commission Structure','Service Tax','TDS','Net Payment',
-											'Agent Type','Agent Name','Agent Branch','Bank Name','Account Number',
-											'Bank Branch','Bank City','Pan Number','Licence Expiry Date','Email',
-											'Payment Status','IFSC Code','Cheque Number','Cheque Date'];
-									break;
-				case 'Max ORC': data_array=[];
-												break;
-				case 'Star Basic':data_array=[];
-												break;
-				case 'Star ORC':data_array=[];
-										break;
-			}
-            vUtil.arrayToCSV(data_array);
-        };
-
-		/**
-		*	Import validation for apollo basic commissions
-		*/
-		function form348_ab_import_validate(data_array)
-        {
-            var validate_template_array=[{column:'Policy Number / Endorsement Number',required:'yes',regex:new RegExp('^[0-9a-zA-Z_-]+$')},
-                                    {column:'Policy Holder Name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'Product Name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'Policy Issuance Date',required:'yes',regex:new RegExp('^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4}')},
-									{column:'Policy Start Date',required:'yes',regex:new RegExp('^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4}')},
-									{column:'Net Premuim',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
-									{column:'Service Tax',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
-									{column:'Gross Premium',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
-									{column:'Comm %',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
-									{column:'Comm Amount',required:'yes',regex:new RegExp('^[0-9 .-]+$')}];
-
-            var error_array=vImport.validate(data_array,validate_template_array);
-            return error_array;
-        }
-
-		/**
-		*	Import for apollo basic commissions
-		*/
-		function form348_ab_import(commissions)
-		{
-			var create_comm_json={data_store:'policy_commissions',log:'yes',data:[],
-							log_data:{title:'Basic Commissions from Apollo',link_to:'form348'}};
-
-			var counter=1;
-			var last_updated=vTime.unix();
-			show_loader();
-
-			for(var a in commissions)
-			{
-				commissions[a].policy_num=commissions[a]['Policy Number / Endorsement Number'];
-				commissions[a].issue_date="";
-				commissions[a].issuer="Apollo";
-				commissions[a].commission_type="basic";
-				commissions[a].agent="";
-				commissions[a].import=false;
-			}
-
-			form348_policy_details(commissions,'policy_num','Apollo',function()
-			{
-				// console.log(commissions);
-				var key=vUtil.newKey();
-				for(var i=0;i<commissions.length;i++)
-				{
-					if(commissions[i].import)
-					{
-						key++;
-						var data_json_array=[{index:'id',value:key},
-									{index:'policy_num',value:commissions[i].policy_num,uniqueWith:['commission_type','premium']},
-									{index:'amount',value:commissions[i]['Comm Amount']},
-									{index:'comm_percent',value:commissions[i]['Comm %']},
-									{index:'premium',value:commissions[i]['Net Premuim']},
-									{index:'issue_date',value:commissions[i].issue_date},
-									{index:'issuer',value:commissions[i].issuer},
-									{index:'commission_type',value:commissions[i].commission_type},
-									{index:'agent',value:commissions[i].agent},
-									{index:'last_updated',value:last_updated}];
-
-						create_comm_json.data.push(data_json_array);
-					}
-				}
-				create_batch_json(create_comm_json);
-			});
-		};
-
-
-		/**
-		*	Import validation for Max basic commissions
-		*/
-		function form348_mb_import_validate(data_array)
-        {
-            var validate_template_array=[{column:'Policy Number',required:'yes',regex:new RegExp('^[0-9a-zA-Z_-]+$')},
-                                    {column:'Customer Id',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'Customer Name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'Agent Code',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'Gwp(Before Tax)',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
-									{column:'Commission Structure',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
-									{column:'Service Tax',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
-									{column:'TDS',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
-									{column:'Net Payment',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
-									{column:'Agent Type',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'Agent Name',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'Agent Branch',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'Bank Name',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'Account Number',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'Bank Branch',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'Bank City',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'Pan Number',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'Licence Expiry Date',regex:new RegExp('^[0-9]{1,2}\-[a-zA-Z]{3}\-[0-9]{2}')},
-									{column:'Email',regex:new RegExp('^[0-9a-zA-Z _.,()@-]+$')},
-									{column:'Payment Status',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'IFSC Code',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'Cheque Number',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')}];
-
-            var error_array=vImport.validate(data_array,validate_template_array);
-            return error_array;
-        }
-
-		/**
-		*	Import for Max basic commissions
-		*/
-		function form348_mb_import(commissions)
-		{
-			var create_comm_json={data_store:'policy_commissions',log:'yes',data:[],
-							log_data:{title:'Basic Commissions from Max',link_to:'form348'}};
-
-			var counter=1;
-			var last_updated=vTime.unix();
-			show_loader();
-
-			for(var a in commissions)
-			{
-				commissions[a].policy_num=commissions[a]['Policy Number'];
-				commissions[a].issue_date="";
-				commissions[a].issuer="Max";
-				commissions[a].commission_type="basic";
-				commissions[a].agent="";
-				commissions[a].import=false;
-				commissions[a].comm_percent= (vUtil.isBlank(commissions[a]['Gwp(Before Tax)']) || commissions[a]['Gwp(Before Tax)']==0) ? 0 : vUtil.round((100*commissions[a]['Commission Structure']/commissions[a]['Gwp(Before Tax)']),2) ;
-			}
-
-			form348_policy_details(commissions,'policy_num','Max',function()
-			{
-				// console.log(commissions);
-				var key=vUtil.newKey();
-				for(var i=0;i<commissions.length;i++)
-				{
-					if(commissions[i].import)
-					{
-						key++;
-						var data_json_array=[{index:'id',value:key},
-									{index:'policy_num',value:commissions[i].policy_num,uniqueWith:['commission_type','premium']},
-									{index:'amount',value:commissions[i]['Commission Structure']},
-									{index:'comm_percent',value:commissions[i]['comm_percent']},
-									{index:'premium',value:commissions[i]['Gwp(Before Tax)']},
-									{index:'issue_date',value:commissions[i].issue_date},
-									{index:'issuer',value:commissions[i].issuer},
-									{index:'commission_type',value:commissions[i].commission_type},
-									{index:'agent',value:commissions[i].agent},
-									{index:'last_updated',value:last_updated}];
-
-						create_comm_json.data.push(data_json_array);
-					}
-				}
-				create_batch_json(create_comm_json);
-			});
-		};
-
-		/**
-		*	Import validation for ICICI basic commissions
-		*/
-		function form348_ib_import_validate(data_array)
-		{
-			var validate_template_array=[{column:'IssueStatus',regex:new RegExp('^[0-9a-zA-Z_-]+$')},
-									{column:'IssueDate',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'CustomerName',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'PolicyNumber',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,/()-]+$')},
-									{column:'NetGWP',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
-									{column:'ServiceTax',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
-									{column:'EducationCess',regex:new RegExp('^[0-9 .-]+$')},
-									{column:'PremiumForPayout',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
-									{column:'CommissionPercentage',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
-									{column:'AgentCommission',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
-									{column:'TDS',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
-									{column:'NetAmt',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
-									{column:'RmName',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'AgentLocation',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'FinalVertical',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')}];
-
-			var error_array=vImport.validate(data_array,validate_template_array);
-			return error_array;
-		}
-
-		/**
-		*	Import for ICICI basic commissions
-		*/
-		function form348_ib_import(commissions)
-		{
-			var create_comm_json={data_store:'policy_commissions',log:'yes',data:[],
-							log_data:{title:'Basic Commissions from Max',link_to:'form348'}};
-
-			var counter=1;
-			var last_updated=vTime.unix();
-			show_loader();
-
-			for(var a in commissions)
-			{
-				commissions[a].policy_num=commissions[a]['PolicyNumber'];
-				commissions[a].issue_date="";
-				commissions[a].issuer="ICICI";
-				commissions[a].commission_type="basic";
-				commissions[a].agent="";
-				commissions[a].import=false;
-			}
-
-			form348_policy_details(commissions,'policy_num','ICICI',function()
-			{
-				// console.log(commissions);
-				var key=vUtil.newKey();
-				for(var i=0;i<commissions.length;i++)
-				{
-					if(commissions[i].import)
-					{
-						key++;
-						var data_json_array=[{index:'id',value:key},
-									{index:'policy_num',value:commissions[i].policy_num,uniqueWith:['commission_type','premium']},
-									{index:'amount',value:commissions[i]['AgentCommission']},
-									{index:'comm_percent',value:commissions[i]['CommissionPercentage']},
-									{index:'premium',value:commissions[i]['PremiumForPayout']},
-									{index:'issue_date',value:commissions[i].issue_date},
-									{index:'issuer',value:commissions[i].issuer},
-									{index:'commission_type',value:commissions[i].commission_type},
-									{index:'agent',value:commissions[i].agent},
-									{index:'last_updated',value:last_updated}];
-
-						create_comm_json.data.push(data_json_array);
-					}
-				}
-				create_batch_json(create_comm_json);
-			});
-		};
 
 	</script>
 </div>

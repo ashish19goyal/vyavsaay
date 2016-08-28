@@ -1947,5 +1947,32 @@
 			});
 		};
 
+
+		function form347_evaluate_commission(comm_type,data,policy_commissions)
+		{
+			var commissions = policy_commissions[data.policy_name];
+			var found=false;
+			var match=false;
+
+			if(!vUtil.isBlank(commissions))
+			{
+				commissions.forEach(function(commission)
+				{
+					if(commission.type.toLowerCase()==comm_type.toLowerCase() && commission.issue.toLowerCase()==data['issue_type'].toLowerCase() && !found)
+					{
+						commission.conditions = vUtil.jsonParse(commission.conditions);
+						var all_match=true;
+						commission.conditions.forEach(function(cond)
+						{
+							if((!vUtil.isBlank(cond.exact) && data[cond.index]!=cond.exact) || (!vUtil.isBlank(cond.lowerbound) && data[cond.index]<cond.lowerbound) || (!vUtil.isBlank(cond.upperbound) && data[cond.index]>cond.upperbound))
+							{
+								all_match=false;
+							}
+						});
+					}
+				});
+			}
+		};
+
     </script>
 </div>

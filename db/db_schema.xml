@@ -2224,6 +2224,20 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</policy_commissions>
+	<policy_commissions_imported>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<agent index='yes' type="TEXT"></agent>
+			<policy_num index='yes' type="TEXT"></policy_num>
+			<issuer index='yes' type="TEXT"></issuer>
+			<notes index="no" type="TEXT"></notes>
+			<premium index="no" type="DECIMAL(12,2)"></premium>
+			<comm_percent index="no" type="DECIMAL(12,2)"></comm_percent>
+			<amount index="no" type="DECIMAL(12,2)"></amount>
+			<issue_date index='yes' type="BIGINT"></issue_date>
+			<commission_type index='yes' type="VARCHAR(30)"></commission_type><!-- basic/orc -->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</policy_commissions_imported>
 	<policy_types>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="TEXT"></name>
