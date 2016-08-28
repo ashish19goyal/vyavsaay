@@ -424,54 +424,52 @@
 				for (var a in grid_array)
 				{
 					var item = grid_array[a];
-					if(!vUtil.isBlank(item.tele_caller) || true)
+
+					var export_row = {};
+					export_row['1']=item.issuer;
+					export_row['2']=item.agent;
+
+					var rows1HTML="<tr>";
+	                rows1HTML+="<td>";
+						rows1HTML+=item.issuer;
+	                rows1HTML+="</td>";
+					rows1HTML+="<td>";
+						rows1HTML+="<a onclick=\"show_object('staff','"+item.agent+"');\">"+item.agent+"</a>";
+	                rows1HTML+="</td>";
+					rows1HTML+="</tr>";
+
+					$('#report126_body1').append(rows1HTML);
+
+					var num = "";
+					var premium = "";
+					var bc ="";
+					var oc ="";
+
+					var x=0;
+					months_array.forEach(function(month)
 					{
-						var export_row = {};
-						export_row['1']=item.issuer;
-						export_row['2']=item.agent;
+						num+="<td>"+item['num-'+month.y+month.m]+"</td>";
+						premium+="<td>"+vUtil.round(item['p-'+month.y+month.m])+"</td>";
+						bc+="<td>"+vUtil.round(item['bc-'+month.y+month.m])+"</td>";
+						oc+="<td>"+vUtil.round(item['oc-'+month.y+month.m])+"</td>";
 
-						var rows1HTML="<tr>";
-		                rows1HTML+="<td>";
-							rows1HTML+=item.issuer;
-		                rows1HTML+="</td>";
-						rows1HTML+="<td>";
-							rows1HTML+="<a onclick=\"show_object('staff','"+item.agent+"');\">"+item.agent+"</a>";
-		                rows1HTML+="</td>";
-						rows1HTML+="</tr>";
+						var a = (3+x).toString();
+						var b = (3+x+numMonths).toString();
+						var c = (3+x+2*numMonths).toString();
+						var d = (3+x+3*numMonths).toString();
 
-						$('#report126_body1').append(rows1HTML);
+						export_row[a]=vUtil.round(item['num-'+month.y+month.m]);
+						export_row[b]=vUtil.round(item['p-'+month.y+month.m]);
+						export_row[c]=vUtil.round(item['bc-'+month.y+month.m]);
+						export_row[d]=vUtil.round(item['oc-'+month.y+month.m]);
+						x++;
+					});
 
-						var num = "";
-						var premium = "";
-						var bc ="";
-						var oc ="";
+					var	rows2HTML="<tr>"+num+premium+bc+oc+"</tr>";
 
-						var x=0;
-						months_array.forEach(function(month)
-						{
-							num+="<td>"+item['num-'+month.y+month.m]+"</td>";
-							premium+="<td>"+vUtil.round(item['p-'+month.y+month.m])+"</td>";
-							bc+="<td>"+vUtil.round(item['bc-'+month.y+month.m])+"</td>";
-							oc+="<td>"+vUtil.round(item['oc-'+month.y+month.m])+"</td>";
+					export_data_array.push(export_row);
 
-							var a = (3+x).toString();
-							var b = (3+x+numMonths).toString();
-							var c = (3+x+2*numMonths).toString();
-							var d = (3+x+3*numMonths).toString();
-
-							export_row[a]=vUtil.round(item['num-'+month.y+month.m]);
-							export_row[b]=vUtil.round(item['p-'+month.y+month.m]);
-							export_row[c]=vUtil.round(item['bc-'+month.y+month.m]);
-							export_row[d]=vUtil.round(item['oc-'+month.y+month.m]);
-							x++;
-						});
-
-						var	rows2HTML="<tr>"+num+premium+bc+oc+"</tr>";
-
-						export_data_array.push(export_row);
-
-						$('#report126_body2').append(rows2HTML);
-					}
+					$('#report126_body2').append(rows2HTML);
 	            }
 				initialize_fixed_tabular_report_buttons(export_data_array,'Total Business Report','report126');
 

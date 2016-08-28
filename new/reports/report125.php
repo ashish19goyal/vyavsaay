@@ -37,8 +37,8 @@
 				<table class="table table-striped table-bordered table-hover">
 					<thead>
 						<tr>
-							<th>Caller</th>
 							<th>Issuing Company</th>
+							<th>Agent</th>
 				        </tr>
 					</thead>
 					<tbody id='report125_body1'></tbody>
@@ -49,9 +49,15 @@
 					<table class="table table-striped table-bordered table-hover">
 						<thead id='report125_thead'>
 							<tr>
-							    <th># of Policies</th>
-								<th>Total Premium</th>
-								<th>Total Short Premium</th>
+							    <th>Renewal_NOP</th>
+								<th>Renewed_NOP</th>
+								<th>Renewed_%</th>
+								<th>Renewal_Premium</th>
+								<th>Renewed_Premium</th>
+								<th>Renewed_Premium_%</th>
+								<th>Upsell_NOP</th>
+								<th>Upsell_%</th>
+								<th>Upsell_Extra_Premium</th>
 							</tr>
 						</thead>
 						<tbody id='report125_body2'></tbody>
@@ -197,11 +203,6 @@
             report125_ini();
         });
 
-		$('#report125_thead>tr>th').each(function(index)
-		{
-			$(this).attr('colspan',1);
-		});
-
 		var paginator=$('#report125_body1').paginator({visible:false});
         setTimeout(function(){$('#report125').formcontrol();},500);
     }
@@ -216,11 +217,11 @@
 
         var columns={data_store:'policies',
 					indexes:[{index:'id'},
-                        {index:'issuer'},
-                        {index:'tele_caller'},
+						{index:'policy_num'},
+						{index:'issuer'},
+						{index:'agent'},
 						{index:'premium'},
-						{index:'short_premium'},
-						{index:'issue_date'},
+						{index:'end_date',upperbound:vTime.unix()},
 						{index:'status',exact:'issued'}]};
 
 		$('#report125_filters .row').each(function(index)
@@ -245,207 +246,126 @@
 			}
 		});
 
-		read_json_rows('report125',columns,function(policies)
-        {
-			var months_object={};
-			var export_data_array=[];
-			var export_row1={};
-			var export_row2={};
-			var export_row3={};
+		read_json_rows('report125',columns,function(renewable_policies)
+		{
+			var policies_nums=vUtil.arrayColumn(renewable_policies,'policy_num');
 
-			export_row1['1']="Caller";
-			export_row2['1']="-";
-			export_row3['1']="-";
-			export_row1['2']="Issuing Company";
-			export_row2['2']="-";
-			export_row3['2']="-";
+			var renewed_columns={data_store:'policies',
+					indexes:[{index:'id'},
+						{index:'application_num',array:policies_nums},
+						{index:'issuer'},
+                        {index:'agent'},
+						{index:'premium'}]};
 
-			for(var i in policies)
-			{
-				policies[i].year = vTime.year({date:policies[i].issue_date,inputFormat:'unix'});
-				policies[i].month = vTime.monthName({date:policies[i].issue_date,inputFormat:'unix'});
-				var obj_name = policies[i].year+"-"+policies[i].month;
-				months_object[obj_name]={m:policies[i].month,y:policies[i].year};
-			}
+			read_json_rows('report125',renewed_columns,function(renewed_policies)
+	        {
+				var grid_array_obj={};
 
-			var months_array = vUtil.objectToArray(months_object);
-
-			var allMonths = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-			months_array.sort(function(a,b){
-				if(a.y>b.y)
-					return 1;
-				else if(a.y<b.y)
-					return -1;
-				else
-			    	return allMonths.indexOf(a.m) > allMonths.indexOf(b.m);
-			});
-
-			var numMonths = months_array.length;
-
-			for (var x=0; x<numMonths;x++)
-			{
-				var a = (3+x).toString();
-				var b = (3+x+numMonths).toString();
-				var c = (3+x+2*numMonths).toString();
-
-				export_row1[a]="# of Policies";
-				export_row1[b]="Total Premium";
-				export_row1[c]="Total Short Premium";
-
-				export_row2[a]=months_array[x].y;
-				export_row2[b]=months_array[x].y;
-				export_row2[c]=months_array[x].y;
-
-				export_row3[a]=months_array[x].m;
-				export_row3[b]=months_array[x].m;
-				export_row3[c]=months_array[x].m;
-			}
-
-			export_data_array.push(export_row1);
-			export_data_array.push(export_row2);
-			export_data_array.push(export_row3);
-
-			$('#report125_thead>tr>th').each(function(index)
-			{
-				$(this).attr('colspan',numMonths);
-			});
-
-			var row2 = "<tr><td>-</td><td>-</td></tr>";
-			$('#report125_body1').append(row2);
-			$('#report125_body1').append(row2);
-
-			var yearsCells = "";
-			var years_object = {};
-			for(var a in months_array)
-			{
-				if(vUtil.isBlank(years_object[months_array[a].y]))
+				for(var i in renewable_policies)
 				{
-					years_object[months_array[a].y]=0;
+					var obj_index = renewable_policies[i].issuer+"-"+renewable_policies[i].agent;
+					if(vUtil.isBlank(grid_array_obj[obj_index]))
+					{
+						grid_array_obj[obj_index]={'Issuing Company':renewable_policies[i].issuer,
+													'Agent':renewable_policies[i].agent,
+													'Renewal NOP':0,
+													'Renewed NOP':0,
+													'Renewed %':0,
+													'Renewal Premium':0,
+													'Renewed Premium':0,
+													'Renewed Premium %':0,
+													'Upsell NOP':0,
+													'Upsell %':0,
+													'Upsell Extra Premium':0};
+					}
+
+					grid_array_obj[obj_index]['Renewal NOP']+=1;
+					if(!isNaN(renewable_policies[i].premium)){
+						grid_array_obj[obj_index]['Renewal Premium']+=parseFloat(renewable_policies[i].premium);
+					}
+
+					for(var j in renewed_policies)
+					{
+						if(renewable_policies[i].policy_num==renewed_policies[j].application_num)
+						{
+							grid_array_obj[obj_index]['Renewed NOP']+=1;
+							if(!isNaN(renewed_policies[j].premium)){
+								grid_array_obj[obj_index]['Renewed Premium']+=parseFloat(renewed_policies[j].premium);
+								if(parseFloat(renewed_policies[j].premium)>parseFloat(renewable_policies[i].premium))
+								{
+									grid_array_obj[obj_index]['Upsell NOP']+=1;
+									grid_array_obj[obj_index]['Upsell Extra Premium']+=parseFloat(renewed_policies[j].premium)-parseFloat(renewable_policies[i].premium);
+								}
+							}
+							break;
+						}
+					}
 				}
 
-				years_object[months_array[a].y]+=1;
-			}
+				var grid_array = vUtil.objectToArray(grid_array_obj);
 
-			for(var b in years_object)
-			{
-				yearsCells+="<td colspan='"+years_object[b]+"'>"+b+"</td>";
-			}
+				grid_array.sort(function(a,b){
+					return a.issuer > b.issuer;
+				});
 
-			var monthsCells = "";
-			for(var i in months_array)
-			{
-				monthsCells+="<td>"+months_array[i].m+"</td>";
-			}
-
-			var row2 = "<tr>"+yearsCells+yearsCells+yearsCells+"</tr>";
-			$('#report125_body2').append(row2);
-			var row2 = "<tr>"+monthsCells+monthsCells+monthsCells+"</tr>";
-			$('#report125_body2').append(row2);
-
-			var grid_array={};
-
-			policies.sort(function(a,b){
-				return a.tele_caller > b.tele_caller;
-			});
-
-            policies.forEach(function(item)
-            {
-				var obj_name = item.tele_caller+"-"+item.issuer;
-				var total_obj = item.tele_caller+"-total";
-
-				if(vUtil.isBlank(grid_array[total_obj]))
+				for (var a in grid_array)
 				{
-					grid_array[total_obj]= {'tele_caller':item.tele_caller,
-											'issuer':'Total'};
-
-					months_array.forEach(function(month){
-						grid_array[total_obj]['num-'+month.y+month.m] = 0;
-						grid_array[total_obj]['p-'+month.y+month.m] = 0;
-						grid_array[total_obj]['sp-'+month.y+month.m] = 0;
-					});
-				}
-
-				if(vUtil.isBlank(grid_array[obj_name]))
-				{
-					grid_array[obj_name]= {'tele_caller':item.tele_caller,
-											'issuer':item.issuer};
-
-					months_array.forEach(function(month){
-						grid_array[obj_name]['num-'+month.y+month.m] = 0;
-						grid_array[obj_name]['p-'+month.y+month.m] = 0;
-						grid_array[obj_name]['sp-'+month.y+month.m] = 0;
-					});
-				}
-
-				grid_array[total_obj]['num-'+item.year+item.month] += 1;
-				if(!vUtil.isBlank(item.premium) && !isNaN(item.premium)){
-					grid_array[total_obj]['p-'+item.year+item.month] += parseFloat(item.premium);
-				}
-				if(!vUtil.isBlank(item.short_premium) && !isNaN(item.short_premium)){
-					grid_array[total_obj]['sp-'+item.year+item.month] += parseFloat(item.short_premium);
-				}
-
-				grid_array[obj_name]['num-'+item.year+item.month] += 1;
-				if(!vUtil.isBlank(item.premium) && !isNaN(item.premium)){
-					grid_array[obj_name]['p-'+item.year+item.month] += parseFloat(item.premium);
-				}
-				if(!vUtil.isBlank(item.short_premium) && !isNaN(item.short_premium)){
-					grid_array[obj_name]['sp-'+item.year+item.month] += parseFloat(item.short_premium);
-				}
-
-			});
-
-			for (var a in grid_array)
-			{
-				var item = grid_array[a];
-				if(!vUtil.isBlank(item.tele_caller) || true)
-				{
-					var export_row = {};
-					export_row['1']=item.tele_caller;
-					export_row['2']=item.issuer;
+					var item = grid_array[a];
+					item['Renewed %']=vUtil.round((100*item['Renewed NOP']/item['Renewal NOP']),2);
+					item['Renewal Premium']=vUtil.round(item['Renewal Premium']);
+					item['Renewed Premium']=vUtil.round(item['Renewed Premium']);
+					item['Renewed Premium %']=vUtil.round((100*item['Renewed Premium']/item['Renewal Premium']),2);
+					item['Upsell %']=vUtil.round((100*item['Upsell NOP']/item['Renewal NOP']),2);
+					item['Upsell Extra Premium']=vUtil.round(item['Upsell Extra Premium']);
 
 					var rows1HTML="<tr>";
 	                rows1HTML+="<td>";
-						rows1HTML+="<a onclick=\"show_object('staff','"+item.telecaller+"');\">"+item.tele_caller+"</a>";
+						rows1HTML+=item['Issuing Company'];
 	                rows1HTML+="</td>";
 					rows1HTML+="<td>";
-						rows1HTML+=item.issuer;
+						rows1HTML+="<a onclick=\"show_object('staff','"+item['Agent']+"');\">"+item['Agent']+"</a>";
 	                rows1HTML+="</td>";
 					rows1HTML+="</tr>";
 
+					var rows2HTML="<tr>";
+					rows2HTML+="<td>";
+						rows2HTML+=item['Renewal NOP'];
+					rows2HTML+="</td>";
+					rows2HTML+="<td>";
+						rows2HTML+=item['Renewed NOP'];
+					rows2HTML+="</td>";
+					rows2HTML+="<td>";
+						rows2HTML+=item['Renewed %'];
+					rows2HTML+="</td>";
+					rows2HTML+="<td>";
+						rows2HTML+=item['Renewal Premium'];
+					rows2HTML+="</td>";
+					rows2HTML+="<td>";
+						rows2HTML+=item['Renewed Premium'];
+					rows2HTML+="</td>";
+					rows2HTML+="<td>";
+						rows2HTML+=item['Renewed Premium %'];
+					rows2HTML+="</td>";
+					rows2HTML+="<td>";
+						rows2HTML+=item['Upsell NOP'];
+					rows2HTML+="</td>";
+					rows2HTML+="<td>";
+						rows2HTML+=item['Upsell %'];
+					rows2HTML+="</td>";
+					rows2HTML+="<td>";
+						rows2HTML+=item['Upsell Extra Premium'];
+					rows2HTML+="</td>";
+					rows2HTML+="</tr>";
+
 					$('#report125_body1').append(rows1HTML);
-
-					var num = "";
-					var premium = "";
-					var spremium ="";
-
-					var x=0;
-					months_array.forEach(function(month)
-					{
-						num+="<td>"+item['num-'+month.y+month.m]+"</td>";
-						premium+="<td>"+vUtil.round(item['p-'+month.y+month.m])+"</td>";
-						spremium+="<td>"+vUtil.round(item['sp-'+month.y+month.m])+"</td>";
-
-						var a = (3+x).toString();
-						var b = (3+x+numMonths).toString();
-						var c = (3+x+2*numMonths).toString();
-						export_row[a]=vUtil.round(item['num-'+month.y+month.m]);
-						export_row[b]=vUtil.round(item['p-'+month.y+month.m]);
-						export_row[c]=vUtil.round(item['sp-'+month.y+month.m]);
-						x++;
-					});
-
-					var	rows2HTML="<tr>"+num+premium+spremium+"</tr>";
-
-					export_data_array.push(export_row);
-
 					$('#report125_body2').append(rows2HTML);
-				}
-            }
-			initialize_fixed_tabular_report_buttons(export_data_array,'Renewals Report','report125');
 
-            hide_loader();
-        });
+	            }
+				initialize_fixed_tabular_report_buttons(grid_array,'Renewals Report','report125');
+
+	            hide_loader();
+	        });
+		});
     };
 
 	</script>
