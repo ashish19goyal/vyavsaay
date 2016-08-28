@@ -1818,7 +1818,7 @@ function form43_ini()
 								var product_data="<product_master>" +
 										"<name></name>" +
 										"</product_master>";
-								set_my_value_list_func(product_data,name_filter);
+								set_my_value_list(product_data,name_filter);
 
 								var add_product=document.getElementById('form24_add_product_'+id);
 								$(add_product).on('click',function()
@@ -1828,7 +1828,7 @@ function form43_ini()
 										var product_data="<product_master>" +
 												"<name></name>" +
 												"</product_master>";
-										set_my_value_list_func(product_data,name_filter,function ()
+										set_my_value_list(product_data,name_filter,function ()
 										{
 											$(name_filter).focus();
 										});
@@ -9449,7 +9449,7 @@ function form155_ini()
 							"<fresh exact='yes'>yes</fresh>"+
 							"<item_name exact='yes'>"+result.product_name+"</item_name>"+
 							"</bill_items>";
-			set_my_value_func(hireable_data,hireable_inventory,function()
+			set_my_value(hireable_data,hireable_inventory,function()
 			{
 				get_inventory(result.product_name,'',function(inventory)
 				{
@@ -9618,7 +9618,7 @@ function form156_ini()
 									"<item_name exact='yes'>"+result.item_name+"</item_name>"+
 									"<storage exact='yes'>"+result.name+"</storage>"+
 									"</bill_items>";
-					set_my_value_func(hireable_data,hireable_inventory,function()
+					set_my_value(hireable_data,hireable_inventory,function()
 					{
 						get_store_inventory(result.name,result.item_name,'',function(inventory)
 						{
@@ -13900,7 +13900,7 @@ function form227_ini()
 				"<item_name exact='yes'>"+result.product_name+"</item_name>" +
 				"</bill_items>";
 
-			set_my_value_func(demo_quantity_xml,d_in,function()
+			set_my_value(demo_quantity_xml,d_in,function()
 			{
 				d_in.value=(-parseFloat(d_in.value));
 			});
@@ -13912,7 +13912,7 @@ function form227_ini()
 				"<item_name exact='yes'>"+result.product_name+"</item_name>" +
 				"</bill_items>";
 
-			set_my_value_func(hire_quantity_xml,h_in,function()
+			set_my_value(hire_quantity_xml,h_in,function()
 			{
 				h_in.value=-parseFloat(h_in.value);
 			});

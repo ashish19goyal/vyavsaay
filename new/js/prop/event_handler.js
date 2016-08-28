@@ -17,7 +17,8 @@ function default_load()
 	}
 
 
-	modal_forms_ini();
+	// modal_forms_ini();
+	// modals_draggable();
 	if(is_set_session())
 	{
 		//responsive_tabs();
@@ -168,13 +169,16 @@ function setup_grid_display_tabs()
 	});
 }
 
-function modal_forms_ini()
+function modals_draggable()
 {
-    $(".draggable-modal").draggable(
+	$(".draggable-modal").draggable(
     {
     	handle: ".modal-header"
     });
+}
 
+function modal_forms_ini()
+{
 	var width=300;
 	if($(document).width<=550)
 	{
@@ -358,7 +362,6 @@ function set_user_name()
 			indexes:[{index:'doc_type',exact:'staff'},{index:'doc_name',exact:'image'},{index:'target_id',exact:user_id}]};
 	read_json_single_column(docs,function(pics)
 	{
-
 		if(pics.length>0)
 		{
 			$('.profile-image').attr('src',pics[0]);

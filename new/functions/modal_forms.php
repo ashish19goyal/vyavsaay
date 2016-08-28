@@ -3947,51 +3947,6 @@
 		</div>
 	</div>
 
-				<a href='#modal217' data-toggle="modal" id='modal217_link'></a>
-				<div id="modal217" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
-		        <div class="modal-dialog">
-		            <div class="modal-content">
-		                <form id='modal217_form' autocomplete="off">
-			            		<div class="modal-header">
-		                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-		                    	<h4 class="modal-title">Add Policy Type</h4>
-		                	</div>
-			                <div class="modal-body">
-				               	<div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
-				                    <div class="row">
-							   			<div class="col-sm-12 col-md-4">Policy Name</div>
-				     					<div class="col-sm-12 col-md-8"><input type='text' required form='modal217_form' name='name'></div>
-				     				</div>
-									<div class="row">
-							   			<div class="col-sm-12 col-md-4">Type</div>
-				     					<div class="col-sm-12 col-md-8"><input type='text' required form='modal217_form' name='type'></div>
-				     				</div>
-									<div class="row">
-							   			<div class="col-sm-12 col-md-4">Description</div>
-				     					<div class="col-sm-12 col-md-8"><textarea form='modal217_form' name='desc'></textarea></div>
-				     				</div>
-									<div class="row">
-							   			<div class="col-sm-12 col-md-4">Issuer</div>
-				     					<div class="col-sm-12 col-md-8"><input type='text' required form='modal217_form' name='issuer'></div>
-				     				</div>
-									<div class="row">
-							   			<div class="col-sm-12 col-md-4">Term</div>
-				     					<div class="col-sm-12 col-md-8"><input type='text' required form='modal217_form' name='term'></div>
-				     				</div>
-									<div class="row">
-							   			<div class="col-sm-12 col-md-4">Preferred</div>
-				     					<div class="col-sm-12 col-md-8"><input type='text' required form='modal217_form' name='preferred'></div>
-				     				</div>
-						        </div>
-							</div>
-			             	<div class="modal-footer">
-			               	<button type="submit" class="btn green" form='modal217_form' name='save'>Add</button>
-			               	<button type="button" class="btn red" form='modal217_form' data-dismiss='modal' name='cancel'>Cancel</button>
-			             	</div>
-		                </form>
-		            </div>
-		        </div>
-		    </div>
 
 				<a href='#modal218' data-toggle="modal" id='modal218_link'></a>
 				<div id="modal218" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">

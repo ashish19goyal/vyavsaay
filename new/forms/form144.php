@@ -316,7 +316,7 @@ function form144_add_expense()
 		var person_data="<staff>"+
 						"<acc_name></acc_name>"+
 						"</staff>";
-		set_my_value_list_func(person_data,person_filter,function () 
+		set_my_value_list(person_data,person_filter,function () 
 		{
 			$(person_filter).focus();
 		});

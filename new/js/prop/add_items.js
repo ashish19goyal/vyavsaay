@@ -142,7 +142,7 @@ function form10_add_item()
 				var service_data="<services>" +
 						"<name></name>" +
 						"</services>";
-				set_my_value_list_func(service_data,name_filter,function ()
+				set_my_value_list(service_data,name_filter,function ()
 				{
 					$(name_filter).focus();
 				});
@@ -152,7 +152,7 @@ function form10_add_item()
 		var service_data="<services>" +
 				"<name></name>" +
 				"</services>";
-		set_my_value_list_func(service_data,name_filter,function ()
+		set_my_value_list(service_data,name_filter,function ()
 		{
 			$(name_filter).focus();
 		});
@@ -278,7 +278,7 @@ function form12_add_item()
 				var product_data="<product_master>" +
 						"<name></name>" +
 						"</product_master>";
-				set_my_value_list_func(product_data,name_filter,function ()
+				set_my_value_list(product_data,name_filter,function ()
 				{
 					$(name_filter).focus();
 				});
@@ -288,7 +288,7 @@ function form12_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,name_filter,function ()
+		set_my_value_list(product_data,name_filter,function ()
 		{
 			$(name_filter).focus();
 		});
@@ -578,7 +578,7 @@ function form24_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,name_filter,function ()
+		set_my_value_list(product_data,name_filter,function ()
 		{
 			$(name_filter).focus();
 		});
@@ -591,7 +591,7 @@ function form24_add_item()
 				var product_data="<product_master>" +
 						"<name></name>" +
 						"</product_master>";
-				set_my_value_list_func(product_data,name_filter,function ()
+				set_my_value_list(product_data,name_filter,function ()
 				{
 					$(name_filter).focus();
 				});
@@ -731,7 +731,7 @@ function form58_add_item()
 		var service_data="<services>" +
 				"<name></name>" +
 				"</services>";
-		set_my_value_list_func(service_data,service_filter,function ()
+		set_my_value_list(service_data,service_filter,function ()
 		{
 			$(service_filter).focus();
 		});
@@ -744,7 +744,7 @@ function form58_add_item()
 				var service_data="<services>" +
 					"<name></name>" +
 					"</services>";
-				set_my_value_list_func(service_data,service_filter,function ()
+				set_my_value_list(service_data,service_filter,function ()
 				{
 					$(service_filter).focus();
 				});
@@ -834,7 +834,7 @@ function form59_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,product_filter,function ()
+		set_my_value_list(product_data,product_filter,function ()
 		{
 			$(product_filter).focus();
 		});
@@ -847,7 +847,7 @@ function form59_add_item()
 				var product_data="<product_master>" +
 						"<name></name>" +
 						"</product_master>";
-				set_my_value_list_func(product_data,product_filter,function ()
+				set_my_value_list(product_data,product_filter,function ()
 				{
 					$(product_filter).focus();
 				});
@@ -927,7 +927,7 @@ function form61_add_item()
 		var service_data="<services>" +
 				"<name></name>" +
 				"</services>";
-		set_my_value_list_func(service_data,service_filter,function ()
+		set_my_value_list(service_data,service_filter,function ()
 		{
 			$(service_filter).focus();
 		});
@@ -940,7 +940,7 @@ function form61_add_item()
 				var service_data="<services>" +
 						"<name></name>" +
 						"</services>";
-				set_my_value_list_func(service_data,service_filter,function ()
+				set_my_value_list(service_data,service_filter,function ()
 				{
 					$(service_filter).focus();
 				});
@@ -1008,7 +1008,7 @@ function form62_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,product_filter,function ()
+		set_my_value_list(product_data,product_filter,function ()
 		{
 			$(product_filter).focus();
 		});
@@ -1026,7 +1026,7 @@ function form62_add_item()
 				var product_data="<product_master>" +
 						"<name></name>" +
 						"</product_master>";
-				set_my_value_list_func(product_data,product_filter,function ()
+				set_my_value_list(product_data,product_filter,function ()
 				{
 					$(product_filter).focus();
 				});
@@ -1099,7 +1099,7 @@ function form63_add_item()
 		var service_data="<services>" +
 				"<name></name>" +
 				"</services>";
-		set_my_value_list_func(service_data,service_filter,function ()
+		set_my_value_list(service_data,service_filter,function ()
 		{
 			$(service_filter).focus();
 		});
@@ -1117,7 +1117,7 @@ function form63_add_item()
 				var service_data="<services>" +
 						"<name></name>" +
 						"</services>";
-				set_my_value_list_func(service_data,service_filter,function ()
+				set_my_value_list(service_data,service_filter,function ()
 				{
 					$(service_filter).focus();
 				});
@@ -1187,7 +1187,7 @@ function form64_add_item()
 		var service_data="<services>" +
 				"<name></name>" +
 				"</services>";
-		set_my_value_list_func(service_data,service_filter,function ()
+		set_my_value_list(service_data,service_filter,function ()
 		{
 			$(service_filter).focus();
 		});
@@ -1200,7 +1200,7 @@ function form64_add_item()
 				var service_data="<services>" +
 						"<name></name>" +
 						"</services>";
-				set_my_value_list_func(service_data,service_filter,function ()
+				set_my_value_list(service_data,service_filter,function ()
 				{
 					$(service_filter).focus();
 				});
@@ -1274,7 +1274,7 @@ function form66_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,product_filter,function ()
+		set_my_value_list(product_data,product_filter,function ()
 		{
 			$(product_filter).focus();
 		});
@@ -1287,7 +1287,7 @@ function form66_add_item()
 				var product_data="<product_master>" +
 						"<name></name>" +
 						"</product_master>";
-				set_my_value_list_func(product_data,product_filter,function ()
+				set_my_value_list(product_data,product_filter,function ()
 				{
 					$(product_filter).focus();
 				});
@@ -1394,7 +1394,7 @@ function form69_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,name_filter,function ()
+		set_my_value_list(product_data,name_filter,function ()
 		{
 			$(name_filter).focus();
 		});
@@ -1533,7 +1533,7 @@ function form81_add_item()
 		var customer_data="<customers>" +
 			"<acc_name></acc_name>" +
 			"</customers>";
-		set_my_value_list_func(customer_data,customer_filter,function ()
+		set_my_value_list(customer_data,customer_filter,function ()
 		{
 			$(customer_filter).focus();
 		});
@@ -1554,7 +1554,7 @@ function form81_add_item()
 				var customer_data="<customers>" +
 					"<acc_name></acc_name>" +
 					"</customers>";
-				set_my_value_list_func(customer_data,customer_filter,function ()
+				set_my_value_list(customer_data,customer_filter,function ()
 				{
 					$(customer_filter).focus();
 				});
@@ -1766,7 +1766,7 @@ function form84_add_item()
 		var customer_data="<customers>" +
 			"<acc_name></acc_name>" +
 			"</customers>";
-		set_my_value_list_func(customer_data,customer_filter,function ()
+		set_my_value_list(customer_data,customer_filter,function ()
 		{
 			$(customer_filter).focus();
 		});
@@ -1784,7 +1784,7 @@ function form84_add_item()
 				var customer_data="<customers>" +
 					"<acc_name></acc_name>" +
 					"</customers>";
-				set_my_value_list_func(customer_data,customer_filter,function ()
+				set_my_value_list(customer_data,customer_filter,function ()
 				{
 					$(customer_filter).focus();
 				});
@@ -1865,7 +1865,7 @@ function form88_add_item()
 		var products_data="<product_master>" +
 			"<name></name>" +
 			"</product_master>";
-		set_my_value_list_func(product_data,product_filter,function ()
+		set_my_value_list(product_data,product_filter,function ()
 		{
 			$(product_filter).focus();
 		});
@@ -1878,7 +1878,7 @@ function form88_add_item()
 				var products_data="<product_master>" +
 					"<name></name>" +
 					"</product_master>";
-				set_my_value_list_func(product_data,product_filter,function ()
+				set_my_value_list(product_data,product_filter,function ()
 				{
 					$(product_filter).focus();
 				});
@@ -1976,7 +1976,7 @@ function form91_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,name_filter,function ()
+		set_my_value_list(product_data,name_filter,function ()
 		{
 			$(name_filter).focus();
 		});
@@ -2247,7 +2247,7 @@ function form102_add_item()
 		var staff_data="<staff>" +
 			"<acc_name></acc_name>" +
 			"</staff>";
-		set_my_value_list_func(staff_data,member_filter,function ()
+		set_my_value_list(staff_data,member_filter,function ()
 		{
 			$(member_filter).focus();
 		});
@@ -2260,7 +2260,7 @@ function form102_add_item()
 				var staff_data="<staff>" +
 					"<acc_name></acc_name>" +
 					"</staff>";
-				set_my_value_list_func(staff_data,member_filter,function ()
+				set_my_value_list(staff_data,member_filter,function ()
 				{
 					$(member_filter).focus();
 				});
@@ -2379,7 +2379,7 @@ function form109_add_item()
 		var asset_data="<assets>" +
 				"<name></name>" +
 				"</assets>";
-		set_my_value_list_func(asset_data,asset_filter,function ()
+		set_my_value_list(asset_data,asset_filter,function ()
 		{
 			$(asset_filter).focus();
 		});
@@ -2392,7 +2392,7 @@ function form109_add_item()
 				var asset_data="<assets>" +
 						"<name></name>" +
 						"</assets>";
-				set_my_value_list_func(asset_data,asset_filter,function ()
+				set_my_value_list(asset_data,asset_filter,function ()
 				{
 					$(asset_filter).focus();
 				});
@@ -2486,7 +2486,7 @@ function form112_add_item()
 			"<name></name>" +
 			"</product_master>";
 
-		set_my_value_list_func(products_data,name_filter);
+		set_my_value_list(products_data,name_filter);
 
 		var storage_data="<store_areas>"+
 						"<name></name>"+
@@ -3000,7 +3000,7 @@ function form118_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,name_filter,function ()
+		set_my_value_list(product_data,name_filter,function ()
 		{
 			$(name_filter).focus();
 		});
@@ -3013,7 +3013,7 @@ function form118_add_item()
 				var product_data="<product_master>" +
 						"<name></name>" +
 						"</product_master>";
-				set_my_value_list_func(product_data,name_filter,function ()
+				set_my_value_list(product_data,name_filter,function ()
 				{
 					$(name_filter).focus();
 				});
@@ -3294,7 +3294,7 @@ function form119_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,name_filter,function ()
+		set_my_value_list(product_data,name_filter,function ()
 		{
 			$(name_filter).focus();
 		});
@@ -3307,7 +3307,7 @@ function form119_add_item()
 				var product_data="<product_master>" +
 						"<name></name>" +
 						"</product_master>";
-				set_my_value_list_func(product_data,name_filter,function ()
+				set_my_value_list(product_data,name_filter,function ()
 				{
 					$(name_filter).focus();
 				});
@@ -3655,7 +3655,7 @@ function form121_add_item()
 		var program_data="<loyalty_programs>" +
 				"<name></name>" +
 				"</loyalty_programs>";
-		set_my_value_list_func(program_data,name_filter,function ()
+		set_my_value_list(program_data,name_filter,function ()
 		{
 			$(name_filter).focus();
 		});
@@ -4487,7 +4487,7 @@ function form125_add_item()
 		var customer_data="<customers>"+
 								"<acc_name></acc_name>"+
 								"</customers>";
-		set_my_value_list_func(customer_data,customer_filter,function ()
+		set_my_value_list(customer_data,customer_filter,function ()
 		{
 			$(customer_filter).focus();
 		});
@@ -4578,7 +4578,7 @@ function form130_add_product()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,name_filter,function ()
+		set_my_value_list(product_data,name_filter,function ()
 		{
 			$(name_filter).focus();
 		});
@@ -4591,7 +4591,7 @@ function form130_add_product()
 				var product_data="<product_master>" +
 						"<name></name>" +
 						"</product_master>";
-				set_my_value_list_func(product_data,name_filter,function ()
+				set_my_value_list(product_data,name_filter,function ()
 				{
 					$(name_filter).focus();
 				});
@@ -4894,7 +4894,7 @@ function form130_add_service()
 		var service_data="<services>" +
 				"<name></name>" +
 				"</services>";
-		set_my_value_list_func(service_data,name_filter,function ()
+		set_my_value_list(service_data,name_filter,function ()
 		{
 			$(name_filter).focus();
 		});
@@ -4913,7 +4913,7 @@ function form130_add_service()
 				var service_data="<services>" +
 						"<name></name>" +
 						"</services>";
-				set_my_value_list_func(service_data,name_filter,function ()
+				set_my_value_list(service_data,name_filter,function ()
 				{
 					$(name_filter).focus();
 				});
@@ -5121,7 +5121,7 @@ function form134_add_team()
 		var assignee_data="<staff>"+
 							"<acc_name></acc_name>"+
 							"</staff>";
-		set_my_value_list_func(assignee_data,assignee_filter,function ()
+		set_my_value_list(assignee_data,assignee_filter,function ()
 		{
 			$(assignee_filter).focus();
 		});
@@ -5308,7 +5308,7 @@ function form139_add_item()
 		var person_data="<customers>"+
 						"<acc_name></acc_name>"+
 						"</customers>";
-		set_my_value_list_func(person_data,customer_filter,function ()
+		set_my_value_list(person_data,customer_filter,function ()
 		{
 			$(customer_filter).focus();
 		});
@@ -5367,7 +5367,7 @@ function form140_add_item()
 		var person_data="<suppliers>"+
 						"<acc_name></acc_name>"+
 						"</suppliers>";
-		set_my_value_list_func(person_data,supplier_filter,function ()
+		set_my_value_list(person_data,supplier_filter,function ()
 		{
 			$(supplier_filter).focus();
 		});
@@ -5434,7 +5434,7 @@ function form146_add_item()
 		var products_data="<product_master>" +
 			"<name></name>" +
 			"</product_master>";
-		set_my_value_list_func(products_data,product_filter,function ()
+		set_my_value_list(products_data,product_filter,function ()
 		{
 			$(product_filter).focus();
 		});
@@ -5447,7 +5447,7 @@ function form146_add_item()
 				var products_data="<product_master>" +
 					"<name></name>" +
 					"</product_master>";
-				set_my_value_list_func(product_data,product_filter,function ()
+				set_my_value_list(product_data,product_filter,function ()
 				{
 					$(product_filter).focus();
 				});
@@ -5514,7 +5514,7 @@ function form151_add_item()
 		var item_data="<product_master>"+
 					"<name></name>"+
 					"</product_master>";
-		set_my_value_list_func(item_data,item_filter,function ()
+		set_my_value_list(item_data,item_filter,function ()
 		{
 			$(item_filter).focus();
 		});
@@ -5602,7 +5602,7 @@ function form151_add_expense()
 		var person_data="<staff>"+
 					"<acc_name></acc_name>"+
 					"</staff>";
-		set_my_value_list_func(person_data,person_filter,function ()
+		set_my_value_list(person_data,person_filter,function ()
 		{
 			$(person_filter).focus();
 		});
@@ -5701,7 +5701,7 @@ function form153_add_product()
 				"<name></name>" +
 				"</product_master>";
 
-		set_my_value_list_func(product_data,name_filter,function ()
+		set_my_value_list(product_data,name_filter,function ()
 		{
 			$(name_filter).focus();
 		});
@@ -5985,7 +5985,7 @@ function form154_add_product()
 					"<name></name>" +
 					"</product_master>";
 
-			set_my_value_list_func(product_data,name_filter,function ()
+			set_my_value_list(product_data,name_filter,function ()
 			{
 				$(name_filter).focus();
 			});
@@ -5998,7 +5998,7 @@ function form154_add_product()
 					var product_data="<product_master>" +
 							"<name></name>" +
 							"</product_master>";
-					set_my_value_list_func(product_data,name_filter,function ()
+					set_my_value_list(product_data,name_filter,function ()
 					{
 						$(name_filter).focus();
 					});
@@ -6270,7 +6270,7 @@ function form154_add_product()
 					var product_data="<product_master>" +
 							"<name></name>" +
 							"</product_master>";
-					set_my_value_list_func(product_data,name_filter,function ()
+					set_my_value_list(product_data,name_filter,function ()
 					{
 						$(name_filter).focus();
 					});
@@ -6281,7 +6281,7 @@ function form154_add_product()
 					"<name></name>" +
 					"</product_master>";
 
-			set_my_value_list_func(product_data,name_filter,function ()
+			set_my_value_list(product_data,name_filter,function ()
 			{
 				$(name_filter).focus();
 			});
@@ -6530,7 +6530,7 @@ function form156_add_item()
 		var products_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(products_data,product_filter,function ()
+		set_my_value_list(products_data,product_filter,function ()
 		{
 			$(product_filter).focus();
 		});
@@ -6543,7 +6543,7 @@ function form156_add_item()
 				var product_data="<product_master>" +
 						"<name></name>" +
 						"</product_master>";
-				set_my_value_list_func(products_data,product_filter,function ()
+				set_my_value_list(products_data,product_filter,function ()
 				{
 					$(product_filter).focus();
 				});
@@ -6662,7 +6662,7 @@ function form157_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,product_filter,function ()
+		set_my_value_list(product_data,product_filter,function ()
 		{
 			$(product_filter).focus();
 		});
@@ -6675,7 +6675,7 @@ function form157_add_item()
 				var product_data="<product_master>" +
 						"<name></name>" +
 						"</product_master>";
-				set_my_value_list_func(product_data,product_filter,function ()
+				set_my_value_list(product_data,product_filter,function ()
 				{
 					$(product_filter).focus();
 				});
@@ -6774,7 +6774,7 @@ function form158_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,name_filter,function ()
+		set_my_value_list(product_data,name_filter,function ()
 		{
 			$(name_filter).focus();
 		});
@@ -6787,7 +6787,7 @@ function form158_add_item()
 				var product_data="<product_master>" +
 						"<name></name>" +
 						"</product_master>";
-				set_my_value_list_func(product_data,name_filter,function ()
+				set_my_value_list(product_data,name_filter,function ()
 				{
 					$(name_filter).focus();
 				});
@@ -6842,7 +6842,7 @@ function form158_add_item()
 			});
 		});
 
-		set_my_value_list_func(storage_data,storage_filter,function()
+		set_my_value_list(storage_data,storage_filter,function()
 		{
 			var store_value_data="<store_areas count='1'>" +
 				"<name></name>" +
@@ -6975,7 +6975,7 @@ function form162_add_item()
 		var item_data="<product_master>"+
 					"<name></name>"+
 					"</product_master>";
-		set_my_value_list_func(item_data,item_filter,function ()
+		set_my_value_list(item_data,item_filter,function ()
 		{
 			$(item_filter).focus();
 		});
@@ -6983,7 +6983,7 @@ function form162_add_item()
 		var cp_data="<checklist_items>"+
 					"<checkpoint></checkpoint>"+
 					"</checklist_items>";
-		set_my_value_list_func(cp_data,cp_filter);
+		set_my_value_list(cp_data,cp_filter);
 
 		$(fields).on("submit", function(event)
 		{
@@ -7353,7 +7353,7 @@ function form173_add_item()
 		var channel_data="<sale_channels>"+
 						"<name></name>"+
 						"</sale_channels>";
-		set_my_value_list_func(channel_data,channel_filter,function ()
+		set_my_value_list(channel_data,channel_filter,function ()
 		{
 			$(channel_filter).focus();
 		});
@@ -7429,7 +7429,7 @@ function form174_add_item()
 		var channel_data="<sale_channels>"+
 						"<name></name>"+
 						"</sale_channels>";
-		set_my_value_list_func(channel_data,channel_filter,function ()
+		set_my_value_list(channel_data,channel_filter,function ()
 		{
 			$(channel_filter).focus();
 		});
@@ -7868,7 +7868,7 @@ function form192_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,name_filter,function ()
+		set_my_value_list(product_data,name_filter,function ()
 		{
 			$(name_filter).focus();
 		});
@@ -7881,7 +7881,7 @@ function form192_add_item()
 				var product_data="<product_master>" +
 						"<name></name>" +
 						"</product_master>";
-				set_my_value_list_func(product_data,name_filter,function ()
+				set_my_value_list(product_data,name_filter,function ()
 				{
 					$(name_filter).focus();
 				});
@@ -9045,7 +9045,7 @@ function form222_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,name_filter,function ()
+		set_my_value_list(product_data,name_filter,function ()
 		{
 			$(name_filter).focus();
 		});
@@ -9058,7 +9058,7 @@ function form222_add_item()
 				var product_data="<product_master>" +
 						"<name></name>" +
 						"</product_master>";
-				set_my_value_list_func(product_data,name_filter,function ()
+				set_my_value_list(product_data,name_filter,function ()
 				{
 					$(name_filter).focus();
 				});
@@ -9175,7 +9175,7 @@ function form228_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,item_filter,function ()
+		set_my_value_list(product_data,item_filter,function ()
 		{
 			$(item_filter).focus();
 		});
@@ -9188,7 +9188,7 @@ function form228_add_item()
 				var product_data="<product_master>" +
 						"<name></name>" +
 						"</product_master>";
-				set_my_value_list_func(product_data,item_filter,function ()
+				set_my_value_list(product_data,item_filter,function ()
 				{
 					$(item_filter).focus();
 				});
@@ -9208,7 +9208,7 @@ function form228_add_item()
 				var customer_data="<customers>" +
 						"<acc_name></acc_name>" +
 						"</customers>";
-				set_my_value_list_func(customer_data,customer_filter,function ()
+				set_my_value_list(customer_data,customer_filter,function ()
 				{
 					$(customer_filter).focus();
 				});
@@ -9275,7 +9275,7 @@ function form229_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,item_filter,function ()
+		set_my_value_list(product_data,item_filter,function ()
 		{
 			$(item_filter).focus();
 		});
@@ -9288,7 +9288,7 @@ function form229_add_item()
 				var product_data="<product_master>" +
 						"<name></name>" +
 						"</product_master>";
-				set_my_value_list_func(product_data,item_filter,function ()
+				set_my_value_list(product_data,item_filter,function ()
 				{
 					$(item_filter).focus();
 				});
@@ -9308,7 +9308,7 @@ function form229_add_item()
 				var customer_data="<customers>" +
 						"<acc_name></acc_name>" +
 						"</customers>";
-				set_my_value_list_func(customer_data,customer_filter,function ()
+				set_my_value_list(customer_data,customer_filter,function ()
 				{
 					$(customer_filter).focus();
 				});
@@ -9382,7 +9382,7 @@ function form230_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,item_filter,function ()
+		set_my_value_list(product_data,item_filter,function ()
 		{
 			$(item_filter).focus();
 		});
@@ -9395,7 +9395,7 @@ function form230_add_item()
 				var product_data="<product_master>" +
 						"<name></name>" +
 						"</product_master>";
-				set_my_value_list_func(product_data,item_filter,function ()
+				set_my_value_list(product_data,item_filter,function ()
 				{
 					$(item_filter).focus();
 				});
@@ -9418,7 +9418,7 @@ function form230_add_item()
 				var customer_data="<accounts>" +
 						"<acc_name></acc_name>" +
 						"</accounts>";
-				set_my_value_list_func(customer_data,customer_filter,function ()
+				set_my_value_list(customer_data,customer_filter,function ()
 				{
 					$(customer_filter).focus();
 				});
@@ -9493,7 +9493,7 @@ function form231_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,item_filter,function ()
+		set_my_value_list(product_data,item_filter,function ()
 		{
 			$(item_filter).focus();
 		});
@@ -10328,7 +10328,7 @@ function form252_add_item()
 		var customer_data="<customers>" +
 			"<acc_name></acc_name>" +
 			"</customers>";
-		set_my_value_list_func(customer_data,customer_filter,function ()
+		set_my_value_list(customer_data,customer_filter,function ()
 		{
 			$(customer_filter).focus();
 		});
@@ -10349,7 +10349,7 @@ function form252_add_item()
 				var customer_data="<customers>" +
 					"<acc_name></acc_name>" +
 					"</customers>";
-				set_my_value_list_func(customer_data,customer_filter,function ()
+				set_my_value_list(customer_data,customer_filter,function ()
 				{
 					$(customer_filter).focus();
 				});
@@ -10415,7 +10415,7 @@ function form253_add_item()
 		var customer_data="<customers>" +
 			"<acc_name></acc_name>" +
 			"</customers>";
-		set_my_value_list_func(customer_data,customer_filter,function ()
+		set_my_value_list(customer_data,customer_filter,function ()
 		{
 			$(customer_filter).focus();
 		});
@@ -10436,7 +10436,7 @@ function form253_add_item()
 				var customer_data="<customers>" +
 					"<acc_name></acc_name>" +
 					"</customers>";
-				set_my_value_list_func(customer_data,customer_filter,function ()
+				set_my_value_list(customer_data,customer_filter,function ()
 				{
 					$(customer_filter).focus();
 				});
@@ -10502,7 +10502,7 @@ function form254_add_item()
 		var customer_data="<customers>" +
 			"<acc_name></acc_name>" +
 			"</customers>";
-		set_my_value_list_func(customer_data,customer_filter,function ()
+		set_my_value_list(customer_data,customer_filter,function ()
 		{
 			$(customer_filter).focus();
 		});
@@ -10523,7 +10523,7 @@ function form254_add_item()
 				var customer_data="<customers>" +
 					"<acc_name></acc_name>" +
 					"</customers>";
-				set_my_value_list_func(customer_data,customer_filter,function ()
+				set_my_value_list(customer_data,customer_filter,function ()
 				{
 					$(customer_filter).focus();
 				});
@@ -10589,7 +10589,7 @@ function form255_add_item()
 		var customer_data="<customers>" +
 			"<acc_name></acc_name>" +
 			"</customers>";
-		set_my_value_list_func(customer_data,customer_filter,function ()
+		set_my_value_list(customer_data,customer_filter,function ()
 		{
 			$(customer_filter).focus();
 		});
@@ -10610,7 +10610,7 @@ function form255_add_item()
 				var customer_data="<customers>" +
 					"<acc_name></acc_name>" +
 					"</customers>";
-				set_my_value_list_func(customer_data,customer_filter,function ()
+				set_my_value_list(customer_data,customer_filter,function ()
 				{
 					$(customer_filter).focus();
 				});
@@ -10795,7 +10795,7 @@ function form275_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,item_filter,function ()
+		set_my_value_list(product_data,item_filter,function ()
 		{
 			$(item_filter).focus();
 		});
@@ -10808,7 +10808,7 @@ function form275_add_item()
 				var product_data="<product_master>" +
 						"<name></name>" +
 						"</product_master>";
-				set_my_value_list_func(product_data,item_filter,function ()
+				set_my_value_list(product_data,item_filter,function ()
 				{
 					$(item_filter).focus();
 				});
@@ -10830,7 +10830,7 @@ function form275_add_item()
 				var customer_data="<accounts>" +
 						"<acc_name></acc_name>" +
 						"</accounts>";
-				set_my_value_list_func(customer_data,customer_filter,function ()
+				set_my_value_list(customer_data,customer_filter,function ()
 				{
 					$(customer_filter).focus();
 				});
@@ -11106,7 +11106,7 @@ function form294_add_item()
 				var product_data="<product_master>" +
 						"<name></name>" +
 						"</product_master>";
-				set_my_value_list_func(product_data,name_filter,function ()
+				set_my_value_list(product_data,name_filter,function ()
 				{
 					$(name_filter).focus();
 				});
@@ -11117,7 +11117,7 @@ function form294_add_item()
 				"<name></name>" +
 				"</product_master>";
 
-		set_my_value_list_func(product_data,name_filter,function ()
+		set_my_value_list(product_data,name_filter,function ()
 		{
 			$(name_filter).focus();
 		});
@@ -11264,7 +11264,7 @@ function form295_add_item()
 				var product_data="<product_master>" +
 						"<name></name>" +
 						"</product_master>";
-				set_my_value_list_func(product_data,name_filter,function ()
+				set_my_value_list(product_data,name_filter,function ()
 				{
 					$(name_filter).focus();
 				});
@@ -11274,7 +11274,7 @@ function form295_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,name_filter,function ()
+		set_my_value_list(product_data,name_filter,function ()
 		{
 			$(name_filter).focus();
 		});
@@ -11397,7 +11397,7 @@ function form296_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,name_filter,function ()
+		set_my_value_list(product_data,name_filter,function ()
 		{
 			$(name_filter).focus();
 		});
@@ -11410,7 +11410,7 @@ function form296_add_item()
 				var product_data="<product_master>" +
 						"<name></name>" +
 						"</product_master>";
-				set_my_value_list_func(product_data,name_filter,function ()
+				set_my_value_list(product_data,name_filter,function ()
 				{
 					$(name_filter).focus();
 				});

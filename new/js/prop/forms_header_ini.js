@@ -143,7 +143,7 @@ function form10_header_ini()
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
-	set_my_value_list_func(customers_data,customers_filter,function ()
+	set_my_value_list(customers_data,customers_filter,function ()
 	{
 		$(customers_filter).focus();
 	});
@@ -1430,7 +1430,7 @@ function form91_header_ini()
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
-	set_my_value_list_func(customers_data,customers_filter,function()
+	set_my_value_list(customers_data,customers_filter,function()
 	{
 		$(customers_filter).focus();
 	});
@@ -3740,7 +3740,7 @@ function form153_header_ini()
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
-	set_my_value_list_func(customers_data,customers_filter,function ()
+	set_my_value_list(customers_data,customers_filter,function ()
 	{
 		$(customers_filter).focus();
 	});
@@ -4848,7 +4848,7 @@ function form193_header_ini()
 					"<name></name>"+
 					"<area_type></area_type>"+
 					"</store_areas>";
-	set_my_value_list_func(storage_data,storage_filter,function()
+	set_my_value_list(storage_data,storage_filter,function()
 	{
 		$(storage_filter).focus();
 	});
@@ -5978,7 +5978,7 @@ function form244_header_ini()
 					"<name></name>"+
 					"<area_type></area_type>"+
 					"</store_areas>";
-	set_my_value_list_func(storage_data,storage_filter,function()
+	set_my_value_list(storage_data,storage_filter,function()
 	{
 		$(storage_filter).focus();
 	});

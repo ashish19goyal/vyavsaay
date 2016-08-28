@@ -409,7 +409,7 @@ function form135_add_task()
 						"<phase_name></phase_name>"+
 						"<project_id exact='yes'>"+project_id+"</project_id>"+
 						"</project_phases>";
-		set_my_value_list_func(phase_data,name_filter,function () 
+		set_my_value_list(phase_data,name_filter,function () 
 		{
 			$(name_filter).focus();
 		});
@@ -522,7 +522,7 @@ function form135_add_team()
 		var member_data="<staff>"+
 							"<acc_name></acc_name>"+							
 							"</staff>";		
-		set_my_value_list_func(member_data,member_filter,function () 
+		set_my_value_list(member_data,member_filter,function () 
 		{
 			$(member_filter).focus();
 		});

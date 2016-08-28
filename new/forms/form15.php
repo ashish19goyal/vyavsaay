@@ -79,7 +79,7 @@
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
-	set_my_value_list_func(customers_data,customers_filter,function () 
+	set_my_value_list(customers_data,customers_filter,function () 
 	{
 		$(customers_filter).focus();
 	});
@@ -298,7 +298,7 @@ function form15_add_item()
 		var product_data="<sale_order_items>" +
 				"<item_name></item_name>" +
 				"</sale_order_items>";
-		set_my_value_list_func(product_data,name_filter);
+		set_my_value_list(product_data,name_filter);
 		
 		$(barcode_filter).on('blur',function()
 		{

@@ -539,3 +539,36 @@ function set_value_list_json(data,filter_element,func)
 		func();
 	}
 }
+
+function set_filter_json(data,filter_element,func)
+{
+	var form=filter_element.form;
+	var datalist=document.createElement('datalist');
+	data=vUtil.arrayUnique(data);
+	data.forEach(function(d)
+	{
+		var option=document.createElement('option');
+		option.setAttribute('value',d);
+		datalist.appendChild(option);
+	});
+
+	var list_id=filter_element.getAttribute('list');
+	if(list_id=='' || list_id==null)
+	{
+		list_id="list_"+vUtil.newKey();
+		filter_element.setAttribute('list',list_id);
+	}
+	else
+	{
+		var oldlist=document.getElementById(list_id);
+		form.removeChild(oldlist);
+	}
+
+	form.appendChild(datalist);
+	datalist.setAttribute('id',list_id);
+
+	if(typeof func!='undefined')
+	{
+		func();
+	}
+}

@@ -5303,7 +5303,7 @@ function modal101_action(doc_type,person,person_type,func,attachment_type,messag
 
 			person_filter.removeAttribute('readonly');
 
-			set_my_value_list_func(person_xml,person_filter,function ()
+			set_my_value_list(person_xml,person_filter,function ()
 			{
 				$(person_filter).focus();
 			});
@@ -6757,7 +6757,7 @@ function modal116_action(barcode,sku)
 			"<name></name>" +
 			"</product_master>";
 			//"<bar_code exact='yes'></bar_code>"+
-	set_my_value_list_func(sku_data,sku_filter,function()
+	set_my_value_list(sku_data,sku_filter,function()
 	{
 		$(sku_filter).focus();
 	});
@@ -16265,61 +16265,6 @@ function modal216_action(policy_holder_value,tele_caller_value,func)
 	$("#modal216_link").click();
 }
 
-
-/**
- * @modalNo 217
- * @modal Add Policy Type
- */
-function modal217_action()
-{
-	var form=document.getElementById('modal217_form');
-	var ftype=form.elements['type'];
-	var fissuer=form.elements['issuer'];
-    var fterm=form.elements['term'];
-    var fpreferred=form.elements['preferred'];
-
-	set_static_value_list_json('policy_types','type',ftype);
-
-	issuer_data={data_store:'policy_types',return_column:'issuer'};
-	set_my_filter_json(issuer_data,fissuer);
-
-	set_static_value_list_json('policy_types','term',fterm);
-	set_static_value_list_json('policy_types','preferred',fpreferred);
-
-	$(form).off("submit");
-	$(form).on("submit",function(event)
-	{
-		event.preventDefault();
-		if(is_create_access('form351'))
-		{
-			var name=form.elements['name'].value;
-			var type=ftype.value;
-			var desc=form.elements['desc'].value;
-			var issuer=fissuer.value;
-			var term=fterm.value;
-			var preferred=fpreferred.value;
-			var last_updated=get_my_time();
-
-			var data_json={data_store:'policy_types',
-			data:[{index:'id',value:vUtil.newKey()},
-				{index:'name',value:name},
-				{index:'type',value:type},
-				{index:'description',value:desc},
-				{index:'issuer',value:issuer},
-				{index:'term',value:term},
-				{index:'preferred',value:preferred},
-				{index:'last_updated',value:last_updated}]};
-			create_json(data_json);
-		}
-		else
-		{
-			$("#modal2_link").click();
-		}
-		$(form).find(".close").click();
-	});
-
-	$("#modal217_link").click();
-}
 
 /**
  * @modalNo 218

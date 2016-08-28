@@ -1,7 +1,7 @@
 <div id='form351' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class='caption'>
-			<a class='btn btn-circle grey btn-outline btn-sm' onclick='modal217_action();'>Add <i class='fa fa-plus'></i></a>
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form351_add_popup_action();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
             <div class="btn-group">
@@ -32,8 +32,8 @@
 				<tr>
 					<form id='form351_header'></form>
 						<th><input type='text' placeholder="Policy Name" class='floatlabel' name='name' form='form351_header'></th>
-            			<th><input type='text' placeholder="Policy Issuer" class='floatlabel' name='issuer' form='form351_header'></th>
-						<th><input type='text' placeholder="Accounts" class='floatlabel' name='account' form='form351_header'></th>
+            			<th><input type='text' placeholder="Issuing Company" class='floatlabel' name='issuer' form='form351_header'></th>
+						<th><input type='text' placeholder="Preferred" class='floatlabel' name='preferred' form='form351_header'></th>
 						<th><input type='text' placeholder="Description" class='floatlabel' name='description' form='form351_header'></th>
 						<th><input type='text' placeholder="Details" readonly='readonly' form='form351_header'></th>
 						<th><input type='submit' form='form351_header' style='visibility: hidden;'></th>
@@ -71,17 +71,63 @@
 				</div>
 			</div>
 		</div>
+
+		<a href='#form351_add_popup' data-toggle="modal" id='form351_add_popup_link'></a>
+		<div id="form351_add_popup" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form id='form351_add_popup_form' autocomplete="off">
+							<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+							<h4 class="modal-title">Add Policy Product</h4>
+						</div>
+						<div class="modal-body">
+							<div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+								<div class="row">
+									<div class="col-sm-12 col-md-4">Policy Name</div>
+									<div class="col-sm-12 col-md-8"><input type='text' required form='form351_add_popup_form' name='name'></div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 col-md-4">Issuer</div>
+									<div class="col-sm-12 col-md-8"><input type='text' required form='form351_add_popup_form' name='issuer'></div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 col-md-4">Preferred</div>
+									<div class="col-sm-12 col-md-8"><input type='text' required form='form351_add_popup_form' name='preferred'></div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 col-md-4">Description</div>
+									<div class="col-sm-12 col-md-8"><textarea form='form351_add_popup_form' name='desc'></textarea></div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 col-md-4">Type</div>
+									<div class="col-sm-12 col-md-8"><input type='text' required form='form351_add_popup_form' name='type'></div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 col-md-4">Term</div>
+									<div class="col-sm-12 col-md-8"><input type='text' required form='form351_add_popup_form' name='term'></div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+						<button type="submit" class="btn green" form='form351_add_popup_form' name='save'>Add</button>
+						<button type="button" class="btn red" form='form351_add_popup_form' data-dismiss='modal' name='cancel'>Cancel</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
 	</div>
 
 	<script>
 		function form351_header_ini()
 		{
 			var filter_fields=document.getElementById('form351_header');
-			var faccount=filter_fields.elements['account'];
+			var fpref=filter_fields.elements['preferred'];
 			var fissuer=filter_fields.elements['issuer'];
 
-			var account_data={data_store:'staff',return_column:'acc_name'};
-			set_my_filter_json(account_data,faccount);
+			set_filter_json(['yes','no'],fpref);
 
 			var issuer_data={data_store:'policy_types',return_column:'issuer'};
 			set_my_filter_json(issuer_data,fissuer);
@@ -106,7 +152,7 @@
 			var filter_fields=document.getElementById('form351_header');
 			var fname=filter_fields.elements['name'].value;
       		var fissuer=filter_fields.elements['issuer'].value;
-			var faccount=filter_fields.elements['account'].value;
+			var fpref=filter_fields.elements['preferred'].value;
 			var fdesc=filter_fields.elements['description'].value;
 
 			var paginator=$('#form351_body').paginator();
@@ -119,41 +165,42 @@
                               			{index:'type'},
             							{index:'issuer',value:fissuer},
 										{index:'term'},
-										{index:'preferred'},
-										{index:'accounts',value:faccount},
-            							{index:'description',value:fdesc}]};
+										{index:'preferred',value:fpref},
+										{index:'description',value:fdesc}]};
 
 			read_json_rows('form351',new_columns,function(results)
 			{
 				results.forEach(function(result)
 				{
-					var accounts_array=vUtil.jsonParse(result.accounts);
-					var accounts_data="<ul id='form351_accounts_"+result.id+"'>";
-					accounts_array.forEach(function(account)
-					{
-						accounts_data+="<li>"+account+"</li>";
-					});
-					accounts_data+="</ul>";
+					// var accounts_array=vUtil.jsonParse(result.accounts);
+					// var accounts_data="<ul id='form351_accounts_"+result.id+"'>";
+					// accounts_array.forEach(function(account)
+					// {
+					// 	accounts_data+="<li>"+account+"</li>";
+					// });
+					// accounts_data+="</ul>";
 
 					var rowsHTML="<tr>";
 						rowsHTML+="<form id='form351_"+result.id+"'></form>";
 							rowsHTML+="<td data-th='Name'>";
 								rowsHTML+="<textarea readonly='readonly' form='form351_"+result.id+"'>"+result.name+"</textarea>";
 							rowsHTML+="</td>";
-              				rowsHTML+="<td data-th='Type'>";
-								rowsHTML+="<input type='text' class='floatlabel dblclick_editable' placeholder='Policy Type' readonly='readonly' form='form351_"+result.id+"' value='"+result.type+"'>";
-								rowsHTML+="<textarea readonly='readonly' class='floatlabel' placeholder='Provider' form='form351_"+result.id+"'>"+result.issuer+"</textarea>";
+              				rowsHTML+="<td data-th='Issuing Company'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form351_"+result.id+"' value='"+result.issuer+"'>";
 							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Accounts'>";
-								rowsHTML+=accounts_data;
-								rowsHTML+="<button type='button' class='btn yellow' name='account' title='Edit Accounts' onclick=\"modal226_action('"+result.id+"');\"><i class='fa fa-pencil'></i></button>";
+							// rowsHTML+="<td data-th='Accounts'>";
+							// 	rowsHTML+=accounts_data;
+							// 	rowsHTML+="<button type='button' class='btn yellow' name='account' title='Edit Accounts' onclick=\"modal226_action('"+result.id+"');\"><i class='fa fa-pencil'></i></button>";
+							// rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Preferred'>";
+								rowsHTML+="<input type='text' class='dblclick_editable' readonly='readonly' form='form351_"+result.id+"' value='"+result.preferred+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Description'>";
 								rowsHTML+="<textarea class='dblclick_editable' readonly='readonly' form='form351_"+result.id+"'>"+result.description+"</textarea>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Details'>";
 								rowsHTML+="<input type='text' class='dblclick_editable floatlabel' placeholder='Term' readonly='readonly' form='form351_"+result.id+"' value='"+result.term+"'>";
-								rowsHTML+="<input type='text' class='dblclick_editable floatlabel' placeholder='Preferred' readonly='readonly' form='form351_"+result.id+"' value='"+result.preferred+"'>";
+								rowsHTML+="<input type='text' class='floatlabel dblclick_editable' placeholder='Policy Type' readonly='readonly' form='form351_"+result.id+"' value='"+result.type+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form351_"+result.id+"' value='"+result.id+"' name='id'>";
@@ -168,7 +215,7 @@
 					var term=fields.elements[4];
 					var preferred=fields.elements[5];
 
-					set_static_value_list_json('policy_types','term',term);
+					set_value_list_json(['one year','two years','one year, two years'],term);
 					set_static_value_list_json('policy_types','preferred',preferred);
 
 					$(fields).on("submit", function(event)
@@ -190,10 +237,10 @@
 			if(is_update_access('form351'))
 			{
 				var name=form.elements[0].value;
-				var type=form.elements[1].value;
+				var preferred=form.elements[2].value;
 				var desc=form.elements[3].value;
 				var term=form.elements[4].value;
-				var preferred=form.elements[5].value;
+				var type=form.elements[5].value;
 				var data_id=form.elements['id'].value;
 				var last_updated=get_my_time();
 				var data_json={data_store:'policy_types',
@@ -222,7 +269,7 @@
 					var form=document.getElementById(form_id);
 
 					var name=form.elements[0].value;
-					var provider=form.elements[2].value;
+					var provider=form.elements[1].value;
 					var data_id=form.elements['id'].value;
 					var last_updated=get_my_time();
 
@@ -314,7 +361,7 @@
 					});
 					$(attribute_label).html(content);
 				}
-				setTimeout(function(){$(form).formcontrol();},1000);
+				setTimeout(function(){$(form).formcontrol();},500);
 			});
 
 			$(form).off("submit");
@@ -348,6 +395,57 @@
 				}
 				$(form).find(".close").click();
 			});
+		}
+
+		function form351_add_popup_action()
+		{
+			var form=document.getElementById('form351_add_popup_form');
+			var ftype=form.elements['type'];
+			var fissuer=form.elements['issuer'];
+		    var fterm=form.elements['term'];
+		    var fpreferred=form.elements['preferred'];
+
+			set_static_value_list_json('policy_types','type',ftype);
+
+			issuer_data={data_store:'policy_types',return_column:'issuer'};
+			set_my_filter_json(issuer_data,fissuer);
+
+			set_value_list_json(['one year','two years','one year, two years'],fterm);
+			set_static_value_list_json('policy_types','preferred',fpreferred);
+
+			$(form).off("submit");
+			$(form).on("submit",function(event)
+			{
+				event.preventDefault();
+				if(is_create_access('form351'))
+				{
+					var name=form.elements['name'].value;
+					var type=ftype.value;
+					var desc=form.elements['desc'].value;
+					var issuer=fissuer.value;
+					var term=fterm.value;
+					var preferred=fpreferred.value;
+					var last_updated=get_my_time();
+
+					var data_json={data_store:'policy_types',
+					data:[{index:'id',value:vUtil.newKey()},
+						{index:'name',value:name},
+						{index:'type',value:type},
+						{index:'description',value:desc},
+						{index:'issuer',value:issuer},
+						{index:'term',value:term},
+						{index:'preferred',value:preferred},
+						{index:'last_updated',value:last_updated}]};
+					create_json(data_json);
+				}
+				else
+				{
+					$("#modal2_link").click();
+				}
+				$(form).find(".close").click();
+			});
+
+			$("#form351_add_popup_link").click();
 		}
 
 
