@@ -324,8 +324,8 @@
 						{
 							if(policies[a].policy_num==imported_commissions[j].policy_num)
 							{
-								policies[a]["imported_"+commissions[j].commission_type] = commissions[j].amount;
-								policies[a]["imported_"+commissions[j].commission_type+"_percent"] = commissions[j].comm_percent;
+								policies[a]["imported_"+imported_commissions[j].commission_type] = imported_commissions[j].amount;
+								policies[a]["imported_"+imported_commissions[j].commission_type+"_percent"] = imported_commissions[j].comm_percent;
 							}
 						}
 
@@ -339,7 +339,7 @@
 							policies[a]['basic_notes']="No validation reports have been imported against this policy.";
 							policies[a]['basic_label']="label-default";
 						}
-						else if(vUtil.isBlank(policies[a]['basic'])!=vUtil.isBlank(policies[a]['imported_basic']))
+						else if(VUtil.round(vUtil.isBlank(policies[a]['basic']))!=vUtil.round(vUtil.isBlank(policies[a]['imported_basic'])))
 						{
 							policies[a]['basic_notes']="Commission amount doesn't match imported report. Please check.";
 							policies[a]['basic_label']="label-danger";
@@ -359,7 +359,7 @@
 							policies[a]['orc_notes']="No validation reports have been imported against this policy.";
 							policies[a]['orc_label']="label-default";
 						}
-						else if(vUtil.isBlank(policies[a]['orc'])!=vUtil.isBlank(policies[a]['imported_orc']))
+						else if(VUtil.round(vUtil.isBlank(policies[a]['orc']))!=vUtil.round(vUtil.isBlank(policies[a]['imported_orc'])))
 						{
 							policies[a]['orc_notes']="Commission amount doesn't match imported report. Please check.";
 							policies[a]['orc_label']="label-danger";
@@ -369,7 +369,7 @@
 							policies[a]['orc_label']="label-success";
 						}
 					}
-					console.log(policies);
+					// console.log(policies);
 		            policies.forEach(function(item)
 		            {
 						var rowsHTML="<tr>";
