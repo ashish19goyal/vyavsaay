@@ -1120,6 +1120,9 @@
 				policies[a].preferred="";
 				policies[a].policy_holder="";
 				policies[a].policy_holder_id="";
+				policies[a].issuer='Apollo';
+				policies[a].premium=policies[a].Premium;
+				policies[a].policy_num=policies[a].Policy_Number;
 				policies[a].agent=document.getElementById('form347_popup_import_form').elements['agent'].value;
 				policies[a].start_time = vTime.unix({date:policies[a].Policy_start_date,inputFormat:'mm/dd/yyyy hh:mm:ss AM'});
 				policies[a].end_time = vTime.unix({date:policies[a].Policy_end_date,inputFormat:'mm/dd/yyyy hh:mm:ss AM'});
@@ -1142,7 +1145,7 @@
 				 					{index:'policy_name',value:policies[i].Product_Name},
 									{index:'premium',value:policies[i].Premium},
 									{index:'sum_insured',value:policies[i].Sum_Insured},
-									{index:'issuer',value:'Apollo'},
+									{index:'issuer',value:policies[i].issuer},
 									{index:'term',value:policies[i].term},
 									{index:'agent',value:policies[i].agent},
 									{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
@@ -1226,6 +1229,9 @@
 				policies[a].issue_type='';
 				policies[a].old_premium=0;
 				policies[a].Policy_Number = policies[a]['Policy Number (Click to view certificate)'].trim();
+				policies[a].issuer='ICICI';
+				policies[a].premium=policies[a]['Net GWP'];
+				policies[a].policy_num=policies[a].Policy_Number;
 				policies[a].start_time = vTime.unix({date:policies[a]['Policy Start Date'],inputFormat:'dd-mmm-yyyy'});
 				policies[a].end_time = policies[a].start_time+(365*86400000);
 				policies[a].issue_time = vTime.unix({date:policies[a]['Policy Endorsement Date'],inputFormat:'dd-mmm-yyyy'});
@@ -1248,7 +1254,7 @@
 				 					{index:'policy_name',value:policies[i]['Product Sub Class']},
 									{index:'cover_note',value:policies[i]['Policy Cover Note No']},
 									{index:'premium',value:policies[i]['Net GWP']},
-									{index:'issuer',value:'ICICI'},
+									{index:'issuer',value:policies[i].issuer},
 									{index:'term',value:policies[i].term},
 									{index:'agent',value:policies[i].agent},
 									{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
@@ -1283,7 +1289,7 @@
 											{index:'policy_name',value:policies[i]['Product Sub Class']},
 											{index:'cover_note',value:policies[i]['Policy Cover Note No']},
 											{index:'premium',value:policies[i]['Net GWP']},
-											{index:'issuer',value:'ICICI'},
+											{index:'issuer',value:policies[i].issuer},
 											{index:'term',value:policies[i].term},
 											{index:'agent',value:policies[i].agent},
 											{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
@@ -1331,7 +1337,7 @@
 												{index:'application_num',value:policies[i].application_num},
 												{index:'cover_note',value:policies[i]['Policy Cover Note No']},
 												{index:'premium',value:policies[i]['Net GWP']},
-												{index:'issuer',value:'ICICI'},
+												{index:'issuer',value:policies[i].issuer},
 												{index:'term',value:policies[i].term},
 												{index:'agent',value:policies[i].agent},
 												{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
@@ -1449,6 +1455,9 @@
 				policies[a].term = ((policies[a].end_time-policies[a].start_time)/(366*86400000)>1) ? 'two years' : 'one year';
 				policies[a].issued_in_quarter = vTime.quarter({date:policies[a].issue_time,inputFormat:'unix'});
 				policies[a].agent=document.getElementById('form347_popup_import_form').elements['agent'].value;
+				policies[a].premium=policies[a]['Issued Premium (Without Taxes)'];
+				policies[a].policy_num=policies[a]['Policy Number'];
+
 			}
 
 			form347_policy_bank(policies,'policy_name','Max',function()
@@ -1668,6 +1677,9 @@
 				policies[a].term = ((policies[a].end_time-policies[a].start_time)/(366*86400000)>1) ? 'two years' : 'one year';
 				policies[a].issued_in_quarter = vTime.quarter({date:policies[a].issue_time,inputFormat:'unix'});
 				policies[a].agent=document.getElementById('form347_popup_import_form').elements['agent'].value;
+				policies[a].premium=policies[a]['Renewal Premium'];
+				policies[a].policy_num=policies[a]['Policy Number'];
+
 			}
 
 			form347_policy_bank(policies,'policy_name','Max',function()
@@ -1837,6 +1849,9 @@
 				policies[a].term = ((policies[a].end_time-policies[a].start_time)/(366*86400000)>1) ? 'two years' : 'one year';
 				policies[a].issued_in_quarter = vTime.quarter({date:policies[a].issue_time,inputFormat:'unix'});
 				policies[a].agent=document.getElementById('form347_popup_import_form').elements['agent'].value;
+				policies[a].premium=policies[a]['Premium'];
+				policies[a].policy_num=policies[a]['Policy Number'];
+
 			}
 
 			form347_policy_bank(policies,'policy_name','Star',function()
