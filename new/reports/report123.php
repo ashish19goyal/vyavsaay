@@ -8,8 +8,11 @@
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
                 <ul class="dropdown-menu pull-right">
-                    <li>
-                        <a id='report123_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
+					<li>
+                        <a id='report123_print'><i class='fa fa-print'></i> Print</a>
+                    </li>
+					<li>
+                        <a id='report123_pdf'><i class='fa fa-file-pdf-o'></i> Download as PDF</a>
                     </li>
                     <li>
                         <a id='report123_email'><i class='fa fa-envelope'></i> Email</a>
