@@ -2013,16 +2013,16 @@
 
 				if(!vUtil.isBlank(policy.commissions))
 				{
-					console.log(policy);
+					// console.log(policy);
 					policy.commissions.forEach(function(commission)
 					{
-						console.log(commission.issue);
+						// console.log(commission.issue);
 						if(commission.issue.toLowerCase()==policy['issue_type'].toLowerCase())
 						{
 							commission.conditions = vUtil.jsonParse(commission.conditions);
 							var all_match=true;
 
-							console.log(commission.conditions);
+							// console.log(commission.conditions);
 							commission.conditions.forEach(function(cond)
 							{
 								if((!vUtil.isBlank(cond.exact) && policy[cond.index]!=cond.exact) || (!vUtil.isBlank(cond.lowerbound) && policy[cond.index]<cond.lowerbound) || (!vUtil.isBlank(cond.upperbound) && policy[cond.index]>cond.upperbound))

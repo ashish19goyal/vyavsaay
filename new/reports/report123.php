@@ -369,7 +369,7 @@
 							policies[a]['orc_label']="label-success";
 						}
 					}
-					// console.log(policies);
+					console.log(policies);
 		            policies.forEach(function(item)
 		            {
 						var rowsHTML="<tr>";
