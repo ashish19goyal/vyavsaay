@@ -317,7 +317,6 @@
 							{
 								policies[a][commissions[i].commission_type] = commissions[i].amount;
 								policies[a][commissions[i].commission_type+"_percent"] = commissions[i].comm_percent;
-								break;
 							}
 						}
 
@@ -327,7 +326,6 @@
 							{
 								policies[a]["imported_"+commissions[j].commission_type] = commissions[j].amount;
 								policies[a]["imported_"+commissions[j].commission_type+"_percent"] = commissions[j].comm_percent;
-								break;
 							}
 						}
 
@@ -371,7 +369,7 @@
 							policies[a]['orc_label']="label-success";
 						}
 					}
-
+					// console.log(policies);
 		            policies.forEach(function(item)
 		            {
 						var rowsHTML="<tr>";

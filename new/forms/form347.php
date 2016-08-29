@@ -605,6 +605,7 @@
 							policies[i].description = policy['description'];
 							policies[i].type = policy['type'];
 							policies[i].preferred = policy['preferred'];
+							policies[i].commissions = vUtil.jsonParse(policy['commissions']);
 						}
 					}
 				});
@@ -889,6 +890,7 @@
 		 					log_data:{title:'Policies from Apollo',link_to:'form347'}};
 			var customer_json={data_store:'customers',loader:'no',data:[]};
 			var attribute_json={data_store:'attributes',loader:'no',data:[]};
+			var commissions_json={data_store:'policy_commissions',loader:'no',data:[]};
 
 			var counter=1;
 			var last_updated=vTime.unix();
@@ -903,6 +905,9 @@
 				policies[a].preferred="";
 				policies[a].issue_type='';
 				policies[a].old_premium=0;
+				policies[a].premium=policies[a].Premium;
+				policies[a].policy_num=policies[a].Policy_Number;
+				policies[a].issuer='Apollo';
 				policies[a].agent=document.getElementById('form347_popup_import_form').elements['agent'].value;
 				policies[a].start_time = vTime.unix({date:policies[a].Policy_start_date,inputFormat:'mm/dd/yyyy hh:mm:ss AM'});
 				policies[a].end_time = vTime.unix({date:policies[a].Policy_end_date,inputFormat:'mm/dd/yyyy hh:mm:ss AM'});
@@ -925,7 +930,7 @@
 									{index:'application_num',value:policies[i].Application_Number},
 									{index:'member_id',value:policies[i].Member_ID},
 									{index:'premium',value:policies[i].Premium},
-									{index:'issuer',value:'Apollo'},
+									{index:'issuer',value:policies[i].issuer},
 									{index:'term',value:policies[i].term},
 									{index:'agent',value:policies[i].agent},
 									{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
@@ -948,6 +953,8 @@
 					{
 						form347_application_ids(policies,'Application_Number','Apollo',function()
 						{
+							var newKey=vUtil.newKey();
+
 							for(var i=0;i<policies.length;i++)
 							{
 								counter++;
@@ -989,6 +996,8 @@
 						 					{index:'last_updated',value:last_updated}];
 
 									attribute_json.data.push(attributes_array);
+									newKey+=2;
+									form347_recalculate_commissions(policies[i],commissions_json,newKey);
 
 									policies.splice(i,1);
 									i--;
@@ -1052,13 +1061,15 @@
 											{index:'last_updated',value:last_updated}];
 
 									customer_json.data.push(customer_json_array);
-
+									newKey+=2;
+									form347_recalculate_commissions(policies[i],commissions_json,newKey);
 								}
 							}
-
+							console.log(commissions_json);
 							create_batch_json(create_policy_json);
 							create_batch_json(customer_json);
 							create_batch_json(attribute_json);
+							create_batch_json(commissions_json);
 							update_batch_json(update_policy_json);
 						});
 					}
@@ -1199,6 +1210,7 @@
 			var update_policy_json={data_store:'policies',log:'yes',data:[],
 		 					log_data:{title:'Policies from ICICI',link_to:'form347'}};
 			var customer_json={data_store:'customers',loader:'no',data:[]};
+			var commissions_json={data_store:'policy_commissions',loader:'no',data:[]};
 
 			var counter=1;
 			var last_updated=vTime.unix();
@@ -1259,6 +1271,7 @@
 					{
 						form347_policy_ids_by_name(policies,'Customer Full Name','Product Sub Class','ICICI',function()
 						{
+							var newKey=vUtil.newKey();
 							// console.log(policies);
 							for(var i=0;i<policies.length;i++)
 							{
@@ -1292,7 +1305,8 @@
 									policy_array.push(upsell_obj);
 
 									update_policy_json.data.push(policy_array);
-
+									newKey+=2;
+									form347_recalculate_commissions(policies[i],commissions_json,newKey);
 									policies.splice(i,1);
 									i--;
 								}
@@ -1346,14 +1360,18 @@
 												{index:'last_updated',value:last_updated}];
 
 										customer_json.data.push(customer_json_array);
+										newKey+=2;
+										form347_recalculate_commissions(policies[i],commissions_json,newKey);
 									}
 
 									create_batch_json(create_policy_json);
 									create_batch_json(customer_json);
+									create_batch_json(commissions_json);
 								});
 							}
 							else{
 								update_batch_json(update_policy_json);
+								create_batch_json(commissions_json);
 							}
 							// console.log(create_policy_json);
 						});
@@ -1400,6 +1418,7 @@
 							log_data:{title:'Policies from Max',link_to:'form347'}};
 			var customer_json={data_store:'customers',loader:'no',data:[]};
 			var attribute_json={data_store:'attributes',loader:'no',data:[]};
+			var commissions_json={data_store:'policy_commissions',loader:'no',data:[]};
 
 			var counter=1;
 			var last_updated=vTime.unix();
@@ -1469,6 +1488,8 @@
 					{
 						form347_application_ids(policies,'Application Number','Max',function()
 						{
+							var newKey=vUtil.newKey();
+
 							for(var i=0;i<policies.length;i++)
 							{
 								counter++;
@@ -1505,6 +1526,8 @@
 											{index:'last_updated',value:last_updated}];
 
 									attribute_json.data.push(attributes_array);
+									newKey+=2;
+									form347_recalculate_commissions(policies[i],commissions_json,newKey);
 
 									policies.splice(i,1);
 									i--;
@@ -1561,13 +1584,15 @@
 											{index:'last_updated',value:last_updated}];
 
 									customer_json.data.push(customer_json_array);
-
+									newKey+=2;
+									form347_recalculate_commissions(policies[i],commissions_json,newKey);
 								}
 							}
 
 							create_batch_json(create_policy_json);
 							create_batch_json(customer_json);
 							create_batch_json(attribute_json);
+							create_batch_json(commissions_json);
 							update_batch_json(update_policy_json);
 						});
 					}
@@ -1612,6 +1637,7 @@
 							log_data:{title:'Renewed Policies from Max',link_to:'form347'}};
 			var customer_json={data_store:'customers',loader:'no',data:[]};
 			var attribute_json={data_store:'attributes',loader:'no',data:[]};
+			var commissions_json={data_store:'policy_commissions',loader:'no',data:[]};
 
 			var counter=1;
 			var last_updated=vTime.unix();
@@ -1733,10 +1759,13 @@
 										{index:'last_updated',value:last_updated}];
 
 								customer_json.data.push(customer_json_array);
+								newKey+=2;
+								form347_recalculate_commissions(policies[i],commissions_json,newKey);
 							}
 							create_batch_json(create_policy_json);
 							create_batch_json(attribute_json);
 							create_batch_json(customer_json);
+							create_batch_json(commissions_json);
 						});
 					}
 					else
@@ -1778,6 +1807,7 @@
 							log_data:{title:'Renewed Policies from Max',link_to:'form347'}};
 			var customer_json={data_store:'customers',loader:'no',data:[]};
 			var attribute_json={data_store:'attributes',loader:'no',data:[]};
+			var commissions_json={data_store:'policy_commissions',loader:'no',data:[]};
 
 			var counter=1;
 			var last_updated=vTime.unix();
@@ -1844,6 +1874,8 @@
 					{
 						form347_policy_ids_by_name_phone(policies,'Star',function()
 						{
+							var newKey=vUtil.newKey();
+
 							for(var i=0;i<policies.length;i++)
 							{
 								counter++;
@@ -1875,6 +1907,8 @@
 									policy_array.push(upsell_obj);
 
 									update_policy_json.data.push(policy_array);
+									newKey+=2;
+									form347_recalculate_commissions(policies[i],commissions_json,newKey);
 
 									policies.splice(i,1);
 									i--;
@@ -1930,13 +1964,17 @@
 												{index:'last_updated',value:last_updated}];
 
 										customer_json.data.push(customer_json_array);
+										newKey+=2;
+										form347_recalculate_commissions(policies[i],commissions_json,newKey);
 									}
 									create_batch_json(create_policy_json);
 									create_batch_json(customer_json);
+									create_batch_json(commissions_json);
 								});
 							}
 							else{
 								update_batch_json(update_policy_json);
+								create_batch_json(commissions_json);
 							}
 						});
 					}
@@ -1948,29 +1986,97 @@
 		};
 
 
-		function form347_evaluate_commission(comm_type,data,policy_commissions)
+		function form347_recalculate_commissions(policy,create_commissions,newKey,func)
 		{
-			var commissions = policy_commissions[data.policy_name];
-			var found=false;
-			var match=false;
-
-			if(!vUtil.isBlank(commissions))
+			if(is_update_access('form347'))
 			{
-				commissions.forEach(function(commission)
+				var last_updated = vTime.unix();
+				var basic=false;
+				var orc=false;
+
+				if(!vUtil.isBlank(policy.commissions))
 				{
-					if(commission.type.toLowerCase()==comm_type.toLowerCase() && commission.issue.toLowerCase()==data['issue_type'].toLowerCase() && !found)
+					policy.commissions.forEach(function(commission)
 					{
-						commission.conditions = vUtil.jsonParse(commission.conditions);
-						var all_match=true;
-						commission.conditions.forEach(function(cond)
+						if(commission.issue.toLowerCase()==policy['issue_type'].toLowerCase())
 						{
-							if((!vUtil.isBlank(cond.exact) && data[cond.index]!=cond.exact) || (!vUtil.isBlank(cond.lowerbound) && data[cond.index]<cond.lowerbound) || (!vUtil.isBlank(cond.upperbound) && data[cond.index]>cond.upperbound))
+							commission.conditions = vUtil.jsonParse(commission.conditions);
+							var all_match=true;
+							// console.log(commission.conditions);
+							commission.conditions.forEach(function(cond)
 							{
-								all_match=false;
+								if((!vUtil.isBlank(cond.exact) && policy[cond.index]!=cond.exact) || (!vUtil.isBlank(cond.lowerbound) && policy[cond.index]<cond.lowerbound) || (!vUtil.isBlank(cond.upperbound) && policy[cond.index]>cond.upperbound))
+								{
+									all_match=false;
+									// console.log('not matched');
+								}
+							});
+
+							if(all_match)
+							{
+								policy['comm_percent'] = commission.commission;
+								policy['amount'] = parseFloat(commission.commission)*parseFloat(policy['premium'])/100;
+
+								var data_array=[{index:'id',value:newKey},
+										{index:'comm_percent',value:policy['comm_percent']},
+										{index:'amount',value:policy['amount']},
+										{index:'agent',value:policy['agent']},
+										{index:'policy_num',value:policy['policy_num'],uniqueWith:['commission_type']},
+										{index:'issuer',value:policy['issuer']},
+										{index:'premium',value:policy['premium']},
+										{index:'issue_date',value:policy['issue_time']},
+										{index:'commission_type',value:commission.type.toLowerCase()},
+										{index:'last_updated',value:last_updated}];
+								newKey++;
+								create_commissions.data.push(data_array);
+
+								if(commission.type.toLowerCase()=='basic')
+									basic = true;
+								if(commission.type.toLowerCase()=='orc')
+									orc = true;
 							}
-						});
-					}
-				});
+						}
+					});
+				}
+
+				if(!basic)
+				{
+					var data_array=[{index:'id',value:newKey},
+							{index:'comm_percent',value:""},
+							{index:'amount',value:""},
+							{index:'agent',value:policy['agent']},
+							{index:'policy_num',value:policy['policy_num'],uniqueWith:['commission_type']},
+							{index:'issuer',value:policy['issuer']},
+							{index:'premium',value:policy['premium']},
+							{index:'issue_date',value:policy['issue_time']},
+							{index:'commission_type',value:'basic'},
+							{index:'last_updated',value:last_updated}];
+					newKey++;
+					create_commissions.data.push(data_array);
+				}
+				if(!orc)
+				{
+					var data_array=[{index:'id',value:newKey},
+							{index:'comm_percent',value:""},
+							{index:'amount',value:""},
+							{index:'agent',value:policy['agent']},
+							{index:'policy_num',value:policy['policy_num'],uniqueWith:['commission_type']},
+							{index:'issuer',value:policy['issuer']},
+							{index:'premium',value:policy['premium']},
+							{index:'issue_date',value:policy['issue_time']},
+							{index:'commission_type',value:'orc'},
+							{index:'last_updated',value:last_updated}];
+					newKey++;
+					create_commissions.data.push(data_array);
+				}
+
+				if(typeof func!='undefined')
+				{
+					func();
+				}
+			}
+			else{
+				$("#modal2_link").click();
 			}
 		};
 
