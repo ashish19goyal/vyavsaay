@@ -1302,8 +1302,9 @@
 											{index:'status',value:'issued'},
 											{index:'last_updated',value:last_updated}];
 
-									var issue_type= (policies[i]['Policy Endorsement Type'] == "RENEWED") ? 'renewal' :'fresh';
-									var issue_type_obj = {index:'issue_type',value:issue_type};
+									policies[i].issue_type = (policies[i]['Policy Endorsement Type'] == "RENEWED") ? 'renewal' :'fresh';
+
+									var issue_type_obj = {index:'issue_type',value:policies[i].issue_type};
 									policy_array.push(issue_type_obj);
 
 									var upsell= (policies[i].old_premium!=0 && parseFloat(policies[i]['Net GWP']) > parseFloat(policies[i].old_premium)) ? 'yes' :'no';
@@ -1350,8 +1351,8 @@
 												{index:'status',value:'issued'},
 												{index:'last_updated',value:last_updated}];
 
-										var issue_type= (policies[i]['Policy Endorsement Type'] == "RENEWED") ? 'renewal' :'fresh';
-										var issue_type_obj = {index:'issue_type',value:issue_type};
+										policies[i].issue_type = (policies[i]['Policy Endorsement Type'] == "RENEWED") ? 'renewal' :'fresh';
+										var issue_type_obj = {index:'issue_type',value:policies[i].issue_type};
 										policy_array.push(issue_type_obj);
 
 										var upsell= (policies[i].old_premium!=0 && parseFloat(policies[i]['Net GWP']) > parseFloat(policies[i].old_premium)) ? 'yes' :'no';
@@ -2017,7 +2018,6 @@
 						{
 							commission.conditions = vUtil.jsonParse(commission.conditions);
 							var all_match=true;
-							// console.log(commission.conditions);
 							commission.conditions.forEach(function(cond)
 							{
 								if((!vUtil.isBlank(cond.exact) && policy[cond.index]!=cond.exact) || (!vUtil.isBlank(cond.lowerbound) && policy[cond.index]<cond.lowerbound) || (!vUtil.isBlank(cond.upperbound) && policy[cond.index]>cond.upperbound))
