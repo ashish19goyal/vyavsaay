@@ -1525,7 +1525,7 @@
 											{index:'issue_type',value:'fresh'},
 											{index:'upsell',value:'no'},
 											{index:'last_updated',value:last_updated}];
-
+									policies[i].issue_type='fresh';
 									update_policy_json.data.push(data_json_array);
 
 									var attributes_array=[{index:'id',value:vUtil.newKey()+counter},
@@ -1576,7 +1576,7 @@
 											{index:'issue_type',value:'fresh'},
 											{index:'upsell',value:'no'},
 											{index:'last_updated',value:last_updated}];
-
+									policies[i].issue_type = 'fresh';
 									create_policy_json.data.push(data_json_array);
 
 									var attributes_array=[{index:'id',value:vUtil.newKey()+counter},
@@ -1750,6 +1750,7 @@
 										{index:'status',value:'issued'},
 										{index:'issue_type',value:'renewal'},
 										{index:'last_updated',value:last_updated}];
+								policies[i].issue_type = 'renewal';
 
 								var upsell= (policies[i].old_premium!=0 && parseFloat(policies[i]['Renewal Premium']) > parseFloat(policies[i].old_premium)) ? 'yes' :'no';
 								var upsell_obj = {index:'upsell',value:upsell};
@@ -1914,8 +1915,8 @@
 											{index:'status',value:'issued'},
 											{index:'last_updated',value:last_updated}];
 
-									var issue_type= (policies[i]['Fresh/Renewal'] == "RENEWAL") ? 'renewal' :'fresh';
-									var issue_type_obj = {index:'issue_type',value:issue_type};
+									policies[i].issue_type= (policies[i]['Fresh/Renewal'] == "RENEWAL") ? 'renewal' :'fresh';
+									var issue_type_obj = {index:'issue_type',value:policies[i].issue_type};
 									policy_array.push(issue_type_obj);
 
 									var upsell= (policies[i].old_premium!=0 && parseFloat(policies[i]['Premium']) > parseFloat(policies[i].old_premium)) ? 'yes' :'no';
@@ -1962,8 +1963,8 @@
 												{index:'status',value:'issued'},
 												{index:'last_updated',value:last_updated}];
 
-										var issue_type= (policies[i]['Fresh/Renewal'] == "RENEWAL") ? 'renewal' :'fresh';
-										var issue_type_obj = {index:'issue_type',value:issue_type};
+										policies[i].issue_type= (policies[i]['Fresh/Renewal'] == "RENEWAL") ? 'renewal' :'fresh';
+										var issue_type_obj = {index:'issue_type',value:policies[i].issue_type};
 										policy_array.push(issue_type_obj);
 
 										var upsell= (policies[i].old_premium!=0 && parseFloat(policies[i]['Premium']) > parseFloat(policies[i].old_premium)) ? 'yes' :'no';
@@ -2012,12 +2013,16 @@
 
 				if(!vUtil.isBlank(policy.commissions))
 				{
+					console.log(policy);
 					policy.commissions.forEach(function(commission)
 					{
+						console.log(commission.issue);
 						if(commission.issue.toLowerCase()==policy['issue_type'].toLowerCase())
 						{
 							commission.conditions = vUtil.jsonParse(commission.conditions);
 							var all_match=true;
+
+							console.log(commission.conditions);
 							commission.conditions.forEach(function(cond)
 							{
 								if((!vUtil.isBlank(cond.exact) && policy[cond.index]!=cond.exact) || (!vUtil.isBlank(cond.lowerbound) && policy[cond.index]<cond.lowerbound) || (!vUtil.isBlank(cond.upperbound) && policy[cond.index]>cond.upperbound))
