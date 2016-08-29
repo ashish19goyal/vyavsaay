@@ -339,7 +339,7 @@
 							policies[a]['basic_notes']="No validation reports have been imported against this policy.";
 							policies[a]['basic_label']="label-default";
 						}
-						else if(VUtil.round(vUtil.isBlank(policies[a]['basic']))!=vUtil.round(vUtil.isBlank(policies[a]['imported_basic'])))
+						else if(vUtil.round(vUtil.isBlank(policies[a]['basic']))!=vUtil.round(vUtil.isBlank(policies[a]['imported_basic'])))
 						{
 							policies[a]['basic_notes']="Commission amount doesn't match imported report. Please check.";
 							policies[a]['basic_label']="label-danger";
@@ -359,7 +359,7 @@
 							policies[a]['orc_notes']="No validation reports have been imported against this policy.";
 							policies[a]['orc_label']="label-default";
 						}
-						else if(VUtil.round(vUtil.isBlank(policies[a]['orc']))!=vUtil.round(vUtil.isBlank(policies[a]['imported_orc'])))
+						else if(vUtil.round(vUtil.isBlank(policies[a]['orc']))!=vUtil.round(vUtil.isBlank(policies[a]['imported_orc'])))
 						{
 							policies[a]['orc_notes']="Commission amount doesn't match imported report. Please check.";
 							policies[a]['orc_label']="label-danger";
