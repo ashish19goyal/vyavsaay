@@ -255,6 +255,7 @@
                         {index:'agent'},
 						{index:'premium'},
 						{index:'amount'},
+						{index:'issue_date'},
 						{index:'commission_type'}]};
 
 			read_json_rows('report126',comm_columns,function(policies)
