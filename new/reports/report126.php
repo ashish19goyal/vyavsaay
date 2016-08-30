@@ -449,6 +449,9 @@
 					var x=0;
 					months_array.forEach(function(month)
 					{
+						item['num-'+month.y+month.m]=parseFloat(item['num-'+month.y+month.m])/2;
+						item['p-'+month.y+month.m]=parseFloat(item['p-'+month.y+month.m])/2;
+
 						num+="<td>"+item['num-'+month.y+month.m]+"</td>";
 						premium+="<td>"+vUtil.round(item['p-'+month.y+month.m])+"</td>";
 						bc+="<td>"+vUtil.round(item['bc-'+month.y+month.m])+"</td>";
