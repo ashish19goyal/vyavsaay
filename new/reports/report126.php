@@ -370,18 +370,18 @@
 					var obj_name = item.issuer+"-"+item.agent;
 					var total_obj = item.issuer+"-total";
 
-					if(vUtil.isBlank(grid_array[total_obj]))
-					{
-						grid_array[total_obj]= {'issuer':item.issuer,
-												'agent':'Total'};
-
-						months_array.forEach(function(month){
-							grid_array[total_obj]['num-'+month.y+month.m] = 0;
-							grid_array[total_obj]['p-'+month.y+month.m] = 0;
-							grid_array[total_obj]['bc-'+month.y+month.m] = 0;
-							grid_array[total_obj]['oc-'+month.y+month.m] = 0;
-						});
-					}
+					// if(vUtil.isBlank(grid_array[total_obj]))
+					// {
+					// 	grid_array[total_obj]= {'issuer':item.issuer,
+					// 							'agent':'Total'};
+					//
+					// 	months_array.forEach(function(month){
+					// 		grid_array[total_obj]['num-'+month.y+month.m] = 0;
+					// 		grid_array[total_obj]['p-'+month.y+month.m] = 0;
+					// 		grid_array[total_obj]['bc-'+month.y+month.m] = 0;
+					// 		grid_array[total_obj]['oc-'+month.y+month.m] = 0;
+					// 	});
+					// }
 
 					if(vUtil.isBlank(grid_array[obj_name]))
 					{
@@ -396,17 +396,17 @@
 						});
 					}
 
-					grid_array[total_obj]['num-'+item.year+item.month] += 1;
-					if(!vUtil.isBlank(item.premium) && !isNaN(item.premium)){
-						grid_array[total_obj]['p-'+item.year+item.month] += parseFloat(item.premium);
-					}
-					if(!vUtil.isBlank(item.amount) && !isNaN(item.amount)){
-						if(item.commission_type=='basic'){
-							grid_array[total_obj]['bc-'+item.year+item.month] += parseFloat(item.amount);
-						}else{
-							grid_array[total_obj]['oc-'+item.year+item.month] += parseFloat(item.amount);
-						}
-					}
+					// grid_array[total_obj]['num-'+item.year+item.month] += 1;
+					// if(!vUtil.isBlank(item.premium) && !isNaN(item.premium)){
+					// 	grid_array[total_obj]['p-'+item.year+item.month] += parseFloat(item.premium);
+					// }
+					// if(!vUtil.isBlank(item.amount) && !isNaN(item.amount)){
+					// 	if(item.commission_type=='basic'){
+					// 		grid_array[total_obj]['bc-'+item.year+item.month] += parseFloat(item.amount);
+					// 	}else{
+					// 		grid_array[total_obj]['oc-'+item.year+item.month] += parseFloat(item.amount);
+					// 	}
+					// }
 
 					grid_array[obj_name]['num-'+item.year+item.month] += 1;
 					if(!vUtil.isBlank(item.premium) && !isNaN(item.premium)){
