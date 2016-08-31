@@ -1,4 +1,4 @@
-<div id='form193' class='function_detail'>
+<div id='form193' class='tab-pane'>
 	<form id='form193_master' autocomplete="off">
 		<fieldset>
 			<label style='background-color:#B93C42;color:#fff;padding:3px;'>Scan Rack<br><input type='text' style='color:#000' required name='storage'></label>

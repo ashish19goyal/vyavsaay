@@ -1,4 +1,4 @@
-<div id='form280' class='function_detail'>
+<div id='form280' class='tab-pane'>
 	<form id='form280_master' autocomplete="off">
 		<fieldset>
 			<label>Channel<br><input type='text' name='channel'></label>

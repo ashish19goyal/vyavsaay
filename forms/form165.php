@@ -1,4 +1,4 @@
-<div id='form165' class='function_detail'>
+<div id='form165' class='tab-pane'>
 	<form id='form165_master' autocomplete="off">
 		<fieldset>
 			<label style='background-color:#555;color:#fff;padding:5px;'>Pending Quantity<br><input type='number' step='any' style='font-weight:bold;' readonly='readonly' name='pending_count'></label>

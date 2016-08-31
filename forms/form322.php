@@ -1,39 +1,55 @@
-<div id='form322' class='function_detail'>
-	<table class='rwd-table'>
-		<thead>
-			<tr>
-				<form id='form322_header'></form>
-					<th>Manifest # <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form322_header'></th>
-					<th>Co-loader <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form322_header'></th>
-					<th>Vendor <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form322_header'></th>
-					<th>Date <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form322_header'></th>
-					<th>
-						<input type='button' form='form322_header' value='EXPORT' class='export_icon'>
-						<input type='button' form='form322_header' value='IMPORT' class='import_icon' onclick='modal208_action();'>
-						<input type='submit' form='form322_header' style='visibility: hidden;'>
-					</th>
-			</tr>
-		</thead>
-		<tbody id='form322_body'>
-		</tbody>
-	</table>
-	<div class='form_nav'>
-		<img src='./images/previous.png' id='form322_prev' class='prev_icon' data-index='-25' onclick="$('#form322_index').attr('data-index',$(this).attr('data-index')); form322_ini();">
-		<div style='display:hidden;' id='form322_index' data-index='0'></div>
-		<img src='./images/next.png' id='form322_next' class='next_icon' data-index='25' onclick="$('#form322_index').attr('data-index',$(this).attr('data-index')); form322_ini();">
+<div id='form322' class='tab-pane portlet box green-meadow'>
+	<div class="portlet-title">
+		<div class="actions">
+            <div class="btn-group">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
+                <ul class="dropdown-menu pull-right">
+                    <li>
+                        <a id='form322_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
+                    </li>
+                    <li>
+                      	<a id='form322_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
+                    </li>
+                    <li>
+                        <a id='form322_print'><i class='fa fa-print'></i> Print</a>
+                    </li>
+                    <li>
+                        <a id='form322_email'><i class='fa fa-envelope'></i> Email</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
 	</div>
-    
+
+	<div class="portlet-body">
+	<br>
+		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
+			<thead>
+				<tr>
+					<form id='form322_header'></form>
+						<th><input type='text' placeholder="Manifest #" class='floatlabel' name='manifest' form='form322_header'></th>
+						<th><input type='text' placeholder="Type" class='floatlabel' name='type' form='form322_header'></th>
+						<th><input type='text' placeholder="Size" readonly='readonly' form='form322_header'></th>
+						<th><input type='text' placeholder="Details" readonly='readonly' form='form322_header'></th>
+						<th><input type='text' placeholder="Date" class='floatlabel' name='date' form='form322_header'></th>
+						<th><input type='submit' form='form322_header' style='visibility: hidden;'></th>
+				</tr>
+			</thead>
+			<tbody id='form322_body'>
+			</tbody>
+		</table>
+	</div>
+
     <script>
-    
+
         function form322_header_ini()
         {
             var filter_fields=document.getElementById('form322_header');
-            var manifest_filter=filter_fields.elements[0];
-            var date_filter=filter_fields.elements[3];
-            
-            var manifest_data="<manifests>" +
-                    "<manifest_num></manifest_num>" +
-                    "</manifests>";
+            var manifest_filter=filter_fields.elements['manifest'];
+            var type_filter=filter_fields.elements['type'];
+            var date_filter=filter_fields.elements['date'];
+
+            var manifest_data={data_store:'manifests',return_column:'manifest_num'};
 
             $(filter_fields).off('submit');
             $(filter_fields).on('submit',function(event)
@@ -42,7 +58,8 @@
                 form322_ini();
             });
 
-            set_my_filter(manifest_data,manifest_filter);
+            set_my_filter_json(manifest_data,manifest_filter);
+            set_static_filter_json('manifests','type',type_filter);
             $(date_filter).datepicker();
         };
 
@@ -51,106 +68,74 @@
             show_loader();
             var fid=$("#form322_link").attr('data_id');
             if(fid==null)
-                fid="";	
-
-            var filter_fields=document.getElementById('form322_header');
-
-            //populating form 
-            var fmanifest=filter_fields.elements[0].value;
-            var floader=filter_fields.elements[1].value;
-            var fvendor=filter_fields.elements[2].value;
-            var fdate=get_raw_time(filter_fields.elements[3].value);
-            
-            ////indexing///
-            var index_element=document.getElementById('form322_index');
-            var prev_element=document.getElementById('form322_prev');
-            var next_element=document.getElementById('form322_next');
-            var start_index=index_element.getAttribute('data-index');
-            //////////////
+                fid="";
 
             $('#form322_body').html("");
 
-            var new_columns=new Object();
-                new_columns.count=25;
-                new_columns.start_index=start_index;
-                new_columns.data_store='manifests';		
+            var filter_fields=document.getElementById('form322_header');
+            var fmanifest=filter_fields.elements['manifest'].value;
+            var ftype=filter_fields.elements['type'].value;
+            var fdate=get_raw_time(filter_fields.elements['date'].value);
 
-                new_columns.indexes=[{index:'id',value:fid},
+            var paginator=$('#form322_body').paginator();
+
+            var new_columns={count:paginator.page_size(),
+                            start_index:paginator.get_index(),
+                            access:'yes',
+							data_store:'manifests',
+                            indexes:[{index:'id',value:fid},
                                     {index:'manifest_num',value:fmanifest},
-                                    {index:'coloader',value:floader},
-                                    {index:'vendor',value:fvendor},
-                                    {index:'date',value:fdate}];
+                                    {index:'type',value:ftype},
+                                    {index:'seal_num'},
+                                    {index:'lbh'},
+                                    {index:'weight'},
+                                    {index:'coloader'},
+                                    {index:'vendor'},
+                                    {index:'date',value:fdate}]};
 
             read_json_rows('form322',new_columns,function(results)
-            {			
+            {
                 results.forEach(function(result)
                 {
-                    var rowsHTML="";
-                    rowsHTML+="<tr>";
+                    var rowsHTML="<tr>";
                         rowsHTML+="<form id='form322_"+result.id+"'></form>";
                             rowsHTML+="<td data-th='Manifest #'>";
-                                rowsHTML+="<input type='text' class='input_link' readonly='readonly' form='form322_"+result.id+"' value='"+result.manifest_num+"' onclick=\"element_display('"+result.id+"','form321');\">";
+                                rowsHTML+="<a onclick=\"element_display('"+result.id+"','form321');\"><input type='text' readonly='readonly' form='form322_"+result.id+"' value='"+result.manifest_num+"'>";
+                            rowsHTML+="</td></a>";
+                            rowsHTML+="<td data-th='Type'>";
+                                rowsHTML+="<input type='text' placeholder='Type' class='floatlabel' readonly='readonly' form='form322_"+result.id+"' value='"+result.type+"'>";
+                                rowsHTML+="<input type='text' placeholder='Seal #' class='floatlabel' readonly='readonly' form='form322_"+result.id+"' value='"+result.seal_num+"'>";
                             rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Co-loader'>";
-                                rowsHTML+="<input type='text' readonly='readonly' form='form322_"+result.id+"' value='"+result.coloader+"'>";
+                            rowsHTML+="<td data-th='Size'>";
+                                rowsHTML+="<input type='text' placeholder='LBH' class='floatlabel' readonly='readonly' form='form322_"+result.id+"' value='"+result.lbh+"'>";
+                                rowsHTML+="<input type='text' placeholder='Weight' class='floatlabel' readonly='readonly' form='form322_"+result.id+"' value='"+result.weight+"'>";
                             rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Vendor'>";
-                                rowsHTML+="<input type='text' readonly='readonly' form='form322_"+result.id+"' value='"+result.vendor+"'>";
+                            rowsHTML+="<td data-th='Details'>";
+                                rowsHTML+="<input type='text' placeholder='Co-loader' class='floatlabel' readonly='readonly' form='form322_"+result.id+"' value='"+result.coloader+"'>";
+                                rowsHTML+="<input type='text' placeholder='Vendor' class='floatlabel' readonly='readonly' form='form322_"+result.id+"' value='"+result.vendor+"'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Date'>";
                                 rowsHTML+="<input type='text' readonly='readonly' form='form322_"+result.id+"' value='"+get_my_past_date(result.date)+"'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Action'>";
                                 rowsHTML+="<input type='hidden' form='form322_"+result.id+"' value='"+result.id+"' name='id'>";
-                                rowsHTML+="<input type='button' class='delete_icon' form='form322_"+result.id+"' title='Delete' onclick='form322_delete_item($(this));'>";
-                            rowsHTML+="</td>";			
+                                rowsHTML+="<button type='button' class='btn red' form='form322_"+result.id+"' title='Delete' onclick='form322_delete_item($(this));'><i class='fa fa-trash'></i></button>";
+                            rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form322_body').append(rowsHTML);
                 });
 
-                ////indexing///
-                var next_index=parseInt(start_index)+25;
-                var prev_index=parseInt(start_index)-25;
-                next_element.setAttribute('data-index',next_index);
-                prev_element.setAttribute('data-index',prev_index);
-                index_element.setAttribute('data-index','0');
-                if(results.length<25)
+                $('#form322').formcontrol();
+				paginator.update_index(results.length);
+				initialize_tabular_report_buttons(new_columns,'Manifests','form322',function (item)
                 {
-                    $(next_element).hide();
-                }
-                else
-                {
-                    $(next_element).show();
-                }
-                if(prev_index<0)
-                {
-                    $(prev_element).hide();
-                }
-                else
-                {
-                    $(prev_element).show();
-                }
-                /////////////
-
-                longPressEditable($('.dblclick_editable'));
-                $('textarea').autosize();
-
-                var export_button=filter_fields.elements[4];
-
-                $(export_button).off("click");
-                $(export_button).on("click", function(event)
-                {
-                    get_export_data(columns,'Manifests');
+                    item.date=get_my_past_date(item.date);
                 });
-                hide_loader();
+				hide_loader();
             });
         };
 
-        /**
-         * @form Manage Transit manifests
-         * @param button
-         */
         function form322_delete_item(button)
         {
             if(is_delete_access('form322'))
@@ -161,60 +146,44 @@
                     var form=document.getElementById(form_id);
 
                     var manifest_num=form.elements[0].value;
-                    var data_id=form.elements[4].value;
-                    var data_xml="<manifests>" +
-                                "<id>"+data_id+"</id>" +
-                                "</manifests>";	
-                    var activity_xml="<activity>" +
-                            "<data_id>"+data_id+"</data_id>" +
-                            "<tablename>manifests</tablename>" +
-                            "<link_to>form322</link_to>" +
-                            "<title>Delete</title>" +
-                            "<notes>Manifest # "+manifest_num+"</notes>" +
-                            "<updated_by>"+get_name()+"</updated_by>" +
-                            "</activity>";
+                    var data_id=form.elements[8].value;
+                    var data_json={data_store:'manifests',
+ 							data:[{index:'id',value:data_id}],
+ 							log:'yes',
+ 							log_data:{title:"Deleted",notes:"Manifest # "+manifest_num,link_to:"form322"}};
 
-                    var manifest_items_xml="<logistics_orders>"+
-                                    "<id></id>"+
-                                    "<status exact='yes'>in-transit</status>"+
-                                    "<manifest_num exact='yes'>"+manifest_num+"</manifest_num>"+
-                                    "</logistics_orders>";			
-                    get_single_column_data(function(manifest_items)
+                    delete_json(data_json);
+
+                    var manifest_items_json={data_store:'logistics_orders',return_column:'id',
+                                            indexes:[{index:'manifest_num',exact:manifest_num}]};
+
+                    read_json_single_column(manifest_items_json,function(manifest_items)
                     {
-                        var data_xml="<logistics_orders>";
-                        var counter=1;
+                        var data_json={data_store:'logistics_orders',
+                                loader:'no',
+                                data:[]};
+
                         var last_updated=get_my_time();
 
                         manifest_items.forEach(function(manifest_item)
                         {
-                            if((counter%500)===0)
-                            {
-                                data_xml+="</logistics_orders><separator></separator><logistics_orders>";
-                            }
+                            var data_json_array=[{index:'id',value:manifest_item},
+                                    {index:'manifest_num',value:''},
+                                    {index:'man_id',value:''},
+                                    {index:'last_updated',value:last_updated}];
 
-                            counter+=1;
-
-                            data_xml+="<row>" +
-                                    "<id>"+manifest_item+"</id>" +
-                                    "<manifest_num></manifest_num>" +
-                                    "<man_id></man_id>" +
-                                    "<status>received</status>"+
-                                    "<last_updated>"+last_updated+"</last_updated>" +
-                                    "</row>";
+                            data_json.data.push(data_json_array);
                         });
-                        data_xml+="</logistics_orders>";
-                        
-                        update_batch(data_xml);
 
-                    },manifest_items_xml);
+                        update_batch_json(data_json);
+                    });
 
-                    delete_row(data_xml,activity_xml);
                     $(button).parent().parent().remove();
                 });
             }
             else
             {
-                $("#modal2").dialog("open");
+                $("#modal2_link").click();
             }
         }
 

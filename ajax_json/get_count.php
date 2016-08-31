@@ -51,7 +51,6 @@
 	$input_object=json_decode($input_data,true);
 
 	$table=$input_object['data_store'];
-	$columns_array=(array)$input_object['indexes'];
 
 	$response_object=[];
 			
@@ -78,114 +77,142 @@
 			$values_array=array();
 			
 			///formulating the query
-			$query="select count(*) from $table where ";
+			$query="select count(id) from $table where ";
 			$limit=" limit ?,?";
 			
 			//parsing the indexes for filtering of results
-			foreach($columns_array as $col)
+			if(isset($input_object['indexes']))
 			{
-				if(isset($col['upperbound']))
+				$columns_array=(array)$input_object['indexes'];
+				foreach($columns_array as $col)
 				{
-					$query.=$col['index']." <= ? and ";
-					$values_array[]=$col['upperbound'];
-				}
-				
-				if(isset($col['lowerbound']))
-				{
-					$query.=$col['index']." >= ? and ";
-					$values_array[]=$col['lowerbound'];
-				}
-				
-				if(isset($col['unequal']))
-				{
-					$query.="(".$col['index']." <> ? or isNull(".$col['index'].")) and ";
-					$values_array[]=$col['unequal'];
-				}
-				
-				if(isset($col['isnull']))
-				{
-					if($col['isnull']=='yes')
+					if(isset($col['upperbound']))
 					{
-						$query.="isNull(".$col['index'].") and ";
-					}
-					else 
-					{
-						$query.="!isNull(".$col['index'].") and ";
-					}
-				}
-				
-				if(isset($col['array']))
-				{
-					$query.=$col['index']." in (";
-					$exploded_values=(array)$col['array'];
-					foreach($exploded_values as $value)
-					{
-						$query.="?,";
-						$values_array[]=$value;
-					}
-					if(count($exploded_values)==0)
-					{
-						$query.="?,";
-						$values_array[]="--";						
+						$query.=$col['index']." <= ? and ";
+						$values_array[]=$col['upperbound'];
 					}
 					
-					$query=rtrim($query,",");
-					$query.=") and ";
-				}
-				
-				if(isset($col['approx_array']))
-				{
-					$approx_array=(array)$col['approx_array'];
-					$exploded_values=[];
-					foreach ($approx_array as $val) 
+					if(isset($col['lowerbound']))
 					{
-					    $exploded_values[] = "%".$val."%";
-					}
-					$query.="(";
-					foreach($exploded_values as $value)
-					{
-						$query.=$col['index']." like ? or ";
-						$values_array[]=$value;
-					}
-					if(count($exploded_values)==0)
-					{
-						$query.="?,";
-						$values_array[]="--";						
+						$query.=$col['index']." >= ? and ";
+						$values_array[]=$col['lowerbound'];
 					}
 					
-					$query=rtrim($query,", or ");
-					$query.=") and ";
-				}
-				
-				if(isset($col['value']))
-				{
-					if($col['value']!="")
+					if(isset($col['unequal']))
 					{
-						if($col['index']=='id')
+						$query.="(".$col['index']." <> ? or isNull(".$col['index'].")) and ";
+						$values_array[]=$col['unequal'];
+					}
+					
+					if(isset($col['isnull']))
+					{
+						if($col['isnull']=='yes')
 						{
-							$query.=$col['index']." = ? and ";
-							$values_array[]=$col['value'];
+							$query.="isNull(".$col['index'].") and ";
 						}
-						else
-						{	
-							$query.=$col['index']." like ? and ";
-							$values_array[]="%".$col['value']."%";
+						else 
+						{
+							$query.="!isNull(".$col['index'].") and ";
 						}
 					}
+					
+					if(isset($col['array']))
+					{
+						$query.=$col['index']." in (";
+						$exploded_values=(array)$col['array'];
+						foreach($exploded_values as $value)
+						{
+							$query.="?,";
+							$values_array[]=$value;
+						}
+						if(count($exploded_values)==0)
+						{
+							$query.="?,";
+							$values_array[]="--";						
+						}
+						
+						$query=rtrim($query,",");
+						$query.=") and ";
+					}
+					
+					if(isset($col['approx_array']))
+					{
+						$approx_array=(array)$col['approx_array'];
+						$exploded_values=[];
+						foreach ($approx_array as $val) 
+						{
+						    $exploded_values[] = "%".$val."%";
+						}
+						$query.="(";
+						foreach($exploded_values as $value)
+						{
+							$query.=$col['index']." like ? or ";
+							$values_array[]=$value;
+						}
+						if(count($exploded_values)==0)
+						{
+							$query.="?,";
+							$values_array[]="--";						
+						}
+						
+						$query=rtrim($query,", or ");
+						$query.=") and ";
+					}
+					
+                    if(isset($col['all_approx_array']))
+					{
+						$approx_array=(array)$col['all_approx_array'];
+						$exploded_values=[];
+						foreach ($approx_array as $val) 
+						{
+						    $exploded_values[] = "%".$val."%";
+						}
+						$query.="(";
+						foreach($exploded_values as $value)
+						{
+							$query.=$col['index']." like ? and ";
+							$values_array[]=$value;
+						}
+						if(count($exploded_values)==0)
+						{
+							$query.="?,";
+							$values_array[]="--";						
+						}
+						
+						$query=rtrim($query,", and ");
+						$query.=") and ";
+                    }
+                    
+					if(isset($col['value']))
+					{
+						if($col['value']!="")
+						{
+							if($col['index']=='id')
+							{
+								$query.=$col['index']." = ? and ";
+								$values_array[]=$col['value'];
+							}
+							else
+							{	
+								$query.=$col['index']." like ? and ";
+								$values_array[]="%".$col['value']."%";
+							}
+						}
+					}
+					
+					if(isset($col['exact']))
+					{
+						$query.=$col['index']." = ? and ";
+						$values_array[]=$col['exact'];
+					}				
 				}
-				
-				if(isset($col['exact']))
-				{
-					$query.=$col['index']." = ? and ";
-					$values_array[]=$col['exact'];
-				}				
 			}
 			
 			$query=rtrim($query,"and ");
 			
 			if(count($values_array)===0)
 			{
-				$query="select count(*) from $table";
+				$query="select count(id) from $table";
 			}
 			
 			if($limit_count!=0)

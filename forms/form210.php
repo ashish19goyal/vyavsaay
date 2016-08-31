@@ -1,4 +1,4 @@
-<div id='form210' class='function_detail'>
+<div id='form210' class='tab-pane'>
 	<form id='form210_master' autocomplete="off">
 		<fieldset>
 			<label>Bag #: <input type='text' class='widebox' name='bag'></label>

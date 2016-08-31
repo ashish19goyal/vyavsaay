@@ -22,13 +22,13 @@
 			var reason_data="";
 			var comment_data="";
 			var domain=form.elements['domain'].value;
-	
-			xmlhttp.open("POST","../ajax_json/unsubscribe.php",true);
+
+			xmlhttp.open("POST","../ajax/unsubscribe.php",true);
 			xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 			xmlhttp.send("id="+id_data+"&reason="+reason_data+"&comment="+comment_data+"&domain="+domain);
 		}
 	};
-	
+
 	function myFunction()
 	{
 		var xmlhttp = new XMLHttpRequest();
@@ -37,8 +37,7 @@
 	     	if(xmlhttp.readyState==4 && xmlhttp.status==200)
 		   	{
 		   		console.log(xmlhttp.responseText);
-		     	//$("#myDiv").hide();
-		        document.getElementById("myDiv").setAttribute('style','display:none;');	                 
+		     	document.getElementById("myDiv").setAttribute('style','display:none;');
 	            document.getElementById("thankYou").innerHTML="Thank you.";
 		   	}
 		}
@@ -47,8 +46,8 @@
 		var reason_data=form.elements['reason'].value;
 		var comment_data=form.elements['complaint'].value;
 		var domain=form.elements['domain'].value;
-		
-		xmlhttp.open("POST","../ajax_json/unsubscribe.php",true);
+
+		xmlhttp.open("POST","../ajax/unsubscribe.php",true);
 		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		xmlhttp.send("id="+id_data+"&reason="+reason_data+"&comment="+comment_data+"&domain="+domain);
 	}
@@ -71,8 +70,8 @@
 <textarea name="complaint" rows="10" style="width:300px;"></textarea><br><br>
 
 <button type="button" onclick="myFunction();">submit</button>
-</form> 
+</form>
 </div>
-<h1 id="thankYou"></h1> 
+<h1 id="thankYou"></h1>
 </body>
 </html>

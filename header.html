@@ -2,11 +2,11 @@
 			<div class="main-nav">
 			  <div class="divider-circle"></div>
 
-	        	<nav class="container">  
+	        	<nav class="container">
 	        		<!-- Logo -->
 	                <div class="logo pull-left">
 	                    <a href="index.html">
-	                    	<h1 class="logo-text">Vyavsaay <span class="text-highlight">ERP</span></h1>			
+	                    	<h1 class="logo-text">Vyavsaay <span class="text-highlight">ERP</span></h1>
 	                    </a>
 	                </div>
 	             <!-- End Logo -->
@@ -27,10 +27,10 @@
 	        	</nav>
 			</div>
 		</div>
-		
-		
+
+
 	<!--begin login box-->
-				<div style='display:none' id='login_box' class='login_box'>
+			<div style='display:none' id='login_box' class='login_box'>
        			<div id="failed_auth" style='color:#ff0000'></div>
 					<form id='login'>
 						<fieldset>
@@ -43,23 +43,23 @@
        		</div>
 
 	<!--end login box-->
-	
+
 	<script>
-	
+
 	$(document).ready(function() {
 	//Mobile menu
 		$('#navigation').mobileMenu({
 			triggerMenu:'#navigation-toggle',
 			subMenuTrigger: ".sub-nav-toggle",
-			animationSpeed: 500 
+			animationSpeed: 500
 		});
 	});
-	
+
 
 	function display_login_box()
 	{
 		var form=document.getElementById("login");
-		
+
 		$(form).off('submit');
 		$(form).on('submit',function(event)
 		{
@@ -67,21 +67,20 @@
 			//$("#login_box").dialog("close");
 			login_action();
 		});
-	
+
 		$('#navigation').slideToggle(500, function(){
 				var $this=$(this);
-		
+
 				if ($this.attr('style')&&$this.css('display')=='none')
 				{
 					$this.removeAttr('style').removeClass('showen-c').addClass('hidden-c');
 				}
-			  
+
 				if ($this.attr('style')&&$this.css('display')=='block'){
 					$this.removeAttr('style').removeClass('hidden-c').addClass('showen-c');
-				}	
-		});	
+				}
+		});
 		$('#navigation').toggleClass('open-menu');
 		$("#login_box").dialog("open");
-	}	
+	}
 </script>
-	

@@ -1,4 +1,4 @@
-<div id='form222' class='function_detail'>
+<div id='form222' class='tab-pane'>
 	<form id='form222_master' autocomplete="off">
 		<fieldset>
 			<label>Supplier <img src='./images/add_image.png' class='add_image' title='Add new supplier' id='form222_add_supplier'><br>

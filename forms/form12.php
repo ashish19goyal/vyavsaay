@@ -1,4 +1,4 @@
-<div id='form12' class='function_detail'>
+<div id='form12' class='tab-pane'>
 	<form id='form12_master' autocomplete="off">
 		<fieldset>
 			<label>Customer <img src='./images/add_image.png' class='add_image' id='form12_add_customer'>

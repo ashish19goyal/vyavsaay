@@ -117,16 +117,10 @@
 					
 					foreach($row as $data)
 					{
-                        /*
-                        if(!isset($data['value']))
-                        {
-                            echo $data['index'];
-                        }
-                        */
-                        $indexed_columns[$data['index']]=$data['value'];
+						$indexed_columns[$data['index']]=$data['value'];
 					}
-
-                    foreach($row as $data)
+					
+					foreach($row as $data)
 					{
 						if(isset($data['unique']) && $data['unique']=='yes')
 						{	

@@ -1,4 +1,4 @@
-<div id='form47' class='function_detail'>
+<div id='form47' class='tab-pane'>
 	<form id='form47_master' autocomplete="off">
 		<fieldset>
 				<label>Current Password: <input type="password" form='form47_master'></label><br>

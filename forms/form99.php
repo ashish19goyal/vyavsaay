@@ -1,4 +1,4 @@
-<div id='form99' class='function_detail'>
+<div id='form99' class='tab-pane'>
 	<form id='form99_master' autocomplete="off">
 		<fieldset>
 				<input type="button" value="Delete Application Cache" class='generic_icon' onclick="modal130_action();">

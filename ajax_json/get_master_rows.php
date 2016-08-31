@@ -180,6 +180,30 @@
 					$query.=") and ";
 				}
 				
+                if(isset($col['all_approx_array']))
+                {
+                    $approx_array=(array)$col['all_approx_array'];
+                    $exploded_values=[];
+                    foreach ($approx_array as $val) 
+                    {
+                        $exploded_values[] = "%".$val."%";
+                    }
+                    $query.="(";
+                    foreach($exploded_values as $value)
+                    {
+                        $query.=$col['index']." like ? and ";
+                        $values_array[]=$value;
+                    }
+                    if(count($exploded_values)==0)
+                    {
+                        $query.="?,";
+                        $values_array[]="--";						
+                    }
+
+                    $query=rtrim($query,", and ");
+                    $query.=") and ";
+                }
+
 				if(isset($col['value']))
 				{
 					if($col['value']!="")

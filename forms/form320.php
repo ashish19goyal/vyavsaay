@@ -1,4 +1,4 @@
-<div id='form320' class='function_detail'>
+<div id='form320' class='tab-pane'>
 	<form id='form320_master' autocomplete="off">
 		<fieldset>
 			<label>Customer <img src='./images/add_image.png' class='add_image' title='Add new customer' id='form320_add_customer'><br>
@@ -40,7 +40,7 @@
 			var order_num_filter=fields.elements['order_num'];
 			var type_filter=fields.elements['bill_type'];
 			
-			fields.elements['order_id'].value=get_new_key();
+			fields.elements['order_id'].value=vUtil.newKey();
 			order_num_filter.value="";
 			
 			var save_button=fields.elements['save'];
@@ -106,7 +106,7 @@
 			},order_num_data);			
 		
 			$(order_date).datepicker();
-			order_date.value=get_my_date();
+			order_date.value=vTime.date();
 			set_static_filter('sale_orders','status',status_filter);
 			status_filter.value='pending';
 			customers_filter.value='';
@@ -217,7 +217,7 @@
 		{
 			if(is_create_access('form320'))
 			{
-				var id=get_new_key();
+				var id=vUtil.newKey();
 				var rowsHTML="<tr>";
 				rowsHTML+="<form id='form320_"+id+"' autocomplete='off'></form>";
 					rowsHTML+="<td data-th='Item'>";
@@ -327,7 +327,7 @@
 				{
 					amount_filter.value=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
 								
-					tax_filter.value=my_round(((parseFloat(tax_unit_filter.value)*(parseFloat(amount_filter.value)))/100),2);			
+					tax_filter.value=vUtil.round(((parseFloat(tax_unit_filter.value)*(parseFloat(amount_filter.value)))/100),2);			
 					if(isNaN(parseFloat(tax_filter.value)))
 						tax_filter.value=0;
 					total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
@@ -339,7 +339,7 @@
 			}
 			else
 			{
-				$("#modal2").dialog("open");
+				$("#modal2_link").click();
 			}
 		}
 		
@@ -394,7 +394,7 @@
 			}
 			else
 			{
-				$("#modal2").dialog("open");
+				$("#modal2_link").click();
 			}
 		}
 		
@@ -497,7 +497,7 @@
 			}
 			else
 			{
-				$("#modal2").dialog("open");
+				$("#modal2_link").click();
 			}
 		}
 		
@@ -577,7 +577,7 @@
 			}
 			else
 			{
-				$("#modal2").dialog("open");
+				$("#modal2_link").click();
 			}
 		}
 		
@@ -603,7 +603,7 @@
 			}
 			else
 			{
-				$("#modal2").dialog("open");
+				$("#modal2_link").click();
 			}
 		}
 		
@@ -794,9 +794,9 @@
 			
 			var form=document.getElementById("form320_master");
 			
-			amount=my_round(amount,2);
-			tax=my_round(tax,2);
-			total=my_round(total,2);
+			amount=vUtil.round(amount,2);
+			tax=vUtil.round(tax,2);
+			total=vUtil.round(total,2);
 				
 			var total_row="<tr><td colspan='1' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 									"<td>Amount:<br>Tax: <br>Total: </td>" +

@@ -3,27 +3,27 @@
 namespace RetailingEssentials;
 use \PDO;
 
-include_once 'file_reader.php';
+include_once 'config.php';
 
 class db_connect
 {
-	public $fr=null;
 	public $conn=null;
-	
+
 	public function __construct($db_name)
 	{
-		//$this->fr=new file_reader("../../Config/config.prop");
-		$this->fr=new file_reader($_SERVER['DOCUMENT_ROOT']."/../Config/config.prop");
-		$dbhost=$this->fr->attributes["host"];
+		$config = config::getInstance();
+		$dbhost = $config->get('host');
+		$dbuser = $config->get('user');
+		$dbpass = $config->get('password');
+
 		if($db_name===0 || $db_name=='0')
-			$dbname= $this->fr->attributes["database"];
+		 	$dbname= $config->get("database");
 		else
-			$dbname=$db_name;
-		$dbuser = $this->fr->attributes["user"];
-		$dbpass = $this->fr->attributes["password"];
+		 	$dbname=$db_name;
+
 		$dsn="mysql:host=".$dbhost.";dbname=".$dbname.";charset=utf8";
 		$options=array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
-		$this->conn = new \PDO($dsn, $dbuser, $dbpass, $options);		
+		$this->conn = new \PDO($dsn, $dbuser, $dbpass, $options);
 	}
 
 	public function __destruct()
@@ -31,5 +31,4 @@ class db_connect
 		unset($this->conn);
 	}
 }
-
 ?>

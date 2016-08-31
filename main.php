@@ -1,58 +1,46 @@
-<?php 
-	include "includes/header.php";	
-?>	
-	<script type='text/javascript'>
-			history.pushState(null, null, 'main.php');
-			window.addEventListener('popstate', function(event) {
-				history.pushState(null, null, 'main.php');
-			});
-	</script>
-<?php	
-	include "includes/searchbar.php";
-	include "includes/modal_forms.php";
-	include "includes/print_templates.php";
-	include "includes/side_menu.php";
-	include "functions/activities.php";
-	
-	echo "<div id='content_box'>";
-		//central grid display for reports
-		
-		//include "includes/grids.php";	
-		include "includes/grids_dynamic.php";
-		
-		//display for search results, notifications and opportunities
-		include "functions/search.php";
-		include "functions/notifications.php";
-		include "functions/all_activities.php";
-		
-	
-		//display for each of the grids
-/*		include "functions/sale_bills.php";
-		include "functions/logistics.php";
-		include "functions/orders.php";
-		include "functions/drs.php";
-		include "functions/transit.php";
-		include "functions/products.php";
-		include "functions/services.php";
-		include "functions/purchase.php";
-		include "functions/store.php";
-		include "functions/customer_service.php";
-		include "functions/treatment.php";
-		include "functions/people.php";
-		include "functions/projects.php";
-		include "functions/offers.php";
-		include "functions/finances.php";
-		include "functions/ecommerce.php";
-		include "functions/manufacturing.php";
-		include "functions/sale_reports.php";
-		include "functions/maps.php";
-		include "functions/admin.php";
-*/
-		include "functions/dynamic.php";
-		
-		//display for settings
-		include "functions/settings.php";
- 	echo "</div>";
-		
-	include "includes/footer.php";
-?>
+<!DOCTYPE html>
+<html manifest="/vyavsaay.appcache">
+
+    <?php
+    	session_start();
+		include "includes/head.php"
+	?>
+
+    <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white page-sidebar-closed" onload="default_load();">
+
+       	<?php include "functions/lock_screen.php"; ?>
+
+        	<!-- BEGIN HEADER & CONTENT DIVIDER -->
+			<?php include "includes/top_bar.php" ?>
+			<div class="clearfix"> </div>
+        	<!-- END HEADER & CONTENT DIVIDER -->
+
+        	<!-- BEGIN CONTAINER -->
+			<div class="page-container">
+
+            <!-- BEGIN SIDEBAR -->
+            <?php include "includes/side_menu.php" ?>
+            <!--end sidebar-->
+
+            <!-- BEGIN CONTENT -->
+            <div class="page-content-wrapper">
+                <!-- BEGIN CONTENT BODY -->
+				<?php include "includes/content.php" ?>
+                <!-- END CONTENT BODY -->
+            </div>
+            <!-- END CONTENT -->
+
+			</div>
+        	<!-- END CONTAINER -->
+
+        	<!-- BEGIN FOOTER -->
+			<?php include "includes/footer.php" ?>
+        	<!-- END FOOTER -->
+
+		<!-- BEGIN CORE PLUGINS -->
+		<?php include "includes/footer_scripts.php" ?>
+      <?php include "includes/overwrite_functions.php" ?>
+      <!-- END THEME LAYOUT SCRIPTS -->
+
+	</body>
+</html>

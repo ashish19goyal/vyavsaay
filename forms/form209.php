@@ -1,4 +1,4 @@
-<div id='form209' class='function_detail'>
+<div id='form209' class='tab-pane'>
 	<form id='form209_master' autocomplete="off">
 		<fieldset>
 			<label>Plan #<br><input type='text' name='num' readonly='readonly' required></label>

@@ -1,4 +1,4 @@
-<div id='form303' class='function_detail'>
+<div id='form303' class='tab-pane'>
 	<table class='rwd-table'>
 		<thead>
 			<tr>
@@ -211,7 +211,7 @@
 			if(is_create_access('form303'))
 			{
 				var rowsHTML="";
-				var id=get_new_key();
+				var id=vUtil.newKey();
 				rowsHTML+="<tr>";
 				rowsHTML+="<form id='form303_"+id+"' autocomplete='off'></form>";
 					rowsHTML+="<td data-th='Item Name'>";
@@ -248,7 +248,7 @@
 				var products_data="<product_master>" +
 						"<name></name>" +
 						"</product_master>";
-				set_my_value_list_func(products_data,product_filter,function () 
+				set_my_value_list(products_data,product_filter,function () 
 				{
 					$(product_filter).focus();
 				});
@@ -261,7 +261,7 @@
 						var product_data="<product_master>" +
 								"<name></name>" +
 								"</product_master>";
-						set_my_value_list_func(products_data,product_filter,function () 
+						set_my_value_list(products_data,product_filter,function () 
 						{
 							$(product_filter).focus();
 						});
@@ -291,7 +291,7 @@
 			}
 			else
 			{
-				$("#modal2").dialog("open");
+				$("#modal2_link").click();
 			}
 		}
 		
@@ -341,7 +341,7 @@
 			}
 			else
 			{
-				$("#modal2").dialog("open");
+				$("#modal2_link").click();
 			}
 		}
 		
@@ -355,7 +355,7 @@
 				var data_id=form.elements[3].value;
 				var last_updated=get_my_time();
 				var data_xml="<inventory_adjust>" +
-							"<id>"+get_new_key()+"</id>" +
+							"<id>"+vUtil.newKey()+"</id>" +
 							"<product_name>"+product_name+"</product_name>" +
 							"<batch>"+product_name+"</batch>" +
 							"<storage>"+name+"</storage>" +
@@ -382,7 +382,7 @@
 			}
 			else
 			{
-				$("#modal2").dialog("open");
+				$("#modal2_link").click();
 			}
 		}
 		
@@ -416,14 +416,14 @@
 			}
 			else
 			{
-				$("#modal2").dialog("open");
+				$("#modal2_link").click();
 			}
 		}
 		
 		function form303_import_template()
 		{
 			var data_array=['id','item_name','storage'];
-			my_array_to_csv(data_array);
+			vUtil.arrayToCSV(data_array);
 		};
 		
 		function form303_import_validate(data_array)
@@ -431,7 +431,7 @@
 			var validate_template_array=[{column:'item_name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 									{column:'storage',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')}];
 							
-			var error_array=validate_import_array(data_array,validate_template_array);
+			var error_array=vImport.validate(data_array,validate_template_array);
 			return error_array;					
 		}
 		

@@ -12,7 +12,7 @@ function set_grid_item_1()
 	var new_columns=new Object();
 		new_columns.count=1;
 		new_columns.data_store='bills';
-		new_columns.indexes=[{index:'bill_num'}];		
+		new_columns.indexes=[{index:'bill_num'}];
 		new_columns.return_column='bill_num';
 
 	read_json_single_column(new_columns,function(results)
@@ -37,9 +37,9 @@ function set_grid_item_1()
 */
 function set_grid_item_2()
 {
-	var new_columns=new Object();
-		new_columns.data_store='bills';
-		new_columns.indexes=[{index:'bill_date',lowerbound:(get_raw_time(get_my_date())-1000),upperbound:(get_raw_time(get_my_date())+86399999)}];		
+	var new_columns={data_store:'bills',return_column:'id',
+					indexes:[{index:'bill_date',lowerbound:(get_raw_time(vTime.date())-1000),
+					upperbound:(get_raw_time(vTime.date())+86399999)}]};
 
 	read_json_count(new_columns,function(bill_count)
 	{
@@ -63,7 +63,7 @@ function set_grid_item_3()
 	var new_columns=new Object();
 		new_columns.count=1;
 		new_columns.data_store='supplier_bills';
-		new_columns.indexes=[{index:'bill_id'}];		
+		new_columns.indexes=[{index:'bill_id'}];
 		new_columns.return_column='bill_id';
 
 	read_json_single_column(new_columns,function(results)
@@ -88,9 +88,8 @@ function set_grid_item_3()
 */
 function set_grid_item_4()
 {
-	var new_columns=new Object();
-		new_columns.data_store='supplier_bills';
-		new_columns.indexes=[{index:'entry_date',lowerbound:(get_raw_time(get_my_date())-1000),upperbound:(get_raw_time(get_my_date())+86399999)}];		
+	var new_columns={data_store:'supplier_bills',return_column:'id',
+					indexes:[{index:'entry_date',lowerbound:(get_raw_time(vTime.date())-1000),upperbound:(get_raw_time(vTime.date())+86399999)}]};
 
 	read_json_count(new_columns,function(bill_count)
 	{
@@ -111,13 +110,11 @@ function set_grid_item_4()
 */
 function set_grid_item_5()
 {
-	var new_columns=new Object();
-		new_columns.sum='yes';
-		new_columns.data_store='payments';
-		new_columns.return_column='total_amount';
-		new_columns.indexes=[{index:'date',lowerbound:(get_raw_time(get_my_date())-1000),upperbound:(get_raw_time(get_my_date())+86399999)},
-							{index:'type',exact:'received'},
-							{index:'status',array:['pending','closed']}];
+	var new_columns={sum:'yes',
+					data_store:'receipts',
+					return_column:'amount',
+					indexes:[{index:'date',lowerbound:(get_raw_time(vTime.date())-1000),upperbound:(get_raw_time(vTime.date())+86399999)},
+							{index:'type',exact:'received'}]};
 
 	read_json_single_column(new_columns,function(results)
 	{
@@ -141,13 +138,11 @@ function set_grid_item_5()
 */
 function set_grid_item_6()
 {
-	var new_columns=new Object();
-		new_columns.sum='yes';
-		new_columns.data_store='payments';
-		new_columns.return_column='total_amount';
-		new_columns.indexes=[{index:'date',lowerbound:(get_raw_time(get_my_date())-1000),upperbound:(get_raw_time(get_my_date())+86399999)},
-							{index:'type',exact:'paid'},
-							{index:'status',array:['pending','closed']}];
+	var new_columns={sum:'yes',
+					data_store:'receipts',
+					return_column:'amount',
+					indexes:[{index:'date',lowerbound:(get_raw_time(vTime.date())-1000),upperbound:(get_raw_time(vTime.date())+86399999)},
+							{index:'type',exact:'paid'}]};
 
 	read_json_single_column(new_columns,function(results)
 	{
@@ -171,14 +166,11 @@ function set_grid_item_6()
 */
 function set_grid_item_7()
 {
-	var new_columns=new Object();
-		new_columns.data_store='product_master';
-		new_columns.indexes=[{index:'name'}];
-
+	var new_columns={data_store:'product_master',return_column:'name'};
 	read_json_count(new_columns,function(item_count)
 	{
 		$('#grid_item_7').html(item_count);
-	});	
+	});
 };
 
 /***function limiter***/
@@ -198,7 +190,7 @@ function set_grid_item_8()
 		new_columns.data_store='bill_items';
 		new_columns.indexes=[{index:'item_name'},
 							{index:'total'},
-							{index:'last_updated',lowerbound:(get_raw_time(get_my_date())-1000)}];
+							{index:'last_updated',lowerbound:(get_raw_time(vTime.date())-1000)}];
 
 	read_json_rows('',new_columns,function(results)
 	{
@@ -214,12 +206,12 @@ function set_grid_item_8()
 				}
 			}
 		}
-		
+
 		results.sort(function(a,b)
 		{
 			if(parseFloat(a.total)<parseFloat(b.total))
 			{	return 1;}
-			else 
+			else
 			{	return -1;}
 		});
 		if(results.length>0)
@@ -242,9 +234,8 @@ function set_grid_item_8()
 */
 function set_grid_item_9()
 {
-	var new_columns=new Object();
-		new_columns.data_store='services';
-		new_columns.indexes=[{index:'name'}];
+	var new_columns={data_store:'services',
+					indexes:[{index:'name'}]};
 
 	read_json_count(new_columns,function(item_count)
 	{
@@ -265,9 +256,8 @@ function set_grid_item_9()
 */
 function set_grid_item_11()
 {
-	var new_columns=new Object();
-		new_columns.data_store='product_instances';
-		new_columns.indexes=[{index:'id'},{index:'product_name'},{index:'sale_price'}];
+	var new_columns={data_store:'product_instances',
+					indexes:[{index:'id'},{index:'product_name'},{index:'sale_price'}]};
 
 	read_json_rows('',new_columns,function(results)
 	{
@@ -275,10 +265,10 @@ function set_grid_item_11()
 		{
 			if(parseFloat(a.sale_price)<parseFloat(b.sale_price))
 			{	return 1;}
-			else 
+			else
 			{	return -1;}
 		});
-				
+
 		if(results.length>0)
 		{
 			$('#grid_item_11').html(results[0].product_name);
@@ -299,12 +289,11 @@ function set_grid_item_11()
 */
 function set_grid_item_12()
 {
-	var new_columns=new Object();
-		new_columns.data_store='product_instances';
-		new_columns.indexes=[{index:'id'},{index:'product_name'},{index:'sale_price'},{index:'cost_price'}];
+	var new_columns={data_store:'product_instances',
+					indexes:[{index:'id'},{index:'product_name'},{index:'sale_price'},{index:'cost_price'}]};
 
 	read_json_rows('',new_columns,function(results)
-	{	
+	{
 		if(results.length>0)
 		{
 			for(var k in results)
@@ -313,15 +302,15 @@ function set_grid_item_12()
 				if(cost_price!=0 && cost_price!='NaN')
 					results[k].margin=(parseFloat(results[k].sale_price)/cost_price);
 			}
-			
+
 			results.sort(function(a,b)
 			{
 				if(parseFloat(a.margin)<parseFloat(b.margin))
 				{	return 1;}
-				else 
+				else
 				{	return -1;}
 			});
-			
+
 			$('#grid_item_12').html(results[0].product_name);
 		}
 	});
@@ -340,13 +329,12 @@ function set_grid_item_12()
 */
 function set_grid_item_13()
 {
-	var new_columns=new Object();
-		new_columns.data_store='bills';
-		new_columns.return_column='customer_name';
-		new_columns.indexes=[{index:'bill_date',lowerbound:(get_raw_time(get_my_date())-1000),upperbound:(get_raw_time(get_my_date())+86399000)}];
+	var new_columns={data_store:'bills',
+					return_column:'customer_name',
+					indexes:[{index:'bill_date',lowerbound:(get_raw_time(vTime.date())-1000),upperbound:(get_raw_time(vTime.date())+86399000)}]};
 
 	read_json_single_column(new_columns,function(results)
-	{	
+	{
 		$('#grid_item_13').html(results.length);
 	});
 };
@@ -364,11 +352,10 @@ function set_grid_item_13()
 */
 function set_grid_item_14()
 {
-	var new_columns=new Object();
-		new_columns.count=1;
-		new_columns.data_store='bills';
-		new_columns.return_column='customer_name';
-		new_columns.indexes=[{index:'customer_name'}];
+	var new_columns={count:1,
+					data_store:'bills',
+					return_column:'customer_name',
+					indexes:[{index:'customer_name'}]};
 
 	read_json_single_column(new_columns,function(results)
 	{
@@ -397,7 +384,7 @@ function set_grid_item_15()
 		new_columns.data_store='supplier_bills';
 		new_columns.return_column='supplier';
 		new_columns.indexes=[{index:'supplier'}];
-	
+
 	read_json_single_column(new_columns,function(results)
 	{
 		if(results.length>0)
@@ -426,7 +413,7 @@ function set_grid_item_16()
 		new_columns.indexes=[{index:'due_date',upperbound:get_my_time()},
 							{index:'type',exact:'paid'},
 							{index:'status',exact:'pending'}];
-	
+
 	read_json_single_column(new_columns,function(results)
 	{
 		var payments=0;
@@ -451,14 +438,13 @@ function set_grid_item_16()
 */
 function set_grid_item_17()
 {
-	var new_columns=new Object();
-		new_columns.data_store='attendance';
-		new_columns.indexes=[{index:'presence',exact:'present'},
-							{index:'date',lowerbound:(get_raw_time(get_my_date())-1000),upperbound:(get_raw_time(get_my_date())+86399000)}];
-	
+	var new_columns={data_store:'attendance',
+									indexes:[{index:'presence',exact:'present'},
+													{index:'date',lowerbound:(get_raw_time(vTime.date())-1000),upperbound:(get_raw_time(vTime.date())+86399000)}]};
+
 	read_json_count(new_columns,function(item_count)
 	{
-		$('#grid_item_17').html(item_count);	
+		$('#grid_item_17').html(item_count);
 	});
 };
 
@@ -478,10 +464,10 @@ function set_grid_item_18()
 	var new_columns=new Object();
 		new_columns.data_store='task_instances';
 		new_columns.indexes=[{index:'status',exact:'pending'}];
-	
+
 	read_json_count(new_columns,function(item_count)
 	{
-		$('#grid_item_18').html(item_count);	
+		$('#grid_item_18').html(item_count);
 	});
 };
 
@@ -498,13 +484,10 @@ function set_grid_item_18()
 */
 function set_grid_item_19()
 {
-	var new_columns=new Object();
-		new_columns.data_store='store_areas';
-		new_columns.indexes=[{index:'area_type',exact:'storage'}];
-	
+	var new_columns={data_store:'store_areas',return_column:'id'};
 	read_json_count(new_columns,function(item_count)
 	{
-		$('#grid_item_19').html(item_count);	
+		$('#grid_item_19').html(item_count);
 	});
 };
 
@@ -524,11 +507,11 @@ function set_grid_item_20()
 	var new_columns=new Object();
 		new_columns.data_store='sale_orders';
 		new_columns.indexes=[{index:'status',exact:'pending'}];
-	
+
 	read_json_count(new_columns,function(item_count)
 	{
-		$('#grid_item_20').html(item_count);	
-	});	
+		$('#grid_item_20').html(item_count);
+	});
 };
 
 /***function limiter***/
@@ -549,11 +532,11 @@ function set_grid_item_22()
 		new_columns.data_store='offers';
 		new_columns.return_column='offer_name';
 		new_columns.indexes=[{index:'status',array:['active','extended']}];
-	
+
 	read_json_single_column(new_columns,function(results)
 	{
 		$('#grid_item_22').html(results[0]);
-	});	
+	});
 };
 
 /***function limiter***/
@@ -569,14 +552,13 @@ function set_grid_item_22()
 */
 function set_grid_item_23()
 {
-	var new_columns=new Object();
-		new_columns.data_store='sale_leads';
-		new_columns.indexes=[{index:'status',exact:'open'}];
-	
+	var new_columns={data_store:'sale_leads',
+									indexes:[{index:'status',exact:'open'}]};
+
 	read_json_count(new_columns,function(item_count)
 	{
-		$('#grid_item_23').html(item_count);	
-	});	
+		$('#grid_item_23').html(item_count);
+	});
 };
 
 /***function limiter***/
@@ -592,12 +574,10 @@ function set_grid_item_23()
 */
 function set_grid_item_26()
 {
-	var new_columns=new Object();
-		new_columns.data_store='bills';
-		new_columns.return_column='total';
-		
-		new_columns.indexes=[{index:'bill_date',lowerbound:(get_raw_time(get_my_date())-1000),upperbound:(get_raw_time(get_my_date())+86399000)}];
-	
+	var new_columns={data_store:'bills',
+					return_column:'total',
+					indexes:[{index:'bill_date',lowerbound:(get_raw_time(vTime.date())-1000),upperbound:(get_raw_time(vTime.date())+86399000)}]};
+
 	read_json_single_column(new_columns,function(results)
 	{
 		var sale=0;
@@ -625,10 +605,10 @@ function set_grid_item_27()
 	var new_columns=new Object();
 		new_columns.data_store='projects';
 		new_columns.indexes=[{index:'status',exact:'active'}];
-	
+
 	read_json_count(new_columns,function(item_count)
 	{
-		$('#grid_item_27').html(item_count);	
+		$('#grid_item_27').html(item_count);
 	});
 };
 
@@ -648,10 +628,10 @@ function set_grid_item_28()
 	var new_columns=new Object();
 		new_columns.data_store='projects';
 		new_columns.indexes=[{index:'status',exact:'completed'}];
-	
+
 	read_json_count(new_columns,function(item_count)
 	{
-		$('#grid_item_28').html(item_count);	
+		$('#grid_item_28').html(item_count);
 	});
 };
 
@@ -671,11 +651,11 @@ function set_grid_item_29()
 	var new_columns=new Object();
 		new_columns.data_store='reports';
 		new_columns.indexes=[{index:'id'}];
-	
+
 	read_json_count(new_columns,function(item_count)
 	{
-		$('#grid_item_29').html(item_count);	
-	});	
+		$('#grid_item_29').html(item_count);
+	});
 };
 
 /***function limiter***/
@@ -691,15 +671,14 @@ function set_grid_item_29()
 */
 function set_grid_item_30()
 {
-	var new_columns=new Object();
-		new_columns.data_store='user_preferences';
-		new_columns.indexes=[{index:'type',array:['form','report']},
-							{index:'value',exact:'checked'}];
-	
+	var new_columns={data_store:'user_preferences',
+					indexes:[{index:'type',array:['form','report']},
+							{index:'value',exact:'checked'}]};
+
 	read_json_count(new_columns,function(item_count)
 	{
-		$('#grid_item_30').html(item_count);	
-	});	
+		$('#grid_item_30').html(item_count);
+	});
 };
 
 /***function limiter***/
@@ -718,11 +697,11 @@ function set_grid_item_31()
 	var new_columns=new Object();
 		new_columns.data_store='service_requests';
 		new_columns.indexes=[{index:'status',exact:'open'}];
-	
+
 	read_json_count(new_columns,function(item_count)
 	{
-		$('#grid_item_31').html(item_count);	
-	});	
+		$('#grid_item_31').html(item_count);
+	});
 };
 
 /***function limiter***/
@@ -741,11 +720,11 @@ function set_grid_item_32()
 	var new_columns=new Object();
 		new_columns.data_store='service_requests';
 		new_columns.indexes=[{index:'status',exact:'closed'},
-							{index:'last_updated',lowerbound:(get_raw_time(get_my_date())-1000)}];
-	
+							{index:'last_updated',lowerbound:(get_raw_time(vTime.date())-1000)}];
+
 	read_json_count(new_columns,function(item_count)
 	{
-		$('#grid_item_32').html(item_count);	
+		$('#grid_item_32').html(item_count);
 	});
 };
 
@@ -765,10 +744,10 @@ function set_grid_item_33()
 	var new_columns=new Object();
 		new_columns.data_store='production_plan';
 		new_columns.indexes=[{index:'status',array:['approved','overdue']}];
-	
+
 	read_json_count(new_columns,function(item_count)
 	{
-		$('#grid_item_33').html(item_count);	
+		$('#grid_item_33').html(item_count);
 	});
 };
 
@@ -787,11 +766,11 @@ function set_grid_item_34()
 {
 	var new_columns=new Object();
 		new_columns.data_store='task_instances';
-		new_columns.indexes=[{index:'t_due',upperbound:(get_raw_time(get_my_date())+86399000)}];
-	
+		new_columns.indexes=[{index:'t_due',upperbound:(get_raw_time(vTime.date())+86399000)}];
+
 	read_json_count(new_columns,function(item_count)
 	{
-		$('#grid_item_34').html(item_count);	
+		$('#grid_item_34').html(item_count);
 	});
 };
 
@@ -812,10 +791,10 @@ function set_grid_item_35()
 		new_columns.data_store='production_plan_items';
 		new_columns.indexes=[{index:'from_time',upperbound:get_my_time()},
 							{index:'to_time',lowerbound:get_my_time()}];
-	
+
 	read_json_count(new_columns,function(item_count)
 	{
-		$('#grid_item_35').html(item_count);	
+		$('#grid_item_35').html(item_count);
 	});
 };
 
@@ -834,11 +813,11 @@ function set_grid_item_36()
 {
 	var new_columns=new Object();
 		new_columns.data_store='logistics_orders';
-		new_columns.indexes=[{index:'import_date',exact:get_raw_time(get_my_date())}];
-	
+		new_columns.indexes=[{index:'import_date',exact:get_raw_time(vTime.date())}];
+
 	read_json_count(new_columns,function(item_count)
 	{
-		$('#grid_item_36').html(item_count);	
+		$('#grid_item_36').html(item_count);
 	});
 };
 
@@ -858,7 +837,7 @@ function set_grid_item_39()
 	var new_columns=new Object();
 		new_columns.data_store='logistics_orders';
 		new_columns.indexes=[{index:'status',array:['pending','undelivered','received','out for delivery']},
-							{index:'import_date',exact:get_raw_time(get_my_date())}];
+							{index:'import_date',exact:get_raw_time(vTime.date())}];
 
 	read_json_count(new_columns,function(item_count)
 	{
@@ -918,7 +897,7 @@ function set_grid_item_41()
 			result.num_sms=Math.floor(result.message.length/sms_char_length)+1;
 			result.num_phone=Math.floor(result.receiver.length/13)+1;
 			result.sms_credit=result.num_sms*result.num_phone;
-			
+
 			total_credits+=result.sms_credit;
 		});
 		$('#grid_item_41').html(total_credits);
@@ -938,9 +917,8 @@ function set_grid_item_41()
 */
 function set_grid_item_42()
 {
-	var new_columns=new Object();
-		new_columns.data_store='drs';
-		new_columns.indexes=[{index:'drs_time',lowebound:(get_raw_time(get_my_date())-1000)}];
+	var new_columns={data_store:'drs',
+					indexes:[{index:'drs_time',lowerbound:(get_raw_time(vTime.date())-1000)}]};
 
 	read_json_count(new_columns,function(item_count)
 	{
@@ -961,9 +939,8 @@ function set_grid_item_42()
 */
 function set_grid_item_43()
 {
-	var new_columns=new Object();
-		new_columns.data_store='rto';
-		new_columns.indexes=[{index:'rto_time',lowebound:(get_raw_time(get_my_date())-1000)}];
+	var new_columns={data_store:'rto',
+					indexes:[{index:'rto_time',lowerbound:(get_raw_time(vTime.date())-1000)}]};
 
 	read_json_count(new_columns,function(item_count)
 	{
@@ -986,7 +963,7 @@ function set_grid_item_44()
 {
 	var new_columns=new Object();
 		new_columns.data_store='quotation';
-		new_columns.indexes=[{index:'date',lowebound:(get_raw_time(get_my_date())-2592000000)}];
+		new_columns.indexes=[{index:'date',lowerbound:(get_raw_time(vTime.date())-2592000000)}];
 
 	read_json_count(new_columns,function(item_count)
 	{
@@ -1008,12 +985,12 @@ function set_grid_item_44()
 function set_grid_item_45()
 {
 	var new_columns=new Object();
-		new_columns.data_store='attributes';		
-			
+		new_columns.data_store='attributes';
+
 		new_columns.indexes=[{index:'type',exact:'product'},
 							{index:'value',exact:'yes'},
 							{index:'attribute',exact:'Spare Part'}];
-	
+
 	read_json_count(new_columns,function(item_count)
 	{
 		$('#grid_item_45').html(item_count);
@@ -1034,10 +1011,10 @@ function set_grid_item_45()
 function set_grid_item_46()
 {
 	var new_columns=new Object();
-		new_columns.data_store='delivery_challans';		
-			
-		new_columns.indexes=[{index:'challan_date',lowebound:(get_raw_time(get_my_date())-1000)}];
-	
+		new_columns.data_store='delivery_challans';
+
+		new_columns.indexes=[{index:'challan_date',lowerbound:(get_raw_time(vTime.date())-1000)}];
+
 	read_json_count(new_columns,function(item_count)
 	{
 		$('#grid_item_46').html(item_count);
@@ -1057,13 +1034,11 @@ function set_grid_item_46()
 */
 function set_grid_item_47()
 {
-	var new_columns=new Object();
-		new_columns.data_store='accounts';		
-			
-		new_columns.indexes=[{index:'username',unequal:""},
+	var new_columns={data_store:'accounts',
+					indexes:[{index:'username',unequal:"",isnull:'no'},
 							{index:'type',array:['master','staff']},
-							{index:'status',value:'active'}];
-	
+							{index:'status',value:'active'}]};
+
 	read_json_count(new_columns,function(item_count)
 	{
 		$('#grid_item_47').html(item_count);
@@ -1083,11 +1058,7 @@ function set_grid_item_47()
 */
 function set_grid_item_48()
 {
-	var new_columns=new Object();
-		new_columns.data_store='customers';		
-			
-		new_columns.indexes=[{index:'id'}];
-	
+	var new_columns={data_store:'customers',indexes:[{index:'id'}]};
 	read_json_count(new_columns,function(item_count)
 	{
 		$('#grid_item_48').html(item_count);
@@ -1108,10 +1079,10 @@ function set_grid_item_48()
 function set_grid_item_49()
 {
 	var new_columns=new Object();
-		new_columns.data_store='unbilled_sale_items';		
+		new_columns.data_store='unbilled_sale_items';
 
 		new_columns.indexes=[{index:'bill_status',exact:'pending'}];
-	
+
 	read_json_count(new_columns,function(item_count)
 	{
 		$('#grid_item_49').html(item_count);
@@ -1132,10 +1103,10 @@ function set_grid_item_49()
 function set_grid_item_50()
 {
 	var new_columns=new Object();
-		new_columns.data_store='unbilled_purchase_items';		
+		new_columns.data_store='unbilled_purchase_items';
 
 		new_columns.indexes=[{index:'bill_status',exact:'pending'}];
-	
+
 	read_json_count(new_columns,function(item_count)
 	{
 		$('#grid_item_50').html(item_count);
@@ -1162,7 +1133,7 @@ function set_grid_item_51()
 	read_json_count(new_columns,function(item_count)
 	{
 		$('#grid_item_51').html(item_count);
-	});	
+	});
 };
 
 /***function limiter***/
@@ -1182,14 +1153,14 @@ function set_grid_item_52()
 		new_columns.data_store='inventory_adjust';
 		new_columns.return_column='quantity';
 		new_columns.sum='yes';
-		
+
 		new_columns.indexes=[{index:'source',exact:'manual'},
-							{index:'last_updated',lowerbound:get_raw_time(get_my_date())}];
+							{index:'last_updated',lowerbound:get_raw_time(vTime.date())}];
 
 	read_json_single_column(new_columns,function(item_count)
 	{
 		$('#grid_item_52').html(item_count);
-	});	
+	});
 };
 
 /***function limiter***/
@@ -1207,14 +1178,14 @@ function set_grid_item_53()
 {
 	var new_columns=new Object();
 		new_columns.data_store='inventory_adjust';
-		
+
 		new_columns.indexes=[{index:'picked_status',exact:'pending'},
 							{index:'quantity'},{index:'picked_quantity'}];
 
 	read_json_rows('',new_columns,function(adjusts)
 	{
 		var adjust_quantity=0;
-		
+
 		for(var a in adjusts)
 		{
 			if(!isNaN(adjusts[a].picked_quantity) && adjusts[a].picked_quantity!=null)
@@ -1222,14 +1193,10 @@ function set_grid_item_53()
 			if(!isNaN(adjusts[a].quantity) && adjusts[a].quantity!=null)
 				adjust_quantity-=parseFloat(adjusts[a].quantity);
 		}
-		var new_columns2=new Object();
-			new_columns2.count=0;
-			new_columns2.start_index=0;
-			new_columns2.data_store='bill_items';
-			
-			new_columns2.indexes=[{index:'picked_status',exact:'pending'},
-								{index:'quantity'},{index:'picked_quantity'}];
-	
+		var new_columns2={data_store:'bill_items',
+						indexes:[{index:'picked_status',exact:'pending'},
+								{index:'quantity'},{index:'picked_quantity'}]};
+
 		read_json_rows('',new_columns2,function(bill_items)
 		{
 			for(var b in bill_items)
@@ -1240,8 +1207,8 @@ function set_grid_item_53()
 					adjust_quantity-=parseFloat(bill_items[b].picked_quantity);
 			}
 			$('#grid_item_53').html(adjust_quantity);
-		});	
-	});	
+		});
+	});
 };
 
 /***function limiter***/
@@ -1259,14 +1226,14 @@ function set_grid_item_54()
 {
 	var new_columns=new Object();
 		new_columns.data_store='inventory_adjust';
-		
+
 		new_columns.indexes=[{index:'put_away_status',exact:'pending'},
 							{index:'quantity'},{index:'placed_quantity'}];
 
 	read_json_rows('',new_columns,function(adjusts)
 	{
 		var adjust_quantity=0;
-		
+
 		for(var a in adjusts)
 		{
 			if(!isNaN(adjusts[a].quantity) && adjusts[a].quantity!=null)
@@ -1274,26 +1241,22 @@ function set_grid_item_54()
 			if(!isNaN(adjusts[a].placed_quantity) && adjusts[a].placed_quantity!=null)
 				adjust_quantity-=parseFloat(adjusts[a].placed_quantity);
 		}
-		var new_columns2=new Object();
-			new_columns2.count=0;
-			new_columns2.start_index=0;
-			new_columns2.data_store='supplier_bill_items';
-			
-			new_columns2.indexes=[{index:'put_away_status',exact:'pending'},
-							{index:'quantity'},{index:'placed_quantity'}];
-	
+		var new_columns2={data_store:'supplier_bill_items',
+						indexes:[{index:'put_away_status',exact:'pending'},
+							{index:'quantity'},{index:'placed_quantity'}]};
+
 		read_json_rows('',new_columns2,function(bill_items)
 		{
 			for(var b in bill_items)
 			{
-				if(!isNaN(bill_items[b].quantity) && bill_items[b].quantity!=null)			
+				if(!isNaN(bill_items[b].quantity) && bill_items[b].quantity!=null)
 					adjust_quantity+=parseFloat(bill_items[b].quantity);
 				if(!isNaN(bill_items[b].placed_quantity) && bill_items[b].placed_quantity!=null)
 					adjust_quantity-=parseFloat(bill_items[b].placed_quantity);
 			}
 			$('#grid_item_54').html(adjust_quantity);
-		});	
-	});	
+		});
+	});
 };
 
 /***function limiter***/
@@ -1316,7 +1279,7 @@ function set_grid_item_55()
 	read_json_count(new_columns,function(item_count)
 	{
 		$('#grid_item_55').html(item_count);
-	});	
+	});
 };
 
 /***function limiter***/
@@ -1337,12 +1300,12 @@ function set_grid_item_56()
 		new_columns.sum='yes';
 		new_columns.return_column='quantity';
 		new_columns.indexes=[{index:'issue_type',exact:'in'},
-							{index:'issue_date',exact:get_raw_time(get_my_date())}];
+							{index:'issue_date',exact:get_raw_time(vTime.date())}];
 
 	read_json_single_column(new_columns,function(items)
 	{
 		$('#grid_item_56').html(items[0]);
-	});	
+	});
 };
 
 /***function limiter***/
@@ -1363,12 +1326,12 @@ function set_grid_item_57()
 		new_columns.sum='yes';
 		new_columns.return_column='quantity';
 		new_columns.indexes=[{index:'issue_type',exact:'out'},
-							{index:'issue_date',exact:get_raw_time(get_my_date())}];
+							{index:'issue_date',exact:get_raw_time(vTime.date())}];
 
 	read_json_single_column(new_columns,function(items)
 	{
 		$('#grid_item_57').html(-items[0]);
-	});	
+	});
 };
 
 /***function limiter***/
@@ -1388,12 +1351,12 @@ function set_grid_item_58()
 		new_columns.data_store='bill_items';
 		new_columns.indexes=[{index:'issue_type',exact:'out'},
 							{index:'hiring_type',exact:'sale'},
-							{index:'issue_date',exact:get_raw_time(get_my_date())}];
+							{index:'issue_date',exact:get_raw_time(vTime.date())}];
 
 	read_json_count(new_columns,function(item_count)
 	{
 		$('#grid_item_58').html(item_count);
-	});	
+	});
 };
 
 /***function limiter***/
@@ -1413,12 +1376,12 @@ function set_grid_item_59()
 		new_columns.data_store='bill_items';
 		new_columns.indexes=[{index:'issue_type',exact:'in'},
 							{index:'hiring_type',exact:'purchase'},
-							{index:'issue_date',exact:get_raw_time(get_my_date())}];
+							{index:'issue_date',exact:get_raw_time(vTime.date())}];
 
 	read_json_count(new_columns,function(item_count)
 	{
 		$('#grid_item_59').html(item_count);
-	});	
+	});
 };
 
 /***function limiter***/
@@ -1441,7 +1404,7 @@ function set_grid_item_60()
 	read_json_count(new_columns,function(item_count)
 	{
 		$('#grid_item_60').html(item_count);
-	});	
+	});
 };
 
 /***function limiter***/
@@ -1464,7 +1427,7 @@ function set_grid_item_61()
 	read_json_count(new_columns,function(item_count)
 	{
 		$('#grid_item_61').html(item_count);
-	});	
+	});
 };
 
 /***function limiter***/
@@ -1487,5 +1450,437 @@ function set_grid_item_62()
 	read_json_count(new_columns,function(item_count)
 	{
 		$('#grid_item_62').html(item_count);
-	});	
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_63
+*@*display_name*:*# Staff Profiles
+*@*grid*:*people
+*@*function_name*:*set_grid_item_63();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_63()
+{
+	var new_columns={data_store:'staff',return_column:'id'};
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_63').html(item_count);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_64
+*@*display_name*:*# Open Letters
+*@*grid*:*people
+*@*function_name*:*set_grid_item_64();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_64()
+{
+	var new_columns=new Object();
+		new_columns.data_store='letters';
+
+		new_columns.indexes=[{index:'status',exact:'open'}];
+
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_64').html(item_count);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_65
+*@*display_name*:*# Due Letters
+*@*grid*:*people
+*@*function_name*:*set_grid_item_65();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_65()
+{
+	var new_columns=new Object();
+		new_columns.data_store='letters';
+
+		new_columns.indexes=[{index:'status',exact:'open'},{index:'due_date',upperbound:get_my_time()}];
+
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_65').html(item_count);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_66
+*@*display_name*:*# Supplier Profiles
+*@*grid*:*people
+*@*function_name*:*set_grid_item_66();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_66()
+{
+	var new_columns={data_store:'suppliers',return_column:'id'};
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_66').html(item_count);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_67
+*@*display_name*:*# Birthdays
+*@*grid*:*people
+*@*function_name*:*set_grid_item_67();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_67()
+{
+	var new_columns={data_store:'attributes',return_column:'value',
+                    indexes:[{index:'type',exact:'customer'},
+                            {index:'attribute',exact:'Birthday'}]};
+	read_json_single_column(new_columns,function(items)
+	{
+        var item_count=0;
+        var d=new Date();
+        var month =d.getMonth()+1;
+        if (month < 10) {
+            month = "0" + month;
+        }
+        var date = d.getDate();
+        if (date < 10) {
+            date = "0" + date;
+        }
+        var time=date+"/"+month;
+
+        for(var i in items)
+        {
+            if(items[i].indexOf(time)!=-1)
+            {
+                item_count+=1;
+            }
+        }
+		$('#grid_item_67').html(item_count);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_68
+*@*display_name*:*Wastage Today
+*@*grid*:*people
+*@*function_name*:*set_grid_item_68();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_68()
+{
+	var new_columns={data_store:'discarded',sum:'yes',return_column:'quantity',
+                    indexes:[{index:'date',lowerbound:get_raw_time(vTime.date()),upperbound:get_raw_time(vTime.date())+86399000}]};
+	read_json_single_column(new_columns,function(item_count)
+	{
+		$('#grid_item_68').html(item_count[0]+" pieces");
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_69
+*@*display_name*:*Pending Receivables
+*@*grid*:*finances
+*@*function_name*:*set_grid_item_69();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_69()
+{
+	var new_columns={data_store:'payments',
+                     indexes:[{index:'paid_amount'},{index:'total_amount'},
+                             {index:'type',exact:'received'},
+                             {index:'status',exact:'pending'}]};
+	read_json_rows('',new_columns,function(results)
+	{
+		var amount=0;
+		for (var i in results)
+		{
+			amount+=parseFloat(results[i].total_amount)-parseFloat(results[i].paid_amount);
+		}
+		$('#grid_item_69').html("Rs. "+amount);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_70
+*@*display_name*:*# Documents
+*@*grid*:*reports
+*@*function_name*:*set_grid_item_70();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_70()
+{
+	var new_columns={data_store:'s3_objects',return_column:'id'};
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_70').html(item_count);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_71
+*@*display_name*:*# Tabs
+*@*grid*:*reports
+*@*function_name*:*set_grid_item_71();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_71()
+{
+	var new_columns={data_store:'tabs_list',return_column:'id'};
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_71').html(item_count);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_72
+*@*display_name*:*# Accounts
+*@*grid*:*reports
+*@*function_name*:*set_grid_item_72();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_72()
+{
+	var new_columns={data_store:'user_profile',database:'0',return_column:'id'};
+	read_json_single_column_master(new_columns,function(items)
+	{
+		$('#grid_item_72').html(items.length);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_73
+*@*display_name*:*Appointments Today
+*@*grid*:*appointments
+*@*function_name*:*set_grid_item_73();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_73()
+{
+	var new_columns={data_store:'appointments',return_column:'id',
+									indexes:[{index:'schedule',lowerbound:get_raw_time(vTime.date()),upperbound:(get_raw_time(vTime.date())+86400000)},
+													{index:'status',exact:'pending'}]};
+	read_json_single_column(new_columns,function(items)
+	{
+		$('#grid_item_73').html(items.length);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_74
+*@*display_name*:*Prescriptions Issued Today
+*@*grid*:*prescriptions
+*@*function_name*:*set_grid_item_74();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_74()
+{
+	var new_columns={data_store:'prescriptions',return_column:'id',
+									indexes:[{index:'date',lowerbound:get_raw_time(vTime.date())-1,upperbound:(get_raw_time(vTime.date())+86400000-1)}]};
+	read_json_single_column(new_columns,function(items)
+	{
+		$('#grid_item_74').html(items.length);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_75
+*@*display_name*:*Active Policies
+*@*grid*:*policies
+*@*function_name*:*set_grid_item_75();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_75()
+{
+	var new_columns={data_store:'policies',return_column:'id',
+									indexes:[{index:'status',exact:'active'}]};
+	read_json_single_column(new_columns,function(items)
+	{
+		$('#grid_item_75').html(items.length);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_76
+*@*display_name*:*Pending Commissions
+*@*grid*:*commissions
+*@*function_name*:*set_grid_item_76();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_76()
+{
+	var new_columns={data_store:'policy_commissions',return_column:'id',
+									indexes:[{index:'status',exact:'pending'}]};
+	read_json_single_column(new_columns,function(items)
+	{
+		$('#grid_item_76').html(items.length);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_77
+*@*display_name*:*Pending Claims
+*@*grid*:*commissions
+*@*function_name*:*set_grid_item_77();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_77()
+{
+	var new_columns={data_store:'policy_claims',return_column:'id',
+									indexes:[{index:'status',exact:'pending'}]};
+	read_json_single_column(new_columns,function(items)
+	{
+		$('#grid_item_77').html(items.length);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_78
+*@*display_name*:*# Transactions Today
+*@*grid*:*commissions
+*@*function_name*:*set_grid_item_78();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_78()
+{
+	var new_columns={data_store:'transactions',return_column:'id',
+					indexes:[{index:'trans_date',lowerbound:get_raw_time(vTime.date())-1,upperbound:(get_raw_time(vTime.date())+86400000-1)}]};
+
+	read_json_single_column(new_columns,function(items)
+	{
+		$('#grid_item_78').html(items.length);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_79
+*@*display_name*:*# Manifests (today)
+*@*grid*:*operations
+*@*function_name*:*set_grid_item_79();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_79()
+{
+	var new_columns={data_store:'manifests',
+					indexes:[{index:'date',lowerbound:(get_raw_time(vTime.date())-1000)}]};
+
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_79').html(item_count);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_80
+*@*display_name*:*# Gatepass (today)
+*@*grid*:*operations
+*@*function_name*:*set_grid_item_80();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_80()
+{
+	var new_columns={data_store:'gate_pass',
+					indexes:[{index:'date',lowerbound:(get_raw_time(vTime.date())-1000)}]};
+
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_80').html(item_count);
+	});
+};
+
+/***function limiter***/
+
+/*metric_id*:*grid_item_81
+*@*display_name*:*Upcoming Renewals (in a week)
+*@*grid*:*reports
+*@*function_name*:*set_grid_item_81();
+*@*status*:*active
+*@*last_updated*:*1
+*@*repeat_time*:*3600
+*@*function_def*:*
+*/
+function set_grid_item_81(s)
+{
+	var new_columns={data_store:'policies',
+					indexes:[{index:'end_date',lowerbound:vTime.unix(),upperbound:vTime.unix()+30*86400000}]};
+
+	read_json_count(new_columns,function(item_count)
+	{
+		$('#grid_item_81').html(item_count);
+	});
 };

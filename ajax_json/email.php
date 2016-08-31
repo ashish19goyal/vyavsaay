@@ -1,4 +1,4 @@
-	<?php
+<?php
 
 	include_once "../Classes/mailer_json.php";
 	use RetailingEssentials\send_mailer_json;
@@ -25,7 +25,7 @@
 	{
 		if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['username']==$user && $_SESSION['re']==$read_access)
 		{
-			$email_instance=new send_mailer_json();
+			$email_instance=new send_mailer_json($domain);
 			if($attachment_type=='csv')
 			{
 				$email_instance->direct_send_csv($subject,$message,$message_attachment,$to,$from,$from_name);

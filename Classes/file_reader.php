@@ -28,15 +28,13 @@ class file_reader
 	private function read_file()
 	{
 		if($this->file_open)
-		{
-			
-		while(($line=fgets($this->file_open,1024))!= false)
+		{	
+            while(($line=fgets($this->file_open,1024))!= false)
 			{
 				$key_value_pair=explode(":",$line,2);
 				$key_value_pair[0]=trim($key_value_pair[0]);
 				$key_value_pair[1]=trim($key_value_pair[1]);
 				$this->attributes[$key_value_pair[0]]=$key_value_pair[1];
-				
 			}
 		}		
 		else

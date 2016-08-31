@@ -1,4 +1,4 @@
-<div id='form129' class='function_detail'>
+<div id='form129' class='tab-pane'>
 	<div id="form129_map" style="height:380px"></div>
 	<div class="customers_pane">
 		<div class="customers_content" id="form129_header"></div>

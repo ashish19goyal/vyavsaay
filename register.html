@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html manifest="vyavsaay.appcache">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">		
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Find industry standard and customizable automation solutions for your business. Setup is fast and easy. Includes Billing, Inventory, Accounting, PM, CRM.">
 	<meta name="msvalidate.01" content="087FEC7E032A681827421F0C55C1A22C" />
-  	<meta name="keywords" content="ERP, Vyavsaay, Mobile, Cloud"> 								<!--Change content-->	
-   <meta name="author" content="Ashish" > 												<!--Change content-->						
-	<title>Vyavsaay - Register</title>																<!--Change title-->	      
-   <link href="appic/css/style.css?v=1" rel="stylesheet">                          		 			<!-- Stylesheet -->    
+  	<meta name="keywords" content="ERP, Vyavsaay, Mobile, Cloud"> 								<!--Change content-->
+   <meta name="author" content="Ashish" > 												<!--Change content-->
+	<title>Vyavsaay - Register</title>																<!--Change title-->
+   <link href="css_custom/custom.css" rel="stylesheet">  <!-- Stylesheet -->
+    <link href="appic/css/style.css" rel="stylesheet">                          		 			<!-- Stylesheet -->
 <style>
 #loading_icon{
 	width:30%;
@@ -36,7 +37,7 @@
 <body>
 
 <div class="wrapper">
-<div id="loading_icon"><img src="./images/loader.gif"></div>
+<div id="loading_icon"><i class='fa fa-spinner fa-spin'></i></div>
 <div id="transparent_layer"></div>
 	<!-- Begin header -->
 	<header id='register_header'>
@@ -63,7 +64,7 @@
 						<input class='form__field pull-left' type="password" required placeholder='Password'>
 						<input class='form__field pull-right' type="password" onkeyup="match_password()" required placeholder='Retype Password:'>
 						<button class="btn btn-info btn-lg btn--highlight" id="submit-btn" name="submit-btn" type="submit">Register</button>
-					</form>                
+					</form>
 				</div>
 			</div>
 		</div>
@@ -80,37 +81,38 @@
 
 </div>
 
-<!--End wrapper -->
-<script src='JavaScripts/open/jquery-1.11.1.min.js'></script>	
+<script src='./js/open/jquery-1.11.1.min.js'></script>
 <script src="appic/external/bootstrap/js/bootstrap.min.js"></script>				<!--Bootstrap JavaScript-->
 <script src="appic/external/jquery-event/jquery.event.drag-2.2.js"></script>		<!--Script jquery event Drag-->
 <script src="appic/external/jquery-event/jquery.event.drop-2.2.js"></script>		<!--Script jquery event Drop-->
 <script src="appic/external/jquery-easing/jquery.easing.1.3.js"></script>			<!--Script jquery Easing-->
 <script src="appic/external/jquery-roundabout/jquery.roundabout.min.js"></script>	<!--Script Roundabout-->
-<script src="appic/external/swiper/idangerous.swiper.min.js"></script>			<!--Script Swiper slider -->	
+<script src="appic/external/swiper/idangerous.swiper.min.js"></script>			<!--Script Swiper slider -->
 <script src="appic/external/gozha-nav/jquery.mobile.menu.js"></script>			<!--Script Mobile menu-->
 <script src="appic/external/modernizr/modernizr.custom.91224.js"></script>		<!--Script Modernizr-->
 <script src="appic/external/colorbox/jquery.colorbox.js"></script>				<!--Script Сolorbox-->
+<!-- <script src="appic/external/jquery/jquery-migrate-1.2.1.min.js"></script>			<!--Script jQuery for old version jQuery--> -->
+<script src="appic/external/jquery-twitter/jquery.twitter.js"></script>			<!--Script Twitter-->
+<script src="appic/external/jflickrfeed/jflickrfeed.js"></script>					<!--Script Widget Flikr-->
 
-<script src='./JavaScripts/open/bcrypt.js'></script>
-<script src='./JavaScripts/open/indexeddb.js'></script>
-<script src='./JavaScripts/open/jquery.autosize.min.js'></script>
-<script src='./JavaScripts/open/jquery-ui.min.js'></script>
-<script src='./JavaScripts/prop/event_handler.js'></script>
-<script src='./JavaScripts/prop/ajax.js'></script>
-<script src='./JavaScripts/prop/ajax_json.js'></script>
-<script src='./JavaScripts/prop/get.js'></script>
-<script src='./JavaScripts/prop/local_db_handling.js'></script>
-<script src='./JavaScripts/prop/login_helper.js'></script>
-<script src='./JavaScripts/prop/sessions.js'></script>
+<script src='./js/open/bcrypt.js'></script>
+<script src='./js/open/jquery.autosize.min.js'></script>
+<script src='./js/open/jquery-ui.min.js'></script>
+<script src='./js/prop/event_handler.js'></script>
+<script src='./js/prop/ajax.js'></script>
+<script src='./js/prop/ajax_json.js'></script>
+<script src='./js/prop/get.js'></script>
+<script src='./js/prop/local_db_handling.js'></script>
+<script src='./js/prop/login_helper.js'></script>
+<script src='./js/prop/sessions.js'></script>
+<script src='./js/prop/vUtil.js'></script>
 <script src="appic/js/custom.js"></script>
 <script src="appic/js/form.js"></script>
-
-<script defer="defer">
-	$(document).ready(function() 
+<script>
+	$(document).ready(function()
 	{
-		$('#register_footer').load('footer.html');		
-		$('#register_header').load('header.html',function () 
+		$('#register_footer').load('footer.html');
+		$('#register_header').load('header.html',function ()
 		{
 			default_load();
 
@@ -120,17 +122,17 @@
 	   		modal: true,
 	   		show: "slide",
 	   		closeOnEscape: true,
-			});			
-		});	
+			});
+		});
+
+		$('#registeration').on('submit',function(event)
+		{
+			event.preventDefault();
+			register_click();
+		});
 	});
-	
-	$('#registeration').on('submit',function(event)
-	{
-		event.preventDefault();
-		register_click();
-	});
-		
+
 </script>
 
 </body>
-</html> 
+</html>

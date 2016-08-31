@@ -1,4 +1,4 @@
-<div id='form78' class='function_detail'>
+<div id='form78' class='tab-pane'>
 	<form id='form78_master' autocomplete="off">
 		<fieldset>
 			<label>Newsletter: <input type='text' required></label>

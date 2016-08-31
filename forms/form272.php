@@ -1,4 +1,4 @@
-<div id='form272' class='function_detail'>
+<div id='form272' class='tab-pane'>
 	<form id='form272_master' autocomplete="off">
 		<fieldset>
 			<label>AWB #: <input type='text' name='awb' required></label>

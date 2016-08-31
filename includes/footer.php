@@ -1,5 +1,8 @@
-		<footer class='main_footer'>
-			<a id='footer_message'>&copy; 2016 Vyavsaay.com</a> | <a href="privacy_policy.php">Privacy Policy</a> 
-		</footer>
-	</body>
-</html>
+        <div class="page-footer">
+			<div id='footer_message' class="page-footer-inner"> 2016 &copy; Vyavsaay ERP | 
+                <a href="" target="_blank">Privacy Policy</a>
+            </div>
+            <div class="scroll-to-top">
+                <i class="icon-arrow-up"></i>
+            </div>
+        </div>

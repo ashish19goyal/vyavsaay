@@ -1,4 +1,4 @@
-<div id='form122' class='function_detail'>
+<div id='form122' class='tab-pane'>
 	<form id='form122_master' autocomplete="off">
 		<fieldset>
 			<label>Order #<br><input type='text' required readonly='readonly' name='po_num'></label>

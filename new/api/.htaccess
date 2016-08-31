@@ -1,6 +1,0 @@
-RewriteEngine On
-#if a directory or file exists, use it
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond $1 !^(api\.php)
-RewriteRule ^(.*)$ ./api.php?url=$1 [L]
