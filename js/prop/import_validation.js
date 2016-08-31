@@ -8,7 +8,7 @@ function form61_import_validate(data_array)
 							{column:'attribute',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 							{column:'value',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')}];
 
-	var error_array=vImport.validate(data_array,validate_template_array);
+	var error_array=validate_import_array(data_array,validate_template_array);
 	return error_array;
 }
 
@@ -25,7 +25,7 @@ function form87_import_validate(data_array)
 							{column:'tax',required:'yes',regex:new RegExp('^[0-9.]+$')},
 							{column:'bar_code',regex:new RegExp('^[a-zA-Z0-9]+$')}];
 
-	var error_array=vImport.validate(data_array,validate_template_array);
+	var error_array=validate_import_array(data_array,validate_template_array);
 	return error_array;
 }
 
@@ -40,7 +40,7 @@ function form109_import_validate(data_array)
 							{column:'attribute',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 							{column:'value',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')}];
 
-	var error_array=vImport.validate(data_array,validate_template_array);
+	var error_array=validate_import_array(data_array,validate_template_array);
 	return error_array;
 }
 
@@ -63,7 +63,7 @@ function form169_import_validate(data_array)
 							{column:'packing',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
 							{column:'bar_code',regex:new RegExp('^[a-zA-Z0-9]+$')}];
 
-	var error_array=vImport.validate(data_array,validate_template_array);
+	var error_array=validate_import_array(data_array,validate_template_array);
 	return error_array;
 }
 
@@ -83,7 +83,7 @@ function form170_import_validate(data_array)
 							{column:'height',regex:new RegExp('^[0-9.]+$')},
 							{column:'unit',regex:new RegExp('^[a-zA-Z.()-]+$')}];
 
-	var error_array=vImport.validate(data_array,validate_template_array);
+	var error_array=validate_import_array(data_array,validate_template_array);
 	return error_array;
 }
 
@@ -98,7 +98,7 @@ function form173_import_validate(data_array)
 							{column:'system_sku',required:'yes',regex:new RegExp('^[0-9a-zA-Z_.,()-]+$')},
 							{column:'channel',required:'yes',regex:new RegExp('^[0-9a-zA-Z_.,()-]+$')}];
 
-	var error_array=vImport.validate(data_array,validate_template_array);
+	var error_array=validate_import_array(data_array,validate_template_array);
 	return error_array;
 }
 
@@ -114,7 +114,7 @@ function form217_import_validate(data_array)
 							{column:'supplier_sku',regex:new RegExp('^[0-9a-zA-Z_.,()-]+$')},
 							{column:'margin',required:'yes',regex:new RegExp('^[0-9.]+$')}];
 
-	var error_array=vImport.validate(data_array,validate_template_array);
+	var error_array=validate_import_array(data_array,validate_template_array);
 	return error_array;
 }
 
@@ -129,7 +129,7 @@ function form245_import_validate(data_array)
 							{column:'component_sku',required:'yes',regex:new RegExp('^[0-9a-zA-Z_.,()-]+$')},
 							{column:'quantity',required:'yes',regex:new RegExp('^[0-9.]+$')}];
 
-	var error_array=vImport.validate(data_array,validate_template_array);
+	var error_array=validate_import_array(data_array,validate_template_array);
 	return error_array;
 }
 
@@ -152,7 +152,7 @@ function form273_import_validate(data_array)
 							{column:'company',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()/-]+$')},
 							{column:'item',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()/ -]+$')}];
 
-	var error_array=vImport.validate(data_array,validate_template_array);
+	var error_array=validate_import_array(data_array,validate_template_array);
 	return error_array;
 }
 
@@ -165,7 +165,7 @@ function form274_import_validate(data_array)
 	var validate_template_array=[{column:'item',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
 							{column:'quantity',required:'yes',regex:new RegExp('^[0-9.-]+$')}];
 
-	var error_array=vImport.validate(data_array,validate_template_array);
+	var error_array=validate_import_array(data_array,validate_template_array);
 	return error_array;
 }
 
@@ -182,7 +182,7 @@ function form275_import_validate(data_array)
 							{column:'to/from',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')},
 							{column:'notes',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()-]+$')}];
 
-	var error_array=vImport.validate(data_array,validate_template_array);
+	var error_array=validate_import_array(data_array,validate_template_array);
 	return error_array;
 }
 
@@ -206,7 +206,7 @@ function form289_import_validate(data_array)
 							{column:'company',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*()/-]+$')},
 							{column:'item',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$#%\*() /-]+$')}];
 
-	var error_array=vImport.validate(data_array,validate_template_array);
+	var error_array=validate_import_array(data_array,validate_template_array);
 	return error_array;
 }
 
@@ -220,7 +220,7 @@ function form290_import_validate(data_array)
 							{column:'state',regex:new RegExp('^[0-9a-zA-Z _.,\'()-]+$')},
 							{column:'country',regex:new RegExp('^[0-9a-zA-Z _.,\'()-]+$')}];
 
-	var error_array=vImport.validate(data_array,validate_template_array);
+	var error_array=validate_import_array(data_array,validate_template_array);
 	return error_array;
 }
 
@@ -238,6 +238,6 @@ function form300_import_validate(data_array)
 							{column:'Cost Price',regex:new RegExp('^[0-9.]+$')},
 							{column:'Sale Price',regex:new RegExp('^[0-9.]+$')}];
 
-	var error_array=vImport.validate(data_array,validate_template_array);
+	var error_array=validate_import_array(data_array,validate_template_array);
 	return error_array;
 }

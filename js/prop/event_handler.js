@@ -17,8 +17,7 @@ function default_load()
 	}
 
 
-	// modal_forms_ini();
-	// modals_draggable();
+	modal_forms_ini();
 	if(is_set_session())
 	{
 		//responsive_tabs();
@@ -50,7 +49,7 @@ function default_load()
 
 function declaring_global_variables()
 {
-  	server_root="";
+  	server_root="/new";
 	localdb_open_requests=0;
 	number_active_ajax=0;
 	loaderTimer=0;
@@ -59,7 +58,6 @@ function declaring_global_variables()
 	vyavsaay_active_tab="";
 	storage_count_tracker=0;
 	total_export_requests=0;
-	global_server_read_batch_size=500;
  	newsletter_element_4_deletion = [];
  	status_label_colors={'pending':'label-warning',
     					'converted':'label-success',
@@ -169,16 +167,13 @@ function setup_grid_display_tabs()
 	});
 }
 
-function modals_draggable()
+function modal_forms_ini()
 {
-	$(".draggable-modal").draggable(
+    $(".draggable-modal").draggable(
     {
     	handle: ".modal-header"
     });
-}
 
-function modal_forms_ini()
-{
 	var width=300;
 	if($(document).width<=550)
 	{
@@ -414,7 +409,6 @@ function hide_menu_items()
 		$('#online_icon').hide();
 		$('#sync_icon').hide();
 		$('#offline_icon').hide();
-		$('#delete_offline_data').hide();
 	}
 	else if(offline=="online")
 	{

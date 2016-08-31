@@ -4,6 +4,7 @@
  * array: yes
  * exact: yes
  * count: <integer>
+ * batch_size: <integer>
  */
 
 function server_read_json_rows_master(columns,callback)
@@ -11,6 +12,11 @@ function server_read_json_rows_master(columns,callback)
 	var domain=get_domain();
 	var username=get_username();
 	var re_access=get_session_var('re');
+
+	if(typeof columns.batch_size!='undefined')
+	{
+		columns.count=columns.batch_size;
+	}
 
 	var string_columns=JSON.stringify(columns);
 	ajax_json(server_root+"/ajax_json/get_master_rows.php",{domain:domain,username:username,re:re_access,data:string_columns},function(response_object)

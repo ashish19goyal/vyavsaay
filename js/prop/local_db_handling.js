@@ -720,7 +720,7 @@ function local_update_row(data_xml,activity_xml)
 				var put_req=objectStore.put(data_record);
 				put_req.onsuccess=function(e)
 				{
-					var id=vUtil.newKey();
+					var id=get_new_key();
 					var act_row={id:id+"",
 							type:'update',
 							status:'unsynced',
@@ -784,7 +784,7 @@ function local_update_simple(data_xml)
 				var put_req=objectStore.put(data_record);
 				put_req.onsuccess=function(e)
 				{
-					var id=vUtil.newKey();
+					var id=get_new_key();
 					var act_row={id:id+"",
 							type:'update',
 							status:'unsynced',
@@ -890,7 +890,7 @@ function local_update_batch(data_xml)
 			}
 		};
 		
-		var activity_id=parseFloat(vUtil.newKey());
+		var activity_id=parseFloat(get_new_key());
 		function insert_activities()
 		{
 			if(j<rows.length)
@@ -987,7 +987,7 @@ function local_update_simple_func(data_xml,func)
 				var put_req=os1.put(data_record);
 				put_req.onsuccess=function(e)
 				{
-					var id=vUtil.newKey();
+					var id=get_new_key();
 					var act_row={id:id+"",
 							type:'update',
 							status:'unsynced',
@@ -1071,7 +1071,7 @@ function local_create_row(data_xml,activity_xml)
 			var put_req=objectStore.put(data_row);
 			put_req.onsuccess=function(e)
 			{
-				var id=vUtil.newKey();
+				var id=get_new_key();
 				var act_row={id:""+id,
 						type:'create',
 						status:'unsynced',
@@ -1109,7 +1109,7 @@ function local_create_row(data_xml,activity_xml)
 					}
 					objectStore.put(data_row).onsuccess=function(e)
 					{
-						var id=vUtil.newKey();
+						var id=get_new_key();
 						var act_row={id:""+id,
 								type:'create',
 								status:'unsynced',
@@ -1191,7 +1191,7 @@ function local_create_row_func(data_xml,activity_xml,func)
 			var put_req=objectStore.put(data_row);
 			put_req.onsuccess=function(e)
 			{
-				var id=vUtil.newKey();
+				var id=get_new_key();
 				var act_row={id:""+id,
 						type:'create',
 						status:'unsynced',
@@ -1233,7 +1233,7 @@ function local_create_row_func(data_xml,activity_xml,func)
 					}
 					objectStore.put(data_row).onsuccess=function(e)
 					{
-						var id=vUtil.newKey();
+						var id=get_new_key();
 						var act_row={id:""+id,
 								type:'create',
 								status:'unsynced',
@@ -1316,7 +1316,7 @@ function local_create_simple(data_xml)
 			var put_req=objectStore.put(data_row);
 			put_req.onsuccess=function(e)
 			{
-				var id=vUtil.newKey();
+				var id=get_new_key();
 				var act_row={id:""+id,
 						type:'create',
 						status:'unsynced',
@@ -1353,7 +1353,7 @@ function local_create_simple(data_xml)
 					}
 					objectStore.put(data_row).onsuccess=function(e)
 					{
-						var id=vUtil.newKey();
+						var id=get_new_key();
 						var act_row={id:""+id,
 								type:'create',
 								status:'unsynced',
@@ -1432,7 +1432,7 @@ function local_create_batch(data_xml)
 		var transaction=static_local_db.transaction([table,'activities'],"readwrite");
 		var os1=transaction.objectStore(table);
 		var os2=transaction.objectStore('activities');
-		var activity_id=parseFloat(vUtil.newKey());
+		var activity_id=parseFloat(get_new_key());
 		
 		var i=0;
 		var m=0;
@@ -1607,7 +1607,7 @@ function local_create_batch_noloader(data_xml)
 		var transaction=static_local_db.transaction([table,'activities'],"readwrite");
 		var os1=transaction.objectStore(table);
 		var os2=transaction.objectStore('activities');
-		var activity_id=parseFloat(vUtil.newKey());
+		var activity_id=parseFloat(get_new_key());
 		
 		var i=0;
 		var m=0;
@@ -1747,7 +1747,7 @@ function local_create_simple_func(data_xml,func)
 			var put_req=objectStore.put(data_row);
 			put_req.onsuccess=function(e)
 			{
-				var id=vUtil.newKey();
+				var id=get_new_key();
 				var act_row={id:""+id,
 						type:'create',
 						status:'unsynced',
@@ -1788,7 +1788,7 @@ function local_create_simple_func(data_xml,func)
 					}
 					objectStore.put(data_row).onsuccess=function(e)
 					{
-						var id=vUtil.newKey();
+						var id=get_new_key();
 						var act_row={id:""+id,
 								type:'create',
 								status:'unsynced',
@@ -1868,7 +1868,7 @@ function local_create_simple_no_warning(data_xml)
 			var put_req=objectStore.put(data_row);
 			put_req.onsuccess=function(e)
 			{
-				var id=vUtil.newKey();
+				var id=get_new_key();
 				var act_row={id:""+id,
 						type:'create',
 						status:'unsynced',
@@ -1905,7 +1905,7 @@ function local_create_simple_no_warning(data_xml)
 					}
 					objectStore.put(data_row).onsuccess=function(e)
 					{
-						var id=vUtil.newKey();
+						var id=get_new_key();
 						var act_row={id:""+id,
 								type:'create',
 								status:'unsynced',
@@ -1994,7 +1994,7 @@ function local_delete_row(data_xml,activity_xml)
 						localdb_open_requests+=1;
 						objectStore.delete(filter[0].value).onsuccess=function(e)
 						{
-							var id=vUtil.newKey();
+							var id=get_new_key();
 							var act_row={id:""+id,
 									type:'delete',
 									status:'unsynced',
@@ -2068,7 +2068,7 @@ function local_delete_row(data_xml,activity_xml)
 						}
 					};
 
-					var activity_id=parseFloat(vUtil.newKey());
+					var activity_id=parseFloat(get_new_key());
 					function insert_activities()
 					{
 						if(j<delete_ids_array.length)
@@ -2176,7 +2176,7 @@ function local_delete_simple(data_xml)
 						localdb_open_requests+=1;
 						objectStore.delete(filter[0].value).onsuccess=function(e)
 						{
-							var id=vUtil.newKey();
+							var id=get_new_key();
 							var act_row={id:""+id,
 									type:'delete',
 									data_id:data.id,
@@ -2249,7 +2249,7 @@ function local_delete_simple(data_xml)
 						}
 					};
 
-					var activity_id=parseFloat(vUtil.newKey());
+					var activity_id=parseFloat(get_new_key());
 					function insert_activities()
 					{
 						//console.log('j '+j);
@@ -2354,7 +2354,7 @@ function local_delete_simple_func(data_xml,func)
 						localdb_open_requests+=1;
 						objectStore.delete(filter[0].value).onsuccess=function(e)
 						{
-							var id=vUtil.newKey();
+							var id=get_new_key();
 							var act_row={id:""+id,
 									type:'delete',
 									data_id:data.id,
@@ -2428,7 +2428,7 @@ function local_delete_simple_func(data_xml,func)
 						}
 					};
 
-					var activity_id=parseFloat(vUtil.newKey());
+					var activity_id=parseFloat(get_new_key());
 					function insert_activities()
 					{
 						//console.log('j '+j);

@@ -3273,10 +3273,11 @@ function form237_print_form(nl_name,nl_id,print_type,func)
 	footer.appendChild(powered_by);
 
 /////////////////populating the content section with newsletter items//////////////////////////
-	var newsletter_data={data_store:'newsletter',
-						count:1,
-						indexes:[{index:'id',exact:nl_id},
-								{index:'html_content'}]};
+	var newsletter_data=new Object();
+		newsletter_data.data_store='newsletter';
+		newsletter_data.count=1;
+		newsletter_data.indexes=[{index:'id',value:nl_id},
+							{index:'html_content'}];
 
 	read_json_rows('',newsletter_data,function(results)
 	{
@@ -3293,11 +3294,10 @@ function form237_print_form(nl_name,nl_id,print_type,func)
 
 				image_elem.src="https://s3-ap-southeast-1.amazonaws.com/vyavsaay-newsletter/"+data_src;
 			});
-			func(container);
 		}
-		else{
-			func();
-		}
+		//console.log(container.innerHTML);
+
+		func(container);
 	});
 }
 

@@ -6,7 +6,7 @@ function form1_import(data_array,import_type)
 {
 	var data_xml="<product_instances>";
 	var counter=1;
-	var new_id=parseFloat(vUtil.newKey());
+	var new_id=parseFloat(get_new_key());
 	var last_updated=get_my_time();
 	data_array.forEach(function(row)
 	{
@@ -2381,7 +2381,7 @@ function form154_import(data_array,import_type)
 {
 	var data_xml="<bill_items>";
 	var counter=1;
-	var new_id=parseFloat(vUtil.newKey());
+	var new_id=parseFloat(get_new_key());
 	var last_updated=get_my_time();
 	data_array.forEach(function(row)
 	{
@@ -2447,7 +2447,7 @@ function form155_import(data_array,import_type)
 {
 	var data_xml="<product_instances>";
 	var counter=1;
-	var new_id=parseFloat(vUtil.newKey());
+	var new_id=parseFloat(get_new_key());
 	var last_updated=get_my_time();
 	data_array.forEach(function(row)
 	{
@@ -2479,7 +2479,7 @@ function form155_import(data_array,import_type)
 				{
 					var new_quantity=parseFloat(row.actual_quantity)-parseFloat(quantity);
 					var adjust_xml="<inventory_adjust>" +
-							"<id>"+(parseFloat(vUtil.newKey())+Math.round(Math.random()*100))+"</id>" +
+							"<id>"+(parseFloat(get_new_key())+Math.round(Math.random()*100))+"</id>" +
 							"<product_name>"+row.product_name+"</product_name>" +
 							"<batch>"+row.product_name+"</batch>" +
 							"<quantity>"+new_quantity+"</quantity>" +
@@ -2693,7 +2693,7 @@ function form161_import(data_array,import_type)
 {
 	var data_xml="<checklist_items>";
 	var counter=1;
-	var new_id=parseFloat(vUtil.newKey());
+	var new_id=parseFloat(get_new_key());
 	var last_updated=get_my_time();
 	data_array.forEach(function(row)
 	{
@@ -2750,7 +2750,7 @@ function form162_import(data_array,import_type)
 {
 	var data_xml="<checklist_mapping>";
 	var counter=1;
-	var new_id=parseFloat(vUtil.newKey());
+	var new_id=parseFloat(get_new_key());
 	var last_updated=get_my_time();
 	data_array.forEach(function(row)
 	{

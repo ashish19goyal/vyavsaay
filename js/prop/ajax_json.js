@@ -4,6 +4,7 @@
  * array: yes
  * exact: yes
  * count: <integer>
+ * batch_size: <integer>
  */
 
 function ajax_external(url,data,func)
@@ -149,9 +150,9 @@ function ajax_json(url,kvp,func)
 
 function server_read_json_rows(columns,callback,results)
 {
-	if(vUtil.isBlank(columns.start_index))
+	if(typeof columns.batch_size!='undefined')
 	{
-		columns.start_index=0;
+		columns.count=columns.batch_size;
 	}
 
 	var data = vUtil.getCredentials();
@@ -160,17 +161,15 @@ function server_read_json_rows(columns,callback,results)
 	ajax_json(server_root+"/controller/read_rows",data,function(response_object)
 	{
 		results=results.concat(response_object.rows);
-
-		if(typeof columns.count=='undefined' && response_object.count>=global_server_read_batch_size)
-		{
-			columns.start_index=columns.start_index+response_object.count;
-			server_read_json_rows(columns,callback,results);
-		}
-		else
+		if(response_object.count<columns.count || (typeof columns.batch_size=='undefined'))
 		{
 			callback(results);
 		}
-
+		else
+		{
+			columns.start_index=columns.start_index+columns.count;
+			server_read_json_rows(columns,callback,results);
+		}
 	});
 }
 

@@ -15,7 +15,7 @@ function set_my_filter_json(filter_data,filter_element,func)
 		var list_id=filter_element.getAttribute('list');
 		if(list_id=='' || list_id==null)
 		{
-			list_id="list_"+vUtil.newKey();
+			list_id="list_"+get_new_key();
 			filter_element.setAttribute('list',list_id);
 		}
 		else
@@ -44,10 +44,14 @@ function set_static_filter_json(table,list,filter_element)
 
 	if(datalist_element==null || datalist_element==undefined)
 	{
-		var list_data={data_store:'values_list',
-						return_column:'name',
-						indexes:[{index:'tablename',exact:table},
-									{index:'listname',exact:list}]};
+		var list_data=new Object();
+				list_data.count=0;
+				list_data.start_index=0;
+				list_data.data_store='values_list';
+				list_data.return_column='name';
+
+				list_data.indexes=[{index:'tablename',exact:table},
+									{index:'listname',exact:list}];
 
 		read_json_single_column(list_data,function(data)
 		{
@@ -80,10 +84,14 @@ function set_static_value_list_json(table,list,filter_element,func)
 
 	if(datalist_element==null || datalist_element==undefined)
 	{
-		var list_data={data_store:'values_list',
-						return_column:'name',
-						indexes:[{index:'tablename',exact:table},
-									{index:'listname',exact:list}]};
+		var list_data=new Object();
+				list_data.count=0;
+				list_data.start_index=0;
+				list_data.data_store='values_list';
+				list_data.return_column='name';
+
+				list_data.indexes=[{index:'tablename',exact:table},
+									{index:'listname',exact:list}];
 
 		read_json_single_column(list_data,function(data)
 		{
@@ -236,7 +244,7 @@ function set_my_value_list_json(filter_data,filter_element,func)
 		var list_id=filter_element.getAttribute('list');
 		if(list_id=='' || list_id==null)
 		{
-			list_id="list_"+vUtil.newKey();
+			list_id="list_"+get_new_key();
 			filter_element.setAttribute("list",list_id);
 		}
 		else
@@ -280,7 +288,7 @@ function set_multiple_value_list_json(filter_data_array,filter_element)
 	var list_id=filter_element.getAttribute('list');
 	if(list_id=='' || list_id==null)
 	{
-		list_id="list_"+vUtil.newKey();
+		list_id="list_"+get_new_key();
 		filter_element.setAttribute("list",list_id);
 	}
 	else
@@ -399,7 +407,7 @@ function set_master_filter_json(filter_data,filter_element,func)
 		var list_id=filter_element.getAttribute('list');
 		if(list_id=='' || list_id==null)
 		{
-			list_id="list_"+vUtil.newKey();
+			list_id="list_"+get_new_key();
 			filter_element.setAttribute('list',list_id);
 		}
 		else
@@ -435,7 +443,7 @@ function set_master_list_json(filter_data,filter_element,func)
 		var list_id=filter_element.getAttribute('list');
 		if(list_id=='' || list_id==null)
 		{
-			list_id="list_"+vUtil.newKey();
+			list_id="list_"+get_new_key();
 			filter_element.setAttribute("list",list_id);
 		}
 		else
@@ -505,7 +513,7 @@ function set_value_list_json(data,filter_element,func)
 	var list_id=filter_element.getAttribute('list');
 	if(list_id=='' || list_id==null)
 	{
-		list_id="list_"+vUtil.uniqueNewKey();
+		list_id="list_"+get_new_key();
 		filter_element.setAttribute("list",list_id);
 	}
 	else
@@ -534,39 +542,6 @@ function set_value_list_json(data,filter_element,func)
             $(this).val('');
         }
 	});
-	if(typeof func!='undefined')
-	{
-		func();
-	}
-}
-
-function set_filter_json(data,filter_element,func)
-{
-	var form=filter_element.form;
-	var datalist=document.createElement('datalist');
-	data=vUtil.arrayUnique(data);
-	data.forEach(function(d)
-	{
-		var option=document.createElement('option');
-		option.setAttribute('value',d);
-		datalist.appendChild(option);
-	});
-
-	var list_id=filter_element.getAttribute('list');
-	if(list_id=='' || list_id==null)
-	{
-		list_id="list_"+vUtil.newKey();
-		filter_element.setAttribute('list',list_id);
-	}
-	else
-	{
-		var oldlist=document.getElementById(list_id);
-		form.removeChild(oldlist);
-	}
-
-	form.appendChild(datalist);
-	datalist.setAttribute('id',list_id);
-
 	if(typeof func!='undefined')
 	{
 		func();

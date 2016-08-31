@@ -5,7 +5,7 @@
 function activities_import_template()
 {
 	var data_array=['id','type','status','data_xml','user_display','data_id','tablename','link_to','last_updated'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -15,7 +15,7 @@ function activities_import_template()
 function form1_import_template()
 {
 	var data_array=['id','product_name','batch','expiry','manufacture_date','actual_quantity','mrp'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -25,7 +25,7 @@ function form1_import_template()
 function form5_import_template()
 {
 	var data_array=['id','name','type','description'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -39,7 +39,7 @@ function form10_import_template()
 	var data_array=['id','bill_id','item_name','quantity','unit_price','mrp','amount',
 	                'total','discount','offer','type','batch','notes',
 	                'staff','tax','free_with'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -49,7 +49,7 @@ function form10_import_template()
 function form11_import_template()
 {
 	var data_array=['id','type','acc_name','total_amount','paid_amount','status','date','source','source_id','source_info','due_date','mode'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -62,7 +62,7 @@ function form12_import_template()
 	var data_array=['id','bill_id','item_name','quantity','unit_price','mrp','amount',
 	                'total','discount','offer','type','batch','notes',
 	                'staff','tax','free_with'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -73,7 +73,7 @@ function form12_import_template()
 function form14_import_template()
 {
 	var data_array=['id','name','description','assignee','t_due','task_hours','t_initiated','status'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -85,7 +85,7 @@ function form14_import_template()
 function form16_import_template()
 {
 	var data_array=['id','order_num','order_id','channel','customer','return_date','total','tax','transaction_id','status'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -96,7 +96,7 @@ function form16_import_template()
 function form24_import_template()
 {
 	var data_array=['id','order_id','item_name','item_desc','supplier_sku','quantity','make','mrp','price','amount','tax','total'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -110,7 +110,7 @@ function form35_import_template()
 	                'product_name','batch','service','criteria_type','criteria_amount','criteria_quantity',
 	                'result_type','discount_percent','discount_amount','quantity_add_percent','quantity_add_amount',
 	                'free_product_name','free_product_quantity'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -121,7 +121,7 @@ function form35_import_template()
 function form43_import_template()
 {
 	var data_array=['id','order_num','order_date','supplier','status','amount','tax','total'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -131,7 +131,7 @@ function form43_import_template()
 function form58_import_template()
 {
 	var data_array=['id','name','requisite_type','requisite_name','quantity','type'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -141,7 +141,7 @@ function form58_import_template()
 function form59_import_template()
 {
 	var data_array=['id','name','requisite_type','requisite_name','quantity','type'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -152,7 +152,7 @@ function form59_import_template()
 function form61_import_template()
 {
 	var data_array=['id','name','attribute','value'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -162,7 +162,7 @@ function form61_import_template()
 function form62_import_template()
 {
 	var data_array=['id','name','type','reviewer','detail','rating'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -172,7 +172,7 @@ function form62_import_template()
 function form63_import_template()
 {
 	var data_array=['id','name','type','reviewer','detail','rating'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -182,7 +182,7 @@ function form63_import_template()
 function form64_import_template()
 {
 	var data_array=['id','name','type','cross_type','cross_name'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -192,7 +192,7 @@ function form64_import_template()
 function form66_import_template()
 {
 	var data_array=['id','name','type','cross_type','cross_name'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -203,7 +203,7 @@ function form66_import_template()
 function form69_import_template()
 {
 	var data_array=['id','order_id','item_name','item_desc','channel_sku','vendor_sku','quantity','mrp','price','amount','tax','freight','total'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -214,7 +214,7 @@ function form69_import_template()
 function form70_import_template()
 {
 	var data_array=['id','customer_name','order_date','type','status'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -225,7 +225,7 @@ function form70_import_template()
 function form79_import_template()
 {
 	var data_array=['id','name','description','est_hours'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -235,7 +235,7 @@ function form79_import_template()
 function form81_import_template()
 {
 	var data_array=['id','customer','detail','due_date','identified_by'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -248,7 +248,7 @@ function form82_import_template()
 	var data_array=['id','bill_id','item_name','quantity','unit_price','mrp','amount',
 	                'total','discount','offer','type','batch','notes',
 	                'staff','tax','free_with'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -259,7 +259,7 @@ function form82_import_template()
 function form84_import_template()
 {
 	var data_array=['id','customer','service','status','notes','last_bill_id','last_bill_date','next_due_date'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -269,7 +269,7 @@ function form84_import_template()
 function form87_import_template()
 {
 	var data_array=['id','name','make','description','tax','bar_code'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -279,7 +279,7 @@ function form87_import_template()
 function form88_import_template()
 {
 	var data_array=['id','product','process_notes','status','schedule','iteration_notes'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -292,7 +292,7 @@ function form91_import_template()
 {
 	var data_array=['id','bill_id','item_name','item_desc','quantity','unit_price','mrp','amount',
 	                'total','freight','batch','tax_rate','tax','cst','vat','storage'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -305,7 +305,7 @@ function form93_import_template()
 	var data_array=['id','type','account','date_initiated','loan_amount','repayment_method',
 	                'interest_paid','interest_rate','interest_period','next_interest_date','interest_type',
 	                'emi','emi_period','next_emi_date','pending_emi','status'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -317,7 +317,7 @@ function form93_import_template()
 function form101_import_template()
 {
 	var data_array=['id','name','details','start_date','status'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -328,7 +328,7 @@ function form101_import_template()
 function form102_import_template()
 {
 	var data_array=['id','project_id','member','notes','role','status'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -339,7 +339,7 @@ function form102_import_template()
 function form103_import_template()
 {
 	var data_array=['id','project_id','phase_name','details','start_date','due_date','status'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -352,7 +352,7 @@ function form103_import_template()
 function form108_import_template()
 {
 	var data_array=['id','order_num','customer_name','order_date','channel','status','amount','tax','freight','total'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -362,7 +362,7 @@ function form108_import_template()
 function form109_import_template()
 {
 	var data_array=['id','name','attribute','value'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -372,7 +372,7 @@ function form109_import_template()
 function form112_import_template()
 {
 	var data_array=['id','customer','item_name','item_desc','batch','quantity','sale_date','mrp','unit_price','amount','tax','total','storage','bill_status','picked_status'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -382,7 +382,7 @@ function form112_import_template()
 function form113_import_template()
 {
 	var data_array=['id','customer','item_name','item_desc','batch','quantity','sale_date','mrp','unit_price','amount','tax','total','storage','bill_status','picked_status'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -392,7 +392,7 @@ function form113_import_template()
 function form114_import_template()
 {
 	var data_array=['id','supplier','item_name','item_desc','batch','quantity','purchase_date','unit_price','amount','tax','total','storage','put_away_status','bill_status'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -402,7 +402,7 @@ function form114_import_template()
 function form115_import_template()
 {
 	var data_array=['id','supplier','item_name','item_desc','batch','quantity','purchase_date','unit_price','amount','tax','total','storage','put_away_status','bill_status'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -413,7 +413,7 @@ function form116_import_template()
 {
 	var data_array=['id','name','type','tier','tier_criteria_lower','tier_criteria_upper','points_addition',
 	                'discount','redemption_criteria','cashback','reward_product','status'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -426,7 +426,7 @@ function form118_import_template()
 	var data_array=['id','bill_id','item_name','quantity','p_quantity','f_quantity','unit_price','mrp','amount',
 	                'total','discount','offer','type','batch','notes',
 	                'staff','tax','free_with'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -440,7 +440,7 @@ function form119_import_template()
 	var data_array=['id','bill_id','item_name','quantity','p_quantity','f_quantity','unit_price','mrp','amount',
 	                'total','discount','offer','type','batch','notes',
 	                'staff','tax','free_with'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -450,7 +450,7 @@ function form119_import_template()
 function form120_import_template()
 {
 	var data_array=['id','program_name','customer','tier','status'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -460,7 +460,7 @@ function form120_import_template()
 function form121_import_template()
 {
 	var data_array=['id','program_name','customer','points','date','source','source_id'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -472,7 +472,7 @@ function form122_import_template()
 {
 	var data_array=['id','quantity','product_name','item_desc','batch','bill_id','mrp','unit_price',
 					'amount','tax','cst','total','qc','qc_comments','storage','put_away_status'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -484,7 +484,7 @@ function form122_import_template()
 function form124_import_template()
 {
 	var data_array=['id','receipt_id','payment_id','type','amount','acc_name','date'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -495,7 +495,7 @@ function form124_import_template()
 function form125_import_template()
 {
 	var data_array=['id','username','acc_name','description','type','status'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -507,7 +507,7 @@ function form125_import_template()
 function form139_import_template()
 {
 	var data_array=['id','name','type','owner','owner_type','description','location','area','floors','notes'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -518,7 +518,7 @@ function form139_import_template()
 function form140_import_template()
 {
 	var data_array=['id','name','type','owner','owner_type','description','location','area','floors','notes'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -529,7 +529,7 @@ function form140_import_template()
 function form146_import_template()
 {
 	var data_array=['id','product','batch','quantity','status','schedule'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -540,7 +540,7 @@ function form146_import_template()
 function form154_import_template()
 {
 	var data_array=['id','bill_id','item_name','quantity','unit','unit_price','amount','from_date','to_date','storage','hired','fresh'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -550,7 +550,7 @@ function form154_import_template()
 function form155_import_template()
 {
 	var data_array=['id','product_name','cost_price','sale_price','manufacture_date','mrp','actual_quantity'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -560,7 +560,7 @@ function form155_import_template()
 function form156_import_template()
 {
 	var data_array=['id','item_name','name'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -571,7 +571,7 @@ function form157_import_template()
 {
 	var data_array=['id','item_name','quantity','source','target',
 	                'status','dispatcher','receiver'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -583,7 +583,7 @@ function form158_import_template()
 {
 	var data_array=['id','quantity','product_name',
 	               'bill_id','unit_price','amount','tax','total','storage'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -593,7 +593,7 @@ function form158_import_template()
 function form161_import_template()
 {
 	var data_array=['id','checkpoint','desired_result','status'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -603,7 +603,7 @@ function form161_import_template()
 function form162_import_template()
 {
 	var data_array=['id','checkpoint','desired_result','item'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -615,7 +615,7 @@ function form162_import_template()
 function form167_import_template()
 {
 	var data_array=['id','name','parent','length','breadth','height','unit'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -625,7 +625,7 @@ function form167_import_template()
 function form169_import_template()
 {
 	var data_array=['id','sku','name','brand','tax','bar_code','length','breadth','height','volume','unit','weight','packing'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -636,7 +636,7 @@ function form169_import_template()
 function form170_import_template()
 {
 	var data_array=['id','name','parent','owner','area_type','height','breadth','length','unit'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -646,7 +646,7 @@ function form170_import_template()
 function form171_import_template()
 {
 	var data_array=['id','name','details','dead_weight_factor'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -656,7 +656,7 @@ function form171_import_template()
 function form172_import_template()
 {
 	var data_array=['id','channel','item','from_time','mrp','discount_customer','sale_price','freight','channel_commission_percentage','channel_commission','pickup_charges','gateway_charges','service_tax','total_charges','cost_price'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -666,7 +666,7 @@ function form172_import_template()
 function form173_import_template()
 {
 	var data_array=['id','channel','channel_sku','system_sku','item_desc'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -676,7 +676,7 @@ function form173_import_template()
 function form174_import_template()
 {
 	var data_array=['id','channel','pincode','minimum','maximum','weight_rate'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -686,7 +686,7 @@ function form174_import_template()
 function form175_import_template()
 {
 	var data_array=['id','channel','type','name','parent','commission'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -696,7 +696,7 @@ function form175_import_template()
 function form176_import_template()
 {
 	var data_array=['id','channel','cat_type','cat_name','sku'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -706,7 +706,7 @@ function form176_import_template()
 function form177_import_template()
 {
 	var data_array=['id','name','type','values','threshold'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -718,7 +718,7 @@ function form177_import_template()
 function form184_import_template()
 {
 	var data_array=['id','name','details','time_estimate','default_assignee','order_no','type','status'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -729,7 +729,7 @@ function form184_import_template()
 function form187_import_template()
 {
 	var data_array=['id','name','details','time_estimate','default_assignee','order_no','status'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -739,7 +739,7 @@ function form187_import_template()
 function form190_import_template()
 {
 	var data_array=['id','customer_name','notes','order_date','assignee','status','address'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -750,7 +750,7 @@ function form190_import_template()
 function form193_import_template()
 {
 	var data_array=['id','product_name','batch','quantity','source','storage'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -760,7 +760,7 @@ function form193_import_template()
 function form195_import_template()
 {
 	var data_array=['id','name','date','receiver','subject','salutation','content','signature','footer'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -771,7 +771,7 @@ function form195_import_template()
 function form217_import_template()
 {
 	var data_array=['id','item','item_desc','supplier_sku','margin','supplier'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -783,7 +783,7 @@ function form217_import_template()
 function form222_import_template()
 {
 	var data_array=['id','order_id','item_name','quantity','make','mrp','price','amount','tax','total'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -794,7 +794,7 @@ function form222_import_template()
 function form223_import_template()
 {
 	var data_array=['id','order_num','order_date','supplier','status','amount','tax','total'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -805,7 +805,7 @@ function form223_import_template()
 function form230_import_template()
 {
 	var data_array=['id','item','quantity','issue_type','for_from','date','to_from','notes'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -815,7 +815,7 @@ function form230_import_template()
 function form245_import_template()
 {
 	var data_array=['id','sku','component_sku','component_name','quantity'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -826,7 +826,7 @@ function form245_import_template()
 function form273_import_template()
 {
 	var data_array=['id','name','phone','email','address','city','item','company','price','quantity','comments','identified date'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -836,7 +836,7 @@ function form273_import_template()
 function form274_import_template()
 {
 	var data_array=['id','item','quantity'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -846,7 +846,7 @@ function form274_import_template()
 function form275_import_template()
 {
 	var data_array=['id','item','quantity','type','date','to/from','notes'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -857,7 +857,7 @@ function form275_import_template()
 function form289_import_template()
 {
 	var data_array=['id','name','phone','email','address','city','item','company','price','point-of-contact','quantity','comments','followup date'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 /**
@@ -867,7 +867,7 @@ function form289_import_template()
 function form290_import_template()
 {
 	var data_array=['id','city','state','country'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };
 
 
@@ -878,5 +878,5 @@ function form290_import_template()
 function form300_import_template()
 {
 	var data_array=['id','Model','Company','Category','Description','MRP','Cost Price','Sale Price'];
-	vUtil.arrayToCSV(data_array);
+	my_array_to_csv(data_array);
 };

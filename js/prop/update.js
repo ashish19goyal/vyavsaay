@@ -377,7 +377,7 @@ function report90_update(form)
 				}
 				var old_pending_quantity=parseFloat(to_pick)-parseFloat(old_picked);
 				var new_picked_quantity=parseFloat(picked)-parseFloat(old_picked);
-				var new_key=vUtil.newKey();
+				var new_key=get_new_key();
 				form.elements[9].value='inventory_adjust';
 				form.elements[8].value=new_key;
 				form.elements[13].value=storage;
@@ -434,7 +434,7 @@ function report90_update(form)
 			if(placements.length===0)
 			{
 				var storage_xml="<area_utilization>" +
-						"<id>"+vUtil.newKey()+"</id>" +
+						"<id>"+get_new_key()+"</id>" +
 						"<name>"+storage+"</name>" +
 						"<item_name>"+item+"</item_name>" +
 						"<batch>"+batch+"</batch>" +
@@ -1006,7 +1006,7 @@ function form12_update_form()
 									free_batch=data[0];
 								}
 
-								var id=vUtil.newKey();
+								var id=get_new_key();
 								rowsHTML="<tr>";
 									rowsHTML+="<form id='form12_"+id+"'></form>";
 					                	rowsHTML+="<td>";
@@ -1039,7 +1039,7 @@ function form12_update_form()
 
 				            $('#form12_body').prepend(rowsHTML);
 
-				            var bill_item_id=vUtil.newKey();
+				            var bill_item_id=get_new_key();
 								var free_xml="<bill_items>" +
 											"<id>"+bill_item_id+"</id>" +
 											"<item_name>"+free_product_name+"</item_name>" +
@@ -2599,7 +2599,7 @@ function form88_update_item(form)
 			{
 				pre_requisites.forEach(function(pre_requisite)
 				{
-					var task_id=vUtil.newKey();
+					var task_id=get_new_key();
 					var task_xml="<task_instances>" +
 							"<id>"+task_id+"</id>" +
 							"<name>"+pre_requisite.name+"</name>" +
@@ -2924,7 +2924,7 @@ function form93_update_item(form)
 				"<notes>Loan of amount Rs. "+amount+" "+type+" "+adjective+" "+account+"</notes>" +
 				"<updated_by>"+get_name()+"</updated_by>" +
 				"</activity>";
-		var payment_id=vUtil.newKey();
+		var payment_id=get_new_key();
 		var transaction2_xml="<transactions>" +
 				"<id>"+payment_id+"</id>" +
 				"<trans_date>"+get_my_time()+"</trans_date>" +
@@ -3391,7 +3391,7 @@ function form118_update_form()
 									free_batch=data[0];
 								}
 
-								var id=vUtil.newKey();
+								var id=get_new_key();
 								rowsHTML="<tr>";
 									rowsHTML+="<form id='form118_"+id+"'></form>";
 					                	rowsHTML+="<td data-th='Item'>";
@@ -3424,7 +3424,7 @@ function form118_update_form()
 
 				                $('#form118_body').prepend(rowsHTML);
 
-				            var bill_item_id=vUtil.newKey();
+				            var bill_item_id=get_new_key();
 								var free_xml="<bill_items>" +
 											"<id>"+bill_item_id+"</id>" +
 											"<item_name>"+free_product_name+"</item_name>" +
@@ -3731,7 +3731,7 @@ function form119_update_form()
 									free_batch=data[0];
 								}
 
-								var id=vUtil.newKey();
+								var id=get_new_key();
 								var rowsHTML="<tr>";
 								rowsHTML+="<form id='form119_"+id+"'></form>";
 									rowsHTML+="<td data-th='Product Name'>";
@@ -4361,7 +4361,7 @@ function form130_update_form()
 									free_batch=data[0];
 								}
 
-								var id=vUtil.newKey();
+								var id=get_new_key();
 								rowsHTML="<tr>";
 									rowsHTML+="<form id='form130_"+id+"'></form>";
 					                	rowsHTML+="<td>";
@@ -4432,7 +4432,7 @@ function form130_update_form()
 				else if(offers[i].result_type=='service free')
 				{
 					var free_service_name=offers[i].free_service_name;
-					var id=vUtil.newKey();
+					var id=get_new_key();
 					rowsHTML="<tr>";
 						rowsHTML+="<form id='form130_"+id+"'></form>";
 		                	rowsHTML+="<td>";
@@ -4503,7 +4503,7 @@ function form130_update_form()
 
 						free_pre_requisites.forEach(function(free_pre_requisite)
 						{
-							var task_id=vUtil.newKey();
+							var task_id=get_new_key();
 							var task_xml="<task_instances>" +
 									"<id>"+task_id+"</id>" +
 									"<name>"+free_pre_requisite.name+"</name>" +
@@ -5730,7 +5730,7 @@ function form157_receive_item(button)
 			if(placements.length===0 && target!="")
 			{
 				var storage_xml="<area_utilization>" +
-						"<id>"+vUtil.newKey()+"</id>" +
+						"<id>"+get_new_key()+"</id>" +
 						"<name>"+target+"</name>" +
 						"<item_name>"+product_name+"</item_name>" +
 						"<batch>"+product_name+"</batch>" +
@@ -6138,7 +6138,7 @@ function form165_update_item(form)
 				}
 				var old_pending_quantity=parseFloat(to_place)-parseFloat(old_placed);
 				var new_placed_quantity=parseFloat(placed)-parseFloat(old_placed);
-				var new_key=vUtil.newKey();
+				var new_key=get_new_key();
 				form.elements[7].value='inventory_adjust';
 				form.elements[6].value=new_key;
 				form.elements[9].value=storage;
@@ -6190,7 +6190,7 @@ function form165_update_item(form)
 			if(placements.length===0)
 			{
 				var storage_xml="<area_utilization>" +
-						"<id>"+vUtil.newKey()+"</id>" +
+						"<id>"+get_new_key()+"</id>" +
 						"<name>"+storage+"</name>" +
 						"<item_name>"+item+"</item_name>" +
 						"<batch>"+batch+"</batch>" +
@@ -7104,7 +7104,7 @@ function form193_update_form()
 
 			//console.log(items);
 
-			var id=vUtil.newKey();
+			var id=get_new_key();
 			var counter=1;
 			items.forEach(function(item)
 			{
@@ -7116,7 +7116,7 @@ function form193_update_form()
 					if(parseFloat(item.quantity)!=parseFloat(sys_quantity))
 					{
 						var quantity=parseFloat(item.quantity)-parseFloat(sys_quantity);
-						//var id=vUtil.newKey();
+						//var id=get_new_key();
 						var last_updated=get_my_time();
 						var data_xml="<inventory_adjust>" +
 									"<id>"+(id+counter)+"</id>" +
@@ -7647,7 +7647,7 @@ function form210_reject_item(bar_code)
 							update_simple(items_xml);
 
 							var discarded_xml="<discarded>"+
-									"<id>"+vUtil.newKey()+"</id>"+
+									"<id>"+get_new_key()+"</id>"+
 									"<batch>"+item_batch+"</batch>"+
 					                "<quantity>1</quantity>"+
 					                "<product_name>"+item_name+"</product_name>"+
@@ -8120,7 +8120,7 @@ function form233_update_item()
 		show_loader();
 		var form=document.getElementById("form233_form");
 
-		var new_key=vUtil.newKey();
+		var new_key=get_new_key();
 		var counter=0;
 
 		$("[id^='vyavsaay_image_box_']").each(function(index)
@@ -8136,7 +8136,7 @@ function form233_update_item()
 
 			if(data_src=="" || data_src=='undefined' || data_src=='null' || data_src==null)
 			{
-				blob_name=vUtil.newKey()+".jpeg";
+				blob_name=get_new_key()+".jpeg";
 				image_elem.setAttribute('data-src',blob_name);
 			}
 
@@ -8277,7 +8277,7 @@ function form233_update_item()
 
 				if(pic_url=="")
 				{
-					var blob_name=get_domain()+"_"+vUtil.newKey()+".jpeg";
+					var blob_name=get_domain()+"_"+get_new_key()+".jpeg";
 				}
 				else
 				{
@@ -8484,7 +8484,7 @@ function form244_update_form()
 		var body_html="";
 		var head_html="<tr><th>SKU</th><th>Item Name</th><th>Batch</th><th>Quantity</th></tr>";
 
-		var id=vUtil.newKey();
+		var id=get_new_key();
 		var counter=1;
 		items.forEach(function(item)
 		{
@@ -8492,7 +8492,7 @@ function form244_update_form()
 			counter+=1;
 			if(parseFloat(item.quantity)>0)
 			{
-				//var id=vUtil.newKey();
+				//var id=get_new_key();
 				var last_updated=get_my_time();
 				var data_xml="<inventory_adjust>" +
 							"<id>"+(id+counter)+"</id>" +

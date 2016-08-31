@@ -4,7 +4,7 @@
  */
 function switch_to_online()
 {
-	if(is_update_access('sync_mode') || is_update_access('sync'))
+	if(is_update_access('sync_mode'))
 	{
 		var credentials=vUtil.getCredentials();
 		ajax_json(server_root+"/ajax/connection.php",credentials,function(response_object)
@@ -45,7 +45,7 @@ function switch_to_online()
  */
 function switch_to_offline()
 {
-	if(is_update_access('sync_mode') || is_update_access('sync'))
+	if(is_update_access('sync_mode'))
 	{
 		var domain=get_domain();
 		show_progress();

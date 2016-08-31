@@ -2,7 +2,7 @@
  * @returns {Array}
  */
 function get_single_column_data(callback,request_data)
-{
+{	
 	var results=new Array();
 
 	if(is_online())
@@ -19,7 +19,7 @@ function get_single_column_data(callback,request_data)
  * @returns {Array}
  */
 function get_single_column_data_array(request_data_array,callback)
-{
+{	
 	var results=new Array();
 	var array_count=request_data_array.length;
 	request_data_array.forEach(function(request_data)
@@ -39,7 +39,7 @@ function get_single_column_data_array(request_data_array,callback)
 			},results);
 		}
 	});
-
+	
 	var get_data_array_timer=setInterval(function()
 	{
   	   if(array_count===0)
@@ -47,7 +47,7 @@ function get_single_column_data_array(request_data_array,callback)
   		   	clearInterval(get_data_array_timer);
   		   	callback(results);
   	   }
-    },10);
+    },10);			
 }
 
 
@@ -81,7 +81,7 @@ function fetch_requested_data(element_id,columns,callback)
  * @returns {Array}
  */
 function generate_report(report_id)
-{
+{	
 	if(is_online())
 	{
 		server_generate_report_json(report_id,function(results)
@@ -95,7 +95,7 @@ function generate_report(report_id)
 					result.last_updated=get_my_datetime(result.last_updated);
 				}
 			});
-			vUtil.objArrayToCSV(results,'report');
+			my_obj_array_to_csv(results,'report');
 		});
 	}
 	else
@@ -110,13 +110,13 @@ function generate_report(report_id)
 				}
 			});
 
-			vUtil.objArrayToCSV(results,'report');
+			my_obj_array_to_csv(results,'report');
 		});
 	}
 }
 
 function get_inventory(product,batch,callback)
-{
+{	
 	if(is_online())
 	{
 		server_get_inventory(product,batch,callback);
@@ -129,7 +129,7 @@ function get_inventory(product,batch,callback)
 
 
 function get_store_inventory(store,product,batch,callback)
-{
+{	
 	if(is_online())
 	{
 		server_get_store_inventory(store,product,batch,callback);
@@ -141,7 +141,7 @@ function get_store_inventory(store,product,batch,callback)
 }
 
 function get_available_inventory(product,batch,data_array,callback)
-{
+{	
 	if(is_online())
 	{
 		server_get_available_inventory(product,batch,data_array,callback);
@@ -343,10 +343,7 @@ function read_json_rows(element_id,columns,callback)
 	{
 		hide_loader();
 		console.log("Being called from " + arguments.callee.caller.toString());
-		if(!vUtil.isBlank(get_session_var('re')))
-		{
-			$("#modal2_link").click();
-		}
+		$("#modal2_link").click();
 	}
 }
 
@@ -490,18 +487,18 @@ function send_email(to,from,from_name,subject,message,func)
 	var email_enabled=get_session_var('email_enabled');
 	var message_attachment="";
 	var pdf_elem=document.getElementById('pdf_print_div');
-
+	
 	if(email_enabled=='yes')
 	{
 		pdf_elem.innerHTML=message;
-
-		html2canvas(pdf_elem,
+	
+		html2canvas(pdf_elem, 
 		{
-	        onrendered: function(canvas)
-	        {
+	        onrendered: function(canvas) 
+	        {   
 	        	message_attachment=canvas.toDataURL("image/jpeg");
 				pdf_elem.innerHTML="";
-
+				
 				var data={"to":to,
 							"from":from,
 							"from_name":from_name,
@@ -509,7 +506,7 @@ function send_email(to,from,from_name,subject,message,func)
 							"message":message,
 							"message_attachment":"",
 							"attachment_type":""};
-				var data_string=JSON.stringify(data);
+				var data_string=JSON.stringify(data);			
 				if(is_online())
 				{
 					server_send_email(data_string,func);
@@ -517,7 +514,7 @@ function send_email(to,from,from_name,subject,message,func)
 				else
 				{
 					var email_data="<emails>"+
-								"<id>"+vUtil.newKey()+"</id>"+
+								"<id>"+get_new_key()+"</id>"+
 								"<subject>"+subject+"</subject>"+
 								"<message>"+htmlentities(message)+"</message>"+
 								"<message_attachment>"+message_attachment+"</message_attachment>"+
@@ -528,11 +525,11 @@ function send_email(to,from,from_name,subject,message,func)
 								"<status>pending</status>"+
 								"<last_updated>"+get_my_time()+"</last_updated>"+
 								"</emails>";
-					local_create_simple(email_data);
+					local_create_simple(email_data);		
 					func();
-				}
+				}	    
 	        }
-	    });
+	    });		
 	}
 	else
 	{
@@ -545,19 +542,19 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
 {
 	var email_enabled=get_session_var('email_enabled');
 	var pdf_elem=document.getElementById('pdf_print_div');
-
+	
 	if(email_enabled=='yes')
 	{
 		if(attachment_type=='image')
 		{
 			pdf_elem.innerHTML=message_attachment;
-			html2canvas(pdf_elem,
+			html2canvas(pdf_elem, 
 			{
-		        onrendered: function(canvas)
-		        {
+		        onrendered: function(canvas) 
+		        {   
 		        	new_message_attachment=canvas.toDataURL("image/jpeg");
 					pdf_elem.innerHTML="";
-
+					
 					var data={"to":to,
 								"from":from,
 								"from_name":from_name,
@@ -565,8 +562,8 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
 								"message":message,
 								"message_attachment":new_message_attachment,
 								"attachment_type":""};
-					var data_string=JSON.stringify(data);
-
+					var data_string=JSON.stringify(data);			
+					
 					if(is_online())
 					{
 						server_send_email(data_string,func);
@@ -574,7 +571,7 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
 					else
 					{
 						var email_data="<emails>"+
-									"<id>"+vUtil.newKey()+"</id>"+
+									"<id>"+get_new_key()+"</id>"+
 									"<subject>"+subject+"</subject>"+
 									"<message>"+htmlentities(message)+"</message>"+
 									"<message_attachment>"+new_message_attachment+"</message_attachment>"+
@@ -585,15 +582,15 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
 									"<status>pending</status>"+
 									"<last_updated>"+get_my_time()+"</last_updated>"+
 									"</emails>";
-						local_create_simple(email_data);
+						local_create_simple(email_data);			
 						func();
-					}
+					}	    
 		        }
 		    });
 		}
         else if(attachment_type=='pdf')
         {
-            var pdfcreator=new htmlToPdf({html:message_attachment});
+            var pdfcreator=new htmlToPdf({html:message_attachment});										
             pdfcreator.getDataUrl(function(new_message_attachment)
             {
                 var data={"to":to,
@@ -603,7 +600,7 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
                             "message":message,
                             "message_attachment":new_message_attachment,
                             "attachment_type":attachment_type};
-                var data_string=JSON.stringify(data);
+                var data_string=JSON.stringify(data);			
 
                 if(is_online())
                 {
@@ -612,7 +609,7 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
                 else
                 {
                     var email_data="<emails>"+
-                                "<id>"+vUtil.newKey()+"</id>"+
+                                "<id>"+get_new_key()+"</id>"+
                                 "<subject>"+subject+"</subject>"+
                                 "<message>"+htmlentities(message)+"</message>"+
                                 "<message_attachment>"+new_message_attachment+"</message_attachment>"+
@@ -623,12 +620,12 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
                                 "<status>pending</status>"+
                                 "<last_updated>"+get_my_time()+"</last_updated>"+
                                 "</emails>";
-                    local_create_simple(email_data);
+                    local_create_simple(email_data);			
                     func();
                 }
             });
         }
-		else
+		else 
 		{
 			var data={"to":to,
 						"from":from,
@@ -637,8 +634,8 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
 						"message":message,
 						"message_attachment":message_attachment,
 						"attachment_type":attachment_type};
-			var data_string=JSON.stringify(data);
-
+			var data_string=JSON.stringify(data);			
+					    	
 			if(is_online())
 			{
 				server_send_email(data_string,func);
@@ -646,7 +643,7 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
 			else
 			{
 				var email_data="<emails>"+
-							"<id>"+vUtil.newKey()+"</id>"+
+							"<id>"+get_new_key()+"</id>"+
 							"<subject>"+subject+"</subject>"+
 							"<message>"+htmlentities(message)+"</message>"+
 							"<message_attachment>"+message_attachment+"</message_attachment>"+
@@ -657,10 +654,10 @@ function send_email_attachment(to,from,from_name,subject,message,message_attachm
 							"<status>pending</status>"+
 							"<last_updated>"+get_my_time()+"</last_updated>"+
 							"</emails>";
-				local_create_simple(email_data);
+				local_create_simple(email_data);			
 				func();
 			}
-		}
+		}	        		
 	}
 	else
 	{
@@ -682,7 +679,7 @@ function send_sms(to,message,type)
 		else
 		{
 			var sms_data="<sms>"+
-						"<id>"+vUtil.newKey()+"</id>"+
+						"<id>"+get_new_key()+"</id>"+
 						"<receiver>"+to+"</receiver>"+
 						"<message>"+htmlentities(message)+"</message>"+
 						"<status>pending</status>"+
@@ -690,11 +687,11 @@ function send_sms(to,message,type)
 						"<type>"+type+"</type>"+
 						"<last_updated>"+get_my_time()+"</last_updated>"+
 						"</sms>";
-			local_create_simple(sms_data);
-			hide_loader();
+			local_create_simple(sms_data);	
+			hide_loader();		
 		}
 	}
-	else
+	else 
 	{
 		hide_loader();
 		//$("#modal60_link").click();
