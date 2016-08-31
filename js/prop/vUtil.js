@@ -24,10 +24,11 @@ var vUtil = function (options)
 	//check if an element is null or blank
     this.isBlank=function(variable)
     {
-        if(variable=="" || variable==null || variable=="null")
+		if(variable=="" || variable==null || variable=="null" || variable=='undefined')
+		{
            return true;
-        else
-           return false;
+	    }
+        return false;
     };
 
 	//executes a function if it is set
@@ -37,7 +38,7 @@ var vUtil = function (options)
            func();
     };
 
-		//parses a json string to get a js object/array
+	//parses a json string to get a js object/array
 	this.jsonParse = function(markers)
 	{
 		var markers_array=[];
@@ -55,6 +56,17 @@ var vUtil = function (options)
 		return markers_array;
 	};
 
+	//converts an object into an array
+    this.objectToArray=function (obj)
+    {
+        var column = [];
+        for(var i in obj)
+        {
+            column.push(obj[i]);
+        }
+        return column;
+    };
+
     //extracts a single column from a multidimensional array
     this.arrayColumn=function (array, col_name)
     {
@@ -66,7 +78,18 @@ var vUtil = function (options)
         return column;
     };
 
-		//get an array with unique values only
+	//extracts a single column from a multidimensional array and returns as an object
+    this.keyedArrayColumn=function (array, key, col_name)
+    {
+        var column = {};
+        for(var i=0; i<array.length; i++)
+        {
+            column[array[i][key]]=array[i][col_name];
+        }
+        return column;
+    };
+
+	//get an array with unique values only
 	this.arrayUnique = function(array)
     {
         return array.filter(function(el,index,arr)
@@ -82,10 +105,15 @@ var vUtil = function (options)
 			return Math.round(number);
 		}
 
+		if(this.isBlank(number))
+		{
+			number=0;
+		}
+
 		var multiplier=1;
 		for(var i=0;i<decimal;i++)
 		{
-				multiplier*=10;
+			multiplier*=10;
 		}
 		var result=(Math.round(number*multiplier))/multiplier;
 		return result;
@@ -95,6 +123,13 @@ var vUtil = function (options)
 	{
 		var d=new Date();
 		return d.getTime();
+	}
+
+	this.uniqueNewKey = function()
+	{
+		var d=new Date();
+		var key = (d.getTime()+Math.random())*1000;
+		return key;
 	}
 
     this.resize_picture=function (picture_tag,pic_width)
@@ -168,6 +203,7 @@ var vUtil = function (options)
             }
             // Now that we have our value string, let's add
             // it to the data array.
+			strMatchedValue = strMatchedValue.replace(/^"(.*)"$/, '$1');
             arrData[arrData.length - 1].push(strMatchedValue);
         }
 
@@ -220,6 +256,10 @@ var vUtil = function (options)
         }
 
         var header_cols=rows[0].split(',');
+		for(var i in header_cols)
+        {
+			header_cols[i] = header_cols[i].replace(/^"(.*)"$/, '$1');
+		}
 
         for(var i=1;i<rows.length;i++)
         {
@@ -331,6 +371,115 @@ var vUtil = function (options)
 			del:get_session_var('del'),
 		};
 	}
+
+	/*
+	*	Converts a one dimensional array to CSV file with just the header row
+	*/
+	this.arrayToCSV = function (data_array,filename)
+    {
+		if(vUtil.isBlank(filename)){
+			filename='import template';
+		}
+        var csvString = data_array.join(",");
+
+        var a = document.createElement('a');
+        var type = 'text/csv;';
+        var blob = new Blob([csvString], { type: type });
+        var URL = window.URL || window.webkitURL;
+        var downloadUrl = URL.createObjectURL(blob);
+
+        a.setAttribute('href',downloadUrl);
+        a.download = filename+".csv";
+        a.target = '_blank';
+
+        document.body.appendChild(a);
+        a.click();
+    };
+
+	/**
+     * Converts an array of objects into a csv string
+     */
+    this.objArrayToCSVString = function (data_array)
+    {
+        var csvRows = [];
+
+        ///for header row
+        var header_string="";
+        var header_array=[];
+        for(var p in data_array[0])
+        {
+            header_array.push(p);
+            header_string+=p+",";
+        }
+
+        csvRows.push(header_string);
+
+        /////for data rows
+        data_array.forEach(function(data_row)
+        {
+            //console.log(data_row);
+            var data_string="";
+            for(var i=0;i<header_array.length;i++)
+            {
+                //if(!vUtil.isBlank(data_row[header_array[i]]))
+				if(data_row[header_array[i]]!="undefined" && data_row[header_array[i]]!="null")
+				{
+					if(header_array[i]=='id')
+                    {
+                        data_string+="`"+data_row[header_array[i]]+",";
+                    }
+                    else
+                    {
+						if(isNaN(data_row[header_array[i]]))
+						{
+							if(data_row[header_array[i]].indexOf('"')>-1)
+	                        {
+	                            data_row[header_array[i]]=data_row[header_array[i]].replace(/\"/g, '\"\"');
+	                        }
+	                        if(data_row[header_array[i]].indexOf(",")>-1)
+	                        {
+	                            data_row[header_array[i]]="\""+data_row[header_array[i]]+"\"";
+	                        }
+						}
+
+                        data_string+=data_row[header_array[i]]+",";
+                    }
+                }
+                else
+                {
+                    data_string+=",";
+                }
+            }
+            csvRows.push(data_string);
+        });
+
+        var csvString = csvRows.join("\n");
+        return csvString;
+    }
+
+
+	/**
+     * Converts an array of objects into a csv file
+     */
+    this.objArrayToCSV = function (data_array,file_name)
+    {
+        var csvString = this.objArrayToCSVString(data_array);
+        var a = document.createElement('a');
+
+        var type = 'text/csv;';
+        var blob = new Blob([csvString], { type: type });
+        var URL = window.URL || window.webkitURL;
+        var downloadUrl = URL.createObjectURL(blob);
+
+        a.setAttribute('href',downloadUrl);
+        a.download = file_name+'.csv';
+        a.target = '_blank';
+
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
 };
 vUtil=new vUtil();
 
@@ -350,151 +499,4 @@ vUtil=new vUtil();
     function revert_htmlentities(str)
     {
         return String(str).replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
-    }
-
-    /**
-     * Converts a two dimensional array to csv file
-     * @param data_array
-     */
-    function my_array_to_csv(data_array)
-    {
-        var csvString = data_array.join(",");
-        //csvString=escape(csvString);
-
-        var a = document.createElement('a');
-        //a.href = 'data:attachment/csv,' + csvString;
-        //a.href = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csvString);
-        //a.target = '_blank';
-        //a.download = 'import_template.csv';
-
-        var type = 'text/csv;';
-        var blob = new Blob([csvString], { type: type });
-        var URL = window.URL || window.webkitURL;
-        var downloadUrl = URL.createObjectURL(blob);
-
-        a.setAttribute('href',downloadUrl);
-        a.download = 'import_template.csv';
-        a.target = '_blank';
-
-        document.body.appendChild(a);
-        a.click();
-    }
-
-
-    /**
-     * Converts an array of objects into a csv file
-     */
-    function my_obj_array_to_csv(data_array,file_name)
-    {
-        var csvRows = [];
-
-        ///for header row
-        var header_string="";
-        var header_array=[];
-        for(var p in data_array[0])
-        {
-            header_array.push(p);
-            header_string+=p+",";
-        }
-
-        csvRows.push(header_string);
-
-        /////for data rows
-        data_array.forEach(function(data_row)
-        {
-            //console.log(data_row);
-            var data_string="";
-            for(var i=0;i<header_array.length;i++)
-            {
-                if(typeof data_row[header_array[i]]!= 'undefined')
-                {
-                    if(header_array[i]=='id')
-                    {
-                        data_string+="'"+data_row[header_array[i]]+",";
-                    }
-                    else
-                    {
-                        if(String(data_row[header_array[i]]).search(",") || String(data_row[header_array[i]]).search(";"))
-                        {
-                            data_row[header_array[i]]="\""+data_row[header_array[i]]+"\"";
-                        }
-                        data_string+=data_row[header_array[i]]+",";
-                    }
-                }
-                else
-                {
-                    data_string+=",";
-                }
-            }
-            csvRows.push(data_string);
-        });
-
-        var csvString = csvRows.join("\n");
-        var a = document.createElement('a');
-
-        var type = 'text/csv;';
-        var blob = new Blob([csvString], { type: type });
-        var URL = window.URL || window.webkitURL;
-        var downloadUrl = URL.createObjectURL(blob);
-
-        a.setAttribute('href',downloadUrl);
-        a.download = file_name+'.csv';
-        a.target = '_blank';
-
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    }
-
-
-    /**
-     * Converts an array of objects into a csv file
-     */
-    function my_obj_array_to_csv_string(data_array)
-    {
-        var csvRows = [];
-
-        ///for header row
-        var header_string="";
-        var header_array=[];
-        for(var p in data_array[0])
-        {
-            header_array.push(p);
-            header_string+=p+",";
-        }
-
-        csvRows.push(header_string);
-
-        /////for data rows
-        data_array.forEach(function(data_row)
-        {
-            //console.log(data_row);
-            var data_string="";
-            for(var i=0;i<header_array.length;i++)
-            {
-                if(typeof data_row[header_array[i]]!= 'undefined')
-                {
-                    if(header_array[i]=='id')
-                    {
-                        data_string+="'"+data_row[header_array[i]]+",";
-                    }
-                    else
-                    {
-                        if(String(data_row[header_array[i]]).search(","))
-                        {
-                            data_row[header_array[i]]="\""+data_row[header_array[i]]+"\"";
-                        }
-                        data_string+=data_row[header_array[i]]+",";
-                    }
-                }
-                else
-                {
-                    data_string+=",";
-                }
-            }
-            csvRows.push(data_string);
-        });
-
-        var csvString = csvRows.join("\n");
-        return csvString;
     }

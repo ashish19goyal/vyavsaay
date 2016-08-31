@@ -480,9 +480,9 @@ function register_click()
 						pass:pass,
 						phone:phone};
 
-		ajax_with_custom_fun(server_root+"/scripts/user_db_creation.php",{userid:userid},function(e2)
+		ajax_json(server_root+"/scripts/user_db_creation.php",{userid:userid},function(e2)
 		{
-			if(e2.responseText=="")
+			if(e2.status=="success")
 			{
 				ajax_json(server_root+"/ajax/register.php",post_data,function(response_object)
 				{

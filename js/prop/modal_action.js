@@ -172,7 +172,7 @@ function modal8_action()
 			var free_quantity_value=free_quantity.value;
 			var free_service_name_value=free_service_name.value;
 			var status_value='active';
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var last_updated=get_my_time();
 
 			var offer_detail_value="Get ";
@@ -424,7 +424,7 @@ function modal10_action(func)
 		var name=fname.value;
 		var type=ftype.value;
 		var description=fdescription.value;
-		var data_id=get_new_key();
+		var data_id=vUtil.newKey();
 		var last_updated=get_my_time();
 		var data_xml="<assets>" +
 					"<id>"+data_id+"</id>" +
@@ -443,7 +443,7 @@ function modal10_action(func)
 					"</activity>";
 		create_row_func(data_xml,activity_xml,func);
 
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		$("#modal10_attributes").find('input, select').each(function()
 		{
 			id++;
@@ -545,7 +545,7 @@ function modal11_action(func)
 			address = address.replace(/â/g,'');
 			address = address.replace(/&/g, "and");
 
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var last_updated=get_my_time();
 
 			var data_json={data_store:'customers',
@@ -571,7 +571,7 @@ function modal11_action(func)
 			create_json(data_json,func);
 			create_json(account_json);
 
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			$("#modal11_attributes").find('input, select').each(function()
 			{
 				id++;
@@ -611,7 +611,7 @@ function modal12_action(func)
 
 	var fname=form.elements['name'];
 	var fdescription=form.elements['desc'];
-	var fdata_id=get_new_key();
+	var fdata_id=vUtil.newKey();
 
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal12_attributes');
@@ -658,7 +658,7 @@ function modal12_action(func)
 		var name=fname.value;
 		var type='financial';
 		var description=fdescription.value;
-		var data_id=get_new_key();
+		var data_id=vUtil.newKey();
 		var last_updated=get_my_time();
 
 		var account_json={data_store:'accounts',
@@ -674,7 +674,7 @@ function modal12_action(func)
 
 		create_json(account_json,func);
 
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		$("#modal12_attributes").find('input, select').each(function()
 		{
 			id++;
@@ -775,7 +775,7 @@ function modal13_action(func)
 			address = address.replace(/â/g,'');
 			address = address.replace(/&/g, "and");
 
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var last_updated=get_my_time();
 
 			var data_json={data_store:'suppliers',
@@ -800,7 +800,7 @@ function modal13_action(func)
 			create_json(data_json,func);
 			create_json(account_json);
 
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			$("#modal13_attributes").find('input, select').each(function()
 			{
 				id++;
@@ -920,7 +920,7 @@ function modal14_action(func)
 			var index_string=JSON.stringify(anew_indexes);
 
 			var tax=form.elements['tax'].value;
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var barcode=form.elements['barcode'].value;
 			var last_updated=get_my_time();
 
@@ -937,7 +937,7 @@ function modal14_action(func)
 	 				log_data:{title:'Added',notes:'Product '+name+' to inventory',link_to:'form39'}};
 			create_json(data_json,func);
 
-			var id=get_new_key();
+			var id=vUtil.newKey();
       $("#modal14_attributes").find('input, select').each(function()
 			{
 				id++;
@@ -981,7 +981,7 @@ function modal15_action()
 	var ftype=form.elements[3];
 	var frating=form.elements[4];
 	var fdate=form.elements[5];
-	var fdata_id=get_new_key();
+	var fdata_id=vUtil.newKey();
 
 	var accounts_data="<accounts>" +
 		"<acc_name></acc_name>" +
@@ -1107,7 +1107,7 @@ function modal16_action(func)
 			address = address.replace(/â/g,'');
 			address = address.replace(/&/g, "and");
 
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var last_updated=get_my_time();
 
 			var data_json={data_store:'staff',
@@ -1133,7 +1133,7 @@ function modal16_action(func)
 			create_json(data_json,func);
 			create_json(account_json);
 
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			$("#modal16_attributes").find('input, select').each(function()
 			{
 				id++;
@@ -1300,7 +1300,7 @@ function modal18_action(func)
 		var name=form.elements[1].value;
 		var description=form.elements[2].value;
 		var est_hours=form.elements[3].value;
-		var data_id=get_new_key();
+		var data_id=vUtil.newKey();
 		var last_updated=get_my_time();
 		var data_xml="<task_type>" +
 					"<id>"+data_id+"</id>" +
@@ -1326,7 +1326,7 @@ function modal18_action(func)
 			local_create_row_func(data_xml,activity_xml,func);
 		}
 
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		$("#modal18_attributes").find('input, select').each(function()
 		{
 			id++;
@@ -1470,8 +1470,8 @@ function modal19_action(button)
       var index_string=JSON.stringify(anew_indexes);
 
 			var tax=form.elements[6].value;
-			var data_id=get_new_key();
-			var pic_id=get_new_key();
+			var data_id=vUtil.newKey();
+			var pic_id=vUtil.newKey();
 			var url=$(fpictureinfo).find('div').find('img').attr('src');
 			var barcode=form.elements[7].value;
 			var last_updated=get_my_time();
@@ -1534,7 +1534,7 @@ function modal19_action(button)
 					if(attribute!="")
 					{
 						var data_xml="<attributes>" +
-								"<id>"+get_new_key()+"</id>" +
+								"<id>"+vUtil.newKey()+"</id>" +
 								"<name>"+name+"</name>" +
 								"<type>product</type>" +
 								"<attribute>"+attribute.attribute+"</attribute>" +
@@ -1567,7 +1567,7 @@ function modal19_action(button)
 					if(requisite!="")
 					{
 						var data_xml="<pre_requisites>" +
-								"<id>"+get_new_key()+"</id>" +
+								"<id>"+vUtil.newKey()+"</id>" +
 								"<name>"+name+"</name>" +
 								"<type>product</type>" +
 								"<requisite_type>"+requisite.requisite_type+"</requisite_type>" +
@@ -1600,7 +1600,7 @@ function modal19_action(button)
 					if(cross_sell!="")
 					{
 						var data_xml="<cross_sells>" +
-							"<id>"+get_new_key()+"</id>" +
+							"<id>"+vUtil.newKey()+"</id>" +
 							"<name>"+name+"</name>" +
 							"<type>product</type>" +
 							"<cross_type>"+cross_sell.cross_type+"</cross_type>" +
@@ -1692,7 +1692,7 @@ function modal19_action(button)
 			var description=form.elements['desc'].value;
 			var tax=form.elements['tax'].value;
 			var price=form.elements['price'].value;
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
  			var last_updated=get_my_time();
  			var data_json={data_store:'services',
  	 				log:'yes',
@@ -1706,7 +1706,7 @@ function modal19_action(button)
 
  			create_json(data_json,func);
 
- 			var id=get_new_key();
+ 			var id=vUtil.newKey();
  			$("#modal20_attributes").find('input, select').each(function()
  			{
  				id++;
@@ -1785,7 +1785,7 @@ function modal21_action()
 			var description=form.elements[2].value;
 			var tax=form.elements[3].value;
 			var price=form.elements[4].value;
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var last_updated=get_my_time();
 			var data_xml="<services>" +
 						"<id>"+data_id+"</id>" +
@@ -1826,7 +1826,7 @@ function modal21_action()
 					if(attribute!="")
 					{
 						var data_xml="<attributes>" +
-								"<id>"+get_new_key()+"</id>" +
+								"<id>"+vUtil.newKey()+"</id>" +
 								"<name>"+name+"</name>" +
 								"<type>service</type>" +
 								"<attribute>"+attribute.attribute+"</attribute>" +
@@ -1859,7 +1859,7 @@ function modal21_action()
 					if(requisite!="")
 					{
 						var data_xml="<pre_requisites>" +
-								"<id>"+get_new_key()+"</id>" +
+								"<id>"+vUtil.newKey()+"</id>" +
 								"<name>"+name+"</name>" +
 								"<type>service</type>" +
 								"<requisite_type>"+requisite.requisite_type+"</requisite_type>" +
@@ -1892,7 +1892,7 @@ function modal21_action()
 					if(cross_sell!="")
 					{
 						var data_xml="<cross_sells>" +
-							"<id>"+get_new_key()+"</id>" +
+							"<id>"+vUtil.newKey()+"</id>" +
 							"<name>"+name+"</name>" +
 							"<type>service</type>" +
 							"<cross_type>"+cross_sell.cross_type+"</cross_type>" +
@@ -1995,7 +1995,7 @@ function modal22_action(func)
 			var cost=fcost.value;
 			var mrp=fmrp.value;
 			var sale_price=fsale_price.value;
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var last_updated=get_my_time();
 			var data_json={data_store:'product_instances',
 	 				log:'yes',
@@ -2011,7 +2011,7 @@ function modal22_action(func)
 	 				log_data:{title:'Added',notes:'New batch '+batch+' for product '+name,link_to:'form1'}};
 			create_json(data_json,func);
 
-			var id=get_new_key();
+			var id=vUtil.newKey();
 
 			$("#modal22_billings").find('input').each(function()
 			{
@@ -2411,7 +2411,7 @@ function modal27_action(product_name)
 	var fprice=form.elements[3];
 	var fquantity=form.elements[4];
 	var fsupplier=form.elements[5];
-	var data_id=get_new_key();
+	var data_id=vUtil.newKey();
 
 	fmake.value="";
 	fprice.value="";
@@ -2501,7 +2501,7 @@ function modal27_action(product_name)
 				}
 				if(purchase_orders.length===0)
 				{
-					order_id=get_new_key();
+					order_id=vUtil.newKey();
 					var data_xml="<purchase_orders>" +
 								"<id>"+order_id+"</id>" +
 								"<order_date>"+get_my_time()+"</order_date>" +
@@ -2835,7 +2835,7 @@ function modal30_action()
 
 				console.log(total_amount);
 
-				var new_id=get_new_key();
+				var new_id=vUtil.newKey();
 				var last_updated=get_my_time();
 				accounts.forEach(function(account)
 				{
@@ -3031,7 +3031,7 @@ function modal30_action()
 					}
 				});
 
-				var p_id=get_new_key();
+				var p_id=vUtil.newKey();
 				if(total_amount<0)
 				{
 					var payment_xml="<payments>" +
@@ -3223,7 +3223,7 @@ function modal32_action(date_initiated)
 		var t_initiated=get_raw_time(date_initiated);
 		var status=form.elements[4].value;
 		var hours=form.elements[5].value;
-		var data_id=get_new_key();
+		var data_id=vUtil.newKey();
 		var last_updated=get_my_time();
 		var data_xml="<task_instances>" +
 					"<id>"+data_id+"</id>" +
@@ -3244,7 +3244,7 @@ function modal32_action(date_initiated)
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var access_xml="<data_access>" +
-					"<id>"+get_new_key()+"</id>" +
+					"<id>"+vUtil.newKey()+"</id>" +
 					"<tablename>task_instances</tablename>" +
 					"<record_id>"+data_id+"</record_id>" +
 					"<access_type>all</access_type>" +
@@ -3400,7 +3400,7 @@ function modal35_action(func)
 		event.preventDefault();
 		if(is_create_access('form83'))
 		{
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var name=form.elements['name'].value;
 			var owner=form.elements['owner'].value;
 			var last_updated=get_my_time();
@@ -3414,7 +3414,7 @@ function modal35_action(func)
 
 			create_json(data_json,func);
 
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			$("#modal35_attributes").find('input, select').each(function()
 			{
 				id++;
@@ -3475,7 +3475,7 @@ function modal36_action(schedule_time)
 			var name=customer_filter.value;
 			var assignee=staff_filter.value;
 			var notes=form.elements['notes'].value;
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var last_updated=get_my_time();
 			var schedule=get_raw_time(schedule_filter.value);
 
@@ -3827,7 +3827,7 @@ function modal39_action(schedule_date)
 			var emi_period=form.elements[10].value;
 			var num_emi=form.elements[11].value;
 			var next_emi_date=date+(parseFloat(emi_period)*86400000);
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var last_updated=get_my_time();
 			var adjective="to";
 			var receiver=account;
@@ -3868,7 +3868,7 @@ function modal39_action(schedule_date)
 						"<notes>Loan of amount Rs. "+amount+" "+type+" "+adjective+" "+account+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			var payment_id=get_new_key()+""+Math.floor(Math.random()*1000);
+			var payment_id=vUtil.newKey()+""+Math.floor(Math.random()*1000);
 			var transaction2_xml="<transactions>" +
 						"<id>"+payment_id+"</id>" +
 						"<trans_date>"+get_my_time()+"</trans_date>" +
@@ -3920,7 +3920,7 @@ function modal39_action(schedule_date)
 				});
 			}
 
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			$("#modal39_attributes").find('input, select').each(function()
 			{
 				id++;
@@ -4008,7 +4008,7 @@ function modal40_action(product,batch)
 			var quantity=form.elements[3].value;
 			var storage=form.elements[4].value;
 			var reason=form.elements[5].value;
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var last_updated=get_my_time();
 			var data_xml="<discarded>" +
 						"<id>"+data_id+"</id>" +
@@ -4332,7 +4332,7 @@ function modal43_action(date_initiated)
 			var description=desc_filter.value;
 			var assignee=staff_filter.value;
 			var t_due=get_raw_time(due_filter.value);
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var last_updated=get_my_time();
             var t_initiated=get_my_time();
             if(typeof date_initiated!='undefined')
@@ -4552,7 +4552,7 @@ function modal45_action()
 			var cashback_value=form.elements[9].value;
 			var reward_product_value=form.elements[10].value;
 			var status_value=form.elements[11].value;
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var last_updated=get_my_time();
 
 			var data_xml="<loyalty_programs>" +
@@ -4587,7 +4587,7 @@ function modal45_action()
 				local_create_row(data_xml,activity_xml);
 			}
 
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			$("#modal45_attributes").find('input, select').each(function()
 			{
 				id++;
@@ -4620,7 +4620,7 @@ function modal45_action()
 			get_single_column_data(function(customers)
 			{
 				var customers_xml="<loyalty_customers>";
-				var id=get_new_key();
+				var id=vUtil.newKey();
 				var counter=0;
 				customers.forEach(function(customer)
 				{
@@ -4894,7 +4894,7 @@ function modal48_action(issue_id)
 		if(is_create_access('form126'))
 		{
 			var solution=form.elements[2].value;
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var last_updated=get_my_time();
 			var data_xml="<solutions>" +
 						"<id>"+data_id+"</id>" +
@@ -5303,7 +5303,7 @@ function modal101_action(doc_type,person,person_type,func,attachment_type,messag
 
 			person_filter.removeAttribute('readonly');
 
-			set_my_value_list_func(person_xml,person_filter,function ()
+			set_my_value_list(person_xml,person_filter,function ()
 			{
 				$(person_filter).focus();
 			});
@@ -5565,7 +5565,7 @@ function modal105_action(project_id)
 		var start_date=get_raw_time(form.elements[3].value);
 		var due_date=get_raw_time(form.elements[4].value);
 		var status=form.elements[5].value;
-		var data_id=get_new_key();
+		var data_id=vUtil.newKey();
 		var last_updated=get_my_time();
 		var data_xml="<project_phases>" +
 					"<id>"+data_id+"</id>" +
@@ -5726,7 +5726,7 @@ function modal108_action(tablename,record_id)
 		var user_field=form.elements[4].value;
 		var criteria_field=form.elements[5].value;
 		var criteria_value=form.elements[6].value;
-		var data_id=get_new_key();
+		var data_id=vUtil.newKey();
 		var last_updated=get_my_time();
 		var data_xml="<data_access>" +
 					"<id>"+data_id+"</id>" +
@@ -5821,7 +5821,7 @@ function modal109_action(tablename)
 		var user_field=form.elements[4].value;
 		var criteria_field=form.elements[5].value;
 		var criteria_value=form.elements[6].value;
-		var data_id=get_new_key();
+		var data_id=vUtil.newKey();
 		var last_updated=get_my_time();
 		var data_xml="<data_access>" +
 					"<id>"+data_id+"</id>" +
@@ -5893,7 +5893,7 @@ function modal110_action(button)
 		var cost_price=form.elements[3].value;
 		var sale_price=form.elements[4].value;
 		var store=form.elements[5].value;
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var data_xml="<manufacturing_schedule>" +
 					"<id>"+data_id+"</id>" +
 					"<status>completed</status>"+
@@ -5932,7 +5932,7 @@ function modal110_action(button)
 			if(owners.length>0)
 			{
 				var store_xml="<store_movement>"+
-					"<id>"+get_new_key()+"</id>"+
+					"<id>"+vUtil.newKey()+"</id>"+
 					"<item_name>"+product_name+"</item_name>"+
 					"<batch>"+batch+"</batch>"+
 					"<quantity>"+quantity+"</quantity>"+
@@ -6034,7 +6034,7 @@ function modal111_action()
 			{
 				event.preventDefault();
 
-				var data_id=get_new_key();
+				var data_id=vUtil.newKey();
 				var last_updated=get_my_time();
 				var data_xml="<location_history>" +
 							"<id>"+data_id+"</id>" +
@@ -6141,7 +6141,7 @@ function modal112_action(func)
 			var description=form.elements['desc'].value;
 
 			var tax=form.elements['tax'].value;
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var cost_price=form.elements['cost'].value;
       var sale_price=form.elements['sale'].value;
 			var last_updated=get_my_time();
@@ -6177,7 +6177,7 @@ function modal112_action(func)
 			var billing_type_data={data_store:'bill_types',return_column:'name',indexes:[{index:'status',exact:'active'}]};
 			read_json_single_column(billing_type_data,function(bill_types)
 			{
-                var id=get_new_key();
+                var id=vUtil.newKey();
 				bill_types.forEach(function(bill_type)
 				{
 					id++;
@@ -6194,7 +6194,7 @@ function modal112_action(func)
 			});
 
 
-			var id=get_new_key();
+			var id=vUtil.newKey();
             $("#modal112_attributes").find('input, select').each(function()
 			{
 				id++;
@@ -6328,7 +6328,7 @@ function modal113_action(func)
 		event.preventDefault();
 		if(is_create_access('form170'))
 		{
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var name=form.elements[1].value;
 			var area_type=form.elements[2].value;
 			var parent=form.elements[3].value;
@@ -6367,7 +6367,7 @@ function modal113_action(func)
 				local_create_row_func(data_xml,activity_xml,func);
 			}
 
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			$("#modal113_attributes").find('input, select').each(function()
 			{
 				id++;
@@ -6535,8 +6535,8 @@ function modal114_action(func)
 			var index_string=JSON.stringify(anew_indexes);
 
 			var tax=form.elements[7].value;
-			var data_id=get_new_key();
-			var pic_id=get_new_key();
+			var data_id=vUtil.newKey();
+			var pic_id=vUtil.newKey();
 			var url=$(fpictureinfo).find('div').find('img').attr('src');
 			var length=form.elements[8].value;
 			var breadth=form.elements[9].value;
@@ -6578,7 +6578,7 @@ function modal114_action(func)
 						"</activity>";
 			create_row_func(data_xml,activity_xml,func);
 
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			$("#modal114_attributes").find('input, select').each(function()
 			{
 				id++;
@@ -6621,7 +6621,7 @@ function modal114_action(func)
 				var sku_mapping_xml="<sku_mapping>";
 				var cat_sku_mapping_xml="<category_sku_mapping>";
 				var channel_price_xml="<channel_prices>";
-				var id=parseFloat(get_new_key());
+				var id=parseFloat(vUtil.newKey());
 				var counter=0;
 				var last_updated=get_my_time();
 				channels.forEach(function(channel)
@@ -6757,7 +6757,7 @@ function modal116_action(barcode,sku)
 			"<name></name>" +
 			"</product_master>";
 			//"<bar_code exact='yes'></bar_code>"+
-	set_my_value_list_func(sku_data,sku_filter,function()
+	set_my_value_list(sku_data,sku_filter,function()
 	{
 		$(sku_filter).focus();
 	});
@@ -6865,7 +6865,7 @@ function modal117_action(date_due)
 			var description=form.elements['notes'].value;
 			var assignee=form.elements['assignee'].value;
 			var status=form.elements['status'].value;
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var last_updated=get_my_time();
 
             var data_json={data_store:'task_instances',
@@ -7096,7 +7096,7 @@ function modal118_action()
 			var new_old=new_filter.value;
 			var acc_name=acc_name_filter.value;
 			var old_id=id_filter.value;
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var last_updated=get_my_time();
 
 			if(new_old=='yes')
@@ -7340,7 +7340,7 @@ function modal120_action(func,product_name,required)
 
 			var expiry=get_raw_time(fexpiry.value);
 			var mrp=fmrp.value;
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var last_updated=get_my_time();
 			var data_xml="<product_instances>" +
 						"<id>"+data_id+"</id>" +
@@ -7408,7 +7408,7 @@ function modal122_action(item_name)
 				}
 
 				var hireable_xml="<bill_items sum='yes'>"+
-							"<id>"+get_new_key()+"</id>"+
+							"<id>"+vUtil.newKey()+"</id>"+
 							"<quantity>"+new_hireable+"</quantity>"+
 							"<hired exact='yes'>yes</hired>"+
 							"<fresh exact='yes'>yes</fresh>"+
@@ -7423,7 +7423,7 @@ function modal122_action(item_name)
 				{
 					var new_total=fresh+hireable-parseFloat(inventory);
 					var adjust_xml="<inventory_adjust>" +
-							"<id>"+get_new_key()+"</id>" +
+							"<id>"+vUtil.newKey()+"</id>" +
 							"<product_name>"+item+"</product_name>" +
 							"<batch>"+item+"</batch>" +
 							"<quantity>"+new_total+"</quantity>" +
@@ -7454,7 +7454,7 @@ function modal122_action(item_name)
 						if(placements.length===0 && storage!="")
 						{
 							var storage_xml="<area_utilization>" +
-									"<id>"+get_new_key()+"</id>" +
+									"<id>"+vUtil.newKey()+"</id>" +
 									"<name>"+get_session_var('sales_store')+"</name>" +
 									"<item_name>"+item+"</item_name>" +
 									"<batch>"+item+"</batch>" +
@@ -7482,7 +7482,7 @@ function modal122_action(item_name)
 						if(placements.length===0 && storage!="")
 						{
 							var storage_xml="<area_utilization>" +
-									"<id>"+get_new_key()+"</id>" +
+									"<id>"+vUtil.newKey()+"</id>" +
 									"<name>"+get_session_var('discard_items_store')+"</name>" +
 									"<item_name>"+item+"</item_name>" +
 									"<batch>"+item+"</batch>" +
@@ -7541,7 +7541,7 @@ function modal123_action(item_name)
 			var last_updated=get_my_time();
 
 			var letter_xml="<letterheads>"+
-							"<id>"+get_new_key()+"</id>"+
+							"<id>"+vUtil.newKey()+"</id>"+
 							"<name unique='yes'>"+name+"</name>"+
 							"<date>"+date+"</date>"+
 							"<receiver>"+to+"</receiver>"+
@@ -7729,7 +7729,7 @@ function modal125_action(item_name)
 						"</supplier_item_mapping>";
 		delete_simple_func(delete_mapping,function ()
 		{
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			$("#modal125_suppliers").find('input').each(function()
 			{
 				id++;
@@ -8462,9 +8462,9 @@ function modal134_action(lead_id,customer,lead_details)
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		if(is_update_access('form213') || is_update_access('form289'))
+		if(is_update_access('form213') || is_update_access('form289') || is_update_access('form361'))
 		{
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			var date=get_raw_time(date_filter.value);
 			var response=response_filter.value;
 			var details=detail_filter.value;
@@ -8530,7 +8530,7 @@ function modal135_action(type,master)
 		event.preventDefault();
 		if(is_create_access('form46') || is_create_access('form50'))
 		{
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			var type_new=type_filter.value;
 			var name=name_filter.value;
 			var display_name=display_name_filter.value;
@@ -8599,7 +8599,7 @@ function modal136_action(type,master)
 		event.preventDefault();
 		if(is_create_access('form46') || is_create_access('form50'))
 		{
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			var type_new=type_filter.value;
 			var name=name_filter.value;
 			var display_name=display_name_filter.value;
@@ -8725,7 +8725,7 @@ function modal138_action()
 						'address','pincode','tin','item_name','channel_sku','system_sku',
 						'item_mrp','item_price','quantity','shipping_amount','estimated_shipping_date',
 						'tax_type','last_updated'];
-		my_array_to_csv(data_array);
+		vUtil.arrayToCSV(data_array);
 	});
 
 	$(form).off('submit');
@@ -8755,8 +8755,6 @@ function modal138_action()
 	       	progress_value=5;
 
 	    	var list2_data=new Object();
-					list2_data.count=0;
-					list2_data.start_index=0;
 					list2_data.data_store='sale_orders';
 					list2_data.indexes=[{index:'order_num'}];
 
@@ -8764,16 +8762,12 @@ function modal138_action()
 			{
 
 		    	var list1_data=new Object();
-					list1_data.count=0;
-					list1_data.start_index=0;
 					list1_data.data_store='sku_mapping';
 					list1_data.indexes=[{index:'item_desc'},{index:'system_sku'},{index:'channel_sku'},{index:'channel',exact:channel}];
 
 				read_json_rows('',list1_data,function(skus)
 				{
 					var list_data=new Object();
-					list_data.count=0;
-					list_data.start_index=0;
 					list_data.data_store='product_master';
 					list_data.indexes=[{index:'name'},{index:'tax'}];
 
@@ -8802,7 +8796,7 @@ function modal138_action()
 												{column:'quantity',required:'yes',regex:new RegExp('^[0-9.]+$')},
 												{column:'tax_type',required:'yes',list:['Tax','Retail-VAT','Retail-CST','Retail-CST-C']}];
 
-						var error_array=validate_import_array(data_array,validate_template_array);
+						var error_array=vImport.validate(data_array,validate_template_array);
 						if(error_array.status=='success')
 						{
 			        		progress_value=10;
@@ -9177,7 +9171,7 @@ function modal140_action(i_func)
 		var data_array=['order_num','order_date','supplier_name','supplier_email','phone','address',
 						'item_name','supplier_sku','system_sku','item_mrp','item_price',
 						'brand','quantity','order_status','tax_rate','cst','last_updated'];
-		my_array_to_csv(data_array);
+		vUtil.arrayToCSV(data_array);
 	});
 
 	$(form).off('submit');
@@ -9201,8 +9195,6 @@ function modal140_action(i_func)
 			progress_value=5;
 
 			var list1_data=new Object();
-					list1_data.count=0;
-					list1_data.start_index=0;
 					list1_data.data_store='purchase_orders';
 					list1_data.return_column='order_num';
 					list1_data.indexes=[{index:'order_num'}];
@@ -9210,8 +9202,6 @@ function modal140_action(i_func)
 			read_json_single_column(list1_data,function(orders)
 			{
 				var list_data=new Object();
-					list_data.count=0;
-					list_data.start_index=0;
 					list_data.data_store='product_master';
 					list_data.return_column='name';
 					list_data.indexes=[{index:'name'}];
@@ -9235,7 +9225,7 @@ function modal140_action(i_func)
 												{column:'tax_rate',required:'yes',regex:new RegExp('^[0-9.]+$')},
 												{column:'cst',required:'yes',list:['yes','no']}];
 
-					var error_array=validate_import_array(data_array,validate_template_array);
+					var error_array=vImport.validate(data_array,validate_template_array);
 					//var error_array=new Object();
 					//error_array.status='success';
 					if(error_array.status=='success')
@@ -9617,7 +9607,7 @@ function modal141_action(button)
 
 		///add to inventory
 		var item_created_xml="<inventory_adjust>"+
-							"<id>"+get_new_key()+"</id>"+
+							"<id>"+vUtil.newKey()+"</id>"+
 							"<product_name>"+item+"</product_name>"+
 							"<batch>"+batch+"</batch>"+
 							"<quantity>"+quantity+"</quantity>"+
@@ -9632,7 +9622,7 @@ function modal141_action(button)
 		if(new_batch_filter.value=='yes')
 		{
 			var instance_xml="<product_instances>"+
-							"<id>"+get_new_key()+"</id>"+
+							"<id>"+vUtil.newKey()+"</id>"+
 							"<sale_price>"+price+"</sale_price>"+
 							"<product_name>"+item+"</product_name>"+
 							"<batch exact='yes'>"+batch+"</batch>"+
@@ -9654,7 +9644,7 @@ function modal141_action(button)
 			if(placements.length===0 && storage!="")
 			{
 				var storage_xml="<area_utilization>" +
-						"<id>"+get_new_key()+"</id>" +
+						"<id>"+vUtil.newKey()+"</id>" +
 						"<name>"+storage+"</name>" +
 						"<item_name>"+item+"</item_name>" +
 						"<batch>"+batch+"</batch>" +
@@ -9665,7 +9655,7 @@ function modal141_action(button)
 		});
 
 		///subtract inventory for raw material
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		$("#modal141_raw").find('label').each(function()
 		{
 			id++;
@@ -9737,7 +9727,7 @@ function modal142_action(func)
 			var mrp=fmrp.value;
 			var cp=fcp.value;
 			var sp=fsp.value;
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var last_updated=get_my_time();
 
 			var data_json={data_store:'product_instances',
@@ -9810,7 +9800,7 @@ function modal143_action(item_name,batch)
 
 				var hireable_json={data_store:'bill_items',
 					warning:'no',
-					data:[{index:'id',value:get_new_key()},
+					data:[{index:'id',value:vUtil.newKey()},
 						{index:'quantity',value:new_inuse},
 						{index:'hired',value:'yes'},
 						{index:'fresh',value:'yes'},
@@ -9825,7 +9815,7 @@ function modal143_action(item_name,batch)
 					var new_total=fresh+inuse-parseFloat(inventory);
 					var adjust_json={data_store:'inventory_adjust',
 						warning:'no',
-						data:[{index:'id',value:get_new_key()},
+						data:[{index:'id',value:vUtil.newKey()},
 							{index:'quantity',value:new_total},
 							{index:'product_name',value:item_name},
 							{index:'batch',value:batch},
@@ -9881,7 +9871,7 @@ function modal144_action(doc_type,target_id,func)
 		if(is_create_access('form39'))
 		{
 			var doc_name=fname.value;
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var url=$(docInfo).attr('href');
 			var last_updated=get_my_time();
 
@@ -10093,7 +10083,7 @@ function modal146_action(test_data_id,test_id,item)
 		{
 			var files=fpicture.files;
 			var doc_name=test_id+item;
-    		var data_id=get_new_key();
+    		var data_id=vUtil.newKey();
 			var url=$(docInfo).attr('href');
 			var last_updated=get_my_time();
 
@@ -10187,7 +10177,7 @@ function modal147_action(hiring_type,button)
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var last_updated=get_my_time();
 
 			var data_xml="<bill_items>" +
@@ -10256,7 +10246,7 @@ function modal148_action()
 	$(template_button).on("click",function(event)
 	{
 		var data_array=['awb','date','order_status','location','remark','received by'];
-		my_array_to_csv(data_array);
+		vUtil.arrayToCSV(data_array);
 	});
 
 	$(form).off('submit');
@@ -10284,7 +10274,7 @@ function modal148_action()
 										{column:'received by',regex:new RegExp('^[0-9a-zA-Z\' _.,/@$!()-]+$')},
 										{column:'remark',regex:new RegExp('^[0-9a-zA-Z\' _.,/@$!()-]+$')}];
 
-			var error_array=validate_import_array(data_array,validate_template_array);
+			var error_array=vImport.validate(data_array,validate_template_array);
 			//var error_array=new Object();
 			//error_array.status='success';
 			if(error_array.status=='success')
@@ -10308,7 +10298,7 @@ function modal148_action()
 										   {index:'awb_num',array:awb_id_array}]};
 				read_json_rows('',order_id_xml,function (order_ids)
 				{
-					console.log(order_ids);
+					// console.log(order_ids);
 					for (var k=0;k<data_array.length;k++)
 					{
 						for(var l=0;l<order_ids.length;l++)
@@ -10323,7 +10313,7 @@ function modal148_action()
 						}
 					}
 
-					//console.log(data_array);
+					// console.log(data_array);
 					data_array.forEach(function (data_row)
 					{
 						if(typeof data_row.id!='undefined')
@@ -10458,7 +10448,7 @@ function modal149_action()
 						'State','Pincode','Tel. Number','Mobile number','Product name','Weight(K.G.)',
 						'Declared Value','Collectable Value','Volumetric Weight(g)','LBH','vendor name','Return Address1','Return Address2','Return Address3',
 						'Return Pin','Pieces'];
-		my_array_to_csv(data_array);
+		vUtil.arrayToCSV(data_array);
 	});
 
 	$(form).off('submit');
@@ -10510,7 +10500,7 @@ function modal149_action()
                 row['Product name']=product_name_array[0];
             });
 
-			var error_array=validate_import_array(data_array,validate_template_array);
+			var error_array=vImport.validate(data_array,validate_template_array);
 			if(error_array.status=='success')
 			{
 	        	progress_value=10;
@@ -10965,7 +10955,7 @@ function modal153_action(button,lead_id)
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		if(is_update_access('form213') || is_update_access('form289'))
+		if(is_update_access('form213') || is_update_access('form289') || is_update_access('form361'))
 		{
 			var lead_form_id=$(button).attr('form');
 			var last_updated=get_my_time();
@@ -11096,7 +11086,7 @@ function modal155_action()
 		var account_name=account_filter.value;
 		var narration=narration_filter.value;
 		var last_updated=vTime.unix();
-		var p_id=get_new_key();
+		var p_id=vUtil.newKey();
 
 		if(is_create_access('form124') || is_create_access('form243') || is_create_access('form291') || is_create_access('form282'))
 		{
@@ -11177,7 +11167,7 @@ function modal156_action(product_type,product_name)
         var name=fname.value;
         var batch=fbatch.value;
         var manufactury=get_raw_time(fmanufacture.value);
-        var data_id=get_new_key();
+        var data_id=vUtil.newKey();
         var last_updated=get_my_time();
         var link_to='form183';
         if(product_type=='raw material')
@@ -11569,7 +11559,7 @@ function modal160_action()
 										{column:'link_to',regex:new RegExp('^[0-9a-zA-Z_]+$')},
 										{column:'last_updated',required:'yes',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')}];
 
-			var error_array=validate_import_array(data_array,validate_template_array);
+			var error_array=vImport.validate(data_array,validate_template_array);
 			if(error_array.status=='success')
 			{
 				progress_value=10;
@@ -11621,7 +11611,7 @@ function modal160_action()
 						{
 						   if(localdb_open_requests===0)
 						   {
-						   		var act_row={id:""+(get_new_key()),
+						   		var act_row={id:""+(vUtil.newKey()),
 										type:'create',
 										status:'unsynced',
 										title:'Data import',
@@ -11740,7 +11730,7 @@ function modal161_action(support_type,func)
 
 			var pincode=fpincode.value;
 			var city=fcity.value;
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var last_updated=get_my_time();
 			var data_xml="<customers>" +
 						"<id>"+data_id+"</id>" +
@@ -11785,7 +11775,7 @@ function modal161_action(support_type,func)
 
 			var business_title=get_session_var('title');
 
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			$(".modal161_attributes").each(function()
 			{
 				id++;
@@ -11949,7 +11939,7 @@ function modal163_action(button)
 			if(placements.length===0)
 			{
 				var storage_xml="<area_utilization>" +
-						"<id>"+get_new_key()+"</id>" +
+						"<id>"+vUtil.newKey()+"</id>" +
 						"<name>"+storage+"</name>" +
 						"<item_name>"+item+"</item_name>" +
 						"<batch>"+batch+"</batch>" +
@@ -11973,7 +11963,7 @@ function modal163_action(button)
  */
 function modal164_action(error_array)
 {
-	var response=my_obj_array_to_csv_string(error_array.logs);
+	var response=vUtil.objArrayToCSVString(error_array.logs);
 	var type="text/csv";
 	var blob = new Blob([response], { type: type });
 	var URL = window.URL || window.webkitURL;
@@ -12082,7 +12072,7 @@ function modal166_action(lead_id,supplier,lead_details)
 		event.preventDefault();
 		if(is_update_access('form273'))
 		{
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			var date=get_raw_time(date_filter.value);
 			var response=response_filter.value;
 			var details=detail_filter.value;
@@ -12431,7 +12421,7 @@ function modal170_action()
 									{column:'AWB Number',regex:new RegExp('^[0-9a-zA-Z -]+$')},
 									{column:'Status',list:['dispatched','','null']}];
 
-			var error_array=validate_import_array(data_array,validate_template_array);
+			var error_array=vImport.validate(data_array,validate_template_array);
 			if(error_array.status=='success')
 			{
         		progress_value=10;
@@ -12726,7 +12716,7 @@ function modal172_action()
 		var receipt_type='paid';
 		var account_name=account_filter.value;
 		var counter_payment=parseFloat(amount_filter.value);
-		var p_id=get_new_key();
+		var p_id=vUtil.newKey();
 		var last_updated=vTime.unix();
 
 		if(is_create_access('form282'))
@@ -12801,8 +12791,6 @@ function modal173_action(item_name)
 	});
 
 	var seller_data=new Object();
-		seller_data.count=0;
-		seller_data.start_index=0;
 		seller_data.data_store='purchase_leads';
 		seller_data.return_column='quantity';
 		seller_data.sum='yes';
@@ -12811,8 +12799,6 @@ function modal173_action(item_name)
 	set_my_value_json(seller_data,seller_filter);
 
 	var buyer_data=new Object();
-		buyer_data.count=0;
-		buyer_data.start_index=0;
 		buyer_data.data_store='sale_leads';
 		buyer_data.return_column='quantity';
 		buyer_data.sum='yes';
@@ -12920,8 +12906,8 @@ function modal174_action(func)
 			description = description.replace(/&/g, "and");
 
 			var mrp=form.elements[7].value;
-			var data_id=get_new_key();
-			var pic_id=get_new_key();
+			var data_id=vUtil.newKey();
+			var pic_id=vUtil.newKey();
 			var discount=form.elements[8].value;
 			var sale_price=form.elements[9].value;
 			var cost_price=form.elements[10].value;
@@ -12964,7 +12950,7 @@ function modal174_action(func)
 			create_row_func(data_xml,activity_xml,func);
 			create_simple(instance_xml);
 
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			$("#modal174_attributes").find('input, select').each(function()
 			{
 				id++;
@@ -13075,7 +13061,7 @@ function modal175_action(func)
 			var name=form.elements['nname'].value;
 			var template=form.elements['tname'].value;
 
-			var id=get_new_key();
+			var id=vUtil.newKey();
 
 			var markers_array=[];
 			$("#modal175_markers").find('textarea').each(function()
@@ -13206,7 +13192,7 @@ function modal176_action(data_id,doc_type,func,master)
 		if(is_create_access('form299') || is_create_access('form298') || is_create_access('form345'))
 		{
 			var name=form.elements[1].value;
-			var pic_id=get_new_key();
+			var pic_id=vUtil.newKey();
 			var url=$(fpictureinfo).find('div').find('img').attr('src');
 			var last_updated=get_my_time();
 
@@ -13390,8 +13376,8 @@ function modal177_action(func)
       var index_string=JSON.stringify(anew_indexes);
 
 			var mrp=form.elements[8].value;
-			var data_id=get_new_key();
-			var pic_id=get_new_key();
+			var data_id=vUtil.newKey();
+			var pic_id=vUtil.newKey();
 			var discount=form.elements[9].value;
 			var sale_price=form.elements[10].value;
 			var cost_price=form.elements[11].value;
@@ -13426,7 +13412,7 @@ function modal177_action(func)
 			create_row_func(data_xml,activity_xml,func);
 			create_simple(instance_xml);
 
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			$("#modal177_attributes").find('input, select').each(function()
 			{
 				id++;
@@ -14587,7 +14573,7 @@ function modal196_action()
 
 		var data_json={data_store:'letters',
 	 				log:'yes',
-	               data:[{index:'id',value:get_new_key()},
+	               data:[{index:'id',value:vUtil.newKey()},
 	 					{index:'letter_num',value:letter_num,unique:'yes'},
                         {index:'department',value:department},
                         {index:'detail',value:details},
@@ -14683,7 +14669,7 @@ function modal198_action(data_id,letter_num,details)
 	 			   log_data:{title:'followed on',notes:'Letter # '+letter,link_to:'form326'}};
 
         var follow_json={data_store:'followups',
-		 				data:[{index:'id',value:get_new_key()},
+		 				data:[{index:'id',value:vUtil.newKey()},
 		 					{index:'customer',value:letter_num},
 		 					{index:'date',value:get_my_time()},
 		 					{index:'response',value:response.value},
@@ -14822,7 +14808,7 @@ function modal201_action(list_name)
 
 		var data_json={data_store:'task_instances',
                        log:'yes',
-	                   data:[{index:'id',value:get_new_key()},
+	                   data:[{index:'id',value:vUtil.newKey()},
 	 					{index:'name',value:task},
                         {index:'source_name',value:list},
                         {index:'source',value:'to_do'},
@@ -14970,7 +14956,7 @@ function modal203_action(func)
       var index_string=JSON.stringify(anew_indexes);
 
 			var tax=form.elements['tax'].value;
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var sale_price=form.elements['sale'].value;
 			var last_updated=get_my_time();
 
@@ -14998,7 +14984,7 @@ function modal203_action(func)
 			var billing_type_data={data_store:'bill_types',return_column:'name',indexes:[{index:'status',exact:'active'}]};
 			read_json_single_column(billing_type_data,function(bill_types)
 			{
-                var id=get_new_key();
+                var id=vUtil.newKey();
 				bill_types.forEach(function(bill_type)
 				{
 					id++;
@@ -15014,7 +15000,7 @@ function modal203_action(func)
 				});
 			});
 
-			var id=get_new_key();
+			var id=vUtil.newKey();
             $("#modal203_attributes").find('input, select').each(function()
 			{
 				id++;
@@ -15108,7 +15094,7 @@ function modal204_action(func)
 			var batch=fbatch.value;
 			var manu_date=get_raw_time(fmanufacture.value);
 			var sale_price=fsale_price.value;
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var last_updated=get_my_time();
 			var data_json={data_store:'product_instances',
 	 				log:'yes',
@@ -15121,7 +15107,7 @@ function modal204_action(func)
 	 				log_data:{title:'Added',notes:'New batch '+batch+' for product '+name,link_to:'form331'}};
 			create_json(data_json,func);
 
-			var id=get_new_key();
+			var id=vUtil.newKey();
 
 			$("#modal204_billings").find('input').each(function()
 			{
@@ -15222,7 +15208,7 @@ function modal205_action(func)
 			name = name.replace(/â/g,'');
 			name = name.replace(/&/g, "and");
 
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var last_updated=get_my_time();
 
 			var data_json={data_store:'staff',
@@ -15248,7 +15234,7 @@ function modal205_action(func)
 			create_json(data_json,func);
 			create_json(account_json);
 
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			$("#modal205_attributes").find('input, select').each(function()
 			{
 				id++;
@@ -15312,7 +15298,7 @@ function modal206_action(doc_type,target_id,target_name,func)
 		if(is_create_access('form39'))
 		{
 			var doc_name=fname.value;
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var url=$(docInfo).attr('href');
 			var last_updated=get_my_time();
 
@@ -15442,7 +15428,7 @@ function modal208_action()
 	$(template_button).on("click",function(event)
 	{
 		var data_array=['AWB No','Consignment No','Weight','LBH'];
-		my_array_to_csv(data_array);
+		vUtil.arrayToCSV(data_array);
 	});
 
 	$(form).off('submit');
@@ -15469,12 +15455,12 @@ function modal208_action()
 			var validate_template_array=[{column:'Weight',regex:new RegExp('^[0-9 .]+$')},
 										{column:'AWB No',required:'yes',regex:new RegExp('^[0-9]+$')}];
 
-			var error_array=validate_import_array(data_array,validate_template_array);
+			var error_array=vImport.validate(data_array,validate_template_array);
 			if(error_array.status=='success')
 			{
 	        	progress_value=10;
 	           	//////////////////
-                var data_id=get_new_key();
+                var data_id=vUtil.newKey();
                 var last_updated=get_my_time();
 
                 var awbs_array=[];
@@ -15662,7 +15648,7 @@ function modal210_action(description,func)
 		event.preventDefault();
 		if(is_create_access('form343'))
 		{
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var doc_name=get_session_var('domain')+data_id+"."+filetype;
 			var last_updated=get_my_time();
 
@@ -15867,7 +15853,7 @@ function modal214_action(func)
 			var name=form.elements['name'].value;
 			var make=form.elements['make'].value;
 			var description=form.elements['desc'].value;
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var last_updated=get_my_time();
       var indexes=name.split(/[\s,]+/);
       var description_indexes=description.split(/[\s,]+/);
@@ -15895,7 +15881,7 @@ function modal214_action(func)
 	 					{index:'last_updated',value:last_updated}]};
 			create_json(instance_json);
 
-			var id=get_new_key();
+			var id=vUtil.newKey();
       $("#modal214_attributes").find('input, select').each(function()
 			{
 				id++;
@@ -15957,7 +15943,7 @@ function modal215_action(item_name)
 			var last_updated=get_my_time();
 
 			var adjust_json={data_store:'inventory_adjust',
-			data:[{index:'id',value:get_new_key()},
+			data:[{index:'id',value:vUtil.newKey()},
 				{index:'product_name',value:item_name},
 				{index:'batch',value:item_name},
 				{index:'quantity',value:change},
@@ -15976,11 +15962,8 @@ function modal215_action(item_name)
 	$("#modal215_link").click();
 }
 
-/**
- * @modalNo 216
- * @modal Add Policy
- */
-function modal216_action()
+
+function modal216_action(policy_holder_value,tele_caller_value,func)
 {
 	var form=document.getElementById('modal216_form');
 	var fapp=form.elements['app_number'];
@@ -15995,12 +15978,9 @@ function modal216_action()
 	var fchild=form.elements['children'];
 	var fage=form.elements['age'];
 	var fpremium=form.elements['premium'];
-	var fshort_premium=form.elements['spremium'];
+	var freceived=form.elements['received_amount'];
 	var fdiscount=form.elements['discount'];
-	var fstart=form.elements['start'];
-	var fissue=form.elements['issue'];
 	var ftype=form.elements['type'];
-	var frenewed_from=form.elements['renewed_from'];
 	var fported_from=form.elements['ported_from'];
 	var fsource=form.elements['source'];
 	var flead=form.elements['lead'];
@@ -16047,12 +16027,9 @@ function modal216_action()
 	fchild.value="";
 	fage.value="";
 	fpremium.value="";
-	fshort_premium.value="";
+	freceived.value="";
 	fdiscount.value="";
-	fstart.value="";
-	fissue.value="";
 	ftype.value="fresh";
-	frenewed_from.value="";
 	fported_from.value="";
 	fsource.value="";
 	flead.value="";
@@ -16060,10 +16037,21 @@ function modal216_action()
 	fcaller.value="";
 	fagent.value="";
 
-	$(fstart).datepicker();
-	$(fissue).datepicker();
+	if(!vUtil.isBlank(policy_holder_value))
+	{
+		fholder.value=policy_holder_value;
+	}
 
-	set_static_value_list_json('policies','issue_type',ftype);
+	if(!vUtil.isBlank(tele_caller_value))
+	{
+		fcaller.value=tele_caller_value;
+	}
+
+	set_value_list_json(['fresh','portability'],ftype);
+	set_value_list_json([100000,200000,300000,400000,500000,700000,750000,1000000,1500000,2000000,2500000,5000000,10000000,20000000,50000000],fsum);
+	set_value_list_json([1,2],fadults);
+	set_value_list_json([0,1,2,3],fchild);
+
 	set_static_value_list_json('policies','sales source',fsource);
 
 	var name_data={data_store:'policy_types',return_column:'name'};
@@ -16074,16 +16062,40 @@ function modal216_action()
 		fpname.value="";
 		var name_data={data_store:'policy_types',return_column:'name',
 						indexes:[{index:'issuer',value:fcompany.value},
-								// {index:'type',value:fptype.value},
 								{index:'term',value:fterm.value},
 								{index:'preferred',value:fpreferred.value}]};
 		set_my_value_list_json(name_data,fpname);
 	};
 
+	function discount_cal()
+	{
+		var short_premium = parseFloat(fpremium.value) - parseFloat(freceived.value);
+		var discount = vUtil.round(short_premium/(fpremium.value)*100,2);
+		fdiscount.value = short_premium+" ("+discount+" %)";
+	}
+
 	vUtil.onChange(fcompany,policy_filtering);
-	//vUtil.onChange(fptype,policy_filtering);
 	vUtil.onChange(fterm,policy_filtering);
 	vUtil.onChange(fpreferred,policy_filtering);
+	vUtil.onChange(fpremium,discount_cal);
+	vUtil.onChange(freceived,discount_cal);
+
+	function premium_calculation()
+	{
+		fpremium.value="";
+		var premium_data={data_store:'policy_premiums',return_column:'premium_amount',
+						indexes:[{index:'policy_name',exact:fpname.value},
+								{index:'sum_insured',exact:fsum.value},
+								{index:'adults',exact:fadults.value},
+								{index:'children',exact:fchild.value},
+								{index:'age_lower',upperbound:fage.value},
+								{index:'age_upper',lowerbound:fage.value}]};
+		set_my_value_json(premium_data,fpremium);
+	};
+	vUtil.onChange(fsum,premium_calculation);
+	vUtil.onChange(fadults,premium_calculation);
+	vUtil.onChange(fchild,premium_calculation);
+	vUtil.onChange(fage,premium_calculation);
 
 	var holder_data={data_store:'customers',return_column:'acc_name'};
 	set_my_value_list_json(holder_data,fholder);
@@ -16119,26 +16131,16 @@ function modal216_action()
 	set_static_value_list_json('policy_types','term',fterm);
 	set_static_value_list_json('policy_types','preferred',fpreferred);
 
-	$(frenewed_from).parent().parent().hide();
 	$(fported_from).parent().parent().hide();
 
 	vUtil.onChange(ftype,function()
 	{
-		if(ftype.value=='renewal')
+		if(ftype.value=='portability')
 		{
-			var renewed_data={data_store:'policies',return_column:'policy_num',indexes:[{index:'policy_holder',exact:fholder.value}]};
-			set_my_value_list_json(renewed_data,frenewed_from);
-			$(frenewed_from).parent().parent().show();
-			$(fported_from).parent().parent().hide();
-		}
-		else if(ftype.value=='portability')
-		{
-			$(frenewed_from).parent().parent().hide();
 			$(fported_from).parent().parent().show();
 		}
 	});
 
-	var commissions = "";
 	var description = "";
 	vUtil.onChange(fpname,function()
 	{
@@ -16149,7 +16151,6 @@ function modal216_action()
 								{index:'term'},
 								{index:'preferred'},
 								{index:'accounts'},
-								{index:'commissions'},
 								{index:'name',exact:fpname.value}]};
 		read_json_rows('',policy_data,function(policies)
 		{
@@ -16161,13 +16162,12 @@ function modal216_action()
 					fagent.value = accounts_array[0];
 				}
 				fcompany.value = policies[0].issuer;
-				//fterm.value = policies[0].term;
-				//fptype.value = policies[0].type;
 				fpreferred.value = policies[0].preferred;
-				commissions = policies[0].commissions;
 				description = policies[0].description;
 			}
 		});
+
+		premium_calculation();
 	});
 
 	$(form).off("submit");
@@ -16181,7 +16181,7 @@ function modal216_action()
 			var attachments = [];
 			var domain=get_session_var('domain');
 			var files = select_file.files;
-			console.log(files);
+			// console.log(files);
 			var counter=files.length;
 			for(var i=0; i<files.length; i++)
 			{
@@ -16197,25 +16197,16 @@ function modal216_action()
 						var doc_mapping={name:file.name,url:doc_name};
 						attachments.push(doc_mapping);
 
-		                var data_json={type:'create',
-		                           bucket:'vyavsaay-documents',
-		                           blob: dataURL,
-		                           name:doc_name,
-		                           description:'',
-		                           content_type:contentType};
+						var data_json={type:'create',
+								   bucket:'vyavsaay-documents',
+								   blob: dataURL,
+								   name:doc_name,
+								   description:'',
+								   content_type:contentType};
 						s3_object(data_json);
 						counter--;
 					}
 				});
-			}
-
-			var start_date=vTime.unix({date:fstart.value});
-			if(fterm.value=="two years")
-			{
-				end_date = start_date + 2*365*86400000;
-			}
-			else{
-				end_date = start_date + 365*86400000;
 			}
 
 			var wait=setInterval(function()
@@ -16223,9 +16214,11 @@ function modal216_action()
 				if(counter==0)
 				{
 					clearInterval(wait);
+					var short_premium = parseFloat(fpremium.value) - parseFloat(freceived.value);
+					var discount = vUtil.round(short_premium/(fpremium.value)*100,2);
 					var attachment_string=JSON.stringify(attachments);
 					var data_json={data_store:'policies',
-					data:[{index:'id',value:get_new_key()},
+					data:[{index:'id',value:vUtil.newKey()},
 						{index:'application_num',value:fapp.value,unique:'yes'},
 						{index:'policy_num',value:""},
 						{index:'policy_name',value:fpname.value},
@@ -16233,18 +16226,15 @@ function modal216_action()
 						{index:'issuer',value:fcompany.value},
 						{index:'policy_holder',value:fholder.value},
 						{index:'premium',value:fpremium.value},
-						{index:'discount',value:fdiscount.value},
-						{index:'short_premium',value:fshort_premium.value},
+						{index:'discount',value:discount},
+						{index:'received_amount',value:freceived.value},
+						{index:'short_premium',value:short_premium},
 						{index:'agent',value:fagent.value},
-						{index:'start_date',value:start_date},
-						{index:'end_date',value:end_date},
-						{index:'issue_date',value:vTime.unix({date:fissue.value})},
 						{index:'type',value:fptype.value},
 						{index:'term',value:fterm.value},
 						{index:'preferred',value:fpreferred.value},
 						{index:'issue_type',value:ftype.value},
 						{index:'ported_source',value:fported_from.value},
-						{index:'renewed_source',value:frenewed_from.value},
 						{index:'sum_insured',value:fsum.value},
 						{index:'adults',value:fadults.value},
 						{index:'children',value:fchild.value},
@@ -16254,24 +16244,14 @@ function modal216_action()
 						{index:'tele_caller',value:fcaller.value},
 						{index:'sales_source',value:fsource.value},
 						{index:'attachments',value:attachment_string},
-						{index:'status',value:'active'},
+						{index:'status',value:'applied'},
 						{index:'last_updated',value:last_updated}]};
 					create_json(data_json);
 
-					// var data_json={data_store:'policy_commissions',
-					// data:[{index:'id',value:get_new_key()},
-					// 	{index:'policy_num',value:app_num},
-					// 	{index:'commission_num',value:''},
-					// 	{index:'issuer',value:pissuer},
-					// 	{index:'policy_holder',value:fholder.value},
-					// 	{index:'amount',value:'1000'},
-					// 	{index:'agent',value:fagent.value},
-					// 	{index:'issue_date',value:issue_date},
-					// 	{index:'commission_type',value:'base'},
-					// 	{index:'status',value:'pending'},
-					// 	{index:'notes',value:''},
-					// 	{index:'last_updated',value:last_updated}]};
-					// create_json(commission_json);
+					if(!vUtil.isBlank(func))
+					{
+						func(fapp.value);
+					}
 				}
 			},500);
 		}
@@ -16285,61 +16265,6 @@ function modal216_action()
 	$("#modal216_link").click();
 }
 
-
-/**
- * @modalNo 217
- * @modal Add Policy Type
- */
-function modal217_action()
-{
-	var form=document.getElementById('modal217_form');
-	var ftype=form.elements['type'];
-	var fissuer=form.elements['issuer'];
-    var fterm=form.elements['term'];
-    var fpreferred=form.elements['preferred'];
-
-	set_static_value_list_json('policy_types','type',ftype);
-
-	issuer_data={data_store:'policy_types',return_column:'issuer'};
-	set_my_filter_json(issuer_data,fissuer);
-
-	set_static_value_list_json('policy_types','term',fterm);
-	set_static_value_list_json('policy_types','preferred',fpreferred);
-
-	$(form).off("submit");
-	$(form).on("submit",function(event)
-	{
-		event.preventDefault();
-		if(is_create_access('form351'))
-		{
-			var name=form.elements['name'].value;
-			var type=ftype.value;
-			var desc=form.elements['desc'].value;
-			var issuer=fissuer.value;
-			var term=fterm.value;
-			var preferred=fpreferred.value;
-			var last_updated=get_my_time();
-
-			var data_json={data_store:'policy_types',
-			data:[{index:'id',value:get_new_key()},
-				{index:'name',value:name},
-				{index:'type',value:type},
-				{index:'description',value:desc},
-				{index:'issuer',value:issuer},
-				{index:'term',value:term},
-				{index:'preferred',value:preferred},
-				{index:'last_updated',value:last_updated}]};
-			create_json(data_json);
-		}
-		else
-		{
-			$("#modal2_link").click();
-		}
-		$(form).find(".close").click();
-	});
-
-	$("#modal217_link").click();
-}
 
 /**
  * @modalNo 218
@@ -16396,7 +16321,7 @@ function modal218_action()
 			var last_updated=vTime.unix();
 
 			var data_json={data_store:'policy_commissions',
-			data:[{index:'id',value:get_new_key()},
+			data:[{index:'id',value:vUtil.newKey()},
 				{index:'policy_num',value:fpolicy.value},
 				{index:'commission_num',value:commission_number},
 				{index:'issuer',value:pissuer},
@@ -16476,7 +16401,7 @@ function modal219_action()
 			var notes_array=[{date:last_updated,detail:notes}];
 			var notes_string=JSON.stringify(notes_array);
 			var data_json={data_store:'policy_claims',
-			data:[{index:'id',value:get_new_key()},
+			data:[{index:'id',value:vUtil.newKey()},
 				{index:'policy_num',value:fpolicy.value},
 				{index:'claim_num',value:claim_number},
 				{index:'issuer',value:pissuer},
@@ -16519,7 +16444,7 @@ function modal220_action(claim_id)
 		event.preventDefault();
 		if(is_update_access('form349'))
 		{
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			var details=detail_filter.value;
 			var last_updated=get_my_time();
 
@@ -16768,7 +16693,7 @@ function modal222_action(func)
 			var purchased=fpurchased.value;
 
 			var tax=form.elements['tax'].value;
-			var data_id=get_new_key();
+			var data_id=vUtil.newKey();
 			var cost_price=fcost.value;
       var sale_price=fsale.value;
 			var last_updated=get_my_time();
@@ -16801,7 +16726,7 @@ function modal222_action(func)
 	 					{index:'last_updated',value:last_updated}]};
 			create_json(instance_json);
 
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			var attribute_json={data_store:'attributes',
 				data:[{index:'id',value:id},
 					{index:'name',value:name},
@@ -16858,7 +16783,7 @@ function modal223_action(production_item_id,item_name,plan_id,plan_name,produced
 				produced_quantity=0;
 			}
 			var total_produced=parseFloat(fquantity.value)+parseFloat(produced_quantity);
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			var last_updated=get_my_time();
 			var storage=get_session_var('production_floor_store');
 			var status='pending';
@@ -16894,7 +16819,7 @@ function modal223_action(production_item_id,item_name,plan_id,plan_name,produced
 			create_json(instance_json);
 
 			var notification_json={data_store:'notifications',
-					data:[{index:'id',value:get_new_key()},
+					data:[{index:'id',value:vUtil.newKey()},
 						{index:'title',value:'Update pricing details'},
 						{index:'notes',value:'A new batch for '+item_name+' has been added. Please update pricing for the same.'},
 						{index:'link_to',value:'form183'},
@@ -16906,7 +16831,7 @@ function modal223_action(production_item_id,item_name,plan_id,plan_name,produced
 			create_json(notification_json);
 
 			var storage_json={data_store:'area_utilization',
-					data:[{index:'id',value:get_new_key()},
+					data:[{index:'id',value:vUtil.newKey()},
 						{index:'item_name',value:item_name,uniqueWith:['batch']},
 						{index:'batch',value:batch},
 						{index:'name',value:storage},
@@ -16969,7 +16894,7 @@ function modal224_action(drs_num,amount,delivery_person)
 		}
 	});
 
-	var collection_record_id=get_new_key();
+	var collection_record_id=vUtil.newKey();
 	var collection_data={data_store:'cod_collections',return_column:'id',
 						indexes:[{index:'drs_num',exact:drs_num},
 						{index:'from_name',exact:"DRS # "+drs_num}]};
@@ -16989,7 +16914,7 @@ function modal224_action(drs_num,amount,delivery_person)
 		{
 			var operator=foperator.value;
 			var additional=fupdated.value;
-			var id=get_new_key();
+			var id=vUtil.newKey();
 			var last_updated=vTime.unix();
 
 			var drs_data={data_store:'cod_collections',
@@ -17099,7 +17024,7 @@ function modal225_action()
 		var heading=heading_filter.value;
 		var narration=narration_filter.value;
 		var last_updated=vTime.unix();
-		var p_id=get_new_key();
+		var p_id=vUtil.newKey();
 
 		if(is_create_access('form124') || is_create_access('form243') || is_create_access('form291') || is_create_access('form282'))
 		{
@@ -17159,7 +17084,7 @@ function modal226_action(policy_id)
 	$(add_button).off('click');
 	$(add_button).on('click',function ()
 	{
-		var id=get_new_key();
+		var id=vUtil.newKey();
 		var content="<div><input placeholder='Account Name' id='modal226_account_"+id+"' class='floatlabel' type='text'></div>";
 		$(attribute_label).append(content);
 		var staff_data={data_store:'attributes',return_column:'name',

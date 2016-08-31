@@ -84,6 +84,73 @@ var vTime = function ()
                 }
                 d=new Date(year,month,day,hour,minutes,seconds,0);
             		break;
+        case 'mm/dd/yyyy hh:mm:ss AM':
+                var date_time_array=String(sets.date).split(/ /);
+                var date_elem=date_time_array[0];
+                var date_array=date_elem.split(/[\-\/]+/);
+
+                var day=parseInt(date_array[1]);
+                var month=parseInt(date_array[0])-1;
+                var year=parseInt(date_array[2]);
+
+                if(year<50)
+                {
+                    year=2000+year;
+                }
+                else if(year>50 && year<100)
+                {
+                    year=1900+year;
+                }
+
+                var hour=0;
+                var minutes=0;
+                var seconds=0;
+
+                if(date_time_array.length==2)
+                {
+                  var time_elem=date_time_array[1];
+                  var time_array=time_elem.split(/:/);
+
+                  hour=parseInt(time_array[0]);
+                  minutes=parseInt(time_array[1]);
+                  seconds=parseInt(time_array[2]);
+                }
+                d=new Date(year,month,day,hour,minutes,seconds,0);
+            	break;
+        case 'dd-mmm-yyyy':
+                var date_array=sets.date.split(/[\-]+/);
+
+                var day=parseInt(date_array[0]);
+                var monthString=date_array[1].toLowerCase();
+                var year=parseInt(date_array[2]);
+                var month=0;
+
+                switch(monthString)
+                {
+                    case 'jan':month=0;break;
+                    case 'feb':month=1;break;
+                    case 'mar':month=2;break;
+                    case 'apr':month=3;break;
+                    case 'may':month=4;break;
+                    case 'jun':month=5;break;
+                    case 'jul':month=6;break;
+                    case 'aug':month=7;break;
+                    case 'sep':month=8;break;
+                    case 'oct':month=9;break;
+                    case 'nov':month=10;break;
+                    case 'dec':month=11;break;
+                }
+                if(year<50)
+                {
+                    year=2000+year;
+                }
+                else if(year>50 && year<100)
+                {
+                    year=1900+year;
+                }
+
+                d=new Date(year,month,day,0,0,0,0);
+            	break;
       }
 
       return d.getTime();
@@ -93,7 +160,7 @@ var vTime = function ()
     this.date = function(opts)
     {
       var defs={time:Date.now(),inputFormat:'unix',resultFormat:'dd/mm/yyyy',addDays:0};
-    	var sets = $.extend(defs, opts || {});
+      var sets = $.extend(defs, opts || {});
 
       if(sets.time=='' || sets.time==null || sets.time=='null' || sets.time==0)
       {
@@ -193,7 +260,7 @@ var vTime = function ()
     this.anniversaryDates = function(opts)
     {
       var defs={time:Date.now(),inputFormat:'unix',resultFormat:'dd/mm/yyyy'};
-    	var sets = $.extend(defs, opts || {});
+      var sets = $.extend(defs, opts || {});
       var results=[];
 
       var inputDate=new Date();
@@ -220,5 +287,94 @@ var vTime = function ()
                     return results;
       }
     };
+
+    /**
+    *   This function returns the month of the specified date
+    */
+    this.month=function (opts)
+    {
+        var defs={date:'today',inputFormat:'dd/mm/yyyy'};
+    	var sets = $.extend(defs, opts || {});
+
+        if(vUtil.isBlank(sets.date))
+        {
+            return '';
+        }
+
+        var d=new Date();
+        if(sets.date=='today')
+        {
+            return d.getMonth()+1;
+        }
+
+        switch(sets.inputFormat)
+        {
+            case 'dd/mm/yyyy':
+                var date_array=sets.date.split(/[\-\/]+/);
+                return parseInt(date_array[1]);
+
+            case 'mm/dd/yyyy':
+                var date_array=sets.date.split(/[\-\/]+/);
+                return parseInt(date_array[0]);
+
+            case 'unix':
+                d=new Date(parseFloat(sets.date));
+        }
+
+      return d.getMonth()+1;
+    };
+
+    /**
+    *   This function returns the name of the month of the specified date
+    */
+    this.monthName=function (opts)
+    {
+        var month = this.month(opts)-1;
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return months[month];
+    };
+
+    /**
+    *   This function returns the quarter of the specified date
+    */
+    this.quarter=function (opts)
+    {
+        var quarter = parseInt(((this.month(opts)-1)/3)+1);
+        return quarter;
+    };
+
+    /**
+    *   This function returns the month of the specified date
+    */
+    this.year=function (opts)
+    {
+        var defs={date:'today',inputFormat:'dd/mm/yyyy'};
+    	var sets = $.extend(defs, opts || {});
+
+        if(vUtil.isBlank(sets.date))
+        {
+            return '';
+        }
+
+        var d=new Date();
+        if(sets.date=='today')
+        {
+            return (d.getYear()+1900);
+        }
+
+        switch(sets.inputFormat)
+        {
+            case 'mm/dd/yyyy':
+            case 'dd/mm/yyyy':
+                var date_array=sets.date.split(/[\-\/]+/);
+                return parseInt(date_array[2]);
+
+            case 'unix':
+                d=new Date(parseFloat(sets.date));
+        }
+
+      return (d.getYear()+1900);
+    };
+
 };
 vTime=new vTime();

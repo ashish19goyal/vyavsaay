@@ -37,7 +37,7 @@ function form2_header_ini()
 	var name_filter=fields.elements[1];
 	fields.elements[2].value="";
 	var id_filter=fields.elements[3];
-	id_filter.value=get_new_key();
+	id_filter.value=vUtil.newKey();
 	$(fields).off('submit');
 	$(fields).on('submit',function(event)
 	{
@@ -98,7 +98,7 @@ function form10_header_ini()
 	var bill_num=fields.elements['bill_num'];
 	var bill_date=fields.elements['bill_date'];
 	var due_date=fields.elements['due_date'];
-	fields.elements['bill_id'].value=get_new_key();
+	fields.elements['bill_id'].value=vUtil.newKey();
 	var order_id_filter=fields.elements['order_id'];
 	order_id_filter.value="";
 	fields.elements['t_id'].value=fields.elements['bill_id'].value;
@@ -143,7 +143,7 @@ function form10_header_ini()
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
-	set_my_value_list_func(customers_data,customers_filter,function ()
+	set_my_value_list(customers_data,customers_filter,function ()
 	{
 		$(customers_filter).focus();
 	});
@@ -242,7 +242,7 @@ function form12_header_ini()
 	var customers_filter=fields.elements[1];
 	var bill_date=fields.elements[2];
 	var bill_num=fields.elements[3];
-	fields.elements[4].value=get_new_key();
+	fields.elements[4].value=vUtil.newKey();
 	fields.elements[5].value="";
 	fields.elements[6].value=fields.elements[4].value;
 	var save_button=fields.elements[7];
@@ -488,7 +488,7 @@ function form24_header_ini()
 	var order_date=fields.elements['date'];
 	var order_num=fields.elements['order_num'];
 	var status_filter=fields.elements['status'];
-	fields.elements['order_id'].value=get_new_key();
+	fields.elements['order_id'].value=vUtil.newKey();
 	var save_button=fields.elements['save'];
 	var share_button=fields.elements['share'];
 	var pmode_filter=fields.elements['mode'];
@@ -954,7 +954,7 @@ function form69_header_ini()
 	var channel_filter=fields.elements['channel'];
 	var type_filter=fields.elements['bill_type'];
 
-	fields.elements['order_id'].value=get_new_key();
+	fields.elements['order_id'].value=vUtil.newKey();
 	order_num_filter.value="";
 	channel_filter.value="";
 
@@ -1180,7 +1180,7 @@ function form82_header_ini()
 	var customers_filter=fields.elements[1];
 	var bill_date=fields.elements[2];
 	var bill_num=fields.elements[3];
-	fields.elements[4].value=get_new_key();
+	fields.elements[4].value=vUtil.newKey();
 	fields.elements[5].value="";
 	fields.elements[6].value=fields.elements[4].value;
 	var save_button=fields.elements[7];
@@ -1391,7 +1391,7 @@ function form91_header_ini()
 	channel.value="";
 	order_id.value="";
 	order_num.value="";
-	fields.elements['bill_id'].value=get_new_key();
+	fields.elements['bill_id'].value=vUtil.newKey();
 	fields.elements['t_id'].value=fields.elements['bill_id'].value;
 	var save_button=fields.elements['save'];
 	var tin_filter=fields.elements['customer_tin'];
@@ -1430,7 +1430,7 @@ function form91_header_ini()
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
-	set_my_value_list_func(customers_data,customers_filter,function()
+	set_my_value_list(customers_data,customers_filter,function()
 	{
 		$(customers_filter).focus();
 	});
@@ -2094,7 +2094,7 @@ function form118_header_ini()
 	var customers_filter=fields.elements[1];
 	var bill_date=fields.elements[2];
 	var bill_num=fields.elements[3];
-	fields.elements[4].value=get_new_key();
+	fields.elements[4].value=vUtil.newKey();
 	fields.elements[5].value="";
 	fields.elements[6].value=fields.elements[4].value;
 	var loyalty_program=fields.elements[7];
@@ -2249,7 +2249,7 @@ function form119_header_ini()
 	var bill_date=fields.elements[3];
 	var bill_num=fields.elements[4];
 	fields.elements[5].value=0;
-	fields.elements[6].value=get_new_key();
+	fields.elements[6].value=vUtil.newKey();
 	fields.elements[7].value="";
 	fields.elements[8].value=fields.elements[6].value;
 	var unbilled_button=fields.elements[9];
@@ -2406,7 +2406,7 @@ function form119_header_ini()
 				{
 					///////////////////////////////////////////////////////////
 					var rowsHTML="";
-					var id=get_new_key();
+					var id=vUtil.newKey();
 					rowsHTML+="<tr>";
 					rowsHTML+="<form id='form119_"+id+"'></form>";
 						rowsHTML+="<td data-th='Product Name'>";
@@ -2769,7 +2769,7 @@ function form122_header_ini()
 	order_num_filter.value="";
 	order_id_filter.value="";
 	unbilled_filter.value="";
-	bill_id_filter.value=get_new_key();
+	bill_id_filter.value=vUtil.newKey();
 	t_id_filter.value=bill_id_filter.value;
 	cst_filter.checked=false;
 
@@ -2860,7 +2860,7 @@ function form122_header_ini()
 				///////////////////////////////////////////////////////////
 				if(is_create_access('form122'))
 				{
-					var id=get_new_key();
+					var id=vUtil.newKey();
 					var rowsHTML="<tr>";
 					rowsHTML+="<form id='form122_"+id+"' autocomplete='off'></form>";
 						rowsHTML+="<td data-th='Item'>";
@@ -3067,9 +3067,9 @@ function form130_header_ini()
 
 	var customers_filter=fields.elements[1];
 	var bill_date=fields.elements[2];
-	fields.elements[3].value=get_new_key();
+	fields.elements[3].value=vUtil.newKey();
 	fields.elements[4].value="";
-	fields.elements[5].value=get_new_key();
+	fields.elements[5].value=vUtil.newKey();
 
 	var save_button=fields.elements[6];
 
@@ -3680,7 +3680,7 @@ function form153_header_ini()
 	var date=fields.elements['date'];
 	var quot_id_filter=fields.elements['quot_id'];
 	var quot_num_filter=fields.elements['quot_num'];
-	quot_id_filter.value=get_new_key();
+	quot_id_filter.value=vUtil.newKey();
 	quot_num_filter.value="";
 	var save_button=fields.elements['save'];
 	var print_button=fields.elements['print'];
@@ -3740,7 +3740,7 @@ function form153_header_ini()
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
-	set_my_value_list_func(customers_data,customers_filter,function ()
+	set_my_value_list(customers_data,customers_filter,function ()
 	{
 		$(customers_filter).focus();
 	});
@@ -3809,7 +3809,7 @@ function form154_header_ini()
 	var narration=fields.elements['narration'];
 	var a1_job=document.getElementById('form154_1job');
 	var bill_num=fields.elements['bill_num'];
-	fields.elements['bill_id'].value=get_new_key();
+	fields.elements['bill_id'].value=vUtil.newKey();
 	fields.elements['t_id'].value=fields.elements['bill_id'].value;
 	var save_button=fields.elements['save'];
 	var cst_filter=fields.elements['cst'];
@@ -4132,7 +4132,7 @@ function form158_header_ini()
 	var bill_date=fields.elements['date'];
 
 	fields.elements['imported'].checked=false;
-	fields.elements['bill_id'].value=get_new_key();
+	fields.elements['bill_id'].value=vUtil.newKey();
 	fields.elements['t_id'].value=fields.elements['bill_id'].value;
 	var save_button=fields.elements['save'];
 
@@ -4751,7 +4751,7 @@ function form192_header_ini()
 	fields.elements[2].value="";
 	var bill_date=fields.elements[3];
 	var entry_date=fields.elements[4];
-	fields.elements[5].value=get_new_key();
+	fields.elements[5].value=vUtil.newKey();
 	fields.elements[6].value=fields.elements[5].value;
 	var save_button=fields.elements[7];
 
@@ -4848,7 +4848,7 @@ function form193_header_ini()
 					"<name></name>"+
 					"<area_type></area_type>"+
 					"</store_areas>";
-	set_my_value_list_func(storage_data,storage_filter,function()
+	set_my_value_list(storage_data,storage_filter,function()
 	{
 		$(storage_filter).focus();
 	});
@@ -5113,7 +5113,7 @@ function form209_header_ini()
 	var customer_filter=fields.elements['customer'];
 	var date_filter=fields.elements['date'];
 	var status_filter=fields.elements['status'];
-	fields.elements['plan_id'].value=get_new_key();
+	fields.elements['plan_id'].value=vUtil.newKey();
 	var save_button=fields.elements['save'];
 
 	$(save_button).off('click');
@@ -5256,7 +5256,7 @@ function form210_header_ini()
 			var list_id=filter_element.getAttribute('list');
 			if(list_id=='' || list_id==null)
 			{
-				list_id="list_"+get_new_key();
+				list_id="list_"+vUtil.newKey();
 				filter_element.setAttribute("list",list_id);
 			}
 			else
@@ -5318,7 +5318,7 @@ function form215_header_ini()
 	var man_filter=fields.elements['man_num'];
 	var man_date=fields.elements['date'];
 
-	fields.elements['id'].value=get_new_key();
+	fields.elements['id'].value=vUtil.newKey();
 
 	var save_button=fields.elements['save'];
 	man_filter.value="";
@@ -5432,7 +5432,7 @@ function form222_header_ini()
 	var order_date=fields.elements['date'];
 	var order_num=fields.elements['order_num'];
 	var status_filter=fields.elements['status'];
-	fields.elements['order_id'].value=get_new_key();
+	fields.elements['order_id'].value=vUtil.newKey();
 	var save_button=fields.elements['save'];
 	var share_button=fields.elements['share'];
 
@@ -5660,7 +5660,7 @@ function form231_header_ini()
 	var num_filter=fields.elements['p_num'];
 	var date_filter=fields.elements['date'];
 	var next_filter=fields.elements['next'];
-	fields.elements['pres_id'].value=get_new_key();
+	fields.elements['pres_id'].value=vUtil.newKey();
 	var save_button=fields.elements['save'];
 	var age_filter=fields.elements['age'];
 	var sex_filter=fields.elements['sex'];
@@ -5796,7 +5796,7 @@ function form233_header_ini()
 	var master_form=document.getElementById('form233_form');
 	master_form.elements['name'].value="";
 	master_form.elements['description'].value="";
-	master_form.elements['id'].value=get_new_key();
+	master_form.elements['id'].value=vUtil.newKey();
 	master_form.elements['pic_url'].value="";
 
 	$(master_form).off('submit');
@@ -5978,7 +5978,7 @@ function form244_header_ini()
 					"<name></name>"+
 					"<area_type></area_type>"+
 					"</store_areas>";
-	set_my_value_list_func(storage_data,storage_filter,function()
+	set_my_value_list(storage_data,storage_filter,function()
 	{
 		$(storage_filter).focus();
 	});
@@ -6074,7 +6074,7 @@ function form248_header_ini()
 	branch.removeAttribute('readonly');
 
 	fields.elements['saved'].value='no';
-	fields.elements['id'].value=get_new_key();
+	fields.elements['id'].value=vUtil.newKey();
 
 	var branch_data="<store_areas><name></name></store_areas>";
 	set_my_value_list(branch_data,branch);
@@ -6169,7 +6169,7 @@ function form250_header_ini()
 	var branch=fields.elements['branch'];
 
 	fields.elements['saved'].value='no';
-	fields.elements['id'].value=get_new_key();
+	fields.elements['id'].value=vUtil.newKey();
 
 	var save_button=fields.elements['save'];
 	mts_filter.value="";
@@ -6449,16 +6449,12 @@ function form273_header_ini()
 	$(date_filter).datepicker();
 
 	var names_data=new Object();
-		names_data.count=0;
-		names_data.start_index=0;
 		names_data.data_store='suppliers';
 		names_data.indexes=[{index:'acc_name'}];
 		names_data.return_column='acc_name';
 	set_my_filter_json(names_data,names_filter);
 
 	var item_data=new Object();
-		item_data.count=0;
-		item_data.start_index=0;
 		item_data.data_store='product_master';
 		item_data.indexes=[{index:'name'}];
 		item_data.return_column='name';
@@ -6552,19 +6548,15 @@ function form280_header_ini()
 	$(filter_fields).on('submit',function (e)
 	{
 		e.preventDefault();
-		var columns=new Object();
-		columns.count=0;
-		columns.start_index=0;
-		columns.data_store='bills';
-
-		columns.indexes=[{index:'id'},
+		var columns={data_store:'bills',
+					indexes:[{index:'id'},
 						{index:'bill_num'},
 						{index:'order_num'},
 						{index:'order_id'},
 						{index:'status'},
 						{index:'awb_num'},
 						{index:'channel',value:channel_filter.value},
-						{index:'bill_date',lowerbound:get_raw_time(start_date.value),upperbound:get_raw_time(end_date.value)}];
+						{index:'bill_date',lowerbound:get_raw_time(start_date.value),upperbound:get_raw_time(end_date.value)}]};
 		//console.log(columns);
 		get_export_data_restructured(columns,'Order Status for Dispatch',function(new_results)
 		{
@@ -6605,24 +6597,18 @@ function form289_header_ini()
 	$(date_filter).datepicker();
 
 	var names_data=new Object();
-		names_data.count=0;
-		names_data.start_index=0;
 		names_data.data_store='customers';
 		names_data.indexes=[{index:'acc_name'}];
 		names_data.return_column='acc_name';
 	set_my_filter_json(names_data,names_filter);
 
 	var staff_data=new Object();
-		staff_data.count=0;
-		staff_data.start_index=0;
 		staff_data.data_store='staff';
 		staff_data.indexes=[{index:'acc_name'}];
 		staff_data.return_column='acc_name';
 	set_my_filter_json(staff_data,poc_filter);
 
 	var item_data=new Object();
-		item_data.count=0;
-		item_data.start_index=0;
 		item_data.data_store='product_master';
 		item_data.indexes=[{index:'name'}];
 		item_data.return_column='name';
@@ -6647,16 +6633,12 @@ function form290_header_ini()
 	var country_filter=filter_fields.elements[2];
 
 	var names_data=new Object();
-		names_data.count=0;
-		names_data.start_index=0;
 		names_data.data_store='cities_data';
 		names_data.indexes=[{index:'state'}];
 		names_data.return_column='state';
 	set_my_filter_json(names_data,state_filter);
 
 	var item_data=new Object();
-		item_data.count=0;
-		item_data.start_index=0;
 		item_data.data_store='cities_data';
 		item_data.indexes=[{index:'country'}];
 		item_data.return_column='country';
@@ -6683,7 +6665,7 @@ function form294_header_ini()
 	var bill_date=fields.elements['date'];
 	var tax_type=fields.elements['tax_type'];
 	var bill_num=fields.elements['bill_num'];
-	fields.elements['bill_id'].value=get_new_key();
+	fields.elements['bill_id'].value=vUtil.newKey();
 	var save_button=fields.elements['save'];
 	var cst_filter=fields.elements['cst'];
 	var tin_filter=fields.elements['tin'];
@@ -6835,7 +6817,7 @@ function form295_header_ini()
 	var bill_date=fields.elements['date'];
 	var entry_date=fields.elements['entry_date'];
 	var bill_num=fields.elements['bill_num'];
-	fields.elements['bill_id'].value=get_new_key();
+	fields.elements['bill_id'].value=vUtil.newKey();
 	fields.elements['notes'].value="";
 	var save_button=fields.elements['save'];
 
@@ -6904,7 +6886,7 @@ function form296_header_ini()
 	var order_date=fields.elements['date'];
 	var order_num=fields.elements['order_num'];
 	var status_filter=fields.elements['status'];
-	fields.elements['order_id'].value=get_new_key();
+	fields.elements['order_id'].value=vUtil.newKey();
 	var save_button=fields.elements['save'];
 	var share_button=fields.elements['share'];
 

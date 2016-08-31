@@ -4,14 +4,14 @@ function log_navigation_history(options)
     if(options.form!="home")
     {
         url+="/"+options.form;
-        
+
         if(options.page!=="")
         {
             url+="/"+options.page;
 
             if(options.id!=="")
             {
-                url+="/"+options.id;    
+                url+="/"+options.id;
             }
         }
     }
@@ -39,11 +39,9 @@ function navigate_history()
             var function_link=$(element_link).parent().parent().parent().attr('id');
             show_function(function_link);
             $(element_link).attr('data_id',obj.id);
-            
-            //var paginator=$('#'+obj.form).find("tbody[isPaged='yes']").data('paginator');
+
             var paginator=$('#'+obj.form).find("[isPaged='yes']").data('paginator');
-            //$(element).attr('isPaged','yes');
-        
+
             if(paginator)
             {
                 var page_index=parseInt(paginator.page_size())*parseInt(obj.page);
@@ -67,17 +65,17 @@ function navigate_history_url(url)
 {
     var obj={form:'home',page:'',id:''};
     url=url.replace(server_root,'');
-    
+
     var url_object=url.split("/");
-    
+
     if(url_object[2])
     {
         obj.form=url_object[2];
-    
+
         if(url_object[3])
         {
             obj.page=url_object[3];
-            
+
             if(url_object[4])
             {
                 obj.id=url_object[4];
@@ -98,7 +96,7 @@ function navigate_history_url(url)
         var paginator=$('#'+obj.form).find("tbody[isPaged='yes']").data('paginator');
         var page_index=0;
         if(paginator)
-        {    
+        {
             page_index=parseInt(paginator.page_size())*parseInt(obj.page);
             paginator.set_index(page_index);
         }
@@ -116,7 +114,7 @@ function home_display()
 {
 	$(document).off('keydown');
 	hide_all();
-	$('#home_grid').show();	
+	$('#home_grid').show();
 
     var history_obj={form:'home',id:'',page:''};
     log_navigation_history(history_obj);
@@ -132,8 +130,8 @@ function grid_click(func)
 {
 	show_function(func+"_main");
 
-	$("#"+func+"_main").find('ul').find('li:visible').find('a').first().click();	
-    
+	$("#"+func+"_main").find('ul').find('li:visible').find('a').first().click();
+
     var element_name=$("#"+func+"_main").find('ul').find('li:visible').find('a').first().attr('href').replace(/#/g,'');
     var history_obj={form:element_name,id:'',page:0};
     log_navigation_history(history_obj);
@@ -149,7 +147,7 @@ function element_display(fid,element_name,elements)
 		$(element_link).attr('data_id',fid);
 		$(element_link).click();
 		$(element_link).attr('data_id','');
-        
+
         var history_obj={form:element_name,id:fid,page:0};
         log_navigation_history(history_obj);
 	}
@@ -165,7 +163,7 @@ function element_display(fid,element_name,elements)
 				$(element_link).attr('data_id',fid);
 				$(element_link).click();
 				$(element_link).attr('data_id','');
-                
+
                 var history_obj={'form':elements[i],'id':fid,page:0};
                 log_navigation_history(history_obj);
 				break;
@@ -174,15 +172,15 @@ function element_display(fid,element_name,elements)
 	}
 }
 
-function show_object(object_type,obj_name,obj_id) 
+function show_object(object_type,obj_name,obj_id)
 {
 	if(is_read_object(object_type))
 	{
-		if_data_access_object(object_type,obj_name,function () 
+		if_data_access_object(object_type,obj_name,function ()
 		{
 			initialize_object(object_type,obj_name,obj_id);
 			$("#object_"+object_type).click();
-		},function () 
+		},function ()
 		{
             console.log('no data access');
 			$('#modal2_link').click();
@@ -193,4 +191,4 @@ function show_object(object_type,obj_name,obj_id)
         console.log('no system access');
 		$('#modal2_link').click();
 	}
-}	
+}

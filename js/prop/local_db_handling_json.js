@@ -1674,7 +1674,7 @@ function local_delete_json(columns,func)
 						localdb_open_requests+=1;
 						objectStore.delete(filter[0].value).onsuccess=function(e)
 						{
-							var id=get_new_key();
+							var id=vUtil.newKey();
 							var act_row={id:""+id,
 									type:'delete',
 									status:'unsynced',
@@ -1835,7 +1835,7 @@ function local_delete_json(columns,func)
 						}
 					};
 
-					var activity_id=get_new_key();
+					var activity_id=vUtil.newKey();
 					function insert_activities()
 					{
 						if(j<delete_ids_array.length)
@@ -1954,7 +1954,7 @@ function local_create_json(data_json,func)
 			var put_req=objectStore.put(data_row);
 			put_req.onsuccess=function(e)
 			{
-				var id=get_new_key();
+				var id=vUtil.newKey();
 				var act_row={id:""+id,
 						type:'create',
 						status:'unsynced',
@@ -2093,7 +2093,7 @@ function local_create_batch_json(data_json,func)
 			var transaction=static_local_db.transaction([table,'activities'],"readwrite");
 			var os1=transaction.objectStore(table);
 			var os2=transaction.objectStore('activities');
-			var activity_id=get_new_key();
+			var activity_id=vUtil.newKey();
 
 			var i=0;
 			var success_count=0;
@@ -2114,7 +2114,7 @@ function local_create_batch_json(data_json,func)
 				{
 					success_count+=1;
 
-					var id=get_new_key();
+					var id=vUtil.newKey();
 					var act_row={id:""+(activity_id+i),
 							type:'create',
 							status:'unsynced',
@@ -2279,7 +2279,7 @@ function local_update_json(data_json,func)
 				var put_req=os1.put(data_record);
 				put_req.onsuccess=function(e)
 				{
-					var id=get_new_key();
+					var id=vUtil.newKey();
 					var act_row={id:""+id,
 							type:'update',
 							status:'unsynced',
@@ -2348,7 +2348,7 @@ function local_update_batch_json(data_json,func)
 
 		var i=0;
 		var success_count=0;
-		var activity_id=get_new_key();
+		var activity_id=vUtil.newKey();
 
 		function update_records()
 		{
@@ -2372,7 +2372,7 @@ function local_update_batch_json(data_json,func)
 						var put_req=os1.put(data_record);
 						put_req.onsuccess=function(e)
 						{
-							var id=get_new_key();
+							var id=vUtil.newKey();
 							var act_row={id:""+(activity_id+i),
 									type:'update',
 									status:'unsynced',
