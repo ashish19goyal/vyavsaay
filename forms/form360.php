@@ -31,6 +31,7 @@
 			<thead>
 				<tr>
 					<form id='form360_header'></form>
+						<th><input type='text' placeholder="Issuing Company" class='floatlabel' name='issuer' form='form360_header'></th>
 						<th><input type='text' placeholder="Policy" class='floatlabel' name='name' form='form360_header'></th>
 						<th><input type='text' placeholder="Holders" readonly='readonly' form='form360_header'></th>
 						<th><input type='text' placeholder="Age" readonly='readonly' form='form360_header'></th>
@@ -48,9 +49,13 @@
 		{
 			var filter_fields=document.getElementById('form360_header');
 			var policy_filter=filter_fields.elements['name'];
+			var issuer_filter=filter_fields.elements['issuer'];
 
 			var policy_data={data_store:'policy_types',return_column:'name'};
 			set_my_filter_json(policy_data,policy_filter);
+
+			var issuer_data={data_store:'policy_types',return_column:'issuer'};
+			set_my_filter_json(issuer_data,issuer_filter);
 
 			$(filter_fields).off('submit');
 			$(filter_fields).on('submit',function(event)
@@ -70,6 +75,7 @@
 			$('#form360_body').html("");
 
 			var filter_fields=document.getElementById('form360_header');
+			var fissuer=filter_fields.elements['issuer'].value;
 			var fpolicy=filter_fields.elements['name'].value;
 
 			var paginator=$('#form360_body').paginator();
@@ -79,7 +85,7 @@
 							data_store:'policy_premiums',
 							indexes:[{index:'id',value:fid},
 									{index:'policy_name',value:fpolicy},
-									{index:'issuer',},
+									{index:'issuer',value:fissuer},
 									{index:'age_lower'},
 									{index:'age_upper'},
 									{index:'sum_insured'},
@@ -93,9 +99,11 @@
 				{
 					var rowsHTML="<tr>";
 						rowsHTML+="<form id='form360_"+result.id+"'></form>";
+							rowsHTML+="<td data-th='Issuing Company'>";
+								rowsHTML+="<input type='text' readonly='readonly' placeholder='Issuer' form='form360_"+result.id+"' value='"+result.issuer+"'>";
+							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Policy'>";
-								rowsHTML+="<textarea readonly='readonly' class='floatlabel' placeholder='Policy Name' form='form360_"+result.id+"'>"+result.policy_name+"</textarea>";
-								rowsHTML+="<input type='text' readonly='readonly' class='floatlabel' placeholder='Issuer' form='form360_"+result.id+"' value='"+result.issuer+"'>";
+								rowsHTML+="<textarea readonly='readonly' placeholder='Policy Name' form='form360_"+result.id+"'>"+result.policy_name+"</textarea>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Holders'>";
 								rowsHTML+="<input type='number' step='1' min='0' readonly='readonly' class='floatlabel dblclick_editable' placeholder='Adults' form='form360_"+result.id+"' value='"+result.adults+"'>";
@@ -140,8 +148,10 @@
 				var rowsHTML="<tr>";
 					rowsHTML+="<form id='form360_"+id+"'></form>";
 						rowsHTML+="<td data-th='Policy'>";
-							rowsHTML+="<input type='text' class='floatlabel' placeholder='Policy Name' form='form360_"+id+"'>";
-							rowsHTML+="<input type='text' class='floatlabel' placeholder='Issuer' form='form360_"+id+"'>";
+							rowsHTML+="<input type='text' placeholder='Issuer' form='form360_"+id+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Policy'>";
+							rowsHTML+="<input type='text' placeholder='Policy Name' form='form360_"+id+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Holders'>";
 							rowsHTML+="<input type='number' step='1' min='0' class='floatlabel dblclick_editable' placeholder='Adults' form='form360_"+id+"'>";
@@ -164,8 +174,8 @@
 
 				$('#form360_body').prepend(rowsHTML);
 				var fields=document.getElementById("form360_"+id);
-				var policy_filter=fields.elements[0];
-				var issuer_filter=fields.elements[1];
+				var policy_filter=fields.elements[1];
+				var issuer_filter=fields.elements[0];
 
 				$(fields).on("submit", function(event)
 				{
@@ -198,8 +208,8 @@
 		{
 			if(is_create_access('form360'))
 			{
-				var policy_name=form.elements[0].value;
-				var issuer=form.elements[1].value;
+				var policy_name=form.elements[1].value;
+				var issuer=form.elements[0].value;
 				var adults=form.elements[2].value;
 				var children=form.elements[3].value;
 				var age_lower=form.elements[4].value;
@@ -249,8 +259,8 @@
 		{
 			if(is_update_access('form360'))
 			{
-				var policy_name=form.elements[0].value;
-				var issuer=form.elements[1].value;
+				var policy_name=form.elements[1].value;
+				var issuer=form.elements[0].value;
 				var adults=form.elements[2].value;
 				var children=form.elements[3].value;
 				var age_lower=form.elements[4].value;
@@ -343,7 +353,7 @@
 				}
 
 				var data_json_array=[{index:'id',value:row.id},
-	 					{index:'policy_name',value:row.policy_name},
+	 					{index:'policy_name',value:row.policy_name,uniqueWith:['adults','children','age_lower','age_upper','sum_insured']},
 	 					{index:'issuer',value:row.issuer},
 	 					{index:'adults',value:row.adults},
 	 					{index:'children',value:row.children},

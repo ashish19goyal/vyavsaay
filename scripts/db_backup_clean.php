@@ -2,18 +2,20 @@
 
 /**
 *	t=yyyy-mm-dd
-*	p=vya
 */
+
+	session_start();
 
 	include_once "../Classes/S3.php";
 	include_once '../Classes/config.php';
+	require_once '../Classes/vUtil.php';
 	use RetailingEssentials\config;
+	use RetailingEssentials\vUtil;
 
-	$time=$_GET['t'];
-	$pass=$_GET['p'];
-
-	if($pass=='vya')
+	if(vUtil::isMasterSession())
 	{
+		$time=$_GET['t'];
+
 		$config = config::getInstance();
 		$dbhost = $config->get("host");
 		$dbuser = $config->get("user");

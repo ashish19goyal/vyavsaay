@@ -78,7 +78,7 @@
             start_date_filter.value=get_my_past_date((get_my_time()-7*86400000));
             end_date_filter.value=vTime.date();
 			var paginator=$('#report9_body').paginator({'visible':false,'container':$('#report9_body')});
-			setTimeout(function(){$('#report9').formcontrol();},1000);
+			setTimeout(function(){$('#report9').formcontrol();},300);
         }
 
         function report9_ini()

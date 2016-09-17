@@ -128,7 +128,7 @@ var vUtil = function (options)
 	this.uniqueNewKey = function()
 	{
 		var d=new Date();
-		var key = (d.getTime()+Math.random())*1000;
+		var key = d.getTime()+""+parseInt(Math.random()*1000);
 		return key;
 	}
 

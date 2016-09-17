@@ -1,12 +1,20 @@
 <?php
 
-namespace RetailingEssentials;
-include_once "../Classes/db.php";
-include_once '../Classes/config.php';
-use RetailingEssentials\config;
-use RetailingEssentials\db_connect;
-use \DOMDocument;
-use \PDO;
+/**
+* db=domainName
+* all=yes
+**/
+
+	session_start();
+
+	include_once '../Classes/config.php';
+	require_once '../Classes/vUtil.php';
+	include_once "../Classes/db.php";
+	use RetailingEssentials\vUtil;
+	use RetailingEssentials\config;
+	use RetailingEssentials\db_connect;
+	use \DOMDocument;
+	use \PDO;
 
 	function notifications_js($dbname,$table_name)
 	{
@@ -74,13 +82,20 @@ use \PDO;
 		}
 	}
 
-	if(isset($_GET['db_name']))
+	if(vUtil::isMasterSession())
 	{
-		$db_name=$_GET['db_name'];
-		notifications_js($db_name,'system_notifications');
+		if(isset($_GET['db']))
+		{
+			$db_name="re_user_".$_GET['db'];
+			notifications_js($db_name,'system_notifications');
+		}
+		else if(isset($_GET['all']))
+		{
+			notifications_all();
+		}
 	}
-	else if(isset($_GET['all']))
-	{
-		notifications_all();
+	else{
+		echo "You don't have permissions to perform this operation.";
 	}
+
 ?>

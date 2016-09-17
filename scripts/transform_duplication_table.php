@@ -1,13 +1,20 @@
 <?php
 
+/**
+*
+**/
+
+	session_start();
+
 	include_once '../Classes/config.php';
 	include_once '../Classes/db.php';
+	require_once '../Classes/vUtil.php';
+	use RetailingEssentials\vUtil;
 	use RetailingEssentials\db_connect;
 	use RetailingEssentials\config;
+	use \PDO;
 
-	$pass=$_GET['p'];
-
-	if($pass=='vya')
+	if(vUtil::isMasterSession())
 	{
 		$config = config::getInstance();
 		$dbhost = $config->get("host");
@@ -27,7 +34,7 @@
 	}
 	else
 	{
-		echo "Invalid session";
+		echo "You don't have permissions to perform this operation";
 	}
 
 	function transform_deduplication($dbname)

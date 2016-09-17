@@ -268,6 +268,7 @@
 			<tax_rate index='no' type='DECIMAL(12,2)'></tax_rate>
 			<total index='no' type='DECIMAL(12,2)'></total>
 			<mrp index='no' type='DECIMAL(12,2)'></mrp>
+			<delivery_schedule index='yes' type="BIGINT"></delivery_schedule>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</purchase_order_items>
@@ -810,6 +811,10 @@
 			<record_source index='yes' type="TEXT"></record_source>			
 			<source_id index='yes' type="BIGINT"></source_id>			
 			<applicable_from index='yes' type="BIGINT"></applicable_from>
+			<dispatched_time index='yes' type="BIGINT"></dispatched_time>
+			<received_time index='yes' type="BIGINT"></received_time>
+			<production_plan index='yes' type="TEXT"></production_plan>			
+			<production_line index='yes' type="TEXT"></production_line>			
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</store_movement>
@@ -2167,6 +2172,9 @@
 			<policy_name index='yes' type="TEXT"></policy_name>
 			<description index="no" type="TEXT"></description>
 			<sum_insured index="no" type="DECIMAL(12,2)"></sum_insured>
+			<net_premium index="no" type="DECIMAL(12,2)"></net_premium>
+			<loading_premium index="no" type="DECIMAL(12,2)"></loading_premium>
+			<tax index="no" type="DECIMAL(12,2)"></tax>
 			<premium index="no" type="DECIMAL(12,2)"></premium>
 			<received_amount index="no" type="DECIMAL(12,2)"></received_amount>
 			<discount index="no" type="DECIMAL(12,2)"></discount>
@@ -2189,8 +2197,13 @@
 			<team_lead index='yes' type="TEXT"></team_lead>
 			<sales_manager index='yes' type="TEXT"></sales_manager>
 			<tele_caller index='yes' type="TEXT"></tele_caller>
+			<out_source index='yes' type="TEXT"></out_source>
 			<sales_source index='yes' type="VARCHAR(30)"></sales_source><!--team/out source-->
 			<attachments index='yes' type="TEXT"></attachments>
+			<payor_name index='yes' type="TEXT"></payor_name>
+			<payment_mode index='yes' type="TEXT"></payment_mode>
+			<bank_details index='yes' type="TEXT"></bank_details>
+			<instrument_number index='yes' type="TEXT"></instrument_number>
 			<status index='yes' type="VARCHAR(30)"></status><!-- applied/issued -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
@@ -2217,8 +2230,13 @@
 			<issuer index='yes' type="TEXT"></issuer>
 			<notes index="no" type="TEXT"></notes>
 			<premium index="no" type="DECIMAL(12,2)"></premium>
+			<net_premium index="no" type="DECIMAL(12,2)"></net_premium>
+			<loading_premium index="no" type="DECIMAL(12,2)"></loading_premium>
+			<premium_tax index="no" type="DECIMAL(12,2)"></premium_tax>
 			<comm_percent index="no" type="DECIMAL(12,2)"></comm_percent>
 			<amount index="no" type="DECIMAL(12,2)"></amount>
+			<commission_tax index="no" type="DECIMAL(12,2)"></commission_tax>
+			<tds index="no" type="DECIMAL(12,2)"></tds>
 			<issue_date index='yes' type="BIGINT"></issue_date>
 			<commission_type index='yes' type="VARCHAR(30)"></commission_type><!-- basic/orc -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
@@ -2264,4 +2282,27 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</policy_premiums>
+	<tax_heads>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<tax_name index='yes' type="TEXT"></tax_name>
+			<display_name index='yes' type="TEXT"></display_name>
+			<start_date index='yes' type="BIGINT"></start_date>
+			<end_date index='yes' type="BIGINT"></end_date>
+			<percentage index='yes' type="DECIMAL(12,2)"></percentage>
+			<status index='yes' type="TEXT"></status><!--active/archived-->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</tax_heads>
+	<tds_settings>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<tax_name index='yes' type="TEXT"></tax_name>
+			<display_name index='yes' type="TEXT"></display_name>
+			<start_date index='yes' type="BIGINT"></start_date>
+			<end_date index='yes' type="BIGINT"></end_date>
+			<percentage index='yes' type="DECIMAL(12,2)"></percentage>
+			<status index='yes' type="TEXT"></status><!--active/archived-->
+			<product index='yes' type="TEXT"></product>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</tds_settings>
 </re_xml>

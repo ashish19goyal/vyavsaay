@@ -242,13 +242,20 @@
 
             var old_order_history=form.elements['order_history'].value;
 
+			if(vUtil.isBlank(comments))
+			{
+				comments = 'Order checked-in at the branch';
+			}
             var order_history=vUtil.jsonParse(old_order_history);
-            var history_object=new Object();
-            history_object.timeStamp=get_my_time();
-            history_object.details=comments;
-            history_object.location=get_session_var('address');
-            history_object.status=status;
-            order_history.push(history_object);
+            var history_object={timeStamp:get_my_time(),
+            					details:comments,
+            					location:get_session_var('address'),
+            					status:status};
+			if(order_history.length>0 && order_history[order_history.length-1]['status']!=status)
+			{
+				order_history.push(history_object);
+			}
+
             var order_history_string=JSON.stringify(order_history);
 
             var data_json={data_store:'logistics_orders',

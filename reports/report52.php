@@ -1,8 +1,8 @@
-<div id='report52' class='tab-pane portlet box red-sunglo'>	   
+<div id='report52' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report52_ini();'>Refresh</a>
-		</div>		
+		</div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
@@ -15,7 +15,7 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
 
 	<div class="portlet-body">
@@ -46,11 +46,11 @@
 			</tfoot>
 		</table>
 	</div>
-	
+
 	<script>
 
         function report52_header_ini()
-        {	
+        {
             var form=document.getElementById('report52_header');
             var name_filter=form.elements['item_name'];
             var make_filter=form.elements['make'];
@@ -77,9 +77,10 @@
             $(date_filter).val(get_my_past_date((get_my_time()-7*86400000)));
             $(upto_date_filter).datepicker();
             $(upto_date_filter).val(vTime.date());
-            
-            $('#report52').formcontrol();
-        }
+
+			var paginator=$('#report52_body').paginator({'visible':false,'container':$('#report52_body')});
+			setTimeout(function(){$('#report9').formcontrol();},300);
+		}
 
         function report52_ini()
         {
@@ -92,19 +93,19 @@
 
             show_loader();
             $('#report52_body').html('');
-            
+
             var rowsHTML="";
 
             var bills_data={data_store:'supplier_bills',
                            indexes:[{index:'id'},
                                    {index:'supplier',value:supplier},
                                    {index:'entry_date',lowerbound:date,upperbound:upto}]};
-            
+
             var returns_data={data_store:'supplier_returns',
                              indexes:[{index:'id'},
                                     {index:'supplier',value:supplier},
                                     {index:'return_date',lowerbound:date,upperbound:upto}]};
-            
+
             read_json_rows('report52',bills_data,function(bills)
             {
                 read_json_rows('report52',returns_data,function(returns)
@@ -158,6 +159,7 @@
                                         if(bill_ids[k].product_name==makes[z].name)
                                         {
                                             var supplier_name="";
+											console.log(bills);
                                             for(var m in bills)
                                             {
                                                 if(bills[m].id==bill_ids[k].bill_id)
@@ -242,6 +244,6 @@
                 });
             });
         };
-	
+
 	</script>
 </div>

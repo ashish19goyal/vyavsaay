@@ -33,6 +33,7 @@
 					<th>Make</th>
 					<th>Rate</th>
 					<th>Amount</th>
+					<th>Delivery Schedule</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -52,20 +53,20 @@
             var supplier_filter=fields.elements['supplier'];
             var order_date=fields.elements['date'];
             var order_num=fields.elements['order_num'];
-						var ship_to=fields.elements['ship_to'];
+			var ship_to=fields.elements['ship_to'];
             var status_filter=fields.elements['status'];
             fields.elements['order_id'].value=vUtil.newKey();
             var save_button=document.getElementById('form178_save');
-						var tAndC=document.getElementById('form178_terms');
+			var tAndC=document.getElementById('form178_terms');
 
             status_filter.value='draft';
             supplier_filter.value='';
-						ship_to.value='';
+			ship_to.value='';
             order_date.value=vTime.date();
-						tAndC.value=get_session_var('po_message');
+			tAndC.value=get_session_var('po_message');
 
-						var staff_data={data_store:'staff',return_column:'acc_name'};
-						set_my_value_list_json(staff_data,ship_to);
+			var staff_data={data_store:'staff',return_column:'acc_name'};
+			set_my_value_list_json(staff_data,ship_to);
 
             var po_id=$("#form178_link").attr('data_id');
             if(po_id==null || po_id=='')
@@ -154,6 +155,7 @@
                                           {index:'mrp'},
                                           {index:'price'},
                                           {index:'amount'},
+										  {index:'delivery_schedule'},
                                           {index:'tax'},
                                           {index:'total'}]};
 
@@ -179,7 +181,7 @@
 
                         var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
                                     "<td>Amount:<br>Tax: <br>Total: </td>" +
-                                    "<td>Rs. "+order_results[0].amount+"<br>" +
+                                    "<td colspan='2'>Rs. "+order_results[0].amount+"<br>" +
                                     "Rs. "+order_results[0].tax+"<br> " +
                                     "Rs. "+order_results[0].total+"</td>" +
                                     "<td></td>" +
@@ -222,7 +224,10 @@
                                 rowsHTML+="<input type='number' class='floatlabel' placeholder='Amount' readonly='readonly' required form='form178_"+id+"' value='"+result.amount+"' step='any'>";
                                 rowsHTML+="<input type='number' class='floatlabel' placeholder='Tax' readonly='readonly' required form='form178_"+id+"' value='"+result.tax+"' step='any'>";
                             rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<td data-th='Delivery Schedule'>";
+                                rowsHTML+="<input type='text' placeholder='Date' readonly='readonly' required form='form178_"+id+"' value='"+vTime.date({time:result.delivery_schedule})+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Action'>";
                                 rowsHTML+="<input type='hidden' form='form178_"+id+"' value='"+result.total+"'>";
                                 rowsHTML+="<input type='hidden' form='form178_"+id+"' value='"+id+"' name='id'>";
                                 rowsHTML+="<input type='button' class='submit_hidden' form='form178_"+id+"' id='save_form178_"+id+"'>";
@@ -239,14 +244,13 @@
 						var bt=get_session_var('title');
                         modal101_action(bt+' - PO # '+filter_fields.elements['order_num'].value,filter_fields.elements['supplier'].value,'supplier',function (func)
                         {
-                            print_form178(func);
-
-							var order_num=filter_fields.elements['order_num'].value;
+                            var order_num=filter_fields.elements['order_num'].value;
 							var status=filter_fields.elements['status'].value;
 
 							if(status=='supplier finalized')
 							{
 								var data_json={data_store:'purchase_orders',
+										loader:'no',
 										log:'yes',
 										data:[{index:'id',value:order_id},
 											{index:'order_placed_time',value:vTime.unix()},
@@ -256,6 +260,7 @@
 
 								update_json(data_json);
 							}
+							print_form178(func);
                         });
                     });
                     $('#form178').formcontrol();
@@ -289,6 +294,9 @@
                         rowsHTML+="<input type='number' class='floatlabel' placeholder='Amount' required form='form178_"+id+"' step='any' readonly='readonly'>";
                         rowsHTML+="<input type='number' class='floatlabel' placeholder='Tax' required form='form178_"+id+"' step='any' readonly='readonly'>";
                     rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Delivery Schedule'>";
+                        rowsHTML+="<input type='text' placeholder='Date' required form='form178_"+id+"'>";
+                    rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Action'>";
                         rowsHTML+="<input type='hidden' form='form178_"+id+"' name='total'>";
                         rowsHTML+="<input type='hidden' form='form178_"+id+"' value='"+id+"' name='id'>";
@@ -312,10 +320,13 @@
                 var price_filter=fields.elements[4];
                 var amount_filter=fields.elements[5];
                 var tax_filter=fields.elements[6];
-                var total_filter=fields.elements[7];
-                var id_filter=fields.elements[8];
-                var save_button=fields.elements[9];
-                var tax_rate_filter=fields.elements[12];
+				var schedule_filter=fields.elements[7];
+                var total_filter=fields.elements[8];
+                var id_filter=fields.elements[9];
+                var save_button=fields.elements[10];
+                var tax_rate_filter=fields.elements[13];
+
+				$(schedule_filter).datepicker();
 
                 $(save_button).on("click", function(event)
                 {
@@ -395,10 +406,11 @@
                 var price=form.elements[4].value;
                 var amount=form.elements[5].value;
                 var tax=form.elements[6].value;
-                var total=form.elements[7].value;
-                var data_id=form.elements[8].value;
-                var save_button=form.elements[9];
-                var del_button=form.elements[10];
+				var schedule=vTime.unix({date:form.elements[7].value});
+                var total=form.elements[8].value;
+                var data_id=form.elements[9].value;
+                var save_button=form.elements[10];
+                var del_button=form.elements[11];
                 var last_updated=get_my_time();
 
                 var data_json={data_store:'purchase_order_items',
@@ -411,6 +423,7 @@
                         {index:'total',value:total},
                         {index:'mrp',value:mrp},
                         {index:'tax',value:tax},
+						{index:'delivery_schedule',value:schedule},
                         {index:'price',value:price},
 	 					{index:'last_updated',value:last_updated}]};
 
@@ -483,13 +496,13 @@
 						total_quantity+=parseFloat(subform.elements[1].value);
                         amount+=parseFloat(subform.elements[5].value);
                         tax+=parseFloat(subform.elements[6].value);
-                        total+=parseFloat(subform.elements[7].value);
+                        total+=parseFloat(subform.elements[8].value);
                     }
                 });
 
                 var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
                             "<td>Amount:<br>Tax: <br>Total: </td>" +
-                            "<td>Rs. "+amount+"<br>" +
+                            "<td colspan='2'>Rs. "+amount+"<br>" +
                             "Rs. "+tax+"<br> " +
                             "Rs. "+total+"</td>" +
                             "<td></td>" +
@@ -582,7 +595,7 @@
 
 							update_json(data_json);
 						}
-					});	
+					});
                 });
 
                 var amount=0;
@@ -600,13 +613,13 @@
 						total_quantity+=parseFloat(subform.elements[1].value);
                         amount+=parseFloat(subform.elements[5].value);
                         tax+=parseFloat(subform.elements[6].value);
-                        total+=parseFloat(subform.elements[7].value);
+                        total+=parseFloat(subform.elements[8].value);
                     }
                 });
 
                 var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
                                         "<td>Amount:<br>Tax: <br>Total: </td>" +
-                                        "<td>Rs. "+amount+"<br>" +
+                                        "<td colspan='2'>Rs. "+amount+"<br>" +
                                         "Rs. "+tax+"<br> " +
                                         "Rs. "+total+"</td>" +
                                         "<td></td>" +
@@ -651,7 +664,7 @@
                     var form_id=$(button).attr('form');
                     var form=document.getElementById(form_id);
 
-                    var data_id=form.elements[8].value;
+                    var data_id=form.elements['id'].value;
 
                     var data_json={data_store:'purchase_order_items',
 	 										data:[{index:'id',value:data_id}]};
@@ -681,13 +694,13 @@
                 {
                     amount+=parseFloat(subform.elements[5].value);
                     tax+=parseFloat(subform.elements[6].value);
-                    total+=parseFloat(subform.elements[7].value);
+                    total+=parseFloat(subform.elements[8].value);
                 }
             });
 
             var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
                                     "<td>Amount:<br>Tax: <br>Total: </td>" +
-                                    "<td>Rs. "+amount+"<br>" +
+                                    "<td colspan='2'>Rs. "+amount+"<br>" +
                                     "Rs. "+tax+"<br> " +
                                     "Rs. "+total+"</td>" +
                                     "<td></td>" +
@@ -705,17 +718,13 @@
             });
         }
 
-        /**
-         * @form Create purchase order (CPS)
-         * @formNo 178
-         */
         function print_form178(func)
         {
             var form_id='form178';
             ////////////setting up containers///////////////////////
             var container=document.createElement('div');
             var header=document.createElement('div');
-                var logo=document.createElement('div');
+            var logo=document.createElement('div');
                 // var business_intro=document.createElement('div');
 
             var invoice_line=document.createElement('div');
@@ -727,10 +736,10 @@
             var table_container=document.createElement('div');
 
             var footer=document.createElement('div');
-                var tandc=document.createElement('div');
-                var signature=document.createElement('div');
-								var clearance=document.createElement('div');
-								var business_contact=document.createElement('div');
+            var tandc=document.createElement('div');
+            var signature=document.createElement('div');
+			var clearance=document.createElement('div');
+			var business_contact=document.createElement('div');
 
         ////////////setting styles for containers/////////////////////////
 
@@ -738,13 +747,13 @@
                 // business_intro.setAttribute('style','width:100%;text-align:center');
 
             info_section.setAttribute('style','width:100%;min-height:100px');
-                customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:48%;height:120px;border: 1px solid #000;border-radius:5px;');
-                business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:48%;height:120px;border: 1px solid #000;border-radius:5px;');
+                customer_info.setAttribute('style','padding:1%;margin-top:5px;margin-bottom:5px;margin-right:1px;float:left;width:47%;height:120px;border: 1px solid #000;border-radius:5px;');
+                business_info.setAttribute('style','padding:1%;margin-top:5px;margin-bottom:5px;margin-left:1px;float:right;width:47%;height:120px;border: 1px solid #000;border-radius:5px;');
             footer.setAttribute('style','width:100%;min-height:100px');
                 tandc.setAttribute('style','float:left;width:60%;min-height:50px');
                 signature.setAttribute('style','float:right;width:30%;min-height:60px');
-								clearance.setAttribute('style','clear:both;');
-								business_contact.setAttribute('style','width:100%;text-align:center;height:40px;font-size:12px;');
+				clearance.setAttribute('style','clear:both;');
+				business_contact.setAttribute('style','width:100%;text-align:center;height:40px;font-size:12px;');
         ///////////////getting the content////////////////////////////////////////
 
             var bt=get_session_var('title');
@@ -784,44 +793,63 @@
             var new_table=document.createElement('table');
             new_table.setAttribute('style','width:100%;font-size:16px;border:1px solid black;text-align:left;');
             var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
-                        "<td style='text-align:left;width:25%;font-weight:600;padding:3px;'>Item</td>"+
-												"<td style='text-align:left;width:15%;font-weight:600;padding:3px;'>Make</td>"+
+                        "<td style='text-align:left;width:20%;font-weight:600;padding:3px;'>Item</td>"+
+						"<td style='text-align:left;width:12%;font-weight:600;padding:3px;'>Make</td>"+
                         "<td style='text-align:left;width:12%;font-weight:600;padding:3px;'>Quantity</td>"+
                         "<td style='text-align:left;width:12%;font-weight:600;padding:3px;'>Rate</td>"+
                         "<td style='text-align:left;width:12%;font-weight:600;padding:3px;'>Amount</td>"+
                         "<td style='text-align:left;width:12%;font-weight:600;padding:3px;'>Tax</td>"+
-                        "<td style='text-align:left;width:12%;font-weight:600;padding:3px;'>Total</td></tr>";
+                        "<td style='text-align:left;width:12%;font-weight:600;padding:3px;'>Total</td>"+
+						"<td style='text-align:left;width:12%;font-weight:600;padding:3px;'>Delivery Schedule</td>"+
+						"</tr>";
 
             var table_rows=table_header;
             var counter=0;
 
+			var rows_array = [];
             $(table_element).find('form').each(function(index)
             {
                 counter+=1;
-                var form=$(this)[0];
-                var item_name=form.elements[0].value;
-                var quantity=""+form.elements[1].value;
-                var make=form.elements[2].value;
-                var price=form.elements[4].value;
-                var amount=form.elements[5].value;
-                var tax=form.elements[6].value;
-                var total=form.elements[7].value;
-
-                table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
-                        "<td style='text-align:left;padding:3px;word-wrap: break-word;'>"+item_name+"</td>"+
-												"<td style='text-align:left;padding:3px;word-wrap: break-word;'>"+make+"</td>"+
-                        "<td style='text-align:left;padding:3px;'>"+quantity+"</td>"+
-                        "<td style='text-align:left;padding:3px;'>"+price+"</td>"+
-                        "<td style='text-align:left;padding:3px;'>"+amount+"</td>"+
-                        "<td style='text-align:left;padding:3px;'>"+tax+"</td>"+
-                        "<td style='text-align:left;padding:3px;'>"+total+"</td></tr>";
+				var form=$(this)[0];
+				var row_obj = {};
+                row_obj.item_name=form.elements[0].value;
+                row_obj.quantity=""+form.elements[1].value;
+                row_obj.make=form.elements[2].value;
+                row_obj.price=form.elements[4].value;
+                row_obj.amount=form.elements[5].value;
+                row_obj.tax=form.elements[6].value;
+                row_obj.schedule=form.elements[7].value;
+				row_obj.total=form.elements[8].value;
+				row_obj.schedule_t = vTime.unix({date:form.elements[7].value});
+				rows_array.push(row_obj);
             });
+
+			rows_array.sort(function(a,b)
+			{
+				if(parseInt(a.schedule_t)>parseInt(b.schedule_t))
+				{	return 1;}
+				else
+				{	return -1;}
+			});
+
+			rows_array.forEach(function(row)
+			{
+				table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
+                        "<td style='text-align:left;padding:3px;word-wrap: break-word;'>"+row.item_name+"</td>"+
+						"<td style='text-align:left;padding:3px;word-wrap: break-word;'>"+row.make+"</td>"+
+                        "<td style='text-align:left;padding:3px;'>"+row.quantity+"</td>"+
+                        "<td style='text-align:left;padding:3px;'>"+row.price+"</td>"+
+                        "<td style='text-align:left;padding:3px;'>"+row.amount+"</td>"+
+                        "<td style='text-align:left;padding:3px;'>"+row.tax+"</td>"+
+						"<td style='text-align:left;padding:3px;'>"+row.total+"</td>"+
+                        "<td style='text-align:left;padding:3px;'>"+row.schedule+"</td></tr>";
+			});
 
             var row_count=$(table_element).find('tbody>tr').length;
             var rows_to_add=15-row_count;
             for(var i=0;i<rows_to_add;i++)
             {
-                table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+                table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
             }
 
             var table_foot=document.getElementById(form_id+'_foot');
@@ -832,7 +860,7 @@
             var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
                         "<td colspan='2' style='text-align:left;padding:3px;'>"+total_text1+"</td>"+
                         "<td colspan='3' style='text-align:left;padding:3px;'>"+total_text2+"</td>"+
-                        "<td colspan='2' style='text-align:left;padding:3px;font-weight:600;'>"+total_amount+"</td></tr>";
+                        "<td colspan='3' style='text-align:left;padding:3px;font-weight:600;'>"+total_amount+"</td></tr>";
             //console.log(table_foot_row);
             table_rows+=table_foot_row;
             new_table.innerHTML=table_rows;
@@ -855,8 +883,8 @@
 
             footer.appendChild(tandc);
             footer.appendChild(signature);
-						footer.appendChild(clearance);
-						footer.appendChild(business_contact);
+			footer.appendChild(clearance);
+			footer.appendChild(business_contact);
 
             func(container);
         }

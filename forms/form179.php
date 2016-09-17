@@ -189,15 +189,15 @@
             if(is_update_access('form179'))
             {
                 var order_num=form.elements['order'].value;
-								var status=form.elements['status'].value;
-								var old_status=form.elements['old_status'].value;
+				var status=form.elements['status'].value;
+				var old_status=form.elements['old_status'].value;
                 var data_id=form.elements['id'].value;
                 var last_updated=vTime.unix();
-								var order_placed_date=vTime.unix({date:form.elements['placed_date'].value});
-								if(status!=old_status && vUtil.isBlank(order_placed_date) && status=='order placed')
-								{
-									order_placed_date=last_updated;
-								}
+				var order_placed_date=vTime.unix({date:form.elements['placed_date'].value});
+				if(status!=old_status && vUtil.isBlank(order_placed_date) && status=='order placed')
+				{
+					order_placed_date=last_updated;
+				}
 
                 var data_json={data_store:'purchase_orders',
 			 				log:'yes',

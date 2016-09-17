@@ -59,7 +59,7 @@ class handler
 		$dataStore = $inputData['data_store'];
 		self::$vDB->setTable($dataStore);
 		$data = $inputData['indexes'];
-		
+
 		$options = array(
 			'access' => isset($inputData['access']) ? true : null,
 			'count' => isset($inputData['count']) ? $inputData['count'] : null,
@@ -71,4 +71,57 @@ class handler
 		$dbResult['data_store'] = $dataStore;
 		return $dbResult;
 	}
+
+	public static function read_column($inputData)
+	{
+		$dataStore = $inputData['data_store'];
+		self::$vDB->setTable($dataStore);
+		$data = isset($inputData['indexes']) ? $inputData['indexes'] : array();
+
+		$options = array(
+			'access' => isset($inputData['access']) ? true : null,
+			'count' => isset($inputData['count']) ? $inputData['count'] : null,
+			'startIndex' => isset($inputData['start_index']) ? $inputData['start_index'] : 0,
+			'allIndexes' => null,
+			'returnColumn' => isset($inputData['return_column']) ? $inputData['return_column'] : 'id'
+		);
+
+		$dbResult = self::$vDB->vRead($data,$options);
+		$output=[];
+		foreach($dbResult['rows'] as $r)
+		{
+			if($r[$inputData['return_column']]==null || $r[$inputData['return_column']]=="null")
+			{
+				$output[]=0;
+			}
+			else{
+				$output[]=$r[$inputData['return_column']];
+			}
+		}
+		$dbResult['rows']=$output;
+		$dbResult['data_store'] = $dataStore;
+		return $dbResult;
+	}
+
+	public static function get_count($inputData)
+	{
+		$dataStore = $inputData['data_store'];
+		self::$vDB->setTable($dataStore);
+		$data = isset($inputData['indexes']) ? $inputData['indexes'] : array();
+
+		$options = array(
+			'access' => isset($inputData['access']) ? true : null,
+			'count' => isset($inputData['count']) ? $inputData['count'] : null,
+			'startIndex' => isset($inputData['start_index']) ? $inputData['start_index'] : 0,
+			'allIndexes' => null,
+			'returnColumn' => isset($inputData['return_column']) ? "count(".$inputData['return_column'].")" : 'count(id)'
+		);
+
+		$dbResult = self::$vDB->vRead($data,$options);
+		// print_r($dbResult);
+		$dbResult['count']=$dbResult['rows'][0][$options['returnColumn']];
+		$dbResult['data_store'] = $dataStore;
+		return $dbResult;
+	}
+
 }

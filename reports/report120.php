@@ -182,6 +182,7 @@
 						{index:'issue_date'},
 						{index:'premium'},
 						{index:'sum_insured'},
+						{index:'issue_type'},
 						{index:'status',exact:'issued'}]};
 
 		$('#report120_filters .row').each(function(index)
@@ -311,6 +312,7 @@
 	            item['Issue Date']=vTime.date({time:item.issue_date});
 				item['Sum Insured']=item.sum_insured;
 				item['Premium']=item.premium;
+				item['Issue Type']=item.issue_type;
 
 	            delete item.application_num;
 	            delete item.agent;
@@ -321,6 +323,7 @@
 				delete item.sum_insured;
 				delete item.premium;
 				delete item.id;
+				delete item.issue_type;
 	        });
 			hide_loader();
 		});

@@ -130,9 +130,10 @@ function grid_click(func)
 {
 	show_function(func+"_main");
 
-	$("#"+func+"_main").find('ul').find('li:visible').find('a').first().click();
+    var element = $("#"+func+"_main>ul>li:visible>a").first();
+    $(element).click();
 
-    var element_name=$("#"+func+"_main").find('ul').find('li:visible').find('a').first().attr('href').replace(/#/g,'');
+    var element_name=$(element).attr('href').replace(/#/g,'');
     var history_obj={form:element_name,id:'',page:0};
     log_navigation_history(history_obj);
 }

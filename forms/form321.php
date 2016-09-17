@@ -631,12 +631,15 @@
 
                 var old_order_history=form.elements['history'].value;
                 var order_history=vUtil.jsonParse(old_order_history);
-                var history_object=new Object();
-                history_object.timeStamp=get_my_time();
-                history_object.details="Order in-transit";
-                history_object.location='';
-                history_object.status="in-transit";
-                order_history.push(history_object);
+                var history_object={timeStamp:get_my_time(),
+                					details:"Order in-transit",
+                					location:branch,
+                					status:"in-transit"};
+				if(order_history.length>0 && order_history[order_history.length-1]['status']!='in-transit')
+				{
+					order_history.push(history_object);
+				}
+
                 var order_history_string=JSON.stringify(order_history);
 
                 var last_updated=get_my_time();

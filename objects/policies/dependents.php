@@ -4,8 +4,10 @@
 			<thead><tr>
 				<td>Name</td>
 				<td>Relation</td>
-				<td>Date of Birth</td>
-			</tr></thead>
+                <td>Relation</td>
+				<td>Birth Date</td>
+                <td>Sum Insured</td>
+            </tr></thead>
 			<tbody id='object_policies_dependents'>
 			</tbody>
 		</table>
@@ -38,8 +40,14 @@
 							rowsHTML+="<td data-th='Relation'>";
 	                            rowsHTML+=attachment.relation;
 	                        rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Date of Birth'>";
-	                            rowsHTML+=vTime.date({time:attachment.date});
+                            rowsHTML+="<td data-th='Gender'>";
+	                            rowsHTML+=attachment.gender;
+	                        rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Birth Date'>";
+	                            rowsHTML+=attachment.dob;
+	                        rowsHTML+="</td>";
+                            rowsHTML+="<td data-th='Sum Insured'>";
+	                            rowsHTML+=attachment.sum;
 	                        rowsHTML+="</td>";
 						rowsHTML+="</tr>";
 

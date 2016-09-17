@@ -228,8 +228,8 @@
                 $("#modal195_item_table tr").each(function(index)
                 {
                     var checked=false;
-                    if($(this).find('td:nth-child(3)>input').length>0)
-                        checked=$(this).find('td:nth-child(3)>input')[0].checked;
+                    if($(this).find('td:nth-child(4)>input').length>0)
+                        checked=$(this).find('td:nth-child(4)>input')[0].checked;
                     var order_item=new Object();
 
                     if(checked)

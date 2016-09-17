@@ -1,6 +1,10 @@
 <?php
 
+	session_start();
+
+	require_once '../Classes/vUtil.php';
 	include_once "../Classes/db.php";
+	use RetailingEssentials\vUtil;
 	use RetailingEssentials\db_connect;
 
 	function update_tables($db_name,$info_conn,$db_schema)
@@ -72,12 +76,18 @@
 		}
 	}
 
-	$db_schema_xml=new \DOMDocument();
-	$db_schema_xml->load("../db/master_db_schema.xml");
-	$db_schema=$db_schema_xml->documentElement;
-	$info_conn=new db_connect('information_schema');
+	if(vUtil::isMasterSession())
+	{
+		$db_schema_xml=new \DOMDocument();
+		$db_schema_xml->load("../db/master_db_schema.xml");
+		$db_schema=$db_schema_xml->documentElement;
+		$info_conn=new db_connect('information_schema');
 
-	echo "<b>updating db re_master</b><br>";
-	update_tables("re_master",$info_conn,$db_schema);
+		echo "<b>updating db re_master</b><br>";
+		update_tables("re_master",$info_conn,$db_schema);
+	}
+	else{
+		echo "You don't have permissions to perform this operation.";
+	}
 
 ?>

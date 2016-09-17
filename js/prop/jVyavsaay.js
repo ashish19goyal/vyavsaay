@@ -7,14 +7,14 @@
 (function ($) {
 	$.fn.formcontrol=function(options)
 	{
-		return this.each(function()
-		{
+		// return this.each(function()
+		// {
 			$(this).find('.floatlabel:visible').floatlabel();
 			$(this).find('.floatlabel_right:visible').floatlabel_right();
 			$(this).find('textarea').autosize();
 			$(this).find("form").attr('autocomplete', 'off');
 			$(this).find('.dblclick_editable').longpresseditable();
-    	});
+    	// });
 	};
 }(jQuery));
 
@@ -163,7 +163,7 @@
 (function ($) {
 	$.fn.fileInput=function(options)
 	{
-		var defaults={fileType:'.csv'};
+		var defaults={fileType:'.csv',multiple:''};
 		var settings = $.extend(defaults, options || {});
 		var dummy = this;
 
@@ -186,12 +186,16 @@
 			input.accept=settings.fileType;
 			input.style='display:none;';
 			input.id = "file_input_"+id;
-
+			if(settings.multiple!="")
+			{
+				input.multiple="multiple";
+			}
 			var output = document.createElement('output');
 			output.id = "file_output_"+id;
 
 			$(dummy).closest('div').append(input);
 			$(dummy).closest('div').append(output);
+			$(input).hide();
 
 			$(dummy).off('click');
 			$(dummy).on('click',function (e)

@@ -1,14 +1,20 @@
 <?php
 
+/**
+* No parameters required
+*/
+
+	session_start();
+
 	include_once "../Classes/S3.php";
-	include_once "../Classes/config.php";
+	include_once '../Classes/config.php';
+	require_once '../Classes/vUtil.php';
 	include_once "../Classes/vDB.php";
 	use RetailingEssentials\vDB;
+	use RetailingEssentials\vUtil;
 	use RetailingEssentials\config;
 
-	$pass=$_GET['p'];
-
-	if($pass=='vya')
+	if(vUtil::isMasterSession())
 	{
 		$config = config::getInstance();
 		$dbhost = $config->get("host");
@@ -60,6 +66,6 @@
 	}
 	else
 	{
-		echo "Invalid session";
+		echo "You don't have permissions to perform this operation.";
 	}
 ?>

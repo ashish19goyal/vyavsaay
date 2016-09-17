@@ -118,7 +118,7 @@
             customer_filter.value='';
 
 			$('#form328_body').paginator({visible:false});
-            $('#form328').formcontrol();
+            setTimeout(function(){$('#form328').formcontrol();},300);
         }
 
         function form328_ini()
@@ -197,7 +197,7 @@
                                 rowsHTML+="<a onclick=\"show_object('product_master','"+result.item_name+"');\"><input type='text' readonly='readonly' form='form328_"+id+"' value='"+result.item_name+"'></a>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Batch'>";
-                                rowsHTML+="<input type='text' class='floatlabel' placeholder='Batch' readonly='readonly' form='form328_"+id+"' value='"+result.batch+"'>";
+                                rowsHTML+="<a><input type='text' class='floatlabel' placeholder='Batch' readonly='readonly' form='form328_"+id+"' value='"+result.batch+"'></a>";
                                 rowsHTML+="<input type='text' class='floatlabel' placeholder='To Storage' readonly='readonly' form='form328_"+id+"' value='"+result.storage+"'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Quantity'>";
@@ -208,7 +208,7 @@
 								rowsHTML+="<input type='text' class='floatlabel' placeholder='Action' readonly='readonly' form='form328_"+id+"' value='"+result.type+"'>";
 							    rowsHTML+="<input type='number' readonly='readonly' class='floatlabel' placeholder='Amount' step='any' form='form328_"+id+"' value='"+result.refund_amount+"'>";
                                 rowsHTML+="<input type='number' step='any' readonly='readonly' class='floatlabel' placeholder='Tax' form='form328_"+id+"' value='"+result.tax+"'>";
-                                rowsHTML+="<input type='text' readonly='readonly' class='floatlabel' placeholder='Exchange Batch' form='form328_"+id+"' value='"+result.exchange_batch+"'>";
+                                rowsHTML+="<a><input type='text' readonly='readonly' class='floatlabel' placeholder='Exchange Batch' form='form328_"+id+"' value='"+result.exchange_batch+"'></a>";
                                 rowsHTML+="<input type='text' readonly='readonly' class='floatlabel' placeholder='From Storage' form='form328_"+id+"' value='"+result.exchange_storage+"'>";
                             rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Reason'>";
@@ -234,6 +234,12 @@
                         {
                             show_object('product_instances',batch_object);
                         });
+
+						var exchange_batch_object={product:result.item_name,batch:result.exchange_batch};
+						$(new_batch_filter).parent().on('click',function()
+						{
+							show_object('product_instances',exchange_batch_object);
+						});
 
                         if(result.type=='exchange')
                         {

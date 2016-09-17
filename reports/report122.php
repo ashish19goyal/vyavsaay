@@ -198,6 +198,7 @@
 						{index:'premium'},
 						{index:'issue_date'},
 						{index:'end_date'},
+						{index:'issue_type'},
 						{index:'status',exact:'applied'}]};
 
 		$('#report122_filters .row').each(function(index)

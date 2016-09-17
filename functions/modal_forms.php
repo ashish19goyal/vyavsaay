@@ -3156,7 +3156,8 @@
 		                  <div class="row">
 								<div class="col-sm-12 col-md-4">Order #</div>
 					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal195_form' required name='order' readonly='readonly'></div>
-					     		</div>
+					     	</div>
+							<hr>
        		               <table id='modal195_item_table' class='table table-striped table-bordered table-hover dt-responsive no-more-tables'></table>
 		               </div>
 		             </div>
@@ -3854,7 +3855,7 @@
         </div>
     </div>
 
-	<a href='#modal216' data-toggle="modal" id='modal216_link'></a>
+	<!-- <a href='#modal216' data-toggle="modal" id='modal216_link'></a>
 	<div id="modal216" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog modal-full">
 			<div class="modal-content">
@@ -3945,154 +3946,299 @@
 				</form>
 			</div>
 		</div>
+	</div> -->
+
+	<a href='#modal216' data-toggle="modal" id='modal216_link'></a>
+	<div id="modal216" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-full">
+			<div class="modal-content">
+				<form id='modal216_form' autocomplete="off">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+						<h4 class="modal-title">Add Application</h4>
+					</div>
+					<div class="modal-body">
+						<div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+							<div class="row">
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Issuing Company" form='modal216_form' required name='company'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Application Number" form='modal216_form' required name='app_number'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Product Name" required form='modal216_form' required name='policy_name'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Policy Holder" form='modal216_form' name='holder'></div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Full Name" required form='modal216_form' name='holder_name'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Email ID" required form='modal216_form' name='email'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Primary Phone" required form='modal216_form' name='phone'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Secondary Phone" required form='modal216_form' name='second_phone'></div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6 col-md-6"><input type='text' class='floatlabel' placeholder="Primary Address" required form='modal216_form' name='address'></div>
+								<div class="col-sm-6 col-md-6"><input type='text' class='floatlabel' placeholder="Permanent Address" form='modal216_form' name='alt_address'></div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class='col-md-12'><button type="button" title='Add Dependents' class='btn green' name='add_button'><i class='fa fa-plus'></i></button></div>
+								<div class='col-md-12'><div id='modal216_dependents'></div></div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Total Sum Insured" required form='modal216_form' name='total_sum'></div>
+								<div class="col-sm-6 col-md-3"><input type='number' class='floatlabel' placeholder="Gross Premium" required form='modal216_form' step='any' min='0' name='premium'></div>
+								<div class="col-sm-6 col-md-3"><input type='number' class='floatlabel' placeholder="Received Amount" required form='modal216_form' step='any' name='received_amount' min='0'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Discount" readonly='readonly' form='modal216_form' name='discount'></div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Payor's Name" form='modal216_form' name='payor'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Payment Mode" form='modal216_form' name='pay_mode'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Bank Details" form='modal216_form' name='bank'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Instrument Number" form='modal216_form' name='instrument'></div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Tele-Caller" form='modal216_form' name='caller'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Sales Manager" form='modal216_form' name='sales'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Team Lead" form='modal216_form' name='lead'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Agent" required form='modal216_form' name='agent'></div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Out Source" required form='modal216_form' name='out_source'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Issuance Type" required form='modal216_form' name='type'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Ported From" form='modal216_form' name='ported_from'></div>
+								<div class="col-sm-6 col-md-3 pull-right">
+									<button type='button' name='file_dummy' form='modal216_form' class='btn yellow-saffron'>Add Attachments</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn green" form='modal216_form' name='save'>Add</button>
+						<button type="button" class="btn red" form='modal216_form' data-dismiss='modal' name='cancel'>Cancel</button>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
 
-
-				<a href='#modal218' data-toggle="modal" id='modal218_link'></a>
-				<div id="modal218" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
-						<div class="modal-dialog">
-								<div class="modal-content">
-										<form id='modal218_form' autocomplete="off">
-											<div class="modal-header">
-													<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-													<h4 class="modal-title">Add Commission</h4>
-											</div>
-											<div class="modal-body">
-												<div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
-													<div class="row">
-														<div class="col-sm-12 col-md-4">Policy Number</div>
-														<div class="col-sm-12 col-md-8"><input type='text' form='modal218_form' name='policy_number'></div>
-													</div>
-													<div class="row">
-														<div class="col-sm-12 col-md-4">Policy Name</div>
-														<div class="col-sm-12 col-md-8"><input type='text' readonly='readonly' form='modal218_form' name='name'></div>
-													</div>
-													<div class="row">
-														<div class="col-sm-12 col-md-4">Policy Holder</div>
-														<div class="col-sm-12 col-md-8"><input type='text' readonly='readonly' form='modal218_form' name='holder'></div>
-													</div>
-													<div class="row">
-														<div class="col-sm-12 col-md-4">Agent</div>
-														<div class="col-sm-12 col-md-8"><input type='text' readonly='readonly' form='modal218_form' name='agent'></div>
-													</div>
-													<div class="row">
-														<div class="col-sm-12 col-md-4">Commission #</div>
-														<div class="col-sm-12 col-md-8"><input type='text' form='modal218_form' name='commission_num'></div>
-													</div>
-													<div class="row">
-														<div class="col-sm-12 col-md-4">Commission Amount</div>
-														<div class="col-sm-12 col-md-8"><input type='number' required form='modal218_form' step='any' name='commission'></div>
-													</div>
-													<div class="row">
-														<div class="col-sm-12 col-md-4">Issue Date</div>
-														<div class="col-sm-12 col-md-8"><input type='text' form='modal218_form' name='issue'></div>
-													</div>
-													<div class="row">
-														<div class="col-sm-12 col-md-4">Type</div>
-														<div class="col-sm-12 col-md-8"><input type='text' required form='modal218_form' name='type'></div>
-													</div>
-													<div class="row">
-														<div class="col-sm-12 col-md-4">Notes</div>
-														<div class="col-sm-12 col-md-8"><textarea type='text' form='modal218_form' name='notes'></textarea></div>
-													</div>
-												</div>
-											</div>
-										<div class="modal-footer">
-											<button type="submit" class="btn green" form='modal218_form' name='save'>Add</button>
-											<button type="button" class="btn red" form='modal218_form' data-dismiss='modal' name='cancel'>Cancel</button>
-										</div>
-										</form>
+	<a href='#modal217' data-toggle="modal" id='modal217_link'></a>
+	<div id="modal217" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-full">
+			<div class="modal-content">
+				<form id='modal217_form' autocomplete="off">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+						<h4 class="modal-title">Renew Policy</h4>
+					</div>
+					<div class="modal-body">
+						<div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+							<div class="row">
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' readonly='readonly' placeholder="Issuing Company" form='modal217_form' required name='company'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' readonly='readonly' placeholder="Application Number" form='modal217_form' required name='app_number'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Product Name" required form='modal217_form' required name='policy_name'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' readonly='readonly' placeholder="Policy Holder" form='modal217_form' name='holder'></div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Full Name" required form='modal217_form' name='holder_name'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Email ID" required form='modal217_form' name='email'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Primary Phone" required form='modal217_form' name='phone'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Secondary Phone" required form='modal217_form' name='second_phone'></div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6 col-md-6"><input type='text' class='floatlabel' placeholder="Primary Address" required form='modal217_form' name='address'></div>
+								<div class="col-sm-6 col-md-6"><input type='text' class='floatlabel' placeholder="Permanent Address" form='modal217_form' name='alt_address'></div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class='col-md-12'><button type="button" title='Add Dependents' class='btn green' name='add_button'><i class='fa fa-plus'></i></button></div>
+								<div class='col-md-12'><div id='modal217_dependents'></div></div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Total Sum Insured" required form='modal217_form' name='total_sum'></div>
+								<div class="col-sm-6 col-md-3"><input type='number' class='floatlabel' placeholder="Gross Premium" required form='modal217_form' step='any' min='0' name='premium'></div>
+								<div class="col-sm-6 col-md-3"><input type='number' class='floatlabel' placeholder="Received Amount" required form='modal217_form' step='any' name='received_amount' min='0'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Discount" readonly='readonly' form='modal217_form' name='discount'></div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Payor's Name" form='modal217_form' name='payor'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Payment Mode" form='modal217_form' name='pay_mode'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Bank Details" form='modal217_form' name='bank'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Instrument Number" form='modal217_form' name='instrument'></div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Tele-Caller" form='modal217_form' name='caller'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Sales Manager" form='modal217_form' name='sales'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Team Lead" form='modal217_form' name='lead'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Agent" required form='modal217_form' name='agent'></div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Out Source" required form='modal217_form' name='out_source'></div>
+								<div class="col-sm-12 col-md-3">
+									<button type='button' name='file_dummy' form='modal217_form' class='btn yellow-saffron'>Add Attachments</button>
 								</div>
+							</div>
 						</div>
-				</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn green" form='modal217_form' name='save'>Renew</button>
+						<button type="button" class="btn red" form='modal217_form' data-dismiss='modal' name='cancel'>Cancel</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
-				<a href='#modal219' data-toggle="modal" id='modal219_link'></a>
-				<div id="modal219" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
-						<div class="modal-dialog">
-								<div class="modal-content">
-										<form id='modal219_form' autocomplete="off">
-											<div class="modal-header">
-													<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-													<h4 class="modal-title">Add Claim</h4>
-											</div>
-											<div class="modal-body">
-												<div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
-													<div class="row">
-														<div class="col-sm-12 col-md-4">Policy Number</div>
-														<div class="col-sm-12 col-md-8"><input type='text' form='modal219_form' name='policy_number'></div>
-													</div>
-													<div class="row">
-														<div class="col-sm-12 col-md-4">Policy Name</div>
-														<div class="col-sm-12 col-md-8"><input type='text' readonly='readonly' form='modal219_form' name='name'></div>
-													</div>
-													<div class="row">
-														<div class="col-sm-12 col-md-4">Policy Holder</div>
-														<div class="col-sm-12 col-md-8"><input type='text' readonly='readonly' form='modal219_form' name='holder'></div>
-													</div>
-													<div class="row">
-														<div class="col-sm-12 col-md-4">Agent</div>
-														<div class="col-sm-12 col-md-8"><input type='text' readonly='readonly' form='modal219_form' name='agent'></div>
-													</div>
-													<div class="row">
-														<div class="col-sm-12 col-md-4">Claim #</div>
-														<div class="col-sm-12 col-md-8"><input type='text' form='modal219_form' name='claim_num'></div>
-													</div>
-													<div class="row">
-														<div class="col-sm-12 col-md-4">Claim Amount</div>
-														<div class="col-sm-12 col-md-8"><input type='number' required form='modal219_form' step='any' name='claim'></div>
-													</div>
-													<div class="row">
-														<div class="col-sm-12 col-md-4">Request Date</div>
-														<div class="col-sm-12 col-md-8"><input type='text' form='modal219_form' name='request'></div>
-													</div>
-													<div class="row">
-														<div class="col-sm-12 col-md-4">Issue Date</div>
-														<div class="col-sm-12 col-md-8"><input type='text' form='modal219_form' name='issue'></div>
-													</div>
-													<div class="row">
-														<div class="col-sm-12 col-md-4">Notes</div>
-														<div class="col-sm-12 col-md-8"><textarea type='text' form='modal219_form' name='notes'></textarea></div>
-													</div>
-												</div>
-											</div>
-										<div class="modal-footer">
-											<button type="submit" class="btn green" form='modal219_form' name='save'>Add</button>
-											<button type="button" class="btn red" form='modal219_form' data-dismiss='modal' name='cancel'>Cancel</button>
-										</div>
-										</form>
+	<a href='#modal218' data-toggle="modal" id='modal218_link'></a>
+	<div id="modal218" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog">
+					<div class="modal-content">
+							<form id='modal218_form' autocomplete="off">
+								<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+										<h4 class="modal-title">Add Commission</h4>
 								</div>
-						</div>
-				</div>
+								<div class="modal-body">
+									<div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+										<div class="row">
+											<div class="col-sm-12 col-md-4">Policy Number</div>
+											<div class="col-sm-12 col-md-8"><input type='text' form='modal218_form' name='policy_number'></div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 col-md-4">Policy Name</div>
+											<div class="col-sm-12 col-md-8"><input type='text' readonly='readonly' form='modal218_form' name='name'></div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 col-md-4">Policy Holder</div>
+											<div class="col-sm-12 col-md-8"><input type='text' readonly='readonly' form='modal218_form' name='holder'></div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 col-md-4">Agent</div>
+											<div class="col-sm-12 col-md-8"><input type='text' readonly='readonly' form='modal218_form' name='agent'></div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 col-md-4">Commission #</div>
+											<div class="col-sm-12 col-md-8"><input type='text' form='modal218_form' name='commission_num'></div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 col-md-4">Commission Amount</div>
+											<div class="col-sm-12 col-md-8"><input type='number' required form='modal218_form' step='any' name='commission'></div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 col-md-4">Issue Date</div>
+											<div class="col-sm-12 col-md-8"><input type='text' form='modal218_form' name='issue'></div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 col-md-4">Type</div>
+											<div class="col-sm-12 col-md-8"><input type='text' required form='modal218_form' name='type'></div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 col-md-4">Notes</div>
+											<div class="col-sm-12 col-md-8"><textarea type='text' form='modal218_form' name='notes'></textarea></div>
+										</div>
+									</div>
+								</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn green" form='modal218_form' name='save'>Add</button>
+								<button type="button" class="btn red" form='modal218_form' data-dismiss='modal' name='cancel'>Cancel</button>
+							</div>
+							</form>
+					</div>
+			</div>
+	</div>
 
-				<a href='#modal220' data-toggle="modal" id='modal220_link'></a>
-				<div id="modal220" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
-			        <div class="modal-dialog">
-			            <div class="modal-content">
-			                <form id='modal220_form' autocomplete="off">
-				            	<div class="modal-header">
-			                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-			                    	<h4 class="modal-title">Add Note</h4>
-			                	</div>
-				                <div class="modal-body">
-					               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
-					               	<div class="row">
-												<div class="col-sm-12 col-md-4">Date</div>
-								     			<div class="col-sm-12 col-md-8"><input type='text' readonly='readonly' form='modal220_form' name='date'></div>
-								     		</div>
-					              <div class="row">
-												<div class="col-sm-12 col-md-4">Details</div>
-								     			<div class="col-sm-12 col-md-8"><textarea form='modal220_form' name='details'></textarea></div>
-								     		</div>
-								     		 </div>
-					             </div>
-				             	<div class="modal-footer">
-				               	<button type="submit" class="btn green" form='modal220_form' name='save'>Add</button>
-				               	<button type="button" data-dismiss='modal' class="btn red" form='modal220_form' name='cancel'>Cancel</button>
-				             	</div>
-			                </form>
-			            </div>
-			        </div>
-			    </div>
+	<a href='#modal219' data-toggle="modal" id='modal219_link'></a>
+	<div id="modal219" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog">
+					<div class="modal-content">
+							<form id='modal219_form' autocomplete="off">
+								<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+										<h4 class="modal-title">Add Claim</h4>
+								</div>
+								<div class="modal-body">
+									<div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+										<div class="row">
+											<div class="col-sm-12 col-md-4">Policy Number</div>
+											<div class="col-sm-12 col-md-8"><input type='text' form='modal219_form' name='policy_number'></div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 col-md-4">Policy Name</div>
+											<div class="col-sm-12 col-md-8"><input type='text' readonly='readonly' form='modal219_form' name='name'></div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 col-md-4">Policy Holder</div>
+											<div class="col-sm-12 col-md-8"><input type='text' readonly='readonly' form='modal219_form' name='holder'></div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 col-md-4">Agent</div>
+											<div class="col-sm-12 col-md-8"><input type='text' readonly='readonly' form='modal219_form' name='agent'></div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 col-md-4">Claim #</div>
+											<div class="col-sm-12 col-md-8"><input type='text' form='modal219_form' name='claim_num'></div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 col-md-4">Claim Amount</div>
+											<div class="col-sm-12 col-md-8"><input type='number' required form='modal219_form' step='any' name='claim'></div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 col-md-4">Request Date</div>
+											<div class="col-sm-12 col-md-8"><input type='text' form='modal219_form' name='request'></div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 col-md-4">Issue Date</div>
+											<div class="col-sm-12 col-md-8"><input type='text' form='modal219_form' name='issue'></div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 col-md-4">Notes</div>
+											<div class="col-sm-12 col-md-8"><textarea type='text' form='modal219_form' name='notes'></textarea></div>
+										</div>
+									</div>
+								</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn green" form='modal219_form' name='save'>Add</button>
+								<button type="button" class="btn red" form='modal219_form' data-dismiss='modal' name='cancel'>Cancel</button>
+							</div>
+							</form>
+					</div>
+			</div>
+	</div>
+
+	<a href='#modal220' data-toggle="modal" id='modal220_link'></a>
+	<div id="modal220" class="modal fade draggable-modal" role="basic" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id='modal220_form' autocomplete="off">
+	            	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    	<h4 class="modal-title">Add Note</h4>
+                	</div>
+	                <div class="modal-body">
+		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+		               	<div class="row">
+									<div class="col-sm-12 col-md-4">Date</div>
+					     			<div class="col-sm-12 col-md-8"><input type='text' readonly='readonly' form='modal220_form' name='date'></div>
+					     		</div>
+		              <div class="row">
+									<div class="col-sm-12 col-md-4">Details</div>
+					     			<div class="col-sm-12 col-md-8"><textarea form='modal220_form' name='details'></textarea></div>
+					     		</div>
+					     		 </div>
+		             </div>
+	             	<div class="modal-footer">
+	               	<button type="submit" class="btn green" form='modal220_form' name='save'>Add</button>
+	               	<button type="button" data-dismiss='modal' class="btn red" form='modal220_form' name='cancel'>Cancel</button>
+	             	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 	<a href='#modal221' data-toggle="modal" id='modal221_link'></a>
 	<div id="modal221" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">

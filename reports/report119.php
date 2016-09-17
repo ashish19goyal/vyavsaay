@@ -198,8 +198,13 @@
 						{index:'agent'},
 						{index:'sum_insured'},
 						{index:'premium'},
+						{index:'short_premium'},
 						{index:'issue_date'},
 						{index:'end_date'},
+						{index:'term'},
+						{index:'issue_type'},
+						{index:'tele_caller'},
+						{index:'sales_manager'},
 						{index:'status',exact:'issued'}]};
 
 		$('#report119_filters .row').each(function(index)
@@ -223,7 +228,7 @@
 				}
 			}
 		});
-		console.log(columns);
+		// console.log(columns);
 		read_json_rows('report119',columns,function(items)
         {
             var rowsHTML="";
@@ -258,7 +263,9 @@
 
             initialize_tabular_report_buttons(columns,'Policies Report','report119',function (item)
             {
+				item['Issue Date']=vTime.date({time:item.issue_date});
 				item['End Date']=vTime.date({time:item.end_date});
+				delete item.issue_date;
 				delete item.end_date;
 			});
 

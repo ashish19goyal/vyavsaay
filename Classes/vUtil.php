@@ -221,6 +221,18 @@ class vUtil
 		}
 		return false;
 	}
+
+	/**
+	*	This function validates the master session for scripts
+	*/
+	public static function isMasterSession()
+	{
+		if(isset($_SESSION['session']) && $_SESSION['session']=='yes' && $_SESSION['domain']=='vyavsaay' && $_SESSION['username']=='master')
+		{
+			return true;
+		}
+		return false;
+	}
 }
 
 

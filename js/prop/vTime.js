@@ -84,6 +84,39 @@ var vTime = function ()
                 }
                 d=new Date(year,month,day,hour,minutes,seconds,0);
             		break;
+        case 'dd/mm/yyyy hh:mm:ss AM':
+                var date_time_array=String(sets.date).split(/ /);
+                var date_elem=date_time_array[0];
+                var date_array=date_elem.split(/[\-\/]+/);
+
+                var day=parseInt(date_array[0]);
+                var month=parseInt(date_array[1])-1;
+                var year=parseInt(date_array[2]);
+
+                if(year<50)
+                {
+                    year=2000+year;
+                }
+                else if(year>50 && year<100)
+                {
+                    year=1900+year;
+                }
+
+                var hour=0;
+                var minutes=0;
+                var seconds=0;
+
+                if(date_time_array.length==2)
+                {
+                  var time_elem=date_time_array[1];
+                  var time_array=time_elem.split(/:/);
+
+                  hour=parseInt(time_array[0]);
+                  minutes=parseInt(time_array[1]);
+                  seconds=parseInt(time_array[2]);
+                }
+                d=new Date(year,month,day,hour,minutes,seconds,0);
+            	break;
         case 'mm/dd/yyyy hh:mm:ss AM':
                 var date_time_array=String(sets.date).split(/ /);
                 var date_elem=date_time_array[0];
@@ -111,9 +144,9 @@ var vTime = function ()
                   var time_elem=date_time_array[1];
                   var time_array=time_elem.split(/:/);
 
-                  hour=parseInt(time_array[0]);
-                  minutes=parseInt(time_array[1]);
-                  seconds=parseInt(time_array[2]);
+                  hour=vUtil.isBlank(time_array[0])? 0 : parseInt(time_array[0]);
+                  minutes=vUtil.isBlank(time_array[1])? 0 : parseInt(time_array[1]);
+                  seconds=vUtil.isBlank(time_array[2])? 0 : parseInt(time_array[2]);
                 }
                 d=new Date(year,month,day,hour,minutes,seconds,0);
             	break;

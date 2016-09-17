@@ -190,7 +190,7 @@ class vDB
 	{
 		$whereArray=$this->getWhereClause($indexes);
 		$limitArray=$this->getLimitClause($options);
-		$indexesClause=$this->getIndexesClause($indexes,$options);
+		$indexesClause= isset($options['returnColumn']) ? $options['returnColumn'] : $this->getIndexesClause($indexes,$options);
 
 		$subQueries = array(
 				'where' => $whereArray['query'],

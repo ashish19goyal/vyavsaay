@@ -217,21 +217,26 @@
             {
                 var old_order_history=form.elements[6].value;
                 var order_history=vUtil.jsonParse(old_order_history);
-                var history_object=new Object();
-                history_object.timeStamp=get_my_time();
-                history_object.details=remarks;
-                history_object.status=status;
+                var history_object={timeStamp:get_my_time(),
+                					details:remarks,
+                					status:status};
 
                 if(status=='RTO pending')
                 {
                     history_object.location=get_session_var('address');
+					history_object.details= (vUtil.isBlank(remarks)) ? "Order checked-in at the branch" : remarks;
                 }
                 else if(status=='RTO delivered')
                 {
                     history_object.location="";
+					history_object.details= (vUtil.isBlank(remarks)) ? "Order delivered to the merchant" : remarks;
                 }
 
-                order_history.push(history_object);
+				if(order_history.length>0 && order_history[order_history.length-1]['status']!=status)
+				{
+                	order_history.push(history_object);
+				}
+
                 var order_history_string=JSON.stringify(order_history);
 
                 var data_json={data_store:'logistics_orders',

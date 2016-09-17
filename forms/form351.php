@@ -172,14 +172,6 @@
 			{
 				results.forEach(function(result)
 				{
-					// var accounts_array=vUtil.jsonParse(result.accounts);
-					// var accounts_data="<ul id='form351_accounts_"+result.id+"'>";
-					// accounts_array.forEach(function(account)
-					// {
-					// 	accounts_data+="<li>"+account+"</li>";
-					// });
-					// accounts_data+="</ul>";
-
 					var rowsHTML="<tr>";
 						rowsHTML+="<form id='form351_"+result.id+"'></form>";
 							rowsHTML+="<td data-th='Name'>";
@@ -188,10 +180,6 @@
               				rowsHTML+="<td data-th='Issuing Company'>";
 								rowsHTML+="<input type='text' readonly='readonly' form='form351_"+result.id+"' value='"+result.issuer+"'>";
 							rowsHTML+="</td>";
-							// rowsHTML+="<td data-th='Accounts'>";
-							// 	rowsHTML+=accounts_data;
-							// 	rowsHTML+="<button type='button' class='btn yellow' name='account' title='Edit Accounts' onclick=\"modal226_action('"+result.id+"');\"><i class='fa fa-pencil'></i></button>";
-							// rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Preferred'>";
 								rowsHTML+="<input type='text' class='dblclick_editable' readonly='readonly' form='form351_"+result.id+"' value='"+result.preferred+"'>";
 							rowsHTML+="</td>";

@@ -221,7 +221,7 @@
 						{index:'issuer'},
 						{index:'agent'},
 						{index:'premium'},
-						{index:'end_date',upperbound:vTime.unix()},
+						{index:'end_date'},
 						{index:'status',exact:'issued'}]};
 
 		$('#report125_filters .row').each(function(index)

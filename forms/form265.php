@@ -518,12 +518,15 @@
             var old_order_history=form.elements[14].value;
 
             var order_history=vUtil.jsonParse(old_order_history);
-            var history_object=new Object();
-            history_object.timeStamp=get_my_time();
-            history_object.details="Order Out for Return";
-            history_object.location=get_session_var('address');
-            history_object.status="RTO out for delivery";
-            order_history.push(history_object);
+            var history_object={timeStamp:get_my_time(),
+            					details:"Order Out for Return",
+            					location:get_session_var('address'),
+            					status:"RTO out for delivery"};
+			if(order_history.length>0 && order_history[order_history.length-1]['status']!="RTO out for delivery")
+			{
+				order_history.push(history_object);
+			}
+
             var order_history_string=JSON.stringify(order_history);
 
             var last_updated=get_my_time();
@@ -676,10 +679,11 @@
 
             var last_updated=get_my_time();
 
-            var rto_columns={data_store:'rto',count:2,return_column:'id',
-                            indexes:[{index:'rto_num',exact:rto_num}]};
+            var rto_columns={data_store:'rto',count:2,
+                            indexes:[{index:'id'},{index:'rto_num',exact:rto_num}]};
             read_json_rows('',rto_columns,function(rtoes)
             {
+				console.log(rtoes);
                 if(rtoes.length==0 || (rtoes.length==1 && rtoes[0].id==data_id))
                 {
                     var data_json={data_store:'rto',

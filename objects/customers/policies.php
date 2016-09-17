@@ -3,12 +3,12 @@
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr>
-					<th>Policy #</th>
+				    <th>Issuing Company</th>
+                	<th>Policy #</th>
                     <th>Policy Name</th>
                     <th>Sum Insured</th>
                     <th>End Date</th>
-                    <th>Status</th>
-				</tr>
+                </tr>
 			</thead>
 			<tbody id='object_customers_policies'>
 			</tbody>
@@ -33,6 +33,7 @@
                                 {index:'policy_name'},
                                 {index:'policy_holder',exact:obj_name},
                                 {index:'status'},
+                                {index:'issuer'},
                                 {index:'sum_insured'},
                                 {index:'end_date'}]};
             read_json_rows('',policy_data,function(results)
@@ -44,6 +45,9 @@
                         result.policy_num = result.application_num;
                     }
 					var rowsHTML="<tr>";
+                        rowsHTML+="<td data-th='Issuing Company'><b>";
+                            rowsHTML+=result.issuer;
+                        rowsHTML+="</b></td>";
                         rowsHTML+="<td data-th='Policy #'><b>";
                             rowsHTML+=result.policy_num;
                         rowsHTML+="</b></td>";
@@ -56,10 +60,7 @@
                         rowsHTML+="<td data-th='End Date'>";
                             rowsHTML+=get_my_past_date(result.end_date);
                         rowsHTML+="</td>";
-                        rowsHTML+="<td data-th='Status'>";
-                            rowsHTML+=result.status;
-                        rowsHTML+="</td>";
-					rowsHTML+="</tr>";
+                    rowsHTML+="</tr>";
 
 					$(container).append(rowsHTML);
 				});

@@ -26,10 +26,10 @@
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr style='color:#9a9a9a;'>
-          <th>Item</th>
+          			<th>Item</th>
 					<th>Quantity</th>
 					<th>Rate</th>
-          <th>Total</th>
+          			<th>Total</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -126,8 +126,8 @@
             status_filter.value='pending';
             customers_filter.value='';
 
-						var paginator=$('#form180_body').paginator({visible:false});
-            $('#form180').formcontrol();
+			var paginator=$('#form180_body').paginator({visible:false});
+            setTimeout(function(){$('#form180').formcontrol();},300);
         }
 
         function form180_ini()

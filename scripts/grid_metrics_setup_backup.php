@@ -1,12 +1,20 @@
 <?php
 
-namespace RetailingEssentials;
-include_once "../Classes/db.php";
-include_once '../Classes/config.php';
-use RetailingEssentials\config;
-use RetailingEssentials\db_connect;
-use \DOMDocument;
-use \PDO;
+/**
+*	db=domainName
+*	all=yes
+*/
+
+	session_start();
+
+	include_once '../Classes/config.php';
+	require_once '../Classes/vUtil.php';
+	include_once "../Classes/db.php";
+	use RetailingEssentials\db_connect;
+	use RetailingEssentials\config;
+	use RetailingEssentials\vUtil;
+	use \DOMDocument;
+	use \PDO;
 
 	function grid_metrics_json($dbname)
 	{
@@ -71,13 +79,19 @@ use \PDO;
 		}
 	}
 
-	if(isset($_GET['db_name']))
+	if(vUtil::isMasterSession())
 	{
-		$db_name=$_GET['db_name'];
-		grid_metrics_json($db_name);
+		if(isset($_GET['db']))
+		{
+			$db_name="re_user_".$_GET['db'];
+			grid_metrics_json($db_name);
+		}
+		else if(isset($_GET['all']))
+		{
+			grid_metrics_all();
+		}
 	}
-	else if(isset($_GET['all']))
-	{
-		grid_metrics_all();
+	else {
+		echo "You don't have permissions to perform this operation.";
 	}
 ?>

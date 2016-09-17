@@ -1,6 +1,6 @@
-<div id='form38' class='tab-pane portlet box green-meadow'>	   
+<div id='form38' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form38_add_item();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -22,9 +22,9 @@
                     </li>
                 </ul>
             </div>
-      </div>	
+      </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -73,7 +73,7 @@
             show_loader();
             var fid=$("#form38_link").attr('data_id');
             if(fid==null)
-                fid="";	
+                fid="";
 
             $('#form38_body').html("");
 
@@ -83,71 +83,72 @@
             var farea=filter_fields.elements['store'].value;
 
             var paginator=$('#form38_body').paginator();
-			
-			var columns=new Object();
-					columns.count=paginator.page_size();
-					columns.start_index=paginator.get_index();
-					columns.data_store='area_utilization';
-                    columns.access={data_store:'store_areas',
-                                    match_result:'yes',
-                                    match_condition:'1',
-                                    match_columns:[{col_order:1,result_column:'name',data_column:'name'}]};
-					columns.indexes=[{index:'id',value:fid},
-									{index:'item_name',value:fname},
-									{index:'batch',value:fbatch},
-									{index:'name',value:farea}];
-			
-            read_json_rows('form38',columns,function(results)
-            {	
-                results.forEach(function(result)
-                {
-                    var rowsHTML="<tr>";
-                        rowsHTML+="<form id='form38_"+result.id+"'></form>";
-                            rowsHTML+="<td data-th='Item Name'>";
-                                rowsHTML+="<a onclick=\"show_object('product_master','"+result.item_name+"');\"><input type='text' readonly='readonly' form='form38_"+result.id+"' value='"+result.item_name+"'></a>";
-                            rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Batch'>";
-                                rowsHTML+="<a><input type='text' readonly='readonly' form='form38_"+result.id+"' value='"+result.batch+"'></a>";
-                            rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Storage'>";
-                                rowsHTML+="<a onclick=\"show_object('store_areas','"+result.name+"');\"><input type='text' readonly='readonly' form='form38_"+result.id+"' value='"+result.name+"'></a>";
-                            rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Quantity'>";
-                                rowsHTML+="<input type='number' readonly='readonly' form='form38_"+result.id+"' value=''>";
-                            rowsHTML+="</td>";
-                            rowsHTML+="<td data-th='Action'>";
-                                rowsHTML+="<input type='hidden' form='form38_"+result.id+"' value='"+result.id+"'>";
-                                rowsHTML+="<button type='button' class='btn red' form='form38_"+result.id+"' title='Delete' name='delete' onclick='form38_delete_item($(this));'><i class='fa fa-trash'></i></button>";	
-                            rowsHTML+="</td>";			
-                    rowsHTML+="</tr>";
 
-                    $('#form38_body').append(rowsHTML);
-                    var fields=document.getElementById("form38_"+result.id);
-                    var batch=fields.elements[1];
-                    var quantity=fields.elements[3];
-                    var delete_button=fields.elements['delete'];
-                    
-                    var batch_object={product:result.item_name,batch:result.batch};
-                    $(batch).parent().on('click',function()
-                    {
-                        show_object('product_instances',batch_object);
-                    });
+			var store_data={data_store:'store_areas',return_column:'name',
+							access:'yes',
+							indexes:[{index:'name',value:farea}]};
+			read_json_single_column(store_data,function(stores)
+			{
+				var columns={count:paginator.page_size(),
+							start_index:paginator.get_index(),
+							data_store:'area_utilization',
+	                    	indexes:[{index:'id',value:fid},
+										{index:'item_name',value:fname},
+										{index:'batch',value:fbatch},
+										{index:'name',array:stores}]};
 
-                    get_store_inventory(result.name,result.item_name,result.batch,function(inventory)
-                    {
-                        quantity.value=inventory;
-                        if(parseFloat(inventory)!=0)
-                        {
-                            $(delete_button).hide();
-                        }
-                    });
-                });
+	            read_json_rows('form38',columns,function(results)
+	            {
+	                results.forEach(function(result)
+	                {
+	                    var rowsHTML="<tr>";
+	                        rowsHTML+="<form id='form38_"+result.id+"'></form>";
+	                            rowsHTML+="<td data-th='Item Name'>";
+	                                rowsHTML+="<a onclick=\"show_object('product_master','"+result.item_name+"');\"><input type='text' readonly='readonly' form='form38_"+result.id+"' value='"+result.item_name+"'></a>";
+	                            rowsHTML+="</td>";
+	                            rowsHTML+="<td data-th='Batch'>";
+	                                rowsHTML+="<a><input type='text' readonly='readonly' form='form38_"+result.id+"' value='"+result.batch+"'></a>";
+	                            rowsHTML+="</td>";
+	                            rowsHTML+="<td data-th='Storage'>";
+	                                rowsHTML+="<a onclick=\"show_object('store_areas','"+result.name+"');\"><input type='text' readonly='readonly' form='form38_"+result.id+"' value='"+result.name+"'></a>";
+	                            rowsHTML+="</td>";
+	                            rowsHTML+="<td data-th='Quantity'>";
+	                                rowsHTML+="<input type='number' readonly='readonly' form='form38_"+result.id+"' value=''>";
+	                            rowsHTML+="</td>";
+	                            rowsHTML+="<td data-th='Action'>";
+	                                rowsHTML+="<input type='hidden' form='form38_"+result.id+"' value='"+result.id+"'>";
+	                                rowsHTML+="<button type='button' class='btn red' form='form38_"+result.id+"' title='Delete' name='delete' onclick='form38_delete_item($(this));'><i class='fa fa-trash'></i></button>";
+	                            rowsHTML+="</td>";
+	                    rowsHTML+="</tr>";
 
-                $('#form38').formcontrol();
-				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Store Placement','form38',function (item){});
-				hide_loader();
-            });
+	                    $('#form38_body').append(rowsHTML);
+	                    var fields=document.getElementById("form38_"+result.id);
+	                    var batch=fields.elements[1];
+	                    var quantity=fields.elements[3];
+	                    var delete_button=fields.elements['delete'];
+
+	                    var batch_object={product:result.item_name,batch:result.batch};
+	                    $(batch).parent().on('click',function()
+	                    {
+	                        show_object('product_instances',batch_object);
+	                    });
+
+	                    get_store_inventory(result.name,result.item_name,result.batch,function(inventory)
+	                    {
+	                        quantity.value=inventory;
+	                        if(parseFloat(inventory)!=0)
+	                        {
+	                            $(delete_button).hide();
+	                        }
+	                    });
+	                });
+
+	                $('#form38').formcontrol();
+					paginator.update_index(results.length);
+					initialize_tabular_report_buttons(columns,'Store Placement','form38',function (item){});
+					hide_loader();
+	            });
+			});
         };
 
         function form38_add_item()
@@ -175,8 +176,8 @@
                     rowsHTML+="<td data-th='Action'>";
                         rowsHTML+="<input type='hidden' form='form38_"+id+"' value='"+id+"'>";
                         rowsHTML+="<button type='submit' class='btn green' name='save' title='Save' form='form38_"+id+"' ><i class='fa fa-save'></i></button>";
-                        rowsHTML+="<button type='button' class='btn red' form='form38_"+id+"' onclick='$(this).parent().parent().remove();' name='delete' title='Delete'><i class='fa fa-trash'></i></button>";	
-                    rowsHTML+="</td>";			
+                        rowsHTML+="<button type='button' class='btn red' form='form38_"+id+"' onclick='$(this).parent().parent().remove();' name='delete' title='Delete'><i class='fa fa-trash'></i></button>";
+                    rowsHTML+="</td>";
                 rowsHTML+="</tr>";
 
                 $('#form38_body').prepend(rowsHTML);
@@ -190,10 +191,10 @@
                 {
                     event.preventDefault();
                     form38_create_item(fields);
-                });		
+                });
 
                 var products_data={data_store:'product_master',return_column:'name'};
-                set_my_value_list_json(products_data,product_filter,function () 
+                set_my_value_list_json(products_data,product_filter,function ()
                 {
                     $(product_filter).focus();
                 });
@@ -202,9 +203,9 @@
                 $(add_product).on('click',function()
                 {
                     modal14_action(function()
-                    {	
+                    {
                         var product_data={data_store:'product_master',return_column:'name'};
-                        set_my_value_list_json(products_data,product_filter,function () 
+                        set_my_value_list_json(products_data,product_filter,function ()
                         {
                             $(product_filter).focus();
                         });
@@ -215,7 +216,7 @@
                 $(add_batch).on('click',function()
                 {
                     modal22_action(function()
-                    {	
+                    {
                         var batch_data={data_store:'product_instances',return_column:'batch',
                                         indexes:[{index:'product_name',exact:product_filter.value}]};
                         set_my_value_list_json(batch_data,batch_filter);
@@ -226,7 +227,7 @@
                 $(add_storage).on('click',function()
                 {
                     modal35_action(function()
-                    {	
+                    {
                         var area_data={data_store:'store_areas',return_column:'name'};
                         set_my_value_list_json(area_data,area_filter);
                     });
@@ -241,7 +242,7 @@
 
                 var area_data={data_store:'store_areas',return_column:'name'};
                 set_my_value_list_json(area_data,area_filter);
-                
+
                 $('#form38').formcontrol();
             }
             else
@@ -267,11 +268,11 @@
 	 					{index:'name',value:name},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Added',notes:'Item '+product_name+' to storage '+name,link_to:'form38'}};
- 				
+
                 create_json(data_json);
-                	
+
                 $(form).readonly();
-                
+
                 var save_button=form.elements['save'];
                 $(save_button).hide();
                 var del_button=form.elements['delete'];
@@ -306,7 +307,7 @@
                     var name=form.elements[2].value;
                     var data_id=form.elements[4].value;
                     var last_updated=get_my_time();
-                    
+
                     var data_json={data_store:'area_utilization',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id}],
@@ -335,7 +336,7 @@
                                     {column:'storage',required:'yes',regex:new RegExp('^[0-9a-zA-Z _., \'+@!$()-]+$')}];
 
             var error_array=vImport.validate(data_array,validate_template_array);
-            return error_array;					
+            return error_array;
         }
 
         function form38_import(data_array,import_type)
@@ -348,7 +349,7 @@
 
 			var counter=1;
 			var last_updated=get_my_time();
-		
+
 			data_array.forEach(function(row)
 			{
 				counter+=1;
@@ -356,7 +357,7 @@
 				{
 					row.id=last_updated+counter;
 				}
-				
+
 				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'name',value:row.storage},
 	 					{index:'item_name',value:row.item_name},
@@ -365,7 +366,7 @@
 
 				data_json.data.push(data_json_array);
 			});
-			
+
 			if(import_type=='create_new')
 			{
 				create_batch_json(data_json);
@@ -373,7 +374,7 @@
 			else
 			{
 				update_batch_json(data_json);
-			}            
+			}
         };
 
     </script>

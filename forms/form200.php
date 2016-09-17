@@ -532,12 +532,14 @@
             var old_order_history=form.elements['order_history'].value;
 
             var order_history=vUtil.jsonParse(old_order_history);
-            var history_object=new Object();
-            history_object.timeStamp=get_my_time();
-            history_object.details="Order Out for delivery";
-            history_object.location=get_session_var('address');
-            history_object.status="Out for delivery";
-            order_history.push(history_object);
+            var history_object={timeStamp:get_my_time(),
+            					details:"Order Out for delivery",
+            					location:get_session_var('address'),
+            					status:"Out for delivery"};
+			if(order_history.length>0 && order_history[order_history.length-1]['status']!='Out for delivery')
+			{
+            	order_history.push(history_object);
+			}
             var order_history_string=JSON.stringify(order_history);
 
             var last_updated=get_my_time();

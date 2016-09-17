@@ -222,6 +222,7 @@
 						{index:'premium'},
 						{index:'short_premium'},
 						{index:'issue_date'},
+						// {index:'issue_type'},
 						{index:'status',exact:'issued'}]};
 
 		$('#report126_filters .row').each(function(index)
@@ -248,6 +249,7 @@
 
 		read_json_single_column(columns,function(policies_nums)
 		{
+			// console.log(policies_nums);
 			var comm_columns={data_store:'policy_commissions',
 					indexes:[{index:'id'},
 						{index:'policy_num',array:policies_nums},
@@ -260,6 +262,7 @@
 
 			read_json_rows('report126',comm_columns,function(policies)
 	        {
+				console.log(policies);
 				var months_object={};
 				var export_data_array=[];
 				var export_row1={};

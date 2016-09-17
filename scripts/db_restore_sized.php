@@ -1,13 +1,19 @@
 <?php
+/**
+* db=domainName
+**/
+
+	session_start();
 
 	include_once "../Classes/S3.php";
 	include_once '../Classes/config.php';
+	require_once '../Classes/vUtil.php';
+	use RetailingEssentials\vUtil;
 	use RetailingEssentials\config;
 
 	$dbname="re_user_".$_GET['db'];
-	$pass=$_GET['p'];
 
-	if($pass=='vya')
+	if(vUtil::isMasterSession())
 	{
 		$config = config::getInstance();
 		$dbhost = $config->get("host");

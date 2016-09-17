@@ -1,16 +1,22 @@
 <?php
 
+/**
+*
+**/
+
+	session_start();
+
+	require_once '../Classes/vUtil.php';
 	include_once "../Classes/db.php";
+	use RetailingEssentials\vUtil;
 	use RetailingEssentials\db_connect;
-	
-	$dbname='re_user_question';
 
 	function update_tables($db_name,$info_conn,$db_schema)
 	{
 		$db_conn=new db_connect($db_name);
-		
+
 		foreach($db_schema->childNodes as $table)
-		{		
+		{
 			$table_name=$table->nodeName;
 
 			if($table_name!='#text' && $table_name!='#comment')
@@ -20,18 +26,18 @@
 				$get_stmt=$info_conn->conn->prepare($get_query);
 				$get_stmt->execute(array($db_name,$table_name));
 				$get_res=$get_stmt->fetchAll(PDO::FETCH_ASSOC);
-			
+
 				if(count($get_res)==0)
 				{
 					$q_string="create table $table_name (";
-				
+
 					foreach($table->childNodes as $column)
 					{
 						if($column->nodeName!='#text' && $column->nodeName!='#comment')
 							$q_string.=$column->nodeName." ".$column->getAttribute('type')." ,";
 					}
 					$q_string.="PRIMARY KEY (id));";
-					
+
 					try{
 						$db_conn->conn->exec($q_string);
 						echo "adding table ".$table_name."<br>";
@@ -39,9 +45,9 @@
 					{
 						echo "Could not create table $table_name: " .$ex->getMessage() ."<br>";
 					}
-				}								
+				}
 				else
-				{								
+				{
 					foreach($table->childNodes as $column)
 					{
 						if($column->nodeName!='#text' && $column->nodeName!='#comment')
@@ -69,11 +75,11 @@
 							}
 						}
 					}
-				}				
+				}
 			}
 		}
 	}
-	
+
 	function update_all_db_tables()
 	{
 		$db_schema_xml=new \DOMDocument();
@@ -85,7 +91,7 @@
 		$get_stmt=$info_conn->conn->prepare($get_query);
 		$get_stmt->execute(array('%re_user%'));
 		$get_res=$get_stmt->fetchAll(PDO::FETCH_ASSOC);
-		
+
 		for($i=0;$i<count($get_res);$i++)
 		{
 			echo "<b>updating db ".$get_res[$i]['table_schema']."</b><br>";
@@ -93,5 +99,13 @@
 		}
 	}
 
-	update_all_db_tables();
+
+	if(vUtil::isMasterSession())
+	{
+		update_all_db_tables();
+	}
+	else{
+		echo "You don't have permissions to perform this operation.";
+	}
+
 ?>

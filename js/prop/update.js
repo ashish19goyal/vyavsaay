@@ -8932,7 +8932,11 @@ function form272_update_item()
 		//console.log(signature_data);
 		//console.log(signature_data[1]);
 
-		order_history.push(history_object);
+		if(order_history.length>0 && order_history[order_history.length-1]['status']!='delivered')
+		{
+			order_history.push(history_object);
+		}
+
 		var order_history_string=JSON.stringify(order_history);
 
 		var data_xml="<logistics_orders>" +

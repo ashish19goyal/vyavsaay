@@ -13,12 +13,9 @@ var vDB = function (options)
     {
         if(is_create_access('form99') || is_create_object('db_backup'))
         {
-            var domain=get_domain();
-            var username=get_username();
-            var cr_access=get_session_var('cr');
             show_loader();
 
-            ajax_with_custom_func(server_root+"/ajax_json/db_backup.php",{domain:domain,username:username,cr:cr_access},function(e)
+            ajax_with_custom_func(server_root+"/ajax_json/db_backup.php",data,function(e)
             {
                 var response=e.responseText;
 
@@ -34,7 +31,7 @@ var vDB = function (options)
                 //var updated_response=response.replace(/ /g,"+");
                 var link=document.createElement('a');
                 link.setAttribute('href',downloadUrl);
-                link.setAttribute('download',domain+".sql");
+                link.setAttribute('download',get_domain()+".sql");
                 link.textContent="Click to download the file.";
                 $('#modal55 .scroller').html(link);
                 $("#modal55_link").click();
@@ -51,11 +48,9 @@ var vDB = function (options)
     {
         if(is_read_access('form99') || is_read_object('db_backup'))
         {
-            var domain=get_domain();
-            var username=get_username();
-            var cr_access=get_session_var('cr');
+            var data = vUtil.getCredentials();
             show_loader();
-            ajax_with_custom_func(server_root+"/scripts/config_db_backup.php",{domain:domain,username:username,cr:cr_access},function(e)
+            ajax_with_custom_func(server_root+"/scripts/config_db_backup.php",data,function(e)
             {
                 var response=e.responseText;
 
@@ -70,7 +65,7 @@ var vDB = function (options)
                 var modal_element=document.getElementById('modal212');
                 var link=document.createElement('a');
                 link.setAttribute('href',downloadUrl);
-                link.setAttribute('download',domain+"_config.sql");
+                link.setAttribute('download',get_domain()+"_config.sql");
                 link.textContent="Click to download the file.";
                 $('#modal212 .scroller').html(link);
                 $("#modal212_link").click();

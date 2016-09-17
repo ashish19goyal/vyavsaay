@@ -176,12 +176,10 @@ function server_read_json_rows(columns,callback,results)
 
 function server_read_json_column(columns,callback,results)
 {
-	var domain=get_domain();
-	var username=get_username();
-	var re_access=get_session_var('re');
-	var string_columns=JSON.stringify(columns);
+	var data = vUtil.getCredentials();
+	data['data']=JSON.stringify(columns);
 
-	ajax_json(server_root+"/ajax_json/get_single_column.php",{domain:domain,username:username,re:re_access,data:string_columns},function(response_object)
+	ajax_json(server_root+"/controller/read_column",data,function(response_object)
 	{
 		results=response_object.rows;
 		callback(results);
@@ -190,12 +188,10 @@ function server_read_json_column(columns,callback,results)
 
 function server_read_json_count(columns,callback)
 {
-	var domain=get_domain();
-	var username=get_username();
-	var re_access=get_session_var('re');
+	var data = vUtil.getCredentials();
+	data['data']=JSON.stringify(columns);
 
-	var string_columns=JSON.stringify(columns);
-	ajax_json(server_root+"/ajax_json/get_count.php",{domain:domain,username:username,re:re_access,data:string_columns},function(response_object)
+	ajax_json(server_root+"/controller/get_count",data,function(response_object)
 	{
 		callback(response_object.count);
 	});
@@ -320,7 +316,6 @@ function server_create_json(data_json,func)
 	var data = vUtil.getCredentials();
 	data['data']=JSON.stringify(data_json);
 
-	//ajax_json(server_root+"/ajax_json/create.php",{domain:domain,username:username,cr:cr_access,data:string_columns},function(response_object)
 	ajax_json(server_root+"/controller/create",data,function(response_object)
 	{
 		console.log(response_object.status);
@@ -395,7 +390,8 @@ function server_create_batch_json(data_json,func)
 
 function server_update_json(data_json,func)
 {
-	show_loader();
+	if(!(typeof data_json.loader!='undefined' && data_json.loader=='no'))
+	{show_loader();}
 	var domain=get_domain();
 	var username=get_username();
 	var up_access=get_session_var('up');
@@ -403,7 +399,9 @@ function server_update_json(data_json,func)
 	ajax_json(server_root+"/ajax_json/update.php",{domain:domain,username:username,up:up_access,data:string_columns},function(response_object)
 	{
 		console.log(response_object.status);
-		hide_loader();
+		if(!(typeof data_json.loader!='undefined' && data_json.loader=='no'))
+		{hide_loader();}
+
 		if(typeof func!="undefined")
 		{
 			func();
@@ -416,10 +414,6 @@ function server_update_batch_json(data_json,func)
 	if(typeof data_json.loader!='undefined' && data_json.loader=='no')
 	{}else
 	{show_loader();}
-
-	var domain=get_domain();
-	var username=get_username();
-	var up_access=get_session_var('cr');
 
 	var data_arrays = [];
 	var array_size = 500;
@@ -440,7 +434,9 @@ function server_update_batch_json(data_json,func)
 	data_arrays.forEach(function(data_chunk)
 	{
 		var string_columns=JSON.stringify(data_chunk);
-		ajax_json(server_root+"/ajax_json/update_batch.php",{domain:domain,username:username,up:up_access,data:string_columns},function(response_object)
+		var ajax_data = vUtil.getCredentials();
+		ajax_data.data = string_columns;
+		ajax_json(server_root+"/ajax_json/update_batch.php",ajax_data,function(response_object)
 		{
 			console.log(response_object);
 		});
@@ -579,13 +575,6 @@ function update_server_table_column(tablename,columnname,columntype,master)
 function s3_object(data,func)
 {
 	show_loader();
-
-//	data={type:'create/update/delete',
-//        bucket:bucketName,
-//        blob: blob,
-//        name:blob_name,
-//        description:description,
-//		  content_type:'image/jpeg'};
 
 	var domain=get_domain();
 	var username=get_username();

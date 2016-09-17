@@ -73,7 +73,7 @@
 
 		var branch_data={data_store:'store_areas',return_column:'name',indexes:[{index:'owner',exact:get_account_name()}]};
 		set_my_value_json(branch_data,branch_filter);
-			
+
         $(gate_filter).off('keydown');
         $(gate_filter).on('keydown',function (event)
         {
@@ -267,6 +267,10 @@
 
             if(status=="received")
             {
+				if(vUtil.isBlank(remarks))
+				{
+					remarks = "Order checked in at branch. Will be out for delivery shortly.";
+				}
                 var old_order_history=form.elements[6].value;
 				var branch=form.elements['branch'].value;
                 var order_history=vUtil.jsonParse(old_order_history);
@@ -274,7 +278,11 @@
                 					details:remarks,
                 					status:status,
                 					location:branch};
-                order_history.push(history_object);
+				if(order_history.length>0 && order_history[order_history.length-1]['status']!=status)
+				{
+					order_history.push(history_object);
+				}
+
                 var order_history_string=JSON.stringify(order_history);
 
                 var data_json={data_store:'logistics_orders',

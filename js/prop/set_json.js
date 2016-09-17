@@ -492,6 +492,7 @@ function set_master_value_json(filter_data,filter_element,func)
 
 function set_value_list_json(data,filter_element,func)
 {
+	// console.log(filter_element);
 	var form=filter_element.form;
 	var datalist=document.createElement('datalist');
 	data=vUtil.arrayUnique(data);

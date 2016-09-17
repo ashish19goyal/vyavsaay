@@ -266,7 +266,9 @@
 									{index:'from_time'},
 									{index:'to_time'},
 									{index:'item'},
+									{index:'brand'},
 									{index:'quantity'},
+									{index:'production_line'},
 									{index:'plan_id',exact:data_id}]};
 			read_json_rows('form189',items_json,function (items)
 			{
@@ -277,7 +279,7 @@
 					var task_json={data_store:'task_instances',
 								data:[{index:'id',value:item.id},
 									{index:'name',value:item.item+"("+item.quantity+" pieces)"},
-									{index:'description',value:'Plan: '+name},
+									{index:'description',value:'Plan: '+name+", Brand: "+item.brand},
 									{index:'assignee',value:''},
 									{index:'t_due',value:item.to_time},
 									{index:'t_initiated',value:item.from_time},
@@ -337,6 +339,10 @@
 																		{index:'record_source',value:'production_plan_item'},
 																		{index:'source_id',value:item.id},
 																		{index:'applicable_from',value:item.from_time},
+																		{index:'dispatched_time',value:''},
+																		{index:'received_time',value:''},
+																		{index:'production_plan',value:name},
+																		{index:'production_line',value:item.production_line},
 																		{index:'last_updated',value:last_updated}]};
 
 													create_json(save_store_json);

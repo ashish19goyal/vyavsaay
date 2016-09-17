@@ -1,10 +1,7 @@
 <div id='form348' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class='caption'>
-			<div class='btn-group' id='form348_status' data-toggle='buttons'>
-					<label class='btn green-jungle basic active' onclick=form348_ini('basic');><input name='basic' type='radio' class='toggle'>Basic</label>
-					<label class='btn green-jungle orc' onclick=form348_ini('orc');><input type='radio' name='orc' class='toggle'>ORC</label>
-			</div>
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick=form348_add_filter();>Add Filter</a>
 		</div>
 		<div class="actions">
             <div class="btn-group">
@@ -29,14 +26,20 @@
 	</div>
 
 	<div class="portlet-body">
+		<form id='form348_header' autocomplete="off">
+			<!-- <label style='float:right;'><button type='button' class='btn red-pink' onclick='modal11_action();' title='Add Customer'><i class='fa fa-plus'></i> Add Customer</button></label> -->
+			<input type='submit' class='submit_hidden'>
+			<fieldset id='form348_filters'></fieldset>
+		</form>
+
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr>
 					<form id='form348_header'></form>
-						<th><input type='text' placeholder="Issuing Company" class='floatlabel' name='company' form='form348_header'></th>
-						<th><input type='text' placeholder="Policy #" class='floatlabel' name='policy' form='form348_header'></th>
-						<th><input type='text' placeholder="Agent" class='floatlabel' name='agent' form='form348_header'></th>
+						<th><input type='text' placeholder="Issuing Company" readonly="readonly" name='company' form='form348_header'></th>
+						<th><input type='text' placeholder="Policy #" readonly="readonly" name='policy' form='form348_header'></th>
+						<th><input type='text' placeholder="Agent" readonly="readonly" name='agent' form='form348_header'></th>
 						<th><input type='text' placeholder="Premium" readonly="readonly" form='form348_header'></th>
 						<th><input type='text' placeholder="Commission %" readonly="readonly" form='form348_header'></th>
 						<th><input type='text' placeholder="Amount" readonly="readonly" form='form348_header'></th>
@@ -50,31 +53,128 @@
 
 	<script>
 
-		function form348_header_ini()
-		{
-			var form=document.getElementById('form348_header');
-			var policy_filter=form.elements['policy'];
-			var agent_filter=form.elements['agent'];
-			var company_filter=form.elements['company'];
+	function form348_add_filter()
+	{
+		var form=document.getElementById('form348_header');
+		var f_filter=document.createElement('input');
+		f_filter.type='text';
+		f_filter.placeholder='Filter By';
+		f_filter.className='floatlabel';
+		f_filter.setAttribute('data-name','f');
 
-			var policy_data={data_store:'policies',return_column:'policy_num'};
-			set_my_filter_json(policy_data,policy_filter);
+		var v_filter=document.createElement('input');
+		v_filter.type='text';
+		v_filter.placeholder='Filter Value';
+		v_filter.className='floatlabel';
+		v_filter.setAttribute('data-name','v');
 
-			var agent_data={data_store:'attributes',return_column:'name',
-							indexes:[{index:'type',exact:'staff'},{index:'attribute',exact:'Designation'},
-									{index:'value',exact:'Agent'}]};
-			set_my_filter_json(agent_data,agent_filter);
+		var i_filter=document.createElement('input');
+		i_filter.type='hidden';
+		i_filter.setAttribute('data-name','i');
+		i_filter.value='status';
 
-			var company_data={data_store:'policy_types',return_column:'issuer'};
-			set_my_filter_json(company_data,company_filter);
+		var from_filter=document.createElement('input');
+		from_filter.type='text';
+		from_filter.placeholder='From Date';
+		from_filter.className='floatlabel';
+		from_filter.setAttribute('data-name','from');
 
-			$(form).off('submit');
-			$(form).on('submit',function(event)
-			{
-				event.preventDefault();
-				form348_ini();
-			});
+		var to_filter=document.createElement('input');
+		to_filter.type='text';
+		to_filter.placeholder='To Date';
+		to_filter.className='floatlabel';
+		to_filter.setAttribute('data-name','to');
+
+		var remove_link = document.createElement('a');
+		remove_link.onclick = function(){
+			$(this).parent().parent().remove();
+		};
+		remove_link.style="vertical-align:top";
+		remove_link.title="Remove Filter";
+		remove_link.innerHTML = "<i class='fa fa-times' style='font-size:25px;margin-top:20px;'></i>";
+
+		var row=document.createElement('div');
+		row.className='row';
+		var col=document.createElement('div');
+		col.className='col-md-12';
+
+		var label1=document.createElement('label');
+		var label2=document.createElement('label');
+		var label3=document.createElement('label');
+		var label4=document.createElement('label');
+		// var label5=document.createElement('label');
+
+		row.appendChild(col);
+		col.appendChild(label1);
+		col.appendChild(label2);
+		col.appendChild(label3);
+		col.appendChild(label4);
+		col.appendChild(remove_link);
+
+		label1.appendChild(f_filter);
+		label2.appendChild(v_filter);
+		label3.appendChild(from_filter);
+		label4.appendChild(to_filter);
+		// label5.appendChild(remove_link);
+		col.appendChild(i_filter);
+
+		var fieldset=document.getElementById('form348_filters');
+		fieldset.appendChild(row);
+
+		var data=['Policy #','Issue Date','Agent','Issuing Company','Commission Type'];
+
+		set_value_list_json(data,f_filter);
+
+		$(from_filter).datepicker();
+		$(to_filter).datepicker();
+
+		function s(x){
+			if(!vUtil.isBlank(x) && x=='d'){
+				$(from_filter).show();
+				$(to_filter).show();
+				$(v_filter).hide();
+				// $('#form348').formcontrol();
+			}else{
+				$(from_filter).hide();
+				$(to_filter).hide();
+				$(v_filter).show();
+				var value_data={data_store:'policy_commissions',return_column:i_filter.value};
+				set_my_filter_json(value_data,v_filter);
+			}
+			v_filter.value="";
+			from_filter.value="";
+			to_filter.value="";
 		}
+
+		s();
+		vUtil.onChange(f_filter,function()
+		{
+			switch(f_filter.value)
+			{
+				case 'Policy #': i_filter.value = 'policy_num'; s(); break;
+				case 'Issue Date':  i_filter.value = 'issue_date'; s('d'); break;
+				case 'Agent': i_filter.value = 'agent'; s(); break;
+				case 'Issuing Company': i_filter.value = 'issuer'; s(); break;
+				case 'Commission Type': i_filter.value = 'commission_type'; s(); break;
+				default: i_filter.value = 'commission_type'; s();
+			}
+		});
+		$('#form348').formcontrol();
+	}
+
+	function form348_header_ini()
+	{
+		var filter_fields=document.getElementById('form348_header');
+		$('#form348_filters').html('');
+		form348_add_filter();
+
+		$(filter_fields).off('submit');
+		$(filter_fields).on('submit',function(event)
+		{
+			event.preventDefault();
+			form348_ini();
+		});
+	};
 
 		function form348_ini(c_type)
 		{
@@ -82,43 +182,47 @@
 			if(fid==null)
 				fid="";
 
-			var form=document.getElementById('form348_header');
-			var company_filter=form.elements['company'].value;
-			var policy_filter=form.elements['policy'].value;
-			var agent_filter=form.elements['agent'].value;
-
 			show_loader();
 			$('#form348_body').html('');
 
-			var type_filter='basic';
-			if(typeof c_type!='undefined' && c_type=='orc')
-			{
-					type_filter='orc';
-					$('#form348_status').find('label.orc').addClass('active');
-					$('#form348_status').find('label.basic').removeClass('active');
-			}
-			else
-			{
-					$('#form348_status').find('label.basic').addClass('active');
-					$('#form348_status').find('label.orc').removeClass('active');
-			}
-
 			var paginator=$('#form348_body').paginator();
 
-			var new_columns={count:paginator.page_size(),
+			var columns={count:paginator.page_size(),
 							start_index:paginator.get_index(),
 							data_store:'policy_commissions',
 							indexes:[{index:'id',value:fid},
-									{index:'policy_num',value:policy_filter},
+									{index:'policy_num'},
 									{index:'amount'},
 									{index:'comm_percent'},
 									{index:'premium'},
 									{index:'issue_date'},
-									{index:'issuer',value:company_filter},
-									{index:'commission_type',value:type_filter},
-									{index:'agent',value:agent_filter}]};
+									{index:'issuer'},
+									{index:'commission_type'},
+									{index:'agent'}]};
 
-			read_json_rows('form348',new_columns,function(results)
+			$('#form348_filters .row').each(function(index)
+			{
+				var row = this;
+				var f_filter = $(this).find("input[data-name='f']").val();
+				var v_filter = $(this).find("input[data-name='v']").val();
+				var i_filter = $(this).find("input[data-name='i']").val();
+				var from_filter = $(this).find("input[data-name='from']").val();
+				var to_filter = $(this).find("input[data-name='to']").val();
+
+				if(!vUtil.isBlank(v_filter)){
+					columns.indexes.push({index:i_filter,value:v_filter});
+				}
+				else{
+					if(!vUtil.isBlank(from_filter)){
+						columns.indexes.push({index:i_filter,lowerbound:vTime.unix({date:from_filter})});
+					}
+				 	if(!vUtil.isBlank(to_filter)){
+						columns.indexes.push({index:i_filter,upperbound:vTime.unix({date:to_filter})});
+					}
+				}
+			});
+
+			read_json_rows('form348',columns,function(results)
 			{
 				results.forEach(function(result)
 				{
@@ -179,9 +283,9 @@
 
 				$('#form348').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Policy Commissions','form348',function (item)
+				initialize_tabular_report_buttons(columns,'Policy Commissions','form348',function (item)
 				{
-					item['Commission %']=vTime.date({time:item.comm_percent});
+					item['Commission %']=item.comm_percent;
 					item['Issue Date']=vTime.date({time:item.issue_date});
 					delete item.issue_date;
 					delete item.comm_percent;
@@ -189,30 +293,6 @@
 				hide_loader();
 			});
 		};
-
-		// function form348_delete_item(button)
-		// {
-		// 	if(is_delete_access('form348'))
-		// 	{
-		// 		modal115_action(function()
-		// 		{
-		// 			var form_id=$(button).attr('form');
-		// 			var form=document.getElementById(form_id);
-		//
-		// 			var data_id=form.elements['id'].value;
-		// 			var data_json={data_store:'policy_commissions',
- 	// 						data:[{index:'id',value:data_id}]};
-		//
-		// 			delete_json(data_json);
-		//
-		// 			$(button).parent().parent().remove();
-		// 		});
-		// 	}
-		// 	else
-		// 	{
-		// 		$("#modal2_link").click();
-		// 	}
-		// }
 
 		function form348_update_item(form)
 		{
@@ -241,8 +321,9 @@
 		{
 			if(is_update_access('form348'))
 			{
+				show_loader();
 				var comm_data={data_store:'policy_commissions',
-								indexes:[{index:'amount',exact:""},
+								indexes:[{index:'amount'},
 										{index:'id'},
 										{index:'policy_num'},
 										{index:'comm_percent'},
@@ -336,6 +417,7 @@
 
 							});
 							update_batch_json(update_comm_json);
+							hide_loader();
 						});
 					});
 				});

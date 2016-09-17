@@ -20,9 +20,13 @@
 
 		switch($requestType)
 		{
-			case 'create': 	$response_object = $handler::create($input_data);
+			case 'create': $response_object = $handler::create($input_data);
 							break;
-			case 'read_rows': 	$response_object = $handler::read_rows($input_data);
+			case 'read_rows': $response_object = $handler::read_rows($input_data);
+							break;
+			case 'read_column': $response_object = $handler::read_column($input_data);
+							break;
+			case 'get_count': $response_object = $handler::get_count($input_data);
 							break;
 		}
 	}

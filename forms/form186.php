@@ -103,7 +103,7 @@
         },false);
 
 		$('#form186_body').paginator({visible:false});
-		$('#form186').formcontrol();
+		setTimeout(function(){$('#form186').formcontrol();},300);
     }
 
     function form186_ini()
@@ -401,7 +401,7 @@
                         {
                             if(parseFloat(raw.quantity)>0)
                             {
-                                var notif_notes=raw.quantity+" more pieces of "+raw.requisite_name+" are required for production of "+quantity+" pieces of "+item+". Please procure immediately.";
+                                var notif_notes=raw.quantity+" more pieces of "+raw.requisite_name+" are required for production of "+quantity+" pieces of "+item+", as planned for Production plan - "+plan_name+". Please procure immediately.";
                                 var notif_json={data_store:'notifications',
 										data:[{index:'id',value:vUtil.newKey()},
 											{index:'t_generated',value:vTime.unix()},
