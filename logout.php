@@ -1,5 +1,7 @@
 <?php
 	session_start();
+	$logout_page = $_GET['p'];
+
 	echo "redirecting";
 	$SERVER_ROOT="";
 	$_SESSION=array();
@@ -10,6 +12,6 @@
 
 	session_destroy();
 
-	header("Location: ".$SERVER_ROOT."/index.html");
+	header("Location: ".$SERVER_ROOT.$logout_page);
 
 ?>

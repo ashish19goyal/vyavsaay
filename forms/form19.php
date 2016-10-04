@@ -17,7 +17,7 @@
                 <label><input type='text' name='return_num' readonly='readonly' class='floatlabel' placeholder='Return #'></label>
                 <label><input type='text' class='floatlabel' requried placeholder='Return Date' name='date'></label>
                 <input type='hidden' name='id'>
-								<input type='submit' class='submit_hidden'>
+				<input type='submit' class='submit_hidden'>
             </fieldset>
         </form>
 
@@ -48,11 +48,11 @@
 
             var supplier_filter=fields.elements['supplier'];
             var return_date=fields.elements['date'];
-						var return_num_filter=fields.elements['return_num'];
+			var return_num_filter=fields.elements['return_num'];
             var id_filter=fields.elements['id'];
             id_filter.value=vUtil.newKey();
 
-						var return_id=$("#form19_link").attr('data_id');
+			var return_id=$("#form19_link").attr('data_id');
             if(vUtil.isBlank(return_id))
             {
                 var return_num_data={data_store:'user_preferences',return_column:'value',
@@ -117,7 +117,7 @@
             return_date.value=vTime.date();
             supplier_filter.value='';
 
-						$('#form19_body').paginator({visible:false});
+			$('#form19_body').paginator({visible:false});
             $('#form19').formcontrol();
         }
 
@@ -136,10 +136,10 @@
                 var return_columns={data_store:'supplier_returns',count:1,
                                    indexes:[{index:'id',value:data_id},
                                            {index:'return_num'},
-																					 {index:'supplier'},
+										   {index:'supplier'},
                                            {index:'total'},
                                            {index:'tax'},
-                                            {index:'amount'},
+										   {index:'amount'},
                                            {index:'return_date'}]};
                 var return_items_column={data_store:'supplier_return_items',
                                         indexes:[{index:'id'},
@@ -160,7 +160,7 @@
                         var filter_fields=document.getElementById('form19_master');
                         filter_fields.elements['supplier'].value=return_results[0].supplier;
                         filter_fields.elements['date'].value=get_my_past_date(return_results[0].return_date);
-												filter_fields.elements['return_num'].value=return_results[0].return_num;
+						filter_fields.elements['return_num'].value=return_results[0].return_num;
                         filter_fields.elements['id'].value=data_id;
                         var save_button=document.getElementById('form19_save');
 
@@ -741,11 +741,12 @@
             var new_table=document.createElement('table');
             new_table.setAttribute('style','width:100%;font-size:16px;border:1px solid black;text-align:left;');
             var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
-                        "<td style='text-align:left;width:30%;padding:3px;font-weight:600;'>Item</td>"+
-                        "<td style='text-align:left;width:15%;padding:3px;font-weight:600;'>Qty</td>"+
-                        "<td style='text-align:left;width:15%;padding:3px;font-weight:600;'>Amount</td>"+
-                        "<td style='text-align:left;width:15%;padding:3px;font-weight:600;'>Tax</td>"+
-                        "<td style='text-align:left;width:15%;padding:3px;font-weight:600;'>Total</td></tr>";
+                        "<td style='text-align:left;width:25%;padding:3px;font-weight:600;'>Item</td>"+
+						"<td style='text-align:left;width:21%;padding:3px;font-weight:600;'>Notes</td>"+
+                        "<td style='text-align:left;width:13%;padding:3px;font-weight:600;'>Qty</td>"+
+                        "<td style='text-align:left;width:13%;padding:3px;font-weight:600;'>Amount</td>"+
+                        "<td style='text-align:left;width:13%;padding:3px;font-weight:600;'>Tax</td>"+
+                        "<td style='text-align:left;width:13%;padding:3px;font-weight:600;'>Total</td></tr>";
 
             var table_rows=table_header;
             var counter=0;
@@ -755,6 +756,7 @@
                 counter+=1;
                 var form=$(this)[0];
                 var item_name=form.elements[0].value;
+				var notes=form.elements[3].value;
                 var quantity=""+form.elements[4].value;
                 var amount=form.elements[6].value;
                 var tax=form.elements[7].value;
@@ -762,6 +764,7 @@
 
                 table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
                         "<td style='text-align:left;word-wrap: break-word;padding:3px;'>"+item_name+"</td>"+
+						"<td style='text-align:left;word-wrap: break-word;padding:3px;'>"+notes+"</td>"+
                         "<td style='text-align:left;word-wrap: break-word;padding:3px;'>"+quantity+"</td>"+
                         "<td style='text-align:left;word-wrap: break-word;padding:3px;'>"+amount+"</td>"+
                         "<td style='text-align:left;word-wrap: break-word;padding:3px;'>"+tax+"</td>"+
@@ -772,18 +775,18 @@
             var rows_to_add=15-row_count;
             for(var i=0;i<rows_to_add;i++)
             {
-                table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td></tr>";
+                table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
             }
 
             var table_foot=document.getElementById('form19_foot');
             var total_text1=$(table_foot).find('tr>td:first')[0].innerHTML;
             var total_text2=$(table_foot).find('tr>td:nth-child(2)')[0].innerHTML;
             var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
-												"<td colspan='1' style='text-align:left;padding:3px;'>Total</td>"+
-												"<td colspan='2' style='text-align:left;padding:3px;'>"+total_text1+"</td>"+
-												"<td colspan='2' style='text-align:left;padding:3px;font-weight:600;'>"+total_text2+"</td></tr>";
+								"<td colspan='2' style='text-align:left;padding:3px;'>Total</td>"+
+								"<td colspan='2' style='text-align:left;padding:3px;'>"+total_text1+"</td>"+
+								"<td colspan='2' style='text-align:left;padding:3px;font-weight:600;'>"+total_text2+"</td></tr>";
 
-						table_rows+=table_foot_row;
+			table_rows+=table_foot_row;
             new_table.innerHTML=table_rows;
 
             /////////////placing the containers //////////////////////////////////////////////////////
@@ -800,10 +803,10 @@
             info_section.appendChild(customer_info);
             info_section.appendChild(business_info);
 
-						footer.appendChild(tandc);
-						footer.appendChild(signature);
-						footer.appendChild(clearance);
-						footer.appendChild(business_contact);
+			footer.appendChild(tandc);
+			footer.appendChild(signature);
+			footer.appendChild(clearance);
+			footer.appendChild(business_contact);
 
             func(container);
         }

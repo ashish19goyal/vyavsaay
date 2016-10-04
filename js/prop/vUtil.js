@@ -422,7 +422,7 @@ var vUtil = function (options)
             for(var i=0;i<header_array.length;i++)
             {
                 //if(!vUtil.isBlank(data_row[header_array[i]]))
-				if(data_row[header_array[i]]!="undefined" && data_row[header_array[i]]!="null")
+				if(data_row[header_array[i]]!="undefined" && data_row[header_array[i]]!="null" && (typeof data_row[header_array[i]]!='undefined'))
 				{
 					if(header_array[i]=='id')
                     {

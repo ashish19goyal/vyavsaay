@@ -124,6 +124,7 @@
                   center: 'title',
                   right: 'month,agendaWeek,agendaDay'
               },
+			  defaultView: 'agendaWeek',
               editable: true,
               slotEventOverlap:true,
               events: function(start, end, timezone, callback)

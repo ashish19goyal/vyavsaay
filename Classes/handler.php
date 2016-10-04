@@ -1,10 +1,10 @@
 <?php
 
 namespace RetailingEssentials;
-use \PDO;
 
 include_once 'vUtil.php';
 include_once 'vDB.php';
+include_once 'vCron.php';
 
 class handler
 {
@@ -80,7 +80,7 @@ class handler
 
 		$options = array(
 			'access' => isset($inputData['access']) ? true : null,
-			'count' => isset($inputData['count']) ? $inputData['count'] : null,
+			'count' => isset($inputData['count']) ? $inputData['count'] : 100000,
 			'startIndex' => isset($inputData['start_index']) ? $inputData['start_index'] : 0,
 			'allIndexes' => null,
 			'returnColumn' => isset($inputData['return_column']) ? $inputData['return_column'] : 'id'
@@ -111,7 +111,7 @@ class handler
 
 		$options = array(
 			'access' => isset($inputData['access']) ? true : null,
-			'count' => isset($inputData['count']) ? $inputData['count'] : null,
+			'count' => isset($inputData['count']) ? $inputData['count'] : 100000,
 			'startIndex' => isset($inputData['start_index']) ? $inputData['start_index'] : 0,
 			'allIndexes' => null,
 			'returnColumn' => isset($inputData['return_column']) ? "count(".$inputData['return_column'].")" : 'count(id)'
@@ -119,8 +119,27 @@ class handler
 
 		$dbResult = self::$vDB->vRead($data,$options);
 		// print_r($dbResult);
-		$dbResult['count']=$dbResult['rows'][0][$options['returnColumn']];
+		$dbResult['count']= (count($dbResult['rows'])>0) ? $dbResult['rows'][0][$options['returnColumn']] : 0;
 		$dbResult['data_store'] = $dataStore;
+		return $dbResult;
+	}
+
+	public static function manage_cron($data)
+	{
+		$vCron = vCron::getInstance();
+
+		$dbResult = array();
+		switch($data['request_type'])
+		{
+			case 'activate': $dbResult = $vCron::activate($data['cron_name']);
+							break;
+			case 'suspend': $dbResult = $vCron::suspend($data['cron_name']);
+							break;
+			case 'check': $dbResult = $vCron::isActive($data['cron_name']) ? array('result' => 'active') : array('result' => 'suspended');
+							break;
+		}
+		// print_r($dbResult);
+		$dbResult['status']= 'success';
 		return $dbResult;
 	}
 

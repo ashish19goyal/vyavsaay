@@ -106,7 +106,7 @@
             entry_date.value=vTime.date();
 
             supplier_filter.value='';
-						$('#form136_body').paginator({visible:false});
+			$('#form136_body').paginator({visible:false});
             $('#form136').formcontrol();
         }
 
@@ -191,9 +191,9 @@
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Bill Price'>";
 								rowsHTML+="<input type='number' class='floatlabel' placeholder='Quantity' readonly='readonly' form='form136_"+id+"' value='"+result.quantity+"' step='any'>";
-							    rowsHTML+="<input type='number' class='floatlabel' placeholder='Unit Price' readonly='readonly' form='form136_"+id+"' value='"+result.unit_price+"' step='any'>";
-                                rowsHTML+="<input type='number' class='floatlabel' placeholder='Amount' readonly='readonly' form='form136_"+id+"' value='"+result.amount+"' step='any'>";
-                                rowsHTML+="<input type='number' readonly='readonly' class='floatlabel' placeholder='Tax' form='form136_"+id+"' value='"+result.tax+"' step='any'>";
+							    rowsHTML+="<input type='number' class='floatlabel dblclick_editable' placeholder='Unit Price' readonly='readonly' form='form136_"+id+"' value='"+result.unit_price+"' step='any'>";
+                                rowsHTML+="<input type='number' class='floatlabel dblclick_editable' placeholder='Amount' readonly='readonly' form='form136_"+id+"' value='"+result.amount+"' step='any'>";
+                                rowsHTML+="<input type='number' readonly='readonly' class='floatlabel dblclick_editable' placeholder='Tax' form='form136_"+id+"' value='"+result.tax+"' step='any'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='PO Price'>";
 								rowsHTML+="<input type='number' class='floatlabel' placeholder='Quantity' readonly='readonly' form='form136_"+id+"' value='"+result.po_quantity+"' step='any'>";
@@ -213,10 +213,11 @@
                                 {
                                     rowsHTML+=" <i id='form136_check_image_"+id+"' class='fa fa-2x fa-close' title='Rejected' data-accepted='rejected'></i>";
                                 }
-                                rowsHTML+="<input type='hidden' form='form136_"+id+"' value='"+id+"'>";
+                                rowsHTML+="<input type='hidden' form='form136_"+id+"' value='"+id+"' name='id'>";
                                 rowsHTML+="<input type='submit' class='submit_hidden' form='form136_"+id+"' id='save_form136_"+id+"'>";
                                 rowsHTML+="<button type='button' class='btn red' form='form136_"+id+"' id='delete_form136_"+id+"' onclick='form136_delete_item($(this));'><i class='fa fa-trash' title='Delete' name='delete'></i></button>";
-                            rowsHTML+="</td>";
+								rowsHTML+="<input type='hidden' form='form136_"+id+"' step='any' name='tax_unit'>";
+		                    rowsHTML+="</td>";
                         rowsHTML+="</tr>";
 
                         $('#form136_body').append(rowsHTML);
@@ -232,7 +233,29 @@
 						$(fields).on("submit", function(event)
                         {
                             event.preventDefault();
+							form136_update_item(fields);
                         });
+
+
+						var fields=document.getElementById("form136_"+id);
+		                var quantity_filter=fields.elements[2];
+		                var unit_filter=fields.elements[3];
+		                var amount_filter=fields.elements[4];
+		                var tax_filter=fields.elements[5];
+						var tax_unit_filter=fields.elements['tax_unit'];
+
+						var tax_unit_data={data_store:'product_master',return_column:'tax',
+										  indexes:[{index:'name',exact:result.product_name}]};
+						set_my_value_json(tax_unit_data,tax_unit_filter);
+
+		                $(unit_filter).on('blur',function ()
+		                {
+		                    amount_filter.value=vUtil.round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
+		                    tax_filter.value=vUtil.round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
+							$(amount_filter).floatlabel();
+							$(tax_filter).floatlabel();
+		                });
+
                     });
                     form136_get_totals();
 
@@ -266,9 +289,9 @@
 	                    rowsHTML+="</td>";
 	                    rowsHTML+="<td data-th='Bill Price'>";
 							rowsHTML+="<input type='number' class='floatlabel' placeholder='Quantity' form='form136_"+id+"' step='any'>";
-							rowsHTML+="<input class='floatlabel' placeholder='Unit Price' type='number' form='form136_"+id+"' step='any'>";
-	                        rowsHTML+="<input type='number' class='floatlabel' placeholder='Amount' readonly='readonly' form='form136_"+id+"' value='' step='any'>";
-	                        rowsHTML+="<input type='number' class='floatlabel' placeholder='Tax' required form='form136_"+id+"' step='any'>";
+							rowsHTML+="<input class='floatlabel dblclick_editable' placeholder='Unit Price' type='number' form='form136_"+id+"' step='any'>";
+	                        rowsHTML+="<input type='number' class='floatlabel dblclick_editable' placeholder='Amount' readonly='readonly' form='form136_"+id+"' value='' step='any'>";
+	                        rowsHTML+="<input type='number' class='floatlabel dblclick_editable' placeholder='Tax' required form='form136_"+id+"' step='any'>";
 	                    rowsHTML+="</td>";
 	                    rowsHTML+="<td data-th='PO Price'>";
 							rowsHTML+="<input type='number' class='floatlabel' placeholder='Quantity' readonly='readonly' form='form136_"+id+"' step='any'>";
@@ -281,7 +304,7 @@
 	                    rowsHTML+="</td>";
 	                    rowsHTML+="<td data-th='Action'>";
 	                        rowsHTML+=" <i id='form136_check_image_"+id+"' class='fa fa-2x fa-check link' title='Accepted' data-accepted='accepted'></i>";
-	                        rowsHTML+="<input type='hidden' form='form136_"+id+"' value='"+id+"'>";
+	                        rowsHTML+="<input type='hidden' form='form136_"+id+"' value='"+id+"' name='id'>";
 	                        rowsHTML+="<input type='button' class='submit_hidden' form='form136_"+id+"' id='save_form136_"+id+"' >";
 	                        rowsHTML+="<button type='button' class='btn red' form='form136_"+id+"' name='delete' title='Delete' id='delete_form136_"+id+"' onclick='$(this).parent().parent().remove(); form136_get_totals();'><i class='fa fa-trash'></i></button>";
 	                        rowsHTML+="<input type='hidden' form='form136_"+id+"' step='any' name='tax_unit'>";
@@ -388,6 +411,10 @@
 	                            po_tax_rate_filter.value="";
 	                            po_tax_filter.value="";
 	                        }
+							$(po_amount_filter).floatlabel();
+							$(po_tax_filter).floatlabel();
+							$(po_quantity_filter).floatlabel();
+							$(po_unit_filter).floatlabel();
 	                    });
 
 	                    var tax_unit_data={data_store:'product_master',return_column:'tax',
@@ -403,6 +430,11 @@
 
 	                    po_amount_filter.value=parseFloat(po_unit_filter.value)*parseFloat(quantity_filter.value);
 	                    po_tax_filter.value=parseFloat(po_tax_rate_filter.value)*parseFloat(po_amount_filter.value)/100;
+
+						$(amount_filter).floatlabel();
+						$(tax_filter).floatlabel();
+						$(po_amount_filter).floatlabel();
+						$(po_tax_filter).floatlabel();
 	                });
 
 	                ////////////////////////////////////
@@ -411,7 +443,8 @@
 	                {
 	                    amount_filter.value=vUtil.round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
 	                    tax_filter.value=vUtil.round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
-
+						$(amount_filter).floatlabel();
+						$(tax_filter).floatlabel();
 	                });
 
 	                form136_get_totals();
@@ -433,6 +466,7 @@
             if(is_create_access('form136'))
             {
                 var bill_id=document.getElementById("form136_master").elements['id'].value;
+				var bill_num=document.getElementById("form136_master").elements['bill_num'].value;
                 var supplier=document.getElementById("form136_master").elements['supplier'].value;
                 var entry_date=get_raw_time(document.getElementById("form136_master").elements['entry_date'].value);
 
@@ -491,7 +525,8 @@
                     var return_json={data_store:'supplier_returns',
 						warning:'no',
                     	data:[{index:'id',value:bill_id},
-		 					{index:'supplier',value:supplier},
+							{index:'return_num',value:bill_num,uniqueWith:['supplier']},
+							{index:'supplier',value:supplier},
 		 					{index:'return_date',value:entry_date},
 	                        {index:'total',value:'0'},
 	                        {index:'tax',value:'0'},
@@ -521,6 +556,11 @@
                 });
 
                 $(save_button).off('click');
+				$(save_button).on('click',function(e)
+				{
+					e.preventDefault();
+					form136_update_item(form);
+				});
 
                 ///////////adding store placement////////
                 var storage_data={data_store:'area_utilization',
@@ -541,6 +581,66 @@
                         create_json(storage_json);
                     }
                 });
+            }
+            else
+            {
+                $("#modal2_link").click();
+            }
+        }
+
+		function form136_update_item(form)
+        {
+            if(is_create_access('form136'))
+            {
+                var bill_id=document.getElementById("form136_master").elements['id'].value;
+                var supplier=document.getElementById("form136_master").elements['supplier'].value;
+                var entry_date=get_raw_time(document.getElementById("form136_master").elements['entry_date'].value);
+
+                var name=form.elements[0].value;
+                var batch=form.elements[1].value;
+                var quantity=form.elements[2].value;
+                var price=form.elements[3].value;
+                var amount=form.elements[4].value;
+                var tax=form.elements[5].value;
+                var total=parseFloat(tax)+parseFloat(amount);
+
+                var storage=form.elements[10].value;
+                var data_id=form.elements['id'].value;
+
+                var qc=document.getElementById('form136_check_image_'+data_id).getAttribute('data-accepted');
+                var last_updated=get_my_time();
+
+                var data_json={data_store:'supplier_bill_items',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'total',value:total},
+                        {index:'tax',value:tax},
+                        {index:'amount',value:amount},
+                        {index:'unit_price',value:price},
+						{index:'storage',value:storage},
+                        {index:'last_updated',value:last_updated}]};
+
+				var batch_json={data_store:'product_instances',
+	 				data:[{index:'id',value:data_id},
+			 					{index:'cost_price',value:price},
+			 					{index:'last_updated',value:last_updated}]};
+
+                update_json(batch_json);
+                update_json(data_json);
+
+				if(qc=='rejected')
+				{
+					var return_json={data_store:'supplier_returns',
+						warning:'no',
+						data:[{index:'id',value:bill_id},
+							{index:'return_num',value:bill_num,uniqueWith:['supplier']},
+							{index:'supplier',value:supplier},
+							{index:'return_date',value:entry_date},
+							{index:'last_updated',value:last_updated}]};
+
+					update_json(return_json);
+				}
+
+                $(form).readonly();
             }
             else
             {
@@ -1014,15 +1114,16 @@
 
             /////////////adding new table //////////////////////////////////////////////////////
             var new_table=document.createElement('table');
-            new_table.setAttribute('style','width:100%;font-size:16px;border:1px solid black;text-align:left;');
+            new_table.setAttribute('style','width:100%;font-size:15px;border:1px solid black;text-align:left;');
             var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
                         "<td style='text-align:left;width:25%;padding:3px;font-weight:600;'>Item</td>"+
-                        "<td style='text-align:left;width:15%;padding:3px;font-weight:600;'>Batch</td>"+
-                        "<td style='text-align:left;width:12%;padding:3px;font-weight:600;'>Quantity</td>"+
-                        "<td style='text-align:left;width:12%;padding:3px;font-weight:600;'>Rate</td>"+
-                        "<td style='text-align:left;width:12%;padding:3px;font-weight:600;'>Amount</td>"+
-                        "<td style='text-align:left;width:12%;padding:3px;font-weight:600;'>Tax</td>"+
-                        "<td style='text-align:left;width:12%;padding:3px;font-weight:600;'>Total</td></tr>";
+                        "<td style='text-align:left;width:13%;padding:3px;font-weight:600;'>Batch</td>"+
+						"<td style='text-align:left;width:10%;padding:3px;font-weight:600;'>Accepted</td>"+
+                        "<td style='text-align:left;width:10%;padding:3px;font-weight:600;'>Quantity</td>"+
+						"<td style='text-align:left;width:10%;padding:3px;font-weight:600;'>Rate</td>"+
+                        "<td style='text-align:left;width:11%;padding:3px;font-weight:600;'>Amount</td>"+
+                        "<td style='text-align:left;width:10%;padding:3px;font-weight:600;'>Tax</td>"+
+                        "<td style='text-align:left;width:11%;padding:3px;font-weight:600;'>Total</td></tr>";
 
             var table_rows=table_header;
             var counter=0;
@@ -1037,13 +1138,19 @@
                 var price=form.elements[3].value;
                 var amount=form.elements[4].value;
                 var tax=form.elements[5].value;
+
+				var qc_id=form.elements[11].value;
+                var qc=document.getElementById('form136_check_image_'+qc_id).getAttribute('data-accepted');
+
+				var accepted = (qc=='accepted') ? 'Accepted' : 'Rejected';
                 var total=parseFloat(amount)+parseFloat(tax);
 
                 table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
                         "<td style='text-align:left;padding:3px;word-wrap: break-word;'>"+item_name+"</td>"+
                         "<td style='text-align:left;padding:3px;'>"+batch+"</td>"+
+						"<td style='text-align:left;padding:3px;'>"+accepted+"</td>"+
                         "<td style='text-align:left;padding:3px;'>"+quantity+"</td>"+
-                        "<td style='text-align:left;padding:3px;'>"+price+"</td>"+
+						"<td style='text-align:left;padding:3px;'>"+price+"</td>"+
                         "<td style='text-align:left;padding:3px;'>"+amount+"</td>"+
                         "<td style='text-align:left;padding:3px;'>"+tax+"</td>"+
                         "<td style='text-align:left;padding:3px;'>"+total+"</td></tr>";
@@ -1053,7 +1160,7 @@
             var rows_to_add=15-row_count;
             for(var i=0;i<rows_to_add;i++)
             {
-                table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+                table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
             }
 
             var table_foot=document.getElementById(form_id+'_foot');
@@ -1062,7 +1169,7 @@
             var total_amount=$(table_foot).find('tr>td:nth-child(3)')[0].innerHTML;
             //console.log(total_amount);
           	var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
-	                      "<td colspan='2' style='text-align:left;padding:3px;'>"+total_text1+"</td>"+
+	                      "<td colspan='3' style='text-align:left;padding:3px;'>"+total_text1+"</td>"+
 	                      "<td colspan='3' style='text-align:left;padding:3px;'>"+total_text2+"</td>"+
                         "<td colspan='2' style='text-align:left;padding:3px;font-weight:600;'>"+total_amount+"</td></tr>";
 						table_rows+=table_foot_row;

@@ -4,6 +4,9 @@
 function login_action(domain,username,pass,func)
 {
 	show_loader();
+	logout_page = window.location.pathname;
+	set_session_var('logout_page',logout_page);
+
 	if(typeof domain=='undefined')
 	{
 		var form=document.getElementById('login');

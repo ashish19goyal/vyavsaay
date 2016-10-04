@@ -906,7 +906,7 @@
 				var data_json={data_store:'bill_items',
 							data:[{index:'id',value:data_id}]};
 
-				delete_simple(data_xml);
+				delete_json(data_json);
 				$(button).parent().parent().remove();
 				form72_get_totals();
 			});

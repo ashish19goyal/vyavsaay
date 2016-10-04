@@ -139,14 +139,14 @@
             }
 
             var history_page=parseInt(this.get_index()/this.page_size());
-            var history_obj={form:element_name,id:history_id,page:history_page};
+            var history_obj={form:element_name,id:history_id,page:history_page,element_id:settings.binding_id};
 
             var url=server_root+"/main.php";
 
 			if(element_name=='undefined' || element_name==undefined || element_name==null)
 			{
 				element_name='home';
-				history_obj={form:'home',id:'',page:''};
+				history_obj={form:'home',id:'',page:'',element_id:settings.binding_id};
 				this.index_onclick();
 			}
 

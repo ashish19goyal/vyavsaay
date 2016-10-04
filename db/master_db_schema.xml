@@ -33,4 +33,13 @@
 			<delete_message index='no' type="TEXT"></delete_message>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</api_key_mapping>
+	<crons>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<pid index='no' type="VARCHAR(20)"></pid>
+			<display_name index='no' type="VARCHAR(90)"></display_name>
+			<name index='no' type="VARCHAR(90)"></name>
+			<status index='no' type="VARCHAR(45)"></status><!-- active/suspended -->
+			<started_on index='no' type="BIGINT"></started_on>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</crons>
 </re_xml>

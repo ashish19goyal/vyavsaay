@@ -75,14 +75,14 @@
 
             var paginator=$('#form17_body').paginator();
 
-						var columns={count:paginator.page_size(),
-												start_index:paginator.get_index(),
-												data_store:'supplier_returns',
-												indexes:[{index:'id',value:fid},
-												{index:'supplier',value:fname},
-												{index:'return_date'},
-												{index:'return_num',value:fnum},
-												{index:'total'}]};
+			var columns={count:paginator.page_size(),
+						start_index:paginator.get_index(),
+						data_store:'supplier_returns',
+						indexes:[{index:'id',value:fid},
+						{index:'supplier',value:fname},
+						{index:'return_date'},
+						{index:'return_num',value:fnum},
+						{index:'total'}]};
 
             read_json_rows('form17',columns,function(results)
             {
@@ -103,7 +103,7 @@
                                 rowsHTML+="<input type='number' readonly='readonly' form='form17_"+result.id+"' value='"+result.total+"' step='any'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Action'>";
-																rowsHTML+="<input type='hidden' form='form17_"+result.id+"' value='"+result.id+"' name='id'>";
+								rowsHTML+="<input type='hidden' form='form17_"+result.id+"' value='"+result.id+"' name='id'>";
                                 rowsHTML+="<button type='button' class='btn red' form='form17_"+result.id+"' title='Delete Return' onclick='form17_delete_item($(this));' name='delete'><i class='fa fa-trash'></i></button>";
                             rowsHTML+="</td>";
                     rowsHTML+="</tr>";
@@ -112,12 +112,12 @@
                 });
 
                 $('#form17').formcontrol();
-								paginator.update_index(results.length);
-								initialize_tabular_report_buttons(columns,'Purchase Returns','form17',function (item)
-								{
-									item.return_date=vTime.date({time:item.return_date});
-								});
-								hide_loader();
+				paginator.update_index(results.length);
+				initialize_tabular_report_buttons(columns,'Purchase Returns','form17',function (item)
+				{
+					item.return_date=vTime.date({time:item.return_date});
+				});
+				hide_loader();
             });
         }
 

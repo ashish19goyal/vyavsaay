@@ -592,3 +592,24 @@ function s3_object(data,func)
         }
 	});
 }
+
+function server_cron_request(columns,callback)
+{
+	show_loader();
+	var data = vUtil.getCredentials();
+	data['data']=JSON.stringify(columns);
+
+	ajax_json(server_root+"/controller/cron",data,function(response_object)
+	{
+		hide_loader();
+		console.log(response_object);
+		if(response_object.status=='success')
+		{
+			callback(response_object);
+		}
+		else
+		{
+			$("#modal74_link").click();
+		}
+	});
+}

@@ -4004,7 +4004,7 @@
 							</div>
 							<hr>
 							<div class="row">
-								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Out Source" required form='modal216_form' name='out_source'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Out Source" form='modal216_form' name='out_source'></div>
 								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Issuance Type" required form='modal216_form' name='type'></div>
 								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Ported From" form='modal216_form' name='ported_from'></div>
 								<div class="col-sm-6 col-md-3 pull-right">
@@ -4078,7 +4078,7 @@
 							</div>
 							<hr>
 							<div class="row">
-								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Out Source" required form='modal217_form' name='out_source'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Out Source" form='modal217_form' name='out_source'></div>
 								<div class="col-sm-12 col-md-3">
 									<button type='button' name='file_dummy' form='modal217_form' class='btn yellow-saffron'>Add Attachments</button>
 								</div>

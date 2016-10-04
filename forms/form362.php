@@ -170,14 +170,14 @@
 							rowsHTML+="<textarea required form='form362_"+id+"'></textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Period'>";
-							rowsHTML+="<input type='text' class='floatlabel' placeholder='Start Date' form='form362_"+id+"'>";
+							rowsHTML+="<input type='text' required class='floatlabel' placeholder='Start Date' form='form362_"+id+"'>";
 							rowsHTML+="<input type='text' class='floatlabel' placeholder='End Date' form='form362_"+id+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Value'>";
-							rowsHTML+="<input type='number' step='any' class='floatlabel_right' placeholder='%' form='form362_"+id+"'>";
+							rowsHTML+="<input type='number' required step='any' class='floatlabel_right' placeholder='%' form='form362_"+id+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Status'>";
-							rowsHTML+="<input type='text' form='form362_"+id+"' value='active'>";
+							rowsHTML+="<input type='text' required form='form362_"+id+"' value='active'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form362_"+id+"' name='id' value='"+id+"'>";
@@ -203,7 +203,7 @@
 
 				$(name_filter).focus();
 
-				set_static_value_list_json('tax_heads','status',status_filter);
+				set_value_list_json(['active','archived'],status_filter);
 
 				$('#form362').formcontrol();
 			}

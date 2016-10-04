@@ -265,7 +265,7 @@
 					indexes:[{index:'id'},
                         {index:'issuer'},
                         {index:'agent'},
-						{index:'premium'},
+						{index:'net_premium'},
 						{index:'policy_num'},
 						{index:'policy_name'},
 						{index:'sum_insured'},
@@ -389,8 +389,8 @@
 						rowsHTML+="<td data-th='Policy #'>";
 							rowsHTML+="<a onclick=\"show_object('policies','"+item.policy_num+"');\">"+item.policy_num+"</a>";
 		                rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Premium'>";
-							rowsHTML+=item.premium;
+						rowsHTML+="<td data-th='Net Premium'>";
+							rowsHTML+=item.net_premium;
 		                rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Basic Comm.'>";
 							rowsHTML+="<span class='label label-sm "+item.basic_label+"' id='report123_basic_"+item.id+"' title='"+item.basic_notes+"'>"+item.basic+"</span>";
@@ -452,7 +452,7 @@
 		var dummy_button=form.elements['file_dummy'];
 		var import_button=form.elements['save'];
 
-		var import_types_list = ['Apollo Basic','Apollo ORC', 'ICICI Basic', 'ICICI ORC','Max Basic','Max ORC','Star Basic','Star ORC'];
+		var import_types_list = ['Apollo Basic','Apollo ORC', 'ICICI Basic','Max Basic'];
 		set_value_list_json(import_types_list,import_type);
 
 		//initializing file import button
@@ -480,16 +480,16 @@
 											break;
 					case 'ICICI Basic':vImport.importData(content,form,report123_ib_import,report123_ib_import_validate);
 											break;
-					case 'ICICI ORC':vImport.importData(content,form,report123_io_import,report123_io_import_validate);
-											break;
+					// case 'ICICI ORC':vImport.importData(content,form,report123_io_import,report123_io_import_validate);
+					// 						break;
 					case 'Max Basic':vImport.importData(content,form,report123_mb_import,report123_mb_import_validate);
 											break;
-					case 'Max ORC':vImport.importData(content,form,report123_mo_import,report123_mo_import_validate);
-											break;
-					case 'Star Basic':vImport.importData(content,form,report123_sb_import,report123_sb_import_validate);
-											break;
-					case 'Star ORC':vImport.importData(content,form,report123_so_import,report123_so_import_validate);
-											break;
+					// case 'Max ORC':vImport.importData(content,form,report123_mo_import,report123_mo_import_validate);
+					// 						break;
+					// case 'Star Basic':vImport.importData(content,form,report123_sb_import,report123_sb_import_validate);
+					// 						break;
+					// case 'Star ORC':vImport.importData(content,form,report123_so_import,report123_so_import_validate);
+					// 						break;
 				}
 			});
 		});
@@ -506,26 +506,30 @@
 											'Product Name','Policy Issuance Date','Policy Start Date',
 											'Net Premuim','Service Tax','Gross Premium','Comm %','Comm Amount'];
 								break;
-			case 'Apollo ORC':data_array=[];
+			case 'Apollo ORC':data_array=['Updated agent code','POLICY_NUMBER','AGENT_NAME','AGENT_CODE',
+										'Updated agent name','Updated Branch','BRANCH','POLICY_HOLDER_NAME',
+										'NOMINEE_NAME','START_DATE','EXPIRY_DATE','ENTRY_DATE','PREMIUM',
+										'SERVICE_TAX','TOTAL_PREMIUM','STATUS','BRANCH_CODE','Type','SUM Insured',
+										'Product','Upsell','Commission'];
 								break;
 			case 'ICICI Basic':data_array=['IssueStatus','IssueDate','CustomerName','PolicyNumber','NetGWP',
 										'ServiceTax','EducationCess','PremiumForPayout','CommissionPercentage',
 										'AgentCommission','TDS','NetAmt','RmName','AgentLocation','FinalVertical'];
 								break;
-			case 'ICICI ORC':data_array=[];
-								break;
+			// case 'ICICI ORC':data_array=[];
+			// 					break;
 			case 'Max Basic':data_array=['Policy Number','Customer Id','Customer Name','Agent Code',
 										'Gwp(Before Tax)','Commission Structure','Service Tax','TDS','Net Payment',
 										'Agent Type','Agent Name','Agent Branch','Bank Name','Account Number',
 										'Bank Branch','Bank City','Pan Number','Licence Expiry Date','Email',
 										'Payment Status','IFSC Code','Cheque Number','Cheque Date'];
 								break;
-			case 'Max ORC': data_array=[];
-											break;
-			case 'Star Basic':data_array=[];
-											break;
-			case 'Star ORC':data_array=[];
-									break;
+			// case 'Max ORC': data_array=[];
+			// 								break;
+			// case 'Star Basic':data_array=[];
+			// 								break;
+			// case 'Star ORC':data_array=[];
+			// 						break;
 		}
 		vUtil.arrayToCSV(data_array);
 	};
@@ -599,6 +603,68 @@
 		});
 	};
 
+	/**
+	*	Import validation for apollo orc commissions
+	*/
+	function report123_ao_import_validate(data_array)
+	{
+		var validate_template_array=[{column:'POLICY_NUMBER',required:'yes',regex:new RegExp('^[0-9a-zA-Z_-]+$')},
+								{column:'PREMIUM',required:'yes',regex:new RegExp('^[0-9 .-]+$')},
+								{column:'Commission',required:'yes',regex:new RegExp('^[0-9 .-]+$')}];
+
+		var error_array=vImport.validate(data_array,validate_template_array);
+		return error_array;
+	}
+
+	/**
+	*	Import for apollo ORC commissions
+	*/
+	function report123_ao_import(commissions)
+	{
+		var create_comm_json={data_store:'policy_commissions_imported',log:'yes',data:[],
+						log_data:{title:'ORC Commissions from Apollo',link_to:'report123'}};
+
+		var counter=1;
+		var last_updated=vTime.unix();
+		show_loader();
+
+		for(var a in commissions)
+		{
+			commissions[a].policy_num=commissions[a]['POLICY_NUMBER'];
+			commissions[a].issue_date="";
+			commissions[a].issuer="Apollo";
+			commissions[a].commission_type="orc";
+			commissions[a].agent="";
+			commissions[a].import=false;
+			commissions[a].comm_percent=vUtil.round(parseFloat(commissions[a].Commission)/parseFloat(commissions[a].PREMIUM)*100,2);
+		}
+
+		report123_policy_details(commissions,'policy_num','Apollo',function()
+		{
+			// console.log(commissions);
+			var key=vUtil.newKey();
+			for(var i=0;i<commissions.length;i++)
+			{
+				if(commissions[i].import)
+				{
+					key++;
+					var data_json_array=[{index:'id',value:key},
+								{index:'policy_num',value:commissions[i].policy_num,uniqueWith:['commission_type','premium']},
+								{index:'amount',value:commissions[i]['Commission']},
+								{index:'comm_percent',value:commissions[i].comm_percent},
+								{index:'premium',value:commissions[i]['PREMIUM']},
+								{index:'issue_date',value:commissions[i].issue_date},
+								{index:'issuer',value:commissions[i].issuer},
+								{index:'commission_type',value:commissions[i].commission_type},
+								{index:'agent',value:commissions[i].agent},
+								{index:'last_updated',value:last_updated}];
+
+					create_comm_json.data.push(data_json_array);
+				}
+			}
+			create_batch_json(create_comm_json);
+		});
+	};
 
 	/**
 	*	Import validation for Max basic commissions

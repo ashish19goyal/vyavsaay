@@ -135,7 +135,7 @@
 
 		var data=['Application #','Policy #','Issue Type','End Date','Start Date','Issue Date',
 					'Tele Caller','Sales Manager','Team Lead','Agent','Issuing Company',
-					'Policy Name','Policy Holder','Preferred','Term'];
+					'Policy Name','Policy Holder','Preferred','Term','Out Source'];
 		set_value_list_json(data,f_filter);
 
 		$(from_filter).datepicker();
@@ -179,6 +179,7 @@
 				case 'Policy Holder': i_filter.value = 'policy_holder'; s(); break;
 				case 'Preferred': i_filter.value = 'preferred'; s(); break;
 				case 'Term': i_filter.value = 'term'; s(); break;
+				case 'Out Source': i_filter.value = 'out_source'; s(); break;
 				default: i_filter.value = 'status'; s();
 			}
 		});

@@ -40,9 +40,10 @@
 						<th><input type='text' placeholder="Issuing Company" readonly="readonly" name='company' form='form348_header'></th>
 						<th><input type='text' placeholder="Policy #" readonly="readonly" name='policy' form='form348_header'></th>
 						<th><input type='text' placeholder="Agent" readonly="readonly" name='agent' form='form348_header'></th>
-						<th><input type='text' placeholder="Premium" readonly="readonly" form='form348_header'></th>
+						<th><input type='text' placeholder="Net Premium" readonly="readonly" form='form348_header'></th>
 						<th><input type='text' placeholder="Commission %" readonly="readonly" form='form348_header'></th>
 						<th><input type='text' placeholder="Amount" readonly="readonly" form='form348_header'></th>
+						<th><input type='text' placeholder="Type" readonly="readonly" form='form348_header'></th>
 						<th><input type='submit' form='form348_header' style='display:none;'></th>
 				</tr>
 			</thead>
@@ -194,7 +195,7 @@
 									{index:'policy_num'},
 									{index:'amount'},
 									{index:'comm_percent'},
-									{index:'premium'},
+									{index:'net_premium'},
 									{index:'issue_date'},
 									{index:'issuer'},
 									{index:'commission_type'},
@@ -238,13 +239,16 @@
 								rowsHTML+="<a onclick=\"show_object('staff','"+result.agent+"')\"><textarea readonly='readonly' form='form348_"+result.id+"'>"+result.agent+"</textarea></a>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Premium'>";
-								rowsHTML+="<input type='number' step='any' readonly='readonly' class='dblclick_editable' form='form348_"+result.id+"' value='"+result.premium+"'>";
+								rowsHTML+="<input type='number' step='any' readonly='readonly' class='dblclick_editable' form='form348_"+result.id+"' value='"+result.net_premium+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Commission %'>";
 								rowsHTML+="<input type='number' step='any' readonly='readonly' class='dblclick_editable' form='form348_"+result.id+"' value='"+result.comm_percent+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Amount'>";
 								rowsHTML+="<input type='number' step='any' readonly='readonly' class='dblclick_editable' form='form348_"+result.id+"' value='"+result.amount+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Type'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form348_"+result.id+"' value='"+result.commission_type+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form348_"+result.id+"' value='"+result.id+"' name='id'>";
@@ -327,7 +331,10 @@
 										{index:'id'},
 										{index:'policy_num'},
 										{index:'comm_percent'},
+										{index:'net_premium'},
 										{index:'premium'},
+										{index:'premium_tax'},
+										{index:'tds'},
 										{index:'commission_type'},
 										{index:'issue_date'}]};
 				read_json_rows('form348',comm_data,function(commissions)
@@ -338,6 +345,10 @@
 									indexes:[{index:'policy_num',array:policy_nums},
 											{index:'policy_name'},
 											{index:'sum_insured'},
+											{index:'premium'},
+											{index:'net_premium'},
+											{index:'tax'},
+											{index:'tds_rate'},
 											{index:'issued_in_quarter'},
 											{index:'upsell'},
 											{index:'issue_type'},
@@ -364,6 +375,10 @@
 										commissions[i].upsell = policies[j].upsell;
 										commissions[i].issue_type = policies[j].issue_type;
 										commissions[i].term = policies[j].term;
+										commissions[i].premium = policies[j].premium;
+										commissions[i].net_premium = policies[j].net_premium;
+										commissions[i].tax = policies[j].tax;
+										commissions[i].tds_rate = policies[j].tds_rate;
 										break;
 									}
 								}
@@ -402,11 +417,16 @@
 											if(all_match)
 											{
 												comm['comm_percent'] = commission.commission;
-												comm['amount'] = parseFloat(commission.commission)*parseFloat(comm['premium'])/100;
+												comm['amount'] = parseFloat(commission.commission)*parseFloat(comm['net_premium'])/100;
+												comm['tds'] = parseFloat(comm['tds_rate'])*parseFloat(comm['amount'])/100;
 
 												var data_array=[{index:'id',value:comm['id']},
 														{index:'comm_percent',value:comm['comm_percent']},
 														{index:'amount',value:comm['amount']},
+														{index:'premium',value:comm['premium']},
+														{index:'net_premium',value:comm['net_premium']},
+														{index:'premium_tax',value:comm['tax']},
+														{index:'tds',value:comm['tds']},
 														{index:'last_updated',value:last_updated}];
 
 												update_comm_json.data.push(data_array);

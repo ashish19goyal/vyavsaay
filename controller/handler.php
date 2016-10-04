@@ -28,6 +28,8 @@
 							break;
 			case 'get_count': $response_object = $handler::get_count($input_data);
 							break;
+			case 'cron': $response_object = $handler::manage_cron($input_data);
+							break;
 		}
 	}
 	else

@@ -40,7 +40,8 @@ function navigate_history()
             show_function(function_link);
             $(element_link).attr('data_id',obj.id);
 
-            var paginator=$('#'+obj.form).find("[isPaged='yes']").data('paginator');
+            // var paginator=$('#'+obj.form).find("[isPaged='yes']").data('paginator');
+            var paginator= !vUtil.isBlank(obj.element_id) ?  $("#"+obj.element_id).data('paginator') : null;
 
             if(paginator)
             {
@@ -68,15 +69,15 @@ function navigate_history_url(url)
 
     var url_object=url.split("/");
 
-    if(url_object[2])
+    if(!vUtil.isBlank(url_object[2]))
     {
         obj.form=url_object[2];
 
-        if(url_object[3])
+        if(!vUtil.isBlank(url_object[3]))
         {
             obj.page=url_object[3];
 
-            if(url_object[4])
+            if(!vUtil.isBlank(url_object[4]))
             {
                 obj.id=url_object[4];
             }
@@ -93,7 +94,10 @@ function navigate_history_url(url)
         var function_link=$(element_link).parent().parent().parent().attr('id');
         show_function(function_link);
         $(element_link).attr('data_id',obj.id);
-        var paginator=$('#'+obj.form).find("tbody[isPaged='yes']").data('paginator');
+
+        // var paginator=$('#'+obj.form).find("tbody[isPaged='yes']").data('paginator');
+        var paginator= !vUtil.isBlank(obj.element_id) ?  $("#"+obj.element_id).data('paginator') : null;
+
         var page_index=0;
         if(paginator)
         {

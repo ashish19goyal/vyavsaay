@@ -28,9 +28,11 @@
 				<tr>
 					<form id='form363_header'></form>
 						<th><input type='text' placeholder="Name" class='floatlabel' name='name' form='form363_header'></th>
-						<th><input type='text' placeholder="Attribute" class='floatlabel' name='attribute' form='form363_header'></th>
-						<th><input type='text' placeholder="Value" class='floatlabel' name='value' form='form363_header'></th>
-						<th><input type='submit' form='form363_header' style='visibility: hidden;'></th>
+						<th><input type='text' placeholder="Product" class='floatlabel' name='product' form='form363_header'></th>
+						<th><input type='text' placeholder="Period" readonly='readonly' form='form363_header'></th>
+						<th><input type='text' placeholder="Value" readonly='readonly' form='form363_header'></th>
+						<th><input type='text' placeholder="Status" class='floatlabel' name='status' form='form363_header'></th>
+						<th><input type='submit' form='form363_header' style='display: none;'></th>
 				</tr>
 			</thead>
 			<tbody id='form363_body'>
@@ -42,19 +44,16 @@
 		function form363_header_ini()
 		{
 			var filter_fields=document.getElementById('form363_header');
-			var customer_filter=filter_fields.elements['name'];
-			var attribute_filter=filter_fields.elements['attribute'];
-			var value_filter=filter_fields.elements['value'];
+			var name_filter=filter_fields.elements['name'];
+			var product_filter=filter_fields.elements['product'];
+			var status_filter=filter_fields.elements['status'];
 
-			var customer_data={data_store:'customers',return_column:'acc_name'};
-			var attribute_data={data_store:'attributes',return_column:'attribute',
-										indexes:[{index:'type',exact:'customer'}]};
-			var value_data={data_store:'attributes',return_column:'value',
-								indexes:[{index:'type',exact:'customer'}]};
+			var name_data={data_store:'tds_settings',return_column:'name'};
+			var product_data={data_store:'tds_settings',return_column:'product'};
 
-			set_my_filter_json(customer_data,customer_filter);
-			set_my_filter_json(attribute_data,attribute_filter);
-			set_my_filter_json(value_data,value_filter);
+			set_my_filter_json(name_data,name_filter);
+			set_my_filter_json(product_data,product_filter);
+			set_filter_json(['active','archived'],status_filter);
 
 			$(filter_fields).off('submit');
 			$(filter_fields).on('submit',function(event)
@@ -74,20 +73,22 @@
 			$('#form363_body').html("");
 
 			var filter_fields=document.getElementById('form363_header');
-			var fcustomer=filter_fields.elements['name'].value;
-			var fattribute=filter_fields.elements['attribute'].value;
-			var fvalue=filter_fields.elements['value'].value;
+			var fname=filter_fields.elements['name'].value;
+			var fproduct=filter_fields.elements['product'].value;
+			var fstatus=filter_fields.elements['status'].value;
 
 			var paginator=$('#form363_body').paginator();
 
 			var new_columns={count:paginator.page_size(),
 							start_index:paginator.get_index(),
-							data_store:'attributes',
+							data_store:'tds_settings',
 							indexes:[{index:'id',value:fid},
-									{index:'name',value:fcustomer},
-									{index:'type',exact:'customer'},
-									{index:'attribute',value:fattribute},
-									{index:'value',value:fvalue}]};
+									{index:'name',value:fname},
+									{index:'product',value:fproduct},
+									{index:'status',value:fstatus},
+									{index:'percentage'},
+									{index:'start_date'},
+									{index:'end_date'}]};
 
 			read_json_rows('form363',new_columns,function(results)
 			{
@@ -96,33 +97,61 @@
 					var rowsHTML="<tr>";
 						rowsHTML+="<form id='form363_"+result.id+"'></form>";
 							rowsHTML+="<td data-th='Name'>";
-								rowsHTML+="<a onclick=\"show_object('customers','"+result.name+"');\"><textarea readonly='readonly' form='form363_"+result.id+"'>"+result.name+"</textarea></a>";
+								rowsHTML+="<textarea readonly='readonly' form='form363_"+result.id+"'>"+result.name+"</textarea>";
 							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Attribute'>";
-								rowsHTML+="<textarea readonly='readonly' form='form363_"+result.id+"'>"+result.attribute+"</textarea>";
+							rowsHTML+="<td data-th='Product'>";
+								rowsHTML+="<textarea readonly='readonly' form='form363_"+result.id+"'>"+result.product+"</textarea>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Period'>";
+								rowsHTML+="<input type='text' readonly='readonly' class='floatlabel' placeholder='Start Date' form='form363_"+result.id+"' value='"+vTime.date({time:result.start_date})+"'>";
+								rowsHTML+="<input type='text' readonly='readonly' class='floatlabel' placeholder='End Date' form='form363_"+result.id+"' value='"+vTime.date({time:result.end_date})+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Value'>";
-								rowsHTML+="<textarea class='dblclick_editable' readonly='readonly' form='form363_"+result.id+"'>"+result.value+"</textarea>";
+								rowsHTML+="<input type='number' class='floatlabel_right' placeholder='%' readonly='readonly' form='form363_"+result.id+"' value='"+result.percentage+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Status'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form363_"+result.id+"' value='"+result.status+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
-								rowsHTML+="<input type='hidden' form='form363_"+result.id+"' value='"+result.id+"'>";
-								rowsHTML+="<button type='submit' class='btn green' name='save' form='form363_"+result.id+"' title='Save'><i class='fa fa-save'></i></button>";
-								rowsHTML+="<button type='button' class='btn red' name='delete' form='form363_"+result.id+"' title='Delete' onclick='form363_delete_item($(this));'><i class='fa fa-trash'></i></button>";
+								rowsHTML+="<input type='hidden' form='form363_"+result.id+"' name='id' value='"+result.id+"'>";
+								if(result.status=='active')
+								{
+									rowsHTML+="<button type='button' class='btn red' name='archive' form='form363_"+result.id+"' title='Archive'><i class='fa fa-times'></i></button>";
+								}
+								else if(result.status=='archived')
+								{
+									rowsHTML+="<button type='button' class='btn green' name='active' form='form363_"+result.id+"' title='Activate'><i class='fa fa-check'></i></button>";
+								}
 							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
 
 					$('#form363_body').append(rowsHTML);
 					var fields=document.getElementById("form363_"+result.id);
-					$(fields).on("submit", function(event)
+					var archive_button = fields.elements['archive'];
+					var active_button = fields.elements['active'];
+
+					$(archive_button).on("click", function(event)
 					{
 						event.preventDefault();
-						form363_update_item(fields);
+						form363_archive_item(fields);
+					});
+
+					$(active_button).on("click", function(event)
+					{
+						event.preventDefault();
+						form363_activate_item(fields);
 					});
 				});
 
 				$('#form363').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Customer Attributes','form363',function (item){});
+				initialize_tabular_report_buttons(new_columns,'TDS Settings','form363',function (item)
+				{
+					item['Start Date'] = vTime.date({time:item.start_date});
+					item['End Date'] = vTime.date({time:item.end_date});
+					delete item.start_date;
+					delete item.end_date;
+				});
 				hide_loader();
 			});
 		};
@@ -133,27 +162,39 @@
 			{
 				var id=vUtil.newKey();
 				var rowsHTML="<tr>";
-				rowsHTML+="<form id='form363_"+id+"' autocomplete='off'></form>";
-					rowsHTML+="<td data-th='Name'>";
-						rowsHTML+="<input type='text' form='form363_"+id+"' required>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Attribute'>";
-						rowsHTML+="<input type='text' form='form363_"+id+"' required>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Value'>";
-						rowsHTML+="<textarea class='dblclick_editable' form='form363_"+id+"' required></textarea>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='form363_"+id+"' value='"+id+"'>";
-						rowsHTML+="<button type='submit' class='btn green' form='form363_"+id+"' title='Save'><i class='fa fa-save'></i></button>";
-						rowsHTML+="<button type='button' class='btn red' form='form363_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
-					rowsHTML+="</td>";
+					rowsHTML+="<form id='form363_"+id+"'></form>";
+						rowsHTML+="<td data-th='Name'>";
+							rowsHTML+="<textarea required form='form363_"+id+"'></textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Product'>";
+							rowsHTML+="<input type='text' required form='form363_"+id+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Period'>";
+							rowsHTML+="<input type='text' requried class='floatlabel' placeholder='Start Date' form='form363_"+id+"'>";
+							rowsHTML+="<input type='text' class='floatlabel' placeholder='End Date' form='form363_"+id+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Value'>";
+							rowsHTML+="<input type='number' required step='any' class='floatlabel_right' placeholder='%' form='form363_"+id+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Status'>";
+							rowsHTML+="<input type='text' required form='form363_"+id+"' value='active'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form363_"+id+"' name='id' value='"+id+"'>";
+							rowsHTML+="<button type='submit' class='btn green' name='save' form='form363_"+id+"' title='Save'><i class='fa fa-save'></i></button>";
+						rowsHTML+="</td>";
 				rowsHTML+="</tr>";
 
 				$('#form363_body').prepend(rowsHTML);
 				var fields=document.getElementById("form363_"+id);
-				var customer_filter=fields.elements[0];
-				var attribute_filter=fields.elements[1];
+				var name_filter=fields.elements[0];
+				var product_filter=fields.elements[1];
+				var start_filter=fields.elements[2];
+				var end_filter=fields.elements[3];
+				var status_filter=fields.elements[5];
+
+				$(start_filter).datepicker();
+				$(end_filter).datepicker();
 
 				$(fields).on("submit", function(event)
 				{
@@ -161,15 +202,12 @@
 					form363_create_item(fields);
 				});
 
-				var customer_data={data_store:'customers',return_column:'acc_name'};
-				set_my_value_list_json(customer_data,customer_filter,function ()
-				{
-					$(customer_filter).focus();
-				});
+				$(name_filter).focus();
 
-				var attribute_data={data_store:'attributes',return_column:'attribute',
-											indexes:[{index:'type',exact:'customer'}]};
-				set_my_filter_json(attribute_data,attribute_filter);
+				set_value_list_json(['active','archived'],status_filter);
+
+				var product_data = {data_store:'policy_types',return_column:'issuer'};
+				set_my_value_list_json(product_data,product_filter);
 
 				$('#form363').formcontrol();
 			}
@@ -183,37 +221,34 @@
 		{
 			if(is_create_access('form363'))
 			{
-				var customer=form.elements[0].value;
-				var attribute=form.elements[1].value;
-				var value=form.elements[2].value;
-				var data_id=form.elements[3].value;
+				var tax_name=form.elements[0].value;
+				var product=form.elements[1].value;
+				var start=vTime.unix({date:form.elements[2].value});
+				var end=vTime.unix({date:form.elements[3].value});
+				var value=form.elements[4].value;
+				var status=form.elements[5].value;
+				var data_id=form.elements['id'].value;
 				var last_updated=get_my_time();
 
-				var data_json={data_store:'attributes',
+				var data_json={data_store:'tds_settings',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
-	 					{index:'name',value:customer},
-	 					{index:'type',value:'customer'},
-	 					{index:'attribute',value:attribute},
-	 					{index:'value',value:value},
+	 					{index:'name',value:tax_name,unique:'yes'},
+	 					{index:'product',value:product},
+	 					{index:'start_date',value:start},
+						{index:'end_date',value:end},
+	 					{index:'percentage',value:value},
+						{index:'status',value:status},
 	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Added',notes:'Attribute for customer '+customer,link_to:'form363'}};
+	 				log_data:{title:'Added',notes:'TDS head '+tax_name,link_to:'form363'}};
 				create_json(data_json);
 
 				$(form).readonly();
-
-				var del_button=form.elements[5];
-				del_button.removeAttribute("onclick");
-				$(del_button).on('click',function(event)
-				{
-					form363_delete_item(del_button);
-				});
 
 				$(form).off('submit');
 				$(form).on('submit',function(event)
 				{
 					event.preventDefault();
-					form363_update_item(form);
 				});
 			}
 			else
@@ -222,24 +257,19 @@
 			}
 		}
 
-		function form363_update_item(form)
+		function form363_archive_item(form)
 		{
 			if(is_update_access('form363'))
 			{
-				var customer=form.elements[0].value;
-				var attribute=form.elements[1].value;
-				var value=form.elements[2].value;
-				var data_id=form.elements[3].value;
+				var name=form.elements[0].value;
+				var data_id=form.elements['id'].value;
 				var last_updated=get_my_time();
-				var data_json={data_store:'attributes',
+				var data_json={data_store:'tds_settings',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
-	 					{index:'name',value:customer},
-	 					{index:'type',value:'customer'},
-	 					{index:'attribute',value:attribute},
-	 					{index:'value',value:value},
+	 					{index:'status',value:'archived'},
 	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Updated',notes:'Attribute for customer '+customer,link_to:'form363'}};
+	 				log_data:{title:'Updated',notes:'TDS head '+name+' archived',link_to:'form363'}};
 
 				update_json(data_json);
 				$(form).readonly();
@@ -250,29 +280,22 @@
 			}
 		}
 
-		function form363_delete_item(button)
+		function form363_activate_item(form)
 		{
-			if(is_delete_access('form363'))
+			if(is_update_access('form363'))
 			{
-				modal115_action(function()
-				{
-					var form_id=$(button).attr('form');
-					var form=document.getElementById(form_id);
-
-					var customer=form.elements[0].value;
-					var attribute=form.elements[1].value;
-					var value=form.elements[2].value;
-					var data_id=form.elements[3].value;
-					var last_updated=get_my_time();
-
-					var data_json={data_store:'attributes',
+				var name=form.elements[0].value;
+				var data_id=form.elements['id'].value;
+				var last_updated=get_my_time();
+				var data_json={data_store:'tds_settings',
 	 				log:'yes',
-	 				data:[{index:'id',value:data_id}],
-	 				log_data:{title:'Deleted',notes:'Attribute for customer '+customer,link_to:'form363'}};
+	 				data:[{index:'id',value:data_id},
+	 					{index:'status',value:'active'},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Updated',notes:'TDS head '+name+' activated again',link_to:'form363'}};
 
-					delete_json(data_json);
-					$(button).parent().parent().remove();
-				});
+				update_json(data_json);
+				$(form).readonly();
 			}
 			else
 			{

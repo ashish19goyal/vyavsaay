@@ -227,7 +227,7 @@
 			var business_email="info@vyavsaay.com";
 			var domain=get_session_var('domain');
 
-			var st_no='ALHPG2106RSD003';
+			//var st_no='ALHPG2106RSD003';
 			var pan='ALHPG2106R';
 			////////////////filling in the content into the containers//////////////////////////
 
@@ -236,7 +236,7 @@
 			invoice_line.innerHTML="<hr style='border: 1px solid #000;'><div style='text-align:center;'><b style='font-size:16px;'>Invoice</b></div><hr style='border: 1px solid #000;'>";
 
 			customer_info.innerHTML="<b>Customer: </b><br>"+customer_name+"<br>Account Name: "+domain;
-			business_info.innerHTML="Bill #: "+bill_no+"<br>Date: "+vTime.date()+"<br>ST #: "+st_no;
+			business_info.innerHTML="Bill #: "+bill_no+"<br>Date: "+vTime.date();
 
 			jurisdiction.innerHTML="All disputes subjected to Delhi jurisdiction.<br>This is a computer generated invoice.";
 			business_contact.innerHTML="<hr style='border: 1px solid #000;margin:5px;'>Address: "+business_address+"<br>Phone: "+business_phone+", E-Mail: "+business_email+"<br>PAN: "+pan+"<hr style='border: 1px solid #000;margin:5px;'>";

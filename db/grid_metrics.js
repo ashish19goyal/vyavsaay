@@ -9,11 +9,10 @@
 */
 function set_grid_item_1()
 {
-	var new_columns=new Object();
-		new_columns.count=1;
-		new_columns.data_store='bills';
-		new_columns.indexes=[{index:'bill_num'}];
-		new_columns.return_column='bill_num';
+	var new_columns={count:1,
+					return_column:'bill_num',
+					data_store:'bills',
+					indexes:[{index:'bill_num'}]};
 
 	read_json_single_column(new_columns,function(results)
 	{
@@ -60,11 +59,10 @@ function set_grid_item_2()
 */
 function set_grid_item_3()
 {
-	var new_columns=new Object();
-		new_columns.count=1;
-		new_columns.data_store='supplier_bills';
-		new_columns.indexes=[{index:'bill_id'}];
-		new_columns.return_column='bill_id';
+	var new_columns={count:1,
+					data_store:'supplier_bills',
+					return_column:'bill_id',
+					indexes:[{index:'bill_id'}]};
 
 	read_json_single_column(new_columns,function(results)
 	{
@@ -379,11 +377,10 @@ function set_grid_item_14()
 */
 function set_grid_item_15()
 {
-	var new_columns=new Object();
-		new_columns.count=1;
-		new_columns.data_store='supplier_bills';
-		new_columns.return_column='supplier';
-		new_columns.indexes=[{index:'supplier'}];
+	var new_columns={count:1,
+					data_store:'supplier_bills',
+					return_column:'supplier',
+					indexes:[{index:'supplier'}]};
 
 	read_json_single_column(new_columns,function(results)
 	{
@@ -439,8 +436,8 @@ function set_grid_item_16()
 function set_grid_item_17()
 {
 	var new_columns={data_store:'attendance',
-									indexes:[{index:'presence',exact:'present'},
-													{index:'date',lowerbound:(get_raw_time(vTime.date())-1000),upperbound:(get_raw_time(vTime.date())+86399000)}]};
+					indexes:[{index:'presence',exact:'present'},
+					{index:'date',lowerbound:(get_raw_time(vTime.date())-1000),upperbound:(get_raw_time(vTime.date())+86399000)}]};
 
 	read_json_count(new_columns,function(item_count)
 	{
@@ -461,9 +458,8 @@ function set_grid_item_17()
 */
 function set_grid_item_18()
 {
-	var new_columns=new Object();
-		new_columns.data_store='task_instances';
-		new_columns.indexes=[{index:'status',exact:'pending'}];
+	var new_columns={data_store:'task_instances',
+					indexes:[{index:'status',exact:'pending'}]};
 
 	read_json_count(new_columns,function(item_count)
 	{
@@ -553,7 +549,7 @@ function set_grid_item_22()
 function set_grid_item_23()
 {
 	var new_columns={data_store:'sale_leads',
-									indexes:[{index:'status',exact:'open'}]};
+					indexes:[{index:'status',exact:'open'}]};
 
 	read_json_count(new_columns,function(item_count)
 	{
@@ -602,9 +598,8 @@ function set_grid_item_26()
 */
 function set_grid_item_27()
 {
-	var new_columns=new Object();
-		new_columns.data_store='projects';
-		new_columns.indexes=[{index:'status',exact:'active'}];
+	var new_columns={data_store:'projects',
+					indexes:[{index:'status',exact:'active'}]};
 
 	read_json_count(new_columns,function(item_count)
 	{
@@ -625,9 +620,8 @@ function set_grid_item_27()
 */
 function set_grid_item_28()
 {
-	var new_columns=new Object();
-		new_columns.data_store='projects';
-		new_columns.indexes=[{index:'status',exact:'completed'}];
+	var new_columns={data_store:'projects',
+					indexes:[{index:'status',exact:'completed'}]};
 
 	read_json_count(new_columns,function(item_count)
 	{
@@ -648,9 +642,8 @@ function set_grid_item_28()
 */
 function set_grid_item_29()
 {
-	var new_columns=new Object();
-		new_columns.data_store='reports';
-		new_columns.indexes=[{index:'id'}];
+	var new_columns={data_store:'reports',
+					indexes:[{index:'id'}]};
 
 	read_json_count(new_columns,function(item_count)
 	{

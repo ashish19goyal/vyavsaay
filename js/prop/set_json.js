@@ -223,6 +223,7 @@ function set_my_value_list_json(filter_data,filter_element,func)
 {
 	read_json_single_column(filter_data,function(data)
 	{
+		// console.log(data);
 		var form=filter_element.form;
 		var datalist=document.createElement('datalist');
 		data=vUtil.arrayUnique(data);

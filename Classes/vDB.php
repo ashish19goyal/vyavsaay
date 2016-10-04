@@ -552,10 +552,10 @@ class vDB
 		$startIndex = isset($options['startIndex']) ? $options['startIndex'] : 0;
 		$count = isset($options['count']) ? $options['count'] : 500;
 
-		if($count>5000)
-		{
-			$count=5000;
-		}
+		// if($count>5000)
+		// {
+		// 	$count=5000;
+		// }
 
 		$result['query'] = "limit ?,?";
 		$result['values'][] = $startIndex;

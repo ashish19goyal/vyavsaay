@@ -226,14 +226,16 @@ function delete_session()
 	localStorage.removeItem('session');
 	localStorage.removeItem('domain');
 	localStorage.removeItem('username');
+	localStorage.removeItem('logout_page');
 	localStorage.clear();
+	// console.log(logout_page);
 	if(is_online())
 	{
-		window.location.assign(server_root+"/logout.php");
+		window.location.assign(server_root+"/logout.php?p="+logout_page);
 	}
 	else
 	{
-		window.location.assign(server_root+"/index.html");
+		window.location.assign(server_root+logout_page);
 	}
 }
 

@@ -6,6 +6,7 @@ function default_load()
 	declaring_global_variables();
 	show_loader();
     var location=window.location.pathname;
+	// console.log(location);
 	if(((location.indexOf("index")>-1) || (location.indexOf(".php")==-1)) && is_set_session())
 	{
 		var domain=get_session_var('domain');
@@ -13,7 +14,7 @@ function default_load()
 	}
     else if(!is_set_session() && (location.indexOf("main")>-1))
 	{
-		window.location.assign(server_root+"/index.html");
+		window.location.assign(server_root+logout_page);
 	}
 
 
@@ -39,7 +40,15 @@ function default_load()
 		}
 
 		document.getElementById('master_title').innerHTML=get_session_var('title');
-    	navigate_history_url(location);
+
+		var landing_page = get_session_var('landing_page');
+		if(vUtil.isBlank(landing_page)){
+			navigate_history_url(location);
+		}
+		else{
+			navigate_history_url(landing_page);
+		}
+
 		hide_loader();
 	}
 	else
@@ -51,6 +60,7 @@ function default_load()
 function declaring_global_variables()
 {
   	server_root="";
+	logout_page= (vUtil.isBlank(get_session_var('logout_page'))) ? "/index.html" : get_session_var('logout_page');
 	localdb_open_requests=0;
 	number_active_ajax=0;
 	loaderTimer=0;
