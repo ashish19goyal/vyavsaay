@@ -1,25 +1,25 @@
-<div id='form240' class='tab-pane portlet box green-meadow'>	   
+<div id='form240' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick="form240_add_item();">Add <i class='fa fa-plus'></i></a>
             <a class='btn btn-circle grey btn-outline btn-sm' id='form240_save'>Save <i class='fa fa-save'></i></a>
 		</div>
 		<div class="actions">
       	<a class='btn btn-default btn-sm' id='form240_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
       	<a class='btn btn-default btn-sm' id='form240_print'><i class='fa fa-print'></i> Print</a>
-      </div>	
+      </div>
 	</div>
-	
+
 	<div class="portlet-body">
     <form id='form240_master' autocomplete="off">
-		<fieldset>	    
+		<fieldset>
 		   <label><input type='text' class='floatlabel' placeholder='Item' required name='item_name'></label>
 		   <label><input type='number' class='floatlabel' placeholder='# of raw materials' readonly='readonly' name='num'></label>
             <input type='hidden' name='id'>
             <input type='submit' class='submit_hidden'>
-		</fieldset>	
+		</fieldset>
 	</form>
-	    
+
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
@@ -35,7 +35,7 @@
 			</tbody>
 		</table>
 	</div>
-        
+
     <script>
 
         function form240_header_ini()
@@ -76,7 +76,7 @@
                           indexes:[{index:'type',exact:'product'},
                                   {index:'value',exact:'yes'},
                                   {index:'attribute',exact:'manufactured'}]};
-            set_my_value_list_json(item_data,item_filter,function () 
+            set_my_value_list_json(item_data,item_filter,function ()
             {
                 $(item_filter).focus();
             });
@@ -89,7 +89,7 @@
         {
             var data_id=$("#form240_link").attr('data_id');
             if(data_id==null)
-                data_id="";	
+                data_id="";
             $('#form240_body').html("");
 
             if(data_id!="")
@@ -118,7 +118,7 @@
                             form240_update_form();
                         });
                         $('#form240').formcontrol();
-				            
+
                         var items_column={data_store:'pre_requisites',
                                          indexes:[{index:'id'},
                                                  {index:'type',exact:'product'},
@@ -144,7 +144,7 @@
                                     rowsHTML+="<td data-th='Action'>";
                                         rowsHTML+="<input type='hidden' form='form240_"+id+"' value='"+id+"'>";
                                         rowsHTML+="<button type='button' class='btn red' name='delete' title='Delete' form='form240_"+id+"' id='delete_form240_"+id+"' onclick='form240_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-                                    rowsHTML+="</td>";			
+                                    rowsHTML+="</td>";
                                 rowsHTML+="</tr>";
 
                                 $('#form240_body').append(rowsHTML);
@@ -165,14 +165,14 @@
                                             $("#modal91_link").click();
                                         }
                                     });
-                                    
+
                                 });
                             });
-                            
+
                             form240_update_serial_numbers();
                             $('#form240').formcontrol();
-				            initialize_static_tabular_report_buttons('Material Requirements','form240');
-                            hide_loader();
+							vExport.export_buttons({file:'Material Requirements',report_id:'form240',action:'static'});
+				            hide_loader();
                         });
                     }
                 });
@@ -199,7 +199,7 @@
                         rowsHTML+="<input type='button' class='submit_hidden' form='form240_"+id+"' id='save_form240_"+id+"' name='save'>";
                         rowsHTML+="<button type='button' class='btn red' form='form240_"+id+"' id='delete_form240_"+id+"' onclick='$(this).parent().parent().remove(); form240_update_serial_numbers();' name='delete' title='Delete'><i class='fa fa-trash'></i></button>";
                         rowsHTML+="<input type='submit' class='submit_hidden' form='form240_"+id+"'>";
-                    rowsHTML+="</td>";			
+                    rowsHTML+="</td>";
                 rowsHTML+="</tr>";
 
                 $('#form240_body').prepend(rowsHTML);
@@ -209,7 +209,7 @@
                 var quantity_filter=item_form.elements[1];
                 var save_button=item_form.elements['save'];
 
-                $(save_button).on('click',function (e) 
+                $(save_button).on('click',function (e)
                 {
                     e.preventDefault();
                     form240_create_item(item_form);
@@ -218,11 +218,11 @@
                 $(item_form).on("submit", function(event)
                 {
                     event.preventDefault();
-                    form240_add_item();			
+                    form240_add_item();
                 });
 
                 var item_data={data_store:'product_master',return_column:'name'};
-                set_my_value_list_json(item_data,item_filter,function () 
+                set_my_value_list_json(item_data,item_filter,function ()
                 {
                     $(item_filter).focus();
                 });
@@ -288,7 +288,7 @@
                 var data_id=form.elements['id'].value;
                 var save_button=form.elements['save'];
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'manage_pre_requisites',
                                log:'yes',
                                log_data:{title:"Assigned",notes:"Raw material for "+item_name,link_to:"form240"},
@@ -313,7 +313,7 @@
                 $("#modal2_link").click();
             }
         }
-        
+
         function form240_update_form()
         {
             if(is_create_access('form240'))
@@ -323,7 +323,7 @@
                 var num_materials=form.elements['num'].value;
                 var data_id=form.elements['id'].value;
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'manage_pre_requisites',
                                log:'yes',
                                log_data:{title:"Assigned",notes:"Raw material for "+item_name,link_to:"form240"},
@@ -365,7 +365,7 @@
                     var data_id=form.elements[2].value;
                     var data_json={data_store:'pre_requisites',
  							data:[{index:'id',value:data_id}]};
-                
+
                     delete_json(data_json);
 
                     $(button).parent().parent().remove();

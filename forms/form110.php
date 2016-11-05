@@ -1,6 +1,6 @@
-<div id='form110' class='tab-pane portlet box green-meadow'>	   
+<div id='form110' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick=element_display('','form111');>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -18,9 +18,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -36,16 +36,16 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<script>
 		function form110_header_ini()
 		{
 			var filter_fields=document.getElementById('form110_header');
 			var name_filter=filter_fields.elements['name'];
-			
+
 			var name_data={data_store:'reports',return_column:'name'};
 			set_my_filter_json(name_data,name_filter);
-			
+
 			$(filter_fields).off('submit');
 			$(filter_fields).on('submit',function(event)
 			{
@@ -53,23 +53,23 @@
 				form110_ini();
 			});
 		};
-		
+
 		function form110_ini()
 		{
 			show_loader();
 			var fid=$("#form110_link").attr('data_id');
 			if(fid==null)
-				fid="";	
-			
+				fid="";
+
 			$('#form110_body').html("");
-			
+
 			var filter_fields=document.getElementById('form110_header');
-			
+
 			var fname=filter_fields.elements['name'].value;
 			var fdesc=filter_fields.elements['desc'].value;
-			
+
 			var paginator=$('#form110_body').paginator();
-			
+
 			var data_json=new Object();
 					data_json.count=paginator.page_size();
 					data_json.start_index=paginator.get_index();
@@ -78,7 +78,7 @@
 					data_json.indexes=[{index:'id',value:fid},
 									{index:'name',value:fname},
 									{index:'description',value:fdesc}];
-			
+
 			read_json_rows('form110',data_json,function(results)
 			{
 				results.forEach(function(result)
@@ -95,21 +95,21 @@
 								rowsHTML+="<input type='hidden' form='form110_"+result.id+"' value='"+result.id+"'>";
 								rowsHTML+="<button type='submit' class='btn green' form='form110_"+result.id+"' title='Save'><i class='fa fa-save'></i></button>";
 								rowsHTML+="<button type='button' class='btn red' name='delete' form='form110_"+result.id+"' title='Delete' onclick='form110_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-					
-					$('#form110_body').append(rowsHTML);			
+
+					$('#form110_body').append(rowsHTML);
 				});
-		
+
 				$('#form110').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(data_json,'Custom Reports','form110',function (item){});
-				
+				vExport.export_buttons({action:'dynamic',columns:data_json,file:'Custom Reports',report_id:'form110'});
+
 				hide_loader();
 			});
 		};
-		
-		
+
+
 		function form110_delete_item(button)
 		{
 			if(is_delete_access('form110'))
@@ -118,19 +118,19 @@
 				{
 					var form_id=$(button).attr('form');
 					var form=document.getElementById(form_id);
-					
+
 					var name=form.elements[0].value;
 					var data_id=form.elements[2].value;
 					var last_updated=get_my_time();
-					
+
 					var data_json={data_store:'reports',
  							data:[{index:'id',value:data_id}],
  							log:'yes',
  							log_data:{title:"Deleted",notes:"Custom report "+name,link_to:"form110"}};
-					
+
 					var data2_json={data_store:'report_items',
  							data:[{index:'report_id',value:data_id}]};
-										
+
 					delete_json(data_json);
 					delete_json(data2_json);
 					$(button).parent().parent().remove();

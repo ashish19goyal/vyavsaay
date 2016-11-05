@@ -148,7 +148,7 @@
 
 				$('#form257').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'User Accounts','form257',function (item){});
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'User Accounts',report_id:'form257'});
 				hide_loader();
 			});
 		};

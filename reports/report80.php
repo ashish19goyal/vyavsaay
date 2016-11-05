@@ -108,7 +108,7 @@
 			$('#report80_body').html(rowsHTML);
 			$('#report80_foot').html(footHTML);
 			/////////////
-			initialize_static_tabular_report_buttons('Total Sales','report80');
+			vExport.export_buttons({file:'Total Sales',report_id:'report80',action:'static'});
 			hide_loader();
 		});
 	};

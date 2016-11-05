@@ -229,8 +229,8 @@
 		                  $('#report116_body').append(rowsHTML);
 		            });
 
-					initialize_static_tabular_report_buttons('Branch Stock Report','report116');
-				    hide_loader();
+					vExport.export_buttons({file:'Branch Stock Report',report_id:'report116',action:'static'});
+					hide_loader();
 			    });
 			});
 		};

@@ -117,7 +117,7 @@
 
 				$('#form50').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(other_data,'Other settings','form50',function (item){});
+				vExport.export_buttons({action:'dynamic',columns:other_data,file:'Other Settings',report_id:'form50'});
 				hide_loader();
 			});
 		};

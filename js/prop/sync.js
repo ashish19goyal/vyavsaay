@@ -11,7 +11,7 @@ function switch_to_online()
 		{
 			if(response_object.status==='connected')
 			{
-				show_progress();
+				vIni.showProgress();
 				show_loader();
 				sync_local_to_server(function()
 				{
@@ -21,7 +21,7 @@ function switch_to_online()
 						progress_value=100;
 						set_session_online(function()
 						{
-							hide_progress();
+							vIni.hideProgress();
 							hide_loader();
 						});
 					});
@@ -48,7 +48,7 @@ function switch_to_offline()
 	if(is_update_access('sync_mode') || is_update_access('sync'))
 	{
 		var domain=get_domain();
-		show_progress();
+		vIni.showProgress();
 		show_loader();
 		create_local_db(domain,function(e)
 		{
@@ -65,7 +65,7 @@ function switch_to_offline()
 
 					progress_value=100;
 					set_session_offline();
-					hide_progress();
+					vIni.hideProgress();
 					//hide_loader();
 				});
 
@@ -90,7 +90,7 @@ function sync_local_and_server()
 		{
 			if(response_object.status==='connected')
 			{
-				show_progress();
+				vIni.showProgress();
 				show_loader();
 
 				sync_local_to_server(function()
@@ -99,12 +99,12 @@ function sync_local_and_server()
 					sync_server_to_local(function()
 					{
 						progress_value=100;
-						hide_menu_items();
+						vIni.hideMenu();
 						if(typeof worker_12!='undefined')
                         {
                             worker_12();
                         }
-						hide_progress();
+						vIni.hideProgress();
 						hide_loader();
 					});
 				});

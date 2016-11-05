@@ -35,12 +35,13 @@
 <script src='../../js/prop/local_db_handling.js'></script>
 <script src='../../js/prop/login_helper.js'></script>
 <script src='../../js/prop/sessions.js'></script>
+<script src='../../js/prop/vIni.js'></script>
 <script src='../../js/prop/vUtil.js'></script>
 <script>
 
 $(window).load(function()
 {
-	default_load();
+	vIni.initialize();
 	$("#login_box").dialog({
    		autoOpen: false,
    		width: 300,

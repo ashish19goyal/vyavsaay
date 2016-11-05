@@ -28,7 +28,7 @@
 		<tbody id='form135_task_body'>
 		</tbody>
 	</table>
-	
+
 	<br>
 	<b>Documents</b>
 	<table class='rwd-table'>
@@ -37,7 +37,7 @@
 				<form id='form135_document_header'></form>
 					<th>Document Name</th>
 					<th>File </th>
-					<th><input type='button' class='add_icon' form='form135_document_header' title='Add document' onclick='form135_add_document();'></th>			
+					<th><input type='button' class='add_icon' form='form135_document_header' title='Add document' onclick='form135_add_document();'></th>
 			</tr>
 		</thead>
 		<tbody id='form135_document_body'>
@@ -45,7 +45,7 @@
 	</table>
 
 	<br>
-	<b>Team</b>	
+	<b>Team</b>
 	<table class='rwd-table'>
 		<thead>
 			<tr>
@@ -70,7 +70,7 @@
 {
 	var fields=document.getElementById('form135_master');
 	var project_id=$("#form135_link").attr('data_id');
-	
+
 	var name_filter=fields.elements[1];
 	var description_filter=fields.elements[2];
 	var status_filter=fields.elements[3];
@@ -80,26 +80,26 @@
 	id_filter.value=project_id;
 
 	$(fields).off('submit');
-	$(fields).on('submit',function (event) 
+	$(fields).on('submit',function (event)
 	{
 		event.preventDefault();
 		form135_ini();
-	});	
-	
+	});
+
 	$(add_button).off('click');
 	$(add_button).on('click',function()
 	{
 		console.log(id_filter.value);
 		modal105_action(id_filter.value);
-	});	
-	
+	});
+
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
 	{
 		event.preventDefault();
 		form135_update_form();
 	});
-		
+
 	$(document).off('keydown');
 	$(document).on('keydown', function(event) {
 		if( event.keyCode == 83 && event.ctrlKey) {
@@ -107,18 +107,18 @@
 	    	$(save_button).trigger('click');
 	    }
 	});
-	
+
 	name_filter.value='';
 	description_filter.value='';
 	status_filter.value='';
-	set_static_value_list('projects','status',status_filter);	
+	set_static_value_list('projects','status',status_filter);
 
 	var project_data="<projects>"+
 					"<name></name>"+
 					"</projects>";
 	set_my_value_list(project_data,name_filter);
-	
-	my_datalist_change(name_filter,function () 
+
+	my_datalist_change(name_filter,function ()
 	{
 		var project_id_data="<projects>"+
 							"<id></id>"+
@@ -131,13 +131,13 @@
 function form135_ini()
 {
 	var filter_fields=document.getElementById('form135_master');
-	var project_id=filter_fields.elements[4].value;	
-	
+	var project_id=filter_fields.elements[4].value;
+
 	$('#form135_team_body').html("");
 	$('#form135_document_body').html("");
 	$('#form135_task_body').html("");
 	$('#form135_asset_body').html("");
-	
+
 	if(project_id!="")
 	{
 		show_loader();
@@ -148,11 +148,11 @@ function form135_ini()
 				"<start_date></start_date>" +
 				"<status></status>" +
 				"</projects>";
-	
+
 		fetch_requested_data('form135',project_columns,function(project_results)
 		{
 			var filter_fields=document.getElementById('form135_master');
-			
+
 			if(project_results.length>0)
 			{
 				filter_fields.elements[1].value=project_results[0].name;
@@ -171,60 +171,60 @@ function form135_ini()
 					"<percent_complete></percent_complete>"+
 					"<status></status>" +
 					"</project_phases>";
-		
+
 			fetch_requested_data('',phase_columns,function(results)
 			{
 				var source_array=[];
-				
+
 				results.sort(function(a,b)
 				{
 					if(parseFloat(a.start_date)>parseFloat(b.start_date))
 					{	return 1;}
-					else 
+					else
 					{	return -1;}
-				});	
-					
+				});
+
 				results.forEach(function(result)
 				{
 					var from_time = "/Date(" + result.start_date + ")/";
 					var to_time = "/Date(" + result.due_date + ")/";
-											
+
 					var source_item=new Object();
 					source_item.name=result.phase_name;
-					source_item.desc="";						
+					source_item.desc="";
 					var value_item=new Object();
 					value_item.from=from_time;
 					value_item.to=to_time;
 					value_item.label=result.details;
 					value_item.desc=result.details;
-					value_item.dataObj=result.id;						
+					value_item.dataObj=result.id;
 					value_item.customClass="ganttRed";
 					if(result.status=='completed')
 						value_item.customClass="ganttGreen";
 					else if(result.status=='active')
 						value_item.customClass="ganttYellow";
-											
+
 					var values_array=[];
 					values_array.push(value_item);
 					source_item.values=values_array;
 					source_array.push(source_item);
-				
+
 				});
-								
+
 				$("#form135_gantt").gantt({
 					source: source_array,
 					scale: "days",
 					minScale: "hours",
 					maxScale:"months",
 					navigate: "scroll",
-					onItemClick: function(data) 
+					onItemClick: function(data)
 					{
 						modal107_action(data);
 					},
-				});	
-				$('textarea').autosize();				
-			});		
-		
+				});
+				$('textarea').autosize();
+			});
+
 			/////////////project team////////////////////////
 			var team_data="<project_team>"+
 									"<id></id>"+
@@ -235,7 +235,7 @@ function form135_ini()
 									"<status></status>"+
 									"</project_team>";
 			fetch_requested_data('',team_data,function(team_results)
-			{				
+			{
 				team_results.forEach(function(result)
 				{
 					var id=result.id;
@@ -257,8 +257,8 @@ function form135_ini()
 							rowsHTML+="<input type='hidden' form='form135_team_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='submit' class='save_icon' form='form135_team_"+id+"' >";
 							rowsHTML+="<input type='button' class='delete_icon' form='form135_team_"+id+"' id='delete_form135_team_"+id+"' onclick='form135_delete_team($(this));'>";
-						rowsHTML+="</td>";			
-					rowsHTML+="</tr>";				
+						rowsHTML+="</td>";
+					rowsHTML+="</tr>";
 					$('#form135_team_body').append(rowsHTML);
 					var fields=document.getElementById("form135_team_"+id);
 					$(fields).on("submit", function(event)
@@ -270,7 +270,7 @@ function form135_ini()
 				$('textarea').autosize();
 				longPressEditable($('.dblclick_editable'));
 			});
-			
+
 			/////////////service request document////////////////////
 			var document_data="<documents>"+
 								"<id></id>"+
@@ -280,7 +280,7 @@ function form135_ini()
 								"<url></url>"+
 								"</documents>";
 			fetch_requested_data('',document_data,function(document_results)
-			{				
+			{
 				document_results.forEach(function(result)
 				{
 					var id=result.id;
@@ -297,11 +297,11 @@ function form135_ini()
 							rowsHTML+="<input type='hidden' form='form135_document_"+id+"'>";
 							rowsHTML+="<input type='hidden' form='form135_document_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form135_document_"+id+"' id='delete_form135_document_"+id+"' onclick='form135_delete_document($(this));'>";
-						rowsHTML+="</td>";			
-					rowsHTML+="</tr>";				
+						rowsHTML+="</td>";
+					rowsHTML+="</tr>";
 					$('#form135_document_body').append(rowsHTML);
-				});		
-				$('textarea').autosize();		
+				});
+				$('textarea').autosize();
 			});
 
 			/////////////project tasks////////////////////
@@ -316,7 +316,7 @@ function form135_ini()
 								"<description></description>"+
 								"</task_instances>";
 			fetch_requested_data('',task_data,function(task_results)
-			{				
+			{
 				task_results.forEach(function(result)
 				{
 					var id=result.id;
@@ -341,8 +341,8 @@ function form135_ini()
 							rowsHTML+="<input type='hidden' form='form135_task_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='submit' class='save_icon' form='form135_task_"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form135_task_"+id+"' id='delete_form135_task_"+id+"' onclick='form135_delete_task($(this));'>";
-						rowsHTML+="</td>";			
-					rowsHTML+="</tr>";				
+						rowsHTML+="</td>";
+					rowsHTML+="</tr>";
 					$('#form135_task_body').append(rowsHTML);
 					var fields=document.getElementById("form135_task_"+id);
 					$(fields).on("submit", function(event)
@@ -350,16 +350,16 @@ function form135_ini()
 						event.preventDefault();
 						form135_update_task(fields);
 					});
-				});	
+				});
 				$('textarea').autosize();
 				longPressEditable($('.dblclick_editable'));
 			});
-			
+
 			hide_loader();
 		});
 	}
 }
-    
+
 function form135_add_task()
 {
 	if(is_create_access('form135'))
@@ -384,40 +384,40 @@ function form135_add_task()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Status'>";
 				rowsHTML+="<input type='text' form='form135_task_"+id+"' value='pending'>";
-			rowsHTML+="</td>";			
+			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form135_task_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='submit' class='save_icon' form='form135_task_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form135_task_"+id+"' onclick='$(this).parent().parent().remove();'>";
-			rowsHTML+="</td>";			
+			rowsHTML+="</td>";
 		rowsHTML+="</tr>";
-	
+
 		$('#form135_task_body').prepend(rowsHTML);
 		var fields=document.getElementById("form135_task_"+id);
 		var name_filter=fields.elements[0];
 		var assignee_filter=fields.elements[2];
 		var due_filter=fields.elements[3];
 		var status_filter=fields.elements[4];
-		
+
 		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
 			form135_create_task(fields);
 		});
-		
+
 		var phase_data="<project_phases>"+
 						"<phase_name></phase_name>"+
 						"<project_id exact='yes'>"+project_id+"</project_id>"+
 						"</project_phases>";
-		set_my_value_list(phase_data,name_filter,function () 
+		set_my_value_list(phase_data,name_filter,function ()
 		{
 			$(name_filter).focus();
 		});
-							
+
 		var assignee_data="<staff>"+
-						"<acc_name></acc_name>"+							
-						"<status exact='yes'>active</status>"+						
-						"</staff>";		
+						"<acc_name></acc_name>"+
+						"<status exact='yes'>active</status>"+
+						"</staff>";
 		set_my_value_list(assignee_data,assignee_filter);
 		set_static_value_list('task_instances','status',status_filter);
 		$(due_filter).datepicker();
@@ -450,21 +450,21 @@ function form135_add_document()
 				rowsHTML+="<input type='hidden' form='form135_document_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='submit' class='save_icon' form='form135_document_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form135_document_"+id+"' onclick='$(this).parent().parent().remove();'>";
-			rowsHTML+="</td>";			
+			rowsHTML+="</td>";
 		rowsHTML+="</tr>";
-	
+
 		$('#form135_document_body').prepend(rowsHTML);
 		var fields=document.getElementById("form135_document_"+id);
 		var name_filter=fields.elements[0];
 		var docInfo=document.getElementById('form135_document_url_'+id);
 		var fpicture=fields.elements[1];
-					
+
 		fpicture.addEventListener('change',function(evt)
 		{
-			select_document(evt,function(dataURL)
+			vFileHandler.document({evt:evt,fsuccess:function(dataURL)
 			{
 				docInfo.setAttribute('href',dataURL);
-			});
+			}});
 		},false);
 
 		$(fields).on("submit", function(event)
@@ -472,7 +472,7 @@ function form135_add_document()
 			event.preventDefault();
 			form135_create_document(fields);
 		});
-		
+
 		$(name_filter).focus();
 	}
 	else
@@ -505,24 +505,24 @@ function form135_add_team()
 				rowsHTML+="<input type='hidden' form='form135_team_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='submit' class='save_icon' form='form135_team_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form135_team_"+id+"' onclick='$(this).parent().parent().remove();'>";
-			rowsHTML+="</td>";			
+			rowsHTML+="</td>";
 		rowsHTML+="</tr>";
-	
+
 		$('#form135_team_body').prepend(rowsHTML);
 		var fields=document.getElementById("form135_team_"+id);
 		var member_filter=fields.elements[0];
 		var status_filter=fields.elements[3];
-		
+
 		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
 			form135_create_team(fields);
 		});
-		
+
 		var member_data="<staff>"+
-							"<acc_name></acc_name>"+							
-							"</staff>";		
-		set_my_value_list(member_data,member_filter,function () 
+							"<acc_name></acc_name>"+
+							"</staff>";
+		set_my_value_list(member_data,member_filter,function ()
 		{
 			$(member_filter).focus();
 		});
@@ -546,10 +546,10 @@ function form135_create_task(form)
 		var description=form.elements[1].value;
 		var assignee=form.elements[2].value;
 		var due_by=get_raw_time(form.elements[3].value);
-		var status=form.elements[4].value;				
+		var status=form.elements[4].value;
 		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
-		
+
 		var data_xml="<task_instances>" +
 					"<id>"+data_id+"</id>" +
 					"<source_id>"+project_id+"</source_id>"+
@@ -561,7 +561,7 @@ function form135_create_task(form)
 					"<t_due>"+due_by+"</t_due>"+
 					"<status>"+status+"</status>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</task_instances>";	
+					"</task_instances>";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>task_instances</tablename>" +
@@ -577,7 +577,7 @@ function form135_create_task(form)
 		else
 		{
 			local_create_row(data_xml,activity_xml);
-		}	
+		}
 		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -588,13 +588,13 @@ function form135_create_task(form)
 		{
 			form135_delete_task(del_button);
 		});
-		
+
 		$(form).off('submit');
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
 			form135_update_task(form);
-		});	
+		});
 	}
 	else
 	{
@@ -622,7 +622,7 @@ function form135_create_document(form)
 		var docInfo=document.getElementById(url_id);
 		var url=$(docInfo).attr('href');
 		var last_updated=get_my_time();
-		
+
 		var data_xml="<documents>" +
 					"<id>"+data_id+"</id>" +
 					"<target_id>"+project_id+"</target_id>"+
@@ -646,7 +646,7 @@ function form135_create_document(form)
 		else
 		{
 			local_create_row(data_xml,activity_xml);
-		}	
+		}
 		for(var i=0;i<2;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -657,12 +657,12 @@ function form135_create_document(form)
 		{
 			form135_delete_document(del_button);
 		});
-		
+
 		$(form).off('submit');
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
-		});	
+		});
 	}
 	else
 	{
@@ -686,7 +686,7 @@ function form135_create_team(form)
 		var status=form.elements[3].value;
 		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
-		
+
 		var data_xml="<project_team>" +
 					"<id>"+data_id+"</id>" +
 					"<project_id>"+project_id+"</project_id>"+
@@ -733,13 +733,13 @@ function form135_create_team(form)
 		{
 			form135_delete_team(del_button);
 		});
-		
+
 		$(form).off('submit');
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
 			form135_update_team(form);
-		});	
+		});
 	}
 	else
 	{
@@ -757,7 +757,7 @@ function form135_update_team(form)
 		var status=form.elements[3].value;
 		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
-		
+
 		var data_xml="<project_team>" +
 					"<id>"+data_id+"</id>" +
 					"<member>"+member+"</member>" +
@@ -773,7 +773,7 @@ function form135_update_team(form)
 		else
 		{
 			local_update_simple(data_xml);
-		}	
+		}
 		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -798,10 +798,10 @@ function form135_update_task(form)
 		var description=form.elements[1].value;
 		var assignee=form.elements[2].value;
 		var due_by=get_raw_time(form.elements[3].value);
-		var status=form.elements[4].value;				
+		var status=form.elements[4].value;
 		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
-				
+
 		var data_xml="<task_instances>" +
 					"<id>"+data_id+"</id>" +
 					"<assignee>"+assignee+"</assignee>" +
@@ -810,7 +810,7 @@ function form135_update_task(form)
 					"<t_due>"+due_by+"</t_due>"+
 					"<status>"+status+"</status>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</task_instances>";	
+					"</task_instances>";
 		if(is_online())
 		{
 			server_update_simple(data_xml);
@@ -818,7 +818,7 @@ function form135_update_task(form)
 		else
 		{
 			local_update_simple(data_xml);
-		}	
+		}
 		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -839,9 +839,9 @@ function form135_delete_team(button)
 			var master_fields=document.getElementById('form135_master');
 			var project_name=master_fields.elements[1].value;
 			var project_id=master_fields.elements[4].value;
-	
+
 			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);		
+			var form=document.getElementById(form_id);
 			var member=form.elements[0].value;
 			var data_id=form.elements[4].value;
 			var data_xml="<project_team>" +
@@ -860,7 +860,7 @@ function form135_delete_team(button)
 						"<tablename>projects</tablename>" +
 						"<user>"+member+"</user>" +
 						"</data_access>";
-	
+
 			if(is_online())
 			{
 				server_delete_row(data_xml,activity_xml);
@@ -870,7 +870,7 @@ function form135_delete_team(button)
 			{
 				local_delete_row(data_xml,activity_xml);
 				local_delete_simple(access_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -894,9 +894,9 @@ function form135_delete_document(button)
 			var master_fields=document.getElementById('form135_master');
 			var project_name=master_fields.elements[1].value;
 			var project_id=master_fields.elements[4].value;
-	
+
 			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);		
+			var form=document.getElementById(form_id);
 			var data_id=form.elements[2].value;
 			var data_xml="<documents>" +
 						"<id>"+data_id+"</id>" +
@@ -917,7 +917,7 @@ function form135_delete_document(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}
@@ -941,9 +941,9 @@ function form135_delete_task(button)
 			var master_fields=document.getElementById('form135_master');
 			var project_name=master_fields.elements[1].value;
 			var project_id=master_fields.elements[4].value;
-	
+
 			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);		
+			var form=document.getElementById(form_id);
 			var data_id=form.elements[5].value;
 			var data_xml="<task_instances>" +
 						"<id>"+data_id+"</id>" +
@@ -963,7 +963,7 @@ function form135_delete_task(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
-			}	
+			}
 			$(button).parent().parent().remove();
 		});
 	}

@@ -804,9 +804,8 @@ function set_grid_item_35()
 */
 function set_grid_item_36()
 {
-	var new_columns=new Object();
-		new_columns.data_store='logistics_orders';
-		new_columns.indexes=[{index:'import_date',exact:get_raw_time(vTime.date())}];
+	var new_columns={data_store:'logistics_orders',
+					indexes:[{index:'import_date',exact:get_raw_time(vTime.date())}]};
 
 	read_json_count(new_columns,function(item_count)
 	{

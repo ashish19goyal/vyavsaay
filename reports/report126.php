@@ -263,7 +263,7 @@
 
 			read_json_rows('report126',comm_columns,function(policies)
 	        {
-				console.log(policies);
+				// console.log(policies);
 				var months_object={};
 				var export_data_array=[];
 				var export_row1={};
@@ -479,7 +479,8 @@
 
 					$('#report126_body2').append(rows2HTML);
 	            }
-				initialize_fixed_tabular_report_buttons(export_data_array,'Total Business Report','report126');
+
+				vExport.export_buttons({results:export_data_array,file:'Total Business Report',report_id:'report126',action:'fixed'});
 
 	            hide_loader();
 	        });

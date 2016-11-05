@@ -125,7 +125,7 @@
             });
             $('#report117_body').append(rowsHTML);
 
-            initialize_tabular_report_buttons(columns,'New Orders from API','report117',function (item)
+			vExport.export_buttons({action:'dynamic',columns:columns,file:'New Orders from API',report_id:'report117',feach:function (item)
             {
 				item['Product']=item.sku;
 				item['Posted Date']=vTime.date({time:item.import_date});
@@ -133,7 +133,7 @@
 				delete item.source;
 				delete item.sku;
 				delete item.import_date;
-			});
+			}});
 
             paginator.update_index(items.length);
             hide_loader();

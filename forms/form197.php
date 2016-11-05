@@ -118,9 +118,9 @@
                 });
 
                 $('#form197').formcontrol();
-								paginator.update_index(results.length);
-								initialize_tabular_report_buttons(columns,'Supplier Item mapping','form197',function (item){});
-								hide_loader();
+				paginator.update_index(results.length);
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Supplier Item Mapping',report_id:'form197'});
+				hide_loader();
             });
         };
 

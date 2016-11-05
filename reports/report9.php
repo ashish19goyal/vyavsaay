@@ -238,7 +238,7 @@
                                 var total_row="<tr><td colspan='3' data-th='Total'>Total</td><td data-th='Quantity'>"+total_quantity+"</td><td data-th='Amount'>Rs. "+Math.round(total_amount)+"</td></tr>";
                                 $('#report9_foot').html(total_row);
 
-                                initialize_static_tabular_report_buttons('Sales Report','report9');
+								vExport.export_buttons({file:'Sales Report',report_id:'report9',action:'static'});
 
                                 hide_loader();
                             });

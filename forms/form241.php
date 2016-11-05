@@ -1,4 +1,4 @@
-<div id='form241' class='tab-pane portlet box green-meadow'>	   
+<div id='form241' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class="actions">
             <div class="btn-group">
@@ -15,9 +15,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -36,9 +36,9 @@
 			</tbody>
 		</table>
 	</div>
-    
+
     <script>
-        
+
         function form241_header_ini()
         {
             var filter_fields=document.getElementById('form241_header');
@@ -63,7 +63,7 @@
             show_loader();
             var fid=$("#form241_link").attr('data_id');
             if(fid==null)
-                fid="";	
+                fid="";
 
             $('#form241_body').html("");
 
@@ -72,7 +72,7 @@
             var fstatus=filter_fields.elements['status'].value;
 
             var paginator=$('#form241_body').paginator();
-			
+
 			var columns=new Object();
 					columns.count=paginator.page_size();
 					columns.start_index=paginator.get_index();
@@ -84,9 +84,9 @@
 									{index:'due_date'},
 									{index:'status',value:fstatus},
                                     {index:'type',exact:'received'}];
-			
+
             read_json_rows('form241',columns,function(results)
-            {	
+            {
                 results.forEach(function(result)
                 {
                     var rowsHTML="<tr>";
@@ -127,11 +127,11 @@
 
                 $('#form241').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Receivables','form241',function (item)
-                {
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Receivables',report_id:'form241',feach:function (item)
+				{
                     delete item.type;
                     item.due_date=get_my_past_date(item.due_date);
-                });
+                }});
 				hide_loader();
             });
         };
@@ -148,13 +148,13 @@
                 var data_id=form.elements[5].value;
 
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'payments',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'acc_name',value:acc_name},
 	 					{index:'total_amount',value:total_amount},
-                        {index:'paid_amount',value:paid_amount},  
+                        {index:'paid_amount',value:paid_amount},
 	 					{index:'due_date',value:due_date},
                         {index:'status',value:status},
 	 					{index:'last_updated',value:last_updated}],

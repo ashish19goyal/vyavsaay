@@ -205,7 +205,7 @@ function report93_ini()
 					$(csv_button).off("click");
 					$(csv_button).on("click", function(event)
 					{
-						csv_download_report(results,'Stock Report');
+						vExport.csv_download({result:results,file:'Stock Report'});
 					});
 
 					clearInterval(report93_complete);

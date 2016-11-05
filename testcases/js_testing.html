@@ -1,13 +1,40 @@
 <html>
 
 <script>
+var parent = function()
+{
+	this.sayHi=function () {
+		console.log('Hi, I am parent!');
+	};
+	this.sayHiToWalk=function () {
+		console.log('Hi, I am parent! and going to walk!');
+	};
+};
 
-	function myTrim(x) {
-    	return x.replace(/^\"+|\"+$/gm,'');
-	}
-	console.log("\"Hello \"World!\"");
-    var str = myTrim("\"Hello \" World!\"");
-	console.log(str);
+//This is child class and the parent class is inherited in the child class.
+var child = function()
+{
+	// parent.call(this);
+	this.sayHi=function(){
+		console.log('I am a child');
+	};
+};
+
+child.prototype=parent.prototype;
+// parent.prototype.sayHi = function () {
+// 	console.log('Hi, I am a child!');
+// };
+//
+// parent.prototype.sayBi = function () {
+// 	console.log('Hi, I am a child!');
+// };
+//
+// var child2 = new parent();
+var child1= new child();
+
+child1.sayHi();
+child1.sayHiToWalk();
+// child2.sayBi();
 </script>
-<body></body>
+<body>abc</body>
 </html>

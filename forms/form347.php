@@ -301,6 +301,7 @@
 								{index:'policy_holder'},
 								{index:'agent'},
 								{index:'premium'},
+								{index:'net_premium'},
 								{index:'short_premium'},
 								{index:'discount'},
 								{index:'status',exact:status_filter},
@@ -367,13 +368,14 @@
                 $('#form347_body').formcontrol();
 				paginator.update_index(results.length);
 				hide_loader();
-				initialize_tabular_report_buttons(columns,'Policies','form347',function (item)
+
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Policies',report_id:'form347',feach:function (item)
 				{
 					item['Issue date']=vTime.date({time:item.issue_date});
 					item['Issue Type']=item.issue_type;
 					delete item.issue_date;
 					delete item.issue_type;
-				});
+				}});
             });
         };
 
@@ -435,6 +437,7 @@
 							{index:'policy_holder',approx_array:holder_names},
 							{index:'policy_num',exact:""},
 							{index:'policy_name'},
+							{index:'upsell'},
 							{index:'premium'},
 							{index:'issuer',value:issuer}]};
 			read_json_rows('form347',id_data,function(ids)
@@ -449,6 +452,7 @@
 						if(id['policy_holder'].toLowerCase().indexOf(policies[i][names_index].toLowerCase())>-1 && id['policy_name'].toLowerCase()==policies[i][policy_name_index].toLowerCase())
 						{
 							policies[i].id = id['id'];
+							policies[i].upsell = id['upsell'];
 							policies[i].policy_holder = id['policy_holder'];
 							policies[i].application_premium = id['premium'];
 							break;
@@ -468,6 +472,7 @@
 							{index:'end_date'},
 							{index:'net_premium'},
 							{index:'premium'},
+							{index:'upsell'},
 							{index:'issuer',value:issuer}]};
 			read_json_rows('form347',id_data,function(ids)
 			{
@@ -479,6 +484,7 @@
 						var match = (time_difference <= 2*86400000 && time_difference >= -2*86400000)? true : false;
 						if(id['policy_holder'].toLowerCase().indexOf(policies[i][names_index].toLowerCase())>-1 && match)
 						{
+							policies[i].upsell = id['upsell'];
 							policies[i].application_num = id['policy_num'];
 							policies[i].policy_holder = id['policy_holder'];
 							policies[i].old_premium = id['premium'];
@@ -494,8 +500,8 @@
 		function form347_policy_ids_by_name_phone(policies,issuer,func)
 		{
 			var holder_names = vUtil.arrayColumn(policies,'Assured Name');
-
 			var holder_phones = vUtil.arrayColumn(policies,'Telephone No');
+
 			for(var i in holder_phones)
 			{
 				var phones = holder_phones[i].split("/");
@@ -513,6 +519,7 @@
 							{index:'policy_num',exact:''},
 							{index:'policy_name'},
 							{index:'premium'},
+							{index:'upsell'},
 							{index:'issuer',value:issuer}]};
 			read_json_rows('form347',id_data,function(ids)
 			{
@@ -523,6 +530,7 @@
 						if(id['policy_holder'].toLowerCase().indexOf(policies[i]['Assured Name'].toLowerCase())>-1 && id['policy_name'].toLowerCase()==policies[i]['Product'].toLowerCase())
 						{
 							policies[i].id = id['id'];
+							policies[i].upsell = id['upsell'];
 							policies[i].application_num = id['application_num'];
 							policies[i].policy_holder = id['policy_holder'];
 							policies[i].application_premium = id['premium'];
@@ -543,6 +551,7 @@
 							{index:'policy_num',array:old_policies},
 							{index:'premium'},
 							{index:'net_premium'},
+							{index:'upsell'},
 							{index:'issuer',value:issuer}]};
 			read_json_rows('form347',id_data,function(ids)
 			{
@@ -552,6 +561,7 @@
 					{
 						if(id['policy_num']==policies[i]['Previous Policy Number'])
 						{
+							policies[i].upsell = id['upsell'];
 							policies[i].policy_holder = id['policy_holder'];
 							policies[i].old_premium = id['premium'];
 							policies[i].old_net_premium = id['net_premium'];
@@ -568,6 +578,7 @@
 			var policy_nums = vUtil.arrayColumn(policies,policy_num_index);
 			var id_data  = {data_store:'policies',indexes:[{index:'id'},
 							{index:'policy_holder'},
+							{index:'upsell'},
 							{index:'policy_num',array:policy_nums},
 							{index:'issuer',value:issuer}]};
 			read_json_rows('form347',id_data,function(ids)
@@ -578,6 +589,7 @@
 					{
 						if(policies[i][policy_num_index]==id['policy_num'])
 						{
+							policies[i].upsell = id['upsell'];
 							policies[i].id = id['id'];
 							policies[i].policy_holder = id['policy_holder'];
 							// break;
@@ -595,6 +607,7 @@
 			var id_data  = {data_store:'policies',indexes:[{index:'id'},
 							{index:'policy_holder'},
 							{index:'premium'},
+							{index:'upsell'},
 							{index:'application_num',array:app_nums},
 							{index:'issuer',value:issuer}]};
 			read_json_rows('form347',id_data,function(ids)
@@ -606,6 +619,7 @@
 						if(policies[i][app_num_index]==id['application_num'])
 						{
 							policies[i].id = id['id'];
+							policies[i].upsell = id['upsell'];
 							policies[i].policy_holder = id['policy_holder'];
 							policies[i].application_premium = id['premium'];
 							break;
@@ -617,6 +631,7 @@
 								{index:'policy_holder'},
 								{index:'premium'},
 								{index:'net_premium'},
+								{index:'upsell'},
 								{index:'policy_num',array:app_nums},
 								{index:'issuer',value:issuer}]};
 				read_json_rows('form347',renewal_data,function(ids)
@@ -630,6 +645,7 @@
 							{
 								policies[i].policy_holder = id['policy_holder'];
 								policies[i].issue_type = 'renewal';
+								policies[i].upsell = id.upsell;
 								policies[i].old_premium = id.premium;
 								policies[i].old_net_premium = id.net_premium;
 							}
@@ -787,7 +803,9 @@
 			var dummy_button=form.elements['file_dummy'];
 			var import_button=form.elements['save'];
 
-			var import_types_list = ['Apollo Policies Search','Apollo Policies Sold', 'ICICI Policies', 'Max Logged Business','Max Renewal Business', 'Star Policies','Religare','Cigna','New Applications','MIS'];
+			var import_types_list = ['Apollo Policies Search','Apollo Policies Sold', 'ICICI Policies',
+									'Max Logged Business','Max Renewal Business', 'Star Policies',
+									'Star Policies - 2','Religare','Cigna','New Applications','MIS'];
 			set_value_list_json(import_types_list,import_type);
 
 			var agent_data={data_store:'attributes',return_column:'name',
@@ -824,6 +842,8 @@
 						case 'Max Renewal Business':vImport.importData(content,form,form347_mr_import,form347_mr_import_validate);
 												break;
 						case 'Star Policies':vImport.importData(content,form,form347_sp_import,form347_sp_import_validate);
+												break;
+						case 'Star Policies - 2':vImport.importData(content,form,form347_sp2_import,form347_sp2_import_validate);
 												break;
 						case 'ICICI Policies':vImport.importData(content,form,form347_ip_import,form347_ip_import_validate);
 												break;
@@ -900,6 +920,11 @@
 												'Fresh/Renewal','Assured Name','Telephone No','ADDRESS','Claims Paid',
 												'Previous Policy Number'];
 												break;
+				case 'Star Policies - 2':data_array=['S.No','Office Code','Office Name','Product','Policy Number','Premium',
+												'Policy From Date','Policy To Date','Policy Issue Date','Fullfiller Code',
+												'Fullfiller Name','Fresh/Renewal','Proposer Name','Telephone No',
+												'ADDRESS','Claims Paid'];
+												break;
 				case 'ICICI Policies':data_array=['Product Class','Product Sub Class','Policy Business Type',
 												'Policy Number (Click to view certificate)','Email','Policy Cover Note No',
 												'Customer Full Name','OD premium','Net GWP	Commission %',
@@ -953,6 +978,7 @@
 				policies[a].description="";
 				policies[a].type="";
 				policies[a].preferred="";
+				policies[a].upsell="";
 				policies[a].issue_type='';
 				policies[a].old_premium=0;
 				policies[a].old_net_premium=0;
@@ -1063,7 +1089,8 @@
 									var issue_type = {index:'issue_type',value:policies[i].issue_type};
 									policy_array.push(issue_type);
 
-									var upsell= (policies[i].old_net_premium!=0 && parseFloat(policies[i].net_premium) > parseFloat(policies[i].old_net_premium)) ? 'yes' :'no';
+									var upsell_new= (policies[i].old_net_premium!=0 && parseFloat(policies[i].net_premium) > parseFloat(policies[i].old_net_premium)) ? 'yes' :'no';
+									var upsell = (vUtil.isBlank(policies[i].upsell))? upsell_new : policies[i].upsell;
 									var upsell_obj = {index:'upsell',value:upsell};
 									policy_array.push(upsell_obj);
 									update_policy_json2.data.push(policy_array);
@@ -1133,7 +1160,8 @@
 									var issue_type_obj = {index:'issue_type',value:policies[i].issue_type};
 									policy_array.push(issue_type_obj);
 
-									var upsell= (policies[i].old_net_premium!=0 && parseFloat(policies[i].net_premium) > parseFloat(policies[i].old_net_premium)) ? 'yes' :'no';
+									var upsell_new= (policies[i].old_net_premium!=0 && parseFloat(policies[i].net_premium) > parseFloat(policies[i].old_net_premium)) ? 'yes' :'no';
+									var upsell = (vUtil.isBlank(policies[i].upsell))? upsell_new : policies[i].upsell;
 									var upsell_obj = {index:'upsell',value:upsell};
 									policy_array.push(upsell_obj);
 
@@ -1206,6 +1234,7 @@
 				policies[a].id="";
 				policies[a].description="";
 				policies[a].type="";
+				policies[a].upsell="";
 				policies[a].preferred="";
 				policies[a].policy_holder="";
 				policies[a].policy_holder_id="";
@@ -1326,6 +1355,7 @@
 				policies[a].policy_holder="";
 				policies[a].description="";
 				policies[a].type="";
+				policies[a].upsell="";
 				policies[a].preferred="";
 				policies[a].issue_type='';
 				policies[a].application_premium=0;
@@ -1457,7 +1487,8 @@
 										policy_array.push(lp_status_obj);
 									}
 
-									var upsell= (policies[i].old_net_premium!=0 && parseFloat(policies[i].net_premium) > parseFloat(policies[i].old_net_premium)) ? 'yes' :'no';
+									var upsell_new= (policies[i].old_net_premium!=0 && parseFloat(policies[i].net_premium) > parseFloat(policies[i].old_net_premium)) ? 'yes' :'no';
+									var upsell = (vUtil.isBlank(policies[i].upsell))? upsell_new : policies[i].upsell;
 									var upsell_obj = {index:'upsell',value:upsell};
 									policy_array.push(upsell_obj);
 
@@ -1514,7 +1545,8 @@
 										var issue_type_obj = {index:'issue_type',value:policies[i].issue_type};
 										policy_array.push(issue_type_obj);
 
-										var upsell= (policies[i].old_net_premium!=0 && parseFloat(policies[i].net_premium) > parseFloat(policies[i].old_net_premium)) ? 'yes' :'no';
+										var upsell_new= (policies[i].old_net_premium!=0 && parseFloat(policies[i].net_premium) > parseFloat(policies[i].old_net_premium)) ? 'yes' :'no';
+										var upsell = (vUtil.isBlank(policies[i].upsell))? upsell_new : policies[i].upsell;
 										var upsell_obj = {index:'upsell',value:upsell};
 										policy_array.push(upsell_obj);
 
@@ -1595,6 +1627,7 @@
 				policies[a].policy_holder="";
 				policies[a].description="";
 				policies[a].type="";
+				policies[a].upsell="";
 				policies[a].preferred="";
 				policies[a].issuer='Max';
 				policies[a].issue_type='';
@@ -1848,6 +1881,7 @@
 				policies[a].policy_holder="";
 				policies[a].description="";
 				policies[a].type="";
+				policies[a].upsell="";
 				policies[a].preferred="";
 				policies[a].issuer='Max';
 				policies[a].issue_type='';
@@ -1952,7 +1986,8 @@
 										{index:'last_updated',value:last_updated}];
 								policies[i].issue_type = 'renewal';
 
-								var upsell= (policies[i].old_net_premium!=0 && parseFloat(policies[i].net_premium) > parseFloat(policies[i].old_net_premium)) ? 'yes' :'no';
+								var upsell_new= (policies[i].old_net_premium!=0 && parseFloat(policies[i].net_premium) > parseFloat(policies[i].old_net_premium)) ? 'yes' :'no';
+								var upsell = (vUtil.isBlank(policies[i].upsell))? upsell_new : policies[i].upsell;
 								var upsell_obj = {index:'upsell',value:upsell};
 								data_json_array.push(upsell_obj);
 
@@ -2032,6 +2067,7 @@
 				policies[a].policy_holder="";
 				policies[a].description="";
 				policies[a].type="";
+				policies[a].upsell="";
 				policies[a].preferred="";
 				policies[a].issuer='Star';
 				policies[a].issue_type='';
@@ -2070,7 +2106,7 @@
 			{
 				form347_policy_ids(policies,'policy_num','Star',function()
 				{
-					console.log(policies);
+					// console.log(policies);
 					var update_policy_json1={data_store:'policies',data:[]};
 
 					for(var i=0;i<policies.length;i++)
@@ -2156,7 +2192,8 @@
 									var issue_type_obj = {index:'issue_type',value:policies[i].issue_type};
 									policy_array.push(issue_type_obj);
 
-									var upsell= (policies[i].old_net_premium!=0 && parseFloat(policies[i].net_premium) > parseFloat(policies[i].old_net_premium)) ? 'yes' :'no';
+									var upsell_new= (policies[i].old_net_premium!=0 && parseFloat(policies[i].net_premium) > parseFloat(policies[i].old_net_premium)) ? 'yes' :'no';
+									var upsell = (vUtil.isBlank(policies[i].upsell))? upsell_new : policies[i].upsell;
 									var upsell_obj = {index:'upsell',value:upsell};
 									policy_array.push(upsell_obj);
 
@@ -2221,7 +2258,8 @@
 										var issue_type_obj = {index:'issue_type',value:policies[i].issue_type};
 										policy_array.push(issue_type_obj);
 
-										var upsell= (policies[i].old_net_premium!=0 && parseFloat(policies[i].net_premium) > parseFloat(policies[i].old_net_premium)) ? 'yes' :'no';
+										var upsell_new= (policies[i].old_net_premium!=0 && parseFloat(policies[i].net_premium) > parseFloat(policies[i].old_net_premium)) ? 'yes' :'no';
+										var upsell = (vUtil.isBlank(policies[i].upsell))? upsell_new : policies[i].upsell;
 										var upsell_obj = {index:'upsell',value:upsell};
 										policy_array.push(upsell_obj);
 
@@ -2257,6 +2295,278 @@
 		};
 
 		/**
+		*	Import validation for Star business report
+		*/
+		function form347_sp2_import_validate(data_array)
+		{
+			var validate_template_array=[{column:'Proposer Name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									// {column:'Previous Policy Number',regex:new RegExp('^[0-9a-zA-Z\/-]+$')},
+									{column:'Policy Number',regex:new RegExp('^[0-9a-zA-Z\/-]+$')},
+									{column:'Fresh/Renewal',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Product',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Telephone No',regex:new RegExp('^[0-9a-zA-Z \/-]+$')},
+									{column:'ADDRESS',regex:new RegExp('^[0-9a-zA-Z _.,;#@!$%&^*|:<>()\/-]+$')},
+									{column:'Premium',regex:new RegExp('^[0-9 .-]+$')},
+									{column:'Policy Issue Date',regex:new RegExp('^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}')},
+									{column:'Policy From Date',regex:new RegExp('^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}')},
+									{column:'Policy To Date',regex:new RegExp('^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}')}];
+
+			var error_array=vImport.validate(data_array,validate_template_array);
+			return error_array;
+		}
+
+		/**
+		*	Import for Star business report
+		*/
+		function form347_sp2_import(policies)
+		{
+			var commissions_json={data_store:'policy_commissions',loader:'no',data:[]};
+
+			var counter=1;
+			var last_updated=vTime.unix();
+			show_loader();
+
+			for(var a=0;a<policies.length;a++)
+			{
+				if(vUtil.isBlank(policies[a]['Policy Number']))
+				{
+					policies.splice(a,1);
+					a--;
+					continue;
+				}
+
+				policies[a]['Assured Name']=policies[a]['Proposer Name'];
+				policies[a].id="";
+				policies[a].policy_holder="";
+				policies[a].description="";
+				policies[a].type="";
+				policies[a].upsell="";
+				policies[a].preferred="";
+				policies[a].issuer='Star';
+				policies[a].issue_type='';
+				policies[a].application_premium=0;
+				policies[a].old_premium=0;
+				policies[a].old_net_premium=0;
+				policies[a].policy_name=policies[a]['Product'];
+				policies[a].start_time = vTime.unix({date:policies[a]['Policy From Date']});
+				policies[a].end_time = vTime.unix({date:policies[a]['Policy To Date']});
+				policies[a].issue_time = vTime.unix({date:policies[a]['Policy Issue Date']});
+				policies[a].term = ((policies[a].end_time-policies[a].start_time)/(366*86400000)>1) ? 'two years' : 'one year';
+				policies[a].issued_in_quarter = vTime.quarter({date:policies[a].issue_time,inputFormat:'unix'});
+				policies[a].agent=document.getElementById('form347_popup_import_form').elements['agent'].value;
+				policies[a].premium=policies[a]['Premium'];
+				policies[a].policy_num=policies[a]['Policy Number'];
+				policies[a].status= (parseFloat(policies[a].premium)<0)? "cancelled" : "issued";
+				var remove_array = ['Mr.','MR.','mr.','Ms.','MS.','ms.','Mrs.','MRS.','mrs.'];
+				remove_array.forEach(function(r)
+				{
+					policies[a]['Proposer Name'] = policies[a]['Proposer Name'].replace(r,'');
+				});
+				// console.log(policies[a]['Assured Name']);
+			}
+
+			policies.sort(function(a,b)
+			{
+				if(parseFloat(a.issue_time)>parseFloat(b.issue_time))
+				{	return 1;}
+				else
+				{	return -1;}
+			});
+
+			var policy_status_array=vUtil.keyedArrayColumn(policies,'policy_num','status');
+
+			form347_policy_bank(policies,'policy_name','Star',function()
+			{
+				form347_policy_ids(policies,'policy_num','Star',function()
+				{
+					// console.log(policies);
+					var update_policy_json1={data_store:'policies',data:[]};
+
+					for(var i=0;i<policies.length;i++)
+					{
+						policies[i].net_premium = vUtil.round(parseFloat(policies[i].premium)/(1+(policies[i].tax_rate/100)),2);
+						policies[i].tax = vUtil.round(parseFloat(policies[i].premium)-parseFloat(policies[i].net_premium),2);
+
+						if(!vUtil.isBlank(policies[i].id))
+						{
+							var data_json_array=[{index:'id',value:policies[i].id},
+									{index:'policy_name',value:policies[i].policy_name},
+									// {index:'application_num',value:policies[i]['Previous Policy Number']},
+									{index:'premium',value:policies[i].premium},
+									{index:'net_premium',value:policies[i].net_premium},
+									{index:'tax',value:policies[i].tax},
+									{index:'tds_rate',value:policies[i].tds_rate},
+									{index:'issuer',value:policies[i].issuer},
+									{index:'term',value:policies[i].term},
+									{index:'agent',value:policies[i].agent},
+									{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
+									{index:'start_date',value:policies[i].start_time},
+									{index:'end_date',value:policies[i].end_time},
+									{index:'issue_date',value:policies[i].issue_time},
+									{index:'type',value:policies[i].type},
+									{index:'description',value:policies[i].description},
+									{index:'preferred',value:policies[i].preferred},
+									{index:'status',value:policies[i].status},
+									{index:'last_updated',value:last_updated}];
+
+							policies[i].issue_type= (policies[i]['Fresh/Renewal'] == "RENEWAL") ? 'renewal' :'fresh';
+							var issue_type_obj = {index:'issue_type',value:policies[i].issue_type};
+							data_json_array.push(issue_type_obj);
+
+							update_policy_json1.data.push(data_json_array);
+
+							if(policies[i].status=='cancelled')
+							{
+								var delete_commission_array={data_store:'policy_commissions',
+					 								data:[{index:'policy_num',value:policies[i].policy_num}]};
+								delete_json(delete_commission_array);
+							}
+
+							policies.splice(i,1);
+							i--;
+						}
+					}
+					update_batch_json(update_policy_json1);
+
+					if(policies.length>0)
+					{
+						form347_policy_ids_by_name_phone(policies,'Star',function()
+						{
+							var update_policy_json2={data_store:'policies',data:[]};
+
+							var newKey=vUtil.newKey();
+
+							for(var i=0;i<policies.length;i++)
+							{
+								counter++;
+								if(!vUtil.isBlank(policies[i].id))
+								{
+									var policy_array=[{index:'id',value:policies[i].id},
+											{index:'policy_num',value:policies[i]['Policy Number']},
+											{index:'policy_name',value:policies[i].policy_name},
+											{index:'premium',value:policies[i].premium},
+											{index:'net_premium',value:policies[i].net_premium},
+											{index:'tax',value:policies[i].tax},
+											{index:'tds_rate',value:policies[i].tds_rate},
+											{index:'issuer',value:policies[i].issuer},
+											{index:'term',value:policies[i].term},
+											{index:'agent',value:policies[i].agent},
+											{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
+											{index:'start_date',value:policies[i].start_time},
+											{index:'end_date',value:policies[i].end_time},
+											{index:'issue_date',value:policies[i].issue_time},
+											{index:'type',value:policies[i].type},
+											{index:'description',value:policies[i].description},
+											{index:'preferred',value:policies[i].preferred},
+											{index:'status',value:policies[i].status},
+											{index:'last_updated',value:last_updated}];
+
+									policies[i].issue_type= (policies[i]['Fresh/Renewal'] == "RENEWAL") ? 'renewal' :'fresh';
+									var issue_type_obj = {index:'issue_type',value:policies[i].issue_type};
+									policy_array.push(issue_type_obj);
+
+									var upsell_new= (policies[i].old_net_premium!=0 && parseFloat(policies[i].net_premium) > parseFloat(policies[i].old_net_premium)) ? 'yes' :'no';
+									var upsell = (vUtil.isBlank(policies[i].upsell))? upsell_new : policies[i].upsell;
+									var upsell_obj = {index:'upsell',value:upsell};
+									policy_array.push(upsell_obj);
+
+									var loading_premium = parseFloat(policies[i].premium) - parseFloat(policies[i].application_premium);
+									if(loading_premium > 0)
+									{
+										var lp_obj = {index:'loading_premium',value:loading_premium};
+										var lp_status_obj = {index:'loading_premium_status',value:'undecided'};
+										policy_array.push(lp_obj);
+										policy_array.push(lp_status_obj);
+									}
+
+									update_policy_json2.data.push(policy_array);
+									newKey+=2;
+									if(policy_status_array[policies[i].policy_num]!="cancelled"){
+										form347_recalculate_commissions(policies[i],commissions_json,newKey);
+									}
+									policies.splice(i,1);
+									i--;
+								}
+							}
+							update_batch_json(update_policy_json2);
+
+							if(policies.length>0)
+							{
+								var create_policy_json3={data_store:'policies',data:[]};
+								var customer_json3={data_store:'customers',data:[]};
+
+								var newKey=vUtil.newKey();
+								for(var i=0; i<policies.length;i++)
+								{
+									newKey++;
+									if(vUtil.isBlank(policies[i].policy_holder))
+									{
+										policies[i].policy_holder=policies[i]['Proposer Name']+" ("+policies[i]['Telephone No']+")";
+									}
+									var policy_array=[{index:'id',value:newKey},
+											{index:'policy_num',value:policies[i]['Policy Number'],unique:'yes'},
+											{index:'policy_name',value:policies[i].policy_name},
+											{index:'policy_holder',value:policies[i].policy_holder},
+											{index:'application_num',value:''},
+											{index:'premium',value:policies[i].premium},
+											{index:'net_premium',value:policies[i].net_premium},
+											{index:'tax',value:policies[i].tax},
+											{index:'tds_rate',value:policies[i].tds_rate},
+											{index:'issuer',value:policies[i].issuer},
+											{index:'term',value:policies[i].term},
+											{index:'agent',value:policies[i].agent},
+											{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
+											{index:'start_date',value:policies[i].start_time},
+											{index:'end_date',value:policies[i].end_time},
+											{index:'issue_date',value:policies[i].issue_time},
+											{index:'type',value:policies[i].type},
+											{index:'description',value:policies[i].description},
+											{index:'preferred',value:policies[i].preferred},
+											{index:'status',value:policies[i].status},
+											{index:'last_updated',value:last_updated}];
+
+									policies[i].issue_type= (policies[i]['Fresh/Renewal'] == "RENEWAL") ? 'renewal' :'fresh';
+									var issue_type_obj = {index:'issue_type',value:policies[i].issue_type};
+									policy_array.push(issue_type_obj);
+
+									// var upsell_new= (policies[i].old_net_premium!=0 && parseFloat(policies[i].net_premium) > parseFloat(policies[i].old_net_premium)) ? 'yes' :'no';
+									var upsell_new= 'no';
+									var upsell = (vUtil.isBlank(policies[i].upsell))? upsell_new : policies[i].upsell;
+									var upsell_obj = {index:'upsell',value:upsell};
+									policy_array.push(upsell_obj);
+
+									create_policy_json3.data.push(policy_array);
+
+									var customer_json_array=[{index:'id',value:newKey},
+											{index:'name',value:policies[i]['Proposer Name']},
+											{index:'phone',value:policies[i]['Telephone No']},
+											{index:'address',value:policies[i]['ADDRESS']},
+											{index:'acc_name',value:policies[i].policy_holder,unique:'yes'},
+											{index:'last_updated',value:last_updated}];
+
+									customer_json3.data.push(customer_json_array);
+									newKey+=2;
+									if(policy_status_array[policies[i].policy_num]!="cancelled"){
+										form347_recalculate_commissions(policies[i],commissions_json,newKey);
+									}
+								}
+
+								create_batch_json(create_policy_json3);
+								create_batch_json(customer_json3);
+
+								create_batch_json(commissions_json);
+
+							}
+							else{
+								create_batch_json(commissions_json);
+							}
+						});
+					}
+				});
+			});
+		}
+
+		/**
 		*	Import validation for religare policies
 		*/
 		function form347_ra_import_validate(data_array)
@@ -2275,7 +2585,7 @@
 		}
 
 		/**
-		*	Import for apollo policies search report
+		*	Import for religare policies
 		*/
 		function form347_ra_import(policies)
 		{
@@ -2291,6 +2601,7 @@
 				policies[a].policy_holder="";
 				policies[a].description="";
 				policies[a].type="";
+				policies[a].upsell="";
 				policies[a].preferred="";
 				policies[a].issue_type='';
 				policies[a].old_premium=0;
@@ -2400,7 +2711,8 @@
 									var issue_type = {index:'issue_type',value:policies[i].issue_type};
 									policy_array.push(issue_type);
 
-									var upsell= (policies[i].old_net_premium!=0 && parseFloat(policies[i].net_premium) > parseFloat(policies[i].old_net_premium)) ? 'yes' :'no';
+									var upsell_new= (policies[i].old_net_premium!=0 && parseFloat(policies[i].net_premium) > parseFloat(policies[i].old_net_premium)) ? 'yes' :'no';
+									var upsell = (vUtil.isBlank(policies[i].upsell))? upsell_new : policies[i].upsell;
 									var upsell_obj = {index:'upsell',value:upsell};
 									policy_array.push(upsell_obj);
 									update_policy_json2.data.push(policy_array);
@@ -2422,7 +2734,7 @@
 		};
 
 		/**
-		*	Import validation for religare policies
+		*	Import validation for cigna policies
 		*/
 		function form347_ca_import_validate(data_array)
 		{
@@ -2440,7 +2752,7 @@
 		}
 
 		/**
-		*	Import for apollo policies search report
+		*	Import for cigna policies
 		*/
 		function form347_ca_import(policies)
 		{
@@ -2456,6 +2768,7 @@
 				policies[a].policy_holder="";
 				policies[a].description="";
 				policies[a].type="";
+				policies[a].upsell="";
 				policies[a].preferred="";
 				policies[a].issue_type='';
 				policies[a].old_premium=0;
@@ -2563,7 +2876,8 @@
 									var issue_type = {index:'issue_type',value:policies[i].issue_type};
 									policy_array.push(issue_type);
 
-									var upsell= (policies[i].old_net_premium!=0 && parseFloat(policies[i].net_premium) > parseFloat(policies[i].old_net_premium)) ? 'yes' :'no';
+									var upsell_new= (policies[i].old_net_premium!=0 && parseFloat(policies[i].net_premium) > parseFloat(policies[i].old_net_premium)) ? 'yes' :'no';
+									var upsell = (vUtil.isBlank(policies[i].upsell))? upsell_new : policies[i].upsell;
 									var upsell_obj = {index:'upsell',value:upsell};
 									policy_array.push(upsell_obj);
 									update_policy_json2.data.push(policy_array);
@@ -2583,6 +2897,7 @@
 				});
 			});
 		};
+
 
 		function form347_recalculate_commissions(policy,create_commissions,newKey,func)
 		{

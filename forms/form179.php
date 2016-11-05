@@ -169,9 +169,9 @@
                 });
 
                 $('#form179').formcontrol();
-								paginator.update_index(results.length);
-								initialize_tabular_report_buttons(columns,'Purchase Orders','form179',function (item)
-                {
+				paginator.update_index(results.length);
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Purchase Orders',report_id:'form179',feach:function (item)
+				{
                     item['order prepared on']=get_my_past_date(item.order_date);
 										item['order placed on']=get_my_past_date(item.order_placed_time);
 										item['last updated on']=get_my_past_date(item.last_updated);
@@ -179,7 +179,7 @@
 										delete item.order_date;
 										delete item.order_placed_time;
 										delete item.last_updated;
-                });
+                }});
 				hide_loader();
             });
         };

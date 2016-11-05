@@ -182,6 +182,7 @@
 						{index:'policy_holder'},
 						{index:'issue_date'},
 						{index:'premium'},
+						{index:'net_premium'},
 						{index:'sum_insured'},
 						{index:'issue_type'},
 						{index:'status',exact:'issued'}]};
@@ -220,7 +221,7 @@
 				// console.log(commissions);
 				var chart_data_array=[];
 
-				var sum_insured = premium = comm = comm_basic = comm_orc = count = 0;
+				var sum_insured = net_premium = premium = comm = comm_basic = comm_orc = count = 0;
 		        policies.forEach(function(policy)
 		        {
 					// count++;
@@ -231,6 +232,10 @@
 					if(!vUtil.isBlank(policy.premium))
 					{
 						premium += parseFloat(policy.premium);
+					}
+					if(!vUtil.isBlank(policy.net_premium))
+					{
+						net_premium += parseFloat(policy.net_premium);
 					}
 	        	});
 
@@ -251,6 +256,7 @@
 
 				// var sum_insured_obj={'bar':'Total Sum Insured','value':vUtil.round(sum_insured)};
 				var premium_obj={'bar':'Total Premium','value':vUtil.round(premium)};
+				var net_premium_obj={'bar':'Net Premium','value':vUtil.round(net_premium)};
 				var comm_obj={'bar':'Total Commission','value':vUtil.round(comm)};
 				var comm_basic_obj={'bar':'Total Commission (Basic)','value':vUtil.round(comm_basic)};
 				var comm_orc_obj={'bar':'Total Commission (ORC)','value':vUtil.round(comm_orc)};
@@ -258,6 +264,7 @@
 
 				// chart_data_array.push(sum_insured_obj);
 				chart_data_array.push(premium_obj);
+				chart_data_array.push(net_premium_obj);
 				chart_data_array.push(comm_obj);
 				chart_data_array.push(comm_basic_obj);
 				chart_data_array.push(comm_orc_obj);
@@ -303,7 +310,7 @@
 
 	        $('#report120_chart').find('div>div>a').hide();
 
-	        initialize_tabular_report_buttons(columns,'Policy Financials','report120',function (item)
+			vExport.export_buttons({action:'dynamic',columns:columns,file:'Policy Financials',report_id:'report120',feach:function (item)
 	        {
 				item['Application #']=item.application_num;
 	            item['Policy #']=item.policy_num;
@@ -313,6 +320,7 @@
 	            item['Issue Date']=vTime.date({time:item.issue_date});
 				item['Sum Insured']=item.sum_insured;
 				item['Premium']=item.premium;
+				item['Net Premium']=item.net_premium;
 				item['Issue Type']=item.issue_type;
 
 	            delete item.application_num;
@@ -323,9 +331,10 @@
 	            delete item.issue_date;
 				delete item.sum_insured;
 				delete item.premium;
+				delete item.net_premium;
 				delete item.id;
 				delete item.issue_type;
-	        });
+	        }});
 			hide_loader();
 		});
     });

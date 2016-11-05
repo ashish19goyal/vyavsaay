@@ -443,8 +443,8 @@
 				}
             }
 
-			initialize_fixed_tabular_report_buttons(export_data_array,'Tele-caller Performance Grid','report124');
-
+			vExport.export_buttons({results:export_data_array,file:'Tele-caller Performance Grid',report_id:'report124',action:'fixed'});
+			
             hide_loader();
         });
     };

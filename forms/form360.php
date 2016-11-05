@@ -135,7 +135,7 @@
 
 				$('#form360').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Premium Setup','form360',function (item){});
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Premium Setup',report_id:'form360'});
 				hide_loader();
 			});
 		};

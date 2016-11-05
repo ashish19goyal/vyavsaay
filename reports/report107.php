@@ -252,7 +252,7 @@
 
         $('#report107_chart').find('div>div>a').hide();
 
-        initialize_tabular_report_buttons(columns,'Commissions Report','report107',function (item)
+		vExport.export_buttons({action:'dynamic',columns:columns,file:'Commissions Report',report_id:'report107',feach:function (item)
         {
 			item['Issuing Company']=item.issuer;
             item['Policy #']=item.policy_num;
@@ -271,7 +271,7 @@
             delete item.comm_percent;
 			delete item.premium;
             delete item.issue_date;
-        });
+        }});
 
         hide_loader();
     });

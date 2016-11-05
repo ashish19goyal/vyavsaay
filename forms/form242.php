@@ -1,4 +1,4 @@
-<div id='form242' class='tab-pane portlet box green-meadow'>	   
+<div id='form242' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class="actions">
             <div class="btn-group">
@@ -15,9 +15,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -36,7 +36,7 @@
 			</tbody>
 		</table>
 	</div>
-    
+
     <script>
         function form242_header_ini()
         {
@@ -45,7 +45,7 @@
             var status_filter=filter_fields.elements['status'];
 
             var accounts_data={data_store:'accounts',return_column:'acc_name'};
-            
+
             $(filter_fields).off('submit');
             $(filter_fields).on('submit',function(event)
             {
@@ -62,7 +62,7 @@
             show_loader();
             var fid=$("#form242_link").attr('data_id');
             if(fid==null)
-                fid="";	
+                fid="";
 
             var filter_fields=document.getElementById('form242_header');
             var faccount=filter_fields.elements['account'].value;
@@ -71,7 +71,7 @@
             $('#form242_body').html("");
 
             var paginator=$('#form242_body').paginator();
-			
+
 			var columns=new Object();
 					columns.count=paginator.page_size();
 					columns.start_index=paginator.get_index();
@@ -83,9 +83,9 @@
 									{index:'due_date'},
 									{index:'status',value:fstatus},
                                     {index:'type',exact:'paid'}];
-			
+
             read_json_rows('form242',columns,function(results)
-            {	
+            {
                 results.forEach(function(result)
                 {
                     var rowsHTML="<tr>";
@@ -127,11 +127,11 @@
 
                 $('#form242').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Payables','form242',function (item)
-                {
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Payables',report_id:'form242',feach:function (item)
+				{
                     delete item.type;
                     item.due_date=get_my_past_date(item.due_date);
-                });
+                }});
 				hide_loader();
             });
         };
@@ -153,12 +153,12 @@
 	 				data:[{index:'id',value:data_id},
 	 					{index:'acc_name',value:acc_name},
 	 					{index:'total_amount',value:total_amount},
-                        {index:'paid_amount',value:paid_amount},  
+                        {index:'paid_amount',value:paid_amount},
 	 					{index:'due_date',value:due_date},
                         {index:'status',value:status},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Updated',notes:'Payment of Rs. '+total_amount+' payable to '+acc_name,link_to:'form242'}};
-               
+
                 update_json(data_json);
 
                 $(form).readonly();

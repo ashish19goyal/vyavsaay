@@ -117,8 +117,8 @@
 
 				$('#form46').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(other_data,'Other settings','form46',function (item){});
-				hide_loader();
+				vExport.export_buttons({action:'dynamic',columns:other_data,file:'Other Settings',report_id:'form46'});
+	            hide_loader();
 			});
 		};
 

@@ -313,10 +313,10 @@ function modal9_action()
 
 	fpicture.addEventListener('change',function(evt)
 	{
-		select_document(evt,function(dataURL)
+		vFileHandler.document({evt:evt,fsuccess:function(dataURL)
 		{
 			docInfo.setAttribute('href',dataURL);
-		});
+		}});
 	},false);
 
 	$(form).off("submit");
@@ -1443,10 +1443,10 @@ function modal19_action(button)
 
 	fpicture.addEventListener('change',function(evt)
 	{
-		select_picture(evt,fpictureinfo,function(dataURL)
+		vFileHandler.picture({evt:evt,size:'small',fsuccess:function(dataURL)
 		{
 			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";
-		});
+		}});
 	},false);
 
 	///////-------------set editable finished-------/////////////
@@ -2090,7 +2090,7 @@ function modal23_action(t_func,i_func,v_func)
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		show_progress();
+        vIni.showProgress();
         show_loader();
 		var file=select_file.files[0];
         var fileType = /csv/gi;
@@ -2138,7 +2138,7 @@ function modal23_action(t_func,i_func,v_func)
 
 			        		if(number_active_ajax===0 && localdb_open_requests===0)
 			        		{
-			        			hide_progress();
+			        			vIni.hideProgress();
                                 hide_loader();
 			        			selected_file.value="Upload complete";
 			        			$(select_file).val('');
@@ -2149,7 +2149,7 @@ function modal23_action(t_func,i_func,v_func)
            		}
            		else
            		{
-           			hide_progress();
+           			vIni.hideProgress();
 	       			selected_file.value="";
 	        		$(select_file).val('');
 	        		$(form).find(".close").click();
@@ -2185,7 +2185,7 @@ function modal23_action(t_func,i_func,v_func)
 
 		        		if(number_active_ajax===0 && localdb_open_requests===0)
 		        		{
-		        			hide_progress();
+		        			vIni.hideProgress();
 		        			selected_file.value="Upload complete";
 		        			$(select_file).val('');
 		        			$(form).find(".close").click();
@@ -6460,10 +6460,10 @@ function modal114_action(func)
 
 	fpicture.addEventListener('change',function(evt)
 	{
-		select_picture(evt,fpictureinfo,function(dataURL)
+		vFileHandler.picture({evt:evt,size:'small',fsuccess:function(dataURL)
 		{
 			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";
-		});
+		}});
 	},false);
 
 	////adding attribute fields///////
@@ -8738,8 +8738,8 @@ function modal138_action()
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		show_progress();
-		show_loader();
+        vIni.showProgress();
+        show_loader();
 
 		var file=select_file.files[0];
         var fileType = /csv/gi;
@@ -9036,7 +9036,7 @@ function modal138_action()
 
 				        		if(number_active_ajax===0 && localdb_open_requests===0)
 				        		{
-				        			hide_progress();
+				        			vIni.hideProgress();
 				        			selected_file.value="Upload complete";
 				        			$(select_file).val('');
 				        			$("#modal138").dialog("close");
@@ -9046,7 +9046,7 @@ function modal138_action()
 				        }
 				        else
 				        {
-				        	hide_progress();
+				        	vIni.hideProgress();
 		        			$(select_file).val('');
 		        			$("#modal138").dialog("close");
 		        			modal164_action(error_array);
@@ -9184,7 +9184,7 @@ function modal140_action(i_func)
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		show_progress();
+		vIni.showProgress();
 		show_loader();
 
 		var file=select_file.files[0];
@@ -9468,7 +9468,7 @@ function modal140_action(i_func)
 
 				        		if(number_active_ajax===0 && localdb_open_requests===0)
 				        		{
-				        			hide_progress();
+				        			vIni.hideProgress();
 				        			selected_file.value="Upload complete";
 				        			$(select_file).val('');
 				        			$("#modal140").dialog("close");
@@ -9478,7 +9478,7 @@ function modal140_action(i_func)
 				        //}
 				        /*else
 				        {
-			        		hide_progress();
+			        		vIni.hideProgress();
 		        			$(select_file).val('');
 		        			$("#modal140").dialog("close");
 		        			$("#modal73_link").click();
@@ -9486,7 +9486,7 @@ function modal140_action(i_func)
 				    }
 				    else
 				    {
-				    	hide_progress();
+				    	vIni.hideProgress();
 	        			$(select_file).val('');
 	        			$("#modal140").dialog("close");
 	        			modal164_action(error_array);
@@ -9864,10 +9864,10 @@ function modal144_action(doc_type,target_id,func)
 
 	fpicture.addEventListener('change',function(evt)
 	{
-		select_document(evt,function(dataURL)
+		vFileHandler.document({evt:evt,fsuccess:function(dataURL)
 		{
 			docInfo.setAttribute('href',dataURL);
-		});
+		}});
 	},false);
 
 	$(form).off("submit");
@@ -10075,10 +10075,10 @@ function modal146_action(test_data_id,test_id,item)
 
 	fpicture.addEventListener('change',function(evt)
 	{
-		select_document(evt,function(dataURL)
+		vFileHandler.document({evt:evt,fsuccess:function(dataURL)
 		{
 			docInfo.setAttribute('href',dataURL);
-		});
+		}});
 	},false);
 
 	$(form).off("submit");
@@ -10259,7 +10259,7 @@ function modal148_action()
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		show_progress();
+		vIni.showProgress();
 		var file=select_file.files[0];
         var fileType = /csv/gi;
 
@@ -10379,7 +10379,7 @@ function modal148_action()
 
 		        		if(number_active_ajax===0 && localdb_open_requests===0)
 		        		{
-		        			hide_progress();
+		        			vIni.hideProgress();
 		        			selected_file.value="Upload complete";
 		        			$(select_file).val('');
 		        			$(form).find(".close").click();
@@ -10390,7 +10390,7 @@ function modal148_action()
 		    }
 		    else
 		    {
-		    	hide_progress();
+		    	vIni.hideProgress();
        			$(select_file).val('');
        			$(form).find(".close").click();
 				modal164_action(error_array);
@@ -10461,7 +10461,7 @@ function modal149_action()
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		show_progress();
+		vIni.showProgress();
 		var file=select_file.files[0];
         var fileType = /csv/gi;
 
@@ -10591,7 +10591,7 @@ function modal149_action()
 
 	        		if(number_active_ajax===0 && localdb_open_requests===0)
 	        		{
-	        			hide_progress();
+	        			vIni.hideProgress();
 	        			selected_file.value="Upload complete";
 	        			$(select_file).val('');
 	        			$(form).find(".close").click();
@@ -10601,7 +10601,7 @@ function modal149_action()
 	        }
 	        else
 	        {
-	        	hide_progress();
+	        	vIni.hideProgress();
        			$(select_file).val('');
        			$(form).find(".close").click();
 				modal164_action(error_array);
@@ -11542,7 +11542,7 @@ function modal160_action()
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		show_progress();
+		vIni.showProgress();
 		var file=select_file.files[0];
         var fileType = /csv/gi;
 
@@ -11662,7 +11662,7 @@ function modal160_action()
 
 	        		if(number_active_ajax===0 && localdb_open_requests===0)
 	        		{
-	        			hide_progress();
+	        			vIni.hideProgress();
 	        			selected_file.value="Upload complete";
 	        			$(select_file).val('');
 	        			$("#modal160").dialog("close");
@@ -11672,7 +11672,7 @@ function modal160_action()
 	        }
 	        else
 	        {
-	        	hide_progress();
+	        	vIni.hideProgress();
        			$(select_file).val('');
        			$("#modal160").dialog("close");
 				modal164_action(error_array);
@@ -12408,7 +12408,7 @@ function modal170_action()
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		show_progress();
+		vIni.showProgress();
 
 		var file=select_file.files[0];
         var fileType = /csv/gi;
@@ -12490,7 +12490,7 @@ function modal170_action()
 
 	        		if(number_active_ajax===0 && localdb_open_requests===0)
 	        		{
-	        			hide_progress();
+	        			vIni.hideProgress();
 	        			selected_file.value="Upload complete";
 	        			$(select_file).val('');
 	        			$("#modal170").dialog("close");
@@ -12500,7 +12500,7 @@ function modal170_action()
 	        }
 	        else
 	        {
-	        	hide_progress();
+	        	vIni.hideProgress();
     			$(select_file).val('');
     			$("#modal170").dialog("close");
     			modal164_action(error_array);
@@ -12847,10 +12847,10 @@ function modal174_action(func)
 
 	fpicture.addEventListener('change',function(evt)
 	{
-		select_picture(evt,fpictureinfo,function(dataURL)
+		vFileHandler.picture({evt:evt,size:'small',fsuccess:function(dataURL)
 		{
 			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";
-		});
+		}});
 	},false);
 
 	////adding attribute fields///////
@@ -13187,10 +13187,10 @@ function modal176_action(data_id,doc_type,func,master)
 
 	fpicture.addEventListener('change',function(evt)
 	{
-		select_picture_large(evt,function(dataURL)
+		vFileHandler.picture({evt:evt,size:'large',fsuccess:function(dataURL)
 		{
 			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";
-		});
+		}});
 	},false);
 
 	$(form).off("submit");
@@ -13309,10 +13309,10 @@ function modal177_action(func)
 
 	fpicture.addEventListener('change',function(evt)
 	{
-		select_picture(evt,fpictureinfo,function(dataURL)
+		vFileHandler.picture({evt:evt,size:'small',fsuccess:function(dataURL)
 		{
 			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";
-		});
+		}});
 	},false);
 
 	////adding attribute fields///////
@@ -13776,10 +13776,10 @@ function modal181_action(id,preview,new_name,master)
 
 	fpicture.addEventListener('change',function(evt)
 	{
-		select_picture(evt,fpictureinfo,function(dataURL)
+		vFileHandler.picture({evt:evt,size:'small',fsuccess:function(dataURL)
 		{
 			fpictureinfo.innerHTML="<div><img src='"+dataURL+"'/></div>";
-		});
+		}});
 	},false);
 
 	$(form).off('submit');
@@ -15296,10 +15296,10 @@ function modal206_action(doc_type,target_id,target_name,func)
 
 	fpicture.addEventListener('change',function(evt)
 	{
-		select_document(evt,function(dataURL)
+		vFileHandler.document({evt:evt,fsuccess:function(dataURL)
 		{
 			docInfo.setAttribute('href',dataURL);
-		});
+		}});
 	},false);
 
 	$(form).off("submit");
@@ -15446,7 +15446,7 @@ function modal208_action()
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		show_progress();
+		vIni.showProgress();
 		var file=select_file.files[0];
         var fileType = /csv/gi;
 		var manifest_num=manifest_filter.value;
@@ -15559,7 +15559,7 @@ function modal208_action()
 
                         if(number_active_ajax===0 && localdb_open_requests===0)
                         {
-                            hide_progress();
+                            vIni.hideProgress();
                             selected_file.value="Upload complete";
                             $(select_file).val('');
                             $("#modal208").dialog("close");
@@ -15570,7 +15570,7 @@ function modal208_action()
 	        }
 	        else
 	        {
-	        	hide_progress();
+	        	vIni.hideProgress();
        			$(select_file).val('');
        			$("#modal208").dialog("close");
 				modal164_action(error_array);
@@ -15645,10 +15645,10 @@ function modal210_action(description,func)
         var file_attr=files[0].name.split('.');
         filetype=file_attr[file_attr.length-1];
         console.log(filetype);
-		select_document(evt,function(dataURL)
+		vFileHandler.document({evt:evt,fsuccess:function(dataURL)
 		{
 			url=dataURL;
-		});
+		}});
 	},false);
 
     $('modal210_form').formcontrol();
@@ -15772,10 +15772,10 @@ function modal213_action(dbname)
         contentType=files[0].type;
         var file_attr=files[0].name.split('.');
         filetype=file_attr[file_attr.length-1];
-		select_document(evt,function(dataURL)
+		vFileHandler.document({evt:evt,fsuccess:function(dataURL)
 		{
 			url=dataURL;
-		});
+		}});
 	},false);
 
 	$(form).off("submit");
@@ -16550,6 +16550,11 @@ function modal217_action(previous_policy_id,func)
 	var freceived=form.elements['received_amount'];
 	var fdiscount=form.elements['discount'];
 
+	var flast_sum=form.elements['last_total_sum'];
+	var flast_premium=form.elements['last_premium'];
+	var flast_received=form.elements['last_received_amount'];
+	var fupsell=form.elements['upsell'];
+
 	var fpayor=form.elements['payor'];
 	var fpay_mode=form.elements['pay_mode'];
 	var fbank=form.elements['bank'];
@@ -16784,6 +16789,8 @@ function modal217_action(previous_policy_id,func)
 	var company_data={data_store:'policy_types',return_column:'issuer'};
 	set_my_value_list_json(company_data,fcompany);
 
+	set_value_list_json(['yes','no'],fupsell);
+
 	var lead_data={data_store:'attributes',return_column:'name',
 					indexes:[{index:'type',exact:'staff'},
 							{index:'attribute',exact:'Designation'},
@@ -16846,6 +16853,9 @@ function modal217_action(previous_policy_id,func)
 									{index:'issuer'},
 									{index:'policy_name'},
 									{index:'sum_insured'},
+									{index:'premium'},
+									{index:'sum_insured'},
+									{index:'received_amount'},
 									{index:'payor_name'},
 									{index:'payment_mode'},
 									{index:'bank_details'},
@@ -16869,6 +16879,11 @@ function modal217_action(previous_policy_id,func)
 			fpremium.value="";
 			freceived.value="";
 			fdiscount.value="";
+
+			flast_sum.value=prev_p[0].sum_insured;
+			flast_premium.value=prev_p[0].premium;
+			flast_received.value=prev_p[0].received_amount;
+			fupsell.value="";
 
 			fpayor.value=prev_p[0].payor_name;
 			fpay_mode.value=prev_p[0].payment_mode;
@@ -16986,7 +17001,7 @@ function modal217_action(previous_policy_id,func)
 						{index:'short_premium',value:short_premium},
 						{index:'agent',value:fagent.value},
 						{index:'out_source',value:fout_source.value},
-						// {index:'type',value:fptype.value},
+						{index:'upsell',value:fupsell.value},
 						// {index:'term',value:fterm.value},
 						{index:'preferred',value:preferred},
 						{index:'issue_type',value:'renewal'},
@@ -17332,8 +17347,9 @@ function modal221_action(t_func,i_func,v_func)
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		show_progress();
-  	show_loader();
+		vIni.showProgress();
+
+  		show_loader();
 		var file=select_file.files[0];
     var fileType = /csv/gi;
 
@@ -17373,7 +17389,7 @@ function modal221_action(t_func,i_func,v_func)
 
         		if(number_active_ajax===0 && localdb_open_requests===0)
         		{
-        			hide_progress();
+        			vIni.hideProgress();
               hide_loader();
         			selected_file.value="Upload complete";
         			$(select_file).val('');
@@ -17384,7 +17400,7 @@ function modal221_action(t_func,i_func,v_func)
      		}
      		else
      		{
-     			hide_progress();
+     			vIni.hideProgress();
 	   			selected_file.value="";
 	    		$(select_file).val('');
 	    		$(form).find(".close").click();
@@ -17413,7 +17429,7 @@ function modal221_action(t_func,i_func,v_func)
 
         		if(number_active_ajax===0 && localdb_open_requests===0)
         		{
-        			hide_progress();
+        			vIni.hideProgress();
         			selected_file.value="Upload complete";
         			$(select_file).val('');
         			$(form).find(".close").click();

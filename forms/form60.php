@@ -1,6 +1,6 @@
-<div id='form60' class='tab-pane portlet box green-meadow'>	   
+<div id='form60' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form60_add_item();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -22,9 +22,9 @@
                     </li>
                 </ul>
             </div>
-      </div>	
+      </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -41,7 +41,7 @@
 			</tbody>
 		</table>
 	</div>
-    
+
     <script>
 
         function form60_header_ini()
@@ -70,7 +70,7 @@
             show_loader();
             var fid=$("#form60_link").attr('data_id');
             if(fid==null)
-                fid="";	
+                fid="";
 
             $('#form60_body').html("");
 
@@ -80,7 +80,7 @@
             var fvalue=filter_fields.elements['val'].value;
 
             var paginator=$('#form60_body').paginator();
-			
+
 			var columns=new Object();
 					columns.count=paginator.page_size();
 					columns.start_index=paginator.get_index();
@@ -91,7 +91,7 @@
 									{index:'attribute',value:fattribute},
 									{index:'value',value:fvalue},
 									{index:'type',exact:'product'}];
-			
+
             read_json_rows('form60',columns,function(results)
             {
                 results.forEach(function(result)
@@ -110,8 +110,8 @@
                             rowsHTML+="<td data-th='Action'>";
                                 rowsHTML+="<input type='hidden' form='form60_"+result.id+"' value='"+result.id+"'>";
                                 rowsHTML+="<button type='submit' class='btn green' form='form60_"+result.id+"' name='save' title='Save'><i class='fa fa-save'></i></button>";
-                                rowsHTML+="<button type='button' class='btn red' form='form60_"+result.id+"' name='delete' title='Delete' onclick='form60_delete_item($(this));'><i class='fa fa-trash'></i></button>";	
-                            rowsHTML+="</td>";			
+                                rowsHTML+="<button type='button' class='btn red' form='form60_"+result.id+"' name='delete' title='Delete' onclick='form60_delete_item($(this));'><i class='fa fa-trash'></i></button>";
+                            rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form60_body').append(rowsHTML);
@@ -125,10 +125,10 @@
 
                 $('#form60').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Product Attributes','form60',function (item)
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Product Attributes',report_id:'form60',feach:function (item)
                 {
                     delete item.type;
-                });
+                }});
 				hide_loader();
             });
         };
@@ -152,8 +152,8 @@
                     rowsHTML+="<td data-th='Action'>";
                         rowsHTML+="<input type='hidden' form='form60_"+id+"' value='"+id+"'>";
                         rowsHTML+="<button type='submit' class='btn green' form='form60_"+id+"' name='save' title='Save'><i class='fa fa-save'></i></button>";
-                        rowsHTML+="<button type='button' class='btn red' form='form60_"+id+"' onclick='$(this).parent().parent().remove();' name='delete' title='Delete'><i class='fa fa-trash'></i></button>";	
-                    rowsHTML+="</td>";			
+                        rowsHTML+="<button type='button' class='btn red' form='form60_"+id+"' onclick='$(this).parent().parent().remove();' name='delete' title='Delete'><i class='fa fa-trash'></i></button>";
+                    rowsHTML+="</td>";
                 rowsHTML+="</tr>";
 
                 $('#form60_body').prepend(rowsHTML);
@@ -168,7 +168,7 @@
                 });
 
                 var product_data={data_store:'product_master',return_column:'name'};
-                set_my_value_list_json(product_data,product_filter,function () 
+                set_my_value_list_json(product_data,product_filter,function ()
                 {
                     $(product_filter).focus();
                 });
@@ -176,7 +176,7 @@
                 var attribute_data={data_store:'attributes',return_column:"attribute",
                                    indexes:[{index:'type',exact:'product'}]};
                 set_my_filter_json(attribute_data,attribute_filter);
-                
+
                 $('#form60').formcontrol();
             }
             else
@@ -194,19 +194,19 @@
                 var value=form.elements[2].value;
                 var data_id=form.elements[3].value;
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'attributes',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'name',value:product,uniqueWith:['attribute']},
 	 					{index:'type',value:'product'},
 	 					{index:'attribute',value:attribute},
-                        {index:'value',value:value},  
+                        {index:'value',value:value},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Added',notes:'Attribute '+attribute+' for product '+product,link_to:'form60'}};
- 				
+
                 create_json(data_json);
-                	
+
                 $(form).readonly();
 
                 var del_button=form.elements['delete'];
@@ -238,19 +238,19 @@
                 var value=form.elements[2].value;
                 var data_id=form.elements[3].value;
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'attributes',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'name',value:product},
 	 					{index:'type',value:'product'},
 	 					{index:'attribute',value:attribute},
-                        {index:'value',value:value},  
+                        {index:'value',value:value},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Update',notes:'Attribute '+attribute+' for product '+product,link_to:'form60'}};
- 				
+
                 update_json(data_json);
-                	
+
                 $(form).readonly();
             }
             else
@@ -276,7 +276,7 @@
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id}],
 	 				log_data:{title:'Deleted',notes:'Attribute '+attribute+' for product '+product,link_to:'form60'}};
- 				
+
                     delete_json(data_json);
                     $(button).parent().parent().remove();
                 });
@@ -300,7 +300,7 @@
                                     {column:'value',regex:new RegExp('^[0-9a-zA-Z \'_.,/:@$*#%^!()-]+$')}];
 
             var error_array=vImport.validate(data_array,validate_template_array);
-            return error_array;					
+            return error_array;
         }
 
         function form60_import(data_array,import_type)
@@ -313,7 +313,7 @@
 
 			var counter=1;
 			var last_updated=get_my_time();
-		
+
 			data_array.forEach(function(row)
 			{
 				counter+=1;
@@ -321,7 +321,7 @@
 				{
 					row.id=last_updated+counter;
 				}
-				
+
 				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'name',value:row.name},
 	 					{index:'type',value:'product'},
@@ -331,7 +331,7 @@
 
 				data_json.data.push(data_json_array);
 			});
-			
+
 			if(import_type=='create_new')
 			{
 				create_batch_json(data_json);

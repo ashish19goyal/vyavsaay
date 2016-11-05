@@ -192,17 +192,17 @@
 											}
 											callback(events);
 
-											initialize_tabular_report_buttons(attendance_data,'Attendance','form7',function (item)
-                      {
+											vExport.export_buttons({action:'dynamic',columns:attendance_data,file:'Attendance',report_id:'form7',feach:function (item)
+						                      {
 													item.staff=item.acc_name;
-                          item.date=get_my_datetime(item.date);
+						                          	item.date=get_my_datetime(item.date);
 													item.attendance=item.presence;
 													item['hours worked']=item.hours_worked;
 
 													delete item.hours_worked;
-                          delete item.presence;
+						                          	delete item.presence;
 													delete item.acc_name;
-                      });
+						                      }});
 
 											hide_loader();
 										});
@@ -285,7 +285,7 @@
 
 								paginator.update_index(results.length);
 
-								initialize_tabular_report_buttons(columns,'Attendance','form7',function (item)
+								vExport.export_buttons({action:'dynamic',columns:columns,file:'Attendance',report_id:'form7',feach:function (item)
 								{
 									item.staff=item.acc_name;
 									item.date=get_my_datetime(item.date);
@@ -295,7 +295,7 @@
 									delete item.hours_worked;
 									delete item.presence;
 									delete item.acc_name;
-								});
+								}});
 
 								$('#form7').formcontrol();
 								hide_loader();

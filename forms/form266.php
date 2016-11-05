@@ -134,8 +134,8 @@
                                 {index:'city'},
                                 {index:'rto_num',array:rto_num_array}];
 
-                initialize_tabular_report_buttons(columns,'RTO Orders','form266',function (item)
-                {
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'RTO Orders',report_id:'form266',feach:function (item)
+				{
                     item['AWB No']=item.awb_num;
                     item['RTO No']=item.rto_num;
                     item['Order Id']=item.order_num;
@@ -170,7 +170,7 @@
                     delete item.city;
                     delete item.phone;
                     delete item.sku;
-                });
+                }});
 
 				$('#form266').formcontrol();
 				paginator.update_index(results.length);

@@ -135,14 +135,14 @@
 
                 $('#form137').formcontrol();
                 paginator.update_index(results.length);
-                initialize_tabular_report_buttons(columns,'Project Expenses','form137',function (item)
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Project Expenses',report_id:'form137',feach:function (item)
                 {
                     item['Project Name']=item.source_name;
                     delete item.source_name;
                     delete item.source;
                     item['Expense Date']=get_my_past_date(item.expense_date);
                     delete item.expense_date;
-                });
+                }});
 
                 hide_loader();
             });

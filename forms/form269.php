@@ -143,8 +143,8 @@
 
                 $('#form269').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Invoices','form269',function (item)
-                {
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Invoices',report_id:'form269',feach:function (item)
+				{
 					item['Challan #']=item.bill_num;
                     item['Challan Date']=get_my_past_date(item.bill_date);
 					item['Manual Challan #']=item.challan_num;
@@ -152,7 +152,7 @@
 					delete item.bill_num;
                     delete item.type;
 					delete item.challan_num;
-                });
+                }});
 				hide_loader();
             });
         }

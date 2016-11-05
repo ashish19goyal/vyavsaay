@@ -173,12 +173,12 @@
                       });
                       callback(events);
 
-                      initialize_tabular_report_buttons(tasks_data,'Appointments','form89',function (item)
+					  vExport.export_buttons({action:'dynamic',columns:tasks_data,file:'Appointments',report_id:'form89',feach:function (item)
                       {
                           item['Schedule']=get_my_datetime(item.schedule);
                           delete item.schedule;
                           delete item.hours;
-                      });
+                      }});
                       hide_loader();
                   });
               },
@@ -290,12 +290,12 @@
 
               paginator.update_index(results.length);
 
-			initialize_tabular_report_buttons(columns,'Appointments','form89',function (item)
+			  vExport.export_buttons({action:'dynamic',columns:columns,file:'Appointments',report_id:'form89',feach:function (item)
 			{
 				item['Schedule']=get_my_datetime(item.schedule);
 				delete item.schedule;
 				delete item.hours;
-			});
+			}});
 
 			$('#form89').formcontrol();
               hide_loader();
@@ -566,12 +566,12 @@
                    app.start = app.schedule;
                    app.end = parseFloat(app.schedule)+3600000*parseFloat(app.hours);
 			   });
-				var cal_options = {act:function(){hide_loader();},calendarId:'appointments',calendarName:'Appointments',link:'https://vyavsaay.com/form89/',events:appointments};
+				var cal_options = {act:function(){hide_loader();},prompt:'auto',calendarId:'appointments',calendarName:'Appointments',link:'https://vyavsaay.com/form89/',events:appointments};
 				var cal_object = new vGCal(cal_options);
-			    if(type=='outlook')
-				{
-					cal_object = new vMSCal(cal_options);
-				}
+			    // if(type=='outlook')
+				// {
+				// 	cal_object = new vMSCal(cal_options);
+				// }
 				cal_object.checkAuth();
 		   });
 		}

@@ -138,11 +138,11 @@
 
             $('#form203').formcontrol();
             paginator.update_index(results.length);
-            initialize_tabular_report_buttons(new_columns,'Orders List','form203',function (item)
+			vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Orders List',report_id:'form203',feach:function (item)
             {
                 item['import date']=get_my_past_date(item.import_date);
                 delete item.import_date;
-            });
+            }});
             hide_loader();
         });
     };

@@ -142,7 +142,7 @@
 
 				$('#form355').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Object Rename Setings','form355',function (item){});
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Object Rename Settings',report_id:'form355'});
 				hide_loader();
 			});
 		};

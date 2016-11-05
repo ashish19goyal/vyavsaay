@@ -147,7 +147,7 @@
             $('#report76_body').append(rowsHTML);
 			$('#report76').formcontrol();
 
-            initialize_tabular_report_buttons(columns,'Order Status','report76',function (item)
+			vExport.export_buttons({action:'dynamic',columns:columns,file:'Order Status',report_id:'report76',feach:function (item)
             {
                 item['AWB No']=item.awb_num;
                 item['Order Id']=item.order_num;
@@ -192,7 +192,7 @@
                 delete item.return_address1;
                 delete item.return_address2;
                 delete item.return_address3;
-            });
+            }});
 
             paginator.update_index(items.length);
             hide_loader();

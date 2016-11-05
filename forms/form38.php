@@ -145,7 +145,7 @@
 
 	                $('#form38').formcontrol();
 					paginator.update_index(results.length);
-					initialize_tabular_report_buttons(columns,'Store Placement','form38',function (item){});
+					vExport.export_buttons({action:'dynamic',columns:columns,file:'Store Placement',report_id:'form38'});
 					hide_loader();
 	            });
 			});

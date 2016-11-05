@@ -9,17 +9,17 @@
             <a onclick=show_activities();>view all</a>
         </li>
         <li>
-            <ul id='topbar_logs' class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283"> 
+            <ul id='topbar_logs' class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
             </ul>
         </li>
     </ul>
 </li>
 
 <script>
-	function show_activities() 
+	function show_activities()
 	{
-		hide_all();
-		$("#activities_box").show();
+        vIni.hideAll();
+        $("#activities_box").show();
 		activities_ini();
 	}
 </script>

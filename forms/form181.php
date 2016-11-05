@@ -170,12 +170,12 @@
 
 				$('#form181').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Sale Orders','form181',function (item)
-                {
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Sale Orders',report_id:'form181',feach:function (item)
+				{
                     delete item.bill_id;
                     delete item.challan_info;
                     item.order_date=get_my_past_date(item.order_date);
-                });
+                }});
                 hide_loader();
             });
         };

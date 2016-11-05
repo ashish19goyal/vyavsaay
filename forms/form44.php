@@ -119,7 +119,7 @@
 
 				$('#form44').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Newsletters','form44',function (item){});
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Newsletters',report_id:'form44'});
 				hide_loader();
 			});
 		};

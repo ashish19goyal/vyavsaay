@@ -1,6 +1,6 @@
-<div id='form340' class='tab-pane portlet box green-meadow'>	   
+<div id='form340' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form340_add_item();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -22,9 +22,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -42,44 +42,44 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<script>
 		function form340_header_ini()
 		{
-			var filter_fields=document.getElementById('form340_header');	
+			var filter_fields=document.getElementById('form340_header');
 			var names_filter=filter_fields.elements['customer'];
 			var identified_filter=filter_fields.elements['staff'];
-		
+
 			var names_data={data_store:'customers',return_column:'acc_name'};
 			set_my_filter_json(names_data,names_filter);
-		
+
 			var identified_data={data_store:'staff',return_column:'acc_name'};
 			set_my_filter_json(identified_data,identified_filter);
-			
+
 			$(filter_fields).off('submit');
 			$(filter_fields).on('submit',function(event)
 			{
 				event.preventDefault();
 				form340_ini();
-			});	
+			});
 		}
-		
+
 		function form340_ini()
 		{
 			show_loader();
 			var fid=$("#form340_link").attr('data_id');
 			if(fid==null)
-				fid="";	
-			
+				fid="";
+
 			$('#form340_body').html("");
-			
+
 			var filter_fields=document.getElementById('form340_header');
 			var fname=filter_fields.elements['customer'].value;
 			var fdetail=filter_fields.elements['detail'].value;
 			var fidentity=filter_fields.elements['staff'].value;
-			
+
 			var paginator=$('#form340_body').paginator();
-			
+
 			var new_columns={count:paginator.page_size(),
                              start_index:paginator.get_index(),
                              data_store:'sale_leads',
@@ -89,7 +89,7 @@
 									{index:'status'},
 									{index:'due_date'},
 									{index:'identified_by',value:fidentity}]};
-					
+
 			read_json_rows('form340',new_columns,function(results)
 			{
 				results.forEach(function(result)
@@ -109,8 +109,8 @@
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Follow up'>";
 								rowsHTML+="<input type='text' readonly='readonly' placeholder='Next Due Date' form='form340_"+result.id+"' name='date' class='floatlabel dblclick_editable' value='"+get_my_past_date(result.due_date)+"'>";
-							if(result.status!='closed')					
-							{					
+							if(result.status!='closed')
+							{
 								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form340_"+result.id+"' name='followup'>Follow up</button>";
 							}
 							rowsHTML+="</td>";
@@ -118,50 +118,50 @@
 							if(result.identified_by=="")
 								rowsHTML+="<input type='text' readonly='readonly' form='form340_"+result.id+"' name='staff' class='dblclick_editable' value='"+result.identified_by+"'>";
 							else
-								rowsHTML+="<a onclick=\"show_object('staff','"+result.identified_by+"');\"><textarea readonly='readonly' form='form340_"+result.id+"' name='staff'>"+result.identified_by+"</textarea></a>";	
+								rowsHTML+="<a onclick=\"show_object('staff','"+result.identified_by+"');\"><textarea readonly='readonly' form='form340_"+result.id+"' name='staff'>"+result.identified_by+"</textarea></a>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form340_"+result.id+"' name='id' value='"+result.id+"'>";
 								rowsHTML+="<button type='submit' class='btn green' form='form340_"+result.id+"' title='Save' name='save'><i class='fa fa-save'></i></button>";
 								rowsHTML+="<button type='button' class='btn red' form='form340_"+result.id+"' title='Delete' name='delete' onclick='form340_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-							if(result.status!='closed')					
-							{					
+							if(result.status!='closed')
+							{
 								rowsHTML+="<button type='button' class='btn yellow' form='form340_"+result.id+"' onclick=\"modal153_action(this,'"+result.id+"');\">Close Lead</button>";
-							}					
-							rowsHTML+="</td>";			
+							}
+							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-					
+
 					$('#form340_body').append(rowsHTML);
 					var fields=document.getElementById("form340_"+result.id);
 					var identified_filter=fields.elements['staff'];
 					var followup_button=fields.elements['followup'];
-					
-					$(followup_button).on('click',function () 
+
+					$(followup_button).on('click',function ()
 					{
 						modal134_action(result.id,result.customer,result.detail);
 					});
-		
+
 					var identified_data={data_store:'staff',return_column:'acc_name'};
 					set_my_value_list_json(identified_data,identified_filter);
-							
+
 					$(fields).on("submit", function(event)
 					{
 						event.preventDefault();
 						form340_update_item(fields);
 					});
 				});
-		
+
 				$('#form340').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Sale Leads','form340',function (item)
-                {
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Sale Leads',report_id:'form340',feach:function (item)
+				{
                     item['followup date']=get_my_past_date(item.due_date);
                     delete item.due_date;
-                });
+                }});
 				hide_loader();
 			});
 		};
-		
+
 		function form340_add_item()
 		{
 			if(is_create_access('form340'))
@@ -187,52 +187,52 @@
 								rowsHTML+="<input type='hidden' form='form340_"+id+"' name='id' value='"+id+"'>";
 								rowsHTML+="<button type='submit' class='btn green' form='form340_"+id+"' title='Save' name='save'><i class='fa fa-save'></i></button>";
 								rowsHTML+="<button type='button' class='btn red' form='form340_"+id+"' title='Delete' name='delete' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-					
+
 				$('#form340_body').prepend(rowsHTML);
-				
+
 				var fields=document.getElementById("form340_"+id);
 				var customer_filter=fields.elements[0];
 				var detail_filter=fields.elements[1];
 				var due_filter=fields.elements[2];
 				var by_filter=fields.elements[3];
-				
+
 				$(fields).on("submit", function(event)
 				{
 					event.preventDefault();
 					form340_create_item(fields);
 				});
-							
+
 				var customer_data={data_store:'customers',return_column:'acc_name'};
-				set_my_value_list_json(customer_data,customer_filter,function () 
+				set_my_value_list_json(customer_data,customer_filter,function ()
 				{
 					$(customer_filter).focus();
 				});
-				
+
 				$(due_filter).datepicker();
 				due_filter.value=get_my_past_date(parseFloat(get_my_time())+86400000);
-				
+
 				var staff_data={data_store:'staff',return_column:'acc_name'};
 				set_my_value_list_json(staff_data,by_filter);
-		
+
 				var add_customer=document.getElementById('form340_add_customer_'+id);
 				$(add_customer).on('click',function()
 				{
 					modal11_action(function()
-					{	
-						set_my_value_list_json(customer_data,customer_filter,function () 
+					{
+						set_my_value_list_json(customer_data,customer_filter,function ()
 						{
 							$(customer_filter).focus();
 						});
 					});
 				});
-		
+
 				var add_staff=document.getElementById('form340_add_staff_'+id);
 				$(add_staff).on('click',function()
 				{
 					modal16_action(function()
-					{	
+					{
 						set_my_value_list_json(staff_data,by_filter);
 					});
 				});
@@ -241,9 +241,9 @@
 			else
 			{
 				$("#modal2_link").click();
-			}		
+			}
 		}
-		
+
 		function form340_create_item(form)
 		{
 			if(is_create_access('form340'))
@@ -254,7 +254,7 @@
 				var identified_by=form.elements['staff'].value;
 				var data_id=form.elements['id'].value;
 				var last_updated=get_my_time();
-				
+
 				var data_json={data_store:'sale_leads',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
@@ -266,16 +266,16 @@
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Added',notes:'Sale lead for customer '+customer,link_to:'form340'}};
 				create_json(data_json);
-				
+
 				$(form).readonly();
-		
+
 				var del_button=form.elements['delete'];
 				del_button.removeAttribute("onclick");
 				$(del_button).on('click',function(event)
 				{
 					form340_delete_item(del_button);
 				});
-				
+
 				$(form).off('submit');
 				$(form).on('submit',function(event)
 				{
@@ -288,7 +288,7 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form340_update_item(form)
 		{
 			if(is_update_access('form340'))
@@ -317,7 +317,7 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form340_delete_item(button)
 		{
 			if(is_delete_access('form340'))
@@ -345,50 +345,50 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form340_import_template()
 		{
 			var data_array=['id','person','party name','location','email','contact','requirement','identified by','followup date'];
 			vUtil.arrayToCSV(data_array);
 		};
-		
+
 		function form340_import_validate(data_array)
 		{
 			var validate_template_array=[{column:'person',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
                                          {column:'identified by',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 									{column:'requirement',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!%()\"-]+$')},
 									{column:'followup date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]+')}];
-							
+
 			var error_array=vImport.validate(data_array,validate_template_array);
-			return error_array;					
+			return error_array;
 		}
-		
+
 		function form340_import(data_array,import_type)
 		{
             var leads_json={data_store:'sale_leads',
  					log:'yes',
  					data:[],
-                    warning:'no',        
+                    warning:'no',
  					log_data:{title:'Sale leads for customers',link_to:'form340'}};
 
             var data_json={data_store:'customers',
  					loader:'no',
-                    warning:'no',       
+                    warning:'no',
  					data:[]};
-            
+
             var attribute_json={data_store:'attributes',
  					loader:'no',
-                    warning:'no',            
+                    warning:'no',
  					data:[]};
 
 			var account_json={data_store:'accounts',
  					loader:'no',
-                    warning:'no',          
+                    warning:'no',
  					data:[]};
 
 			var counter=1;
 			var last_updated=get_my_time();
-		
+
 			data_array.forEach(function(row)
 			{
 				counter+=1;
@@ -396,9 +396,9 @@
 				{
 					row.id=last_updated+counter;
 				}
-				
+
                 row.acc_name=row.person+" ("+row.contact+")";
-                
+
 				var leads_json_array=[{index:'id',value:row.id},
 	 					{index:'customer',value:row.acc_name,unique:'yes'},
 	 					{index:'detail',value:row.requirement},
@@ -435,9 +435,9 @@
 	 					{index:'status',value:'active'},
 	 					{index:'last_updated',value:last_updated}];
 
-				account_json.data.push(account_json_array);				
+				account_json.data.push(account_json_array);
 			});
-			
+
 			if(import_type=='create_new')
 			{
                 if(is_create_access('form340'))

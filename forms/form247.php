@@ -1,6 +1,6 @@
-<div id='form247' class='tab-pane portlet box green-meadow'>	   
+<div id='form247' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form247_add_item();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -22,9 +22,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -43,7 +43,7 @@
 	</div>
 
     <script>
-    
+
     function form247_header_ini()
     {
         var filter_fields=document.getElementById('form247_header');
@@ -71,7 +71,7 @@
         show_loader();
         var fid=$("#form247_link").attr('data_id');
         if(fid==null)
-            fid="";	
+            fid="";
 
         $('#form247_body').html("");
 
@@ -81,14 +81,14 @@
         var fstatus=filter_fields.elements['status'].value;
 
         var paginator=$('#form247_body').paginator();
-			
+
 		var new_columns={count:paginator.page_size(),
                          start_index:paginator.get_index(),
                          data_store:'pincodes',
                          indexes:[{index:'id',value:fid},
                                 {index:'zone',value:fzone},
                                 {index:'status',value:fstatus},
-                                {index:'pincode',value:fpincode}]};        
+                                {index:'pincode',value:fpincode}]};
         read_json_rows('form247',new_columns,function(results)
         {
             results.forEach(function(result)
@@ -108,7 +108,7 @@
                             rowsHTML+="<input type='hidden' form='form247_"+result.id+"' value='"+result.id+"'>";
                             rowsHTML+="<button type='submit' form='form247_"+result.id+"' title='Save' class='btn green'><i class='fa fa-save' name='save'></i></button>";
                             rowsHTML+="<button type='button' form='form247_"+result.id+"' title='Delete' class='btn red' onclick='form247_delete_item($(this));' name='delete'><i class='fa fa-trash'></i></button>";
-                        rowsHTML+="</td>";				
+                        rowsHTML+="</td>";
                 rowsHTML+="</tr>";
 
                 $('#form247_body').append(rowsHTML);
@@ -121,7 +121,7 @@
                 set_my_value_list_json(zone_data,zone_filter);
                 set_static_value_list_json('pincodes','status',status_filter);
 
-                $(fields).on('submit',function (e) 
+                $(fields).on('submit',function (e)
                 {
                     e.preventDefault();
                     form247_update_item(fields);
@@ -130,7 +130,7 @@
 
             $('#form247').formcontrol();
             paginator.update_index(results.length);
-            initialize_tabular_report_buttons(new_columns,'Pincodes','form247');
+			vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Pincodes',report_id:'form247'});
             hide_loader();
         });
     };
@@ -155,7 +155,7 @@
                     rowsHTML+="<input type='hidden' form='form247_"+id+"' value='"+id+"'>";
                     rowsHTML+="<button type='submit' class='btn green' form='form247_"+id+"' name='save' id='save_form247_"+id+"'><i class='fa fa-save'></i></button>";
                     rowsHTML+="<button type='button' class='btn red' form='form247_"+id+"' id='delete_form247_"+id+"' onclick='$(this).parent().parent().remove();' name='delete'><i class='fa fa-trash'></i></button>";
-                rowsHTML+="</td>";			
+                rowsHTML+="</td>";
             rowsHTML+="</tr>";
 
             $('#form247_body').prepend(rowsHTML);
@@ -191,12 +191,12 @@
         {
             var pincode=form.elements[0].value;
             var zone=form.elements[1].value;
-            var status=form.elements[2].value;		
+            var status=form.elements[2].value;
             var data_id=form.elements[3].value;
             var save_button=form.elements['save'];
             var del_button=form.elements['delete'];
             var last_updated=get_my_time();
-            
+
             var data_json={data_store:'pincodes',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
@@ -205,7 +205,7 @@
 	 					{index:'status',value:status},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Added',notes:'Pincode to '+zone,link_to:'form247'}};
- 				
+
             create_json(data_json);
             $(form).readonly();
 
@@ -216,7 +216,7 @@
             });
 
             $(form).off('submit');
-            $(form).on('submit',function (e) 
+            $(form).on('submit',function (e)
             {
                 e.preventDefault();
                 form247_update_item(form);
@@ -237,7 +237,7 @@
             var data_id=form.elements[3].value;
 
             var last_updated=get_my_time();
-            
+
             var data_json={data_store:'pincodes',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
@@ -245,7 +245,7 @@
 	 					{index:'status',value:status},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Added',notes:'Pincode to '+zone,link_to:'form247'}};
- 			
+
             update_json(data_json);
 
             $(form).readonly();
@@ -272,7 +272,7 @@
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id}],
 	 				log_data:{title:'Deleted',notes:'Pincode '+pincode,link_to:'form247'}};
- 			
+
                 delete_json(data_json);
 
                 $(button).parent().parent().remove();
@@ -297,7 +297,7 @@
                                 {column:'status',required:'yes',list:['active','inactive']}];
 
         var error_array=vImport.validate(data_array,validate_template_array);
-        return error_array;					
+        return error_array;
     }
 
     function form247_import(data_array,import_type)

@@ -150,7 +150,7 @@
 
 					$(image_dummy).on('change',function(evt)
 					{
-					   select_picture(evt,'',function(dataURL)
+						vFileHandler.picture({evt:evt,size:'small',fsuccess:function(dataURL)
 						{
 							image_elem.src=dataURL;
 							var last_updated=get_my_time();
@@ -177,7 +177,7 @@
 					 					{index:'last_updated',value:last_updated}]};
 								update_json(data_json);
 							}
-						});
+						}});
 					});
 
 					$(fields).on("submit", function(event)
@@ -189,7 +189,7 @@
 
 				$('#form30').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Customers','form30');
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Customers',report_id:'form30'});
 
 				hide_loader();
 			});

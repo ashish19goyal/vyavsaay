@@ -1,10 +1,10 @@
-<div id='form331' class='tab-pane portlet box green-meadow'>	   
+<div id='form331' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<div class='btn-group' id='form331_store' data-toggle='buttons'>
                 <label class='btn green-jungle my active' onclick=form331_ini('my');><input name='my' type='radio' class='toggle'>My Store</label>
                 <label class='btn green-jungle all' onclick=form331_ini('all');><input type='radio' name='all' class='toggle'>All Stores</label>
-            </div>			
+            </div>
             <a class='btn btn-circle grey btn-outline btn-sm' onclick='modal204_action();'>Add Batch <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -26,9 +26,9 @@
                     </li>
                 </ul>
             </div>
-      </div>	
+      </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -47,15 +47,15 @@
 			</tbody>
 		</table>
 	</div>
-        
+
     <script>
 
         function form331_header_ini()
         {
-            var filter_fields=document.getElementById('form331_header');	
+            var filter_fields=document.getElementById('form331_header');
             var names_filter=filter_fields.elements['name'];
             var batch_filter=filter_fields.elements['batch'];
-            
+
             $(filter_fields).off('submit');
             $(filter_fields).on('submit',function(event)
             {
@@ -69,7 +69,7 @@
                                   {index:'attribute',exact:'Batch Applicable'}]};
 
             set_my_filter_json(item_data,names_filter);
-            
+
             var batch_data={data_store:'product_instances',return_column:'batch'};
             set_my_filter_json(batch_data,batch_filter);
         };
@@ -82,7 +82,7 @@
                 fid="";
 
             $('#form331_body').html('');
-            
+
             var store=get_session_var('user_setting_Store');
             if(typeof store_type!='undefined' && store_type=='all')
             {
@@ -99,18 +99,18 @@
             var filter_fields=document.getElementById('form331_header');
             var fname=filter_fields.elements['name'].value;
             var fbatch=filter_fields.elements['batch'].value;
-            
+
             var paginator=$('#form331_body').paginator();
-			    
+
             var item_columns={data_store:'attributes',return_column:'name',
                              indexes:[{index:'name',value:fname},
                                      {index:'type',exact:'product'},
                                      {index:'value',value:'yes'},
                                      {index:'attribute',value:'Batch Applicable'}]};
 
-            read_json_single_column(item_columns,function (items) 
+            read_json_single_column(item_columns,function (items)
             {
-                var columns={data_store:'product_instances',                 
+                var columns={data_store:'product_instances',
 					       count:paginator.page_size(),
 					       start_index:paginator.get_index(),
                            indexes:[{index:'id',value:fid},
@@ -145,7 +145,7 @@
                                     rowsHTML+="<input type='hidden' form='form331_"+result.id+"' name='old_price' value='"+result.sale_price+"'>";
                                     rowsHTML+="<button type='submit' class='btn green' name='save' title='Save' form='form331_"+result.id+"'><i class='fa fa-save'></i></button>";
                                     rowsHTML+="<button type='submit' class='btn red' name='delete' title='Delete' form='form331_"+result.id+"' onclick='fsorm331_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-                                rowsHTML+="</td>";			
+                                rowsHTML+="</td>";
                         rowsHTML+="</tr>";
 
                         $('#form331_body').append(rowsHTML);
@@ -154,9 +154,9 @@
                         var sale_price=fields.elements[3];
                         var sys_inventory=fields.elements[4];
                         var second_inventory=fields.elements['second'];
-                        
+
                         $(manufacturing).datepicker();
-                        
+
                         if(store=='')
                         {
                             get_inventory(result.product_name,result.batch,function(inventory)
@@ -186,8 +186,8 @@
 
                     $('#form331').formcontrol();
 				    paginator.update_index(results.length);
-				    initialize_tabular_report_buttons(columns,'Inventory (without batch)','form331',function (item)
-                    {
+					vExport.export_buttons({action:'dynamic',columns:columns,file:'Inventory (without batch)',report_id:'form331',feach:function (item)
+				    {
                         total_export_requests+=1;
                         if(store=='')
                         {
@@ -207,15 +207,15 @@
                         }
                         item['Manufacture Date']=get_my_past_date(item.manufacture_date);
                         item['Sale Price']=item.sale_price;
-                        
+
                         delete item.manufacture_date;
                         delete item.sale_price;
-                    });
+                    }});
                     hide_loader();
                 });
             });
         };
-        
+
         function form331_update_item(form)
         {
             if(is_update_access('form331'))
@@ -256,19 +256,19 @@
                         }
                     });
                 }
-                
+
                 if(parseFloat(quantity)!=parseFloat(old_quantity))
                 {
                     var adjust_json={data_store:'inventory_adjust',
                         data:[{index:'id',value:vUtil.newKey()},
                              {index:'product_name',value:name},
-                             {index:'batch',value:name}, 
+                             {index:'batch',value:name},
                              {index:'storage',value:storage},
                              {index:'quantity',value:parseFloat(quantity)-parseFloat(old_quantity)},
                              {index:'last_updated',value:last_updated}]};
                     create_json(adjust_json);
-                
-                
+
+
                     var storage_data={data_store:'area_utilization',return_column:'id',
                                      indexes:[{index:'name',exact:storage},
                                              {index:'item_name',exact:item_name},
@@ -280,22 +280,22 @@
                             var adjust_json={data_store:'area_utilization',
                             data:[{index:'id',value:vUtil.newKey()},
                                  {index:'item_name',value:name},
-                                 {index:'batch',value:batch}, 
+                                 {index:'batch',value:batch},
                                  {index:'name',value:storage},
                                  {index:'last_updated',value:last_updated}]};
-                            create_json(adjust_json);                        
+                            create_json(adjust_json);
                         }
-                    });		
+                    });
                 }
-                
-                $(form).readonly();               
+
+                $(form).readonly();
             }
             else
             {
                 $("#modal2_link").click();
             }
         }
-        
+
         function form331_delete_item(button)
         {
             if(is_delete_access('form331'))
@@ -308,7 +308,7 @@
                     var batch=form.elements[1].value;
                     var data_id=form.elements[5].value;
                     var last_updated=get_my_time();
-                    
+
                     var data_json={data_store:'product_instances',
  							data:[{index:'id',value:data_id}],
  							log:'yes',
@@ -346,14 +346,14 @@
 			var validate_template_array=[{column:'item',required:'yes',regex:new RegExp('^[0-9a-zA-Z _,;:/\'()!@#$%-]+$')},
 									{column:'batch',regex:new RegExp('^[0-9a-zA-Z _.,:/\'+@!$()-]+$')},
                                     {column:'manufacture date',required:'yes',regex:new RegExp('^[0-9/-]+$')},
-                                    {column:'mrp',regex:new RegExp('^[0-9 .')},     
+                                    {column:'mrp',regex:new RegExp('^[0-9 .')},
 									{column:'sale price',regex:new RegExp('^[0-9 .')},
                                     {column:'quantity',regex:new RegExp('^[0-9 .')}];
-							
+
 			var error_array=vImport.validate(data_array,validate_template_array);
-			return error_array;					
+			return error_array;
 		}
-		
+
         function form331_import(data_array,import_type)
         {
             var data_json={data_store:'product_instances',
@@ -372,17 +372,17 @@
 				{
 					row.id=last_updated+counter;
 				}
-				
+
 				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'product_name',value:row.item},
 	 					{index:'batch',value:row.batch},
 	 					{index:'mrp',value:row.mrp},
 	 					{index:'sale_price',value:row['sale price']},
-                        {index:'manufacture_date',value:get_raw_time(row['manufacture date'])},             
+                        {index:'manufacture_date',value:get_raw_time(row['manufacture date'])},
 	 					{index:'last_updated',value:last_updated}];
 
 				data_json.data.push(data_json_array);
-                
+
                 if(row.quantity!="")
                 {
                     get_inventory(row.item,row.batch,function(quantity)
@@ -403,7 +403,7 @@
                     });
                 }
 			});
-			
+
 			if(import_type=='create_new')
 			{
 				create_batch_json(data_json);

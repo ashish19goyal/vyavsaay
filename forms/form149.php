@@ -1,6 +1,6 @@
-<div id='form149' class='tab-pane portlet box green-meadow'>	   
+<div id='form149' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form149_add_item();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -22,9 +22,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -41,7 +41,7 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<script>
 		function form149_header_ini()
 		{
@@ -49,15 +49,15 @@
 			var role_filter=filter_fields.elements['role'];
 			var username_filter=filter_fields.elements['username'];
 			var status_filter=filter_fields.elements['status'];
-			
+
 			var role_data={data_store:'roles',return_column:'role_name'};
 			set_my_filter_json(role_data,role_filter);
-		
+
 			var user_data={data_store:'user_role_mapping',return_column:'username'};
-			set_my_filter_json(user_data,username_filter);					
-				
+			set_my_filter_json(user_data,username_filter);
+
 			set_static_filter_json('roles','status',status_filter);
-			
+
 			$(filter_fields).off('submit');
 			$(filter_fields).on('submit',function(event)
 			{
@@ -65,23 +65,23 @@
 				form149_ini();
 			});
 		};
-		
+
 		function form149_ini()
 		{
 			show_loader();
 			var fid=$("#form149_link").attr('data_id');
 			if(fid==null)
-				fid="";	
-			
+				fid="";
+
 			$('#form149_body').html("");
 
 			var filter_fields=document.getElementById('form149_header');
 			var frole=filter_fields.elements['role'].value;
 			var fuser=filter_fields.elements['username'].value;
 			var fstatus=filter_fields.elements['status'].value;
-			
+
 			var paginator=$('#form149_body').paginator();
-			
+
 			var data_json=new Object();
 					data_json.count=paginator.page_size();
 					data_json.start_index=paginator.get_index();
@@ -91,7 +91,7 @@
 									{index:'role_name',value:frole},
 									{index:'username',value:fuser},
 									{index:'status',value:fstatus}];
-			
+
 			read_json_rows('form149',data_json,function(results)
 			{
 				results.forEach(function(result)
@@ -111,34 +111,34 @@
 								rowsHTML+="<input type='hidden' form='form149_"+result.id+"' value='"+result.id+"'>";
 								rowsHTML+="<button type='submit' class='btn green' form='form149_"+result.id+"' title='Save'><i class='fa fa-save'></i></button>";
 								rowsHTML+="<button type='button' class='btn red' name='delete' form='form149_"+result.id+"' title='Delete' onclick='form149_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-				
+
 					$('#form149_body').append(rowsHTML);
-		
+
 					var fields=document.getElementById("form149_"+result.id);
 					var status_filter=fields.elements[2];
-					
-					set_static_select('user_role_mapping','status',status_filter,function () 
+
+					set_static_select('user_role_mapping','status',status_filter,function ()
 					{
 						$(status_filter).selectpicker('val',result.status);
 					});
-					
+
 					$(fields).on("submit",function(event)
 					{
 						event.preventDefault();
 						form149_update_item(fields);
 					});
 				});
-		
+
 				$('#form149').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(data_json,'User Role Mappings','form149',function (item){});
-				
+				vExport.export_buttons({action:'dynamic',columns:data_json,file:'User Role Mappings',report_id:'form149'});
+
 				hide_loader();
-			});	
+			});
 		};
-		
+
 		function form149_add_item()
 		{
 			if(is_create_access('form149'))
@@ -159,25 +159,25 @@
 								rowsHTML+="<input type='hidden' form='form149_"+id+"' value='"+id+"'>";
 								rowsHTML+="<button type='submit' class='btn green' form='form149_"+id+"' title='Save'><i class='fa fa-save'></i></button>";
 								rowsHTML+="<button type='button' class='btn red' name='delete' form='form149_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 				rowsHTML+="</tr>";
-				
+
 				$('#form149_body').prepend(rowsHTML);
-				
+
 				var fields=document.getElementById("form149_"+id);
 				var role_filter=fields.elements[0];
 				var user_filter=fields.elements[1];
 				var status_filter=fields.elements[2];
-				
+
 				var role_data={data_store:'roles',return_column:'role_name'};
-				set_my_value_list_json(role_data,role_filter,function () 
+				set_my_value_list_json(role_data,role_filter,function ()
 				{
 					$(role_filter).focus();
-				});		
-				
+				});
+
 				var user_data={data_store:'accounts',return_column:'username'};
-				set_my_value_list_json(user_data,user_filter);		
-				
+				set_my_value_list_json(user_data,user_filter);
+
 				$(fields).on("submit", function(event)
 				{
 					event.preventDefault();
@@ -185,25 +185,25 @@
 				});
 
 				set_static_select('user_role_mapping','status',status_filter);
-				
+
 				$('#form149').formcontrol();
 			}
 			else
 			{
 				$("#modal2_link").click();
-			}		
+			}
 		}
-		
+
 		function form149_create_item(form)
 		{
 			if(is_create_access('form149'))
 			{
 				var role=form.elements[0].value;
 				var user=form.elements[1].value;
-				var status=$(form.elements[2]).val();		
+				var status=$(form.elements[2]).val();
 				var data_id=form.elements[3].value;
 				var last_updated=get_my_time();
-				
+
 				var data_json={data_store:'user_role_mapping',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
@@ -211,18 +211,18 @@
 	 					{index:'username',value:user},
 	 					{index:'status',value:status},
 	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Assigned',notes:'Role '+role+' to user '+user,link_to:'form149'}}; 				
+	 				log_data:{title:'Assigned',notes:'Role '+role+' to user '+user,link_to:'form149'}};
 				create_json(data_json);
-				
+
 				$(form).readonly();
-						
+
 				var del_button=form.elements['delete'];
 				del_button.removeAttribute("onclick");
 				$(del_button).on('click',function(event)
 				{
 					form149_delete_item(del_button);
 				});
-				
+
 				$(form).off('submit');
 				$(form).on('submit',function(event)
 				{
@@ -235,7 +235,7 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form149_update_item(form)
 		{
 			if(is_update_access('form149'))
@@ -245,24 +245,24 @@
 				var status=form.elements[2].value;
 				var data_id=form.elements[3].value;
 				var last_updated=get_my_time();
-				
+
 				var data_json={data_store:'user_role_mapping',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'status',value:status},
 	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Updated',notes:'Role '+role+' assigned to user '+username,link_to:'form149'}}; 				
-								
+	 				log_data:{title:'Updated',notes:'Role '+role+' assigned to user '+username,link_to:'form149'}};
+
 				update_json(data_json);
-									
-				$(form).readonly();				
+
+				$(form).readonly();
 			}
 			else
 			{
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form149_delete_item(button)
 		{
 			if(is_delete_access('form149'))
@@ -271,17 +271,17 @@
 				{
 					var form_id=$(button).attr('form');
 					var form=document.getElementById(form_id);
-					
+
 					var role=form.elements[0].value;
 					var user=form.elements[1].value;
 					var data_id=form.elements[3].value;
-					
+
 					var data_json={data_store:'user_role_mapping',
  							data:[{index:'id',value:data_id}],
  							log:'yes',
  							log_data:{title:"Removed",notes:"Role "+role+" assigned to user "+user,link_to:"form149"}};
-										
-					delete_json(data_json);					
+
+					delete_json(data_json);
 					$(button).parent().parent().remove();
 				});
 			}
@@ -290,24 +290,24 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form149_import_template()
 		{
 			var data_array=['id','role_name','username','status'];
 			vUtil.arrayToCSV(data_array);
 		};
-		
+
 		function form149_import_validate(data_array)
 		{
 			var validate_template_array=[{column:'role_name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _-]+$')},
 									{column:'username',required:'yes',regex:new RegExp('^[0-9a-zA-Z_-]+$')},
 									{column:'status',required:'yes',list:['active','inactive']}];
-							
+
 			var error_array=vImport.validate(data_array,validate_template_array);
-			return error_array;					
+			return error_array;
 		}
-		
-		
+
+
 		function form149_import(data_array,import_type)
 		{
 			var data_json={data_store:'user_role_mapping',
@@ -318,7 +318,7 @@
 
 			var counter=1;
 			var last_updated=get_my_time();
-		
+
 			data_array.forEach(function(row)
 			{
 				counter+=1;
@@ -326,7 +326,7 @@
 				{
 					row.id=last_updated+counter;
 				}
-				
+
 				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'role_name',value:row.role_name},
 	 					{index:'username',value:row.username},
@@ -335,7 +335,7 @@
 
 				data_json.data.push(data_json_array);
 			});
-			
+
 			if(import_type=='create_new')
 			{
 				create_batch_json(data_json);
@@ -343,7 +343,7 @@
 			else
 			{
 				update_batch_json(data_json);
-			}		
+			}
 		};
 
 	</script>

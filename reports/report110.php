@@ -115,7 +115,7 @@
             });
             $('#report110_body').append(rowsHTML);
 
-            initialize_tabular_report_buttons(columns,'Orders Not Received','report110',function (item){});
+			vExport.export_buttons({action:'dynamic',columns:columns,file:'Orders Not Received',report_id:'report110'});
 
             paginator.update_index(items.length);
             hide_loader();

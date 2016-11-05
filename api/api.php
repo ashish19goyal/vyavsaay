@@ -5,7 +5,7 @@
 
 	$post = json_decode(file_get_contents("php://input"),true);
 	$api = api::getInstance($_GET,$post);
-
+	
 	$authentication = $api->authenticateRequest();
 
 	$response_object = $authentication;

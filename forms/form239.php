@@ -1,6 +1,6 @@
-<div id='form239' class='tab-pane portlet box green-meadow'>	   
+<div id='form239' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick="element_display('','form240');">Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -18,9 +18,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -36,7 +36,7 @@
 			</tbody>
 		</table>
 	</div>
-    
+
     <script>
 
         function form239_header_ini()
@@ -64,15 +64,15 @@
             show_loader();
             var fid=$("#form239_link").attr('data_id');
             if(fid==null)
-                fid="";	
+                fid="";
 
             $('#form239_body').html("");
 
             var filter_fields=document.getElementById('form239_header');
             var	fitem=filter_fields.elements['name'].value;
-            
+
             var paginator=$('#form239_body').paginator();
-			
+
 			var columns=new Object();
 					columns.count=paginator.page_size();
 					columns.start_index=paginator.get_index();
@@ -81,9 +81,9 @@
 					columns.indexes=[{index:'id',value:fid},
 									{index:'name',value:fitem},
 									{index:'num_materials'}];
-			
+
             read_json_rows('form239',columns,function(results)
-            {	
+            {
                 results.forEach(function(result)
                 {
                     var rowsHTML="<tr>";
@@ -95,9 +95,9 @@
                                 rowsHTML+="<input type='text' readonly='readonly' form='form239_"+result.id+"' value='"+result.num_materials+"'>";
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Action'>";
-                                rowsHTML+="<input type='hidden' form='form239_"+result.id+"' value='"+result.id+"'>";	
+                                rowsHTML+="<input type='hidden' form='form239_"+result.id+"' value='"+result.id+"'>";
                                 rowsHTML+="<button type='button' class='btn red' form='form239_"+result.id+"' title='Delete' name='delete' onclick='form239_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form239_body').append(rowsHTML);
@@ -105,7 +105,7 @@
 
                 $('#form239').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Material Requirements','form239');
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Material Requirements',report_id:'form239'});
 				hide_loader();
             });
         }
@@ -127,7 +127,7 @@
  							log_data:{title:"Deleted",notes:"Raw material requirements for "+item_name,link_to:"form239"}};
                     var pre_requisites_json={data_store:'pre_requisites',
  							data:[{index:'name',value:item_name}]};
-			
+
                     delete_json(data_json);
                     delete_json(pre_requisites_json);
 

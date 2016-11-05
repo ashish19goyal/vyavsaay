@@ -25,17 +25,21 @@
 			var url=form.elements['url'].value;
 			var username=form.elements['username'].value;
 			var key=form.elements['key'].value;
-			var indexes=form.elements['indexes'].value;
+			var indexes=JSON.parse(form.elements['indexes'].value);
 			var data=form.elements['data'].value;
 			var options=form.elements['options'].value;
 			var row=form.elements['row'].value;
+			var query_data={indexes:indexes,data:data,username:username,key:key,options:options,row:row};
+			var call_data=JSON.stringify(query_data);
+
 			$.ajax(
 			{
 				type: "POST",
-				url: "https://vyavsaay,com/api/"+url,
-				data: {indexes:indexes,data:data,username:username,key:key,options:options,row:row},
+				url: "http://localhost/api/"+url,
+				data: call_data,
 				error:function(xhr, ajaxOptions, thrownError)
 				{
+					console.log(thrownError);
 					console.log(xhr.responseText);
 		    	},
 				success: function(return_data,return_status,e)

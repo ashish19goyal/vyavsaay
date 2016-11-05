@@ -1,8 +1,8 @@
-<div id='report82' class='tab-pane portlet box red-sunglo'>	   
+<div id='report82' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report82_ini();'>Refresh</a>
-		</div>		
+		</div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
@@ -21,7 +21,7 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
 
 	<div class="portlet-body">
@@ -45,11 +45,11 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<script>
 
         function report82_header_ini()
-        {	
+        {
             var form=document.getElementById('report82_header');
             var product_filter=form.elements['item_name'];
 
@@ -70,17 +70,17 @@
             var item_filter=form.elements['item_name'].value;
 
             show_loader();
-            $('#report82_body').html('');	
+            $('#report82_body').html('');
 
             var paginator=$('#report69_body').paginator();
 			var columns=new Object();
 			columns.count=paginator.page_size();
 			columns.start_index=paginator.get_index();
 			columns.data_store='product_master';
-					
+
 			columns.indexes=[{index:'id'},
 							{index:'name',value:item_filter}];
-	        
+
             read_json_rows('report82',columns,function(items)
             {
                 items.forEach(function(item)
@@ -103,13 +103,13 @@
 
                     $('#report82_body').append(rowsHTML);
 
-                    get_inventory(item.name,'',function (inventory) 
+                    get_inventory(item.name,'',function (inventory)
                     {
                         document.getElementById("report82_total_"+item.id).innerHTML=inventory;
                         var sale_item_json={data_store:'sale_order_items',sum:'yes',return_column:'quantity',
                                            indexes:[{index:'bill_status',exact:'pending'},
                                                    {index:'item_name',exact:item.name}]};
-                        read_json_single_column(sale_item_json,function (sale_items) 
+                        read_json_single_column(sale_item_json,function (sale_items)
                         {
                             if(sale_items.length>0)
                             {
@@ -123,20 +123,20 @@
                                 document.getElementById("report82_available_"+item.id).innerHTML=inventory;
                             }
                         });
-                    });				
-                });		
+                    });
+                });
 
                 paginator.update_index(items.length);
-				initialize_tabular_report_buttons(columns,'Inventory Report','report82',function (item) 
-                {
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Inventory Report',report_id:'report82',feach:function (item)
+				{
                     total_export_requests+=1;
-                    get_inventory(item.name,'',function (inventory) 
+                    get_inventory(item.name,'',function (inventory)
                     {
                         item['total inventory']=inventory;
                         var sale_item_json={data_store:'sale_order_items',sum:'yes',return_column:'quantity',
                                            indexes:[{index:'bill_status',exact:'pending'},
                                                    {index:'item_name',exact:item.name}]};
-                        read_json_single_column(sale_item_json,function (sale_items) 
+                        read_json_single_column(sale_item_json,function (sale_items)
                         {
                             if(sale_items.length>0)
                             {
@@ -152,11 +152,11 @@
                             total_export_requests-=1;
                         });
                     });
-                });
-                
+                }});
+
                 hide_loader();
             });
         };
-	
+
 	</script>
 </div>

@@ -175,7 +175,7 @@ function report79_ini()
 						new_item['Pending Qty']=item.quantity;
 						new_items.push(new_item);
 					});
-					csv_download_report(new_items,'Pending purchase order items');
+					vExport.csv_download({result:new_items,file:'Pending purchase order items'});
 				});
 
 				hide_loader();

@@ -1,6 +1,6 @@
-<div id='form316' class='tab-pane portlet box green-meadow'>	   
+<div id='form316' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick=modal136_action('report','master');>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -18,9 +18,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -37,44 +37,44 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<script>
 
 		function form316_header_ini()
-		{	
+		{
 			var form=document.getElementById('form316_header');
 			var other_element=form.elements['name'];
-						
+
 			$(form).off('submit');
 			$(form).on('submit',function(event)
 			{
 				event.preventDefault();
 				form316_ini();
 			});
-			
+
 			var other_data=new Object();
 						other_data.data_store='user_preferences';
 						other_data.return_column='display_name';
 						other_data.indexes=[{index:'type',exact:'report'}];
-					
+
 			set_my_filter_json(other_data,other_element);
-		}	
-		
+		}
+
 		function form316_ini()
 		{
 			var fid=$("#form316_link").attr('data_id');
 			if(fid==null)
-				fid="";	
-			
+				fid="";
+
 			var form=document.getElementById('form316_header');
 			var name_filter=form.elements['name'].value;
 			var tables_filter=form.elements['tables'].value;
-			
+
 			show_loader();
-			$('#form316_body').html('');	
-			
+			$('#form316_body').html('');
+
 			var paginator=$('#form316_body').paginator();
-			
+
 			var other_data=new Object();
 					other_data.count=paginator.page_size();
 					other_data.start_index=paginator.get_index();
@@ -86,7 +86,7 @@
 									{index:'value'},
 									{index:'name'},
 									{index:'type',exact:'report'}];
-									
+
 			read_json_rows('form316',other_data,function(results)
 			{
 				results.forEach(function(result)
@@ -103,16 +103,16 @@
 								rowsHTML+="<input type='checkbox' readonly='readonly' form='form48_"+result.id+"' "+result.value+">";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
-								rowsHTML+="<input type='hidden' form='form316_"+result.id+"' value='"+result.id+"'>";	
-								rowsHTML+="<input type='hidden' form='form316_"+result.id+"' value='"+result.name+"'>";	
+								rowsHTML+="<input type='hidden' form='form316_"+result.id+"' value='"+result.id+"'>";
+								rowsHTML+="<input type='hidden' form='form316_"+result.id+"' value='"+result.name+"'>";
 								rowsHTML+="<button type='submit' class='btn green' form='form316_"+result.id+"' title='Save'><i class='fa fa-save'></i></button>";
 								rowsHTML+="<button class='btn red' form='form316_"+result.id+"' title='Delete' onclick='form316_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-					
+
 					$('#form316_body').append(rowsHTML);
 					var fields=document.getElementById("form316_"+result.id);
-					
+
 					$(fields).on("submit", function(event)
 					{
 						event.preventDefault();
@@ -122,7 +122,7 @@
 
 				$('#form316').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(other_data,'Report Tabs','form316',function (item){});
+				vExport.export_buttons({action:'dynamic',columns:other_data,file:'Report Tabs',report_id:'form316'});
 				hide_loader();
 			});
 		};
@@ -136,22 +136,22 @@
 				var value='unchecked';
 				if(form.elements[2].checked)
 					value='checked';
-						
+
 				var data_id=form.elements[3].value;
 				var name=form.elements[4].value;
 				var del_button=form.elements[6];
-				
+
 				var last_updated=get_my_time();
-				
+
 				var data_json={data_store:'user_preferences',
 	 				data:[{index:'name',value:name,unique:'yes'},
 	 					{index:'display_name',value:display_name},
 	 					{index:'value',value:value},
 	 					{index:'tables',value:tables},
 	 					{index:'last_updated',value:last_updated}]};
- 				
+
  				server_update_master_all(data_json);
-				
+
 				$(form).readonly();
 			}
 			else
@@ -159,7 +159,7 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form316_delete_item(button)
 		{
 			if(is_delete_access('form316'))
@@ -171,13 +171,13 @@
 					var name=form.elements[4].value;
 					var data_json={data_store:'user_preferences',
  							data:[{index:'name',value:name}]};
-					
+
 					var data2_json={data_store:'access_control',
 							data:[{index:'element_id',value:name}]};
 
-					server_delete_master_all(data_json);			
-					server_delete_master_all(data2_json);			
-										
+					server_delete_master_all(data_json);
+					server_delete_master_all(data2_json);
+
 					$(button).parent().parent().remove();
 				});
 			}

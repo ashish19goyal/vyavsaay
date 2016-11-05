@@ -245,13 +245,13 @@ var vTime = function ()
           date = "0" + date;
       }
       var hour=inputDate.getHours();
-  		if (hour < 10) {
-  		    hour = "0" + hour;
-  		}
-  		var minutes=inputDate.getMinutes();
-  		if (minutes < 10) {
-  		    minutes = "0" + minutes;
-  		}
+      if (hour < 10) {
+          hour = "0" + hour;
+      }
+      var minutes=inputDate.getMinutes();
+      if (minutes < 10) {
+          minutes = "0" + minutes;
+      }
 
       switch(sets.resultFormat)
       {
@@ -259,6 +259,7 @@ var vTime = function ()
         case 'mm/dd/yyyy hh:mm':return month+"/"+date+"/"+year+" "+hour+":"+minutes;
         case 'dd-mm-yyyy hh:mm':return date+"-"+month+"-"+year+" "+hour+":"+minutes;
         case 'mm-dd-yyyy hh:mm':return month+"-"+date+"-"+year+" "+hour+":"+minutes;
+        case 'yyyy-mm-ddThh:mm:ss':return year+"-"+month+"-"+date+"T"+hour+":"+minutes+":00";
       }
     };
 

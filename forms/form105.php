@@ -1,6 +1,6 @@
-<div id='form105' class='tab-pane portlet box green-meadow'>	   
+<div id='form105' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form105_add_item();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -18,9 +18,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -38,14 +38,14 @@
 			</tbody>
 		</table>
 	</div>
-    
+
     <script>
         function form105_header_ini()
         {
             var fields=document.getElementById('form105_header');
             var table=fields.elements['tablename'];
             var type=fields.elements['type'];
-            
+
             $(fields).off('submit');
             $(fields).on('submit',function(event)
             {
@@ -63,7 +63,7 @@
             show_loader();
             var fid=$("#form105_link").attr('data_id');
             if(fid==null)
-                fid="";	
+                fid="";
 
             $('#form105_body').html("");
 
@@ -71,9 +71,9 @@
             var ftablename=fields.elements['tablename'].value;
             var ftype=fields.elements['type'].value;
             var fuser=fields.elements['user'].value;
-            
+
             var paginator=$('#form105_body').paginator();
-			
+
 			var columns=new Object();
 					columns.count=paginator.page_size();
 					columns.start_index=paginator.get_index();
@@ -85,9 +85,9 @@
 									{index:'user',value:fuser},
 									{index:'criteria_field'},
                                     {index:'criteria_value'}];
-			
+
             read_json_rows('form105',columns,function(results)
-            {	
+            {
                 results.forEach(function(result)
                 {
                     var rowsHTML="<tr>";
@@ -100,7 +100,7 @@
                             rowsHTML+="</td>";
                             rowsHTML+="<td data-th='User'>";
                                 rowsHTML+="<textarea readonly='readonly' form='form105_"+result.id+"'>"+result.user+"</textarea>";
-                            rowsHTML+="</td>";										
+                            rowsHTML+="</td>";
                             rowsHTML+="<td data-th='Criteria'>";
                                 rowsHTML+="<input type='text' class='floatlabel' placeholder='Field' readonly='readonly' form='form105_"+result.id+"' value='"+result.criteria_field+"'>";
                                 rowsHTML+="<textarea class='floatlabel' placeholder='Value' readonly='readonly' form='form105_"+result.id+"'>"+result.criteria_value+"</textarea>";
@@ -108,7 +108,7 @@
                             rowsHTML+="<td data-th='Action'>";
                                 rowsHTML+="<input type='hidden' form='form105_"+result.id+"' value='"+result.id+"'>";
                                 rowsHTML+="<button type='button' class='btn red' name='delete' form='form105_"+result.id+"' title='Delete' onclick='form105_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form105_body').append(rowsHTML);
@@ -116,10 +116,10 @@
 
 				$('#form105').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Data Access Rules','form105',function (item){});
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Data Access Rules',report_id:'form105'});
                 hide_loader();
             });
-        };        
+        };
 
         function form105_add_item()
         {
@@ -136,7 +136,7 @@
                         rowsHTML+="</td>";
                         rowsHTML+="<td data-th='User'>";
                             rowsHTML+="<input type='text' form='form105_"+id+"' required>";
-                        rowsHTML+="</td>";										
+                        rowsHTML+="</td>";
                         rowsHTML+="<td data-th='Criteria'>";
                             rowsHTML+="<input type='text' class='floatlabel' placeholder='Field' form='form105_"+id+"'>";
                             rowsHTML+="<textarea class='floatlabel' placeholder='Value' form='form105_"+id+"'></textarea>";
@@ -145,7 +145,7 @@
                             rowsHTML+="<input type='hidden' form='form105_"+id+"' value='"+id+"'>";
                             rowsHTML+="<button type='submit' class='btn green' name='save' form='form105_"+id+"' title='Save'><i class='fa fa-save'></i></button>";
                             rowsHTML+="<button type='button' class='btn red' name='delete' form='form105_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
-                        rowsHTML+="</td>";			
+                        rowsHTML+="</td>";
                 rowsHTML+="</tr>";
 
                 $('#form105_body').prepend(rowsHTML);
@@ -190,12 +190,12 @@
                 });
 
                 var field_data={data_store:'access_conditions',return_column:'criteria_field'};
-                set_my_filter_json(field_data,field_filter);		
+                set_my_filter_json(field_data,field_filter);
             }
             else
             {
                 $("#modal2_link").click();
-            }		
+            }
         }
 
         function form105_create_item(form)
@@ -218,7 +218,7 @@
                                       {index:'user',value:user},
                                       {index:'criteria_field',value:criteria_field},
                                       {index:'criteria_value',value:criteria_value},
-                                      {index:'last_updated',value:last_updated}]};                    
+                                      {index:'last_updated',value:last_updated}]};
                 create_json(data_json);
                 $(form).readonly();
 
@@ -259,7 +259,7 @@
             else
             {
                 $("#modal2_link").click();
-            }		
+            }
         }
 
     </script>

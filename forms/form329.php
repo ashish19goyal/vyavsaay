@@ -112,12 +112,12 @@
                 });
 
                 $('#form329').formcontrol();
-								paginator.update_index(results.length);
-								initialize_tabular_report_buttons(columns,'Sale Returns','form329',function (item)
-								{
-									item.return_date=vTime.date({time:item.return_date});
-								});
-								hide_loader();
+				paginator.update_index(results.length);
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Sale Returns',report_id:'form329',feach:function (item)
+				{
+					item.return_date=vTime.date({time:item.return_date});
+				}});
+				hide_loader();
             });
         }
 

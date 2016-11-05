@@ -1,6 +1,6 @@
-<div id='form343' class='tab-pane portlet box green-meadow'>	   
+<div id='form343' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick=modal210_action('');>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -18,9 +18,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -36,12 +36,12 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<script>
 		function form343_header_ini()
 		{
-			var filter_fields=document.getElementById('form343_header');	
-			
+			var filter_fields=document.getElementById('form343_header');
+
 			$(filter_fields).off('submit');
 			$(filter_fields).on('submit',function(event)
 			{
@@ -49,21 +49,21 @@
 				form343_ini();
 			});
 		}
-		
+
 		function form343_ini()
 		{
 			show_loader();
 			var fid=$("#form343_link").attr('data_id');
 			if(fid==null)
-				fid="";	
-			
+				fid="";
+
 			$('#form343_body').html("");
-			
+
 			var filter_fields=document.getElementById('form343_header');
 			var fdetail=filter_fields.elements['desc'].value;
-			
+
 			var paginator=$('#form343_body').paginator();
-			
+
 			var new_columns={count:paginator.page_size(),
                              start_index:paginator.get_index(),
                              data_store:'s3_objects',
@@ -72,7 +72,7 @@
 									{index:'description',value:fdetail},
 									{index:'status'},
 									{index:'name'}]};
-					
+
 			read_json_rows('form343',new_columns,function(results)
 			{
 				results.forEach(function(result)
@@ -89,20 +89,20 @@
 								rowsHTML+="<input type='hidden' form='form343_"+result.id+"' name='id' value='"+result.id+"'>";
 								rowsHTML+="<input type='hidden' form='form343_"+result.id+"' name='name' value='"+result.name+"'>";
 								rowsHTML+="<button type='button' class='btn red' form='form343_"+result.id+"' title='Delete' name='delete' onclick='form343_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-					
-					$('#form343_body').append(rowsHTML);				    
+
+					$('#form343_body').append(rowsHTML);
 				});
-		
+
 				$('#form343').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Documents','form343');
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Documents',report_id:'form343'});
 				hide_loader();
 			});
 		};
-		
-		
+
+
 		function form343_delete_item(button)
 		{
 			if(is_delete_access('form343'))
@@ -115,7 +115,7 @@
 					var object_name=form.elements['name'].value;
 					var data_json={data_store:'s3_objects',
 	 					data:[{index:'id',value:data_id}]};
-					
+
                     var object_data={type:'delete',bucket:'vyavsaay-documents',name:object_name};
 
                     delete_json(data_json);

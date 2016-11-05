@@ -128,10 +128,10 @@
 
                 $('#form322').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Manifests','form322',function (item)
-                {
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Manifests',report_id:'form322',feach:function (item)
+				{
                     item.date=get_my_past_date(item.date);
-                });
+                }});
 				hide_loader();
             });
         };

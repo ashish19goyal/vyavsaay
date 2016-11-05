@@ -134,8 +134,8 @@ function report89_ini()
 				$('#report89_body').append(rowsHTML);
 			});
 
-			initialize_tabular_report_buttons(columns,'Deliveries (by person)','report89',function (item)
-            {
+			vExport.export_buttons({action:'dynamic',columns:columns,file:'Deliveries (by person)',report_id:'report89',feach:function (item)
+			{
                 item['AWB No']=item.awb_num;
                 item['Order Id']=item.order_num;
                 item['Import Date']=get_my_past_date(item.import_date);
@@ -161,7 +161,7 @@ function report89_ini()
                 delete item.return_address1;
                 delete item.return_address2;
                 delete item.return_address3;
-            });
+            }});
 
             paginator.update_index(deliveries.length);
             hide_loader();

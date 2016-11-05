@@ -126,7 +126,7 @@
 
 				$('#form96').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Customer Attributes','form96',function (item){});
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Customer Attributes',report_id:'form96'});
 				hide_loader();
 			});
 		};

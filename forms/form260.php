@@ -110,8 +110,8 @@
 
                 $('#form260').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Inventory (Spare Parts)','form260',function (item)
-                {
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Inventory (Spare Parts)',report_id:'form260',feach:function (item)
+				{
                     total_export_requests+=1;
                     get_inventory(item.name,'',function(inventory)
                     {
@@ -122,7 +122,7 @@
                         delete item.attribute;
                         total_export_requests-=1;
                     });
-                });
+                }});
 			    hide_loader();
             });
         };

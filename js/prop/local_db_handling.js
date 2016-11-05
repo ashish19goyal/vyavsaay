@@ -35,7 +35,7 @@ function create_local_db(domain,func)
 			delete(static_local_db);//="undefined";
 
 			var db_name="re_local_"+domain;
-			get_table_structure('',function(tables)			
+			get_table_structure('',function(tables)
 			{
 				show_loader();
 				var request = indexedDB.open(db_name,dbversion);
@@ -45,37 +45,37 @@ function create_local_db(domain,func)
 					var db=e.target.result;
 					db.close();
 					if(typeof func!="undefined")
-					{					
+					{
 						func();
 					}
 				};
-	
+
 				request.onerror=function(ev)
 				{
 					hide_loader();
 					alert('Could not switch to offline mode. Please refresh your browser and try again.');
 				};
-					
+
 				request.onupgradeneeded=function(ev)
 				{
 					var db=ev.target.result;
-					
+
 					for(var k=0;k<tables.length;k++)
 					{
 						//console.log(tables[k].nodeName);
 						var table_name=tables[k].tablename;
 						var columns=tables[k].columns;
 						var table=db.createObjectStore(table_name,{keyPath:'id'});
-						
+
 						for(var i=0;i<columns.length;i++)
-						{	
+						{
 							var indexing=columns[i].colname;
 							table.createIndex(columns[i].colname,[columns[i].colname,'last_updated']);
 						}
-					}			
+					}
 				};
 			});
-		}		
+		}
 	}
 	else
 	{
@@ -96,7 +96,7 @@ function open_local_db(func)
 	{
 		static_local_db=e.target.result;
 		if(typeof func!="undefined")
-		{					
+		{
 			func();
 		}
 	};
@@ -115,39 +115,39 @@ function open_local_db(func)
 	    console.log(this.error);
 	    //func();
 	};
-	
+
 };
 
 function delete_local_db()
 {
-	lock_screen(function()
+	vIni.lockScreen(function()
 	{
 		show_loader();
 		var pass=document.getElementById("lock_form").elements['password'].value;
-		
-		verify_login(pass,function () 
-		{	
+
+		verify_login(pass,function ()
+		{
 			if("indexedDB" in window)
 			{
 				var db_name="re_local_"+get_domain();
-		
+
 				if(typeof static_local_db!=='undefined')
 				{
 					static_local_db.close();
 				}
-				
+
 				var deleterequest=indexedDB.deleteDatabase(db_name);
 				deleterequest.onsuccess=function(ev)
 				{
 					console.log('delete_local_db');
 					$("#modal52_link").click();
 				};
-				
+
 				deleterequest.onerror=function(ev)
 				{
 					alert('Could not delete local storage. Please refresh your browser and try again.');
 				};
-				
+
 				deleterequest.onblocked=function(ev)
 				{
 					alert('Deleting local storage. Please wait for a few moments.');
@@ -157,9 +157,9 @@ function delete_local_db()
 			{
 				$("#modal52_link").click();
 			}
-			
+
 		},
-		function () 
+		function ()
 		{
 			alert('Credentials could not be verified. Aborting operation.');
 		});
@@ -176,18 +176,18 @@ function update_local_db(domain,func,new_version)
 	if("indexedDB" in window)
 	{
 		var db_name="re_local_"+domain;
-		get_table_structure('',function (tables)	
+		get_table_structure('',function (tables)
 		{
 			show_loader();
 			var request = indexedDB.open(db_name,new_version);
-		
+
 			request.onsuccess=function(e)
 			{
 				var db=e.target.result;
 				//console.log(db.version);
 				db.close();
 				if(typeof func!="undefined")
-				{					
+				{
 					func();
 				}
 			};
@@ -197,13 +197,13 @@ function update_local_db(domain,func,new_version)
 				hide_loader();
 				alert('Could not switch to offline mode. Please refresh your browser and try again.');
 			};
-				
+
 			request.onupgradeneeded=function(ev)
 			{
 				var db=ev.target.result;
 				//console.log(db.version);
 				//console.log(tables);
-				
+
 				for(var k=0;k<tables.length;k++)
 				{
 					var table_name=tables[k].tablename;
@@ -212,12 +212,12 @@ function update_local_db(domain,func,new_version)
 					{
 						//console.log(tables[k].nodeName);
 						var table=db.createObjectStore(table_name,{keyPath:'id'});
-					
+
 						for(var i=0;i<columns.length;i++)
-						{	
+						{
 							table.createIndex(columns[i].colname,[columns[i].colname,'last_updated']);
 						}
-					}					
+					}
 				}
 			};
 
@@ -261,9 +261,9 @@ function local_read_single_column(columns,callback,results)
 		{
 			sum=true;
 		}
-		
+
 		var sum_result=0;
-		
+
 		if(tcols.length>0)
 		{
 			var result_column_name=tcols[0].nodeName;
@@ -276,17 +276,17 @@ function local_read_single_column(columns,callback,results)
 			var sort_order='prev';
 			var lowerbound=['0','0'];
 			var upperbound=['9999999999','9999999999'];
-			
+
 			var bound_count=0;
 			var filter=new Array();
-			
+
 			for(var j=0; j<tcols.length;j++)
 			{
 				if(tcols[j].textContent!=null && tcols[j].textContent!="")
 				{
 					var fil=new Object();
 					fil.name=tcols[j].nodeName;
-					
+
 					if(tcols[j].hasAttribute('lowerbound'))
 					{
 						fil.value=tcols[j].textContent;
@@ -294,7 +294,7 @@ function local_read_single_column(columns,callback,results)
 						filter.push(fil);
 						lowerbound=[fil.value,'0'];
 						sort_index=tcols[j].nodeName;
-						
+
 						if(bound_count==0)
 						{
 							upperbound=['9999999999','9999999999'];
@@ -308,14 +308,14 @@ function local_read_single_column(columns,callback,results)
 						filter.push(fil);
 						upperbound=[fil.value,'999999999999'];
 						sort_index=tcols[j].nodeName;
-						
+
 						if(bound_count==0)
 						{
 							lowerbound=['0','0'];
 						}
 						bound_count+=1;
 					}
-					
+
 					if(tcols[j].hasAttribute('array'))
 					{
 						fil.value=tcols[j].textContent;
@@ -342,16 +342,16 @@ function local_read_single_column(columns,callback,results)
 					bound_count=0;
 				}
 			}
-			
+
 			var sort_key=IDBKeyRange.bound(lowerbound,upperbound);
-			
-			//console.log(table+" "+sort_index+" "+columns);	
-			var read_tx=static_local_db.transaction([table],"readonly");		
-			var read_index=read_tx.objectStore(table).index(sort_index);		
+
+			//console.log(table+" "+sort_index+" "+columns);
+			var read_tx=static_local_db.transaction([table],"readonly");
+			var read_index=read_tx.objectStore(table).index(sort_index);
 			var read_request=read_index.openCursor(sort_key,sort_order);
-			
+
 			localdb_open_requests+=1;
-	
+
 			read_request.onsuccess=function(e)
 			{
 				var result=e.target.result;
@@ -366,7 +366,7 @@ function local_read_single_column(columns,callback,results)
 							var string=record[filter[i].name].toString().toLowerCase();
 							var search_word=filter[i].value.toString().toLowerCase();
 							var found=0;
-							
+
 							if(filter[i].type=='')
 							{
 								found=string.indexOf(search_word);
@@ -383,7 +383,7 @@ function local_read_single_column(columns,callback,results)
 							{
 								found=search_word.indexOf("-"+string+"-");
 							}
-							else if(filter[i].type=='upperbound') 
+							else if(filter[i].type=='upperbound')
 							{
 								if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
 								{
@@ -391,7 +391,7 @@ function local_read_single_column(columns,callback,results)
 									break;
 								}
 							}
-							else if(filter[i].type=='lowerbound') 
+							else if(filter[i].type=='lowerbound')
 							{
 								if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
 								{
@@ -399,20 +399,20 @@ function local_read_single_column(columns,callback,results)
 									break;
 								}
 							}
-							
+
 							if(found==-1)
 							{
 								match_word=false;
 								break;
 							}
 						}
-						else 
+						else
 						{
 							match_word=false;
-							break;						
+							break;
 						}
 					}
-					
+
 					if(match_word===true)
 					{
 						//console.log(columns);
@@ -424,11 +424,11 @@ function local_read_single_column(columns,callback,results)
 						else
 						{
 							results.push(record[result_column_name]);
-						
+
 							if(results.length===count)
 							{
 								localdb_open_requests-=1;
-								results=vUtil.arrayUnique(results);								
+								results=vUtil.arrayUnique(results);
 								callback(results);
 							}
 							else
@@ -445,7 +445,7 @@ function local_read_single_column(columns,callback,results)
 				else
 				{
 					localdb_open_requests-=1;
-					
+
 					if(sum)
 					{
 						callback([sum_result]);
@@ -496,16 +496,16 @@ function local_read_multi_column(columns,callback,results)
 		var sort_order='prev';
 		var lowerbound=['0','0'];
 		var upperbound=['9999999999','9999999999'];
-		
+
 		var bound_count=0;
-		
+
 		for(var j=0;j<cols.length;j++)
 		{
 			if(cols[j].textContent!=null && cols[j].textContent!="")
 			{
 				var fil=new Object();
 				fil.name=cols[j].nodeName;
-				
+
 				if(cols[j].hasAttribute('lowerbound'))
 				{
 					fil.value=cols[j].textContent;
@@ -513,7 +513,7 @@ function local_read_multi_column(columns,callback,results)
 					filter.push(fil);
 					lowerbound=[fil.value,'0'];
 					sort_index=cols[j].nodeName;
-					
+
 					if(bound_count==0)
 					{
 						var upperbound=['9999999999','9999999999'];
@@ -527,14 +527,14 @@ function local_read_multi_column(columns,callback,results)
 					filter.push(fil);
 					upperbound=[fil.value,'999999999999'];
 					sort_index=cols[j].nodeName;
-					
+
 					if(bound_count==0)
 					{
 						lowerbound=['0','0'];
 					}
 					bound_count+=1;
 				}
-				
+
 				if(cols[j].hasAttribute('array'))
 				{
 					fil.value=cols[j].textContent;
@@ -561,10 +561,10 @@ function local_read_multi_column(columns,callback,results)
 				bound_count=0;
 			}
 		}
-	
+
 		var sort_key=IDBKeyRange.bound(lowerbound,upperbound);
 		var objectstore=static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index);
-		
+
 		if(filter.length>0)
 		{
 			if(filter[0].name=='id')
@@ -573,10 +573,10 @@ function local_read_multi_column(columns,callback,results)
 				sort_key=IDBKeyRange.only(filter[0].value);
 			}
 		}
-		
-		
+
+
 		var read_request=objectstore.openCursor(sort_key,sort_order);
-		
+
 		localdb_open_requests+=1;
 
 		read_request.onsuccess=function(e)
@@ -593,7 +593,7 @@ function local_read_multi_column(columns,callback,results)
 						var string=record[filter[i].name].toString().toLowerCase();
 						var search_word=filter[i].value.toString().toLowerCase();
 						var found=0;
-						
+
 						if(filter[i].type=='')
 						{
 							found=string.indexOf(search_word);
@@ -610,14 +610,14 @@ function local_read_multi_column(columns,callback,results)
 						{
 							found=search_word.indexOf("-"+string+"-");
 						}
-						
+
 						if(found===-1)
 						{
 							match_word=false;
 							break;
 						}
-						
-						if(filter[i].type=='upperbound') 
+
+						if(filter[i].type=='upperbound')
 						{
 							if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
 							{
@@ -625,7 +625,7 @@ function local_read_multi_column(columns,callback,results)
 								break;
 							}
 						}
-						else if(filter[i].type=='lowerbound') 
+						else if(filter[i].type=='lowerbound')
 						{
 							if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
 							{
@@ -634,13 +634,13 @@ function local_read_multi_column(columns,callback,results)
 							}
 						}
 					}
-					else 
+					else
 					{
 						match_word=false;
-						break;						
-					}	
+						break;
+					}
 				}
-				
+
 				if(match_word===true)
 				{
 					if(start_index==0)
@@ -648,10 +648,10 @@ function local_read_multi_column(columns,callback,results)
 						results.push(record);
 					}
 					else
-					{					
+					{
 						start_index-=1;
 					}
-					
+
 					if(results.length===count)
 					{
 						localdb_open_requests-=1;
@@ -672,7 +672,7 @@ function local_read_multi_column(columns,callback,results)
 				localdb_open_requests-=1;
 				callback(results);
 			}
-		};		
+		};
 	}
 };
 
@@ -696,13 +696,13 @@ function local_update_row(data_xml,activity_xml)
 	{
 		show_loader();
 		localdb_open_requests+=1;
-		
+
 		var parser=new DOMParser();
 		var data=parser.parseFromString(data_xml,"text/xml");
 		var table=data.childNodes[0].nodeName;
 		var data_id=data.childNodes[0].getElementsByTagName('id')[0].textContent;
 		var cols=data.childNodes[0].childNodes;
-	
+
 		var activity=parser.parseFromString(activity_xml,"text/xml");
 		var activity_data=activity.childNodes[0].childNodes;
 
@@ -768,7 +768,7 @@ function local_update_simple(data_xml)
 		var table=data.childNodes[0].nodeName;
 		var data_id=data.childNodes[0].getElementsByTagName('id')[0].textContent;
 		var cols=data.childNodes[0].childNodes;
-		
+
 		var objectStore=static_local_db.transaction([table],"readwrite").objectStore(table);
 		var req=objectStore.get(data_id);
 		req.onsuccess=function(e)
@@ -780,7 +780,7 @@ function local_update_simple(data_xml)
 				{
 					data_record[cols[j].nodeName]=cols[j].textContent;
 				}
-				
+
 				var put_req=objectStore.put(data_record);
 				put_req.onsuccess=function(e)
 				{
@@ -794,7 +794,7 @@ function local_update_simple(data_xml)
 							tablename:table,
 							link_to:'',
 							last_updated:""+get_my_time()};
-					
+
 					static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 					{
 						localdb_open_requests-=1;
@@ -828,28 +828,28 @@ function local_update_batch(data_xml)
 		var data_xml_array=data_xml.split("<separator></separator>");
 		var table="";
 		var rows=[];
-		
+
 		data_xml_array.forEach(function(data_chunk)
 		{
 			var data=parser.parseFromString(data_chunk,"text/xml");
 			table=data.childNodes[0].nodeName;
 			var rows_data=data.childNodes[0].childNodes;
-			
+
 			for(var x=0;x<rows_data.length;x++)
 			{
 				rows.push(rows_data[x]);
 			}
 		});
-		
+
 		//console.log(rows.length);
-		
+
 		var os1=static_local_db.transaction([table],"readwrite").objectStore(table);
 		var os2=static_local_db.transaction(['activities'],"readwrite").objectStore('activities');
-		
+
 		var i=0;
 		var j=0;
 		var success_count=0;
-		
+
 		function update_records()
 		{
 			if(i<rows.length)
@@ -858,13 +858,13 @@ function local_update_batch(data_xml)
 				var data_id=rows[i].getElementsByTagName('id')[0].textContent;
 				var cols=rows[i].childNodes;
 				localdb_open_requests+=1;
-								
+
 				var req=os1.get(data_id);
 				req.onsuccess=function(e)
 				{
 					i++;
 					localdb_open_requests-=1;
-					
+
 					var data_record=req.result;
 					if(data_record)
 					{
@@ -872,7 +872,7 @@ function local_update_batch(data_xml)
 						{
 							data_record[cols[j].nodeName]=cols[j].textContent;
 						}
-						
+
 						var put_req=os1.put(data_record);
 						put_req.onsuccess=function(e)
 						{
@@ -889,7 +889,7 @@ function local_update_batch(data_xml)
 				};
 			}
 		};
-		
+
 		var activity_id=parseFloat(vUtil.newKey());
 		function insert_activities()
 		{
@@ -898,7 +898,7 @@ function local_update_batch(data_xml)
 				//console.log("J"+j);
 				var data_id=rows[j].getElementsByTagName('id')[0].textContent;
 				localdb_open_requests+=1;
-				
+
 				var row_data_xml="<"+table+">"+rows[j].textContent+"</"+table+">";
 				var act_row={id:""+(activity_id+j),
 						type:'update',
@@ -909,7 +909,7 @@ function local_update_batch(data_xml)
 						tablename:table,
 						link_to:'',
 						last_updated:""+get_my_time()};
-				
+
 				os2.put(act_row).onsuccess=function(e)
 				{
 					j++;
@@ -918,10 +918,10 @@ function local_update_batch(data_xml)
 				};
 			}
 		};
-		
+
 		update_records();
 		insert_activities();
-		
+
 		var local_update_complete=setInterval(function()
 		{
 		   if(localdb_open_requests===0)
@@ -937,10 +937,10 @@ function local_update_batch(data_xml)
 						tablename:'',
 						link_to:'',
 						last_updated:""+get_my_time()};
-				var transaction=static_local_db.transaction([table,'activities'],"readwrite");		
-				var os3=transaction.objectStore('activities');		
+				var transaction=static_local_db.transaction([table,'activities'],"readwrite");
+				var os3=transaction.objectStore('activities');
 				os3.put(act_row).onsuccess=function(e){};
-			    
+
 			   clearInterval(local_update_complete);
      		   hide_loader();
 		   }
@@ -971,7 +971,7 @@ function local_update_simple_func(data_xml,func)
 		var table=data.childNodes[0].nodeName;
 		var data_id=data.childNodes[0].getElementsByTagName('id')[0].textContent;
 		var cols=data.childNodes[0].childNodes;
-		
+
 		var os1=static_local_db.transaction([table],"readwrite").objectStore(table);
 		var req=os1.get(data_id);
 		req.onsuccess=function(e)
@@ -983,7 +983,7 @@ function local_update_simple_func(data_xml,func)
 				{
 					data_record[cols[j].nodeName]=cols[j].textContent;
 				}
-				
+
 				var put_req=os1.put(data_record);
 				put_req.onsuccess=function(e)
 				{
@@ -997,12 +997,12 @@ function local_update_simple_func(data_xml,func)
 							tablename:table,
 							link_to:'',
 							last_updated:""+get_my_time()};
-				
+
 					static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 					{
 						localdb_open_requests-=1;
 						if(typeof func!="undefined")
-						{					
+						{
 							func();
 						}
 					};
@@ -1037,7 +1037,7 @@ function local_create_row(data_xml,activity_xml)
 		var table=data.childNodes[0].nodeName;
 		var data_id=data.childNodes[0].getElementsByTagName('id')[0].textContent;
 		var cols=data.childNodes[0].childNodes;
-		
+
 		var unique=new Array();
 		for(var j=0;j<cols.length;j++)
 		{
@@ -1052,22 +1052,22 @@ function local_create_row(data_xml,activity_xml)
 				}
 			}
 		}
-		
+
 		var activity=parser.parseFromString(activity_xml,"text/xml");
 		var activity_data=activity.childNodes[0].childNodes;
 		var objectStore=static_local_db.transaction([table],"readwrite").objectStore(table);
-		
+
 		if(unique.length===0)
 		{
 			//console.log("unique length is zero");
 			var type='create';
 			var data_row=new Object();
-				
+
 			for(var j=0;j<cols.length;j++)
 			{
 				data_row[cols[j].nodeName]=cols[j].textContent;
 			}
-			
+
 			var put_req=objectStore.put(data_row);
 			put_req.onsuccess=function(e)
 			{
@@ -1116,7 +1116,7 @@ function local_create_row(data_xml,activity_xml)
 								data_xml:data_xml,
 								user_display:'yes',
 								last_updated:""+get_my_time()};
-						
+
 						for(var k=0;k<activity_data.length;k++)
 						{
 							act_row[activity_data[k].nodeName]=activity_data[k].textContent;
@@ -1157,7 +1157,7 @@ function local_create_row_func(data_xml,activity_xml,func)
 		var table=data.childNodes[0].nodeName;
 		var data_id=data.childNodes[0].getElementsByTagName('id')[0].textContent;
 		var cols=data.childNodes[0].childNodes;
-		
+
 		var unique=new Array();
 		for(var j=0;j<cols.length;j++)
 		{
@@ -1172,22 +1172,22 @@ function local_create_row_func(data_xml,activity_xml,func)
 				}
 			}
 		}
-		
+
 		var activity=parser.parseFromString(activity_xml,"text/xml");
 		var activity_data=activity.childNodes[0].childNodes;
 		var objectStore=static_local_db.transaction([table],"readwrite").objectStore(table);
-		
+
 		if(unique.length===0)
 		{
 			//console.log("unique length is zero");
 			var type='create';
 			var data_row=new Object();
-				
+
 			for(var j=0;j<cols.length;j++)
 			{
 				data_row[cols[j].nodeName]=cols[j].textContent;
 			}
-			
+
 			var put_req=objectStore.put(data_row);
 			put_req.onsuccess=function(e)
 			{
@@ -1206,7 +1206,7 @@ function local_create_row_func(data_xml,activity_xml,func)
 				{
 					localdb_open_requests-=1;
 					if(typeof func!="undefined")
-					{					
+					{
 						func();
 					}
 					hide_loader();
@@ -1240,7 +1240,7 @@ function local_create_row_func(data_xml,activity_xml,func)
 								data_xml:data_xml,
 								user_display:'yes',
 								last_updated:""+get_my_time()};
-						
+
 						for(var k=0;k<activity_data.length;k++)
 						{
 							act_row[activity_data[k].nodeName]=activity_data[k].textContent;
@@ -1248,9 +1248,9 @@ function local_create_row_func(data_xml,activity_xml,func)
 						static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 						{
 							localdb_open_requests-=1;
-									
+
 							if(typeof func!="undefined")
-							{					
+							{
 								func();
 							}
 							hide_loader();
@@ -1302,17 +1302,17 @@ function local_create_simple(data_xml)
 			}
 		}
 		var objectStore=static_local_db.transaction([table],"readwrite").objectStore(table);
-		
+
 		if(unique.length===0)
 		{
 			//console.log("unique length is zero");
 			var data_row=new Object();
-				
+
 			for(var j=0;j<cols.length;j++)
 			{
 				data_row[cols[j].nodeName]=cols[j].textContent;
 			}
-			
+
 			var put_req=objectStore.put(data_row);
 			put_req.onsuccess=function(e)
 			{
@@ -1402,15 +1402,15 @@ function local_create_batch(data_xml)
 			var data=parser.parseFromString(data_chunk,"text/xml");
 			table=data.childNodes[0].nodeName;
 			var rows_data=data.childNodes[0].childNodes;
-			
+
 			for(var x=0;x<rows_data.length;x++)
 			{
 				rows.push(rows_data[x]);
 			}
 		});
-		
+
 		var unique=new Array();
-		
+
 		if(rows.length>0)
 		{
 			var first_col=rows[0].childNodes;
@@ -1433,27 +1433,27 @@ function local_create_batch(data_xml)
 		var os1=transaction.objectStore(table);
 		var os2=transaction.objectStore('activities');
 		var activity_id=parseFloat(vUtil.newKey());
-		
+
 		var i=0;
 		var m=0;
 		var success_count=0;
-		
+
 		function create_records()
 		{
 			if(i<rows.length)
 			{
 				var data_id=rows[i].getElementsByTagName('id')[0].textContent;
 				var cols=rows[i].childNodes;
-				
+
 				var data_row=new Object();
-				
+
 				for(var j=0;j<cols.length;j++)
 				{
 					data_row[cols[j].nodeName]=cols[j].textContent;
 				}
-				
+
 				localdb_open_requests+=1;
-				
+
 				if(unique.length>0)
 				{
 					var kv=IDBKeyRange.bound([data_row[unique[0].name],'0'],[data_row[unique[0].name],'99999999']);
@@ -1482,7 +1482,7 @@ function local_create_batch(data_xml)
 										tablename:table,
 										link_to:'',
 										last_updated:""+get_my_time()};
-								
+
 								os2.put(act_row).onsuccess=function(e)
 								{
 									i+=1;
@@ -1508,7 +1508,7 @@ function local_create_batch(data_xml)
 								tablename:table,
 								link_to:'',
 								last_updated:""+get_my_time()};
-						
+
 						os2.put(act_row).onsuccess=function(e)
 						{
 							i+=1;
@@ -1520,9 +1520,9 @@ function local_create_batch(data_xml)
 			}
 		};
 
-		
+
 		create_records();
-		
+
 		var local_create_complete=setInterval(function()
 		{
 		   if(localdb_open_requests===0)
@@ -1539,8 +1539,8 @@ function local_create_batch(data_xml)
 						link_to:'',
 						updated_by:""+get_session_var('name'),
 						last_updated:""+get_my_time()};
-				var transaction=static_local_db.transaction([table,'activities'],"readwrite");		
-				var os3=transaction.objectStore('activities');		
+				var transaction=static_local_db.transaction([table,'activities'],"readwrite");
+				var os3=transaction.objectStore('activities');
 				os3.put(act_row).onsuccess=function(e){};
 			   clearInterval(local_create_complete);
      		   hide_loader();
@@ -1577,15 +1577,15 @@ function local_create_batch_noloader(data_xml)
 			var data=parser.parseFromString(data_chunk,"text/xml");
 			table=data.childNodes[0].nodeName;
 			var rows_data=data.childNodes[0].childNodes;
-			
+
 			for(var x=0;x<rows_data.length;x++)
 			{
 				rows.push(rows_data[x]);
 			}
 		});
-		
+
 		var unique=new Array();
-		
+
 		if(rows.length>0)
 		{
 			var first_col=rows[0].childNodes;
@@ -1608,27 +1608,27 @@ function local_create_batch_noloader(data_xml)
 		var os1=transaction.objectStore(table);
 		var os2=transaction.objectStore('activities');
 		var activity_id=parseFloat(vUtil.newKey());
-		
+
 		var i=0;
 		var m=0;
 		var success_count=0;
-		
+
 		function create_records()
 		{
 			if(i<rows.length)
 			{
 				var data_id=rows[i].getElementsByTagName('id')[0].textContent;
 				var cols=rows[i].childNodes;
-				
+
 				var data_row=new Object();
-				
+
 				for(var j=0;j<cols.length;j++)
 				{
 					data_row[cols[j].nodeName]=cols[j].textContent;
 				}
-				
+
 				localdb_open_requests+=1;
-				
+
 				if(unique.length>0)
 				{
 					var kv=IDBKeyRange.bound([data_row[unique[0].name],'0'],[data_row[unique[0].name],'99999999']);
@@ -1657,7 +1657,7 @@ function local_create_batch_noloader(data_xml)
 										tablename:table,
 										link_to:'',
 										last_updated:""+get_my_time()};
-								
+
 								os2.put(act_row).onsuccess=function(e)
 								{
 									i+=1;
@@ -1683,7 +1683,7 @@ function local_create_batch_noloader(data_xml)
 								tablename:table,
 								link_to:'',
 								last_updated:""+get_my_time()};
-						
+
 						os2.put(act_row).onsuccess=function(e)
 						{
 							i+=1;
@@ -1695,7 +1695,7 @@ function local_create_batch_noloader(data_xml)
 			}
 		};
 
-		create_records();		
+		create_records();
 	}
 }
 
@@ -1733,17 +1733,17 @@ function local_create_simple_func(data_xml,func)
 			}
 		}
 		var objectStore=static_local_db.transaction([table],"readwrite").objectStore(table);
-		
+
 		if(unique.length===0)
 		{
 			//console.log("unique length is zero");
 			var data_row=new Object();
-				
+
 			for(var j=0;j<cols.length;j++)
 			{
 				data_row[cols[j].nodeName]=cols[j].textContent;
 			}
-			
+
 			var put_req=objectStore.put(data_row);
 			put_req.onsuccess=function(e)
 			{
@@ -1761,7 +1761,7 @@ function local_create_simple_func(data_xml,func)
 				{
 					localdb_open_requests-=1;
 					if(typeof func!="undefined")
-					{					
+					{
 						func();
 					}
 				};
@@ -1802,7 +1802,7 @@ function local_create_simple_func(data_xml,func)
 						{
 							localdb_open_requests-=1;
 							if(typeof func!="undefined")
-							{					
+							{
 								func();
 							}
 						};
@@ -1854,17 +1854,17 @@ function local_create_simple_no_warning(data_xml)
 			}
 		}
 		var objectStore=static_local_db.transaction([table],"readwrite").objectStore(table);
-		
+
 		if(unique.length===0)
 		{
 			//console.log("unique length is zero");
 			var data_row=new Object();
-				
+
 			for(var j=0;j<cols.length;j++)
 			{
 				data_row[cols[j].nodeName]=cols[j].textContent;
 			}
-			
+
 			var put_req=objectStore.put(data_row);
 			put_req.onsuccess=function(e)
 			{
@@ -1929,7 +1929,7 @@ function local_create_simple_no_warning(data_xml)
 
 
 /**
- * 
+ *
  * @param data_xml
  * @param activity_xml
  * @returns
@@ -1950,10 +1950,10 @@ function local_delete_row(data_xml,activity_xml)
 		var parser=new DOMParser();
 		var data=parser.parseFromString(data_xml,"text/xml");
 		var table=data.childNodes[0].nodeName;
-		
+
 		var activity=parser.parseFromString(activity_xml,"text/xml");
 		var activity_data=activity.childNodes[0].childNodes;
-		
+
 		var cols=data.childNodes[0].childNodes;
 		var filter=new Array();
 		for(var j=0;j<cols.length;j++)
@@ -1966,9 +1966,9 @@ function local_delete_row(data_xml,activity_xml)
 				filter.push(fil);
 			}
 		}
-	
+
 		var objectStore=static_local_db.transaction([table],"readwrite").objectStore(table);
-		
+
 		if(filter[0].name=='id')
 		{
 			var get_req=objectStore.get(filter[0].value);
@@ -2001,12 +2001,12 @@ function local_delete_row(data_xml,activity_xml)
 									user_display:'yes',
 									data_xml:data_xml,
 									last_updated:""+get_my_time()};
-							
+
 							for(var k=0;k<activity_data.length;k++)
 							{
 								act_row[activity_data[k].nodeName]=activity_data[k].textContent;
 							}
-							
+
 							static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 							{
 								localdb_open_requests-=1;
@@ -2027,7 +2027,7 @@ function local_delete_row(data_xml,activity_xml)
 				if(result)
 				{
 					var data=result.value;
-					
+
 					var match_word=true;
 					for(var i=1;i<filter.length;i++)
 					{
@@ -2051,8 +2051,8 @@ function local_delete_row(data_xml,activity_xml)
 					var j=0;
 					var os1=static_local_db.transaction([table],"readwrite").objectStore(table);
 					var os2=static_local_db.transaction(['activities'],"readwrite").objectStore('activities');
-					
-					
+
+
 					function delete_records()
 					{
 						//console.log('i '+i);
@@ -2080,7 +2080,7 @@ function local_delete_row(data_xml,activity_xml)
 									user_display:'yes',
 									data_xml:data_xml,
 									last_updated:""+get_my_time()};
-							
+
 							for(var k=0;k<activity_data.length;k++)
 							{
 								act_row[activity_data[k].nodeName]=activity_data[k].textContent;
@@ -2095,15 +2095,15 @@ function local_delete_row(data_xml,activity_xml)
 							j++;
 						}
 					};
-					
+
 					delete_records();
 					insert_activities();
-					
+
 					localdb_open_requests-=1;
 				}
 			};
 		}
-		
+
 		var local_delete_complete=setInterval(function()
 		{
 		   if(localdb_open_requests===0)
@@ -2148,9 +2148,9 @@ function local_delete_simple(data_xml)
 				filter.push(fil);
 			}
 		}
-	
+
 		var objectStore=static_local_db.transaction([table],"readwrite").objectStore(table);
-		
+
 		if(filter[0].name=='id')
 		{
 			var get_req=objectStore.get(filter[0].value);
@@ -2207,7 +2207,7 @@ function local_delete_simple(data_xml)
 				if(result)
 				{
 					var data=result.value;
-					
+
 					var match_word=true;
 					for(var i=1;i<filter.length;i++)
 					{
@@ -2231,8 +2231,8 @@ function local_delete_simple(data_xml)
 					var j=0;
 					var os1=static_local_db.transaction([table],"readwrite").objectStore(table);
 					var os2=static_local_db.transaction(['activities'],"readwrite").objectStore('activities');
-					
-					
+
+
 					function delete_records()
 					{
 						//console.log('i '+i);
@@ -2245,7 +2245,7 @@ function local_delete_simple(data_xml)
 								localdb_open_requests-=1;
 								delete_records();
 							};
-							
+
 						}
 					};
 
@@ -2273,13 +2273,13 @@ function local_delete_simple(data_xml)
 							};
 						}
 					};
-					
+
 					delete_records();
 					insert_activities();
 					localdb_open_requests-=1;
 				}
 			};
-			
+
 			var local_delete_complete=setInterval(function()
 			{
 			   if(localdb_open_requests===0)
@@ -2289,7 +2289,7 @@ function local_delete_simple(data_xml)
 			   }
 	        },2000);
 		}
-		
+
 	}
 };
 
@@ -2326,9 +2326,9 @@ function local_delete_simple_func(data_xml,func)
 				filter.push(fil);
 			}
 		}
-	
+
 		var objectStore=static_local_db.transaction([table],"readwrite").objectStore(table);
-		
+
 		if(filter[0].name=='id')
 		{
 			var get_req=objectStore.get(filter[0].value);
@@ -2368,7 +2368,7 @@ function local_delete_simple_func(data_xml,func)
 							{
 								localdb_open_requests-=1;
 								if(typeof func!="undefined")
-								{					
+								{
 									func();
 								}
 							};
@@ -2387,7 +2387,7 @@ function local_delete_simple_func(data_xml,func)
 				if(result)
 				{
 					var data=result.value;
-					
+
 					var match_word=true;
 					for(var i=1;i<filter.length;i++)
 					{
@@ -2411,8 +2411,8 @@ function local_delete_simple_func(data_xml,func)
 					var j=0;
 					var os1=static_local_db.transaction([table],"readwrite").objectStore(table);
 					var os2=static_local_db.transaction(['activities'],"readwrite").objectStore('activities');
-					
-					
+
+
 					function delete_records()
 					{
 						//console.log('i '+i);
@@ -2452,22 +2452,22 @@ function local_delete_simple_func(data_xml,func)
 							j++;
 						}
 					};
-					
+
 					delete_records();
 					insert_activities();
-					
+
 					localdb_open_requests-=1;
 				}
 			};
 		}
-		
+
 		var local_delete_complete=setInterval(function()
 		{
 		   if(localdb_open_requests===0)
 		   {
 			   clearInterval(local_delete_complete);
 			   if(typeof func!="undefined")
-				{					
+				{
 					func();
 				}
 		   }
@@ -2496,7 +2496,7 @@ function local_get_inventory(product,batch,callback)
 		var sort_order='prev';
 		var result=0;
 		var transaction=static_local_db.transaction(['bill_items','supplier_bill_items','supplier_return_items','inventory_adjust','customer_return_items','discarded','unbilled_sale_items','unbilled_purchase_items'],"readonly");
-		
+
 		var keyValue=IDBKeyRange.bound([product,'0'],[product,'99999999']);
 		transaction.objectStore('bill_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 		{
@@ -2628,9 +2628,9 @@ function local_get_inventory(product,batch,callback)
 							}
 						};
 					}
-				};			
+				};
 			}
-		};		
+		};
 	}
 }
 
@@ -2656,12 +2656,12 @@ function local_get_store_inventory(store,product,batch,callback)
 		var sort_order='prev';
 		var result=0;
 		var transaction=static_local_db.transaction(['bill_items','supplier_bill_items','inventory_adjust','supplier_return_items','store_movement','customer_return_items','discarded','unbilled_sale_items','unbilled_purchase_items'],"readonly");
-		
+
 		var keyValue=IDBKeyRange.bound([product,'0'],[product,'99999999']);
 		transaction.objectStore('bill_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 		{
 			var bi_result=e.target.result;
-			//console.log(bi_result);			
+			//console.log(bi_result);
 			if(bi_result)
 			{
 				var bi_record=bi_result.value;
@@ -2676,8 +2676,8 @@ function local_get_store_inventory(store,product,batch,callback)
 				transaction.objectStore('supplier_bill_items').index('product_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 				{
 					var si_result=e.target.result;
-					//console.log("si_result");			
-					//console.log(si_result);			
+					//console.log("si_result");
+					//console.log(si_result);
 					if(si_result)
 					{
 						var si_record=si_result.value;
@@ -2692,8 +2692,8 @@ function local_get_store_inventory(store,product,batch,callback)
 						transaction.objectStore('supplier_return_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 						{
 							var sr_result=e.target.result;
-							//console.log("sr_result");			
-							//console.log(sr_result);			
+							//console.log("sr_result");
+							//console.log(sr_result);
 							if(sr_result)
 							{
 								var sr_record=sr_result.value;
@@ -2703,13 +2703,13 @@ function local_get_store_inventory(store,product,batch,callback)
 								}
 								sr_result.continue();
 							}
-							else 
+							else
 							{
 								transaction.objectStore('inventory_adjust').index('product_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 								{
 									var ia_result=e.target.result;
-									//console.log("ia_result");			
-									//console.log(ia_result);			
+									//console.log("ia_result");
+									//console.log(ia_result);
 									if(ia_result)
 									{
 										var ia_record=ia_result.value;
@@ -2724,8 +2724,8 @@ function local_get_store_inventory(store,product,batch,callback)
 										transaction.objectStore('store_movement').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 										{
 											var sm_result=e.target.result;
-											//console.log("sm_result");			
-											//console.log(sm_result);		
+											//console.log("sm_result");
+											//console.log(sm_result);
 											if(sm_result)
 											{
 												var sm_record=sm_result.value;
@@ -2744,9 +2744,9 @@ function local_get_store_inventory(store,product,batch,callback)
 												transaction.objectStore('customer_return_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 												{
 													var cr_result=e.target.result;
-													//console.log("cr_result");			
-													//console.log(cr_result);			
-																		
+													//console.log("cr_result");
+													//console.log(cr_result);
+
 													if(cr_result)
 													{
 														var cr_record=cr_result.value;
@@ -2765,9 +2765,9 @@ function local_get_store_inventory(store,product,batch,callback)
 														transaction.objectStore('discarded').index('product_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 														{
 															var di_result=e.target.result;
-															//console.log("di_result");			
-															//console.log(di_result);				
-					
+															//console.log("di_result");
+															//console.log(di_result);
+
 															if(di_result)
 															{
 																var di_record=di_result.value;
@@ -2782,9 +2782,9 @@ function local_get_store_inventory(store,product,batch,callback)
 																transaction.objectStore('unbilled_sale_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 																{
 																	var us_result=e.target.result;
-																	//console.log("us_result");			
-																	//console.log(us_result);			
-																						
+																	//console.log("us_result");
+																	//console.log(us_result);
+
 																	if(us_result)
 																	{
 																		var us_record=us_result.value;
@@ -2799,8 +2799,8 @@ function local_get_store_inventory(store,product,batch,callback)
 																		transaction.objectStore('unbilled_purchase_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 																		{
 																			var up_result=e.target.result;
-																			//console.log("up_result");			
-																			//console.log(up_result);			
+																			//console.log("up_result");
+																			//console.log(up_result);
 																			if(up_result)
 																			{
 																				var up_record=up_result.value;
@@ -2828,9 +2828,9 @@ function local_get_store_inventory(store,product,batch,callback)
 							}
 						};
 					}
-				};			
+				};
 			}
-		};		
+		};
 	}
 }
 
@@ -2855,7 +2855,7 @@ function local_get_available_inventory(product,batch,data_array,callback)
 		var sort_order='prev';
 		var result=0;
 		var transaction=static_local_db.transaction(['bill_items','supplier_bill_items','supplier_return_items','inventory_adjust','customer_return_items','discarded','unbilled_sale_items','unbilled_purchase_items'],"readonly");
-		
+
 		var keyValue=IDBKeyRange.bound([product,'0'],[product,'99999999']);
 		transaction.objectStore('bill_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 		{
@@ -2973,12 +2973,12 @@ function local_get_available_inventory(product,batch,data_array,callback)
 																	}
 																	else
 																	{
-																	//////////////////////////////////////////////////////	
+																	//////////////////////////////////////////////////////
 																		var parser=new DOMParser();
 																		var data=parser.parseFromString(data_array,"text/xml");
 																		var table=data.childNodes[0].nodeName;
 																		var tcols=data.childNodes[0].childNodes;
-																		
+
 																		if(tcols.length>0)
 																		{
 																			var add_sub_type="";
@@ -2986,20 +2986,20 @@ function local_get_available_inventory(product,batch,data_array,callback)
 																			{
 																				add_sub_type=data.childNodes[0].getAttribute('type');
 																			}
-																			
+
 																			var lowerbound=['0','0'];
 																			var upperbound=['9999999999','9999999999'];
-																			
+
 																			var bound_count=0;
 																			var filter=new Array();
-																			
+
 																			for(var j=0; j<tcols.length;j++)
 																			{
 																				if(tcols[j].textContent!=null && tcols[j].textContent!="")
 																				{
 																					var fil=new Object();
 																					fil.name=tcols[j].nodeName;
-																					
+
 																					if(tcols[j].hasAttribute('lowerbound'))
 																					{
 																						fil.value=tcols[j].textContent;
@@ -3007,7 +3007,7 @@ function local_get_available_inventory(product,batch,data_array,callback)
 																						filter.push(fil);
 																						lowerbound=[fil.value,'0'];
 																						sort_index=tcols[j].nodeName;
-																						
+
 																						if(bound_count==0)
 																						{
 																							upperbound=['9999999999','9999999999'];
@@ -3021,14 +3021,14 @@ function local_get_available_inventory(product,batch,data_array,callback)
 																						filter.push(fil);
 																						upperbound=[fil.value,'999999999999'];
 																						sort_index=tcols[j].nodeName;
-																						
+
 																						if(bound_count==0)
 																						{
 																							lowerbound=['0','0'];
 																						}
 																						bound_count+=1;
 																					}
-																					
+
 																					if(tcols[j].hasAttribute('array'))
 																					{
 																						fil.value=tcols[j].textContent;
@@ -3055,9 +3055,9 @@ function local_get_available_inventory(product,batch,data_array,callback)
 																					bound_count=0;
 																				}
 																			}
-																			
+
 																			var sort_key=IDBKeyRange.bound(lowerbound,upperbound);
-																			
+
 																			var read_request=static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index).openCursor(sort_key,sort_order);
 																			read_request.onsuccess=function(e)
 																			{
@@ -3066,13 +3066,13 @@ function local_get_available_inventory(product,batch,data_array,callback)
 																				{
 																					var record=iresult.value;
 																					var match_word=true;
-																					
+
 																					for(var i=0;i<filter.length;i++)
 																					{
 																						var string=record[filter[i].name].toString().toLowerCase();
 																						var search_word=filter[i].value.toString().toLowerCase();
 																						var found=0;
-																						
+
 																						if(filter[i].type=='')
 																						{
 																							found=string.indexOf(search_word);
@@ -3089,7 +3089,7 @@ function local_get_available_inventory(product,batch,data_array,callback)
 																						{
 																							found=search_word.indexOf("-"+string+"-");
 																						}
-																						else if(filter[i].type=='upperbound') 
+																						else if(filter[i].type=='upperbound')
 																						{
 																							if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
 																							{
@@ -3097,7 +3097,7 @@ function local_get_available_inventory(product,batch,data_array,callback)
 																								break;
 																							}
 																						}
-																						else if(filter[i].type=='lowerbound') 
+																						else if(filter[i].type=='lowerbound')
 																						{
 																							if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
 																							{
@@ -3105,14 +3105,14 @@ function local_get_available_inventory(product,batch,data_array,callback)
 																								break;
 																							}
 																						}
-																						
+
 																						if(found==-1)
 																						{
 																							match_word=false;
 																							break;
 																						}
 																					}
-																					
+
 																					if(match_word===true)
 																					{
 																						if(add_sub_type=='add')
@@ -3120,7 +3120,7 @@ function local_get_available_inventory(product,batch,data_array,callback)
 																						else
 																							result-=record['quantity'];
 																					}
-																					
+
 																					iresult.continue();
 																				}
 																				else
@@ -3142,9 +3142,8 @@ function local_get_available_inventory(product,batch,data_array,callback)
 							}
 						};
 					}
-				};			
+				};
 			}
-		};		
+		};
 	}
 }
-

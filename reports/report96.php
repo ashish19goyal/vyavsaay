@@ -101,8 +101,8 @@ function report96_ini()
 			});
 		});
 
-        initialize_static_tabular_report_buttons('COD Collection Report','report96');
-		hide_loader();
+		vExport.export_buttons({file:'COD Collection Report',report_id:'report96',action:'static'});
+        hide_loader();
         paginator.update_index(staff.length);
 	});
 };

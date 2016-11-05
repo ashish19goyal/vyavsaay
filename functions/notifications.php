@@ -105,8 +105,7 @@ function notifications_update(button,data_id,status)
 		for($i=0;$i<count($struct_res);$i++)
 		{
 			$script_content.=$struct_res[$i]['function_def'];
-			$function_names.="timed_execute(function(){".$struct_res[$i]['function_name']."},'".$struct_res[$i]['initial_delay']."','".$struct_res[$i]['repeat_delay']."');";
-			//$function_names.="timed_execute(function(){".$struct_res[$i]['function_name']."},'10','50');";
+			$function_names.="vUtil.timedExecute(function(){".$struct_res[$i]['function_name']."},'".$struct_res[$i]['initial_delay']."','".$struct_res[$i]['repeat_delay']."');";
 		}
 
 		$function_names.="}";

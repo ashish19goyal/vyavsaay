@@ -1,8 +1,8 @@
-<div id='report69' class='tab-pane portlet box red-sunglo'>	   
+<div id='report69' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report69_ini();'>Refresh</a>
-		</div>		
+		</div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
@@ -21,7 +21,7 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
 
 	<div class="portlet-body">
@@ -51,18 +51,18 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<script>
 
         function report69_header_ini()
-        {	
+        {
             var form=document.getElementById('report69_header');
             var project_filter=form.elements['project'];
             var staff_filter=form.elements['staff'];
             var from_filter=form.elements['from'];
             var to_filter=form.elements['to'];
             var id_filter=form.elements['project_id'];
-            
+
             $(form).off('submit');
             $(form).on('submit',function(event)
             {
@@ -70,7 +70,7 @@
                 report69_ini();
             });
 
-            my_datalist_change(project_filter,function () 
+            my_datalist_change(project_filter,function ()
             {
                 var id_data={data_store:'projects',return_column:'id',
                             indexes:[{index:'name',exact:project_filter.value}]};
@@ -99,16 +99,16 @@
             var to_filter=get_raw_time(form.elements['to'].value)+86399999;
             var key_filter=form.elements['keywords'].value;
             var id_filter=form.elements['project_id'].value;
-            
+
             show_loader();
-            $('#report69_body').html('');	
+            $('#report69_body').html('');
 
             var paginator=$('#report69_body').paginator();
 			var columns=new Object();
 			columns.count=paginator.page_size();
 			columns.start_index=paginator.get_index();
 			columns.data_store='expenses';
-					
+
 			columns.indexes=[{index:'id'},
 							{index:'person',value:staff_filter},
 							{index:'amount'},{index:'status'},
@@ -116,7 +116,7 @@
                             {index:'source',exact:'project'},
                             {index:'source_id',value:id_filter},
                             {index:'expense_date',lowerbound:from_filter,upperbound:to_filter}];
-	            
+
             read_json_rows('report69',columns,function(items)
             {
                 var rowsHTML="";
@@ -144,12 +144,12 @@
                 $('#report69_body').html(rowsHTML);
 
                 paginator.update_index(items.length);
-				initialize_tabular_report_buttons(columns,'Expenses Report','report69',function (item) 
-                {
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Expenses Report',report_id:'report69',feach:function (item)
+				{
                     item.expense_date=get_my_past_date(item.expense_date);
                     delete item.source_id;
                     delete item.source;
-                });
+                }});
                 hide_loader();
             });
         };

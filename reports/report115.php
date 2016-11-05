@@ -234,7 +234,8 @@
 		                  $('#report115_body').append(rowsHTML);
 		            });
 
-					initialize_static_tabular_report_buttons('Branch Stock Report','report115');
+					vExport.export_buttons({file:'Branch Stock Report',report_id:'report115',action:'static'});
+
 				    hide_loader();
 			    });
 			});

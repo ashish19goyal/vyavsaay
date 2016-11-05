@@ -197,6 +197,7 @@
 						{index:'agent'},
 						{index:'sum_insured'},
 						{index:'premium'},
+						{index:'net_premium'},
 						{index:'issue_date'},
 						{index:'end_date'},
 						{index:'issue_type'},
@@ -253,8 +254,7 @@
             });
             $('#report122_body').append(rowsHTML);
 
-            initialize_tabular_report_buttons(columns,'Policies Report','report122',function (item)
-            {});
+			vExport.export_buttons({action:'dynamic',columns:columns,file:'Policies Report',report_id:'report122'});
 
             paginator.update_index(items.length);
             hide_loader();

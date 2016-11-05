@@ -1,4 +1,4 @@
-<div id='form327' class='tab-pane portlet box green-meadow'>	   
+<div id='form327' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class="actions">
             <div class="btn-group">
@@ -19,9 +19,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -39,43 +39,43 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<script>
 		function form327_header_ini()
 		{
-			var filter_fields=document.getElementById('form327_header');	
+			var filter_fields=document.getElementById('form327_header');
 			var names_filter=filter_fields.elements['letter'];
             var staff_filter=filter_fields.elements['staff'];
-		
+
 			var names_data={data_store:'letters',return_column:'letter_num'};
 			set_my_filter_json(names_data,names_filter);
-            
+
             var staff_data={data_store:'staff',return_column:'acc_name'};
 			set_my_filter_json(staff_data,staff_filter);
-			
+
 			$(filter_fields).off('submit');
 			$(filter_fields).on('submit',function(event)
 			{
 				event.preventDefault();
 				form327_ini();
-			});	
+			});
 		}
-		
+
 		function form327_ini()
 		{
 			show_loader();
 			var fid=$("#form327_link").attr('data_id');
 			if(fid==null)
-				fid="";	
-			
+				fid="";
+
 			$('#form327_body').html("");
-			
+
 			var filter_fields=document.getElementById('form327_header');
 			var fname=filter_fields.elements['letter'].value;
             var fstaff=filter_fields.elements['staff'].value;
-			
+
 			var paginator=$('#form327_body').paginator();
-			
+
 			var new_columns=new Object();
 					new_columns.count=paginator.page_size();
 					new_columns.start_index=paginator.get_index();
@@ -87,10 +87,10 @@
                                     {index:'office'},
                                     {index:'dpo_section'},
                                     {index:'detail'},
-                                    {index:'remarks'},     
+                                    {index:'remarks'},
 									{index:'status',exact:'closed'},
 									{index:'assigned_to',value:fstaff}];
-					
+
 			read_json_rows('form327',new_columns,function(results)
 			{
 				results.forEach(function(result)
@@ -104,7 +104,7 @@
 							rowsHTML+="<td data-th='Category'>";
 								rowsHTML+="<input type='text' class='floatlabel dblclick_editable' placeholder='Department' readonly='readonly' form='form327_"+result.id+"' name='dep' value='"+result.department+"'>";
 								rowsHTML+="<input type='text' class='floatlabel dblclick_editable' placeholder='Office' readonly='readonly' form='form327_"+result.id+"' name='office' value='"+result.office+"'>";
-            				    rowsHTML+="<input type='text' class='floatlabel dblclick_editable' placeholder='DPO Section' readonly='readonly' form='form327_"+result.id+"' name='dpo' value='"+result.dpo_section+"'>";		
+            				    rowsHTML+="<input type='text' class='floatlabel dblclick_editable' placeholder='DPO Section' readonly='readonly' form='form327_"+result.id+"' name='dpo' value='"+result.dpo_section+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Notes'>";
 								rowsHTML+="<textarea readonly='readonly' class='floatlabel dblclick_editable' placeholder='Brief Notes' form='form327_"+result.id+"' name='notes'>"+result.detail+"</textarea>";
@@ -117,14 +117,14 @@
 								rowsHTML+="<input type='hidden' form='form327_"+result.id+"' name='id' value='"+result.id+"'>";
 								rowsHTML+="<button type='submit' class='btn green' form='form327_"+result.id+"' title='Save' name='save'><i class='fa fa-save'></i></button>";
 								rowsHTML+="<button type='button' class='btn red' form='form327_"+result.id+"' title='Delete' name='delete' onclick='form327_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-					
+
 					$('#form327_body').append(rowsHTML);
 					var fields=document.getElementById("form327_"+result.id);
 					var dep_filter=fields.elements['dep'];
 					var followup_button=fields.elements['followup'];
-                    
+
 					var dep_data={data_store:'letters',return_column:'department'};
 					set_my_filter_json(dep_data,dep_filter);
 
@@ -134,26 +134,26 @@
 						form327_update_item(fields);
 					});
 				});
-		
+
 				$('#form327').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Closed Letters','form327',function (item)
-                {
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Closed Letters',report_id:'form327',feach:function (item)
+				{
                     delete item.status;
 
                     item['Letter #']=item.letter_num;
                     delete item.letter_num;
-                    
+
                     item['File #']=item.file_num;
                     delete item.file_num;
-                    
+
                     item['DPO Section']=item.dpo_section;
                     delete item.dpo_section;
-                });
+                }});
 				hide_loader();
 			});
 		};
-		
+
 		function form327_update_item(form)
 		{
 			if(is_update_access('form327'))
@@ -186,7 +186,7 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form327_delete_item(button)
 		{
 			if(is_delete_access('form327'))
@@ -214,13 +214,13 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form327_import_template()
 		{
 			var data_array=['id','letter number','file number','DPO section','department','office','brief notes','remarks','due_date','assigned_to'];
 			vUtil.arrayToCSV(data_array);
 		};
-		
+
 		function form327_import_validate(data_array)
 		{
 			var validate_template_array=[{column:'letter numner',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
@@ -230,13 +230,13 @@
                                     {column:'office',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
                                     {column:'DPO section',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
                                     {column:'department',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
-                                    {column:'assigned_to',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},     
+                                    {column:'assigned_to',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 									{column:'due_date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')}];
-							
+
 			var error_array=vImport.validate(data_array,validate_template_array);
-			return error_array;					
+			return error_array;
 		}
-		
+
 		function form327_import(data_array,import_type)
 		{
 			var data_json={data_store:'letters',
@@ -247,7 +247,7 @@
 
 			var counter=1;
 			var last_updated=get_my_time();
-		
+
 			data_array.forEach(function(row)
 			{
 				counter+=1;
@@ -255,23 +255,23 @@
 				{
 					row.id=last_updated+counter;
 				}
-				
+
 				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'letter_num',value:row['letter number']},
 	 					{index:'detail',value:row.notes},
-                        {index:'department',value:row.department},             
-                        {index:'office',value:row.office},             
-                        {index:'dpo_section',value:row['DPO section']},             
-                        {index:'remarks',value:row.remarks},             
-                        {index:'file_num',value:row['file number']},                          
+                        {index:'department',value:row.department},
+                        {index:'office',value:row.office},
+                        {index:'dpo_section',value:row['DPO section']},
+                        {index:'remarks',value:row.remarks},
+                        {index:'file_num',value:row['file number']},
 	 					{index:'due_date',value:get_raw_time(row.due_date)},
 	 					{index:'assigned_to',value:row.assigned_to},
-                        {index:'status',value:'closed'},             
+                        {index:'status',value:'closed'},
 	 					{index:'last_updated',value:last_updated}];
 
 				data_json.data.push(data_json_array);
 			});
-			
+
 			if(import_type=='create_new')
 			{
 				create_batch_json(data_json);

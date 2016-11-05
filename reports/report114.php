@@ -142,8 +142,8 @@
                   $('#report114_body').append(rowsHTML);
               });
 
-			  initialize_static_tabular_report_buttons('Receipts/Payables Report','report114');
-		      hide_loader();
+			  vExport.export_buttons({file:'Receipts/Payables Report',report_id:'report114',action:'static'});
+			  hide_loader();
 		    });
 		};
 	</script>

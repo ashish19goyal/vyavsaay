@@ -1,6 +1,6 @@
-<div id='form277' class='tab-pane portlet box green-meadow'>	   
+<div id='form277' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form277_add_item();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -22,9 +22,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -43,47 +43,47 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<script>
 
 		function form277_header_ini()
-		{	
+		{
 			var form=document.getElementById('form277_header');
 			var name_filter=form.elements['name'];
 			var desc_filter=form.elements['desc'];
 			var status_filter=form.elements['status'];
-			
+
 			$(form).off('submit');
 			$(form).on('submit',function(event)
 			{
 				event.preventDefault();
 				form277_ini();
 			});
-			
+
 			set_static_filter_json('system_notifications','status',status_filter);
-		}	
-		
+		}
+
 		function form277_ini()
 		{
 			var fid=$("#form277_link").attr('data_id');
 			if(fid==null)
-				fid="";	
-			
+				fid="";
+
 			var form=document.getElementById('form277_header');
 			var name_filter=form.elements['name'].value;
 			var desc_filter=form.elements['desc'].value;
 			var status_filter=form.elements['status'].value;
 
 			show_loader();
-			$('#form277_body').html('');	
-			
+			$('#form277_body').html('');
+
 			var paginator=$('#form277_body').paginator();
-			
+
 			var pop_data=new Object();
 					pop_data.count=paginator.page_size();
 					pop_data.start_index=paginator.get_index();
 					pop_data.data_store='system_notifications';
-							
+
 					pop_data.indexes=[{index:'id',value:fid},
 									{index:'name',value:name_filter},
 									{index:'description',value:desc_filter},
@@ -112,34 +112,34 @@
 								rowsHTML+="<select class='dblclick_editable' form='form277_"+result.id+"'></select>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Function'>";
-								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form277_"+result.id+"' onclick=\"modal178_action('"+result.id+"');\">Function</button>";							
+								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form277_"+result.id+"' onclick=\"modal178_action('"+result.id+"');\">Function</button>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
-								rowsHTML+="<input type='hidden' form='form277_"+result.id+"' value='"+result.id+"'>";	
+								rowsHTML+="<input type='hidden' form='form277_"+result.id+"' value='"+result.id+"'>";
 								rowsHTML+="<button type='submit' class='btn green' form='form277_"+result.id+"' title='Save'><i class='fa fa-save'></i></button>";
 								rowsHTML+="<button type='button' class='btn red' form='form277_"+result.id+"' title='Delete' onclick='form277_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-					
+
 					$('#form277_body').append(rowsHTML);
 					var fields=document.getElementById("form277_"+result.id);
 					var status_filter=fields.elements[4];
 
-					set_static_select('system_notifications','status',status_filter,function () 
+					set_static_select('system_notifications','status',status_filter,function ()
 					{
 						$(status_filter).selectpicker('val',result.status);
 					});
-					
+
 					$(fields).on("submit", function(event)
 					{
 						event.preventDefault();
 						form277_update_item(fields);
 					});
 				});
-				
+
 				$('#form277').formcontrol();
-				paginator.update_index(results.length);				
-				initialize_tabular_report_buttons(pop_data,'Notifications','form277',function (item){});
+				paginator.update_index(results.length);
+				vExport.export_buttons({action:'dynamic',columns:pop_data,file:'Notifications',report_id:'form277'});
 				hide_loader();
 			});
 		};
@@ -149,7 +149,7 @@
 			if(is_create_access('form277'))
 			{
 				var id=vUtil.newKey();
-		
+
 				var rowsHTML="<tr>";
 						rowsHTML+="<form id='form277_"+id+"'></form>";
 							rowsHTML+="<td data-th='Name'>";
@@ -166,17 +166,17 @@
 								rowsHTML+="<select class='dblclick_editable' form='form277_"+id+"'></select>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Function'>";
-								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form277_"+id+"'>Function</button>";							
+								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form277_"+id+"'>Function</button>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
-								rowsHTML+="<input type='hidden' form='form277_"+id+"' value='"+id+"'>";	
+								rowsHTML+="<input type='hidden' form='form277_"+id+"' value='"+id+"'>";
 								rowsHTML+="<button type='submit' class='btn green' form='form277_"+id+"' title='Save'><i class='fa fa-save'></i></button>";
 								rowsHTML+="<button type='button' class='btn red' form='form277_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-							
+
 				$('#form277_body').prepend(rowsHTML);
-				
+
 				var fields=document.getElementById("form277_"+id);
 				var name_filter=fields.elements[0];
 				var status_filter=fields.elements[4];
@@ -184,7 +184,7 @@
 				$(name_filter).focus();
 
 				set_static_select('system_notifications','status',status_filter);
-				
+
 				$(fields).on("submit", function(event)
 				{
 					event.preventDefault();
@@ -195,9 +195,9 @@
 			else
 			{
 				$("#modal2_link").click();
-			}		
+			}
 		}
-		
+
 		function form277_create_item(form)
 		{
 			if(is_create_access('form277'))
@@ -210,9 +210,9 @@
 				var func_button=form.elements[5];
 				var data_id=form.elements[6].value;
 				var del_button=form.elements[8];
-				
+
 				var last_updated=get_my_time();
-				
+
 				var data_json={data_store:'system_notifications',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'name',value:name,unique:'yes'},
@@ -223,10 +223,10 @@
 	 					{index:'last_updated',value:last_updated}]};
 
 				create_json(data_json);
-				
+
 				$(form).readonly();
-				
-				$(func_button).on('click',function () 
+
+				$(func_button).on('click',function ()
 				{
 					modal178_action(data_id);
 				});
@@ -236,7 +236,7 @@
 				{
 					form277_delete_item(del_button);
 				});
-				
+
 				$(form).off('submit');
 				$(form).on('submit',function(event)
 				{
@@ -249,7 +249,7 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form277_update_item(form)
 		{
 			if(is_update_access('form277'))
@@ -262,9 +262,9 @@
 				var func_button=form.elements[5];
 				var data_id=form.elements[6].value;
 				var del_button=form.elements[8];
-				
+
 				var last_updated=get_my_time();
-				
+
 				var data_json={data_store:'system_notifications',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'name',value:name,unique:'yes'},
@@ -274,8 +274,8 @@
 	 					{index:'status',value:status},
 	 					{index:'last_updated',value:last_updated}]};
 
-				update_json(data_json);				
-				
+				update_json(data_json);
+
 				$(form).readonly();
 			}
 			else
@@ -283,7 +283,7 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form277_delete_item(button)
 		{
 			if(is_delete_access('form277'))
@@ -298,9 +298,9 @@
  							data:[{index:'id',value:data_id}],
  							log:'yes',
  							log_data:{title:"Deleted",notes:"Notification "+name,link_to:"form277"}};
-			
-					delete_json(data_json);			
-					
+
+					delete_json(data_json);
+
 					$(button).parent().parent().remove();
 				});
 			}
@@ -309,13 +309,13 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form277_import_template()
 		{
 			var data_array=['id','name','description','function_name','function_def','initial_delay','repeat_delay','status'];
 			vUtil.arrayToCSV(data_array);
 		};
-		
+
 		function form277_import_validate(data_array)
 		{
 			var validate_template_array=[{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z_ -]+$')},
@@ -325,11 +325,11 @@
 									{column:'status',required:'yes',list:['active','inactive']},
 									{column:'initial_delay',required:'yes',regex:new RegExp('^[0-9]+$')},
 									{column:'repeat_delay',required:'yes',regex:new RegExp('^[0-9]+$')}];
-							
+
 			var error_array=vImport.validate(data_array,validate_template_array);
-			return error_array;					
+			return error_array;
 		}
-		
+
 		function form277_import(data_array,import_type)
 		{
 			var data_json={data_store:'system_notifications',
@@ -340,7 +340,7 @@
 
 			var counter=1;
 			var last_updated=get_my_time();
-		
+
 			data_array.forEach(function(row)
 			{
 				counter+=1;
@@ -348,7 +348,7 @@
 				{
 					row.id=last_updated+counter;
 				}
-				
+
 				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'name',value:row.name},
 	 					{index:'description',value:row.description},
@@ -361,7 +361,7 @@
 
 				data_json.data.push(data_json_array);
 			});
-			
+
 			if(import_type=='create_new')
 			{
 				create_batch_json(data_json);

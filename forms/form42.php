@@ -132,10 +132,10 @@
 
 			$('#form42').formcontrol();
 			paginator.update_index(results.length);
-			initialize_tabular_report_buttons(columns,'Sale Bills','form42',function (item)
+			vExport.export_buttons({action:'dynamic',columns:columns,file:'Sale Bills',report_id:'form42',feach:function (item)
 			{
 				item.bill_date=get_my_past_date(item.bill_date);
-			});
+			}});
 			hide_loader();
 		});
 	}

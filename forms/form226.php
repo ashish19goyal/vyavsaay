@@ -1,6 +1,6 @@
-<div id='form226' class='tab-pane portlet box green-meadow'>	   
+<div id='form226' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form226_add_item();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -22,9 +22,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -43,14 +43,14 @@
 			</tbody>
 		</table>
 	</div>
-    
+
     <script>
 function form226_header_ini()
 {
 	var filter_fields=document.getElementById('form226_header');
 	var person_filter=filter_fields.elements['person'];
 	var date_filter=filter_fields.elements['date'];
-		
+
 	var person_data={data_store:'staff',return_column:'acc_name'};
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
@@ -68,16 +68,16 @@ function form226_ini()
 	show_loader();
 	var fid=$("#form226_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	$('#form226_body').html("");
 
 	var filter_fields=document.getElementById('form226_header');
 	var fperson=filter_fields.elements['person'].value;
 	var fdate=get_raw_time(filter_fields.elements['date'].value);
-	
+
     var paginator=$('#form226_body').paginator();
-			
+
     var new_columns={count:paginator.page_size(),
                      start_index:paginator.get_index(),
                      data_store:'delivery_run',
@@ -89,7 +89,7 @@ function form226_ini()
                             {index:'total_run'}]};
 
 	read_json_rows('form226',new_columns,function(results)
-	{	
+	{
 		results.forEach(function(result)
 		{
 			var rowsHTML="<tr>";
@@ -120,14 +120,14 @@ function form226_ini()
 
 		$('#form226').formcontrol();
         paginator.update_index(results.length);
-        initialize_tabular_report_buttons(new_columns,'Delivery Runs','form226',function (item)
+		vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Delivery Runs',report_id:'form226',feach:function (item)
         {
             item['date']=get_my_past_date(item.date);
-        });
+        }});
         hide_loader();
 	});
 };
-    
+
 function form226_add_item()
 {
 	if(is_create_access('form226'))
@@ -164,30 +164,30 @@ function form226_add_item()
 		var start_filter=fields.elements[2];
 		var end_filter=fields.elements[3];
 		var total_filter=fields.elements[4];
-		
+
 		$(date_filter).datepicker();
-		
+
 		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
 			form226_create_item(fields);
 		});
-		
-		$(start_filter).add(end_filter).on('blur',function () 
+
+		$(start_filter).add(end_filter).on('blur',function ()
 		{
 			if(parseFloat(end_filter.value)>=parseFloat(start_filter.value))
 			{
 				total_filter.value=parseFloat(end_filter.value)-parseFloat(start_filter.value);
 			}
-			else 
+			else
 			{
 				end_filter.value=start_filter.value;
 				total_filter.value=0;
 			}
 		});
-		
+
 		var person_data={data_store:'staff',return_column:'acc_name'};
-		set_my_value_list_json(person_data,person_filter,function () 
+		set_my_value_list_json(person_data,person_filter,function ()
 		{
 			$(person_filter).focus();
 		});
@@ -211,7 +211,7 @@ function form226_create_item(form)
 		var save_button=form.elements['save'];
 		var del_button=form.elements['delete'];
 		var last_updated=get_my_time();
-        
+
         var data_json={data_store:'delivery_run',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
@@ -222,17 +222,17 @@ function form226_create_item(form)
 	 					{index:'total_run',value:total},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Added',notes:'Delivery run for '+person,link_to:'form226'}};
-				
+
 		create_json(data_json);
-		
+
 		$(form).readonly();
-		
+
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form226_delete_item(del_button);
 		});
-		
+
 		$(save_button).off('click');
 		$(save_button).on('click',function(e)
 		{
@@ -243,7 +243,7 @@ function form226_create_item(form)
 	{
 		$("#modal2_link").click();
 	}
-}    
+}
 
 function form226_delete_item(button)
 {
@@ -253,14 +253,14 @@ function form226_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			
+
 			var data_id=form.elements[5].value;
-            
+
             var data_json={data_store:'delivery_run',
             data:[{index:'id',value:data_id}]};
 
 			delete_json(data_json);
-			
+
 			$(button).parent().parent().remove();
 		});
 	}
@@ -269,7 +269,7 @@ function form226_delete_item(button)
 		$("#modal2_link").click();
 	}
 }
-        
+
 function form226_import_template()
 {
 	var data_array=['id','person','date','starting_km','ending_km','total_run'];
@@ -283,9 +283,9 @@ function form226_import_validate(data_array)
 							{column:'person',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')},
 							{column:'total_run',required:'yes',regex:new RegExp('^[0-9 .]+$')},
 							{column:'date',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]+')}];
-					
+
 	var error_array=vImport.validate(data_array,validate_template_array);
-	return error_array;					
+	return error_array;
 }
 
 function form226_import(data_array,import_type)
@@ -311,7 +311,7 @@ function form226_import(data_array,import_type)
                 {index:'date',value:get_raw_time(row.date)},
                 {index:'starting_km',value:row.starting_km},
                 {index:'ending_km',value:row.ending_km},
-                {index:'total_run',value:row.total_run},             
+                {index:'total_run',value:row.total_run},
                 {index:'last_updated',value:last_updated}];
 
         data_json.data.push(data_json_array);
@@ -340,6 +340,6 @@ function form226_import(data_array,import_type)
         }
     }
 };
-        
+
     </script>
 </div>

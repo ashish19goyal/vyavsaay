@@ -52,7 +52,7 @@
 			if($i==0)
 			{
 				$main_search.="function show_search_results(){".
-									"hide_all();".
+									"vIni.hideAll();".
 									"$('#search_results_box').show();".
 									"$('#search_tab_".$struct_res[$i]['table_name']."_link').click();}";
 			}

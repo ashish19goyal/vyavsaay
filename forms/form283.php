@@ -158,12 +158,12 @@
 
                 $('#form283').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Invoices','form283',function (item)
-                {
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Invoices',report_id:'form283',feach:function (item)
+				{
                     item['bill date']=get_my_past_date(item.bill_date);
                     delete item.bill_date;
                     delete item.performa;
-                });
+                }});
 				hide_loader();
             });
         }

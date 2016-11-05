@@ -130,10 +130,10 @@
 
                 $('#form337').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Gate passes','form337',function (item)
-                {
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Gate Passes',report_id:'form337',feach:function (item)
+				{
                     item.date=get_my_past_date(item.date);
-                });
+                }});
 				hide_loader();
             });
         };

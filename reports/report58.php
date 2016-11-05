@@ -177,8 +177,8 @@
 						element_display(tran.source_id,source_form);
                   });
               });
-	        	initialize_static_tabular_report_buttons('Ledger','report58');
-	          	hide_loader();
+			  vExport.export_buttons({file:'Ledger',report_id:'report58',action:'static'});
+			  hide_loader();
             });
         };
 	</script>

@@ -157,7 +157,7 @@
                         });
                         callback(events);
 
-                        initialize_tabular_report_buttons(tasks_data,'Project Tasks','form104',function (item)
+						vExport.export_buttons({action:'dynamic',columns:tasks_data,file:'Project Tasks',report_id:'form104',feach:function (item)
                         {
                             item['Due Time']=get_my_datetime(item.t_due);
                             delete item.t_due;
@@ -167,7 +167,7 @@
                             item['Project']=(item.source_name);
                             delete item.source_name;
                             delete item.source;
-                        });
+                        }});
                         hide_loader();
                     });
                 },
@@ -284,8 +284,8 @@
                 });
 
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Project Tasks','form104',function (item)
-                {
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Project Tasks',report_id:'form104',feach:function (item)
+				{
                     item['Due Time']=get_my_datetime(item.t_due);
                     delete item.t_due;
 
@@ -294,7 +294,7 @@
                     item['Project']=(item.source_name);
                     delete item.source_name;
                     delete item.source;
-                });
+                }});
 				$('#form104').formcontrol();
                 hide_loader();
             });

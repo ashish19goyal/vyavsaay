@@ -4,29 +4,39 @@
  * Copyright: Copyright 2016 | Vyavsaay ERP
  */
 
-var vGCal = function (options) 
-{	
+var vGCal = function (options)
+{
 	var defaults={client_id:get_session_var('googleClientId'),
 				 scopes:["https://www.googleapis.com/auth/calendar"],
-				 act:function(response){console.log(response);},
+				 prompt:'force',
+				 act:function(response){
+					 hide_loader();
+					 console.log(response);
+				 },
 				 action:'batchEvents'};
-	
+
 	var settings = $.extend(defaults, options || {});
-	
-	
+
+
 	/**
 	* Initiate auth flow in response to user clicking authorize button.
 	*
 	* @param {Event} event Button click event.
 	*/
-	this.checkAuth = function (event) 
+	this.checkAuth = function (event)
 	{
 		gapi.auth.authorize(
-		{client_id: settings.client_id, scope: settings.scopes.join(' '),immediate:false},
+		{
+			client_id: settings.client_id,
+			scope: settings.scopes.join(' '),
+			immediate:false,
+			approval_prompt:settings.prompt
+		},
 		function (authResult)
 		{
-			if (authResult && !authResult.error) 
+			if (authResult && !authResult.error)
 			{
+				// console.log('checkauth');
 				gapi.client.load('calendar', 'v3', operations[settings.action]);
 			}
 			else
@@ -41,10 +51,13 @@ var vGCal = function (options)
 	{
 		operations.listCalendars(function(calendarId)
 		{
+			// console.log('listCalendars');
 			operations.deleteCalendar(calendarId,function()
 			{
+				// console.log('deleteCalendar');
 				operations.createCalendar(function(calId)
 				{
+					// console.log('insertEvents');
 					operations.insertEvents(calId);
 				});
 			});
@@ -55,7 +68,7 @@ var vGCal = function (options)
 	{
 		var request=gapi.client.calendar.calendarList.list({});
 
-		request.execute(function(resp) 
+		request.execute(function(resp)
 		{
 			var items=resp.items;
 			var calendarId="";
@@ -80,7 +93,7 @@ var vGCal = function (options)
 			'calendarId':calendarId
 		});
 
-		request.execute(function(resp) 
+		request.execute(function(resp)
 		{
 		  	//console.log(resp);
 			if(typeof func!='undefined')
@@ -98,9 +111,9 @@ var vGCal = function (options)
 			  'timeZone':'Asia/Kolkata'
 		});
 
-		request.execute(function(resp) 
+		request.execute(function(resp)
 		{
-		  	//console.log(resp);
+			//console.log(resp);
 			if(typeof func!='undefined')
 			{
 				func(resp.id);
@@ -111,18 +124,18 @@ var vGCal = function (options)
 	this.insertEvents = function(calId)
 	{
 		var batch = gapi.client.newBatch();
-		
+
 		settings.events.forEach(function(ev)
 		{
 			var event = {
 			  'summary': ev.title,
 			  'description': ev.notes,
 			  'end': {
-				'dateTime': get_iso_time_tz(ev.end),
+				'dateTime': vTime.datetime({resultFormat:'yyyy-mm-ddThh:mm:ss',time:ev.end}),
 				'timeZone': 'Asia/Kolkata'
 			  },
 			  'start': {
-				'dateTime': get_iso_time_tz(ev.start),
+				'dateTime': vTime.datetime({resultFormat:'yyyy-mm-ddThh:mm:ss',time:ev.start}),
 				'timeZone': 'Asia/Kolkata'
 			  },
 				'gadget':{
@@ -141,13 +154,18 @@ var vGCal = function (options)
 
 			batch.add(request);
 		});
-		
-		batch.execute(function(resp) {
-		  	//console.log(resp);
-			settings.act(resp);
-		});		
+
+		if(settings.events.length>0)
+		{
+			batch.execute(function(resp) {
+				//console.log(resp);
+				settings.act(resp);
+			});
+		}else{
+			settings.act();
+		}
 	};
-	
+
 	var operations={batchEvents:this.batchEvents,
 					listCalendars:this.listCalendars,
 				   createCalendar:this.createCalendar,

@@ -141,13 +141,13 @@
 
             $('#form189').formcontrol();
 			paginator.update_index(results.length);
-			initialize_tabular_report_buttons(columns,'Production Plans','form189',function (item)
-            {
+			vExport.export_buttons({action:'dynamic',columns:columns,file:'Production Plans',report_id:'form189',feach:function (item)
+			{
                 item['Start Date']=get_my_past_date(item.from_time);
                 item['End Date']=get_my_past_date(item.to_time);
                 delete item.from_time;
                 delete item.to_time;
-            });
+            }});
             hide_loader();
         });
     };

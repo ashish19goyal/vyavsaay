@@ -128,12 +128,12 @@
                 });
 
                 $('#form56').formcontrol();
-								paginator.update_index(results.length);
-								initialize_tabular_report_buttons(columns,'Cash Register','form56',function (item)
-                {
+				paginator.update_index(results.length);
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Cash Register',report_id:'form56',feach:function (item)
+	            {
                     item.date=get_my_past_date(item.date);
-                });
-								hide_loader();
+                }});
+				hide_loader();
             });
         };
 

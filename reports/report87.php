@@ -1,8 +1,8 @@
-<div id='report87' class='tab-pane portlet box red-sunglo'>	   
+<div id='report87' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report87_ini();'>Refresh</a>
-		</div>		
+		</div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
@@ -18,16 +18,16 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 		<form id='report87_header' autocomplete="off">
 			<fieldset>
 				<label><input type='text' placeholder="Person" class='floatlabel' name='person'></label>
 				<label><input type='text' placeholder="Start Date" class='floatlabel' name='start'></label>
 				<label><input type='text' placeholder="End Date" class='floatlabel' name='end'></label>
-				<label><input type='submit' class='submit_hidden'></label>			
+				<label><input type='submit' class='submit_hidden'></label>
 			</fieldset>
 		</form>
 	<br>
@@ -43,11 +43,11 @@
             <tbody id='report87_foot'></tbody>
 		</table>
 	</div>
-	
+
 	<script>
 
     function report87_header_ini()
-    {	
+    {
         var form=document.getElementById('report87_header');
         var person_filter=form.elements['person'];
         var start_date=form.elements['start'];
@@ -88,10 +88,10 @@
                         {index:'total_run'}]};
 
         read_json_rows('report87',columns,function(deliveries)
-        {	
+        {
             var total_kms=0;
             deliveries.forEach(function(result)
-            {	
+            {
                 total_kms+=parseFloat(result.total_run);
                 var rowsHTML="<tr>";
                     rowsHTML+="<td data-th='Person'>";
@@ -111,10 +111,11 @@
             var total_row="<tr><td data-th='Total' colspan='2'>Total</td><td data-th='Total Kms'>"+total_kms+" kms</td></tr>";
             $('#report87_foot').html(total_row);
 
-            initialize_static_tabular_report_buttons('Delivery Run Report','report87');
-            hide_loader();
+			vExport.export_buttons({file:'Delivery Run Report',report_id:'report87',action:'static'});
+
+			hide_loader();
         });
     };
-	
+
 	</script>
 </div>

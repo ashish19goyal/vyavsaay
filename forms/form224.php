@@ -1,6 +1,6 @@
-<div id='form224' class='tab-pane portlet box green-meadow'>	   
+<div id='form224' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form224_add_item();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -18,9 +18,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -39,7 +39,7 @@
 			</tbody>
 		</table>
 	</div>
-    
+
     <script>
     function form224_header_ini()
     {
@@ -69,10 +69,10 @@
         show_loader();
         var fid=$("#form224_link").attr('data_id');
         if(fid==null)
-            fid="";	
+            fid="";
 
         $('#form224_body').html("");
-        
+
         var filter_fields=document.getElementById('form224_header');
         var fnum=filter_fields.elements['test'].value;
         var fname=filter_fields.elements['product'].value;
@@ -80,7 +80,7 @@
         var fstatus=filter_fields.elements['status'].value;
 
         var paginator=$('#form224_body').paginator();
-			
+
 		var columns={data_store:'testing_process',
 				    count:paginator.page_size(),
 					start_index:paginator.get_index(),
@@ -92,7 +92,7 @@
                             {index:'next_due'}]};
 
         read_json_rows('form224',columns,function(results)
-        {	
+        {
             results.forEach(function(result)
             {
                 var rowsHTML="<tr>";
@@ -132,16 +132,16 @@
                 {
                     event.preventDefault();
                     form224_update_item(fields);
-                });			
+                });
             });
 
             $('#form224').formcontrol();
             paginator.update_index(results.length);
-			initialize_tabular_report_buttons(columns,'Product Testing','form224',function (item)
-            {
+			vExport.export_buttons({action:'dynamic',columns:columns,file:'Product Testing',report_id:'form224',feach:function (item)
+			{
                 item['Next Due']=get_my_past_date(item.next_due);
                 delete item.next_due;
-            });
+            }});
 			hide_loader();
         });
     };
@@ -173,7 +173,7 @@
                     rowsHTML+="<input type='hidden' form='form224_"+id+"' name='id' value='"+id+"'>";
                     rowsHTML+="<button type='submit' class='btn green' name='save' form='form224_"+id+"' id='save_form224_"+id+"' title='Save'><i class='fa fa-save'></i></button>";
                     rowsHTML+="<button type='button' class='btn red' form='form224_"+id+"' onclick='$(this).parent().parent().remove();' name='delete' title='Delete'><i class='fa fa-trash'></i></button>";
-                rowsHTML+="</td>";			
+                rowsHTML+="</td>";
             rowsHTML+="</tr>";
 
             $('#form224_body').prepend(rowsHTML);
@@ -191,7 +191,7 @@
             });
 
             var item_data={data_store:'product_master',return_column:'name'};
-            set_my_value_list_json(item_data,item_filter,function () 
+            set_my_value_list_json(item_data,item_filter,function ()
             {
                 $(item_filter).focus();
             });
@@ -217,7 +217,7 @@
             var save_button=form.elements['save'];
             var del_button=form.elements['delete'];
             var last_updated=get_my_time();
-            
+
             var data_json={data_store:'testing_process',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
@@ -228,11 +228,11 @@
 	 					{index:'status',value:status},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Created',notes:'Testing for '+item,link_to:'form224'}};
- 				
+
             create_json(data_json);
 
             $(form).readonly();
-            
+
             del_button.removeAttribute("onclick");
             $(del_button).on('click',function(event)
             {
@@ -264,14 +264,14 @@
             var save_button=form.elements['save'];
             var del_button=form.elements['delete'];
             var last_updated=get_my_time();
-            
+
             var data_json={data_store:'testing_process',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'details',value:details},
 	 					{index:'next_due',value:next_due},
 	 					{index:'status',value:status},
 	 					{index:'last_updated',value:last_updated}]};
- 			
+
             update_json(data_json);
 
             $(form).readonly();
@@ -293,18 +293,18 @@
 
                 var data_id=form.elements['id'].value;
                 var test_id=form.elements[0].value;
-                
+
                 var data_json={data_store:'testing_process',
 	 				data:[{index:'id',value:data_id}]};
  			    var data2_json={data_store:'testing_results',
 	 				data:[{index:'test_id',value:test_id}]};
  			    var data3_json={data_store:'documents',
 	 				data:[{index:'target_id',value:data_id}]};
- 			
+
                 delete_json(data_json);
                 delete_json(data2_json);
                 delete_json(data3_json);
-                
+
                 $(button).parent().parent().remove();
             });
         }

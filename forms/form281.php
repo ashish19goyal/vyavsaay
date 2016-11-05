@@ -148,7 +148,7 @@
 
 				$('#form281').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(pop_data,'Pop Boxes','form281',function (item){});
+				vExport.export_buttons({action:'dynamic',columns:pop_data,file:'Pop Boxes',report_id:'form281'});
 				hide_loader();
 			});
 		};

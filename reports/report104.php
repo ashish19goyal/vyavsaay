@@ -1,10 +1,10 @@
-<div id='report104' class='tab-pane portlet box green-meadow'>	   
+<div id='report104' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<div class='btn-group' id='report104_store' data-toggle='buttons'>
                 <label class='btn green-jungle my active' onclick=report104_ini('my');><input name='my' type='radio' class='toggle'>My Store</label>
                 <label class='btn green-jungle all' onclick=report104_ini('all');><input type='radio' name='all' class='toggle'>All Stores</label>
-            </div>			
+            </div>
 		</div>
 		<div class="actions">
             <div class="btn-group">
@@ -21,9 +21,9 @@
                     </li>
                 </ul>
             </div>
-      </div>	
+      </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -38,14 +38,14 @@
 			</tbody>
 		</table>
 	</div>
-        
+
     <script>
 
         function report104_header_ini()
         {
-            var filter_fields=document.getElementById('report104_header');	
+            var filter_fields=document.getElementById('report104_header');
             var names_filter=filter_fields.elements['name'];
-            
+
             $(filter_fields).off('submit');
             $(filter_fields).on('submit',function(event)
             {
@@ -65,7 +65,7 @@
                 fid="";
 
             $('#report104_body').html('');
-            
+
             var store=get_session_var('user_setting_Store');
             if(typeof store_type!='undefined' && store_type=='all')
             {
@@ -84,7 +84,7 @@
             var item_columns={data_store:'product_master',
                              indexes:[{index:'id'},{index:'name',value:fname}]};
 
-            read_json_rows('',item_columns,function (items) 
+            read_json_rows('',item_columns,function (items)
             {
                 items.forEach(function(result)
                 {
@@ -98,7 +98,7 @@
 
                     $('#report104_body').append(rowsHTML);
                     var sys_inventory=document.getElementById('report104_'+result.id);
-                    
+
                     if(store=='')
                     {
                         get_inventory(result.name,'',function(inventory)
@@ -129,8 +129,9 @@
                     }
                 });
 
-                initialize_static_tabular_report_buttons('Stock Report','report104');
-                hide_loader();
+				vExport.export_buttons({file:'Stock Report',report_id:'report104',action:'static'});
+
+				hide_loader();
             });
         };
     </script>

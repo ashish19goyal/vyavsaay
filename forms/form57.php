@@ -120,7 +120,7 @@
 
 			$('#form57').formcontrol();
 			paginator.update_index(results.length);
-			initialize_tabular_report_buttons(new_columns,'Services','form57',function (item){});
+			vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Services',report_id:'form57'});
 			hide_loader();
 		});
 	};

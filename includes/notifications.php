@@ -19,7 +19,7 @@
 <script>
 	function show_notifications()
 	{
-		hide_all();
+		vIni.hideAll();
 		$("#notifications_box").show();
 		notifications_ini();
 		notifications_update_seen();

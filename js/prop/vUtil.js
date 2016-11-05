@@ -42,17 +42,20 @@ var vUtil = function (options)
 	this.jsonParse = function(markers)
 	{
 		var markers_array=[];
-		if(markers!="" && markers!='undefined' && markers!=null && markers!=0)
-		{
-			try
-			{
-				markers_array=JSON.parse(markers);
-			}
-			catch (ee)
-			{
-				return [];
-			}
+		// console.log(typeof markers);
+		if(markers==null || markers=='undefined' || markers=="" || markers==0){
+			return [];
 		}
+		if(typeof markers=='array' || typeof markers=='object'){
+			return markers;
+		}
+
+		try{
+			markers_array=JSON.parse(markers);
+		}catch (ee){
+			return [];
+		}
+
 		return markers_array;
 	};
 
@@ -478,7 +481,47 @@ var vUtil = function (options)
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-    }
+    };
+
+	this.deferredExecute=function(func)
+	{
+		if(localdb_open_requests===0 && number_active_ajax===0)
+		{
+			func();
+		}
+		else
+		{
+			setTimeout(function()
+			{
+				vUtil.deferredExecute(func);
+			},5000);
+		}
+	}
+
+	this.timedExecute=function(func,initial_delay,repeat_delay)
+	{
+		var start_at=1000*parseInt(initial_delay);
+		var repeat_at=1000*parseInt(repeat_delay);
+		setTimeout(function()
+		{
+			if(localdb_open_requests===0 && number_active_ajax===0)
+			{
+				func();
+				setTimeout(function()
+				{
+					vUtil.timedExecute(func,initial_delay,repeat_delay);
+				},repeat_at);
+			}
+			else
+			{
+				setTimeout(function()
+				{
+					vUtil.timedExecute(func,initial_delay,repeat_delay);
+				},5000);
+			}
+		},start_at);
+	};
+
 
 };
 vUtil=new vUtil();

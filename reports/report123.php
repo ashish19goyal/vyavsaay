@@ -41,7 +41,7 @@
 					<th>Issuing Company</th>
 		            <th>Agent</th>
 					<th>Policy #</th>
-					<th>Premium</th>
+					<th>Net Premium</th>
 					<th>Basic Comm.</th>
 					<th>ORC Comm.</th>
 				</tr>
@@ -403,8 +403,8 @@
 						$('#report123_body').append(rowsHTML);
 		            });
 
-					initialize_fixed_tabular_report_buttons(policies,'Commissions Validation','report123');
-					initialize_static_tabular_report_buttons('Commissions Validation','report123');
+					vExport.export_buttons({results:policies,file:'Commissions Validation',report_id:'report123',action:'fixed'});
+					vExport.export_buttons({file:'Commissions Validation',report_id:'report123',action:'static'});
 
 		            paginator.update_index(policies.length);
 		            hide_loader();

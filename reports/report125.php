@@ -17,9 +17,9 @@
 					<li>
                         <a id='report125_print'><i class='fa fa-print'></i> Print</a>
                     </li>
-					<li>
+					<!-- <li>
 						<a id='report125_pdf'><i class='fa fa-file-pdf-o'></i> Download as PDF</a>
-					</li>
+					</li> -->
                 </ul>
             </div>
         </div>
@@ -362,7 +362,7 @@
 					$('#report125_body2').append(rows2HTML);
 
 	            }
-				initialize_fixed_tabular_report_buttons(grid_array,'Renewals Report','report125');
+				vExport.export_buttons({results:grid_array,file:'Renewals Report',report_id:'report125',action:'fixed'});
 
 	            hide_loader();
 	        });

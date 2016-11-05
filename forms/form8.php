@@ -179,7 +179,7 @@
 
 					$(image_dummy).on('change',function(evt)
 					{
-					   select_picture(evt,'',function(dataURL)
+						vFileHandler.picture({evt:evt,size:'small',fsuccess:function(dataURL)
 						{
 							image_elem.src=dataURL;
 							var last_updated=get_my_time();
@@ -206,7 +206,7 @@
 					 					{index:'last_updated',value:last_updated}]};
 								update_json(data_json);
 							}
-						});
+						}});
 					});
 
 					$(fields).on("submit", function(event)
@@ -218,7 +218,7 @@
 
 				$('#form8').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Staff','form8');
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Staff',report_id:'form8'});
 
 				hide_loader();
 			});

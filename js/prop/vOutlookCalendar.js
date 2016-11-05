@@ -4,7 +4,7 @@
  * Copyright: Copyright 2016 | Vyavsaay ERP
  */
 
-var vMSCal = function (options) 
+var vMSCal = function (options)
 {
 	var defaults={client_id:get_session_var('outlookClientId'),
 				scopes:["https://outlook.office.com/calendars.readwrite"],
@@ -12,18 +12,18 @@ var vMSCal = function (options)
 				action:'batchEvents'};
 
 	var settings = $.extend(defaults, options || {});
-	
-	this.checkAuth = function (event) 
+
+	this.checkAuth = function (event)
 	{
 		var authContext = new O365Auth.Context();
-		authContext.getIdToken("https://outlook.office365.com/").then((function (token) 
+		authContext.getIdToken("https://outlook.office365.com/").then((function (token)
 		{
 		   var authToken = token;
 			console.log(authToken);
 			var outlookClient = new Microsoft.OutlookServices.Client('https://outlook.office365.com/api/v1.0', authToken.getAccessTokenFn('https://outlook.office365.com'));
 			console.log(outlookClient);
-			
-		}).bind(this), function (reason) 
+
+		}).bind(this), function (reason)
 		{
 		   console.log('Failed to login. Error = ' + reason.message);
 		});
@@ -47,7 +47,7 @@ var vMSCal = function (options)
 	{
 		var request=gapi.client.calendar.calendarList.list({});
 
-		request.execute(function(resp) 
+		request.execute(function(resp)
 		{
 			var items=resp.items;
 			var calendarId="";
@@ -72,7 +72,7 @@ var vMSCal = function (options)
 			'calendarId':calendarId
 		});
 
-		request.execute(function(resp) 
+		request.execute(function(resp)
 		{
 		  	//console.log(resp);
 			if(typeof func!='undefined')
@@ -90,7 +90,7 @@ var vMSCal = function (options)
 			  'timeZone':'Asia/Kolkata'
 		});
 
-		request.execute(function(resp) 
+		request.execute(function(resp)
 		{
 		  	//console.log(resp);
 			if(typeof func!='undefined')
@@ -103,18 +103,18 @@ var vMSCal = function (options)
 	this.insertEvents = function(calId)
 	{
 		var batch = gapi.client.newBatch();
-		
+
 		settings.events.forEach(function(ev)
 		{
 			var event = {
 			  'summary': ev.title,
 			  'description': ev.notes,
 			  'end': {
-				'dateTime': get_iso_time_tz(ev.end),
+				'dateTime': vTime.datetime({resultFormat:'yyyy-mm-ddThh:mm:ss',time:ev.end}),
 				'timeZone': 'Asia/Kolkata'
 			  },
 			  'start': {
-				'dateTime': get_iso_time_tz(ev.start),
+				'dateTime': vTime.datetime({resultFormat:'yyyy-mm-ddThh:mm:ss',time:ev.start}),
 				'timeZone': 'Asia/Kolkata'
 			  },
 				'gadget':{
@@ -133,13 +133,13 @@ var vMSCal = function (options)
 
 			batch.add(request);
 		});
-		
+
 		batch.execute(function(resp) {
 		  	//console.log(resp);
 			settings.act(resp);
-		});		
+		});
 	};
-	
+
 	var operations={batchEvents:this.batchEvents,
 					listCalendars:this.listCalendars,
 				   createCalendar:this.createCalendar,

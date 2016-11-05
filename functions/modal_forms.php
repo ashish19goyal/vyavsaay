@@ -4052,7 +4052,7 @@
 							</div>
 							<hr>
 							<div class="row">
-								<div class='col-md-12'><button type="button" title='Add Dependents' class='btn green' name='add_button'><i class='fa fa-plus'></i></button></div>
+								<div class='col-md-12'><button type="button" title='Add Dependents' class='btn green' name='add_button'><i class='fa fa-plus'></i></button> Dependents</div>
 								<div class='col-md-12'><div id='modal217_dependents'></div></div>
 							</div>
 							<hr>
@@ -4060,6 +4060,12 @@
 								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Total Sum Insured" required form='modal217_form' name='total_sum'></div>
 								<div class="col-sm-6 col-md-3"><input type='number' class='floatlabel' placeholder="Gross Premium" required form='modal217_form' step='any' min='0' name='premium'></div>
 								<div class="col-sm-6 col-md-3"><input type='number' class='floatlabel' placeholder="Received Amount" required form='modal217_form' step='any' name='received_amount' min='0'></div>
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Upsell" required form='modal217_form' name='upsell'></div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Last Sum Insured" readonly='readonly' form='modal217_form' name='last_total_sum'></div>
+								<div class="col-sm-6 col-md-3"><input type='number' class='floatlabel' placeholder="Last Gross Premium" readonly='readonly' form='modal217_form' step='any' name='last_premium'></div>
+								<div class="col-sm-6 col-md-3"><input type='number' class='floatlabel' placeholder="Last Received Amount" readonly='readonly' form='modal217_form' step='any' name='last_received_amount'></div>
 								<div class="col-sm-6 col-md-3"><input type='text' class='floatlabel' placeholder="Discount" readonly='readonly' form='modal217_form' name='discount'></div>
 							</div>
 							<hr>

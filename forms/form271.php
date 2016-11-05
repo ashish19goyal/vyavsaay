@@ -138,8 +138,8 @@
 
                 $('#form271').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'COD Collections','form271',function (item)
-                {
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'COD Collections',report_id:'form271',feach:function (item)
+				{
                     item['To']=item.acc_name;
 					item['From']=item.from_name;
                     item['Date']=get_my_past_date(item.date);
@@ -150,7 +150,7 @@
 					delete item.amount;
 					delete item.date;
 					delete item.drs_num;
-                });
+                }});
 				hide_loader();
             });
         }

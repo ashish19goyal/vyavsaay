@@ -117,10 +117,10 @@
 
             $('#form259').formcontrol();
             paginator.update_index(results.length);
-			initialize_tabular_report_buttons(columns,'Quotations','form259',function (item)
-            {
+			vExport.export_buttons({action:'dynamic',columns:columns,file:'Quotations',report_id:'form259',feach:function (item)
+			{
                 item.date=get_my_past_date(item.date);
-            });
+            }});
 			hide_loader();
         });
     }

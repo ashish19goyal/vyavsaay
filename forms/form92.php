@@ -144,11 +144,11 @@
 
                 $('#form92').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Sale Bills','form92',function (item)
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Sale Bills',report_id:'form92',feach:function (item)
                 {
                     delete item.order_id;
                     item.bill_date=get_my_past_date(item.bill_date);
-                });
+                }});
 				hide_loader();
             });
         }

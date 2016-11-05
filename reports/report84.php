@@ -1,4 +1,4 @@
-<div id='report84' class='tab-pane portlet box red-sunglo'>	   
+<div id='report84' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
         <div class='caption'>
             <a class='btn btn-circle grey btn-outline btn-sm' onclick='report84_ini();'>Refresh</a>
@@ -15,7 +15,7 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
 
 	<div class="portlet-body">
@@ -26,7 +26,7 @@
 
 	   <div class='horizontal-bar-chart' id='report84_chart'></div>
     </div>
-	
+
 	<script>
 
     function report84_header_ini()
@@ -46,7 +46,7 @@
         $(end_date).datepicker();
         start_date.value=get_my_past_date((get_my_time()-(7*86400000)));
         end_date.value=vTime.date();
-        
+
         $('#report84').formcontrol();
         var paginator=$('#report84').paginator({visible:false,container:$('#report84')});
     }
@@ -57,7 +57,7 @@
         var form=document.getElementById('report84_master');
         var start_date=get_raw_time(form.elements['start'].value);
         var end_date=get_raw_time(form.elements['end'].value)+86399999;
-			
+
         var columns={data_store:'logistics_orders',
                     indexes:[{index:'id'},
                         {index:'awb_num'},
@@ -75,7 +75,7 @@
                         {index:'return_address1'},
                         {index:'return_address2'},
                         {index:'return_address3'},
-                        {index:'drs_num'}]};		
+                        {index:'drs_num'}]};
 
         read_json_rows('report84',columns,function(orders)
         {
@@ -139,10 +139,10 @@
                         "gridPosition": "start"
                     }
             });
-                
+
             $('#report84_chart').find('div>div>a').hide();
-                
-            initialize_tabular_report_buttons(columns,'Deliveries Report','report84',function (item)
+
+			vExport.export_buttons({action:'dynamic',columns:columns,file:'Deliveries Report',report_id:'report84',feach:function (item)
             {
                 item['AWB No']=item.awb_num;
                 item['Order Id']=item.order_num;
@@ -158,7 +158,7 @@
                 item['Product Name']=item.sku;
                 item['DRS #']=item.drs_num;
                 item['DRS Time']=get_my_past_date(item.drs_time);
-             
+
                 delete item.id;
                 delete item.awb_num;
                 delete item.import_date;
@@ -176,11 +176,11 @@
                 delete item.return_address3;
                 delete item.drs_num;
                 delete item.drs_time;
-            });
+            }});
 
             hide_loader();
         });
     };
-	
+
 	</script>
 </div>

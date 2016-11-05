@@ -114,7 +114,7 @@ var vImport = function (options)
 
 	this.readFile = function(input,func)
 	{
-		show_progress();
+		vIni.showProgress();
 		show_loader();
 
 		var file=input.files[0];
@@ -161,7 +161,7 @@ var vImport = function (options)
 
 				if(number_active_ajax===0 && localdb_open_requests===0)
 				{
-					hide_progress();
+					vIni.hideProgress();
 					hide_loader();
 					clearInterval(ajax_complete);
 				}
@@ -170,7 +170,7 @@ var vImport = function (options)
 		}
 		else
 		{
-			hide_progress();
+			vIni.hideProgress();
 			hide_loader();
 			$(form).find(".close").click();
 			modal164_action(error_array);

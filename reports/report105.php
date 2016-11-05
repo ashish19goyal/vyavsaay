@@ -125,7 +125,7 @@
             });
             $('#report105_body').append(rowsHTML);
 
-            initialize_tabular_report_buttons(columns,'Stock Report','report105',function (item)
+			vExport.export_buttons({action:'dynamic',columns:columns,file:'Stock Report',report_id:'report105',feach:function (item)
             {
                 item['AWB No']=item.awb_num;
                 item['Order Id']=item.order_num;
@@ -169,7 +169,7 @@
                 delete item.return_address1;
                 delete item.return_address2;
                 delete item.return_address3;
-            });
+            }});
 
             paginator.update_index(items.length);
             hide_loader();

@@ -160,7 +160,7 @@
                                 {index:'city'},
                                 {index:'drs_num',array:drs_num_array}];
 
-                initialize_tabular_report_buttons(columns,'DRS Orders','form201',function (item)
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'DRS Orders',report_id:'form201',feach:function (item)
                 {
                     item['AWB No']=item.awb_num;
                     item['DRS No']=item.drs_num;
@@ -196,7 +196,7 @@
                     delete item.sku;
                     delete item.drs_num;
                     delete item.drs_time;
-                });
+                }});
 
             hide_loader();
         });

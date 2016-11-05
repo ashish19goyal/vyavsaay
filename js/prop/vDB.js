@@ -13,9 +13,10 @@ var vDB = function (options)
     {
         if(is_create_access('form99') || is_create_object('db_backup'))
         {
+			var data = vUtil.getCredentials();
             show_loader();
 
-            ajax_with_custom_func(server_root+"/ajax_json/db_backup.php",data,function(e)
+            ajax_with_custom_func(server_root+"/scripts/db_backup.php",data,function(e)
             {
                 var response=e.responseText;
 

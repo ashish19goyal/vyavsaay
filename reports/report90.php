@@ -403,7 +403,7 @@ function report90_ini()
 
 										sorted_array.push(sorted_element);
 									});
-									csv_download_report(sorted_array,'Order Picklist - '+bills[0].order_num);
+									vExport.csv_download({result:sorted_array,file:'Order Picklist - '+bills[0].order_num});
 								});
 
 								hide_loader();
@@ -663,7 +663,7 @@ function report90_ini()
 
 								sorted_array.push(sorted_element);
 							});
-							csv_download_report(sorted_array,'Order Picklist');
+							vExport.csv_download({result:sorted_array,file:'Order Picklist'});
 						});
 
 
@@ -790,7 +790,7 @@ function report90_ini()
 					{
 						clearInterval(report90_complete);
 						hide_loader();
-						csv_download_report(sorted_array,'Order Picklist');
+						vExport.csv_download({result:sorted_array,file:'Order Picklist'});
 					}
 				},500);
 			});

@@ -4,7 +4,7 @@
 		<a title='Export All Logs' class='btn btn-icon-only green' class='export_icon' onclick='export_activities();'><i class='fa fa-send'></i></a>
 		<a title='Export Unsynced Data' class='btn btn-icon-only blue' onclick='export_unsynced_activities();'><i class='fa fa-share'></i></a>
 		<a title='Import Unsynced Data' class='btn btn-icon-only red' onclick='modal160_action();'><i class='fa fa-upload'></i></a>
-	</div>	
+	</div>
 	<div class="row">
 		<div class="col-md-12">
 			<div class="tabbable-line tabbable-full-width">
@@ -20,25 +20,22 @@
 
 function export_activities()
 {
-	var new_columns=new Object();
-		new_columns.data_store='activities';
-		new_columns.indexes=[{index:'title'},
+	var new_columns={data_store:'activities',
+					indexes:[{index:'title'},
 							{index:'notes'},
 							{index:'updated_by'},
 							{index:'type'},
 							{index:'status'},
 							{index:'user_display'},
 							{index:'last_updated',lowerbound:(get_my_time()-30*86400000)},
-							{index:'data_xml'}];
-	
-	get_limited_export_data(new_columns,'Activities',function(new_result){});
+							{index:'data_xml'}]};
+	vExport.export({columns:new_columns,file:'Activities'});
 }
 
 function export_unsynced_activities()
 {
-	var new_columns=new Object();
-		new_columns.data_store='activities';
-		new_columns.indexes=[{index:'id'},
+	var new_columns={data_store:'activities',
+					indexes:[{index:'id'},
 							{index:'title'},
 							{index:'notes'},
 							{index:'link_to'},
@@ -50,8 +47,8 @@ function export_unsynced_activities()
 							{index:'data_type'},
 							{index:'updated_by'},
 							{index:'status',exact:'unsynced'},
-							{index:'last_updated'}];
-	get_limited_export_data(new_columns,'Unsynced Data',function(new_result){});
+							{index:'last_updated'}]};
+	vExport.export({columns:new_columns,file:'Unsynced Data'});
 }
 
 function activities_ini()
@@ -89,7 +86,7 @@ function delete_activity(div_elem,data_id)
 		modal115_action(function()
 		{
 			var data_json={data_store:'activities',data:[{index:'id',value:data_id}],log:'no'};
-			delete_json(data_json);						
+			delete_json(data_json);
 			$(div_elem).parent().parent().remove();
 		});
 	}

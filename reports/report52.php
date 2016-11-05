@@ -236,7 +236,7 @@
                                 var total_row="<tr><td colspan='4' data-th='Total'>Total</td><td data-th='Amount'>Rs. "+total_amount+"</td></tr>";
                                 $('#report52_foot').html(total_row);
 
-                                initialize_static_tabular_report_buttons('Purchase Report','report52');
+								vExport.export_buttons({file:'Purchase Report',report_id:'report52',action:'static'});
                                 hide_loader();
                             });
                         });

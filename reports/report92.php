@@ -70,7 +70,7 @@ function report92_ini()
 			{
 				bill_id_string+=bill_id_array[x].bill_id+"--";
 			}
-			
+
 			po_id_string+=pos[i].id+"--";
 		}
 
@@ -174,7 +174,7 @@ function report92_ini()
 						new_item['Pending Qty']=item.quantity;
 						new_items.push(new_item);
 					});
-					csv_download_report(new_items,'Pending sale order items');
+					vExport.csv_download({result:new_items,file:'Pending sale order items'});
 				});
 
 				hide_loader();

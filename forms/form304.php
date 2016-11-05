@@ -151,7 +151,7 @@
 				});
 
 				paginator.update_index(results.length);
-				initialize_static_tabular_report_buttons('Inventory','form304');
+				vExport.export_buttons({file:'Inventory',report_id:'form304',action:'static'});
 
 				$('#form304').formcontrol();
 				hide_loader();

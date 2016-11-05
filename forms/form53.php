@@ -140,11 +140,11 @@
 
                 $('#form53').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Purchase Bills','form53',function (item)
-                {
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Purchase Bills',report_id:'form53',feach:function (item)
+				{
                     item.bill_date=get_my_past_date(item.bill_date);
                     delete item.order_id;
-                });
+                }});
 				hide_loader();
             });
         }

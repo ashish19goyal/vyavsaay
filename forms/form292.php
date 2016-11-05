@@ -142,6 +142,7 @@
 								rowsHTML+="<button type='button' title='Email' class='btn yellow' form='form292_"+result.id+"' name='share'><i class='fa fa-reply'></i></button>";
 								rowsHTML+="<button type='button' title='Print' class='btn purple' form='form292_"+result.id+"' name='print'><i class='fa fa-print'></i></button>";
 							}
+							rowsHTML+="<input type='hidden' form='form292_"+result.id+"' name='bill_date' value='"+result.bill_date+"'>";
 						rowsHTML+="</td>";
 				rowsHTML+="</tr>";
 
@@ -194,11 +195,11 @@
 
 			$('#form292').formcontrol();
 			paginator.update_index(results.length);
-			initialize_tabular_report_buttons(new_columns,'Invoices','form292',function (item)
+			vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Invoices',report_id:'form292',feach:function (item)
 			{
 				item['bill date']=get_my_past_date(item.bill_date);
 				delete item.bill_date;
-			});
+			}});
 			hide_loader();
 		});
 	};
@@ -239,7 +240,7 @@
 					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 
-			$('#form292_body').append(rowsHTML);
+			$('#form292_body').prepend(rowsHTML);
 			var fields=document.getElementById("form292_"+id);
 			var customer_filter=fields.elements[0];
 			var domain_filter=fields.elements[1];
@@ -539,8 +540,9 @@
 		var bill_amount=master_form.elements[7].value;
 		var bill_tax=master_form.elements[8].value;
 		var bill_total=master_form.elements[9].value;
+		var bill_date=vTime.date({time:master_form.elements['bill_date'].value});
 
-		var st_no=get_session_var('service_tax_no');
+		// var st_no=get_session_var('service_tax_no');
 		var pan=get_session_var('pan');
 		////////////////filling in the content into the containers//////////////////////////
 
@@ -549,7 +551,7 @@
 		invoice_line.innerHTML="<hr style='border: 1px solid #000;'><div style='text-align:center;'><b style='font-size:16px;'>Invoice</b></div><hr style='border: 1px solid #000;'>";
 
 		customer_info.innerHTML="<b>Customer: </b><br>"+customer_name+"<br>Account Name: "+domain;
-		business_info.innerHTML="Bill #: "+bill_no+"<br>Date: "+vTime.date()+"<br>ST #: "+st_no;
+		business_info.innerHTML="Bill #: "+bill_no+"<br>Bill Date: "+bill_date+"<br>Print Date: "+vTime.date();//+"<br>ST #: "+st_no;
 
 		jurisdiction.innerHTML="All disputes subjected to Delhi jurisdiction.<br>This is a computer generated invoice.";
 		business_contact.innerHTML="<hr style='border: 1px solid #000;margin:5px;'>Address: "+business_address+"<br>Phone: "+business_phone+", E-Mail: "+business_email+"<br>PAN: "+pan+"<hr style='border: 1px solid #000;margin:5px;'>";

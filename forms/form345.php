@@ -188,10 +188,11 @@
 
 			///Creating list of components for selection
 			var tname_data={data_store:'newsletter_components',
-											indexes:[{index:'id'},{index:'name'},
-															{index:'detail'},
-															{index:'markers'},
-															{index:'html_code'}]};
+							indexes:[{index:'id'},
+									{index:'name'},
+									{index:'detail'},
+									{index:'markers'},
+									{index:'html_code'}]};
 			read_json_rows('form345',tname_data,function(templates)
 			{
 				templates.forEach(function(template)
@@ -238,11 +239,11 @@
 				show_loader();
 
 				var new_columns={count:1,
-												data_store:'newsletter',
-												indexes:[{index:'id',value:fid},
-																{index:'name'},
-																{index:'html_content'},
-																{index:'components'}]};
+							data_store:'newsletter',
+							indexes:[{index:'id',value:fid},
+									{index:'name'},
+									{index:'html_content'},
+									{index:'components'}]};
 
 				read_json_rows('form345',new_columns,function(newsletters)
 				{
@@ -268,8 +269,8 @@
 						components_array.forEach(function (component)
 						{
 							var component_elem="<li class='list-group-item bg-green bg-font-green link' id='form345_nc_"+component.id+"' data-name='"+component.name+"' data-id='"+component.id+"' data-tid='"+component.tid+"'>"+component.name+
-																		"<i class='fa fa-times pull-right' onclick=\"form345_delete_item('"+component.id+"');\"></i>"+
-																"</li>";
+												"<i class='fa fa-times pull-right' onclick=\"form345_delete_item('"+component.id+"');\"></i>"+
+												"</li>";
 							$('#form345_navigation').append(component_elem);
 							$('#form345_nc_'+component.id).attr('data-attr',component.attr);
 							$('#form345_nc_'+component.id).on('click',function ()
@@ -282,19 +283,19 @@
 				});
 
 				var img_columns={data_store:'documents',
-												indexes:[{index:'id'},
-																{index:'doc_type',exact:'newsletter'},
-																{index:'target_id',exact:fid},
-																{index:'url'},
-																{index:'doc_name'}]};
+								indexes:[{index:'id'},
+										{index:'doc_type',exact:'newsletter'},
+										{index:'target_id',exact:fid},
+										{index:'url'},
+										{index:'doc_name'}]};
 
 				read_json_rows('form345',img_columns,function(images)
 				{
 					images.forEach(function (image)
 					{
 						var image_elem="<li class='list-group-item bg-red bg-font-red link' id='form345_image_"+image.id+"' data-name='"+image.doc_name+"' data-id='"+image.id+"' data-url='"+image.url+"'>"+image.doc_name+
-											"<i class='fa fa-times pull-right' onclick=form345_delete_image('"+image.id+"');></i>"+
-											"</li>";
+										"<i class='fa fa-times pull-right' onclick=form345_delete_image('"+image.id+"');></i>"+
+										"</li>";
 						$('#form345_images').append(image_elem);
 					});
 				});

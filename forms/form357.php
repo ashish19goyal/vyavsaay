@@ -143,7 +143,7 @@
 
 			$('#form357').formcontrol();
 			paginator.update_index(results.length);
-			initialize_tabular_report_buttons(new_columns,'API Settings','form357',function (item){});
+			vExport.export_buttons({action:'dynamic',columns:new_columns,file:'API Settings',report_id:'form357'});
 			hide_loader();
 		});
 	};

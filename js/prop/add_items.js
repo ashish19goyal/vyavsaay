@@ -42,10 +42,10 @@ function form2_add_item()
 
 		picture.addEventListener('change',function(evt)
 		{
-			select_picture(evt,pictureinfo,function(dataURL)
+            vFileHandler.picture({evt:evt,size:'small',fsuccess:function(dataURL)
 			{
 				pictureinfo.innerHTML="<div class='figure'><img id='img_form2_"+id+"' src='"+dataURL+"'></div>";
-			});
+			}});
 		},false);
 
 		$(fields).on("submit", function(event)
@@ -5182,10 +5182,10 @@ function form134_add_document()
 
 		fpicture.addEventListener('change',function(evt)
 		{
-			select_document(evt,function(dataURL)
+			vFileHandler.document({evt:evt,fsuccess:function(dataURL)
 			{
 				docInfo.setAttribute('href',dataURL);
-			});
+			}});
 		},false);
 
 		$(fields).on("submit", function(event)

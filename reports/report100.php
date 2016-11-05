@@ -1,6 +1,6 @@
-<div id='report100' class='tab-pane portlet box red-sunglo'>	   
+<div id='report100' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
-        <div class='caption'>		
+        <div class='caption'>
             <div class='btn-group' id='report100_due_date' data-toggle='buttons'>
                 <label class='btn red-pink active today' onclick=report100_ini('today');><input name='due_date' type='radio' class='toggle'>Due Today</label>
                 <label class='btn red-pink week' onclick=report100_ini('week');><input type='radio' name='due_date' class='toggle'>Due In a Week</label>
@@ -28,9 +28,9 @@
                     </li>
                 </ul>
             </div>
-      </div>	
+      </div>
 	</div>
-	
+
 	<div class="portlet-body">
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
@@ -48,7 +48,7 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<script>
 
     function report100_ini(due_date)
@@ -67,7 +67,7 @@
             $('#report100_due_date').find('label.today').addClass('active');
             $('#report100_due_date').find('label.week').removeClass('active');
         }
-        
+
         var paginator=$('#report100_body').paginator();
 
         var letters_data=new Object();
@@ -77,7 +77,7 @@
 
                 letters_data.indexes=[{index:'id'},
                                 {index:'letter_num'},
-                                {index:'file_num'},      
+                                {index:'file_num'},
                                 {index:'department'},
                                 {index:'office'},
                                 {index:'dpo_section'},
@@ -86,7 +86,7 @@
         read_json_rows('report100',letters_data,function(letters)
         {
             var rowsHTML="";
-            letters.forEach(function (letter) 
+            letters.forEach(function (letter)
             {
                 rowsHTML+="<tr data-letter='"+letter.letter_num+"' data-assignee='"+letter.assigned_to+"'>";
                 rowsHTML+="<td data-th='Letter #'><a title='Click to see followup details' onclick=modal200_action('"+letter.id+"');>";
@@ -110,7 +110,7 @@
                 rowsHTML+="<td data-th='Assignee'><a onclick=\"show_object('staff','"+letter.assigned_to+"');\">";
                     rowsHTML+=letter.assigned_to;
                 rowsHTML+="</a></td>";
-                rowsHTML+="</tr>";			
+                rowsHTML+="</tr>";
             });
             $('#report100_body').html(rowsHTML);
             $('#report100').formcontrol();
@@ -118,12 +118,12 @@
 
             paginator.update_index(letters.length);
 
-            initialize_tabular_report_buttons(letters_data,'Due Letters','report100',function (item) 
-            {
+			vExport.export_buttons({action:'dynamic',columns:letters_data,file:'Due Letters',report_id:'report100',feach:function (item)
+			{
                 delete item.status;
                 delete item.due_date;
-            });
-            
+            }});
+
             var remind_button=document.getElementById('report100_remind');
             $(remind_button).off('click');
             $(remind_button).on('click',function()
@@ -136,7 +136,7 @@
                     sms_count+=1;
                     var staff_name=$(this).attr('data-assignee');
                     var letter_num=$(this).attr('data-letter');
-                    
+
                     var phone_data={data_store:'staff',return_column:'phone',count:1,indexes:[{index:'acc_name',exact:staff_name}]};
                     read_json_single_column(phone_data,function(phones)
                     {
@@ -156,12 +156,12 @@
                     {
                         hide_loader();
                         clearInterval(sms_timer);
-                        
+
                     }
                 },1000);
             });
-        });				
+        });
     };
-	
+
 	</script>
 </div>

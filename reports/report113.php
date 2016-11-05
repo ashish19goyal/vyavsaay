@@ -141,7 +141,8 @@
 			  var footRow="<tr><td colspan='4'>Total Amount</td><td>Rs. "+total_amount+"</td></tr>";
 			  $('#report113_foot').append(footRow);
 
-			  initialize_static_tabular_report_buttons('Cash Register','report113');
+			  vExport.export_buttons({file:'Cash Register',report_id:'report113',action:'static'});
+			  
 		      hide_loader();
 		    });
 		};

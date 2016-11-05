@@ -1,8 +1,8 @@
-<div id='report98' class='tab-pane portlet box red-sunglo'>	   
+<div id='report98' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report98_ini();'>Refresh</a>
-		</div>		
+		</div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
@@ -21,9 +21,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 		<form id='report98_header' autocomplete="off">
 			<fieldset>
@@ -32,7 +32,7 @@
 				<label><input type='text' placeholder="From Date" class='floatlabel' name='start'></label>
 				<label><input type='text' placeholder="To Date" class='floatlabel' name='end'></label>
 				<label><input type='text' placeholder="Status" class='floatlabel' name='status'></label>
-				<label><input type='submit' class='submit_hidden'></label>			
+				<label><input type='submit' class='submit_hidden'></label>
 			</fieldset>
 		</form>
 	<br>
@@ -49,38 +49,38 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<script>
 
 		function report98_header_ini()
-		{	
+		{
 			var form=document.getElementById('report98_header');
 			var source_filter=form.elements['source'];
 			var status_filter=form.elements['status'];
 			var keyword_filter=form.elements['keyword'];
 			var start_date=form.elements['start'];
 			var end_date=form.elements['end'];
-		
+
 			$(form).off('submit');
 			$(form).on('submit',function(event)
 			{
 				event.preventDefault();
 				report98_ini();
 			});
-		
+
 			var source_data={data_store:'qr_scans',return_column:'source'};
 			set_my_filter_json(source_data,source_filter);
-			
+
 			set_static_filter_json('qr_scans','status',status_filter);
-							
+
 			$(start_date).datepicker();
 			$(end_date).datepicker();
 			start_date.value=get_my_past_date((get_my_time()-(30*86400000)));
 			end_date.value=vTime.date();
-			
+
 			$('#report98').formcontrol();
-		}	
-		
+		}
+
 		function report98_ini()
 		{
 			var form=document.getElementById('report98_header');
@@ -89,17 +89,17 @@
 			var keyword_filter=form.elements['keyword'].value;
 			var start_date=get_raw_time(form.elements['start'].value);
 			var end_date=get_raw_time(form.elements['end'].value)+86400000;
-			
+
 			show_loader();
-			$('#report98_body').html('');	
-			
+			$('#report98_body').html('');
+
 			var paginator=$('#report98_body').paginator();
-			
+
 			var qr_data=new Object();
 					qr_data.count=paginator.page_size();
 					qr_data.start_index=paginator.get_index();
 					qr_data.data_store='qr_scans';
-							
+
 					qr_data.indexes=[{index:'id'},
 									{index:'source',value:source_filter},
 									{index:'status',value:status_filter},
@@ -127,13 +127,13 @@
 					rowsHTML+="</tr>";
 				});
 				$('#report98_body').append(rowsHTML);
-				
+
 				paginator.update_index(items.length);
-				
-				initialize_tabular_report_buttons(qr_data,'QR Scan Data','report98',function (item) 
+
+				vExport.export_buttons({action:'dynamic',columns:qr_data,file:'QR Scan Data',report_id:'report98',feach:function (item)
 				{
 					item.time=get_my_datetime(item.time);
-				});				
+				}});
 				hide_loader();
 			});
 		};

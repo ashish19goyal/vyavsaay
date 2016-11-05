@@ -4,7 +4,7 @@
 <script src='/js/open/leaflet.js'></script>
 <script src='/js/open/jSignature.min.js'></script>
 <script src='/js/open/html2canvas.js'></script>
-<script src='/js/open/googleAPIClient.js'></script>
+<!-- <script src='/js/open/googleAPIClient.js'></script> -->
 <script src='/js/open/jquery.fn.gantt.min.js'></script>
 <script src='/js/open/JsBarcode.all.min.js'></script>
 <script src='/js/open/moment.min.js'></script>
@@ -24,6 +24,7 @@
 <script src='/js/prop/create.js'></script>
 <script src='/js/prop/vDB.js'></script>
 <script src='/js/prop/delete.js'></script>
+<script src='/js/prop/vIni.js'></script>
 <script src='/js/prop/event_handler.js'></script>
 <script src='/js/prop/navigation.js'></script>
 <script src='/js/prop/forms_header_ini.js'></script>
@@ -53,6 +54,8 @@
 <script src='/js/prop/jHtmlToPdf.js'></script>
 <script src='/js/prop/jDatepicker.js'></script>
 <script src='/js/prop/jVyavsaay.js'></script>
+<script src='/js/prop/vExport.js'></script>
+<script src='/js/prop/vFileHandler.js'></script>
 <script src='/js/prop/vGoogleCalendar.js'></script>
 <script src='/js/prop/vTime.js'></script>
 <script src='/js/prop/vUtil.js'></script>

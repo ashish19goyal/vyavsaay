@@ -145,13 +145,13 @@
 
 				$('#form363').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'TDS Settings','form363',function (item)
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'TDS Settings',report_id:'form363',feach:function (item)
 				{
 					item['Start Date'] = vTime.date({time:item.start_date});
 					item['End Date'] = vTime.date({time:item.end_date});
 					delete item.start_date;
 					delete item.end_date;
-				});
+				}});
 				hide_loader();
 			});
 		};

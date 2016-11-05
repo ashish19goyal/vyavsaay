@@ -117,7 +117,7 @@ function navigate_history_url(url)
 function home_display()
 {
 	$(document).off('keydown');
-	hide_all();
+    vIni.hideAll();
 	$('#home_grid').show();
 
     var history_obj={form:'home',id:'',page:''};
@@ -126,7 +126,7 @@ function home_display()
 
 function show_function(function_id)
 {
-	hide_all();
+    vIni.hideAll();
 	$("#"+function_id).show();
 }
 

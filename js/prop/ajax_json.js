@@ -91,7 +91,7 @@ function ajax_json(url,kvp,func)
 				var user=get_username();
 				var domain=get_domain();
 
-				lock_screen(function()
+				vIni.lockScreen(function()
 				{
 					show_loader();
 					var pass=document.getElementById("lock_form").elements['password'].value;

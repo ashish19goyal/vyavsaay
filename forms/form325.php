@@ -173,7 +173,7 @@
                 $(export_button).off("click");
                 $(export_button).on("click", function(event)
                 {
-                    get_export_data(columns,'sale_orders');
+					vExport.old_export(columns:columns,file:'Sale Orders'});
                 });
                 hide_loader();
             });

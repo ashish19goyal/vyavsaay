@@ -126,6 +126,7 @@
 <script src='./js/open/bcrypt.js'></script>
 <script src='./js/open/jquery.autosize.min.js'></script>
 <script src='./js/open/jquery-ui.min.js'></script>
+<script src='./js/prop/vIni.js'></script>
 <script src='./js/prop/event_handler.js'></script>
 <script src='./js/prop/ajax.js'></script>
 <script src='./js/prop/ajax_json.js'></script>
@@ -143,9 +144,8 @@
 		$('#case_footer').load('footer.html');
 		$('#case_header').load('header.html',function ()
 		{
-				default_load();
-
-				$("#login_box").dialog({
+			vIni.initialize();
+			$("#login_box").dialog({
 	   		autoOpen: false,
 	   		width: 300,
 	   		modal: true,

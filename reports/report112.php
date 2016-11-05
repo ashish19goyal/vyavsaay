@@ -124,7 +124,8 @@
 						element_display(tran.source_id,tran.source_link);
                   });
               });
-			  initialize_static_tabular_report_buttons('Day Book','report112');
+			  vExport.export_buttons({file:'Day Book',report_id:'report112',action:'static'});
+
 		      hide_loader();
 		    });
 		};

@@ -1,8 +1,8 @@
-<div id='report75' class='tab-pane portlet box red-sunglo'>	   
+<div id='report75' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='report75_ini();'>Refresh</a>
-		</div>		
+		</div>
 		<div class="actions">
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
@@ -18,14 +18,14 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 		<form id='report75_header' autocomplete="off">
 			<fieldset>
 				<label><input type='text' placeholder="Supplier" class='floatlabel' name='supplier' required></label>
-				<label><input type='submit' class='submit_hidden'></label>			
+				<label><input type='submit' class='submit_hidden'></label>
 			</fieldset>
 		</form>
 	<br>
@@ -40,19 +40,19 @@
 			<tbody id='report75_body'>
 			</tbody>
 			<tfoot id='report75_foot'>
-			</tfoot>			
+			</tfoot>
 		</table>
 	</div>
-	
+
 	<script>
 		function report75_header_ini()
-		{	
+		{
 			var form=document.getElementById('report75_header');
 			var supplier_filter=form.elements['supplier'];
-			
+
 			var supplier_data={data_store:'suppliers',return_column:'acc_name'};
 			set_my_value_list_json(supplier_data,supplier_filter);
-			
+
 			$(form).off('submit');
 			$(form).on('submit',function(event)
 			{
@@ -64,18 +64,18 @@
 		function report75_ini()
 		{
 			show_loader();
-			
+
 			var form=document.getElementById('report75_header');
 			var supplier=form.elements['supplier'].value;
-			
+
 			$('#report75_body').html("");
 			$('#report75_foot').html("");
-			
+
 			if(supplier!="")
 			{
 				var struct_data={data_store:'ques_struct',
 										indexes:[{index:'id'},{index:'name',exact:'ques2'}]};
-			
+
 				read_json_rows('report75',struct_data,function(structs)
 				{
 					if(structs.length>0)
@@ -88,19 +88,19 @@
 														{index:'description'},
 														{index:'weight'},
 														{index:'forder'}]};
-						read_json_rows('report75',fields_data,function (fields) 
+						read_json_rows('report75',fields_data,function (fields)
 						{
 							fields.sort(function(a,b)
 							{
 								if(parseInt(a.forder)>parseInt(b.forder))
 								{	return 1;}
-								else 
+								else
 								{	return -1;}
 							});
-							
+
                             var fields_id_array=[];
-                            
-                            fields.forEach(function (field) 
+
+                            fields.forEach(function (field)
                             {
                                 fields_id_array.push(field.id);
                             });
@@ -108,7 +108,7 @@
                             var field_value_data={data_store:'ques_fields_data',
 												indexes:[{index:'ques_id'},{index:'field_value'},
                                                          {index:'field_id',array:fields_id_array}]};
-                            read_json_rows('',field_value_data,function (field_values) 
+                            read_json_rows('',field_value_data,function (field_values)
                             {
                                 var ques_match=[];
                                 for(var j=0;j<field_values.length;j++)
@@ -140,7 +140,7 @@
                                             break;
                                         }
                                     }
-                                    
+
                                     if(isnumber)
                                     {
                                         field.score=Math.round(total_value/total_count);
@@ -162,13 +162,13 @@
                                     rowsHTML+="</tr>";
                                     $('#report75_body').append(rowsHTML);
                                 });
-											
+
                                 var total_score=0;
-								var total_weight=0;								
+								var total_weight=0;
                                 fields.forEach(function (total_field)
                                 {
                                     if(!isNaN(parseFloat(total_field.score)))
-                                    {									
+                                    {
                                         total_score+=(parseFloat(total_field.score)*parseFloat(total_field.weight));
                                         total_weight+=parseFloat(total_field.weight);
                                     }
@@ -180,14 +180,14 @@
 						  });
 						});
 					}
-					else 
+					else
 					{
 						hide_loader();
-					}		
+					}
 				});
-				initialize_static_tabular_report_buttons('Supplier Score','report75');
-			}	
+				vExport.export_buttons({file:'Supplier Score',report_id:'report75',action:'static'});
+			}
 		};
-			
+
 	</script>
 </div>

@@ -215,7 +215,7 @@
 
 				$('#form351').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Policy Types','form351',function (item){});
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Policy Types',report_id:'form351'});
 				hide_loader();
 			});
 		};

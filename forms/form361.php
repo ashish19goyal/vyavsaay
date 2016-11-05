@@ -189,7 +189,7 @@
 
 				$('#form361').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Sale Leads','form361',function (item){});
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Sale Leads',report_id:'form361'});
 				hide_loader();
 			});
 		};

@@ -142,7 +142,7 @@
 
 				$('#form314').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(obj_data,'Object Pages','form314',function (item){});
+				vExport.export_buttons({action:'dynamic',columns:obj_data,file:'Object Pages',report_id:'form314'});
 				hide_loader();
 			});
 		};

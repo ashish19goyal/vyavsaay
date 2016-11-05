@@ -245,7 +245,10 @@ js/prop/set_json.js
 js/prop/sync.js
 js/prop/time.js
 js/prop/update.js
+js/prop/vExport.js
+js/prop/vFileHandler.js
 js/prop/vGoogleCalendar.js
+js/prop/vIni.js
 js/prop/vUtil.js
 js/prop/vImport.js
 js/prop/vTime.js

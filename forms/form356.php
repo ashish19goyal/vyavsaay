@@ -107,7 +107,7 @@
 
 				$('#form356').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'User Fields Settings','form356',function (item){});
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'User Fields Settings',report_id:'form365'});
 				hide_loader();
 			});
 		};

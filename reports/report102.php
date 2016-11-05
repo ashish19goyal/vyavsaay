@@ -1,6 +1,6 @@
-<div id='report102' class='tab-pane portlet box red-sunglo'>	   
+<div id='report102' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
-        <div class='caption'>		
+        <div class='caption'>
             <div class='btn-group' id='report102_status' data-toggle='buttons'>
                 <label class='btn red-pink active pending' onclick=report102_ini('pending');><input name='due_date' type='radio' class='toggle'>Pending</label>
                 <label class='btn red-pink closed' onclick=report102_ini('closed');><input type='radio' name='due_date' class='toggle'>Closed</label>
@@ -24,9 +24,9 @@
                     </li>
                 </ul>
             </div>
-      </div>	
+      </div>
 	</div>
-	
+
 	<div class="portlet-body">
         <form id='report102_master' autocomplete="off">
             <fieldset>
@@ -50,7 +50,7 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<script>
     function report102_header_ini()
     {
@@ -58,7 +58,7 @@
         var customers_filter=fields.elements['account'];
         var accounts_data={data_store:'accounts',return_column:'acc_name'};
         set_my_value_list_json(accounts_data,customers_filter);
-        
+
         $(fields).off('submit');
         $(fields).on("submit", function(event)
         {
@@ -68,7 +68,7 @@
 
         $('#report102').formcontrol();
     }
-        
+
     function report102_ini(status)
     {
         show_loader();
@@ -87,7 +87,7 @@
         }
         var filter_fields=document.getElementById('report102_master');
         var account_filter=filter_fields.elements['account'].value;
-        
+
         var paginator=$('#report102_body').paginator();
 
         var columns=new Object();
@@ -97,7 +97,7 @@
 
                 columns.indexes=[{index:'id'},
                                 {index:'acc_name',value:account_filter},
-                                {index:'type'},      
+                                {index:'type'},
                                 {index:'total_amount'},
                                 {index:'paid_amount'},
                                 {index:'status',exact:status_filter},
@@ -107,7 +107,7 @@
         read_json_rows('report102',columns,function(results)
         {
             var rowsHTML="";
-            results.forEach(function (result) 
+            results.forEach(function (result)
             {
                 var details="<a onclick=element_display('"+result.source_id+"','form92');>For "+result.source+" # "+result.source_info+"</a>";
                 var sign="";
@@ -137,7 +137,7 @@
                 rowsHTML+="<td data-th='Paid'><span class='label label-sm "+color+"'>";
                     rowsHTML+=sign+"Rs. "+result.paid_amount;
                 rowsHTML+="</span></td>";
-                rowsHTML+="</tr>";			
+                rowsHTML+="</tr>";
             });
             $('#report102_body').html(rowsHTML);
             $('#report102').formcontrol();
@@ -145,16 +145,16 @@
 
             paginator.update_index(results.length);
 
-            initialize_tabular_report_buttons(columns,'Invoice Ledger','report102',function (item) 
-            {
+			vExport.export_buttons({action:'dynamic',columns:columns,file:'Invoice Ledger',report_id:'report102',feach:function (item)
+			{
                 item.due_date=get_my_past_date(item.due_date);
                 item.date=get_my_past_date(item.date);
                 delete item.status;
                 delete item.source_id;
                 delete item.source_info;
-            });
-        });				
+            }});
+        });
     };
-	
+
 	</script>
 </div>

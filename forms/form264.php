@@ -1,6 +1,6 @@
-<div id='form264' class='tab-pane portlet box green-meadow'>	   
+<div id='form264' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form264_add_item();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -22,7 +22,7 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
 
 	<div class="portlet-body">
@@ -43,7 +43,7 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<script>
 		function form264_header_ini()
 		{
@@ -52,23 +52,23 @@
 			var display_filter=form.elements['display'];
 			var grid_filter=form.elements['grid'];
 			var status_filter=form.elements['status'];
-			
+
 			$(form).off('submit');
 			$(form).on('submit',function(event)
 			{
 				event.preventDefault();
 				form264_ini();
 			});
-			
+
 			set_static_filter_json('system_grid_metrics','status',status_filter);
 		};
-		
+
 		function form264_ini()
 		{
 			var fid=$("#form264_link").attr('data_id');
 			if(fid==null)
-				fid="";	
-			
+				fid="";
+
 			var form=document.getElementById('form264_header');
 			var name_filter=form.elements['name'].value;
 			var display_filter=form.elements['display'].value;
@@ -76,15 +76,15 @@
 			var status_filter=form.elements['status'].value;
 
 			show_loader();
-			$('#form264_body').html('');	
-			
+			$('#form264_body').html('');
+
 			var paginator=$('#form264_body').paginator();
-			
+
 			var pop_data=new Object();
 					pop_data.count=paginator.page_size();
 					pop_data.start_index=paginator.get_index();
 					pop_data.data_store='system_grid_metrics';
-							
+
 					pop_data.indexes=[{index:'id',value:fid},
 									{index:'metric_id',value:name_filter},
 									{index:'display_name',value:display_filter},
@@ -112,55 +112,55 @@
 								rowsHTML+="<select class='dblclick_editable' form='form264_"+result.id+"'></select>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Details'>";
-								rowsHTML+="<input type='number' step='any' class='dblclick_editable floatlabel' placeholder='Repeat Time' readonly='readonly' form='form264_"+result.id+"' value='"+result.repeat_time+"'>";							
-								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form264_"+result.id+"' onclick=\"modal165_action('"+result.id+"');\">Function</button>";							
+								rowsHTML+="<input type='number' step='any' class='dblclick_editable floatlabel' placeholder='Repeat Time' readonly='readonly' form='form264_"+result.id+"' value='"+result.repeat_time+"'>";
+								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form264_"+result.id+"' onclick=\"modal165_action('"+result.id+"');\">Function</button>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
-								rowsHTML+="<input type='hidden' form='form264_"+result.id+"' value='"+result.id+"'>";	
+								rowsHTML+="<input type='hidden' form='form264_"+result.id+"' value='"+result.id+"'>";
 								rowsHTML+="<button type='submit' class='btn green' form='form264_"+result.id+"' title='Save'><i class='fa fa-save'></i></button>";
 								rowsHTML+="<button type='button' class='btn red' form='form264_"+result.id+"' title='Delete' onclick='form264_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-					
+
 					$('#form264_body').append(rowsHTML);
 					var fields=document.getElementById("form264_"+result.id);
 					var grid_filter=fields.elements[2];
 					var status_filter=fields.elements[3];
 
-					set_static_select('system_grid_metrics','status',status_filter,function () 
+					set_static_select('system_grid_metrics','status',status_filter,function ()
 					{
 						$(status_filter).selectpicker('val',result.status);
 					});
-					
+
 					var type_data=new Object();
-						type_data.data_store='system_grids';		
+						type_data.data_store='system_grids';
 						type_data.return_column='name';
 						type_data.indexes=[{index:'status',exact:'active'}];
 					set_my_select(type_data,grid_filter,function()
 					{
 						$(grid_filter).selectpicker('val',result.grid);
 					});
-					
+
 					$(fields).on("submit", function(event)
 					{
 						event.preventDefault();
 						form264_update_item(fields);
 					});
 				});
-				
+
 				$('#form264').formcontrol();
-				paginator.update_index(results.length);				
-				initialize_tabular_report_buttons(pop_data,'Grid Metrics','form264',function (item){});
+				paginator.update_index(results.length);
+				vExport.export_buttons({action:'dynamic',columns:pop_data,file:'Grid Metrics',report_id:'form264'});
 				hide_loader();
 			});
 		}
-		
+
 		function form264_add_item()
 		{
 			if(is_create_access('form264'))
 			{
 				var id=vUtil.newKey();
-		
+
 				var rowsHTML="<tr>";
 						rowsHTML+="<form id='form264_"+id+"'></form>";
 							rowsHTML+="<td data-th='Name'>";
@@ -176,18 +176,18 @@
 								rowsHTML+="<select class='dblclick_editable' data-style='btn-info' form='form264_"+id+"'></select>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Details'>";
-								rowsHTML+="<input type='number' step='any' class='dblclick_editable floatlabel' placeholder='Repeat Time' form='form264_"+id+"'>";							
-								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form264_"+id+"'>Function</button>";							
+								rowsHTML+="<input type='number' step='any' class='dblclick_editable floatlabel' placeholder='Repeat Time' form='form264_"+id+"'>";
+								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form264_"+id+"'>Function</button>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
-								rowsHTML+="<input type='hidden' form='form264_"+id+"' value='"+id+"'>";	
+								rowsHTML+="<input type='hidden' form='form264_"+id+"' value='"+id+"'>";
 								rowsHTML+="<button type='submit' class='btn green' form='form264_"+id+"' title='Save'><i class='fa fa-save'></i></button>";
 								rowsHTML+="<button type='button' class='btn red' form='form264_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-						
+
 				$('#form264_body').prepend(rowsHTML);
-				
+
 				var fields=document.getElementById("form264_"+id);
 				var name_filter=fields.elements[0];
 				var grid_filter=fields.elements[2];
@@ -197,11 +197,11 @@
 
 				set_static_select('system_grid_metrics','status',status_filter);
 				var type_data=new Object();
-					type_data.data_store='system_grids';		
+					type_data.data_store='system_grids';
 					type_data.return_column='name';
 					type_data.indexes=[{index:'status',exact:'active'}];
 				set_my_select(type_data,grid_filter);
-				
+
 				$(fields).on("submit", function(event)
 				{
 					event.preventDefault();
@@ -212,9 +212,9 @@
 			else
 			{
 				$("#modal2_link").click();
-			}		
+			}
 		}
-		
+
 		function form264_create_item(form)
 		{
 			if(is_create_access('form264'))
@@ -227,9 +227,9 @@
 				var box_func=form.elements[5];
 				var data_id=form.elements[6].value;
 				var del_button=form.elements[8];
-				
+
 				var last_updated=get_my_time();
-				
+
 				var data_json={data_store:'system_grid_metrics',
 	 				log:'no',
 	 				data:[{index:'id',value:data_id},
@@ -243,8 +243,8 @@
 				create_json(data_json);
 
 				$(form).readonly();
-				
-				$(box_func).on('click',function () 
+
+				$(box_func).on('click',function ()
 				{
 					modal165_action(data_id);
 				});
@@ -254,7 +254,7 @@
 				{
 					form264_delete_item(del_button);
 				});
-				
+
 				$(form).off('submit');
 				$(form).on('submit',function(event)
 				{
@@ -267,7 +267,7 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form264_update_item(form)
 		{
 			if(is_update_access('form264'))
@@ -280,7 +280,7 @@
 				var box_func=form.elements[5];
 				var data_id=form.elements[6].value;
 				var del_button=form.elements[8];
-				
+
 				var last_updated=get_my_time();
 				var data_json={data_store:'system_grid_metrics',
 	 				log:'no',
@@ -291,7 +291,7 @@
 	 					{index:'repeat_time',value:repeat_time},
 	 					{index:'status',value:status},
 	 					{index:'last_updated',value:last_updated}]};
-				
+
 				update_json(data_json);
 
 				$(form).readonly();
@@ -301,7 +301,7 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form264_delete_item(button)
 		{
 			if(is_delete_access('form264'))
@@ -315,7 +315,7 @@
 					var data_json={data_store:'system_grid_metrics',
  							data:[{index:'id',value:data_id}]};
 
-					delete_json(data_json);			
+					delete_json(data_json);
 
 					$(button).parent().parent().remove();
 				});
@@ -325,13 +325,13 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form264_import_template()
 		{
 			var data_array=['id','metric_id','display_name','grid','function_name','function_def','status','repeat_time'];
 			vUtil.arrayToCSV(data_array);
 		};
-		
+
 		function form264_import_validate(data_array)
 		{
 			var validate_template_array=[{column:'metric_id',required:'yes',regex:new RegExp('^[0-9a-zA-Z_]+$')},
@@ -340,11 +340,11 @@
 									{column:'function_name',regex:new RegExp('^[a-zA-Z0-9_() ;]+$')},
 									{column:'status',required:'yes',list:['active','inactive']},
 									{column:'repeat_time',required:'yes',regex:new RegExp('^[0-9]+$')}];
-							
+
 			var error_array=vImport.validate(data_array,validate_template_array);
-			return error_array;					
+			return error_array;
 		}
-		
+
 		function form264_import(data_array,import_type)
 		{
 			var data_json={data_store:'system_grid_metrics',
@@ -355,7 +355,7 @@
 
 			var counter=1;
 			var last_updated=get_my_time();
-		
+
 			data_array.forEach(function(row)
 			{
 				counter+=1;
@@ -363,7 +363,7 @@
 				{
 					row.id=last_updated+counter;
 				}
-				
+
 				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'metric_id',value:row.metric_id},
 	 					{index:'display_name',value:row.display_name},

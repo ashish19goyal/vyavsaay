@@ -21,27 +21,27 @@
 		<div style='display:hidden;' id='form94_index' data-index='0'></div>
 		<img src='./images/next.png' id='form94_next' class='next_icon' data-index='25' onclick="$('#form94_index').attr('data-index',$(this).attr('data-index')); form94_ini();">
 	</div>
-    
+
     <script>
         function form94_header_ini()
 {
-	var filter_fields=document.getElementById('form94_header');	
+	var filter_fields=document.getElementById('form94_header');
 	var names_filter=filter_fields.elements[0];
 	var batches_filter=filter_fields.elements[1];
-	
-	//setting autocompletes 
+
+	//setting autocompletes
 	var products_data="<product_master>" +
 			"<name></name>" +
 			"</product_master>";
-	
+
 	var batch_data="<product_instances>" +
 			"<batch></batch>" +
 			"</product_instances>";
 
 	set_my_filter(products_data,names_filter);
 	set_my_filter(batch_data,batches_filter);
-	
-	
+
+
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
 	{
@@ -55,13 +55,13 @@ function form94_ini()
 	show_loader();
 	var fid=$("#form94_link").attr('data_id');
 	if(fid==null)
-		fid="";	
-	
+		fid="";
+
 	var filter_fields=document.getElementById('form94_header');
-	
+
 	var fname=filter_fields.elements[0].value;
 	var fbatch=filter_fields.elements[1].value;
-	
+
 	////indexing///
 	var index_element=document.getElementById('form94_index');
 	var prev_element=document.getElementById('form94_prev');
@@ -82,9 +82,9 @@ function form94_ini()
 		"<status exact='yes'>pending approval</status>"+
 		"<last_updated></last_updated>" +
 		"</discarded>";
-	
+
 	$('#form94_body').html("");
-	
+
 	fetch_requested_data('form94',columns,function(results)
 	{
 		results.forEach(function(result)
@@ -112,20 +112,20 @@ function form94_ini()
 						//rowsHTML+="<input type='button' class='delete_icon' title='Delete' form='form94_"+result.id+"' onclick='form94_delete_item($(this));'>";
 						rowsHTML+="<br><input type='button' class='generic_icon' title='Don\'t Reject' value='Approve' form='form94_"+result.id+"'>";
 						rowsHTML+="<br><input type='button' class='generic_icon' title='Reject' value='Reject' form='form94_"+result.id+"'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form94_body').append(rowsHTML);
 			var fields=document.getElementById("form94_"+result.id);
 			//var storage_filter=fields.elements[3];
 			var accept_button=fields.elements[7];
 			var reject_button=fields.elements[8];
-			
+
 /*			var storage_xml="<store_areas>"+
 							"<name></name>"+
 							"</store_areas>";
 			set_my_value_list(storage_xml,storage_filter);
-*/			
+*/
 			$(fields).on("submit",function(event)
 			{
 				event.preventDefault();
@@ -171,12 +171,12 @@ function form94_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Discarded Items');
+			vExport.old_export(columns:columns,file:'Discarded Items'});
 		});
 		hide_loader();
 	});
@@ -197,7 +197,7 @@ function form94_update_item(form)
 					//"<storage>"+storage+"</storage>" +
 					"<reason>"+reason+"</reason>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</discarded>";	
+					"</discarded>";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>discarded</tablename>" +
@@ -235,7 +235,7 @@ function form94_accept_item(form)
 		var last_updated=get_my_time();
 		var data_xml="<discarded>" +
 					"<id>"+data_id+"</id>" +
-					"</discarded>";	
+					"</discarded>";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>discarded</tablename>" +
@@ -246,7 +246,7 @@ function form94_accept_item(form)
 					"</activity>";
 		delete_row(data_xml,activity_xml);
 		$(form).parent().remove();
-		
+
 		var adjust_id=vUtil.newKey();
 		var adjust1_xml="<inventory_adjust>"+
 						"<id>"+adjust_id+"</id>"+
@@ -300,7 +300,7 @@ function form94_reject_item(form)
 					"<reason>"+reason+"</reason>" +
 					"<status>rejected</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</discarded>";	
+					"</discarded>";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>discarded</tablename>" +
@@ -326,7 +326,7 @@ function form94_import_template()
 	var data_array=['id','product_name','batch','quantity','storage'];
 	vUtil.arrayToCSV(data_array);
 };
-        
+
 function form94_import(data_array,import_type)
 {
 	var data_xml="<discarded>";

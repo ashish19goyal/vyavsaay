@@ -113,10 +113,10 @@
 
                 $('#form17').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Purchase Returns','form17',function (item)
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Purchase Returns',report_id:'form17',feach:function (item)
 				{
 					item.return_date=vTime.date({time:item.return_date});
-				});
+				}});
 				hide_loader();
             });
         }

@@ -60,7 +60,7 @@
         <li class="divider"> </li>
 
         <li>
-            <a onclick="lock_screen();">
+            <a onclick="vIni.lockScreen();">
                 <i class="icon-lock"></i> Lock Screen </a>
         </li>
         <li>

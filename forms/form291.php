@@ -218,10 +218,10 @@
 
                 $('#form291').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Receipts','form291',function (item)
-                {
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Receipts',report_id:'form291',feach:function (item)
+				{
                     item.date=get_my_past_date(item.date);
-                });
+                }});
 				hide_loader();
             });
         };

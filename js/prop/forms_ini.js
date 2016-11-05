@@ -116,7 +116,7 @@ function form1_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data_extended(columns,'Inventory',function(new_result)
+			vExport.old_export({columns:columns,file:'Inventory',feach:function(new_result)
 			{
 				total_export_requests+=1;
 
@@ -125,7 +125,7 @@ function form1_ini()
 					new_result.quantity=inventory;
 					total_export_requests-=1;
 				});
-			});
+			}});
 		});
 		hide_loader();
 	});
@@ -230,10 +230,10 @@ function form2_ini()
 
 				picture.addEventListener('change',function(evt)
 				{
-					select_picture(evt,pictureinfo,function(dataURL)
-					{
+                    vFileHandler.picture({evt:evt,size:'small',fsuccess:function(dataURL)
+                    {
 						pictureinfo.innerHTML="<div class='figure'><img id='img_form2_"+id+"' src='"+dataURL+"'></div>";
-					});
+					}});
 				},false);
 
 			});
@@ -343,7 +343,7 @@ function form5_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Assets');
+            vExport.old_export({columns:columns,file:'Assets'});
 		});
 		hide_loader();
 	});
@@ -661,7 +661,7 @@ function form11_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Payments');
+			vExport.old_export({columns:columns,file:'Payments'});
 		});
 		hide_loader();
 	});
@@ -942,7 +942,7 @@ function form14_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Tasks');
+			vExport.old_export({columns:columns,file:'Tasks'});
 		});
 		hide_loader();
 	});
@@ -1064,7 +1064,7 @@ function form16_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Customer Returns');
+			vExport.old_export({columns:columns,file:'Customer Returns'});
 		});
 		hide_loader();
 	});
@@ -1368,7 +1368,7 @@ function form35_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Offers');
+			vExport.old_export({columns:columns,file:'Offers'});
 		});
 		hide_loader();
 	});
@@ -1941,7 +1941,7 @@ function form43_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Purchase Orders');
+			vExport.old_export({columns:columns,file:'Purchase Orders'});
 		});
 		hide_loader();
 	});
@@ -2044,7 +2044,7 @@ function form54_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Printing Templates');
+			vExport.old_export({columns:columns,file:'Printing Templates'});
 		});
 		hide_loader();
 	});
@@ -2152,7 +2152,7 @@ function form58_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Service Pre requisites');
+			vExport.old_export({columns:columns,file:'Service Pre-requisites'});
 		});
 		hide_loader();
 	});
@@ -2261,7 +2261,7 @@ function form59_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Product Pre requisites');
+			vExport.old_export({columns:columns,file:'Product pre-requisites'});
 		});
 		hide_loader();
 	});
@@ -2366,7 +2366,7 @@ function form61_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Service Attributes');
+			vExport.old_export({columns:columns,file:'Service Attributes'});
 		});
 		hide_loader();
 	});
@@ -2475,7 +2475,7 @@ function form62_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Product Reviews');
+			vExport.old_export({columns:columns,file:'Product Reviews'});
 		});
 		hide_loader();
 	});
@@ -2584,7 +2584,7 @@ function form63_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Service Reviews');
+			vExport.old_export({columns:columns,file:'Service Reviews'});
 		});
 		hide_loader();
 	});
@@ -2689,7 +2689,7 @@ function form64_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Service Cross Sells');
+			vExport.old_export({columns:columns,file:'Service Cross Sells'});
 		});
 		hide_loader();
 	});
@@ -2795,7 +2795,7 @@ function form66_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Product Cross Sells');
+			vExport.old_export({columns:columns,file:'Product Cross sells'});
 		});
 		hide_loader();
 	});
@@ -3069,7 +3069,7 @@ function form70_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Sale Orders');
+			vExport.old_export({columns:columns,file:'Sale Orders'});
 		});
 		hide_loader();
 	});
@@ -3178,7 +3178,7 @@ function form77_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Shortcuts');
+			vExport.old_export({columns:columns,file:'Shortcuts'});
 		});
 		hide_loader();
 	});
@@ -3358,7 +3358,7 @@ function form79_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Task Types');
+			vExport.old_export({columns:columns,file:'Task Types'});
 		});
 		hide_loader();
 	});
@@ -3464,7 +3464,7 @@ function form81_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Sale Leads');
+			vExport.old_export({columns:columns,file:'Sale Leads'});
 		});
 		hide_loader();
 	});
@@ -3584,7 +3584,7 @@ function form84_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Subscriptions');
+			vExport.old_export({columns:columns,file:'Subscriptions'});
 		});
 		hide_loader();
 	});
@@ -3982,7 +3982,7 @@ function form87_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Products');
+			vExport.old_export({columns:columns,file:'Products'});
 		});
 		hide_loader();
 	});
@@ -4101,7 +4101,7 @@ function form88_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Manufacturing Schedule');
+			vExport.old_export({columns:columns,file:'Manufacturing Schedule'});
 		});
 		hide_loader();
 	});
@@ -4417,7 +4417,7 @@ function form93_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Loans');
+			vExport.old_export({columns:columns,file:'Loans'});
 		});
 		hide_loader();
 	});
@@ -4682,7 +4682,7 @@ function form101_ini()
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
-				get_export_data(columns,'Projects');
+				vExport.old_export({columns:columns,file:'Projects'});
 			});
 			hide_loader();
 		});
@@ -5194,7 +5194,7 @@ function form108_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Sale Orders');
+			vExport.old_export({columns:columns,file:'Sale Orders'});
 		});
 		hide_loader();
 	});
@@ -5297,7 +5297,7 @@ function form109_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Product Attributes');
+			vExport.old_export({columns:columns,file:'Product Attributes'});
 		});
 		hide_loader();
 	});
@@ -5405,7 +5405,7 @@ function form113_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Sale Challans');
+			vExport.old_export({columns:columns,file:'Sale Challans'});
 		});
 		hide_loader();
 	});
@@ -5515,7 +5515,7 @@ function form115_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Purchase Challans');
+			vExport.old_export({columns:columns,file:'Purchase Challans'});
 		});
 		hide_loader();
 	});
@@ -5648,7 +5648,7 @@ function form116_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Loyalty Programs');
+			vExport.old_export({columns:columns,file:'Loyalty Programs'});
 		});
 		hide_loader();
 	});
@@ -6160,7 +6160,7 @@ function form120_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'loyalty_customers');
+			vExport.old_export({columns:columns,file:':Loyalty Programs customers'});
 		});
 		hide_loader();
 	});
@@ -6262,7 +6262,7 @@ function form121_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'loyalty_points');
+			vExport.old_export({columns:columns,file:'Loyalty points'});
 		});
 		hide_loader();
 	});
@@ -6551,7 +6551,7 @@ function form124_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'receipts');
+			vExport.old_export({columns:columns,file:'Receipts'});
 		});
 		hide_loader();
 	});
@@ -6661,7 +6661,7 @@ function form125_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'customer_accounts');
+			vExport.old_export({columns:columns,file:'Customer Accounts'});
 		});
 		hide_loader();
 	});
@@ -6775,7 +6775,7 @@ function form126_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'issues');
+			vExport.old_export({columns:columns,file:'Issues'});
 		});
 		hide_loader();
 	});
@@ -6925,7 +6925,7 @@ function form128_ini()
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
-				get_export_data(columns,'service_requests');
+				vExport.old_export({columns:columns,file:'Service Requests'});
 			});
 			hide_loader();
 		});
@@ -7473,7 +7473,7 @@ function form131_ini()
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
-				get_export_data(columns,'tasks');
+				vExport.old_export({columns:columns,file:'Tasks'});
 			});
 			hide_loader();
 		});
@@ -8261,7 +8261,7 @@ function form141_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'sale_orders');
+			vExport.old_export({columns:columns,file:'Sale Orders'});
 		});
 		hide_loader();
 	});
@@ -8384,7 +8384,7 @@ function form146_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'manufacturing_schedule');
+			vExport.old_export({columns:columns,file:'Manufacturing Schedule'});
 		});
 		hide_loader();
 	});
@@ -8867,7 +8867,7 @@ function form152_ini()
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
-				get_export_data(columns,'Quotations');
+				vExport.old_export({columns:columns,file:'Quotations'});
 			});
 			hide_loader();
 		});
@@ -9489,7 +9489,7 @@ function form155_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'inventory');
+			vExport.old_export({columns:columns,file:'Inventory'});
 		});
 
 		hide_loader();
@@ -9658,7 +9658,7 @@ function form156_ini()
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
-				get_export_data(columns,'store_placement');
+				vExport.old_export({columns:columns,file:'Store Placement'});
 			});
 			hide_loader();
 		});
@@ -9812,7 +9812,7 @@ function form157_ini()
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
-				get_export_data(columns,'store_movement');
+				vExport.old_export({columns:columns,file:'Store Movement'});
 			});
 			hide_loader();
 		});
@@ -10044,7 +10044,7 @@ function form161_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'checklist_items');
+			vExport.old_export({columns:columns,file:'Checklist Items'});
 		});
 		hide_loader();
 	});
@@ -10147,7 +10147,7 @@ function form162_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'product_checklist');
+			vExport.old_export({columns:columns,file:'Product Checklist'});
 		});
 		hide_loader();
 	});
@@ -10302,7 +10302,7 @@ function form163_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'product_dimensions');
+			vExport.old_export({columns:columns,file:'Product Dimensions'});
 		});
 		hide_loader();
 	});
@@ -10591,7 +10591,7 @@ function form167_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'storage_structure');
+			vExport.old_export({columns:columns,file:'Storage Structure'});
 		});
 
 		hide_loader();
@@ -10726,10 +10726,10 @@ function form169_ini()
 
 				picture.addEventListener('change',function(evt)
 				{
-					select_picture(evt,pictureinfo,function(dataURL)
-					{
+                    vFileHandler.picture({evt:evt,size:'small',fsuccess:function(dataURL)
+                    {
 						pictureinfo.innerHTML="<div class='figure' name='"+pic_results_id+"'><img id='img_form169_"+result.id+"' src='"+dataURL+"'></div>";
-					});
+					}});
 				},false);
 
 				longPressEditable($('.dblclick_editable'));
@@ -10766,9 +10766,7 @@ function form169_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_limited_export_data(new_columns,'Products',function(new_result)
-			{
-			});
+            vExport.export({columns:new_columns,file:'Prodcuts'});
 		});
 		hide_loader();
 	});
@@ -10903,7 +10901,7 @@ function form170_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'store_areas');
+			vExport.old_export({columns:columns,file:'Store Areas'});
 		});
 		hide_loader();
 	});
@@ -11008,7 +11006,7 @@ function form171_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'sale_channels');
+			vExport.old_export({columns:columns,file:'Sale Channels'});
 		});
 		hide_loader();
 	});
@@ -11140,7 +11138,7 @@ function form172_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'pricing_sheet');
+			vExport.old_export({columns:columns,file:'Pricing Sheet'});
 		});
 		hide_loader();
 	});
@@ -11252,7 +11250,7 @@ function form173_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'sku_mapping');
+			vExport.old_export({columns:columns,file:'SKU Mapping'});
 		});
 		hide_loader();
 	});
@@ -11364,7 +11362,7 @@ function form174_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'pickup_charges');
+			vExport.old_export({columns:columns,file:'Pickup Charges'});
 		});
 		hide_loader();
 	});
@@ -11478,7 +11476,7 @@ function form175_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'channel_categories');
+			vExport.old_export({columns:columns,file:'Channel Categories'});
 		});
 		hide_loader();
 	});
@@ -11609,7 +11607,7 @@ function form176_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'category_sku_mapping');
+			vExport.old_export({columns:columns,file:'Category SKU Mapping'});
 		});
 		hide_loader();
 	});
@@ -11717,7 +11715,7 @@ function form177_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'prioritization_parameters');
+			vExport.old_export({columns:columns,file:'Prioritization Parameters'});
 		});
 		hide_loader();
 	});
@@ -11852,7 +11850,7 @@ function form184_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'production_steps');
+			vExport.old_export({columns:columns,file:'Production Steps'});
 		});
 		hide_loader();
 	});
@@ -11983,7 +11981,7 @@ function form187_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'testing_steps');
+			vExport.old_export({columns:columns,file:'Testing Steps'});
 		});
 		hide_loader();
 	});
@@ -12432,7 +12430,7 @@ function form190_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'orders');
+			vExport.old_export({columns:columns,file:'Orders'});
 		});
 		hide_loader();
 	});
@@ -12833,7 +12831,7 @@ function form195_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'letterheads');
+			vExport.old_export({columns:columns,file:'LetterHeads'});
 		});
 		hide_loader();
 	});
@@ -12960,7 +12958,7 @@ function form208_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'treatment_plans');
+			vExport.old_export({columns:columns,file:'Treatment Plans'});
 		});
 		hide_loader();
 	});
@@ -13553,7 +13551,7 @@ function form217_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'supplier_sku');
+			vExport.old_export({columns:columns,file:'Supplier SKUs'});
 		});
 		hide_loader();
 	});
@@ -13792,7 +13790,7 @@ function form223_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'purchase_orders');
+			vExport.old_export({columns:columns,file:'Purchase Orders'});
 		});
 		hide_loader();
 	});
@@ -13949,7 +13947,7 @@ function form227_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data_extended(columns,'WarehouseInventory',function(new_result)
+			vExport.old_export({columns:columns,file:'WarehouseInventory',feach:function(new_result)
 			{
 				total_export_requests+=3;
 
@@ -13998,7 +13996,7 @@ function form227_ini()
 					}
 					total_export_requests-=1;
 				},hire_quantity_xml);
-			});
+			}});
 		});
 		hide_loader();
 	});
@@ -14137,7 +14135,7 @@ function form228_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'demo');
+			vExport.old_export({columns:columns,file:'Demo'});
 		});
 		hide_loader();
 	});
@@ -14273,7 +14271,7 @@ function form229_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'hire');
+			vExport.old_export({columns:columns,file:'Hire'});
 		});
 		hide_loader();
 	});
@@ -14393,7 +14391,7 @@ function form230_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'In-out');
+			vExport.old_export({columns:columns,file:'In-out'});
 		});
 		hide_loader();
 	});
@@ -14614,7 +14612,7 @@ function form232_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'prescriptions');
+			vExport.old_export({columns:columns,file:'Prescriptions'});
 		});
 		hide_loader();
 	});
@@ -14786,10 +14784,10 @@ function form235_ini()
 
 				picture.addEventListener('change',function(evt)
 				{
-					select_picture(evt,pictureinfo,function(dataURL)
+					vFileHandler.picture({evt:evt,size:'small',fsuccess:function(dataURL)
 					{
 						pictureinfo.innerHTML="<div class='form_grid_item' name='"+pic_results_id+"'><img id='img_form235_"+result.id+"' src='"+dataURL+"'></div>";
-					});
+					}});
 				},false);
 
 				longPressEditable($('.dblclick_editable'));
@@ -14827,7 +14825,7 @@ function form235_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'products');
+			vExport.old_export({columns:columns,file:'Products'});
 		});
 		hide_loader();
 	});
@@ -14926,7 +14924,7 @@ function form236_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'manifest_details');
+			vExport.old_export({columns:columns,file:'Manifest Details'});
 		});
 		hide_loader();
 	});
@@ -15237,7 +15235,7 @@ function form249_ini()
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
-				get_export_data(columns,'Transit bags');
+				vExport.old_export({columns:columns,file:'Transit Bags'});
 			});
 			hide_loader();
 		});
@@ -15480,7 +15478,7 @@ function form251_ini()
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
-				get_export_data(columns,'MTS');
+				vExport.old_export({columns:columns,file:'MTS'});
 			});
 			hide_loader();
 		});
@@ -15610,7 +15608,7 @@ function form252_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Vendor Support');
+			vExport.old_export({columns:columns,file:'Vendor Support'});
 		});
 		hide_loader();
 	});
@@ -15738,7 +15736,7 @@ function form253_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Customer Support');
+			vExport.old_export({columns:columns,file:'Customer Support'});
 		});
 		hide_loader();
 	});
@@ -15866,7 +15864,7 @@ function form254_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Telecalling Support');
+			vExport.old_export({columns:columns,file:'Telecalling Support'});
 		});
 		hide_loader();
 	});
@@ -15994,7 +15992,7 @@ function form255_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Marketing Support');
+			vExport.old_export({columns:columns,file:'Marketing Support'});
 		});
 		hide_loader();
 	});
@@ -16189,7 +16187,7 @@ function form273_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_limited_export_data(new_columns,'Seller Leads');
+			vExport.export({columns:new_columns,file:'Seller Leads'});
 		});
 		hide_loader();
 	});
@@ -16307,7 +16305,7 @@ function form274_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data_extended(columns,'Inventory',function(new_result)
+			vExport.old_export({columns:columns,file:'Inventory',feach:function(new_result)
 			{
 				total_export_requests+=1;
 				get_inventory(new_result.product_name,'',function(inventory)
@@ -16315,7 +16313,7 @@ function form274_ini()
 					new_result['Stock Quantity']=""+(-parseFloat(inventory));
 					total_export_requests-=1;
 				});
-			});
+			}});
 		});
 		hide_loader();
 	});
@@ -16430,7 +16428,7 @@ function form275_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'In-out');
+			vExport.old_export({columns:columns,file:'In-out'});
 		});
 		hide_loader();
 	});
@@ -16570,7 +16568,7 @@ function form289_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_limited_export_data(new_columns,'Buyer Leads');
+			vExport.export({columns:new_columns,file:'Buyer Leads'});
 		});
 		hide_loader();
 	});
@@ -16665,7 +16663,7 @@ function form290_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_limited_export_data(new_columns,'Cities');
+			vExport.export({columns:new_columns,file:'Cities'});
 		});
 		hide_loader();
 	});
@@ -17261,7 +17259,7 @@ function form297_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Purchase Orders');
+			vExport.old_export({columns:columns,file:'Purchase Orders'});
 		});
 		hide_loader();
 	});
@@ -17376,11 +17374,11 @@ function form300_ini()
 
 			picture.addEventListener('change',function(evt)
 			{
-				select_picture(evt,pictureinfo,function(dataURL)
+				vFileHandler.picture({evt:evt,size:'small',fsuccess:function(dataURL)
 				{
 					var pic_result_id=$('#figure_form300_'+result.id).attr('name');
 					pictureinfo.innerHTML="<div class='figure' name='"+pic_result_id+"'><img id='img_form300_"+result.id+"' src='"+dataURL+"'></div>";
-				});
+				}});
 			},false);
 		});
 
@@ -17415,7 +17413,7 @@ function form300_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_limited_export_data(new_columns,'Products');
+			vExport.export({columns:new_columns,file:'Products'});
 		});
 		hide_loader();
 	});
@@ -17553,7 +17551,7 @@ function form302_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_limited_export_data(new_columns,'QR Sources');
+			vExport.export({columns:new_columns,file:'QR Sources'});
 		});
 		hide_loader();
 	});

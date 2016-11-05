@@ -162,8 +162,8 @@
 
                 $('#form145').formcontrol();
                 paginator.update_index(results.length);
-                initialize_tabular_report_buttons(columns,'Store Movement','form145',function (item)
-				{
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Store Movement',report_id:'form145',feach:function (item)
+                {
 					item['Scheduled Time']=vTime.datetime({time:result.applicable_from});
 					item['Dispatched Time']=vTime.datetime({time:result.dispatched_time});
 					item['Received Time']=vTime.datetime({time:result.received_time});
@@ -171,7 +171,7 @@
 					delete item.applicable_from;
 					delete item.dispatched_time;
 					delete item.received_time;
-				});
+				}});
                 hide_loader();
             });
         }

@@ -281,7 +281,7 @@
 
 						$('#report118_body').append(rowsHTML);
 					});
-					initialize_static_tabular_report_buttons('Item Register','report118');
+					vExport.export_buttons({file:'Item Register',report_id:'report118',action:'static'});
 					hide_loader();
 				}
 	        },500);

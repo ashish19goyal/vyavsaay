@@ -1,4 +1,4 @@
-<div id='report95' class='tab-pane portlet box red-sunglo'>	   
+<div id='report95' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
 		<div class="actions">
             <div class="btn-group">
@@ -15,14 +15,14 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 		<form id='report95_header' autocomplete="off">
 			<fieldset>
 			     <input type='text' placeholder='Scan AWB #' class='floatlabel' required name='awb'>
-				<label><input type='submit' class='submit_hidden'></label>			
+				<label><input type='submit' class='submit_hidden'></label>
 			</fieldset>
 		</form>
 	<br>
@@ -37,11 +37,11 @@
 			<tbody id='report95_body'></tbody>
 		</table>
 	</div>
-	
+
 	<script>
 
     function report95_header_ini()
-    {	
+    {
         var form=document.getElementById('report95_header');
         var awb_filter=form.elements['awb'];
 
@@ -53,8 +53,9 @@
             event.preventDefault();
             report95_ini();
         });
-        
-        initialize_static_tabular_report_buttons('Order Sorting','report95');
+
+		vExport.export_buttons({file:'Order Sorting',report_id:'report95',action:'static'});
+
         var paginator=$('#report95').paginator({visible:false,container:$('#report95')});
         $(awb_filter).focus();
     }
@@ -75,7 +76,7 @@
                               indexes:[{index:'status',exact:'active'},
                                       {index:'pincode',exact:awbs[0]}]};
                 read_json_single_column(zone_data,function(pincodes)
-                {				
+                {
                     if(pincodes.length>0)
                     {
                         var rowsHTML="<tr>";
@@ -98,16 +99,16 @@
                     }
                     awb_filter.value="";
                     hide_loader();
-                });	
+                });
             }
-            else 
+            else
             {
                 $("#modal71_link").click();
                 awb_filter.value="";
                 hide_loader();
-            }	  		   
+            }
         });
     };
-	
+
 	</script>
 </div>

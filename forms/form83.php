@@ -1,6 +1,6 @@
 <div id='form83' class='tab-pane portlet box yellow-saffron'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='modal35_action();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -22,9 +22,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 		<form id='form83_header' autocomplete="off">
 			<fieldset>
@@ -35,10 +35,10 @@
 		</form>
 		<br>
 		<div id='form83_body' class='row'>
-			
+
 		</div>
 	</div>
-    
+
     <script>
         function form83_header_ini()
         {
@@ -65,7 +65,7 @@
             show_loader();
             var fid=$("#form83_link").attr('data_id');
             if(fid==null)
-                fid="";	
+                fid="";
 
             $('#form83_body').html("");
 
@@ -74,7 +74,7 @@
             var fowner=filter_fields.elements['owner'].value;
 
             var paginator=$('#form83_body').paginator({'page_size':24});
-			
+
 			var columns=new Object();
 					columns.count=paginator.page_size();
 					columns.start_index=paginator.get_index();
@@ -82,8 +82,8 @@
 
 					columns.indexes=[{index:'id',value:fid},
 									{index:'name',value:fname},
-									{index:'owner',value:fowner}];		
-			
+									{index:'owner',value:fowner}];
+
 
             read_json_rows('form83',columns,function(results)
             {
@@ -96,7 +96,7 @@
 						clear_both="style='clear:both;'";
 					}
 					counter++;
-					
+
                     var rowsHTML="<div class='col-xs-6 col-sm-3 col-md-3' "+clear_both+">"+
 											"<div class='thumbnail'>"+
                                  	          "<div class='caption'>"+
@@ -110,7 +110,7 @@
                                  	          "</div>"+
                                	            "</div>"+
                                     "</div>";
-					
+
                     $('#form83_body').append(rowsHTML);
                     var fields=document.getElementById("form83_"+result.id);
                     var owner_filter=fields.elements['owner'];
@@ -124,10 +124,10 @@
                         form83_update_item(fields);
                     });
                 });
-                
+
                 $('#form83').formcontrol();
-				paginator.update_index(results.length);				
-				initialize_tabular_report_buttons(columns,'Customers','form83',function (item){});
+				paginator.update_index(results.length);
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Customers',report_id:'form83'});
                 hide_loader();
             });
         };
@@ -144,7 +144,7 @@
                     var name=form.elements['name'].value;
                     var data_id=form.elements['id'].value;
                     var last_updated=get_my_time();
-                    
+
                     var data_json={data_store:'store_areas',
 	 				data:[{index:'id',value:data_id}],
 	 				log:'yes',
@@ -168,7 +168,7 @@
                 var owner=form.elements['owner'].value;
                 var data_id=form.elements['id'].value;
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'store_areas',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'owner',value:owner},
@@ -196,7 +196,7 @@
                                     {column:'owner',regex:new RegExp('^[0-9a-zA-Z _.,\'+@!$()-]+$')}];
 
             var error_array=vImport.validate(data_array,validate_template_array);
-            return error_array;					
+            return error_array;
         }
 
         function form83_import(data_array,import_type)
@@ -209,7 +209,7 @@
 
 			var counter=1;
 			var last_updated=get_my_time();
-		
+
 			data_array.forEach(function(row)
 			{
 				counter+=1;
@@ -217,7 +217,7 @@
 				{
 					row.id=last_updated+counter;
 				}
-				
+
 				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'name',value:row.name},
 	 					{index:'owner',value:row.owner},
@@ -225,7 +225,7 @@
 
 				data_json.data.push(data_json_array);
 			});
-			
+
 			if(import_type=='create_new')
 			{
 				create_batch_json(data_json);
@@ -233,7 +233,7 @@
 			else
 			{
 				update_batch_json(data_json);
-			}            
+			}
         };
 
     </script>

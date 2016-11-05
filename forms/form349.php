@@ -11,11 +11,11 @@
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
                 <ul class="dropdown-menu pull-right">
-										<li>
-												<a onclick='modal219_action();'><i class='fa fa-plus'> Add</i></a>
-										</li>
-										<li class="divider"> </li>
-										<li>
+					<li>
+						<a onclick='modal219_action();'><i class='fa fa-plus'> Add</i></a>
+					</li>
+					<li class="divider"> </li>
+					<li>
                         <a id='form349_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
                     </li>
                     <li>
@@ -188,7 +188,7 @@
 
 				$('#form349').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Policy Claims','form349',function (item){});
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Policy Claims',report_id:'form349'});
 				hide_loader();
 			});
 		};

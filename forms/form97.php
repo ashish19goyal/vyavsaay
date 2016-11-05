@@ -1,6 +1,6 @@
-<div id='form97' class='tab-pane portlet box green-meadow'>	   
+<div id='form97' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form97_add_item();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -22,9 +22,9 @@
                     </li>
                 </ul>
             </div>
-      </div>	
+      </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -49,17 +49,17 @@
 			var supplier_filter=filter_fields.elements['name'];
 			var attribute_filter=filter_fields.elements['attribute'];
 			var value_filter=filter_fields.elements['value'];
-			
+
 			var supplier_data={data_store:'suppliers',return_column:'acc_name'};
 			var attribute_data={data_store:'attributes',return_column:'attribute',
-										indexes:[{index:'type',exact:'supplier'}]};		
+										indexes:[{index:'type',exact:'supplier'}]};
 			var value_data={data_store:'attributes',return_column:'value',
 								indexes:[{index:'type',exact:'supplier'}]};
-			
+
 			set_my_filter_json(supplier_data,supplier_filter);
 			set_my_filter_json(attribute_data,attribute_filter);
 			set_my_filter_json(value_data,value_filter);
-			
+
 			$(filter_fields).off('submit');
 			$(filter_fields).on('submit',function(event)
 			{
@@ -67,23 +67,23 @@
 				form97_ini();
 			});
 		};
-		
+
 		function form97_ini()
 		{
 			show_loader();
 			var fid=$("#form97_link").attr('data_id');
 			if(fid==null)
-				fid="";	
+				fid="";
 
 			$('#form97_body').html("");
-			
-			var filter_fields=document.getElementById('form97_header');			
+
+			var filter_fields=document.getElementById('form97_header');
 			var fsupplier=filter_fields.elements['name'].value;
 			var fattribute=filter_fields.elements['attribute'].value;
 			var fvalue=filter_fields.elements['value'].value;
-			
+
 			var paginator=$('#form97_body').paginator();
-			
+
 			var new_columns=new Object();
 					new_columns.count=paginator.page_size();
 					new_columns.start_index=paginator.get_index();
@@ -93,7 +93,7 @@
 									{index:'type',exact:'supplier'},
 									{index:'attribute',value:fattribute},
 									{index:'value',value:fvalue}];
-		
+
 			read_json_rows('form97',new_columns,function(results)
 			{
 				results.forEach(function(result)
@@ -112,10 +112,10 @@
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form97_"+result.id+"' value='"+result.id+"'>";
 								rowsHTML+="<button type='submit' class='btn green' name='save' form='form97_"+result.id+"' title='Save'><i class='fa fa-save'></i></button>";
-								rowsHTML+="<button type='button' class='btn red' name='delete' form='form97_"+result.id+"' title='Delete' onclick='form97_delete_item($(this));'><i class='fa fa-trash'></i></button>";	
-							rowsHTML+="</td>";			
+								rowsHTML+="<button type='button' class='btn red' name='delete' form='form97_"+result.id+"' title='Delete' onclick='form97_delete_item($(this));'><i class='fa fa-trash'></i></button>";
+							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-					
+
 					$('#form97_body').append(rowsHTML);
 					var fields=document.getElementById("form97_"+result.id);
 					$(fields).on("submit", function(event)
@@ -124,14 +124,14 @@
 						form97_update_item(fields);
 					});
 				});
-		
+
 				$('#form97').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Supplier Attributes','form97',function (item){});
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Supplier Attributes',report_id:'form97'});
 				hide_loader();
 			});
 		};
-		
+
 		function form97_add_item()
 		{
 			if(is_create_access('form97'))
@@ -151,31 +151,31 @@
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form97_"+id+"' value='"+id+"'>";
 						rowsHTML+="<button type='submit' class='btn green' form='form97_"+id+"' title='Save'><i class='fa fa-save'></i></button>";
-						rowsHTML+="<button type='button' class='btn red' form='form97_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<button type='button' class='btn red' form='form97_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
+					rowsHTML+="</td>";
 				rowsHTML+="</tr>";
-			
+
 				$('#form97_body').prepend(rowsHTML);
 				var fields=document.getElementById("form97_"+id);
 				var supplier_filter=fields.elements[0];
 				var attribute_filter=fields.elements[1];
-				
+
 				$(fields).on("submit", function(event)
 				{
 					event.preventDefault();
 					form97_create_item(fields);
 				});
-						
+
 				var supplier_data={data_store:'suppliers',return_column:'acc_name'};
-				set_my_value_list_json(supplier_data,supplier_filter,function () 
+				set_my_value_list_json(supplier_data,supplier_filter,function ()
 				{
 					$(supplier_filter).focus();
 				});
-		
+
 				var attribute_data={data_store:'attributes',return_column:'attribute',
 											indexes:[{index:'type',exact:'supplier'}]};
 				set_my_filter_json(attribute_data,attribute_filter);
-				
+
 				$('#form97').formcontrol();
 			}
 			else
@@ -183,7 +183,7 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form97_create_item(form)
 		{
 			if(is_create_access('form97'))
@@ -193,7 +193,7 @@
 				var value=form.elements[2].value;
 				var data_id=form.elements[3].value;
 				var last_updated=get_my_time();
-				
+
 				var data_json={data_store:'attributes',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
@@ -202,19 +202,19 @@
 	 					{index:'attribute',value:attribute},
 	 					{index:'value',value:value},
 	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Added',notes:'Attribute for supplier '+supplier,link_to:'form97'}}; 								
-				create_json(data_json);	
-				
+	 				log_data:{title:'Added',notes:'Attribute for supplier '+supplier,link_to:'form97'}};
+				create_json(data_json);
+
 				$(form).readonly();
-				
+
 				var del_button=form.elements[5];
 				del_button.removeAttribute("onclick");
 				$(del_button).on('click',function(event)
 				{
 					form97_delete_item(del_button);
 				});
-				
-				$(form).off('submit');		
+
+				$(form).off('submit');
 				$(form).on('submit',function(event)
 				{
 					event.preventDefault();
@@ -226,7 +226,7 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form97_update_item(form)
 		{
 			if(is_update_access('form97'))
@@ -244,8 +244,8 @@
 	 					{index:'attribute',value:attribute},
 	 					{index:'value',value:value},
 	 					{index:'last_updated',value:last_updated}],
-	 				log_data:{title:'Updated',notes:'Attribute for supplier '+supplier,link_to:'form97'}}; 								
-				
+	 				log_data:{title:'Updated',notes:'Attribute for supplier '+supplier,link_to:'form97'}};
+
 				update_json(data_json);
 				$(form).readonly();
 			}
@@ -254,7 +254,7 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form97_delete_item(button)
 		{
 			if(is_delete_access('form97'))
@@ -263,18 +263,18 @@
 				{
 					var form_id=$(button).attr('form');
 					var form=document.getElementById(form_id);
-					
+
 					var supplier=form.elements[0].value;
 					var attribute=form.elements[1].value;
 					var value=form.elements[2].value;
 					var data_id=form.elements[3].value;
 					var last_updated=get_my_time();
-					
+
 					var data_json={data_store:'attributes',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id}],
-	 				log_data:{title:'Deleted',notes:'Attribute for supplier '+supplier,link_to:'form97'}}; 								
-				
+	 				log_data:{title:'Deleted',notes:'Attribute for supplier '+supplier,link_to:'form97'}};
+
 					delete_json(data_json);
 					$(button).parent().parent().remove();
 				});
@@ -284,23 +284,23 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form97_import_template()
 		{
 			var data_array=['id','name','attribute','value'];
 			vUtil.arrayToCSV(data_array);
 		};
-		
+
 		function form97_import_validate(data_array)
 		{
 			var validate_template_array=[{column:'name',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 									{column:'attribute',required:'yes',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')},
 									{column:'value',regex:new RegExp('^[0-9a-zA-Z \'_.,/@$!()-]+$')}];
-							
+
 			var error_array=vImport.validate(data_array,validate_template_array);
-			return error_array;					
+			return error_array;
 		}
-		
+
 		function form97_import(data_array,import_type)
 		{
 			var data_json={data_store:'attributes',
@@ -311,7 +311,7 @@
 
 			var counter=1;
 			var last_updated=get_my_time();
-		
+
 			data_array.forEach(function(row)
 			{
 				counter+=1;
@@ -319,7 +319,7 @@
 				{
 					row.id=last_updated+counter;
 				}
-				
+
 				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'name',value:row.name},
 	 					{index:'type',value:'supplier'},
@@ -329,7 +329,7 @@
 
 				data_json.data.push(data_json_array);
 			});
-			
+
 			if(import_type=='create_new')
 			{
 				create_batch_json(data_json);

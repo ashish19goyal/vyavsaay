@@ -282,14 +282,14 @@ function set_session_online(func)
 						{
 							//console.log('5.7');
 							set_session_var('offline','online');
-							hide_menu_items();
+							vIni.hideMenu();
 							func();
 						};
 						put_req.onerror=function(e)
 						{
 							//console.log('5.7.1');
 							set_session_var('offline','online');
-							hide_menu_items();
+							vIni.hideMenu();
 							func();
 						};
 					}
@@ -297,7 +297,7 @@ function set_session_online(func)
 					{
 						//console.log('5.6.1');
 						set_session_var('offline','online');
-						hide_menu_items();
+						vIni.hideMenu();
 						func();
 					}
 				};
@@ -333,7 +333,7 @@ function set_session_online(func)
 	{
 		//console.log('5.11');
 		set_session_var('offline','online');
-		hide_menu_items();
+		vIni.hideMenu();
 		func();
 	}
 };
@@ -374,7 +374,7 @@ function set_session_offline()
 					//console.log('put offline record');
 
 					set_session_var('offline','offline');
-					hide_menu_items();
+					vIni.hideMenu();
 					hide_loader();
 				};
 			}

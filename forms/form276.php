@@ -1,6 +1,6 @@
-<div id='form276' class='tab-pane portlet box green-meadow'>	   
+<div id='form276' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form276_add_item();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -18,9 +18,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -38,28 +38,28 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<script>
 		function form276_header_ini()
 		{
 			var filter_fields=document.getElementById('form276_header');
 			var table_filter=filter_fields.elements['table'];
 			var tab_filter=filter_fields.elements['tab'];
-				
+
 			var name_data={data_store:'system_search',return_column:'table_name'};
 			var tab_data={data_store:'system_search',return_column:'tab_name'};
-		
+
 			$(filter_fields).off('submit');
 			$(filter_fields).on('submit',function(event)
 			{
 				event.preventDefault();
 				form276_ini();
 			});
-		
+
 			set_my_filter_json(name_data,table_filter);
 			set_my_filter_json(tab_data,tab_filter);
 		};
-		
+
 		function form276_ini()
 		{
 			show_loader();
@@ -68,19 +68,19 @@
 				fid="";
 
 			$('#form276_body').html("");
-			
+
 			var filter_fields=document.getElementById('form276_header');
 			var ftable=filter_fields.elements['table'].value;
 			var ftab=filter_fields.elements['tab'].value;
 			var fsearch=filter_fields.elements['search'].value;
-			
+
 			var paginator=$('#form276_body').paginator();
-			
+
 			var new_columns=new Object();
 					new_columns.count=paginator.page_size();
 					new_columns.start_index=paginator.get_index();
-					new_columns.data_store='system_search';		
-					
+					new_columns.data_store='system_search';
+
 					new_columns.indexes=[{index:'id',value:fid},
 										{index:'search_column_array',value:fsearch},
 										{index:'table_name',value:ftable},
@@ -91,9 +91,9 @@
 										{index:'return_columns'},
 										{index:'tab_order'},
 										{index:'tab_name',value:ftab}];
-				
+
 			read_json_rows('form276',new_columns,function(results)
-			{	
+			{
 				results.forEach(function(result)
 				{
 					var rowsHTML="<tr>";
@@ -115,30 +115,30 @@
 								rowsHTML+="<input type='number' placeholder='Count' class='floatlabel dblclick_editable' readonly='readonly' form='form276_"+result.id+"' value='"+result.result_count+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
-								rowsHTML+="<input type='hidden' form='form276_"+result.id+"' value='"+result.id+"'>";	
+								rowsHTML+="<input type='hidden' form='form276_"+result.id+"' value='"+result.id+"'>";
 								rowsHTML+="<button type='submit' class='btn green' form='form276_"+result.id+"'><i class='fa fa-save'></i></button>";
 								rowsHTML+="<button type='button' class='btn red' form='form276_"+result.id+"' title='Delete' onclick='form276_delete_item($(this));'><i class='fa fa-trash'></i></button>";
 								rowsHTML+="<button type='button' class='btn yellow' form='form276_"+result.id+"' onclick=\"modal169_action('"+result.id+"')\">Return Columns</button>";
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-					
+
 					$('#form276_body').append(rowsHTML);
 					var fields=document.getElementById('form276_'+result.id);
-					
-					$(fields).on('submit',function (ev) 
+
+					$(fields).on('submit',function (ev)
 					{
 						ev.preventDefault();
 						form276_update_item(fields);
 					});
 				});
-		
+
 				$('#form276').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Search Settings','form276',function (item){});
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Search Settings',report_id:'form276'});
 				hide_loader();
 			});
 		}
-		
+
 		function form276_add_item()
 		{
 			if(is_create_access('form276'))
@@ -163,36 +163,36 @@
 								rowsHTML+="<input type='number' placeholder='Count' class='floatlabel dblclick_editable' form='form276_"+id+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
-								rowsHTML+="<input type='hidden' form='form276_"+id+"' value='"+id+"'>";	
+								rowsHTML+="<input type='hidden' form='form276_"+id+"' value='"+id+"'>";
 								rowsHTML+="<button type='submit' class='btn green' form='form276_"+id+"' name='save' title='Save'><i class='fa fa-save'></i></button>";
 								rowsHTML+="<button type='button' class='btn red' form='form276_"+id+"' name=''delete title='Delete' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
 								rowsHTML+="<button type='button' class='btn yellow' form='form276_"+id+"' onclick=\"modal169_action('"+id+"')\">Return Columns</button>";
 							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-		
+
 				$('#form276_body').prepend(rowsHTML);
-				
+
 				var fields=document.getElementById("form276_"+id);
 				var form_filter=fields.elements[6];
-				var status_filter=fields.elements[8];			
-				
+				var status_filter=fields.elements[8];
+
 				var form_data={data_store:'user_preferences',return_column:'name',
 									indexes:[{index:'value',exact:'checked'}]};
 				set_my_value_list_json(form_data,form_filter);
-		
+
 				$(fields).on("submit", function(event)
 				{
 					event.preventDefault();
 					form276_create_item(fields);
 				});
-				$('#form276').formcontrol();					
+				$('#form276').formcontrol();
 			}
 			else
 			{
 				$("#modal2_link").click();
-			}		
+			}
 		}
-		
+
 		function form276_create_item(form)
 		{
 			if(is_create_access('form276'))
@@ -208,7 +208,7 @@
 				var data_id=form.elements[8].value;
 				var del_button=form.elements[10];
 				var last_updated=get_my_time();
-				
+
 				var data_json={data_store:'system_search',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
@@ -223,17 +223,17 @@
 	 					{index:'status',value:'active'},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Added',notes:'Search tab '+tab_name,link_to:'form276'}};
- 				
+
 				create_json(data_json);
-				
+
 				$(form).readonly();
-				
+
 				del_button.removeAttribute("onclick");
 				$(del_button).on('click',function(event)
 				{
 					form276_delete_item(del_button);
 				});
-				
+
 				$(form).off('submit');
 				$(form).on('submit',function(event)
 				{
@@ -246,7 +246,7 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form276_update_item(form)
 		{
 			if(is_update_access('form276'))
@@ -260,7 +260,7 @@
 				var result_form=form.elements[6].value;
 				var result_count=form.elements[7].value;
 				var data_id=form.elements[8].value;
-				
+
 				var last_updated=get_my_time();
 				var data_json={data_store:'system_search',
 	 				log:'yes',
@@ -277,7 +277,7 @@
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Updated',notes:'Search settings '+name,link_to:'form276'}};
  				update_json(data_json);
- 				
+
 				$(form).readonly();
 			}
 			else
@@ -285,7 +285,7 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form276_delete_item(button)
 		{
 			if(is_delete_access('form276'))
@@ -296,12 +296,12 @@
 					var form=document.getElementById(form_id);
 					var data_id=form.elements[8].value;
 					var tab_name=form.elements[1].value;
-				
+
 					var data_json={data_store:'system_search',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id}],
 	 				log_data:{title:'Deleted',notes:'Search tab '+tab_name,link_to:'form276'}};
- 									
+
 					delete_json(data_json);
 					$(button).parent().parent().remove();
 				});
@@ -311,7 +311,7 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 
 	</script>
 </div>

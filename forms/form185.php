@@ -157,14 +157,14 @@
                         });
                         callback(events);
 
-                        initialize_tabular_report_buttons(tasks_data,'Manufacturing Tasks','form185',function (item)
+						vExport.export_buttons({action:'dynamic',columns:tasks_data,file:'Manufacturing Tasks',report_id:'form185',feach:function (item)
                         {
                             item['Due Time']=get_my_datetime(item.t_due);
                             delete item.t_due;
                             delete item.task_hours;
                             delete item.source_name;
                             delete item.source;
-                        });
+                        }});
                         hide_loader();
                     });
                 },
@@ -303,15 +303,15 @@
                 });
 
                 paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Manufacturing Tasks','form185',function (item)
-                {
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Manufacturing Tasks',report_id:'form185',feach:function (item)
+				{
                     item['Due Time']=get_my_datetime(item.t_due);
                     delete item.t_due;
 
                     delete item.task_hours;
                     delete item.source_name;
                     delete item.source;
-                });
+                }});
 				$('#form185').formcontrol();
 
                 hide_loader();

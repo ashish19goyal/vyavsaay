@@ -156,9 +156,9 @@
                     });
 
                     $('#form238').formcontrol();
-								    paginator.update_index(results.length);
-								    initialize_tabular_report_buttons(columns,'Inventory (finished goods)','form238',function (item)
-                    {
+					paginator.update_index(results.length);
+					vExport.export_buttons({action:'dynamic',columns:columns,file:'Inventory (finished goods)',report_id:'form238',feach:function (item)
+					{
                         total_export_requests+=1;
                         get_inventory(item.product_name,item.batch,function(inventory)
                         {
@@ -166,7 +166,7 @@
                             total_export_requests-=1;
                         });
                         item.manufacture_date=get_my_past_date(item.manufacture_date);
-                    });
+                    }});
                     hide_loader();
                 });
             });

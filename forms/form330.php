@@ -1,10 +1,10 @@
-<div id='form330' class='tab-pane portlet box green-meadow'>	   
+<div id='form330' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<div class='btn-group' id='form330_store' data-toggle='buttons'>
                 <label class='btn green-jungle my active' onclick=form330_ini('my');><input name='my' type='radio' class='toggle'>My Store</label>
                 <label class='btn green-jungle all' onclick=form330_ini('all');><input type='radio' name='all' class='toggle'>All Stores</label>
-            </div>			
+            </div>
 		</div>
 		<div class="actions">
             <div class="btn-group">
@@ -21,9 +21,9 @@
                     </li>
                 </ul>
             </div>
-      </div>	
+      </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -41,14 +41,14 @@
 			</tbody>
 		</table>
 	</div>
-        
+
     <script>
 
         function form330_header_ini()
         {
-            var filter_fields=document.getElementById('form330_header');	
+            var filter_fields=document.getElementById('form330_header');
             var names_filter=filter_fields.elements['name'];
-            
+
             $(filter_fields).off('submit');
             $(filter_fields).on('submit',function(event)
             {
@@ -72,7 +72,7 @@
                 fid="";
 
             $('#form330_body').html('');
-            
+
             var store=get_session_var('user_setting_Store');
             if(typeof store_type!='undefined' && store_type=='all')
             {
@@ -89,7 +89,7 @@
             var filter_fields=document.getElementById('form330_header');
             var fname=filter_fields.elements['name'].value;
             var paginator=$('#form330_body').paginator();
-			    
+
             var item_columns={data_store:'attributes',return_column:'name',
                               count:paginator.page_size(),
                               start_index:paginator.get_index(),
@@ -98,9 +98,9 @@
                                      {index:'value',value:'no'},
                                      {index:'attribute',value:'Batch Applicable'}]};
 
-            read_json_single_column(item_columns,function (items) 
+            read_json_single_column(item_columns,function (items)
             {
-                var columns={data_store:'product_instances',                 
+                var columns={data_store:'product_instances',
 					       count:paginator.page_size(),
 					       start_index:paginator.get_index(),
                            indexes:[{index:'id',value:fid},
@@ -130,7 +130,7 @@
                                     rowsHTML+="<input type='hidden' form='form330_"+result.id+"' name='second'>";
                                     rowsHTML+="<input type='hidden' form='form330_"+result.id+"' name='old_price' value='"+result.sale_price+"'>";
                                     rowsHTML+="<button type='submit' class='btn green' name='save' title='Save' form='form330_"+result.id+"'><i class='fa fa-save'></i></button>";
-                                rowsHTML+="</td>";			
+                                rowsHTML+="</td>";
                         rowsHTML+="</tr>";
 
                         $('#form330_body').append(rowsHTML);
@@ -139,9 +139,9 @@
                         var sale_price=fields.elements[2];
                         var sys_inventory=fields.elements[3];
                         var second_inventory=fields.elements['second'];
-                        
+
                         $(manufacturing).datepicker();
-                        
+
                         if(store=='')
                         {
                             get_inventory(result.product_name,'',function(inventory)
@@ -170,8 +170,8 @@
 
                     $('#form330').formcontrol();
 				    paginator.update_index(results.length);
-				    initialize_tabular_report_buttons(columns,'Inventory (without batch)','form330',function (item)
-                    {
+					vExport.export_buttons({action:'dynamic',columns:columns,file:'Inventory (without batch)',report_id:'form330',feach:function (item)
+				    {
                         total_export_requests+=1;
                         if(store=='')
                         {
@@ -191,15 +191,15 @@
                         }
                         item['Manufacture Date']=get_my_past_date(item.manufacture_date);
                         item['Sale Price']=item.sale_price;
-                        
+
                         delete item.manufacture_date;
                         delete item.sale_price;
-                    });
+                    }});
                     hide_loader();
                 });
             });
         };
-        
+
         function form330_update_item(form)
         {
             if(is_update_access('form330'))
@@ -220,7 +220,7 @@
                              {index:'sale_price',value:sale},
                              {index:'last_updated',value:last_updated}]};
                 update_json(data_json);
-                
+
                 if(sale!=old_price)
                 {
                     var sale_price_data={data_store:'sale_prices',return_column:'id',
@@ -238,18 +238,18 @@
                         }
                     });
                 }
-                
+
                 if(parseFloat(quantity)!=parseFloat(old_quantity))
                 {
                     var adjust_json={data_store:'inventory_adjust',
                         data:[{index:'id',value:vUtil.newKey()},
                              {index:'product_name',value:name},
-                             {index:'batch',value:name}, 
+                             {index:'batch',value:name},
                              {index:'storage',value:storage},
                              {index:'quantity',value:parseFloat(quantity)-parseFloat(old_quantity)},
                              {index:'last_updated',value:last_updated}]};
                     create_json(adjust_json);
-                    
+
                     var storage_data={data_store:'area_utilization',return_column:'id',
                                  indexes:[{index:'name',exact:storage},
                                          {index:'item_name',exact:item_name}]};
@@ -260,15 +260,15 @@
                             var adjust_json={data_store:'area_utilization',
                             data:[{index:'id',value:vUtil.newKey()},
                                  {index:'item_name',value:name},
-                                 {index:'batch',value:name}, 
+                                 {index:'batch',value:name},
                                  {index:'name',value:storage},
                                  {index:'last_updated',value:last_updated}]};
-                            create_json(adjust_json);                        
+                            create_json(adjust_json);
                         }
                     });
                 }
-                
-                $(form).readonly();               
+
+                $(form).readonly();
             }
             else
             {

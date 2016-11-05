@@ -166,8 +166,8 @@
 						{index:'status'},
                         {index:'manifest_num',array:manifest_num_array}]};
 
-            initialize_tabular_report_buttons(columns,'Manifest Report','report106',function (item)
-            {
+			vExport.export_buttons({action:'dynamic',columns:columns,file:'Manifest Report',report_id:'report106',feach:function (item)
+			{
 				var coloader="";
 				var vendor="";
 				var manifest_date="";
@@ -230,7 +230,7 @@
                 delete item.manifest_num;
 				delete item.pass_num;
 				delete item.pass_date;
-            });
+            }});
 
             hide_loader();
         });

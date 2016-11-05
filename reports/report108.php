@@ -208,6 +208,7 @@
 							{index:'issue_date'},
 							{index:'start_date'},
 							{index:'premium'},
+							{index:'net_premium'},
 	                        {index:'policy_holder'},
 	                        {index:'status',exact:'issued'}]};
 
@@ -265,12 +266,13 @@
 	            });
 	            $('#report108_body').append(rowsHTML);
 
-	            initialize_tabular_report_buttons(columns,'Policy Expiry Report','report108',function (item)
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Policy Expiry Report',report_id:'report108',feach:function (item)
 	            {
 	                item['Policy No']=item.policy_num;
 	                item['Issuer']=item.issuer;
 					item['Policy Name']=item.policy_name;
 					item['Premium']=item.premium;
+					item['Net Premium']=item.net_premium;
 	                item['Policy Type']=item.type;
 					item['Policy Description']=item.description;
 					item['Issue Date']=vTime.date({time:item.issue_date});
@@ -293,7 +295,8 @@
 	                delete item.policy_holder;
 	                delete item.agent;
 					delete item.premium;
-	            });
+					delete item.net_premium;
+	            }});
 
 	            paginator.update_index(items.length);
 	            hide_loader();

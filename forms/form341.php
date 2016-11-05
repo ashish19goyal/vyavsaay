@@ -140,10 +140,10 @@
 
 				$('#form341').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Tabs List','form341',function (item)
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Tabs List',report_id:'form341',feach:function (item)
 				{
 					delete item.code;
-				});
+				}});
 				hide_loader();
 			});
 		};

@@ -5838,7 +5838,7 @@ function form233_header_ini()
     $("#form233_image_input").on("change", function(evt)
     {
     	//console.log(evt);
-        select_document(evt,function(dataURL)
+        vFileHandler.document({evt:evt,fsuccess:function(dataURL)
         {
 			//var unique_id="vyavsaay_picture_box"+Math.round(Math.random()*100);
 
@@ -5862,7 +5862,7 @@ function form233_header_ini()
 			$('#form233_section').append(new_elem);
 		    $(new_elem).resizable({aspectRatio:true});
             //$(new_div_elem).draggable({ containment: "window" });
-        });
+        }});
     });
 };
 
@@ -6558,7 +6558,7 @@ function form280_header_ini()
 						{index:'channel',value:channel_filter.value},
 						{index:'bill_date',lowerbound:get_raw_time(start_date.value),upperbound:get_raw_time(end_date.value)}]};
 		//console.log(columns);
-		get_export_data_restructured(columns,'Order Status for Dispatch',function(new_results)
+		vExport.export({columns:columns,file:'Order Status for Dispatch',fall:function(new_results)
 		{
 			var sorted_array=[];
 			new_results.forEach(function(new_result)
@@ -6576,7 +6576,7 @@ function form280_header_ini()
 				sorted_array.push(sorted_element);
 			});
 			return sorted_array;
-		});
+		}});
 	});
 };
 

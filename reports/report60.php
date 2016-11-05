@@ -225,7 +225,7 @@
                       element_display(tran.source_id,source_form);
                   });
               });
-              initialize_static_tabular_report_buttons('Trial Balance','report60');
+			  vExport.export_buttons({file:'Trial Balance',report_id:'report60',action:'static'});
               hide_loader();
           });
         };

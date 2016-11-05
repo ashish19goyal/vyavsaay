@@ -199,6 +199,7 @@
 						{index:'agent'},
 						{index:'sum_insured'},
 						{index:'premium'},
+						{index:'net_premium'},
 						{index:'short_premium'},
 						{index:'issue_date'},
 						{index:'end_date'},
@@ -262,13 +263,13 @@
             });
             $('#report119_body').append(rowsHTML);
 
-            initialize_tabular_report_buttons(columns,'Policies Report','report119',function (item)
+			vExport.export_buttons({action:'dynamic',columns:columns,file:'Policies Report',report_id:'report119',feach:function (item)
             {
 				item['Issue Date']=vTime.date({time:item.issue_date});
 				item['End Date']=vTime.date({time:item.end_date});
 				delete item.issue_date;
 				delete item.end_date;
-			});
+			}});
 
             paginator.update_index(items.length);
             hide_loader();

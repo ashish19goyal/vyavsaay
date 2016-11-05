@@ -130,12 +130,12 @@ function report78_ini()
 
 		paginator.update_index(followups.length);
 
-		initialize_tabular_report_buttons(follow_up_data,'Sale Lead followups','report78',function (item)
+		vExport.export_buttons({action:'dynamic',columns:follow_up_data,file:'Sale Lead Followups',report_id:'report78',feach:function (item)
 		{
 			item.next_date=get_my_past_date(item.next_date);
 			item.date=get_my_past_date(item.date);
 			delete item.source_id;
-		});
+		}});
 	});
 };
 

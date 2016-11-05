@@ -1,6 +1,6 @@
-<div id='form308' class='tab-pane portlet box green-meadow'>	   
+<div id='form308' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form308_add_item();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -18,9 +18,9 @@
                     </li>
                 </ul>
             </div>
-      </div>	
+      </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -39,47 +39,47 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<script>
 
 		function form308_header_ini()
-		{	
+		{
 			var form=document.getElementById('form308_header');
 			var name_filter=form.elements['name'];
 			var desc_filter=form.elements['desc'];
 			var status_filter=form.elements['status'];
-			
+
 			$(form).off('submit');
 			$(form).on('submit',function(event)
 			{
 				event.preventDefault();
 				form308_ini();
 			});
-			
+
 			set_static_filter_json('system_notifications','status',status_filter);
-		}	
-		
+		}
+
 		function form308_ini()
 		{
 			var fid=$("#form308_link").attr('data_id');
 			if(fid==null)
-				fid="";	
-			
+				fid="";
+
 			var form=document.getElementById('form308_header');
 			var name_filter=form.elements['name'].value;
 			var desc_filter=form.elements['desc'].value;
 			var status_filter=form.elements['status'].value;
 
 			show_loader();
-			$('#form308_body').html('');	
-			
+			$('#form308_body').html('');
+
 			var paginator=$('#form308_body').paginator();
-			
+
 			var pop_data=new Object();
 					pop_data.count=paginator.page_size();
 					pop_data.start_index=paginator.get_index();
 					pop_data.data_store='system_notifications';
-							
+
 					pop_data.indexes=[{index:'id',value:fid},
 									{index:'name',value:name_filter},
 									{index:'description',value:desc_filter},
@@ -108,34 +108,34 @@
 								rowsHTML+="<select class='dblclick_editable' form='form308_"+result.id+"'></select>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Function'>";
-								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form308_"+result.id+"' onclick=\"modal178_action('"+result.id+"','"+result.name+"','master');\">Function</button>";							
+								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form308_"+result.id+"' onclick=\"modal178_action('"+result.id+"','"+result.name+"','master');\">Function</button>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
-								rowsHTML+="<input type='hidden' form='form308_"+result.id+"' value='"+result.id+"'>";	
+								rowsHTML+="<input type='hidden' form='form308_"+result.id+"' value='"+result.id+"'>";
 								rowsHTML+="<button type='submit' class='btn green' form='form308_"+result.id+"' title='Save'><i class='fa fa-save'></i></button>";
 								rowsHTML+="<button type='button' class='btn red' form='form308_"+result.id+"' title='Delete' onclick='form308_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-					
+
 					$('#form308_body').append(rowsHTML);
 					var fields=document.getElementById("form308_"+result.id);
 					var status_filter=fields.elements[4];
 
-					set_static_select('system_notifications','status',status_filter,function () 
+					set_static_select('system_notifications','status',status_filter,function ()
 					{
 						$(status_filter).selectpicker('val',result.status);
 					});
-					
+
 					$(fields).on("submit", function(event)
 					{
 						event.preventDefault();
 						form308_update_item(fields);
 					});
 				});
-				
+
 				$('#form308').formcontrol();
-				paginator.update_index(results.length);				
-				initialize_tabular_report_buttons(pop_data,'Notifications','form308',function (item){});
+				paginator.update_index(results.length);
+				vExport.export_buttons({action:'dynamic',columns:pop_data,file:'Notifications',report_id:'form308'});
 				hide_loader();
 			});
 		};
@@ -145,7 +145,7 @@
 			if(is_create_access('form308'))
 			{
 				var id=vUtil.newKey();
-		
+
 				var rowsHTML="<tr>";
 						rowsHTML+="<form id='form308_"+id+"'></form>";
 							rowsHTML+="<td data-th='Name'>";
@@ -162,17 +162,17 @@
 								rowsHTML+="<select class='dblclick_editable' form='form308_"+id+"'></select>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Function'>";
-								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form308_"+id+"'>Function</button>";							
+								rowsHTML+="<button type='button' class='btn default purple-stripe' form='form308_"+id+"'>Function</button>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
-								rowsHTML+="<input type='hidden' form='form308_"+id+"' value='"+id+"'>";	
+								rowsHTML+="<input type='hidden' form='form308_"+id+"' value='"+id+"'>";
 								rowsHTML+="<button type='submit' class='btn green' form='form308_"+id+"' title='Save'><i class='fa fa-save'></i></button>";
 								rowsHTML+="<button type='button' class='btn red' form='form308_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
-							rowsHTML+="</td>";			
+							rowsHTML+="</td>";
 					rowsHTML+="</tr>";
-							
+
 				$('#form308_body').prepend(rowsHTML);
-				
+
 				var fields=document.getElementById("form308_"+id);
 				var name_filter=fields.elements[0];
 				var status_filter=fields.elements[4];
@@ -180,7 +180,7 @@
 				$(name_filter).focus();
 
 				set_static_select('system_notifications','status',status_filter);
-				
+
 				$(fields).on("submit", function(event)
 				{
 					event.preventDefault();
@@ -191,9 +191,9 @@
 			else
 			{
 				$("#modal2_link").click();
-			}		
+			}
 		}
-		
+
 		function form308_create_item(form)
 		{
 			if(is_create_access('form308'))
@@ -206,9 +206,9 @@
 				var func_button=form.elements[5];
 				var data_id=form.elements[6].value;
 				var del_button=form.elements[8];
-				
+
 				var last_updated=get_my_time();
-				
+
 				var data_json={data_store:'system_notifications',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'name',value:name,unique:'yes'},
@@ -221,8 +221,8 @@
 				server_create_master_all(data_json);
 
 				$(form).readonly();
-				
-				$(func_button).on('click',function () 
+
+				$(func_button).on('click',function ()
 				{
 					modal178_action(data_id,name,'master');
 				});
@@ -232,7 +232,7 @@
 				{
 					form308_delete_item(del_button);
 				});
-				
+
 				$(form).off('submit');
 				$(form).on('submit',function(event)
 				{
@@ -245,7 +245,7 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form308_update_item(form)
 		{
 			if(is_update_access('form308'))
@@ -258,9 +258,9 @@
 				var func_button=form.elements[5];
 				var data_id=form.elements[6].value;
 				var del_button=form.elements[8];
-				
+
 				var last_updated=get_my_time();
-				
+
 				var data_json={data_store:'system_notifications',
 	 				data:[{index:'name',value:name,unique:'yes'},
 	 					{index:'description',value:desc},
@@ -277,7 +277,7 @@
 				$("#modal2_link").click();
 			}
 		}
-		
+
 		function form308_delete_item(button)
 		{
 			if(is_delete_access('form308'))
@@ -290,8 +290,8 @@
 					var data_json={data_store:'system_notifications',
  							data:[{index:'name',value:name}]};
 
-					server_delete_master_all(data_json);			
-					
+					server_delete_master_all(data_json);
+
 					$(button).parent().parent().remove();
 				});
 			}

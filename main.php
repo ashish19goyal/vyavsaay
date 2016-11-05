@@ -6,7 +6,7 @@
 		include "includes/head.php"
 	?>
 
-    <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white page-sidebar-closed" onload="default_load();">
+    <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white page-sidebar-closed" onload="vIni.initialize();">
 
        	<?php include "functions/lock_screen.php"; ?>
 

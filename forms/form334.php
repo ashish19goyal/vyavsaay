@@ -1,6 +1,6 @@
-<div id='form334' class='tab-pane portlet box green-meadow'>	   
+<div id='form334' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<div class='btn-group' id='form334_store' data-toggle='buttons'>
                 <label class='btn green-jungle my active' onclick=form334_ini('my');><input name='my' type='radio' class='toggle'>My Store</label>
                 <label class='btn green-jungle all' onclick=form334_ini('all');><input type='radio' name='all' class='toggle'>All Stores</label>
@@ -22,9 +22,9 @@
                     </li>
                 </ul>
             </div>
-      </div>	
+      </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -42,15 +42,15 @@
 			</tbody>
 		</table>
 	</div>
-    
+
     <script>
         function form334_header_ini()
         {
-            var filter_fields=document.getElementById('form334_header');	
+            var filter_fields=document.getElementById('form334_header');
             var names_filter=filter_fields.elements['name'];
             var batches_filter=filter_fields.elements['batch'];
 
-            //setting autocompletes 
+            //setting autocompletes
             var products_data={data_store:'product_master',return_column:'name'};
             var batch_data={data_store:'product_instances',return_column:'batch'};
 
@@ -70,7 +70,7 @@
             show_loader();
             var fid=$("#form334_link").attr('data_id');
             if(fid==null)
-                fid="";	
+                fid="";
 
             var store=get_session_var('user_setting_Store');
             if(typeof store_type!='undefined' && store_type=='all')
@@ -88,9 +88,9 @@
             var filter_fields=document.getElementById('form334_header');
             var fname=filter_fields.elements['name'].value;
             var fbatch=filter_fields.elements['batch'].value;
-            
+
             var paginator=$('#form334_body').paginator();
-			var columns={data_store:'discarded',                 
+			var columns={data_store:'discarded',
 					       count:paginator.page_size(),
 					       start_index:paginator.get_index(),
                            indexes:[{index:'id',value:fid},
@@ -99,7 +99,7 @@
                                     {index:'quantity'},
                                     {index:'date'},
                                     {index:'storage',value:store}]};
-                
+
             $('#form334_body').html("");
 
             read_json_rows('form334',columns,function(results)
@@ -123,7 +123,7 @@
                             rowsHTML+="<td data-th='Action'>";
                                 rowsHTML+="<input type='hidden' form='form334_"+result.id+"' value='"+result.id+"'>";
                                 rowsHTML+="<button type='button' class='btn red' title='Delete' name='delete' form='form334_"+result.id+"' onclick='form335_delete_item($(this));'><i class='fa fa-trash'></i></button>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form334_body').append(rowsHTML);
@@ -131,11 +131,11 @@
 
                 $('#form334').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Discarded Inventory','form334',function (item)
-                {
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Discarded Inventory',report_id:'form334',feach:function (item)
+				{
                     item.date=get_my_past_date(item.date);
-                });
-                    
+                }});
+
                 hide_loader();
             });
         };
@@ -164,7 +164,7 @@
                             rowsHTML+="<input type='hidden' form='form334_"+id+"' value='"+id+"'>";
                             rowsHTML+="<button type='submit' class='btn green' name='save' title='Save' form='form334_"+id+"'><i class='fa fa-save'></i></button>";
                             rowsHTML+="<button type='button' class='btn red' title='Delete' name='delete' form='form334_"+id+"' onclick='$(this).parent().parent().remove();'><i class='fa fa-trash'></i></button>";
-                        rowsHTML+="</td>";			
+                        rowsHTML+="</td>";
                 rowsHTML+="</tr>";
 
                 $('#form334_body').prepend(rowsHTML);
@@ -175,20 +175,20 @@
                 var date_filter=fields.elements[3];
 
                 $(date_filter).datepicker();
-                
+
                 var product_data={data_store:'product_master',return_column:'name'};
                 set_my_value_list_json(product_data,name_filter,function()
                 {
                     $(name_filter).focus();
                 });
-                
+
                 $(name_filter).on('blur',function()
                 {
                     var batch_data={data_store:'product_instances',return_column:'batch',
                                    indexes:[{index:'product_name',exact:name_filter.value}]};
-                    set_my_value_list_json(batch_data,batch_filter);                    
+                    set_my_value_list_json(batch_data,batch_filter);
                 });
-                
+
                 $(fields).on("submit", function(event)
                 {
                     event.preventDefault();
@@ -214,18 +214,18 @@
                 var data_id=form.elements[4].value;
                 var storage=get_session_var('user_setting_Store');
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'discarded',
                         data:[{index:'id',value:data_id},
                              {index:'product_name',value:item_name},
                              {index:'batch',value:batch},
                              {index:'quantity',value:quantity},
-                             {index:'storage',value:storage}, 
+                             {index:'storage',value:storage},
                              {index:'date',value:last_updated},
                              {index:'last_updated',value:last_updated}],
                         log:'yes',
                         log_data:{title:'Discarded',notes:'Inventory for '+item_name,link_to:'form334'}};
-                
+
                 create_json(data_json);
                 $(form).readonly();
             }
@@ -234,7 +234,7 @@
                 $("#modal2_link").click();
             }
         }
-        
+
         function form334_delete_item(button)
         {
             if(is_update_access('form334'))
@@ -244,12 +244,12 @@
                 var item_name=form.elements[0].value;
                 var data_id=form.elements[4].value;
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'discarded',
                         data:[{index:'id',value:data_id}],
                         log:'yes',
                         log_data:{title:'Re-accepted',notes:'Inventory for '+item_name,link_to:'form334'}};
-                
+
                 delete_json(data_json);
                 $(button).parent().parent().remove();
             }

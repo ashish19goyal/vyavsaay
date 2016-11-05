@@ -175,12 +175,12 @@
 
 				$('#form279').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(columns,'Tasks','form279',function (item)
-                {
+				vExport.export_buttons({action:'dynamic',columns:columns,file:'Tasks',report_id:'form279',feach:function (item)
+				{
                     delete item.source;
                     item['list name']=item.source_name;
                     delete item.source_name;
-                });
+                }});
 				hide_loader();
 			});
 		};

@@ -1,6 +1,6 @@
-<div id='form261' class='tab-pane portlet box green-meadow'>	   
+<div id='form261' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form261_add_item();'>Add <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
@@ -22,9 +22,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -46,7 +46,7 @@
     <script>
         function form261_header_ini()
         {
-            var filter_fields=document.getElementById('form261_header');	
+            var filter_fields=document.getElementById('form261_header');
             var name_filter=filter_fields.elements['name'];
             var bank_filter=filter_fields.elements['bank'];
             var status_filter=filter_fields.elements['status'];
@@ -57,14 +57,14 @@
             var bank_data={data_store:'bank_accounts',return_column:'bank'};
             set_my_filter_json(bank_data,bank_filter);
 
-            set_static_filter_json('bank_accounts','status',status_filter);	
+            set_static_filter_json('bank_accounts','status',status_filter);
 
             $(filter_fields).off('submit');
             $(filter_fields).on('submit',function(event)
             {
                 event.preventDefault();
                 form261_ini();
-            });	
+            });
         }
 
         function form261_ini()
@@ -82,11 +82,11 @@
             var fstatus=filter_fields.elements['status'].value;
 
             var paginator=$('#form261_body').paginator();
-			
+
 			var new_columns=new Object();
 				new_columns.count=paginator.page_size();
 				new_columns.start_index=paginator.get_index();
-			    new_columns.data_store='bank_accounts';		
+			    new_columns.data_store='bank_accounts';
 
                 new_columns.indexes=[{index:'id',value:fid},
                                         {index:'name',value:fname},
@@ -98,7 +98,7 @@
                                         {index:'status',value:fstatus}];
 
             read_json_rows('form261',new_columns,function(results)
-            {			
+            {
                 results.forEach(function(result)
                 {
                     var rowsHTML="<tr>";
@@ -122,7 +122,7 @@
                                 rowsHTML+="<input type='hidden' form='form261_"+result.id+"' value='"+result.id+"'>";
                                 rowsHTML+="<button type='submit' class='btn green' form='form261_"+result.id+"' name='save' title='Save'><i class='fa fa-save'></i></button>";
                                 rowsHTML+="<button type='button' class='btn red' form='form261_"+result.id+"' onclick='form261_delete_item($(this));' title='Delete' name='delete'><i class='fa fa-trash'></i></button>";
-                            rowsHTML+="</td>";			
+                            rowsHTML+="</td>";
                     rowsHTML+="</tr>";
 
                     $('#form261_body').append(rowsHTML);
@@ -140,14 +140,14 @@
 
                 $('#form261').formcontrol();
 				paginator.update_index(results.length);
-				initialize_tabular_report_buttons(new_columns,'Bank Accounts','form261',function (item)
-                {
+				vExport.export_buttons({action:'dynamic',columns:new_columns,file:'Bank Accounts',report_id:'form261',feach:function (item)
+				{
                     item['account #']=item.account_num;
                     item['account name']=item.account_name;
-                    
+
                     delete item.account_name;
                     delete item.account_num;
-                });
+                }});
 				hide_loader();
             });
         };
@@ -176,13 +176,13 @@
                     rowsHTML+="</td>";
                     rowsHTML+="<td data-th='Action'>";
                         rowsHTML+="<input type='hidden' form='form261_"+id+"' value='"+id+"'>";
-                        rowsHTML+="<button type='submit' class='btn green' form='form261_"+id+"' name='save' title='Save'><i class='fa fa-save'></i></button>";	
-                        rowsHTML+="<button type='button' class='btn red' form='form261_"+id+"' onclick='$(this).parent().parent().remove();' name='delete' title='Delete'><i class='fa fa-trash'></i></button>";	
-                    rowsHTML+="</td>";			
+                        rowsHTML+="<button type='submit' class='btn green' form='form261_"+id+"' name='save' title='Save'><i class='fa fa-save'></i></button>";
+                        rowsHTML+="<button type='button' class='btn red' form='form261_"+id+"' onclick='$(this).parent().parent().remove();' name='delete' title='Delete'><i class='fa fa-trash'></i></button>";
+                    rowsHTML+="</td>";
                 rowsHTML+="</tr>";
 
                 $('#form261_body').prepend(rowsHTML);
-                
+
                 var fields=document.getElementById("form261_"+id);
                 var status_filter=fields.elements[6];
 
@@ -198,7 +198,7 @@
             else
             {
                 $("#modal2_link").click();
-            }		
+            }
         }
 
         function form261_create_item(form)
@@ -216,7 +216,7 @@
                 var del_button=form.elements['delete'];
 
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'bank_accounts',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
@@ -225,15 +225,15 @@
                         {index:'branch',value:branch},
                         {index:'ifsc',value:ifsc},
                         {index:'account_name',value:acc_name},
-                        {index:'account_num',value:acc_num},  
+                        {index:'account_num',value:acc_num},
 	 					{index:'status',value:status},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Added',notes:'Bank account details for '+name,link_to:'form261'}};
- 				
+
                 create_json(data_json);
 
                 $(form).readonly();
-                
+
                 del_button.removeAttribute("onclick");
                 $(del_button).on('click',function(event)
                 {
@@ -266,7 +266,7 @@
                 var status=form.elements[6].value;
                 var data_id=form.elements[7].value;
                 var last_updated=get_my_time();
-                
+
                 var data_json={data_store:'bank_accounts',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
@@ -275,11 +275,11 @@
                         {index:'branch',value:branch},
                         {index:'ifsc',value:ifsc},
                         {index:'account_name',value:acc_name},
-                        {index:'account_num',value:acc_num},  
+                        {index:'account_num',value:acc_num},
 	 					{index:'status',value:status},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Updated',notes:'Bank account details for '+name,link_to:'form261'}};
- 				
+
                 update_json(data_json);
 
                 $(form).readonly();
@@ -300,13 +300,13 @@
                     var form=document.getElementById(form_id);
                     var name=form.elements[0].value;
                     var data_id=form.elements[7].value;
-                    
+
                     var data_json={data_store:'bank_accounts',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id}],
 	 				log_data:{title:'Deleted',notes:'Bank account details for '+name,link_to:'form261'}};
- 				
-                    delete_json(data_json);			
+
+                    delete_json(data_json);
 
                     $(button).parent().parent().remove();
                 });
@@ -334,7 +334,7 @@
                                     {column:'status',required:'yes',list:['active','inactive']}];
 
             var error_array=vImport.validate(data_array,validate_template_array);
-            return error_array;					
+            return error_array;
         }
 
         function form261_import(data_array,import_type)
@@ -346,7 +346,7 @@
 
 			var counter=1;
 			var last_updated=get_my_time();
-		
+
 			data_array.forEach(function(row)
 			{
 				counter+=1;
@@ -354,20 +354,20 @@
 				{
 					row.id=last_updated+counter;
 				}
-				
+
 				var data_json_array=[{index:'id',value:row.id},
 	 					{index:'name',value:row.name,unique:'yes'},
 	 					{index:'bank',value:row.bank},
 	 					{index:'branch',value:row.branch},
                         {index:'ifsc',value:row.ifsc},
                         {index:'account_name',value:row['account name']},
-                        {index:'account_num',value:row['account number']},             
+                        {index:'account_num',value:row['account number']},
 	 					{index:'status',value:row.status},
 	 					{index:'last_updated',value:last_updated}];
 
 				data_json.data.push(data_json_array);
 			});
-			
+
 			if(import_type=='create_new')
 			{
 				create_batch_json(data_json);
@@ -375,7 +375,7 @@
 			else
 			{
 				update_batch_json(data_json);
-			}            
+			}
         };
 
     </script>

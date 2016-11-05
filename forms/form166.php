@@ -1,4 +1,4 @@
-<div id='form166' class='tab-pane portlet box green-meadow'>	   
+<div id='form166' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class="actions">
             <div class="btn-group">
@@ -15,9 +15,9 @@
                     </li>
                 </ul>
             </div>
-        </div>	
+        </div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -35,11 +35,11 @@
 			</tbody>
 		</table>
 	</div>
-    
+
     <script>
     function form166_header_ini()
     {
-        var filter_fields=document.getElementById('form166_header');	
+        var filter_fields=document.getElementById('form166_header');
         var names_filter=filter_fields.elements['name'];
         //var batches_filter=filter_fields.elements[1];
 
@@ -49,9 +49,9 @@
             event.preventDefault();
             form166_ini();
         });
-        //setting autocompletes 
+        //setting autocompletes
         var products_data={data_store:'product_master',return_column:'name'};
-        
+
         /*var batch_data="<product_instances>" +
                 "<batch></batch>" +
                 "</product_instances>";
@@ -65,7 +65,7 @@
         show_loader();
         var fid=$("#form166_link").attr('data_id');
         if(fid==null)
-            fid="";	
+            fid="";
 
         $('#form166_body').html("");
 
@@ -74,7 +74,7 @@
         //var fbatch=filter_fields.elements[1].value;
 
         var paginator=$('#form166_body').paginator();
-			
+
 			var columns=new Object();
 				columns.count=paginator.page_size();
 				columns.start_index=paginator.get_index();
@@ -83,7 +83,7 @@
 									{index:'product_name',value:fname},
 									{index:'mrp'},{index:'cost_price'},
 									{index:'sale_price'}];
-			
+
         read_json_rows('form166',columns,function(results)
         {
             results.forEach(function(result)
@@ -109,7 +109,7 @@
                         rowsHTML+="<td data-th='Action'>";
                             rowsHTML+="<input type='hidden' form='form166_"+result.id+"' value='"+result.id+"'>";
                             rowsHTML+="<button type='submit' class='btn green' name='save' title='Save' form='form166_"+result.id+"'><i class='fa fa-save'></i></button>";
-                        rowsHTML+="</td>";			
+                        rowsHTML+="</td>";
                 rowsHTML+="</tr>";
 
                 $('#form166_body').append(rowsHTML);
@@ -120,10 +120,10 @@
                     form166_update_item(fields);
                 });
             });
-            
+
             $('#form166').formcontrol();
 			paginator.update_index(results.length);
-			initialize_tabular_report_buttons(columns,'Pricing Details','form166',function (item){});
+			vExport.export_buttons({action:'dynamic',columns:columns,file:'Pricing Details',report_id:'form166'});
 			hide_loader();
         });
     };
@@ -138,16 +138,16 @@
             var sale_price=form.elements[3].value;
             var data_id=form.elements[4].value;
             var last_updated=get_my_time();
-            
+
             var data_json={data_store:'product_instances',
 	 				log:'yes',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'mrp',value:mrp},
 	 					{index:'cost_price',value:cost_price},
-                        {index:'sale_price',value:sale_price},  
+                        {index:'sale_price',value:sale_price},
 	 					{index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Updated',notes:'Pricing for '+name,link_to:'form166'}};
- 				
+
             update_json(data_json);
             $(form).readonly();
         }
@@ -156,6 +156,6 @@
             $("#modal2_link").click();
         }
     }
-    
+
     </script>
 </div>

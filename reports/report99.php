@@ -159,7 +159,7 @@
                         {index:'return_address3'},
                         {index:'rto_num',array:rto_num_array}]};
 
-            initialize_tabular_report_buttons(columns,'RTO Report','report99',function (item)
+			vExport.export_buttons({action:'dynamic',columns:columns,file:'RTO Report',report_id:'report99',feach:function (item)
             {
                 item['AWB No']=item.awb_num;
                 item['RTO No']=item.rto_num;
@@ -196,7 +196,7 @@
                 delete item.address2;
                 delete item.address3;
                 delete item.rto_num;
-            });
+	        }});
 
             hide_loader();
         });

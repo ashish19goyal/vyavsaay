@@ -1,10 +1,24 @@
 <html>
 
 <script>
+function animal()
+{
+	this.eats=true;
+	this.v1=11;
+};
 
-var x=int(null);
+animal.prototype.v1=32;
+animal.prototype.eats=false;
 
-console.log(x);
+function Rabbit(name) {
+	animal.call(this);
+	this.name = name;
+};
+
+Rabbit.prototype=animal.prototype;
+
+var john = new Rabbit('John');
+console.log(john.eats);
 
 </script>
 <body></body>
