@@ -76,6 +76,7 @@
 		$data_stores=$api_struct_res[0]['data_stores'];
 		if(strpos($data_stores,$table)!==false)
 		{
+			$values_array=array();
 			$query="select * from $table where ";
 			$order_by=" ORDER BY last_updated DESC, ";
 			$limit=" limit ?,?";

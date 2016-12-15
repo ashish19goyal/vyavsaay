@@ -9,7 +9,7 @@
 	</div>
 	<button onclick="my_func();">Request</button>
 </body>
-<script src='../JavaScripts/open/jquery-1.11.1.min.js'></script>
+<script src='../js/open/jquery-1.11.1.min.js'></script>
 <script>
 	function my_func()
 	{
@@ -24,17 +24,18 @@
 		call_data_object.indexes[0]=new Object();
 		call_data_object.indexes[0].index='awb_num';
 		call_data_object.indexes[0].value='';
-		
+
 		var call_data=JSON.stringify(call_data_object);
 
 		$.ajax(
 		{
 			type: "POST",
-			url: "../ajax/get_data.php",
+			url: "../api/get_data.php",
 			data: {data:call_data},
-			error:function()
+			error:function(xhr, ajaxOptions, thrownError)
 			{
-				my_div.innerHTML="failure in ajax request";
+				console.log(thrownError);
+				console.log(xhr.responseText);
 			},
 			success: function(return_data,return_status,e)
 			{

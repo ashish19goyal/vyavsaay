@@ -21,6 +21,7 @@
 	<div class="portlet-body">
 		<form id='report52_header' autocomplete="off">
 			<fieldset>
+				<label><input type='text' placeholder="Item Keyword" class='floatlabel' name='key'></label>
 				<label><input type='text' placeholder="Item" class='floatlabel' name='item_name'></label>
 				<label><input type='text' placeholder="Brand" class='floatlabel' name='make'></label>
                 <label><input type='text' placeholder="Supplier" class='floatlabel' name='supplier'></label>
@@ -74,17 +75,20 @@
             set_my_filter_json(supplier_data,supplier_filter);
 
             $(date_filter).datepicker();
-            $(date_filter).val(get_my_past_date((get_my_time()-7*86400000)));
+            $(date_filter).val(vTime.date({addDays:-7}));
             $(upto_date_filter).datepicker();
             $(upto_date_filter).val(vTime.date());
 
 			var paginator=$('#report52_body').paginator({'visible':false,'container':$('#report52_body')});
-			setTimeout(function(){$('#report9').formcontrol();},300);
+			vUtil.delay(function(){
+				$('#report52').formcontrol();
+			});
 		}
 
         function report52_ini()
         {
             var form=document.getElementById('report52_header');
+			var index=form.elements['key'].value;
             var name=form.elements['item_name'].value;
             var make=form.elements['make'].value;
             var supplier=form.elements['supplier'].value;
@@ -99,7 +103,7 @@
             var bills_data={data_store:'supplier_bills',
                            indexes:[{index:'id'},
                                    {index:'supplier',value:supplier},
-                                   {index:'entry_date',lowerbound:date,upperbound:upto}]};
+                                   {index:'bill_date',lowerbound:date,upperbound:upto}]};
 
             var returns_data={data_store:'supplier_returns',
                              indexes:[{index:'id'},
@@ -147,11 +151,13 @@
 
                             var make_data={data_store:'product_master',
                                           indexes:[{index:'name',array:product_string},
-                                                  {index:'make',value:make}]};
+                                                  {index:'indexes',value:index},
+												  {index:'make',value:make}]};
 
                             read_json_rows('report52',make_data,function(makes)
                             {
                                 var total_amount=0;
+								var total_quantity=0;
                                 for(var k in bill_ids)
                                 {
                                     for(var z in makes)
@@ -159,7 +165,7 @@
                                         if(bill_ids[k].product_name==makes[z].name)
                                         {
                                             var supplier_name="";
-											console.log(bills);
+											// console.log(bills);
                                             for(var m in bills)
                                             {
                                                 if(bills[m].id==bill_ids[k].bill_id)
@@ -170,6 +176,7 @@
                                             }
 
                                             total_amount+=parseFloat(bill_ids[k].amount);
+											total_quantity+=parseFloat(bill_ids[k].quantity);
 
                                             rowsHTML+="<tr>";
                                                 rowsHTML+="<td data-th='Item'><a onclick=\"show_object('product_master','"+bill_ids[k].product_name+"');\">";
@@ -209,6 +216,7 @@
                                             }
 
                                             total_amount-=parseFloat(return_ids[k].refund_amount);
+											total_quantity-=parseFloat(return_ids[k].quantity);
 
                                             rowsHTML+="<tr>";
                                                 rowsHTML+="<td data-th='Item'><a onclick=\"show_object('product_master','"+return_ids[k].product_name+"');\">";
@@ -233,7 +241,7 @@
                                 }
                                 $('#report52_body').html(rowsHTML);
 
-                                var total_row="<tr><td colspan='4' data-th='Total'>Total</td><td data-th='Amount'>Rs. "+total_amount+"</td></tr>";
+                                var total_row="<tr><td colspan='3' data-th='Total'>Total</td><td data-th='Quantity'>"+total_quantity+"</td><td data-th='Amount'>Rs. "+total_amount+"</td></tr>";
                                 $('#report52_foot').html(total_row);
 
 								vExport.export_buttons({file:'Purchase Report',report_id:'report52',action:'static'});

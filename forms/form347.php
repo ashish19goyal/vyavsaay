@@ -805,7 +805,7 @@
 
 			var import_types_list = ['Apollo Policies Search','Apollo Policies Sold', 'ICICI Policies',
 									'Max Logged Business','Max Renewal Business', 'Star Policies',
-									'Star Policies - 2','Religare','Cigna','New Applications','MIS'];
+									'Star Policies - 2','Religare','Cigna','Bajaj','New Applications','MIS'];
 			set_value_list_json(import_types_list,import_type);
 
 			var agent_data={data_store:'attributes',return_column:'name',
@@ -850,6 +850,8 @@
 						case 'Religare':vImport.importData(content,form,form347_ra_import,form347_ra_import_validate);
 												break;
 						case 'Cigna':vImport.importData(content,form,form347_ca_import,form347_ca_import_validate);
+												break;
+						case 'Bajaj':vImport.importData(content,form,form347_ba_import,form347_ba_import_validate);
 												break;
 						case 'New Applications':vImport.importData(content,form,form347_na_import,form347_na_import_validate);
 												break;
@@ -936,6 +938,9 @@
 											break;
 				case 'Cigna':data_array=['Policy Holder Name','Policy Number','Product Name','Sum Insured','Gross Premium',
 											'Policy Start Date','Policy Issue Date','Policy End Date'];
+											break;
+				case 'Bajaj':data_array=['application number','issue date','client name','policy name','product',
+										'policy number','status','sum insured','premium'];
 											break;
 			}
             vUtil.arrayToCSV(data_array);
@@ -2898,6 +2903,235 @@
 			});
 		};
 
+		/**
+		*	Import validation for Bajaj policies report
+		*/
+		function form347_ba_import_validate(data_array)
+		{
+			var validate_template_array=[{column:'policy number',regex:new RegExp('^[0-9a-zA-Z_-]+$')},
+									{column:'client name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'product',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()<-]+$')},
+									{column:'issue date',required:'yes',regex:new RegExp('^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4}[0-9A-Z ]*')},
+									{column:'policy name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'application number',required:'yes',regex:new RegExp('^[0-9a-zA-Z_-]+$')},
+									{column:'status',required:'yes',list:['ISSUED','CANCEL','LOGIN AWAITED']},
+									{column:'sum insured',required:'yes',regex:new RegExp('^[0-9 .]+$')},
+									{column:'premium',required:'yes',regex:new RegExp('^[0-9 .]+$')}];
+
+			var error_array=vImport.validate(data_array,validate_template_array);
+			return error_array;
+		}
+
+		/**
+		*	Import for Bajaj policies report
+		*/
+		function form347_ba_import(policies)
+		{
+			var commissions_json={data_store:'policy_commissions',loader:'no',data:[]};
+
+			var counter=1;
+			var last_updated=vTime.unix();
+			show_loader();
+
+			for(var a in policies)
+			{
+				policies[a].id="";
+				policies[a].policy_holder="";
+				policies[a].description="";
+				policies[a].type="";
+				policies[a].preferred="";
+				policies[a].upsell="";
+				policies[a].issue_type='';
+				policies[a].old_premium=0;
+				policies[a].old_net_premium=0;
+				policies[a].application_premium=0;
+				policies[a].policy_num=policies[a]['policy number'];
+				policies[a].issuer='Bajaj';
+				policies[a].agent=document.getElementById('form347_popup_import_form').elements['agent'].value;
+				// policies[a].start_time = vTime.unix({date:policies[a].Policy_start_date,inputFormat:'mm/dd/yyyy hh:mm:ss AM'});
+				policies[a].issue_time = vTime.unix({date:policies[a]['issue date']});
+				policies[a].end_time = parseFloat(policies[a].issue_time)+(365*24*3600*1000);
+				policies[a].term = 'one year';
+				policies[a].issued_in_quarter = vTime.quarter({date:policies[a].issue_time,inputFormat:'unix'});
+			}
+			// console.log(policies);
+			form347_policy_bank(policies,'issuer','Bajaj',function()
+			{
+				form347_policy_ids(policies,'policy number','Bajaj',function()
+				{
+					var update_policy_json1={data_store:'policies',data:[]};
+					for(var i=0;i<policies.length;i++)
+					{
+						policies[i].net_premium = vUtil.round(parseFloat(policies[i].premium)/(1+(policies[i].tax_rate/100)),2);
+						policies[i].tax = vUtil.round(parseFloat(policies[i].premium)-parseFloat(policies[i].net_premium),2);
+
+						if(!vUtil.isBlank(policies[i].id))
+						{
+							var data_json_array=[{index:'id',value:policies[i].id},
+									{index:'policy_name',value:policies[i]['policy name']+"-"+policies[i]['product']},
+									{index:'application_num',value:policies[i]['application number']},
+									{index:'premium',value:policies[i].premium},
+									{index:'net_premium',value:policies[i].net_premium},
+									{index:'tax',value:policies[i].tax},
+									{index:'tds_rate',value:policies[i].tds_rate},
+									{index:'issuer',value:policies[i].issuer},
+									{index:'term',value:policies[i].term},
+									{index:'agent',value:policies[i].agent},
+									{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
+									{index:'start_date',value:policies[i].issue_time},
+									{index:'end_date',value:policies[i].end_time},
+									{index:'issue_date',value:policies[i].issue_time},
+									{index:'type',value:policies[i].type},
+									{index:'description',value:policies[i].description},
+									{index:'preferred',value:policies[i].preferred},
+									{index:'last_updated',value:last_updated}];
+
+							// data_json_array.push(issue_type);
+
+							update_policy_json1.data.push(data_json_array);
+							policies.splice(i,1);
+							i--;
+						}
+					}
+					// console.log(update_policy_json1);
+					update_batch_json(update_policy_json1);
+
+					if(policies.length>0)
+					{
+						form347_application_ids(policies,'application number','Bajaj',function()
+						{
+							var newKey=vUtil.newKey();
+
+							var update_policy_json2={data_store:'policies',data:[]};
+
+							for(var i=0;i<policies.length;i++)
+							{
+								counter++;
+								if(!vUtil.isBlank(policies[i].id))
+								{
+									policies[i].status=(policies[i].status=='ISSUED')? 'issued' : 'cancelled';
+									var policy_array=[{index:'id',value:policies[i].id},
+											{index:'policy_name',value:policies[i]['policy name']+"-"+policies[i]['product']},
+											{index:'policy_num',value:policies[i].policy_num},
+											{index:'premium',value:policies[i].premium},
+											{index:'net_premium',value:policies[i].net_premium},
+											{index:'tax',value:policies[i].tax},
+											{index:'tds_rate',value:policies[i].tds_rate},
+											{index:'issuer',value:policies[i].issuer},
+											{index:'term',value:policies[i].term},
+											{index:'agent',value:policies[i].agent},
+											{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
+											{index:'start_date',value:policies[i].issue_time},
+											{index:'end_date',value:policies[i].end_time},
+											{index:'issue_date',value:policies[i].issue_time},
+											{index:'status',value:policies[i].status},
+											{index:'type',value:policies[i].type},
+											{index:'description',value:policies[i].description},
+											{index:'preferred',value:policies[i].preferred},
+											{index:'last_updated',value:last_updated}];
+
+									policies[i].issue_type = 'fresh';
+
+									var loading_premium = parseFloat(policies[i].premium) - parseFloat(policies[i].application_premium);
+									if(loading_premium > 0)
+									{
+										var lp_obj = {index:'loading_premium',value:loading_premium};
+										var lp_status_obj = {index:'loading_premium_status',value:'undecided'};
+										policy_array.push(lp_obj);
+										policy_array.push(lp_status_obj);
+									}
+									var issue_type = {index:'issue_type',value:policies[i].issue_type};
+									policy_array.push(issue_type);
+
+									var upsell_new= (policies[i].old_net_premium!=0 && parseFloat(policies[i].net_premium) > parseFloat(policies[i].old_net_premium)) ? 'yes' :'no';
+									var upsell = (vUtil.isBlank(policies[i].upsell))? upsell_new : policies[i].upsell;
+									var upsell_obj = {index:'upsell',value:upsell};
+									policy_array.push(upsell_obj);
+									update_policy_json2.data.push(policy_array);
+
+									newKey+=2;
+									if(policies[i].status=='issued')
+									{
+										form347_recalculate_commissions(policies[i],commissions_json,newKey);
+									}
+
+									policies.splice(i,1);
+									i--;
+								}
+							}
+							// console.log(update_policy_json2);
+							update_batch_json(update_policy_json2);
+
+							if(policies.length>0)
+							{
+								var create_policy_json3={data_store:'policies',data:[]};
+								var customer_json3={data_store:'customers',data:[]};
+
+								for(var i=0; i<policies.length;i++)
+								{
+									counter++;
+									if(vUtil.isBlank(policies[i].policy_holder))
+									{
+										policies[i].policy_holder=policies[i]['client name']+" ("+policies[i]['application number']+")";
+									}
+									policies[i].status=(policies[i].status=='ISSUED')? 'issued' : 'cancelled';
+
+									var policy_array=[{index:'id',value:vUtil.newKey()+counter},
+											{index:'policy_name',value:policies[i]['policy name']+"-"+policies[i]['product']},
+											{index:'application_num',value:policies[i]['application number']},
+											{index:'policy_num',value:policies[i].policy_num,unique:'yes'},
+											{index:'policy_holder',value:policies[i].policy_holder},
+											{index:'premium',value:policies[i].premium},
+											{index:'net_premium',value:policies[i].net_premium},
+											{index:'tax',value:policies[i].tax},
+											{index:'tds_rate',value:policies[i].tds_rate},
+											{index:'issuer',value:policies[i].issuer},
+											{index:'agent',value:policies[i].agent},
+											{index:'issued_in_quarter',value:policies[i].issued_in_quarter},
+											{index:'term',value:policies[i].term},
+											{index:'start_date',value:policies[i].issue_time},
+											{index:'end_date',value:policies[i].end_time},
+											{index:'issue_date',value:policies[i].issue_time},
+											{index:'status',value:policies[i].status},
+											{index:'type',value:policies[i].type},
+											{index:'description',value:policies[i].description},
+											{index:'preferred',value:policies[i].preferred},
+											{index:'last_updated',value:last_updated}];
+
+									policies[i].issue_type='fresh';
+
+									var issue_type_obj = {index:'issue_type',value:policies[i].issue_type};
+									policy_array.push(issue_type_obj);
+
+									var upsell_new= (policies[i].old_net_premium!=0 && parseFloat(policies[i].net_premium) > parseFloat(policies[i].old_net_premium)) ? 'yes' :'no';
+									var upsell = (vUtil.isBlank(policies[i].upsell))? upsell_new : policies[i].upsell;
+									var upsell_obj = {index:'upsell',value:upsell};
+									policy_array.push(upsell_obj);
+
+									create_policy_json3.data.push(policy_array);
+
+									var customer_json_array=[{index:'id',value:vUtil.newKey()+counter},
+											{index:'name',value:policies[i]['client name']},
+											{index:'acc_name',value:policies[i].policy_holder,unique:'yes'},
+											{index:'last_updated',value:last_updated}];
+
+									customer_json3.data.push(customer_json_array);
+									newKey+=2;
+									if(policies[i].status=='issued')
+									{
+										form347_recalculate_commissions(policies[i],commissions_json,newKey);
+									}
+								}
+								// console.log(create_policy_json3);
+								create_batch_json(create_policy_json3);
+								create_batch_json(customer_json3);
+							}
+							create_batch_json(commissions_json);
+						});
+					}
+				});
+			});
+		};
 
 		function form347_recalculate_commissions(policy,create_commissions,newKey,func)
 		{

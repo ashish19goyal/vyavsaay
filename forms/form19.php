@@ -118,7 +118,9 @@
             supplier_filter.value='';
 
 			$('#form19_body').paginator({visible:false});
-            $('#form19').formcontrol();
+			vUtil.delay(function(){
+				$('#form19').formcontrol();				
+			});
         }
 
         function form19_ini()

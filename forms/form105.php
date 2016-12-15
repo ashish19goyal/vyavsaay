@@ -55,7 +55,7 @@
 
             var tables_data={data_store:'access_conditions',return_column:'tablename'};
             set_my_filter_json(tables_data,table);
-            set_static_filter_json('access_conditions','user_type',type);
+            set_filter_json(['user','role','field'],type);
         }
 
         function form105_ini()
@@ -161,7 +161,7 @@
                 {
                     $(table_filter).focus();
                 });
-                set_static_value_list_json('access_conditions','user_type',type_filter);
+                set_value_list_json(['user','role','field'],type_filter);
 
                 $(fields).on("submit", function(event)
                 {

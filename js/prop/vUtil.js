@@ -122,6 +122,11 @@ var vUtil = function (options)
 		return result;
 	};
 
+	this.ceil = function(number)
+	{
+		return Math.ceil(number);
+	};
+
 	this.newKey = function()
 	{
 		var d=new Date();
@@ -521,6 +526,17 @@ var vUtil = function (options)
 			}
 		},start_at);
 	};
+
+	this.delay=function(func,seconds)
+	{
+		if(vUtil.isBlank(seconds)){
+			seconds=500;
+		}
+		setTimeout(function()
+		{
+			func();
+		},seconds);
+	}
 
 
 };

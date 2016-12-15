@@ -453,55 +453,6 @@ function report90_update(form)
 }
 
 /**
- * @form Update inventory
- * @param button
- */
-function form1_update_item(form)
-{
-	if(is_update_access('form1'))
-	{
-		var name=form.elements[0].value;
-		var batch=form.elements[1].value;
-		var manufacturing=get_raw_time(form.elements[2].value);
-		var expiry=get_raw_time(form.elements[3].value);
-		var data_id=form.elements[6].value;
-		var last_updated=get_my_time();
-		var data_xml="<product_instances>" +
-					"<id>"+data_id+"</id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<batch>"+batch+"</batch>" +
-					"<manufacture_date>"+manufacturing+"</manufacture_date>"+
-					"<expiry>"+expiry+"</expiry>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</product_instances>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>product_instances</tablename>" +
-					"<link_to>form1</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Costing for batch number "+batch+" of "+name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
-		for(var i=0;i<6;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2_link").click();
-	}
-}
-
-/**
  * @form Create Newsletter
  * @param button
  */

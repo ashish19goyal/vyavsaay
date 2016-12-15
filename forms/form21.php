@@ -95,7 +95,9 @@
 		$(bill_date).datepicker();
 		$(bill_date).val(vTime.date());
 		var paginator=$('#form21_body').paginator({visible:false});
-		$('#form21').formcontrol();
+		vUtil.delay(function(){
+			$('#form21').formcontrol();
+		});
 	}
 
 	function form21_ini()

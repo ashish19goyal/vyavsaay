@@ -28,7 +28,7 @@
             			<th><input type='text' placeholder="Customer" class='floatlabel' name='customer' form='form42_header'></th>
 						<th><input type='text' placeholder="Bill Date" class='floatlabel' name='bill_date' form='form42_header'></th>
 						<th><input type='text' placeholder="Bill Amount" readonly='readonly' form='form42_header'></th>
-						<th><input type='submit' form='form42_header' style='visibility: hidden;'></th>
+						<th><input type='submit' form='form42_header' style='display:none;'></th>
 				</tr>
 			</thead>
 			<tbody id='form42_body'>
@@ -125,7 +125,7 @@
 					var bill_num=fields.elements[0];
 					$(bill_num).parent().on('click',function()
 					{
-						element_display(result.id,'form119',['form72','form91','form130','form154','form225','form294','form332']);
+						element_display(result.id,'form119',['form72','form91','form130','form154','form225','form294','form332','form367']);
 					});
 				}
 			});

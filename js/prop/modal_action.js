@@ -14371,7 +14371,8 @@ function modal194_action(elem_id)
         $(items).find('option').on('click',function()
         {
             $(elem_id).val($(this).html());
-            $(form).find('.close').click();
+			$(elem_id).trigger("blur");
+	 		$(form).find('.close').click();
         });
     });
 
@@ -14396,7 +14397,8 @@ function modal194_action(elem_id)
             $(items).find('option').on('click',function()
             {
                 $(elem_id).val($(this).html());
-                $(form).find('.close').click();
+				$(elem_id).trigger("blur");
+		 		$(form).find('.close').click();
             });
         });
     }
@@ -14414,6 +14416,7 @@ function modal194_action(elem_id)
 	{
 		event.preventDefault();
         $(elem_id).val(items.options[0].innerHTML);
+		$(elem_id).trigger("blur");
  		$(form).find('.close').click();
 	});
 
@@ -18088,4 +18091,121 @@ function modal227_action(object)
 	});
 
 	$("#modal227_link").click();
+}
+
+/**
+ * @modalNo 228
+ * @modal Add new product
+ * @param button
+ */
+function modal228_action(func)
+{
+	var form=document.getElementById('modal228_form');
+
+	var fname=form.elements['name'];
+	var fmake=form.elements['make'];
+	var fdescription=form.elements['desc'];
+
+	var make_data={data_store:'product_master',return_column:'make'};
+	set_my_filter_json(make_data,fmake);
+
+	////adding attribute fields///////
+	var attribute_label=document.getElementById('modal228_attributes');
+	attribute_label.innerHTML="";
+	var attributes_data={data_store:'mandatory_attributes',
+                        indexes:[{index:'attribute'},{index:'status'},{index:'value'},{index:'object',exact:'product'}]};
+	read_json_rows('',attributes_data,function(attributes)
+	{
+		attributes.forEach(function(attribute)
+		{
+            if(attribute.status!='inactive')
+			{
+				var required="";
+				if(attribute.status=='required')
+					required='required';
+				var attr_label=document.createElement('div');
+				attr_label.setAttribute('class','row');
+				if(attribute.value=="")
+				{
+					attr_label.innerHTML="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><input type='text' "+required+" name='"+attribute.attribute+"'></div>";
+				}
+				else
+				{
+					var values_array=attribute.value.split(";");
+					var content="<div class='col-sm-12 col-md-4'>"+attribute.attribute+"</div>"+
+					     			"<div class='col-sm-12 col-md-8'><select "+required+" name='"+attribute.attribute+"'>";
+					values_array.forEach(function(fvalue)
+					{
+						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
+					});
+					content+="</select></div>";
+					attr_label.innerHTML=content;
+				}
+				attribute_label.appendChild(attr_label);
+			}
+		});
+	});
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form39'))
+		{
+			var name=form.elements['name'].value;
+			var make=form.elements['make'].value;
+			var description=form.elements['desc'].value;
+
+			var indexes=name.split(/[\s,]+/);
+			var description_indexes=description.split(/[\s,]+/);
+			var make_indexes=make.split(/[\s,]+/);
+			var new_indexes=indexes.concat(description_indexes,make_indexes);
+			var anew_indexes=vUtil.arrayUnique(new_indexes);
+			var index_string=JSON.stringify(anew_indexes);
+
+			var tax=form.elements['tax'].value;
+			var data_id=vUtil.newKey();
+			var last_updated=get_my_time();
+
+      		var data_json={data_store:'product_master',
+	 				log:'yes',
+	 				data:[{index:'id',value:data_id},
+	 					{index:'name',value:name,unique:'yes'},
+	 					{index:'make',value:make},
+	 					{index:'description',value:description},
+	 					{index:'tax',value:tax},
+	 					{index:'bar_code',value:''},
+						{index:'indexes',value:index_string},
+	 					{index:'last_updated',value:last_updated}],
+	 				log_data:{title:'Added',notes:'Product '+name+' to inventory',link_to:'form39'}};
+			create_json(data_json,func);
+
+			var id=vUtil.newKey();
+      		$("#modal228_attributes").find('input, select').each(function()
+			{
+				id++;
+				var value=$(this).val();
+				var attribute=$(this).attr('name');
+				if(value!="")
+				{
+					var attribute_json={data_store:'attributes',
+	 				data:[{index:'id',value:id},
+	 					{index:'name',value:name,uniqueWith:['attribute']},
+	 					{index:'type',value:'product'},
+	 					{index:'attribute',value:attribute},
+	 					{index:'value',value:value},
+	 					{index:'last_updated',value:last_updated}]};
+					create_json(attribute_json);
+				}
+			});
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
+		$(form).find(".close").click();
+	});
+
+	$("#modal228_link").click();
 }

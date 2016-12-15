@@ -5,7 +5,7 @@ CACHE MANIFEST
 #Avoid using a continually-updating timestamp or random string to force updates every time.
 #The manifest is checked twice during an update,
 #once at the start and once after all cached files have been updated.
-#last updated on 15th Sep 2016 9:08am
+#last updated on 5th Nov 2016 9:08am
 #these files will be cached
 CACHE:
 case-studies.html
@@ -89,6 +89,7 @@ client_images/logo.png
 client_images/neptune.png
 client_images/nvs_logo.png
 client_images/pooja.png
+client_images/reiz.png
 client_images/soundworks.png
 client_images/sound_background4.jpeg
 css_custom/custom.css

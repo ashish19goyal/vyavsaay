@@ -9,16 +9,6 @@ function activities_import_template()
 };
 
 /**
-* @form Update Inventory
-* @formNo 1
-*/
-function form1_import_template()
-{
-	var data_array=['id','product_name','batch','expiry','manufacture_date','actual_quantity','mrp'];
-	vUtil.arrayToCSV(data_array);
-};
-
-/**
 * @form Manage Assets
 * @formNo 5
 */

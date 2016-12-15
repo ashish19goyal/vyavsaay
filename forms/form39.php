@@ -51,7 +51,10 @@
             $(add_button).off('click');
             $(add_button).on('click',function()
             {
-                if(is_read_access('form1') || is_read_access('form207'))
+                if(is_read_access('form1'))
+				{
+					modal228_action();
+				}else if(is_read_access('form207'))
                 {
                     modal14_action();
                 }
@@ -59,7 +62,7 @@
                 {
                     modal203_action();
                 }
-								else if(is_read_access('form183') || is_read_access('form238'))
+				else if(is_read_access('form183') || is_read_access('form238'))
                 {
                     modal222_action();
                 }

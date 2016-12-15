@@ -3,7 +3,7 @@
 <script>
 function animal()
 {
-	this.eats=true;
+	// this.eats=true;
 	this.v1=11;
 };
 
@@ -19,6 +19,8 @@ Rabbit.prototype=animal.prototype;
 
 var john = new Rabbit('John');
 console.log(john.eats);
+console.log(john);
+console.log(john instanceof animal);
 
 </script>
 <body></body>

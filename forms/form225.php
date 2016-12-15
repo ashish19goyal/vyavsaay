@@ -30,7 +30,7 @@
         <table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
 			<thead>
 				<tr style='color:#9a9a9a;'>
-          <th>Item</th>
+          			<th>Item</th>
 					<th>Batch</th>
 					<th>Quantity</th>
 					<th>Rate</th>
@@ -40,8 +40,8 @@
 			</thead>
 			<tbody id='form225_body'>
 			</tbody>
-      <tfoot id='form225_foot'>
-      </tfoot>
+	      <tfoot id='form225_foot'>
+	      </tfoot>
 		</table>
     </div>
 
@@ -929,7 +929,7 @@
 
             footer.appendChild(tandc);
             footer.appendChild(signature);
-						footer.appendChild(clearance);
+			footer.appendChild(clearance);
             footer.appendChild(business_contact);
 
             func(container);

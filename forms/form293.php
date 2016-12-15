@@ -1,10 +1,10 @@
-<div id='form293' class='tab-pane portlet box green-meadow'>	   
+<div id='form293' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
-		<div class='caption'>		
+		<div class='caption'>
 			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form293_add_item();'>Add <i class='fa fa-plus'></i></a>
-		</div>	
+		</div>
 	</div>
-	
+
 	<div class="portlet-body">
 	<br>
 		<table class="table table-striped table-bordered table-hover dt-responsive no-more-tables" width="100%">
@@ -23,11 +23,11 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<script>
 	function form293_header_ini()
 	{
-		var filter_fields=document.getElementById('form293_header');	
+		var filter_fields=document.getElementById('form293_header');
 		var user_filter=filter_fields.elements['name'];
 		var name_filter=filter_fields.elements['person'];
 		var db_filter=filter_fields.elements['db'];
@@ -64,7 +64,7 @@
 		show_loader();
 		var fid=$("#form293_link").attr('data_id');
 		if(fid==null)
-			fid="";	
+			fid="";
 
 		var filter_fields=document.getElementById('form293_header');
 		var fuser=filter_fields.elements['name'].value;
@@ -75,7 +75,7 @@
 		$('#form293_body').html("");
 
 		var paginator=$('#form293_body').paginator();
-			
+
 		var new_columns={count:paginator.page_size(),
 						start_index:paginator.get_index(),
 						data_store:'user_profile',
@@ -89,7 +89,7 @@
 								{index:'dbname',value:fdb}]};
 
 		read_json_rows_master('form293',new_columns,function(results)
-		{	
+		{
 			results.forEach(function(result)
 			{
 				var rowsHTML="<tr>";
@@ -98,7 +98,7 @@
 							rowsHTML+="<textarea readonly='readonly' form='form293_"+result.id+"'>"+result.username+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Contact Person'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form293_"+result.id+"' value='"+result.name+"'>";
+							rowsHTML+="<input type='text' class='dblclick_editable' readonly='readonly' form='form293_"+result.id+"' value='"+result.name+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Contact Details'>";
 							rowsHTML+="<input type='text' class='floatlabel dblclick_editable' placeholder='Phone' readonly='readonly' form='form293_"+result.id+"' value='"+result.phone+"'>";
@@ -108,7 +108,7 @@
 							rowsHTML+="<textarea readonly='readonly' form='form293_"+result.id+"' required class='dblclick_editable'>"+result.dbname+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Status'>";
-							rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' required form='form293_"+result.id+"' value='"+result.status+"'>";	
+							rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' required form='form293_"+result.id+"' value='"+result.status+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form293_"+result.id+"' value='"+result.id+"'>";
@@ -158,13 +158,13 @@
 						rowsHTML+="<textarea form='form293_"+id+"' placeholder='DB' required class='dblclick_editable'></textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
-						rowsHTML+="<input type='text' class='dblclick_editable' placeholder='Status' requried form='form293_"+id+"'>";	
+						rowsHTML+="<input type='text' class='dblclick_editable' placeholder='Status' requried form='form293_"+id+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form293_"+id+"' value='"+id+"'>";
 						rowsHTML+="<button type='submit' class='btn green' form='form293_"+id+"' name='save' title='Save'><i class='fa fa-save'></i></button>";
 						rowsHTML+="<button type='button' class='btn red' form='form293_"+id+"' onclick='$(this).parent().parent().remove();' name='delete' title='Delete'><i class='fa fa-trash'></i></button>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 
 			$('#form293_body').prepend(rowsHTML);
@@ -188,7 +188,7 @@
 		else
 		{
 			$("#modal2_link").click();
-		}		
+		}
 	}
 
 	function form293_create_item(form)
@@ -210,7 +210,7 @@
 			server_create_master(new_columns);
 
 			$(form).readonly();
-			
+
 			del_button.removeAttribute("onclick");
 			$(del_button).on('click',function(event)
 			{
@@ -236,7 +236,8 @@
 		{
 			var new_columns={data_store:'user_profile',database:'0',
 							 data:[{index:'id',value:form.elements[6].value},
-								{index:'phone',value:form.elements[2].value},
+								 {index:'name',value:form.elements[1].value},
+								 {index:'phone',value:form.elements[2].value},
 								{index:'name',value:form.elements[1].value},
 								{index:'status',value:form.elements[5].value},
 								{index:'email',value:form.elements[3].value},

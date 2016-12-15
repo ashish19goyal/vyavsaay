@@ -21,6 +21,7 @@
 	<div class="portlet-body">
 		<form id='report9_header' autocomplete="off">
 			<fieldset>
+				<label><input type='text' placeholder="Item Keyword" class='floatlabel' name='key'></label>
 				<label><input type='text' placeholder="Item" class='floatlabel' name='item_name'></label>
 				<label><input type='text' placeholder="Brand" class='floatlabel' name='make'></label>
                 <label><input type='text' placeholder="Customer" class='floatlabel' name='customer'></label>
@@ -75,15 +76,18 @@
 
             $(start_date_filter).datepicker();
             $(end_date_filter).datepicker();
-            start_date_filter.value=get_my_past_date((get_my_time()-7*86400000));
+			start_date_filter.value=vTime.date({addDays:-7});
             end_date_filter.value=vTime.date();
 			var paginator=$('#report9_body').paginator({'visible':false,'container':$('#report9_body')});
-			setTimeout(function(){$('#report9').formcontrol();},300);
+			vUtil.delay(function(){
+				$('#report9').formcontrol();
+			});
         }
 
         function report9_ini()
         {
             var form=document.getElementById('report9_header');
+			var index=form.elements['key'].value;
             var name=form.elements['item_name'].value;
             var make=form.elements['make'].value;
             var customer=form.elements['customer'].value;
@@ -148,7 +152,8 @@
 
                             var make_data={data_store:'product_master',
                                           indexes:[{index:'name',array:product_string},
-                                                  {index:'make',value:make}]};
+										  			{index:'indexes',value:index},
+												  {index:'make',value:make}]};
 
                             read_json_rows('report9',make_data,function(makes)
                             {

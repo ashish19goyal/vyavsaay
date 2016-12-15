@@ -25,7 +25,7 @@
 						<th><input type='text' placeholder="Name"  readonly="readonly" name='name' form='form263_header'></th>
 						<th><input type='text' placeholder="Display Name" readonly="readonly" name='disp' form='form263_header'></th>
 						<th><input type='text' placeholder="Action" readonly="readonly" name='action' form='form263_header'></th>
-						<th><input type='submit' form='form263_header' style='visibility: hidden;'></th>
+						<th><input type='submit' form='form263_header' style='display:none;'></th>
 				</tr>
 			</thead>
 			<tbody id='form263_body'>
