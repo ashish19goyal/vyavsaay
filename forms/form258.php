@@ -646,7 +646,8 @@
 
                         var share_button=document.getElementById('form258_share');
                         $(share_button).show();
-                        $(share_button).click(function()
+						$(share_button).off('click');
+						$(share_button).on('click',function()
                         {
                             modal171_action('Quotation from - '+bt,filter_fields.elements['customer'].value,'customer',function (func)
                             {
@@ -992,13 +993,13 @@
                 var message_attachment="";
                 var bt=get_session_var('title');
 
-                $(share_button).off('click');
+				$(share_button).off('click');
                 $(share_button).on('click',function()
                 {
-                    modal101_action('Quotation from - '+bt,customer,'customer',function (func)
+                    modal171_action('Quotation from - '+bt,customer,'customer',function (func)
                     {
                         print_form258(func);
-                    });
+                    },'pdf');
                 });
 
                 var amount=0;
@@ -1132,7 +1133,7 @@
                 var items=JSON.stringify(items_array);
                 var terms=JSON.stringify(terms_array);
 
-                var data_json={data_store:'quoptation',
+                var data_json={data_store:'quotation',
 	 				data:[{index:'id',value:data_id},
 	 					{index:'quot_num',value:quot_num},
 	 					{index:'customer',value:customer},
@@ -1166,7 +1167,7 @@
                     {
                         var quot_num_array=quot_num.split("-");
 
-                        var num_json={data_store:'quoptation',
+                        var num_json={data_store:'quotation',
                             data:[{index:'id',value:num_ids[0]},
                                 {index:'value',value:(parseInt(quot_num_array[1])+1)},
                                 {index:'last_updated',value:last_updated}]};

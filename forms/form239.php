@@ -16,6 +16,10 @@
                     <li>
                         <a id='form239_print'><i class='fa fa-print'></i> Print</a>
                     </li>
+					<li class="divider"> </li>
+					<li>
+						<a id='form239_upload' onclick=modal23_action(form239_import_template,form239_import);><i class='fa fa-upload'></i> Import</a>
+					</li>
                 </ul>
             </div>
         </div>
@@ -73,14 +77,12 @@
 
             var paginator=$('#form239_body').paginator();
 
-			var columns=new Object();
-					columns.count=paginator.page_size();
-					columns.start_index=paginator.get_index();
-					columns.data_store='manage_pre_requisites';
-
-					columns.indexes=[{index:'id',value:fid},
+			var columns={count:paginator.page_size(),
+						start_index:paginator.get_index(),
+						data_store:'manage_pre_requisites',
+						indexes:[{index:'id',value:fid},
 									{index:'name',value:fitem},
-									{index:'num_materials'}];
+									{index:'num_materials'}]};
 
             read_json_rows('form239',columns,function(results)
             {
@@ -139,5 +141,86 @@
                 $("#modal2_link").click();
             }
         }
+
+		function form239_import_template()
+        {
+            var data_array=['id','finished item','raw material','quantity'];
+            vUtil.arrayToCSV(data_array);
+        };
+
+        function form239_import(data_array,import_type)
+        {
+            var data_json={data_store:'pre_requisites',
+	 					data:[]};
+			var manage_data_json={data_store:'manage_pre_requisites',
+						log:'yes',
+						data:[],
+						log_data:{title:'Raw Material requirements for finished items',link_to:'form239'}};
+
+			var counter=1;
+			var last_updated=get_my_time();
+
+			var unique_items = {};
+
+			data_array.forEach(function(row)
+			{
+				counter++;
+				if(import_type=='create_new')
+				{
+					row.id=last_updated+counter;
+				}
+
+				var data_json_array=[{index:'id',value:row.id},
+						{index:'type',value:'product'},
+						{index:'requisite_type',value:'product'},
+						{index:'requisite_name',value:row['raw material']},
+						{index:'quantity',value:row['quantity']},
+						{index:'name',value:row['finished item']},
+	 					{index:'last_updated',value:last_updated}];
+
+				data_json.data.push(data_json_array);
+				if(vUtil.isBlank(unique_items[row['finished item']])){
+					unique_items[row['finished item']] = 1;
+				}else{
+					unique_items[row['finished item']] += 1;
+				}
+			});
+
+			for(var i in unique_items)
+			{
+				counter++;
+				var id = last_updated+counter;
+				var data_json_array=[{index:'id',value:id},
+						{index:'num_materials',value:unique_items[i]},
+						{index:'name',value:i},
+	 					{index:'last_updated',value:last_updated}];
+				manage_data_json.data.push(data_json_array);
+			}
+
+			if(import_type=='create_new')
+			{
+				if(is_create_access('form238'))
+				{
+					create_batch_json(data_json);
+					create_batch_json(manage_data_json);
+				}
+				else
+		          {
+		              $("#modal2_link").click();
+		          }
+			}
+			else
+			{
+				if(is_update_access('form238'))
+				{
+					update_batch_json(data_json);
+				}
+				else
+	            {
+	              $("#modal2_link").click();
+	            }
+            }
+        }
+
     </script>
 </div>

@@ -1,7 +1,7 @@
 <div id='report103' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
         <div class='caption'>
-            <div class='btn-group' id='report103_status' data-toggle='buttons'>
+            <div class='btn-group' id='report103_status' data-toggle='buttons' data-value='pending'>
                 <label class='btn red-pink active pending' onclick=report103_ini('pending');><input name='due_date' type='radio' class='toggle'>Pending</label>
                 <label class='btn red-pink closed' onclick=report103_ini('closed');><input type='radio' name='due_date' class='toggle'>Closed</label>
             </div>
@@ -79,16 +79,18 @@
         if(typeof status!='undefined' && status=='closed')
         {
             status_filter='closed';
+			$('#report103_status').data('value','closed');
         }
         else
         {
+			$('#report103_status').data('value','pending');
             $('#report103_status').find('label.pending').addClass('active');
             $('#report103_status').find('label.closed').removeClass('active');
         }
         var filter_fields=document.getElementById('report103_master');
         var account_filter=filter_fields.elements['account'].value;
 
-        var paginator=$('#report103_body').paginator();
+        var paginator=$('#report103_body').paginator({func:"report103_ini($('#report103_status').data('value'))"});
 
         var columns=new Object();
                 columns.count=paginator.page_size();

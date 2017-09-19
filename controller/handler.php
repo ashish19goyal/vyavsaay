@@ -7,8 +7,8 @@
 	use RetailingEssentials\vUtil;
 	use RetailingEssentials\handler;
 
-	$input_data=json_decode($_POST['data'],true);
-	$domain=$_POST['domain'];
+	$input_data = isset($_POST['data']) ? json_decode($_POST['data'],true) : array();
+	$domain = isset($_POST['domain']) ? $_POST['domain'] : "";
 	$response_object=[];
 
 	$getArray = explode('/',$_GET['url']);
@@ -22,6 +22,10 @@
 		{
 			case 'create': $response_object = $handler::create($input_data);
 							break;
+			case 'update': $response_object = $handler::update($input_data);
+							break;
+			case 'delete': $response_object = $handler::delete($input_data);
+							break;
 			case 'read_rows': $response_object = $handler::read_rows($input_data);
 							break;
 			case 'read_column': $response_object = $handler::read_column($input_data);
@@ -29,6 +33,13 @@
 			case 'get_count': $response_object = $handler::get_count($input_data);
 							break;
 			case 'cron': $response_object = $handler::manage_cron($input_data);
+							break;
+			case 'batch': $response_object = $handler::batch($input_data);
+							break;
+			case 's3': $input_data['domain'] = $domain;
+						$response_object = $handler::s3($input_data);
+						break;
+			case 'search': $response_object = $handler::search($input_data);
 							break;
 		}
 	}

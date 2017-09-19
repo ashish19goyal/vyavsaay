@@ -8013,7 +8013,7 @@ function modal128_action()
 		                "<collectable_value>"+c_value+"</collectable_value>"+
 		                "<return_address1>"+raddress+"</return_address1>"+
 		                "<import_date>"+date+"</import_date>"+
-		                "<status>picked</status>"+
+		                "<status>not received</status>"+
 		                "<last_updated>"+last_updated+"</last_updated>"+
 						"</logistics_orders>";
 			create_simple(orders_xml);
@@ -10275,7 +10275,7 @@ function modal148_action()
 
 			var validate_template_array=[{column:'date',required:'yes',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
 										{column:'awb',required:'yes',regex:new RegExp('^[0-9a-zA-Z]+$')},
-										{column:'order_status',required:'yes',list:['delivered','undelivered','pending','in-transit','RTO Delivered','RTO in-transit']},
+										{column:'order_status',required:'yes',list:['received','delivered','undelivered','pending','in-transit','RTO delivered','RTO in-transit']},
 										{column:'location',regex:new RegExp('^[0-9a-zA-Z\' _.,/@$!()-]+$')},
 										{column:'received by',regex:new RegExp('^[0-9a-zA-Z\' _.,/@$!()-]+$')},
 										{column:'remark',regex:new RegExp('^[0-9a-zA-Z\' _.,/@$!()-]+$')}];
@@ -10356,6 +10356,7 @@ function modal148_action()
                                 {index:'status',value:row.status},
                                 {index:'received_by',value:row.received_by},
                                 {index:'order_history',value:row.order_history},
+								{index:'sync_status',value:1},
                                 {index:'last_updated',value:last_updated}];
 
                         data_json.data.push(data_json_array);
@@ -10453,7 +10454,7 @@ function modal149_action()
 						'State','Pincode','Tel. Number','Mobile number','Product name','Weight(K.G.)',
 						'Declared Value','Collectable Value','Volumetric Weight(g)','LBH','vendor name',
 						'Return Address1','Return Address2','Return Address3',
-						'Return Pin','Pieces'];
+						'Return Pin','Pieces','Return Reason Code'];
 		vUtil.arrayToCSV(data_array);
 	});
 
@@ -10498,7 +10499,8 @@ function modal149_action()
 										{column:'Return Address1',required:'yes'},
 										{column:'Return Address2'},
 										{column:'Return Address3'},
-										{column:'Return Pin',required:'yes',regex:new RegExp('^[0-9]+$')}];
+										{column:'Return Pin',required:'yes',regex:new RegExp('^[0-9]+$')},
+										{column:'Return Reason Code',required:'yes',list:['NA','WACW','RTA','ANF','ACCNR','COS','NSPCNC','ICA']}];
 
 			data_array.forEach(function(row)
             {
@@ -10566,7 +10568,9 @@ function modal149_action()
 			                {index:'sku',value:row['Product name']},
 			                {index:'pieces',value:row['Pieces']},
 			                {index:'order_history',value:order_history_string},
-			                {index:'status',value:'picked'},
+							{index:'sync_status',value:1},
+			                {index:'status',value:'not received'},
+							{index:'reason_code',value:row['Return Reason Code']},
 			                {index:'last_updated',value:last_updated}];
 
                     data_json.data.push(data_json_array);
@@ -14779,65 +14783,6 @@ function modal200_action(letter_id)
     });
 }
 
-/**
- * @modalNo 201
- * @modal Add task
- */
-function modal201_action(list_name)
-{
-	var form=document.getElementById('modal201_form');
-    var list_filter=form.elements['list'];
-    var task_filter=form.elements['task'];
-    var desc_filter=form.elements['desc'];
-    var staff_filter=form.elements['assignee'];
-
-    list_filter.value="";
-    task_filter.value="";
-    desc_filter.value="";
-    staff_filter.value="";
-    $(list_filter).focus();
-    if(typeof list_name!='undefined' && list_name!="")
-    {
-        list_filter.value=list_name;
-        list_filter.setAttribute('readonly','readonly');
-        $(task_filter).focus();
-    }
-    else
-    {
-        list_filter.removeAttribute('readonly');
-    }
-
-    var assignee_data={data_store:'staff',return_column:'acc_name'};
-    set_my_value_list_json(assignee_data,staff_filter);
-
-    $(form).off('submit');
-	$(form).on('submit',function(event)
-	{
-		event.preventDefault();
-        var list=list_filter.value;
-        var task=task_filter.value;
-        var desc=desc_filter.value;
-        var staff=staff_filter.value;
-        var last_updated=get_my_time();
-
-		var data_json={data_store:'task_instances',
-                       log:'yes',
-	                   data:[{index:'id',value:vUtil.newKey()},
-	 					{index:'name',value:task},
-                        {index:'source_name',value:list},
-                        {index:'source',value:'to_do'},
-                        {index:'description',value:desc},
-                        {index:'assignee',value:staff},
-                        {index:'status',value:'pending'},
-	 					{index:'last_updated',value:last_updated}],
-	 			   log_data:{title:'Added',notes:'Task to list '+list_name,link_to:'form279'}};
-        create_json(data_json);
-
-        $(form).find('.close').click();
-	});
-	$('#modal201').formcontrol();
-	$("#modal201_link").click();
-}
 
 /**
  * @modalNo 202

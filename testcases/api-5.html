@@ -96,7 +96,7 @@
 							result_head_box.innerHTML="<br>"+result_row.awb_num+" Details";
 							result_table.innerHTML="<th>Time</th><th>Details</th><th>Location</th><th>Status</th>";
 
-							var order_history=result_row.order_history;
+							var order_history=JSON.parse(result_row.order_history);
 							order_history.forEach(function(history)
 							{
 								var result_table_row=document.createElement('tr');

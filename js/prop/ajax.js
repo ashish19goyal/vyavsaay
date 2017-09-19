@@ -15,7 +15,7 @@
  * @param func - function to be executed on successful result from server
  */
 function ajax_with_custom_func(url,kvp,func)
-{
+{	
 	if(typeof number_active_ajax=='undefined')
 	{
 		number_active_ajax=1;

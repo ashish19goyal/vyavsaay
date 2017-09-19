@@ -14,8 +14,8 @@
                       binding_id:binding_id,
                       func:binding_id.replace(/body/g,"ini();"),
                       container:$(element).parent().parent(),
-                      visible:true
-                     };
+                      visible:true,
+					 };
 
 		var settings = $.extend(defaults, options || {});
 

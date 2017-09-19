@@ -654,6 +654,7 @@
 						{index:'branch',value:branch},
                         {index:'status',value:'in-transit'},
                         {index:'order_history',value:order_history_string},
+						{index:'sync_status',value:1},
 	 					{index:'last_updated',value:last_updated}]};
 
                 update_json(data_json);
@@ -883,6 +884,7 @@
 						{index:'manifest_date',value:''},
 						{index:'branch',value:''},
                         {index:'status',value:'pending'},
+						{index:'sync_status',value:1},
 	 					{index:'last_updated',value:last_updated}]};
 
                     update_json(data_json);

@@ -5,11 +5,13 @@ use \PDO;
 
 include_once 'config.php';
 include_once 'vUtil.php';
+include_once 'vLog.php';
 
 class vDB
 {
 	private $conn;
 	private $table;
+	private $log;
 	/**
 	* Constructor initializes a connnection to the database
 	*/
@@ -28,6 +30,7 @@ class vDB
 		$dsn="mysql:host=".$dbhost.";dbname=".$dbname.";charset=utf8";
 		$options=array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 		$this->conn = new \PDO($dsn, $dbuser, $dbpass, $options);
+		$this->log = vLog::getInstance(array('domain' => $db_name));
 	}
 
 	/**
@@ -60,9 +63,10 @@ class vDB
 		try{
 			$stmt=$this->conn->prepare($query);
 			$result = $stmt->execute($values);
-		}catch(PDOException $e)
+		}catch(Exception $e)
 		{
 			$result = false;
+			$this->log::err($e . ' - query - '. $query);
 		}
 		return $result;
 	}
@@ -90,19 +94,31 @@ class vDB
 		$query=$this->getQuery('delete',$subQueries);
 		if($this->dbExecute($query,$whereArray['values']))
 		{
-			return $ids;
-		}else {
-			return false;
+			return array(
+				'status' => 'success',
+				'ids' => $ids
+			);
+		}
+		else
+		{
+			return array(
+				'status' => 'error'
+			);
 		}
 	}
 
 	/**
 	* Performs update as per the provided indexes and data
 	*/
-	public function vUpdate($indexes,$data)
+	public function vUpdate($data)
 	{
+		$id = vUtil::getIndexValue($data,'id');
+
 		$setArray=$this->getSetClause($data);
-		$whereArray=$this->getWhereClause($indexes);
+		$whereArray=array(
+			'query' => 'id=?',
+			'values' => array($id)
+		);//where should only include id= $id
 
 		$subQueries = array(
 				'where' => $whereArray['query'],
@@ -112,14 +128,13 @@ class vDB
 
 		$values=array_merge($setArray['values'],$whereArray['values']);
 
-		$id = vUtil::getIndexValue($indexes,'id');
-
 		if($this->dbExecute($query,$values))
 		{
 			return array(
 				'status' => 'success',
-				'row' => $indexes,
-				'id' => $id
+				'row' => $data,
+				'id' => $id,
+				'query' => $query
 			);
 		}
 		else{
@@ -212,6 +227,7 @@ class vDB
 		$query=$this->getQuery('select',$subQueries);
 		// print_r($query);
 		// print_r($values);die;
+		// $this->log::info($query);
 		$rows = $this->dbSelect($query,$values);
 
 		$startIndex = isset($options['startIndex']) ? $options['startIndex'] : 0;
@@ -240,7 +256,7 @@ class vDB
 		$result=$this->vCreate($data);
 		if($result['status']=='error' && $result['description']=='duplicate record')
 		{
-			$result=$this->vUpdate(array(),$data);
+			$result=$this->vUpdate($data);
 		}
 		return $result;
 	}
@@ -626,7 +642,7 @@ class vDB
 			$condQuery = "(";
 			foreach($conditions as $cond)
 			{
-				if(!vUtil::isBlank($cond['criteria_field']))
+				if(isset($cond['criteria_field']) && !vUtil::isBlank($cond['criteria_field']))
 				{
 					$condQuery.=$cond['criteria_field']."=? or ";
 					$condValues[] = $cond['criteria_value'];
@@ -651,7 +667,7 @@ class vDB
 			$fieldQuery = "(";
 			foreach($fields as $f)
 			{
-				if(!vUtil::isBlank($f['criteria_field']))
+				if(isset($f['criteria_field']) && !vUtil::isBlank($f['criteria_field']))
 				{
 					$fieldQuery.="(".$f['criteria_field']."=? and ".$f['user']." in (".$placeholder.")) or ";
 					$fieldValues[] = $f['criteria_value'];

@@ -203,7 +203,8 @@
 
 				var bt=get_session_var('title');
 				$('#form72_share').show();
-				$('#form72_share').click(function()
+				$('#form72_share').off("click");
+				$('#form72_share').on("click",function()
 				{
 					modal101_action(bt+' - Invoice# '+filter_fields.elements['bill_num'].value,filter_fields.elements['customer'].value,'customer',function (func)
 					{
@@ -542,7 +543,8 @@
 
 			var bt=get_session_var('title');
 			$('#form72_share').show();
-			$('#form72_share').click(function()
+			$('#form72_share').off("click");
+			$('#form72_share').on("click",function()
 			{
 				modal101_action(bt+' - Invoice# '+bill_num,customer,'customer',function (func)
 				{
@@ -592,34 +594,18 @@
 			amount=vUtil.ceil(amount);
 			discount=vUtil.ceil(discount);
 			total=vUtil.ceil(total);
+			var sgst = (vat+service_tax)/2;
+			var cgst = sgst;
 
 			var tax=service_tax+vat;
-			var tax_string="VAT: <br>S.Tax:";
-			var tax_amount_string="Rs. "+vat+"<br>Rs. "+service_tax+"<br>";
-
-			if(vat==0)
-			{
-				tax_string="S.Tax:";
-				tax_amount_string="Rs. "+service_tax+"<br>";
-			}
-
-			if(service_tax==0)
-			{
-				tax_string="VAT:";
-				tax_amount_string="Rs. "+vat+"<br>";
-			}
-
-			if(service_tax==0 && vat==0)
-			{
-				tax_string="Tax:";
-				tax_amount_string="Rs. 0<br>";
-			}
+			var tax_string="SGST: <br>CGST:";
+			var tax_amount_string="Rs. "+sgst+"<br>Rs. "+cgst;
 
 			var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 						"<td>Amount:<br>Discount: <br>"+tax_string+"<br>Total: </td>" +
 						"<td>Rs. "+amount+"</br>" +
-						"Rs. "+discount+"</br>" +
-						tax_amount_string +
+						"Rs. "+discount +"</br>" +
+						tax_amount_string +"</br>" +
 						"Rs. "+total+"</td>" +
 						"<td></td>" +
 						"</tr>";
@@ -704,11 +690,11 @@
 
 					if(isNaN(bill_num))
 					{
-						num_json.data.push({index:'value',value:(parseFloat(bill_num_ids[0].value)+1)+""});
+						num_json.data.push({index:'value',value:(parseFloat(bill_num_ids[0].value)+1)});
 					}
 					else
 					{
-						num_json.data.push({index:'value',value:(parseFloat(bill_num)+1)+""});
+						num_json.data.push({index:'value',value:(parseFloat(bill_num)+1)});
 					}
 					update_json(num_json);
 				}
@@ -742,7 +728,8 @@
 
 			var bt=get_session_var('title');
 			$('#form72_share').show();
-			$('#form72_share').click(function()
+			$('#form72_share').off("click");
+			$('#form72_share').on("click",function()
 			{
 				modal101_action(bt+' - Invoice# '+bill_num,customer,'customer',function (func)
 				{
@@ -792,35 +779,18 @@
 			amount=vUtil.ceil(amount);
 			discount=vUtil.ceil(discount);
 			total=vUtil.ceil(total);
+			var sgst = (vat+service_tax)/2;
+			var cgst = sgst;
 
 			var tax=service_tax+vat;
-
-			var tax_string="VAT: <br>S.Tax:";
-			var tax_amount_string="Rs. "+vat+"<br>Rs. "+service_tax+"<br>";
-
-			if(vat==0)
-			{
-				tax_string="S.Tax:";
-				tax_amount_string="Rs. "+service_tax+"<br>";
-			}
-
-			if(service_tax==0)
-			{
-				tax_string="VAT:";
-				tax_amount_string="Rs. "+vat+"<br>";
-			}
-
-			if(service_tax==0 && vat==0)
-			{
-				tax_string="Tax:";
-				tax_amount_string="Rs. 0<br>";
-			}
+			var tax_string="SGST: <br>CGST:";
+			var tax_amount_string="Rs. "+sgst+"<br>Rs. "+cgst;
 
 			var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 						"<td>Amount:<br>Discount: <br>"+tax_string+"<br>Total: </td>" +
 						"<td>Rs. "+amount+"</br>" +
-						"Rs. "+discount+"</br>" +
-						tax_amount_string +
+						"Rs. "+discount +"</br>" +
+						tax_amount_string +"</br>" +
 						"Rs. "+total+"</td>" +
 						"<td></td>" +
 						"</tr>";
@@ -974,33 +944,18 @@
 		amount=vUtil.ceil(amount);
 		discount=vUtil.ceil(discount);
 		total=vUtil.ceil(total);
+		var sgst = (vat+service_tax)/2;
+		var cgst = sgst;
 
-		var tax_string="VAT: <br>S.Tax:";
-		var tax_amount_string="Rs. "+vat+"<br>Rs. "+service_tax+"<br>";
-
-		if(vat==0)
-		{
-			tax_string="S.Tax:";
-			tax_amount_string="Rs. "+service_tax+"<br>";
-		}
-
-		if(service_tax==0)
-		{
-			tax_string="VAT:";
-			tax_amount_string="Rs. "+vat+"<br>";
-		}
-
-		if(service_tax==0 && vat==0)
-		{
-			tax_string="Tax:";
-			tax_amount_string="Rs. 0<br>";
-		}
+		var tax=service_tax+vat;
+		var tax_string="SGST: <br>CGST:";
+		var tax_amount_string="Rs. "+sgst+"<br>Rs. "+cgst;
 
 		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 					"<td>Amount:<br>Discount: <br>"+tax_string+"<br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
-					"Rs. "+discount+"</br>" +
-					tax_amount_string +
+					"Rs. "+discount +"</br>" +
+					tax_amount_string +"</br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
 					"</tr>";
@@ -1052,8 +1007,8 @@
 		var customer_name=master_form.elements['customer'].value;
 		var date=master_form.elements['date'].value;
 		var bill_num=master_form.elements['bill_num'].value;
-		var vat_no=get_session_var('vat');
-		var st_no=get_session_var('service_tax_no');
+		//var vat_no=get_session_var('vat');
+		var gst_no=get_session_var('gst_no');
 
 		var show_sub_totals=master_form.elements['sub_totals'];
 
@@ -1063,17 +1018,12 @@
 
 		logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 		//business_intro.innerHTML=get_session_var('business_intro');
-		business_contact.innerHTML="<hr style='border: 1px solid #00f;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+"<br>VAT #: "+vat_no+"S.Tax #: "+st_no;
+		business_contact.innerHTML="<hr style='border: 1px solid #00f;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+"<br>GST #: "+gst_no;
 
 		var info_section_text="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Invoice No: "+bill_num+"</b></div><hr style='border: 1px solid #00f;'>"+
 								"<b>For: </b>"+customer_name+
 								"<br>Date: "+date;
-	/*
-		if(show_sub_totals.checked)
-		{
-			info_section_text+="<br>VAT #: "+vat_no;
-		}
-	*/
+
 		info_section.innerHTML=info_section_text;
 		footer.innerHTML=bill_message;
 
@@ -1149,6 +1099,8 @@
 		total_vat=vUtil.ceil(total_vat);
 		total_st=vUtil.ceil(total_st);
 		master_total=vUtil.ceil(master_total);
+		var total_sgst = (total_vat+total_st)/2;
+		var total_cgst = total_sgst;
 
 		var row_count=$(table_element).find('tbody>tr').length;
 		var rows_to_add=5-row_count;
@@ -1168,26 +1120,8 @@
 
 		if(show_sub_totals.checked)
 		{
-			display_total="Amount:<br>VAT: <br>S. Tax:<br>Total:";
-			display_total_amount="Rs. "+total_amount+"<br>Rs. "+total_vat+"<br>Rs. "+total_st+"<br>Rs. "+master_total;
-
-			if(counter_service==0)
-			{
-				display_total="Amount:<br>VAT: <br>Total:";
-				display_total_amount="Rs. "+total_amount+"<br>Rs. "+total_vat+"<br>Rs. "+master_total;
-			}
-
-			if(counter_product==0)
-			{
-				display_total="Amount:<br>S. Tax:<br>Total:";
-				display_total_amount="Rs. "+total_amount+"<br>Rs. "+total_st+"<br>Rs. "+master_total;
-			}
-
-			if(counter_service==0 && counter_product==0)
-			{
-				display_total="Amount:<br>Tax:<br>Total:";
-				display_total_amount="Rs. "+total_amount+"<br>Rs. 0<br>Rs. "+master_total;
-			}
+			display_total="Amount:<br>SGST: <br>CGST: <br>Total:";
+			display_total_amount="Rs. "+total_amount+"<br>Rs. "+total_sgst+"<br>Rs. "+total_cgst+"<br>Rs. "+master_total;
 		}
 
 		//console.log(total_amount);

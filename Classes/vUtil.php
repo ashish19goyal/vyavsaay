@@ -196,12 +196,12 @@ class vUtil
 	*/
 	public static function validateSession($post)
 	{
-		$domain=$post['domain'];
-		$username=$post['username'];
-		$cr_access=$post['cr'];
-		$re_access=$post['re'];
-		$up_access=$post['up'];
-		$del_access=$post['del'];
+		$domain=isset($post['domain']) ? $post['domain'] : "" ;
+		$username=isset($post['username']) ? $post['username'] : "" ;
+		$cr_access=isset($post['cr']) ? $post['cr'] : "" ;
+		$re_access=isset($post['re']) ? $post['re'] : "" ;
+		$up_access=isset($post['up']) ? $post['up'] : "" ;
+		$del_access=isset($post['del']) ? $post['del'] : "" ;
 
 		if(isset($_SESSION['session']) && $_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['username']==$username && $_SESSION['cr']==$cr_access && $_SESSION['re']==$re_access && $_SESSION['up']==$up_access && $_SESSION['del']==$del_access)
 		{
@@ -215,7 +215,7 @@ class vUtil
 	*/
 	public static function isBlank($arg)
 	{
-		if($arg=="" || $arg==null || $arg=="null" || $arg=="undefined")
+		if(!isset($arg) || $arg==null || $arg=="null" || $arg=="undefined" || $arg=="")
 		{
 			return true;
 		}

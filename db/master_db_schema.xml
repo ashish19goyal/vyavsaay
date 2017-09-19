@@ -42,4 +42,9 @@
 			<started_on index='no' type="BIGINT"></started_on>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</crons>
+	<hard_bounce>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<email index='no' type="VARCHAR(50)"></email>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</hard_bounce>
 </re_xml>

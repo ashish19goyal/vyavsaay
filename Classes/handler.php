@@ -5,6 +5,8 @@ namespace RetailingEssentials;
 include_once 'vUtil.php';
 include_once 'vDB.php';
 include_once 'vCron.php';
+include_once 'vS3.php';
+include_once 'vElastic.php';
 
 class handler
 {
@@ -45,6 +47,50 @@ class handler
 				array(
 					'type' => 'create',
 					'ids' => array($dbResult['id']),
+				));
+			self::$vDB->log($logData);
+		}
+
+		$dbResult['data_store'] = $dataStore;
+		$dbResult['warning']= isset($inputData['warning']) ? $inputData['warning'] : 'yes';
+		return $dbResult;
+	}
+
+	public static function update($inputData)
+	{
+		$dataStore = $inputData['data_store'];
+		self::$vDB->setTable($dataStore);
+		$data = $inputData['data'];
+
+		$dbResult = self::$vDB->vUpdate($data);
+		if($dbResult['status']=='success')
+		{
+			$logData = array_merge($inputData,
+				array(
+					'type' => 'update',
+					'ids' => array($dbResult['id'])
+				));
+			self::$vDB->log($logData);
+		}
+
+		$dbResult['data_store'] = $dataStore;
+		$dbResult['warning']= isset($inputData['warning']) ? $inputData['warning'] : 'yes';
+		return $dbResult;
+	}
+
+	public static function delete($inputData)
+	{
+		$dataStore = $inputData['data_store'];
+		self::$vDB->setTable($dataStore);
+		$data = $inputData['data'];
+
+		$dbResult = self::$vDB->vDelete($data);
+		if($dbResult['status']=='success')
+		{
+			$logData = array_merge($inputData,
+				array(
+					'type' => 'delete',
+					'ids' => $dbResult['ids']
 				));
 			self::$vDB->log($logData);
 		}
@@ -143,4 +189,77 @@ class handler
 		return $dbResult;
 	}
 
+	public static function batch($requests)
+	{
+		$response = array();
+		$response['responses'] = array();
+		try
+		{
+			foreach($requests as $request)
+			{
+				$request_output = null;
+				switch($request['request_type'])
+				{
+					case 'create' : $request_output = self::create($request);
+									break;
+					case 'update' : $request_output = self::update($request);
+									break;
+					case 'delete' : $request_output = self::delete($request);
+									break;
+					case 'read_rows' : $request_output = self::read_rows($request);
+									break;
+					case 'read_column' : $request_output = self::read_column($request);
+									break;
+					case 'get_count' : $request_output = self::get_count($request);
+									break;
+				}
+				$response['responses'][] = $request_output;
+			}
+			$response['status'] = 'success';
+		}
+		catch(Exception $e)
+		{
+			$response['status'] = 'fail';
+		}
+		return $response;
+	}
+
+	public static function s3($data)
+	{
+		$vS3 = new vS3(array(
+			'domain' => $data['domain'],
+			'bucket' => $data['bucket']
+		));
+
+		$dbResult = array();
+		$objectInfo = array(
+			'name' => $data['name'],
+			'content' => $data['blob'],
+			'mime' => $data['content_type'],
+			'description' => $data['description']
+		);
+		switch($data['type'])
+		{
+			case 'create': $vS3->saveObject($objectInfo);
+							$dbResult['status']= 'created';
+							break;
+			case 'update': $vS3->updateObject($objectInfo);
+							$dbResult['status']= 'updated';
+							break;
+			case 'delete': $vS3->deleteObject($objectInfo);
+							$dbResult['status']= 'deleted';
+							break;
+		}
+		return $dbResult;
+	}
+
+	public static function search($data)
+	{
+		$result = array(
+			'status' => 'success'
+		);
+		$vES = vElastic::getInstance(self::$domain);
+		$result['data'] = $vES->search($data);
+		return $result;
+	}
 }

@@ -294,7 +294,7 @@
 	                        rowsHTML+="<input type='number' class='floatlabel dblclick_editable' placeholder='Tax' required form='form136_"+id+"' step='any'>";
 	                    rowsHTML+="</td>";
 	                    rowsHTML+="<td data-th='PO Price'>";
-							rowsHTML+="<input type='number' class='floatlabel' placeholder='Quantity' readonly='readonly' form='form136_"+id+"' step='any'>";
+							rowsHTML+="<input type='number' class='floatlabel' placeholder='Pending Quantity' readonly='readonly' form='form136_"+id+"' step='any'>";
 							rowsHTML+="<input type='number' class='floatlabel' placeholder='Unit Price' readonly='readonly' form='form136_"+id+"' step='any'>";
 	                        rowsHTML+="<input type='number' class='floatlabel' placeholder='Amount' readonly='readonly' form='form136_"+id+"' value='' step='any'>";
 	                        rowsHTML+="<input type='number' class='floatlabel' placeholder='Tax' readonly='readonly' required form='form136_"+id+"' step='any'>";
@@ -395,26 +395,72 @@
 	                                             {index:'order_id',exact:order_id}]};
 	                    read_json_rows('',po_item_data,function(po_items)
 	                    {
-	                        if(po_items.length>0)
-	                        {
-								po_quantity_filter.value=po_items[0].quantity;
-								po_unit_filter.value=po_items[0].price;
-	                            po_amount_filter.value=po_items[0].price;
-	                            po_tax_rate_filter.value=po_items[0].tax_rate;
-	                            po_tax_filter.value=parseFloat(po_items[0].tax_rate)*parseFloat(po_items[0].price)/100;
-	                        }
-	                        else
-	                        {
+							if(po_items.length>0)
+							{
+								var bill_id_data={data_store:'supplier_bills',return_column:'id',
+					 					indexes:[{index:'order_id',exact:order_id}]};
+								read_json_single_column(bill_id_data,function(bill_ids)
+								{
+									var call_count = 2*bill_ids.length;
+									var item_quantity = parseFloat(po_items[0].quantity);
+									bill_ids.forEach(function(bill_id)
+									{
+										var item_json={data_store:'supplier_bill_items',return_column:'quantity',
+							 				indexes:[{index:'product_name',exact:name_filter.value},
+						                        {index:'bill_id',exact:bill_id}]};
+										read_json_single_column(item_json,function(item_quantities)
+										{
+											item_quantities.forEach(function(q){
+												item_quantity-=parseFloat(item_quantity);
+											});
+											call_count--;
+										});
+
+										var return_item_json={data_store:'supplier_return_items',return_column:'quantity',
+													indexes:[{index:'return_id',exact:bill_id},
+														{index:'item_name',exact:name_filter.value}]};
+
+										read_json_single_column(return_item_json,function(item_quantities)
+										{
+											item_quantities.forEach(function(q){
+												item_quantity+=parseFloat(item_quantity);
+											});
+											call_count--;
+										});
+									});
+
+									var complete=setInterval(function()
+									{
+									   if(call_count===0)
+									   {
+										   item_quantity = (item_quantity<0) ? 0 : item_quantity;
+										   	po_quantity_filter.value=item_quantity;
+		   									po_unit_filter.value=po_items[0].price;
+		   		                            po_amount_filter.value=po_items[0].price;
+		   		                            po_tax_rate_filter.value=po_items[0].tax_rate;
+		   		                            po_tax_filter.value=parseFloat(po_items[0].tax_rate)*parseFloat(po_items[0].price)/100;
+
+			   								$(po_amount_filter).floatlabel();
+			   								$(po_tax_filter).floatlabel();
+			   								$(po_quantity_filter).floatlabel();
+			   								$(po_unit_filter).floatlabel();
+										   	clearInterval(complete);
+									   }
+								   },200);
+							   });
+							}
+							else
+							{
 								po_quantity_filter.value="";
-	                            po_unit_filter.value="";
-	                            po_amount_filter.value="";
-	                            po_tax_rate_filter.value="";
-	                            po_tax_filter.value="";
-	                        }
-							$(po_amount_filter).floatlabel();
-							$(po_tax_filter).floatlabel();
-							$(po_quantity_filter).floatlabel();
-							$(po_unit_filter).floatlabel();
+								po_unit_filter.value="";
+								po_amount_filter.value="";
+								po_tax_rate_filter.value="";
+								po_tax_filter.value="";
+								$(po_amount_filter).floatlabel();
+								$(po_tax_filter).floatlabel();
+								$(po_quantity_filter).floatlabel();
+								$(po_unit_filter).floatlabel();
+							}
 	                    });
 
 	                    var tax_unit_data={data_store:'product_master',return_column:'tax',

@@ -1,7 +1,7 @@
 <div id='form330' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class='caption'>
-			<div class='btn-group' id='form330_store' data-toggle='buttons'>
+			<div class='btn-group' id='form330_store' data-toggle='buttons' data-value='my'>
                 <label class='btn green-jungle my active' onclick=form330_ini('my');><input name='my' type='radio' class='toggle'>My Store</label>
                 <label class='btn green-jungle all' onclick=form330_ini('all');><input type='radio' name='all' class='toggle'>All Stores</label>
             </div>
@@ -77,18 +77,20 @@
             if(typeof store_type!='undefined' && store_type=='all')
             {
                 store='';
-                $('#form330_store').find('label.all').addClass('active');
+				$('#form330_store').data('value','all');
+			  	$('#form330_store').find('label.all').addClass('active');
                 $('#form330_store').find('label.my').removeClass('active');
             }
             else
             {
+				$('#form330_store').data('value','my');
                 $('#form330_store').find('label.my').addClass('active');
                 $('#form330_store').find('label.all').removeClass('active');
             }
 
             var filter_fields=document.getElementById('form330_header');
             var fname=filter_fields.elements['name'].value;
-            var paginator=$('#form330_body').paginator();
+            var paginator=$('#form330_body').paginator({func:"form330_ini($('#form330_store').data('value'))"});
 
             var item_columns={data_store:'attributes',return_column:'name',
                               count:paginator.page_size(),

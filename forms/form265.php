@@ -538,6 +538,7 @@
                         {index:'return_person',value:delivery_person},
                         {index:'order_history',value:order_history_string},
                         {index:'rto_time',value:get_raw_time(rto_date)},
+						{index:'sync_status',value:1},
                         {index:'last_updated',value:last_updated}]};
 
             update_json(data_json);
@@ -729,6 +730,7 @@
 	 					{index:'rto_num',value:''},
 	 					{index:'rto_id',value:''},
                         {index:'return_person',value:''},
+						{index:'sync_status',value:1},
                         {index:'last_updated',value:last_updated}]};
 
                 update_json(data_json);

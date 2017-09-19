@@ -1,24 +1,25 @@
 <?php
 
-	include_once "../Classes/mailer_json.php";
-	use RetailingEssentials\send_mailer_json;
+	include_once "../Classes/emailSES.php";
+	use RetailingEssentials\emailSES;
 
 	//ini_set('display_errors',1);
-	$to_array=array(
-				array("email" => "info@vyavsaay.com",
-					"name" => "Ashish"
-				)
-			);
-	$to = json_encode($to_array);
 	$email = $_POST["input-email"];
-
-	$from= "vyavsaayindia@gmail.com";
-	$from_name="Vyavsaay";
-
 	$subject="New customer for newsletter";
-	$message="This mail was sent to *|name|*<br>Email: $email";
-	$email_instance=new send_mailer_json('vyavsaay');
-	$email_instance->direct_send($subject,$message,'',$to,$from,$from_name);
+	$message="$email: wants to subscribe for newsletter";
+
+	$mailer=emailSES::getInstance('vyavsaay');
+	$message = array(
+		'receivers' => '[{"email":"info@vyavsaay.com"},{"email":"ashish.19goyal@gmail.com"}]',
+		'sender' => 'info@vyavsaay.com',
+		'subject' => $subject,
+		'message' => $message,
+		'sender_name' => 'Website',
+		'attachment_type' => '',
+		'message_attachment' => ''
+	);
+
+	$mailer->send($message);
 
 	$response_object = array( "status" => "mail success");
 	$jsonresponse=json_encode($response_object);

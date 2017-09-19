@@ -214,55 +214,12 @@ function server_generate_report_json(report_id,callback)
 	});
 }
 
-function sync_logistics_apis()
-{
-	show_loader();
-	var domain=get_domain();
-	var username=get_username();
-	var re_access=get_session_var('re');
-	ajax_json(server_root+"/ajax_json/logistics_api.php",{domain:domain,username:username,re:re_access},function(response_object)
-	{
-		console.log(response_object);
-		//console.log(response_object.rows);
-		hide_loader();
-		if(response_object.status=='success')
-		{
-			if(response_object.data['delivered']=='success' && response_object.data['rto delivered']=='success' && response_object.data['rto picked']=='success')
-			{
-				$("#modal80").html('All order status have been successfully updated on partner sites.');
-			}
-			else
-			{
-				$("#modal80").html('Updates failed for following type of orders: <br>');
-				if(response_object.data['delivered']!='success')
-				{
-					$("#modal80").append('Delivered orders<br>');
-				}
-				if(response_object.data['rto delivered']!='success')
-				{
-					$("#modal80").append('RTO Delivered orders<br>');
-				}
-				if(response_object.data['rto picked']!='success')
-				{
-					$("#modal80").append('RTO Picked orders<br>');
-				}
-			}
-			$("#modal80_link").click();
-		}
-		else
-		{
-			$("#modal81_link").click();
-		}
-	});
-}
 
-
-function server_send_email(data,func)
+function server_send_email(columns,func)
 {
-	var domain=get_domain();
-	var username=get_username();
-	var read_access=get_session_var('re');
-	ajax_json(server_root+"/ajax_json/email.php",{domain:domain,username:username,re:read_access,email_data:data},function(response_object)
+	var data = vUtil.getCredentials();
+	data['data']=columns;
+	ajax_json(server_root+"/ajax/email.php",data,function(response_object)
 	{
 		console.log(response_object);
 		func();
@@ -272,21 +229,19 @@ function server_send_email(data,func)
 /**
  * this function delete a row of data from the server database
  */
-function server_delete_json(data_json,func)
+function server_delete_json(columns,callback)
 {
 	show_loader();
-	var domain=get_domain();
-	var username=get_username();
-	var del_access=get_session_var('del');
-	var string_columns=JSON.stringify(data_json);
+	var data = vUtil.getCredentials();
+	data['data']=JSON.stringify(columns);
 
-	ajax_json(server_root+"/ajax_json/delete.php",{domain:domain,username:username,del:del_access,data:string_columns},function(response_object)
+	ajax_json(server_root+"/controller/delete",data,function(response_object)
 	{
 		console.log(response_object.status);
 		hide_loader();
-		if(typeof func!="undefined")
+		if(typeof callback!="undefined")
 		{
-			func();
+			callback();
 		}
 	});
 }
@@ -388,23 +343,25 @@ function server_create_batch_json(data_json,func)
 	},1000);
 }
 
-function server_update_json(data_json,func)
+function server_update_json(data_json,callback)
 {
 	if(!(typeof data_json.loader!='undefined' && data_json.loader=='no'))
-	{show_loader();}
-	var domain=get_domain();
-	var username=get_username();
-	var up_access=get_session_var('up');
-	var string_columns=JSON.stringify(data_json);
-	ajax_json(server_root+"/ajax_json/update.php",{domain:domain,username:username,up:up_access,data:string_columns},function(response_object)
+	{
+		show_loader();
+	}
+	var data = vUtil.getCredentials();
+	data['data']=JSON.stringify(data_json);
+
+	ajax_json(server_root+"/controller/update",data,function(response_object)
 	{
 		console.log(response_object.status);
 		if(!(typeof data_json.loader!='undefined' && data_json.loader=='no'))
-		{hide_loader();}
-
+		{
+			hide_loader();
+		}
 		if(typeof func!="undefined")
 		{
-			func();
+			callback();
 		}
 	});
 }
@@ -572,19 +529,15 @@ function update_server_table_column(tablename,columnname,columntype,master)
 	});
 }
 
-function s3_object(data,func)
+function s3_object(data_json,func)
 {
 	show_loader();
 
-	var domain=get_domain();
-	var username=get_username();
-	var cr_access=get_session_var('cr');
-    var re_access=get_session_var('re');
-    var del_access=get_session_var('del');
-    var data=JSON.stringify(data);
-	ajax_json(server_root+"/ajax_json/s3_object.php",{domain:domain,username:username,cr:cr_access,re:re_access,del:del_access,object_data:data},function(response_object)
+	var data = vUtil.getCredentials();
+	data['data']=JSON.stringify(data_json);
+
+	ajax_json(server_root+"/controller/s3",data,function(response_object)
 	{
-		//console.log(response_object);
 		hide_loader();
 		if(typeof func!='undefined')
         {

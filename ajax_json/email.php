@@ -1,7 +1,7 @@
 <?php
 
-	include_once "../Classes/mailer_json.php";
-	use RetailingEssentials\send_mailer_json;
+include_once "../Classes/mailer_json.php";
+use RetailingEssentials\send_mailer_json;
 
 	session_start();
 
@@ -18,9 +18,9 @@
 	$to=$input_object['to'];
 	$from=$input_object['from'];
 	$from_name=$input_object['from_name'];
-	
+
 	$response_object=[];
-	
+
 	if(isset($_SESSION['session']))
 	{
 		if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['username']==$user && $_SESSION['re']==$read_access)
@@ -36,7 +36,7 @@
 				$email_instance->direct_send_pdf($subject,$message,$message_attachment,$to,$from,$from_name);
                 $response_object['status']='mailed as pdf';
 			}
-			else 
+			else
 			{
 				$email_instance->direct_send($subject,$message,$message_attachment,$to,$from,$from_name);
                 $response_object['status']='mailed';
@@ -52,8 +52,8 @@
 	{
 		$response_object['status']='Invalid session';
 	}
-	
-	$jsonresponse=json_encode($response_object);		
+
+	$jsonresponse=json_encode($response_object);
 	header ("Content-Type:application/json");
 	echo $jsonresponse;
 

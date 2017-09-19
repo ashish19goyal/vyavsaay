@@ -44,6 +44,12 @@
 			"status":{"index": "no","type": "VARCHAR(45)"},
 			"type":{"index": "no","type": "VARCHAR(25)"},
 			"last_updated":{"index": "yes","type": "BIGINT"}
+		},
+		"hard_bounce":
+		{
+			"id":{"index": "no","type": "BIGINT NOT NULL AUTO_INCREMENT"},
+			"email":{"index": "no","type": "VARCHAR(50) NOT NULL"},
+			"last_updated":{"index": "yes","type": "BIGINT"}
 		}
 	}
 }

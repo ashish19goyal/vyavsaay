@@ -1,7 +1,7 @@
 <div id='form347' class='tab-pane portlet box yellow-saffron'>
 	<div class="portlet-title">
 		<div class='caption'>
-			<div class='btn-group' id='form347_status' data-toggle='buttons'>
+			<div class='btn-group' id='form347_status' data-toggle='buttons' data-value='issued'>
 				<label class='btn yellow-crusta issued active' onclick=form347_ini('issued');><input name='issued' type='radio' class='toggle'>Issued</label>
 				<label class='btn yellow-crusta applied' onclick=form347_ini('applied');><input type='radio' name='applied' class='toggle'>Applied</label>
 				<label class='btn yellow-crusta cancelled' onclick=form347_ini('cancelled');><input type='radio' name='cancelled' class='toggle'>Cancelled</label>
@@ -273,6 +273,7 @@
 			if(typeof policy_type!='undefined' && policy_type=='applied')
 			{
 				status_filter='applied';
+				$('#form347_status').data('value','applied');
 			  	$('#form347_status').find('label.applied').addClass('active');
 			  	$('#form347_status').find('label.issued').removeClass('active');
 				$('#form347_status').find('label.cancelled').removeClass('active');
@@ -280,17 +281,19 @@
 			else if(policy_type=='cancelled')
 			{
 				status_filter='cancelled';
+				$('#form347_status').data('value','cancelled');
 			  	$('#form347_status').find('label.cancelled').addClass('active');
 			  	$('#form347_status').find('label.applied').removeClass('active');
 				$('#form347_status').find('label.issued').removeClass('active');
 		  	}
 			else{
+				$('#form347_status').data('value','issued');
 				$('#form347_status').find('label.issued').addClass('active');
 			  	$('#form347_status').find('label.applied').removeClass('active');
 				$('#form347_status').find('label.cancelled').removeClass('active');
 			}
 
-            var paginator=$('#form347_body').paginator();
+            var paginator=$('#form347_body').paginator({func:"form347_ini($('#form347_status').data('value'))"});
 
 			var columns={count:paginator.page_size(),
 						start_index:paginator.get_index(),
@@ -2908,15 +2911,15 @@
 		*/
 		function form347_ba_import_validate(data_array)
 		{
-			var validate_template_array=[{column:'policy number',regex:new RegExp('^[0-9a-zA-Z_-]+$')},
-									{column:'client name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'product',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()<-]+$')},
-									{column:'issue date',required:'yes',regex:new RegExp('^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4}[0-9A-Z ]*')},
-									{column:'policy name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
-									{column:'application number',required:'yes',regex:new RegExp('^[0-9a-zA-Z_-]+$')},
-									{column:'status',required:'yes',list:['ISSUED','CANCEL','LOGIN AWAITED']},
-									{column:'sum insured',required:'yes',regex:new RegExp('^[0-9 .]+$')},
-									{column:'premium',required:'yes',regex:new RegExp('^[0-9 .]+$')}];
+			var validate_template_array=[{column:'Lead No',regex:new RegExp('^[0-9a-zA-Z_-]+$')},
+									{column:'Date',required:'yes',regex:new RegExp('^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4}')},
+									{column:'Investor',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,()-]+$')},
+									{column:'Company',required:'yes',regex:new RegExp('^[0-9a-zA-Z &_.,()<-]+$')},
+									{column:'Scheme',required:'yes',regex:new RegExp('^[0-9a-zA-Z &_.,()<-]+$')},
+									{column:'Policy',required:'yes',regex:new RegExp('^[0-9a-zA-Z_-]+$')},
+									{column:'Status',required:'yes',list:['ISSUED','CANCEL','LOGIN AWAITED']},
+									{column:'Sum Assured',required:'yes',regex:new RegExp('^[0-9 .]+$')},
+									{column:'Premium',required:'yes',regex:new RegExp('^[0-9 .]+$')}];
 
 			var error_array=vImport.validate(data_array,validate_template_array);
 			return error_array;
@@ -2945,11 +2948,13 @@
 				policies[a].old_premium=0;
 				policies[a].old_net_premium=0;
 				policies[a].application_premium=0;
-				policies[a].policy_num=policies[a]['policy number'];
+				policies[a].policy_num=policies[a]['Policy'];
 				policies[a].issuer='Bajaj';
+				policies[a].status=policies[a].Status;
+				policies[a].premium=policies[a].Premium;
 				policies[a].agent=document.getElementById('form347_popup_import_form').elements['agent'].value;
 				// policies[a].start_time = vTime.unix({date:policies[a].Policy_start_date,inputFormat:'mm/dd/yyyy hh:mm:ss AM'});
-				policies[a].issue_time = vTime.unix({date:policies[a]['issue date']});
+				policies[a].issue_time = vTime.unix({date:policies[a]['Date']});
 				policies[a].end_time = parseFloat(policies[a].issue_time)+(365*24*3600*1000);
 				policies[a].term = 'one year';
 				policies[a].issued_in_quarter = vTime.quarter({date:policies[a].issue_time,inputFormat:'unix'});
@@ -2957,7 +2962,7 @@
 			// console.log(policies);
 			form347_policy_bank(policies,'issuer','Bajaj',function()
 			{
-				form347_policy_ids(policies,'policy number','Bajaj',function()
+				form347_policy_ids(policies,'policy_num','Bajaj',function()
 				{
 					var update_policy_json1={data_store:'policies',data:[]};
 					for(var i=0;i<policies.length;i++)
@@ -2968,8 +2973,8 @@
 						if(!vUtil.isBlank(policies[i].id))
 						{
 							var data_json_array=[{index:'id',value:policies[i].id},
-									{index:'policy_name',value:policies[i]['policy name']+"-"+policies[i]['product']},
-									{index:'application_num',value:policies[i]['application number']},
+									{index:'policy_name',value:policies[i]['Company']+"-"+policies[i]['Scheme']},
+									{index:'application_num',value:policies[i]['Lead No']},
 									{index:'premium',value:policies[i].premium},
 									{index:'net_premium',value:policies[i].net_premium},
 									{index:'tax',value:policies[i].tax},
@@ -2984,6 +2989,7 @@
 									{index:'type',value:policies[i].type},
 									{index:'description',value:policies[i].description},
 									{index:'preferred',value:policies[i].preferred},
+									{index:'sum_insured',value:policies[i]['Sum Assured']},
 									{index:'last_updated',value:last_updated}];
 
 							// data_json_array.push(issue_type);
@@ -2998,7 +3004,7 @@
 
 					if(policies.length>0)
 					{
-						form347_application_ids(policies,'application number','Bajaj',function()
+						form347_application_ids(policies,'Lead No','Bajaj',function()
 						{
 							var newKey=vUtil.newKey();
 
@@ -3011,7 +3017,7 @@
 								{
 									policies[i].status=(policies[i].status=='ISSUED')? 'issued' : 'cancelled';
 									var policy_array=[{index:'id',value:policies[i].id},
-											{index:'policy_name',value:policies[i]['policy name']+"-"+policies[i]['product']},
+											{index:'policy_name',value:policies[i]['Comapny']+"-"+policies[i]['Scheme']},
 											{index:'policy_num',value:policies[i].policy_num},
 											{index:'premium',value:policies[i].premium},
 											{index:'net_premium',value:policies[i].net_premium},
@@ -3028,6 +3034,7 @@
 											{index:'type',value:policies[i].type},
 											{index:'description',value:policies[i].description},
 											{index:'preferred',value:policies[i].preferred},
+											{index:'sum_insured',value:policies[i]['Sum Assured']},
 											{index:'last_updated',value:last_updated}];
 
 									policies[i].issue_type = 'fresh';
@@ -3072,13 +3079,13 @@
 									counter++;
 									if(vUtil.isBlank(policies[i].policy_holder))
 									{
-										policies[i].policy_holder=policies[i]['client name']+" ("+policies[i]['application number']+")";
+										policies[i].policy_holder=policies[i]['Investor']+" ("+policies[i]['Lead No']+")";
 									}
 									policies[i].status=(policies[i].status=='ISSUED')? 'issued' : 'cancelled';
 
 									var policy_array=[{index:'id',value:vUtil.newKey()+counter},
-											{index:'policy_name',value:policies[i]['policy name']+"-"+policies[i]['product']},
-											{index:'application_num',value:policies[i]['application number']},
+											{index:'policy_name',value:policies[i]['Company']+"-"+policies[i]['Scheme']},
+											{index:'application_num',value:policies[i]['Lead No']},
 											{index:'policy_num',value:policies[i].policy_num,unique:'yes'},
 											{index:'policy_holder',value:policies[i].policy_holder},
 											{index:'premium',value:policies[i].premium},
@@ -3096,6 +3103,7 @@
 											{index:'type',value:policies[i].type},
 											{index:'description',value:policies[i].description},
 											{index:'preferred',value:policies[i].preferred},
+											{index:'sum_insured',value:policies[i]['Sum Assured']},
 											{index:'last_updated',value:last_updated}];
 
 									policies[i].issue_type='fresh';
@@ -3111,7 +3119,7 @@
 									create_policy_json3.data.push(policy_array);
 
 									var customer_json_array=[{index:'id',value:vUtil.newKey()+counter},
-											{index:'name',value:policies[i]['client name']},
+											{index:'name',value:policies[i]['Investor']},
 											{index:'acc_name',value:policies[i].policy_holder,unique:'yes'},
 											{index:'last_updated',value:last_updated}];
 

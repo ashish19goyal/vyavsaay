@@ -7,7 +7,7 @@ var vUtil = function (options)
 {
 	var defaults={};
 	var settings = $.extend(defaults, options || {});
-
+	var _self = this;
     //returns an index from an array
     this.fetch_index=function (array,index)
     {
@@ -78,7 +78,7 @@ var vUtil = function (options)
         {
             column.push(array[i][col_name]);
         }
-        return column;
+        return _self.arrayUnique(column);
     };
 
 	//extracts a single column from a multidimensional array and returns as an object

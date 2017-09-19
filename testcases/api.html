@@ -2,52 +2,176 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>API testing</title>
-<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+<title>Shipment Tracking</title>
+    
+    <link href="api.css" rel="stylesheet" type="text/css">
 </head>
-
 <body>
-	<form id='form' onsubmit="performance(); return false;">
-		<input type='text' name='url' placeholder='URL'><br>
-		<input type='text' name='username' placeholder='Username'><br>
-		<input type='text' name='key' placeholder='Key'><br>
-		<input type='text' name='indexes' placeholder='Indexes (JSON)'><br>
-		<input type='text' name='options' placeholder='Options (JSON)'><br>
-		<input type='text' name='row' placeholder='Row (JSON)'><br>
-		<input type='text' name='data' placeholder='Data (JSON)'><br>
-		<button type='submit'>Call API</button>
+    <header>
+        <nav class="main_menu">
+                <ul>
+                    <li><a href="index.html" class="menu_item">Home</a></li>
+                    <li><a href="about-us.html" class="menu_item">About Us</a></li>
+                    <li><a href="index.html#contact" class="menu_item">Contact Us</a></li>
+                </ul>
+            </nav>
+        
+        <img class=logo src="images/seven-horses-white.png" />
+        
+        
+    </header>
+    <div class="banner">
+    <div class="banner_text">TRACK YOUR ORDER</div>
+    <img class="hero_banner" src="images/about us.jpg">
+    </div>
+    
+    
+	<form id='tracking_form'>	
+		<input class="tracktext" type='text' name='awb_num' id='awb_num' placeholder="Enter AWB Number" title='For tracking multiple AWB numbers, separate using comma (,)'>
+		<input class="button" type='submit' value='Track Now'>
 	</form>
+	<div class="order_details" id="result">       
+	</div>
 </body>
-	<script>
-        function performance()
-        {
-			var form=document.getElementById('form');
-			var url=form.elements['url'].value;
-			var username=form.elements['username'].value;
-			var key=form.elements['key'].value;
-			var indexes=JSON.parse(form.elements['indexes'].value);
-			var data=form.elements['data'].value;
-			var options=JSON.parse(form.elements['options'].value);
-			var row=form.elements['row'].value;
-			var query_data={indexes:indexes,data:data,username:username,key:key,options:options,row:row};
-			var call_data=JSON.stringify(query_data);
-			//  console.log(call_data);
-			$.ajax(
+<script src='https://code.jquery.com/jquery-1.11.3.min.js'></script>
+<script>
+	
+	$(window).load(function()
+	{
+		var tracking_form=document.getElementById('tracking_form');
+		$(tracking_form).on('submit',function (e) {
+			e.preventDefault();
+			api_func();
+		});
+	});
+	
+	function api_func()
+	{
+		var awb_num=document.getElementById('awb_num').value;
+		var result_div=document.getElementById('result');
+				
+		$.ajax(
+		{
+			type: "POST",
+			url: "./api.php",
+			data: {awb_num:awb_num},
+			error:function(xhr)
 			{
-				type: "POST",
-				// url: "https://vyavsaay.com/api/"+url,
-				url:"https://vyavsaay.com/api/"+url,
-				data: call_data,
-				error:function(xhr, ajaxOptions, thrownError)
+				result_div.innerHTML="oops!. Something weird happened. Please bear with us. We will be there soon.";
+				console.log(xhr.responseText);
+			},
+			success: function(return_data,return_status,e)
+			{
+				$("#result").html;
+				//console.log(e.responseText);
+								
+				$(result_div).html('');
+								
+				var response_object=JSON.parse(e.responseText);
+				
+				if(response_object.status=='success')
 				{
-					console.log(thrownError);
-					console.log(xhr.responseText);
-		    	},
-				success: function(return_data,return_status,e)
-				{
-					console.log(e.responseText);
+					var result_rows=response_object.rows;
+					if(result_rows.length>0)
+					{
+						var result_master_head_box=document.createElement('div');
+						result_master_head_box.innerHTML="<br>Summary";
+
+						var result_master_table=document.createElement('table');
+						result_master_table.innerHTML="<th>AWB #</th><th>Destination</th><th>Pickup Date</th><th>Status</th>";					
+						
+						result_div.appendChild(result_master_head_box);
+						result_div.appendChild(result_master_table);
+
+						result_rows.forEach(function(result_row)
+						{
+							var result_master_table_row=document.createElement('tr');
+							result_master_table_row.innerHTML="<td>"+result_row.awb_num+"</td><td>"+result_row.city+"</td><td>"+get_my_datetime(result_row.import_date)+"</td><td>"+result_row.status+"</td>";					
+	
+							result_master_table.appendChild(result_master_table_row);							
+						
+							var result_head_box=document.createElement('div');
+							var result_table=document.createElement('table');
+							
+							result_head_box.innerHTML="<br>"+result_row.awb_num+" Details";
+							result_table.innerHTML="<th>Time</th><th>Details</th><th>Location</th><th>Status</th>";					
+							
+							var order_history=result_row.order_history;
+							order_history.forEach(function(history)
+							{
+								var result_table_row=document.createElement('tr');
+								result_table_row.innerHTML="<td>"+get_my_datetime(history.timeStamp)+"</td><td>"+history.details+"</td><td>"+history.location+"</td><td>"+history.status+"</td>";					
+								result_table.appendChild(result_table_row);
+							});
+							
+							result_div.appendChild(result_head_box);
+							result_div.appendChild(result_table);
+						});						
+					}
+					else {
+						result_div.innerHTML="Sorry! we couldn't find any orders corresponding to this tracking number. Please re-verify and try again.";
+					}
 				}
-			});
-        }
-    </script>
+				else {
+					result_div.innerHTML="oops!. Something weird happened. Please bear with us. We will be there soon.";
+				}
+			}
+		});
+	}
+	
+	function get_my_datetime(raw_time)
+	{
+		if(!raw_time)
+		{
+			var d=new Date();
+			var year = d.getFullYear();
+			var month =d.getMonth()+1;
+			if (month < 10) {
+			    month = "0" + month;
+			}
+			var date = d.getDate();
+			if (date < 10) {
+			    date = "0" + date;
+			}
+			var hour=d.getHours();
+			if (hour < 10) {
+			    hour = "0" + hour;
+			}
+			var minutes=d.getMinutes();
+			if (minutes < 10) {
+			    minutes = "0" + minutes;
+			}	
+			var time=date+"/"+month+"/"+year+" "+hour+":"+minutes;
+			return time;
+		}
+		else if(raw_time=="")	
+		{
+			return "";
+		}
+		else
+		{
+			var d= new Date(parseFloat(raw_time));
+			var year = d.getFullYear();
+			var month =d.getMonth()+1;
+			if (month < 10) {
+			    month = "0" + month;
+			}
+			var date = d.getDate();
+			if (date < 10) {
+			    date = "0" + date;
+			}
+			var hour=d.getHours();
+			if (hour < 10) {
+			    hour = "0" + hour;
+			}
+			var minutes=d.getMinutes();
+			if (minutes < 10) {
+			    minutes = "0" + minutes;
+			}	
+			var time=date+"/"+month+"/"+year+" "+hour+":"+minutes;
+			return time;
+		}
+	}
+
+</script>
 </html>

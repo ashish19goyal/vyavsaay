@@ -1,7 +1,7 @@
 <div id='report104' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class='caption'>
-			<div class='btn-group' id='report104_store' data-toggle='buttons'>
+			<div class='btn-group' id='report104_store' data-toggle='buttons' data-value='my'>
                 <label class='btn green-jungle my active' onclick=report104_ini('my');><input name='my' type='radio' class='toggle'>My Store</label>
                 <label class='btn green-jungle all' onclick=report104_ini('all');><input type='radio' name='all' class='toggle'>All Stores</label>
             </div>
@@ -70,11 +70,13 @@
             if(typeof store_type!='undefined' && store_type=='all')
             {
                 store='';
-                $('#report104_store').find('label.all').addClass('active');
+                $('#report104_store').data('value','all');
+				$('#report104_store').find('label.all').addClass('active');
                 $('#report104_store').find('label.my').removeClass('active');
             }
             else
             {
+				$('#report104_store').data('value','my');
                 $('#report104_store').find('label.my').addClass('active');
                 $('#report104_store').find('label.all').removeClass('active');
             }

@@ -224,7 +224,7 @@
                 if(status=='RTO pending')
                 {
                     history_object.location=get_session_var('address');
-					history_object.details= (vUtil.isBlank(remarks)) ? "Order checked-in at the branch" : remarks;
+					history_object.details= (vUtil.isBlank(remarks)) ? "NDR-Order Cancel" : remarks;
                 }
                 else if(status=='RTO delivered')
                 {
@@ -244,6 +244,7 @@
 	 					{index:'status',value:status},
 	 					{index:'comments',value:remarks},
 	 					{index:'order_history',value:order_history_string},
+						{index:'sync_status',value:1},
 	 					{index:'last_updated',value:last_updated}]};
                 update_json(data_json);
 

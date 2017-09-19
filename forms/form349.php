@@ -1,7 +1,7 @@
 <div id='form349' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class='caption'>
-			<div class='btn-group' id='form349_status' data-toggle='buttons'>
+			<div class='btn-group' id='form349_status' data-toggle='buttons' data-value='pending'>
 					<label class='btn green-jungle pending active' onclick=form349_ini('pending');><input name='pending' type='radio' class='toggle'>Pending</label>
 					<label class='btn green-jungle approved' onclick=form349_ini('approved');><input type='radio' name='approved' class='toggle'>Approved</label>
 					<label class='btn green-jungle rejected' onclick=form349_ini('rejected');><input type='radio' name='rejected' class='toggle'>Rejected</label>
@@ -85,6 +85,7 @@
 			if(typeof claim_type!='undefined' && claim_type=='approved')
 			{
 					status_filter='approved';
+					$('#form349_status').data('value','approved');
 					$('#form349_status').find('label.approved').addClass('active');
 					$('#form349_status').find('label.pending').removeClass('active');
 					$('#form349_status').find('label.rejected').removeClass('active');
@@ -92,12 +93,14 @@
 			else if(typeof claim_type!='undefined' && claim_type=='rejected')
 			{
 					status_filter='rejected';
+					$('#form349_status').data('value','rejected');
 					$('#form349_status').find('label.rejected').addClass('active');
 					$('#form349_status').find('label.pending').removeClass('active');
 					$('#form349_status').find('label.approved').removeClass('active');
 			}
 			else
 			{
+					$('#form349_status').data('value','pending');
 					$('#form349_status').find('label.pending').addClass('active');
 					$('#form349_status').find('label.approved').removeClass('active');
 					$('#form349_status').find('label.rejected').removeClass('active');
@@ -107,7 +110,7 @@
 			var fclaim=filter_fields.elements['claim'].value;
 			var fpolicy=filter_fields.elements['policy'].value;
 
-			var paginator=$('#form349_body').paginator();
+			var paginator=$('#form349_body').paginator({func:"form349_ini($('#form349_status').data('value'))"});
 
 			var new_columns={count:paginator.page_size(),
 											start_index:paginator.get_index(),

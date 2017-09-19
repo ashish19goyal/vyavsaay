@@ -36,6 +36,7 @@
 				<tr>
 					<th>Branch</th>
 					<th>Total Assigned</th>
+					<th>In-transit</th>
 					<th>Received</th>
 					<th>Out for Delivery</th>
 					<th>Pending</th>
@@ -208,6 +209,9 @@
 						  rowsHTML+="<td data-th='Total Assigned'><a onclick=\"report115_popup_action('"+branch.name+"','total');\">";
 		                      rowsHTML+=branch.total;
 		                  rowsHTML+="</a></td>";
+						  rowsHTML+="<td data-th='In-transit'><a onclick=\"report115_popup_action('"+branch.name+"','transit');\">";
+		                      rowsHTML+=branch.transit;
+		                  rowsHTML+="</a></td>";
 		                  rowsHTML+="<td data-th='Received'><a onclick=\"report115_popup_action('"+branch.name+"','received');\">";
 		                      rowsHTML+=branch.received;
 		                  rowsHTML+="</a></td>";
@@ -254,8 +258,10 @@
 			{
 				case 'total':status_object={index:"status"};
 							break;
+				case 'trnasit':status_object={index:"status",exact:'in-transit'};
+							break;
 				case 'received':status_object={index:"status",unequal:'in-transit'};
-								break;
+					break;
 				case 'ofd':status_object={index:"status",exact:'out for delivery'};
 								break;
 				case 'pending':status_object={index:"status",array:['pending','undelivered','received']};

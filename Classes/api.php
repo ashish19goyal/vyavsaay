@@ -2,7 +2,7 @@
 namespace RetailingEssentials;
 
 include_once 'vDB.php';
-include_once 'mailer_json.php';
+include_once "emailSES.php";
 include_once 'vUtil.php';
 
 /**
@@ -54,12 +54,12 @@ class api
 		self::$table = isset($getArray[0]) ? $getArray[0] : null;
 		self::$requestType = isset($getArray[1]) ? $getArray[1] : null;
 
-		self::$data = vUtil::isBlank($post['data']) ? array() : $post['data'];
-		self::$row = vUtil::isBlank($post['row']) ? array() : $post['row'];
-		self::$indexes = vUtil::isBlank($post['indexes']) ? array() : $post['indexes'];
-		self::$options = vUtil::isBlank($post['options']) ? array() : $post['options'];
-		self::$username = vUtil::isBlank($post['username']) ? null : $post['username'];
-		self::$apiKey = vUtil::isBlank($post['key']) ? null : $post['key'];
+		self::$data = isset($post['data']) ? $post['data'] : array();
+		self::$row = isset($post['row']) ? $post['row'] : array();
+		self::$indexes = isset($post['indexes']) ? $post['indexes'] : array();
+		self::$options = isset($post['options']) ? $post['options'] : array();
+		self::$username = isset($post['username']) ? $post['username'] : null;
+		self::$apiKey = isset($post['key']) ? $post['key'] : null;
 
 		$_SESSION['name'] = self::$username;
 	}
@@ -218,7 +218,7 @@ class api
 
 			foreach($emails_array as $em)
 			{
-				$receiver=array('name'=>$bt,'email'=>$em);
+				$receiver=array('email'=>$em);
 				$r_array[]=$receiver;
 			}
 			$receivers=json_encode($r_array);
@@ -226,9 +226,18 @@ class api
 			$formatted_message = $vUtil::getFormattedEmail(self::$emailTitle,$email_message);
 
 			try{
-				$email_instance=new send_mailer_json(self::$domain);
-				$email_instance->direct_send(self::$emailTitle,$formatted_message,'',$receivers,$bemail,$bt);
-				$email_instance->log_mailer(self::$domain,self::$emailTitle,$formatted_message,'',$receivers,$bemail,$bt);
+				$mailer=emailSES::getInstance(self::$domain);
+				$message = array(
+					'receivers' => $receivers,
+					'sender' => $bemail,
+					'subject' => self::$emailTitle,
+					'message' => $formatted_message,
+					'sender_name' => $bt,
+					'attachment_type' => '',
+					'message_attachment' => ''
+				);
+				$mailer->send($message);
+				// print_r("email sent");
 			}
 			catch(Exception $e){}
 		}
@@ -261,7 +270,7 @@ class api
 	*/
 	private static function getReturnIndexes()
 	{
-		$returnIndexes = (vUtil::isBlank(self::$returnIndexes)) ? array() : json_decode(self::$returnIndexes,true);
+		$returnIndexes = (!isset(self::$returnIndexes) || vUtil::isBlank(self::$returnIndexes)) ? array() : json_decode(self::$returnIndexes,true);
 		$output = array();
 		foreach($returnIndexes as $i)
 		{
@@ -461,27 +470,23 @@ class api
 		self::inflateIndexes();
 		$output = $vDB->vDelete(self::$indexes);
 
-		if($output == false)
+		if($output['status'] == 'error')
 		{
-			return array(
-				'status' => 'error',
-				'description' => 'Could not delete data'
-			);
-		}else
+			$output['description'] = 'Could not delete data';
+		}
+		else
 		{
 			$logData = array(
 				'data_store' => self::$table,
 				'type' => 'delete',
-				'ids' => $output,
+				'ids' => $output['ids'],
 				'data' => self::$indexes
 			);
 			$vDB->log($logData);
-			return array(
-				'status' => 'success',
-				'data_store' => self::$table,
-				'ids' => $output
-			);
+
+			$output['data_store'] = self::$table;
 		}
+		return $output;
 	}
 }
 

@@ -2,9 +2,9 @@
 
 	include_once "../Classes/db.php";
 	include_once "../Classes/sms.php";
-	include_once "../Classes/mailer_json.php";
+	include_once "../Classes/emailSES.php";
+	use RetailingEssentials\emailSES;
 	use RetailingEssentials\send_sms;
-	use RetailingEssentials\send_mailer_json;
 	use RetailingEssentials\db_connect;
 
 	$status="failed_registration";
@@ -50,20 +50,31 @@
 
 	$from = "info@vyavsaay.com";
 	$from_name = "Vyavsaay ERP";
-	$email_message="Congratulations *|name|*!! Your *|business_title|* account has been successfully setup.".
+	$email_message="Congratulations $name!! Your Vyavsaay account has been successfully setup.".
 					"<br>Your account details are as follows. Please login and change your password.".
 					"<br>Url: https://vyavsaay.com".
 					"<br>Login: ".$username.
 					"<br>Password: ".$pass;
 	$to_array=array(
-				array("email" => $email,
-					"name" => $name
+				array("email" => $email
+					//"name" => $name
 				)
 			);
 	$to = json_encode($to_array);
 
-	$email_instance=new send_mailer_json('vyavsaay');
-	$email_instance->direct_send('Vyavsaay: Account Setup',$email_message,'',$to,$from,$from_name);
+	$subject ='Vyavsaay: Account Setup';
+	$mailer=emailSES::getInstance('vyavsaay');
+	$message = array(
+		'receivers' => $to,
+		'sender' => $from,
+		'subject' => $subject,
+		'message' => $email_message,
+		'sender_name' => $from_name,
+		'attachment_type' => '',
+		'message_attachment' => ''
+	);
+
+	$mailer->send($message);
 
 	function set_user_profiles($conn2,$pass_hash,$name,$email,$phone)
 	{

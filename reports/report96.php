@@ -95,7 +95,7 @@ function report96_ini()
 									indexes:[{index:'from_name',exact:result.acc_name}]};
 				read_json_single_column(given_data,function(given)
 				{
-					var balance_amount=parseFloat(received[0])-parseFloat(given[0]);
+					var balance_amount=(isNaN(parseFloat(received[0])-parseFloat(given[0])))? 0: vUtil.round(parseFloat(received[0])-parseFloat(given[0]));
 					document.getElementById('report96_balance_'+result.id).textContent="Rs. "+balance_amount;
 				});
 			});

@@ -239,7 +239,8 @@
                     });
 
                     $('#form178_share').show();
-                    $('#form178_share').click(function()
+					$('#form178_share').off('click');
+					$('#form178_share').click(function()
                     {
 						var bt=get_session_var('title');
                         modal101_action(bt+' - PO # '+filter_fields.elements['order_num'].value,filter_fields.elements['supplier'].value,'supplier',function (func)
@@ -460,7 +461,8 @@
                 var save_button=document.getElementById('form178_save');
 
                 $('#form178_share').show();
-                $('#form178_share').click(function()
+				$('#form178_share').off('click');
+				$('#form178_share').click(function()
                 {
 					var bt=get_session_var('title');
                     modal101_action(bt+' - PO # '+order_num,supplier,'supplier',function (func)
@@ -576,7 +578,8 @@
                 var save_button=document.getElementById('form178_save');
 
                 $('#form178_share').show();
-                $('#form178_share').click(function()
+				$('#form178_share').off('click');
+				$('#form178_share').click(function()
                 {
 					var bt=get_session_var('title');
 					modal101_action(bt+' - PO # '+order_num,supplier,'supplier',function (func)

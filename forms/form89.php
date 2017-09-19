@@ -1,7 +1,7 @@
 <div id='form89' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class='caption'>
-            <div class='btn-group' id='form89_view' data-toggle='buttons'>
+            <div class='btn-group' id='form89_view' data-toggle='buttons' data-value='calendar'>
                 <label class='btn green-jungle cc active' onclick=form89_ini('calendar');><input name='cc' type='radio' class='toggle'>Calendar</label>
                 <label class='btn green-jungle tt' onclick=form89_ini('table');><input type='radio' name='tt' class='toggle'>Table</label>
             </div>
@@ -104,11 +104,13 @@
       if(typeof view!='undefined' && view=='table')
       {
           view_filter='table';
+		  $('#form89_view').data('value','table');
           $('#form89_view').find('label.tt').addClass('active');
           $('#form89_view').find('label.cc').removeClass('active');
       }
       else
       {
+		  $('#form89_view').data('value','calendar');
           $('#form89_view').find('label.cc').addClass('active');
           $('#form89_view').find('label.tt').removeClass('active');
       }
@@ -227,7 +229,7 @@
           var notes_filter=fields.elements['notes'].value;
           var status_filter=fields.elements['status'].value;
 
-          var paginator=$('#form89_body').paginator();
+          var paginator=$('#form89_body').paginator({func:"form89_ini($('#form89_view').data('value'))"});
 
 					var columns={data_store:'appointments',
                        count:paginator.page_size(),

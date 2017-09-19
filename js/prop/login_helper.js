@@ -82,7 +82,7 @@ function login_action(domain,username,pass,func)
 
 function login_online(username,domain,pass,func)
 {
-	var user_kvp={domain:domain,user:username,pass:pass,os:navigator.platform,browser:navigator.userAgent};
+	var user_kvp={domain:domain,user:username,pass:pass,os:navigator.platform};
 	ajax_json(server_root+"/ajax/login.php",user_kvp,function(response_object)
 	{
 		//console.log(response_object);
@@ -578,7 +578,7 @@ function verify_login(pass,func_success,func_failure)
 	var username=get_username();
 	if(is_online())
 	{
-		var user_kvp={domain:domain,user:username,pass:pass,os:navigator.platform,browser:navigator.userAgent};
+		var user_kvp={domain:domain,user:username,pass:pass,os:navigator.platform};
 		ajax_json(server_root+"/ajax/login.php",user_kvp,function(response_object)
 		{
 			//console.log(response_object);

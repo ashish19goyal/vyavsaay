@@ -236,7 +236,7 @@
 
 			if(vUtil.isBlank(comments))
 			{
-				comments = 'Order checked-in at the branch';
+				comments = 'NDR-Order Cancel';
 			}
             var old_order_history=form.elements['order_history'].value;
             var order_history=vUtil.jsonParse(old_order_history);
@@ -258,6 +258,8 @@
 	 					{index:'return_pickup_by',value:picked_by},
 						{index:'branch',value:branch},
 	 					{index:'order_history',value:order_history_string},
+						{index:'sync_status',value:1},
+						{index:'reason_code',value:comments},
 	 					{index:'last_updated',value:last_updated}]};
             update_json(data_json);
 

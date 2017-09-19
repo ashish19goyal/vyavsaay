@@ -1,0 +1,29 @@
+{
+  "name": "Vyavsaay ERP",
+  "short_name": "Vyavsaay",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "Manage your business with Vyavsaay ERP",
+  "icons": [{
+    "src": "images/icon-50.png",
+    "sizes": "50x50",
+    "type": "image/png"
+  },
+  {
+	  "src": "images/icon-132.png",
+      "sizes": "132x132",
+      "type": "image/png"
+  },
+  {
+	  "src": "images/icon-256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+  },
+  {
+	  "src": "images/icon-400.png",
+      "sizes": "400x400",
+      "type": "image/png"
+  }],
+"orientation": "portrait"
+}

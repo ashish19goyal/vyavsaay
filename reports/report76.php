@@ -152,7 +152,7 @@
                 item['AWB No']=item.awb_num;
                 item['Order Id']=item.order_num;
                 item['Import Date']=get_my_past_date(item.import_date);
-                item['Manifest Id']=get_my_past_date(item.manifest_id);
+                item['Manifest Id']=item.manifest_id;
                 item['Channel']=item.channel_name;
                 item['Status']=item.status;
                 item['Wt']=item.weight;

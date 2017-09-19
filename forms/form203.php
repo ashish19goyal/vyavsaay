@@ -21,7 +21,7 @@
 						<th><input type='text' placeholder="Date" class='floatlabel' name='date' form='form203_header'></th>
 						<th><input type='text' placeholder="Type" readonly='readonly' form='form203_header'></th>
 						<th><input type='text' placeholder="Status" class='floatlabel' name='status' form='form203_header'></th>
-						<th><input type='submit' form='form203_header' style='visibility: hidden;'></th>
+						<th><input type='submit' form='form203_header' style='display: none;'></th>
 				</tr>
 			</thead>
 			<tbody id='form203_body'>

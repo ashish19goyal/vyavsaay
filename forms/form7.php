@@ -1,7 +1,7 @@
 <div id='form7' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class='caption'>
-            <div class='btn-group' id='form7_view' data-toggle='buttons'>
+            <div class='btn-group' id='form7_view' data-toggle='buttons' data-value='calendar'>
                 <label class='btn green-jungle cc active' onclick=form7_ini('calendar');><input name='cc' type='radio' class='toggle'>Calendar</label>
                 <label class='btn green-jungle tt' onclick=form7_ini('table');><input type='radio' name='tt' class='toggle'>Table</label>
             </div>
@@ -10,8 +10,8 @@
 			<div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
                 <ul class="dropdown-menu pull-right">
-										<li class="divider"> </li>
-										<li>
+					<li class="divider"> </li>
+					<li>
                         <a id='form7_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
                     </li>
                     <li>
@@ -101,11 +101,13 @@
 				if(typeof view!='undefined' && view=='table')
 				{
 						view_filter='table';
-						$('#form7_view').find('label.tt').addClass('active');
+						$('#form7_view').data('value','table');
+					  	$('#form7_view').find('label.tt').addClass('active');
 						$('#form7_view').find('label.cc').removeClass('active');
 				}
 				else
 				{
+						$('#form7_view').data('value','calendar');
 						$('#form7_view').find('label.cc').addClass('active');
 						$('#form7_view').find('label.tt').removeClass('active');
 				}
@@ -237,7 +239,7 @@
 						var fields=document.getElementById('form7_header');
 						var staff_filter=fields.elements['staff'].value;
 						var attendance_filter=fields.elements['attendance'].value;
-						var paginator=$('#form7_body').paginator();
+						var paginator=$('#form7_body').paginator({func:"form7_ini($('#form7_view').data('value'))"});
 
 						var columns={data_store:'attendance',
 												 count:paginator.page_size(),

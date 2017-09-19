@@ -36,7 +36,8 @@
 					<th>Bill Date</th>
           			<th>Bill Number</th>
           			<th>Supplier</th>
-          			<th>Bill Total</th>
+          			<th>Tax</th>
+					<th>Total</th>
         		</tr>
 			</thead>
 			<tbody id='report127_body'></tbody>
@@ -81,12 +82,14 @@
 
 		var columns={data_store:'supplier_bills',
 					indexes:[{index:'total'},
+							{index:'tax'},
 							{index:'bill_id'},
 							{index:'supplier'},
 							{index:'bill_date',lowerbound:(start_filter-1),upperbound:(end_filter+86400000-1)}]};
 		read_json_rows('report127',columns,function(items)
 		{
 			var rowsHTML="";
+			var total_tax=0;
 			var bill_total=0;
 			items.forEach(function(item)
 			{
@@ -100,20 +103,26 @@
 				rowsHTML+="<td data-th='Supplier'>";
 					rowsHTML+=item.supplier;
 				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Bill Total'>";
+				rowsHTML+="<td data-th='Total'>";
+					rowsHTML+="Rs. "+item.tax;
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Total'>";
 					rowsHTML+="Rs. "+item.total;
 				rowsHTML+="</td>";
 				rowsHTML+="</tr>";
 
-				bill_total+=parseFloat(item.total);
+				if(!isNaN(item.tax))
+					total_tax+=parseFloat(item.tax);
+				if(!isNaN(item.total))
+					bill_total+=parseFloat(item.total);
 			});
 
-			var footHTML="<tr><td colspan='3'><b>Total Sales<b></td><td><b>Rs. "+bill_total+"</b></td></tr>";
+			var footHTML="<tr><td colspan='3'><b>Total<b></td><td><b>Rs. "+total_tax+"</b></td><td><b>Rs. "+bill_total+"</b></td></tr>";
 
 			$('#report127_body').html(rowsHTML);
 			$('#report127_foot').html(footHTML);
 			/////////////
-			vExport.export_buttons({file:'Total Sales',report_id:'report127',action:'static'});
+			vExport.export_buttons({file:'Total Purchase',report_id:'report127',action:'static'});
 			hide_loader();
 		});
 	};

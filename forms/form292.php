@@ -72,6 +72,7 @@
 
 	function form292_ini()
 	{
+		console.log("23232");
 		show_loader();
 		var fid=$("#form292_link").attr('data_id');
 		if(fid==null)

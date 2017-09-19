@@ -22,7 +22,7 @@ class paytm_api
 	{
 		$config = config::getInstance();
 
-  	$this->client_id=$config->get("paytmClientId");
+  		$this->client_id=$config->get("paytmClientId");
 		$this->secret = $config->get("paytmSecret");
 		$this->username = $config->get("paytmUsername");
 		$this->password = $config->get("paytmPassword");

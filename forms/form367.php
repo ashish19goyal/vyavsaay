@@ -170,6 +170,8 @@
 				results.forEach(function(result)
 				{
 					var id=result.id;
+					// console.log(result);
+					var discount_percent = (vUtil.isBlank(result.discount) || parseFloat(result.amount)==0) ? 0 : vUtil.round((result.discount/result.amount),2);
 					var rowsHTML="<tr>";
 					rowsHTML+="<form id='form367_"+id+"'></form>";
 						rowsHTML+="<td data-th='Item'>";
@@ -187,7 +189,7 @@
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Amount'>";
 							rowsHTML+="<input type='number' class='floatlabel' placeholder='Amount' readonly='readonly' form='form367_"+id+"' step='any' value='"+result.amount+"'>";
-							rowsHTML+="<input type='number' class='floatlabel' placeholder='Discount' readonly='readonly' form='form367_"+id+"' step='any' value='"+result.discount+"'>";
+							rowsHTML+="<input type='number' class='floatlabel' placeholder='Discount %' readonly='readonly' form='form367_"+id+"' step='any' value='"+discount_percent+"'>";
 							rowsHTML+="<input type='number' class='floatlabel' placeholder='Tax' readonly='readonly' form='form367_"+id+"' step='any' value='"+result.tax+"'>";
 							rowsHTML+="<input type='number' class='floatlabel' placeholder='Total' readonly='readonly' form='form367_"+id+"' step='any' value='"+result.total+"'>";
 						rowsHTML+="</td>";
@@ -195,6 +197,7 @@
 							rowsHTML+="<input type='hidden' form='form367_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='submit_hidden' form='form367_"+id+"' id='save_form367_"+id+"'>";
 							rowsHTML+="<button type='button' class='btn red' form='form367_"+id+"' id='delete_form367_"+id+"' onclick='form367_delete_item($(this));' title='Delete' name='delete'><i class='fa fa-trash'></i></button>";
+							rowsHTML+="<input type='hidden' form='form367_"+id+"' value='"+result.discount+"' name='discount'>";
 						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
 
@@ -241,7 +244,7 @@
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Amount'>";
 					rowsHTML+="<input type='number' class='floatlabel' placeholder='Amount' readonly='readonly' required form='form367_"+id+"' step='any'>";
-					rowsHTML+="<input type='number' class='floatlabel' placeholder='Discount' form='form367_"+id+"' step='any' value='0'>";
+					rowsHTML+="<input type='number' class='floatlabel' placeholder='Discount %' form='form367_"+id+"' step='any' value='0'>";
 					rowsHTML+="<input type='number' required class='floatlabel' placeholder='Tax' readonly='readonly' form='form367_"+id+"' step='any'>";
 					rowsHTML+="<input type='number' required class='floatlabel' placeholder='Total' readonly='readonly' required form='form367_"+id+"' step='any'>";
 				rowsHTML+="</td>";
@@ -252,6 +255,7 @@
 					rowsHTML+="<input type='submit' class='submit_hidden' form='form367_"+id+"'>";
 					rowsHTML+="<input type='hidden' form='form367_"+id+"' name='tax_rate'>";
 					rowsHTML+="<input type='hidden' form='form367_"+id+"' name='type' value='product'>";
+					rowsHTML+="<input type='hidden' form='form367_"+id+"' name='discount'>";
 				rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 
@@ -264,12 +268,13 @@
 			var quantity_filter=fields.elements[3];
 			var price_filter=fields.elements[4];
 			var amount_filter=fields.elements[5];
-			var discount_filter=fields.elements[6];
+			var discount_percent_filter=fields.elements[6];
 			var tax_filter=fields.elements[7];
 			var total_filter=fields.elements[8];
 			var id_filter=fields.elements[9];
 			var save_button=fields.elements[10];
 			var tax_rate_filter=fields.elements[13];
+			var discount_filter=fields.elements['discount'];
 
 			$(save_button).on("click", function(event)
 			{
@@ -323,11 +328,12 @@
 					total_filter.value=0;
 					amount_filter.value=0;
 					discount_filter.value=0;
+					discount_percent_filter.value = 0;
 					tax_filter.value=0;
 
 					$(total_filter).floatlabel();
 					$(amount_filter).floatlabel();
-					$(discount_filter).floatlabel();
+					$(discount_percent_filter).floatlabel();
 					$(tax_filter).floatlabel();
 				});
 			});
@@ -348,18 +354,20 @@
 				total_filter.value=0;
 				amount_filter.value=0;
 				discount_filter.value=0;
+				discount_percent_filter.value = 0;
 				tax_filter.value=0;
 
 				// $(quantity_filter).floatlabel();
 				$(total_filter).floatlabel();
 				$(amount_filter).floatlabel();
-				$(discount_filter).floatlabel();
+				$(discount_percent_filter).floatlabel();
 				$(tax_filter).floatlabel();
 			});
 
-			$(quantity_filter).add(price_filter).add(discount_filter).on('blur',function(event)
+			$(quantity_filter).add(price_filter).add(discount_percent_filter).on('blur',function(event)
 			{
 				amount_filter.value=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
+				discount_filter.value = vUtil.round((parseFloat(discount_percent_filter.value)*parseFloat(amount_filter.value)/100),2);
 				tax_filter.value=parseFloat((parseFloat(tax_rate_filter.value)*(parseFloat(amount_filter.value)-parseFloat(discount_filter.value)))/100);
 				total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);
 
@@ -388,7 +396,7 @@
 			var quantity=form.elements[3].value;
 			var price=form.elements[4].value;
 			var amount=form.elements[5].value;
-			var discount=form.elements[6].value;
+			var discount=form.elements['discount'].value;
 			var tax=form.elements[7].value;
 			var total=form.elements[8].value;
 			var data_id=form.elements[9].value;
@@ -466,9 +474,9 @@
 				{
 					amount+=parseFloat(subform.elements[5].value);
 				}
-				if(!isNaN(parseFloat(subform.elements[6].value)))
+				if(!isNaN(parseFloat(subform.elements['discount'].value)))
 				{
-					discount+=parseFloat(subform.elements[6].value);
+					discount+=parseFloat(subform.elements['discount'].value);
 				}
 				if(!isNaN(parseFloat(subform.elements[7].value)))
 				{
@@ -485,7 +493,7 @@
 			total=vUtil.round(total);
 
 			var tax=vat;
-			var tax_string="Tax: ";
+			var tax_string="VAT: ";
 			var tax_amount_string="Rs. "+vat+"<br>";
 
 			var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
@@ -639,9 +647,9 @@
 				{
 					amount+=parseFloat(subform.elements[5].value);
 				}
-				if(!isNaN(parseFloat(subform.elements[6].value)))
+				if(!isNaN(parseFloat(subform.elements['discount'].value)))
 				{
-					discount+=parseFloat(subform.elements[6].value);
+					discount+=parseFloat(subform.elements['discount'].value);
 				}
 				if(!isNaN(parseFloat(subform.elements[8].value)))
 				{
@@ -659,7 +667,7 @@
 			total=vUtil.round(total,0);
 
 			var tax=vat;
-			var tax_string="VAT: <br>S.Tax:";
+			var tax_string="VAT:";
 			var tax_amount_string="Rs. "+vat+"<br>";
 
 			var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
@@ -793,9 +801,9 @@
 			{
 				amount+=parseFloat(subform.elements[5].value);
 			}
-			if(!isNaN(parseFloat(subform.elements[6].value)))
+			if(!isNaN(parseFloat(subform.elements['discount'].value)))
 			{
-				discount+=parseFloat(subform.elements[6].value);
+				discount+=parseFloat(subform.elements['discount'].value);
 			}
 			if(!isNaN(parseFloat(subform.elements[7].value)))
 			{
@@ -978,7 +986,7 @@
 
 		if(show_sub_totals.checked)
 		{
-			display_total="Amount:<br>Tax: <br>Total:";
+			display_total="Amount:<br>VAT(5.5%): <br>Total:";
 			display_total_amount="Rs. "+total_amount+"<br>Rs. "+total_vat+"<br>Rs. "+master_total;
 		}
 

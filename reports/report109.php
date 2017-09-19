@@ -89,7 +89,7 @@
 						{index:'address1'},
 						{index:'city'},
 						{index:'phone'},
-                        {index:'status',exact:'picked'}]};
+                        {index:'status',array:['picked','not received']}]};
 
         read_json_rows('report109',columns,function(items)
         {

@@ -59,6 +59,7 @@
                         <div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Gate Pass #</span></div><div class='col-md-8 col-sm-8'><input type='text' name='pass_num'></div></div>
 						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Delivery Person</span></div><div class='col-md-8 col-sm-8'><input type='text' name='delivery_person'></div></div>
 						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Branch</span></div><div class='col-md-8 col-sm-8'><input type='text' name='branch'></div></div>
+                        <div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Return Reason</span></div><div class='col-md-8 col-sm-8'><input type='text' name='return_reason'></div></div>
 						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Received By</span></div><div class='col-md-8 col-sm-8'><input type='text' name='received_by'></div></div>
 						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Received By (Phone)</span></div><div class='col-md-8 col-sm-8'><input type='text' name='received_by_phone'></div></div>
 						<div class='row'><div class='col-md-4 col-sm-4' style='height:45px;'><span style='position:relative;top:30%;'>Signature</span></div><div class='col-md-8 col-sm-8'><div id='form198_canvas_div'></div></div></div>
@@ -148,6 +149,7 @@
                                 {index:'received_by'},
                                 {index:'received_by_phone'},
                                 {index:'received_by_sign'},
+                                {index:'reason_code'},
                                 {index:'status'}]};
         read_json_rows('form198',new_columns,function(results)
         {
@@ -211,6 +213,7 @@
                 form.elements['pass_num'].value=result.pass_num;
                 form.elements['delivery_person'].value=result.delivery_person;
                 form.elements['branch'].value=result.branch;
+                form.elements['return_reason'].value=result.reason_code;
                 form.elements['received_by'].value=result.received_by;
                 form.elements['received_by_phone'].value=result.received_by_phone;
 
@@ -263,6 +266,7 @@
             var status=form.elements['status'].value;
             var delivery_person=form.elements['delivery_person'].value;
             var branch=form.elements['branch'].value;
+            var reason_code=form.elements['return_reason'].value;
             var import_date=get_raw_time(form.elements['ddate'].value);
             var id=form.elements['id'].value;
             var last_updated=get_my_time();
@@ -312,6 +316,7 @@
                         {index:'status',value:status},
                         {index:'delivery_person',value:delivery_person},
                         {index:'branch',value:branch},
+                        {index:'reason_code',value:reason_code},
                         {index:'order_history',value:order_history},
                         {index:'last_updated',value:last_updated}],
 	 				log_data:{title:'Updated',notes:'AWB # '+awb_num,link_to:'form198'}};

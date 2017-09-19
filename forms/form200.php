@@ -552,6 +552,7 @@
 	 					{index:'delivery_person',value:delivery_person},
                         {index:'order_history',value:order_history_string},
                         {index:'drs_time',value:get_raw_time(drs_date)},
+						{index:'sync_status',value:1},
                         {index:'last_updated',value:last_updated}]};
 
             update_json(data_json);

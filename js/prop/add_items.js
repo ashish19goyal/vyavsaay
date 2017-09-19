@@ -8213,7 +8213,7 @@ function form202_add_item()
 							"<city></city>"+
 							"<pincode></pincode>"+
 							"<order_history></order_history>"+
-							"<status exact='yes'>picked</status>"+
+							"<status array='yes'>--picked--not received--</status>"+
 							"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>"+
 							"</logistics_orders>";
 					fetch_requested_data('',order_data,function(orders)

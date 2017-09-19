@@ -16,11 +16,6 @@
             <a onclick="modal111_action();">
                 <i class="icon-location-pin"></i> Log Location </a>
         </li>
-        <li id='api_sync_icon'>
-            <a onclick="sync_logistics_apis();">
-                <i class="icon-cloud-upload"></i> Sync APIs </a>
-        </li>
-
         <li class="divider"> </li>
 
         <li id='online_icon'>

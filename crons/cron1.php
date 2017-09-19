@@ -3,13 +3,18 @@
 <?php
 
 	include_once "../Classes/vDB.php";
-	include_once "../Classes/mailer_json.php";
 	include_once "../Classes/vUtil.php";
+	include_once "../Classes/emailSES.php";
+	include_once "../Classes/vLog.php";
+	use RetailingEssentials\emailSES;
 	use RetailingEssentials\vDB;
-	use RetailingEssentials\send_mailer_json;
 	use RetailingEssentials\vUtil;
+	use RetailingEssentials\vLog;
 
 	date_default_timezone_set('Asia/Kolkata');
+
+	$log = vLog::getInstance(array('domain' => 'beacon'));
+
 /**
  * Method for displaying the help and default variables.
  **/
@@ -95,7 +100,7 @@ function cron1()
 										$branch['total_cod']+=floatval($order['collectable_value']);
 										$branch['total']+=1;
 										break;
-						case 'RTO Delivered':
+						case 'RTO delivered':
 						case 'RTO pending':
 						case 'RTO out for delivery':$branch['rto']+=1;
 										$branch['total']+=1;
@@ -109,10 +114,10 @@ function cron1()
 	}
 	//print_r($branches);
 
-	$vUtil = vUtil::getInstance('beacon');
+	$vUtil = vUtil::getInstance($domain);
 	$userPreferences = $vUtil::getUserPreferences(array('title','email','email_report'));
 	$bt= $userPreferences['title'];
-	$bemail = $userPreferences['email'];
+	$bemail = $domain."@vyavsaay.com";//$userPreferences['email'];
 	$email = $userPreferences['email_report'];
 
 	$rowsHTML="<table style='width:100%;font-size:14px;border:1px solid black;text-align:left;' class='plain_table'>".
@@ -159,14 +164,29 @@ function cron1()
 
 		foreach($emails_array as $em)
 		{
-			$receiver=array('name'=>$bt,'email'=>$em);
+			$receiver=array('email'=>$em);
 			$r_array[]=$receiver;
 		}
 		$receivers=json_encode($r_array);
 
-		$email_instance=new send_mailer_json($domain);
-		$email_instance->direct_send($reportTitle,$email_message,'',$receivers,$bemail,$bt);
-		$email_instance->log_mailer($domain,$reportTitle,$email_message,'',$receivers,$bemail,$bt);
+		$mailer=emailSES::getInstance($domain);
+		$message = array(
+			'receivers' => $receivers,
+			'sender' => $bemail,
+			'subject' => $reportTitle,
+			'message' => $email_message,
+			'sender_name' => $bt,
+			'attachment_type' => '',
+			'message_attachment' => ''
+		);
+		// print_r($message);
+		try{
+			$mailer->send($message);
+		}
+		catch(Exception $e)
+		{
+			$log::info($message);
+		}
 	}
 }
 
@@ -206,7 +226,12 @@ else
 		$chour=$ctime['tm_hour'];
 		if($chour==20)
 		{
-			cron1();
+			try
+			{
+				cron1();
+			} catch (Exception $e) {
+				$log::err($e);
+			}
 		}
 		sleep(3550);
     }

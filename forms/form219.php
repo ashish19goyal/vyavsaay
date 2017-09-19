@@ -182,7 +182,7 @@
                     var rowsHTML="<tr>";
 
                     var address=result.ship_to+"\n"+result.address1+", "+result.address2+", "+result.city+"-"+result.pincode;
-                    if(result.address2=="--" || result.address2==result.address1)
+                    if(result.address2==null || result.address2=="--" || result.address2==result.address1)
                     {
                         var address=result.ship_to+"\n"+result.address1+", "+result.city+"-"+result.pincode;
                     }
@@ -570,6 +570,7 @@
 	 					{index:'delivery_person',value:delivery_person},
                         {index:'order_history',value:order_history_string},
                         {index:'drs_time',value:get_raw_time(drs_date)},
+						{index:'sync_status',value:1},
                         {index:'last_updated',value:last_updated}]};
 
             update_json(data_json);

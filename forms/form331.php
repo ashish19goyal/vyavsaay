@@ -1,7 +1,7 @@
 <div id='form331' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class='caption'>
-			<div class='btn-group' id='form331_store' data-toggle='buttons'>
+			<div class='btn-group' id='form331_store' data-toggle='buttons' data-value='my'>
                 <label class='btn green-jungle my active' onclick=form331_ini('my');><input name='my' type='radio' class='toggle'>My Store</label>
                 <label class='btn green-jungle all' onclick=form331_ini('all');><input type='radio' name='all' class='toggle'>All Stores</label>
             </div>
@@ -87,12 +87,14 @@
             if(typeof store_type!='undefined' && store_type=='all')
             {
                 store='';
-                $('#form331_store').find('label.all').addClass('active');
+				$('#form331_store').data('value','all');
+				$('#form331_store').find('label.all').addClass('active');
                 $('#form331_store').find('label.my').removeClass('active');
             }
             else
             {
-                $('#form331_store').find('label.my').addClass('active');
+				$('#form331_store').data('value','my');
+				$('#form331_store').find('label.my').addClass('active');
                 $('#form331_store').find('label.all').removeClass('active');
             }
 
@@ -100,7 +102,7 @@
             var fname=filter_fields.elements['name'].value;
             var fbatch=filter_fields.elements['batch'].value;
 
-            var paginator=$('#form331_body').paginator();
+            var paginator=$('#form331_body').paginator({func:"form331_ini($('#form331_store').data('value'))"});
 
             var item_columns={data_store:'attributes',return_column:'name',
                              indexes:[{index:'name',value:fname},

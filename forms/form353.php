@@ -57,7 +57,8 @@
         drs_filter.value="";
         $(drs_filter).focus();
 
-        set_static_value_list_json('logistics_orders','status',status_filter);
+		set_value_list_json(['pending','delivered','undelivered','RTO pending','out for delivery'],status_filter);
+        // set_static_value_list_json('logistics_orders','status',status_filter);
 
         $(awb_filter).off('keydown');
         $(awb_filter).on('keydown',function (event)
@@ -159,6 +160,7 @@
                     var fields=document.getElementById("form353_"+result.awb_num);
                     var status_filter=fields.elements[2];
 
+					set_value_list_json(['pending','delivered','undelivered','RTO pending','out for delivery'],status_filter);
                     set_static_value_list_json('logistics_orders','status',status_filter);
 
                     $(fields).on("submit", function(event)
@@ -180,6 +182,7 @@
         var pending=0;
         var undelivered=0;
 		var total_cod=0;
+		var rto_pending = 0;
 
         $("[id^='save_form353']").each(function(index)
         {
@@ -202,6 +205,8 @@
                     out_for_delivery+=1;
                 else if(updated_status=='pending')
                     pending+=1;
+				else if(updated_status=='RTO pending')
+                    rto_pending+=1;
             }
             else
             {
@@ -216,15 +221,17 @@
                     out_for_delivery+=1;
                 else if(current_status=='pending')
                     pending+=1;
+				else if(current_status=='RTO pending')
+                    rto_pending+=1;
             }
         });
 
 		var filter_fields=document.getElementById('form353_master');
         filter_fields.elements['collection'].value=total_cod;
 
-        var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
-                                "<td>Out for Delivery:<br>Delivered:<br>Undelivered:<br>Pending:</td>" +
-                                "<td>"+out_for_delivery+"<br>"+delivered+"<br>" +undelivered+"<br> " +pending+"</td>" +
+        var total_row="<tr><td colspan='2' data-th='Total'><b>Total</b></td>" +
+                                "<td>Out for Delivery:<br>Delivered:<br>Undelivered:<br>Pending:<br>RTO Pending:</td>" +
+                                "<td>"+out_for_delivery+"<br>"+delivered+"<br>" +undelivered+"<br> " +pending+"<br> " +rto_pending+"</td>" +
                                 "<td></td>" +
                                 "</tr>";
         $('#form353_foot').html(total_row);
@@ -239,21 +246,15 @@
             var remarks=form.elements[3].value;
             var id=form.elements[4].value;
             var last_updated=get_my_time();
-            var delivery_object={index:'delivery_time'};
+            var delivery_object={index:'delivery_time',value:1};
 
             if(status!="")
             {
                 var old_order_history=form.elements[6].value;
                 var order_history=vUtil.jsonParse(old_order_history);
-                var history_object={timeStamp:get_my_time(),
-                					status:status};
+                var history_object={timeStamp:get_my_time(),status:status};
 
-                if(status=='received')
-                {
-                    history_object.location=get_session_var('address');
-					history_object.details= (vUtil.isBlank(remarks))? "Order checked in at the branch" : remarks;
-                }
-                else if(status=='pending')
+                if(status=='pending')
                 {
                     history_object.location=get_session_var('address');
 					history_object.details= (vUtil.isBlank(remarks))? "Order pending for delivery" : remarks;
@@ -269,6 +270,11 @@
                     history_object.location="";
 					history_object.details= (vUtil.isBlank(remarks))? "Order could not be delivered. Delivery will be re-attempted shortly." : remarks;
                 }
+				else if(status=='RTO pending')
+				{
+					history_object.location=get_session_var('address');
+					history_object.details= (vUtil.isBlank(remarks))? "Order marked for RTO. " : remarks;
+				}
 
 				if(order_history.length>0 && order_history[order_history.length-1]['status']!=status)
 				{
@@ -281,9 +287,10 @@
 	 					{index:'status',value:status},
 	 					{index:'comments',value:remarks},
 	 					{index:'order_history',value:order_history_string},
+						{index:'sync_status',value:1},
                         delivery_object,
 	 					{index:'last_updated',value:last_updated}]};
-
+				// console.log(data_json);
                 update_json(data_json);
 
                 $(form).readonly();

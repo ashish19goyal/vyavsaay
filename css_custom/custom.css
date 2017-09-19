@@ -515,6 +515,10 @@ ul.v_task_list li>.task-status>a.pending>i:hover{
 ul.v_task_list li>.task-status>a.done>i:hover{
     color:green;
 }
+
+ul.v_task_list li>.task-status>a.suspend>i:hover{
+    color:yellow;
+}
 /*******************/
 
 /********to keep modals on top of object pages***********/

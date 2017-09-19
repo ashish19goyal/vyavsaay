@@ -24,7 +24,10 @@ function set_session(session_data,func)
 	if(typeof func=='undefined')
 	{
 		var domain=get_session_var('domain');
-		window.location.assign(server_root+"/main.php?dn="+domain);
+		var version=get_session_var('code_version');
+		version = (version==null || version == "" || version =="undefined")? "1" : version;
+		window.location.assign(server_root+"/main.php?dn="+domain+"&cv="+version);
+		// window.location.assign(server_root+"/main.php?dn="+domain);
 	}
 	else
 	{

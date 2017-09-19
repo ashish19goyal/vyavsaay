@@ -85,6 +85,7 @@
                         {index:'channel_name',value:channel_filter},
                         {index:'import_date'},
 						{index:'merchant_name'},
+						{index:'vendor_phone'},
 						{index:'return_address1'},
 						{index:'ship_to'},
 						{index:'address1'},
@@ -93,7 +94,7 @@
 						{index:'sku'},
 						{index:'pieces'},
 						{index:'source',exact:'api'},
-                        {index:'status',exact:'picked'}]};
+                        {index:'status',array:['picked','not received']}]};
 		if(!vUtil.isBlank(date_filter)){
 			var date_filter_index={index:'import_date',lowerbound:date_filter,upperbound:date_filter+86400000};
 			columns.indexes.push(date_filter_index);
@@ -116,7 +117,7 @@
 					rowsHTML+=item.ship_to+", "+item.address1+", "+item.city;
                 rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Merchant'>";
-					rowsHTML+=item.merchant_name;
+					rowsHTML+=item.merchant_name+"<br>"+item.vendor_phone;
                 rowsHTML+="</td>";
                 rowsHTML+="<td data-th='Status'>";
                     rowsHTML+=item.status;
@@ -127,12 +128,14 @@
 
 			vExport.export_buttons({action:'dynamic',columns:columns,file:'New Orders from API',report_id:'report117',feach:function (item)
             {
+				item['Merchant Phone']=item.vendor_phone;
 				item['Product']=item.sku;
 				item['Posted Date']=vTime.date({time:item.import_date});
 				item['Posted Time']=vTime.time({time:item.import_date});
 				delete item.source;
 				delete item.sku;
 				delete item.import_date;
+				delete item.vendor_phone;
 			}});
 
             paginator.update_index(items.length);

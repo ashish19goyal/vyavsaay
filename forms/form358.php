@@ -142,7 +142,7 @@
                                        access:'yes',
 									   indexes:[{index:'id'},
                                                {index:'order_history'},
-                                               {index:'status',array:['picked','in-transit']},
+                                               {index:'status',array:['picked','in-transit','not received']},
                                                {index:'sku'},
                                                {index:'merchant_name'},
                                                {index:'pieces'},
@@ -253,6 +253,7 @@
 	 					{index:'comments',value:comments},
 	 					{index:'pickup_by',value:picked_by},
 	 					{index:'order_history',value:order_history_string},
+						{index:'sync_status',value:1},
 	 					{index:'last_updated',value:last_updated}]};
             update_json(data_json);
 
@@ -272,7 +273,7 @@
             var form=document.getElementById(form_id);
 
             var awb_num=form.elements[0].value;
-            var status='picked';
+            var status='not received';
             var id=form.elements[5].value;
             var last_updated=get_my_time();
             if(id!="")

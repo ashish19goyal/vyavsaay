@@ -1,9 +1,9 @@
 <?php
 
 	include_once "../Classes/db.php";
-	include_once "../Classes/mailer_json.php";
+	include_once "../Classes/emailSES.php";
+	use RetailingEssentials\emailSES;
 	use RetailingEssentials\db_connect;
-	use RetailingEssentials\send_mailer_json;
 
 	$userNameString=$_POST['userName'];
 	$userEmail=$_POST['userEmail'];
@@ -56,9 +56,19 @@
 			);
 			$to = json_encode($to_array);
 
-			$email_instance=new send_mailer_json('vyavsaay');
-			$email_instance->direct_send($subject,$message,'',$to,$from,$from_name);
-			$email_instance->log_mailer($domain,$subject,$message,'',$to,$from,$from_name);
+			$mailer=emailSES::getInstance('vyavsaay');
+			$message = array(
+				'receivers' => $to,
+				'sender' => $from,
+				'subject' => $subject,
+				'message' => $message,
+				'sender_name' => $from_name,
+				'attachment_type' => '',
+				'message_attachment' => ''
+			);
+
+			$mailer->send($message);
+
 			$response_object['status']='success';
 		}
 		else

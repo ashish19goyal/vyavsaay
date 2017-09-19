@@ -1,7 +1,7 @@
 <div id='form104' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class='caption'>
-            <div class='btn-group' id='form104_view' data-toggle='buttons'>
+            <div class='btn-group' id='form104_view' data-toggle='buttons' data-value='calendar'>
                 <label class='btn green-jungle cc active' onclick=form104_ini('calendar');><input name='cc' type='radio' class='toggle'>Calendar</label>
                 <label class='btn green-jungle tt' onclick=form104_ini('table');><input type='radio' name='tt' class='toggle'>Table</label>
             </div>
@@ -89,11 +89,13 @@
         if(typeof view!='undefined' && view=='table')
         {
             view_filter='table';
-            $('#form104_view').find('label.tt').addClass('active');
+			$('#form104_view').data('value','table');
+			$('#form104_view').find('label.tt').addClass('active');
             $('#form104_view').find('label.cc').removeClass('active');
         }
         else
         {
+			$('#form104_view').data('value','calendar');
             $('#form104_view').find('label.cc').addClass('active');
             $('#form104_view').find('label.tt').removeClass('active');
         }
@@ -211,7 +213,7 @@
             var assignee_filter=fields.elements['assignee'].value;
             var status_filter=fields.elements['status'].value;
 
-            var paginator=$('#form104_body').paginator();
+            var paginator=$('#form104_body').paginator({func:"form104_ini($('#form104_view').data('value'))"});
 
             var columns={data_store:'task_instances',
                          count:paginator.page_size(),

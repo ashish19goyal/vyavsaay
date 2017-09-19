@@ -18,7 +18,9 @@ var vIni = function()
 		if(((location.indexOf("index")>-1) || (location.indexOf(".php")==-1)) && is_set_session())
 		{
 			var domain=get_session_var('domain');
-			window.location.assign(server_root+"/main.php?dn="+domain);
+			var version=get_session_var('code_version');
+			version = (version==null || version == "" || version =="undefined")? "1" : version;
+			window.location.assign(server_root+"/main.php?dn="+domain+"&cv="+version);
 		}
 	    else if(!is_set_session() && (location.indexOf("main")>-1))
 		{

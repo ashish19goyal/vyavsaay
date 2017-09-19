@@ -84,64 +84,6 @@ a div{
 
 
 
-/*
-formatting for feeds
-*/
-
-.feed_item{
-	border: 1px solid #000;
-	margin: 5px;
-	padding: 5px;
-	text-align: left;
-}
-
-.feed_title{
-	width:80%;
-	text-align: left;
-	margin: 2px;
-	font-weight: bold;
-}
-
-div.feed_detail{
-	width:80%;
-	text-align: left;
-	margin: 2px;
-}
-
-textarea.feed_detail{
-	width:80%;
-	text-align: left;
-	margin: 2px;
-	border: 1px solid #dadada;
-}
-
-.feed_likes{
-	width:80%;
-	text-align: left;
-	padding: 2px;
-}
-
-div.feed_comments{
-	width:80%;
-	text-align: left;
-	padding: 5px;
-}
-
-textarea.feed_comments{
-	width:80%;
-	height:30px;
-	text-align: left;
-	padding: 2px;
-	border: 1px solid #dadada;
-}
-
-.feed_post{
-	width:80%;
-	text-align: left;
-	margin-right: 5px;
-}
-
-/*end feed formatting*/
 tr.default_row{
 	background: #EAF2D3;
 }
@@ -199,295 +141,14 @@ tr.cancelled_row{
 }
 
 
-
-.filter_icon{
-	height:20px;
-	width: 20px;
-	border: 0;
-	cursor: pointer;
-}
-
-.thumbs_icon{
-	height:20px;
-	width: 20px;
-	border: 0;
-	cursor: pointer;
-}
-
-.export_icon{
-	height: 25px;
-	width: auto;
-	cursor: pointer;
-	border: 2px solid #1A783B;
-	display: inline-block;
-	color: #FFF;
-	font-size: 1em;
-	text-align: center;
-	-webkit-appearance:none;
-	transition: 0.5s all;
-	-webkit-transition: 0.5s all;
-	-moz-transition: 0.5s all;
-	-o-transition: 0.5s all;
-	background: #2ABF5E;
-	outline: none;
-}
-
-.import_icon{
-	height: 25px;
-	width: auto;
-	cursor: pointer;
-	border: 2px solid #8B0000;
-	display: inline-block;
-	color: #FFF;
-	font-size: 1em;
-	text-align: center;
-	-webkit-appearance:none;
-	transition: 0.5s all;
-	-webkit-transition: 0.5s all;
-	-moz-transition: 0.5s all;
-	-o-transition: 0.5s all;
-	background: #DB0000;
-	outline: none;
-}
-
-.generic_icon{
-	height: 25px;
-	width: auto;
-	cursor: pointer;
-	border: 2px solid #818060;
-	display: inline-block;
-	color: #FFF;
-	font-size: 1em;
-	text-align: center;
-	-webkit-appearance:none;
-	transition: 0.5s all;
-	-webkit-transition: 0.5s all;
-	-moz-transition: 0.5s all;
-	-o-transition: 0.5s all;
-	background: #818060;
-	outline: none;
-	margin: 2px 0px;
-}
-
-.generic_green_icon{
-	height: 25px;
-	width: auto;
-	cursor: pointer;
-	border: 2px solid #009933;
-	display: inline-block;
-	color: #FFF;
-	font-size: 1em;
-	text-align: center;
-	-webkit-appearance:none;
-	transition: 0.5s all;
-	-webkit-transition: 0.5s all;
-	-moz-transition: 0.5s all;
-	-o-transition: 0.5s all;
-	background: #009933;
-	outline: none;
-	margin: 2px 0px;
-}
-
-.generic_red_icon{
-	height: 25px;
-	width: auto;
-	cursor: pointer;
-	border: 2px solid #BB0000;
-	display: inline-block;
-	color: #FFF;
-	font-size: 1em;
-	text-align: center;
-	-webkit-appearance:none;
-	transition: 0.5s all;
-	-webkit-transition: 0.5s all;
-	-moz-transition: 0.5s all;
-	-o-transition: 0.5s all;
-	background: #DB0000;
-	outline: none;
-	margin: 2px 0px;
-}
-
-
-.generic_head_icon{
-	height: 25px;
-	width: auto;
-	cursor: pointer;
-	border: 2px solid #1A783B;
-	display: inline-block;
-	color: #FFF;
-	font-size: 1em;
-	text-align: center;
-	-webkit-appearance:none;
-	transition: 0.5s all;
-	-webkit-transition: 0.5s all;
-	-moz-transition: 0.5s all;
-	-o-transition: 0.5s all;
-	background: #2ABF5E;
-	outline: none;
-	margin: 2px 0px;
-}
-
-
 .submit_hidden{
 	width:1px;
 	color:transparent;
 	visibility:hidden;
 }
 
-.save_icon{
-	height: 25px;
-	width: 25px;
-	background:url('/images/save.png') no-repeat left top;
-	background-size: 25px 25px;
-	color:transparent;
-	border: 0;
-	cursor: pointer;
-	border-radius: 1px;
-	vertical-align:middle;
-}
-
-.share_icon{
-	height: 25px;
-	width: 25px;
-	background:url('/images/share.png') no-repeat left top;
-	background-size: 25px 25px;
-	color:transparent;
-	border: 0;
-	cursor: pointer;
-	border-radius: 1px;
-	vertical-align:middle;
-}
-
-.delete_icon{
-	height:25px;
-	width: 25px;
-	background:url('/images/delete.png') no-repeat left top;
-	background-size: 25px 25px;
-	color:transparent;
-	border: 0;
-	cursor: pointer;
-	border-radius: 1px;
-	vertical-align:middle;
-}
-
-.edit_icon{
-	height:25px;
-	width: 25px;
-	background:url('/images/edit.png') no-repeat left top;
-	border: 0;
-	cursor: pointer;
-	background-size: 25px 25px;
-	color:transparent;
-	vertical-align:middle;
-}
-
-.refresh_icon{
-	height:25px;
-	width: 25px;
-	background:url('/images/refresh.png') no-repeat left top;
-	border: 0;
-	cursor: pointer;
-	background-size: 25px 25px;
-	color:transparent;
-	vertical-align:middle;
-}
-
-
-.barcode_icon{
-	height:25px;
-	width: 25px;
-	border: 0;
-	cursor: pointer;
-}
-
-
-.add_icon{
-	height:25px;
-	width: 25px;
-	background:url('/images/add_button.png') no-repeat left top;
-	border: 0;
-	cursor: pointer;
-	background-size: 25px 25px;
-	color:transparent;
-	vertical-align:middle;
-}
-
-.add_red_icon{
-	height:25px;
-	width: 25px;
-	background:url('/images/add_red_button.png') no-repeat left top;
-	border: 0;
-	cursor: pointer;
-	background-size: 25px 25px;
-	color:transparent;
-	vertical-align:middle;
-}
-
-.add_image{
-	height:25px;
-	width: 25px;
-	border: 0;
-	cursor: pointer;
-}
-
-.prev_icon{
-	height:30px;
-	width: 50px;
-	border: 0;
-	cursor: pointer;
-	float:left;
-}
-
-.next_icon{
-	height:30px;
-	width: 50px;
-	border: 0;
-	cursor: pointer;
-	float:right;
-}
-
 .form_nav{
 	width:100%;
-}
-
-.print_icon{
-	height:25px;
-	width: 25px;
-	background:url('/images/print.png') no-repeat left top;
-	border: 0;
-	cursor: pointer;
-	background-size: 25px 25px;
-	color:transparent;
-	vertical-align:middle;
-}
-
-.csv_icon{
-	height:25px;
-	width: 25px;
-	background:url('/images/csv_icon.png') no-repeat left top;
-	border: 0;
-	cursor: pointer;
-	background-size: 25px 25px;
-	color:transparent;
-	vertical-align:middle;
-}
-
-.csv_red_icon{
-	height:25px;
-	width: 25px;
-	background:url('/images/csv_red.png') no-repeat left top;
-	border: 0;
-	cursor: pointer;
-	background-size: 25px 25px;
-	color:transparent;
-	vertical-align:middle;
-}
-
-a.small_cross_icon{
-	width:10px;
-	height:10px;
-	color: #222;
-	cursor: pointer;
 }
 
 .customers_pane{
@@ -680,34 +341,7 @@ textarea.ultrawidebox{
 }
 
 @media screen and (min-width: 550px) {
-	#side_menu{
-		background-color: #A2A2A2;
-		width: 50px;
-		height: auto;
-		position: fixed;
-		top: 10%;
-		left:0%;
-		float: left;
-		border-style: solid;
-		border-width: 2px;
-		/*border-radius: 5px;*//*changed*/
-		border-color: #A2A2A2;
-		margin: 1% 1% 1% 0%;
-		z-index:99;
-	}
 
-	.menu_icon{
-		position:relative;
-		width: 40px;
-		height: 40px;
-		margin: 25% 15% 25% 15%;
-		cursor: pointer;
-	}
-
-	.icon{
-		width:100%;
-		border-radius: 2px;
-	}
 	footer{
 		display: block;
 		width:100%;
@@ -728,23 +362,6 @@ textarea.ultrawidebox{
 		left: 55px;
 		height: auto;
 		margin: 50px 130px 50px 60px;
-	}
-	.side_lane{
-		width: 140px;
-		height: 75%;
-		min-height: 50%;
-		text-align: left;
-		float: right;
-		border-style: solid;
-		/*border-radius: 5px;*//*changed*/
-		border-width: 2px;
-		border-color: #2A2A2A;
-		margin: 1% 0% 1% 1%;
-		position: fixed;
-		top:45px;
-		right:0%;
-		overflow-y: auto;
-		overflow-x: hidden;
 	}
 }
 
@@ -793,37 +410,8 @@ textarea.ultrawidebox{
 	.customers_pane{
 		max-width:300px;
 	}
-	#side_menu{
-		background-color: #A2A2A2;
-		width: 98%;
-		height: 75px;
-		position: fixed;
-		bottom: -2%;
-		left:-1%;
-		padding-left:10px;
-		padding-right:10px;
-		padding-bottom: 5px;
-		z-index:99;
-		text-align: justify;
-	}
-	#side_menu:after {
-	  content: '';
-	  width: 100%;
-	  display: inline-block;
-	}
 	footer.main_footer{
 		display: none;
-	}
-	.menu_icon{
-		display: inline-block;
-		width: 60px;
-		height: 60px;
-		cursor: pointer;
-	}
-	.icon{
-		border-radius: 2px;
-		/*width: 100%;*/
-		height: 60px;
 	}
 	#content_box{
 		width: auto;
@@ -842,24 +430,12 @@ textarea.ultrawidebox{
 	}
 
 
-	.export_icon, .generic_icon, .import_icon{
-		height:30px;
-		font-size: 20px;
-	}
-
 	canvas{
 		position:relative;
 	}
 
 	.submit_hidden{
 		min-width:1px;
-	}
-
-	.save_icon,.delete_icon,.share_icon,.edit_icon,.refresh_icon,.copy_icon,.add_icon,.add_image,.print_icon,.csv_icon,.csv_red_icon,.doc_search_icon{
-		min-width:40px;
-		height:40px;
-		width:40px;
-		background-size: 40px 40px;
 	}
 
 	v2{

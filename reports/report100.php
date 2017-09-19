@@ -1,7 +1,7 @@
 <div id='report100' class='tab-pane portlet box red-sunglo'>
 	<div class="portlet-title">
         <div class='caption'>
-            <div class='btn-group' id='report100_due_date' data-toggle='buttons'>
+            <div class='btn-group' id='report100_due_date' data-toggle='buttons' data-value='today'>
                 <label class='btn red-pink active today' onclick=report100_ini('today');><input name='due_date' type='radio' class='toggle'>Due Today</label>
                 <label class='btn red-pink week' onclick=report100_ini('week');><input type='radio' name='due_date' class='toggle'>Due In a Week</label>
             </div>
@@ -60,15 +60,17 @@
         var due_time=get_raw_time(vTime.date())+86400000;
         if(typeof due_date!='undefined' && due_date=='week')
         {
+			$('#report100_due_date').data('value','week');
             due_time=get_raw_time(vTime.date())+7*86400000;
         }
         else
         {
-            $('#report100_due_date').find('label.today').addClass('active');
+            $('#report100_due_date').data('value','today');
+			$('#report100_due_date').find('label.today').addClass('active');
             $('#report100_due_date').find('label.week').removeClass('active');
         }
 
-        var paginator=$('#report100_body').paginator();
+        var paginator=$('#report100_body').paginator({func:"report100_ini($('#report100_due_date').data('value'))"});
 
         var letters_data=new Object();
                 letters_data.count=paginator.page_size();

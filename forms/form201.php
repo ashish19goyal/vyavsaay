@@ -41,12 +41,10 @@
     function form201_header_ini()
     {
         var filter_fields=document.getElementById('form201_header');
-        var drs_filter=filter_fields.elements['drs'];
         var employee_filter=filter_fields.elements['emp'];
         var date_filter=filter_fields.elements['date'];
         var type_filter=filter_fields.elements['type'];
 
-        var drs_data={data_store:'drs',return_column:'drs_num'};
         var employee_data={data_store:'staff',return_column:'acc_name'};
 
         $(filter_fields).off('submit');
@@ -56,7 +54,6 @@
             form201_ini();
         });
 
-        set_my_filter_json(drs_data,drs_filter);
         set_my_filter_json(employee_data,employee_filter);
         set_static_filter_json('drs','type',type_filter);
         $(date_filter).datepicker();

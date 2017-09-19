@@ -291,6 +291,7 @@
 	 					{index:'comments',value:remarks},
 	 					{index:'order_history',value:order_history_string},
 						{index:'branch',value:branch},
+						{index:'sync_status',value:1},
                         {index:'last_updated',value:last_updated}]};
 
                 update_json(data_json);

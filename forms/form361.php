@@ -1,7 +1,7 @@
 <div id='form361' class='tab-pane portlet box green-meadow'>
 	<div class="portlet-title">
 		<div class='caption'>
-			<div class='btn-group' id='form347_status' data-toggle='buttons'>
+			<div class='btn-group' id='form347_status' data-toggle='buttons' data-value='open'>
 				<label class='btn green-jungle open active' onclick=form361_ini('open');><input name='open' type='radio' class='toggle'>Open</label>
 				<label class='btn green-jungle closed' onclick=form361_ini('closed');><input type='radio' name='closed' class='toggle'>Closed</label>
 			</div>
@@ -83,12 +83,14 @@
 			if(typeof lead_status!='undefined' && lead_status=='closed')
 			{
 				status_filter='closed';
+				$('#form361_status').data('value','closed');
 			  	$('#form361_status').find('label.closed').addClass('active');
 			  	$('#form361_status').find('label.open').removeClass('active');
 			}
 			else
 			{
-			  	$('#form361_status').find('label.open').addClass('active');
+				$('#form361_status').data('value','open');
+				$('#form361_status').find('label.open').addClass('active');
 			  	$('#form361_status').find('label.closed').removeClass('active');
 		  	}
 
@@ -97,7 +99,7 @@
 			var fdetail=filter_fields.elements['detail'].value;
 			var fidentity=filter_fields.elements['staff'].value;
 
-			var paginator=$('#form361_body').paginator();
+			var paginator=$('#form361_body').paginator({func:"form361_ini($('#form361_status').data('value'))"});
 
 			var new_columns={count:paginator.page_size(),
 							start_index:paginator.get_index(),
