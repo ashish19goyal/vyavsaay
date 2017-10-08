@@ -7,7 +7,7 @@ include_once "vElasticCore.php";
 
 class vElastic
 {
-	private static $instance;
+	private static $instance = array();
 	private $logger;
 	private $core;
 	private static $searchType = "search";
@@ -25,11 +25,11 @@ class vElastic
 
 	public static function getInstance($domain)
 	{
-		if(!isset(self::$instance))
+		if(!isset(self::$instance[$domain]))
 		{
-			self::$instance = new vElastic($domain);
+			self::$instance[$domain] = new vElastic($domain);
 		}
-		return self::$instance;
+		return self::$instance[$domain];
 	}
 
 	public function setup()
@@ -135,6 +135,42 @@ class vElastic
 		return array();
 	}
 
+	/*
+	'data' => [
+	'by' => [
+	'at' => [
+	'id' => [
+	'tablename' => [
+	'type' => [
+	'display' => [
+	'title' => [
+	'link' => [
+	*/
+	public function addActivityLog($requestData)
+	{
+		$log = (isset($requestData['log']) && $requestData['log']=='yes') ? true : false;
+
+		$logData = $log ? $requestData['log_data'] : array();
+		$addData = array(
+			'by' => $_SESSION['name'],
+			'display' => isset($requestData['log']) ? $requestData['log'] : 'no',
+			'tablename' => $requestData['data_store'],
+			'data' => json_encode($requestData['data']),
+			'type' => $requestData['type'],
+			'at' => 1000*time(),
+			'link' => $requestData['link_to']
+		);
+
+		$affectedIds = (isset($requestData['ids'])) ? $requestData['ids'] : array();
+		foreach($affectedIds as $id)
+		{
+			$data = array_merge($logData,$addData,array('id' => $requestData['data_store'] . $id));
+			$this->addLog($data);
+		}
+
+		return true;
+	}
+
 	public function addLog($document)
 	{
 		try
@@ -158,6 +194,23 @@ class vElastic
 			$this->logger->err($e);
 		}
 		return array();
+	}
+
+	public function deleteLog($query)
+	{
+		try
+		{
+			$documents = $this->getLog($query);
+			foreach($documents as $doc)
+			{
+				$this->core->delete(self::$logType,$doc['id']);
+			}
+			return true;
+		}catch(Exception $e)
+		{
+			$this->logger->err($e);
+		}
+		return false;
 	}
 
 	private function getResult($dbResult)

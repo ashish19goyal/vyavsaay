@@ -10251,7 +10251,7 @@ function modal148_action()
 	$(template_button).off("click");
 	$(template_button).on("click",function(event)
 	{
-		var data_array=['awb','date','order_status','location','remark','received by'];
+		var data_array=['awb','date','order_status','location','remark','non-delivery reason','received by'];
 		vUtil.arrayToCSV(data_array);
 	});
 
@@ -10273,16 +10273,54 @@ function modal148_action()
 
 			progress_value=5;
 
+			var ndr_reasons = [
+				'NA','WACW','RTA','ANF','ACCNR','COS','NSPCNC','ICA',
+				'NDR-No response and adderss not found',
+				'NDR-contact number swich off and address not traceable',
+				'NDR-Order cancel by customer',
+				'NDR-As per shopclues instruction',
+				'NDR-Address not traceable and customer is unable to describe location',
+				'NDR-Refused by customer',
+				'NDR-Incomplete address and contact number swich off',
+				'NDR-customer is out of station',
+				'NDR-Incomplete address and No response',
+				'NDR-No service',
+				'NDR-Address not found and No Response',
+				'NDR-customer cancel the order',
+				'NDR-contact number not valid and address not found',
+				'NDR-Short address and No response',
+				'NDR-contact number not contactable and address not found',
+				'NDR-Door closed and contact number swich off',
+				'NDR-customr is asking for refund only',
+				'NDR-Wrong address and No response',
+				'NDR-Shifted',
+				'NDR-House closed and No response',
+				'NDR-No such person and No response',
+				'NDR-Order Cancel',
+				'NDR-NSP and No response',
+				'NDR-Customer out of station',
+				'NDR-Open Delivery',
+				'NDR-Wrong Porduct',
+				'NDR-Incomplete address and customer no response',
+				'NDR-No Service',
+				'NDR-Customer no response',
+				'NDR-Fake Order',
+				'NDR-Address in complete',
+				'NDR-No Book any Order',
+				'NDR-Wrong Address and wrong contact number',
+				'NDR-Again and Again delivery address change',
+			];
+
 			var validate_template_array=[{column:'date',required:'yes',regex:new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}')},
 										{column:'awb',required:'yes',regex:new RegExp('^[0-9a-zA-Z]+$')},
 										{column:'order_status',required:'yes',list:['received','delivered','undelivered','pending','in-transit','RTO delivered','RTO in-transit']},
 										{column:'location',regex:new RegExp('^[0-9a-zA-Z\' _.,/@$!()-]+$')},
 										{column:'received by',regex:new RegExp('^[0-9a-zA-Z\' _.,/@$!()-]+$')},
-										{column:'remark',regex:new RegExp('^[0-9a-zA-Z\' _.,/@$!()-]+$')}];
+										{column:'remark',regex:new RegExp('^[0-9a-zA-Z\' _.,/@$!()-]+$')},
+										{column:'non-delivery reason',required:'yes',list:ndr_reasons}];
 
 			var error_array=vImport.validate(data_array,validate_template_array);
-			//var error_array=new Object();
-			//error_array.status='success';
+
 			if(error_array.status=='success')
 			{
 	        	progress_value=10;
@@ -10326,7 +10364,8 @@ function modal148_action()
 						{
 							var order_object={id:data_row.id,
 											status:data_row['order_status'],
-											received_by:data_row['received by']};
+											received_by:data_row['received by'],
+											reason_code:data_row['non-delivery reason']};
 
 							var history_object=vUtil.jsonParse(data_row.order_history);
 							var new_history_object={timeStamp:get_raw_time(data_row.date),
@@ -10357,6 +10396,7 @@ function modal148_action()
                                 {index:'received_by',value:row.received_by},
                                 {index:'order_history',value:row.order_history},
 								{index:'sync_status',value:1},
+								{index:'reason_code',value:row.reason_code},
                                 {index:'last_updated',value:last_updated}];
 
                         data_json.data.push(data_json_array);

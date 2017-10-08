@@ -11,6 +11,7 @@
                 <label><input type='text' name='drs' class='floatlabel' placeholder='DRS #'></label>
                 <label><input type='text' name='status' class='floatlabel' placeholder='Status'></label>
                 <label><textarea name='remark' class='floatlabel' placeholder='Remark'></textarea></label>
+				<label><input type='text' name='ndr' class='floatlabel' placeholder='Non-Delivery Reason'></label>
                 <label><input type='text' name='awb_num' class='floatlabel' placeholder='AWB #'></label>
                 <input type='submit' class='submit_hidden'>
             </fieldset>
@@ -25,6 +26,7 @@
 					<th>Current Status</th>
 					<th>Updated Status</th>
 					<th>Remark</th>
+					<th>Non-Delivery Reason</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -35,8 +37,70 @@
         </table>
     </div>
 
+	<div class='modal_forms'>
+		<a href='#form211_modal_ndr' data-toggle="modal" id='form211_modal_ndr_link'></a>
+		<div id="form211_modal_ndr" class="modal fade draggable-modal" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form id='form211_modal_ndr_form'>
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+							<h4 class="modal-title">Update Non-Delivery Reason</h4>
+						</div>
+						<div class="modal-body">
+							<div class="scroller" style="height:100px;" data-always-visible="1" data-rail-visible1="1">
+								This order can't be updated, as the selection for Non-delivery reason is incorrect. Please verify.
+							</div>
+						</div>
+						<div class="modal-footer">
+							<input type="button" class="btn green" data-dismiss='modal' name='close' value='Ok'>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
     <script>
-    function form211_header_ini()
+	var rto_reasons = ['WACW','RTA','ANF','ACCNR','COS','NSPCNC','ICA'];
+	var ndr_reasons = [
+		'NDR-No response and adderss not found',
+		'NDR-contact number swich off and address not traceable',
+		'NDR-Order cancel by customer',
+		'NDR-As per shopclues instruction',
+		'NDR-Address not traceable and customer is unable to describe location',
+		'NDR-Refused by customer',
+		'NDR-Incomplete address and contact number swich off',
+		'NDR-customer is out of station',
+		'NDR-Incomplete address and No response',
+		'NDR-No service',
+		'NDR-Address not found and No Response',
+		'NDR-customer cancel the order',
+		'NDR-contact number not valid and address not found',
+		'NDR-Short address and No response',
+		'NDR-contact number not contactable and address not found',
+		'NDR-Door closed and contact number swich off',
+		'NDR-customr is asking for refund only',
+		'NDR-Wrong address and No response',
+		'NDR-Shifted',
+		'NDR-House closed and No response',
+		'NDR-No such person and No response',
+		'NDR-Order Cancel',
+		'NDR-NSP and No response',
+		'NDR-Customer out of station',
+		'NDR-Open Delivery',
+		'NDR-Wrong Porduct',
+		'NDR-Incomplete address and customer no response',
+		'NDR-No Service',
+		'NDR-Customer no response',
+		'NDR-Fake Order',
+		'NDR-Address in complete',
+		'NDR-No Book any Order',
+		'NDR-Wrong Address and wrong contact number',
+		'NDR-Again and Again delivery address change',
+	];
+
+	function form211_header_ini()
     {
         $('#form211_body').html("");
 
@@ -45,6 +109,7 @@
         var drs_filter=fields.elements['drs'];
         var status_filter=fields.elements['status'];
         var remark_filter=fields.elements['remark'];
+		var ndr_filter=fields.elements['ndr'];
         var awb_filter=fields.elements['awb_num'];
         var save_button=document.getElementById('form211_save');
 
@@ -52,21 +117,37 @@
         $(drs_filter).focus();
 
 		set_value_list_json(['pending','delivered','undelivered','RTO pending','out for delivery'],status_filter);
-        // set_static_value_list_json('logistics_orders','status',status_filter);
+		var all_reasons = rto_reasons.concat(ndr_reasons);
+		set_value_list_json(all_reasons,ndr_filter);
 
-        $(awb_filter).off('keydown');
-        $(awb_filter).on('keydown',function (event)
-        {
-            if(event.keyCode == 13)
-            {
-                event.preventDefault();
-                var subform=document.getElementById('form211_'+awb_filter.value);
-                subform.elements[2].value=status_filter.value;
-                subform.elements[3].value=remark_filter.value;
-                form211_get_totals();
-                awb_filter.value="";
-            }
-        });
+		var fillSubform = function(){
+			var subform=document.getElementById('form211_'+awb_filter.value);
+			subform.elements[2].value=status_filter.value;
+			subform.elements[3].value=remark_filter.value;
+			subform.elements[4].value=ndr_filter.value;
+			form211_get_totals();
+			awb_filter.value="";
+		};
+
+		$(awb_filter).off('keydown');
+		$(awb_filter).on('keydown',function (event)
+		{
+			if(event.keyCode == 13)
+			{
+				event.preventDefault();
+				if((status_filter.value == 'undelivered' && ndr_reasons.indexOf(ndr_filter.value)>-1) ||
+					(status_filter.value == 'RTO pending' && rto_reasons.indexOf(ndr_filter.value)>-1) ||
+					(status_filter.value != 'RTO pending' && status_filter.value != 'undelivered' && ndr_filter.value == "")
+				)
+				{
+					fillSubform();
+				}
+				else{
+					$("#form211_modal_ndr_link").click();
+				}
+
+			}
+		});
 
         $(drs_filter).off('keydown');
         $(drs_filter).on('keydown',function (event)
@@ -84,6 +165,10 @@
             event.preventDefault();
             $("[id^='save_form211_']").click();
         });
+
+		$(fields).on('submit',function(event){
+			event.preventDefault();
+		});
     }
 
     function form211_ini()
@@ -93,8 +178,6 @@
 
         var filter_fields=document.getElementById('form211_master');
         var drs_num=filter_fields['drs'].value;
-        var all_status=filter_fields['status'].value;
-        var all_remark=filter_fields['remark'].value;
         var awb_filter=filter_fields['awb_num'];
 
         if(drs_num!="")
@@ -135,6 +218,9 @@
                         rowsHTML+="<td data-th='Remark'>";
                             rowsHTML+="<textarea form='form211_"+result.awb_num+"'></textarea>";
                         rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Non-Delivery Reason'>";
+                            rowsHTML+="<input type='text' form='form211_"+result.awb_num+"'>";
+                        rowsHTML+="</td>";
                         rowsHTML+="<td data-th='Action'>";
                             rowsHTML+="<input type='hidden' form='form211_"+result.awb_num+"' value='"+id+"'>";
                             rowsHTML+="<button type='submit' class='btn green' form='form211_"+result.awb_num+"' id='save_form211_"+id+"' name='save'><i class='fa fa-save'></i></button>";
@@ -145,14 +231,23 @@
                     $('#form211_body').prepend(rowsHTML);
                     var fields=document.getElementById("form211_"+result.awb_num);
                     var status_filter=fields.elements[2];
+					var ndr_filter=fields.elements[4];
 
 					set_value_list_json(['pending','delivered','undelivered','RTO pending','out for delivery'],status_filter);
-                    // set_static_value_list_json('logistics_orders','status',status_filter);
 
                     $(fields).on("submit", function(event)
                     {
                         event.preventDefault();
-                        form211_update_item(fields);
+						if((status_filter.value == 'undelivered' && ndr_reasons.indexOf(ndr_filter.value)>-1) ||
+							(status_filter.value == 'RTO pending' && rto_reasons.indexOf(ndr_filter.value)>-1) ||
+							(status_filter.value != 'RTO pending' && status_filter.value != 'undelivered' && ndr_filter.value == "")
+						)
+						{
+							form211_update_item(fields);
+						}
+						else{
+							$("#form211_modal_ndr_link").click();
+						}
                     });
                 });
                 form211_get_totals();
@@ -219,13 +314,14 @@
             var awb_num=form.elements[0].value;
             var status=form.elements[2].value;
             var remarks=form.elements[3].value;
-            var id=form.elements[4].value;
+			var ndr_reason=form.elements[4].value;
+            var id=form.elements[5].value;
             var last_updated=get_my_time();
             var delivery_object={index:'delivery_time',value:1};
 
             if(status!="")
             {
-                var old_order_history=form.elements[6].value;
+                var old_order_history=form.elements[7].value;
                 var order_history=vUtil.jsonParse(old_order_history);
                 var history_object={timeStamp:get_my_time(),status:status};
 
@@ -266,6 +362,7 @@
 	 				data:[{index:'id',value:id},
 	 					{index:'status',value:status},
 	 					{index:'comments',value:remarks},
+						{index:'reason_code',value:ndr_reason},
 	 					{index:'order_history',value:order_history_string},
 						{index:'sync_status',value:1},
                         delivery_object,

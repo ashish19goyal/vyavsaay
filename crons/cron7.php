@@ -2,13 +2,13 @@
 
 <?php
 
-	include_once '../Classes/config.php';
 	include_once "../Classes/vDB.php";
 	include_once "../Classes/vLog.php";
+	include_once "../Classes/vUtil.php";
 
 	use RetailingEssentials\vDB;
-	use RetailingEssentials\config;
 	use RetailingEssentials\vLog;
+	use RetailingEssentials\vUtil;
 
 	date_default_timezone_set('Asia/Kolkata');
 /**
@@ -32,14 +32,7 @@ function cron7()
 	$log = vLog::getInstance();
 	try
 	{
-		$config = config::getInstance();
-		$dbhost = $config->get("host");
-		$dbuser = $config->get("user");
-		$dbpass = $config->get("password");
-
-		$info_conn=new vDB('information_schema');
-		$get_query="select distinct table_schema from information_schema.columns where table_schema like ?";
-		$get_res=$info_conn->dbSelect($get_query,array('%re_user%'));
+		$get_res=vUtil::getAllDbNames();
 
 		$time = time();
 		$monthTimeStamp = ($time - 3600*24*30)*1000;
@@ -48,7 +41,7 @@ function cron7()
 
 		for($i=0;$i<count($get_res);$i++)
 		{
-			$dbname=$get_res[$i]['table_schema'];
+			$dbname=$get_res[$i];
 			try
 			{
 				$dbConn = new vDB($dbname);

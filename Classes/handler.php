@@ -14,12 +14,14 @@ class handler
 	private static $domain;
 	private static $dbName;
 	private static $vDB;
+	private static $vElastic;
 
 	private function __construct($domain)
 	{
 		self::$domain = $domain;
 		self::$dbName = "re_user_".$domain;
 		self::$vDB = new vDB(self::$dbName);
+		self::$vElastic = vElastic::getInstance(self::$domain);
 	}
 
 	/**
@@ -34,6 +36,11 @@ class handler
     	return self::$instance;
 	}
 
+	/**
+	 * [create description]
+	 * @param  [type] $inputData [description]
+	 * @return [type]            [description]
+	 */
 	public static function create($inputData)
 	{
 		$dataStore = $inputData['data_store'];
@@ -48,6 +55,12 @@ class handler
 					'type' => 'create',
 					'ids' => array($dbResult['id']),
 				));
+			try{
+				self::$vElastic->addActivityLog($logData);
+			}catch(Exception $e)
+			{
+
+			}
 			self::$vDB->log($logData);
 		}
 
@@ -56,6 +69,11 @@ class handler
 		return $dbResult;
 	}
 
+/**
+ * [update description]
+ * @param  [type] $inputData [description]
+ * @return [type]            [description]
+ */
 	public static function update($inputData)
 	{
 		$dataStore = $inputData['data_store'];
@@ -70,6 +88,12 @@ class handler
 					'type' => 'update',
 					'ids' => array($dbResult['id'])
 				));
+			try{
+				self::$vElastic->addActivityLog($logData);
+			}catch(Exception $e)
+			{
+
+			}
 			self::$vDB->log($logData);
 		}
 
@@ -92,6 +116,12 @@ class handler
 					'type' => 'delete',
 					'ids' => $dbResult['ids']
 				));
+			try{
+				self::$vElastic->addActivityLog($logData);
+			}catch(Exception $e)
+			{
+
+			}
 			self::$vDB->log($logData);
 		}
 
@@ -258,8 +288,29 @@ class handler
 		$result = array(
 			'status' => 'success'
 		);
-		$vES = vElastic::getInstance(self::$domain);
-		$result['data'] = $vES->search($data);
+		$result['data'] = self::$vElastic->search($data);
 		return $result;
+	}
+
+	public static function getLog($query)
+	{
+		$result = array(
+			'status' => 'success'
+		);
+		$result['data'] = self::$vElastic->getLog($query);
+		return $result;
+	}
+
+	public static function deleteLog($query)
+	{
+		if(!self::$vElastic->deleteLog($query))
+		{
+			return array(
+				'status' => 'fail'
+			);
+		}
+		return array(
+			'status' => 'success'
+		);
 	}
 }

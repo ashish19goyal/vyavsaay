@@ -265,6 +265,40 @@ function server_delete_logs(data_json,func)
 	});
 }
 
+function server_delete_logs(data_json,func)
+{
+	show_loader();
+	var data = vUtil.getCredentials();
+	data['data']=JSON.stringify(data_json);
+
+	ajax_json(server_root+"/controller/deleteLog",data,function(response_object)
+	{
+		console.log(response_object.status);
+		hide_loader();
+		if(typeof func!="undefined")
+		{
+			func();
+		}
+	});
+}
+
+function server_get_logs(data_json,func)
+{
+	show_loader();
+	var data = vUtil.getCredentials();
+	data['data']=JSON.stringify(data_json);
+
+	ajax_json(server_root+"/controller/getLog",data,function(response_object)
+	{
+		console.log(response_object);
+		hide_loader();
+		if(typeof func!="undefined" && response_object.status=='success')
+		{
+			func(response_object.data);
+		}
+	});
+}
+
 function server_create_json(data_json,func)
 {
 	show_loader();

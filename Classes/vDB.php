@@ -12,6 +12,7 @@ class vDB
 	private $conn;
 	private $table;
 	private $log;
+
 	/**
 	* Constructor initializes a connnection to the database
 	*/
@@ -302,7 +303,6 @@ class vDB
 
 		return true;
 	}
-
 
 	//helper functions to generate queries
 

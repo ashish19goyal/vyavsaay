@@ -41,6 +41,10 @@
 						break;
 			case 'search': $response_object = $handler::search($input_data);
 							break;
+			case 'getLog': $response_object = $handler::getLog($input_data);
+							break;
+			case 'deleteLog': $response_object = $handler::deleteLog($input_data);
+							break;
 		}
 	}
 	else

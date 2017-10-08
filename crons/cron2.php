@@ -105,6 +105,10 @@ function postOrder($order,$token,$channel){
 		$body['reason_code']=(strpos($order['status'],"undelivered") === false && strpos($order['status'],"RTO") === false ) ? "" : ($order['reason_code'] == null || $order['reason_code'] == "null") ? "" : $order['reason_code'];
 		$body['rto_awbno']=(strpos($order['status'],"RTO") === false ) ? "" : $order['awb_num'];
 		$body['received_by']=(strpos($order['status'],"RTO delivered") !== false ) ? $order['merchant_name'] : (strpos($order['status'],"delivered") !== false )? $order['ship_to'] : "";
+		$body['payment_type']= ($order['type'] == "COD") ? strtolower($order['type']) : "prepaid";
+		$body['collectable_amount']=$order['collectable_value'];
+		$body['delivery_agent_number']=$order['delivery_agent_number'];
+
 		// print_r($body);
 		// return false;
 		$data = json_encode($body);
@@ -180,7 +184,7 @@ function cron2()
 
 	while($updateCount == 100)
 	{
-		$orders_query="select id,awb_num,status,order_history,reason_code,ship_to,merchant_name from logistics_orders where sync_status=? and channel_name=? order by sync_order,last_updated limit 0,$updateCount;";
+		$orders_query = "select l.id,l.awb_num,l.status,l.order_history,l.reason_code,l.ship_to,l.merchant_name,l.type,l.collectable_value from logistics_orders l join staff s on l.delivery_person = s.acc_name where l.sync_status=? and l.channel_name=? order by l.sync_order,l.last_updated limit 0,$updateCount;";
 		$orders=$vDB->dbSelect($orders_query,array(1,"Shopclues"));
 
 		$updateCount = count($orders);

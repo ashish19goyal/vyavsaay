@@ -90,13 +90,16 @@ var vExport = {
 
 			create_json(data_json);
 
+			show_loader();
+
 			if(!vUtil.isBlank(settings.feach))
 			{
 				results.forEach(function(result)
 				{
 					settings.feach(result);
 				});
-			}else if(!vUtil.isBlank(settings.fall))
+			}
+			else if(!vUtil.isBlank(settings.fall))
 			{
 				results=settings.fall(results);
 			}
@@ -106,8 +109,8 @@ var vExport = {
 				if(total_export_requests===0)
 				{
 					clearInterval(export_complete);
-					hide_loader();
 					vUtil.objArrayToCSV(results,settings.file);
+					hide_loader();
 				}
 			},500);
 		});
@@ -134,8 +137,9 @@ var vExport = {
 
 		create_json(data_json);
 
-		hide_loader();
+		show_loader();
 		vUtil.objArrayToCSV(settings.result,settings.file);
+		hide_loader();
 	},
 
 	export_buttons:function(options){
@@ -190,6 +194,8 @@ var vExport = {
 
 	button_action:function(options)
 	{
+		show_loader();
+
 		var defaults={};
 		var settings = $.extend(defaults, options || {});
 
@@ -209,12 +215,12 @@ var vExport = {
 
 		if(settings.action=='dynamic')
 		{
-			show_loader();
 			delete settings.columns.count;
 			settings.columns.start_index=0;
 
 			read_json_rows('',settings.columns,function(results)
 			{
+				show_loader();
 				if(!vUtil.isBlank(settings.feach))
 				{
 					results.forEach(function(result)
@@ -285,6 +291,7 @@ var vExport = {
 
 				vExport.dynamic_action(settings);
 			}
+			hide_loader();
 		}
 	},
 

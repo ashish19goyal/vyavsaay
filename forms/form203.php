@@ -66,6 +66,7 @@
         var filter_fields=document.getElementById('form203_header');
         var fawb=filter_fields.elements['awb'].value;
         var forder=filter_fields.elements['order'].value;
+		var fcustomer=filter_fields.elements['customer'].value;
         var fdate=get_raw_time(filter_fields.elements['date'].value);
         var fstatus=filter_fields.elements['status'].value;
 
@@ -91,7 +92,7 @@
                                 {index:'order_num',value:forder},
                                 {index:'merchant_name'},
 								{index:'return_address1'},
-		                        {index:'ship_to'},
+		                        {index:'ship_to',value:fcustomer},
                                 {index:'import_date',value:fdate},
                                 {index:'type'},
                                 {index:'manifest_type'},

@@ -8,7 +8,7 @@ use Elasticsearch\ClientBuilder;
 
 class vElasticCore
 {
-	private static $instance;
+	private static $instance = array();
 	private $client;
 	private $index;
 	private $logger;
@@ -25,11 +25,11 @@ class vElasticCore
 
 	public static function getInstance($domain)
 	{
-		if(!isset(self::$instance))
+		if(!isset(self::$instance[$domain]))
 		{
-			self::$instance = new vElasticCore($domain);
+			self::$instance[$domain] = new vElasticCore($domain);
 		}
-		return self::$instance;
+		return self::$instance[$domain];
 	}
 
 	/**
@@ -126,9 +126,7 @@ class vElasticCore
 			$params = [
 			    'index' => $this->index,
 			    'type' => $type,
-			    'body' => [
-					'query' => $query
-					]
+			    'body' => $query
 			];
 			$response = $this->client->search($params);
 			if(count($response['hits'])>0)
@@ -141,6 +139,24 @@ class vElasticCore
 			$this->logger->err($e);
 		}
 		return array();
+	}
+
+	public function delete($type,$docId)
+	{
+		try{
+			$params = [
+			    'index' => $this->index,
+			    'type' => $type,
+			    'id' => $docId
+			];
+			$this->client->delete($params);
+			return true;
+		}
+		catch(Exception $e)
+		{
+			$this->logger->err($e);
+		}
+		return false;
 	}
 
 }

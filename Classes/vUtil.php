@@ -58,6 +58,24 @@ class vUtil
 		return $output;
 	}
 
+	public static function getAllDbNames()
+	{
+		$info_conn=new vDB('information_schema');
+		$get_query="select distinct table_schema from information_schema.columns where table_schema like ?";
+		$get_res=$info_conn->dbSelect($get_query,array('%re_user%'));
+
+		return self::get1Dfrom2D($get_res,"table_schema");
+	}
+
+	public static function getAllDomains()
+	{
+		$dbnames = self::getAllDbNames();
+		for ($i=0;$i<count($dbnames);$i++) {
+			$dbnames[$i] = str_replace("re_user_","",$dbnames[$i]);
+		}
+		return $dbnames;
+	}
+
 	/**
 	* This function returns the user preferences as per the array passed to it
 	*/
