@@ -1,12 +1,12 @@
 <div id='activities_box' style='display:none;'>
-	<h3 class="page-title">Activities</h3>
+	<h3 class="page-title">Activity Logs</h3>
 	<div style='display:inline-block;float:right;'>
-		<a title='Export All Logs' class='btn btn-icon-only green' class='export_icon' onclick='export_activities();'><i class='fa fa-send'></i></a>
+		<a title='Export All Logs' class='btn btn-icon-only green' class='export_icon' onclick='vActivity.exportLog();'><i class='fa fa-send'></i></a>
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<div class="tabbable-line tabbable-full-width">
-				<div class="tab-content" id='activities_detail'>
+			<div class="tabbable-line tabbable-full-width" style="height:100%">
+				<div class="tab-content" id='activities_detail' style="overflow-y:scroll">
 					No activities
 				</div>
 			</div>
@@ -15,87 +15,133 @@
 </div>
 
 <script>
-
-function export_activities()
+var vActivity = function(options)
 {
-	var searchQuery={
-		sort : {
-			at : {
-				order : "desc"
-			}
-		}
+	var defaults ={
+		pageSize : 20,
+		scroll : 'down',
+		page: 0,
+		container : $("#activities_detail")
 	};
 
-	server_get_logs(searchQuery,function(activities)
-	{
-		vExport.csv_download({result:activities,file:'Activities'});
-	});
-}
+	var settings = $.extend(defaults, options || {});
 
-function activities_ini()
-{
-	show_loader();
-	var searchQuery={
-		query:{
-			match:{
-				display : "yes"
-			}
-		},
-		sort : {
-			at : {
-				order : "desc"
-			}
-		},
-		size : 50,
-		from : 0
+	var bindScrollDown = function()
+	{
+		$(settings.container).on('scroll', function(event)
+		{
+		    var e = event.target;
+		    if (e.scrollHeight - e.scrollTop === e.clientHeight)
+		    {
+		        console.log('scrolled');
+		    }
+		});
 	};
 
-	server_get_logs(searchQuery,function(activities)
+	var render = function(activities,option)
 	{
-		console.log(activities);
-		var result_html="";
+		var result_html="<div id='activityLog"+option.page+"' data-page='"+option.page+"'>";
 		activities.forEach(function(activity)
 		{
-			var dataId = JSON.parse(activity.data).id;
+			var dataId = JSON.parse(activity.data)[0].value;
 
 			result_html+="<div class='search-classic'>"+
 							"<div class='notification_check'>"+
-								"<i class='fa fa-times-circle' onclick=delete_activity($(this),'"+activity.id+"');></i>"+
+								"<i class='fa fa-times-circle' onclick=vActivity.deleteLog($(this),'"+activity.id+"');></i>"+
 							"</div>"+
 							"<div class='notification_detail'>"+
-								"<h4><a onclick=element_display('"+activity.dataId+"','"+activity.link+"');>"+activity.title+"</a></h4>"+
+								"<h4><a onclick=element_display('"+dataId+"','"+activity.link_to+"');>"+activity.title+"</a></h4>"+
 								"<p>"+activity.notes+"</p>"+
 								"<p class='activity_by'>By "+activity.by+" @ "+vTime.datetime({time:activity.at})+"</p>"+
 							"</div>"+
 						"</div>";
 		});
-		$("#activities_detail").html(result_html);
-		hide_loader();
-	});
-}
+		result_html+="</div>";
 
-function delete_activity(div_elem,data_id)
-{
-	if(is_delete_access('activities'))
-	{
-		modal115_action(function()
+		if(option.direction == 'down')
 		{
-			var searchQuery={
-				query:{
-					match:{
-						'id':data_id
-					}
-				}
-			};
-			server_delete_logs(searchQuery,function(){
-				$(div_elem).parent().parent().remove();
-			});
-		});
+			settings.container.append(result_html);
+		}
+		else {
+			settings.container.prepend(result_html);
+		}
 	}
-	else
+
+	var get = function(option)
 	{
-		$("#modal2_link").click();
+		show_loader();
+
+		var searchQuery={
+			query:{
+				match:{
+					display : "yes"
+				}
+			},
+			sort : {
+				at : {
+					order : "desc"
+				}
+			},
+			size : settings.pageSize,
+			from : option.page * settings.pageSize
+		};
+
+		server_get_logs(searchQuery,function(activities)
+		{
+			render(activities,option);
+			hide_loader();
+		});
+	};
+
+	this.deleteLog = function(div_elem,data_id)
+	{
+		if(is_delete_access('activities'))
+		{
+			modal115_action(function()
+			{
+				var searchQuery={
+					query:{
+						match:{
+							'id':data_id
+						}
+					}
+				};
+				server_delete_logs(searchQuery,function()
+				{
+					$(div_elem).parent().parent().remove();
+				});
+			});
+		}
+		else
+		{
+			$("#modal2_link").click();
+		}
 	}
-}
+
+	this.exportLog = function()
+	{
+		var searchQuery={
+			sort : {
+				at : {
+					order : "desc"
+				}
+			}
+		};
+
+		server_get_logs(searchQuery,function(activities)
+		{
+			vExport.csv_download({result:activities,file:'Activities'});
+		});
+	};
+
+	this.show = function()
+	{
+		vIni.hideAll();
+		$("#activities_box").show();
+		get({page:0,direction:'down'});
+	};
+};
+
+vActivity = new vActivity();
 
 </script>

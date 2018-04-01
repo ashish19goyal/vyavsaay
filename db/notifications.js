@@ -1609,17 +1609,22 @@ function worker_12()
 */
 function worker_13()
 {
-	var columns={data_store:'activities',
-				count:10,
-				indexes:[{index:'id'},
-						{index:'title'},
-						{index:'notes'},
-						{index:'link_to'},
-						{index:'data_id'},
-						{index:'user_display',exact:'yes'},
-						{index:'last_updated'}]};
+	var searchQuery={
+		query:{
+			match:{
+				display : "yes"
+			}
+		},
+		sort : {
+			at : {
+				order : "desc"
+			}
+		},
+		size : 7,
+		from : 0
+	};
 
-	read_json_rows('',columns,function(activities)
+	server_get_logs(searchQuery,function(activities)
 	{
 		var result_html="";
 		activities.forEach(function(activity)
@@ -1656,8 +1661,9 @@ function worker_13()
 							btn_color="label-danger";
 							break;
 			};
-			result_html+="<li><a onclick=element_display('"+activity.data_id+"','"+activity.link_to+"');>"+
-                        "<span class='time'>"+get_only_time(activity.last_updated)+"</span>"+
+			var dataId = JSON.parse(activity.data)[0].value;
+			result_html+="<li><a onclick=element_display('"+dataId+"','"+activity.link_to+"');>"+
+                        "<span class='time'>"+vTime.time({time:activity.at})+"</span>"+
                         "<span class='details'><span class='label label-sm label-icon "+btn_color+"'><i class='fa "+icon+"' title='"+activity.title+"'></i></span>"+activity.notes+"</span></a></li>";
 
 		});

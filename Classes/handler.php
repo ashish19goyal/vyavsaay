@@ -61,7 +61,6 @@ class handler
 			{
 
 			}
-			self::$vDB->log($logData);
 		}
 
 		$dbResult['data_store'] = $dataStore;
@@ -94,7 +93,6 @@ class handler
 			{
 
 			}
-			self::$vDB->log($logData);
 		}
 
 		$dbResult['data_store'] = $dataStore;
@@ -122,7 +120,6 @@ class handler
 			{
 
 			}
-			self::$vDB->log($logData);
 		}
 
 		$dbResult['data_store'] = $dataStore;

@@ -3352,44 +3352,6 @@
         </div>
     </div>
 
-	<a href='#modal201' data-toggle="modal" id='modal201_link'></a>
-	<div id="modal201" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id='modal201_form' autocomplete="off">
-	            	<div class="modal-header">
-                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    	<h4 class="modal-title">Add Task</h4>
-                	</div>
-	                <div class="modal-body">
-		               <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
-                            <div class="row">
-								<div class="col-sm-12 col-md-4">List Name</div>
-					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal201_form' required name='list'></div>
-					     		</div>
-                           <div class="row">
-								<div class="col-sm-12 col-md-4">Task</div>
-					     		<div class="col-sm-12 col-md-8"><input type='text' form='modal201_form' name='task' required></div>
-					       </div>
-		                  <div class="row">
-								<div class="col-sm-12 col-md-4">Notes</div>
-                              <div class="col-sm-12 col-md-8"><textarea form='modal201_form' name='desc'></textarea></div>
-					       </div>
-		                  <div class="row">
-								<div class="col-sm-12 col-md-4">Assignee</div>
-                              <div class="col-sm-12 col-md-8"><input type='text' form='modal201_form' name='assignee'></div>
-					       </div>
-		               </div>
-		             </div>
-	             	<div class="modal-footer">
-	               	<button type="submit" class="btn green" form='modal201_form' name='save'>Add</button>
-	               	<button type="button" class="btn red" form='modal201_form' data-dismiss='modal' name='cancel'>Cancel</button>
-	             	</div>
-                </form>
-            </div>
-        </div>
-    </div>
-
 	<a href='#modal202' data-toggle="modal" id='modal202_link'></a>
 	<div id="modal202" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">

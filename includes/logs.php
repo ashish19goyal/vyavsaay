@@ -6,7 +6,7 @@
     <ul class="dropdown-menu extended tasks">
         <li class="external">
             <h3><span class="bold" id="log_count2">0</span> unsynced activities</h3>
-            <a onclick=show_activities();>view all</a>
+            <a onclick=vActivity.show();>view all</a>
         </li>
         <li>
             <ul id='topbar_logs' class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
@@ -14,12 +14,3 @@
         </li>
     </ul>
 </li>
-
-<script>
-	function show_activities()
-	{
-        vIni.hideAll();
-        $("#activities_box").show();
-		activities_ini();
-	}
-</script>

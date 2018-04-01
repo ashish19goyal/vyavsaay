@@ -2,40 +2,19 @@
 	<div class="portlet-title">
 		<div class='caption'>
             <div class='btn-group' id='form279_status' data-toggle='buttons' data-value='pending'>
-                <label class='btn green-jungle pending active' onclick=form279_ini('pending');><input name='pending' type='radio' class='toggle'>Pending</label>
-				<label class='btn green-jungle suspended' onclick=form279_ini('suspended');><input name='suspended' type='radio' class='toggle'>Suspended</label>
-                <label class='btn green-jungle completed' onclick=form279_ini('completed');><input type='radio' name='completed' class='toggle'>Completed</label>
+                <label class='btn green-jungle open active' onclick=form279_ini('open');><input name='open' type='radio' class='toggle'>Open</label>
+				<label class='btn green-jungle closed' onclick=form279_ini('closed');><input name='closed' type='radio' class='toggle'>Closed</label>
             </div>
-			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form279_list_popup();'>Add List <i class='fa fa-plus'></i></a>
 		</div>
 		<div class="actions">
-            <div class="btn-group">
-                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i></button>
-                <ul class="dropdown-menu pull-right">
-                    <li>
-                        <a id='form279_csv'><i class='fa fa-file-excel-o'></i> Save as CSV</a>
-                    </li>
-                    <li>
-                      	<a id='form279_pdf'><i class='fa fa-file-pdf-o'></i> Save as PDF</a>
-                    </li>
-                    <li>
-                        <a id='form279_print'><i class='fa fa-print'></i> Print</a>
-                    </li>
-                    <li class="divider"> </li>
-                    <li>
-                        <a id='form279_upload' onclick=modal23_action(form279_import_template,form279_import,form279_import_validate);><i class='fa fa-upload'></i> Import</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+			<a class='btn btn-circle grey btn-outline btn-sm' onclick='form279_add_list_popup();'>Add List <i class='fa fa-plus'></i></a>
+		</div>
 	</div>
 
 	<div class="portlet-body">
 	   <form id='form279_header' autocomplete="off">
 			<fieldset>
 				<label><input type='text' placeholder="List" class='floatlabel' name='list'></label>
-				<label><input type='text' placeholder="Task" class='floatlabel' name='task'></label>
-				<label><input type='text' placeholder="Assignee" class='floatlabel' name='staff'></label>
 				<label><input type='submit' class='submit_hidden'></label>
 			</fieldset>
 		</form>
@@ -43,6 +22,77 @@
 
         <div id='form279_body' class='row'>
         </div>
+
+		<div class='modal_forms'>
+			<a href='#form279_add_task' data-toggle="modal" id='form279_add_task_link'></a>
+			<div id="form279_add_task" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<form id='form279_add_task_form' autocomplete="off">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+								<h4 class="modal-title">Add Task</h4>
+							</div>
+							<div class="modal-body">
+							   <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+									<div class="row">
+										<div class="col-sm-12 col-md-4">List Name</div>
+										<div class="col-sm-12 col-md-8"><input type='text' form='form279_add_task_form' required name='list'></div>
+										</div>
+								   <div class="row">
+										<div class="col-sm-12 col-md-4">Task</div>
+										<div class="col-sm-12 col-md-8"><input type='text' form='form279_add_task_form' name='task' required></div>
+								   </div>
+								  <div class="row">
+										<div class="col-sm-12 col-md-4">Notes</div>
+									  <div class="col-sm-12 col-md-8"><textarea form='form279_add_task_form' name='desc'></textarea></div>
+								   </div>
+								  <div class="row">
+										<div class="col-sm-12 col-md-4">Assignee</div>
+									  <div class="col-sm-12 col-md-8"><input type='text' form='form279_add_task_form' name='assignee'></div>
+								   </div>
+							   </div>
+							 </div>
+							<div class="modal-footer">
+							<button type="submit" class="btn green" form='form279_add_task_form' name='save'>Add</button>
+							<button type="button" class="btn red" form='form279_add_task_form' data-dismiss='modal' name='cancel'>Cancel</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<a href='#form279_add_list' data-toggle="modal" id='form279_add_list_link'></a>
+			<div id="form279_add_list" class="modal fade draggable-modal" role="dialog" tabindex="-1" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<form id='form279_add_list_form' autocomplete="off">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+								<h4 class="modal-title">Add Task List</h4>
+							</div>
+							<div class="modal-body">
+							   <div class="scroller" style="height:50%;" data-always-visible="1" data-rail-visible1="1">
+									<div class="row">
+										<div class="col-sm-12 col-md-4">List Name</div>
+										<div class="col-sm-12 col-md-8"><input type='text' form='form279_add_list_form' required name='list'></div>
+										</div>
+								   <div class="row">
+										<div class="col-sm-12 col-md-4">Color</div>
+										<div class="col-sm-12 col-md-8"><input type='text' form='form279_add_list_form' name='color' required></div>
+								   </div>
+							   </div>
+							 </div>
+							<div class="modal-footer">
+							<button type="submit" class="btn green" form='form279_add_list_form' name='save'>Add</button>
+							<button type="button" class="btn red" form='form279_add_list_form' data-dismiss='modal' name='cancel'>Cancel</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
     </div>
 
 	<script>
@@ -51,9 +101,7 @@
 		{
 			var form=document.getElementById('form279_header');
 			var list_filter=form.elements['list'];
-			var task_filter=form.elements['task'];
 
-			var assignee_filter=form.elements['staff'];
 			$(form).off('submit');
 			$(form).on('submit',function(event)
 			{
@@ -61,14 +109,8 @@
 				form279_ini();
 			});
 
-	      var list_data={data_store:'task_instances',return_column:'source_name'};
-	      set_my_filter_json(list_data,list_filter);
-
-	      var task_data={data_store:'task_instances',return_column:'name'};
-	      set_my_filter_json(task_data,task_filter);
-
-	      var assignee_data={data_store:'task_instances',return_column:'assignee'};
-	      set_my_filter_json(assignee_data,assignee_filter);
+			var list_data={data_store:'task_lists',return_column:'name'};
+			set_my_filter_json(list_data,list_filter);
 	  	}
 
 		function form279_ini(task_types)
@@ -77,103 +119,103 @@
 			if(fid==null)
 				fid="";
 
-		      var status_filter='pending';
-		      if(typeof task_types!='undefined' && task_types=='completed')
-		      {
-		          status_filter='completed';
-				  $('#form279_status').data('value','completed');
-				  $('#form279_status').find('label.completed').addClass('active');
-		          $('#form279_status').find('label.pending').removeClass('active');
-		      }
-		      else if(task_types=='suspended')
-		      {
-				  status_filter='suspended';
-				  $('#form279_status').data('value','suspended');
-		          $('#form279_status').find('label.suspended').addClass('active');
-		          $('#form279_status').find('label.suspended').removeClass('active');
-		      }
-			  else
-		      {
-				  $('#form279_status').data('value','pending');
-		          $('#form279_status').find('label.pending').addClass('active');
-		          $('#form279_status').find('label.completed').removeClass('active');
-		      }
+			var status_filter='open';
+			if(typeof task_types!='undefined' && task_types=='closed')
+			{
+			  status_filter='closed';
+			  $('#form279_status').data('value','closed');
+			  $('#form279_status').find('label.closed').addClass('active');
+			  $('#form279_status').find('label.open').removeClass('active');
+			}
+			else
+			{
+			  $('#form279_status').data('value','open');
+			  $('#form279_status').find('label.open').addClass('active');
+			  $('#form279_status').find('label.closed').removeClass('active');
+			}
 
 			var form=document.getElementById('form279_header');
 			var list_filter=form.elements['list'].value;
-			var task_filter=form.elements['task'].value;
-			var staff_filter=form.elements['staff'].value;
 
 			show_loader();
 			$('#form279_body').html('');
 
-			var paginator=$('#form279_body').paginator({func:"form279_ini($('#form279_status').data('value'))"});
+			var paginator=$('#form279_body').paginator({
+				func:"form279_ini($('#form279_status').data('value'))",
+				page_size:5
+			});
 
 			var list_columns = {count:paginator.page_size(),
 						start_index:paginator.get_index(),
 						data_store:'task_lists',
-						indexes:[{index:'id'},
+						indexes:[{index:'id',value:fid},
 								{index:'name',value:list_filter},
 								{index:'color'},
-								{index:'sort_order'},
-                                {index:'source',exact:'to_do'}]};
+								{index:'sort_order',sort:"asc"},
+                                {index:'type',exact:'to_do'},
+								{index:'status',exact:status_filter}]};
 			read_json_rows('form279',list_columns,function(lists)
 			{
-				// console.log(lists);
- 				var list_ids = vUtil.arrayColumn(lists,'id');
+				lists.forEach(function(list_item)
+				{
+					var list_html="<div class='col-sm-4' style='padding-bottom:10px;'>"+
+								"<div class='mt-element-list'>"+
+									"<div class='mt-list-head list-todo "+list_item.color+"'>"+
+										"<div class='list-head-title-container'>"+
+											"<a id='form279_task_list_"+list_item.id+"' class='list-toggle-container' data-toggle='collapse' href='#form279_lists_heading_"+list_item.id+"' aria-expanded='false'>"+
+												"<h3 class='list-title uppercase'>"+list_item.name+"</h3>"+
+											"</a>"+
+										"</div>"+
+										"<a title='Delete List' onclick=\"form279_delete_list('"+list_item.id+"','"+list_item.name+"',this);\"><i class='fa fa-close pending'></i></a>"+
+										"<a title='Add Task' onclick=\"form279_add_task_popup('"+list_item.id+"','"+list_item.name+"');\"><i class='fa fa-plus pending'></i>"+
+										"</a>"+
+									"</div>"+
+									"<div class='task-list panel-collapse collapse in' id='form279_lists_heading_"+list_item.id+"' area-expanded='false'>"+
+										"<ul id='form279_lists_"+list_item.id+"' class='v_task_list'></ul>"+
+									"</div>"+
+								"</div>"+
+							"</div>"+
+						"</div>";
+
+					$('#form279_body').append(list_html);
+					$("#form279_task_list_"+list_item.id).on('click',function(){
+						form279_get_tasks(list_item.id,list_item.name);
+					});
+				});
+
+				$('#form279').formcontrol();
+				paginator.update_index(lists.length);
+				hide_loader();
+			});
+		}
+
+		function form279_get_tasks(listid,listname)
+		{
+			if($('#form279_lists_'+listid).html()=="")
+			{
+				show_loader();
 				var columns={data_store:'task_instances',
-							indexes:[{index:'id',value:fid},
-									{index:'name',value:task_filter},
+							indexes:[{index:'id'},
+									{index:'name'},
 									{index:'description'},
-									{index:'source_id',array:list_ids},
-									{index:'status',exact:status_filter},
-	                                {index:'assignee',value:staff_filter}]};
+									{index:'t_initiated'},
+									{index:'t_due'},
+									{index:'sort_order',sort:'asc'},
+									{index:'inputs'},
+									{index:'outputs'},
+									{index:'list',exact:listname},
+									{index:'status',exact:'open'},
+	                                {index:'assignee'}]};
 				read_json_rows('form279',columns,function(results)
 				{
-					// console.log(results);
-					var lists_array = vUtil.arrayColumn(results,'source_id');
-					for(var i=0;i<lists.length;i++){
-						if(lists_array.indexOf(lists[i].id)==-1){
-							lists.splice(i,1);
-							i--;
-						}
-					}
-					lists.forEach(function(list_item)
-	                {
-	                    var list_item_clean=list_item.name.replace(/ /g,"");
-	                    var list_html="<div class='col-sm-4' style='padding-bottom:10px;'>"+
-	                                "<div class='mt-element-list'>"+
-	                                    "<div class='mt-list-head list-todo "+list_item.color+"'>"+
-	                                        "<div class='list-head-title-container'>"+
-	                                            "<a class='list-toggle-container' data-toggle='collapse' href='#form279_lists_heading_"+list_item_clean+"' aria-expanded='false'>"+
-	                                                "<h3 class='list-title uppercase'>"+list_item.name+"</h3>"+
-	                                            "</a>"+
-	                                        "</div>"+
-	                                        "<a title='Edit' onclick=\"form279_list_popup('"+list_item.id+"');\"><div class='list-count pull-right yellow-crusta' style='padding:16px;'><i class='fa fa-edit'></i></div></a>"+
-											"<a title='Add Task' onclick=\"form279_add_task_popup('"+list_item.id+"','"+list_item.name+"');\"><div class='list-count pull-right yellow-crusta' style='padding:16px;'><i class='fa fa-plus'></i></div></a>"+
-	                                    "</div>"+
-	                                    "<div class='task-list panel-collapse collapse in' id='form279_lists_heading_"+list_item_clean+"' area-expanded='false'>"+
-	                                        "<ul id='form279_lists_"+list_item_clean+"' class='v_task_list'></ul>"+
-	                                    "</div>"+
-	                                "</div>"+
-	                            "</div>"+
-	                        "</div>";
-
-	                    $('#form279_body').append(list_html);
-	                });
-
 					results.forEach(function(result)
 					{
-	                    var list_item_clean=result.source_name.replace(/ /g,"");
 						var rowsHTML="<li class='task-list-item done'>"+
 	                                    "<div class='task-status'>";
-	                        if(result.status=='pending')
+	                        if(result.status=='open')
 	                        {
 	                            rowsHTML+="<a class='done' onclick=form279_close_item('"+result.id+"',this); title='Close'>"+
 	                                        "<i class='fa fa-check'></i>"+
-	                                    "</a>"+
-										"<a class='suspend' onclick=form279_suspend_item('"+result.id+"',this); title='Suspend'>"+
-	                                        "<i class='fa fa-clock-o'></i>"+
 	                                    "</a>";
 	                        }
 							else
@@ -183,31 +225,26 @@
 	                                    "</a>";
 							}
 	                        rowsHTML+="<a class='pending' title='Delete' onclick=form279_delete_item('"+result.id+"',this);>"+
-	                            "<i class='fa fa-close link'></i>"+
+	                            			"<i class='fa fa-close link'></i>"+
 	                                    "</a>"+
-	                                    "</div>"+
+										"<a class='done' title='"+result.assignee+"'>"+
+ 		   	                            			"<i class='fa fa-user link'></i>"+
+ 		   	                            "</a>"+
+ 		   	                            "</div>"+
 	                                    "<div class='task-content'>"+
-	                                        "<h4 class='uppercase bold'>"+
-	                                            "<a onclick=\"modal202_action('"+result.id+"');\">"+result.name+"</a>"+
+	                                        "<h4 class='lowercase'>"+
+	                                            "<a onclick=\"form279_modify_task(modal202_action('"+result.id+"');\">"+result.name+"</a>"+
 	                                        "</h4>"+
-	                                        "<p>"+result.assignee+"</p>"+
+	                                        "<p>"+result.description+"</p>"+
 	                                    "</div>"+
 	                                "</li>";
 
-						$('#form279_lists_'+list_item_clean).append(rowsHTML);
+						$('#form279_lists_'+listid).append(rowsHTML);
 	                });
-
-					$('#form279').formcontrol();
-					paginator.update_index(results.length);
-					vExport.export_buttons({action:'dynamic',columns:columns,file:'Tasks',report_id:'form279',feach:function (item)
-					{
-	                    delete item.source;
-	                    item['list name']=item.source_name;
-	                    delete item.source_name;
-	                }});
 					hide_loader();
+					$('#form279_task_list_'+list_item.id).trigger('click');
 				});
-			});
+			}
 		};
 
 		function form279_reopen_item(id,button)
@@ -217,7 +254,7 @@
 				var last_updated=get_my_time();
 				var data_json={data_store:'task_instances',
 	 				data:[{index:'id',value:id},
-	 					{index:'status',value:'pending'},
+	 					{index:'status',value:'open'},
 	 					{index:'last_updated',value:last_updated}]};
  				update_json(data_json);
                 $(button).parent().parent().remove();
@@ -235,25 +272,7 @@
 				var last_updated=get_my_time();
 				var data_json={data_store:'task_instances',
 	 				data:[{index:'id',value:id},
-	 					{index:'status',value:'completed'},
-	 					{index:'last_updated',value:last_updated}]};
- 				update_json(data_json);
-                $(button).parent().parent().remove();
-			}
-			else
-			{
-				$("#modal2_link").click();
-			}
-		}
-
-		function form279_suspend_item(id,button)
-		{
-			if(is_update_access('form279'))
-			{
-				var last_updated=get_my_time();
-				var data_json={data_store:'task_instances',
-	 				data:[{index:'id',value:id},
-	 					{index:'status',value:'suspended'},
+	 					{index:'status',value:'closed'},
 	 					{index:'last_updated',value:last_updated}]};
  				update_json(data_json);
                 $(button).parent().parent().remove();
@@ -282,69 +301,68 @@
 			}
 		}
 
-		function form279_import_template()
+		function form279_delete_list(id,name,button)
 		{
-			var data_array=['id','task name','description','status','assignee','list name'];
-			vUtil.arrayToCSV(data_array);
-		};
-
-		function form279_import_validate(data_array)
-		{
-			var validate_template_array=[{column:'task name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _,;:/\'()!@#$%-]+$')},
-									{column:'description',regex:new RegExp('^[0-9a-zA-Z _.,:/\'+@!$()-]+$')},
-                                    {column:'list name',required:'yes',regex:new RegExp('^[0-9a-zA-Z _.,:/\'+@!$()-]+$')},
-                                    {column:'assignee',regex:new RegExp('^[0-9a-zA-Z _.,:/\'+@!$()-]+$')},
-									{column:'status',required:'yes',list:['pending','completed','cancelled']}];
-
-			var error_array=vImport.validate(data_array,validate_template_array);
-			return error_array;
-		}
-
-		function form279_import(data_array,import_type)
-		{
-			var data_json={data_store:'task_instances',
- 					loader:'no',
- 					log:'yes',
- 					data:[],
- 					log_data:{title:'To do list',link_to:'form279'}};
-
-			var counter=1;
-			var last_updated=get_my_time();
-
-			data_array.forEach(function(row)
+			if(is_delete_access('form279'))
 			{
-				counter+=1;
-				if(import_type=='create_new')
+				modal115_action(function()
 				{
-					row.id=last_updated+counter;
-				}
+					var data_json={data_store:'task_instances',
+							data:[{index:'list',exact:name}]};
+					delete_json(data_json);
 
-				var data_json_array=[{index:'id',value:row.id},
-	 					{index:'name',value:row['task name']},
-	 					{index:'description',value:row.description},
-	 					{index:'source_name',value:row['list name']},
-	 					{index:'status',value:row.status},
-                        {index:'source',value:'to_do'},
-                        {index:'assignee',value:row.assignee},
-	 					{index:'last_updated',value:last_updated}];
+					var list_json={data_store:'task_lists',
+							data:[{index:'id',exact:id}]};
+					delete_json(list_json);
 
-				data_json.data.push(data_json_array);
-			});
-
-			if(import_type=='create_new')
-			{
-				create_batch_json(data_json);
+					$(button).parent().parent().parent().remove();
+				});
 			}
 			else
 			{
-				update_batch_json(data_json);
+				$("#modal2_link").click();
 			}
-		};
+		}
 
+		function form279_add_list_popup()
+		{
+			var form=document.getElementById('form279_add_list_form');
+			var name_filter=form.elements['list'];
+			var color_filter=form.elements['color'];
+
+			name_filter.value="";
+			color_filter.value="";
+			$(name_filter).focus();
+
+			$(form).off('submit');
+			$(form).on('submit',function(event)
+			{
+				event.preventDefault();
+				var name=name_filter.value;
+				var color=color_filter.value;
+				var last_updated=get_my_time();
+
+				var data_json={data_store:'task_lists',
+							   log:'yes',
+							   data:[{index:'id',value:vUtil.newKey()},
+								{index:'name',value:name},
+								{index:'color',value:color},
+								{index:'type',value:'to_do'},
+								{index:'status',value:'open'},
+								{index:'sort_order',value:'100'},
+								{index:'last_updated',value:last_updated}],
+						   log_data:{title:'Added',notes:'New Task list '+name,link_to:'form279'}};
+				create_json(data_json);
+
+				$(form).find('.close').click();
+			});
+			$('#form279_add_list').formcontrol();
+			$("#form279_add_list_link").click();
+		}
 
 		function form279_add_task_popup(list_id,list_name)
 		{
-			var form=document.getElementById('modal201_form');
+			var form=document.getElementById('form279_add_task_form');
 		    var list_filter=form.elements['list'];
 		    var task_filter=form.elements['task'];
 		    var desc_filter=form.elements['desc'];
@@ -389,8 +407,8 @@
 
 		        $(form).find('.close').click();
 			});
-			$('#modal201').formcontrol();
-			$("#modal201_link").click();
+			$('#form279_add_task').formcontrol();
+			$("#form279_add_task_link").click();
 		}
 
 	</script>

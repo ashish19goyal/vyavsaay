@@ -25,5 +25,6 @@
       "sizes": "400x400",
       "type": "image/png"
   }],
-"orientation": "portrait"
+"orientation": "portrait",
+"theme_color": "#212C43"
 }

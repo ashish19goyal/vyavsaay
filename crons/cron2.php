@@ -32,6 +32,7 @@ function displayUsage()
 
 function getToken(){
 	try{
+		$log = vLog::getInstance(array('domain' => 'beacon'));
 		// $get_url="http://sandbox.shopclues.com/oauth/loginToken.php";
 		$get_url = "https://auth.shopclues.com/loginToken.php";
 		$ch=curl_init();
@@ -61,7 +62,7 @@ function getToken(){
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
 
 		$result = curl_exec($ch);
-		// print_r($result);
+		$log::info($result);
 		curl_close($ch);
 		$tokenObject = json_decode($result,true);
 
@@ -75,15 +76,16 @@ function getToken(){
 		}
 	}
 	catch(Exception $e){
+		$log::err("token failed");
 		return false;
 	}
 }
 
 function postOrder($order,$token,$channel){
 	try{
+		$log = vLog::getInstance(array('domain' => 'beacon'));
 		// $get_url="http://sandbox.shopclues.com/api/v1/Pushordertrack";
 		// $ch=curl_init();
-		$log = vLog::getInstance(array('domain' => 'beacon'));
 		$get_url = "http://developer.shopclues.com/api/v1/Pushordertrack";
 
 		$history = json_decode($order['order_history'],true);
@@ -172,6 +174,7 @@ function updateError($vDB,$id,$orderPushStatus)
 
 function cron2()
 {
+	$log = vLog::getInstance(array('domain' => 'beacon'));
 	$domain = "beacon";
 	$vDB=new vDB('re_user_beacon');
 	$updateCount = 100;
@@ -180,12 +183,11 @@ function cron2()
 		return;
 	}
 
-	$log = vLog::getInstance(array('domain' => 'beacon'));
-
 	while($updateCount == 100)
 	{
-		$orders_query = "select l.id,l.awb_num,l.status,l.order_history,l.reason_code,l.ship_to,l.merchant_name,l.type,l.collectable_value from logistics_orders l join staff s on l.delivery_person = s.acc_name where l.sync_status=? and l.channel_name=? order by l.sync_order,l.last_updated limit 0,$updateCount;";
+		$orders_query = "select l.id,l.awb_num,l.status,l.order_history,l.reason_code,l.ship_to,l.merchant_name,l.type,l.collectable_value from logistics_orders l left join staff s on l.delivery_person = s.acc_name where l.sync_status=? and l.channel_name=? order by l.sync_order,l.last_updated limit 0,$updateCount;";
 		$orders=$vDB->dbSelect($orders_query,array(1,"Shopclues"));
+		print_r($orders);
 
 		$updateCount = count($orders);
 		$updatedIds = array(0);

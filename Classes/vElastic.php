@@ -151,14 +151,17 @@ class vElastic
 		$log = (isset($requestData['log']) && $requestData['log']=='yes') ? true : false;
 
 		$logData = $log ? $requestData['log_data'] : array();
+		$logData['link'] = isset($logData['link_to']) ? $logData['link_to'] : "";
+
+		unset($logData['link_to']);
+
 		$addData = array(
 			'by' => $_SESSION['name'],
 			'display' => isset($requestData['log']) ? $requestData['log'] : 'no',
 			'tablename' => $requestData['data_store'],
 			'data' => json_encode($requestData['data']),
 			'type' => $requestData['type'],
-			'at' => 1000*time(),
-			'link' => $requestData['link_to']
+			'at' => 1000*time()
 		);
 
 		$affectedIds = (isset($requestData['ids'])) ? $requestData['ids'] : array();

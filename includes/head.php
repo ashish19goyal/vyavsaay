@@ -5,6 +5,7 @@
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta name="description" content="Find industry standard and customizable automation solutions for your business. Setup is fast and easy. The range of solutions include Billing, Inventory management, Accounting, Project management, Task force management and CRM." />
 	<meta content="Ashish Goyal" name="author" />
+	<meta name="theme-color" content="#212C43"/>
 
 	<link rel="manifest" href="manifest.json" />
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
